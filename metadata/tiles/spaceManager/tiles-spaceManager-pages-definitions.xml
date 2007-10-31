@@ -72,5 +72,9 @@
     </definition>        
     <definition name="prepare-search-spaces" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/searchSpaces.jsp"></put>
-    </definition>                            	            
+    </definition>
+    <definition name="view-event-space-occupations" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/viewEventSpaceOccupations.jsp"></put>
+    </definition>
+                           	            
 </tiles-definitions>

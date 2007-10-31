@@ -58,7 +58,8 @@
             <forward name="ManageSpaceAccessGroups" path="manage-space-access-groups"/>
             <forward name="PrepareMoveSpace" path="prepare-move-space"/>
             <forward name="PrepareMergeSpace" path="prepare-merge-space"/>
-			<forward name="CompareRoomsBeforeMerge" path="compare-rooms-before-merge"/>			                       
+			<forward name="CompareRoomsBeforeMerge" path="compare-rooms-before-merge"/>		
+			<forward name="ViewEventSpaceOccupations" path="view-event-space-occupations"/>									                       
         </action>
         
         <action path="/managePersonSpaceOccupations"

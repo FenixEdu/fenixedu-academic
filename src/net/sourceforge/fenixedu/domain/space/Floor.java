@@ -31,6 +31,12 @@ public class Floor extends Floor_Base {
 	new FloorInformation(this, level, begin, end, blueprintNumber);
     }
 
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted floor", parameters = {})
+    public void delete() {
+	super.delete();
+    }
+    
     @Override
     public void setSuroundingSpace(Space suroundingSpace) {
         if(suroundingSpace == null || suroundingSpace.isCampus() || suroundingSpace.isRoomSubdivision()) {
@@ -47,17 +53,23 @@ public class Floor extends Floor_Base {
     @Override
     public FloorInformation getSpaceInformation(final YearMonthDay when) {
 	return (FloorInformation) super.getSpaceInformation(when);
-    }
-
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted floor", parameters = {})
-    public void delete() {
-	super.delete();
-    }
+    }   
 
     @Override
     public boolean isFloor() {
 	return true;
+    }
+    
+    @Override
+    public Integer getExamCapacity() {
+	// Necessary for Renderers
+	return null;
+    }
+
+    @Override
+    public Integer getNormalCapacity() {
+	// Necessary for Renderers
+	return null;
     }
 
     public static abstract class FloorFactory implements Serializable, FactoryExecutor {
@@ -141,17 +153,5 @@ public class Floor extends Floor_Base {
 		    getBlueprintNumber());
 	}
 
-    }
-
-    @Override
-    public Integer getExamCapacity() {
-	// Necessary for Renderers
-	return null;
-    }
-
-    @Override
-    public Integer getNormalCapacity() {
-	// Necessary for Renderers
-	return null;
-    }
+    }   
 }

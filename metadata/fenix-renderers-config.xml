@@ -244,6 +244,10 @@ Documentation:
     <renderer type="org.joda.time.Partial" layout="month" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer">
         <property name="format" value="MMM"/>    	    	
     </renderer>
+    
+    <renderer type="org.joda.time.Partial" layout="year-partial" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer">
+        <property name="format" value="yyyy"/>    	    	
+    </renderer>
 
     <!--@ The default presentation for a domain object consist of a link for it's details. The is the top level 
           version of the <tt>link</tt> layout. -->
@@ -591,7 +595,7 @@ Documentation:
 	<renderer mode="input" type="org.joda.time.Partial" layout="year" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
 		<property name="year" value="true"/>
 	</renderer>
-	
+		
 	<!--@ The layout year-month allows you to insert a joda time partial given a month, a year, and a day -->
 	<renderer mode="input" type="org.joda.time.Partial" layout="year-month-day" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
 		<property name="year" value="true"/>

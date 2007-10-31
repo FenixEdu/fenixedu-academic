@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -20,6 +18,12 @@ public class Campus extends Campus_Base {
 	super();	
 	new CampusInformation(this, name, begin, end, blueprintNumber);
     }  
+
+    @Checked("SpacePredicates.checkPermissionsToManageSpace")
+    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted campus", parameters = {})
+    public void delete() {
+	super.delete();
+    }
     
     @Override
     public void setSuroundingSpace(Space suroundingSpace) {
@@ -34,13 +38,7 @@ public class Campus extends Campus_Base {
     @Override
     public CampusInformation getSpaceInformation(final YearMonthDay when) {
 	return (CampusInformation) super.getSpaceInformation(when);
-    }
-    
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
-    @FenixDomainObjectActionLogAnnotation(actionName = "Deleted campus", parameters = {})
-    public void delete() {
-	super.delete();
-    }
+    }      
     
     public String getLocation() {	
 	return getSpaceInformation().hasLocality() ? getSpaceInformation().getLocality().getName() : null;	
@@ -72,6 +70,19 @@ public class Campus extends Campus_Base {
     @Override
     public boolean isCampus() {
 	return true;
+    }
+    
+
+    @Override
+    public Integer getExamCapacity() {
+	// Necessary for Renderers
+	return null;
+    }
+
+    @Override
+    public Integer getNormalCapacity() {
+	// Necessary for Renderers
+	return null;
     }
 
     public static abstract class CampusFactory implements Serializable, FactoryExecutor {
@@ -138,17 +149,5 @@ public class Campus extends Campus_Base {
 	public CampusInformation execute() {
 	    return new CampusInformation(getSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
 	}
-    }
-
-    @Override
-    public Integer getExamCapacity() {
-	// Necessary for Renderers
-	return null;
-    }
-
-    @Override
-    public Integer getNormalCapacity() {
-	// Necessary for Renderers
-	return null;
     }
 }

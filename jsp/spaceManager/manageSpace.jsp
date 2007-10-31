@@ -129,12 +129,19 @@
 		</html:link>&nbsp;,
 		<html:link page="/manageSpaces.do?method=deleteSpace&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
 			<bean:message bundle="SPACE_RESOURCES" key="link.delete.space"/>
-		</html:link>			
+		</html:link>
+		
+		<% if(thisSpace.isAllocatableSpace()) {%>
+		&nbsp;,	
+		<html:link page="/manageSpaces.do?method=viewEventSpaceOccupations" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+			<bean:message bundle="SPACE_RESOURCES" key="link.event.space.occupations"/>
+		</html:link>		
+		<% } %>
 	</p>	
 	<%
 		}
 	%>
-
+		
 	<%-- BluePrints --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
 		
@@ -446,4 +453,4 @@
 		}
 	%>
 	
-</logic:present>	
+</logic:present>		

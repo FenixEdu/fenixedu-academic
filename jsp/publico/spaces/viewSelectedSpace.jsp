@@ -22,7 +22,6 @@
 		</fr:layout>								
 	</fr:view>
 
-
 	<ul>
 		<logic:equal name="selectedSpace" property="withSchedule" value="true">
 			<bean:define id="viewScheduleLink">/viewRoom.do?method=roomViewer&amp;roomName=<bean:write name="selectedSpace" property="space.identification"/></bean:define>				

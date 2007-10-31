@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.ClassTimeTableColorPicker;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.ExecutionCourseTimeTableColorPicker;
@@ -32,6 +31,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftTi
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopClassRoomTimeTableLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopClassTimeTableLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopRoomTimeTableLessonContentRenderer;
+import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SpaceManagerRoomTimeTableLessonContentRenderer;
 
 import org.apache.struts.Globals;
 import org.apache.struts.util.MessageResources;
@@ -69,8 +69,7 @@ public final class RenderTimeTableTag extends TagSupport {
     private String name;
 
     // Mensagens de erro.
-    protected static MessageResources messages = MessageResources
-            .getMessageResources("PublicDegreeInformation");
+    protected static MessageResources messages = MessageResources.getMessageResources("PublicDegreeInformation");
 
     private InfoCurricularYear infoCurricularYear = null;
 
@@ -167,8 +166,7 @@ public final class RenderTimeTableTag extends TagSupport {
 
     private String getMessageResource(PageContext pageContext, String key) {
         try {
-            return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY,
-                    key);
+            return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, key);
         } catch (JspException e) {
             return "???" + key + "???";
         }
@@ -177,17 +175,17 @@ public final class RenderTimeTableTag extends TagSupport {
     private StringBuilder legenda(List listaAulas, Locale locale) {
        
 	StringBuilder result = new StringBuilder("");
-        List listaAuxiliar = new ArrayList();
-        Iterator iterator = listaAulas.iterator();
+        List<SubtitleEntry> listaAuxiliar = new ArrayList<SubtitleEntry>();
+        Iterator<InfoShowOccupation> iterator = listaAulas.iterator();
         
         while (iterator.hasNext()) {
             
-            InfoShowOccupation elem = (InfoShowOccupation) iterator.next();
+            InfoShowOccupation elem = iterator.next();
             
             if (elem instanceof InfoLesson || elem instanceof InfoLessonInstance) {
-                SubtitleEntry subtitleEntry = new SubtitleEntry(elem.getInfoShift()
-                        .getInfoDisciplinaExecucao().getSigla(), elem.getInfoShift()
-                        .getInfoDisciplinaExecucao().getNome());
+                SubtitleEntry subtitleEntry = new SubtitleEntry(
+                	elem.getInfoShift().getInfoDisciplinaExecucao().getSigla(), 
+                	elem.getInfoShift().getInfoDisciplinaExecucao().getNome());
                 
                 if (!listaAuxiliar.contains(subtitleEntry))
                     listaAuxiliar.add(subtitleEntry);            
@@ -195,13 +193,17 @@ public final class RenderTimeTableTag extends TagSupport {
         }
 
         if (listaAuxiliar.size() > 1) {
+           
             Collections.sort(listaAuxiliar);
+            
             result.append("<br/><b>");
             result.append(getMessageResource(pageContext, "public.degree.information.label.legend"));
-            result
-                    .append("</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
+            result.append("</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
+            
             for (int i = 0; i < listaAuxiliar.size(); i++) {
-                SubtitleEntry elem = (SubtitleEntry) listaAuxiliar.get(i);
+                
+        	SubtitleEntry elem = (SubtitleEntry) listaAuxiliar.get(i);
+                
                 boolean oddElement = (i % 2 == 1);
                 if (!oddElement) {
                     result.append("<tr>\r\n");
@@ -211,6 +213,7 @@ public final class RenderTimeTableTag extends TagSupport {
                 result.append("</b></td><td  style='vertical-align:top'>-</td><td>");
                 result.append(elem.getValue());
                 result.append("</td>");
+                
                 if (oddElement) {
                     result.append("</tr>\r\n");
                 }
@@ -281,6 +284,11 @@ public final class RenderTimeTableTag extends TagSupport {
             this.colorPicker = new ClassTimeTableColorPicker();
             break;
         
+        case TimeTableType.SPACE_MANAGER_TIMETABLE:
+            this.lessonSlotContentRenderer = new SpaceManagerRoomTimeTableLessonContentRenderer();
+            this.colorPicker = new ClassTimeTableColorPicker();
+            break;
+            
         case TimeTableType.SOP_CLASS_ROOM_TIMETABLE:
             this.lessonSlotContentRenderer = new SopClassRoomTimeTableLessonContentRenderer();
             this.colorPicker = new ClassTimeTableColorPicker();

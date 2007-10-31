@@ -55,21 +55,22 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
      */
     public ActionForward prepararVerSala(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        super.execute(mapping, form, request, response);
+       
+	super.execute(mapping, form, request, response);
 
         request.removeAttribute(mapping.getAttribute());
 
         DynaActionForm posicaoSalaFormBean = (DynaActionForm) form;
         Integer index = (Integer) posicaoSalaFormBean.get("index");
+        
         request.setAttribute("selectedRoomIndex", index);
-
         request.setAttribute("roomId", index.toString());
 
         // Reset indexForm value
         DynaActionForm selectRoomIndexForm = (DynaActionForm) form;
         selectRoomIndexForm.set("index", null);
 
-        return (mapping.findForward("VerSala"));
+        return mapping.findForward("VerSala");
     }
 
     /**

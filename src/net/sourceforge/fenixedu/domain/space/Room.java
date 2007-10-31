@@ -20,10 +20,15 @@ public class Room extends Room_Base {
 	    String description, RoomClassification roomClassification, BigDecimal area,
 	    Boolean heightQuality, Boolean illuminationQuality,
 	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality,
-	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end, String doorNumber) {
+	    Boolean ageQuality, String observations, YearMonthDay begin, YearMonthDay end, 
+	    String doorNumber, Integer normalCapacity, Integer examCapacity) {
 
 	super();		
+	
 	setSuroundingSpace(suroundingSpace);
+	setNormalCapacity(normalCapacity);
+	setExamCapacity(examCapacity);
+	
 	new RoomInformation(this, blueprintNumber, identification, description, roomClassification,
 		area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality,
 		securityQuality, ageQuality, observations, begin, end, doorNumber);
@@ -125,8 +130,9 @@ public class Room extends Room_Base {
     public String getIdentification() {
 	return getSpaceInformation().getIdentification(); 
     }
-                                               
+    
     public static abstract class RoomFactory implements Serializable, FactoryExecutor {
+	
 	private String blueprintNumber;
 
 	private String identification;
@@ -155,6 +161,10 @@ public class Room extends Room_Base {
 
 	private DomainReference<RoomClassification> roomClassificationReference;
 
+	private Integer examCapacity;
+	
+	private Integer normalCapacity;
+	
 	public YearMonthDay getBegin() {
 	    return begin;
 	}
@@ -270,9 +280,26 @@ public class Room extends Room_Base {
 	public void setDoorNumber(String doorNumber) {
 	    this.doorNumber = doorNumber;
 	}
+
+	public Integer getExamCapacity() {
+	    return examCapacity;
+	}
+
+	public void setExamCapacity(Integer examCapacity) {
+	    this.examCapacity = examCapacity;
+	}
+
+	public Integer getNormalCapacity() {
+	    return normalCapacity;
+	}
+
+	public void setNormalCapacity(Integer normalCapacity) {
+	    this.normalCapacity = normalCapacity;
+	}
     }
 
     public static class RoomFactoryCreator extends RoomFactory {
+	
 	private DomainReference<Space> surroundingSpaceReference;
 
 	public Space getSurroundingSpace() {
@@ -289,11 +316,13 @@ public class Room extends Room_Base {
 	    return new Room(getSurroundingSpace(), getBlueprintNumber(), getIdentification(),
 		    getDescription(), getRoomClassification(), getArea(), getHeightQuality(),
 		    getIlluminationQuality(), getDistanceFromSanitaryInstalationsQuality(),
-		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), getEnd(), getDoorNumber());
+		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), 
+		    getEnd(), getDoorNumber(), getNormalCapacity(), getExamCapacity());
 	}
     }
 
     public static class RoomFactoryEditor extends RoomFactory {
+	
 	private DomainReference<Room> roomReference;
 
 	public Room getSpace() {
@@ -307,10 +336,17 @@ public class Room extends Room_Base {
 	}
 
 	public RoomInformation execute() {
-	    return new RoomInformation(getSpace(), getBlueprintNumber(), getIdentification(),
+	    
+	    getSpace().setNormalCapacity(getNormalCapacity());
+	    getSpace().setExamCapacity(getExamCapacity());
+	    
+	    RoomInformation roomInformation = new RoomInformation(getSpace(), getBlueprintNumber(), getIdentification(),
 		    getDescription(), getRoomClassification(), getArea(), getHeightQuality(),
 		    getIlluminationQuality(), getDistanceFromSanitaryInstalationsQuality(),
-		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), getEnd(), getDoorNumber());
+		    getSecurityQuality(), getAgeQuality(), getObservations(), getBegin(), 
+		    getEnd(), getDoorNumber());
+	     
+	     return roomInformation;
 	}
-    }   
+    }  
 }

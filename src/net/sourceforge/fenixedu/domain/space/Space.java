@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.Material;
-import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
@@ -57,12 +56,7 @@ public abstract class Space extends Space_Base {
 		return compareFloors((Floor)o1, (Floor)o2);
 	    }	    
 
-	    int compareTo = o1.getSpaceInformation().getPresentationName().compareTo(o2.getSpaceInformation().getPresentationName());	    
-	    if(compareTo == 0) {
-		return o1.getIdInternal().compareTo(o2.getIdInternal());
-	    }	    
-
-	    return compareTo;   
+	    return comparePresentationName(o1, o2);	    	  
 	}	
     };       
 

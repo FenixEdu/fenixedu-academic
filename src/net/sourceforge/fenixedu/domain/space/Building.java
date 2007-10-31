@@ -87,6 +87,18 @@ public class Building extends Building_Base {
 	return null;
     }
       
+    @Override
+    public Integer getExamCapacity() {
+	// Necessary for Renderers
+	return null;
+    }
+
+    @Override
+    public Integer getNormalCapacity() {
+	// Necessary for Renderers
+	return null;
+    }
+    
     public static abstract class BuildingFactory implements Serializable, FactoryExecutor {
 	private String name;
 
@@ -167,17 +179,5 @@ public class Building extends Building_Base {
 	    return new BuildingInformation(getSpace(), getName(), getBegin(), getEnd(),
 		    getBlueprintNumber());
 	}
-    }
-
-    @Override
-    public Integer getExamCapacity() {
-	// Necessary for Renderers
-	return null;
-    }
-
-    @Override
-    public Integer getNormalCapacity() {
-	// Necessary for Renderers
-	return null;
-    }
+    }   
 }

@@ -11,13 +11,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
+import net.sourceforge.fenixedu.dataTransferObject.spaceManager.ViewEventSpaceOccupationsBean;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -41,22 +40,12 @@ import org.joda.time.YearMonthDay;
 
 public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Service {
 
-    public List<InfoObject> run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
+    public List<InfoObject> run(AllocatableSpace room, YearMonthDay day) throws ExcepcaoPersistencia, FenixServiceException {
 
 	List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
-	final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
-
-	Calendar startDay = Calendar.getInstance();
-	startDay.setTimeInMillis(day.getTimeInMillis());
-	startDay.add(Calendar.DATE, Calendar.MONDAY - day.get(Calendar.DAY_OF_WEEK));
-
-	Calendar endDay = Calendar.getInstance();
-	endDay.setTimeInMillis(startDay.getTimeInMillis());
-	endDay.add(Calendar.DATE, 6);
-
-	final YearMonthDay weekStartYearMonthDay = YearMonthDay.fromCalendarFields(startDay);
-	final YearMonthDay weekEndYearMonthDay = YearMonthDay.fromCalendarFields(endDay).minusDays(1);
+	final YearMonthDay weekStartYearMonthDay = day.toDateTimeAtMidnight().withDayOfWeek(ViewEventSpaceOccupationsBean.MONDAY_IN_JODA_TIME).toYearMonthDay();		 
+	final YearMonthDay weekEndYearMonthDay = day.toDateTimeAtMidnight().withDayOfWeek(ViewEventSpaceOccupationsBean.SATURDAY_IN_JODA_TIME).toYearMonthDay(); 	
 
 	for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {            
 
