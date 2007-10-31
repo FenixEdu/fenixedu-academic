@@ -109,26 +109,33 @@
 		<bean:message bundle="SPACE_RESOURCES" key="label.version"/>: 
 		<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="label.edit"/>
-		</html:link> | 
+		</html:link>  
 		<%
 			if(thisSpace.personIsSpacesAdministrator(person)){
 		%>
+		|
 		<html:link page="/manageSpaces.do?method=deleteSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar a versão?')">
 			<bean:message bundle="SPACE_RESOURCES" key="label.delete"/>
 		</html:link> | 
 		<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="label.create"/>
-		</html:link>
-		<logic:equal name="selectedSpaceInformation" property="space.class.superclass.superclass.name" value="net.sourceforge.fenixedu.domain.space.AllocatableSpace">
-			 | 
-			<html:link page="/manageSpaces.do?method=prepareMergeRoom&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
-				<bean:message bundle="SPACE_RESOURCES" key="label.merge"/>
-			</html:link>
-		</logic:equal>
+		</html:link>		
 		<%
 			}
 		%>
-		&nbsp;&nbsp; <bean:message bundle="SPACE_RESOURCES" key="label.space"/>: 
+		&nbsp;&nbsp; <bean:message bundle="SPACE_RESOURCES" key="label.space"/>:
+		<%
+			if(thisSpace.personIsSpacesAdministrator(person)){
+		%>
+		<logic:equal name="selectedSpaceInformation" property="space.class.superclass.superclass.name" value="net.sourceforge.fenixedu.domain.space.AllocatableSpace">			
+			<html:link page="/manageSpaces.do?method=prepareMergeRoom&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+				<bean:message bundle="SPACE_RESOURCES" key="label.merge"/>
+			</html:link>
+			|
+		</logic:equal>
+		<%
+			}
+		%> 
 		<html:link page="/manageSpaces.do?method=prepareMoveSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="label.move"/>
 		</html:link> | 
@@ -146,8 +153,6 @@
 	<%
 		}
 	%>
-		 
-
 		
 	<%-- BluePrints --%>	
 	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.recent.bluePrint"/></h3>			
