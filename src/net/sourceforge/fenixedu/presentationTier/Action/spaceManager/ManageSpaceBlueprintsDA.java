@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -162,6 +163,8 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 	Boolean isToViewIdentifications = isToViewSpaceIdentifications(request);
 	Boolean isToViewDoorNumbers = isToViewDoorNumbers(request); 
 
+	BigDecimal scalePercentage = getScalePercentage(request);
+	
 	final String blueprintIdString = request.getParameter("blueprintId");
 	final Integer blueprintId = Integer.valueOf(blueprintIdString);
 	final Blueprint blueprint = rootDomainObject.readBlueprintByOID(blueprintId);
@@ -182,14 +185,14 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 	SpaceBlueprintsDWGProcessor processor = null;
 
 	if (isToViewOriginalSpaceBlueprint != null && isToViewOriginalSpaceBlueprint) {
-	    processor = new SpaceBlueprintsDWGProcessor();
+	    processor = new SpaceBlueprintsDWGProcessor(scalePercentage);
 
 	} else if (isSuroundingSpaceBlueprint != null && isSuroundingSpaceBlueprint) {
 	    SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	    processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), spaceInformation.getSpace(), viewBlueprintNumbers, isToViewIdentifications, isToViewDoorNumbers);
+	    processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), spaceInformation.getSpace(), viewBlueprintNumbers, isToViewIdentifications, isToViewDoorNumbers, scalePercentage);
 
 	} else {
-	    processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), viewBlueprintNumbers, isToViewIdentifications, isToViewDoorNumbers);
+	    processor = new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), viewBlueprintNumbers, isToViewIdentifications, isToViewDoorNumbers, scalePercentage);
 	}
 
 	if (processor != null) {
@@ -213,62 +216,55 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
     }
 
     private SpaceInformation getSpaceInformationFromParameter(final HttpServletRequest request) {
-	final String spaceInformationIDString = request.getParameterMap().containsKey(
-		"spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
-		.getAttribute("spaceInformationID");
-	final Integer spaceInformationID = (!StringUtils.isEmpty(spaceInformationIDString)) ? Integer
-		.valueOf(spaceInformationIDString) : null;
+	final String spaceInformationIDString = request.getParameterMap().containsKey("spaceInformationID") ?
+		request.getParameter("spaceInformationID") : (String) request.getAttribute("spaceInformationID");
+	final Integer spaceInformationID = (!StringUtils.isEmpty(spaceInformationIDString)) ? Integer.valueOf(spaceInformationIDString) : null;
 	return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
     }
 
     private Blueprint getSpaceBlueprintFromParameter(HttpServletRequest request) {
-	final String spaceBlueprintIDString = request.getParameterMap().containsKey("spaceBlueprintID") ? request
-		.getParameter("spaceBlueprintID")
-		: (String) request.getAttribute("spaceBlueprintID");
-	final Integer spaceBlueprintID = (!StringUtils.isEmpty(spaceBlueprintIDString)) ? Integer
-		.valueOf(spaceBlueprintIDString) : null;
+	final String spaceBlueprintIDString = request.getParameterMap().containsKey("spaceBlueprintID") ? 
+		request.getParameter("spaceBlueprintID") : (String) request.getAttribute("spaceBlueprintID");
+	final Integer spaceBlueprintID = (!StringUtils.isEmpty(spaceBlueprintIDString)) ? Integer.valueOf(spaceBlueprintIDString) : null;
 	return rootDomainObject.readBlueprintByOID(spaceBlueprintID);
     }
 
     private Boolean isToViewBlueprintNumbers(HttpServletRequest request) {
-	final String viewBlueprintNumbersString = request.getParameterMap().containsKey(
-		"viewBlueprintNumbers") ? request.getParameter("viewBlueprintNumbers")
-		: (String) request.getAttribute("viewBlueprintNumbers");
+	final String viewBlueprintNumbersString = request.getParameterMap().containsKey("viewBlueprintNumbers") ?
+		request.getParameter("viewBlueprintNumbers") : (String) request.getAttribute("viewBlueprintNumbers");
 	return viewBlueprintNumbersString != null ? Boolean.valueOf(viewBlueprintNumbersString) : null;
     }
 
     private Boolean isSuroundingSpaceBlueprint(HttpServletRequest request) {
-	final String suroundingSpaceBlueprintString = request.getParameterMap().containsKey(
-		"suroundingSpaceBlueprint") ? request.getParameter("suroundingSpaceBlueprint")
-		: (String) request.getAttribute("suroundingSpaceBlueprint");
-	return suroundingSpaceBlueprintString != null ? Boolean.valueOf(suroundingSpaceBlueprintString)
-		: null;
+	final String suroundingSpaceBlueprintString = request.getParameterMap().containsKey("suroundingSpaceBlueprint") ? 
+		request.getParameter("suroundingSpaceBlueprint") : (String) request.getAttribute("suroundingSpaceBlueprint");
+	return suroundingSpaceBlueprintString != null ? Boolean.valueOf(suroundingSpaceBlueprintString)	: null;
     }
 
     private Boolean isToViewOriginalSpaceBlueprint(HttpServletRequest request) {
-	final String viewOriginalSpaceBlueprintString = request.getParameterMap().containsKey(
-		"viewOriginalSpaceBlueprint") ? request.getParameter("viewOriginalSpaceBlueprint")
-		: (String) request.getAttribute("viewOriginalSpaceBlueprint");
-	return viewOriginalSpaceBlueprintString != null ? Boolean
-		.valueOf(viewOriginalSpaceBlueprintString) : null;
+	final String viewOriginalSpaceBlueprintString = request.getParameterMap().containsKey("viewOriginalSpaceBlueprint") ?
+		request.getParameter("viewOriginalSpaceBlueprint") : (String) request.getAttribute("viewOriginalSpaceBlueprint");
+	return viewOriginalSpaceBlueprintString != null ? Boolean.valueOf(viewOriginalSpaceBlueprintString) : null;
     }
     
     private Boolean isToViewSpaceIdentifications(HttpServletRequest request) {
-	final String viewSpaceIdentificationsString = request.getParameterMap().containsKey(
-		"viewSpaceIdentifications") ? request.getParameter("viewSpaceIdentifications")
-		: (String) request.getAttribute("viewSpaceIdentifications");
-	return viewSpaceIdentificationsString != null ? Boolean
-		.valueOf(viewSpaceIdentificationsString) : null;
+	final String viewSpaceIdentificationsString = request.getParameterMap().containsKey("viewSpaceIdentifications") ?
+		request.getParameter("viewSpaceIdentifications") : (String) request.getAttribute("viewSpaceIdentifications");
+	return viewSpaceIdentificationsString != null ? Boolean.valueOf(viewSpaceIdentificationsString) : null;
     }
     
     private Boolean isToViewDoorNumbers(HttpServletRequest request) {
-	final String viewDoorNumbersString = request.getParameterMap().containsKey(
-		"viewDoorNumbers") ? request.getParameter("viewDoorNumbers")
-		: (String) request.getAttribute("viewDoorNumbers");
-	return viewDoorNumbersString != null ? Boolean
-		.valueOf(viewDoorNumbersString) : null;
+	final String viewDoorNumbersString = request.getParameterMap().containsKey("viewDoorNumbers") ?
+		request.getParameter("viewDoorNumbers")	: (String) request.getAttribute("viewDoorNumbers");
+	return viewDoorNumbersString != null ? Boolean.valueOf(viewDoorNumbersString) : null;
     }
 
+    private BigDecimal getScalePercentage(HttpServletRequest request) {
+	final String scalePercentageString = request.getParameterMap().containsKey("scalePercentage") ? 
+		request.getParameter("scalePercentage") : (String) request.getAttribute("scalePercentage");
+	return scalePercentageString != null ? BigDecimal.valueOf(Double.valueOf(scalePercentageString)) : null;
+    }
+    
     private void saveActionMessageOnRequest(HttpServletRequest request, String errorKey, String[] args) {
 	ActionMessages actionMessages = new ActionMessages();
 	actionMessages.add(errorKey, new ActionMessage(errorKey, args));

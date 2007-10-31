@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -40,12 +41,14 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 
     private Boolean viewOriginalSpaceBlueprint;
 
-    private Space thisSpace;
+    private Space thisSpace;       
+    
 
     public SpaceBlueprintsDWGProcessor(Space parentSpace_, Boolean viewBlueprintNumbers_,
-	    Boolean viewSpaceIdentifications_, Boolean viewDoorNumbers_) throws IOException {
+	    Boolean viewSpaceIdentifications_, Boolean viewDoorNumbers_, 
+	    BigDecimal scalePercentage) throws IOException {
 
-	super();
+	super(scalePercentage);
 	this.suroundingSpaceBlueprint = false;
 	this.viewOriginalSpaceBlueprint = false;
 
@@ -57,10 +60,10 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
     }
 
     public SpaceBlueprintsDWGProcessor(Space parentSpace_, Space thisSpace_,
-	    Boolean viewBlueprintNumbers_, Boolean viewSpaceIdentifications_, Boolean viewDoorNumbers_)
-	    throws IOException {
+	    Boolean viewBlueprintNumbers_, Boolean viewSpaceIdentifications_, Boolean viewDoorNumbers_,
+	    BigDecimal scalePercentage) throws IOException {
 
-	super();
+	super(scalePercentage);
 	this.viewOriginalSpaceBlueprint = false;
 	this.suroundingSpaceBlueprint = true;
 
@@ -72,8 +75,8 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	this.parentSpace = parentSpace_;
     }
 
-    public SpaceBlueprintsDWGProcessor() throws IOException {
-	super();	
+    public SpaceBlueprintsDWGProcessor(BigDecimal scalePercentage) throws IOException {
+	super(scalePercentage);	
 	this.viewOriginalSpaceBlueprint = true;
     }
     
@@ -113,7 +116,7 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 
     public static BlueprintTextRectangles getBlueprintTextRectangles(final InputStream inputStream,
 	    Space parentSpace, Boolean viewBlueprintNumbers, Boolean viewOriginalSpaceBlueprint,
-	    Boolean viewSpaceIdentifications, Boolean viewDoorNumbers) throws IOException {
+	    Boolean viewSpaceIdentifications, Boolean viewDoorNumbers, BigDecimal scalePercentage) throws IOException {
 
 	BlueprintTextRectangles map = new BlueprintTextRectangles();
 	if (viewOriginalSpaceBlueprint != null && viewOriginalSpaceBlueprint) {
@@ -121,7 +124,7 @@ public class SpaceBlueprintsDWGProcessor extends DWGProcessor {
 	}
 
 	File file = FileUtils.copyToTemporaryFile(inputStream);
-	final SpaceBlueprintsDWGProcessor processor = new SpaceBlueprintsDWGProcessor();
+	final SpaceBlueprintsDWGProcessor processor = new SpaceBlueprintsDWGProcessor(scalePercentage);
 	final DwgFile dwgFile = processor.readDwgFile(file.getAbsolutePath());	
 	final Vector<DwgObject> dwgObjects = dwgFile.getDwgObjects();		
 	final ReferenceConverter referenceConverter = new ReferenceConverter(dwgObjects, processor.scaleRatio);
