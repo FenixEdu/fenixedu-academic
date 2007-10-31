@@ -1850,6 +1850,10 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    final public boolean hasStateType(final ExecutionYear executionYear, final RegistrationStateType registrationStateType) {
+	return getRegistrationStatesTypes(executionYear).contains(registrationStateType);
+    }
+
     final public Collection<RegistrationState> getRegistrationStates(final RegistrationStateType registrationStateType) {
 	final Collection<RegistrationState> result = new HashSet<RegistrationState>();
 
@@ -1898,6 +1902,10 @@ public class Registration extends Registration_Base {
 
     final public boolean isTransition() {
 	return getActiveStateType() == RegistrationStateType.TRANSITION;
+    }
+
+    final public boolean isTransition(final ExecutionYear executionYear) {
+	return hasStateType(executionYear, RegistrationStateType.TRANSITION);
     }
 
     final public boolean isTransited() {
