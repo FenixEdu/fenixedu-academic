@@ -111,7 +111,7 @@
 			<bean:message bundle="SPACE_RESOURCES" key="label.edit"/>
 		</html:link>  
 		<%
-			if(thisSpace.personIsSpacesAdministrator(person)){
+			if(Space.personIsSpacesAdministrator(person)){
 		%>
 		|
 		<html:link page="/manageSpaces.do?method=deleteSpaceInformation&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar a versão?')">
@@ -125,7 +125,7 @@
 		%>
 		&nbsp;&nbsp; <bean:message bundle="SPACE_RESOURCES" key="label.space"/>:
 		<%
-			if(thisSpace.personIsSpacesAdministrator(person)){
+			if(Space.personIsSpacesAdministrator(person)){
 		%>
 		<logic:equal name="selectedSpaceInformation" property="space.class.superclass.superclass.name" value="net.sourceforge.fenixedu.domain.space.AllocatableSpace">			
 			<html:link page="/manageSpaces.do?method=prepareMergeRoom&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
@@ -219,7 +219,7 @@
 		<p class="mtop05"><em><bean:message key="label.empty.blueprint" bundle="SPACE_RESOURCES"/>.</em></p>										
 	</logic:empty>
 	<%
-		if(thisSpace.personIsSpacesAdministrator(person)){
+		if(Space.personIsSpacesAdministrator(person)){
 	%>	
 	<p class="mtop025">
 		<html:link page="/manageBlueprints.do?method=showBlueprintVersions&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
@@ -455,7 +455,7 @@
 	%>	
 		
 	<%
-		if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
+		if(Space.personIsSpacesAdministrator(person)){
 	%>
 	<%-- Access Groups --%>
 	<h3 class="mtop2 mbottom0"><bean:message bundle="SPACE_RESOURCES" key="label.access.groups"/></h3>
