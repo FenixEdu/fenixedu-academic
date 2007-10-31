@@ -170,69 +170,73 @@
 				<html:link page="<%= urlToViewIdentifications %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.identification"/></html:link> 	
 		   	</logic:equal>
 		   	<logic:equal name="viewSpaceIdentifications" value="true">	
-				<bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.identification"/>
+				<span class="highlight2" style="padding: 2px;"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.identification"/></span>
 			</logic:equal>								
 			|
 		   	<logic:equal name="viewDoorNumbers" value="false">
 				<html:link page="<%= urlToViewDoorNumbers %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.door.numbers"/></html:link> 	
 		   	</logic:equal>
 		   	<logic:equal name="viewDoorNumbers" value="true">	
-				<bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.door.numbers"/>
+				<span class="highlight2" style="padding: 2px;"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.door.numbers"/></span>
 			</logic:equal>														
 			|
 			<logic:equal name="viewBlueprintNumbers" value="false">
 		   		<html:link page="<%= urlToViewBlueprinNumbers %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></html:link> 	
 			</logic:equal>
 			<logic:equal name="viewBlueprintNumbers" value="true">
-				<bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/>
+				<span class="highlight2" style="padding: 2px;"><bean:message bundle="SPACE_RESOURCES" key="link.view.blueprint.numbers"/></span>
 			</logic:equal>											
 			|
 			<logic:equal name="viewOriginalSpaceBlueprint" value="false">
 		   		<html:link page="<%= urlToViewOriginalSpaceBlueprint %>"><bean:message bundle="SPACE_RESOURCES" key="link.view.original.blueprint"/></html:link> 	
 			</logic:equal>
 			<logic:equal name="viewOriginalSpaceBlueprint" value="true">
-				<bean:message bundle="SPACE_RESOURCES" key="link.view.original.blueprint"/>
+				<span class="highlight2" style="padding: 2px;"><bean:message bundle="SPACE_RESOURCES" key="link.view.original.blueprint"/></span>
 			</logic:equal>	   						   		
-		</p>
-
-		<p>
-		
+			
 			<logic:notEmpty name="scalePercentage">				
-			
-				<p>
-					<logic:equal name="scalePercentage" value="100">
-						<bean:define id="viewBlueprintWithZoom">/manageSpaces.do?method=manageSpace&amp;spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&amp;viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&amp;viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&amp;viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&amp;viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/>&amp;scalePercentage=50</bean:define>
-						<html:link page="<%= viewBlueprintWithZoom %>">
-							<bean:message key="label.zoom.out" bundle="SPACE_RESOURCES"/>
-						</html:link>																		
-					</logic:equal>
-					<logic:notEqual name="scalePercentage" value="100">
-						<bean:define id="viewBlueprintWithZoom">/manageSpaces.do?method=manageSpace&amp;spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&amp;viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&amp;viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&amp;viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&amp;viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/>&amp;scalePercentage=100</bean:define>
-						<html:link page="<%= viewBlueprintWithZoom %>">
-							<bean:message key="label.zoom.in" bundle="SPACE_RESOURCES"/>
-						</html:link>																		
-					</logic:notEqual>
-				</p>
-			
-				<bean:define id="urlToImage"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&amp;blueprintId=<bean:write name="mostRecentBlueprint" property="idInternal"/>&amp;viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&amp;viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&amp;viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&amp;suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&amp;viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/>&amp;spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&amp;scalePercentage=<bean:write name="scalePercentage" /></bean:define>														
-				<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap" style="border: 1px dotted #ccc; padding: 4px;"/>
-				<map id ="roomLinksMap" name="roomLinksMap">
-					<logic:iterate id="blueprintTextRectanglesEntry" name="blueprintTextRectangles">																	
-						<bean:define id="blueprintSpace" name="blueprintTextRectanglesEntry" property="key" />					
-						<logic:iterate id="blueprintTextRectangle" name="blueprintTextRectanglesEntry" property="value">
-							<bean:define id="p1" name="blueprintTextRectangle" property="p1" />				
-							<bean:define id="p2" name="blueprintTextRectangle" property="p2" />				
-		 					<bean:define id="p3" name="blueprintTextRectangle" property="p3" />				
-		 					<bean:define id="p4" name="blueprintTextRectangle" property="p4" />							
-							<bean:define id="coords"><bean:write name="p1" property="x"/>,<bean:write name="p1" property="y"/>,<bean:write name="p2" property="x"/>,<bean:write name="p2" property="y"/>,<bean:write name="p3" property="x"/>,<bean:write name="p3" property="y"/>,<bean:write name="p4" property="x"/>,<bean:write name="p4" property="y"/></bean:define>				 				
-							<bean:define id="urlToCoords"><%= request.getContextPath() %>/SpaceManager/manageSpaces.do?method=manageSpace&amp;spaceInformationID=<bean:write name="blueprintSpace" property="spaceInformation.idInternal"/>&amp;viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&amp;viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&amp;viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&amp;viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/></bean:define>
-							<area shape="poly" coords="<%= coords %>" href="<%= urlToCoords %>"/>									
-						</logic:iterate>										
-					</logic:iterate>					
-				</map>								
-			
-			</logic:notEmpty>					
+			| 
+				<logic:equal name="scalePercentage" value="100">
+					<bean:define id="viewBlueprintWithZoom">/manageSpaces.do?method=manageSpace&amp;spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&amp;viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&amp;viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&amp;viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&amp;viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/>&amp;scalePercentage=50</bean:define>
+					<img src="<%= request.getContextPath() %>/images/zoom.png"/>
+					<html:link page="<%= viewBlueprintWithZoom %>">
+						<bean:message key="label.zoom.out" bundle="SPACE_RESOURCES"/>
+					</html:link>																		
+				</logic:equal>
+				<logic:notEqual name="scalePercentage" value="100">
+					<bean:define id="viewBlueprintWithZoom">/manageSpaces.do?method=manageSpace&amp;spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&amp;viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&amp;viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&amp;viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&amp;viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/>&amp;scalePercentage=100</bean:define>
+					<img src="<%= request.getContextPath() %>/images/zoom.png"/>
+					<html:link page="<%= viewBlueprintWithZoom %>">
+						<bean:message key="label.zoom.in" bundle="SPACE_RESOURCES"/>
+					</html:link>																		
+				</logic:notEqual>
+			</logic:notEmpty>	
 		</p>
+		
+		
+		<logic:notEmpty name="scalePercentage">	
+		
+			<bean:define id="urlToImage"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&amp;blueprintId=<bean:write name="mostRecentBlueprint" property="idInternal"/>&amp;viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&amp;viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&amp;viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&amp;suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&amp;viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/>&amp;spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&amp;scalePercentage=<bean:write name="scalePercentage" /></bean:define>														
+			<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap" style="border: 1px dotted #ccc; padding: 4px;"/>
+			<map id ="roomLinksMap" name="roomLinksMap">
+				<logic:iterate id="blueprintTextRectanglesEntry" name="blueprintTextRectangles">																	
+					<bean:define id="blueprintSpace" name="blueprintTextRectanglesEntry" property="key" />					
+					<logic:iterate id="blueprintTextRectangle" name="blueprintTextRectanglesEntry" property="value">
+						<bean:define id="p1" name="blueprintTextRectangle" property="p1" />				
+						<bean:define id="p2" name="blueprintTextRectangle" property="p2" />				
+	 					<bean:define id="p3" name="blueprintTextRectangle" property="p3" />				
+	 					<bean:define id="p4" name="blueprintTextRectangle" property="p4" />							
+						<bean:define id="coords"><bean:write name="p1" property="x"/>,<bean:write name="p1" property="y"/>,<bean:write name="p2" property="x"/>,<bean:write name="p2" property="y"/>,<bean:write name="p3" property="x"/>,<bean:write name="p3" property="y"/>,<bean:write name="p4" property="x"/>,<bean:write name="p4" property="y"/></bean:define>				 				
+						<bean:define id="urlToCoords"><%= request.getContextPath() %>/SpaceManager/manageSpaces.do?method=manageSpace&amp;spaceInformationID=<bean:write name="blueprintSpace" property="spaceInformation.idInternal"/>&amp;viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&amp;viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&amp;viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&amp;viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/></bean:define>
+						<area shape="poly" coords="<%= coords %>" href="<%= urlToCoords %>"/>									
+					</logic:iterate>										
+				</logic:iterate>					
+			</map>
+			
+		</logic:notEmpty>					
+		
+				
+
 		
 	</logic:notEmpty>			
 	<logic:empty name="mostRecentBlueprint">																	
