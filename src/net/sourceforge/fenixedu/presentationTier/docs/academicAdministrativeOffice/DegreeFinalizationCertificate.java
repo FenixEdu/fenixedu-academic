@@ -1,8 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.SortedSet;
@@ -97,18 +96,19 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	    entries.addAll(curriculum.getEntries());
 	    entries.addAll(curriculum.getDismissalRelatedEntries());
 
-	    final List<Enrolment> extraCurricularEnrolments = new ArrayList<Enrolment>();
-	    final List<Enrolment> propaedeuticEnrolments = new ArrayList<Enrolment>();
 	    final Map<Unit,String> academicUnitIdentifiers = new HashMap<Unit,String>();
-
-	    reportEntries(result, entries, extraCurricularEnrolments, propaedeuticEnrolments, academicUnitIdentifiers);
-
-	    if (!extraCurricularEnrolments.isEmpty()) {
-		reportRemainingEnrolments(result, extraCurricularEnrolments, "Extra-Curriculares");
+	    reportEntries(result, entries, academicUnitIdentifiers);
+	    
+	    final SortedSet<Enrolment> remainingEntries = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    remainingEntries.addAll(registration.getExtraCurricularEnrolments());
+	    if (!remainingEntries.isEmpty()) {
+		reportRemainingEnrolments(result, remainingEntries, "Extra-Curriculares");
 	    }
 		    
-	    if (!propaedeuticEnrolments.isEmpty()) {
-		reportRemainingEnrolments(result, propaedeuticEnrolments, "Propedêuticas");
+	    remainingEntries.clear();
+	    remainingEntries.addAll(registration.getPropaedeuticEnrolments());
+	    if (!remainingEntries.isEmpty()) {
+		reportRemainingEnrolments(result, remainingEntries, "Propedêuticas");
 	    }
 		
 	    if (getDocumentRequest().isToShowCredits()) {
@@ -125,25 +125,13 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	return result.toString();
     }
 
-    final private void reportEntries(final StringBuilder result, final SortedSet<ICurriculumEntry> entries, final List<Enrolment> extraCurricularEnrolments, final List<Enrolment> propaedeuticEnrolments, final Map<Unit, String> academicUnitIdentifiers) {
+    final private void reportEntries(final StringBuilder result, final SortedSet<ICurriculumEntry> entries, final Map<Unit, String> academicUnitIdentifiers) {
 	for (final ICurriculumEntry entry : entries) {
-	    if (entry instanceof Enrolment) {
-		final Enrolment enrolment = (Enrolment) entry;
-		
-		if (enrolment.isExtraCurricular()) {
-		    extraCurricularEnrolments.add(enrolment);
-		    continue;
-		} else if (enrolment.isPropaedeutic()) {
-		    propaedeuticEnrolments.add(enrolment);
-		    continue;
-		}
-	    }
-	
 	    reportEntry(result, entry, academicUnitIdentifiers);
 	}
     }
 
-    final private void reportRemainingEnrolments(final StringBuilder result, final List<Enrolment> enrolments, final String title) {
+    final private void reportRemainingEnrolments(final StringBuilder result, final Collection<Enrolment> enrolments, final String title) {
 	result.append(generateEndLine()).append("\n").append(title).append(":\n");
 	
 	for (final Enrolment enrolment : enrolments) {

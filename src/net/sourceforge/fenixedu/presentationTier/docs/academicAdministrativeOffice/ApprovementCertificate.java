@@ -1,8 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -12,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -31,24 +31,26 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     final private String getApprovementsInfo() {
 	final StringBuilder result = new StringBuilder();
 
-	final Curriculum curriculum = getDocumentRequest().getRegistration().getCurriculum();
+	Registration registration = getDocumentRequest().getRegistration();
+	final Curriculum curriculum = registration.getCurriculum();
 	
 	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
 	entries.addAll(curriculum.getEntries());
 	entries.addAll(curriculum.getDismissalRelatedEntries());
 
-	final List<Enrolment> extraCurricularEnrolments = new ArrayList<Enrolment>();
-	final List<Enrolment> propaedeuticEnrolments = new ArrayList<Enrolment>();
 	final Map<Unit,String> academicUnitIdentifiers = new HashMap<Unit,String>();
-
-	reportEntries(result, entries, extraCurricularEnrolments, propaedeuticEnrolments, academicUnitIdentifiers);
+	reportEntries(result, entries, academicUnitIdentifiers);
 	
-	if (!extraCurricularEnrolments.isEmpty()) {
-	    reportRemainingEnrolments(result, extraCurricularEnrolments, "Extra-Curriculares");
+	final SortedSet<Enrolment> remainingEntries = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	remainingEntries.addAll(registration.getExtraCurricularEnrolments());
+	if (!remainingEntries.isEmpty()) {
+	    reportRemainingEnrolments(result, remainingEntries, "Extra-Curriculares");
 	}
 	    
-	if (!propaedeuticEnrolments.isEmpty()) {
-	    reportRemainingEnrolments(result, propaedeuticEnrolments, "Propedêuticas");
+	remainingEntries.clear();
+	remainingEntries.addAll(registration.getPropaedeuticEnrolments());
+	if (!remainingEntries.isEmpty()) {
+	    reportRemainingEnrolments(result, remainingEntries, "Propedêuticas");
 	}
 	
     	if (getDocumentRequest().isToShowCredits()) {
@@ -64,21 +66,9 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	return result.toString();
     }
 
-    final private void reportEntries(final StringBuilder result, final SortedSet<ICurriculumEntry> entries, final List<Enrolment> extraCurricularEnrolments, final List<Enrolment> propaedeuticEnrolments, final Map<Unit, String> academicUnitIdentifiers) {
+    final private void reportEntries(final StringBuilder result, final SortedSet<ICurriculumEntry> entries, final Map<Unit, String> academicUnitIdentifiers) {
 	ExecutionYear lastReportedExecutionYear = entries.first().getExecutionYear(); 
 	for (final ICurriculumEntry entry : entries) {
-	    if (entry instanceof Enrolment) {
-		final Enrolment enrolment = (Enrolment) entry;
-
-		if (enrolment.isExtraCurricular()) {
-		    extraCurricularEnrolments.add(enrolment);
-		    continue;
-		} else if (enrolment.isPropaedeutic()) {
-		    propaedeuticEnrolments.add(enrolment);
-		    continue;
-		}
-	    }
-	
 	    final ExecutionYear executionYear = entry.getExecutionYear();
 	    if (executionYear != lastReportedExecutionYear) {
 		lastReportedExecutionYear = executionYear;
@@ -89,7 +79,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	}
     }
 
-    final private void reportRemainingEnrolments(final StringBuilder result, final List<Enrolment> enrolments, final String title) {
+    final private void reportRemainingEnrolments(final StringBuilder result, final Collection<Enrolment> enrolments, final String title) {
 	result.append(generateEndLine()).append("\n").append(title).append(":\n");
 	
 	for (final Enrolment enrolment : enrolments) {
