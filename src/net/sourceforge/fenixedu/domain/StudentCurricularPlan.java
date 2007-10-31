@@ -64,6 +64,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
+import net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
@@ -2330,6 +2331,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean hasExtraCurriculumGroup() {
 	return getExtraCurriculumGroup() != null;
+    }
+
+    public PropaedeuticsCurriculumGroup getPropaedeuticCurriculumGroup() {
+	return (PropaedeuticsCurriculumGroup) getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.PROPAEDEUTICS);
+    }
+
+    public boolean hasPropaedeuticsCurriculumGroup() {
+	return getPropaedeuticCurriculumGroup() != null;
     }
 
     public Collection<CurricularCourse> getAllCurricularCoursesToDismissal() {
