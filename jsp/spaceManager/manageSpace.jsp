@@ -101,11 +101,10 @@
 		</tr>
 	</table>
 
-
 	<%
-		if(thisSpace.personHasPermissionsToManageSpace(person)){
+		if(thisSpace.personHasPermissionsToManageSpace(person)) {
 	%>
-	<p class="mtop0 mbottom2">
+	<p class="mtop0 mbottom2">		
 		<bean:message bundle="SPACE_RESOURCES" key="label.version"/>: 
 		<html:link page="/manageSpaces.do?method=prepareEditSpace" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="label.edit"/>
@@ -122,7 +121,7 @@
 		</html:link>		
 		<%
 			}
-		%>
+		%>		
 		&nbsp;&nbsp; <bean:message bundle="SPACE_RESOURCES" key="label.space"/>:
 		<%
 			if(Space.personIsSpacesAdministrator(person)){
@@ -143,12 +142,16 @@
 			<bean:message bundle="SPACE_RESOURCES" key="label.delete"/>
 		</html:link>
 		
-		<% if(thisSpace.isAllocatableSpace() && ((AllocatableSpace)thisSpace).isForEducation()) { %>
+		<%
+			if(thisSpace.isAllocatableSpace() && ((AllocatableSpace)thisSpace).isForEducation()) { 
+		%>
 		&nbsp;&nbsp; <bean:message bundle="SPACE_RESOURCES" key="label.consult"/>: 
 		<html:link page="/manageSpaces.do?method=viewEventSpaceOccupations" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="link.event.space.occupations"/>
 		</html:link>		
-		<% } %>
+		<%
+			} 
+		%>
 	</p>	
 	<%
 		}
@@ -212,10 +215,8 @@
 				</logic:notEqual>
 			</logic:notEmpty>	
 		</p>
-		
-		
-		<logic:notEmpty name="scalePercentage">	
-		
+				
+		<logic:notEmpty name="scalePercentage">			
 			<bean:define id="urlToImage"><%= request.getContextPath() %>/SpaceManager/manageBlueprints.do?method=view&amp;blueprintId=<bean:write name="mostRecentBlueprint" property="idInternal"/>&amp;viewBlueprintNumbers=<bean:write name="viewBlueprintNumbers"/>&amp;viewDoorNumbers=<bean:write name="viewDoorNumbers"/>&amp;viewSpaceIdentifications=<bean:write name="viewSpaceIdentifications"/>&amp;suroundingSpaceBlueprint=<bean:write name="suroundingSpaceBlueprint"/>&amp;viewOriginalSpaceBlueprint=<bean:write name="viewOriginalSpaceBlueprint"/>&amp;spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&amp;scalePercentage=<bean:write name="scalePercentage" /></bean:define>														
 			<html:img src="<%= urlToImage %>" altKey="clip_image002" bundle="IMAGE_RESOURCES" usemap="#roomLinksMap" style="border: 1px dotted #ccc; padding: 4px;"/>
 			<map id ="roomLinksMap" name="roomLinksMap">
@@ -231,12 +232,8 @@
 						<area shape="poly" coords="<%= coords %>" href="<%= urlToCoords %>"/>									
 					</logic:iterate>										
 				</logic:iterate>					
-			</map>
-			
+			</map>			
 		</logic:notEmpty>					
-		
-				
-
 		
 	</logic:notEmpty>			
 	<logic:empty name="mostRecentBlueprint">																	
