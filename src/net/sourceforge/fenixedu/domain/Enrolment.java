@@ -350,45 +350,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    credits.delete();
 	}
 
-	Iterator<EquivalentEnrolmentForEnrolmentEquivalence> equivalentEnrolmentIterator = getEquivalentEnrolmentForEnrolmentEquivalencesIterator();
-
-	while (equivalentEnrolmentIterator.hasNext()) {
-	    EquivalentEnrolmentForEnrolmentEquivalence equivalentEnrolment = equivalentEnrolmentIterator.next();
-	    equivalentEnrolmentIterator.remove();
-	    equivalentEnrolment.removeEquivalentEnrolment();
-
-	    EnrolmentEquivalence equivalence = equivalentEnrolment.getEnrolmentEquivalence();
-	    Enrolment enrolment = equivalence.getEnrolment();
-
-	    equivalence.removeEnrolment();
-	    enrolment.delete();
-	    equivalentEnrolment.removeEnrolmentEquivalence();
-
-	    equivalentEnrolment.delete();
-	    equivalence.delete();
-	}
-
-	Iterator<EnrolmentEquivalence> equivalenceIterator = getEnrolmentEquivalencesIterator();
-
-	while (equivalenceIterator.hasNext()) {
-	    EnrolmentEquivalence equivalence = equivalenceIterator.next();
-	    equivalenceIterator.remove();
-	    equivalence.removeEnrolment();
-
-	    Iterator<EquivalentEnrolmentForEnrolmentEquivalence> equivalentRestrictionIterator = equivalence
-		    .getEquivalenceRestrictionsIterator();
-
-	    while (equivalentRestrictionIterator.hasNext()) {
-		EquivalentEnrolmentForEnrolmentEquivalence equivalentRestriction = equivalentRestrictionIterator.next();
-		equivalentRestriction.removeEquivalentEnrolment();
-		equivalentRestrictionIterator.remove();
-		equivalentRestriction.removeEnrolmentEquivalence();
-
-		equivalentRestriction.delete();
-	    }
-	    equivalence.delete();
-	}
-
 	Iterator<Thesis> theses = getThesesIterator();
 	while (theses.hasNext()) {
 	    theses.next().delete();

@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Adding Show Publications Functionality to department site" changes-20071102135504.sql
+execute "Delete LEEC Enrolment Equivalences Tables" deleteLEECEnrolmentEquivalenceTables.sql

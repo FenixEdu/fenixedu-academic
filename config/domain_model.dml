@@ -469,9 +469,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Integer who;
 	}
 
-	class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
-	}
-
 	class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 		String checkSum;
 		EnrolmentEvaluationState enrolmentEvaluationState;
@@ -522,9 +519,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 		class net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan extends net.sourceforge.fenixedu.domain.EquivalencePlan {
 		}
-
-	class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
-	}
 
 	class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 		String publishmentMessage;
@@ -5774,32 +5768,11 @@ relation EnrolmentCreditsInScientificArea {
 	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
 }
 
-relation EnrolmentEnrolmentEquivalence {
-	net.sourceforge.fenixedu.domain.EnrolmentEquivalence playsRole enrolmentEquivalences {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
-}
-
 relation EnrolmentEnrolmentEvaluation {
 	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
 	net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole evaluations {
 		multiplicity *;
 	}
-}
-
-relation EnrolmentEquivalenceEquivalentEnrolmentForEnrolmentEquivalence {
-	net.sourceforge.fenixedu.domain.EnrolmentEquivalence playsRole enrolmentEquivalence;
-	net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence playsRole equivalenceRestrictions {
-		multiplicity *;
-	}
-}
-
-relation EnrolmentEquivalentEnrolmentForEnrolmentEquivalence {
-	net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence playsRole equivalentEnrolmentForEnrolmentEquivalences {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Enrolment playsRole equivalentEnrolment;
 }
 
 relation EnrolmentEvaluationEmployee {
@@ -9048,13 +9021,6 @@ relation RootDomainObjectEmployeeHistoric {
 	}
 }
 
-relation RootDomainObjectEnrolmentEquivalence {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.EnrolmentEquivalence playsRole enrolmentEquivalences {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectEnrolmentEvaluation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole enrolmentEvaluations {
@@ -9100,13 +9066,6 @@ relation RootDomainObjectEquivalencePlan {
 relation RootDomainObjectEquivalencePlanEntry {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.EquivalencePlanEntry playsRole equivalencePlanEntries {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectEquivalentEnrolmentForEnrolmentEquivalence {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence playsRole equivalentEnrolmentForEnrolmentEquivalences {
 		multiplicity *;
 	}
 }
