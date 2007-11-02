@@ -63,7 +63,7 @@ public class ParkingRequestSearch implements Serializable {
     }
 
     private boolean satisfiedCarPlateNumber(ParkingRequest request) {
-        if (getCarPlateNumber() == null) {
+        if (org.apache.commons.lang.StringUtils.isEmpty(getCarPlateNumber())) {
             return true;
         }
         return request.hasVehicleContainingPlateNumber(getCarPlateNumber());       
@@ -81,8 +81,7 @@ public class ParkingRequestSearch implements Serializable {
                 Person person = (Person) request.getParkingParty().getParty();
                 if (person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
                     return false;
-                }
-                return true;
+                }                
             }
             return true;
         }
