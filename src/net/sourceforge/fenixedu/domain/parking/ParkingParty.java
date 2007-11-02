@@ -405,6 +405,10 @@ public class ParkingParty extends ParkingParty_Base {
 		    && person.getPersonRole(RoleType.TEACHER) == null) {
 		return person.getEmployee().getEmployeeNumber();
 	    }
+	    if (getPartyClassification().equals(PartyClassification.RESEARCHER)
+		    && person.getEmployee() != null) {
+		return person.getEmployee().getEmployeeNumber();
+	    }
 	    if (person.getStudent() != null) {
 		DegreeType degreeType = person.getStudent().getMostSignificantDegreeType();
 		Collection<Registration> registrations = person.getStudent()
