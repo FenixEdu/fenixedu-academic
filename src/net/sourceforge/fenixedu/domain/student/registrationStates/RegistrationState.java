@@ -217,5 +217,9 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
 	throw new DomainException("RegistrationState.external.enrolments.only.included.in.mobility.states");
     }
+    
+    public boolean getCanDeleteActualInfo() {
+	return getStateType().deleteActualPeriodInfo();
+    }
 
 }

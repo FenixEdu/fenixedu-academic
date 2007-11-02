@@ -157,6 +157,12 @@
 	     <form-property name="method" type="java.lang.String" />
          <form-property name="notNeedToEnrolEnrolments" type="java.lang.Integer[]" />
       </form-bean>
+      
+      <form-bean name="deleteregistrationActualInfoForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	     <form-property name="method" type="java.lang.String" />
+         <form-property name="registrationId" type="java.lang.String" />
+      </form-bean>
+      
 
     </form-beans>
 
@@ -266,8 +272,10 @@
 	        parameter="method"
 			scope="request"
 			validate="true"
+			name="deleteregistrationActualInfoForm"
 			input="/manageRegistrationState.do?method=prepare">
 	        	<forward name="showRegistrationStates" path="student.showRegistrationStates"/>
+	        	<forward name="deleteActualInfoConfirm" path="student.deleteActualInfoConfirm"/>
 	    </action>		    		
 
 		<action path="/manageIngression"

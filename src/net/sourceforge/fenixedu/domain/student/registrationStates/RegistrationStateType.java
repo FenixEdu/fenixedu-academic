@@ -13,14 +13,17 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
  */
 public enum RegistrationStateType {
 
-    REGISTERED(true), MOBILITY(true), CANCELED(false), CONCLUDED(false), FLUNKED(false), INTERRUPTED(false), SCHOOLPARTCONCLUDED(
-	    true), INTERNAL_ABANDON(false), EXTERNAL_ABANDON(false), TRANSITION(false), TRANSITED(false);
+    REGISTERED(true, false), MOBILITY(true, false), CANCELED(false, true), CONCLUDED(false, false), FLUNKED(false, true), 
+    INTERRUPTED(false, true), SCHOOLPARTCONCLUDED(true, false), INTERNAL_ABANDON(false, true), EXTERNAL_ABANDON(false, true),
+    TRANSITION(false, false), TRANSITED(false, false);
 
-    private RegistrationStateType(boolean active) {
+    private RegistrationStateType(boolean active, boolean deleteActualPeriodInfo) {
 	this.active = active;
+	this.deleteActualPeriodInfo = deleteActualPeriodInfo;
     }
 
     private boolean active;
+    private boolean deleteActualPeriodInfo;
 
     public String getName() {
 	return name();
@@ -32,6 +35,10 @@ public enum RegistrationStateType {
 
     public boolean isInactive() {
 	return !active;
+    }
+    
+    public boolean deleteActualPeriodInfo() {
+	return deleteActualPeriodInfo;
     }
 
     public String getQualifiedName() {

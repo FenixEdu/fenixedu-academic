@@ -1371,5 +1371,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
 	return enrolments.get(0);
     }
+    
+    public boolean hasAnyAssociatedMarkSheetOrFinalGrade() {
+	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
+	    if(enrolmentEvaluation.hasMarkSheet() || enrolmentEvaluation.isFinal()) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
 }

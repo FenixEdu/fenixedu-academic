@@ -13,6 +13,19 @@ public class RolePredicates {
 	};
     };
     
+    public static final AccessControlPredicate<DomainObject> ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE = new AccessControlPredicate<DomainObject>() {
+	public boolean evaluate(DomainObject domainObject) {
+	    return hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+	};
+    };
+    
+    public static final AccessControlPredicate<DomainObject> MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE = new AccessControlPredicate<DomainObject>() {
+	public boolean evaluate(DomainObject domainObject) {
+	    return MANAGER_PREDICATE.evaluate(domainObject) || ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE.evaluate(domainObject);
+	};
+    };
+
+    
     private static boolean hasRole(final RoleType roleType) {
 	return AccessControl.getPerson().hasRole(roleType);
     }

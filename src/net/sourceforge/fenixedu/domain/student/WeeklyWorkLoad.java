@@ -53,7 +53,7 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
 	return new Interval(start, end);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void delete() {
 	removeAttends();
 	removeRootDomainObject();

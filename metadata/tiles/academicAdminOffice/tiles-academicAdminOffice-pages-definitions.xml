@@ -79,6 +79,9 @@
     </definition>      
     <definition name="student.showRegistrationStates" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageRegistrationState.jsp"></put>
+    </definition>
+    <definition name="student.deleteActualInfoConfirm" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/deleteRegistrationActualInfo.jsp"></put>
     </definition>      
     <definition name="registrationConclusion" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/registrationConclusion.jsp"></put>

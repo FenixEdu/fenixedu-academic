@@ -86,7 +86,14 @@
 				</html:link>
 			</fr:property>			
 			
-			<fr:property name="sortBy" value="stateDate=asc"/>
+			<fr:property name="sortBy" value="stateDate=desc"/>
+			
+		<%-- 	<fr:property name="link(deleteActualInfo)" value="/manageRegistrationState.do?method=deleteActualInfoConfirm" />
+			<fr:property name="param(deleteActualInfo)" value="registration.idInternal/registrationId" />
+			<fr:property name="key(deleteActualInfo)" value="link.view.deleteActualInfo" />
+			<fr:property name="bundle(deleteActualInfo)" value="ACADEMIC_OFFICE_RESOURCES" />
+			<fr:property name="visibleIf(deleteActualInfo)" value="canDeleteActualInfo"/>
+		 --%>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

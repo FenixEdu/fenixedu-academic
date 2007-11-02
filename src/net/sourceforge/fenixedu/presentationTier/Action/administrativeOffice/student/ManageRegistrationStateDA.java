@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.factoryExecutors.DeleteRegistrationActualInfoFactoryExecutor;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
@@ -68,6 +69,33 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 
 	return prepare(mapping, actionForm, request, response);
     }
+    
+    public ActionForward deleteActualInfoConfirm(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+
+	getAndTransportRegistration(request);
+	return mapping.findForward("deleteActualInfoConfirm");
+	
+    }
+
+    
+    public ActionForward deleteActualInfo(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+
+	Registration registration = getAndTransportRegistration(request);
+	
+	try {
+	    executeFactoryMethod(new DeleteRegistrationActualInfoFactoryExecutor(registration));
+	    addActionMessage(request, "message.success.state.delete");
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	}
+	
+	return prepare(mapping, actionForm, request, response);
+    }
+
 
     private Registration getAndTransportRegistration(final HttpServletRequest request) {
 	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(

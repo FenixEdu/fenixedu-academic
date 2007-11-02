@@ -2615,5 +2615,36 @@ public class Registration extends Registration_Base {
 		return isForOffice(AdministrativeOffice
 				.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE));
     }
+    
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void deleteActualInfo() {
+	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	deleteExecutionYearAttends(executionYear);
+	for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    studentCurricularPlan.deleteExecutionYearEnrolments(executionYear);
+	}
+    }
+
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    private void deleteExecutionYearAttends(final ExecutionYear executionYear) {
+	for (final Attends attends : getAssociatedAttends()) {
+	    if(attends.isFor(executionYear)) {
+		deleteAllAttendsInfo(attends);
+	    }
+	}
+    }
+
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    private void deleteAllAttendsInfo(Attends attends) {
+	for(; attends.hasAnyAssociatedMarks(); attends.getAssociatedMarks().get(0).delete())
+	    ;
+	for(; attends.hasAnyWeeklyWorkLoads(); attends.getWeeklyWorkLoads().get(0).delete())
+	    ;
+	for(; attends.hasAnyProjectSubmissions(); attends.getProjectSubmissions().get(0).delete())
+	    ;
+	attends.getStudentGroups().clear();
+	
+	attends.delete();
+    }
 
 }

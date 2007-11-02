@@ -2689,4 +2689,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBoxStructure() ? getRoot().getNoCourseGroupCurriculumGroups() : new HashSet<NoCourseGroupCurriculumGroup>();
     }
     
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void deleteExecutionYearEnrolments(final ExecutionYear executionYear) {
+	for (Enrolment enrolment : getEnrolmentsByExecutionYear(executionYear)) {
+	    if(!enrolment.hasAnyAssociatedMarkSheetOrFinalGrade()) {
+		enrolment.delete();
+	    }
+	}
+	
+    }
+    
 }
