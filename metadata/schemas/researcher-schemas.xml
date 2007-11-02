@@ -1027,9 +1027,6 @@ extends="eventCreation">
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
 	<slot name="participatorName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
-	<slot name="email">
-		<property name="size" value="30"/>
-	</slot>
 	<slot name="unitParticipationType" key="label.unit" layout="radio-postback">
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="change.unitType"/>
@@ -1052,9 +1049,6 @@ extends="eventCreation">
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
 	<slot name="participatorName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" read-only="true"/>
-	<slot name="email">
-		<property name="size" value="30"/>
-	</slot>
 	<slot name="unitParticipationType" key="label.unit" layout="radio" read-only="true">
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
