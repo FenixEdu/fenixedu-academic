@@ -459,6 +459,10 @@
         <put name="body" value="/publico/department/showDepartmentThesisDetails.jsp"/>
     </definition>
 
+    <definition name="department-show-publications" extends="definition.public.department">
+        <put name="body" value="/publico/department/showPublications.jsp"/>
+    </definition>
+
     <definition name="definition.public.department.site" extends="definition.public.department">
         <put name="body-context" value="/publico/department/site-context.jsp"/>
     </definition>

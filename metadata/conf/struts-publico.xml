@@ -993,6 +993,7 @@
             <forward name="site-item-adviseLogin" path="department-item-adviseLogin"/>
             <forward name="unit-organization" path="department-organization"/>
             <forward name="unit-subunits" path="department-subunits"/>
+			<forward name="showPublications" path="department-show-publications"/>
 
             <forward name="announcementsAction" path="/department/announcements.do"/>
             <forward name="eventsAction" path="/department/events.do"/>

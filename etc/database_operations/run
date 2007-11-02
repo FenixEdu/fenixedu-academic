@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding Show Publications Functionality to department site" changes-20071102135504.sql
