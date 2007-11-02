@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
@@ -636,20 +637,41 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    addTabsToRow(enrolmentRow, level);
 	    enrolmentRow.setClasses(getEnrolmentRowClass());
 
+	    if(enrolment.isEnroled()) {
+		generateEnrolmentWithStateEnroled(enrolmentRow, enrolment, level, allowSelection);
+	    } else {
+		generateCurricularCourseCodeAndNameCell(enrolmentRow, enrolment, level, allowSelection);
+		generateDegreeCurricularPlanCell(enrolmentRow, enrolment);
+		generateEnrolmentTypeCell(enrolmentRow, enrolment);
+		generateEnrolmentStateCell(enrolmentRow, enrolment);
+		generateEnrolmentGradeCell(enrolmentRow, enrolment);
+		generateEnrolmentWeightCell(enrolmentRow, enrolment);
+		generateEnrolmentEctsCell(enrolmentRow, enrolment);
+		generateEnrolmentLastEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
+		generateEnrolmentExecutionYearCell(enrolmentRow, enrolment);
+		generateEnrolmentSemesterCell(enrolmentRow, enrolment);
+		generateLastEnrolmentEvaluationExamDateCellIfRequired(enrolmentRow, enrolment);
+		generateGradeResponsibleIfRequired(enrolmentRow, enrolment);
+		generateSpacerCellsIfRequired(enrolmentRow);
+	    }
+
+	}
+
+	private void generateEnrolmentWithStateEnroled(HtmlTableRow enrolmentRow, Enrolment enrolment, int level,
+		boolean allowSelection) {
 	    generateCurricularCourseCodeAndNameCell(enrolmentRow, enrolment, level, allowSelection);
 	    generateDegreeCurricularPlanCell(enrolmentRow, enrolment);
 	    generateEnrolmentTypeCell(enrolmentRow, enrolment);
 	    generateEnrolmentStateCell(enrolmentRow, enrolment);
-	    generateEnrolmentGradeCell(enrolmentRow, enrolment);
-	    generateEnrolmentWeightCell(enrolmentRow, enrolment);
-	    generateEnrolmentEctsCell(enrolmentRow, enrolment);
-	    generateEnrolmentLastEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
+	    generateCellWithText(enrolmentRow, "-", getGradeCellClass()); //grade
+	    generateCellWithText(enrolmentRow, "-", getWeightCellClass()); //weight
+	    generateCellWithText(enrolmentRow, "-", getEctsCreditsCellClass()); //ects
+	    generateEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
 	    generateEnrolmentExecutionYearCell(enrolmentRow, enrolment);
 	    generateEnrolmentSemesterCell(enrolmentRow, enrolment);
-	    generateLastEnrolmentEvaluationExamDateCellIfRequired(enrolmentRow, enrolment);
-	    generateGradeResponsibleIfRequired(enrolmentRow, enrolment);
+	    generateCellWithText(enrolmentRow, "-", getLastEnrolmentEvaluationTypeCellClass()); //enrolment evaluation date
+	    generateCellWithText(enrolmentRow, "-", getGradeResponsibleCellClass()); //grade responsible
 	    generateSpacerCellsIfRequired(enrolmentRow);
-
 	}
 
 	private void generateGradeResponsibleIfRequired(HtmlTableRow enrolmentRow, Enrolment enrolment) {
@@ -718,6 +740,18 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    }
 
 	}
+	
+	private void generateEnrolmentEvaluationTypeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
+	    final EnrolmentEvaluationType enrolmentEvaluationType = enrolment.getEnrolmentEvaluationType();
+	    if (enrolmentEvaluationType != null) {
+		generateCellWithSpan(enrolmentRow, enumerationResources.getString(enrolmentEvaluationType.getAcronym()),
+			getLastEnrolmentEvaluationTypeCellClass());
+	    } else {
+		generateCellWithText(enrolmentRow, "-", getLastEnrolmentEvaluationTypeCellClass());
+	    }
+
+	}
+
 
 	private void generateEnrolmentEctsCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
 	    // Credits are only relevant to show when student is already
