@@ -267,7 +267,15 @@
 	</slot>
 	<slot name="phone" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="username" read-only="true"/>
-	<slot name="password" layout="password" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="password" layout="input-with-comment">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.StringLengthValidator">
+			<property name="min" value="8"/>
+		</validator>
+		<property name="subLayout" value="password"/>
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="comment" value="label.passwordLength.explanation"/>
+		<property name="commentClasses" value="smalltxt color555"/>
+	</slot>
 	<slot name="passwordConfirmation" layout="password" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>	
 
