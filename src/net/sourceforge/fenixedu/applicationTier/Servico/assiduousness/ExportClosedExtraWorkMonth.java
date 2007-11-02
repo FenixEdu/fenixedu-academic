@@ -4,10 +4,12 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.LeaveBean;
 import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
@@ -24,6 +26,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Days;
@@ -92,10 +95,9 @@ public class ExportClosedExtraWorkMonth extends Service {
 	    unjustifiedDays = new ArrayList<YearMonthDay>();
 	    if (assiduousness.isStatusActive(beginDate, endDate)
 		    && !isADISTEmployee(assiduousness, beginDate, endDate)) {
-		result
-			.append(getAssiduousnessMonthBalance(assiduousness,
-				allLeaves.get(assiduousness), allAssiduousnessClosedMonths
-					.get(assiduousness), closedMonth, beginDate, endDate));
+		result.append(getAssiduousnessMonthBalance(assiduousness, joinLeaves(allLeaves
+			.get(assiduousness)), allAssiduousnessClosedMonths.get(assiduousness),
+			closedMonth, beginDate, endDate));
 
 		extraWorkResult.append(getAssiduousnessExtraWork(assiduousness,
 			allAssiduousnessClosedMonths.get(assiduousness), beginDate, endDate));
@@ -111,6 +113,78 @@ public class ExportClosedExtraWorkMonth extends Service {
 	    extraWorkResult.append(maternityJustificationResult);
 	}
 	return result.append(extraWorkResult).toString();
+    }
+
+    private List<LeaveBean> joinLeaves(List<Leave> leaves) {
+	if (leaves != null) {
+	    List<LeaveBean> leaveBeanList = new ArrayList<LeaveBean>();
+	    Map<JustificationMotive, List<Leave>> leavesByMotive = new HashMap<JustificationMotive, List<Leave>>();
+	    for (Leave leave : leaves) {
+		if (leave.getJustificationMotive().getJustificationType().equals(
+			JustificationType.OCCURRENCE)
+			|| leave.getJustificationMotive().getJustificationType().equals(
+				JustificationType.MULTIPLE_MONTH_BALANCE)) {
+		    if (leavesByMotive.get(leave.getJustificationMotive()) == null) {
+			List<Leave> newList = new ArrayList<Leave>();
+			newList.add(leave);
+			leavesByMotive.put(leave.getJustificationMotive(), newList);
+		    } else {
+			leavesByMotive.get(leave.getJustificationMotive()).add(leave);
+		    }
+		}
+	    }
+	    for (JustificationMotive justificationMotive : leavesByMotive.keySet()) {
+		List<Leave> leavesMotiveList = leavesByMotive.get(justificationMotive);
+		Collections.sort(leavesMotiveList, AssiduousnessRecord.COMPARATOR_BY_DATE);
+		Iterator<Leave> iterator = leavesMotiveList.iterator();
+		Leave nextLeave = null;
+		LeaveBean leaveBean = null;
+		while (iterator.hasNext()) {
+		    Leave leave = null;
+		    if (nextLeave != null) {
+			leave = nextLeave;
+		    } else {
+			leave = (Leave) iterator.next();
+		    }
+		    if (iterator.hasNext()) {
+			nextLeave = (Leave) iterator.next();
+		    }
+		    if (nextLeave != null) {
+			if (leave.getEndYearMonthDay().plusDays(1).isEqual(
+				nextLeave.getDate().toYearMonthDay())) {
+			    if (leaveBean == null) {
+				leaveBean = new LeaveBean(leave, nextLeave);
+			    } else {
+				leaveBean.setEndYearMonthDay(nextLeave.getEndYearMonthDay());
+			    }
+			    leaves.remove(nextLeave);
+			} else {
+			    if (leaveBean == null) {
+				leaveBeanList.add(new LeaveBean(leave));
+			    } else {
+				leaveBeanList.add(leaveBean);
+			    }
+			}
+		    } else {
+			if (leaveBean == null) {
+			    leaveBeanList.add(new LeaveBean(leave));
+			} else {
+			    leaveBeanList.add(leaveBean);
+			}
+		    }
+		    leaves.remove(leave);
+		}
+		if (leaveBean != null) {
+		    leaveBeanList.add(leaveBean);
+		}
+	    }
+	    for (Leave leave : leaves) {
+		leaveBeanList.add(new LeaveBean(leave));
+	    }
+
+	    return leaveBeanList;
+	}
+	return null;
     }
 
     private String getExtraWorkMovement(Assiduousness assiduousness, YearMonthDay beginDate,
@@ -198,26 +272,26 @@ public class ExportClosedExtraWorkMonth extends Service {
 	return result.toString();
     }
 
-    private String getAssiduousnessMonthBalance(Assiduousness assiduousness, List<Leave> leaves,
-	    AssiduousnessClosedMonth assiduousnessClosedMonth, ClosedMonth closedMonth,
-	    YearMonthDay beginDate, YearMonthDay endDate) {
+    private String getAssiduousnessMonthBalance(Assiduousness assiduousness,
+	    List<LeaveBean> leavesBeans, AssiduousnessClosedMonth assiduousnessClosedMonth,
+	    ClosedMonth closedMonth, YearMonthDay beginDate, YearMonthDay endDate) {
 	StringBuilder result = new StringBuilder();
-	if (leaves != null && !leaves.isEmpty()) {
-	    Collections.sort(leaves, AssiduousnessRecord.COMPARATOR_BY_DATE);
-	    for (Leave leave : leaves) {
-		if (leave.getJustificationMotive().getJustificationType().equals(
+	if (leavesBeans != null && !leavesBeans.isEmpty()) {
+	    Collections.sort(leavesBeans, new BeanComparator("date"));
+	    for (LeaveBean leaveBean : leavesBeans) {
+		if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 			JustificationType.OCCURRENCE)
-			|| leave.getJustificationMotive().getJustificationType().equals(
+			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 				JustificationType.MULTIPLE_MONTH_BALANCE)) {
-		    result.append(getLeaveLine(leave, beginDate, endDate));
-		} else if (leave.getJustificationMotive().getJustificationType().equals(
+		    result.append(getLeaveLine(leaveBean, beginDate, endDate));
+		} else if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 			JustificationType.HALF_OCCURRENCE_TIME)
-			|| leave.getJustificationMotive().getJustificationType().equals(
+			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 				JustificationType.HALF_MULTIPLE_MONTH_BALANCE)
-			|| (leave.getJustificationMotive().getJustificationType().equals(
-				JustificationType.TIME) && !leave.getJustificationMotive()
-				.getAccumulate())) {
-		    result.append(getHalfLeaveLine(leave, beginDate));
+			|| (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
+				JustificationType.TIME) && !leaveBean.getLeave()
+				.getJustificationMotive().getAccumulate())) {
+		    result.append(getHalfLeaveLine(leaveBean.getLeave(), beginDate));
 		}
 	    }
 	}
@@ -246,7 +320,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 			.getJustificationMotiveByGiafCode(giafCode, assiduousness, assiduousnessStatus);
 		if (justificationMotive != null) {
 		    result.append(getLeaveLine(assiduousness, justificationMotive, closedMonth,
-			    justificationDays, leaves));
+			    justificationDays, leavesBeans));
 		}
 	    }
 	}
@@ -268,12 +342,12 @@ public class ExportClosedExtraWorkMonth extends Service {
 
 	if (A66ToDiscount != 0) {
 	    result.append(getLeaveLine(assiduousness, a66JustificationMotive, closedMonth,
-		    A66ToDiscount, leaves));
+		    A66ToDiscount, leavesBeans));
 	}
 
 	if (unjustifiedToDiscount != 0) {
 	    result.append(getLeaveLine(assiduousness, unjustifiedJustificationMotive, closedMonth,
-		    unjustifiedToDiscount, leaves));
+		    unjustifiedToDiscount, leavesBeans));
 	}
 
 	return result.toString();
@@ -281,9 +355,9 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     private StringBuilder getLeaveLine(Assiduousness assiduousness,
 	    JustificationMotive justificationMotive, ClosedMonth closedMonth, int justificationDays,
-	    List<Leave> leaves) {
+	    List<LeaveBean> leavesBeans) {
 	List<YearMonthDay> daysToUnjustify = getJustificationDays(assiduousness, justificationMotive,
-		closedMonth, justificationDays, leaves);
+		closedMonth, justificationDays, leavesBeans);
 	StringBuilder line = new StringBuilder();
 	for (YearMonthDay day : daysToUnjustify) {
 	    AssiduousnessStatus assiduousnessStatus = assiduousness
@@ -307,14 +381,14 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     private List<YearMonthDay> getJustificationDays(Assiduousness assiduousness,
 	    JustificationMotive justificationMotive, ClosedMonth closedMonth, int daysNumber,
-	    List<Leave> leaves) {
+	    List<LeaveBean> leavesBeans) {
 	List<YearMonthDay> days = new ArrayList<YearMonthDay>();
 	YearMonthDay day = new YearMonthDay(closedMonth.getClosedYearMonth().get(
 		DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
 		DateTimeFieldType.monthOfYear()) + 1, 1).minusDays(1);
 	while (daysNumber != 0) {
 	    day = getPreviousWorkingDay(justificationMotive, assiduousness, day, true);
-	    if (!unjustifiedDays.contains(day) && !existAnyLeaveForThisDay(leaves, day)) {
+	    if (!unjustifiedDays.contains(day) && !existAnyLeaveForThisDay(leavesBeans, day)) {
 		days.add(day);
 		daysNumber--;
 	    }
@@ -324,14 +398,14 @@ public class ExportClosedExtraWorkMonth extends Service {
 	return days;
     }
 
-    private boolean existAnyLeaveForThisDay(List<Leave> leaves, YearMonthDay day) {
-	if (leaves != null) {
-	    for (Leave leave : leaves) {
-		if (leave.getJustificationMotive().getJustificationType().equals(
+    private boolean existAnyLeaveForThisDay(List<LeaveBean> leavesBeans, YearMonthDay day) {
+	if (leavesBeans != null) {
+	    for (LeaveBean leaveBean : leavesBeans) {
+		if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 			JustificationType.MULTIPLE_MONTH_BALANCE)
-			|| leave.getJustificationMotive().getJustificationType().equals(
+			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 				JustificationType.OCCURRENCE)) {
-		    if (leave.getTotalInterval().contains(day.toDateTimeAtMidnight())) {
+		    if (leaveBean.getLeave().getTotalInterval().contains(day.toDateTimeAtMidnight())) {
 			return true;
 		    }
 		}
@@ -340,38 +414,38 @@ public class ExportClosedExtraWorkMonth extends Service {
 	return false;
     }
 
-    private StringBuilder getLeaveLine(Leave leave, YearMonthDay beginDate, YearMonthDay endDate) {
-	YearMonthDay start = getNextWorkingDay(leave, beginDate, false);
+    private StringBuilder getLeaveLine(LeaveBean leaveBean, YearMonthDay beginDate, YearMonthDay endDate) {
+	YearMonthDay start = getNextWorkingDay(leaveBean.getLeave(), beginDate, false);
 	YearMonthDay end = endDate;
-	if (leave.getDate().toYearMonthDay().isAfter(beginDate)) {
-	    start = getNextWorkingDay(leave, leave.getDate().toYearMonthDay(), false);
+	if (leaveBean.getDate().toYearMonthDay().isAfter(beginDate)) {
+	    start = getNextWorkingDay(leaveBean.getLeave(), leaveBean.getDate().toYearMonthDay(), false);
 	}
-	if (leave.getEndYearMonthDay() == null) {
-	    end = getPreviousWorkingDay(leave.getJustificationMotive(), leave.getAssiduousness(), leave
-		    .getDate().toYearMonthDay(), false);
-	} else if (leave.getEndYearMonthDay().isBefore(endDate)) {
-	    end = getPreviousWorkingDay(leave.getJustificationMotive(), leave.getAssiduousness(), leave
-		    .getEndYearMonthDay(), false);
+	if (leaveBean.getEndYearMonthDay() == null) {
+	    end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean
+		    .getLeave().getAssiduousness(), leaveBean.getDate().toYearMonthDay(), false);
+	} else if (leaveBean.getEndYearMonthDay().isBefore(endDate)) {
+	    end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean
+		    .getLeave().getAssiduousness(), leaveBean.getEndYearMonthDay(), false);
 	}
-	AssiduousnessStatus assiduousnessStatus = leave.getAssiduousness()
+	AssiduousnessStatus assiduousnessStatus = leaveBean.getLeave().getAssiduousness()
 		.getActiveAssiduousnessStatusInDate(start);
-	Integer code = leave.getJustificationMotive().getGiafCode(leave.getAssiduousness(),
-		assiduousnessStatus);
+	Integer code = leaveBean.getLeave().getJustificationMotive().getGiafCode(
+		leaveBean.getLeave().getAssiduousness(), assiduousnessStatus);
 	StringBuilder line = new StringBuilder();
 
 	if (code != 0) {
-	    if (leave.getJustificationMotive() == maternityJustificationMotive
+	    if (leaveBean.getLeave().getJustificationMotive() == maternityJustificationMotive
 		    && endDate.getDayOfMonth() != 30
 		    && Days.daysBetween(start, end).getDays() + 1 == endDate.getDayOfMonth()) {
-		if (!maternityJustificationList.contains(leave.getAssiduousness())
-			&& !isContractedEmployee(leave.getAssiduousness(), start, end)) {
-		    maternityJustificationList.add(leave.getAssiduousness());
+		if (!maternityJustificationList.contains(leaveBean.getLeave().getAssiduousness())
+			&& !isContractedEmployee(leaveBean.getLeave().getAssiduousness(), start, end)) {
+		    maternityJustificationList.add(leaveBean.getLeave().getAssiduousness());
 		}
 	    }
 	    line.append(start.getYear()).append(fieldSeparator);
 	    line.append(monthFormat.format(start.getMonthOfYear() + 1)).append(fieldSeparator);
 	    line.append(
-		    employeeNumberFormat.format(leave.getAssiduousness().getEmployee()
+		    employeeNumberFormat.format(leaveBean.getLeave().getAssiduousness().getEmployee()
 			    .getEmployeeNumber())).append(fieldSeparator);
 	    line.append("F").append(fieldSeparator);
 	    line.append(justificationCodeFormat.format(code)).append(fieldSeparator);
@@ -381,7 +455,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 	    line.append(days).append("00").append(fieldSeparator);
 	    Interval interval = new Interval(start.toDateTimeAtMidnight().getMillis(), end
 		    .toDateTimeAtMidnight().getMillis());
-	    line.append(leave.getUtilDaysBetween(interval)).append("00\r\n");
+	    line.append(leaveBean.getLeave().getUtilDaysBetween(interval)).append("00\r\n");
 	}
 	return line;
     }
@@ -513,7 +587,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     public JustificationMotive getMaternityJustificationMotive() {
 	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
-	    if (justificationMotive.getAcronym().equalsIgnoreCase("LP")) {
+	    if (justificationMotive.getAcronym().equalsIgnoreCase("LP25%")) {
 		return justificationMotive;
 	    }
 	}
