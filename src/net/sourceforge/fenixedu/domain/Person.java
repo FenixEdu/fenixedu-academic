@@ -1489,7 +1489,7 @@ public class Person extends Person_Base {
     // used by grant owner
     public static List<Person> readPersonsByName(final String name, final Integer startIndex,
 	    final Integer numberOfElementsInSpan) {
-	final List<Person> personsList = readPersonsByName(name);
+	final List<Person> personsList = readPersonsByName(name,Integer.MAX_VALUE);	
 	if (startIndex != null && numberOfElementsInSpan != null && !personsList.isEmpty()) {
 	    int finalIndex = Math.min(personsList.size(), startIndex + numberOfElementsInSpan);
 	    return personsList.subList(startIndex, finalIndex);
@@ -1498,9 +1498,20 @@ public class Person extends Person_Base {
     }
 
     public static Integer countAllByName(final String name) {
-	return Integer.valueOf(readPersonsByName(name).size());
+	return readPersonsByName(name,Integer.MAX_VALUE).size();
     }
 
+    public static List<Person> readPersonsByName(final String name, final int size) {
+	final List<Person> result = new ArrayList<Person>();
+	if (name != null) {
+	    final String nameToMatch = name.replaceAll("%", "").toLowerCase();
+	    for (PersonName personName : PersonName.find(nameToMatch,size)) {
+		result.add(personName.getPerson());
+	    }
+	}
+	return result;
+    }
+    
     public static List<Person> readPersonsByName(final String name) {
 	final List<Person> result = new ArrayList<Person>();
 	if (name != null) {

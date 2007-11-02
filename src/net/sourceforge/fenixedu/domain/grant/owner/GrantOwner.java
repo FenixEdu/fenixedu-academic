@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
@@ -74,11 +75,10 @@ public class GrantOwner extends GrantOwner_Base {
     }
 
     private static List<GrantOwner> readAllGrantOwnersByName(String name) {
-	List<GrantOwner> grantOwners = new ArrayList();
-	final String nameToMatch = name.replaceAll("%", ".*").toLowerCase();
+	List<GrantOwner> grantOwners = new ArrayList();	
 	for (final GrantOwner grantOwner : RootDomainObject.getInstance().getGrantOwnersSet()) {
 	    final Person person = grantOwner.getPerson();
-	    if (person.getName().toLowerCase().matches(nameToMatch) && person.hasGrantOwner()) {
+	    if (person != null && StringUtils.verifyContainsWithEquality(person.getName(), name)) {
 		grantOwners.add(person.getGrantOwner());
 	    }
 	}

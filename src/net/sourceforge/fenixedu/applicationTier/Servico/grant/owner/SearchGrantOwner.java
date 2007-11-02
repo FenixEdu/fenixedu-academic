@@ -58,15 +58,15 @@ public class SearchGrantOwner extends Service {
         if (person == null && grantOwner == null) {
             if (name != null) {
                 Integer tempNumberOfElementInSpan = new Integer(
-                        SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1);
+                        SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1);            
                 if (onlyGrantOwner.booleanValue()) {
                     grantOwnerList = GrantOwner.readGrantOwnerByName(name, startIndex,
                             tempNumberOfElementInSpan);
-                    numberOfResultsByName = GrantOwner.countAllGrantOwnerByName(name);
+                    numberOfResultsByName = GrantOwner.countAllGrantOwnerByName(name);                    
                 } else {
                     personList = Person.readPersonsByName(name, startIndex, tempNumberOfElementInSpan);
                     numberOfResultsByName = Person.countAllByName(name);
-                }
+                }                
             }
         } else if (grantOwner != null) {
             grantOwnerList.add(grantOwner);

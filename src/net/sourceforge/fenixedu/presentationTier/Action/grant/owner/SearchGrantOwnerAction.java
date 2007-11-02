@@ -29,7 +29,6 @@ public class SearchGrantOwnerAction extends SearchAction {
         if (justGrantOwner.equals("on")) {
             onlyGrantOwner = new Boolean(true);
         }
-        name = name.replace("*", "%");
         request.setAttribute("justGrantOwner", justGrantOwner);
         request.setAttribute("name", name);       
 

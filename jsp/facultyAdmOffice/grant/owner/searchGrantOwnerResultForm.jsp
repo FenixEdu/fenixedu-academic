@@ -18,16 +18,11 @@
 	<p><strong><bean:message key="label.grant.owner.filter"/></strong></p>
 </logic:equal>
 
-<bean:define id="decodedName" value=""/>
-<logic:notEmpty name="decodedName">
-	<bean:define id="decodedName"><%= ((java.lang.String)request.getAttribute("name")).replace("%","*") %></bean:define>
-</logic:notEmpty>
-
 <table>
 <tr>
 	<logic:present name="beforeSpan">
 	<td>
-       	<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("beforeSpan") + "&amp;name=" + decodedName + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
+       	<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("beforeSpan") + "&amp;name=" + request.getAttribute("name") + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
 		   	<bean:message key="link.grant.owner.list.before.page"/>
 		</html:link>
 	</td>
@@ -45,7 +40,7 @@
 	</td>
 	<td>
 	<logic:present name="nextSpan">
-		<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("nextSpan") + "&amp;name=" + decodedName + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
+		<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("nextSpan") + "&amp;name=" + request.getAttribute("name") + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
  		   	<bean:message key="link.grant.owner.list.after.page"/>
 		</html:link>
 	</td>
@@ -136,7 +131,7 @@
 <tr>
 	<logic:present name="beforeSpan">
 	<td>
-       	<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("beforeSpan") + "&amp;name=" + decodedName + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
+       	<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("beforeSpan") + "&amp;name=" + request.getAttribute("name") + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
 		   	<bean:message key="link.grant.owner.list.before.page"/>
 		</html:link>
 	</td>
@@ -154,7 +149,7 @@
 	</td>
 	<td>
 	<logic:present name="nextSpan">
-		<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("nextSpan") + "&amp;name=" + decodedName + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
+		<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("nextSpan") + "&amp;name=" + request.getAttribute("name") + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
  		   	<bean:message key="link.grant.owner.list.after.page"/>
 		</html:link>
 	</td>

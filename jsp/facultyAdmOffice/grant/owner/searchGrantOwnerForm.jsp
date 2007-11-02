@@ -12,9 +12,6 @@
 	<p><b><bean:message key="info.grant.searchform.name.and.id"/></b></p>
 
 	<div class="infoop2">
-		<bean:message key="info.grant.searchform.by.firstname"/>
-		<bean:message key="info.grant.searchform.by.lastname"/>
-		<bean:message key="info.grant.searchform.by.name"/>
 		<bean:message key="info.grant.searchform.only.grants"/>
 	</div>
 
