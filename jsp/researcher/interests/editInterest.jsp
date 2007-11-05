@@ -14,6 +14,7 @@
 		<fr:destination name="cancel" path="/interests/interestsManagement.do?method=prepare"/>
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thmiddle thlight thtop mbottom1"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 

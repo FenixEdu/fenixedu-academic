@@ -10,7 +10,7 @@
   	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.activitiesManagement.mainTitle"/></h2>
 
 	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.types"/>:
-	<table class="tstyle1 thlight mtop05">
+	<table class="tstyle4 thlight mtop05">
 		<tr>
 			<th class="width12em"><bean:message bundle="RESEARCHER_RESOURCES" key="label.activities" /></th>
 			<th><bean:message bundle="RESEARCHER_RESOURCES" key="label.types" /></th>
