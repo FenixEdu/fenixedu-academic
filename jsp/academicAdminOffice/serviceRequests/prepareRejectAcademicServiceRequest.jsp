@@ -16,7 +16,7 @@
 </html:messages>
 
 
-<bean:define id="academicServiceRequest" name="academicServiceRequest" scope="request" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest"/>
+<bean:define id="academicServiceRequest" name="academicServiceRequest" scope="request" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
 <bean:define id="simpleClassName" name="academicServiceRequest" property="class.simpleName" />
 <p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="request.information"/></strong></p>
 <fr:view name="academicServiceRequest" schema="<%= simpleClassName  + ".view"%>">
