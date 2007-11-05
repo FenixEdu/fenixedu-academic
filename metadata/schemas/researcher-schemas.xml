@@ -3013,11 +3013,3 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="subProperty(eachSchema)" value="researchInterest.name"/>
 	</slot>
 </schema>
-
-<schema name="showPhone" type="net.sourceforge.fenixedu.domain.contacts.Phone" bundle="RESEARCHER_RESOURCES">
-	<slot name="number" layout="prefixed">
-		<property name="prefixKey" value="label.person.telephone"/>
-		<property name="prefixBundle" value="APPLICATION_RESOURCES"/>
-		<property name="subLayout" value="default"/>
-	</slot>
-</schema>

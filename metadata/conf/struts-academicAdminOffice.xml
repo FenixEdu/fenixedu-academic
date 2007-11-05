@@ -392,14 +392,6 @@
 				<forward name="processNewAcademicServiceRequest" path="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest"/>
 		</action>
 
-		<action path="/curricularCourseRequests"
-		     	parameter="method"
-		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.CurricularCourseRequestsDispatchAction"
-				scope="request">
-				<forward name="requestCreated" path="/student.do?method=visualizeRegistration"/>
-				<forward name="prepareCurricularcoursesRequests" path="prepare.curricular.course.requests"/>
-		</action>
-				
 		<!-- Begin Payments -->
 		<action path="/payments"
 				parameter="method"
