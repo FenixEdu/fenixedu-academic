@@ -12463,16 +12463,6 @@
 		<filterChains>
 			<chain name="LibraryAuthorization" />
 		</filterChains>
-	</service>
-	
-	<service>
-		<name>CreateCurricularCourseRequest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.CreateCurricularCourseRequest</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="AcademicAdministrativeOfficeAuthorization" />
-		</filterChains>
 	</service>	
 	<service>
 		<name>EditLibraryCard</name>
