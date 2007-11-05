@@ -184,10 +184,6 @@
 	<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest&schema=DocumentRequestCreateBean.chooseDocumentRequestType" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="certificates"/>
 	</html:link>
-	<%-- |
-	<html:link action="/curricularCourseRequests.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.curricularCourses"/>
-	</html:link> --%>
 </p>
 
 <p class="mtop1">
