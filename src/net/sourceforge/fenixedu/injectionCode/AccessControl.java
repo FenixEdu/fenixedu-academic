@@ -15,22 +15,26 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class AccessControl {
 
-    private static InheritableThreadLocal<IUserView> userView = new InheritableThreadLocal<IUserView>();
+    static private InheritableThreadLocal<IUserView> userView = new InheritableThreadLocal<IUserView>();
 
-    public static IUserView getUserView() {
+    static public IUserView getUserView() {
 	return AccessControl.userView.get();
     }
 
-    public static Person getPerson() {
+    static public Person getPerson() {
 	final IUserView userView = getUserView();
 	return userView == null ? null : userView.getPerson();
     }
 
-    public static void setUserView(IUserView userView) {
+    static public void setUserView(IUserView userView) {
 	AccessControl.userView.set(userView);
     }
+    
+    static public boolean hasPerson() {
+	return getPerson() != null;
+    }
 
-    public static void check(DomainObject c, AccessControlPredicate<DomainObject> predicate) {
+    static public void check(DomainObject c, AccessControlPredicate<DomainObject> predicate) {
 	Person requester = AccessControl.getPerson();
 	boolean result = false;
 
