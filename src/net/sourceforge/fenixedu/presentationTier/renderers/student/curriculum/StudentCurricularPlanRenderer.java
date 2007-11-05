@@ -513,12 +513,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    getEnrolmentSemesterCellClass() });
 	}
 
-	private void generateCellsBetweenLabelAndEctsCell(final HtmlTableRow dismissalRow) {
-	    generateCellsWithText(dismissalRow, COLUMNS_BETWEEN_TEXT_AND_ECTS, "-", new String[] {
-		    getDegreeCurricularPlanCellClass(), getEnrolmentTypeCellClass(), getEnrolmentStateCellClass(),
-		    getGradeCellClass(), getWeightCellClass() });
-	}
-
 	private void generateCellsWithText(final HtmlTableRow row, final int numberOfCells, final String text,
 		final String[] cssClasses) {
 	    for (int i = 0; i < numberOfCells; i++) {
@@ -531,9 +525,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    getEctsCreditsCellClass());
 	}
 
-	private void generateDismissalLabelCell(final HtmlTable mainTable, HtmlTableRow dismissalRow, Dismissal dismissal,
-		int level) {
-	    // TODO: temporary solution: hasRole
+	private void generateDismissalLabelCell(final HtmlTable mainTable, HtmlTableRow dismissalRow, Dismissal dismissal, int level) {
 	    if (dismissal.hasCurricularCourse() || loggedPersonIsManager()) {
 		final HtmlTableCell cell = dismissalRow.createCell();
 		cell.setColspan(MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
@@ -548,7 +540,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    container.addChild(checkBox);
 		}
 
-		final HtmlText text = new HtmlText(studentResources.getString("label.dismissal." + dismissal.getCredits().getClass().getSimpleName()) + ": ");
+		final HtmlText text = new HtmlText(studentResources.getString("label.dismissal." + dismissal.getCredits().getClass().getSimpleName()));
 		container.addChild(text);
 		
 		final CurricularCourse curricularCourse = dismissal.getCurricularCourse();
@@ -560,6 +552,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    }
 		    codeAndName += dismissal.getName().getContent();
 		    final HtmlLink curricularCourseLink = createCurricularCourseLink(codeAndName, curricularCourse);
+		    container.addChild(new HtmlText(": "));
 		    container.addChild(curricularCourseLink);
 		}
 
@@ -583,7 +576,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		if (enrolment.isExternalEnrolment()) {
 		    generateExternalEnrolmentRow(mainTable, (ExternalEnrolment) enrolment, level + 1);
 		} else {
-		    generateEnrolmentRow(mainTable, (Enrolment) enrolment, level + 1, false);
+		    generateEnrolmentRow(mainTable, (Enrolment) enrolment, level + 1, false, true);
 		}
 	    }
 	}
@@ -621,10 +614,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	    for (final Enrolment enrolment : sortedEnrolments) {
 		if (isToShowAllEnrolmentStates()) {
-		    generateEnrolmentRow(mainTable, enrolment, level, true);
+		    generateEnrolmentRow(mainTable, enrolment, level, true, false);
 		} else if (isToShowApprovedOrEnroledStatesOnly()) {
 		    if (enrolment.isApproved() || enrolment.isEnroled()) {
-			generateEnrolmentRow(mainTable, enrolment, level, true);
+			generateEnrolmentRow(mainTable, enrolment, level, true, false);
 		    }
 		} else {
 		    throw new RuntimeException("Unexpected enrolment state filter type");
@@ -632,7 +625,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    }
 	}
 
-	private void generateEnrolmentRow(HtmlTable mainTable, Enrolment enrolment, int level, boolean allowSelection) {
+	private void generateEnrolmentRow(HtmlTable mainTable, Enrolment enrolment, int level, boolean allowSelection, boolean isFromDetail) {
 	    final HtmlTableRow enrolmentRow = mainTable.createRow();
 	    addTabsToRow(enrolmentRow, level);
 	    enrolmentRow.setClasses(getEnrolmentRowClass());
@@ -646,7 +639,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		generateEnrolmentStateCell(enrolmentRow, enrolment);
 		generateEnrolmentGradeCell(enrolmentRow, enrolment);
 		generateEnrolmentWeightCell(enrolmentRow, enrolment);
-		generateEnrolmentEctsCell(enrolmentRow, enrolment);
+		generateEnrolmentEctsCell(enrolmentRow, enrolment, isFromDetail);
 		generateEnrolmentLastEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
 		generateEnrolmentExecutionYearCell(enrolmentRow, enrolment);
 		generateEnrolmentSemesterCell(enrolmentRow, enrolment);
@@ -753,12 +746,14 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 
-	private void generateEnrolmentEctsCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-	    // Credits are only relevant to show when student is already
-	    // approved
-	    generateCellWithText(enrolmentRow, enrolment.isApproved() ? enrolment.getEctsCredits().toString() : "-",
-		    getEctsCreditsCellClass());
-
+	private void generateEnrolmentEctsCell(final HtmlTableRow enrolmentRow, final Enrolment enrolment, final boolean isFromDetail) {
+	    final String ectsCredits;
+	    if (enrolment.isApproved()) {
+		ectsCredits = String.valueOf(isFromDetail ? enrolment.getEctsCreditsForCurriculum() : enrolment.getEctsCredits());
+	    } else {
+		ectsCredits = "-";
+	    }
+	    generateCellWithText(enrolmentRow, ectsCredits, getEctsCreditsCellClass());
 	}
 
 	private void generateEnrolmentWeightCell(HtmlTableRow enrolmentRow, IEnrolment enrolment) {
