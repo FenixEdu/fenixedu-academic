@@ -24,7 +24,7 @@
 	</slot>
 	<slot name="executionDegree" layout="menu-select-postback" key="label.executionDegree">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionPeriodProvider"/>
-		<property name="format" value="${degree.degreeType.localizedName} em ${degree.name} - ${degreeCurricularPlan.name}" />
+		<property name="format" value="${presentationName}" />
 		<property name="destination" value="search"/>
 	</slot>
 </schema>

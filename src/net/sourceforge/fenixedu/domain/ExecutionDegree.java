@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -698,6 +700,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 		.nestedOccupationPeriodsContainsDay(date));
     }
 
+    final public String getPresentationName() {
+	return getDegreeCurricularPlan().getPresentationName();
+    }
+    
     public Degree getDegree() {
 	return getDegreeCurricularPlan().getDegree();
     }

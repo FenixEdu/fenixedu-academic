@@ -460,12 +460,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     final public String getPresentationName() {
-	final ResourceBundle enumResourceBundle = ResourceBundle
-		.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
-	final ResourceBundle appResourceBundle = ResourceBundle
-		.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
-	return enumResourceBundle.getString(getDegreeType().toString()) + " "
-		+ appResourceBundle.getString("label.in") + " " + getNome();
+	final ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	final ResourceBundle appResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+	return enumResourceBundle.getString(getDegreeType().toString()) + " " + appResourceBundle.getString("label.in") + " " + getNome();
     }
 
     final public String getFilteredName() {

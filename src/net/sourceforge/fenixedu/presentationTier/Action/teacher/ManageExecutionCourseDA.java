@@ -477,6 +477,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getKey(), e.getArgs());
 	    }
+	    
 	} else if (importType != null && importType.equals(ImportLessonPlanningsBean.ImportType.SUMMARIES)) {
 	    return mapping.findForward("importLessonPlannings");
 	}
@@ -495,7 +496,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	Shift shiftFrom = bean.getShift();
 
 	final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo,
-		shiftFrom.getDisciplinaExecucao(), shiftFrom };
+		shiftFrom.getExecutionCourse(), shiftFrom };
 	try {
 	    executeService(request, "ImportLessonPlannings", args);
 	} catch (DomainException e) {
@@ -512,8 +513,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 	Map<ShiftType, List<LessonPlanning>> lessonPlanningsMap = new TreeMap<ShiftType, List<LessonPlanning>>();
 	for (ShiftType shiftType : executionCourse.getShiftTypes()) {
-	    List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse
-	    .getLessonPlanningsOrderedByOrder(shiftType);
+	    List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
 	    if (!lessonPlanningsOrderedByOrder.isEmpty()) {
 		lessonPlanningsMap.put(shiftType, lessonPlanningsOrderedByOrder);
 	    }
@@ -535,6 +535,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	}
+	
 	return lessonPlannings(mapping, form, request, response);
     }
 
@@ -551,6 +552,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	}
+	
 	return lessonPlannings(mapping, form, request, response);
     }
 

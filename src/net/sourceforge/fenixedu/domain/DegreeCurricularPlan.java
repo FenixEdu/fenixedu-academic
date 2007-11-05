@@ -1057,7 +1057,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String getPresentationName() {
-	return getDegree().getPresentationName() + " " + getName();
+	return getDegree().getPresentationName() + " - " + getName();
     }
 
     public boolean hasAnyExecutionDegreeFor(ExecutionYear executionYear) {

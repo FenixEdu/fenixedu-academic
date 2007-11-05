@@ -69,13 +69,11 @@ public class Login extends Login_Base {
         Role mostImportantRole = UsernameUtils.getMostImportantRole(personRoles);
         if (mostImportantRole != null) {
             RoleType roleType = mostImportantRole.getRoleType();
-            List<LoginAlias> loginAlias = getRoleLoginAlias(roleType);
-            
+            List<LoginAlias> loginAlias = getRoleLoginAlias(roleType);            
             if (!loginAlias.isEmpty()) {
                 return loginAlias.get(0).getAlias();
             }
-        }
-        
+        }       
         return getAlias().isEmpty() ? null : getAlias().get(0).getAlias();
     }
 

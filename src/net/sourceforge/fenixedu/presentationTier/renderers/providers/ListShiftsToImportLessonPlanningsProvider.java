@@ -37,13 +37,17 @@ public class ListShiftsToImportLessonPlanningsProvider implements DataProvider {
 		if (CollectionUtils.containsAny(shiftTypesTo, shift.getTypes())) {
 		    shifts.add(shift);
 		}
-	    }	    
+	    }
+	    
+	    if(shifts.isEmpty()) {
+		return executionCourseFrom.getAssociatedShifts();
+	    }
 	}
+	
 	return shifts;
     }
 
     public Converter getConverter() {
 	return new DomainObjectKeyConverter();
     }
-
 }
