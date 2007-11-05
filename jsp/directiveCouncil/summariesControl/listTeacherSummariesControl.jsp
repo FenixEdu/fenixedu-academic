@@ -8,7 +8,8 @@
 
 <logic:present role="DIRECTIVE_COUNCIL,DEPARTMENT_ADMINISTRATIVE_OFFICE">
 
-	<p><h2><bean:message key="link.summaries.control"/></h2></p>
+	<em><bean:message key="DIRECTIVE_COUNCIL" /></em>
+	<h2><bean:message key="link.summaries.control"/></h2>
 		
 	<p><span class="warning0"><!-- Error messages go here --><html:errors /></span></p>
 	<html:messages id="message" message="true" bundle="DEFAULT">
@@ -84,8 +85,8 @@
 			<p>
 				<fr:view name="listElements" schema="summaries.control.list">
 					<fr:layout name="tabular-sortable">
-						<fr:property name="classes" value="tstyle4 mtop05"/>
-						<fr:property name="columnClasses" value=",acenter,acenter,,,aright,aright,bold aright, aright,bold aright"/>
+						<fr:property name="classes" value="tstyle4 thsmalltxt mtop05"/>
+						<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright, aright,bold aright"/>
 						<fr:property name="suffixes" value=",,,,,h,h,%,h,%"/>
 						<fr:property name="sortUrl" value="<%= "/summariesControl.do?method=listSummariesControl&department=" + department + "&executionPeriod=" + executionPeriod %>"/>
 						<fr:property name="sortParameter" value="sortBy"/>

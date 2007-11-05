@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
-
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
@@ -22,7 +21,7 @@
 	
 	<div class="infoop2">
 		<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>
-		<b><bean:message key="label.masterDegree.gratuity.executionYear" />:</b>&nbsp;<bean:write name="executionYearLabel" /><br />
+		<bean:message key="label.masterDegree.gratuity.executionYear" />: <bean:write name="executionYearLabel" />
 	</div>
 
 </logic:present>

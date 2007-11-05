@@ -209,10 +209,11 @@ table.vamiddle td, table.vamiddle th { vertical-align: middle; }
 background: #fff !important;
 }
 
-/* font-weight */
+/* font */
 table.thlight th { font-weight: normal; }
 table.thbold th { font-weight: bold; }
 .tdbold td { font-weight: bold; }
+.thsmalltxt tr th { font-size: 0.85em; }
 
 /* text-align */
 table.taleft th, table.taleft td { text-align: left; }
