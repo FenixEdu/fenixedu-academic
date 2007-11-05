@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.se
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -32,7 +32,7 @@ import org.apache.struts.action.DynaActionForm;
 
 public class AcademicServiceRequestsManagementDispatchAction extends FenixDispatchAction {
 
-    private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
+    private RegistrationAcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
 	Integer academicServiceRequestId = getRequestParameterAsInteger(request,
 		"academicServiceRequestId");
 	if (academicServiceRequestId == null) {
@@ -41,7 +41,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequest academicServiceRequest = rootDomainObject
 		.readAcademicServiceRequestByOID(academicServiceRequestId);
 	request.setAttribute("academicServiceRequest", academicServiceRequest);
-	return academicServiceRequest;
+	return (RegistrationAcademicServiceRequest) academicServiceRequest;
     }
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
@@ -85,7 +85,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
 	try {
 	    executeService("ProcessNewAcademicServiceRequests", academicServiceRequest);
@@ -118,7 +118,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 	final String justification = ((DynaActionForm) actionForm).getString("justification");
 
 	try {
@@ -150,7 +150,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 	final String justification = ((DynaActionForm) actionForm).getString("justification");
 
 	try {
@@ -174,7 +174,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixFilterException, FenixServiceException {
 
-	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
 	if (academicServiceRequest.isDocumentRequest()) {
 	    return mapping.findForward("prepareConcludeDocumentRequest");
@@ -188,7 +188,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
 	try {
 	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
@@ -210,7 +210,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 	
 	try {
 	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
@@ -228,7 +228,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequestSituationType academicServiceRequestSituationType = AcademicServiceRequestSituationType.valueOf(request.getParameter("academicSituationType"));
 	request.setAttribute("academicSituationType", academicServiceRequestSituationType);
 	
-	final Collection<AcademicServiceRequest> academicServiceRequests = getAdministrativeOffice().searchAcademicServiceRequests(
+	final Collection<AcademicServiceRequest> academicServiceRequests = getAdministrativeOffice().searchRegistrationAcademicServiceRequests(
 		(Employee) null,
 		academicServiceRequestSituationType,
 		(Registration) null,
