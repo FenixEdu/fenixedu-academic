@@ -2628,7 +2628,7 @@ public class Registration extends Registration_Base {
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     private void deleteExecutionYearAttends(final ExecutionYear executionYear) {
 	for (final Attends attends : getAssociatedAttends()) {
-	    if(attends.isFor(executionYear)) {
+	    if(attends.isFor(executionYear) && !attends.hasAnyAssociatedMarkSheetOrFinalGrade()) {
 		deleteAllAttendsInfo(attends);
 	    }
 	}
@@ -2643,7 +2643,7 @@ public class Registration extends Registration_Base {
 	for(; attends.hasAnyProjectSubmissions(); attends.getProjectSubmissions().get(0).delete())
 	    ;
 	attends.getStudentGroups().clear();
-	
+	attends.removeShifts();
 	attends.delete();
     }
 

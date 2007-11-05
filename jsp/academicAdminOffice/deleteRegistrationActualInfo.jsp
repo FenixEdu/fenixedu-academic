@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="label.title.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<h2><bean:message key="label.title.deleteActualInfo" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
@@ -52,15 +52,21 @@
 </logic:notPresent>
 
 
-<p>
-	<bean:message key="message.confirm.delete.actual.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-</p>
+<div class="infoop2" style="width: 500px;">
+	
+	<p>
+		<bean:define id="ey" name="executionYear"/>
+		<bean:message key="message.confirm.delete.actual.info" arg0="<%= ey.toString() %>" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</p>
 
+	<p class="mtop1">
+		<html:form action="/manageRegistrationState.do">
+			<bean:define id="registrationId" name="registration" property="idInternal"/>
+			<html:hidden property="method" value="deleteActualInfo"/>
+			<html:hidden property="registrationId" value="<%= registrationId.toString() %>"/>
+			<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.deleteActualInfo"/></html:submit>
+			<html:submit onclick="this.form.method.value='prepare'"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.cancel"/></html:submit>
+		</html:form>
+	</p>
 
-<html:form action="/manageRegistrationState.do">
-	<bean:define id="registrationId" name="registration" property="idInternal"/>
-	<html:hidden property="method" value="deleteActualInfo"/>
-	<html:hidden property="registrationId" value="<%= registrationId.toString() %>"/>
-	<html:submit><bean:message key="label.confirm"/></html:submit>
-	<html:submit onclick="this.form.method.value='prepare'"><bean:message key="label.back"/></html:submit>
-</html:form>
+</div>

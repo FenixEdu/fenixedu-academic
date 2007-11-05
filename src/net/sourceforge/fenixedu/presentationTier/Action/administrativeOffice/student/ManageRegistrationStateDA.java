@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.DeleteRegistrationActualInfoFactoryExecutor;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -75,6 +76,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 	    FenixServiceException {
 
 	getAndTransportRegistration(request);
+	request.setAttribute("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
 	return mapping.findForward("deleteActualInfoConfirm");
 	
     }
@@ -88,7 +90,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 	
 	try {
 	    executeFactoryMethod(new DeleteRegistrationActualInfoFactoryExecutor(registration));
-	    addActionMessage(request, "message.success.state.delete");
+	    addActionMessage(request, "message.success.deleteActualInfo");
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

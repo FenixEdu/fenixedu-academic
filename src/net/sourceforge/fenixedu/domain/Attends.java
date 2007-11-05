@@ -364,4 +364,8 @@ public class Attends extends Attends_Base {
 	}
     }
 
+    public boolean hasAnyAssociatedMarkSheetOrFinalGrade() {
+	return getEnrolment().hasAnyAssociatedMarkSheetOrFinalGrade();
+    }
+
 }

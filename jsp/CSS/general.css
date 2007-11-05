@@ -515,7 +515,7 @@ padding-right: 0.5em;
 .mtop0 { margin-top: 0;}
 .mtop025 { margin-top: 0.25em;}
 .mtop05 { margin-top: 0.5em;}
-.mtop1 { margin-top: 1em;}
+.mtop1 { margin-top: 1em !important;}
 .mtop15 { margin-top: 1.5em;}
 .mtop2 { margin-top: 2em;}
 .mtop2 { margin-top: 2em;}
