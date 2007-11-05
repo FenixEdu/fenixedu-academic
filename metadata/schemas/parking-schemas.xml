@@ -459,5 +459,10 @@
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
 			<property name="required" value="false"/>
 		</validator>
-	</slot>	
+	</slot>
+	<slot name="newParkingGroup" key="label.changeGroup" layout="menu-select">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.parking.ParkingGroup"/>
+		<property name="format" value="${groupName}"/>
+		<property name="sortBy" value="groupName"/>
+	</slot>		
 </schema>

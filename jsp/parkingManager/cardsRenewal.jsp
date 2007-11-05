@@ -24,7 +24,7 @@
 		<fr:view name="parkingCardSearchBean" property="selectedParkingParties" schema="show.selectedParkingCards">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 tdcenter"/>
-				<fr:property name="columnClasses" value=",smalltxt color888,,,,aleft"/>
+				<fr:property name="columnClasses" value=",,smalltxt color888,,,aleft"/>
 				<fr:property name="checkable" value="true"/>
 				<fr:property name="checkboxName" value="parkingCardsToRemove" />
 				<fr:property name="checkboxValue" value="idInternal"/>

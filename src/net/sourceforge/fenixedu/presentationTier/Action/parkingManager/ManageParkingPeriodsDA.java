@@ -73,7 +73,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	}
 	String actualEndDate = request.getParameter("actualEndDate");
 	if (!StringUtils.isEmpty(actualEndDate)) {
-	    DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyyMMdd");
+	    DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
 	    parkingCardSearchBean.setActualEndDate(dtf.parseDateTime(actualEndDate).toYearMonthDay());
 	}
 	String parkingCardSearchPeriod = request.getParameter("parkingCardSearchPeriod");
@@ -122,9 +122,10 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	}
 	ServiceUtils.executeService(SessionUtils.getUserView(request), "RenewParkingCards",
 		new Object[] { parkingCardSearchBean.getSelectedParkingParties(),
-			parkingCardSearchBean.getRenewalEndDate() });
+			parkingCardSearchBean.getRenewalEndDate(), parkingCardSearchBean.getNewParkingGroup() });
 	parkingCardSearchBean.getSelectedParkingParties().clear();
 	parkingCardSearchBean.setRenewalEndDate(null);
+	parkingCardSearchBean.setNewParkingGroup(null);
 	request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
 	return searchCards(mapping, actionForm, request, response);
     }

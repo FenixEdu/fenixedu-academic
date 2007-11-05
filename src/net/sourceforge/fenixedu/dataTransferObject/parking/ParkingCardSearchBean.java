@@ -19,8 +19,10 @@ public class ParkingCardSearchBean implements Serializable {
 
     private DomainReference<ParkingGroup> parkingGroup;
 
+    private DomainReference<ParkingGroup> newParkingGroup;
+
     private DomainListReference<ParkingParty> searchedParkingParties = new DomainListReference<ParkingParty>();
-    
+
     private DomainListReference<ParkingParty> selectedParkingParties = new DomainListReference<ParkingParty>();;
 
     private YearMonthDay actualEndDate;
@@ -68,7 +70,7 @@ public class ParkingCardSearchBean implements Serializable {
 	    if (parkingParty.hasAnyVehicles() && satisfiesSearch(parkingParty)) {
 		getSearchedParkingParties().add(parkingParty);
 	    }
-	}	
+	}
     }
 
     private boolean satisfiesSearch(ParkingParty parkingParty) {
@@ -107,8 +109,9 @@ public class ParkingCardSearchBean implements Serializable {
     }
 
     private boolean satisfiesEndDate(ParkingParty parkingParty) {
-	return getActualEndDate() == null || (parkingParty.getCardEndDate() != null
-		&& getActualEndDate().isEqual(parkingParty.getCardEndDate().toYearMonthDay()));
+	return getActualEndDate() == null
+		|| (parkingParty.getCardEndDate() != null && getActualEndDate().isEqual(
+			parkingParty.getCardEndDate().toYearMonthDay()));
     }
 
     private boolean satisfiesGroup(ParkingParty parkingParty) {
@@ -139,6 +142,15 @@ public class ParkingCardSearchBean implements Serializable {
     public void setParkingGroup(ParkingGroup parkingGroup) {
 	this.parkingGroup = parkingGroup != null ? new DomainReference<ParkingGroup>(parkingGroup)
 		: null;
+    }
+
+    public ParkingGroup getNewParkingGroup() {
+	return newParkingGroup != null ? newParkingGroup.getObject() : null;
+    }
+
+    public void setNewParkingGroup(ParkingGroup newParkingGroup) {
+	this.newParkingGroup = newParkingGroup != null ? new DomainReference<ParkingGroup>(
+		newParkingGroup) : null;
     }
 
     public YearMonthDay getActualEndDate() {
@@ -177,7 +189,7 @@ public class ParkingCardSearchBean implements Serializable {
 	Collections.sort(getSearchedParkingParties(), new BeanComparator("partyClassification"));
 	Collections.sort(getSearchedParkingParties(), new BeanComparator("cardEndDateToCompare"));
     }
-    
+
     public void orderSelectedParkingParties() {
 	Collections.sort(getSearchedParkingParties(), new BeanComparator("partyClassification"));
 	Collections.sort(getSearchedParkingParties(), new BeanComparator("cardEndDateToCompare"));
@@ -200,19 +212,19 @@ public class ParkingCardSearchBean implements Serializable {
     }
 
     public DomainListReference<ParkingParty> getSelectedParkingParties() {
-        return selectedParkingParties;
+	return selectedParkingParties;
     }
 
     public void setSelectedParkingParties(DomainListReference<ParkingParty> selectedParkingParties) {
-        this.selectedParkingParties = selectedParkingParties;
+	this.selectedParkingParties = selectedParkingParties;
     }
 
     public void removeSelectedParkingParty(Integer parkingPartyIDToRemove) {
 	for (ParkingParty parkingParty : getSelectedParkingParties()) {
-	    if(parkingParty.getIdInternal().equals(parkingPartyIDToRemove)) {
+	    if (parkingParty.getIdInternal().equals(parkingPartyIDToRemove)) {
 		getSelectedParkingParties().remove(parkingParty);
 		break;
 	    }
-	}	
+	}
     }
 }
