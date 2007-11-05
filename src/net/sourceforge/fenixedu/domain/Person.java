@@ -2731,4 +2731,8 @@ public class Person extends Person_Base {
 	}
 	return result;
     }
+    
+    public AdministrativeOffice getEmployeeAdministrativeOffice() {
+	return hasEmployee() ? getEmployee().getAdministrativeOffice() : null;
+    }
 }

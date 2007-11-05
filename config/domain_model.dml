@@ -1340,31 +1340,34 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 		class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 		}
-
-			class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
-			}
-
-			class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
-			}
-
-			class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
-			}
-
-				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaDegreeDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
-				}
-
-				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaMasterDegreeDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
-				}
-
-				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaPhdProgramDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
-				}
-
-		class  net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CourseTradeEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
-		}
 		
-		class  net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CourseEquivalenceEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
-		}
+			class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
+			}
+
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
 	
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
+	
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
+	
+					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaDegreeDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
+					}
+	
+					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaMasterDegreeDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
+					}
+	
+					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaPhdProgramDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
+					}
+					
+			class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.ExternalDegreeChangeRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
+			}
+			
+			class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.InternalDegreeChangeRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
+			}
+
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 			YearMonthDay creationDate;
 		}
@@ -3505,73 +3508,82 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.resource.ResourceResponsibility {
 		}
 
-	class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest extends net.sourceforge.fenixedu.domain.DomainObject {
-		Boolean freeProcessed;
-		Integer serviceRequestNumber;
-		Boolean urgentRequest;
-	}
-
+	
 	class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation extends net.sourceforge.fenixedu.domain.DomainObject {
 		AcademicServiceRequestSituationType academicServiceRequestSituationType;
 		DateTime creationDate;
 		String justification;
 	}
-
-		class net.sourceforge.fenixedu.domain.serviceRequest.CurricularCourseRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
+	
+	class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest extends net.sourceforge.fenixedu.domain.DomainObject {
+		Boolean freeProcessed;
+		Integer serviceRequestNumber;
+		Boolean urgentRequest;
+	}
 		
+		class net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
 		}
-
-		class net.sourceforge.fenixedu.domain.serviceRequests.CourseTradeRequest extends net.sourceforge.fenixedu.domain.serviceRequest.CurricularCourseRequest {	
+	
+			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest extends net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest {
+			}
+	
+				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
+					DocumentPurposeType documentPurposeType;
+					Integer numberOfPages;
+					String otherDocumentPurposeTypeDescription;
+				}
+	
+					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+						MobilityProgram mobilityProgram;
+					}
+	
+					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+						Boolean average;
+						Boolean detailed;
+						MobilityProgram mobilityProgram;
+					}
+	
+					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+						Boolean detailed;
+					}
+	
+					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+					}
+	
+				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
+					DocumentPurposeType documentPurposeType;
+					Integer numberOfPages;
+					String otherDocumentPurposeTypeDescription;
+				}
+	
+					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest {
+					}
+	
+					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest {
+						Integer year;
+					}
+	
+					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest {
+					}
+	
+				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
+					CycleType requestedCycle;
+				}
+			
+			class net.sourceforge.fenixedu.domain.serviceRequests.InternalDegreeChangeRequest extends net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest {
+			}
+			
+			class net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionRequest extends net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest {
+			}
+						
+		class net.sourceforge.fenixedu.domain.serviceRequests.PersonAcademicServiceRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
 		}
+	
+			class net.sourceforge.fenixedu.domain.serviceRequests.ExternalDegreeChangeRequest extends net.sourceforge.fenixedu.domain.serviceRequests.PersonAcademicServiceRequest {
+			}
+			
+			
 		
-		class net.sourceforge.fenixedu.domain.serviceRequests.CourseEquivalenceRequest extends net.sourceforge.fenixedu.domain.serviceRequest.CurricularCourseRequest {
-		} 
-		
-		class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
-		}
-
-			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
-				DocumentPurposeType documentPurposeType;
-				Integer numberOfPages;
-				String otherDocumentPurposeTypeDescription;
-			}
-
-				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
-					MobilityProgram mobilityProgram;
-				}
-
-				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
-					Boolean average;
-					Boolean detailed;
-					MobilityProgram mobilityProgram;
-				}
-
-				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
-					Boolean detailed;
-				}
-
-				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
-				}
-
-			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
-				DocumentPurposeType documentPurposeType;
-				Integer numberOfPages;
-				String otherDocumentPurposeTypeDescription;
-			}
-
-				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest {
-				}
-
-				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest {
-					Integer year;
-				}
-
-				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest {
-				}
-
-			class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
-				CycleType requestedCycle;
-			}
 
 	class net.sourceforge.fenixedu.domain.sms.SentSms extends net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime deliveryDateDateTime;
@@ -4471,9 +4483,16 @@ relation AcademicServiceRequestEventAcademicServiceRequest {
 	net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent playsRole event;
 }
 
-relation AcademicServiceRequestRegistration {
+relation RegistrationAcademicServiceRequestRegistration {
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
-	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
+	net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest playsRole academicServiceRequests {
+		multiplicity *;
+	}
+}
+
+relation PersonAcademicServiceRequestPerson {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.serviceRequests.PersonAcademicServiceRequest playsRole academicServiceRequests {
 		multiplicity *;
 	}
 }
@@ -4481,6 +4500,20 @@ relation AcademicServiceRequestRegistration {
 relation AcademicServiceRequestSituationEmployee {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
+		multiplicity *;
+	}
+}
+
+relation DestinationDegreeCurricularPlanExternalDegreeChangeRequest {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole destination;
+	net.sourceforge.fenixedu.domain.serviceRequests.ExternalDegreeChangeRequest playsRole destinationExternalDegreeChangeRequests {
+		multiplicity *;
+	}
+}
+
+relation DestinationDegreeCurricularPlanInternalDegreeChangeRequest {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole destination;
+	net.sourceforge.fenixedu.domain.serviceRequests.InternalDegreeChangeRequest playsRole destinationInternalDegreeChangeRequests {
 		multiplicity *;
 	}
 }
@@ -12262,18 +12295,4 @@ relation RootDomainObjectDelegateElectionPeriod {
 relation PhDCandidacyEventPhDProgramCandidacy {
 	net.sourceforge.fenixedu.domain.accounting.events.phd.PhDCandidacyEvent playsRole phdCandidacyEvent;
 	net.sourceforge.fenixedu.domain.candidacy.PHDProgramCandidacy playsRole phdCandidacy;
-}
-
-relation CurricularCourseRequestCurricularCourseRequest {
-	net.sourceforge.fenixedu.domain.serviceRequest.CurricularCourseRequest playsRole requests {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.CurricularCourse playsRole requestedCurricularCourse;
-}
-
-relation CurricularCourseRequestCurricularCourseProposal {
-	net.sourceforge.fenixedu.domain.serviceRequest.CurricularCourseRequest playsRole proposals {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.CurricularCourse playsRole proposedCurricularCourse;
 }

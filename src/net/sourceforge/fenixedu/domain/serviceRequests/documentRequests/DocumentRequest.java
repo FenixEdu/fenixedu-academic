@@ -1,11 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -24,11 +20,6 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	}
     }
 
-    @Override
-    final public Set<AdministrativeOfficeType> getPossibleAdministrativeOffices() {
-	return new HashSet<AdministrativeOfficeType>(getDocumentRequestType().getAdministrativeOfficeTypes());
-    }
-    
     @Override
     public String getDescription() {
 	return getDescription("AcademicServiceRequestType.DOCUMENT", getDocumentRequestType().getQualifiedName());

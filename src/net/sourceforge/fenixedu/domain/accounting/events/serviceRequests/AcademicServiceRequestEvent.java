@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting.events.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -19,7 +18,6 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
 
     protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person, final AcademicServiceRequest academicServiceRequest) {
 	super.init(administrativeOffice, eventType, person);
-
 	checkParameters(academicServiceRequest);
 	super.setAcademicServiceRequest(academicServiceRequest);
     }
@@ -48,10 +46,6 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
     @Override
     final public PostingRule getPostingRule() {
 	return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
-    }
-    
-    final protected Degree getDegree() {
-	return getAcademicServiceRequest().getDegree();
     }
     
     final protected ExecutionYear getExecutionYear() {

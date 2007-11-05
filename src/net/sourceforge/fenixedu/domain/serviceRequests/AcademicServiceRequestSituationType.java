@@ -17,5 +17,4 @@ public enum AcademicServiceRequestSituationType {
         return AcademicServiceRequestSituationType.class.getName() + "." + name();
     }
 
-    
 }

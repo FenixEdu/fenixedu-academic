@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -62,7 +63,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	throw new DomainException("error.administrativeOffice.AdministrativeOffice.cannot.modify.unit");
     }
 
-    public Collection<AcademicServiceRequest> searchAcademicServiceRequests(
+    public Collection<AcademicServiceRequest> searchRegistrationAcademicServiceRequests(
 	    Employee employee,
 	    AcademicServiceRequestSituationType requestSituationType,
 	    Registration registration,
@@ -72,7 +73,14 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
 	final Collection<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
 
-	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	for (final AcademicServiceRequest request : getAcademicServiceRequestsSet()) {
+	    
+	    if (!request.isRequestForRegistration()) {
+		continue;
+	    }
+	    
+	    final RegistrationAcademicServiceRequest academicServiceRequest = (RegistrationAcademicServiceRequest) request;
+	    
 	    if (employee != null && !academicServiceRequest.isNewRequest() && !academicServiceRequest.getActiveSituation().getEmployee().equals(employee)) {
 		continue;
 	    }
