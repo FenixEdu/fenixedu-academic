@@ -41,14 +41,15 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
     }
 
     private void checkParameters(Integer year) {
+	if (year == null) {
+	    throw new DomainException(
+	    "error.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest.year.cannot.be.null");
+	}
+
 	if (new YearMonthDay(year, 1, 1).isBefore(new YearMonthDay(FIRST_VALID_YEAR, 1, 1))) {
 	    throw new DomainException("IRSDeclarationRequest.only.available.after.first.valid.year");
 	}
 	
-	if (year == null) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest.year.cannot.be.null");
-	}
     }
 
     @Override

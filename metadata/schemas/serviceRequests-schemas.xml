@@ -102,7 +102,7 @@
 </schema>
 
 <schema name="IRSDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="year" key="label.year"/>
+	<slot name="year" key="label.year" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="EnrolmentDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
