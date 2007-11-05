@@ -10,7 +10,7 @@
 
 <html:form action="/createContributorDispatchAction?method=create">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
-	<table class="tstyle5 thlight">
+	<table class="tstyle5 thright thlight">
 		<tr>
 			<th><bean:message key="label.type" />:</th>
 			<td>

@@ -51,7 +51,7 @@
 	</fr:view>
 	
 	<logic:greaterThan name="enrolmentListSize" value="0">
-		<p class="mtop15 mbottom15">	
+		<p class="mtop15 mbottom15">
 			<html:image border="0" src='<%= request.getContextPath() + "/images/excel.gif"%>' altKey="excel" bundle="IMAGE_RESOURCES" onclick="this.form.method.value='exportInfoToExcel';this.form.submit();return true;"></html:image>	
 			<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>	
 		</p>

@@ -8,7 +8,7 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.action.contributors.visualize" /></h2>
 
-    <table class="tstyle4 thlight thright">
+    <table class="tstyle2 thlight thright">
      <bean:define id="contributor" name="<%= SessionConstants.CONTRIBUTOR %>" scope="session"/>
         <logic:present name="contributor">
           <!-- Contributor Number -->
@@ -56,7 +56,7 @@
 	<ul>
 		<li>
 		    <html:link page="/editContributor.do?method=prepareEdit">
-		    	<bean:message key="link.masterDegree.administrativeOffice.editContributor" />
+		    	<bean:message key="label.action.contributors.edit" />
 		    </html:link>
 	    </li>
     </ul>

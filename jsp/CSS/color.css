@@ -90,6 +90,7 @@ border-top: 12px solid #f6f4ed;
 text-decoration: none;
 color: #105c93;
 border-bottom: 1px solid #97b7ce;
+cursor: pointer;
 }
 #content h3 a {
 border-bottom: none;
