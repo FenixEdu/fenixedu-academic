@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.thesis;
 import java.text.Collator;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
@@ -71,7 +72,10 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
             } else {
         	setCategory(teacher.getCategory().getName().getContent());
             }
-            setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
+            Department currentWorkingDepartment = teacher.getCurrentWorkingDepartment();
+            if(currentWorkingDepartment != null) {
+        	setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
+            }
         }
         else {
             ExternalContract contract = person.getExternalContract();
@@ -81,8 +85,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
             else {
                 Employee employee = person.getEmployee();
                 if (employee != null) {
-                    Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
-                    
+                    Unit currentWorkingPlace = employee.getCurrentWorkingPlace();                    
                     if (currentWorkingPlace != null) {
                         setAffiliation(currentWorkingPlace.getNameWithAcronym());
                     }
