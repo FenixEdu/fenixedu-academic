@@ -8,6 +8,7 @@
 
 <logic:present role="DIRECTIVE_COUNCIL">
 
+	<em><bean:message key="DIRECTIVE_COUNCIL" /></em>
 	<h2><bean:message key="label.evaluationMethodControl"/></h2>
 
 	<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
@@ -18,16 +19,19 @@
 			</span>
 		</p>
 	</html:messages>
-
-	<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean1" action="/evaluationMethodControl.do?method=search"
-			 name="executionCourseWithNoEvaluationMethodSearchBean"
-			 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
-			 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thright thmiddle thlight inobullet"/>
-  			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-	   	</fr:layout>	    	
-	</fr:edit>
+	
+	<fr:form action="/evaluationMethodControl.do?method=search">
+		<fr:edit id="executionCourseWithNoEvaluationMethodSearchBean1"
+				 name="executionCourseWithNoEvaluationMethodSearchBean"
+				 type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean"
+				 schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thright thmiddle thlight inobullet"/>
+	  			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		   	</fr:layout>	    	
+		</fr:edit>
+		<html:submit><bean:message key="button.submit" /></html:submit>
+	</fr:form>
 	
 	<logic:present name="executionCourses">
 		<bean:define id="executionPeriod" name="executionCourseWithNoEvaluationMethodSearchBean" property="executionPeriod"/>
