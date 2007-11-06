@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+<ft:tilesView definition="definition.directiveCouncil.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>

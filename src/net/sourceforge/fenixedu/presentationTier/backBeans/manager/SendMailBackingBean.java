@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.manager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -32,17 +33,37 @@ public class SendMailBackingBean extends FenixBackingBean {
     private String bccs = null;
     private String subject = null;
     private String message = null;
+
     private Boolean teachers = null;
     private Boolean employees = null;
+    private Boolean students = null;
+
+    private Boolean bolonhaAdvancedFormationDiplomaStudents = null;
+    private Boolean bolonhaDegreeStudents = null;
+    private Boolean bolonhaIntegratedMasterDegreeStudents = null;
+    private Boolean bolonhaMasterDegreeStudents = null;
+    private Boolean bolonhaPhdProgramStudents = null;
+    private Boolean bolonhaSpecializationDegreeStudents = null;
     private Boolean degreeStudents = null;
     private Boolean masterDegreeStudents = null;
-    private Boolean executionCourseResponsibles = null;
-    private Boolean masterDegreeCoordinators = null;
+
+    private Boolean bolonhaAdvancedFormationDiplomaCoordinators = null;
+    private Boolean bolonhaDegreeCoordinators = null;
+    private Boolean bolonhaIntegratedMasterDegreeCoordinators = null;
+    private Boolean bolonhaMasterDegreeCoordinators = null;
+    private Boolean bolonhaPhdProgramCoordinators = null;
+    private Boolean bolonhaSpecializationDegreeCoordinators = null;
     private Boolean degreeCoordinators = null;
+    private Boolean masterDegreeCoordinators = null;
+
+    private Boolean executionCourseResponsibles = null;
+
+    private Boolean sent = Boolean.FALSE;
 
     public void send() throws FenixFilterException, FenixServiceException {
 	final Object[] args = { getToList(), getCCList(), getBCCList(), getFrom(), getFrom(), getSubject(), getMessage() };
 	ServiceUtils.executeService(null, "commons.SendMail", args);
+	sent = Boolean.TRUE;
     }
 
     private List<String> getEmailList(final String emailStrings) {
@@ -83,41 +104,72 @@ public class SendMailBackingBean extends FenixBackingBean {
 	    }
 	}
 
-	boolean includeDegreeStudents = getDegreeStudents();
-	boolean includeMasterDegreeStudents = getMasterDegreeStudents();
+	final boolean students = getStudents().booleanValue();
+	final boolean bolonhaAdvancedFormationDiplomaStudents = getBolonhaAdvancedFormationDiplomaStudents().booleanValue();
+	final boolean bolonhaDegreeStudents = getBolonhaDegreeStudents().booleanValue();
+	final boolean bolonhaIntegratedMasterDegreeStudents = getBolonhaIntegratedMasterDegreeStudents().booleanValue();
+	final boolean bolonhaMasterDegreeStudents = getBolonhaMasterDegreeStudents().booleanValue();
+	final boolean bolonhaPhdProgramStudents = getBolonhaPhdProgramStudents().booleanValue();
+	final boolean bolonhaSpecializationDegreeStudents = getBolonhaSpecializationDegreeStudents().booleanValue();
+	final boolean degreeStudents = getDegreeStudents().booleanValue();
+	final boolean masterDegreeStudents = getMasterDegreeStudents().booleanValue();
 
-	List<Registration> registrations = RootDomainObject.getInstance().getRegistrations();
-	for (Registration registration : registrations) {
-	    if (!registration.isActive()) {
-		continue;
-	    }
+	if (students || bolonhaAdvancedFormationDiplomaStudents || bolonhaDegreeStudents || bolonhaIntegratedMasterDegreeStudents
+		|| bolonhaMasterDegreeStudents || bolonhaPhdProgramStudents || bolonhaSpecializationDegreeStudents
+		|| degreeStudents || masterDegreeStudents) {
 
-	    switch (registration.getDegreeType()) {
-	    case DEGREE:
-	    case BOLONHA_DEGREE:
-	    case BOLONHA_SPECIALIZATION_DEGREE:
-		if (includeDegreeStudents) {
-		    String email = registration.getPerson().getEmail();
-		    if (email != null && email.length() > 0) {
-			emails.add(email);
+	    final Set<Registration> registrations = RootDomainObject.getInstance().getRegistrationsSet();
+	    for (final Registration registration : registrations) {
+		if (registration.isActive()) {
+		    final DegreeType degreeType = registration.getDegreeType();
+		    if (students
+			    || (bolonhaAdvancedFormationDiplomaStudents && degreeType == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+			    || (bolonhaDegreeStudents && degreeType == DegreeType.BOLONHA_DEGREE)
+			    || (bolonhaIntegratedMasterDegreeStudents && degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)
+			    || (bolonhaMasterDegreeStudents && degreeType == DegreeType.BOLONHA_MASTER_DEGREE)
+			    || (bolonhaPhdProgramStudents && degreeType == DegreeType.BOLONHA_PHD_PROGRAM)
+			    || (bolonhaSpecializationDegreeStudents && degreeType == DegreeType.BOLONHA_SPECIALIZATION_DEGREE)
+			    || (degreeStudents && degreeType == DegreeType.DEGREE)
+			    || (masterDegreeStudents && degreeType == DegreeType.MASTER_DEGREE)) {
+			final String email = registration.getPerson().getEmail();
+			if (email != null && email.length() > 0) {
+			    emails.add(email);
+			}			
 		    }
 		}
-		break;
-
-	    case MASTER_DEGREE:
-	    case BOLONHA_MASTER_DEGREE:
-	    case BOLONHA_INTEGRATED_MASTER_DEGREE:
-		if (includeMasterDegreeStudents) {
-		    String email = registration.getPerson().getEmail();
-		    if (email != null && email.length() > 0) {
-			emails.add(email);
-		    }
-		}
-		break;
-
-	    default:
-		break;
 	    }
+	}
+
+	if (getBolonhaAdvancedFormationDiplomaCoordinators().booleanValue()) {
+	    addEmailsForCoordinatorsByDegreeType(emails, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+	}
+
+	if (getBolonhaDegreeCoordinators().booleanValue()) {
+	    addEmailsForCoordinatorsByDegreeType(emails, DegreeType.BOLONHA_DEGREE);
+	}
+
+	if (getBolonhaIntegratedMasterDegreeCoordinators().booleanValue()) {
+	    addEmailsForCoordinatorsByDegreeType(emails, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	}
+
+	if (getBolonhaMasterDegreeCoordinators().booleanValue()) {
+	    addEmailsForCoordinatorsByDegreeType(emails, DegreeType.BOLONHA_MASTER_DEGREE);
+	}
+
+	if (getBolonhaPhdProgramCoordinators().booleanValue()) {
+	    addEmailsForCoordinatorsByDegreeType(emails, DegreeType.BOLONHA_PHD_PROGRAM);
+	}
+
+	if (getBolonhaSpecializationDegreeCoordinators().booleanValue()) {
+	    addEmailsForCoordinatorsByDegreeType(emails, DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
+	}
+
+	if (getDegreeCoordinators().booleanValue()) {
+	    addEmailsForCoordinatorsByDegreeType(emails, DegreeType.DEGREE);
+	}
+
+	if (getMasterDegreeCoordinators().booleanValue()) {
+	    addEmailsForCoordinatorsByDegreeType(emails, DegreeType.MASTER_DEGREE);
 	}
 
 	final Boolean executionCourseResponsibles = getExecutionCourseResponsibles();
@@ -141,16 +193,6 @@ public class SendMailBackingBean extends FenixBackingBean {
 	    }
 	}
 
-	final Boolean degreeCoordinators = getDegreeCoordinators();
-	if (degreeCoordinators.booleanValue()) {
-	    addEmailsForDegreeType(emails, DegreeType.DEGREE);
-	}
-
-	final Boolean masterDegreeCoordinators = getMasterDegreeCoordinators();
-	if (masterDegreeCoordinators.booleanValue()) {
-	    addEmailsForDegreeType(emails, DegreeType.MASTER_DEGREE);
-	}
-
 	return emails;
     }
 
@@ -163,7 +205,7 @@ public class SendMailBackingBean extends FenixBackingBean {
 	}
     }
 
-    private void addEmailsForDegreeType(final List<String> emails, final DegreeType degreeType) throws FenixServiceException,
+    private void addEmailsForCoordinatorsByDegreeType(final List<String> emails, final DegreeType degreeType) throws FenixServiceException,
 	    FenixFilterException {
 	for (final ExecutionYear executionYear : rootDomainObject.getExecutionYearsSet()) {
 	    if (executionYear.isCurrent()) {
@@ -284,6 +326,118 @@ public class SendMailBackingBean extends FenixBackingBean {
 
     public void setMasterDegreeCoordinators(Boolean masterDegreeCoordinators) {
 	this.masterDegreeCoordinators = masterDegreeCoordinators;
+    }
+
+    public Boolean getBolonhaAdvancedFormationDiplomaStudents() {
+        return bolonhaAdvancedFormationDiplomaStudents;
+    }
+
+    public void setBolonhaAdvancedFormationDiplomaStudents(Boolean bolonhaAdvancedFormationDiplomaStudents) {
+        this.bolonhaAdvancedFormationDiplomaStudents = bolonhaAdvancedFormationDiplomaStudents;
+    }
+
+    public Boolean getBolonhaDegreeStudents() {
+        return bolonhaDegreeStudents;
+    }
+
+    public void setBolonhaDegreeStudents(Boolean bolonhaDegreeStudents) {
+        this.bolonhaDegreeStudents = bolonhaDegreeStudents;
+    }
+
+    public Boolean getBolonhaIntegratedMasterDegreeStudents() {
+        return bolonhaIntegratedMasterDegreeStudents;
+    }
+
+    public void setBolonhaIntegratedMasterDegreeStudents(Boolean bolonhaIntegratedMasterDegreeStudents) {
+        this.bolonhaIntegratedMasterDegreeStudents = bolonhaIntegratedMasterDegreeStudents;
+    }
+
+    public Boolean getBolonhaMasterDegreeStudents() {
+        return bolonhaMasterDegreeStudents;
+    }
+
+    public void setBolonhaMasterDegreeStudents(Boolean bolonhaMasterDegreeStudents) {
+        this.bolonhaMasterDegreeStudents = bolonhaMasterDegreeStudents;
+    }
+
+    public Boolean getBolonhaPhdProgramStudents() {
+        return bolonhaPhdProgramStudents;
+    }
+
+    public void setBolonhaPhdProgramStudents(Boolean bolonhaPhdProgramStudents) {
+        this.bolonhaPhdProgramStudents = bolonhaPhdProgramStudents;
+    }
+
+    public Boolean getBolonhaSpecializationDegreeStudents() {
+        return bolonhaSpecializationDegreeStudents;
+    }
+
+    public void setBolonhaSpecializationDegreeStudents(Boolean bolonhaSpecializationDegreeStudents) {
+        this.bolonhaSpecializationDegreeStudents = bolonhaSpecializationDegreeStudents;
+    }
+
+    public Boolean getBolonhaAdvancedFormationDiplomaCoordinators() {
+        return bolonhaAdvancedFormationDiplomaCoordinators;
+    }
+
+    public void setBolonhaAdvancedFormationDiplomaCoordinators(Boolean bolonhaAdvancedFormationDiplomaCoordinators) {
+        this.bolonhaAdvancedFormationDiplomaCoordinators = bolonhaAdvancedFormationDiplomaCoordinators;
+    }
+
+    public Boolean getBolonhaDegreeCoordinators() {
+        return bolonhaDegreeCoordinators;
+    }
+
+    public void setBolonhaDegreeCoordinators(Boolean bolonhaDegreeCoordinators) {
+        this.bolonhaDegreeCoordinators = bolonhaDegreeCoordinators;
+    }
+
+    public Boolean getBolonhaIntegratedMasterDegreeCoordinators() {
+        return bolonhaIntegratedMasterDegreeCoordinators;
+    }
+
+    public void setBolonhaIntegratedMasterDegreeCoordinators(Boolean bolonhaIntegratedMasterDegreeCoordinators) {
+        this.bolonhaIntegratedMasterDegreeCoordinators = bolonhaIntegratedMasterDegreeCoordinators;
+    }
+
+    public Boolean getBolonhaMasterDegreeCoordinators() {
+        return bolonhaMasterDegreeCoordinators;
+    }
+
+    public void setBolonhaMasterDegreeCoordinators(Boolean bolonhaMasterDegreeCoordinators) {
+        this.bolonhaMasterDegreeCoordinators = bolonhaMasterDegreeCoordinators;
+    }
+
+    public Boolean getBolonhaPhdProgramCoordinators() {
+        return bolonhaPhdProgramCoordinators;
+    }
+
+    public void setBolonhaPhdProgramCoordinators(Boolean bolonhaPhdProgramCoordinators) {
+        this.bolonhaPhdProgramCoordinators = bolonhaPhdProgramCoordinators;
+    }
+
+    public Boolean getBolonhaSpecializationDegreeCoordinators() {
+        return bolonhaSpecializationDegreeCoordinators;
+    }
+
+    public void setBolonhaSpecializationDegreeCoordinators(Boolean bolonhaSpecializationDegreeCoordinators) {
+        this.bolonhaSpecializationDegreeCoordinators = bolonhaSpecializationDegreeCoordinators;
+    }
+
+    public Boolean getStudents() {
+        return students;
+    }
+
+    public void setStudents(Boolean students) {
+        this.students = students;
+    }
+
+    public Boolean getSent() {
+        return sent;
+    }
+
+    public void setSent(Boolean sent) {
+        this.sent = sent;
     }
 
 }
