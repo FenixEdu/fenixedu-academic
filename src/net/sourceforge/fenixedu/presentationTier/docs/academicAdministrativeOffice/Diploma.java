@@ -53,6 +53,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	
 	parameters.put("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, registration));
 	parameters.put("graduateTitle", registration.getGraduateTitle(diplomaRequest.getRequestedCycle()));
+	parameters.put("degreeDescription", getDegreeDescription());
     }
 
     final private String getConclusionStatusAndDegreeType(final DiplomaRequest diplomaRequest, final Registration registration) {
@@ -73,8 +74,16 @@ public class Diploma extends AdministrativeOfficeDocument {
 	    result.append(" ").append(applicationResources.getString("of.masculine")).append(" ");
 	} 
 	
-	result.append(applicationResources.getString("label.degree"));
-	result.append(" ").append(applicationResources.getString("of"));
+	switch (degreeType) {
+	case BOLONHA_PHD_PROGRAM:
+	    break;
+	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+	    result.append("curso conducente ao");
+	    break;
+	default:
+	    result.append("curso de");
+	    break;
+	}
 	result.append(" ").append(degreeType.getFilteredName());
 	if (degreeType.hasExactlyOneCycleType()) {
 	    result.append(" (").append(enumerationBundle.getString(degreeType.getCycleType().getQualifiedName())).append(")");
