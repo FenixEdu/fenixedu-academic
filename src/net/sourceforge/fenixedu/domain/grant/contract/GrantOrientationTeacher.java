@@ -21,5 +21,4 @@ public class GrantOrientationTeacher extends GrantOrientationTeacher_Base {
         removeOrientationTeacher();
         super.deleteDomainObject();
     }
-
 }

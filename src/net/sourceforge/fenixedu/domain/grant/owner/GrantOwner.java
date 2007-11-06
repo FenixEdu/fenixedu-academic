@@ -9,9 +9,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
+import net.sourceforge.fenixedu.stm.RelationList;
+import net.sourceforge.fenixedu.stm.VBox;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -164,4 +167,17 @@ public class GrantOwner extends GrantOwner_Base {
 	}
 	return Boolean.FALSE;
     }
+    
+    public void delete() {	
+	if(!canBeDeleted()) {
+	    throw new DomainException("error.GrantOwner.cannot.be.deleted");
+	}	
+	removePerson();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }    
+    
+    private boolean canBeDeleted() {
+	return !hasAnyGrantContracts();
+    } 
 }
