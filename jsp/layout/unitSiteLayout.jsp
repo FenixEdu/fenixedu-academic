@@ -37,7 +37,6 @@
 <!-- END BROWSER UPGRADE MESSAGE -->
 
 
-
 <!-- SYMBOLSROW -->
 <div id="header">
 	<tiles:insert attribute="symbols_row" ignore="true"/>
@@ -48,32 +47,42 @@
 	<tiles:insert attribute="profile_navigation" ignore="true"/>
 </div>
 
+
+
+
 <div id="holder">
 <table id="bigtable" width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
 
-<td id="latnav_container" width="155">
-<!--MAIN NAVIGATION -->   
-<div id="latnav">
-	<tiles:insert attribute="main_navigation" ignore="true"/>
-</div>
-</td>
+	<tr>
+	
+		<td rowspan="3" id="latnav_container" width="155">
+			<!--MAIN NAVIGATION -->   
+			<div id="latnav">
+				<tiles:insert attribute="main_navigation" ignore="true"/>
+			</div>
+		</td>
+	
+		<!-- DEGREE SITE -->
+			<td width="100%" colspan="3" id="main" class="usitemain">
+				<bean:define id="useFlags" toScope="request">
+					<tiles:getAsString name="useFlags" ignore="true"/>
+				</bean:define>
+			
+				<tiles:insert attribute="body-context" ignore="true"/>
+				<tiles:insert attribute="banner" ignore="true"/>
+				<tiles:getAsString name="body-inline" ignore="true"/>
+			</td>
+	</tr>
 
-<!-- DEGREE SITE -->
-<td width="100%" colspan="3" id="main" class="usitemain">
-	<bean:define id="useFlags" toScope="request">
-		<tiles:getAsString name="useFlags" ignore="true"/>
-	</bean:define>
-
-	<tiles:insert attribute="body-context" ignore="true"/>
 	<tiles:insert attribute="body" ignore="true"/>
-	<tiles:getAsString name="body-inline" ignore="true"/>
 
-</td>
-
-</tr>
 </table>
 </div>
+
+
+
+
+
 <!-- FOOTER --> 
 
 <div id="footer">

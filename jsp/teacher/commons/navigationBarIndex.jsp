@@ -76,7 +76,7 @@
   	</html:link>  
   </li>
   --%>
-	<%--<li>
+	<li>
     <html:link page="/tests/questionBank.do?method=manageQuestionBank">
       <bean:message key="message.questionBank.manage" bundle="TESTS_RESOURCES" />
     </html:link>
@@ -86,15 +86,15 @@
     <html:link page="/tests/testModels.do?method=manageTestModels">
       <bean:message key="message.testModels.manage" bundle="TESTS_RESOURCES" />
     </html:link>
-  </li>--%>
+  </li>
 
-	<%--
+<%-- 
   <li>
 	<html:link href="<%= request.getContextPath() + "/teacher/viewOldInquiriesTeachersResults.do?method=prepare" %>">
 		<bean:message key="link.view.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
 	</html:link>
   </li>
-  --%>
+ --%>
 
 	<li><html:link
 		href="<%= request.getContextPath() + "/teacher/roomsReserveManagement.do?method=viewReserves" %>">

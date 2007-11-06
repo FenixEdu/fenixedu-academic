@@ -11,8 +11,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<table class="usitechannels">
-	<tr>
+	<tr class="usitechannels">
 		<logic:equal name="site" property="showAnnouncements" value="true"> 
 			<th class="usitechannel1">
 				<bean:message key="label.announcements"/>
@@ -24,7 +23,8 @@
 			</th>
 		</logic:equal>
 	</tr>
-	<tr>
+	
+	<tr class="usitechannels">
     
     <bean:define id="textLength" value="350" toScope="request"/>
     
@@ -165,5 +165,5 @@
 		</td>
 	</logic:equal>
 	</tr>
-</table>
+
 

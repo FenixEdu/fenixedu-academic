@@ -111,5 +111,3 @@
 	</div>
 	<div style="clear: both;"></div>
 </logic:notPresent>
-
-<jsp:include flush="true" page="mainBody.jsp"/>

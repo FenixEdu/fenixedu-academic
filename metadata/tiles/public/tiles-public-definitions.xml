@@ -108,6 +108,7 @@
 			<put name="title" value="Instituto Superior Técnico" />
 			<put name="symbols_row" value="/publico/customized/symbolsRow.jsp" />
 			<put name="main_navigation" value="/commons/blank.jsp"/>
+			<put name="banner" value="/commons/blank.jsp"/>
 			<put name="body" value="/commons/blank.jsp" />
 			<put name="footer" value="/publico/customized/footer.jsp" />
 			<put name="analytics" value="/publico/unitSite/analytics.jsp" />

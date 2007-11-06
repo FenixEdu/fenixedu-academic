@@ -345,15 +345,18 @@
     </definition>
     
     <definition name="basicUnit-site-front-page-banner-intro" extends="definition.public.basicUnit.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
     </definition>
     
     <definition name="basicUnit-site-front-page-intro-banner" extends="definition.public.basicUnit.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
     </definition>
     
     <definition name="basicUnit-site-front-page-intro-float" extends="definition.public.basicUnit.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
 		<put name="useFlags" value="false"/>
     </definition>
 
@@ -427,15 +430,18 @@
 	</definition>
 
     <definition name="department-site-front-page-banner-intro" extends="definition.public.department.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
     </definition>
     
     <definition name="department-site-front-page-intro-banner" extends="definition.public.department.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
     </definition>
     
     <definition name="department-site-front-page-intro-float" extends="definition.public.department.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
 		<put name="useFlags" value="false"/>
     </definition>
 
@@ -519,15 +525,18 @@
 
 	<!-- ========== PEDAGOGICAL COUNCIL SITE -->
     <definition name="pedagogicalCouncil-site-front-page-banner-intro" extends="definition.public.pedagogicalCouncil.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
     </definition>
     
     <definition name="pedagogicalCouncil-site-front-page-intro-banner" extends="definition.public.pedagogicalCouncil.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
     </definition>
     
     <definition name="pedagogicalCouncil-site-front-page-intro-float" extends="definition.public.pedagogicalCouncil.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
 		<put name="useFlags" value="false"/>
     </definition>
 
@@ -572,15 +581,18 @@
    
 	<!-- ========== SCIENTIFIC COUNCIL SITE -->
     <definition name="scientificCouncil-site-front-page-banner-intro" extends="definition.public.scientificCouncil.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
     </definition>
     
     <definition name="scientificCouncil-site-front-page-intro-banner" extends="definition.public.scientificCouncil.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
     </definition>
     
     <definition name="scientificCouncil-site-front-page-intro-float" extends="definition.public.scientificCouncil.frontPage">
-        <put name="body" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+        <put name="banner" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+        <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
 		<put name="useFlags" value="false"/>
     </definition>
 
@@ -625,15 +637,18 @@
    
 	<!--  ===== RESEARCH UNIT SITE ======== -->
 	<definition name="research-site-front-page-banner-intro" extends="definition.public.researchUnit.noPaddingLayout">
-		<put name="body" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+		<put name="banner" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
+		<put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
 	</definition>
 	
 	<definition name="research-site-front-page-intro-banner" extends="definition.public.researchUnit.noPaddingLayout">
-		<put name="body" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+		<put name="banner" value="/commons/sites/unitSite/frontPage_IntroBanner.jsp"/>
+		<put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
 	</definition>
 	
 	<definition name="research-site-front-page-intro-float" extends="definition.public.researchUnit.noPaddingLayout">
-		<put name="body" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+		<put name="banner" value="/commons/sites/unitSite/frontPage_IntroFloat.jsp"/>
+		<put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>
 		<put name="useFlags" value="false"/>
 	</definition>
 	
