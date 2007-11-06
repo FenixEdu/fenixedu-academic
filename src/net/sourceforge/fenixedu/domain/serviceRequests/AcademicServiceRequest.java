@@ -305,7 +305,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    getEvent().cancel(employee);
 	}
 
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.DELIVERED) {
+	if (isToDeliver(academicServiceRequestSituationType)) {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
@@ -315,6 +315,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected boolean isToCancelOrReject(final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
 	return academicServiceRequestSituationType == AcademicServiceRequestSituationType.CANCELLED
 		|| academicServiceRequestSituationType == AcademicServiceRequestSituationType.REJECTED;
+    }
+    
+    protected boolean isToDeliver(final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+	return academicServiceRequestSituationType == AcademicServiceRequestSituationType.DELIVERED;
     }
     
     protected boolean isToProcessing(final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
