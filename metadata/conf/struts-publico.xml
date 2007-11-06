@@ -1188,6 +1188,12 @@
             <forward name="eventsRSSAction" path="/researchSite/eventsRSS.do"/>
         </action>
        
+       <action path="/researchSite/searchPublication"
+        parameter="method"
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA">
+        	<forward name="SearchPublication"  path="search-research-unit-publications"/>
+        </action>
+       
         <action path="/researchSite/manageResearchUnitAnnouncements"
 	   type="net.sourceforge.fenixedu.presentationTier.Action.publico.ManageResearchUnitAnnoucementsDA"
 	   parameter="method">

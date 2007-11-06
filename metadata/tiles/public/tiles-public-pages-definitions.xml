@@ -645,10 +645,14 @@
         <put name="body" value="/publico/researchUnitSite/showPublications.jsp"/>
     </definition>   
    
+   	 <definition name="search-research-unit-publications" extends="definition.public.researchUnit">
+        <put name="body" value="/publico/unitSite/searchPublications.jsp"/>
+    </definition>      
+   
 	 <definition name="show-unit-publications" extends="definition.public.researchUnit">
         <put name="body" value="/publico/unitSite/showPublications.jsp"/>
     </definition>      
-   
+
 	<definition name="view-researchUnit-section" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
         <put name="body" value="/commons/sites/public/section.jsp"/>

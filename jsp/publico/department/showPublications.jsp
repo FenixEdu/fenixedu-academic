@@ -4,7 +4,36 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-	
+
+<div class="breadcumbs mvert0">
+    <bean:define id="institutionUrl">
+        <bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+    </bean:define>
+    <bean:define id="structureUrl">
+        <bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
+    </bean:define>
+    
+    <html:link href="<%= institutionUrl %>">
+        <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/> 
+    </html:link>
+    &nbsp;&gt;&nbsp;
+    <html:link href="<%= institutionUrl + structureUrl %>">
+        <bean:message key="structure" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
+    </html:link>
+    &nbsp;&gt;&nbsp;
+    <html:link page="/department/showDepartments.faces">
+        <bean:message key="academic.units" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
+    </html:link>
+    &nbsp;&gt;&nbsp;
+    <bean:define id="unitId" name="unit" property="idInternal"/>
+    <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
+        <fr:view name="department" property="nameI18n"/>
+    </html:link>
+    &nbsp;&gt;&nbsp;
+    <bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES"/> 
+</div>
+
+
 <h1 class="mbottom03 cnone">
 	<fr:view name="unit" property="nameWithAcronym"/>
 </h1>
@@ -124,3 +153,27 @@
 			</logic:iterate>
 		</ul>
 	</logic:notEmpty>
+
+	<logic:empty name="books">
+		<logic:empty name="inbooks">
+			<logic:empty name="articles">
+				<logic:empty name="inproceedings">
+					<logic:empty name="proceedings">
+						<logic:empty name="theses">
+							<logic:empty name="manuals">
+								<logic:empty name="technicalReports">
+									<logic:empty name="otherPublications">
+										<logic:empty name="unstructureds">
+											<bean:message key="label.search.noResultsFound" />
+										</logic:empty>
+									</logic:empty>
+								</logic:empty>
+							</logic:empty>
+						</logic:empty>
+					</logic:empty>
+				</logic:empty>
+			</logic:empty>
+		</logic:empty>
+	</logic:empty>
+
+	

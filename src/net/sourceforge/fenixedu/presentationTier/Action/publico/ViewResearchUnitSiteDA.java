@@ -6,10 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchUnitProcessor;
 
 import org.apache.struts.action.ActionForm;
@@ -25,6 +22,8 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
 	ResearchUnitSite site = getSite(request);
 	request.setAttribute("researchUnit", site.getUnit());
 
+	
+	
 	return super.execute(mapping, form, request, response);
     }
 

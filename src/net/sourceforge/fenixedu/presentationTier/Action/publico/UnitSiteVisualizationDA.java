@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.net.MalformedURLException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -8,16 +9,23 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -167,30 +175,85 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     public ActionForward showPublications(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	Unit unit = getUnit(request);
-	putPublicationsInRequest(request, unit);
+
+	IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
+
+	ExecutionYearIntervalBean bean;
+	if (viewState != null) {
+	    bean = (ExecutionYearIntervalBean) viewState.getMetaObject().getObject();
+	} else {
+	    bean = new ExecutionYearIntervalBean(ExecutionYear.readCurrentExecutionYear()
+		    .getPreviousExecutionYear(3), ExecutionYear.readCurrentExecutionYear());
+	}
+
+	request.setAttribute("executionYearIntervalBean", bean);
+
+	preparePublicationsForResponse(request, unit, bean);
+
 	return mapping.findForward("showPublications");
     }
 
-    private void putPublicationsInRequest(HttpServletRequest request, Unit unit) {
-	request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks()));
-	request.setAttribute("national-articles", ResearchResultPublication.sort(unit
-		.getArticles(ScopeType.NATIONAL)));
-	request.setAttribute("international-articles", ResearchResultPublication.sort(unit
-		.getArticles(ScopeType.INTERNATIONAL)));
-	request.setAttribute("national-inproceedings", ResearchResultPublication.sort(unit
-		.getInproceedings(ScopeType.NATIONAL)));
-	request.setAttribute("international-inproceedings", ResearchResultPublication.sort(unit
-		.getInproceedings(ScopeType.INTERNATIONAL)));
-	request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings()));
-	request.setAttribute("theses", ResearchResultPublication.sort(unit.getTheses()));
-	request.setAttribute("manuals", ResearchResultPublication.sort(unit.getManuals()));
-	request.setAttribute("technicalReports", ResearchResultPublication.sort(unit
-		.getTechnicalReports()));
-	request.setAttribute("otherPublications", ResearchResultPublication.sort(unit
-		.getOtherPublications()));
-	request.setAttribute("unstructureds", ResearchResultPublication.sort(unit.getUnstructureds()));
-	request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks()));
+    protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit,
+	    ExecutionYearIntervalBean bean) {
+	putPublicationsOnRequest(request, unit, bean, Boolean.FALSE);
+    }
 
+    protected void putPublicationsOnRequest(HttpServletRequest request, Unit unit,
+	    ExecutionYearIntervalBean bean, Boolean checkSubunits) {
+
+	//String[] publicationTypes = new String[] {"articles", "books", "inbooks", "inproceedings", "proceedings", "theses", "manuals", "technical-reports", "other-publications", "unstructureds"};
+
+	ExecutionYear firstExecutionYear = bean.getFirstExecutionYear();
+	ExecutionYear finalExecutionYear = bean.getFinalExecutionYear();
+	ResultPublicationType resultPublicationType = bean.getPublicationType();
+
+	if (resultPublicationType == null) {
+	    request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("inproceedings", ResearchResultPublication.sort(unit.getInproceedings(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("theses", ResearchResultPublication.sort(unit.getTheses(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("manuals", ResearchResultPublication.sort(unit.getManuals(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("technical-reports", ResearchResultPublication.sort(unit
+		    .getTechnicalReports(firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("other-publications", ResearchResultPublication.sort(unit
+		    .getOtherPublications(firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("unstructureds", ResearchResultPublication.sort(unit.getUnstructureds(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	} else if (resultPublicationType.equals(ResultPublicationType.Article)) {
+	    request.setAttribute("articles", ResearchResultPublication.sort(unit.getArticles(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	} else if (resultPublicationType.equals(ResultPublicationType.Book)) {
+	    request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	} else if (resultPublicationType.equals(ResultPublicationType.BookPart)) {
+	    request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	} else if (resultPublicationType.equals(ResultPublicationType.Inproceedings)) {
+	    request.setAttribute("inproceedings", ResearchResultPublication.sort(unit.getInproceedings(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	} else if (resultPublicationType.equals(ResultPublicationType.Manual)) {
+	    request.setAttribute("manuals", ResearchResultPublication.sort(unit.getManuals(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	} else if (resultPublicationType.equals(ResultPublicationType.OtherPublication)) {
+	    request.setAttribute("other-publications", ResearchResultPublication.sort(unit
+		    .getOtherPublications(firstExecutionYear, finalExecutionYear, checkSubunits)));
+	} else if (resultPublicationType.equals(ResultPublicationType.Proceedings)) {
+	    request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	} else if (resultPublicationType.equals(ResultPublicationType.TechnicalReport)) {
+	    request.setAttribute("technical-reports", ResearchResultPublication.sort(unit
+		    .getTechnicalReports(firstExecutionYear, finalExecutionYear, checkSubunits)));
+	} else if (resultPublicationType.equals(ResultPublicationType.Thesis)) {
+	    request.setAttribute("theses", ResearchResultPublication.sort(unit.getTheses(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	}
     }
 
 }

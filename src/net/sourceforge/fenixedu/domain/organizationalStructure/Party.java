@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -54,6 +55,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
+import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -85,24 +87,24 @@ public abstract class Party extends Party_Base {
     public abstract String getPartyPresentationName();
 
     public abstract void setName(String name);
-    
+
     public abstract String getName();
-    
+
     public Party() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	createAccount(AccountType.INTERNAL);
 	createAccount(AccountType.EXTERNAL);
     }
-           
+
     @Override
     public void setPartyName(MultiLanguageString partyName) {
-	if(partyName == null || partyName.isEmpty()) {
+	if (partyName == null || partyName.isEmpty()) {
 	    throw new DomainException("error.Party.empty.partyName");
 	}
 	super.setPartyName(partyName);
     }
-    
+
     @Deprecated
     @Override
     final public Country getNationality() {
@@ -181,8 +183,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Party> getParentParties(List<AccountabilityTypeEnum> accountabilityTypeEnums,
-	    Class<? extends Party> parentPartyClass) {
+    public Collection<? extends Party> getParentParties(
+	    List<AccountabilityTypeEnum> accountabilityTypeEnums, Class<? extends Party> parentPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
@@ -215,8 +217,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Party> getChildParties(List<AccountabilityTypeEnum> accountabilityTypeEnums,
-	    Class<? extends Party> childPartyClass) {
+    public Collection<? extends Party> getChildParties(
+	    List<AccountabilityTypeEnum> accountabilityTypeEnums, Class<? extends Party> childPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
@@ -227,7 +229,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    protected Collection<? extends Party> getChildParties(PartyTypeEnum type, Class<? extends Party> childPartyClass) {
+    protected Collection<? extends Party> getChildParties(PartyTypeEnum type,
+	    Class<? extends Party> childPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getChildParty().getType() == type
@@ -238,7 +241,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getParentAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum) {
+    public Collection<? extends Accountability> getParentAccountabilities(
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum) {
@@ -248,7 +252,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getChildAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum) {
+    public Collection<? extends Accountability> getChildAccountabilities(
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum) {
@@ -259,7 +264,8 @@ public abstract class Party extends Party_Base {
     }
 
     public Collection<? extends Accountability> getParentAccountabilities(
-	    AccountabilityTypeEnum accountabilityTypeEnum, Class<? extends Accountability> accountabilityClass) {
+	    AccountabilityTypeEnum accountabilityTypeEnum,
+	    Class<? extends Accountability> accountabilityClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
 	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
@@ -312,7 +318,8 @@ public abstract class Party extends Party_Base {
 	return result;
     }
 
-    public Collection<? extends Accountability> getChildAccountabilitiesByChildClass(Class<? extends Party> childClass) {
+    public Collection<? extends Accountability> getChildAccountabilitiesByChildClass(
+	    Class<? extends Party> childClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getChildsSet()) {
 	    if (childClass.isAssignableFrom(accountability.getChildParty().getClass())) {
@@ -338,14 +345,16 @@ public abstract class Party extends Party_Base {
 	    throw new DomainException("error.party.cannot.be.deleted");
 	}
 
-	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete());
-	for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules());
-	
+	for (; !getAccounts().isEmpty(); getAccounts().get(0).delete())
+	    ;
+	for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules())
+	    ;
+
 	removeNationality();
 	removePartyType();
 	removeRootDomainObject();
-	
-	deleteDomainObject();		   
+
+	deleteDomainObject();
     }
 
     private boolean canBeDeleted() {
@@ -357,7 +366,8 @@ public abstract class Party extends Party_Base {
 	Comparator<Party> caseInsensitiveName = new Comparator<Party>() {
 	    public int compare(Party party, Party otherParty) {
 		Collator collator = Collator.getInstance();
-		return collator.compare(party.getName().toLowerCase(), otherParty.getName().toLowerCase());
+		return collator.compare(party.getName().toLowerCase(), otherParty.getName()
+			.toLowerCase());
 	    }
 	};
 
@@ -386,9 +396,9 @@ public abstract class Party extends Party_Base {
 	return null;
     }
 
-    public void editContributor(String contributorName, String contributorNumber, String contributorAddress,
-	    String areaCode, String areaOfAreaCode, String area, String parishOfResidence,
-	    String districtSubdivisionOfResidence, String districtOfResidence) {
+    public void editContributor(String contributorName, String contributorNumber,
+	    String contributorAddress, String areaCode, String areaOfAreaCode, String area,
+	    String parishOfResidence, String districtSubdivisionOfResidence, String districtOfResidence) {
 
 	final Party existing = Party.readByContributorNumber(contributorNumber);
 	if (existing != null && existing != this) {
@@ -508,12 +518,13 @@ public abstract class Party extends Party_Base {
 	return false;
     }
 
-    private List<? extends Participation> filterParticipationsByYear(List<? extends Participation> participations,
-	    ExecutionYear begin, ExecutionYear end) {
+    private List<? extends Participation> filterParticipationsByYear(
+	    List<? extends Participation> participations, ExecutionYear begin, ExecutionYear end) {
 	List<Participation> participationsForInterval = new ArrayList<Participation>();
 	for (Participation participation : participations) {
 	    Integer year = participation.getCivilYear();
-	    if (year == null || (begin == null || begin.isBeforeCivilYear(year) || begin.belongsToCivilYear(year))
+	    if (year == null
+		    || (begin == null || begin.isBeforeCivilYear(year) || begin.belongsToCivilYear(year))
 		    && (end == null || end.isAfterCivilYear(year) || end.belongsToCivilYear(year))) {
 		participationsForInterval.add(participation);
 	    }
@@ -521,29 +532,33 @@ public abstract class Party extends Party_Base {
 	return participationsForInterval;
     }
 
-    private List<? extends Participation> filterParticipationsByType(Class<? extends Participation> clazz,
-	    ScopeType scopeType) {
+    private List<? extends Participation> filterParticipationsByType(
+	    Class<? extends Participation> clazz, ScopeType scopeType) {
 	List<Participation> participations = new ArrayList<Participation>();
 	for (Participation participation : getParticipations()) {
-	    if (participation.getClass().equals(clazz) && (scopeType == null || participation.scopeMatches(scopeType))) {
+	    if (participation.getClass().equals(clazz)
+		    && (scopeType == null || participation.scopeMatches(scopeType))) {
 		participations.add(participation);
 	    }
 	}
 	return participations;
     }
 
-    public List<EventEditionParticipation> getEventEditionParticipations(ScopeType type, ExecutionYear begin,
-	    ExecutionYear end) {
-	return (List<EventEditionParticipation>) filterParticipationsByYear(getEventEditionParticipations(type), begin,
-		end);
+    public List<EventEditionParticipation> getEventEditionParticipations(ScopeType type,
+	    ExecutionYear begin, ExecutionYear end) {
+	return (List<EventEditionParticipation>) filterParticipationsByYear(
+		getEventEditionParticipations(type), begin, end);
     }
 
-    public List<EventEditionParticipation> getEventEditionParticipations(ExecutionYear begin, ExecutionYear end) {
-	return (List<EventEditionParticipation>) filterParticipationsByYear(getEventEditionParticipations(), begin, end);
+    public List<EventEditionParticipation> getEventEditionParticipations(ExecutionYear begin,
+	    ExecutionYear end) {
+	return (List<EventEditionParticipation>) filterParticipationsByYear(
+		getEventEditionParticipations(), begin, end);
     }
 
     public List<EventEditionParticipation> getEventEditionParticipations(ScopeType type) {
-	return (List<EventEditionParticipation>) filterParticipationsByType(EventEditionParticipation.class, type);
+	return (List<EventEditionParticipation>) filterParticipationsByType(
+		EventEditionParticipation.class, type);
     }
 
     public List<EventEditionParticipation> getEventEditionParticipations() {
@@ -554,7 +569,8 @@ public abstract class Party extends Party_Base {
 	return (List<EventParticipation>) filterParticipationsByType(EventParticipation.class, type);
     }
 
-    public Set<EventEdition> getAssociatedEventEditions(ScopeType type, ExecutionYear begin, ExecutionYear end) {
+    public Set<EventEdition> getAssociatedEventEditions(ScopeType type, ExecutionYear begin,
+	    ExecutionYear end) {
 	Set<EventEdition> eventEditions = new HashSet<EventEdition>();
 	for (EventEditionParticipation participation : getEventEditionParticipations(type, begin, end)) {
 	    eventEditions.add(participation.getEventEdition());
@@ -574,12 +590,15 @@ public abstract class Party extends Party_Base {
 	return getAssociatedEventEditions(type, null, null);
     }
 
-    public List<EventParticipation> getEventParticipations(ScopeType type, ExecutionYear begin, ExecutionYear end) {
-	return (List<EventParticipation>) filterParticipationsByYear(getEventParticipations(type), begin, end);
+    public List<EventParticipation> getEventParticipations(ScopeType type, ExecutionYear begin,
+	    ExecutionYear end) {
+	return (List<EventParticipation>) filterParticipationsByYear(getEventParticipations(type),
+		begin, end);
     }
 
     public List<EventParticipation> getEventParticipation(ExecutionYear begin, ExecutionYear end) {
-	return (List<EventParticipation>) filterParticipationsByYear(getEventParticipations(), begin, end);
+	return (List<EventParticipation>) filterParticipationsByYear(getEventParticipations(), begin,
+		end);
     }
 
     public List<EventParticipation> getEventParticipations() {
@@ -606,30 +625,32 @@ public abstract class Party extends Party_Base {
 	return getAssociatedEvents(null);
     }
 
-    public List<ScientificJournalParticipation> getScientificJournalParticipations(ScopeType type, ExecutionYear begin,
-	    ExecutionYear end) {
+    public List<ScientificJournalParticipation> getScientificJournalParticipations(ScopeType type,
+	    ExecutionYear begin, ExecutionYear end) {
 	return (List<ScientificJournalParticipation>) filterParticipationsByYear(
 		getScientificJournalParticipations(type), begin, end);
     }
 
     public List<ScientificJournalParticipation> getScientificJournalParticipations(ExecutionYear begin,
 	    ExecutionYear end) {
-	return (List<ScientificJournalParticipation>) filterParticipationsByYear(getScientificJournalParticipations(),
-		begin, end);
+	return (List<ScientificJournalParticipation>) filterParticipationsByYear(
+		getScientificJournalParticipations(), begin, end);
     }
 
     public List<ScientificJournalParticipation> getScientificJournalParticipations(ScopeType type) {
-	return (List<ScientificJournalParticipation>) filterParticipationsByType(ScientificJournalParticipation.class,
-		type);
+	return (List<ScientificJournalParticipation>) filterParticipationsByType(
+		ScientificJournalParticipation.class, type);
     }
 
     public List<ScientificJournalParticipation> getScientificJournalParticipations() {
 	return getScientificJournalParticipations(null);
     }
 
-    public Set<ScientificJournal> getAssociatedScientificJournals(ScopeType type, ExecutionYear begin, ExecutionYear end) {
+    public Set<ScientificJournal> getAssociatedScientificJournals(ScopeType type, ExecutionYear begin,
+	    ExecutionYear end) {
 	Set<ScientificJournal> journals = new HashSet<ScientificJournal>();
-	for (ScientificJournalParticipation participation : getScientificJournalParticipations(type, begin, end)) {
+	for (ScientificJournalParticipation participation : getScientificJournalParticipations(type,
+		begin, end)) {
 	    journals.add(participation.getScientificJournal());
 	}
 	return journals;
@@ -647,27 +668,32 @@ public abstract class Party extends Party_Base {
 	return getAssociatedScientificJournals(null);
     }
 
-    public List<JournalIssueParticipation> getJournalIssueParticipations(ScopeType type, ExecutionYear begin,
-	    ExecutionYear end) {
-	return (List<JournalIssueParticipation>) filterParticipationsByYear(getJournalIssueParticipations(type), begin,
-		end);
+    public List<JournalIssueParticipation> getJournalIssueParticipations(ScopeType type,
+	    ExecutionYear begin, ExecutionYear end) {
+	return (List<JournalIssueParticipation>) filterParticipationsByYear(
+		getJournalIssueParticipations(type), begin, end);
     }
 
-    public List<JournalIssueParticipation> getJournalIssueParticipations(ExecutionYear begin, ExecutionYear end) {
-	return (List<JournalIssueParticipation>) filterParticipationsByYear(getJournalIssueParticipations(), begin, end);
+    public List<JournalIssueParticipation> getJournalIssueParticipations(ExecutionYear begin,
+	    ExecutionYear end) {
+	return (List<JournalIssueParticipation>) filterParticipationsByYear(
+		getJournalIssueParticipations(), begin, end);
     }
 
     public List<JournalIssueParticipation> getJournalIssueParticipations(ScopeType type) {
-	return (List<JournalIssueParticipation>) filterParticipationsByType(JournalIssueParticipation.class, type);
+	return (List<JournalIssueParticipation>) filterParticipationsByType(
+		JournalIssueParticipation.class, type);
     }
 
     public List<JournalIssueParticipation> getJournalIssueParticipations() {
 	return getJournalIssueParticipations(null);
     }
 
-    public Set<JournalIssue> getAssociatedJournalIssues(ScopeType type, ExecutionYear begin, ExecutionYear end) {
+    public Set<JournalIssue> getAssociatedJournalIssues(ScopeType type, ExecutionYear begin,
+	    ExecutionYear end) {
 	Set<JournalIssue> issues = new HashSet<JournalIssue>();
-	for (JournalIssueParticipation participation : this.getJournalIssueParticipations(type, begin, end)) {
+	for (JournalIssueParticipation participation : this.getJournalIssueParticipations(type, begin,
+		end)) {
 	    issues.add(participation.getJournalIssue());
 	}
 	return issues;
@@ -685,8 +711,10 @@ public abstract class Party extends Party_Base {
 	return getAssociatedJournalIssues(null);
     }
 
-    public List<CooperationParticipation> getCooperationParticipations(ExecutionYear begin, ExecutionYear end) {
-	return (List<CooperationParticipation>) filterParticipationsByYear(getCooperationParticipations(), begin, end);
+    public List<CooperationParticipation> getCooperationParticipations(ExecutionYear begin,
+	    ExecutionYear end) {
+	return (List<CooperationParticipation>) filterParticipationsByYear(
+		getCooperationParticipations(), begin, end);
     }
 
     public List<CooperationParticipation> getCooperationParticipations() {
@@ -715,7 +743,8 @@ public abstract class Party extends Party_Base {
 	    final PartyContactType type) {
 	final List<PartyContact> result = new ArrayList<PartyContact>();
 	for (final PartyContact contact : getPartyContactsSet()) {
-	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)) {
+	    if (clazz.isAssignableFrom(contact.getClass())
+		    && (type == null || contact.getType() == type)) {
 		result.add(contact);
 	    }
 	}
@@ -726,7 +755,8 @@ public abstract class Party extends Party_Base {
 	return getPartyContacts(clazz, null);
     }
 
-    public boolean hasAnyPartyContact(final Class<? extends PartyContact> clazz, final PartyContactType type) {
+    public boolean hasAnyPartyContact(final Class<? extends PartyContact> clazz,
+	    final PartyContactType type) {
 	for (final PartyContact contact : getPartyContactsSet()) {
 	    if (clazz.isAssignableFrom(contact.getClass()) && contact.getType() == type) {
 		return true;
@@ -769,7 +799,8 @@ public abstract class Party extends Party_Base {
     }
 
     protected WebAddress createDefaultWebAddress(final String url) {
-	return (!StringUtils.isEmpty(url)) ? PartyContact.createDefaultPersonalWebAddress(this, url) : null;
+	return (!StringUtils.isEmpty(url)) ? PartyContact.createDefaultPersonalWebAddress(this, url)
+		: null;
     }
 
     public void updateDefaultWebAddress(final String url) {
@@ -797,7 +828,8 @@ public abstract class Party extends Party_Base {
     }
 
     protected Phone createDefaultPhone(final String number) {
-	return (!StringUtils.isEmpty(number)) ? PartyContact.createDefaultPersonalPhone(this, number) : null;
+	return (!StringUtils.isEmpty(number)) ? PartyContact.createDefaultPersonalPhone(this, number)
+		: null;
     }
 
     protected void updateDefaultPhone(final String number) {
@@ -821,11 +853,13 @@ public abstract class Party extends Party_Base {
 
     private MobilePhone getOrCreateDefaultMobilePhone() {
 	final MobilePhone mobilePhone = getDefaultMobilePhone();
-	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact.createDefaultPersonalMobilePhone(this);
+	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact
+		.createDefaultPersonalMobilePhone(this);
     }
 
     protected MobilePhone createDefaultMobilePhone(final String number) {
-	return (!StringUtils.isEmpty(number)) ? PartyContact.createDefaultPersonalMobilePhone(this, number) : null;
+	return (!StringUtils.isEmpty(number)) ? PartyContact.createDefaultPersonalMobilePhone(this,
+		number) : null;
     }
 
     public void updateDefaultMobilePhone(final String number) {
@@ -841,12 +875,14 @@ public abstract class Party extends Party_Base {
     }
 
     protected EmailAddress createDefaultEmailAddress(final String value) {
-	return (!StringUtils.isEmpty(value)) ? PartyContact.createDefaultPersonalEmailAddress(this, value) : null;
+	return (!StringUtils.isEmpty(value)) ? PartyContact.createDefaultPersonalEmailAddress(this,
+		value) : null;
     }
 
     private EmailAddress getOrCreateDefaultEmailAddress() {
 	final EmailAddress emailAddress = getDefaultEmailAddress();
-	return emailAddress != null ? emailAddress : PartyContact.createDefaultPersonalEmailAddress(this);
+	return emailAddress != null ? emailAddress : PartyContact
+		.createDefaultPersonalEmailAddress(this);
     }
 
     public void updateDefaultEmailAddress(final String email) {
@@ -883,7 +919,8 @@ public abstract class Party extends Party_Base {
 
     private PhysicalAddress getOrCreateDefaultPhysicalAddress() {
 	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
-	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this);
+	return physicalAdress != null ? physicalAdress : PartyContact
+		.createDefaultPersonalPhysicalAddress(this);
     }
 
     public PhysicalAddress getDefaultPhysicalAddress() {
@@ -945,11 +982,13 @@ public abstract class Party extends Party_Base {
 
     public String getDistrictSubdivisionOfResidence() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence() : StringUtils.EMPTY;
+	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence()
+		: StringUtils.EMPTY;
     }
 
     public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
-	getOrCreateDefaultPhysicalAddress().setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
+	getOrCreateDefaultPhysicalAddress().setDistrictSubdivisionOfResidence(
+		districtSubdivisionOfResidence);
     }
 
     public String getDistrictOfResidence() {
@@ -997,16 +1036,9 @@ public abstract class Party extends Party_Base {
 	updateDefaultMobilePhone(mobile);
     }
 
-    public List<ResearchResultPublication> getBooks() {
-	return this.getResearchResultPublicationsByType(Book.class);
-    }
 
-    public List<ResearchResultPublication> getBooks(ExecutionYear executionYear) {
-	return this.getResearchResultPublicationsByType(Book.class, executionYear);
-    }
-
-    private List<ResearchResultPublication> filterArticlesWithType(List<ResearchResultPublication> publications,
-	    ScopeType locationType) {
+    protected List<ResearchResultPublication> filterArticlesWithType(
+	    List<ResearchResultPublication> publications, ScopeType locationType) {
 	List<ResearchResultPublication> publicationsOfType = new ArrayList<ResearchResultPublication>();
 	for (ResearchResultPublication publication : publications) {
 	    Article article = (Article) publication;
@@ -1017,8 +1049,8 @@ public abstract class Party extends Party_Base {
 	return publicationsOfType;
     }
 
-    private List<ResearchResultPublication> filterInproceedingsWithType(List<ResearchResultPublication> publications,
-	    ScopeType locationType) {
+    protected List<ResearchResultPublication> filterInproceedingsWithType(
+	    List<ResearchResultPublication> publications, ScopeType locationType) {
 	List<ResearchResultPublication> publicationsOfType = new ArrayList<ResearchResultPublication>();
 	for (ResearchResultPublication publication : publications) {
 	    Inproceedings inproceedings = (Inproceedings) publication;
@@ -1029,98 +1061,9 @@ public abstract class Party extends Party_Base {
 	return publicationsOfType;
     }
 
-    public List<ResearchResultPublication> getArticles(ScopeType locationType) {
-	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class), locationType);
-    }
-
-    public List<ResearchResultPublication> getArticles(ScopeType locationType, ExecutionYear executionYear) {
-	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class, executionYear),
-		locationType);
-    }
-
-    public List<ResearchResultPublication> getArticles() {
-	return this.getResearchResultPublicationsByType(Article.class);
-    }
-
-    public List<ResearchResultPublication> getArticles(ExecutionYear executionYear) {
-	return this.getResearchResultPublicationsByType(Article.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ScopeType locationType) {
-	return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class), locationType);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ScopeType locationType, ExecutionYear executionYear) {
-	return filterInproceedingsWithType(
-		this.getResearchResultPublicationsByType(Inproceedings.class, executionYear), locationType);
-    }
-
-    public List<ResearchResultPublication> getInproceedings() {
-	return this.getResearchResultPublicationsByType(Inproceedings.class);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ExecutionYear executionYear) {
-	return this.getResearchResultPublicationsByType(Inproceedings.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getProceedings() {
-	return this.getResearchResultPublicationsByType(Proceedings.class);
-    }
-
-    public List<ResearchResultPublication> getProceedings(ExecutionYear executionYear) {
-	return this.getResearchResultPublicationsByType(Proceedings.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getTheses() {
-	return this.getResearchResultPublicationsByType(Thesis.class);
-    }
-
-    public List<ResearchResultPublication> getTheses(ExecutionYear executionYear) {
-	return this.getResearchResultPublicationsByType(Thesis.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getManuals() {
-	return this.getResearchResultPublicationsByType(Manual.class);
-    }
-
-    public List<ResearchResultPublication> getManuals(ExecutionYear executionYear) {
-	return this.getResearchResultPublicationsByType(Manual.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getTechnicalReports() {
-	return ResearchResultPublication.sort(this.getResearchResultPublicationsByType(TechnicalReport.class));
-    }
-
-    public List<ResearchResultPublication> getTechnicalReports(ExecutionYear executionYear) {
-	return this.getResearchResultPublicationsByType(TechnicalReport.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getOtherPublications() {
-	return this.getResearchResultPublicationsByType(OtherPublication.class);
-    }
-
-    public List<ResearchResultPublication> getOtherPublications(ExecutionYear executionYear) {
-	return this.getResearchResultPublicationsByType(OtherPublication.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getUnstructureds() {
-	return this.getResearchResultPublicationsByType(Unstructured.class);
-    }
-
-    public List<ResearchResultPublication> getUnstructureds(ExecutionYear executionYear) {
-	return this.getResearchResultPublicationsByType(Unstructured.class, executionYear);
-    }
-
-    public List<ResearchResultPublication> getInbooks() {
-	return this.getResearchResultPublicationsByType(BookPart.class);
-    }
-
-    public List<ResearchResultPublication> getInbooks(ExecutionYear executionYear) {
-	return this.getResearchResultPublicationsByType(BookPart.class, executionYear);
-    }
-
-    private List<ResearchResultPublication> filterResultPublicationsByType(
-	    final Class<? extends ResearchResultPublication> clazz, List<ResearchResultPublication> publications) {
+    protected List<ResearchResultPublication> filterResultPublicationsByType(
+	    final Class<? extends ResearchResultPublication> clazz,
+	    List<ResearchResultPublication> publications) {
 	return (List<ResearchResultPublication>) CollectionUtils.select(publications, new Predicate() {
 	    public boolean evaluate(Object arg0) {
 		return clazz.equals(arg0.getClass());
@@ -1128,24 +1071,58 @@ public abstract class Party extends Party_Base {
 	});
     }
 
-    private List<ResearchResultPublication> getResearchResultPublicationsByType(
+    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
 	    final Class<? extends ResearchResultPublication> clazz) {
 	return filterResultPublicationsByType(clazz, getResearchResultPublications());
     }
 
-    private List<ResearchResultPublication> getResearchResultPublicationsByType(
+    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
 	    final Class<? extends ResearchResultPublication> clazz, ExecutionYear executionYear) {
-	return filterResultPublicationsByType(clazz, getResearchResultPublicationsByExecutionYear(executionYear));
+	return filterResultPublicationsByType(clazz,
+		getResearchResultPublicationsByExecutionYear(executionYear));
     }
 
-    public List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(ExecutionYear executionYear) {
-
+    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
+	    final Class<? extends ResearchResultPublication> clazz, ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return filterResultPublicationsByType(clazz,
+		getResearchResultPublicationsByExecutionYear(firstExecutionYear, lastExecutionYear));
+    }
+    
+    public List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(
+	    ExecutionYear executionYear) {
+	
 	List<ResearchResultPublication> publicationsForExecutionYear = new ArrayList<ResearchResultPublication>();
 	for (ResearchResultPublication publication : getResearchResultPublications()) {
 	    if (publication.getYear() == null || executionYear.belongsToCivilYear(publication.getYear())) {
 		publicationsForExecutionYear.add(publication);
 	    }
 	}
+	return publicationsForExecutionYear;
+    }
+
+    protected List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(
+	    ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+
+	List<ResearchResultPublication> publicationsForExecutionYear = new ArrayList<ResearchResultPublication>();
+
+	if (firstExecutionYear == null) {
+	    firstExecutionYear = ExecutionYear.readFirstExecutionYear();
+	}
+	if (lastExecutionYear == null || lastExecutionYear.isBefore(firstExecutionYear)) {
+	    lastExecutionYear = ExecutionYear.readLastExecutionYear();
+	}
+	
+	for (ResearchResultPublication publication : getResearchResultPublications()) {
+	    if (publication.getYear() == null
+		    || ((firstExecutionYear.isBeforeCivilYear(publication.getYear()) || firstExecutionYear
+			    .belongsToCivilYear(publication.getYear())) 
+			    && (lastExecutionYear.isAfterCivilYear(publication.getYear()) || lastExecutionYear
+			    .belongsToCivilYear(publication.getYear())))) {
+		publicationsForExecutionYear.add(publication);
+	    }
+
+	}
+
 	return publicationsForExecutionYear;
     }
 
@@ -1161,6 +1138,162 @@ public abstract class Party extends Party_Base {
 
     public abstract List<ResearchResultPublication> getResearchResultPublications();
 
+    public List<ResearchResultPublication> getBooks() {
+	return this.getResearchResultPublicationsByType(Book.class);
+    }
+    
+    public List<ResearchResultPublication> getBooks(ExecutionYear executionYear) {
+	return this.getResearchResultPublicationsByType(Book.class, executionYear);
+    }
+    
+    public List<ResearchResultPublication> getBooks(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return this.getResearchResultPublicationsByType(Book.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    public List<ResearchResultPublication> getInbooks() {
+	return this.getResearchResultPublicationsByType(BookPart.class);
+    }
+
+    public List<ResearchResultPublication> getInbooks(ExecutionYear executionYear) {
+	return this.getResearchResultPublicationsByType(BookPart.class, executionYear);
+    }
+
+    public List<ResearchResultPublication> getInbooks(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return this.getResearchResultPublicationsByType(BookPart.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    public List<ResearchResultPublication> getArticles(ScopeType locationType) {
+	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class),
+		locationType);
+    }
+
+    public List<ResearchResultPublication> getArticles(ScopeType locationType,
+	    ExecutionYear executionYear) {
+	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class,
+		executionYear), locationType);
+    }
+
+    public List<ResearchResultPublication> getArticles(ScopeType locationType,
+	    ExecutionYear firstExecutionYear,  ExecutionYear lastExecutionYear) {
+	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class,
+		firstExecutionYear,  lastExecutionYear), locationType);
+    }
+
+    public List<ResearchResultPublication> getArticles() {
+	return this.getResearchResultPublicationsByType(Article.class);
+    }
+
+    public List<ResearchResultPublication> getArticles(ExecutionYear executionYear) {
+	return this.getResearchResultPublicationsByType(Article.class, executionYear);
+    }
+
+    public List<ResearchResultPublication> getArticles(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return this.getResearchResultPublicationsByType(Article.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ScopeType locationType) {
+	return filterInproceedingsWithType(
+		this.getResearchResultPublicationsByType(Inproceedings.class), locationType);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ScopeType locationType,
+	    ExecutionYear executionYear) {
+	return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class,
+		executionYear), locationType);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ScopeType locationType,
+	    ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class,
+		firstExecutionYear, lastExecutionYear), locationType);
+    }
+
+    public List<ResearchResultPublication> getInproceedings() {
+	return this.getResearchResultPublicationsByType(Inproceedings.class);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ExecutionYear executionYear) {
+	return this.getResearchResultPublicationsByType(Inproceedings.class, executionYear);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return this.getResearchResultPublicationsByType(Inproceedings.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    public List<ResearchResultPublication> getProceedings() {
+	return this.getResearchResultPublicationsByType(Proceedings.class);
+    }
+
+    public List<ResearchResultPublication> getProceedings(ExecutionYear executionYear) {
+	return this.getResearchResultPublicationsByType(Proceedings.class, executionYear);
+    }
+
+    public List<ResearchResultPublication> getProceedings(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return this.getResearchResultPublicationsByType(Proceedings.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    public List<ResearchResultPublication> getTheses() {
+	return this.getResearchResultPublicationsByType(Thesis.class);
+    }
+
+    public List<ResearchResultPublication> getTheses(ExecutionYear executionYear) {
+	return this.getResearchResultPublicationsByType(Thesis.class, executionYear);
+    }
+
+    public List<ResearchResultPublication> getTheses(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return this.getResearchResultPublicationsByType(Thesis.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    public List<ResearchResultPublication> getManuals() {
+	return this.getResearchResultPublicationsByType(Manual.class);
+    }
+
+    public List<ResearchResultPublication> getManuals(ExecutionYear executionYear) {
+	return this.getResearchResultPublicationsByType(Manual.class, executionYear);
+    }
+
+    public List<ResearchResultPublication> getManuals(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return this.getResearchResultPublicationsByType(Manual.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    public List<ResearchResultPublication> getTechnicalReports() {
+	return ResearchResultPublication.sort(this
+		.getResearchResultPublicationsByType(TechnicalReport.class));
+    }
+
+    public List<ResearchResultPublication> getTechnicalReports(ExecutionYear executionYear) {
+	return this.getResearchResultPublicationsByType(TechnicalReport.class, executionYear);
+    }
+
+    public List<ResearchResultPublication> getTechnicalReports(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return this.getResearchResultPublicationsByType(TechnicalReport.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    public List<ResearchResultPublication> getOtherPublications() {
+	return this.getResearchResultPublicationsByType(OtherPublication.class);
+    }
+
+    public List<ResearchResultPublication> getOtherPublications(ExecutionYear executionYear) {
+	return this.getResearchResultPublicationsByType(OtherPublication.class, executionYear);
+    }
+
+    public List<ResearchResultPublication> getOtherPublications(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return this.getResearchResultPublicationsByType(OtherPublication.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    public List<ResearchResultPublication> getUnstructureds() {
+	return this.getResearchResultPublicationsByType(Unstructured.class);
+    }
+
+    public List<ResearchResultPublication> getUnstructureds(ExecutionYear executionYear) {
+	return this.getResearchResultPublicationsByType(Unstructured.class, executionYear);
+    }
+
+    public List<ResearchResultPublication> getUnstructureds(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
+	return this.getResearchResultPublicationsByType(Unstructured.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    
     //
     // Site
     //
@@ -1177,7 +1310,7 @@ public abstract class Party extends Party_Base {
      * appropriate site.
      * 
      * @return the newly created site or, if this party already contains a site,
-     *         the currently existing one
+     *         the currently existing one(publication.getYear())
      */
     public Site initializeSite() {
 	Site site = getSite();

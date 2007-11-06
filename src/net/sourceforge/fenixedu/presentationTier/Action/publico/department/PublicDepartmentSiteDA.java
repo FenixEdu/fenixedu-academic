@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -230,5 +231,11 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 	}
 
 	teachers.add(teacher);
+    }
+    
+    @Override
+    protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit,
+	    ExecutionYearIntervalBean bean) {
+	putPublicationsOnRequest(request, unit, bean, Boolean.TRUE);
     }
 }

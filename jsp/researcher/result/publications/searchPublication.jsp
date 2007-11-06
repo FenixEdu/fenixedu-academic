@@ -75,10 +75,10 @@
  
 				<logic:equal name="index" value="0">
 					<div class="switchNone">
-					<html:link page="<%="/search.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
+					<html:link page="<%="/publications/search.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
 					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
 					 , 
-					<html:link page="<%="/search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></html:link>								
+					<html:link page="<%="/publications/search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></html:link>								
 					</logic:greaterThan>
 					</div>
 					<div class="switchInline">
@@ -91,8 +91,8 @@
 				</logic:equal>
 				<logic:notEqual name="index" value="0">
 					<div class="switchNone">
-					<html:link page="<%="/search.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link> , 			
-					<html:link page="<%="/search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
+					<html:link page="<%="/publications/search.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link> , 			
+					<html:link page="<%="/publications/search.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
 					</div>
 					<div class="switchInline">
 					<a href="#" onclick="<%= "javascript:getElementById('searchForm').method.value='addNewSearchCriteria'; getElementById('searchForm').addIndex.value='" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 

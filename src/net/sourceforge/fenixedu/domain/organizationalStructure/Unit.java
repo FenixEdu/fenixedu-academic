@@ -39,7 +39,18 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.publication.Article;
+import net.sourceforge.fenixedu.domain.research.result.publication.Book;
+import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
+import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
+import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
+import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
+import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
+import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
@@ -60,22 +71,24 @@ public class Unit extends Unit_Base {
 
     public static OrderedRelationAdapter<Unit, Function> FUNCTION_ORDERED_ADAPTER;
     static {
-	FUNCTION_ORDERED_ADAPTER = new OrderedRelationAdapter<Unit, Function>("activeFunctions", "functionOrder"); 
+	FUNCTION_ORDERED_ADAPTER = new OrderedRelationAdapter<Unit, Function>("activeFunctions",
+		"functionOrder");
 	UnitFunction.addListener(FUNCTION_ORDERED_ADAPTER);
-    }	
-    static final private ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt"));
+    }
+    static final private ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle(
+	    "resources.ApplicationResources", new Locale("pt"));
 
     protected Unit() {
 	super();
     }
 
-    protected void init(MultiLanguageString name, Integer costCenterCode, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification,
-	    Boolean canBeResponsibleOfSpaces, Campus campus) {
+    protected void init(MultiLanguageString name, Integer costCenterCode, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress,
+	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	setPartyName(name);
 	setAcronym(acronym);
-	if(getCostCenterCode() == null || !getCostCenterCode().equals(costCenterCode)) {
+	if (getCostCenterCode() == null || !getCostCenterCode().equals(costCenterCode)) {
 	    setCostCenterCode(costCenterCode);
 	}
 	setBeginDateYearMonthDay(beginDate);
@@ -85,31 +98,31 @@ public class Unit extends Unit_Base {
 	setCampus(campus);
 	updateDefaultWebAddress(webAddress);
     }
-    
+
     @Override
-    public void setPartyName(MultiLanguageString partyName) {               
+    public void setPartyName(MultiLanguageString partyName) {
 	super.setPartyName(partyName);
 	setName(partyName.getPreferedContent());
     }
-    
+
     public String getName() {
 	return getPartyName().getPreferedContent();
     }
-    
+
     public void setName(String name) {
-	
-	if(name == null || StringUtils.isEmpty(name.trim())) {
+
+	if (name == null || StringUtils.isEmpty(name.trim())) {
 	    throw new DomainException("error.person.empty.name");
 	}
-	
+
 	MultiLanguageString partyName = getPartyName();
 	partyName = partyName == null ? new MultiLanguageString() : partyName;
 	partyName.setContent(LanguageUtils.getSystemLanguage(), name);
-	
+
 	super.setPartyName(partyName);
-	
+
 	UnitName unitName = getUnitName();
-	unitName = unitName == null ? new UnitName(this) : unitName;	
+	unitName = unitName == null ? new UnitName(this) : unitName;
 	unitName.setName(name);
     }
 
@@ -118,10 +131,10 @@ public class Unit extends Unit_Base {
 	setAcronym(acronym);
     }
 
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification,
-	    Department department, Degree degree, AdministrativeOffice administrativeOffice,
-	    Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress,
+	    UnitClassification classification, Department department, Degree degree,
+	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	init(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
 		canBeResponsibleOfSpaces, campus);
@@ -145,66 +158,67 @@ public class Unit extends Unit_Base {
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
 	final YearMonthDay start = getBeginDateYearMonthDay();
-	final YearMonthDay end = getEndDateYearMonthDay();	
+	final YearMonthDay end = getEndDateYearMonthDay();
 	return start != null && (end == null || !start.isAfter(end));
     }
 
     public void delete() {
-	
+
 	if (!canBeDeleted()) {
 	    throw new DomainException("error.unit.cannot.be.deleted");
 	}
-	
+
 	if (hasAnyParentUnits()) {
 	    getParents().get(0).delete();
 	}
-	
+
 	if (hasSite()) {
 	    getSite().delete();
 	}
 
-	for (; !getUnitFileTagsSet().isEmpty(); getUnitFileTags().get(0).delete());
-	
+	for (; !getUnitFileTagsSet().isEmpty(); getUnitFileTags().get(0).delete())
+	    ;
+
 	getUnitName().delete();
 	getFunctionalityPrinters().clear();
 	getAllowedPeopleToUploadFiles().clear();
-	
+
 	removeRootDomainObjectForEarthUnit();
 	removeRootDomainObjectForExternalInstitutionUnit();
 	removeRootDomainObjectForInstitutionUnit();
-	removeCampus();	
-		
-	super.delete();														
+	removeCampus();
+
+	super.delete();
     }
 
     private boolean canBeDeleted() {
 	return (!hasAnyParents() || (getParentsCount() == 1 && getParentUnits().size() == 1))
-	&& !hasAnyChilds() && !hasAnyFunctions() && !hasAnyVigilantGroups()		
-	&& !hasAnyAssociatedNonAffiliatedTeachers() && !hasAnyPayedGuides()
-	&& !hasAnyPayedReceipts() && !hasAnyExtraPayingUnitAuthorizations()
-	&& !hasAnyExtraWorkingUnitAuthorizations() && !hasAnyExternalCurricularCourses()
-	&& !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate()
-	&& !hasAnyResearchInterests() && !hasAnyProjectParticipations()
-	&& !hasAnyParticipations() && !hasAnyBoards()
-	&& (!hasSite() || getSite().canBeDeleted()) && !hasAnyOwnedReceipts()
-	&& !hasAnyCreatedReceipts() && !hasAnyProtocols() && !hasAnyPartnerProtocols()
-	&& !hasAnyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations()
-	&& !hasAnyExamCoordinators() && !hasAnyExtraWorkRequests() && !hasAnyExternalRegistrationDatas()
-	&& !hasAnyUnitExtraWorkAmounts() && !hasAnyCooperation() && !hasAnyFiles()
-	&& !hasAnyPersistentGroups();
+		&& !hasAnyChilds() && !hasAnyFunctions() && !hasAnyVigilantGroups()
+		&& !hasAnyAssociatedNonAffiliatedTeachers() && !hasAnyPayedGuides()
+		&& !hasAnyPayedReceipts() && !hasAnyExtraPayingUnitAuthorizations()
+		&& !hasAnyExtraWorkingUnitAuthorizations() && !hasAnyExternalCurricularCourses()
+		&& !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate()
+		&& !hasAnyResearchInterests() && !hasAnyProjectParticipations()
+		&& !hasAnyParticipations() && !hasAnyBoards()
+		&& (!hasSite() || getSite().canBeDeleted()) && !hasAnyOwnedReceipts()
+		&& !hasAnyCreatedReceipts() && !hasAnyProtocols() && !hasAnyPartnerProtocols()
+		&& !hasAnyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations()
+		&& !hasAnyExamCoordinators() && !hasAnyExtraWorkRequests()
+		&& !hasAnyExternalRegistrationDatas() && !hasAnyUnitExtraWorkAmounts()
+		&& !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups();
     }
 
     @Override
     public Campus getCampus() {
 
-	Campus campus = super.getCampus();        
+	Campus campus = super.getCampus();
 
-	if(campus != null) {
+	if (campus != null) {
 	    return campus;
 	}
 
 	Collection<Unit> parentUnits = getParentUnits();
-	if(parentUnits.size() == 1) {
+	if (parentUnits.size() == 1) {
 	    campus = parentUnits.iterator().next().getCampus();
 	}
 
@@ -328,7 +342,7 @@ public class Unit extends Unit_Base {
     final public Person getActiveUnitCoordinator(final YearMonthDay yearMonthDay) {
 	for (final Accountability accountability : getUnitCoordinatorFunction().getAccountabilitiesSet()) {
 	    if (accountability.isPersonFunction() && accountability.isActive(yearMonthDay)) {
-		return ((PersonFunction)accountability).getPerson();
+		return ((PersonFunction) accountability).getPerson();
 	    }
 	}
 
@@ -490,8 +504,8 @@ public class Unit extends Unit_Base {
     }
 
     public Collection<ExternalContract> getExternalPersons() {
-	return (Collection<ExternalContract>) getChildAccountabilities(
-		ExternalContract.class, AccountabilityTypeEnum.WORKING_CONTRACT);
+	return (Collection<ExternalContract>) getChildAccountabilities(ExternalContract.class,
+		AccountabilityTypeEnum.WORKING_CONTRACT);
     }
 
     public List<Contract> getWorkingContracts() {
@@ -514,7 +528,8 @@ public class Unit extends Unit_Base {
 	return contracts;
     }
 
-    public List<Contract> getContracts(YearMonthDay begin, YearMonthDay end, AccountabilityTypeEnum ... types) {
+    public List<Contract> getContracts(YearMonthDay begin, YearMonthDay end,
+	    AccountabilityTypeEnum... types) {
 	List<Contract> contracts = new ArrayList<Contract>();
 	for (Contract contract : getContracts(types)) {
 	    if (contract.belongsToPeriod(begin, end)) {
@@ -524,7 +539,7 @@ public class Unit extends Unit_Base {
 	return contracts;
     }
 
-    public Collection<Contract> getContracts(AccountabilityTypeEnum ... types) {
+    public Collection<Contract> getContracts(AccountabilityTypeEnum... types) {
 	return (Collection<Contract>) getChildAccountabilities(Contract.class, types);
     }
 
@@ -743,10 +758,9 @@ public class Unit extends Unit_Base {
 			|| partyTypeEnum.equals(PartyTypeEnum.PLANET)
 			|| partyTypeEnum.equals(PartyTypeEnum.COUNTRY)
 			|| partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
-			|| partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY) 
-			|| partyTypeEnum.equals(PartyTypeEnum.SCHOOL)
-			|| partyTypeEnum.equals(PartyTypeEnum.RESEARCH_UNIT)	
-		)) {
+			|| partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY)
+			|| partyTypeEnum.equals(PartyTypeEnum.SCHOOL) || partyTypeEnum
+			.equals(PartyTypeEnum.RESEARCH_UNIT))) {
 
 	    for (Unit unit : readAllUnits()) {
 		if (unit.getAcronym() != null && unit.getAcronym().equals(acronym)
@@ -788,13 +802,14 @@ public class Unit extends Unit_Base {
 		Unit.class);
     }
 
-    public static Unit createNewUnit(MultiLanguageString unitName, Integer costCenterCode, String acronym,
-	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+    public static Unit createNewUnit(MultiLanguageString unitName, Integer costCenterCode,
+	    String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	Unit unit = new Unit();
-	unit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);
+	unit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+		canBeResponsibleOfSpaces, campus);
 	if (parentUnit != null && accountabilityType != null) {
 	    unit.addParentUnit(parentUnit, accountabilityType);
 	}
@@ -808,8 +823,11 @@ public class Unit extends Unit_Base {
     public static Unit createNewNoOfficialExternalInstitution(String unitName, Country country) {
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	Unit noOfficialExternalInstitutionUnit = new Unit();
-	noOfficialExternalInstitutionUnit.init(new MultiLanguageString(LanguageUtils.getSystemLanguage(), unitName), null, null, new YearMonthDay(), null, null, null, null, null);
-	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+	noOfficialExternalInstitutionUnit.init(new MultiLanguageString(
+		LanguageUtils.getSystemLanguage(), unitName), null, null, new YearMonthDay(), null,
+		null, null, null, null);
+	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
+		.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	noOfficialExternalInstitutionUnit.setCountry(country);
 	return noOfficialExternalInstitutionUnit;
     }
@@ -819,7 +837,7 @@ public class Unit extends Unit_Base {
 
 	if (Party.readByContributorNumber(contributorNumber) != null) {
 	    throw new DomainException(
-	    "EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
+		    "EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
 	}
 
 	final Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
@@ -886,8 +904,8 @@ public class Unit extends Unit_Base {
 
     public String getNameWithAcronym() {
 	String name = getName().trim();
-	return (getAcronym() == null || StringUtils.isEmpty(getAcronym().trim())) ? name :
-	    name + " ("	+ getAcronym().trim() + ")";
+	return (getAcronym() == null || StringUtils.isEmpty(getAcronym().trim())) ? name : name + " ("
+		+ getAcronym().trim() + ")";
     }
 
     public String getPresentationName() {
@@ -913,7 +931,8 @@ public class Unit extends Unit_Base {
     }
 
     public String getParentUnitsPresentationNameWithBreakLine() {
-	return getParentUnitsPresentationName(applicationResourcesBundle.getString("label.html.breakLine"));
+	return getParentUnitsPresentationName(applicationResourcesBundle
+		.getString("label.html.breakLine"));
     }
 
     public String getParentUnitsPresentationName() {
@@ -950,7 +969,8 @@ public class Unit extends Unit_Base {
 	while (searchedUnit.getParentUnits().size() == 1) {
 	    Unit parentUnit = searchedUnit.getParentUnits().iterator().next();
 	    parentUnits.add(0, parentUnit);
-	    if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit && parentUnit != earthUnit) {
+	    if (parentUnit != institutionUnit && parentUnit != externalInstitutionUnit
+		    && parentUnit != earthUnit) {
 		searchedUnit = parentUnit;
 		continue;
 	    }
@@ -1016,14 +1036,17 @@ public class Unit extends Unit_Base {
 	    throw new DomainException("error.merge.external.units.invalid.units");
 	}
 
-	Collection<? extends Accountability> externalContracts = fromUnit.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);	
-	destinationUnit.getChilds().addAll(externalContracts);	
+	Collection<? extends Accountability> externalContracts = fromUnit
+		.getChildAccountabilitiesByAccountabilityClass(ExternalContract.class);
+	destinationUnit.getChilds().addAll(externalContracts);
 	destinationUnit.getPayedReceipts().addAll(fromUnit.getPayedReceipts());
 	destinationUnit.getPayedGuides().addAll(fromUnit.getPayedGuides());
 	destinationUnit.getResultUnitAssociations().addAll(fromUnit.getResultUnitAssociations());
-	destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(fromUnit.getAssociatedNonAffiliatedTeachers());
-	destinationUnit.getPrecedentDegreeInformations().addAll(fromUnit.getPrecedentDegreeInformations());	
-	
+	destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(
+		fromUnit.getAssociatedNonAffiliatedTeachers());
+	destinationUnit.getPrecedentDegreeInformations().addAll(
+		fromUnit.getPrecedentDegreeInformations());
+
 	fromUnit.delete();
     }
 
@@ -1038,17 +1061,6 @@ public class Unit extends Unit_Base {
 
     public boolean isSiteAvailable() {
 	return hasSite();
-    }
-
-    public List<ResearchResultPublication> getResearchResultPublications() {
-	Set<ResearchResultPublication> publications = new HashSet<ResearchResultPublication>();
-
-	for (ResultUnitAssociation association : getResultUnitAssociations()) {
-	    if (association.getResult() instanceof ResearchResultPublication) {
-		publications.add((ResearchResultPublication) association.getResult());
-	    }
-	}
-	return new ArrayList<ResearchResultPublication>(publications);
     }
 
     public List<ResearchResultPatent> getAssociatedPatents() {
@@ -1129,7 +1141,7 @@ public class Unit extends Unit_Base {
     }
 
     public MultiLanguageString getNameI18n() {
-	return getPartyName(); 
+	return getPartyName();
     }
 
     public List<ExtraWorkRequest> getExtraWorkRequests(int year, Month month, int hoursDoneInYear,
@@ -1137,7 +1149,7 @@ public class Unit extends Unit_Base {
 	Partial partialDate = new Partial().with(DateTimeFieldType.year(), year).with(
 		DateTimeFieldType.monthOfYear(), month.ordinal() + 1);
 	Partial hoursDonePartialDate = new Partial().with(DateTimeFieldType.year(), hoursDoneInYear)
-	.with(DateTimeFieldType.monthOfYear(), hoursDoneInMonth.ordinal() + 1);
+		.with(DateTimeFieldType.monthOfYear(), hoursDoneInMonth.ordinal() + 1);
 	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
 	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
 	    if (extraWorkRequest.getPartialPayingDate().equals(partialDate)
@@ -1186,7 +1198,6 @@ public class Unit extends Unit_Base {
 	return getPresentationNameWithParents();
     }
 
-
     public List<IGroup> getGroups() {
 	List<IGroup> groups = new ArrayList<IGroup>();
 	groups.addAll(getDefaultGroups());
@@ -1200,7 +1211,7 @@ public class Unit extends Unit_Base {
 
     public boolean isUserAbleToDefineGroups(Person person) {
 	UnitSite site = getSite();
-	return (site == null) ? false : site.getManagers().contains(person); 
+	return (site == null) ? false : site.getManagers().contains(person);
     }
 
     public boolean isCurrentUserAbleToDefineGroups() {
@@ -1233,7 +1244,7 @@ public class Unit extends Unit_Base {
 		continue;
 	    }
 	    result.add(function);
-	}	
+	}
 	return result;
     }
 
@@ -1264,8 +1275,7 @@ public class Unit extends Unit_Base {
 	if (this == RootDomainObject.getInstance().getInstitutionUnit()) {
 	    // TODO: to be removed if institution unit becomes a specific class
 	    return InstitutionSite.initialize();
-	}
-	else {
+	} else {
 	    return new UnitSite(this);
 	}
     }
@@ -1274,7 +1284,7 @@ public class Unit extends Unit_Base {
     public UnitSite initializeSite() {
 	return (UnitSite) super.initializeSite();
     }
-    
+
     @Override
     public List<Function> getFunctions() {
 	List<Function> result = new ArrayList<Function>();
@@ -1285,4 +1295,282 @@ public class Unit extends Unit_Base {
 	}
 	return result;
     }
+
+    /*
+     * ResearchResultPublication getters
+     */
+
+    public List<ResearchResultPublication> getBooks(Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Book.class, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getBooks(ExecutionYear executionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Book.class, executionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getBooks(ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Book.class, firstExecutionYear,
+		lastExecutionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getInbooks(Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(BookPart.class, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getInbooks(ExecutionYear executionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(BookPart.class, executionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getInbooks(ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(BookPart.class, firstExecutionYear,
+		lastExecutionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getArticles(ScopeType locationType, Boolean checkSubunits) {
+	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class,
+		checkSubunits), locationType);
+    }
+
+    public List<ResearchResultPublication> getArticles(ScopeType locationType,
+	    ExecutionYear executionYear, Boolean checkSubunits) {
+	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class,
+		executionYear, checkSubunits), locationType);
+    }
+
+    public List<ResearchResultPublication> getArticles(ScopeType locationType,
+	    ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class,
+		firstExecutionYear, lastExecutionYear, checkSubunits), locationType);
+    }
+
+    public List<ResearchResultPublication> getArticles(Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Article.class, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getArticles(ExecutionYear executionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Article.class, executionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getArticles(ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Article.class, firstExecutionYear,
+		lastExecutionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ScopeType locationType, Boolean checkSubunits) {
+	return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class,
+		checkSubunits), locationType);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ScopeType locationType,
+	    ExecutionYear executionYear, Boolean checkSubunits) {
+	return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class,
+		executionYear, checkSubunits), locationType);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ScopeType locationType,
+	    ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class,
+		firstExecutionYear, lastExecutionYear, checkSubunits), locationType);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Inproceedings.class, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ExecutionYear executionYear,
+	    Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Inproceedings.class, executionYear,
+		checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getInproceedings(ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Inproceedings.class, firstExecutionYear,
+		lastExecutionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getProceedings(Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Proceedings.class, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getProceedings(ExecutionYear executionYear,
+	    Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Proceedings.class, executionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getProceedings(ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Proceedings.class, firstExecutionYear,
+		lastExecutionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getTheses(Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Thesis.class, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getTheses(ExecutionYear executionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Thesis.class, executionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getTheses(ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Thesis.class, firstExecutionYear,
+		lastExecutionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getManuals(Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Manual.class, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getManuals(ExecutionYear executionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Manual.class, executionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getManuals(ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Manual.class, firstExecutionYear,
+		lastExecutionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getTechnicalReports(Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(TechnicalReport.class, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getTechnicalReports(ExecutionYear executionYear,
+	    Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(TechnicalReport.class, executionYear,
+		checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getTechnicalReports(ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(TechnicalReport.class, firstExecutionYear,
+		lastExecutionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getOtherPublications(Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(OtherPublication.class, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getOtherPublications(ExecutionYear executionYear,
+	    Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(OtherPublication.class, executionYear,
+		checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getOtherPublications(ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(OtherPublication.class, firstExecutionYear,
+		lastExecutionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getUnstructureds(Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Unstructured.class, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getUnstructureds(ExecutionYear executionYear,
+	    Boolean checkSubunits) {
+	return this
+		.getResearchResultPublicationsByType(Unstructured.class, executionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getUnstructureds(ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return this.getResearchResultPublicationsByType(Unstructured.class, firstExecutionYear,
+		lastExecutionYear, checkSubunits);
+    }
+
+    public List<ResearchResultPublication> getResearchResultPublications() {
+	Set<ResearchResultPublication> publications = new HashSet<ResearchResultPublication>();
+
+	for (ResultUnitAssociation association : getResultUnitAssociations()) {
+	    if (association.getResult() instanceof ResearchResultPublication) {
+		publications.add((ResearchResultPublication) association.getResult());
+	    }
+	}
+	return new ArrayList<ResearchResultPublication>(publications);
+    }
+
+    public List<ResearchResultPublication> getResearchResultPublications(Boolean checkSubunits) {
+
+	List<ResearchResultPublication> publications = new ArrayList<ResearchResultPublication>(
+		getResearchResultPublications());
+
+	if (checkSubunits.equals(Boolean.TRUE)) {
+
+	    Set<ResearchResultPublication> uniquePublications = new HashSet<ResearchResultPublication>(
+		    publications);
+	    for (Unit unit : getAllSubUnits()) {
+		uniquePublications.addAll(unit.getResearchResultPublications());
+	    }
+
+	    return new ArrayList<ResearchResultPublication>(uniquePublications);
+	}
+
+	return publications;
+
+    }
+
+    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
+	    final Class<? extends ResearchResultPublication> clazz, Boolean checkSubunits) {
+	return filterResultPublicationsByType(clazz, getResearchResultPublications(checkSubunits));
+    }
+
+    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
+	    final Class<? extends ResearchResultPublication> clazz, ExecutionYear executionYear,
+	    Boolean checkSubunits) {
+	return filterResultPublicationsByType(clazz, getResearchResultPublicationsByExecutionYear(
+		executionYear, checkSubunits));
+    }
+
+    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
+	    final Class<? extends ResearchResultPublication> clazz, ExecutionYear firstExecutionYear,
+	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+	return filterResultPublicationsByType(clazz, getResearchResultPublicationsByExecutionYear(
+		firstExecutionYear, lastExecutionYear, checkSubunits));
+    }
+
+    protected List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(
+	    ExecutionYear executionYear, Boolean checkSubunits) {
+
+	List<ResearchResultPublication> publications = getResearchResultPublicationsByExecutionYear(executionYear);
+
+	if (checkSubunits.equals(Boolean.TRUE)) {
+
+	    Set<ResearchResultPublication> uniquePublications = new HashSet<ResearchResultPublication>(
+		    publications);
+	    for (Unit unit : getAllSubUnits()) {
+		uniquePublications.addAll(unit
+			.getResearchResultPublicationsByExecutionYear(executionYear));
+	    }
+
+	    return new ArrayList<ResearchResultPublication>(uniquePublications);
+	}
+
+	return publications;
+    }
+
+    protected List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(
+	    ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear, Boolean checkSubunits) {
+
+	List<ResearchResultPublication> publications = getResearchResultPublicationsByExecutionYear(
+		firstExecutionYear, lastExecutionYear);
+
+	if (checkSubunits.equals(Boolean.TRUE)) {
+	    Set<ResearchResultPublication> uniquePublications = new HashSet<ResearchResultPublication>(
+		    publications);
+	    for (Unit unit : getAllSubUnits()) {
+		uniquePublications.addAll(unit.getResearchResultPublicationsByExecutionYear(
+			firstExecutionYear, lastExecutionYear));
+	    }
+
+	    return new ArrayList<ResearchResultPublication>(uniquePublications);
+	}
+
+	return publications;
+    }
+
 }
