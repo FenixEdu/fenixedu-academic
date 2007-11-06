@@ -140,10 +140,11 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
 
 	case ENROLMENT_WITH_RULES:
 	    result.append("(").append(resourceBundle.getString("label.student.enrollment.withRules")).append(")");
+	    break;
 
 	case ENROLMENT_NO_RULES:
 	    result.append("(").append(resourceBundle.getString("label.student.enrollment.withoutRules")).append(")");
-
+	    break;
 	}
 
 	return result.toString();
