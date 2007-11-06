@@ -86,7 +86,7 @@ public class Attends extends Attends_Base {
     }
 
     private boolean canDelete() {
-	//if (hasAnyShiftEnrolments()) throw new DomainException("error.attends.cant.delete");
+	if (hasAnyShiftEnrolments()) throw new DomainException("error.attends.cant.delete");
 	if (hasAnyStudentGroups()) throw new DomainException("error.attends.cant.delete");
 	if (hasAnyAssociatedMarks()) throw new DomainException("error.attends.cant.delete");
 	if (hasAnyProjectSubmissions()) throw new DomainException("error.attends.cant.delete");
