@@ -170,7 +170,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	parameters.put("nationality", StringUtils.multipleLineRightPad("de nacionalidade " + nationality, LINE_LENGTH, '-'));
     }
 
-    final private String getDegreeDescription() {
+    final protected String getDegreeDescription() {
 	return getDocumentRequest().getRegistration().getDegreeDescription();
     }
     
