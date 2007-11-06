@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 public class ParkingCardSearchBean implements Serializable {
@@ -34,6 +35,8 @@ public class ParkingCardSearchBean implements Serializable {
     private ParkingCardSearchPeriod parkingCardSearchPeriod;
 
     private ParkingCardUserState parkingCardUserState;
+
+    private ParkingCardUserState parkingCardState;
 
     public enum ParkingCardSearchPeriod {
 	ENDS_BEFORE_ONE_MONTH, ENDS_BEFORE_TWO_MONTHS, ENDED_UNTIL_ONE_MONTH_AGO, ENDED_UNTIL_SIX_MONTHS_AGO, ENDED_UNTIL_ONE_YEAR_AGO;
@@ -62,6 +65,7 @@ public class ParkingCardSearchBean implements Serializable {
 
     public ParkingCardSearchBean() {
 	setParkingCardUserState(ParkingCardUserState.ALL);
+	setParkingCardState(ParkingCardUserState.ALL);
     }
 
     public void doSearch() {
@@ -75,7 +79,29 @@ public class ParkingCardSearchBean implements Serializable {
 
     private boolean satisfiesSearch(ParkingParty parkingParty) {
 	return satisfiesGroup(parkingParty) && satisfiesEndDate(parkingParty)
-		&& satisfiesState(parkingParty) && satisfiesPeriodCriteria(parkingParty);
+		&& satisfiesUserState(parkingParty) && satisfiesPeriodCriteria(parkingParty)
+		&& satisfiesCardState(parkingParty);
+    }
+
+    private boolean satisfiesCardState(ParkingParty parkingParty) {
+	switch (getParkingCardState()) {
+	case ALL:
+	    return Boolean.TRUE;
+	case ACTIVE:
+	    if (parkingParty.getCardEndDate() == null) {
+		return Boolean.TRUE;
+	    } else {
+		return new Interval(parkingParty.getCardStartDate(), parkingParty.getCardEndDate())
+			.contains(new DateTime());
+	    }
+	default:
+	    if (parkingParty.getCardEndDate() == null) {
+		return Boolean.FALSE;
+	    } else {
+		return !new Interval(parkingParty.getCardStartDate(), parkingParty.getCardEndDate())
+			.contains(new DateTime());
+	    }
+	}
     }
 
     private boolean satisfiesPeriodCriteria(ParkingParty parkingParty) {
@@ -121,7 +147,7 @@ public class ParkingCardSearchBean implements Serializable {
 	return getParkingGroup() == parkingParty.getParkingGroup();
     }
 
-    private boolean satisfiesState(ParkingParty parkingParty) {
+    private boolean satisfiesUserState(ParkingParty parkingParty) {
 	if (parkingParty.getParty().isPerson() && ((Person) parkingParty.getParty()).isExternalPerson()) {
 	    return Boolean.TRUE;
 	}
@@ -226,5 +252,13 @@ public class ParkingCardSearchBean implements Serializable {
 		break;
 	    }
 	}
+    }
+
+    public ParkingCardUserState getParkingCardState() {
+	return parkingCardState;
+    }
+
+    public void setParkingCardState(ParkingCardUserState parkingCardState) {
+	this.parkingCardState = parkingCardState;
     }
 }

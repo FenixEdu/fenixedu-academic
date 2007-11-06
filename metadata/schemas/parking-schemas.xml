@@ -419,6 +419,9 @@
 		<property name="size" value="10"/>		
 	</slot>
 	<slot name="parkingCardSearchPeriod" key="label.cardSearchPeriod"/>
+	<slot name="parkingCardState" key="label.parkingState" layout="radio">
+		<property name="classes" value="liinline"/>
+	</slot>	
 </schema>
 
 <schema name="show.searchedParkingCards" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
