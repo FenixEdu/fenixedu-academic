@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ScientificAreaMemberGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeachersAndInstitutionSiteManagersGroup;
@@ -185,6 +186,7 @@ public class GroupBuilderRegistry {
         register("currentDegreeScientificComissionMembers", CurrentDegreeScientificCommissionMembersGroup.class, new CurrentDegreeScientificCommissionMembersGroup.Builder());
         register("assiduousnessManagers", ManagementGroups.class, new ManagementGroups.AssiduousnessManagerGroupBuilder());
         register("assiduousnessSectionStaff", ManagementGroups.class, new ManagementGroups.AssiduousnessSectionStaffGroupBuilder());
+        register("scientificAreaMembers", ScientificAreaMemberGroup.class, new ScientificAreaMemberGroup.Builder());
         register("payrollSectionStaff", ManagementGroups.class, new ManagementGroups.PayrollSectionStaffGroupBuilder());
         registerGroupsWithNoArguments();
     }

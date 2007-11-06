@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.PedagogicalCouncilSite;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCouncilSite;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
@@ -20,7 +21,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.UnitFunctionalities;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -48,35 +48,45 @@ public class ViewFilesDA extends UnitFunctionalities {
 			researchUnitsGroup.add(new PersonFileSourceBean(unit));
 		}
 		
+		MultiLanguageString scientificAreaName = MultiLanguageString.i18n().add("pt", "Áreas Ciêntificas").add("en", "Scientific Areas").finish();
+		PersonFileSourceGroupBean scientificAreaUnits = new PersonFileSourceGroupBean(scientificAreaName);
+
+		SortedSet<Unit> scientificAreas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
+		scientificAreas.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.SCIENTIFIC_AREA));
+		for (Unit unit : scientificAreas) {
+		    scientificAreaUnits.add(new PersonFileSourceBean(unit));
+		}
+		
 		PersonFileSourceBean pedagogicalCouncil = new PersonFileSourceBean(PedagogicalCouncilSite.getSite().getUnit());
 		
 		PersonFileSourceBean scientific = new PersonFileSourceBean(ScientificCouncilSite.getSite().getUnit());
 		
 		result.add(departmentsGroup);
 		result.add(researchUnitsGroup);
+		result.add(scientificAreaUnits);
 		result.add(pedagogicalCouncil);
 		result.add(scientific);
 		
 		Collections.sort(result, PersonFileSource.COMPARATOR);
 		
-		filterSources(result);
+		filterSources(result, getLoggedPerson(request));
 		
 		request.setAttribute("sources", result);
 		
 		return mapping.findForward("showSources");
 	}
 	
-	private void filterSources(List<PersonFileSource> result) {
+	private void filterSources(List<PersonFileSource> result, Person person) {
 		Iterator<PersonFileSource> iterator = result.iterator();
 		
 		while (iterator.hasNext()) {
 			PersonFileSource source = iterator.next();
 			
-			if (source.getCount() == 0) {
+			if (source.getCount() == 0 && !source.isAllowedToUpload(person)) {
 				iterator.remove();
 			}
 			else {
-				filterSources(source.getChildren());
+				filterSources(source.getChildren(), person);
 			}
 		}
 	}

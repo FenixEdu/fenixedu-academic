@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>	
@@ -73,7 +74,7 @@
 						</html:link>
 					</li>																
 				</logic:equal>
-			</logic:notEmpty>	
+				</logic:notEmpty>	
 		</ul>	
 		<%
 			IUserView user = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -94,11 +95,11 @@
 	
 		
 		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
-		<bean:define id="unit" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit" toScope="request"/>
+		<bean:define id="unit" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit"/>
 		<bean:define id="unitID" name="unit" property="idInternal"/>
 		
 		<ul>	
-		<li class="navheader"><bean:message key="title.unit.communication.section" bundle="RESEARCHER_RESOURCES"/></li>
+		<li class="navheader"><fr:view name="unit" property="acronym"/></li>
 			<ul>
 				<li>
 					<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&unitId=" + unitID %>">
@@ -115,8 +116,35 @@
 			</ul>
 		</li>
 		</ul>
-		</logic:notEmpty>
 		
+			<logic:notEmpty name="unit" property="allSubUnits">
+				<ul>
+				<logic:iterate id="subUnit" name="unit" property="allSubUnits">
+					<logic:equal name="subUnit" property="scientificAreaUnit"  value="true">
+						<logic:equal name="subUnit" property="currentUserMemberOfScientificArea" value="true">
+							<bean:define id="subUnitID" name="subUnit" property="idInternal"/>
+							<li class="navheader"><fr:view name="subUnit" property="name"/></li>
+									<ul>
+										<li>
+											<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&unitId=" + subUnitID %>">
+												<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
+											 </html:link>
+										 </li>	
+										  <logic:equal name="subUnit" property="currentUserAbleToDefineGroups" value="true">
+										  <li>
+											 <html:link page="<%= "/departmentFunctionalities.do?method=configureGroups&unitId=" + subUnitID %>"><bean:message key="label.configurePersistentGroups" bundle="RESEARCHER_RESOURCES"/>
+											 </html:link>
+										  </li>
+										  </logic:equal>
+										  <li><html:link page="<%= "/departmentFunctionalities.do?method=manageFiles&unitId=" + subUnitID %>"><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></html:link></li>						
+									</ul>							
+						</logic:equal>
+					</logic:equal>
+				</logic:iterate>
+				</ul>
+			</logic:notEmpty>
+			
+		</logic:notEmpty>
 		
 		<logic:notEmpty name="UserView" property="person.protocols">
 			<ul style="margin-top: 1em">

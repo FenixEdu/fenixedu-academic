@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -42,5 +43,11 @@ public class PersonFileSourceBean implements PersonFileSource {
 	public List<PersonFileSource> getChildren() {
 		return Collections.emptyList();
 	}
+
+	public boolean isAllowedToUpload(Person person) {
+	    return getUnit().isUserAllowedToUploadFiles(person);
+	}
+	
+	
 	
 }

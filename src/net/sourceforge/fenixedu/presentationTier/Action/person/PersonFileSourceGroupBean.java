@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -51,5 +52,14 @@ public class PersonFileSourceGroupBean implements PersonFileSource {
 		}
 
 		return this.count;
+	}
+
+	public boolean isAllowedToUpload(Person person) {
+	    for(PersonFileSource child : getChildren()) {
+		if(child.isAllowedToUpload(person)) {
+		    return true;
+		}
+	    }
+	    return false;
 	}
 }

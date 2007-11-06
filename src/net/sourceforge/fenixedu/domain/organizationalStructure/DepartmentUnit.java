@@ -214,4 +214,5 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	protected UnitSite createSite() {
 		return new DepartmentSite(this);
 	}
+	
 }

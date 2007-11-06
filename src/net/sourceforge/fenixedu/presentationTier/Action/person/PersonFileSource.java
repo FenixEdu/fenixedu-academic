@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public interface PersonFileSource extends Serializable {
@@ -36,5 +37,5 @@ public interface PersonFileSource extends Serializable {
 	public MultiLanguageString getName();
 	public List<PersonFileSource> getChildren();
 	public int getCount();
-	
+	public boolean isAllowedToUpload(Person person);
 }
