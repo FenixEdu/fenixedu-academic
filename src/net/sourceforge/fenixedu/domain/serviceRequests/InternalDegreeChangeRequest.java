@@ -22,18 +22,25 @@ public class InternalDegreeChangeRequest extends InternalDegreeChangeRequest_Bas
     protected void init(final Registration registration, final DegreeCurricularPlan destination, final Boolean urgentRequest, final Boolean freeProcessed) {
 	super.init(registration, urgentRequest, freeProcessed);
 	checkParameters(destination);
+	checkIfCanCreate(registration, destination);
 	super.setDestination(destination);
     }
     
+    private void checkIfCanCreate(final Registration registration, final DegreeCurricularPlan destination) {
+	if (registration.getLastDegreeCurricularPlan() == destination) {
+	    throw new DomainException("error.serviceRequests.InternalDegreeChangeRequest.destinationDegreeCurricularPlan.must.be.different.from.source");
+	}
+    }
+
     private void checkParameters(final DegreeCurricularPlan sourceDegreeCurricularPlan) {
 	if (sourceDegreeCurricularPlan == null) {
-	    throw new DomainException("error.serviceRequests.PersonAcademicServiceRequest.sourceDegreeCurricularPlan.cannot.be.null");
+	    throw new DomainException("error.serviceRequests.InternalDegreeChangeRequest.sourceDegreeCurricularPlan.cannot.be.null");
 	}
     }
 
     @Override
     public void setDestination(DegreeCurricularPlan destination) {
-        throw new DomainException("error.serviceRequests.ExternalDegreeChangeRequest.cannot.modify.destinationDegreeCurricularPlan");
+        throw new DomainException("error.serviceRequests.InternalDegreeChangeRequest.cannot.modify.destinationDegreeCurricularPlan");
     }
     
     @Override
