@@ -64,11 +64,6 @@ asd
 				<bean:message key="link.inquiries.teachers" bundle="INQUIRIES_RESOURCES"/>
 			</a>
 		</li>
-		<li>
-			<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_ROOM_FORM_ANCHOR %>'>
-				<bean:message key="link.inquiries.rooms" bundle="INQUIRIES_RESOURCES"/>
-			</a>
-		</li>
 	</ol>
 
 	<html:form action="/fillInquiries">
@@ -175,11 +170,6 @@ asd
 				3.
 				<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_TEACHER_FORM_ANCHOR %>'>
 					<bean:message key="link.inquiries.teachers" bundle="INQUIRIES_RESOURCES"/>
-				</a>
-				&nbsp;|&nbsp;
-				4.
-				<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_ROOM_FORM_ANCHOR %>'>
-					<bean:message key="link.inquiries.rooms" bundle="INQUIRIES_RESOURCES"/>
 				</a>
 			</p>
 			--%>
@@ -465,11 +455,6 @@ asd
 					3.
 					<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_TEACHER_FORM_ANCHOR %>'>
 						<bean:message key="link.inquiries.teachers" bundle="INQUIRIES_RESOURCES"/>
-					</a>
-					&nbsp;|&nbsp;
-					4.
-					<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_ROOM_FORM_ANCHOR %>'>
-						<bean:message key="link.inquiries.rooms" bundle="INQUIRIES_RESOURCES"/>
 					</a>
 				</p>
 				--%>
@@ -1240,11 +1225,6 @@ asd
 				<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_TEACHER_FORM_ANCHOR %>'>
 					<bean:message key="link.inquiries.teachers" bundle="INQUIRIES_RESOURCES"/>
 				</a>
-				&nbsp;|&nbsp;
-				4.
-				<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_ROOM_FORM_ANCHOR %>'>
-					<bean:message key="link.inquiries.rooms" bundle="INQUIRIES_RESOURCES"/>
-				</a>
 			</p>
 			--%>
 
@@ -1253,210 +1233,8 @@ asd
 
 
 
-		<div id='<%= InquiriesUtil.ATTENDING_COURSE_ROOM_FORM_ANCHOR  %>' class="block">
-			<h2>
-				4. <bean:message key="header.inquiries.rooms.form" bundle="INQUIRIES_RESOURCES"/>
-			</h2>
-			
-			<logic:present name='<%= InquiriesUtil.ATTENDING_COURSE_ROOMS %>'>
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newAttendingCourseRoomId" property="newAttendingCourseRoomId" />
-				<bean:define id="evaluateRoom">
-					<bean:message key="message.inquiries.anchor.title.evaluate.room" bundle="INQUIRIES_RESOURCES"/>
-				</bean:define>
-
-				<div class="block2">
-					<bean:define id="buttonValue">
-						<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
-					</bean:define>
-					<bean:define id="buttonTitle">
-						<bean:message key="button.title.inquiries.new.room.evaluation" bundle="INQUIRIES_RESOURCES"/>
-					</bean:define>
-					
-					<p><bean:message key="title.inquiries.choose.room" bundle="INQUIRIES_RESOURCES"/></p>
-					<ul>
-						<logic:iterate id="attendingCourseRoom" name='<%= InquiriesUtil.ATTENDING_COURSE_ROOMS %>' type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInquiriesRoom">
-							<bean:define id="currentRoomId" name="attendingCourseRoom" property="idInternal"/>
-							<li>
-								<logic:notPresent name="attendingCourseRoom" property="inquiriesRoom">
-									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton"
-										onclick='<%="this.form.method.value='prepareNewRoom';this.form.newAttendingCourseRoomId.value='" + currentRoomId + "';" %>'
-										value='<%= buttonValue %>' title='<%= buttonTitle %>'/>
-									&gt;
-								</logic:notPresent>
-								<logic:present name="attendingCourseRoom" property="inquiriesRoom">
-									<input alt="input.input" type="submit" class="inquirybutton" disabled="disabled" value='<%= buttonValue %>' />
-									&gt;
-								</logic:present>
-								<bean:message key="label.inquiries.room" bundle="INQUIRIES_RESOURCES"/>
-								<bean:write name="attendingCourseRoom" property="nome" />
-
-								<%--c:if test="${attendingCourseRoom.alreadyEvaluatedFlag}">
-									<bean:write name="attendingCourseRoom" property="nome" />
-								</c:if--%>
-							</li>
-					</logic:iterate>
-					</ul>
-				</div>
-			</logic:present>
-
-			<logic:present name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_ROOMS %>'>
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomId" property="selectedAttendingCourseRoomId" />
-
-				<logic:iterate id="selectedAttendingCourseRoom" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_ROOMS %>' indexId="roomPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom">
-					<bean:define id="selectedAttendingCourseRoomId" name="selectedAttendingCourseRoom" property="room.idInternal" />
-
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomsId" property="selectedAttendingCourseRoomsId" value='<%= "" + selectedAttendingCourseRoomId %>'/>
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomsQuestion41" property="selectedAttendingCourseRoomsQuestion41" value='<%= "" + selectedAttendingCourseRoom.getSpaceAdequation() %>' />
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomsQuestion42" property="selectedAttendingCourseRoomsQuestion42" value='<%= "" + selectedAttendingCourseRoom.getEnvironmentalConditions() %>' />
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomsQuestion43" property="selectedAttendingCourseRoomsQuestion43" value='<%= "" + selectedAttendingCourseRoom.getEquipmentQuality() %>' />
+		<div class="block">
 		
-					<c:if test="${selectedAttendingCourseRoomId == currentAttendingCourseRoom.room.idInternal}">
-						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.currentAttendingCourseRoomId" property="currentAttendingCourseRoomId" value='<%= selectedAttendingCourseRoomId.toString() %>'/>
-						<table id='<%= InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM_FORM_ANCHOR  %>'>
-							<tr>
-								<td class="top" colspan="2">
-									<strong>
-										<bean:write name="selectedAttendingCourseRoom" property="room.nome" />
-									</strong>
-								</td>
-							</tr>
-		
-							<logic:present name='<%= InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM_FORM_ERROR %>'>
-								<tr>
-									<td class="top" colspan="2">
-										<font class="error">
-											<bean:message key="error.message.inquiries.current.attending.course.room.form" bundle="INQUIRIES_RESOURCES" />
-										</font>
-									</td>
-								</tr>				
-							</logic:present>
-
-							<tr>
-								<td class="top" colspan="2">
-									<bean:message key="message.inquiries.how.evaluate" bundle="INQUIRIES_RESOURCES"/>
-								</td>
-							</tr>				
-
-							<tr>
-								<td class="left">
-									4.1 <bean:message key="table.rowname.inquiries.room.form.space.adequation" bundle="INQUIRIES_RESOURCES"/>
-								</td>
-								<td class="right">
-									<table class="radio">
-										<tr>
-											<c:forTokens items="1,2,3,4,5" delims="," var="int">
-												<td>
-													<c:out value="${int}"/>
-												</td>
-											</c:forTokens>
-										</tr>
-										<tr>
-											<c:forTokens items="1,2,3,4,5" delims="," var="int">
-													<bean:define id="i">
-														<c:out value="${int}"/>
-													</bean:define>
-												<td>
-													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseRoomQuestion41" property="currentAttendingCourseRoomQuestion41" value='<%= i %>'/>
-												</td>
-											</c:forTokens>
-										</tr>
-									</table>
-								</td>
-							</tr>
-
-							<tr>
-								<td class="left">
-									4.2 <bean:message key="table.rowname.inquiries.room.form.environmental.conditions" bundle="INQUIRIES_RESOURCES"/>
-								</td>
-								<td class="right">
-									<table class="radio">
-										<tr>
-											<c:forTokens items="1,2,3,4,5" delims="," var="int">
-												<td>
-													<c:out value="${int}"/>
-												</td>
-											</c:forTokens>
-										</tr>
-										<tr>
-											<c:forTokens items="1,2,3,4,5" delims="," var="int">
-													<bean:define id="i">
-														<c:out value="${int}"/>
-													</bean:define>
-												<td>
-													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseRoomQuestion42" property="currentAttendingCourseRoomQuestion42" value='<%= i %>'/>
-												</td>
-											</c:forTokens>
-										</tr>
-									</table>
-								</td>
-							</tr>
-
-							<tr>
-								<td class="left">
-									4.3 <bean:message key="table.rowname.inquiries.room.form.equipment.quality" bundle="INQUIRIES_RESOURCES"/>
-								</td>
-								<td class="right">
-									<table class="radio">
-										<tr>
-											<c:forTokens items="1,2,3,4,5" delims="," var="int">
-												<td>
-													<c:out value="${int}"/>
-												</td>
-											</c:forTokens>
-										</tr>
-										<tr>
-											<c:forTokens items="1,2,3,4,5" delims="," var="int">
-													<bean:define id="i">
-														<c:out value="${int}"/>
-													</bean:define>
-												<td>
-													<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.currentAttendingCourseRoomQuestion43" property="currentAttendingCourseRoomQuestion43" value='<%= i %>'/>
-												</td>
-											</c:forTokens>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							
-							<tr>
-								<td class="left" colspan="2">
-									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='closeRoom';" %>'>
-										<bean:message key="button.inquiries.confirm.evaluation" bundle="INQUIRIES_RESOURCES"/>
-									</html:submit>
-									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='removeRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
-										<bean:message key="button.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
-									</html:submit>
-								</td>
-							</tr>
-						</table>
-					</c:if>
-
-					<c:if test="${selectedAttendingCourseRoomId != currentAttendingCourseRoom.room.idInternal}">
-						<table>
-							<tr>
-								<td class="top" colspan="2">
-									<strong>
-								<bean:write name="selectedAttendingCourseRoom" property="room.nome" />
-									</strong>
-								</td>
-							</tr>
-							<tr>
-								<td class="left" colspan="2">
-									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='editRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
-										<bean:message key="button.inquiries.edit.evaluation" bundle="INQUIRIES_RESOURCES"/>
-									</html:submit>
-									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inquirybutton" onclick='<%="this.form.method.value='removeRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
-										<bean:message key="button.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
-									</html:submit>
-								</td>
-							</tr>
-						</table>
-
-					</c:if>
-
-				</logic:iterate>
-			</logic:present>
-
 			<p class="navbottom">
 				1.
 				<a href='<%= "#" + InquiriesUtil.STUDENT_FORM_ANCHOR %>'>
@@ -1471,11 +1249,6 @@ asd
 				3.
 				<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_TEACHER_FORM_ANCHOR %>'>
 					<bean:message key="link.inquiries.teachers" bundle="INQUIRIES_RESOURCES"/>
-				</a>
-				&nbsp;|&nbsp;
-				4.
-				<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_ROOM_FORM_ANCHOR %>'>
-					<bean:message key="link.inquiries.rooms" bundle="INQUIRIES_RESOURCES"/>
 				</a>
 			</p>
 
