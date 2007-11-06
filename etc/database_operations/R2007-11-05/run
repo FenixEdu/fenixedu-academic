@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add key person column to AcademicServiceRequest table" alterAcademicServiceRequestTable.sql
