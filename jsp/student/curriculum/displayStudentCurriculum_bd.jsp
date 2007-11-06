@@ -94,7 +94,11 @@
 
 	<logic:equal name="registration" property="concluded" value="false">
 
-		<logic:equal name="registration" property="degree.bolonhaDegree" value="false">
+		<%
+			request.setAttribute("toShow", registration.getDegreeType().hasExactlyOneCycleType());
+		%>
+
+		<logic:equal name="toShow" value="true">
 
 			<p class="mtop1 mbottom1">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
