@@ -290,7 +290,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (getBeginTime() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.hour"));
 			}
-			if (isOverlapingAnotherAssiduousnessRecord()) {
+			if (isOverlapingAnotherAssiduousnessRecord(null)) {
 			    return new ActionMessage(
 				    "errors.regularizationOverlapingAnotherAssiduousnessRecord");
 			}
@@ -542,7 +542,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.required", bundle.getString("label.hour"));
 			}
 
-			if (isOverlapingAnotherAssiduousnessRecord()) {
+			if (isOverlapingAnotherAssiduousnessRecord((MissingClocking) getJustification())) {
 			    return new ActionMessage(
 				    "errors.regularizationOverlapingAnotherAssiduousnessRecord");
 			}
@@ -962,7 +962,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	return false;
     }
 
-    protected boolean isOverlapingAnotherAssiduousnessRecord() {
+    protected boolean isOverlapingAnotherAssiduousnessRecord(MissingClocking missingClocking) {
 	final List<Leave> leaves = getEmployee().getAssiduousness().getLeaves(getBeginDate(),
 		getBeginDate());
 	DateTime date = getBeginDate().toDateTime(getBeginTime());
@@ -984,7 +984,12 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	}
 
 	if (!clockings.isEmpty()) {
-	    return true;
+	    if (clockings.contains(missingClocking) && clockings.size() == 1) {
+		return Boolean.FALSE;
+	    } else {
+		return Boolean.TRUE;
+	    }
+
 	}
 	return false;
     }
