@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 public class SendMailBackingBean extends FenixBackingBean {
 
-    private String from = null;
+    private String from = "no-reply@ist.utl.pt";
     private String to = null;
     private String ccs = null;
     private String bccs = null;
