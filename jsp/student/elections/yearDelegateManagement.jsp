@@ -158,19 +158,25 @@
 	
 	<logic:present name="candidatesBeanList">
 		<logic:notEmpty name="candidatesBeanList">	
+		
 		<h4><bean:message key="label.elections.candidatesList" bundle="APPLICATION_RESOURCES" /></h4>
+		<p class="mtop1 mbottom05">
+			<span class="warning0"><bean:message key="message.warning.votingDelegate" bundle="DELEGATES_RESOURCES" /></span>	
+		</p>
 		<table class="tstyle2 mtop15 tdleft">
 			<logic:iterate id="candidate" name="candidatesBeanList">	
+			
 					<tr>			
 						<td class="personInfo_photo">
-				          	<logic:notEqual name="candidate" property="student.person.photoPubliclyAvailable" value="true">
+						
+				          	<logic:notEqual name="candidate" property="student.person.availablePhoto" value="true">
 				          		<bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
 								<div><img src="<%= request.getContextPath() %>/images/photo_placer01_<%= language == null ? "pt" : String.valueOf(language) %>.gif"/></div>
 				          	</logic:notEqual>
 				
-				          	<logic:equal name="candidate" property="student.person.photoPubliclyAvailable" value="true">
-				      			<bean:define id="homepageID" name="candidate" property="student.person.homepage.idInternal"/>
-				      			<div><img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>"/></div>
+				          	<logic:equal name="candidate" property="student.person.availablePhoto" value="true">
+				      			<bean:define id="personID" name="candidate" property="student.person.idInternal"/>
+				      			<div><img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>"/></div>
 				   			</logic:equal>
 						</td>			
 									
@@ -203,6 +209,10 @@
 		<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
 		
 		<h4><bean:message key="label.elections.otherStudentsList" bundle="APPLICATION_RESOURCES" /></h4>
+		<p class="mtop1 mbottom05">
+			<span class="warning0"><bean:message key="message.warning.votingDelegate" bundle="DELEGATES_RESOURCES" /></span>	
+		</p>
+		
 		<fr:edit id="otherStudentsBeanList" name="otherStudentsBeanList" layout="tabular-editable" schema="student.yearDelegateElection.vote">
 			<fr:layout>
 				<fr:property name="classes" value="tstyle1 thlight tdcenter mtop05 mbottom05"/>
