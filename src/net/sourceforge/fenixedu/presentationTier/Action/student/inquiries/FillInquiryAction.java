@@ -1063,8 +1063,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 	IUserView userView = SessionUtils.getUserView(request);
 
-	final Registration registration = userView.getPerson().getStudent()
-			.getLastActiveRegistration();
+	final Registration registration = findAvailableRegistration(userView.getPerson());
 	// Obtaining the information on the student
 	InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
 	if (infoStudent == null) {
