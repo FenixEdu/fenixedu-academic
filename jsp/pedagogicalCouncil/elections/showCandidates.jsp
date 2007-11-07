@@ -60,7 +60,7 @@
 		<fr:view name="candidatesWithoutPhotos" layout="tabular-sortable" schema="yearDelegateElection.candidates" >
 			<fr:layout>
 				<fr:property name="classes" value="tstyle2 thlight tdcenter mtop05"/>
-				<fr:property name="columnClasses" value="width80px,width200px aleft"/>
+				<fr:property name="columnClasses" value="width80px,aleft"/>
 				<fr:property name="sortParameter" value="sortBy"/>
 				<fr:property name="sortableSlots" value="number,person.name"/>
 	           	<fr:property name="sortUrl" value="<%= String.format("/electionsPeriodsManagement.do?method=showCandidates&amp;selectedCandidacyPeriod=" +electionOID ) %>"/>

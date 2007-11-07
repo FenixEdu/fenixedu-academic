@@ -20,6 +20,6 @@
 <fr:view name="delegates" schema="<%= roleSchema %>">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight thcenter tdcenter mtop0"/>
-		<fr:property name="columnClasses" value="aleft nowrap,width200px aleft nowrap,,,"/>
+		<fr:property name="columnClasses" value="aleft nowrap,aleft nowrap,,,"/>
 	</fr:layout>
 </fr:view>

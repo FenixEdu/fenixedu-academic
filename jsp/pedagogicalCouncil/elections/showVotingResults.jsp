@@ -53,7 +53,7 @@
 		<fr:view name="votingResultsByStudent" layout="tabular-sortable" schema="yearDelegateElection.showResults" >
 			<fr:layout>
 				<fr:property name="classes" value="tstyle2 thlight tdcenter mtop0"/>
-				<fr:property name="columnClasses" value="width80px,width200px aleft,,"/>
+				<fr:property name="columnClasses" value="width80px,aleft,,"/>
 				<fr:property name="sortParameter" value="sortBy"/>
 				<fr:property name="sortableSlots" value="student.number,student.person.name,votesNumber,votesRelativePercentage"/>
             	<fr:property name="sortUrl" value="<%= String.format("/electionsPeriodsManagement.do?method=showVotingResults&amp;selectedVotingPeriod=" + electionOID) %>"/>

@@ -56,7 +56,7 @@
 		<fr:view name="votingResultsByStudent" layout="tabular-sortable" schema="yearDelegateElection.showResults.completeInfo" >
 			<fr:layout>
 				<fr:property name="classes" value="tstyle1 thlight tdcenter mtop0"/>
-				<fr:property name="columnClasses" value=",width200px aleft,,,,,"/>
+				<fr:property name="columnClasses" value=",aleft,,,,,"/>
 				<fr:property name="link(add)" value="/delegatesManagement.do?method=addYearDelegate" />
 				<fr:property name="param(add)" value="student.idInternal/selectedStudent,election.idInternal/selectedElection"/>
 				<fr:property name="key(add)" value="link.delegates.addRole"/>

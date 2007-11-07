@@ -13,7 +13,7 @@
 
 <logic:messagesPresent message="true">
 	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-		<p><span class="error"><bean:write name="message" /></span></p>
+		<p><span class="warning0"><bean:write name="message" /></span></p>
 	</html:messages>
 </logic:messagesPresent>
 
@@ -41,7 +41,7 @@
 						<fr:view name="yearDelegateResultsElection" layout="tabular-sortable" schema="student.yearDelegateElection.showResults" >
 							<fr:layout>
 								<fr:property name="classes" value="tstyle2 thlight tdcenter mtop0"/>
-								<fr:property name="columnClasses" value="width80px,width200px aleft,,"/>
+								<fr:property name="columnClasses" value="width80px,aleft,,"/>
 								<fr:property name="sortParameter" value="sortBy"/>
 								<fr:property name="sortableSlots" value="student.number,student.person.name,votesNumber,votesRelativePercentage"/>
 				            	<fr:property name="sortUrl" value="/yearDelegateManagement.do?method=prepare"/>
@@ -108,11 +108,11 @@
 	<logic:notPresent name="notVotedYearDelegate" >
 		<logic:present name="candidates" >
 			<logic:notEmpty name="candidates">
-				<h4><bean:message key="label.elections.candidatesList" bundle="APPLICATION_RESOURCES" /></h4>	
+				<p><strong><bean:message key="label.elections.candidatesList" bundle="APPLICATION_RESOURCES" /></strong></p>
 				<fr:view name="candidates" layout="tabular-sortable" schema="student.yearDelegateElection.candidates" >
 					<fr:layout>
 						<fr:property name="classes" value="tstyle2 thlight thleft tdleft mtop0"/>
-						<fr:property name="columnClasses" value="width80px, width200px"/>
+						<fr:property name="columnClasses" value="width80px,"/>
 						<fr:property name="sortParameter" value="sortBy"/>
 						<fr:property name="sortableSlots" value="number,person.name"/>
 		            	<fr:property name="sortUrl" value="<%= String.format("/yearDelegateManagement.do?method=prepare") %>"/>
@@ -137,16 +137,19 @@
 		</fr:layout>
 	</fr:view>
 
-	<p class="mtop2">
-		<span class="warning0"><bean:message key="label.elections.votingPeriod.voted" bundle="APPLICATION_RESOURCES" /></span></p>
+	<p>
+		<span class="warning0"><bean:message key="label.elections.votingPeriod.voted" bundle="APPLICATION_RESOURCES" /></span>
+	</p>
 </logic:present>
 
 <!-- STUDENT THAT HAS NOT VOTED YET -->
 <logic:present name="notVotedYearDelegate" >
 	<p class="mtop1 mbottom05">
 		<b><bean:message key="label.elections.votingPeriod" bundle="APPLICATION_RESOURCES"/></b></p>
-	<p class="color888 mvert05">
-		<bean:message key="label.elections.votingPeriod.notVoted.help" bundle="APPLICATION_RESOURCES" /></p>
+		
+	<p class="infoop2">
+		<bean:message key="label.elections.votingPeriod.notVoted.help" bundle="APPLICATION_RESOURCES" />
+	</p>
 	
 	<fr:view name="notVotedYearDelegate" layout="tabular-nonNullValues" schema="student.elections.electionPeriod" >
 		<fr:layout>
@@ -209,14 +212,11 @@
 		<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
 		
 		<h4><bean:message key="label.elections.otherStudentsList" bundle="APPLICATION_RESOURCES" /></h4>
-		<p class="mtop1 mbottom05">
-			<span class="warning0"><bean:message key="message.warning.votingDelegate" bundle="DELEGATES_RESOURCES" /></span>	
-		</p>
 		
 		<fr:edit id="otherStudentsBeanList" name="otherStudentsBeanList" layout="tabular-editable" schema="student.yearDelegateElection.vote">
 			<fr:layout>
 				<fr:property name="classes" value="tstyle1 thlight tdcenter mtop05 mbottom05"/>
-				<fr:property name="columnClasses" value=",width200px aleft,"/>
+				<fr:property name="columnClasses" value=",aleft,"/>
 			</fr:layout>
 		<fr:destination name="invalid" path="/yearDelegateManagement.do?method=vote" />
 		<fr:destination name="postBack" path="/yearDelegateManagement.do?method=vote"/>
