@@ -1894,8 +1894,16 @@ public class Registration extends Registration_Base {
 	return getCurriculum(executionYear).getCurricularYear();
     }
 
-    final public boolean isConcluded() {
+    public boolean isConcluded() {
 	return getActiveStateType() == RegistrationStateType.CONCLUDED;
+    }
+    
+    public boolean isInterrupted() {
+	return getActiveStateType() == RegistrationStateType.INTERRUPTED;
+    }
+    
+    public boolean isFlunked() {
+	return getActiveStateType() == RegistrationStateType.FLUNKED;
     }
     
     public boolean isRegistrationConclusionProcessed() {
