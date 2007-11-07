@@ -208,6 +208,8 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	ResultPublicationType resultPublicationType = bean.getPublicationType();
 
 	if (resultPublicationType == null) {
+	    request.setAttribute("articles", ResearchResultPublication.sort(unit.getArticles(
+		    firstExecutionYear, finalExecutionYear, checkSubunits)));
 	    request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(
 		    firstExecutionYear, finalExecutionYear, checkSubunits)));
 	    request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(
