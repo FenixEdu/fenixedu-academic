@@ -45,4 +45,10 @@ public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleEx
 			sourceDegreeModuleToEvaluate.getName());
     }
 
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+	return true;
+    }
+
 }

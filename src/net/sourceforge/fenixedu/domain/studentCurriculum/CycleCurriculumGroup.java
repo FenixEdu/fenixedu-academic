@@ -66,6 +66,11 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	}
 	super.setDegreeModule(degreeModule);
     }
+    
+    @Override
+    public CycleCourseGroup getDegreeModule() {
+        return (CycleCourseGroup) super.getDegreeModule();
+    }
 
     @Override
     public boolean isCycleCurriculumGroup() {
@@ -116,6 +121,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
 	super.delete();
     }
+    
 
     private void checkRulesToDelete() {
 	if (!getCurriculumGroup().getDegreeType().canRemoveEnrolmentIn(getCycleType())) {

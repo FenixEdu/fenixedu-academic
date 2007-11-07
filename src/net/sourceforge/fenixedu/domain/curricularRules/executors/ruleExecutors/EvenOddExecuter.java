@@ -52,4 +52,10 @@ public class EvenOddExecuter extends CurricularRuleExecutor {
 	return (number & 1) != 0;
     }
 
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+	return true;
+    }
+
 }

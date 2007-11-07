@@ -22,6 +22,11 @@ abstract public class CurricularRuleExecutor {
 
     public RuleResult execute(final ICurricularRule curricularRule, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
 	    final EnrolmentContext enrolmentContext) {
+	
+	if(!canBeEvaluated(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext)) {
+	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+	}
+	
 	switch (enrolmentContext.getCurricularRuleLevel()) {
 	case ENROLMENT_WITH_RULES:
 	    return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
@@ -173,5 +178,8 @@ abstract public class CurricularRuleExecutor {
 
     abstract protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+    
+    abstract protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext);
 
 }

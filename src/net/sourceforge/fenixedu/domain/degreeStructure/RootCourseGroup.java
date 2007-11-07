@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -125,6 +126,11 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 
     public boolean hasCycleGroups() {
 	return !getCycleCourseGroups().isEmpty();
+    }
+    
+    @Override
+    public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
+        return Collections.emptySet();
     }
 
 }

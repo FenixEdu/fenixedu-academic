@@ -46,4 +46,10 @@ public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluationExecutor extends 
 	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+	return true;
+    }
+
 }

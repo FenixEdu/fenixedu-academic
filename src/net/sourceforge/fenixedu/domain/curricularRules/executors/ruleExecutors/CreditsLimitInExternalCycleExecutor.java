@@ -167,4 +167,10 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
 			.getMaxCreditsInExternalCycle().toString());
     }
 
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+	return true;
+    }
+
 }

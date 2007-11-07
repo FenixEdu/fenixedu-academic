@@ -92,4 +92,10 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 
     }
 
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+	return true;
+    }
+
 }

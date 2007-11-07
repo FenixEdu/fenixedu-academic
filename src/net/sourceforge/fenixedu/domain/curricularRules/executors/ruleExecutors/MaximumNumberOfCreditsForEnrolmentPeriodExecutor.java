@@ -41,4 +41,10 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
 	return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+	return true;
+    }
+
 }

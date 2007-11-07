@@ -44,4 +44,10 @@ public class EnrolmentInSpecialSeasonEvaluationExecutor extends CurricularRuleEx
 	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+	return true;
+    }
+
 }

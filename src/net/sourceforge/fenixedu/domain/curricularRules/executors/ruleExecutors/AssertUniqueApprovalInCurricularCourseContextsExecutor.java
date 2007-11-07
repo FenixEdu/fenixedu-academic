@@ -70,4 +70,10 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
 	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+	return true;
+    }
+
 }

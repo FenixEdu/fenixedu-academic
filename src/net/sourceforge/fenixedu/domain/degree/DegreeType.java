@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -435,6 +436,12 @@ public enum DegreeType {
     public CycleType getLastCycleType() {
 	final Collection<CycleType> cycleTypes = getCycleTypes();
 	return cycleTypes.isEmpty() ? null : Collections.max(cycleTypes, CycleType.CYCLE_TYPE_COMPARATOR);
+    }
+    
+    public Collection<CycleType> getOrderedCycleTypes() {
+	TreeSet<CycleType> result = new TreeSet<CycleType>(CycleType.CYCLE_TYPE_COMPARATOR);
+	result.addAll(getCycleTypes());
+	return result;
     }
 
     public boolean canRemoveEnrolmentIn(final CycleType cycleType) {

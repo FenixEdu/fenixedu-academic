@@ -1,13 +1,17 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecutor {
 
@@ -119,6 +123,25 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
     protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+
+	RestrictionBetweenDegreeModules restrictionBetweenDegreeModules = (RestrictionBetweenDegreeModules) curricularRule;
+
+	Collection<CycleCourseGroup> cycleCourseGroups = restrictionBetweenDegreeModules.getPrecedenceDegreeModule()
+		.getParentCycleCourseGroups();
+	for (CycleCourseGroup cycleCourseGroup : cycleCourseGroups) {
+	    CycleCurriculumGroup cycleCurriculumGroup = (CycleCurriculumGroup) enrolmentContext.getStudentCurricularPlan()
+		    .findCurriculumGroupFor(cycleCourseGroup);
+	    if (cycleCurriculumGroup != null) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
 }

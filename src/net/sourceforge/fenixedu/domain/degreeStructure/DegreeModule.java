@@ -458,4 +458,20 @@ abstract public class DegreeModule extends DegreeModule_Base {
     
     abstract public Set<CurricularCourse> getAllCurricularCourses();
 
+    public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
+	Collection<CycleCourseGroup> res = new HashSet<CycleCourseGroup>();
+	for (CourseGroup courseGroup : getParentCourseGroups()) {
+	    res.addAll(courseGroup.getParentCycleCourseGroups());
+	}
+	return res;
+    }
+    
+    public Set<CourseGroup> getParentCourseGroups() {
+	Set<CourseGroup> res = new HashSet<CourseGroup>();
+	for (Context context : getParentContextsSet()) {
+	    res.add(context.getParentCourseGroup());
+	}
+	return res;
+    }
+
 }

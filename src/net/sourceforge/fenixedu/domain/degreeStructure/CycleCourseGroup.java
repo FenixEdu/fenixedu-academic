@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -68,4 +70,8 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 	return getCycleType() == CycleType.THIRD_CYCLE;
     }
 
+    @Override
+    public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
+        return Collections.singletonList(this);
+    }
 }

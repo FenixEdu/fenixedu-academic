@@ -65,4 +65,10 @@ public class ImprovementOfApprovedEnrolmentExecutor extends CurricularRuleExecut
 	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+	return true;
+    }
+
 }

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -21,11 +23,15 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
@@ -86,7 +92,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear = getCurricularCoursesToEnrolByYear(
 		previousYearsEnrolmentCurricularRule, enrolmentContext, sourceDegreeModuleToEvaluate, false);
 
-	//printCurricularCoursesToEnrol(curricularCoursesToEnrolByYear);
+	printCurricularCoursesToEnrol(curricularCoursesToEnrolByYear);
 
 	return hasAnyCurricularCoursesToEnrolInPreviousYears(enrolmentContext, curricularCoursesToEnrolByYear,
 		sourceDegreeModuleToEvaluate);
@@ -176,11 +182,32 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	    final EnrolmentContext enrolmentContext, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
 	    final boolean withTemporaryEnrolments) {
 	final Map<Integer, Set<CurricularCourse>> result = new HashMap<Integer, Set<CurricularCourse>>();
-
-	collectCourseGroupCurricularCoursesToEnrol(result, previousYearsEnrolmentCurricularRule.getDegreeModuleToApplyRule(),
-		new CollectContext(), enrolmentContext, sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
+	
+	for (CourseGroup courseGroup : getCourseGroupsToEvaluate(previousYearsEnrolmentCurricularRule.getDegreeModuleToApplyRule(), enrolmentContext)) {
+	    collectCourseGroupCurricularCoursesToEnrol(result, courseGroup,
+		    new CollectContext(), enrolmentContext, sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
+	}
 
 	return result;
+    }
+
+    private Collection<CourseGroup> getCourseGroupsToEvaluate(final CourseGroup courseGroup, final EnrolmentContext enrolmentContext) {
+	if(courseGroup.isRoot()) {
+	    final Collection<CourseGroup> res = new HashSet<CourseGroup>();
+	    for(final CycleType cycleType : enrolmentContext.getStudentCurricularPlan().getDegreeType().getCycleTypes()) {
+		CycleCurriculumGroup cycleCurriculumGroup = enrolmentContext.getStudentCurricularPlan().getRoot().getCycleCurriculumGroup(cycleType);
+		if(cycleCurriculumGroup != null) {
+		    if(cycleCurriculumGroup.isExternal()) {
+			throw new DomainException("error.cycleCurriculumGroup.cannot.be.external");
+		    }
+		    
+		    res.add(cycleCurriculumGroup.getDegreeModule());
+		}
+	    }
+	    return res;
+	} else {
+	    return Collections.singleton(courseGroup);
+	}
     }
 
     private void collectCourseGroupCurricularCoursesToEnrol(final Map<Integer, Set<CurricularCourse>> result,
@@ -730,5 +757,11 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+	return true;
     }
 }

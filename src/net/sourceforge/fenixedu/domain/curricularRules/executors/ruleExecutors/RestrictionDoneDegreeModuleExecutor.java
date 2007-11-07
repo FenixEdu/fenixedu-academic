@@ -1,12 +1,17 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor {
 
@@ -108,6 +113,25 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
     protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    @Override
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+	    EnrolmentContext enrolmentContext) {
+
+	RestrictionDoneDegreeModule restrictionDoneDegreeModule = (RestrictionDoneDegreeModule) curricularRule;
+
+	Collection<CycleCourseGroup> cycleCourseGroups = restrictionDoneDegreeModule.getPrecedenceDegreeModule()
+		.getParentCycleCourseGroups();
+	for (CycleCourseGroup cycleCourseGroup : cycleCourseGroups) {
+	    CycleCurriculumGroup cycleCurriculumGroup = (CycleCurriculumGroup) enrolmentContext.getStudentCurricularPlan()
+		    .findCurriculumGroupFor(cycleCourseGroup);
+	    if (cycleCurriculumGroup != null) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
 }
