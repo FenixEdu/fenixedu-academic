@@ -139,15 +139,8 @@ public class LibraryCardSearch implements Serializable {
 	}
 	for (Degree degree : Degree.readAllByDegreeType(degreeType)) {
 	    for (StudentCurricularPlan scp : degree.getStudentCurricularPlans(executionYear)) {
-		if (scp.getRegistration().isActive()) {
-		    if (!degreeType.equals(DegreeType.DEGREE)
-			    && !degreeType.equals(DegreeType.MASTER_DEGREE)) {
-			persons.add(scp.getRegistration().getPerson());
-		    } else { // *                                       
-			if (!scp.getRegistration().getStudent().hasTransitionRegistrations()) {
-			    persons.add(scp.getRegistration().getPerson());
-			}
-		    }
+		if (scp.getRegistration().isActive()) {		    
+		    persons.add(scp.getRegistration().getPerson());		
 		}
 	    }
 	}
@@ -155,6 +148,9 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private boolean satisfiesSearch(Person person) {
+	if(person.getIdInternal().equals(new Integer(140966))) {
+	    System.out.println("estado1: " );
+	}
 	return satisfiesCategory(person) && satisfiesNumber(person) && satisfiesUserName(person);
     }
 

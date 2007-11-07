@@ -936,8 +936,11 @@ public class ParkingRequest extends ParkingRequest_Base {
 	if (canBeDeleted()) {
 	    for (; getVehicles().size() != 0; getVehicles().get(0).delete())
 		;
+	    for (; getParkingDocuments().size() != 0; getParkingDocuments().get(0).delete())
+		;
 	    deleteDriverLicenseDocument();
-	    setParkingParty(null);
+	    removeParkingParty();
+	    removeRootDomainObject();
 	    deleteDomainObject();
 	}
     }

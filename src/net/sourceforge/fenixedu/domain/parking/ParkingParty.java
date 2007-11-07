@@ -348,6 +348,30 @@ public class ParkingParty extends ParkingParty_Base {
 	return occupations;
     }
 
+    public String getYearInformation() {
+	StringBuilder stringBuilder = new StringBuilder();
+	if (getParty().isPerson()) {
+	    Person person = (Person) getParty();
+	    Student student = person.getStudent();
+	    if (student != null && person.getPersonRole(RoleType.STUDENT) != null) {
+		if (student.getActiveRegistrations().size() == 1) {
+		    Registration registration = student.getActiveRegistrations().get(0);
+		    StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
+		    if (scp != null) {
+			if (!registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+			    stringBuilder.append(registration.getCurricularYear()).append("º ano");
+			    if (isFirstTimeEnrolledInCurrentYear(registration, registration
+				    .getCurricularYear())) {
+				stringBuilder.append(" - 1ª vez");
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return stringBuilder.toString();
+    }
+
     public boolean hasVehicleContainingPlateNumber(String plateNumber) {
 	String plateNumberLowerCase = plateNumber.toLowerCase();
 	for (Vehicle vehicle : getVehicles()) {
@@ -635,8 +659,8 @@ public class ParkingParty extends ParkingParty_Base {
 
     public void renewParkingCard(DateTime newEndDate, ParkingGroup newParkingGroup) {
 	setCardEndDate(newEndDate);
-	if(newParkingGroup != null) {
+	if (newParkingGroup != null) {
 	    setParkingGroup(newParkingGroup);
-	}	
+	}
     }
 }
