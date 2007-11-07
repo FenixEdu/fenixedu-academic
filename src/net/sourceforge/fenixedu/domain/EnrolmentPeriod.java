@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.joda.time.DateTime;
 
@@ -21,20 +20,18 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    protected void init(final DegreeCurricularPlan degreeCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final Date startDate, final Date endDate) {
-	setDegreeCurricularPlan(degreeCurricularPlan);
-	setExecutionPeriod(executionPeriod);
-	
-	if (!endDate.after(startDate)) {
-	    throw new DomainException("EnrolmentPeriod.end.date.must.be.after.start.date");
-	}
-	setStartDate(startDate);
-	setEndDate(endDate);
+    protected void init(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionPeriod executionPeriod,
+	    final Date startDate, final Date endDate) {
+	init(degreeCurricularPlan, executionPeriod, new DateTime(startDate), new DateTime(endDate));
     }
     
-    protected void init(final DegreeCurricularPlan degreeCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final DateTime startDate, final DateTime endDate) {
+    protected void init(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionPeriod executionPeriod,
+	    final DateTime startDate, final DateTime endDate) {
+
+	if (!endDate.isAfter(startDate)) {
+	    throw new DomainException("EnrolmentPeriod.end.date.must.be.after.start.date");
+	}
+	
 	setDegreeCurricularPlan(degreeCurricularPlan);
 	setExecutionPeriod(executionPeriod);
 	setStartDateDateTime(startDate);
@@ -42,13 +39,11 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
     }
 
     public boolean isValid() {
-	Date date = new Date();
-	return isValid(date);
+	return containsDate(new DateTime());
     }
 
-    public boolean isValid(Date date) {
-	return (DateFormatUtil.compareDates("yyyyMMddHHmm", this.getStartDate(), date) <= 0)
-		&& (DateFormatUtil.compareDates("yyyyMMddHHmm", this.getEndDate(), date) >= 0);
+    public boolean isValid(final Date date) {
+	return containsDate(new DateTime(date));
     }
 
     public boolean containsDate(DateTime date) {
