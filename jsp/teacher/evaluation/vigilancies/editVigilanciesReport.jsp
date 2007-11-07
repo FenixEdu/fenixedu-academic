@@ -35,7 +35,7 @@
 	}
 </script>
 	
-<form id="convokeForm" action="<%= request.getContextPath() + "/teacher/evaluation/vigilancy/vigilantsForEvaluation.do"%>">
+<form id="convokeForm" method="post" action="<%= request.getContextPath() + "/teacher/evaluation/vigilancy/vigilantsForEvaluation.do"%>">
 	<input type="hidden" name="evaluationOID" value="<%= evaluationId %>"/>
 	<input type="hidden" name="executionCourseID" value="<%= executionCourseId %>"/>
 	<input type="hidden" name="method" value=""/>
