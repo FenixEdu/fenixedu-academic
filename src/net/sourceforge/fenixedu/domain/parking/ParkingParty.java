@@ -360,13 +360,14 @@ public class ParkingParty extends ParkingParty_Base {
 
     public void delete() {
 	if (canBeDeleted()) {
-	    setParty(null);
-	    setParkingGroup(null);
+	    removeParty();
+	    removeParkingGroup();
 	    deleteDriverLicenseDocument();
 	    for (; getVehicles().size() != 0; getVehicles().get(0).delete())
 		;
 	    for (; getParkingRequests().size() != 0; getParkingRequests().get(0).delete())
 		;
+	    removeRootDomainObject();
 	    deleteDomainObject();
 	}
     }
