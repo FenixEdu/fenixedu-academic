@@ -662,8 +662,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    generateEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
 	    generateEnrolmentExecutionYearCell(enrolmentRow, enrolment);
 	    generateEnrolmentSemesterCell(enrolmentRow, enrolment);
-	    generateCellWithText(enrolmentRow, "-", getLastEnrolmentEvaluationTypeCellClass()); //enrolment evaluation date
-	    generateCellWithText(enrolmentRow, "-", getGradeResponsibleCellClass()); //grade responsible
+	    if (isToShowLatestEnrolmentEvaluationInfo()) {
+		generateCellWithText(enrolmentRow, "-", getLastEnrolmentEvaluationTypeCellClass()); //enrolment evaluation date
+		generateCellWithText(enrolmentRow, "-", getGradeResponsibleCellClass()); //grade responsible
+	    }
 	    generateSpacerCellsIfRequired(enrolmentRow);
 	}
 
