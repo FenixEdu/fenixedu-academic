@@ -561,12 +561,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public EnrolmentPeriodInCurricularCourses getActualEnrolmentPeriod() {
-	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
 	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) && enrolmentPeriod.isValid()) {
 		return (EnrolmentPeriodInCurricularCourses) enrolmentPeriod;
 	    }
 	}
 	return null;
+    }
+    
+    public boolean hasActualEnrolmentPeriodInCurricularCourses() {
+	return getActualEnrolmentPeriod() != null;
     }
     
     public EnrolmentPeriodInCurricularCoursesSpecialSeason getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() {
