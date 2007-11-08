@@ -561,8 +561,7 @@ public class Unit extends Unit_Base {
 	List<Employee> employees = getAllWorkingEmployees(begin, end);
 	for (Employee employee : employees) {
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null
-		    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
+	    if (teacher != null && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
 		teachers.add(teacher);
 	    }
 	}

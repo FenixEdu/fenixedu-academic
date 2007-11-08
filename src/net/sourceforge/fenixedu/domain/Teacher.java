@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.publication.Publication;
@@ -244,7 +246,17 @@ public class Teacher extends Teacher_Base {
 
     public TeacherProfessionalSituation getCurrentLegalRegimenWithoutSpecialSitutions() {
 	TeacherProfessionalSituation lastLegalRegimen = getLastLegalRegimenWithoutSpecialSituations();
-	return (lastLegalRegimen != null && lastLegalRegimen.isActive(new YearMonthDay())) ? lastLegalRegimen : null;
+	if(lastLegalRegimen != null) {	    
+	    if(lastLegalRegimen.isActive(new YearMonthDay())) {
+		return lastLegalRegimen;
+	    }	    
+	    EmployeeContract currentWorkingContract = (EmployeeContract) getEmployee().getCurrentWorkingContract();
+	    if(currentWorkingContract != null && currentWorkingContract.getTeacherContract() != null 
+		    && currentWorkingContract.getTeacherContract()) {
+		return lastLegalRegimen;
+	    }
+	}	
+	return null;
     }
 
     public TeacherProfessionalSituation getLastLegalRegimenWithoutSpecialSituations() {
@@ -263,8 +275,7 @@ public class Teacher extends Teacher_Base {
 	return regimenToReturn;
     }
 
-    public TeacherProfessionalSituation getLastLegalRegimenWithoutSpecialSituations(YearMonthDay begin,
-	    YearMonthDay end) {
+    public TeacherProfessionalSituation getLastLegalRegimenWithoutSpecialSituations(YearMonthDay begin, YearMonthDay end) {
 	YearMonthDay date = null, current = new YearMonthDay();
 	TeacherProfessionalSituation regimenToReturn = null;
 	for (TeacherProfessionalSituation regimen : getAllLegalRegimensWithoutSpecialSituations(begin, end)) {
@@ -280,8 +291,7 @@ public class Teacher extends Teacher_Base {
 	return regimenToReturn;
     }
 
-    public List<TeacherProfessionalSituation> getAllLegalRegimensWithoutSpecialSituations(YearMonthDay beginDate,
-	    YearMonthDay endDate) {
+    public List<TeacherProfessionalSituation> getAllLegalRegimensWithoutSpecialSituations(YearMonthDay beginDate, YearMonthDay endDate) {
 	Set<TeacherProfessionalSituation> legalRegimens = new HashSet<TeacherProfessionalSituation>();
 	for (TeacherProfessionalSituation legalRegimen : getLegalRegimens()) {
 	    if (!legalRegimen.isEndSituation() && !legalRegimen.isFunctionAccumulation()

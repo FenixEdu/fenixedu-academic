@@ -49,32 +49,32 @@ public class Department extends Department_Base {
     }
 
     public List<Employee> getAllCurrentActiveWorkingEmployees() {
-	Unit departmentUnit = this.getDepartmentUnit();
+	Unit departmentUnit = getDepartmentUnit();
 	return (departmentUnit != null) ? departmentUnit.getAllCurrentActiveWorkingEmployees() : new ArrayList<Employee>();
     }
 
     public List<Employee> getAllWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
-	Unit departmentUnit = this.getDepartmentUnit();
+	Unit departmentUnit = getDepartmentUnit();
 	return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees(begin, end) : new ArrayList<Employee>();
     }
 
     public List<Employee> getAllWorkingEmployees() {
-	Unit departmentUnit = this.getDepartmentUnit();
+	Unit departmentUnit = getDepartmentUnit();
 	return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees() : new ArrayList<Employee>();
     }
 
     public List<Teacher> getAllCurrentTeachers() {
-	Unit departmentUnit = this.getDepartmentUnit();
+	Unit departmentUnit = getDepartmentUnit();
 	return (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers() : new ArrayList<Teacher>();
     }
 
     public List<Teacher> getAllTeachers() {
-	Unit departmentUnit = this.getDepartmentUnit();
+	Unit departmentUnit = getDepartmentUnit();
 	return (departmentUnit != null) ? departmentUnit.getAllTeachers() : new ArrayList<Teacher>();
     }
 
     public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
-	Unit departmentUnit = this.getDepartmentUnit();
+	Unit departmentUnit = getDepartmentUnit();
 	return (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>();
     }
 

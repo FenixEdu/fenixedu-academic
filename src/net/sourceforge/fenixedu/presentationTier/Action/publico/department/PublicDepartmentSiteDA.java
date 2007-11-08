@@ -178,13 +178,11 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
     }
 
     private void setupTeachersCategories(HttpServletRequest request, Department department) {
-	YearMonthDay today = new YearMonthDay();
-	YearMonthDay tomorrow = today.plusDays(1);
 
 	SortedSet<Category> categories = new TreeSet<Category>();
 	Map<String, SortedSet<Teacher>> teachers = new Hashtable<String, SortedSet<Teacher>>();
 
-	for (Teacher teacher : department.getAllTeachers(today, tomorrow)) {
+	for (Teacher teacher : department.getAllCurrentTeachers()) {
 	    categories.add(teacher.getCategory());
 	    addListTeacher(teachers, teacher.getCategory().getCode(), teacher);
 	}
@@ -194,14 +192,12 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
     }
 
     private void setupTeachersAreas(HttpServletRequest request, Department department) {
-	YearMonthDay today = new YearMonthDay();
-	YearMonthDay tomorrow = today.plusDays(1);
 
 	SortedSet<Unit> areas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
 	SortedSet<Teacher> teachersNoArea = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
 	Map<String, SortedSet<Teacher>> teachers = new Hashtable<String, SortedSet<Teacher>>();
 
-	for (Teacher teacher : department.getAllTeachers(today, tomorrow)) {
+	for (Teacher teacher : department.getAllCurrentTeachers()) {
 	    Unit area = teacher.getCurrentSectionOrScientificArea();
 
 	    if (area != null) {

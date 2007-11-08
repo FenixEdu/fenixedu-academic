@@ -85,8 +85,7 @@ public class Employee extends Employee_Base {
     }
 
     public Collection<Contract> getContractsByContractType(AccountabilityTypeEnum contractType) {
-	return (Collection<Contract>) getPerson().getParentAccountabilities(contractType,
-		EmployeeContract.class);
+	return (Collection<Contract>) getPerson().getParentAccountabilities(contractType, EmployeeContract.class);
     }
 
     public List<Contract> getContractsByContractType(AccountabilityTypeEnum contractType,

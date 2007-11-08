@@ -8,11 +8,13 @@ import org.joda.time.YearMonthDay;
 
 public class EmployeeContract extends EmployeeContract_Base {
     
-    public EmployeeContract(Person person, YearMonthDay beginDate, YearMonthDay endDate, Unit unit, AccountabilityTypeEnum contractType) {
+    public EmployeeContract(Person person, YearMonthDay beginDate, YearMonthDay endDate, Unit unit, AccountabilityTypeEnum contractType, 
+	    Boolean teacherContract) {
         super();
         super.init(person, beginDate, endDate, unit);
 	AccountabilityType accountabilityType = AccountabilityType.readAccountabilityTypeByType(contractType);
 	setAccountabilityType(accountabilityType);
+	setTeacherContract(teacherContract);
     }
     
     @Override
@@ -30,6 +32,19 @@ public class EmployeeContract extends EmployeeContract_Base {
 	}
 	return null;
     } 
+    
+    public Boolean isTeacherContract() {
+	return getTeacherContract();
+    }
+    
+    @Override
+    public void setTeacherContract(Boolean teacherContract) {
+        if(teacherContract == null && getAccountabilityType() != null &&
+        	getAccountabilityType().getType().equals(AccountabilityTypeEnum.WORKING_CONTRACT)) {
+            throw new DomainException("error.EmployeeContract.empty.teacher.contract.flag");
+        }
+        super.setTeacherContract(teacherContract);
+    }
     
     @Override
     public void setAccountabilityType(AccountabilityType accountabilityType) {
