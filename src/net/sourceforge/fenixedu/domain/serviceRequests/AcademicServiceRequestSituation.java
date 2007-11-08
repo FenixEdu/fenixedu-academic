@@ -27,7 +27,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	super.setCreationDate(new DateTime());
     }
     
-    AcademicServiceRequestSituation(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
+    private AcademicServiceRequestSituation(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
 	this();
 	init(academicServiceRequest, academicServiceRequestBean);
     }
@@ -111,6 +111,19 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
     protected void checkRulesToDelete() {
 	if (isDelivered()) {
 	    throw new DomainException("AcademicServiceRequestSituation.already.delivered");
+	}
+    }
+    
+    static AcademicServiceRequestSituation create(final AcademicServiceRequest academicServiceRequest,
+	    final AcademicServiceRequestBean academicServiceRequestBean) {
+	
+	switch (academicServiceRequestBean.getAcademicServiceRequestSituationType()) {
+	case SENT_TO_UNIT:
+	    return new SentToUnitAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
+	case RECEIVED_FROM_UNIT:
+	    return new ReceivedFromUnitAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
+	default:
+	    return new AcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
 	}
     }
 }

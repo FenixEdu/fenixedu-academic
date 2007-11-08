@@ -3508,12 +3508,22 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		class net.sourceforge.fenixedu.domain.space.SpaceResponsibility extends net.sourceforge.fenixedu.domain.resource.ResourceResponsibility {
 		}
 
-	
 	class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation extends net.sourceforge.fenixedu.domain.DomainObject {
 		AcademicServiceRequestSituationType academicServiceRequestSituationType;
 		DateTime creationDate;
 		String justification;
 	}
+	
+		class net.sourceforge.fenixedu.domain.serviceRequests.UnitRelatedAcademicServiceRequestSituation extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation {
+		}
+	
+			class net.sourceforge.fenixedu.domain.serviceRequests.SentToUnitAcademicServiceRequestSituation extends net.sourceforge.fenixedu.domain.serviceRequests.UnitRelatedAcademicServiceRequestSituation {
+				DateTime sentDate;			
+			}
+		
+			class net.sourceforge.fenixedu.domain.serviceRequests.ReceivedFromUnitAcademicServiceRequestSituation extends net.sourceforge.fenixedu.domain.serviceRequests.UnitRelatedAcademicServiceRequestSituation {
+				DateTime receivedDate;
+			}
 	
 	class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest extends net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean freeProcessed;
@@ -4468,6 +4478,13 @@ relation AcademicCalendarEntryBasedAcademicCalendarEntry {
 relation AcademicServiceRequestAcademicServiceRequestSituation {
 	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequest;
 	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
+		multiplicity *;
+	}
+}
+
+relation UnitRelatedAcademicServiceRequestSituationUnit {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
+	net.sourceforge.fenixedu.domain.serviceRequests.UnitRelatedAcademicServiceRequestSituation playsRole unitRelatedAcademicServiceRequestSituations {
 		multiplicity *;
 	}
 }

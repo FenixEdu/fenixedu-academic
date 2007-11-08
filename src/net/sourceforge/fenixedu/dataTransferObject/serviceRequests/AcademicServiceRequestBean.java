@@ -3,13 +3,18 @@ package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
 public class AcademicServiceRequestBean implements Serializable {
     
     private AcademicServiceRequestSituationType academicServiceRequestSituationType;
+    private DateTime situationDate;
+    private DomainReference<Unit> situationUnit;
     private Employee employee;
     private String justification;
     
@@ -43,6 +48,22 @@ public class AcademicServiceRequestBean implements Serializable {
     public boolean hasAcademicServiceRequestSituationType() {
 	return this.academicServiceRequestSituationType != null;
     }
+    
+    public DateTime getSituationDate() {
+        return situationDate;
+    }
+
+    public void setSituationDate(DateTime situationDate) {
+        this.situationDate = situationDate;
+    }
+    
+    public Unit getSituationUnit() {
+	return (this.situationUnit != null) ? this.situationUnit.getObject() : null;
+    }
+
+    public void setSituationUnit(Unit situationUnit) {
+	this.situationUnit = (situationUnit != null) ? new DomainReference<Unit>(situationUnit) : null;
+    }
 
     public Employee getEmployee() {
         return employee;
@@ -62,6 +83,10 @@ public class AcademicServiceRequestBean implements Serializable {
     
     public boolean hasJustification() {
 	return !StringUtils.isEmpty(this.justification);
+    }
+    
+    public boolean isNew() {
+	return this.academicServiceRequestSituationType == AcademicServiceRequestSituationType.NEW;
     }
     
     public boolean isToProcess() {
@@ -84,8 +109,17 @@ public class AcademicServiceRequestBean implements Serializable {
 	return this.academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED;
     }
     
+    public boolean isToSendToUnit() {
+	return this.academicServiceRequestSituationType == AcademicServiceRequestSituationType.SENT_TO_UNIT;
+    }
+    
+    public boolean isToReceiveFromUnit() {
+	return this.academicServiceRequestSituationType == AcademicServiceRequestSituationType.RECEIVED_FROM_UNIT;
+    }
+    
     public boolean isToCancelOrReject() {
 	return isToCancel() || isToReject();
     }
+
 
 }

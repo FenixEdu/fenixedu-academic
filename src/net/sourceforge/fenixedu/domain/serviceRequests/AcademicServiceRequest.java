@@ -62,7 +62,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setFreeProcessed(freeProcessed);
 	super.setExecutionYear(executionYear);
 
-	new AcademicServiceRequestSituation(this, new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
+	
+	AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
 		AccessControl.getPerson().getEmployee()));
     }
     
@@ -249,7 +250,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getActiveSituation().getAcademicServiceRequestSituationType();
     }
 
-    public void edit(AcademicServiceRequestBean academicServiceRequestBean) {
+    public void edit(final AcademicServiceRequestBean academicServiceRequestBean) {
 
 	if (!isEditable()) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.is.not.editable");
@@ -258,7 +259,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	if (getAcademicServiceRequestSituationType() != academicServiceRequestBean.getAcademicServiceRequestSituationType()) {
 	    checkRulesToChangeState(academicServiceRequestBean.getAcademicServiceRequestSituationType());
 	    internalChangeState(academicServiceRequestBean);
-	    new AcademicServiceRequestSituation(this, academicServiceRequestBean);
+	    AcademicServiceRequestSituation.create(this, academicServiceRequestBean);
 	    
 	} else {
 	    getActiveSituation().edit(academicServiceRequestBean);

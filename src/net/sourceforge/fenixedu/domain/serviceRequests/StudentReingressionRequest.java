@@ -70,13 +70,13 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	    
-	} else if (academicServiceRequestBean.isToProcess()) {
+	} else if (academicServiceRequestBean.isNew()) {
 	    if (hasEvent()) {
 		throw new DomainException("error.ExternalDegreeChangeRequest.already.has.event");
 	    }
 	    new StudentReingressionRequestEvent(getAdministrativeOffice(), getPerson(), this);
 	    
-	} else if (isProcessing()) {
+	} else if (academicServiceRequestBean.isToProcess()) {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }

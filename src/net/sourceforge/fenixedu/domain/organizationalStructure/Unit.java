@@ -205,7 +205,8 @@ public class Unit extends Unit_Base {
 		&& !hasAnyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations()
 		&& !hasAnyExamCoordinators() && !hasAnyExtraWorkRequests()
 		&& !hasAnyExternalRegistrationDatas() && !hasAnyUnitExtraWorkAmounts()
-		&& !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups();
+		&& !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups()
+		&& !hasAnyUnitRelatedAcademicServiceRequestSituations();
     }
 
     @Override
