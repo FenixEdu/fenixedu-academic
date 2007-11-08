@@ -678,6 +678,8 @@ public class Thesis extends Thesis_Base {
 
     protected MarkSheet getExistingMarkSheet() {
 	CurricularCourse curricularCourse = getEnrolment().getCurricularCourse();
+	
+	Teacher teacher = getResponsibleTeacher();
 
 	for (MarkSheet markSheet : curricularCourse.getMarkSheets()) {
 	    if (markSheet.isConfirmed()) {
@@ -687,11 +689,25 @@ public class Thesis extends Thesis_Base {
 	    if (markSheet.getMarkSheetType() != MarkSheetType.SPECIAL_AUTHORIZATION) {
 		continue;
 	    }
+	    
+	    if(markSheet.getResponsibleTeacher() != teacher) {
+		continue;
+	    }
 
 	    return markSheet;
 	}
 
 	return null;
+    }
+
+    private Teacher getResponsibleTeacher() {
+	Teacher responsible = getExecutionCourseTeacher();
+	
+	if(responsible == null) {
+	    responsible = AccessControl.getPerson().getTeacher();
+	}
+	
+	return responsible;
     }
 
     private void mergeInMarkSheet(MarkSheet markSheet) {
