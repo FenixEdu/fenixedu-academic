@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
@@ -74,10 +73,10 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     }
 
     @Override
-    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-	super.internalChangeState(academicServiceRequestSituationType, employee);
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
 
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
+	if (academicServiceRequestBean.isToProcess()) {
 	    if (getRegistration().hasGratuityDebtsCurrently() && !getFreeProcessed()) {
 		throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
 	    }

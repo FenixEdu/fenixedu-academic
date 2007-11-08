@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.ExternalDegreeChangeRequestEvent;
@@ -46,10 +46,10 @@ public class ExternalDegreeChangeRequest extends ExternalDegreeChangeRequest_Bas
     }
 
     @Override
-    protected void internalChangeState(final AcademicServiceRequestSituationType academicServiceRequestSituationType, final Employee employee) {
-	super.internalChangeState(academicServiceRequestSituationType, employee);
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
 
-	if (isToProcessing(academicServiceRequestSituationType)) {
+	if (academicServiceRequestBean.isToProcess()) {
 	    if (hasEvent()) {
 		throw new DomainException("error.ExternalDegreeChangeRequest.already.has.event");
 	    }

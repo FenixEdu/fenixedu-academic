@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -61,7 +62,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setFreeProcessed(freeProcessed);
 	super.setExecutionYear(executionYear);
 
-	new AcademicServiceRequestSituation(this, AcademicServiceRequestSituationType.NEW, AccessControl.getPerson().getEmployee());
+	new AcademicServiceRequestSituation(this, new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
+		AccessControl.getPerson().getEmployee()));
     }
     
     protected AdministrativeOffice findAdministrativeOffice() {
@@ -144,27 +146,27 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public void process() throws DomainException {
 	final Employee employee = AccessControl.getPerson().getEmployee();
-	edit(AcademicServiceRequestSituationType.PROCESSING, employee, null);
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.PROCESSING, employee));
     }
 
     final public void reject(final String justification) {
 	final Employee employee = AccessControl.getPerson().getEmployee();
-	edit(AcademicServiceRequestSituationType.REJECTED, employee, justification);
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.REJECTED, employee, justification));
     }
 
     final public void cancel(final String justification) {
 	final Employee employee = AccessControl.getPerson().getEmployee();
-	edit(AcademicServiceRequestSituationType.CANCELLED, employee, justification);
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CANCELLED, employee, justification));
     }
 
     final public void conclude() {
 	final Employee employee = AccessControl.getPerson().getEmployee();
-	edit(AcademicServiceRequestSituationType.CONCLUDED, employee, null);
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee));
     }
 
     final public void delivered() {
 	final Employee employee = AccessControl.getPerson().getEmployee();
-	edit(AcademicServiceRequestSituationType.DELIVERED, employee, null);
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.DELIVERED, employee));
     }
 
     public void delete() {
@@ -247,20 +249,19 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getActiveSituation().getAcademicServiceRequestSituationType();
     }
 
-    public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee,
-	    String justification) {
+    public void edit(AcademicServiceRequestBean academicServiceRequestBean) {
 
 	if (!isEditable()) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.is.not.editable");
 	}
 
-	if (getAcademicServiceRequestSituationType() != academicServiceRequestSituationType) {
-	    checkRulesToChangeState(academicServiceRequestSituationType);
-	    internalChangeState(academicServiceRequestSituationType, employee);
-	    new AcademicServiceRequestSituation(this, academicServiceRequestSituationType, employee, justification);
+	if (getAcademicServiceRequestSituationType() != academicServiceRequestBean.getAcademicServiceRequestSituationType()) {
+	    checkRulesToChangeState(academicServiceRequestBean.getAcademicServiceRequestSituationType());
+	    internalChangeState(academicServiceRequestBean);
+	    new AcademicServiceRequestSituation(this, academicServiceRequestBean);
 	    
 	} else {
-	    getActiveSituation().edit(employee, justification);
+	    getActiveSituation().edit(academicServiceRequestBean);
 	}
 
     }
@@ -307,33 +308,18 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
     }
 
-    /**
-     * This method is overwritten in the subclasses
-     */
-    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-	
-	if (isToCancelOrReject(academicServiceRequestSituationType) && hasEvent()) {
-	    getEvent().cancel(employee);
+    /** This method is overwritten in the subclasses */
+    protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
+
+	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
+	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	}
 
-	if (isToDeliver(academicServiceRequestSituationType)) {
+	if (academicServiceRequestBean.isToDeliver()) {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 	}
-    }
-
-    protected boolean isToCancelOrReject(final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-	return academicServiceRequestSituationType == AcademicServiceRequestSituationType.CANCELLED
-		|| academicServiceRequestSituationType == AcademicServiceRequestSituationType.REJECTED;
-    }
-    
-    protected boolean isToDeliver(final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-	return academicServiceRequestSituationType == AcademicServiceRequestSituationType.DELIVERED;
-    }
-    
-    protected boolean isToProcessing(final AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-	return academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING;
     }
 
     final public boolean isNewRequest() {

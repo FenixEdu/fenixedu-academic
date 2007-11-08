@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent;
@@ -65,18 +65,18 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     }
 
     @Override
-    protected void internalChangeState(final AcademicServiceRequestSituationType academicServiceRequestSituationType, final Employee employee) {
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 	
-	if (isToCancelOrReject(academicServiceRequestSituationType) && hasEvent()) {
-	    getEvent().cancel(employee);
+	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
+	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	    
-	} else if (isToProcessing(academicServiceRequestSituationType)) {
+	} else if (academicServiceRequestBean.isToProcess()) {
 	    if (hasEvent()) {
 		throw new DomainException("error.ExternalDegreeChangeRequest.already.has.event");
 	    }
 	    new StudentReingressionRequestEvent(getAdministrativeOffice(), getPerson(), this);
 	    
-	} else if (isProcessing() && !isToProcessing(academicServiceRequestSituationType)) {
+	} else if (isProcessing()) {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }

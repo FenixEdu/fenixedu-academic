@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -67,45 +67,43 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
     abstract public Integer getNumberOfUnits();
 
-    final public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
-	    Employee employee, String justification, Integer numberOfPages) {
+    final public void edit(final DocumentRequestBean certificateRequestBean) {
 
-	if (isPayable() && isPayed() && !getNumberOfPages().equals(numberOfPages)) {
+	if (isPayable() && isPayed() && !getNumberOfPages().equals(certificateRequestBean.getNumberOfPages())) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
 	}
 
-	super.edit(academicServiceRequestSituationType, employee, justification);
-	super.setNumberOfPages(numberOfPages);
+	super.edit(certificateRequestBean);
+	super.setNumberOfPages(certificateRequestBean.getNumberOfPages());
     }
-
     
     @Override
-    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-	super.internalChangeState(academicServiceRequestSituationType, employee);
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
 
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
+	if (academicServiceRequestBean.isToConclude()) {
+
 	    if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
 		throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
 	    }
-	    
+
 	    if (!isFree()) {
-		new CertificateRequestEvent(getAdministrativeOffice(), 
-			getEventType(), getRegistration().getPerson(), this);
+		new CertificateRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
 	    }
 	}
     }
 
     /**
-     * Important: Notice that this method's return value may not be the same 
-     * before and after conclusion of the academic service request.
-     */
+         * Important: Notice that this method's return value may not be the same
+         * before and after conclusion of the academic service request.
+         */
     @Override
     final public boolean isFree() {
 	if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE
 		|| getDocumentRequestType() == DocumentRequestType.ENROLMENT_CERTIFICATE) {
 	    return super.isFree() || (!isRequestForPreviousExecutionYear() && isFirstRequestOfCurrentExecutionYear());
-	} 
+	}
 
 	return super.isFree();
     }
@@ -115,10 +113,8 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
 
     private boolean isFirstRequestOfCurrentExecutionYear() {
-	return getRegistration().getSucessfullyFinishedDocumentRequestsBy(
-		ExecutionYear.readCurrentExecutionYear(),
-		getDocumentRequestType(),
-		false).isEmpty();
+	return getRegistration().getSucessfullyFinishedDocumentRequestsBy(ExecutionYear.readCurrentExecutionYear(),
+		getDocumentRequestType(), false).isEmpty();
     }
 
 }

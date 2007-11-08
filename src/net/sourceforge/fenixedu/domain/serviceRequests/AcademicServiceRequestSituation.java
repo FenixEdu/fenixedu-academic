@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 public class AcademicServiceRequestSituation extends AcademicServiceRequestSituation_Base {
@@ -16,8 +16,8 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 		AcademicServiceRequestSituation rightAcademicServiceRequestSituation) {
 	    int comparationResult = -(leftAcademicServiceRequestSituation.getCreationDate()
 		    .compareTo(rightAcademicServiceRequestSituation.getCreationDate()));
-	    return (comparationResult == 0) ? leftAcademicServiceRequestSituation.getIdInternal()
-		    .compareTo(rightAcademicServiceRequestSituation.getIdInternal()) : comparationResult;
+	    return (comparationResult == 0) ? leftAcademicServiceRequestSituation.getIdInternal().compareTo(
+		    rightAcademicServiceRequestSituation.getIdInternal()) : comparationResult;
 	}
     };
 
@@ -26,63 +26,38 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setCreationDate(new DateTime());
     }
-
-    AcademicServiceRequestSituation(AcademicServiceRequest academicServiceRequest,
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-	this(academicServiceRequest, academicServiceRequestSituationType, employee, null);
-
-    }
-
-    AcademicServiceRequestSituation(AcademicServiceRequest academicServiceRequest,
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee,
-	    String justification) {
+    
+    AcademicServiceRequestSituation(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
 	this();
-	init(academicServiceRequest, academicServiceRequestSituationType, employee, justification);
+	init(academicServiceRequest, academicServiceRequestBean);
     }
 
-    private void checkParameters(AcademicServiceRequest academicServiceRequest,
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee,
-	    String justification) {
+    protected void init(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
+	checkParameters(academicServiceRequest, academicServiceRequestBean);
+	
+	super.setAcademicServiceRequest(academicServiceRequest);
+	super.setAcademicServiceRequestSituationType(academicServiceRequestBean.getAcademicServiceRequestSituationType());
+	super.setEmployee(academicServiceRequestBean.getEmployee());
+	super.setJustification(academicServiceRequestBean.hasJustification() ? academicServiceRequestBean.getJustification() : null);
+    }
+    
+    private void checkParameters(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequest == null) {
-	    throw new DomainException(
-		    "error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequest.cannot.be.null");
+	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequest.cannot.be.null");
 	}
-	if (academicServiceRequestSituationType == null) {
-	    throw new DomainException(
-		    "error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType.cannot.be.null");
+	
+	if (!academicServiceRequestBean.hasAcademicServiceRequestSituationType()) {
+	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType.cannot.be.null");
 	}
 
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CANCELLED
-		|| academicServiceRequestSituationType == AcademicServiceRequestSituationType.REJECTED) {
-	    if (StringUtils.isEmpty(justification)) {
+	if (academicServiceRequestBean.isToCancelOrReject()) {
+	    if (!academicServiceRequestBean.hasJustification()) {
 		throw new DomainException(
 			"error.serviceRequests.AcademicServiceRequestSituation.justification.cannot.be.null.for.cancelled.and.rejected.situations");
 	    }
 	}
     }
 
-    protected void init(AcademicServiceRequest academicServiceRequest,
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee,
-	    String justification) {
-	checkParameters(academicServiceRequest, academicServiceRequestSituationType, employee,
-		justification);
-	super.setAcademicServiceRequest(academicServiceRequest);
-	super.setAcademicServiceRequestSituationType(academicServiceRequestSituationType);
-	super.setEmployee(employee);
-	super.setJustification(StringUtils.isEmpty(justification) ? null : justification);
-    }
-
-    public void delete() {
-	if (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.DELIVERED) {
-	    throw new DomainException("AcademicServiceRequestSituation.already.delivered");
-	}
-	
-	super.setRootDomainObject(null);
-	super.setEmployee(null);
-	super.setAcademicServiceRequest(null);
-	super.deleteDomainObject();
-    }
-    
     @Override
     public void setAcademicServiceRequest(AcademicServiceRequest academicServiceRequest) {
 	throw new DomainException(
@@ -113,10 +88,29 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	throw new DomainException(
 		"error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.justification");
     }
-
-    void edit(Employee employee, String justification) {
-	super.setEmployee(employee);
-	super.setJustification(justification);
+    
+    public boolean isDelivered() {
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.DELIVERED;
     }
 
+    void edit(final AcademicServiceRequestBean academicServiceRequestBean) {
+	super.setEmployee(academicServiceRequestBean.getEmployee());
+	super.setJustification(academicServiceRequestBean.getJustification());
+    }
+    
+    public void delete() {
+	checkRulesToDelete();
+	
+	super.setRootDomainObject(null);
+	super.setEmployee(null);
+	super.setAcademicServiceRequest(null);
+	
+	super.deleteDomainObject();
+    }
+
+    protected void checkRulesToDelete() {
+	if (isDelivered()) {
+	    throw new DomainException("AcademicServiceRequestSituation.already.delivered");
+	}
+    }
 }

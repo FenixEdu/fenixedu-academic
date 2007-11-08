@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public abstract class DeclarationRequest extends DeclarationRequest_Base {
@@ -69,30 +69,27 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	return Boolean.FALSE;
     }
     
-    final public void edit(AcademicServiceRequestSituationType academicServiceRequestSituationType,
-	    Employee employee, String justification, Integer numberOfPages) {
+    final public void edit(final DocumentRequestBean documentRequestBean) {
 	
-	if (isPayable() && isPayed() && !getNumberOfPages().equals(numberOfPages)) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
+	if (isPayable() && isPayed() && !getNumberOfPages().equals(documentRequestBean.getNumberOfPages())) {
+	    throw new DomainException("error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
 	}
-
-	super.edit(academicServiceRequestSituationType, employee, justification);
-	super.setNumberOfPages(numberOfPages);
+	
+	super.edit(documentRequestBean);
+	super.setNumberOfPages(documentRequestBean.getNumberOfPages());
     }
 
     @Override
-    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-	super.internalChangeState(academicServiceRequestSituationType, employee);
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
 
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED) {
+	if (academicServiceRequestBean.isToConclude()) {
 	    if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
 		throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
 	    }
 
 	    if (!isFree()) {
-		new DeclarationRequestEvent(getAdministrativeOffice(), 
-			getEventType(), getRegistration().getPerson(), this);
+		new DeclarationRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
 	    }
 	}
     }
@@ -107,18 +104,16 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	if (getDocumentPurposeType() == DocumentPurposeType.PPRE) {
 	    return false;
 	}
-	
+
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	final Set<DocumentRequest> schoolRegistrationDeclarations = getRegistration().getSucessfullyFinishedDocumentRequestsBy(
+		currentExecutionYear, DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION, false);
 
-	final Set<DocumentRequest> schoolRegistrationDeclarations = getRegistration()
-		.getSucessfullyFinishedDocumentRequestsBy(currentExecutionYear,
-			DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION, false);
-	
-	final Set<DocumentRequest> enrolmentDeclarations = getRegistration()
-		.getSucessfullyFinishedDocumentRequestsBy(currentExecutionYear,
-			DocumentRequestType.ENROLMENT_DECLARATION, false);
+	final Set<DocumentRequest> enrolmentDeclarations = getRegistration().getSucessfullyFinishedDocumentRequestsBy(
+		currentExecutionYear, DocumentRequestType.ENROLMENT_DECLARATION, false);
 
-	return super.isFree() || ((schoolRegistrationDeclarations.size() + enrolmentDeclarations.size()) < MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR);
+	return super.isFree()
+		|| ((schoolRegistrationDeclarations.size() + enrolmentDeclarations.size()) < MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR);
     }
 
 }

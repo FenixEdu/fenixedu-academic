@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -47,10 +46,10 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     @Override
-    final protected void internalChangeState(final AcademicServiceRequestSituationType academicServiceRequestSituationType, final Employee employee) {
-	super.internalChangeState(academicServiceRequestSituationType, employee);
+    final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
 
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
+	if (academicServiceRequestBean.isToProcess()) {
 	    if (!getRegistration().isConcluded()) {
 		throw new DomainException("DegreeFinalizationCertificateRequest.registration.is.not.concluded");
 	    } else if (!getRegistration().hasDiplomaRequest()) {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -26,6 +26,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	    final DocumentPurposeType documentPurposeType,
 	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest,
 	    final MobilityProgram mobilityProgram) {
+
 	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 	checkParameters(mobilityProgram);
 	super.setMobilityProgram(mobilityProgram);
@@ -38,10 +39,11 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     @Override
-    protected void internalChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType, Employee employee) {
-	super.internalChangeState(academicServiceRequestSituationType, employee);
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
 
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
+	if (academicServiceRequestBean.isToProcess()) {
+
 	    if (!getRegistration().getCurriculum().isEmpty()) {
 		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
 	    }

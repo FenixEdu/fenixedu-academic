@@ -3,13 +3,12 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DiplomaRequest extends DiplomaRequest_Base {
@@ -83,10 +82,10 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     }
 
     @Override
-    final protected void internalChangeState(final AcademicServiceRequestSituationType academicServiceRequestSituationType, final Employee employee) {
-	super.internalChangeState(academicServiceRequestSituationType, employee);
+    final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
 
-	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
+	if (academicServiceRequestBean.isToProcess()) {
 	    if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {
 		throw new DomainException("DiplomaRequest.diploma.not.available");
 	    }
@@ -103,7 +102,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 		throw new DomainException("DiplomaRequest.registration.doesnt.have.dissertation.thesis");
 	    }
 	    
-	} else if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.CONCLUDED && !isFree()) {
+	} else if (academicServiceRequestBean.isToConclude() && !isFree()) {
 	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
     }
