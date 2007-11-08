@@ -4426,6 +4426,7 @@ class net.sourceforge.fenixedu.domain.library.LibraryCard extends net.sourceforg
 }
 
 class net.sourceforge.fenixedu.domain.elections.DelegateElection extends net.sourceforge.fenixedu.domain.DomainObject {
+	Boolean sentResultsToCandidates;
 }
 
 class net.sourceforge.fenixedu.domain.elections.YearDelegateElection extends net.sourceforge.fenixedu.domain.elections.DelegateElection {

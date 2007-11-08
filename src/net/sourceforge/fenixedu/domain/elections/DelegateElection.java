@@ -38,6 +38,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
 	protected DelegateElection(){
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
+		setSentResultsToCandidates(Boolean.FALSE);
 	}
 	
 	public YearMonthDay getCandidacyStartDate(){
