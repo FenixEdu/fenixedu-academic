@@ -36,16 +36,7 @@ public class EmployeeContract extends EmployeeContract_Base {
     public Boolean isTeacherContract() {
 	return getTeacherContract();
     }
-    
-    @Override
-    public void setTeacherContract(Boolean teacherContract) {
-        if(teacherContract == null && getAccountabilityType() != null &&
-        	getAccountabilityType().getType().equals(AccountabilityTypeEnum.WORKING_CONTRACT)) {
-            throw new DomainException("error.EmployeeContract.empty.teacher.contract.flag");
-        }
-        super.setTeacherContract(teacherContract);
-    }
-    
+          
     @Override
     public void setAccountabilityType(AccountabilityType accountabilityType) {
         super.setAccountabilityType(accountabilityType);
