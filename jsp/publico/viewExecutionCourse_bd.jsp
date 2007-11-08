@@ -134,7 +134,7 @@
 					<logic:notPresent name="person" property="homepage">
 						<bean:write name="person" property="name"/>
 					</logic:notPresent>
-					<bean:message key="label.responsible"/>
+					(<bean:message key="label.responsible"/>)
 					</p>
 				</logic:iterate>	
         </logic:notEmpty>

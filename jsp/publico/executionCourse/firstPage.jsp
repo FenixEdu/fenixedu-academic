@@ -99,7 +99,7 @@
 			<p style="margin-top: 6px; margin-bottom: 6px;">
 				<bean:define id="professorship" name="professorship" toScope="request"/>
 				<jsp:include page="professorshipName.jsp"/>
-				<bean:message key="label.responsible"/>
+				(<bean:message key="label.responsible"/>)
 			</p>
 		</logic:equal>
 	</logic:iterate>
