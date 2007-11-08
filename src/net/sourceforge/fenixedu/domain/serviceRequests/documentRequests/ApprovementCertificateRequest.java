@@ -26,7 +26,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	    final DocumentPurposeType documentPurposeType,
 	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest,
 	    final MobilityProgram mobilityProgram) {
-	
 	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 	checkParameters(mobilityProgram);
 	super.setMobilityProgram(mobilityProgram);
@@ -43,7 +42,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 
 	if (academicServiceRequestSituationType == AcademicServiceRequestSituationType.PROCESSING) {
-	    if (!getRegistration().getCurriculum().hasAnyEntries()) {
+	    if (!getRegistration().getCurriculum().isEmpty()) {
 		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
 	    }
 
