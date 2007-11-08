@@ -14,11 +14,16 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super();
 	super.setNumberOfPages(0);
     }
-
+    
     final protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
+	init(registration, null, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+    }
 
-	super.init(registration, urgentRequest, Boolean.FALSE);
+    final protected void init(Registration registration, final ExecutionYear executionYear, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
+
+	super.init(registration, executionYear, urgentRequest, Boolean.FALSE);
 
 	super.checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
 	super.setDocumentPurposeType(documentPurposeType);

@@ -14,29 +14,22 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	super();
     }
 
-    public EnrolmentCertificateRequest(Registration registration,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest, Boolean detailed, ExecutionYear executionYear) {
+    public EnrolmentCertificateRequest(Registration registration, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed, ExecutionYear executionYear) {
 
 	this();
-
-	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
-		detailed, executionYear);
-
+	init(registration, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, detailed);
     }
 
-    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed,
-	    ExecutionYear executionYear) {
+    protected void init(Registration registration, ExecutionYear executionYear, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed) {
 
-	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
-
-	checkParameters(detailed, executionYear);
+	checkParameters(registration, detailed, executionYear);
+	super.init(registration, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 	super.setDetailed(detailed);
-	super.setExecutionYear(executionYear);
     }
 
-    private void checkParameters(Boolean detailed, ExecutionYear executionYear) {
+    private void checkParameters(final Registration registration, final Boolean detailed, final ExecutionYear executionYear) {
 	if (detailed == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.detailed.cannot.be.null");
@@ -44,18 +37,13 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	if (executionYear == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-	} else if (!getRegistration().hasAnyEnrolmentsIn(executionYear)) {
+	    
+	} else if (!registration.hasAnyEnrolmentsIn(executionYear)) {
 	    throw new DomainException(
 		    "EnrolmentCertificateRequest.no.enrolments.for.registration.in.given.executionYear");
 	}
     }
 
-    @Override
-    public void delete() {
-	super.setExecutionYear(null);
-	super.delete();
-    }
-    
     @Override
     final public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.ENROLMENT_CERTIFICATE;
@@ -64,12 +52,6 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     @Override
     final public String getDocumentTemplateKey() {
 	return getClass().getName();
-    }
-
-    @Override
-    final public void setExecutionYear(ExecutionYear executionYear) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.EnrolmentCertificateRequest.cannot.modify.executionYear");
     }
 
     @Override

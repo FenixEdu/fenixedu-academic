@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -68,11 +67,6 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
 		"error.serviceRequests.documentRequests.IRSDeclarationRequest.cannot.modify.year");
     }
 
-    @Override
-    final public ExecutionYear getExecutionYear() {
-	return null;
-    }
-    
     @Override
     final public EventType getEventType() {
 	return null;

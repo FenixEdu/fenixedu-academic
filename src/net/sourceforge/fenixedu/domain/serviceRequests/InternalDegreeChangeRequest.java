@@ -54,11 +54,6 @@ public class InternalDegreeChangeRequest extends InternalDegreeChangeRequest_Bas
     }
 
     @Override
-    public ExecutionYear getExecutionYear() {
-	return null;
-    }
-
-    @Override
     protected void internalChangeState(final AcademicServiceRequestSituationType academicServiceRequestSituationType, final Employee employee) {
 	super.internalChangeState(academicServiceRequestSituationType, employee);
 

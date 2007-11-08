@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -26,6 +25,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     final protected void init(final Registration registration, final DocumentPurposeType documentPurposeType,
 	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest, final Boolean average,
 	    final Boolean detailed, final MobilityProgram mobilityProgram) {
+	
 	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 
 	this.checkParameters(average, detailed, mobilityProgram);
@@ -82,11 +82,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     final public EventType getEventType() {
 	return EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST;
-    }
-
-    @Override
-    final public ExecutionYear getExecutionYear() {
-	return null;
     }
 
     @Override

@@ -17,12 +17,17 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	super();
 	super.setNumberOfPages(0);
     }
-
+    
     protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
+	init(registration, null, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
+    }
 
-	super.init(registration, Boolean.FALSE, freeProcessed);
-	
+    protected void init(Registration registration, ExecutionYear executionYear, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
+
+	super.init(registration, executionYear, Boolean.FALSE, freeProcessed);
+
 	super.checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
 	super.setDocumentPurposeType(documentPurposeType);
 	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);

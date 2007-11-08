@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -81,11 +80,6 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	default:
 	    throw new DomainException("DiplomaRequest.not.available.for.given.degree.type");
 	}
-    }
-
-    @Override
-    final public ExecutionYear getExecutionYear() {
-	return null;
     }
 
     @Override

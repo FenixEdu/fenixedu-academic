@@ -14,10 +14,17 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
         super();
     }
     
-    public StudentReingressionRequest(final Registration registration, final Boolean urgentRequest, final Boolean freeProcessed) {
+    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
 	this();
-	super.init(registration, urgentRequest, freeProcessed);
+	checkParameters(executionYear);
 	checkRulesToCreate(registration);
+	super.init(registration, executionYear, urgentRequest, freeProcessed);
+    }
+
+    private void checkParameters(final ExecutionYear executionYear) {
+	if (executionYear == null) {
+	    throw new RuntimeException("error.StudentReingressionRequest.executionYear.cannot.be.null");
+	}
     }
 
     private void checkRulesToCreate(final Registration registration) {
@@ -57,11 +64,6 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	return EventType.STUDENT_REINGRESSION_REQUEST;
     }
 
-    @Override
-    public ExecutionYear getExecutionYear() {
-	return null;
-    }
-    
     @Override
     protected void internalChangeState(final AcademicServiceRequestSituationType academicServiceRequestSituationType, final Employee employee) {
 	

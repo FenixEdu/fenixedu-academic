@@ -11,32 +11,23 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
 	super();
     }
 
-    public SchoolRegistrationDeclarationRequest(Registration registration,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
-
+    public SchoolRegistrationDeclarationRequest(Registration registration, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 	this();
-	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
+	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
     }
 
-    @Override
-    final protected void init(Registration registration, DocumentPurposeType documentPurposeType,
+    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 
-	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
-
-        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        if (!getRegistration().isInRegisteredState(currentExecutionYear)) {
-            throw new DomainException("SchoolRegistrationDeclarationRequest.registration.not.in.registered.state.in.current.executionYear");
-        }
-        super.setExecutionYear(currentExecutionYear);
+	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	if (!registration.isInRegisteredState(currentExecutionYear)) {
+	    throw new DomainException(
+		    "SchoolRegistrationDeclarationRequest.registration.not.in.registered.state.in.current.executionYear");
+	}
+	super.init(registration, currentExecutionYear, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
     }
 
-    @Override
-    public void delete() {
-	super.setExecutionYear(null);
-	super.delete();
-    }
-    
     @Override
     final public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION;
@@ -47,12 +38,6 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
 	return getClass().getName();
     }
 
-    @Override
-    final public void setExecutionYear(ExecutionYear executionYear) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest.cannot.modify.executionYear");
-    }
-    
     @Override
     final public EventType getEventType() {
 	return EventType.SCHOOL_REGISTRATION_DECLARATION_REQUEST;

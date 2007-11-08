@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -27,8 +26,9 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	    final DocumentPurposeType documentPurposeType,
 	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest,
 	    final MobilityProgram mobilityProgram) {
+	
 	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
-	this.checkParameters(mobilityProgram);
+	checkParameters(mobilityProgram);
 	super.setMobilityProgram(mobilityProgram);
     }
 
@@ -78,11 +78,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     @Override
     final public EventType getEventType() {
 	return EventType.APPROVEMENT_CERTIFICATE_REQUEST;
-    }
-
-    @Override
-    final public ExecutionYear getExecutionYear() {
-	return null;
     }
 
     @Override

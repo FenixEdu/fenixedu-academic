@@ -48,6 +48,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected void init(final Boolean urgentRequest, final Boolean freeProcessed) {
+	init(null, urgentRequest, freeProcessed);
+    }
+    
+    protected void init(final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
 
 	final AdministrativeOffice administrativeOffice = findAdministrativeOffice();
 	checkParameters(administrativeOffice, urgentRequest, freeProcessed);
@@ -55,6 +59,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setAdministrativeOffice(administrativeOffice);
 	super.setUrgentRequest(urgentRequest);
 	super.setFreeProcessed(freeProcessed);
+	super.setExecutionYear(executionYear);
 
 	new AcademicServiceRequestSituation(this, AcademicServiceRequestSituationType.NEW, AccessControl.getPerson().getEmployee());
     }
@@ -88,6 +93,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     final public void setFreeProcessed(Boolean freeProcessed) {
 	throw new DomainException(
 		"error.serviceRequests.AcademicServiceRequest.cannot.modify.freeProcessed");
+    }
+    
+    @Override
+    final public void setExecutionYear(ExecutionYear executionYear) {
+        throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.executionYear");
     }
 
     final public boolean isUrgentRequest() {
@@ -163,6 +173,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         if (hasEvent()) {
             getEvent().delete();
         }
+        super.setExecutionYear(null);
         super.setRootDomainObject(null);
 	super.deleteDomainObject();
     }
@@ -398,14 +409,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return false;
     }
     
-    public boolean hasExecutionYear() {
-	return getExecutionYear() != null;
-    }
-    
     abstract public EventType getEventType();
-
     abstract public String getDescription();
-
-    abstract public ExecutionYear getExecutionYear();
-    
 }

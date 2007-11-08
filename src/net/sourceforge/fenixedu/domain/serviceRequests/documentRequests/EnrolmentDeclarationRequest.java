@@ -15,28 +15,19 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
 	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 
 	this();
-	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
+	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
     }
 
-    @Override
-    final protected void init(Registration registration,DocumentPurposeType documentPurposeType,
-            String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
+    protected void init(Registration registration, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 
-        super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
-
-        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        if (!getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
-            throw new DomainException("EnrolmentDeclarationRequest.no.enrolments.for.registration.in.current.executionYear");
-        }
-        super.setExecutionYear(currentExecutionYear);
+	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	if (!registration.hasAnyEnrolmentsIn(currentExecutionYear)) {
+	    throw new DomainException("EnrolmentDeclarationRequest.no.enrolments.for.registration.in.current.executionYear");
+	}
+	super.init(registration, currentExecutionYear, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
     }
 
-    @Override
-    public void delete() {
-	super.setExecutionYear(null);
-	super.delete();
-    }
-    
     @Override
     final public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.ENROLMENT_DECLARATION;
@@ -48,14 +39,7 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
     }
 
     @Override
-    final public void setExecutionYear(ExecutionYear executionYear) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.EnrolmentCertificateRequest.cannot.modify.executionYear");
-    }
-    
-    @Override
     final public EventType getEventType() {
 	return EventType.ENROLMENT_DECLARATION_REQUEST;
     }
-
 }

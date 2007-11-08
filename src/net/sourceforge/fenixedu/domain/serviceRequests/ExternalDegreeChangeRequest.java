@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.ExternalDegreeChangeRequestEvent;
@@ -39,11 +38,6 @@ public class ExternalDegreeChangeRequest extends ExternalDegreeChangeRequest_Bas
     @Override
     public String getDescription() {
 	return getDescription("AcademicServiceRequestType.DEGREE_CHANGE");
-    }
-    
-    @Override
-    public ExecutionYear getExecutionYear() {
-	return null;
     }
     
     @Override

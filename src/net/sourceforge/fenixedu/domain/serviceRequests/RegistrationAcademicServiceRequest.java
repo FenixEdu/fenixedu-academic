@@ -19,11 +19,15 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     }
     
     protected void init(final Registration registration, final Boolean urgentRequest, final Boolean freeProcessed) {
+	init(registration, null, urgentRequest, freeProcessed);
+    }
+    
+    protected void init(final Registration registration, final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
 	// first set own parameters
 	checkParameters(registration);
 	super.setRegistration(registration);
 	// then set super parameters
-	super.init(urgentRequest, freeProcessed);
+	super.init(executionYear, urgentRequest, freeProcessed);
     }
 
     private void checkParameters(final Registration registration) {
@@ -64,7 +68,8 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     }
 
     public Campus getCampus() {
-	return getStudentCurricularPlan().getCurrentCampus();
+	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(); 
+	return studentCurricularPlan != null ? studentCurricularPlan.getCurrentCampus() : null;
     }
 
     @Override
