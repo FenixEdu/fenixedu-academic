@@ -11,20 +11,58 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-	<tr class="usitechannels">
-		<logic:equal name="site" property="showAnnouncements" value="true"> 
+	<logic:equal name="site" property="showAnnouncements" value="true"> 
+	<logic:equal name="site" property="showEvents" value="true">
+		<tr class="usitechannels">
+			<th class="usitechannel1 width50pc">
+				<bean:message key="label.announcements"/>
+			</th>
+			<th class="usitechannel2">
+				<bean:message key="label.events"/>
+			</th>
+		</tr>
+	</logic:equal>
+	</logic:equal>
+	
+	<logic:equal name="site" property="showAnnouncements" value="false"> 
+	<logic:equal name="site" property="showEvents" value="true">
+		<tr class="usitechannels">
+			<th class="usitechannel2">
+				<bean:message key="label.events"/>
+			</th>
+		</tr>
+	</logic:equal>
+	</logic:equal>
+	
+	<logic:equal name="site" property="showAnnouncements" value="true"> 
+	<logic:equal name="site" property="showEvents" value="false">
+		<tr class="usitechannels">
 			<th class="usitechannel1">
 				<bean:message key="label.announcements"/>
 			</th>
-		</logic:equal>
-		<logic:equal name="site" property="showEvents" value="true">
-			<th class="usitechannel2">
-			<bean:message key="label.events"/>
-			</th>
-		</logic:equal>
-	</tr>
+		</tr>
+	</logic:equal>
+	</logic:equal>
+
+
+	<%-- <tr> that contains events and annoucements are shown if at least one channel exists--%>
+	<logic:equal name="site" property="showEvents" value="true">
+	<logic:equal name="site" property="showAnnouncements" value="true">
+		<tr class="usitechannels">
+	</logic:equal>
+	</logic:equal>
+
+	<logic:equal name="site" property="showEvents" value="true">
+	<logic:equal name="site" property="showAnnouncements" value="false">
+		<tr class="usitechannels">
+	</logic:equal>
+	</logic:equal>
 	
-	<tr class="usitechannels">
+	<logic:equal name="site" property="showEvents" value="false">
+	<logic:equal name="site" property="showAnnouncements" value="true">
+		<tr class="usitechannels">
+	</logic:equal>
+	</logic:equal>
     
     <bean:define id="textLength" value="350" toScope="request"/>
     
@@ -164,6 +202,24 @@
 			</logic:empty>
 		</td>
 	</logic:equal>
-	</tr>
+
+
+	<logic:equal name="site" property="showEvents" value="true">
+	<logic:equal name="site" property="showAnnouncements" value="true">
+		</tr>
+	</logic:equal>
+	</logic:equal>
+
+	<logic:equal name="site" property="showEvents" value="true">
+	<logic:equal name="site" property="showAnnouncements" value="false">
+		</tr>
+	</logic:equal>
+	</logic:equal>
+	
+	<logic:equal name="site" property="showEvents" value="false">
+	<logic:equal name="site" property="showAnnouncements" value="true">
+		</tr>
+	</logic:equal>
+	</logic:equal>
 
 

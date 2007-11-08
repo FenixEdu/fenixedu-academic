@@ -560,6 +560,7 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 /* with's */
 .wauto { width: auto; }
 .width100 { width: 100%; }
+.width50pc { width: 50%; }
 .width05em { width: 0.5em; }
 .width1em { width: 1em; }
 .width1p5em { width: 1.5em; }
@@ -1330,7 +1331,6 @@ height: 25px;
 .usitechannel2 { background: #cc9; }
 
 .usitechannels td {
-width: 50%;
 font-family: "bitstream vera sans", "Lucida Grande", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 font-size: 11px;
 color: #333;
