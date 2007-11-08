@@ -208,12 +208,19 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	ResultPublicationType resultPublicationType = bean.getPublicationType();
 
 	if (resultPublicationType == null) {
-	    request.setAttribute("articles", ResearchResultPublication.sort(unit.getArticles(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("international-articles", ResearchResultPublication.sort(unit.getArticles(ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("national-articles", ResearchResultPublication.sort(unit.getArticles(ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
+	    List<ResearchResultPublication> articles = ResearchResultPublication.sort(unit.getArticles(
+		    firstExecutionYear, finalExecutionYear, checkSubunits));
+	    request.setAttribute("hasArticles", !articles.isEmpty());
+	    request.setAttribute("articles", articles);
+	    
 	    request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(
 		    firstExecutionYear, finalExecutionYear, checkSubunits)));
 	    request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(
 		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("international-inproceedings", ResearchResultPublication.sort(unit.getInproceedings(ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("national-inproceedings", ResearchResultPublication.sort(unit.getInproceedings(ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
 	    request.setAttribute("inproceedings", ResearchResultPublication.sort(unit.getInproceedings(
 		    firstExecutionYear, finalExecutionYear, checkSubunits)));
 	    request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(
