@@ -53,15 +53,17 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 			    .get(DateTimeFieldType.monthOfYear())) {
 		for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth
 			.getClosedMonthJustifications()) {
-		    Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
-			    assiduousnessClosedMonth.getAssiduousness(),
-			    closedMonthJustification.getAssiduousnessStatus());
-		    Duration duration = pastJustificationsDurations.get(code);
-		    if (duration == null) {
-			duration = Duration.ZERO;
+		    if (closedMonthJustification.getJustificationMotive().getActive()) {
+			Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
+				assiduousnessClosedMonth.getAssiduousness(),
+				closedMonthJustification.getAssiduousnessStatus());
+			Duration duration = pastJustificationsDurations.get(code);
+			if (duration == null) {
+			    duration = Duration.ZERO;
+			}
+			duration = duration.plus(closedMonthJustification.getJustificationDuration());
+			pastJustificationsDurations.put(code, duration);
 		    }
-		    duration = duration.plus(closedMonthJustification.getJustificationDuration());
-		    pastJustificationsDurations.put(code, duration);
 		}
 	    }
 	}
