@@ -71,7 +71,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
 
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator(
-		"executionPeriod"));
+	"executionPeriod"));
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("nome",
 		Collator.getInstance()));
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
@@ -222,7 +222,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    if (canAddBibliographicReference(bibliographicReference)) {
 		this.createBibliographicReference(bibliographicReference.getTitle(), bibliographicReference.getAuthors(),
 			bibliographicReference.getReference(), bibliographicReference.getYear(), bibliographicReference
-				.getOptional());
+			.getOptional());
 	    } else {
 		notCopiedBibliographicReferences.add(bibliographicReference);
 	    }
@@ -538,7 +538,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 
 	    return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd", evaluationComparisonDate)
-		    + evaluation.getIdInternal();
+	    + evaluation.getIdInternal();
 	}
     };
 
@@ -557,7 +557,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     private static class CurricularCourseExecutionCourseListener extends
-	    dml.runtime.RelationAdapter<ExecutionCourse, CurricularCourse> {
+    dml.runtime.RelationAdapter<ExecutionCourse, CurricularCourse> {
 
 	@Override
 	public void afterAdd(ExecutionCourse execution, CurricularCourse curricular) {
@@ -991,7 +991,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
 	    if (competenceCourse != null) {
 		final CompetenceCourseInformation competenceCourseInformation = competenceCourse
-			.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
+		.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
 		if (competenceCourseInformation != null) {
 		    competenceCourseInformations.add(competenceCourseInformation);
 		}
@@ -1188,10 +1188,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
 	    if (competenceCourse != null) {
 		final CompetenceCourseInformation competenceCourseInformation = competenceCourse
-			.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
+		.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
 		if (competenceCourseInformation != null) {
 		    final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences bibliographicReferences = competenceCourseInformation
-			    .getBibliographicReferences();
+		    .getBibliographicReferences();
 		    if (bibliographicReferences != null) {
 			for (final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference bibliographicReference : bibliographicReferences
 				.getBibliographicReferencesList()) {
@@ -1749,19 +1749,21 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	if (hasEvaluationMethod()) {
 	    final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
-	    return evaluationElements != null && evaluationElements.hasContent(Language.pt) ? evaluationElements
-		    .getContent(Language.pt) : getCompetenceCourses().iterator().next().getEvaluationMethod();
+	    return evaluationElements != null && evaluationElements.hasContent(Language.pt) ? 
+		    evaluationElements.getContent(Language.pt) : !getCompetenceCourses().isEmpty() ?
+			    getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
 	} else {
 	    return getCompetenceCourses().iterator().next().getEvaluationMethod();
 	}
     }
-    
+
     public String getEvaluationMethodTextEn() {
 	if (hasEvaluationMethod()) {
 	    final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
 	    return evaluationElements != null && evaluationElements.hasContent(Language.en) ? evaluationElements
-		    .getContent(Language.en) : getCompetenceCourses().iterator().next().getEvaluationMethodEn();
+		    .getContent(Language.en) : !getCompetenceCourses().isEmpty() ?
+			    getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
 	} else {
 	    return getCompetenceCourses().iterator().next().getEvaluationMethodEn();
 	}
