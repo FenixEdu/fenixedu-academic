@@ -6179,16 +6179,9 @@ relation ExecutionPeriodSchoolClass {
 	}
 }
 
-relation ExecutionYearEnrolmentCertificateRequest {
+relation ExecutionYearAcademicServiceRequest {
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest playsRole enrolmentCertificateRequests {
-		multiplicity *;
-	}
-}
-
-relation ExecutionYearEnrolmentDecalrationRequest {
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest playsRole enrolmentDeclarationRequests {
+	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
 		multiplicity *;
 	}
 }
@@ -6203,20 +6196,6 @@ relation ExecutionYearMasterDegreeInsurancePaymentCode {
 relation ExecutionYearPaymentPlan {
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 	net.sourceforge.fenixedu.domain.accounting.PaymentPlan playsRole paymentPlans {
-		multiplicity *;
-	}
-}
-
-relation ExecutionYearSchoolRegistrationCertificateRequest {
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest playsRole schoolRegistrationCertificateRequests {
-		multiplicity *;
-	}
-}
-
-relation ExecutionYearSchoolRegistrationDeclarationRequest {
-	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
-	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest playsRole schoolRegistrationDeclarationRequests {
 		multiplicity *;
 	}
 }
