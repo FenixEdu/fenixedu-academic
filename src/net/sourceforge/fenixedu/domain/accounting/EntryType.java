@@ -36,7 +36,9 @@ public enum EntryType {
     
     INTERNAL_DEGREE_CHANGE_REQUEST_FEE,
     
-    STUDENT_REINGRESSION_REQUEST_FEE;
+    STUDENT_REINGRESSION_REQUEST_FEE,
+    
+    EQUIVALENCE_PLAN_REQUEST_FEE;
     
     public String getName() {
 	return name();

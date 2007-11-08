@@ -72,7 +72,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    
 	} else if (academicServiceRequestBean.isNew()) {
 	    if (hasEvent()) {
-		throw new DomainException("error.ExternalDegreeChangeRequest.already.has.event");
+		throw new DomainException("AcademicServiceRequest.already.has.event");
 	    }
 	    new StudentReingressionRequestEvent(getAdministrativeOffice(), getPerson(), this);
 	    

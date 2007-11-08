@@ -1362,11 +1362,18 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaPhdProgramDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
 					}
 					
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.InternalDegreeChangeRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
+				
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
+				
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.EquivalencePlanRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
+				
 			class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.ExternalDegreeChangeRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
 			}
 			
-			class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.InternalDegreeChangeRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
-			}
 
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 			YearMonthDay creationDate;
@@ -3584,6 +3591,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			}
 			
 			class net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionRequest extends net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest {
+			}
+			
+			class net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest extends net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest {
+			}
+			
+			class net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest extends net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest {
 			}
 						
 		class net.sourceforge.fenixedu.domain.serviceRequests.PersonAcademicServiceRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {

@@ -4,24 +4,24 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
-public class StudentReingressionRequestEvent extends StudentReingressionRequestEvent_Base {
+public class EquivalencePlanRequestEvent extends EquivalencePlanRequestEvent_Base {
     
-    protected StudentReingressionRequestEvent() {
+    protected EquivalencePlanRequestEvent() {
         super();
     }
     
-    public StudentReingressionRequestEvent(final AdministrativeOffice administrativeOffice, final Person person, final StudentReingressionRequest academicServiceRequest) {
+    public EquivalencePlanRequestEvent(final AdministrativeOffice administrativeOffice, final Person person, final EquivalencePlanRequest academicServiceRequest) {
 	this();
-	super.init(administrativeOffice, EventType.STUDENT_REINGRESSION_REQUEST, person, academicServiceRequest);
+	super.init(administrativeOffice, EventType.EQUIVALENCE_PLAN_REQUEST, person, academicServiceRequest);
     }
     
     @Override
-    public StudentReingressionRequest getAcademicServiceRequest() {
-        return (StudentReingressionRequest) super.getAcademicServiceRequest();
+    public EquivalencePlanRequest getAcademicServiceRequest() {
+        return (EquivalencePlanRequest) super.getAcademicServiceRequest();
     }
     
     private Registration getRegistration() {
@@ -39,9 +39,10 @@ public class StudentReingressionRequestEvent extends StudentReingressionRequestE
 	labelFormatter.appendLabel(getRegistration().getLastDegreeCurricularPlan().getName());
 	labelFormatter.appendLabel(")");
 	if (getAcademicServiceRequest().hasExecutionYear()) {
-	    labelFormatter.appendLabel(" - " + getExecutionYear().getYear());    
+	    labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
 	}
 	
 	return labelFormatter;
     }
+    
 }
