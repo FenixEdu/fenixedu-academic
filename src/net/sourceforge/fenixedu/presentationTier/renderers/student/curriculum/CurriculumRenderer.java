@@ -202,7 +202,7 @@ public class CurriculumRenderer extends InputRenderer {
 		return container;
 	    }
 
-	    if (this.curriculum.getEntries().isEmpty() && this.curriculum.getDismissalRelatedEntries().isEmpty()) {
+	    if (this.curriculum.getEnrolmentRelatedEntries().isEmpty() && this.curriculum.getDismissalRelatedEntries().isEmpty()) {
 		container.addChild(createHtmlTextItalic(studentResources.getString("message.no.enrolments")));
 
 		return container;
@@ -240,7 +240,7 @@ public class CurriculumRenderer extends InputRenderer {
 	private void generateAverageRows(final HtmlTable mainTable) {
 
 	    final Set<ICurriculumEntry> sortedIAverageEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-	    sortedIAverageEntries.addAll(this.curriculum.getEntries());
+	    sortedIAverageEntries.addAll(this.curriculum.getEnrolmentRelatedEntries());
 	    if (!sortedIAverageEntries.isEmpty()) {
 		generateGroupRowWithText(mainTable, "Inscrições", true, 0);
 		generateRows(mainTable, sortedIAverageEntries, 0);
