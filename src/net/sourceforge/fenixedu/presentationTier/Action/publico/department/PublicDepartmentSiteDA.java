@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYear
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -227,6 +228,11 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 	}
 
 	teachers.add(teacher);
+    }
+
+    @Override
+    protected ExecutionYearIntervalBean generateSearchBean() {
+	return new ExecutionYearIntervalBean(ExecutionYear.readFirstExecutionYear(), ExecutionYear.readCurrentExecutionYear());
     }
     
     @Override

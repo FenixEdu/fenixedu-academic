@@ -182,8 +182,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	if (viewState != null) {
 	    bean = (ExecutionYearIntervalBean) viewState.getMetaObject().getObject();
 	} else {
-	    bean = new ExecutionYearIntervalBean(ExecutionYear.readCurrentExecutionYear()
-		    .getPreviousExecutionYear(3), ExecutionYear.readCurrentExecutionYear());
+	    bean = generateSearchBean();
 	}
 
 	request.setAttribute("executionYearIntervalBean", bean);
@@ -191,6 +190,11 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	preparePublicationsForResponse(request, unit, bean);
 
 	return mapping.findForward("showPublications");
+    }
+
+    protected ExecutionYearIntervalBean generateSearchBean() {
+	return new ExecutionYearIntervalBean(ExecutionYear.readCurrentExecutionYear()
+		.getPreviousExecutionYear(3), ExecutionYear.readCurrentExecutionYear());
     }
 
     protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit,
@@ -201,26 +205,32 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     protected void putPublicationsOnRequest(HttpServletRequest request, Unit unit,
 	    ExecutionYearIntervalBean bean, Boolean checkSubunits) {
 
-	//String[] publicationTypes = new String[] {"articles", "books", "inbooks", "inproceedings", "proceedings", "theses", "manuals", "technical-reports", "other-publications", "unstructureds"};
+	// String[] publicationTypes = new String[] {"articles", "books",
+	// "inbooks", "inproceedings", "proceedings", "theses", "manuals",
+	// "technical-reports", "other-publications", "unstructureds"};
 
 	ExecutionYear firstExecutionYear = bean.getFirstExecutionYear();
 	ExecutionYear finalExecutionYear = bean.getFinalExecutionYear();
 	ResultPublicationType resultPublicationType = bean.getPublicationType();
 
 	if (resultPublicationType == null) {
-	    request.setAttribute("international-articles", ResearchResultPublication.sort(unit.getArticles(ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
-	    request.setAttribute("national-articles", ResearchResultPublication.sort(unit.getArticles(ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("international-articles", ResearchResultPublication.sort(unit
+		    .getArticles(ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("national-articles", ResearchResultPublication.sort(unit.getArticles(
+		    ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
 	    List<ResearchResultPublication> articles = ResearchResultPublication.sort(unit.getArticles(
 		    firstExecutionYear, finalExecutionYear, checkSubunits));
 	    request.setAttribute("hasArticles", !articles.isEmpty());
 	    request.setAttribute("articles", articles);
-	    
+
 	    request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(
 		    firstExecutionYear, finalExecutionYear, checkSubunits)));
 	    request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(
 		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	    request.setAttribute("international-inproceedings", ResearchResultPublication.sort(unit.getInproceedings(ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
-	    request.setAttribute("national-inproceedings", ResearchResultPublication.sort(unit.getInproceedings(ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("international-inproceedings", ResearchResultPublication.sort(unit
+		    .getInproceedings(ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("national-inproceedings", ResearchResultPublication.sort(unit
+		    .getInproceedings(ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
 	    request.setAttribute("inproceedings", ResearchResultPublication.sort(unit.getInproceedings(
 		    firstExecutionYear, finalExecutionYear, checkSubunits)));
 	    request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(
