@@ -5234,7 +5234,9 @@ relation CreditsDismissalEquivalence {
 }
 
 relation CreditsExecutionPeriod {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod {
+		multiplicity 1..1;
+	}
 	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits {
 		multiplicity *;
 	}
