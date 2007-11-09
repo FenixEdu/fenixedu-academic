@@ -48,7 +48,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.curriculum.StudentCurriculumBase.AverageType;
+import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
@@ -1682,42 +1682,42 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	
 
-    /**
-     * This must be completely refactored. A pattern of some sort is desirable
-     * in order to make this instance-dependent. Just did this due to time
-     * constrains.
-     */
+	/**
+	 * This must be completely refactored. A pattern of some sort is desirable
+	 * in order to make this instance-dependent. Just did this due to time
+	 * constrains.
+	 */
 
-    static final Set<String> bestAverage = new HashSet<String>();
-    static {
-	bestAverage.add("MEE02/04");
-	bestAverage.add("MEE03/05");
-	bestAverage.add("MF02/04");
-	bestAverage.add("MF03/05");
-	bestAverage.add("MC02/04");
-	bestAverage.add("MC03/05");
-	bestAverage.add("MEMAT02/04");
-	bestAverage.add("MEQ03/04");
-	bestAverage.add("MSIG02/04");
-	bestAverage.add("MCES02/04");
-	bestAverage.add("MEIC02/04");
-	bestAverage.add("MEIC03/05");
-	bestAverage.add("ML03/05");
-	bestAverage.add("ML02/04");
-	bestAverage.add("ML05/07");
-	bestAverage.add("MEE04/06");
-	bestAverage.add("MEE05/07");
-    };
+	static final Set<String> bestAverage = new HashSet<String>();
+	static {
+	    bestAverage.add("MB02/04");
+	    bestAverage.add("MB03/05");
+	    bestAverage.add("MIOES02/04");
+	    bestAverage.add("MT02/04");
+	    bestAverage.add("MT03/05");
+	    bestAverage.add("MT05/07");
+	};
 
-    static final Set<String> weightedAverage = new HashSet<String>();
-    static {
-	weightedAverage.add("MB02/04");
-	weightedAverage.add("MB03/05");
-	weightedAverage.add("MIOES02/04");
-	weightedAverage.add("MT02/04");
-	weightedAverage.add("MT03/05");
-	weightedAverage.add("MT05/07");
-    };
+	static final Set<String> weightedAverage = new HashSet<String>();
+	static {
+	    weightedAverage.add("MEE02/04");
+	    weightedAverage.add("MEE03/05");
+	    weightedAverage.add("MF02/04");
+	    weightedAverage.add("MF03/05");
+	    weightedAverage.add("MC02/04");
+	    weightedAverage.add("MC03/05");
+	    weightedAverage.add("MEMAT02/04");
+	    weightedAverage.add("MEQ03/04");
+	    weightedAverage.add("MSIG02/04");
+	    weightedAverage.add("MCES02/04");
+	    weightedAverage.add("MEIC02/04");
+	    weightedAverage.add("MEIC03/05");
+	    weightedAverage.add("ML03/05");
+	    weightedAverage.add("ML02/04");
+	    weightedAverage.add("ML05/07");
+	    weightedAverage.add("MEE04/06");
+	    weightedAverage.add("MEE05/07");
+	};
 
     final public AverageType getAverageType() {
 	if (getDegreeType() == DegreeType.MASTER_DEGREE) {
