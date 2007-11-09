@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -32,11 +32,10 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	final StringBuilder result = new StringBuilder();
 
 	Registration registration = getDocumentRequest().getRegistration();
-	final Curriculum curriculum = registration.getCurriculum();
+	final ICurriculum curriculum = registration.getCurriculum();
 	
 	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-	entries.addAll(curriculum.getEntries());
-	entries.addAll(curriculum.getDismissalRelatedEntries());
+	entries.addAll(curriculum.getCurriculumEntries());
 
 	final Map<Unit,String> academicUnitIdentifiers = new HashMap<Unit,String>();
 	reportEntries(result, entries, academicUnitIdentifiers);

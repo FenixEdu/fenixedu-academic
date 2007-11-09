@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
-import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -207,8 +207,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	result.append(entry.getEctsCreditsForCurriculum()).append(getCreditsDescription()).append(", ");
     }
     
-    final protected String getCreditsDismissalsEctsCreditsInfo(final Curriculum curriculum) {
-	final BigDecimal creditsDismissalsEctsCredits = curriculum.getCreditsDismissalsEctsCredits();
+    final protected String getCreditsDismissalsEctsCreditsInfo(final ICurriculum curriculum) {
+	final BigDecimal creditsDismissalsEctsCredits = curriculum.getCreditsEctsCredits();
 	
 	final StringBuilder result = new StringBuilder();
 	if (creditsDismissalsEctsCredits != BigDecimal.ZERO) {

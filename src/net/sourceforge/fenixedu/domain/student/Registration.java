@@ -69,7 +69,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -502,15 +504,15 @@ public class Registration extends Registration_Base {
 	return Double.valueOf(Math.round(this.arithmeticMean * 100) / 100.0);
     }
 
-    final public Curriculum getCurriculum() {
+    final public ICurriculum getCurriculum() {
 	return getCurriculum((ExecutionYear) null, (CycleType) null);
     }
     
-    final public Curriculum getCurriculum(final ExecutionYear executionYear) {
+    final public ICurriculum getCurriculum(final ExecutionYear executionYear) {
 	return getCurriculum(executionYear, (CycleType) null);
     }
 
-    final public Curriculum getCurriculum(final ExecutionYear executionYear, final CycleType cycleType) {
+    final public ICurriculum getCurriculum(final ExecutionYear executionYear, final CycleType cycleType) {
 	if (!hasAnyStudentCurricularPlans()) {
 	    return Curriculum.createEmpty(executionYear);
 	}
@@ -535,21 +537,17 @@ public class Registration extends Registration_Base {
 	    final List<StudentCurricularPlan> sortedStudentCurricularPlans = getSortedStudentCurricularPlans();
 	    final ListIterator<StudentCurricularPlan> sortedSCPsIterator = sortedStudentCurricularPlans.listIterator(sortedStudentCurricularPlans.size());
 	    final StudentCurricularPlan lastStudentCurricularPlan = sortedSCPsIterator.previous();
-	    final Curriculum curriculum = lastStudentCurricularPlan.getCurriculum(executionYear);
 	    
-	    // TODO remove last degree verification once script for spliting Registrations from different degrees is run
-	    final Degree lastDegree = lastStudentCurricularPlan.getDegree();
-
-	    for (;sortedSCPsIterator.hasPrevious();) {
-		final StudentCurricularPlan studentCurricularPlan = sortedSCPsIterator.previous();
-		if (studentCurricularPlan.getDegree() == lastDegree && studentCurricularPlan.getStartExecutionYear().isBeforeOrEquals(executionYear)) {
-		    curriculum.add(studentCurricularPlan.getCurriculum(executionYear));
-		}
+	    final ICurriculum curriculum;
+	    if (lastStudentCurricularPlan.isBoxStructure()) {
+		curriculum = lastStudentCurricularPlan.getCurriculum(executionYear);
+	    } else {
+		curriculum = new StudentCurriculum(this, executionYear); 
 	    }
 	    
 	    return curriculum;
 	}
-	}
+    }
 
     public int getNumberOfCurriculumEntries() {
 	return getCurriculum().getCurriculumEntries().size();
@@ -2623,7 +2621,7 @@ public class Registration extends Registration_Base {
 		return isForOffice(AdministrativeOffice
 				.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE));
     }
-    
+
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void deleteActualInfo() {
 	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
