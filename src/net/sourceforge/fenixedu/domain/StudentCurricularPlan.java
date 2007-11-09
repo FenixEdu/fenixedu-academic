@@ -50,6 +50,7 @@ import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -291,6 +292,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
+    final public AverageType getAverageType() {
+	return getDegreeCurricularPlan().getAverageType();
+    }
+    
     final public boolean isActive() {
 	return isLastStudentCurricularPlanFromRegistration() && getRegistration().isActive();
     }
