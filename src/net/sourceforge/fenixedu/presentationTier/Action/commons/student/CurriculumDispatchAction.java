@@ -136,7 +136,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 		.getStudentCurricularPlans()));
 
 	if (StringUtils.isEmpty(actionForm.getString("select"))) {
-	    actionForm.set("select", EnrolmentStateFilterType.ALL.name());
+	    actionForm.set("select", EnrolmentStateFilterType.APPROVED_OR_ENROLED.name());
 	}
 
 	if (StringUtils.isEmpty(actionForm.getString("organizedBy"))) {
