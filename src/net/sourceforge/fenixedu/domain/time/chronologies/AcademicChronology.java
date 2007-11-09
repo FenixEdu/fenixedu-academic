@@ -20,33 +20,42 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.DurationField;
 import org.joda.time.Interval;
 import org.joda.time.chrono.AssembledChronology;
+import org.joda.time.chrono.GregorianChronology;
 import org.joda.time.chrono.ISOChronology;
 
 public class AcademicChronology extends AssembledChronology {
-      
+        
     private transient AcademicCalendarRootEntry academicCalendar;
+        
     
-    
+    // Duration Fields
     private transient DurationField acAcademicYearsField;
 
     private transient DurationField acAcademicSemestersField;
-
     
+    
+    // DateTime Fields
     private transient DateTimeField acAcademicYear;
     
     private transient DateTimeField acAcademicSemester;    
     
     private transient DateTimeField acAcademicSemesterOfAcademicYear;
 
-    private transient DateTimeField acDayOfAcademicSemester;
-
+    private transient DateTimeField acDayOfAcademicSemester;          
+    
+    
+    // Static Variables
+    private static final ISOChronology ISO_INSTANCE;    
+    static {
+	ISO_INSTANCE = ISOChronology.getInstance();
+    }
+    
+    // Override Methods
     
     public AcademicChronology(AcademicCalendarRootEntry academicCalendar) {
-	super(ISOChronology.getInstance(), null);
+	super(ISO_INSTANCE, null);
 	this.academicCalendar = academicCalendar;	
     }     
-    
-    // Overrided Methods
     
     @Override
     protected void assemble(Fields fields) {	
@@ -58,15 +67,15 @@ public class AcademicChronology extends AssembledChronology {
         acAcademicSemesterOfAcademicYear = new AcademicSemesterOfAcademicYearDateTimeField(this);	
         acDayOfAcademicSemester = new DayOfAcademicSemesterDateTimeField(this); 	
     }
-
+    
     @Override
     public Chronology withUTC() {
-	return null;
+	return ISO_INSTANCE.getInstanceUTC();
     }
 
     @Override
     public Chronology withZone(DateTimeZone zone) {
-	return null;
+	return ISO_INSTANCE.withZone(zone);
     }
 
     @Override
@@ -78,6 +87,7 @@ public class AcademicChronology extends AssembledChronology {
 	}
 	return str;
     }       
+    
     
     // DateTime Fields
    
@@ -97,6 +107,7 @@ public class AcademicChronology extends AssembledChronology {
 	return acDayOfAcademicSemester;
     }
 
+    
     // Duration Fields
 
     public DurationField academicYears() {
@@ -106,6 +117,7 @@ public class AcademicChronology extends AssembledChronology {
     public DurationField academicSemesters() {
 	return acAcademicSemestersField;
     }
+    
     
     // Auxiliar Methods
 
