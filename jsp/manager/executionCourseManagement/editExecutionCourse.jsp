@@ -58,6 +58,16 @@
 			</tr>
 			<tr>
 				<td>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.entry.phase"/>
+				</td>
+				<td>
+					<html:select bundle="HTMLALT_RESOURCES" property="entryPhase">
+						<html:optionsCollection name="entryPhases"/>
+					</html:select>
+				</td>
+			</tr>						
+			<tr>
+				<td>
 					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.available.grade.submission"/>
 				</td>
 				<td>

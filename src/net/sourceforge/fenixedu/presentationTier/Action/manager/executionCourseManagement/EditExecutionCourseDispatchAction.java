@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
+import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -236,6 +237,13 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
         fillForm(form, infoExecutionCourse, request);
+        
+        List<LabelValueBean> entryPhases = new ArrayList<LabelValueBean>();
+        for (EntryPhase entryPhase : EntryPhase.getAll()) {
+		LabelValueBean labelValueBean = new LabelValueBean(entryPhase.toString(), entryPhase.getEntryPhase().toString());
+		entryPhases.add(labelValueBean);
+	    }
+        request.setAttribute("entryPhases", entryPhases);
 
         return mapping.findForward("editExecutionCourse");
     }
@@ -378,6 +386,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             infoExecutionCourse.setSigla((String) editExecutionCourseForm.get("code"));            
             infoExecutionCourse.setComment((String) editExecutionCourseForm.get("comment"));
             infoExecutionCourse.setAvailableGradeSubmission(Boolean.valueOf(editExecutionCourseForm.getString("availableGradeSubmission")));
+            infoExecutionCourse.setEntryPhase(EntryPhase.valueOf(Integer.valueOf(editExecutionCourseForm.getString("entryPhase"))));
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -391,6 +400,8 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	DynaActionForm executionCourseForm = (DynaActionForm) form;
         executionCourseForm.set("name", infoExecutionCourse.getNome());
         executionCourseForm.set("code", infoExecutionCourse.getSigla());        
+        executionCourseForm.set("comment", infoExecutionCourse.getComment());
+        executionCourseForm.set("entryPhase", infoExecutionCourse.getEntryPhase().getEntryPhase().toString());
         if(infoExecutionCourse.getAvailableGradeSubmission() != null) {
             executionCourseForm.set("availableGradeSubmission", infoExecutionCourse.getAvailableGradeSubmission().toString());
         }                       

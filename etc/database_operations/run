@@ -33,3 +33,4 @@ executeWithTempFile "Add New Academic Interval Slots - Step 3" addNewAcademicInt
 execute "Add New Academic Interval Slots - Step 4" addNewAcademicIntervalSlots4.sql
 executeWithTempFile "Add New Role SubClass" alterRoleTable.sql
 execute "Add New Role SubClass - Step 2" alterRoleTable2.sql
+execute "Alter Table ExecutionCourse add EntryPhase" alterTableExecutionPeriodAddEntryPhase.sql

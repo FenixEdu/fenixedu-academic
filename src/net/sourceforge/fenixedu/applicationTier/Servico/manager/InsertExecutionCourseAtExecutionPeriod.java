@@ -30,7 +30,7 @@ public class InsertExecutionCourseAtExecutionPeriod extends Service {
 		    + executionPeriod.getName() + "-" + executionPeriod.getExecutionYear().getYear());
 	}
 
-	final ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(), executionPeriod);
+	final ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(), executionPeriod, infoExecutionCourse.getEntryPhase());
 	executionCourse.createSite();
     }
 }

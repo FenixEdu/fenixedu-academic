@@ -567,7 +567,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean availableGradeSubmission;
 		String comment;		
 		String nome;		
-		String sigla;		
+		String sigla;
+		EntryPhase entryPhase;		
 	}
 	
 	class net.sourceforge.fenixedu.domain.CourseLoad extends net.sourceforge.fenixedu.domain.DomainObject {

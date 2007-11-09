@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.util.EntryPhase;
+
 public class InfoExecutionCourseEditor extends InfoObject {
 
     protected String _nome;
@@ -35,6 +37,8 @@ public class InfoExecutionCourseEditor extends InfoObject {
     protected InfoExecutionPeriod infoExecutionPeriod;
 
     protected List associatedInfoCurricularCourses;
+    
+    private EntryPhase entryPhase;
 
     public InfoExecutionCourseEditor() {
     }
@@ -181,6 +185,14 @@ public class InfoExecutionCourseEditor extends InfoObject {
 
     public void setAvailableGradeSubmission(Boolean availableGradeSubmission) {
         this.availableGradeSubmission = availableGradeSubmission;
+    }
+
+    public EntryPhase getEntryPhase() {
+        return entryPhase;
+    }
+
+    public void setEntryPhase(EntryPhase entryPhase) {
+        this.entryPhase = entryPhase;
     }
 
 }

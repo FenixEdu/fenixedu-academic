@@ -127,7 +127,7 @@ public class SeperateExecutionCourse extends Service {
 		originExecutionCourse.getExecutionPeriod(), originExecutionCourse.getSigla());
 
 	final ExecutionCourse destinationExecutionCourse = new ExecutionCourse(originExecutionCourse
-		.getNome(), sigla, originExecutionCourse.getExecutionPeriod());
+		.getNome(), sigla, originExecutionCourse.getExecutionPeriod(), null);
 
 	for (CourseLoad courseLoad : originExecutionCourse.getCourseLoads()) {
 	    new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(), 

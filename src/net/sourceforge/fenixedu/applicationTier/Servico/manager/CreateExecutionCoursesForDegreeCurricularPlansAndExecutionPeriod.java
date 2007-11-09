@@ -35,7 +35,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
                     final String originalCode = getCodeForCurricularCourse(curricularCourse);
                     if (originalCode != null) {
                         final String sigla = getUniqueSigla(existentsExecutionCoursesSiglas, originalCode);
-                        final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(), sigla, executionPeriod);                        
+                        final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(), sigla, executionPeriod, null);                        
                         executionCourse.createSite();
                         curricularCourse.addAssociatedExecutionCourses(executionCourse);
                     }

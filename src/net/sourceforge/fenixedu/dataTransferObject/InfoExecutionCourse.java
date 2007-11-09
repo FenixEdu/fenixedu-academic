@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
+import net.sourceforge.fenixedu.util.EntryPhase;
 
 /**
  * @author tfc130
@@ -337,6 +338,10 @@ public class InfoExecutionCourse extends InfoObject {
 
     public void setFilteredInfoGroupings(List<InfoGrouping> filteredInfoGroupings) {
 	this.filteredInfoGroupings = filteredInfoGroupings;
+    }
+    
+    public EntryPhase getEntryPhase() {
+	return getExecutionCourse().getEntryPhase();
     }
     
 }

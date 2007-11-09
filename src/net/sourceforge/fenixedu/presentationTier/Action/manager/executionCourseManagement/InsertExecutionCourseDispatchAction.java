@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -82,6 +83,14 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
             }, executionPeriodLabels);
 
             request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
+            
+            List<LabelValueBean> entryPhases = new ArrayList<LabelValueBean>();
+            for (EntryPhase entryPhase : EntryPhase.getAll()) {
+		LabelValueBean labelValueBean = new LabelValueBean(entryPhase.toString(), entryPhase.getEntryPhase().toString());
+		entryPhases.add(labelValueBean);
+	    }
+            request.setAttribute("entryPhases", entryPhases);
+            
         }
 
         return mapping.findForward("insertExecutionCourse");
@@ -130,6 +139,14 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
             comment = (String) dynaForm.get("comment");
         }
         infoExecutionCourse.setComment(comment);
+        
+        String entryPhaseString = dynaForm.getString("entryPhase");
+        EntryPhase entryPhase = null;
+        if(entryPhaseString != null && entryPhaseString.length() > 0) {
+            entryPhase = EntryPhase.valueOf(Integer.valueOf(entryPhaseString));
+        }
+        infoExecutionCourse.setEntryPhase(entryPhase);
+        
         return infoExecutionCourse;
     }
 }

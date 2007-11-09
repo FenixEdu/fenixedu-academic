@@ -16,7 +16,7 @@ public class EditExecutionCourseInfo extends Service {
         }
 
         executionCourse.editInformation(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),
-        	infoExecutionCourse.getComment(), infoExecutionCourse.getAvailableGradeSubmission());
+        	infoExecutionCourse.getComment(), infoExecutionCourse.getAvailableGradeSubmission(), infoExecutionCourse.getEntryPhase());
 
         return new InfoExecutionCourse(executionCourse);
     }

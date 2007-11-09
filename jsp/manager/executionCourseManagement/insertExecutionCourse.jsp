@@ -47,6 +47,19 @@
 					<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.comment" property="comment" rows="3" cols="45"/>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.entry.phase"/>
+				</td>
+				<td>
+					<html:select bundle="HTMLALT_RESOURCES" property="entryPhase">
+						<html:option value="" key="label.manager.executionCourseManagement.select">
+							<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.select"/>
+						</html:option>
+						<html:optionsCollection name="entryPhases"/>
+					</html:select>
+				</td>
+			</tr>			
 		</table>
 		<br />
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/></html:submit>

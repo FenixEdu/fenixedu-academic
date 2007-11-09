@@ -810,7 +810,7 @@ public class CreateTestData {
                     for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
                         if (curricularCourse.hasActiveScopesInExecutionPeriod(executionPeriod)) {                            
                             final ExecutionCourse executionCourse = new ExecutionCourse(
-                                    curricularCourse.getName(), curricularCourse.getCode(), executionPeriod);
+                                    curricularCourse.getName(), curricularCourse.getCode(), executionPeriod, null);
                                                       
                             BigDecimal numberOfWeeks = BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS);
                             new CourseLoad(executionCourse, ShiftType.TEORICA, BigDecimal.valueOf(1.5), BigDecimal.valueOf(1.5).multiply(numberOfWeeks));
@@ -1244,7 +1244,7 @@ public class CreateTestData {
     }
 
     private static void createExecutionCourse(final ExecutionPeriod executionPeriod, final CurricularCourse curricularCourse) {
-        final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(), curricularCourse.getAcronym(), executionPeriod);
+        final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(), curricularCourse.getAcronym(), executionPeriod, null);
         executionCourse.addAssociatedCurricularCourses(curricularCourse);               
         executionCourse.setAvailableForInquiries(Boolean.TRUE);
        

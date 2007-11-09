@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.ProposalState;
@@ -84,7 +85,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	ExecutionCourseBibliographicReference.addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
     }
 
-    public ExecutionCourse(final String nome, final String sigla, final ExecutionPeriod executionPeriod) {
+    public ExecutionCourse(final String nome, final String sigla, final ExecutionPeriod executionPeriod, EntryPhase entryPhase) {
 	super();
 
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -99,13 +100,22 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	createForum(nome, nome);
 	createExecutionCourseAnnouncementBoard(nome);
+	
+	if(entryPhase == null) {
+	    entryPhase = EntryPhase.FIRST_PHASE_OBJ;
+	}
+	setEntryPhase(entryPhase);
+	
     }
 
-    public void editInformation(String nome, String sigla, String comment, Boolean availableGradeSubmission) {
+    public void editInformation(String nome, String sigla, String comment, Boolean availableGradeSubmission, EntryPhase entryPhase) {
 	setNome(nome);
 	setSigla(sigla);
 	setComment(comment);
 	setAvailableGradeSubmission(availableGradeSubmission);
+	if(entryPhase != null) {
+	    setEntryPhase(entryPhase);
+	}
     }
 
     public void editCourseLoad(ShiftType type, BigDecimal unitQuantity, BigDecimal totalQuantity) {
