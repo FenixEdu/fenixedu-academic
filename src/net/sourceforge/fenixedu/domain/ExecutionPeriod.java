@@ -428,6 +428,10 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 
     public static ExecutionPeriod readByDateTime(final DateTime dateTime) {
 	final YearMonthDay yearMonthDay = dateTime.toYearMonthDay();
+	return readByYearMonthDay(yearMonthDay);
+    }
+    
+    public static ExecutionPeriod readByYearMonthDay(final YearMonthDay yearMonthDay) {
 	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
 	    if (executionPeriod.containsDay(yearMonthDay)) {
 		return executionPeriod;
@@ -435,5 +439,6 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	}
 	return null;
     }
+
 
 }
