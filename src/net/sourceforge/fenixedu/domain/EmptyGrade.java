@@ -31,7 +31,7 @@ public class EmptyGrade extends Grade {
 	if (value != null) {
 	    value = value.trim();
 	}
-	return StringUtils.isEmpty(value) || value.equals("null") || value.equals("0");
+	return StringUtils.isEmpty(value) || value.equals("null");
     }
     
     @Override
