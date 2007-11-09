@@ -103,6 +103,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
             response.flushBuffer();
         } else {
             setError(request, assiduousnessExportChoices, "error.noWorkScheduleToExport");
+            request.setAttribute("action", "exportWorkSheets");
             return mapping.findForward("choose-year-month");
         }
         return mapping.findForward("");

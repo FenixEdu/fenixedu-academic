@@ -8,6 +8,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.owner;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -56,7 +58,7 @@ public class SearchGrantOwner extends Service {
         Integer numberOfResultsByName = null;
         // Search by name IF search by ID has failed
         if (person == null && grantOwner == null) {
-            if (name != null) {
+            if (!StringUtils.isEmpty(name)) {
                 Integer tempNumberOfElementInSpan = new Integer(
                         SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1);            
                 if (onlyGrantOwner.booleanValue()) {

@@ -49,16 +49,7 @@
 				</var>
 			</field>
 		</form>
-
-
-		<!-- Initial form to search a Grant Owner -->
-        <form name="searchGrantOwnerForm">
-            <field property="idNumber" depends="integer" page="1">
-                <msg name="integer" key="errors.integer" resource="true"/>
-                <arg0 key="label.grant.owner.idNumber"/>
-            </field>
-        </form>
-
+		
 		<!-- Initial form to search a Grant Owner By Number-->
         <form name="searchGrantOwnerByNumberForm">
             <field property="grantOwnerNumber" depends="required, integer" page="1">
