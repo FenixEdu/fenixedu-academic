@@ -5,9 +5,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page language="java" %>
-<%@page import="java.math.BigDecimal"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
-<%@page import="net.sourceforge.fenixedu.domain.student.curriculum.Curriculum"%>
+<%@page import="net.sourceforge.fenixedu.domain.degree.DegreeType"%>
 <%@page import="org.apache.struts.util.LabelValueBean"%>
 <html:xhtml/>
 
@@ -79,7 +77,7 @@
 			<p>
 				<span class="highlight1">
 					<bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>:
-					<b><bean:write name="registration" property="average"/></b>
+					<b><bean:write name="registration" property="finalAverage"/></b>
 				</span>
 			</p>
 		</logic:equal>				
@@ -93,13 +91,11 @@
 	</logic:equal>
 
 	<logic:equal name="registration" property="concluded" value="false">
-
 		<%
-			request.setAttribute("toShow", registration.getDegreeType().hasExactlyOneCycleType());
+			final DegreeType degreeType = registration.getDegreeType();
+			request.setAttribute("toShow", degreeType != DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 		%>
-
 		<logic:equal name="toShow" value="true">
-
 			<p class="mtop1 mbottom1">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<bean:define id="url">
@@ -113,85 +109,6 @@
 					<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</html:link>
 			</p>
-<%--
-			<script language="JavaScript">	
-			function check(e,v){
-				if (e.className == "dnone")
-			  	{
-				  e.className = "dblock";
-				  v.value = "-";
-				}
-				else {
-				  e.className = "dnone";
-			  	  v.value = "+";
-				}
-			}
-			</script>
-	
-			<div class="mtop1 mbottom15">
-		
-				<p class="mbottom05">
-					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-					<a href="#" class="dnone" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;">Consultar Média</a>
-				</p>
-			
-				<div id="instructions" class="dblock mvert0">
-			
-					<div class="infoop3">
-					
-							<%
-								// average
-								Curriculum curriculum = registration.getCurriculum();
-
-								final BigDecimal sumPiCi = curriculum.getSumPiCi();
-								request.setAttribute("sumPiCi", sumPiCi);
-							
-								final BigDecimal sumPi = curriculum.getSumPi();
-								request.setAttribute("sumPi", sumPi);
-				
-								final BigDecimal average = curriculum.getAverage();
-								request.setAttribute("average", average);
-				
-								// curricular year
-								final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-								curriculum = registration.getCurriculum(currentExecutionYear);
-								
-								final BigDecimal sumEctsCredits = curriculum.getSumEctsCredits();
-								request.setAttribute("sumEctsCredits", sumEctsCredits);
-
-								final Integer curricularYear = curriculum.getCurricularYear();
-								request.setAttribute("curricularYear", curricularYear);
-							%>
-
-							<p class="mvert05"><strong><bean:message key="legal.value.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-							<p class="mvert05"><bean:message key="rules.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
-							<p class="mvert05"><bean:message key="bolonha.special.case.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></p>
-
-							<p class="mtop1 mbottom05"><strong><bean:message key="degree.average.is.current.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-							
-							<ul>
-								<li><bean:message key="degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="average"/></b></li>
-								<li><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="average.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
-								<li><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="degree.average.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:write name="sumPiCi"/> / <bean:write name="sumPi"/> = <b class="highlight1"><bean:write name="average"/></b></li>
-							</ul>
-							
-							<p class="mtop1 mbottom05"><strong><bean:message key="curricular.year.in.begin.of.execution.year.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-							<ul>
-								<li><bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <b class="highlight1"><bean:write name="curricularYear"/></b></li>
-								<li><bean:message key="rule" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.rule" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
-								<li><bean:message key="result" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:message key="curricular.year.abbreviation" bundle="ACADEMIC_OFFICE_RESOURCES"/> = <bean:message key="minimum" bundle="ACADEMIC_OFFICE_RESOURCES"/> (<bean:message key="int" bundle="ACADEMIC_OFFICE_RESOURCES"/> ( (<bean:write name="sumEctsCredits"/> + 24) / 60 + 1) ; <bean:write name="registration" property="degreeType.years"/>) = <b class="highlight1"><bean:write name="curricularYear"/></b>;</li>
-							</ul>
-					</div>
-	
-				</div>
-	
-			</div>
-	
-			<script>
-				check(document.getElementById('instructions'), document.getElementById('instructionsButton'));
-				document.getElementById('instructionsButton').className="dinline";
-			</script>
---%>
 		</logic:equal>
 
 	</logic:equal>
