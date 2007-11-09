@@ -17,30 +17,31 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 public class DegreeCurricularPlanBasedStudentCurriculum extends StudentCurriculumBase {
 
-    public DegreeCurricularPlanBasedStudentCurriculum(final Registration registration) {
-	super(registration);
+    public DegreeCurricularPlanBasedStudentCurriculum(final Registration registration, final ExecutionYear executionYear) {
+	super(registration, executionYear);
     }
 
     @Override
-    public Collection<CurriculumEntry> getCurriculumEntries(final ExecutionYear executionYear) {
-	final StudentCurricularPlan studentCurricularPlan = getRegistration().getStudentCurricularPlan(executionYear);
+    public Collection<ICurriculumEntry> getCurriculumEntries() {
+	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan();
         if (studentCurricularPlan == null) {
             return null;
         }
 
-        final EnrolmentSet approvedEnrolments = getApprovedEnrolments(executionYear);
+        final EnrolmentSet approvedEnrolments = getApprovedEnrolments();
 
         final Collection<CurriculumEntry> entries = new HashSet<CurriculumEntry>();
 
-        addCurricularEnrolments(entries, studentCurricularPlan, executionYear, approvedEnrolments);
+        addCurricularEnrolments(entries, studentCurricularPlan, approvedEnrolments);
 
         addNotInDegreeCurriculumEnrolments(entries, studentCurricularPlan, approvedEnrolments);
 
-        return entries;
+        return new HashSet<ICurriculumEntry>(entries);
     }
 
-    protected EnrolmentSet getApprovedEnrolments(final ExecutionYear executionYear) {
-	final EnrolmentSet approvedEnrolments = new EnrolmentSet(executionYear);
+    @Override
+    protected EnrolmentSet getApprovedEnrolments() {
+	final EnrolmentSet approvedEnrolments = new EnrolmentSet(getExecutionYear());
 	
 	final Registration registration = getRegistration();
 	final Student student = registration.getStudent();
@@ -49,12 +50,12 @@ public class DegreeCurricularPlanBasedStudentCurriculum extends StudentCurriculu
         return approvedEnrolments;
     }
 
-    private void addCurricularEnrolments(final Collection<CurriculumEntry> curriculumEntries, final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionYear executionYear, final EnrolmentSet approvedEnrolments) {
+    private void addCurricularEnrolments(final Collection<CurriculumEntry> curriculumEntries, final StudentCurricularPlan studentCurricularPlan, 
+	    final EnrolmentSet approvedEnrolments) {
 
         final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-            if (curricularCourse.isActive(executionYear)) {
+            if (curricularCourse.isActive(getExecutionYear())) {
         	final SimpleCurriculumEntry simpleEntry = getSimpleEntry(curriculumEntries, studentCurricularPlan, approvedEnrolments, curricularCourse);
         	if (simpleEntry == null) {
         	    final Set<SimpleCurriculumEntry> simpleEntries = findEquivalentEnrolments(curriculumEntries, studentCurricularPlan,

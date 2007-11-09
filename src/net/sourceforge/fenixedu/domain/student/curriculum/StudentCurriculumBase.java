@@ -1,111 +1,125 @@
 package net.sourceforge.fenixedu.domain.student.curriculum;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public abstract class StudentCurriculumBase implements Serializable {
+abstract public class StudentCurriculumBase implements Serializable, ICurriculum {
 
     final private DomainReference<Registration> registrationDomainReference;
+    
+    final private DomainReference<ExecutionYear> executionYearDomainReference;
 
-    public StudentCurriculumBase(final Registration registration) {
+    static final protected int SCALE = 2;
+
+    static final protected RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
+
+    public StudentCurriculumBase(final Registration registration, final ExecutionYear executionYear) {
         super();
         if (registration == null) {
             throw new NullPointerException("error.registration.cannot.be.null");
         }
         this.registrationDomainReference = new DomainReference<Registration>(registration);
+        this.executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
     }
 
     final public Registration getRegistration() {
         return registrationDomainReference.getObject();
     }
 
-    abstract public Collection<CurriculumEntry> getCurriculumEntries(final ExecutionYear executionYear);
-    
-    abstract protected EnrolmentSet getApprovedEnrolments(final ExecutionYear executionYear);
+    final public ExecutionYear getExecutionYear() {
+        return executionYearDomainReference.getObject();
+    }
 
-    final public double getTotalEctsCredits(final ExecutionYear executionYear) {
-	double ectsCredits = 0;
-	for (final CurriculumEntry entry : getCurriculumEntries(executionYear)) {
-	    ectsCredits += entry.getEctsCredits();
+    final public StudentCurricularPlan getStudentCurricularPlan() {
+	return getRegistration().getStudentCurricularPlan(getExecutionYear());
+    }
+
+    public boolean isEmpty() {
+	return getCurriculumEntries().isEmpty();
+    }
+
+    abstract public Collection<ICurriculumEntry> getCurriculumEntries();
+    
+    abstract protected EnrolmentSet getApprovedEnrolments();
+
+    final public BigDecimal getSumEctsCredits() {
+	BigDecimal ectsCredits = BigDecimal.ZERO;
+	for (final ICurriculumEntry entry : getCurriculumEntries()) {
+	    ectsCredits = ectsCredits.add(entry.getEctsCreditsForCurriculum());
 	}
 	return ectsCredits;
     }
 
-    final public int calculateCurricularYear(final ExecutionYear executionYear) {
-	final double ectsCredits = getTotalEctsCredits(executionYear);
-	int degreeCurricularYears = getRegistration().getStudentCurricularPlan(executionYear).getDegreeType().getYears();
-	int ectsCreditsCurricularYear = (int) Math.floor((((ectsCredits + 24) / 60) + 1));
-	return Math.min(ectsCreditsCurricularYear, degreeCurricularYears);
+    final public Integer getCurricularYear() {
+	final int degreeCurricularYears = getStudentCurricularPlan().getDegreeType().getYears();
+	final BigDecimal ectsCreditsCurricularYear = getSumEctsCredits().add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60), SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
+	return Math.min(ectsCreditsCurricularYear.intValue(), degreeCurricularYears);
     }
 
-    public enum AverageType {
-	SIMPLE,
-	WEIGHTED,
-	BEST
+    private AverageType averageType = AverageType.WEIGHTED;
+
+    public void setAverageType(AverageType averageType) {
+	this.averageType = averageType;
     }
-    
+	
     final private class AverageCalculator {
-	private double sumPiCi = 0;
-	private double sumPi = 0;
+	private BigDecimal sumPiCi = BigDecimal.ZERO;
+	private BigDecimal sumPi = BigDecimal.ZERO;
 
 	public AverageCalculator() {
 	}
 
-	public double sumPiCi() {
-	    return sumPiCi;
-	}
-	
-	public double sumPi() {
-	    return sumPi;
-	}
-	
-	public double result() {
-	    return sumPi == 0 ? 0 : sumPiCi / sumPi;
-	}
-	
-	public void add(final Collection<CurriculumEntry> entries) {
-	    for (final CurriculumEntry entry : entries) {
+	public void add(final Collection<ICurriculumEntry> entries) {
+	    for (final ICurriculumEntry entry : entries) {
 		add(entry);
 	    }
 	}
 
-	public void add(final CurriculumEntry entry) {
-	    if (entry.getWeigthTimesClassification() != null) {
-		sumPi += entry.getWeigth();
-		sumPiCi += entry.getWeigthTimesClassification();
+	public void add(final ICurriculumEntry entry) {
+	    if (entry.getWeigthTimesGrade() != null) {
+		if (averageType == AverageType.WEIGHTED) {
+		    sumPi = sumPi.add(entry.getWeigthForCurriculum());
+		    sumPiCi = sumPiCi.add(entry.getWeigthTimesGrade());
+		} else {
+		    sumPi = sumPi.add(BigDecimal.ONE);
+		    sumPiCi = sumPiCi.add(entry.getGrade().getNumericValue());
+		}
 	    }
+	}
+
+	public BigDecimal result() {
+	    return sumPi.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : sumPiCi.divide(sumPi, SCALE * SCALE + 1, ROUNDING_MODE);
 	}
 
     }
 
-    final public double calculateAverage(final ExecutionYear executionYear) {
+    final public BigDecimal getAverage() {
 	final AverageCalculator averageCalculator = new AverageCalculator();
-	averageCalculator.add(getCurriculumEntries(executionYear));
-	return averageCalculator.result();
+	averageCalculator.add(getCurriculumEntries());
+	return averageCalculator.result().setScale(SCALE, ROUNDING_MODE);
     }
 
-    final public Double getRoundedAverage(final ExecutionYear executionYear, final boolean decimal) {
-	return applyRound(calculateAverage(executionYear), decimal);
-    }
-
-    static final public Double applyRound(final double d, final boolean decimal) {
-	return decimal ? Math.round((d * 100)) / 100.0 : Math.round((d));
-    }
-
-    final public double getSumPiCi(final ExecutionYear executionYear) {
+    final public BigDecimal getSumPiCi() {
 	final AverageCalculator averageCalculator = new AverageCalculator();
-	averageCalculator.add(getCurriculumEntries(executionYear));
+	averageCalculator.add(getCurriculumEntries());
 	return averageCalculator.sumPiCi;
     }
     
-    final public double getSumPi(final ExecutionYear executionYear) {
+    final public BigDecimal getSumPi() {
 	final AverageCalculator averageCalculator = new AverageCalculator();
-	averageCalculator.add(getCurriculumEntries(executionYear));
+	averageCalculator.add(getCurriculumEntries());
 	return averageCalculator.sumPi;
+    }
+
+    final public BigDecimal getCreditsEctsCredits() {
+	return BigDecimal.valueOf(getStudentCurricularPlan().getGivenCredits());
     }
 
 }
