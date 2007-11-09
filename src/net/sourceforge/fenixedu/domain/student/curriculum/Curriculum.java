@@ -7,21 +7,21 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 
-public class Curriculum implements Serializable {
+public class Curriculum implements Serializable, ICurriculum {
     
     private CurriculumModule curriculumModule;
     
     private ExecutionYear executionYear;
 
-    private Set<ICurriculumEntry> entries = new HashSet<ICurriculumEntry>();
+    private Set<ICurriculumEntry> enrolmentRelatedEntries = new HashSet<ICurriculumEntry>();
     
     private Set<ICurriculumEntry> dismissalRelatedEntries = new HashSet<ICurriculumEntry>();
     
@@ -34,6 +34,8 @@ public class Curriculum implements Serializable {
     static final protected int SCALE = 2;
 
     static final protected RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
+    
+    private AverageType averageType = AverageType.WEIGHTED;
 
     private BigDecimal average;
     
@@ -60,13 +62,13 @@ public class Curriculum implements Serializable {
     public Curriculum(final CurriculumModule curriculumModule, final ExecutionYear executionYear, final Collection<ICurriculumEntry> entries, final Collection<ICurriculumEntry> dismissalRelatedEntries, final Collection<ICurriculumEntry> curricularYearEntries) {
 	this(curriculumModule, executionYear);
 	
-	addEntries(this.entries, entries, true);
+	addEntries(this.enrolmentRelatedEntries, entries, true);
 	addEntries(this.dismissalRelatedEntries, dismissalRelatedEntries, true);
 	addEntries(this.curricularYearEntries, curricularYearEntries, false);
     }
 
     public void add(final Curriculum curriculum) {
-	addEntries(this.entries, curriculum.getEntries(), true);
+	addEntries(this.enrolmentRelatedEntries, curriculum.getEnrolmentRelatedEntries(), true);
 	addEntries(this.dismissalRelatedEntries, curriculum.getDismissalRelatedEntries(), true);
 	addEntries(this.curricularYearEntries, curriculum.getCurricularYearEntries(), false);
 
@@ -123,24 +125,20 @@ public class Curriculum implements Serializable {
     }
     
     public boolean isEmpty() {
-	return curriculumModule == null || !hasAnyEntries() || this.curricularYearEntries.isEmpty();
-    }
-    
-    public boolean hasAnyEntries() {
-	return !entries.isEmpty() || !dismissalRelatedEntries.isEmpty();
+	return curriculumModule == null || this.curricularYearEntries.isEmpty();
     }
     
     public Collection<ICurriculumEntry> getCurriculumEntries() {
 	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 	
-	result.addAll(entries);
+	result.addAll(enrolmentRelatedEntries);
 	result.addAll(dismissalRelatedEntries);
 	
 	return result;
     }
     
-    public Set<ICurriculumEntry> getEntries() {
-	return entries;
+    public Set<ICurriculumEntry> getEnrolmentRelatedEntries() {
+	return enrolmentRelatedEntries;
     }
     
     public Set<ICurriculumEntry> getDismissalRelatedEntries() {
@@ -196,7 +194,7 @@ public class Curriculum implements Serializable {
 	return curricularYear;
     }
 
-    public BigDecimal getCreditsDismissalsEctsCredits() {
+    public BigDecimal getCreditsEctsCredits() {
 	BigDecimal result = BigDecimal.ZERO;
 
 	for (final ICurriculumEntry entry : this.curricularYearEntries) {
@@ -211,7 +209,7 @@ public class Curriculum implements Serializable {
     private void doCalculus() {
 	sumPiCi = BigDecimal.ZERO;
 	sumPi = BigDecimal.ZERO;
-	countAverage(entries);
+	countAverage(enrolmentRelatedEntries);
 	countAverage(dismissalRelatedEntries);
 	average = calculateAverage();
 	
@@ -222,23 +220,29 @@ public class Curriculum implements Serializable {
 	//System.out.println(toString());
     }
     
+    public void setAverageType(AverageType averageType) {
+	this.averageType = averageType;
+	forceCalculus = true;
+    }
+	
     private void countAverage(final Set<ICurriculumEntry> entries) {
 	for (final ICurriculumEntry entry : entries) {
 	    final BigDecimal weigth = entry.getWeigthForCurriculum();
-		
-	    sumPiCi = sumPiCi.add(weigth.multiply(entry.getGrade().getNumericValue()));
-	    sumPi = sumPi.add(weigth);
+
+	    if (averageType == AverageType.WEIGHTED) {
+		sumPi = sumPi.add(weigth);
+		sumPiCi = sumPiCi.add(entry.getWeigthTimesGrade());
+	    } else if (averageType == AverageType.SIMPLE) {
+		sumPi = sumPi.add(BigDecimal.ONE);
+		sumPiCi = sumPiCi.add(entry.getGrade().getNumericValue());
+	    } else {
+		throw new DomainException("Curriculum.average.type.not.supported");
+	    }
 	}
     }
     
     private BigDecimal calculateAverage() {
 	return sumPi.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : sumPiCi.divide(sumPi, SCALE * SCALE + 1, ROUNDING_MODE);
-    }
-    
-    private Integer calculateCurricularYear() {
-	final int degreeCurricularYears = getStudentCurricularPlan().getDegreeType().getYears();
-	final BigDecimal ectsCreditsCurricularYear = sumEctsCredits.add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60), SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
-	return Math.min(ectsCreditsCurricularYear.intValue(), degreeCurricularYears);
     }
     
     private void countCurricularYear(final Set<ICurriculumEntry> entries) {
@@ -247,13 +251,19 @@ public class Curriculum implements Serializable {
 	}
     }
     
+    private Integer calculateCurricularYear() {
+	final int degreeCurricularYears = getStudentCurricularPlan().getDegreeType().getYears();
+	final BigDecimal ectsCreditsCurricularYear = sumEctsCredits.add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60), SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
+	return Math.min(ectsCreditsCurricularYear.intValue(), degreeCurricularYears);
+    }
+    
     @Override
     public String toString() {
 	final StringBuilder result = new StringBuilder();
 	
 	result.append("\n[CURRICULUM]");
 	result.append("\n[CURRICULUM_MODULE][ID] " + curriculumModule.getIdInternal() + "\t[NAME]" + curriculumModule.getName().getContent());
-	result.append("\n[SUM ENTRIES] " + (entries.size() + dismissalRelatedEntries.size()));
+	result.append("\n[SUM ENTRIES] " + (enrolmentRelatedEntries.size() + dismissalRelatedEntries.size()));
 	result.append("\n[SUM PiCi] " + sumPiCi.toString());
 	result.append("\n[SUM Pi] " + sumPi.toString());
 	result.append("\n[AVERAGE] " + average);
@@ -261,7 +271,7 @@ public class Curriculum implements Serializable {
 	result.append("\n[CURRICULAR YEAR] " + curricularYear);
 	
 	result.append("\n[ENTRIES]");
-	for (final ICurriculumEntry entry : entries) {
+	for (final ICurriculumEntry entry : enrolmentRelatedEntries) {
 	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[GRADE] " + entry.getGrade().getNumericValue() + "\t[WEIGHT] " + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] " + entry.getClass().getSimpleName());
 	}
 	
