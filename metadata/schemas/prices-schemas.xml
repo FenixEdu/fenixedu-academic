@@ -186,6 +186,11 @@
 		bundle="APPLICATION_RESOURCES">
 </schema>
 
+<schema name="DiplomaRequestPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DiplomaRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
+</schema>
+
 <schema name="FixedAmountWithPenaltyPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR" extends="FixedAmountPR.view-student" bundle="APPLICATION_RESOURCES" >
 	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
 </schema>
