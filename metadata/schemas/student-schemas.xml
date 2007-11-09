@@ -428,7 +428,7 @@
 	<slot name="student.number" key="label.student.elections.results.studentNumber" />
 	<slot name="student.person.name" key="label.name" />
 	<slot name="votesNumber" key="label.student.elections.results.votes" />
-	<slot name="votesRelativePercentage" key="label.student.elections.results.votesRelativePercentage" />
+	<!--<slot name="votesRelativePercentage" key="label.student.elections.results.votesRelativePercentage" />-->
 </schema>
 
 <schema name="student.electionPeriod.showResults.resume" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
