@@ -6,31 +6,34 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 
-<h1 class="mbottom03 cnone"><fr:view name="site"
-	property="unit.nameWithAcronym" /></h1>
+<h1 class="mbottom03 cnone"><fr:view name="site" property="unit.nameWithAcronym" /></h1>
 
 
-<p><html:link
-	page="<%="/researchSite/viewResearchUnitSite.do?sectionID=" + request.getParameter("sectionID") + "&siteID=" + request.getParameter("siteID") + "&method=showPublications" %>">
-	<bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES" />
-</html:link> | <bean:message key="link.Search" bundle="RESEARCHER_RESOURCES" /></p>
+<h2 class="mtop15"><bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES" /></h2>
 
-<h2 class="mtop15"><bean:message key="link.Search"
-	bundle="RESEARCHER_RESOURCES" /></h2>
+<p>
+	<bean:message key="link.Search" bundle="RESEARCHER_RESOURCES" />: 
+	<html:link page="<%="/researchSite/viewResearchUnitSite.do?sectionID=" + request.getParameter("sectionID") + "&siteID=" + request.getParameter("siteID") + "&method=showPublications" %>">
+		<bean:message key="label.searchByDate" bundle="RESEARCHER_RESOURCES" />
+	</html:link> | 
+	<html:link	page="<%="/researchSite/searchPublication.do?sectionID=" + request.getParameter("sectionID") + "&siteID=" + request.getParameter("siteID") + "&method=prepareSearchPublication" %>">
+		<bean:message key="label.searchByKeyword" bundle="RESEARCHER_RESOURCES" />
+	</html:link>
+</p>
 
-<bean:define id="bean" name="bean"
-	type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpacePublicationBean" />
 
-<fr:form id="searchForm"
-	action="<%="/researchSite/searchPublication.do?sectionID=" + request.getParameter("sectionID") + "&siteID=" + request.getParameter("siteID") + "&method=searchPublication" %>">
+<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpacePublicationBean" />
+
+<fr:form id="searchForm" action="<%="/researchSite/searchPublication.do?sectionID=" + request.getParameter("sectionID") + "&siteID=" + request.getParameter("siteID") + "&method=searchPublication" %>">
 	<fr:hasMessages for="search" type="validation">
-		<p><span class="error0"><bean:message
-			key="label.requiredFieldsNotPresent" /></span></p>
+		<p><span class="error0"><bean:message key="label.requiredFieldsNotPresent" /></span></p>
 	</fr:hasMessages>
+
+	<p class="mbottom025 color888"><bean:message key="label.choosen.keywords" bundle="RESEARCHER_RESOURCES"/>:</p>
 
 	<fr:edit id="search" name="bean" visible="false" />
 
-	<table class="tstyle5 thlight thright">
+	<table class="tstyle5 thlight thright thmiddle">
 		<logic:iterate id="searchElement" indexId="index" name="bean" property="searchElements">
 		<tr>
 			<th>

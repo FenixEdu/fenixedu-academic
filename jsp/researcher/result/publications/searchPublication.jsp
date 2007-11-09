@@ -30,7 +30,7 @@
 
 	
 
-		<table class="tstyle5 thlight thright">
+		<table class="tstyle5 thlight thright thmiddle">
 		<tr>
 			<th><bean:message key="label.type" bundle="RESEARCHER_RESOURCES"/>:</th>
 			<td>

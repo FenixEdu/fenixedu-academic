@@ -5,75 +5,76 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h1 class="mbottom03 cnone"><fr:view name="researchUnit"
-	property="nameWithAcronym" /></h1>
+<h1 class="mbottom03 cnone"><fr:view name="researchUnit" property="nameWithAcronym" /></h1>
+
+<h2 class="mtop15"><bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES" /></h2>
+
+<p>
+	<bean:message key="link.Search" bundle="RESEARCHER_RESOURCES" />: 
+	<html:link page="<%="/researchSite/viewResearchUnitSite.do?sectionID=" + request.getParameter("sectionID") + "&siteID=" + request.getParameter("siteID") + "&method=showPublications" %>">
+		<bean:message key="label.searchByDate" bundle="RESEARCHER_RESOURCES" />
+	</html:link> | 
+	<html:link	page="<%="/researchSite/searchPublication.do?sectionID=" + request.getParameter("sectionID") + "&siteID=" + request.getParameter("siteID") + "&method=prepareSearchPublication" %>">
+		<bean:message key="label.searchByKeyword" bundle="RESEARCHER_RESOURCES" />
+	</html:link>
+</p>
 
 
-<p><bean:message key="link.Publications"
-	bundle="RESEARCHER_RESOURCES" /> | <html:link
-	page="<%="/researchSite/searchPublication.do?sectionID=" + request.getParameter("sectionID") + "&siteID=" + request.getParameter("siteID") + "&method=prepareSearchPublication" %>">
-	<bean:message key="link.Search" bundle="RESEARCHER_RESOURCES" />
-</html:link></p>
+<fr:form action="<%="/researchSite/viewResearchUnitSite.do?sectionID=" + request.getParameter("sectionID") + "&siteID=" + request.getParameter("siteID") + "&method=showPublications" %>">
 
-
-<h2 class="mtop15"><bean:message key="link.Publications"
-	bundle="RESEARCHER_RESOURCES" /></h2>
-
-		<fr:form action="<%="/researchSite/viewResearchUnitSite.do?sectionID=" + request.getParameter("sectionID") + "&siteID=" + request.getParameter("siteID") + "&method=showPublications" %>">
-		<fr:edit id="executionYearIntervalBean" name="executionYearIntervalBean" visible="false"/>
-		
-		<p class="mbottom025"><bean:message key="label.choosen.interval" bundle="RESEARCHER_RESOURCES"/>:</p>
-		
-		<table class="tstyle5 mtop025">
+	<fr:edit id="executionYearIntervalBean" name="executionYearIntervalBean" visible="false"/>
+	
+	<p class="mbottom025 color888"><bean:message key="label.choosen.interval" bundle="RESEARCHER_RESOURCES"/>:</p>
+	
+	<table class="tstyle5 mtop025 thmiddle">
 		<tr>
 			<td>
 				<bean:message key="label.date.from" bundle="RESEARCHER_RESOURCES"/>:	  
 				<fr:edit id="firstYear" name="executionYearIntervalBean" slot="firstExecutionYear">
 					<fr:layout name="menu-select">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
-					<fr:property name="format" value="${year}"/>
-					<fr:property name="defaultText" value="label.undefined"/>
-					<fr:property name="key" value="true"/>
-					<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
-				</fr:layout>
+						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+						<fr:property name="format" value="${year}"/>
+						<fr:property name="defaultText" value="label.undefined"/>
+						<fr:property name="key" value="true"/>
+						<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
+					</fr:layout>
 				</fr:edit>
 			</td>
 			<td>
 				<bean:message key="label.date.to" bundle="RESEARCHER_RESOURCES"/>:
 				<fr:edit id="finalYear" name="executionYearIntervalBean" slot="finalExecutionYear">
 					<fr:layout name="menu-select">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
-					<fr:property name="format" value="${year}"/>
-					<fr:property name="defaultText" value="label.undefined"/>
-					<fr:property name="key" value="true"/>
-					<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
-				</fr:layout>
+						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+						<fr:property name="format" value="${year}"/>
+						<fr:property name="defaultText" value="label.undefined"/>
+						<fr:property name="key" value="true"/>
+						<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
+					</fr:layout>
 				</fr:edit>
 			</td>
 			<td>
 				<bean:message key="label.projectType" bundle="RESEARCHER_RESOURCES"/>:
 				<fr:edit id="finalYear" name="executionYearIntervalBean" slot="publicationType">
 					<fr:layout name="menu-select">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ResultPublicationTypeProvider"/>
-					<fr:property name="defaultText" value="label.all"/>
-					<fr:property name="key" value="true"/>
-					<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
-					<fr:property name="sort" value="true"/>
-				</fr:layout>
+						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ResultPublicationTypeProvider"/>
+						<fr:property name="defaultText" value="label.all"/>
+						<fr:property name="key" value="true"/>
+						<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
+						<fr:property name="sort" value="true"/>
+					</fr:layout>
 				</fr:edit>
-
+	
 				<html:submit><bean:message key="label.filter" bundle="RESEARCHER_RESOURCES"/></html:submit>
 			</td>
 		</tr>
-		</table>
-		</fr:form>
+	</table>
+
+</fr:form>
 
 
 <logic:messagesPresent name="messages" message="true">
-	<html:messages id="messages" message="true"
-		bundle="RESEARCHER_RESOURCES">
-		<p><span class="error1"><!-- Error messages go here --><bean:write
-			name="messages" /></span></p>
+	<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
+		<p><span class="error1"><!-- Error messages go here --><bean:write name="messages" /></span></p>
 	</html:messages>
 </logic:messagesPresent>
 

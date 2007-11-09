@@ -109,6 +109,7 @@ padding: 0.5em;
 
 table.smalltxt tr td { font-size: 0.85em;}
 .smalltxt { font-size: 0.85em; }
+.color888 { color: #888; }
 
 /* accessibility javascript */
 .switchInline { display: none; }
