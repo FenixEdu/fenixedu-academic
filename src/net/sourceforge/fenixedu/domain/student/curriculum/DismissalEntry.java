@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.student.curriculum;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 
@@ -29,9 +32,8 @@ public class DismissalEntry extends CurriculumEntry {
 	return hasDismissal() ? getDismissal().getCurriculumGroup() : null;
     }
 
-    @Override
-    public double getEctsCredits() {
-	return hasDismissal() ? getDismissal().getEctsCredits().doubleValue() : 0d;
+    public BigDecimal getEctsCreditsForCurriculum() {
+	return hasDismissal() ? BigDecimal.valueOf(getDismissal().getEctsCredits()) : BigDecimal.ZERO;
     }
     
     @Override
@@ -39,13 +41,17 @@ public class DismissalEntry extends CurriculumEntry {
         return true;
     }
 
-    @Override
-    public double getWeigth() {
+    public BigDecimal getWeigthForCurriculum() {
 	throw new RuntimeException();
     }
 
     @Override
-    public Double getWeigthTimesClassification() {
+    public BigDecimal getWeigthTimesGrade() {
+	return null;
+    }
+
+    @Override
+    public Grade getGrade() {
 	return null;
     }
 

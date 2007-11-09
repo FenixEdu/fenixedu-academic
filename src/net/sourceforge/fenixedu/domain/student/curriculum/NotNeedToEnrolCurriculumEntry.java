@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.student.curriculum;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 
 public class NotNeedToEnrolCurriculumEntry extends SimpleCurriculumEntry {
@@ -23,19 +26,22 @@ public class NotNeedToEnrolCurriculumEntry extends SimpleCurriculumEntry {
     public NotNeedToEnrollInCurricularCourse getNotNeedToEnrol() {
 	return notNeedToEnrolDomainReference.getObject();
     }
-
-    @Override
-    public double getEctsCredits() {
-	return getNotNeedToEnrol().getEctsCredits().doubleValue();
+    
+    public BigDecimal getEctsCreditsForCurriculum() {
+	return BigDecimal.valueOf(getNotNeedToEnrol().getEctsCredits());
     }
 
-    @Override
-    public double getWeigth() {
+    public BigDecimal getWeigthForCurriculum() {
 	throw new RuntimeException();
     }
 
     @Override
-    public Double getWeigthTimesClassification() {
+    public BigDecimal getWeigthTimesGrade() {
+	return null;
+    }
+
+    @Override
+    public Grade getGrade() {
 	return null;
     }
 

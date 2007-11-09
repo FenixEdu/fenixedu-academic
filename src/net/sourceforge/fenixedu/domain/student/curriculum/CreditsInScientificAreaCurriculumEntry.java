@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.domain.student.curriculum;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreditsInScientificAreaCurriculumEntry extends CreditsCurriculumEntry {
 
@@ -11,9 +15,8 @@ public class CreditsInScientificAreaCurriculumEntry extends CreditsCurriculumEnt
 	this.creditsInScientificArea = new DomainReference<CreditsInScientificArea>(creditsInScientificArea);
     }
     
-    @Override
-    public double getEctsCredits() {
-	return creditsInScientificArea.getObject().getEctsCredits();
+    public BigDecimal getEctsCreditsForCurriculum() {
+	return BigDecimal.valueOf(creditsInScientificArea.getObject().getEctsCredits());
     }
 
 }

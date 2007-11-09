@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.domain.student.curriculum;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
-
-import org.apache.commons.lang.StringUtils;
+import net.sourceforge.fenixedu.domain.Grade;
 
 public class EnrolmentCurriculumEntry extends SimpleCurriculumEntry {
 
@@ -21,23 +22,20 @@ public class EnrolmentCurriculumEntry extends SimpleCurriculumEntry {
     }
 
     public Enrolment getEnrolment() {
-        return enrolmentDomainReference.getObject();
+	return enrolmentDomainReference.getObject();
+    }
+    
+    public BigDecimal getEctsCreditsForCurriculum() {
+	return BigDecimal.valueOf(getEnrolment().getEctsCredits());
+    }
+
+    public BigDecimal getWeigthForCurriculum() {
+	return BigDecimal.valueOf(getEnrolment().getWeigth());
     }
 
     @Override
-    public double getEctsCredits() {
-	return getEnrolment().getEctsCredits().doubleValue();
-    }
-
-    @Override
-    public double getWeigth() {
-	return getEnrolment().getWeigth().doubleValue();
-    }
-
-    @Override
-    public Double getWeigthTimesClassification() {
-	final String grade = getEnrolment().getGradeValue();
-	return StringUtils.isNumeric(grade) ? Double.valueOf(getWeigth() * Integer.valueOf(grade)) : null;
+    public Grade getGrade() {
+	return getEnrolment().getGrade();
     }
 
 }
