@@ -1,0 +1,1 @@
+UPDATE ACADEMIC_SERVICE_REQUEST_SITUATION SET ACADEMIC_SERVICE_REQUEST_SITUATION.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation';
