@@ -189,6 +189,7 @@ valueType net.sourceforge.fenixedu.domain.assiduousness.util.YearMonthList 					
 valueType net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType 						 as BonusType;
 valueType net.sourceforge.fenixedu.domain.PartyClassification														 as PartyClassification;
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.SeasonType											 as SeasonType; 
+valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval									 as AcademicInterval;
 
 /*
 *
@@ -577,24 +578,21 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 	class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fenixedu.domain.DomainObject {
 		MultiLanguageString anotation;
-		Boolean temporaryExamMap;
+		Boolean temporaryExamMap;							
 	}
 
 	class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
-		YearMonthDay beginDateYearMonthDay;
+		AcademicInterval executionInterval;							
+		String name;		
+		PeriodState state;		
 		DateTime departmentAdmOfficeCreditsPeriodBegin;
 		DateTime departmentAdmOfficeCreditsPeriodEnd;
-		YearMonthDay endDateYearMonthDay;
-		String name;
-		Integer semester;
-		PeriodState state;
 		DateTime teacherCreditsPeriodBegin;
 		DateTime teacherCreditsPeriodEnd;
 	}
 
 	class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
-		YearMonthDay beginDateYearMonthDay;
-		YearMonthDay endDateYearMonthDay;
+		AcademicInterval executionInterval;		
 		PeriodState state;
 		String year;
 	}
@@ -991,7 +989,14 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String pageNameProperty;
 		String portalSubApplication;
 		RoleType roleType;
-	}
+	}	
+	
+		class net.sourceforge.fenixedu.domain.ResourceAllocationRole extends net.sourceforge.fenixedu.domain.Role {
+			Group schedulesAccessGroup;		
+			Group spacesAccessGroup;
+			Group materialsAccessGroup;
+			Group vehiclesAccessGroup;			
+		}
 
 	class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.fenixedu.domain.DomainObject {
 	}
@@ -4299,7 +4304,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		MultiLanguageString title;
 		MultiLanguageString description;		
 		DateTime begin;
-		DateTime end;		
+		DateTime end;		 
 	}
 
 		class net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {			
@@ -6192,11 +6197,6 @@ relation ExecutionPeriodExecutionCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
-}
-
-relation ExecutionPeriodExecutionPeriod {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole nextExecutionPeriod;
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole previousExecutionPeriod;
 }
 
 relation ExecutionPeriodExecutionYear {

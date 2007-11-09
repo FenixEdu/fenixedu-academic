@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
+import org.joda.time.Days;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -237,5 +238,11 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	    firstOccupationPeriod = firstOccupationPeriod.getNextPeriod();
 	}	        
 	return false;
+    }
+    
+    public boolean isGreater(OccupationPeriod period) {
+	int periodDays = Days.daysBetween(period.getStartYearMonthDay(), period.getEndYearMonthDay()).getDays();
+	int thisDays = Days.daysBetween(getStartYearMonthDay(), getEndYearMonthDay()).getDays();
+	return thisDays > periodDays;
     }
 }

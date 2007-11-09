@@ -249,10 +249,10 @@ public class Teacher extends Teacher_Base {
 	if(lastLegalRegimen != null) {	    
 	    if(lastLegalRegimen.isActive(new YearMonthDay())) {
 		return lastLegalRegimen;
-	    }	    
+	    }	     
 	    EmployeeContract currentWorkingContract = (EmployeeContract) getEmployee().getCurrentWorkingContract();
 	    if(currentWorkingContract != null && currentWorkingContract.getTeacherContract() != null 
-		    && currentWorkingContract.getTeacherContract()) {
+		    && currentWorkingContract.isTeacherContract()) {
 		return lastLegalRegimen;
 	    }
 	}	
@@ -737,7 +737,7 @@ public class Teacher extends Teacher_Base {
 	    return calculateSabbaticalOrEquivalentCreditsByType(teacherServiceExemption.getSituationType(),
 		    lessonsPeriod);
 
-	} else if (executionPeriod.containsDay(teacherServiceExemption.getBeginDate())) {
+	} else if (executionPeriod.containsDay(teacherServiceExemption.getBeginDateYearMonthDay())) {
 
 	    ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
 	    if (sabbaticalMonths >= 11) {
@@ -747,13 +747,11 @@ public class Teacher extends Teacher_Base {
 
 	    if (nextExecutionPeriod != null) {
 		OccupationPeriod nextLessonsPeriod = nextExecutionPeriod.getLessonsPeriod();
-		overlapPercentage2 = calculateLessonsIntervalAndExemptionOverlapPercentage(nextLessonsPeriod,
-			teacherServiceExemption);
+		overlapPercentage2 = calculateLessonsIntervalAndExemptionOverlapPercentage(nextLessonsPeriod, teacherServiceExemption);
 	    }
 
 	    if (overlapPercentage1 > overlapPercentage2) {
-		return calculateSabbaticalOrEquivalentCreditsByType(teacherServiceExemption.getSituationType(),
-			lessonsPeriod);
+		return calculateSabbaticalOrEquivalentCreditsByType(teacherServiceExemption.getSituationType(), lessonsPeriod);
 	    }
 
 	} else {
@@ -763,8 +761,8 @@ public class Teacher extends Teacher_Base {
 	    }
 
 	    OccupationPeriod previousLessonsPeriod = previousExecutionPeriod.getLessonsPeriod();
-	    overlapPercentage2 = calculateLessonsIntervalAndExemptionOverlapPercentage(previousLessonsPeriod,
-		    teacherServiceExemption);
+	    overlapPercentage2 = calculateLessonsIntervalAndExemptionOverlapPercentage(previousLessonsPeriod, teacherServiceExemption);
+	    
 	    if (overlapPercentage1 > overlapPercentage2) {
 		return calculateSabbaticalOrEquivalentCreditsByType(teacherServiceExemption.getSituationType(),
 			lessonsPeriod);
@@ -960,8 +958,7 @@ public class Teacher extends Teacher_Base {
 	    return 0;
 	}
 
-	TeacherProfessionalSituation lastLegalRegimen = getLastLegalRegimenWithoutSpecialSituations(lessonsPeriod
-		.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
+	TeacherProfessionalSituation lastLegalRegimen = getLastLegalRegimenWithoutSpecialSituations(lessonsPeriod.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
 	if (lastLegalRegimen != null) {
 
 	    Category category = lastLegalRegimen.getCategory();
@@ -977,8 +974,7 @@ public class Teacher extends Teacher_Base {
 	    if (teacherServiceExemption != null && teacherServiceExemption.isForNotCountInCredits()) {
 		TeacherProfessionalSituation regimen = getLastFunctionAccumulationLegalRegimen(teacherServiceExemption
 			.getBeginDateYearMonthDay(), teacherServiceExemption.getEndDateYearMonthDay());
-		return regimen != null ? (regimen.getWeeklyLessonHours() != null ? regimen.getWeeklyLessonHours()
-			.intValue() : 0) : 0;
+		return regimen != null ? (regimen.getWeeklyLessonHours() != null ? regimen.getWeeklyLessonHours().intValue() : 0) : 0;
 	    }
 
 	    final Integer hours = lastLegalRegimen.getWeeklyLessonHours();

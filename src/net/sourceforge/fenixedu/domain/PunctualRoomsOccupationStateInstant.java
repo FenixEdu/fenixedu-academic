@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -16,6 +17,7 @@ public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupation
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationStateInstant")
     public PunctualRoomsOccupationStateInstant(PunctualRoomsOccupationRequest request, RequestState state, DateTime instant) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());

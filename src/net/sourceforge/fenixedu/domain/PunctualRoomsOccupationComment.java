@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -18,6 +19,7 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationComment")
     public PunctualRoomsOccupationComment(PunctualRoomsOccupationRequest request, MultiLanguageString subject, 
 	    MultiLanguageString description, Person owner, DateTime instant) {
         
@@ -30,19 +32,20 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
         setDescription(description);
         setInstant(instant);               
     }  
-       
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkRequiredParameters() {
-	return getInstant() != null && getSubject() != null && !getSubject().isEmpty()
-		&& getDescription() != null && !getDescription().isEmpty();
-    }
-    
+           
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationComment")
     public void edit(MultiLanguageString subject, MultiLanguageString description) {
 	if(!getRequest().getCurrentState().equals(RequestState.NEW)) {
 	    throw new DomainException("error.PunctualRoomsOccupationRequest.impossible.edit");
 	}	
 	setSubject(subject);
 	setDescription(description);
+    }
+    
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkRequiredParameters() {
+	return getInstant() != null && getSubject() != null && !getSubject().isEmpty()
+		&& getDescription() != null && !getDescription().isEmpty();
     }
     
     public String getPresentationInstant() {

@@ -8,8 +8,7 @@ import org.joda.time.DurationFieldType;
 
 public class AcademicYearsDurationFieldType extends DurationFieldType {
 
-    public static final AcademicYearsDurationFieldType ACADEMIC_YEARS_TYPE;
-    
+    public static final AcademicYearsDurationFieldType ACADEMIC_YEARS_TYPE;    
     static {
 	ACADEMIC_YEARS_TYPE = new AcademicYearsDurationFieldType("academicYears");
     }
@@ -18,6 +17,10 @@ public class AcademicYearsDurationFieldType extends DurationFieldType {
 	super(name);
     }
 
+    public static DurationFieldType academicYears() {
+	return academicYears();
+    }
+    
     @Override
     public DurationField getField(Chronology chronology) {
 	if(chronology instanceof AcademicChronology) {

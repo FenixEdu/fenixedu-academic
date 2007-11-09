@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields;
 
 import java.util.Locale;
 
+import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
+
 import org.joda.time.Chronology;
 import org.joda.time.DateTimeField;
 import org.joda.time.DateTimeFieldType;
@@ -55,7 +57,9 @@ public class AcademicSemesterDateTimeField extends DateTimeField {
 
     @Override
     public int get(long instant) {
-
+	if(chronology instanceof AcademicChronology) {
+	    return ((AcademicChronology)chronology).getAcademicSemester(instant);
+	}
 	throw unsupported();
     }
 
@@ -318,8 +322,6 @@ public class AcademicSemesterDateTimeField extends DateTimeField {
     }
 
     private UnsupportedOperationException unsupported() {
-	return new UnsupportedOperationException(
-		AcademicSemesterOfAcademicYearDateTimeFieldType.ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR
-			+ " field is unsupported");
+	return new UnsupportedOperationException(AcademicSemesterDateTimeFieldType.academicSemester() + " field is unsupported");
     }
 }

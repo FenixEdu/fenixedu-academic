@@ -108,6 +108,7 @@
 			<html:submit><bean:message key="button.submit" bundle="MANAGER_RESOURCES"/></html:submit>	
 			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='gotBackToViewEntry';this.form.submit();"><bean:message key="button.cancel" bundle="MANAGER_RESOURCES"/></html:cancel>				
 		</fr:form>		
+		
 	</logic:notEmpty>
 	
 </logic:present>	

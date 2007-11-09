@@ -17,7 +17,7 @@ import org.joda.time.YearMonthDay;
 
 public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         
-    @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
+    @Checked("SpacePredicates.checkPermissionsToManageLessonSpaceOccupations")
     public LessonSpaceOccupation(AllocatableSpace allocatableSpace, Lesson lesson) {	       
 	
 	super();
@@ -41,7 +41,7 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         setResource(allocatableSpace);                                   	
     }   
     
-    @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")
+    @Checked("SpacePredicates.checkPermissionsToManageLessonSpaceOccupations")
     public void edit(AllocatableSpace allocatableSpace) {	
 
 	if(getPeriod() == null) {
@@ -57,7 +57,7 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 	setResource(allocatableSpace);						       	  
     }
     
-    @Checked("SpacePredicates.checkPermissionsToManageLessonSpaceOccupationsWithoutCheckSpaceManagerRole")
+    @Checked("SpacePredicates.checkPermissionsToDeleteLessonSpaceOccupations")
     public void delete() {	
         super.setLesson(null);
 	super.delete();

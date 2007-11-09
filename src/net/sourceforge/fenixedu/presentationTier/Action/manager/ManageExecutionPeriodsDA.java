@@ -40,8 +40,7 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         try {
-            List infoExecutionPeriods = (List) ServiceUtils.executeService(userView,
-                    "ReadExecutionPeriods", null);
+            List infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
 
             if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 
@@ -80,14 +79,4 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
         return prepare(mapping, form, request, response);
     }
-
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws Exception {
-    	final String executionPeriodIDString = request.getParameter("executionPeriodID");
-    	final Integer executionPeriodID = Integer.valueOf(executionPeriodIDString);
-    	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
-    	request.setAttribute("executionPeriod", executionPeriod);
-    	return mapping.findForward("editExecutionPeriod");
-    }
-
 }

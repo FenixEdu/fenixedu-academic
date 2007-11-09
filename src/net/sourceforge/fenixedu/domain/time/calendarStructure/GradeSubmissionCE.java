@@ -16,25 +16,15 @@ public class GradeSubmissionCE extends GradeSubmissionCE_Base {
 	setSeasonType(seasonType);
     }
 
-    private GradeSubmissionCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, 
-	    MultiLanguageString description, DateTime begin, DateTime end, SeasonType seasonType, 
-	    AcademicCalendarEntry templateEntry) {
-
-	super();
-	super.initEntry(parentEntry, title, description, begin, end, parentEntry.getRootEntry());	
-	setSeasonType(seasonType);
-	setTemplateEntry(templateEntry);
-    }
-
     private GradeSubmissionCE(AcademicCalendarEntry academicCalendarEntry, GradeSubmissionCE gradeSubmissionCE) {	
 	super();	
-	super.initVirtualOrRedefinedEntry(academicCalendarEntry, gradeSubmissionCE);		
+	super.initVirtualEntry(academicCalendarEntry, gradeSubmissionCE);		
     }
 
     @Override
     public AcademicCalendarEntry edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
 	    AcademicCalendarRootEntry rootEntryDestination, SeasonType seasonType, AcademicCalendarEntry templateEntry) {
-	
+
 	GradeSubmissionCE entry = (GradeSubmissionCE) super.edit(title, description, begin, end, rootEntryDestination, seasonType, templateEntry);
 	entry.setSeasonType(seasonType);
 	return entry;	
@@ -82,11 +72,7 @@ public class GradeSubmissionCE extends GradeSubmissionCE_Base {
     }
 
     @Override
-    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {
-	if(virtual) {
-	    return new GradeSubmissionCE(parentEntry, this);
-	} else {
-	    return new GradeSubmissionCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), getSeasonType(), this);
-	}
+    protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
+	return new GradeSubmissionCE(parentEntry, this);
     }   
 }

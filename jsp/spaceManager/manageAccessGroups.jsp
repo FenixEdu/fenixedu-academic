@@ -47,7 +47,7 @@
 			<logic:notEmpty name="space" property="<%= slotName %>">																										
 				<bean:define id="accessGroup" name="space" property="<%= slotName %>" type="net.sourceforge.fenixedu.domain.accessControl.Group" toScope="request"/>																																	
 				<logic:notEmpty name="accessGroup" property="elements">					
-					<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/></strong></p>
+					<p class="mtop1 mbottom05"><strong><bean:write name="accessGroupType" property="label"/></strong></p>
 					<bean:define id="withLinks" value="true" toScope="request"/>									
 					<jsp:include page="printAccessGroups.jsp" />					
 				</logic:notEmpty>																																				

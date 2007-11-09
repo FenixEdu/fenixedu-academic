@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -40,9 +41,9 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     
     public abstract Integer getExamCapacity();     
     
-    public abstract void setNormalCapacity(Integer capacidadeNormal);
+    protected abstract void setNormalCapacity(Integer capacidadeNormal);
 
-    public abstract void setExamCapacity(Integer capacidadeExame);
+    protected abstract void setExamCapacity(Integer capacidadeExame);
     
     @Deprecated
     public abstract Integer getCapacidadeNormal();
@@ -88,6 +89,12 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	return !StringUtils.isEmpty(getIdentification());
     }   
     
+    @Checked("SpacePredicates.checkPermissionsToManageRoomCapacities")
+    public void editCapacities(Integer capacidadeNormal, Integer capacidadeExame) {
+	setNormalCapacity(capacidadeNormal);
+	setExamCapacity(capacidadeExame);
+    }   
+    
     public String getCompleteIdentification() {
 	StringBuilder builder = new StringBuilder();
 	if(containsIdentification()) {
@@ -108,7 +115,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	}
 	return result;
     }                   
-    
+       
     public static void mergeAllocatableSpaces(AllocatableSpace fromRoom, AllocatableSpace destinationRoom) {
 	
 	if(fromRoom == null || destinationRoom == null || fromRoom.equals(destinationRoom)) {

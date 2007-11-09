@@ -30,7 +30,9 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
     @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void delete() {
 	getPersons().clear();
-	getUnit().removeGroupFromUnitFiles(this);
+	if(hasUnit()) {
+	    getUnit().removeGroupFromUnitFiles(this);
+	}
 	removeUnit();
 	removeRootDomainObject();
 	deleteDomainObject();

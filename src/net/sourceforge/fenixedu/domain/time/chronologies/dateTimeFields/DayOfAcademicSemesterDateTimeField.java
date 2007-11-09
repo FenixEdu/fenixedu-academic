@@ -214,7 +214,7 @@ public class DayOfAcademicSemesterDateTimeField extends DateTimeField {
 
     @Override
     public String getName() {
-	return DayOfAcademicSemesterDateTimeFieldType.DAY_OF_ACADEMIC_SEMESTER_TYPE.getName();
+	return DayOfAcademicSemesterDateTimeFieldType.dayOfAcademicSemester().getName();
     }
 
     @Override
@@ -321,7 +321,6 @@ public class DayOfAcademicSemesterDateTimeField extends DateTimeField {
 
     private UnsupportedOperationException unsupported() {
 	return new UnsupportedOperationException(
-		DayOfAcademicSemesterDateTimeFieldType.DAY_OF_ACADEMIC_SEMESTER_TYPE
-			+ " field is unsupported");
+		DayOfAcademicSemesterDateTimeFieldType.dayOfAcademicSemester() + " field is unsupported");
     }
 }

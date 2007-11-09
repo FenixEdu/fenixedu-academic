@@ -82,8 +82,8 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     }
        
     public void createNewTeacherCommentAndOpenRequest(MultiLanguageString description, Person commentOwner, DateTime instant) {
-	new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);	
-	openRequestWithoutAssociateOwner(instant);	
+	openRequestWithoutAssociateOwner(instant);
+	new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);			
 	setTeacherReadComments(getCommentsCount());	
     }
     

@@ -11,9 +11,8 @@ public class EditarSala extends Service {
     public void run(InfoRoomEditor salaNova) throws ExistingServiceException, ExcepcaoPersistencia {
 	if(salaNova != null) {
 	    AllocatableSpace room = salaNova.getRoom();
-            if(room != null) {
-                room.setNormalCapacity(salaNova.getCapacidadeNormal());
-                room.setExamCapacity(salaNova.getCapacidadeExame());
+            if(room != null) {        	
+        	room.editCapacities(salaNova.getCapacidadeNormal(), salaNova.getCapacidadeExame());
             }	
 	}
     }

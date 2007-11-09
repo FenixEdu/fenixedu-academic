@@ -10,6 +10,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -19,6 +22,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import dml.runtime.RelationAdapter;
+
 /**
  * Created on 11/Fev/2003
  * 
@@ -26,6 +31,10 @@ import org.joda.time.YearMonthDay;
  * 
  */
 public class ExecutionYear extends ExecutionYear_Base implements Comparable {
+
+    static {
+	ExecutionPeriodExecutionYear.addListener(new ExecutionPeriodExecutionYearListener());
+    }
 
     static final public Comparator<ExecutionYear> COMPARATOR_BY_YEAR = new Comparator<ExecutionYear>() {
 	public int compare(ExecutionYear o1, ExecutionYear o2) {
@@ -39,9 +48,30 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	}
     };
 
-    public ExecutionYear() {
+    private ExecutionYear() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public ExecutionYear(AcademicInterval academicInterval) {
+	this();
+	setExecutionInterval(academicInterval);
+    }
+
+    @Override
+    public void setExecutionInterval(AcademicInterval executionInterval) {
+	if(executionInterval == null) {
+	    throw new DomainException("error.ExecutionYear.empty.executionInterval");
+	}
+	super.setExecutionInterval(executionInterval);
+    }
+
+    public YearMonthDay getBeginDateYearMonthDay() {
+	return getExecutionInterval().getBeginYearMonthDay();
+    }
+
+    public YearMonthDay getEndDateYearMonthDay() {
+	return getExecutionInterval().getEndYearMonthDay();
     }
 
     public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
@@ -66,9 +96,9 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	    }
 	}
 
-	return previousExecutionYear;
-    }
-
+	return previousExecutionYear;    
+    }    
+    
     public ExecutionYear getPreviousExecutionYear(final Integer previousCivilYears) {
 	ExecutionYear previousExecutionYear = getPreviousExecutionYear();
 	for (int i = 1; i < previousCivilYears.intValue(); i++) {
@@ -76,19 +106,18 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	}
 	return previousExecutionYear;
     }
-
-    public boolean hasPreviousExecutionYear() {
-	return getPreviousExecutionYear() != null;
-    }
-
+    
     public ExecutionYear getNextExecutionYear() {
-	for (ExecutionPeriod executionPeriod = this.getExecutionPeriods().get(0); executionPeriod != null; executionPeriod = executionPeriod
-		.getNextExecutionPeriod()) {
+	for (ExecutionPeriod executionPeriod = getExecutionPeriods().get(0); executionPeriod != null; executionPeriod = executionPeriod.getNextExecutionPeriod()) {
 	    if (executionPeriod.getExecutionYear() != this) {
 		return executionPeriod.getExecutionYear();
 	    }
 	}
 	return null;
+    }
+
+    public boolean hasPreviousExecutionYear() {
+	return getPreviousExecutionYear() != null;
     }
 
     public boolean hasNextExecutionYear() {
@@ -219,8 +248,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	if (!getExecutionDegreesSet().isEmpty()) {
 	    throw new Error("cannot.delete.execution.year.because.execution.degrees.exist");
 	}
-	for (; hasAnyExecutionPeriods(); getExecutionPeriodsSet().iterator().next().delete())
-	    ;
+	for (; hasAnyExecutionPeriods(); getExecutionPeriodsSet().iterator().next().delete());
 
 	removeRootDomainObject();
 	deleteDomainObject();
@@ -255,9 +283,29 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return result;
     }
 
+    private static class ExecutionPeriodExecutionYearListener extends RelationAdapter<ExecutionYear, ExecutionPeriod> {
+	@Override
+	public void beforeAdd(ExecutionYear executionYear, ExecutionPeriod executionPeriod) {
+	    if(executionYear != null && executionPeriod != null && executionYear.getExecutionPeriodsCount() == 2) {
+		throw new DomainException("error.ExecutionYear.exceeded.number.of.executionPeriods", executionYear.getYear());
+	    }	    
+	}
+    }
+
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
+
+    public static ExecutionYear getExecutionYear(AcademicYearCE entry) {
+	if(entry != null) {
+	    for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+		if(executionYear.getExecutionInterval().getAcademicCalendarEntry().equals(entry)) {
+		    return executionYear;
+		}
+	    }
+	}
+	return null;
+    }  
 
     static public ExecutionYear readCurrentExecutionYear() {
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
@@ -312,6 +360,16 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return null;
     }
 
+    public static ExecutionYear readBy(final YearMonthDay begin, YearMonthDay end) {
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+	    if (executionYear.getBeginDateYearMonthDay().isEqual(begin) 
+		    && executionYear.getEndDateYearMonthDay().isEqual(end)) {
+		return executionYear;
+	    }
+	}
+	return null;
+    }
+
     static public ExecutionYear getExecutionYearByDate(final YearMonthDay date) {
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
 	    if (executionYear.containsDate(date.toDateTimeAtMidnight())) {
@@ -351,4 +409,15 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return null;
     }
 
+    @Deprecated   
+    public java.util.Date getBeginDate(){  
+	YearMonthDay day = getBeginDateYearMonthDay(); 
+	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
+    }
+
+    @Deprecated   
+    public java.util.Date getEndDate(){  
+	YearMonthDay day = getEndDateYearMonthDay(); 
+	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
+    }
 }

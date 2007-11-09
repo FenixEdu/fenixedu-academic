@@ -10,14 +10,17 @@ import org.joda.time.DurationFieldType;
 
 public class AcademicYearDateTimeFieldType extends DateTimeFieldType {
     
-    public static final AcademicYearDateTimeFieldType ACADEMIC_YEAR_TYPE;
-    
+    private static final AcademicYearDateTimeFieldType ACADEMIC_YEAR_TYPE;    
     static {
 	ACADEMIC_YEAR_TYPE = new AcademicYearDateTimeFieldType("academicYear");
     }
     
     private AcademicYearDateTimeFieldType(String name) {
-	super(name);	
+	super(name);	    
+    }
+    
+    public static DateTimeFieldType academicYear() {
+	return ACADEMIC_YEAR_TYPE;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class AcademicYearDateTimeFieldType extends DateTimeFieldType {
     
     @Override
     public DurationFieldType getDurationType() {	
-	return AcademicYearsDurationFieldType.ACADEMIC_YEARS_TYPE;
+	return AcademicYearsDurationFieldType.academicYears();
     }   
 
     @Override

@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -16,6 +17,7 @@ import org.joda.time.YearMonthDay;
 
 public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation_Base {
     
+    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupations")
     public LessonInstanceSpaceOccupation(AllocatableSpace allocatableSpace) {
         
 	super();
@@ -28,6 +30,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 	setResource(allocatableSpace);		
     }
     
+    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck")
     public void edit(LessonInstance lessonInstance) {
 	
 	if(hasLessonInstances(lessonInstance)) {
@@ -37,6 +40,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 	AllocatableSpace space = (AllocatableSpace) getResource();
 	if(!space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(), 
 		lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
+	    
 	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free",
 		    space.getIdentification(), lessonInstance.getDay().toString("dd-MM-yy"));
 	}
@@ -44,6 +48,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 	addLessonInstances(lessonInstance);
     } 
     
+    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupations")
     public void delete() {
 	if(canBeDeleted()) {
 	    super.delete();

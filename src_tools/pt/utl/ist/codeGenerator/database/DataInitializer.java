@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
@@ -63,8 +64,7 @@ public class DataInitializer {
     private static void createRoles() {
 	new Role(RoleType.PERSON, "/person", "/index.do", "portal.person");
 	new Role(RoleType.STUDENT, "/student", "/index.do", "portal.student");
-	new Role(RoleType.TEACHER, "/teacher", "/index.do", "portal.teacher");
-	new Role(RoleType.RESOURCE_ALLOCATION_MANAGER, "/resourcesManager", "/paginaPrincipal.do", "portal.resourcesManager");
+	new Role(RoleType.TEACHER, "/teacher", "/index.do", "portal.teacher");	
 	new Role(RoleType.MASTER_DEGREE_CANDIDATE, "/candidato", "/index.do", "portal.candidate");
 	new Role(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE, "/posGraduacao", "/index.do", "portal.masterDegree");
 	new Role(RoleType.TREASURY, "/treasury", "/index.do", "portal.treasury");
@@ -100,7 +100,9 @@ public class DataInitializer {
 	new Role(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, "/academicAdminOffice", "/index.do", "portal.academicAdminOffice");
 	new Role(RoleType.MESSAGING, "/messaging", "/index.do", "portal.messaging");
 	new Role(RoleType.SPACE_MANAGER_SUPER_USER, "/spaceManagerSuperUser", "/index.do", "portal.spaceManagerSuperUser");
-	new Role(RoleType.INTERNATIONAL_RELATION_OFFICE, "/internationalRelatOffice", "/index.do", "portal.internRelationOffice");
+	new Role(RoleType.INTERNATIONAL_RELATION_OFFICE, "/internationalRelatOffice", "/index.do", "portal.internRelationOffice");	
+	new ResourceAllocationRole("/resourceAllocationManager", "/paginaPrincipal.jsp", "portal.resourceAllocationManager");
+	new Role(RoleType.RESOURCE_MANAGER, "/resourceManager", "/index.do", "portal.resourceManager");
     }
 
     private static void createCurricularYearsAndSemesters() {

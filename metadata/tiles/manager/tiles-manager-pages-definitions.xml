@@ -734,14 +734,9 @@
 	<definition name="manager.payments.uploadSibsPaymentsFileSuccess" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/payments/uploadSibsPaymentsFileSuccess.jsp" />
 	</definition>
-		
-	<!-- ##########################################-->
-	
-	<definition name="df.page.manage.edit.execution-period" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/editExecutionPeriod.jsp" />
-	</definition>	
 	
 	<!-- ################### Logins Management #######################-->
+
 	<definition name="prepare-search-person-to-logins-management" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/loginsManagement/searchPersonToManageLogins.jsp" />
 	</definition>	

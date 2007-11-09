@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -12,6 +11,7 @@ import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
+import org.w3c.css.sac.SiblingSelector;
 
 public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 
@@ -41,9 +41,16 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
         super.delete(rootEntry);
     }
     
+    public AcademicChronology getAcademicChronology() {
+	if (academicChronology == null) {
+	    academicChronology = new AcademicChronology(this);
+	}
+	return academicChronology;
+    }
+    
     @Override
-    public void setTemplateEntry(AcademicCalendarEntry templateEntry) {        
-	if(!getChildEntries().isEmpty() && hasTemplateEntry() && !getTemplateEntry().equals(templateEntry)) {
+    public void setTemplateEntry(AcademicCalendarEntry templateEntry) {
+	if(!getChildEntries().isEmpty() && (!hasTemplateEntry() || !getTemplateEntry().equals(templateEntry))) {
 	    throw new DomainException("error.RootEntry.invalid.templateEntry");    
 	}	
         super.setTemplateEntry(templateEntry);
@@ -85,13 +92,13 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     }
     
     @Override
-    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {	
+    protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {	
 	throw new DomainException("error.unsupported.operation");	
     }
                 
     @Override
     protected boolean areIntersectionsPossible() {	
-	return true;
+	return false;
     }
 
     @Override
@@ -113,26 +120,10 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     public boolean isRoot() {
         return true;
     }
-    
-    public List<? extends AcademicCalendarEntry> getAllChildEntriesOrderByDate(Class<? extends AcademicCalendarEntry> entryClass,
-	    Class<? extends AcademicCalendarEntry> parentEntryClass) {
 
-	Set<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
-	for (AcademicCalendarEntry entry : getChildEntriesSet()) {
-	    if (entry.getClass().equals(entryClass) && (parentEntryClass == null || 
-		    (parentEntryClass != null && entry.getParentEntry().getClass().equals(parentEntryClass)))) {
-		result.add(entry);
-	    }
-	    result.addAll(entry.getAllChildEntries(entry, entryClass, parentEntryClass));
-	}
-	return new ArrayList(result);
-    }
-    
-    public AcademicCalendarEntry getEntryByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass,
-	    Class<? extends AcademicCalendarEntry> parentEntryClass) {
-	
-	List<AcademicCalendarEntry> allEntriesByType = (List<AcademicCalendarEntry>) getAllChildEntriesOrderByDate(entryClass, parentEntryClass);
-	for (AcademicCalendarEntry entry : allEntriesByType) {
+    public AcademicCalendarEntry getEntryByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {	
+	List<AcademicCalendarEntry> allEntriesByType = getAllChildEntriesOrderByDateInReverseMode(entryClass, parentEntryClass);	
+	for (AcademicCalendarEntry entry : allEntriesByType) {	    
 	    if (entry.containsInstant(instant)) {
 		return entry;
 	    }
@@ -140,22 +131,30 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 	return null;
     }
 
-    public Integer getEntryValueByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {	
-	Integer counter = 0;
-	List<AcademicCalendarEntry> allEntriesByType = (List<AcademicCalendarEntry>) getAllChildEntriesOrderByDate(entryClass, parentEntryClass);
-	for (AcademicCalendarEntry entry : allEntriesByType) {
-	    counter++;
+    public Integer getEntryValueByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {		
+	List<AcademicCalendarEntry> allEntriesByType = getAllChildEntriesOrderByDateInReverseMode(entryClass, parentEntryClass);	
+	Integer counter = allEntriesByType.size();
+	for (AcademicCalendarEntry entry : allEntriesByType) {	    
 	    if (entry.containsInstant(instant)) {
 		return counter;
 	    }
+	    counter--;
 	}
 	return null;
     }
-      
-    public AcademicChronology getAcademicChronology() {
-	if (academicChronology == null) {
-	    academicChronology = new AcademicChronology(this);
+
+    public AcademicCalendarEntry getEntryByValue(int index, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {			
+	List<AcademicCalendarEntry> allEntriesByType = getAllChildEntriesOrderByDateInReverseMode(entryClass, parentEntryClass);			
+	if(index > allEntriesByType.size() || index < 1) {
+	    return null;
+	}	
+	Integer counter = allEntriesByType.size();
+	for (AcademicCalendarEntry entry : allEntriesByType) {	    
+	    if (counter == index) {
+		return entry;
+	    }
+	    counter--;
 	}
-	return academicChronology;
-    }
+	return null;	
+    }        
 }

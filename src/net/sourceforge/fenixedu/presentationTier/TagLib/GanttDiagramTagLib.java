@@ -10,6 +10,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram.ViewType;
@@ -555,8 +556,8 @@ public class GanttDiagramTagLib extends TagSupport {
 	    case WEEKLY:
 
 		if(!StringUtils.isEmpty(getWeeklyViewUrl())) {
-		    nextUrl = getRequest().getContextPath() + getWeeklyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusDays(7).toString("ddMMyyyy");
-		    beforeUrl = getRequest().getContextPath() + getWeeklyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusDays(7).toString("ddMMyyyy");
+		    nextUrl = getRequest().getContextPath() + getWeeklyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK).toString("ddMMyyyy");
+		    beforeUrl = getRequest().getContextPath() + getWeeklyViewUrl() + "&amp;" + getFirstDayParameter() + "=" + firstDay.minusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK).toString("ddMMyyyy");
 		    builder.append("<tr><td class=\"tcalendarlinks\"></td><td colspan=\"7\" class=\"acenter tcalendarlinks\"> <span class=\"smalltxt\"><a href=\"").append(beforeUrl).append("\">").append("&lt;&lt; ").append(getMessage("label.previous.week")).append("</a>");
 		    builder.append(" , ").append("<a href=\"").append(nextUrl).append("\">").append(getMessage("label.next.week")).append(" &gt;&gt;").append("</a>").append("</span></td><td class=\"tcalendarlinks\"></td><td class=\"tcalendarlinks\"></td></tr>");
 		}

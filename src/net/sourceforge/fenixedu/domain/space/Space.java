@@ -21,9 +21,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.Material;
@@ -541,58 +538,37 @@ public abstract class Space extends Space_Base {
 
     public boolean personHasSpecialPermissionToManageSpace(Person person) {
 	Group accessGroup = getSpaceManagementAccessGroupWithChainOfResponsibility();
-	if (accessGroup != null && accessGroup.isMember(person)) {
-	    return true;
-	}
-	return false;
+	return accessGroup != null && accessGroup.isMember(person);
     }
 
     public boolean personHasPermissionToManagePersonOccupations(Person person) {
 	Group accessGroup = getPersonOccupationsAccessGroupWithChainOfResponsibility();
-	if (accessGroup != null && accessGroup.isMember(person)) {
-	    return true;
-	}
-	return false;
+	return accessGroup != null && accessGroup.isMember(person);
     }
 
     public boolean personHasPermissionToManageExtensionOccupations(Person person) {
 	Group accessGroup = getExtensionOccupationsAccessGroupWithChainOfResponsibility();
-	if (accessGroup != null && accessGroup.isMember(person)) {
-	    return true;
-	}
-	return false;
+	return accessGroup != null && accessGroup.isMember(person);
     }
 
     public boolean personHasPermissionToManageUnitOccupations(Person person) {
 	Group accessGroup = getUnitOccupationsAccessGroupWithChainOfResponsibility();
-	if (accessGroup != null && accessGroup.isMember(person)) {
-	    return true;
-	}
-	return false;
+	return accessGroup != null && accessGroup.isMember(person);
     }
 
     public boolean personHasPermissionToManageLessonOccupations(Person person) {
 	Group accessGroup = getLessonOccupationsAccessGroupWithChainOfResponsibility();
-	if (accessGroup != null && accessGroup.isMember(person)) {
-	    return true;
-	}
-	return false;
+	return accessGroup != null && accessGroup.isMember(person);
     }
 
     public boolean personHasPermissionToManageWrittenEvaluationOccupations(Person person) {
 	Group accessGroup = getWrittenEvaluationOccupationsAccessGroup();
-	if (accessGroup != null && accessGroup.isMember(person)) {
-	    return true;
-	}
-	return false;
+	return accessGroup != null && accessGroup.isMember(person);
     }
 
     public boolean personHasPermissionToGenericEventOccupations(Person person) {
 	Group accessGroup = getGenericEventOccupationsAccessGroup();
-	if (accessGroup != null && accessGroup.isMember(person)) {
-	    return true;
-	}
-	return false;
+	return accessGroup != null && accessGroup.isMember(person);
     }
 
     public Group getPersonOccupationsAccessGroupWithChainOfResponsibility() {
@@ -829,41 +805,25 @@ public abstract class Space extends Space_Base {
 	if(toAdd) {	    
 	    for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
 		IGroup existentGroup_ = (IGroup) iter.next();
-		if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) && existentGroup_.getElements().containsAll(groupToAddOrRemove.getElements())) {
-		    iter.remove();
-		    existentGroups.remove(groupToAddOrRemove);
+		if(existentGroup_.getElements().containsAll(groupToAddOrRemove.getElements())) {
+		    toAdd = false;		    
+		    break;
 		}
 	    }
-	    existentGroups.add(groupToAddOrRemove);
-
-	} else {		
-	    if(groupToAddOrRemove instanceof PersonGroup) {		    
-		for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
-		    IGroup existentGroup_ = (IGroup) iter.next();
-		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) && ((PersonGroup)existentGroup_).getPerson().equals(((PersonGroup)groupToAddOrRemove).getPerson())) {
-			iter.remove();
-			existentGroups.remove(groupToAddOrRemove);
-		    }
+	    if(toAdd) {
+		existentGroups.add(groupToAddOrRemove);
+	    }
+	    
+	} else {	    
+	    for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
+		IGroup existentGroup_ = (IGroup) iter.next();
+		if(existentGroup_.getElementsCount() == groupToAddOrRemove.getElementsCount() 
+			&& existentGroup_.getElements().containsAll(groupToAddOrRemove.getElements())) {
+		    iter.remove();
+		    existentGroups.remove(existentGroup_);
 		}
-	    } else if(groupToAddOrRemove instanceof PersistentGroup) {
-		for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
-		    IGroup existentGroup_ = (IGroup) iter.next();
-		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) && ((PersistentGroup)existentGroup_).getPersistentGroupMembers().equals(((PersistentGroup)groupToAddOrRemove).getPersistentGroupMembers())) {
-			iter.remove();
-			existentGroups.remove(groupToAddOrRemove);
-		    }
-		}		    
-	    } else if(groupToAddOrRemove instanceof RoleGroup) {
-		for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
-		    IGroup existentGroup_ = (IGroup) iter.next();
-		    if(existentGroup_.getClass().equals(groupToAddOrRemove.getClass()) && ((RoleGroup)existentGroup_).getRole().equals(((RoleGroup)groupToAddOrRemove).getRole())) {
-			iter.remove();
-			existentGroups.remove(groupToAddOrRemove);
-		    }
-		}		    
-	    }			    
+	    }	    	   
 	}	
-
 	return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.get(0) : new GroupUnion(existentGroups)); 
     }
 
@@ -880,16 +840,15 @@ public abstract class Space extends Space_Base {
     private void spaceManagerRoleManagement(Set<Person> elementsToManage, boolean toAdd) {	
 	if (toAdd) {
 	    for (Person person : elementsToManage) {
-		if (!person.hasRole(RoleType.SPACE_MANAGER)) {
-		    person.addPersonRoleByRoleType(RoleType.SPACE_MANAGER);
-		}
+		person.addPersonRoleByRoleType(RoleType.SPACE_MANAGER);		
 	    }	   
 	} else {	    
 	    for (Resource resource : RootDomainObject.getInstance().getResources()) {
 		if (resource.isSpace()) {
 		    Space space = (Space) resource;
 		    for (Person person : elementsToManage) {
-			if (!space.personHasPermissionToManageExtensionOccupations(person)
+			if (!personIsSpacesAdministrator(person) 
+				&& !space.personHasPermissionToManageExtensionOccupations(person)
 				&& !space.personHasPermissionToManagePersonOccupations(person)
 				&& !space.personHasPermissionToManageUnitOccupations(person)
 				&& !space.personHasSpecialPermissionToManageSpace(person)) {

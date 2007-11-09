@@ -208,7 +208,7 @@ public class AcademicYearDateTimeField extends DateTimeField {
 
     @Override
     public String getName() {	
-	return AcademicYearDateTimeFieldType.ACADEMIC_YEAR_TYPE.getName();
+	return AcademicYearDateTimeFieldType.academicYear().getName();
     }
 
     @Override
@@ -219,7 +219,7 @@ public class AcademicYearDateTimeField extends DateTimeField {
 
     @Override
     public DateTimeFieldType getType() {	
-	return AcademicYearDateTimeFieldType.ACADEMIC_YEAR_TYPE;
+	return AcademicYearDateTimeFieldType.academicYear();
     }
 
     @Override
@@ -312,6 +312,6 @@ public class AcademicYearDateTimeField extends DateTimeField {
     }
     
     private UnsupportedOperationException unsupported() {
-        return new UnsupportedOperationException(AcademicYearDateTimeFieldType.ACADEMIC_YEAR_TYPE + " field is unsupported");
+        return new UnsupportedOperationException(AcademicYearDateTimeFieldType.academicYear() + " field is unsupported");
     }
 }

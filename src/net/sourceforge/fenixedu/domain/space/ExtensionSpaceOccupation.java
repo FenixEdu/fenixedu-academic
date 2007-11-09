@@ -11,7 +11,7 @@ import org.joda.time.YearMonthDay;
 
 public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Checked("SpacePredicates.checkPermissionsToManageExtensionSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(
          actionName="Created extension occupation", 
 	 parameters={"space","extension","begin","end"}
@@ -26,7 +26,7 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 	super.setEnd(end);
     }
     
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Checked("SpacePredicates.checkPermissionsToManageExtensionSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(
          actionName="Edited extension occupation", 
 	 parameters={"begin","end"}
@@ -37,7 +37,7 @@ public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {
 	super.setEnd(end);
     }
       
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Checked("SpacePredicates.checkPermissionsToManageExtensionSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(
 	 actionName="Deleted extension occupation", 
          parameters={}

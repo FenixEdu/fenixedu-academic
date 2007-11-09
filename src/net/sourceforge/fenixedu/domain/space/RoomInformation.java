@@ -66,8 +66,7 @@ public class RoomInformation extends RoomInformation_Base {
 	setAgeQuality(ageQuality);
 	setObservations(observations);
 	setDoorNumber(doorNumber);		
-	setNormalCapacity(normalCapacity);
-	setExamCapacity(examCapacity);
+	getRoom().editCapacities(normalCapacity, examCapacity);	
     }
     
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
@@ -85,9 +84,8 @@ public class RoomInformation extends RoomInformation_Base {
 	setDescription(description);
 	setRoomClassification(roomClassification);	
 	setObservations(observations);
-	setDoorNumber(doorNumber);
-	setNormalCapacity(normalCapacity);
-	setExamCapacity(examCapacity);
+	setDoorNumber(doorNumber);	
+	getRoom().editCapacities(normalCapacity, examCapacity);	
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
@@ -126,15 +124,7 @@ public class RoomInformation extends RoomInformation_Base {
     public Integer getExamCapacity() {
 	return getRoom().getExamCapacity();
     }
-    
-    public void setExamCapacity(Integer examCapacity) {
-	getRoom().setExamCapacity(examCapacity);
-    }
-    
-    public void setNormalCapacity(Integer normalCapacity) {
-	getRoom().setNormalCapacity(normalCapacity);
-    }
-    
+          
     public RoomFactoryEditor getSpaceFactoryEditor() {
 	final RoomFactoryEditor roomFactoryEditor = new RoomFactoryEditor();
 	roomFactoryEditor.setSpace((Room) getSpace());

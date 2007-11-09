@@ -146,7 +146,7 @@ public class Attends extends Attends_Base {
 	}
 
 	final int currentWeekOffset = calculateCurrentWeekOffset();
-	if (currentWeekOffset < 1 || new YearMonthDay(getEndOfExamsPeriod()).plusDays(7).isBefore(new YearMonthDay())) {
+	if (currentWeekOffset < 1 || new YearMonthDay(getEndOfExamsPeriod()).plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK).isBefore(new YearMonthDay())) {
 	    throw new DomainException("outside.weekly.work.load.response.period");
 	}
 
@@ -172,7 +172,7 @@ public class Attends extends Attends_Base {
     public WeeklyWorkLoad getWeeklyWorkLoadOfPreviousWeek() {
 	final int currentWeekOffset = calculateCurrentWeekOffset();
 	if (currentWeekOffset < 1
-		|| new YearMonthDay(getEndOfExamsPeriod()).plusDays(7).isBefore(new YearMonthDay())) {
+		|| new YearMonthDay(getEndOfExamsPeriod()).plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK).isBefore(new YearMonthDay())) {
 	    throw new DomainException("outside.weekly.work.load.response.period");
 	}
 	final int previousWeekOffset = currentWeekOffset - 1;

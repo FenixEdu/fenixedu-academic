@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -43,6 +44,7 @@ public class Lesson extends Lesson_Base {
 	((ComparatorChain) LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency, 
 	    ExecutionPeriod executionPeriod, YearMonthDay beginDate, YearMonthDay endDate, AllocatableSpace room) {
 
@@ -78,15 +80,10 @@ public class Lesson extends Lesson_Base {
 	}
     }
 
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim, 
 	    FrequencyType frequency, Boolean createLessonInstances, AllocatableSpace newRoom) {
-
-	edit(newBeginDate, newEndDate, diaSemana, inicio, fim, frequency, createLessonInstances, null, newRoom);
-    }
-
-    private void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim, 
-	    FrequencyType frequency, Boolean createLessonInstances, YearMonthDay dayToNotCreateInstance, AllocatableSpace newRoom) {			
-
+	
 	if(newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
 	    throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
 	}
@@ -99,7 +96,7 @@ public class Lesson extends Lesson_Base {
 	    throw new DomainException("error.invalid.new.end.date");
 	}	
 
-	refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate, createLessonInstances, maxLessonsPeriod, dayToNotCreateInstance);
+	refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate, createLessonInstances, maxLessonsPeriod);
 
 	if(wasFinished() && (hasLessonSpaceOccupation() || !hasAnyLessonInstances())) {
 	    throw new DomainException("error.Lesson.empty.period");
@@ -115,6 +112,7 @@ public class Lesson extends Lesson_Base {
 	lessonSpaceOccupationManagement(newRoom);
     }  
 
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public void delete() {
 
 	if (getShift().hasAnyAssociatedStudentGroups()) {
@@ -249,25 +247,22 @@ public class Lesson extends Lesson_Base {
 	if(!wasFinished() && newBeginDate != null && newBeginDate.isAfter(getPeriod().getStartYearMonthDay())) {						
 	    SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), true);	    
 	    refreshPeriod(newBeginDate, getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay());	    			
-	    createAllLessonInstances(instanceDates, null);
+	    createAllLessonInstances(instanceDates);
 	}
     }
 
     private void refreshPeriodAndInstancesInEditOperation(YearMonthDay newBeginDate, YearMonthDay newEndDate, 
-	    Boolean createLessonInstances, GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod, 
-	    YearMonthDay dayToNotCreateInstance) {
+	    Boolean createLessonInstances, GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod) {
 
 	removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);	    
 	SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), createLessonInstances);	
 	refreshPeriod(newBeginDate, newEndDate);	
-	createAllLessonInstances(instanceDates, dayToNotCreateInstance);
+	createAllLessonInstances(instanceDates);
     }
 
-    private void createAllLessonInstances(SortedSet<YearMonthDay> instanceDates, YearMonthDay dayToNotCreateInstance) {
-	for (YearMonthDay day : instanceDates) {
-	    if(dayToNotCreateInstance == null || !dayToNotCreateInstance.isEqual(day)) {
-		new LessonInstance(this, day);
-	    }
+    private void createAllLessonInstances(SortedSet<YearMonthDay> instanceDates) {
+	for (YearMonthDay day : instanceDates) {	    
+	    new LessonInstance(this, day);	    
 	}	
     }
 

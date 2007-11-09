@@ -16,16 +16,6 @@ public class ExamsPeriodCE extends ExamsPeriodCE_Base {
 	setSeasonType(seasonType);
     }
 
-    private ExamsPeriodCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, 
-	    MultiLanguageString description, DateTime begin, DateTime end, SeasonType seasonType,
-	    AcademicCalendarEntry templateEntry) {
-
-	super();
-	super.initEntry(parentEntry, title, description, begin, end, parentEntry.getRootEntry());
-	setSeasonType(seasonType);
-	setTemplateEntry(templateEntry);
-    }
-
     @Override
     public AcademicCalendarEntry edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
 	    AcademicCalendarRootEntry rootEntryDestination, SeasonType seasonType, AcademicCalendarEntry templateEntry) {
@@ -37,7 +27,7 @@ public class ExamsPeriodCE extends ExamsPeriodCE_Base {
 
     private ExamsPeriodCE(AcademicCalendarEntry parentEntry, ExamsPeriodCE examsPeriodCE) {
 	super();
-	super.initVirtualOrRedefinedEntry(parentEntry, examsPeriodCE);
+	super.initVirtualEntry(parentEntry, examsPeriodCE);
     }
 
     @Override
@@ -82,11 +72,7 @@ public class ExamsPeriodCE extends ExamsPeriodCE_Base {
     }
 
     @Override
-    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {
-	if(virtual) {
-	    return new ExamsPeriodCE(parentEntry, this);
-	} else {
-	    return new ExamsPeriodCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), getSeasonType(), this);
-	}
+    protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
+	return new ExamsPeriodCE(parentEntry, this);
     }
 }

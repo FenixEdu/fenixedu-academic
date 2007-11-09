@@ -67,12 +67,12 @@ public class AcademicSemestersDurationField extends DurationField {
 
     @Override
     public String getName() {
-	return AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE.getName();
+	return AcademicSemestersDurationFieldType.academicSemesters().getName();
     }
 
     @Override
     public DurationFieldType getType() {
-	return AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE;
+	return AcademicSemestersDurationFieldType.academicSemesters();
     }
 
     @Override
@@ -121,7 +121,6 @@ public class AcademicSemestersDurationField extends DurationField {
     }
 
     private UnsupportedOperationException unsupported() {
-	return new UnsupportedOperationException(
-		AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE + " field is unsupported");
+	return new UnsupportedOperationException(AcademicSemestersDurationFieldType.academicSemesters() + " field is unsupported");
     }
 }

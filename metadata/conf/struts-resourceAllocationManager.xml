@@ -1361,7 +1361,7 @@
     	<forward name="show" path="df.page.showWrittenEvaluationsByDate"/>
    	</action>    
  
-	<!-- ==================== View Curricular Course Historic ================== -->
+		<!-- ==================== View Curricular Course Historic ================== -->
        	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
        		name="executionYearDegreeCurricularPlanForm"
        		attribute="executionYearDegreeCurricularPlanForm"
@@ -1383,6 +1383,7 @@
        	</action>
  
 		<!-- ========== Merge Execution Courses ========== -->	
+		
 		<action	name="chooseDegreesForExecutionCourseMerge"
 				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
 				path="/chooseDegreesForExecutionCourseMerge"
@@ -1451,6 +1452,15 @@
 	    		<forward name="seeVehicleAllocationHistory" path="see-vehicle-allocation-history"/>
 	    		<forward name="seeVehicleAllocation" path="see-vehicle-allocation"/>	    			    			    		    			    				  
 	   	</action>
+
+		<!-- =================== Access Groups Management  =================== -->
+		
+		<action path="/accessGroupsManagement"	
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.AccessGroupsManagementDA"
+	    		parameter="method" 	    		
+	    		scope="request">    			    		
+	    		<forward name="prepareAccessGroupsManagement" path="prepare-access-groups-management"/>	    		   			    		    			    				 
+	   	</action>			
 					
     </action-mappings>     
 

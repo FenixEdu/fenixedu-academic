@@ -7,6 +7,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -24,6 +25,7 @@ public class LessonInstance extends LessonInstance_Base {
 	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE_TIME).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
     public LessonInstance(Summary summary, Lesson lesson) {
 	
 	super();
@@ -60,6 +62,7 @@ public class LessonInstance extends LessonInstance_Base {
 	lessonInstanceSpaceOccupationManagement(room);	
     }
 
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances")
     public LessonInstance(Lesson lesson, YearMonthDay day) {
 	
 	super();
@@ -92,6 +95,7 @@ public class LessonInstance extends LessonInstance_Base {
 	lessonInstanceSpaceOccupationManagement(room);	
     }    
 
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances")
     public void delete() {	
 	
 	if(!canBeDeleted()) {
@@ -110,6 +114,7 @@ public class LessonInstance extends LessonInstance_Base {
 	deleteDomainObject();	
     }
     
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
     public void summaryAndCourseLoadManagement(Summary summary, Lesson lesson) {
 	CourseLoad courseLoad = null;
 	if(lesson != null && summary != null) {	

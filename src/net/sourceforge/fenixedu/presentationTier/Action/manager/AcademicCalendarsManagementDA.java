@@ -173,7 +173,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	    entry = (AcademicCalendarEntry) executeService("CreateAcademicCalendarEntry", new Object[] {bean, false});
 
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
+	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute("entryBean", bean);		
 	    return mapping.findForward("prepareCreateCalendarEntry");
 	}

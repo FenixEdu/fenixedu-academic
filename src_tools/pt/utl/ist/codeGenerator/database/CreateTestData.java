@@ -134,6 +134,9 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -190,22 +193,26 @@ public class CreateTestData {
     }
 
     public static class CreateExecutionYears extends AtomicAction {
-        public void doIt() {
-            final int numYearsToCreate = 5;
+        public void doIt() {                                   
+            final int numYearsToCreate = 5;            
             final YearMonthDay today = new YearMonthDay();
             final YearMonthDay yearMonthDay = new YearMonthDay(today.getYear() - numYearsToCreate + 2, 9, 1);
-            for (int i = 0; i < numYearsToCreate; createExecutionYear(yearMonthDay, i++));
+            AcademicCalendarRootEntry rootEntry = new AcademicCalendarRootEntry(new MultiLanguageString("Calendário Académico"), null, null);
+            for (int i = 0; i < numYearsToCreate; createExecutionYear(yearMonthDay, i++, rootEntry));
         }
 
-        private void createExecutionYear(final YearMonthDay yearMonthDay, final int offset) {
+        private void createExecutionYear(final YearMonthDay yearMonthDay, final int offset, AcademicCalendarRootEntry rootEntry) {
+            
             final int year = yearMonthDay.getYear() + offset;
             final YearMonthDay start = new YearMonthDay(year, yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth());
             final YearMonthDay end = new YearMonthDay(year + 1, 8, 31);
 
-            final ExecutionYear executionYear = new ExecutionYear();
-            executionYear.setYear(getYearString(year));
-            executionYear.setBeginDateYearMonthDay(start);
-            executionYear.setEndDateYearMonthDay(end);
+            AcademicYearCE academicYear = new AcademicYearCE(rootEntry, new MultiLanguageString(getYearString(year)), null, 
+        	    start.toDateTimeAtMidnight(), end.toDateTimeAtMidnight(), rootEntry);
+            
+            ExecutionYear executionYear = ExecutionYear.getExecutionYear(academicYear);
+                        
+            
             final YearMonthDay now = new YearMonthDay();
             if (start.isAfter(now) || end.isBefore(now)) {
                 executionYear.setState(PeriodState.OPEN);
@@ -213,26 +220,25 @@ public class CreateTestData {
                 executionYear.setState(PeriodState.CURRENT);                
             }
 
-            createExecutionPeriods(executionYear);
+            createExecutionPeriods(executionYear, academicYear);
         }
 
-        private void createExecutionPeriods(final ExecutionYear executionYear) {
-            createExecutionPeriods(executionYear, 1);
-            createExecutionPeriods(executionYear, 2);
+        private void createExecutionPeriods(final ExecutionYear executionYear, AcademicYearCE academicYear) {
+            createExecutionPeriods(executionYear, 1, academicYear);
+            createExecutionPeriods(executionYear, 2, academicYear);
         }
 
-        private void createExecutionPeriods(final ExecutionYear executionYear, final int semester) {
+        private void createExecutionPeriods(final ExecutionYear executionYear, final int semester, AcademicYearCE academicYear) {
+            
             final ExecutionPeriod lastExecutionPeriod = ExecutionPeriod.readLastExecutionPeriod();
             final YearMonthDay start = getStartYearMonthDay(executionYear, semester);
             final YearMonthDay end = getEndYearMonthDay(executionYear, semester);
-
-            final ExecutionPeriod executionPeriod = new ExecutionPeriod();
-            executionPeriod.setBeginDateYearMonthDay(start);
-            executionPeriod.setEndDateYearMonthDay(end);
-            executionPeriod.setExecutionYear(executionYear);
-            executionPeriod.setName(getPeriodString(semester));
-            executionPeriod.setPreviousExecutionPeriod(lastExecutionPeriod);
-            executionPeriod.setSemester(Integer.valueOf(semester));
+                       
+            AcademicSemesterCE academicSemester = new AcademicSemesterCE(academicYear, new MultiLanguageString(getPeriodString(semester)), 
+        	    null, start.toDateTimeAtMidnight(), end.toDateTimeAtMidnight(), academicYear.getRootEntry());
+            
+            ExecutionPeriod executionPeriod = ExecutionPeriod.getExecutionPeriod(academicSemester);                        
+                        
             final YearMonthDay now = new YearMonthDay();
             if (start.isAfter(now) || end.isBefore(now)) {
                 executionPeriod.setState(PeriodState.OPEN);
@@ -300,7 +306,7 @@ public class CreateTestData {
 
         private void createRoom(Floor floor) {
             final Room room = new Room(floor, null, getRoomName(), "", /* RoomClassification */ null, new BigDecimal(30), Boolean.TRUE, Boolean.TRUE,
-                    Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, "", new YearMonthDay(), null, Integer.toString(roomCounter - 1) , null, null);
+                    Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, "", new YearMonthDay(), null, Integer.toString(roomCounter - 1), null, null);
             room.setExtensionOccupationsAccessGroup(managersGroup);
             room.setGenericEventOccupationsAccessGroup(managersGroup);
             room.setLessonOccupationsAccessGroup(managersGroup);
@@ -830,7 +836,7 @@ public class CreateTestData {
             final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
             final YearMonthDay start = executionPeriod.getBeginDateYearMonthDay();
             final YearMonthDay end = executionPeriod.getEndDateYearMonthDay();
-            for (YearMonthDay day = start; day.compareTo(end) < 0; day = day.plusDays(7)) {
+            for (YearMonthDay day = start; day.compareTo(end) < 0; day = day.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK)) {
                 createAnnouncements(announcementBoard, day);
                 createPlanning(executionCourse, ShiftType.TEORICA);
                 createPlanning(executionCourse, ShiftType.TEORICA);

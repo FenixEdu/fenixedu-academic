@@ -12,7 +12,7 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 public class SeasonType2SqlSeasonTypeConversion implements FieldConversion {
 
     public Object javaToSql(Object source) throws ConversionException {
-	if (source instanceof SeasonType2SqlSeasonTypeConversion) {
+	if (source instanceof SeasonType) {
 	    SeasonType s = (SeasonType) source;
 	    return s.name();
 	}

@@ -26,6 +26,12 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 	deleteWithoutCheckNumberOfSpaceInformations();
     }  
     
+    public void deleteWithoutCheckNumberOfSpaceInformations() {
+	super.setSpace(null);	
+	removeRootDomainObject();	
+	deleteDomainObject();
+    }
+    
     @Override
     public void setValidFrom(YearMonthDay begin) {
 	checkSpaceInformationsIntersection(begin, getValidUntil());
@@ -48,13 +54,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
 	super.setValidFrom(begin);
 	super.setValidUntil(end);
     }
-                  
-    public void deleteWithoutCheckNumberOfSpaceInformations() {
-	super.setSpace(null);	
-	removeRootDomainObject();	
-	deleteDomainObject();
-    }
-        
+                             
     @Override    
     public void setSpace(Space space) {
 	if (space == null) {

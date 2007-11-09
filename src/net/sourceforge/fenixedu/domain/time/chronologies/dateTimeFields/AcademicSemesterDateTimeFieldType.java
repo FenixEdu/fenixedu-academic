@@ -10,19 +10,22 @@ import org.joda.time.DurationFieldType;
 
 public class AcademicSemesterDateTimeFieldType extends DateTimeFieldType {
 
-    public static final AcademicSemesterDateTimeFieldType ACADEMIC_SEMESTER_YEAR;
-
+    private static final AcademicSemesterDateTimeFieldType ACADEMIC_SEMESTER_TYPE;
     static {
-	ACADEMIC_SEMESTER_YEAR = new AcademicSemesterDateTimeFieldType("academicSemester");
+	ACADEMIC_SEMESTER_TYPE = new AcademicSemesterDateTimeFieldType("academicSemester");
     }
 
     protected AcademicSemesterDateTimeFieldType(String name) {
 	super(name);
     }
 
+    public static DateTimeFieldType academicSemester() {
+	return ACADEMIC_SEMESTER_TYPE;
+    }
+    
     @Override
     public DurationFieldType getDurationType() {
-	return AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE;
+	return AcademicSemestersDurationFieldType.academicSemesters();
     }
 
     @Override
@@ -39,6 +42,6 @@ public class AcademicSemesterDateTimeFieldType extends DateTimeFieldType {
     }
     
     private UnsupportedOperationException unsupported() {
-        return new UnsupportedOperationException(ACADEMIC_SEMESTER_YEAR + " field is unsupported");
+        return new UnsupportedOperationException(ACADEMIC_SEMESTER_TYPE + " field is unsupported");
     }
 }

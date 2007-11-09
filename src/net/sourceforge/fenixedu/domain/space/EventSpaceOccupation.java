@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.FrequencyType;
+import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -165,21 +166,15 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 	    Boolean dailyFrequencyMarkSaturday, Boolean dailyFrequencyMarkSunday) {
 
 	List<Interval> result = new ArrayList<Interval>();		
-			
-	if(diaSemana != null) {
-	    YearMonthDay newBegin = begin.toDateTimeAtMidnight().withDayOfWeek(diaSemana.getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
-	    if(newBegin.isBefore(begin)) {
-		begin = newBegin.plusDays(7);
-	    } else {
-		begin = newBegin;
-	    }
-	}
-
+	
+	begin = getBeginDateInSpecificWeekDay(diaSemana, begin);
+	
 	if(frequency == null) {            
 	    if (!begin.isAfter(end)) {
                 result.add(createNewInterval(begin, end, beginTime, endTime));
                 return result;
             }            
+	    
 	} else {
             int numberOfDaysToSum = frequency.getNumberOfDays();            
             while (true) {
@@ -199,6 +194,18 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 	return result; 
     }
                  
+    private YearMonthDay getBeginDateInSpecificWeekDay(DiaSemana diaSemana, YearMonthDay begin) {
+	if(diaSemana != null) {
+	    YearMonthDay newBegin = begin.toDateTimeAtMidnight().withDayOfWeek(diaSemana.getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();	    
+	    if(newBegin.isBefore(begin)) {
+		begin = newBegin.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);
+	    } else {
+		begin = newBegin;
+	    }
+	}
+	return begin;
+    }
+
     protected Interval createNewInterval(YearMonthDay begin, YearMonthDay end, HourMinuteSecond beginTime, HourMinuteSecond endTime) {	
 	return new Interval(
 		begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)),			

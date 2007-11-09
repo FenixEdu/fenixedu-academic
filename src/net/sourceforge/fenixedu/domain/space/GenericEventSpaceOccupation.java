@@ -12,7 +12,7 @@ import org.joda.time.YearMonthDay;
 
 public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Base {
     
-    @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")   
+    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")   
     public GenericEventSpaceOccupation(AllocatableSpace allocatableSpace, GenericEvent genericEvent) {	
 	
 	super();          
@@ -26,7 +26,7 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
         setResource(allocatableSpace);                     
     }   
     
-    @Checked("SpacePredicates.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole")   
+    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")   
     public void delete() {	
 	super.setGenericEvent(null);
 	super.delete();

@@ -8,29 +8,21 @@ public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
 
     public AcademicTrimesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title,
 	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
-	
+
 	super();
 	super.initEntry(parentEntry, title, description, begin, end, rootEntry);
     } 
-    
-    private AcademicTrimesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title,
-	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarEntry templateEntry) {
-	
-	super();
-	super.initEntry(parentEntry, title, description, begin, end, parentEntry.getRootEntry());
-	setTemplateEntry(templateEntry);
-    } 
-    
+   
     private AcademicTrimesterCE(AcademicCalendarEntry parentEntry, AcademicTrimesterCE academicTrimesterCE) {
 	super();
-	super.initVirtualOrRedefinedEntry(parentEntry, academicTrimesterCE);
+	super.initVirtualEntry(parentEntry, academicTrimesterCE);
     }
 
     @Override
     public boolean isAcademicTrimester() {
 	return true;
     }
-    
+
     @Override
     protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
 	return !parentEntry.isAcademicYear() && !parentEntry.isAcademicSemester();
@@ -52,11 +44,7 @@ public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
     }
 
     @Override
-    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {
-	if(virtual) {
-	    return new AcademicTrimesterCE(parentEntry, this);
-	} else {
-	    return new AcademicTrimesterCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), this);
-	}
+    protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
+	return new AcademicTrimesterCE(parentEntry, this);	
     }
 }

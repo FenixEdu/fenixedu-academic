@@ -203,3 +203,14 @@
 	<slot name="shift" key="label.shift" layout="shift-plain"/>			
 	<slot name="writtenSummary" key="label.lesson.summary"/>
 </schema>
+
+<!-- Access Groups Management -->
+
+<schema name="ViewPersonToListAccessGroupsInResourceAllocationManagement" type="net.sourceforge.fenixedu.domain.Person" bundle="SOP_RESOURCES">
+	<slot name="name" key="label.access.group.person.name"/>
+	<slot name="username" key="label.access.group.person.username"/>	
+</schema>	
+<schema name="AddPersonToAccessGroupInResourceAllocationManagement" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.AccessGroupBean" bundle="SOP_RESOURCES">
+	<slot name="accessGroupType" key="label.access.group" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="person" layout="username-as-person" key="label.access.group.person" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>			
+</schema>

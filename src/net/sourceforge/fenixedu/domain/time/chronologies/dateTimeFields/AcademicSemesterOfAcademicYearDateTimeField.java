@@ -65,11 +65,13 @@ public class AcademicSemesterOfAcademicYearDateTimeField extends DateTimeField {
 
     @Override
     public String getAsShortText(long instant) {		
+	
 	throw unsupported();	
     }
 
     @Override
     public String getAsShortText(long instant, Locale locale) {		
+	
 	throw unsupported();		
     }
 
@@ -216,8 +218,7 @@ public class AcademicSemesterOfAcademicYearDateTimeField extends DateTimeField {
 
     @Override
     public String getName() {
-	return AcademicSemesterOfAcademicYearDateTimeFieldType.ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR
-		.getName();
+	return AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear().getName();
     }
 
     @Override
@@ -228,7 +229,7 @@ public class AcademicSemesterOfAcademicYearDateTimeField extends DateTimeField {
 
     @Override
     public DateTimeFieldType getType() {
-	return AcademicSemesterOfAcademicYearDateTimeFieldType.ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR;
+	return AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear();
     }
 
     @Override
@@ -322,6 +323,6 @@ public class AcademicSemesterOfAcademicYearDateTimeField extends DateTimeField {
     }
 
     private UnsupportedOperationException unsupported() {
-	return new UnsupportedOperationException(AcademicSemesterOfAcademicYearDateTimeFieldType.ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR + " field is unsupported");
+	return new UnsupportedOperationException(AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear() + " field is unsupported");
     }
 }

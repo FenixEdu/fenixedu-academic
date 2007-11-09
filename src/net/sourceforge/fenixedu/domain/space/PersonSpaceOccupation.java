@@ -25,7 +25,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Checked("SpacePredicates.checkPermissionsToManagePersonSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(
          actionName="Created person occupation", 
 	 parameters={"space","person","begin","end"}
@@ -41,7 +41,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	super.setEnd(end);
     }
     
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Checked("SpacePredicates.checkPermissionsToManagePersonSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(
          actionName="Edited person occupation", 
 	 parameters={"begin","end"}
@@ -52,7 +52,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 	super.setEnd(end);
     }
     
-    @Checked("SpacePredicates.checkPermissionsToManageOccupations")
+    @Checked("SpacePredicates.checkPermissionsToManagePersonSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(
 	 actionName="Deleted person occupation", 
          parameters={}

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -8,23 +10,21 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 
     public AcademicSemesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, 
 	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
-	
+
 	super();
 	super.initEntry(parentEntry, title, description, begin, end, rootEntry);
-    }    
-    
-    private AcademicSemesterCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, 
-	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarEntry templateEntry) {
-	
-	super();
-	super.initEntry(parentEntry, title, description, begin, end, parentEntry.getRootEntry());
-	setTemplateEntry(templateEntry);
-    }    
+	createNewExecutionPeriod();
+    }       
 
     private AcademicSemesterCE(AcademicCalendarEntry parentEntry, AcademicSemesterCE academicSemesterCE) {
 	super();
-	super.initVirtualOrRedefinedEntry(parentEntry, academicSemesterCE);
+	super.initVirtualEntry(parentEntry, academicSemesterCE);
     }
+    
+    @Override
+    protected void afterRedefineEntry() {
+	createNewExecutionPeriod();
+    }  
 
     @Override
     public boolean isAcademicSemester() {
@@ -55,11 +55,13 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
     }
 
     @Override
-    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {
-	if(virtual) {
-	    return new AcademicSemesterCE(parentEntry, this);
-	} else {
-	    return new AcademicSemesterCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), this);
-	}
-    }              
+    protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
+	return new AcademicSemesterCE(parentEntry, this);	
+    }       
+
+    private void createNewExecutionPeriod() {		
+	AcademicYearCE academicYear = (AcademicYearCE) getParentEntry().getOriginalTemplateEntry();		
+	ExecutionYear executionYear = ExecutionYear.getExecutionYear(academicYear);	    
+	new ExecutionPeriod(executionYear, new AcademicInterval(this), getTitle().getContent());
+    }      
 }

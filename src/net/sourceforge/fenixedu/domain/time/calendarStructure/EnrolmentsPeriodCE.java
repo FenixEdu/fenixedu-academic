@@ -13,17 +13,9 @@ public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
 	super.initEntry(academicCalendarEntry, title, description, begin, end, rootEntry);
     }
 
-    private EnrolmentsPeriodCE(AcademicCalendarEntry parentEntry, MultiLanguageString title, 
-	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarEntry templateEntry) {
-
-	super();
-	super.initEntry(parentEntry, title, description, begin, end, parentEntry.getRootEntry());
-	setTemplateEntry(templateEntry);
-    }
-
     private EnrolmentsPeriodCE(AcademicCalendarEntry parentEntry, EnrolmentsPeriodCE enrolmentsPeriodCE) {
 	super();
-	super.initVirtualOrRedefinedEntry(parentEntry, enrolmentsPeriodCE);
+	super.initVirtualEntry(parentEntry, enrolmentsPeriodCE);
     }
 
     @Override
@@ -52,11 +44,7 @@ public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
     }
 
     @Override
-    protected AcademicCalendarEntry makeAnEntryCopyInDifferentCalendar(AcademicCalendarEntry parentEntry, boolean virtual) {
-	if(virtual) {
-	    return new EnrolmentsPeriodCE(parentEntry, this);
-	} else {
-	    return new EnrolmentsPeriodCE(parentEntry, getTitle(), getDescription(), getBegin(), getEnd(), this);   
-	}
+    protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
+	return new EnrolmentsPeriodCE(parentEntry, this);
     }
 }

@@ -1,6 +1,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@page import="net.sourceforge.fenixedu.domain.ResourceAllocationRole"%>
+<%@page import="net.sourceforge.fenixedu.domain.Person"%>
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<html:xhtml/>
+
 
 <bean:define id="dotTitle"type="java.lang.String"><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></bean:define>
 
@@ -8,6 +12,13 @@
 
 <bean:message key="introduction.message" arg0="<%= dotTitle %>"/>
 
+<%
+	Person loggedPerson = AccessControl.getPerson();	
+%>
+
+<%			
+	if(ResourceAllocationRole.personHasPermissionToManageSchedulesAllocation(loggedPerson)) { 
+%>	
 
 <table class="mtop15" width="98%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -55,6 +66,13 @@ e alterar aulas).</p>
 </table>
 <p><bean:message key="message.info.sop" bundle="CURRICULUM_HISTORIC_RESOURCES"/></p>
 
+<%
+	}
+%>
+		
+<%			
+	if(ResourceAllocationRole.personHasPermissionToManageSpacesAllocation(loggedPerson)) { 
+%>
 <table width="98%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img height="15" src="<%= request.getContextPath() %>/images/info.gif" alt="<bean:message key="info" bundle="IMAGE_RESOURCES" />" width="15" /> 
@@ -64,5 +82,8 @@ e alterar aulas).</p>
 </table>
 <p>Este m&oacute;dulo visa uma gest&atilde;o eficiente das <strong>salas de aulas</strong> dispon&iacute;veis
   e a sua calendariza&ccedil;&atilde;o.</p>
+<%
+	}
+%>
 
 <br />

@@ -11,8 +11,7 @@ import org.joda.time.DurationFieldType;
 
 public class AcademicSemesterOfAcademicYearDateTimeFieldType extends DateTimeFieldType {
 
-    public static final AcademicSemesterOfAcademicYearDateTimeFieldType ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR;
-
+    private static final AcademicSemesterOfAcademicYearDateTimeFieldType ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR;
     static {
 	ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR = new AcademicSemesterOfAcademicYearDateTimeFieldType(
 		"academicSemesterOfAcademicYear",
@@ -20,29 +19,30 @@ public class AcademicSemesterOfAcademicYearDateTimeFieldType extends DateTimeFie
 		AcademicYearsDurationFieldType.ACADEMIC_YEARS_TYPE);
     }
 
-    private AcademicSemesterOfAcademicYearDateTimeFieldType(String name, DurationFieldType unitType,
-	    DurationFieldType rangeType) {
+    private AcademicSemesterOfAcademicYearDateTimeFieldType(String name, DurationFieldType unitType, DurationFieldType rangeType) {
 	super(name);
     }
 
+    public static DateTimeFieldType academicSemesterOfAcademicYear() {
+	return ACADEMIC_SEMESTER_OF_ACADEMIC_YEAR;
+    }
+    
     @Override
     public DateTimeField getField(Chronology chronology) {
 	if(chronology instanceof AcademicChronology) {
 	    return ((AcademicChronology)chronology).academicSemesterOfAcademicYear();
 	}	
 	throw unsupported();
-    }
-
-
+    }  
+    
     @Override
     public DurationFieldType getDurationType() {
-	return AcademicSemestersDurationFieldType.ACADEMIC_SEMESTERS_TYPE;
+	return AcademicSemestersDurationFieldType.academicSemesters();
     }
-
     
     @Override
     public DurationFieldType getRangeDurationType() {
-	return AcademicYearsDurationFieldType.ACADEMIC_YEARS_TYPE;
+	return AcademicYearsDurationFieldType.academicYears();
     }
     
     private UnsupportedOperationException unsupported() {

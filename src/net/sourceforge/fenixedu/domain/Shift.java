@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -21,10 +22,11 @@ import org.apache.commons.lang.StringUtils;
 
 public class Shift extends Shift_Base {
 
+    public static final ResourceBundle enumerationResourcesBundle = ResourceBundle.getBundle("resources/EnumerationResources");
+
     public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME = new BeanComparator("nome", Collator.getInstance());
     public static final Comparator<Shift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
-    public static final ResourceBundle enumerationResourcesBundle = ResourceBundle.getBundle("resources/EnumerationResources");
-    
+        
     static {
         ((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("executionCourse.nome"));
 	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("shiftTypesIntegerComparator"));
@@ -34,6 +36,7 @@ public class Shift extends Shift_Base {
 	Registration.ShiftStudent.addListener(new ShiftStudentListener());
     }
 
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public Shift(final ExecutionCourse executionCourse, List<ShiftType> types, final Integer lotacao) {
 	
 	super();
@@ -48,6 +51,7 @@ public class Shift extends Shift_Base {
 	}
     }
 
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName) {	
 
 	ExecutionCourse beforeExecutionCourse = getExecutionCourse();
@@ -74,6 +78,7 @@ public class Shift extends Shift_Base {
 	}
     }
 
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void delete() {
 	if (canBeDeleted()) {	    
 

@@ -15,6 +15,7 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
     public abstract Group getAccessGroup();
 
     public void checkPermissionsToManageSpaceOccupations() {
+	
 	Person loggedPerson = AccessControl.getPerson();
 	if (getSpace().personHasPermissionsToManageSpace(loggedPerson)) {
 	    return;
@@ -28,12 +29,14 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     }
 
-    public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManagerRole() {
+    public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManager() {
+	
 	Person loggedPerson = AccessControl.getPerson();	
 	final Group group = getAccessGroup();
 	if (group != null && group.isMember(loggedPerson)) {
 	    return;
 	}	
+	
 	throw new DomainException("error.logged.person.not.authorized.to.make.operation");
     } 
     
