@@ -271,7 +271,7 @@ if (month != null && year!=null)
 
 
 		<div class="aarchives">
-			<messaging:archive name="archive" targetUrl="<%=request.getScheme() + "://" + request.getServerName() +":"+ request.getServerPort() + context + module + contextPrefix + "method=viewArchive&announcementBoardId=" + board.getIdInternal() + "&" + extraParameters + "&" %>"/>	
+			<messaging:archive name="archive" targetUrl="<%= context + module + contextPrefix + "method=viewArchive&announcementBoardId=" + board.getIdInternal() + "&" + extraParameters + "&" %>"/>	
 		</div>
 
 	</logic:present>
