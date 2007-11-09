@@ -44,7 +44,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
 	if (academicServiceRequestBean.isToProcess()) {
 
-	    if (!getRegistration().getCurriculum().isEmpty()) {
+	    if (getRegistration().getCurriculum().isEmpty()) {
 		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
 	    }
 
