@@ -301,11 +301,22 @@ public enum DegreeType {
 	return administrativeOfficeType;
     }
 
+    public String getPrefix() {
+	switch (this) {
+	case BOLONHA_PHD_PROGRAM:
+	    return "";
+	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+	    return "curso conducente ao ";
+	default:
+	    return "curso de ";
+	}
+    }
+
     public String getLocalizedName() {
 	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
 		.getString(getQualifiedName());
     }
-
+    
     public String getQualifiedName() {
 	return StringAppender.append(DegreeType.class.getSimpleName(), ".", name());
     }
