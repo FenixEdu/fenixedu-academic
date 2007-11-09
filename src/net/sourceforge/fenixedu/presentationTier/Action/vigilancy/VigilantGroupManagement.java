@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -632,7 +633,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		bean.setConvokeStrategy(group.getConvokeStrategy());
 		bean.setName(group.getName());
 		bean.setUnit(group.getUnit());
-		bean.setSelectedDepartment(group.getUnit().getDepartment());
+		bean.setSelectedDepartment(getDepartment(group));
 		bean.setContactEmail(group.getContactEmail());
 		bean.setRulesLink(group.getRulesLink());
 		bean.setEmployees(new ArrayList<Employee>());
@@ -644,6 +645,18 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		request.setAttribute("bean", bean);
 	}
 
+	private Department getDepartment(VigilantGroup group) {
+	    Unit unit = group.getUnit();
+	    if(unit.isDepartmentUnit()) {
+		return unit.getDepartment();
+	    }
+	    if(unit.isScientificAreaUnit()) {
+		ScientificAreaUnit scientificAreaUnit = (ScientificAreaUnit)unit;
+		return scientificAreaUnit.getDepartmentUnit().getDepartment();
+	    }
+	    return null;
+	}
+	
 	private void prepareManagementBean(HttpServletRequest request, ExecutionYear selectedYear)
 			throws FenixFilterException, FenixServiceException {
 
