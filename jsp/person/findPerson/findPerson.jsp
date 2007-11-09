@@ -77,7 +77,7 @@ function check(e,v){
 	</tr>
 	<logic:present name="degreeType">
 		<tr>
-			<td class="leftcolumn"><bean:message key="label.degree"/>:</td>
+			<td class="leftcolumn"><bean:message key="label.degree.type"/>:</td>
 			<td>
 				<html:form action="/preparePerson" >					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="preparePerson" />					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.countPage" property="countPage" value="1"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.departmentId" property="departmentId" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeId" property="degreeId" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewPhoto" property="viewPhoto" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" property="name" name="findPersonForm"/>					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.roleType" property="roleType" name="findPersonForm"/>					<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"  />
 					<html:select bundle="HTMLALT_RESOURCES" property="degreeType" onchange="this.form.submit()">

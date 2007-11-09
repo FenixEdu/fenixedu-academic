@@ -7,8 +7,6 @@
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.domain.ShiftType" %>
 
-asd
-
 <noscript>
 	<font class="error">
 		<bean:message key="error.message.inquiries.javascript.disabled" bundle="INQUIRIES_RESOURCES"/>
