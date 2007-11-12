@@ -483,5 +483,57 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     public boolean isRoot() {
 	return false;
-    }   
+    }
+
+    protected AcademicCalendarEntry getEntryByInstant(final long instant,
+	    final Class<? extends AcademicCalendarEntry> entryClass,
+	    final Class<? extends AcademicCalendarEntry> parentEntryClass,
+	    final AcademicCalendarEntry first) {
+	
+	if (containsInstant(instant)) {
+	    if (this.getClass().equals(entryClass) && getParentEntry().getClass().equals(parentEntryClass) && !isRedefinedBy(this, first)) {
+		return this;
+	    } else {
+		AcademicCalendarEntry result = null;
+
+		for (final AcademicCalendarEntry childEntry : getChildEntriesSet()) {
+		    if (this == first || !isRedefinedBy(childEntry, first)) {
+			final AcademicCalendarEntry childEntryResult = childEntry.getEntryByInstant(instant, entryClass, parentEntryClass);
+			if (childEntryResult != null && (result == null || childEntryResult.getBegin().isAfter(result.getBegin()))) {
+			    result = childEntryResult;
+			}
+		    }
+		}
+
+		final AcademicCalendarEntry templateEntry = getTemplateEntry();
+		if (templateEntry != null) {
+		    final AcademicCalendarEntry templateEntryResult = templateEntry.getEntryByInstant(instant, entryClass, parentEntryClass, first);
+		    if (templateEntry != null && (result == null || templateEntryResult.getBegin().isAfter(result.getBegin()))) {
+			result = templateEntryResult;
+		    }
+		}
+
+		return result;
+	    }
+	}
+	return null;
+    }
+
+    public AcademicCalendarEntry getEntryByInstant(final long instant, final Class<? extends AcademicCalendarEntry> entryClass, final Class<? extends AcademicCalendarEntry> parentEntryClass) {
+	return getEntryByInstant(instant, entryClass, parentEntryClass, this);
+    }
+
+    protected boolean isRedefinedBy(final AcademicCalendarEntry child, final AcademicCalendarEntry currentParentEntry) {
+	for (final AcademicCalendarEntry academicCalendarEntry : currentParentEntry.getChildEntriesSet()) {
+	    if (academicCalendarEntry.getTemplateEntry() == child) {
+		return true;
+	    }
+	    if (academicCalendarEntry == child) {
+		return false;
+	    }
+	}
+	final AcademicCalendarEntry template = currentParentEntry.getTemplateEntry();
+	return template != null ? template.isRedefinedBy(child, template) : false;
+    }
+
 }

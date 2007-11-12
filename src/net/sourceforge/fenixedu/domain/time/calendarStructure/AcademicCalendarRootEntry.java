@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -11,7 +10,6 @@ import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
-import org.w3c.css.sac.SiblingSelector;
 
 public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 
@@ -121,16 +119,6 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
         return true;
     }
 
-    public AcademicCalendarEntry getEntryByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {	
-	List<AcademicCalendarEntry> allEntriesByType = getAllChildEntriesOrderByDateInReverseMode(entryClass, parentEntryClass);	
-	for (AcademicCalendarEntry entry : allEntriesByType) {	    
-	    if (entry.containsInstant(instant)) {
-		return entry;
-	    }
-	}
-	return null;
-    }
-
     public Integer getEntryValueByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {		
 	List<AcademicCalendarEntry> allEntriesByType = getAllChildEntriesOrderByDateInReverseMode(entryClass, parentEntryClass);	
 	Integer counter = allEntriesByType.size();
@@ -156,5 +144,11 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 	    counter--;
 	}
 	return null;	
-    }        
+    }
+
+    @Override
+    public boolean containsInstant(final long instant) {
+	return true;
+    }
+
 }

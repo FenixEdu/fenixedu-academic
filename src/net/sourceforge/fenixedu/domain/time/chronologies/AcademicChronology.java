@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.time.chronologies;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
@@ -20,7 +18,6 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.DurationField;
 import org.joda.time.Interval;
 import org.joda.time.chrono.AssembledChronology;
-import org.joda.time.chrono.GregorianChronology;
 import org.joda.time.chrono.ISOChronology;
 
 public class AcademicChronology extends AssembledChronology {
@@ -155,16 +152,14 @@ public class AcademicChronology extends AssembledChronology {
     }
     
     public int getAcademicSemesterOfAcademicYear(long instant) {	
-	AcademicCalendarEntry entry = academicCalendar.getEntryByInstant(instant, AcademicYearCE.class, AcademicCalendarRootEntry.class);		
-	List<AcademicCalendarEntry> childEntries = entry.getChildEntriesOrderByDateInReverseMode(AcademicSemesterCE.class);
-	int counter = childEntries.size();
-	for (AcademicCalendarEntry academicCalendarEntry : childEntries) {	    
-	    if(academicCalendarEntry.containsInstant(instant)) {
-		return counter;
+	final AcademicCalendarEntry entry = academicCalendar.getEntryByInstant(instant, AcademicYearCE.class, AcademicCalendarRootEntry.class);
+	int counter = 1;
+	for (final AcademicCalendarEntry subEntry : entry.getChildEntriesSet()) {
+	    if (subEntry.getClass().equals(AcademicSemesterCE.class) && AcademicCalendarEntry.COMPARATOR_BEGIN_DATE.compare(subEntry, entry) < 0) {
+		counter++;
 	    }
-	    counter--;
-	}			
-	return 0;
+	}
+	return counter;
     }
     
     public int getMaximumValueForAcademicSemesterOfAcademicYear(long instant) {	
