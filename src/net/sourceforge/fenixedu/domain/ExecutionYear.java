@@ -409,15 +409,15 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return null;
     }
 
-    @Deprecated   
-    public java.util.Date getBeginDate(){  
-	YearMonthDay day = getBeginDateYearMonthDay(); 
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
-    }
-
-    @Deprecated   
-    public java.util.Date getEndDate(){  
-	YearMonthDay day = getEndDateYearMonthDay(); 
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
-    }
+//    @Deprecated   
+//    public java.util.Date getBeginDate(){  
+//	YearMonthDay day = getBeginDateYearMonthDay(); 
+//	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
+//    }
+//
+//    @Deprecated   
+//    public java.util.Date getEndDate(){  
+//	YearMonthDay day = getEndDateYearMonthDay(); 
+//	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
+//    }
 }
