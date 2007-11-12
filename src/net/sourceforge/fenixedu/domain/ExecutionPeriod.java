@@ -38,12 +38,16 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable {
 
     private transient OccupationPeriod lessonsPeriod;
+    private transient ExecutionPeriod previousExecutionPeriod;
+    private transient ExecutionPeriod nextExecutionPeriod;
+
 
     public static final Comparator<ExecutionPeriod> EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR = new ComparatorChain();
-    static {	
-	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR).addComparator(new BeanComparator("executionYear.year"));
+    static {
+	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR).addComparator(new BeanComparator(
+	"executionYear.year"));
 	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR).addComparator(new BeanComparator("semester"));
-	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR).addComparator(DomainObject.COMPARATOR_BY_ID);	
+	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
     private ExecutionPeriod() {
@@ -60,7 +64,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 
     @Override
     public void setExecutionInterval(AcademicInterval executionInterval) {
-	if(executionInterval == null) {
+	if (executionInterval == null) {
 	    throw new DomainException("error.ExecutionPeriod.empty.executionInterval");
 	}
 	super.setExecutionInterval(executionInterval);
@@ -68,32 +72,38 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 
     @Override
     public void setExecutionYear(ExecutionYear executionYear) {
-	if(executionYear == null) {
+	if (executionYear == null) {
 	    throw new DomainException("error.ExecutionPeriod.empty.executionYear");
-	}      
+	}
 	super.setExecutionYear(executionYear);
     }
 
-    public YearMonthDay getBeginDateYearMonthDay() {	
-	return getExecutionInterval().getBeginYearMonthDay();	
+    public YearMonthDay getBeginDateYearMonthDay() {
+	return getExecutionInterval().getBeginYearMonthDay();
     }
 
-    public YearMonthDay getEndDateYearMonthDay() {     
+    public YearMonthDay getEndDateYearMonthDay() {
 	return getExecutionInterval().getEndYearMonthDay();
     }
 
-    public Integer getSemester() {        
-	return Integer.valueOf(getExecutionInterval().getAcademicSemesterOfAcademicYear());	      
+    public Integer getSemester() {
+	return Integer.valueOf(getExecutionInterval().getAcademicSemesterOfAcademicYear());
     }
 
     public ExecutionPeriod getNextExecutionPeriod() {
-	AcademicInterval semester = getExecutionInterval().plusSemester(1);
-	return semester != null ? ExecutionPeriod.getExecutionPeriod((AcademicSemesterCE) semester.getAcademicCalendarEntry()) : null;	
+	if(nextExecutionPeriod == null) {
+	    AcademicInterval semester = getExecutionInterval().plusSemester(1);
+	    nextExecutionPeriod = semester != null ? ExecutionPeriod.getExecutionPeriod((AcademicSemesterCE) semester.getAcademicCalendarEntry()) : null;
+	}
+	return nextExecutionPeriod;
     }
 
     public ExecutionPeriod getPreviousExecutionPeriod() {
-	AcademicInterval semester = getExecutionInterval().minusSemester(1);
-	return semester != null ? ExecutionPeriod.getExecutionPeriod((AcademicSemesterCE) semester.getAcademicCalendarEntry()) : null;	
+	if(previousExecutionPeriod == null) {
+	    AcademicInterval semester = getExecutionInterval().minusSemester(1);
+	    previousExecutionPeriod = semester != null ? ExecutionPeriod.getExecutionPeriod((AcademicSemesterCE) semester.getAcademicCalendarEntry()) : null;
+	}
+	return previousExecutionPeriod;
     }
 
     public boolean hasPreviousExecutionPeriod() {
@@ -336,7 +346,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 
     public OccupationPeriod getLessonsPeriod() {
 
-	if(lessonsPeriod == null) {
+	if (lessonsPeriod == null) {
 
 	    Collection<ExecutionDegree> degrees = getExecutionYear().getExecutionDegreesByType(DegreeType.DEGREE);
 	    if (degrees.isEmpty()) {
@@ -348,18 +358,20 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	    if (degrees.isEmpty()) {
 		degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_MASTER_DEGREE));
 	    }
-	    
-	    for (ExecutionDegree executionDegree : degrees) {	    	   
+
+	    for (ExecutionDegree executionDegree : degrees) {
 		if (getSemester() == 1) {
 		    OccupationPeriod lessonsPeriodFirstSemester = executionDegree.getPeriodLessonsFirstSemester();
-		    lessonsPeriod = (lessonsPeriod == null || lessonsPeriodFirstSemester.isGreater(lessonsPeriod)) ? lessonsPeriodFirstSemester : lessonsPeriod;
+		    lessonsPeriod = (lessonsPeriod == null || lessonsPeriodFirstSemester.isGreater(lessonsPeriod)) ? lessonsPeriodFirstSemester
+			    : lessonsPeriod;
 		} else {
 		    OccupationPeriod lessonsPeriodSecondSemester = executionDegree.getPeriodLessonsSecondSemester();
-		    lessonsPeriod = (lessonsPeriod == null || lessonsPeriodSecondSemester.isGreater(lessonsPeriod)) ? lessonsPeriodSecondSemester : lessonsPeriod;	
+		    lessonsPeriod = (lessonsPeriod == null || lessonsPeriodSecondSemester.isGreater(lessonsPeriod)) ? lessonsPeriodSecondSemester
+			    : lessonsPeriod;
 		}
-	    }	   
+	    }
 	}
-	return lessonsPeriod;	
+	return lessonsPeriod;
     }
 
     public String getYear() {
@@ -374,7 +386,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	    throw new Error("cannot.delete.execution.period.because.enrolments.exist");
 	}
 	removeExecutionYear();
-	removeRootDomainObject();	
+	removeRootDomainObject();
 	deleteDomainObject();
     }
 
@@ -401,16 +413,16 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     // read static methods
     // -------------------------------------------------------------
 
-    public static ExecutionPeriod getExecutionPeriod (AcademicSemesterCE entry) {
-	if(entry != null) {
+    public static ExecutionPeriod getExecutionPeriod(AcademicSemesterCE entry) {
+	if (entry != null) {
 	    for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-		if(executionPeriod.getExecutionInterval().getAcademicCalendarEntry().equals(entry)) {
+		if (executionPeriod.getExecutionInterval().getAcademicCalendarEntry().equals(entry)) {
 		    return executionPeriod;
 		}
 	    }
 	}
 	return null;
-    }  
+    }
 
     private static transient ExecutionPeriod currentExecutionPeriod = null;
 
@@ -511,7 +523,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	final YearMonthDay yearMonthDay = dateTime.toYearMonthDay();
 	return readByYearMonthDay(yearMonthDay);
     }
-    
+
     public static ExecutionPeriod readByYearMonthDay(final YearMonthDay yearMonthDay) {
 	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
 	    if (executionPeriod.containsDay(yearMonthDay)) {
@@ -521,16 +533,15 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	return null;
     }
 
-    @Deprecated   
-    public java.util.Date getBeginDate(){  
-	YearMonthDay day = getBeginDateYearMonthDay(); 
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
+    @Deprecated
+    public java.util.Date getBeginDate() {
+	YearMonthDay day = getBeginDateYearMonthDay();
+	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());
     }
 
-
-    @Deprecated   
-    public java.util.Date getEndDate(){  
-	YearMonthDay day = getEndDateYearMonthDay(); 
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
+    @Deprecated
+    public java.util.Date getEndDate() {
+	YearMonthDay day = getEndDateYearMonthDay();
+	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());
     }
 }
