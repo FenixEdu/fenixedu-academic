@@ -83,7 +83,7 @@
 
 <!-- Payments -->
 <h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<p class="mvert05">
+<p class="mtop05 mbottom15">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 	<html:link action="/payments.do?method=showOperations" paramName="student" paramProperty="person.idInternal" paramId="personId">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
