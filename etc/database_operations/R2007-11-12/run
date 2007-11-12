@@ -27,3 +27,10 @@ function executeWithTempFile() {
 	echo
 }
 
+executeWithTempFile "Add New Academic Interval Slots - Step 1" addNewAcademicIntervalSlots1.sql
+executeWithTempFile "Add New Academic Interval Slots - Step 2" addNewAcademicIntervalSlots2.sql
+executeWithTempFile "Add New Academic Interval Slots - Step 3" addNewAcademicIntervalSlots3.sql
+execute "Add New Academic Interval Slots - Step 4" addNewAcademicIntervalSlots4.sql
+executeWithTempFile "Add New Role SubClass" alterRoleTable.sql
+execute "Add New Role SubClass - Step 2" alterRoleTable2.sql
+execute "Alter Table ExecutionCourse add EntryPhase" alterTableExecutionPeriodAddEntryPhase.sql
