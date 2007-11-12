@@ -109,8 +109,7 @@ public class LibraryCardSearch implements Serializable {
     private List<Person> getPersonsByCardClassification(PartyClassification partyClassification) {
 	List<Person> persons = new ArrayList<Person>();
 	for (LibraryCard libraryCard : RootDomainObject.getInstance().getLibraryCards()) {
-	    if (libraryCard.getPerson().getPartyClassification().equals(PartyClassification.PERSON)
-		    && libraryCard.getPartyClassification().equals(partyClassification)) {
+	    if (libraryCard.getPartyClassification().equals(partyClassification)) {
 		persons.add(libraryCard.getPerson());
 	    }
 	}
@@ -148,9 +147,6 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private boolean satisfiesSearch(Person person) {
-	if(person.getIdInternal().equals(new Integer(140966))) {
-	    System.out.println("estado1: " );
-	}
 	return satisfiesCategory(person) && satisfiesNumber(person) && satisfiesUserName(person);
     }
 
@@ -164,7 +160,7 @@ public class LibraryCardSearch implements Serializable {
 	PartyClassification personClassification = person.getPartyClassification();
 	if (person.getLibraryCard() != null && personClassification.equals(PartyClassification.PERSON)
 		&& person.getLibraryCard().getPartyClassification().equals(getPartyClassification())) {
-	    return true;
+	    return Boolean.TRUE;
 	}
 	PartyClassification partyClassification = person.getLibraryCard() != null ? person
 		.getLibraryCard().getPartyClassification() : personClassification;

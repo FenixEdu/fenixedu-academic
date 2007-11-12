@@ -75,8 +75,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 
     private void fillInRow(final Spreadsheet parkingBDSpreadsheet, ParkingParty parkingParty)
 	    throws FenixServiceException {
-	long thisInstant = Calendar.getInstance().getTimeInMillis();
-	DateTime dateTime = new DateTime(thisInstant);
+	DateTime dateTime = new DateTime();
 	final Row row = parkingBDSpreadsheet.addRow();
 	Person person = null;
 	if (parkingParty.getParty().isPerson()) {
@@ -224,7 +223,6 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	OpenFileBean openFileBean = (OpenFileBean) getRenderedObject();
 	if (openFileBean != null) {
-	    //if (openFileBean.getFileName().equalsIgnoreCase("Cartões_XML.mdb")) {
 
 	    response.setContentType("text/plain");
 	    response.setHeader("Content-disposition", "attachment; filename=parkingDB_merge.xls");
@@ -259,13 +257,6 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    writer.flush();
 	    response.flushBuffer();
 
-	    //            } else {
-	    //                ActionMessages actionMessages = getMessages(request);
-	    //                actionMessages.add("file", new ActionMessage("error.inccorrect.file"));
-	    //                saveMessages(request, actionMessages);
-	    //                RenderUtils.invalidateViewState();
-	    //                return mapping.getInputForward();
-	    //            }
 	}
 	return null;
     }

@@ -65,10 +65,10 @@ public class ParkingRequestPeriod extends ParkingRequestPeriod_Base {
 		.getParkingRequestPeriods()) {
 	    if (new Interval(parkingRequestPeriod.getBeginDate(), parkingRequestPeriod.getEndDate())
 		    .contains(date)) {
-		return true;
+		return Boolean.TRUE;
 	    }
 	}
-	return false;
+	return Boolean.FALSE;
     }
 
     public void delete() {
