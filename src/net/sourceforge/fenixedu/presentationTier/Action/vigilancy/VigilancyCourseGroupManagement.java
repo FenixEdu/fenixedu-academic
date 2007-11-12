@@ -6,9 +6,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
@@ -30,12 +33,24 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 	VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(
 		VigilantGroup.class, idInternal);
 	bean.setSelectedVigilantGroup(group);
-	bean.setSelectedDepartment(group.getUnit().getDepartment());
+	bean.setSelectedDepartment(getDepartment(group));
 	request.setAttribute("bean", bean);
 
 	return mapping.findForward("editCourseGroup");
     }
 
+    private Department getDepartment(VigilantGroup group) {
+	    Unit unit = group.getUnit();
+	    if(unit.isDepartmentUnit()) {
+		return unit.getDepartment();
+	    }
+	    if(unit.isScientificAreaUnit()) {
+		ScientificAreaUnit scientificAreaUnit = (ScientificAreaUnit)unit;
+		return scientificAreaUnit.getDepartmentUnit().getDepartment();
+	    }
+	    return null;
+	}
+    
     public ActionForward selectUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
