@@ -66,13 +66,13 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	super.setExecutionInterval(executionInterval);
     }
 
-    public YearMonthDay getBeginDateYearMonthDay() {
-	return getExecutionInterval().getBeginYearMonthDay();
-    }
-
-    public YearMonthDay getEndDateYearMonthDay() {
-	return getExecutionInterval().getEndYearMonthDay();
-    }
+//    public YearMonthDay getBeginDateYearMonthDay() {
+//	return getExecutionInterval().getBeginYearMonthDay();
+//    }
+//
+//    public YearMonthDay getEndDateYearMonthDay() {
+//	return getExecutionInterval().getEndYearMonthDay();
+//    }
 
     public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
 	return CollectionUtils.select(getExecutionDegrees(), new Predicate() {

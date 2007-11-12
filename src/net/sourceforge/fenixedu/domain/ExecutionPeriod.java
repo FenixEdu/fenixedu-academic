@@ -41,7 +41,6 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
     private transient ExecutionPeriod previousExecutionPeriod;
     private transient ExecutionPeriod nextExecutionPeriod;
 
-
     public static final Comparator<ExecutionPeriod> EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR = new ComparatorChain();
     static {
 	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR).addComparator(new BeanComparator(
@@ -78,41 +77,41 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	super.setExecutionYear(executionYear);
     }
 
-    public YearMonthDay getBeginDateYearMonthDay() {
-	return getExecutionInterval().getBeginYearMonthDay();
-    }
+//    public YearMonthDay getBeginDateYearMonthDay() {
+//	return getExecutionInterval().getBeginYearMonthDay();
+//    }
+//
+//    public YearMonthDay getEndDateYearMonthDay() {
+//	return getExecutionInterval().getEndYearMonthDay();
+//    }
 
-    public YearMonthDay getEndDateYearMonthDay() {
-	return getExecutionInterval().getEndYearMonthDay();
-    }
+//    public Integer getSemester() {
+//	return Integer.valueOf(getExecutionInterval().getAcademicSemesterOfAcademicYear());
+//    }
 
-    public Integer getSemester() {
-	return Integer.valueOf(getExecutionInterval().getAcademicSemesterOfAcademicYear());
-    }
+//    public ExecutionPeriod getNextExecutionPeriod() {
+//	if(nextExecutionPeriod == null) {
+//	    AcademicInterval semester = getExecutionInterval().plusSemester(1);
+//	    nextExecutionPeriod = semester != null ? ExecutionPeriod.getExecutionPeriod((AcademicSemesterCE) semester.getAcademicCalendarEntry()) : null;
+//	}
+//	return nextExecutionPeriod;
+//    }
+//
+//    public ExecutionPeriod getPreviousExecutionPeriod() {
+//	if(previousExecutionPeriod == null) {
+//	    AcademicInterval semester = getExecutionInterval().minusSemester(1);
+//	    previousExecutionPeriod = semester != null ? ExecutionPeriod.getExecutionPeriod((AcademicSemesterCE) semester.getAcademicCalendarEntry()) : null;
+//	}
+//	return previousExecutionPeriod;
+//    }
 
-    public ExecutionPeriod getNextExecutionPeriod() {
-	if(nextExecutionPeriod == null) {
-	    AcademicInterval semester = getExecutionInterval().plusSemester(1);
-	    nextExecutionPeriod = semester != null ? ExecutionPeriod.getExecutionPeriod((AcademicSemesterCE) semester.getAcademicCalendarEntry()) : null;
-	}
-	return nextExecutionPeriod;
-    }
-
-    public ExecutionPeriod getPreviousExecutionPeriod() {
-	if(previousExecutionPeriod == null) {
-	    AcademicInterval semester = getExecutionInterval().minusSemester(1);
-	    previousExecutionPeriod = semester != null ? ExecutionPeriod.getExecutionPeriod((AcademicSemesterCE) semester.getAcademicCalendarEntry()) : null;
-	}
-	return previousExecutionPeriod;
-    }
-
-    public boolean hasPreviousExecutionPeriod() {
-	return getPreviousExecutionPeriod() != null;
-    }
-
-    public boolean hasNextExecutionPeriod() {
-	return getNextExecutionPeriod() != null;
-    }
+//    public boolean hasPreviousExecutionPeriod() {
+//	return getPreviousExecutionPeriod() != null;
+//    }
+//
+//    public boolean hasNextExecutionPeriod() {
+//	return getNextExecutionPeriod() != null;
+//    }
 
     public int compareTo(Object object) {
 	final ExecutionPeriod executionPeriod = (ExecutionPeriod) object;
@@ -533,15 +532,15 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable 
 	return null;
     }
 
-    @Deprecated
-    public java.util.Date getBeginDate() {
-	YearMonthDay day = getBeginDateYearMonthDay();
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());
-    }
-
-    @Deprecated
-    public java.util.Date getEndDate() {
-	YearMonthDay day = getEndDateYearMonthDay();
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());
-    }
+//    @Deprecated
+//    public java.util.Date getBeginDate() {
+//	YearMonthDay day = getBeginDateYearMonthDay();
+//	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());
+//    }
+//
+//    @Deprecated
+//    public java.util.Date getEndDate() {
+//	YearMonthDay day = getEndDateYearMonthDay();
+//	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());
+//    }
 }

@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Roll Back Periods" rollBackPeriods.sql
