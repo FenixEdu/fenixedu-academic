@@ -282,10 +282,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
         
-	setGrade(grade);
-        setGradeAvailableDateYearMonthDay(YearMonthDay.fromDateFields(availableDate));
-        setPersonResponsibleForGrade(responsibleFor);
-
         if (examDate != null) {
             final RegistrationState stateInExamDate = getRegistration().getStateInDate(YearMonthDay.fromDateFields(examDate).toDateTimeAtMidnight());
 	    if (stateInExamDate == null || !stateInExamDate.isActive()) {
@@ -297,6 +293,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         } else {
             setExamDateYearMonthDay(YearMonthDay.fromDateFields(availableDate));
         }
+
+	setGrade(grade);
+        setGradeAvailableDateYearMonthDay(YearMonthDay.fromDateFields(availableDate));
+        setPersonResponsibleForGrade(responsibleFor);
+
         generateCheckSum();
     }
 
@@ -306,6 +307,18 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     
     public void confirmSubmission(EnrolmentEvaluationState enrolmentEvaluationState, Employee employee, String observation) {
         
+	if (!isTemporary()) {
+	    throw new DomainException("EnrolmentEvaluation.cannot.submit.not.temporary");
+	}
+	
+	if (!hasGrade()) {
+	    throw new DomainException("EnrolmentEvaluation.cannot.submit.with.empty.grade");
+	}
+	
+	if (!hasExamDateYearMonthDay()) {
+	    throw new DomainException("EnrolmentEvaluation.cannot.submit.without.exam.date");
+	}
+	
         if(enrolmentEvaluationState == EnrolmentEvaluationState.RECTIFICATION_OBJ && hasRectified()) {
             getRectified().setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
         }
@@ -501,6 +514,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     
     public boolean hasGrade() {
 	return !getGrade().isEmpty();
+    }
+
+    final public boolean hasExamDateYearMonthDay() {
+	return getExamDateYearMonthDay() != null;
     }
 
     public boolean isPayable() {
