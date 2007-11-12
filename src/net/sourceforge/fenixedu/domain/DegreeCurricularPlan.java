@@ -336,7 +336,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     private Boolean getCanBeDeleted() {
 	return ((getRoot() == null || getRoot().getCanBeDeleted()) && !(hasAnyStudentCurricularPlans()
 		|| hasAnyCurricularCourseEquivalences() || hasAnyEnrolmentPeriods() || hasAnyCurricularCourses()
-		|| hasAnyExecutionDegrees() || hasAnyAreas() || hasServiceAgreementTemplate()));
+		|| hasAnyExecutionDegrees() || hasAnyAreas() || hasServiceAgreementTemplate()
+		|| hasAnyDestinationExternalDegreeChangeRequests() || hasAnyDestinationInternalDegreeChangeRequests()));
     }
 
     public void delete() {
@@ -1624,13 +1625,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public static Set<DegreeCurricularPlan> getDegreeCurricularPlans(final Set<DegreeType> degreeTypes) {
 	final Set<DegreeCurricularPlan> degreeCurricularPlans = new TreeSet<DegreeCurricularPlan>(
 		DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
-	for (final DegreeType degreeType : degreeTypes) {
-	    for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
-		if (degreeTypes.contains(degree.getDegreeType())) {
-		    for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-			if (degreeCurricularPlan.isActive()) {
-			    degreeCurricularPlans.add(degreeCurricularPlan);
-			}
+
+	for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+	    if (degreeTypes.contains(degree.getDegreeType())) {
+		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+		    if (degreeCurricularPlan.isActive()) {
+			degreeCurricularPlans.add(degreeCurricularPlan);
 		    }
 		}
 	    }

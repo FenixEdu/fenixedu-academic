@@ -90,7 +90,8 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Boolean getCanBeDeleted() {
-	return super.getCanBeDeleted() && !hasAnyChildContexts();
+	return super.getCanBeDeleted() && !hasAnyChildContexts() && !hasAnyOldCourseGroupChangeRequests()
+		&& !hasAnyNewCourseGroupChangeRequests();
     }
 
     public void delete() {

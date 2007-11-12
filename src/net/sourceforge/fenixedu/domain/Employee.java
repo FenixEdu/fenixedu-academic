@@ -29,9 +29,7 @@ import org.joda.time.YearMonthDay;
 public class Employee extends Employee_Base {
 
     public Employee(Person person, Integer employeeNumber, Boolean active) {
-
 	super();
-
 	setEmployeeNumber(employeeNumber);
 	setCreationDate(new DateTime());
 	setPerson(person);
@@ -42,9 +40,17 @@ public class Employee extends Employee_Base {
     }
     
     public void delete() {
+	checkRulesToDelete();
+	
 	super.setPerson(null);
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    private void checkRulesToDelete() {
+	if (hasAnyAcademicServiceRequestSituations()) {
+	    throw new DomainException("error.Employee.cannot.delete");
+	}
     }
 
     @Override

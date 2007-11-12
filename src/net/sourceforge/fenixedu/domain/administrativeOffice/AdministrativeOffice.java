@@ -193,10 +193,18 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public void delete() {
+	checkRulesToDelete();
+	
 	removeUnit();
 	removeServiceAgreementTemplate();	
 	removeRootDomainObject();	
 	deleteDomainObject();
+    }
+
+    private void checkRulesToDelete() {
+	if (hasAnyAcademicServiceRequests()) {
+	    throw new DomainException("error.AdministrativeOffice.cannot.delete");
+	}
     }
 
 }

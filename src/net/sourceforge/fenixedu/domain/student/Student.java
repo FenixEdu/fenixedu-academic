@@ -470,7 +470,7 @@ public class Student extends Student_Base {
 	return getStatutes(ExecutionPeriod.readActualExecutionPeriod());
     }
 
-    private Collection<StudentStatuteBean> getStatutes(ExecutionPeriod executionPeriod) {
+    public Collection<StudentStatuteBean> getStatutes(ExecutionPeriod executionPeriod) {
 	List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
 	for (final StudentStatute statute : getStudentStatutesSet()) {
 	    if (statute.isValidInExecutionPeriod(executionPeriod)) {

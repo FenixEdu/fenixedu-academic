@@ -61,7 +61,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setUrgentRequest(urgentRequest);
 	super.setFreeProcessed(freeProcessed);
 	super.setExecutionYear(executionYear);
-
 	
 	AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
 		AccessControl.getPerson().getEmployee()));

@@ -23,7 +23,7 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     }
     
     protected void init(final Registration registration, final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
-	// first set own parameters
+	// first set own parameters because of findAdministrativeOffice
 	checkParameters(registration);
 	super.setRegistration(registration);
 	// then set super parameters

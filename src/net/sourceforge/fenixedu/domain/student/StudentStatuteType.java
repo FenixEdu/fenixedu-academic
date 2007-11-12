@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.domain.student;
  */
 public enum StudentStatuteType {
 
-    WORKING_STUDENT(true), PROFESSIONAL_ATHLETE(true), HANDICAPPED(false), SAS_GRANT_OWNER(true);
+    WORKING_STUDENT(true), PROFESSIONAL_ATHLETE(true), HANDICAPPED(false), SAS_GRANT_OWNER(true), ASSOCIATIVE_LEADER(true);
 
     private boolean explicitCreation;
 

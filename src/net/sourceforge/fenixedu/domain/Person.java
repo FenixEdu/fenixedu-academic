@@ -1081,7 +1081,7 @@ public class Person extends Person_Base {
 		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
 		&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
 		&& !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().canBeDeleted())
-		&& !hasLibraryCard();
+		&& !hasLibraryCard() && !hasAnyAcademicServiceRequests();
     }
 
     private boolean hasParking() {
@@ -1660,15 +1660,6 @@ public class Person extends Person_Base {
 
 	}
 	return people;
-    }
-
-    private boolean hasStudentWithNumber(final Integer institutionalNumber) {
-	for (final Registration registration : getStudents()) {
-	    if (registration.getNumber().equals(institutionalNumber)) {
-		return true;
-	    }
-	}
-	return false;
     }
 
     public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice,

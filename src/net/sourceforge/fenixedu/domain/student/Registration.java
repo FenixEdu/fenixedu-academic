@@ -214,16 +214,12 @@ public class Registration extends Registration_Base {
 
 	checkRulesToDelete();
 
-	for (; !getStudentCurricularPlans().isEmpty(); getStudentCurricularPlans().get(0).delete())
-	    ;
-	for (; !getRegistrationStates().isEmpty(); getRegistrationStates().get(0).delete())
-	    ;
-	for (; !getAssociatedAttends().isEmpty(); getAssociatedAttends().get(0).delete())
-	    ;
-	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete())
-	    ;
-	for (; hasAnyRegistrationDataByExecutionYear(); getRegistrationDataByExecutionYear().get(0).delete())
-	    ;
+	for (; hasAnyStudentCurricularPlans(); getStudentCurricularPlans().get(0).delete());
+	for (; hasAnyRegistrationStates(); getRegistrationStates().get(0).delete());
+	for (; hasAnyAssociatedAttends(); getAssociatedAttends().get(0).delete());
+	for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete());
+	for (; hasAnyRegistrationDataByExecutionYear(); getRegistrationDataByExecutionYear().get(0).delete());
+	for (; hasAnyAcademicServiceRequests(); getAcademicServiceRequests().get(0).delete());
 
 	if (hasRegistrationNumber()) {
 	    getRegistrationNumber().delete();
