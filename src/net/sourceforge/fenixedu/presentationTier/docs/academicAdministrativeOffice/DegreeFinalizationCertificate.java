@@ -170,4 +170,9 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	return result.toString();
     }
 
+    @Override
+    protected String getDegreeDescription() {
+	return getDocumentRequest().getRegistration().getDegreeDescription();
+    }
+    
 }
