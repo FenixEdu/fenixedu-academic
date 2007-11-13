@@ -35,3 +35,5 @@ executeWithTempFile "Add New Role SubClass" alterRoleTable.sql
 execute "Add New Role SubClass - Step 2" alterRoleTable2.sql
 execute "Alter Table ExecutionCourse add EntryPhase" alterTableExecutionPeriodAddEntryPhase.sql
 execute "Roll Back Periods" rollBackPeriods.sql
+
+execute "Add new columns to academic service request table" alterAcademicServiceRequest.sql
