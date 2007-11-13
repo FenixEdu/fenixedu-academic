@@ -119,7 +119,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
         return true;
     }
 
-    public Integer getEntryValueByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {		
+    public Integer getEntryValueByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {
 	List<AcademicCalendarEntry> allEntriesByType = getAllChildEntriesOrderByDateInReverseMode(entryClass, parentEntryClass);	
 	Integer counter = allEntriesByType.size();
 	for (AcademicCalendarEntry entry : allEntriesByType) {	    

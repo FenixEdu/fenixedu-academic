@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
+import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeFieldType;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
@@ -251,8 +253,8 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	    }
 	}
 
-	super.setBegin(begin);
-	super.setEnd(end);
+	setBegin(begin);
+	setEnd(end);
     }
 
     @Override
@@ -489,7 +491,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	    final Class<? extends AcademicCalendarEntry> entryClass,
 	    final Class<? extends AcademicCalendarEntry> parentEntryClass,
 	    final AcademicCalendarEntry first) {
-	
+
 	if (containsInstant(instant)) {
 	    if (this.getClass().equals(entryClass) && getParentEntry().getClass().equals(parentEntryClass) && !isRedefinedBy(this, first)) {
 		return this;
@@ -524,16 +526,36 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     protected boolean isRedefinedBy(final AcademicCalendarEntry child, final AcademicCalendarEntry currentParentEntry) {
-	for (final AcademicCalendarEntry academicCalendarEntry : currentParentEntry.getChildEntriesSet()) {
-	    if (academicCalendarEntry.getTemplateEntry() == child) {
+	for (final AcademicCalendarEntry redefinedEntry : getBasedEntriesSet()) {
+	    if (currentParentEntry.hasChildEntriesOrTemplatedEntry(redefinedEntry)) {
 		return true;
 	    }
-	    if (academicCalendarEntry == child) {
-		return false;
+	}
+	return false;
+    }
+
+    protected boolean hasChildEntriesOrTemplatedEntry(final AcademicCalendarEntry academicCalendarEntry) {
+	return getChildEntriesSet().contains(academicCalendarEntry)
+		|| (hasTemplateEntry() && getTemplateEntry().hasChildEntriesOrTemplatedEntry(academicCalendarEntry));
+    }
+
+    public int getAcademicSemesterOfAcademicYear(final AcademicChronology academicChronology) {
+	return getBegin().get(AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear());
+    }
+
+    public AcademicCalendarEntry getEntryForCalendar(final AcademicCalendarRootEntry academicCalendar) {
+	for (AcademicCalendarEntry parent = getParentEntry(); parent != null; parent = parent.getParentEntry()) {
+	    if (parent == academicCalendar) {
+		return this;
 	    }
 	}
-	final AcademicCalendarEntry template = currentParentEntry.getTemplateEntry();
-	return template != null ? template.isRedefinedBy(child, template) : false;
+	for (final AcademicCalendarEntry basedEntry : getBasedEntriesSet()) {
+	    final AcademicCalendarEntry basedEntryFor = basedEntry.getEntryForCalendar(academicCalendar);
+	    if (basedEntryFor != null) {
+		return basedEntryFor;
+	    }
+	}
+	return null;
     }
 
 }

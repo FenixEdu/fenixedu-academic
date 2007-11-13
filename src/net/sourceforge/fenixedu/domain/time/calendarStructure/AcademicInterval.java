@@ -4,10 +4,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
-import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeFieldType;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.Chronology;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.joda.time.base.AbstractInterval;
 
@@ -39,24 +39,34 @@ public class AcademicInterval extends AbstractInterval {
 
     @Override
     public long getStartMillis() {
-	return getAcademicCalendarEntry().getBegin().getMillis();	
+	return getStartDateTime().getMillis();	
     }
 
     @Override
     public long getEndMillis() {
-	return getAcademicCalendarEntry().getEnd().getMillis();
+	return getEndDateTime().getMillis();
     }
     
     public YearMonthDay getBeginYearMonthDay() {
-	return getStart().toYearMonthDay();
+	return getStartDateTime().toYearMonthDay();
     }
     
     public YearMonthDay getEndYearMonthDay() {
-	return getEnd().toYearMonthDay();
+	return getEndDateTime().toYearMonthDay();
     }
-    
-    public int getAcademicSemesterOfAcademicYear() {	
-	return getStart().get(AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear());
+
+    public DateTime getStartDateTime() {
+	return getAcademicCalendarEntry().getBegin();
+    }
+
+    public DateTime getEndDateTime() {
+	return getAcademicCalendarEntry().getEnd();
+    }
+
+    public int getAcademicSemesterOfAcademicYear() {
+	final AcademicCalendarEntry academicCalendarEntry = getAcademicCalendarEntry();
+	final AcademicChronology academicChronology = getAcademicChronology();
+	return academicCalendarEntry.getAcademicSemesterOfAcademicYear(academicChronology);
     }
     
     public AcademicInterval minusSemester(int amount) {	

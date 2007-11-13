@@ -67,4 +67,14 @@ public class AcademicYearCE extends AcademicYearCE_Base {
 	    new ExecutionYear(new AcademicInterval(this));	
 	}
     }
+
+    public int countAcademicSemesterOfAcademicYear(final AcademicSemesterCE academicSemesterCE, int order, final AcademicYearCE first) {
+	for (final AcademicCalendarEntry academicCalendarEntry : getChildEntriesSet()) {
+	    if (academicCalendarEntry.getBegin().isBefore(academicSemesterCE.getBegin()) && !isRedefinedBy(academicCalendarEntry, first)) {
+		order++;
+	    }
+	}
+	final AcademicYearCE template = (AcademicYearCE) getTemplateEntry(); 
+	return template == null ? order : template.countAcademicSemesterOfAcademicYear(academicSemesterCE, order, first);
+    }
 }

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -63,5 +64,12 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 	AcademicYearCE academicYear = (AcademicYearCE) getParentEntry().getOriginalTemplateEntry();		
 	ExecutionYear executionYear = ExecutionYear.getExecutionYear(academicYear);	    
 	new ExecutionPeriod(executionYear, new AcademicInterval(this), getTitle().getContent());
-    }      
+    }
+
+    @Override
+    public int getAcademicSemesterOfAcademicYear(final AcademicChronology academicChronology) {
+	final AcademicYearCE academicYearCE = (AcademicYearCE) academicChronology.findParentOf(this);
+	return academicYearCE.countAcademicSemesterOfAcademicYear(this, 1, academicYearCE);
+    }
+
 }

@@ -173,4 +173,9 @@ public class AcademicChronology extends AssembledChronology {
     public int getMaximumValueForAcademicSemesterOfAcademicYear() {
 	return 2;   
     }
+
+    public AcademicCalendarEntry findParentOf(final AcademicCalendarEntry child) {
+	return child.getParentEntry().getEntryForCalendar(academicCalendar);
+    }
+
 }
