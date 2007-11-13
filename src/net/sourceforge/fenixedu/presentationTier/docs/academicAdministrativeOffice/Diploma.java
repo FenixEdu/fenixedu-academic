@@ -74,17 +74,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	    result.append(" ").append(applicationResources.getString("of.masculine")).append(" ");
 	} 
 	
-	switch (degreeType) {
-	case BOLONHA_PHD_PROGRAM:
-	    break;
-	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-	    result.append("curso conducente ao");
-	    break;
-	default:
-	    result.append("curso de");
-	    break;
-	}
-	result.append(" ").append(degreeType.getFilteredName());
+	result.append(degreeType.getPrefix()).append(degreeType.getFilteredName());
 	if (degreeType.hasExactlyOneCycleType()) {
 	    result.append(" (").append(enumerationBundle.getString(degreeType.getCycleType().getQualifiedName())).append(")");
 	}
@@ -92,4 +82,9 @@ public class Diploma extends AdministrativeOfficeDocument {
 	return result.toString();
     }
 
+    @Override
+    protected String getDegreeDescription() {
+	return getDocumentRequest().getRegistration().getDegreeDescription();
+    }
+    
 }
