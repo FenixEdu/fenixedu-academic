@@ -69,7 +69,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState;
@@ -529,13 +528,22 @@ public class Registration extends Registration_Base {
 	    return cycleCurriculumGroup.getCurriculum(executionYear);
 	} else {
 	    final List<StudentCurricularPlan> sortedStudentCurricularPlans = getSortedStudentCurricularPlans();
-	    final ListIterator<StudentCurricularPlan> sortedSCPsIterator = sortedStudentCurricularPlans
-		    .listIterator(sortedStudentCurricularPlans.size());
+	    final ListIterator<StudentCurricularPlan> sortedSCPsIterator = sortedStudentCurricularPlans.listIterator(sortedStudentCurricularPlans.size());
 	    final StudentCurricularPlan lastStudentCurricularPlan = sortedSCPsIterator.previous();
 	    
 	    final ICurriculum curriculum;
 	    if (lastStudentCurricularPlan.isBoxStructure()) {
 		curriculum = lastStudentCurricularPlan.getCurriculum(executionYear);
+		
+		for (;sortedSCPsIterator.hasPrevious();) {
+		    final StudentCurricularPlan studentCurricularPlan = sortedSCPsIterator.previous();
+		    if (studentCurricularPlan.getStartExecutionYear().isBeforeOrEquals(executionYear)) {
+			((Curriculum) curriculum).add(studentCurricularPlan.getCurriculum(executionYear));
+		    }
+		}
+		    
+		return curriculum;
+
 	    } else {
 		curriculum = new StudentCurriculum(this, executionYear); 
 	    }
