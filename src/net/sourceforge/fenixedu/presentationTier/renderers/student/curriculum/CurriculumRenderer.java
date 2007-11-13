@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum;
 
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -239,15 +239,15 @@ public class CurriculumRenderer extends InputRenderer {
 
 	private void generateAverageRows(final HtmlTable mainTable) {
 
-	    final Set<ICurriculumEntry> sortedIAverageEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    final Set<ICurriculumEntry> sortedIAverageEntries = new HashSet<ICurriculumEntry>();//ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
 	    sortedIAverageEntries.addAll(this.curriculum.getEnrolmentRelatedEntries());
 	    if (!sortedIAverageEntries.isEmpty()) {
 		generateGroupRowWithText(mainTable, "Inscrições", true, 0);
 		generateRows(mainTable, sortedIAverageEntries, 0);
 	    }
 
-	    final Set<ICurriculumEntry> sortedEquivalenceEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-	    final Set<ICurriculumEntry> sortedSubstitutionsEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    final Set<ICurriculumEntry> sortedEquivalenceEntries = new HashSet<ICurriculumEntry>();//ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    final Set<ICurriculumEntry> sortedSubstitutionsEntries = new HashSet<ICurriculumEntry>();//ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
 	    for (final ICurriculumEntry entry : this.curriculum.getDismissalRelatedEntries()) {
 		if (entry instanceof Dismissal) {
 		    sortedEquivalenceEntries.add(entry);
@@ -304,38 +304,35 @@ public class CurriculumRenderer extends InputRenderer {
 	}
 
 	private void generateRows(HtmlTable mainTable, Set<ICurriculumEntry> entries, int level) {
-	    for (final ICurriculumEntry ICurriculumEntry : entries) {
-		generateRow(mainTable, ICurriculumEntry, level, true);
+	    for (final ICurriculumEntry entry : entries) {
+		generateRow(mainTable, entry, level, true);
 	    }
 	}
 
-	private void generateRow(HtmlTable mainTable, final ICurriculumEntry ICurriculumEntry, int level, boolean allowSelection) {
+	private void generateRow(HtmlTable mainTable, final ICurriculumEntry entry, int level, boolean allowSelection) {
 	    final HtmlTableRow enrolmentRow = mainTable.createRow();
 	    enrolmentRow.setClasses(getEnrolmentRowClass());
 
-	    generateCurricularCourseCodeAndNameCell(enrolmentRow, ICurriculumEntry, level, allowSelection);
-	    if (ICurriculumEntry instanceof ExternalEnrolment) {
-		generateExternalEnrolmentLabelCell(enrolmentRow, (ExternalEnrolment) ICurriculumEntry, level);
-	    } else if (!(ICurriculumEntry instanceof Enrolment)) {
-		//generateCellWithText(enrolmentRow, ICurriculumEntry.getClass().getSimpleName(), getLabelCellClass(), 1);
-	    }
-	    generateGradeCell(enrolmentRow, ICurriculumEntry);
-	    generateWeightCell(enrolmentRow, ICurriculumEntry);
-	    generateWeightTimesGradeCell(enrolmentRow, ICurriculumEntry);
-	    generateExecutionYearCell(enrolmentRow, ICurriculumEntry);
-	    generateSemesterCell(enrolmentRow, ICurriculumEntry);
+	    generateCodeAndNameCell(enrolmentRow, entry, level, allowSelection);
+	    if (entry instanceof ExternalEnrolment) {
+		generateExternalEnrolmentLabelCell(enrolmentRow, (ExternalEnrolment) entry, level);
+	    } 
+	    generateGradeCell(enrolmentRow, entry);
+	    generateWeightCell(enrolmentRow, entry);
+	    generateWeightTimesGradeCell(enrolmentRow, entry);
+	    generateExecutionYearCell(enrolmentRow, entry);
+	    generateSemesterCell(enrolmentRow, entry);
 	}
 
-	private void generateCurricularCourseCodeAndNameCell(final HtmlTableRow enrolmentRow, final ICurriculumEntry ICurriculumEntry,
+	private void generateCodeAndNameCell(final HtmlTableRow enrolmentRow, final ICurriculumEntry entry,
 		final int level, boolean allowSelection) {
 
 	    final HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
-
-	    inlineContainer.addChild(new HtmlText(getPresentationNameFor(ICurriculumEntry)));
+	    inlineContainer.addChild(new HtmlText(getPresentationNameFor(entry)));
 
 	    final HtmlTableCell cell = enrolmentRow.createCell();
 	    cell.setClasses(getLabelCellClass());
-	    cell.setColspan(MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - (!(ICurriculumEntry instanceof Enrolment) ? 1 : 0) - level);
+	    cell.setColspan(MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - (entry instanceof ExternalEnrolment ? 1 : 0) - level);
 	    cell.setBody(inlineContainer);
 	}
 
@@ -438,7 +435,7 @@ public class CurriculumRenderer extends InputRenderer {
 	}
 
 	private void generateCurricularYearRows(final HtmlTable table) {
-	    final Set<ICurriculumEntry> sortedEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    final Set<ICurriculumEntry> sortedEntries = new HashSet<ICurriculumEntry>();//ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
 	    sortedEntries.addAll(this.curriculum.getCurricularYearEntries());
 	    if (!sortedEntries.isEmpty()) {
 		generateCurricularYearHeaderRowWithText(table, "", true, 0);
@@ -482,11 +479,9 @@ public class CurriculumRenderer extends InputRenderer {
 	    final HtmlTableRow enrolmentRow = mainTable.createRow();
 	    enrolmentRow.setClasses(getEnrolmentRowClass());
 
-	    generateCurricularCourseCodeAndNameCell(enrolmentRow, entry, level, allowSelection);
+	    generateCodeAndNameCell(enrolmentRow, entry, level, allowSelection);
 	    if (entry instanceof ExternalEnrolment) {
 		generateExternalEnrolmentLabelCell(enrolmentRow, (ExternalEnrolment) entry, level);
-	    } else if (!(entry instanceof Enrolment)) {
-		generateCellWithText(enrolmentRow, entry.getClass().getSimpleName(), getLabelCellClass(), 1);
 	    }
 	    generateEctsCreditsCell(enrolmentRow, entry);
 	    generateExecutionYearCell(enrolmentRow, entry);
