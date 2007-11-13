@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -77,10 +78,17 @@ public enum CycleType {
     }
     
     public CycleType getNext() {
-	final List<CycleType> sortedValues = new ArrayList<CycleType>(getSortedValues());
-	final ListIterator<CycleType> listIterator = sortedValues.listIterator(sortedValues.indexOf(this));
+	final Iterator<CycleType> iterator = getSortedValues().iterator();
 	
-	return listIterator.hasNext() ? listIterator.next() : null;
+	for (CycleType cycleType = iterator.next(); iterator.hasNext(); cycleType = iterator.next()) {
+	    if (cycleType == this) {
+		return iterator.next();
+	    }
+	    
+	    continue;
+	}
+	
+	return null;
     }
 
     public boolean hasNext() {
@@ -89,9 +97,17 @@ public enum CycleType {
 
     public CycleType getPrevious() {
 	final List<CycleType> sortedValues = new ArrayList<CycleType>(getSortedValues());
-	final ListIterator<CycleType> listIterator = sortedValues.listIterator(sortedValues.indexOf(this));
+	final ListIterator<CycleType> listIterator = sortedValues.listIterator(sortedValues.size() + 1);
 	
-	return listIterator.hasPrevious() ? listIterator.previous() : null;
+	for (CycleType cycleType = listIterator.previous(); listIterator.hasPrevious(); cycleType = listIterator.previous()) {
+	    if (cycleType == this) {
+		return  listIterator.previous();
+	    }
+	    
+	    continue;
+	}
+	
+	return null;
     }
 
     public boolean hasPrevious() {
