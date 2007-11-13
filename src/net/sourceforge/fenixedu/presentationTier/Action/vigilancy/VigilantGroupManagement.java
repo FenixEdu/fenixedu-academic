@@ -474,7 +474,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
 		Person person = getLoggedPerson(request);
 		ExamCoordinator coordinator = person.getCurrentExamCoordinator();
-		Department department = coordinator.getUnit().getDepartment();
+		Department department = getDepartment(coordinator.getUnit());
 
 		ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
 		List<Employee> employees = department.getAllWorkingEmployees(currentYear.getBeginDateYearMonthDay(),
@@ -633,7 +633,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		bean.setConvokeStrategy(group.getConvokeStrategy());
 		bean.setName(group.getName());
 		bean.setUnit(group.getUnit());
-		bean.setSelectedDepartment(getDepartment(group));
+		bean.setSelectedDepartment(getDepartment(group.getUnit()));
 		bean.setContactEmail(group.getContactEmail());
 		bean.setRulesLink(group.getRulesLink());
 		bean.setEmployees(new ArrayList<Employee>());
@@ -645,8 +645,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		request.setAttribute("bean", bean);
 	}
 
-	private Department getDepartment(VigilantGroup group) {
-	    Unit unit = group.getUnit();
+	private Department getDepartment(Unit unit) {
 	    if(unit.isDepartmentUnit()) {
 		return unit.getDepartment();
 	    }
