@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
@@ -71,6 +74,28 @@ public enum CycleType {
 
     public CycleType getSourceCycleAffinity() {
 	return this.sourceCycleAffinity;
+    }
+    
+    public CycleType getNext() {
+	final List<CycleType> sortedValues = new ArrayList<CycleType>(getSortedValues());
+	final ListIterator<CycleType> listIterator = sortedValues.listIterator(sortedValues.indexOf(this));
+	
+	return listIterator.hasNext() ? listIterator.next() : null;
+    }
+
+    public boolean hasNext() {
+	return getNext() != null;
+    }
+
+    public CycleType getPrevious() {
+	final List<CycleType> sortedValues = new ArrayList<CycleType>(getSortedValues());
+	final ListIterator<CycleType> listIterator = sortedValues.listIterator(sortedValues.indexOf(this));
+	
+	return listIterator.hasPrevious() ? listIterator.previous() : null;
+    }
+
+    public boolean hasPrevious() {
+	return getPrevious() != null;
     }
 
 }
