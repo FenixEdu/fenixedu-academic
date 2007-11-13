@@ -13,12 +13,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
@@ -170,8 +172,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	parameters.put("nationality", StringUtils.multipleLineRightPad("de nacionalidade " + nationality, LINE_LENGTH, '-'));
     }
 
-    final protected String getDegreeDescription() {
-	return getDocumentRequest().getRegistration().getDegreeDescription();
+    protected String getDegreeDescription() {
+	final Registration registration = getDocumentRequest().getRegistration();
+	final DegreeType degreeType = registration.getDegreeType();
+	return registration.getDegreeDescription(degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration.getCurrentCycleType());
     }
     
     final protected String getCreditsDescription() {
