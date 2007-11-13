@@ -26,7 +26,7 @@
 
 		<fr:edit name="protocolSearch" id="protocolSearchNationalityType" schema="edit.protocolSearch.nationalityType">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05"/>
+				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 liinline"/>
 				<fr:property name="columnClasses" value="width100px,width500px inobullet,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="searchCountry" path="/protocols.do?method=searchProtocols"/>
@@ -82,18 +82,23 @@
 			</td>
 		</tr>
 		</table>
-
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.ok" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-		</html:submit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.export" property="export">
-			<bean:message key="link.export" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-		</html:submit>
+		
+		<p class="mbottom15">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message key="button.ok" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+			</html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.export" property="export">
+				<bean:message key="link.export" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+			</html:submit>
+		</p>
 	</fr:form>
-	<br/>
-	<br/>
-	<bean:size id="protocolNumber" name="protocolSearch" property="search"/>
-	<bean:message key="message.protocol.number" arg0="<%= protocolNumber.toString()%>" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+
+	<p>
+		<em>
+			<bean:size id="protocolNumber" name="protocolSearch" property="search"/>
+			<bean:message key="message.protocol.number" arg0="<%= protocolNumber.toString()%>" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+		</em>
+	</p>
 	<logic:notEmpty name="protocolSearch" property="search">
 		<fr:view name="protocolSearch" property="search" schema="show.protocol.toList" >
 			<fr:layout name="tabular">

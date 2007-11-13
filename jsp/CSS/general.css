@@ -264,6 +264,9 @@ table.smalltxt tr td { font-size: 1em;}
 .emphasis1 th { background: #ffc; }
 .emphasis2 th { font-weight: bold; }
 
+table.liinline tr td ul li { display: inline; }
+td.liinline ul li { display: inline; }
+
 /* -------------------- */
 /* General cell classes */
 
