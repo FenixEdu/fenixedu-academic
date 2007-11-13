@@ -46,7 +46,7 @@ public class LibraryCardSearch implements Serializable {
 
     public void doSearch() {
 	List<LibraryCardDTO> libraryCardDTOList = new ArrayList<LibraryCardDTO>();
-	List<Person> resultList = new ArrayList<Person>(getAssociatedPersons(getPartyClassification()));
+	Set<Person> resultList = new HashSet<Person>(getAssociatedPersons(getPartyClassification()));
 	resultList.addAll(getPersonsByCardClassification(getPartyClassification()));
 	for (Person person : resultList) {
 	    if (satisfiesSearch(person)) {
