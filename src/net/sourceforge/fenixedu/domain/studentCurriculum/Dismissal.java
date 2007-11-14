@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -188,7 +187,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     public boolean isSimilar(final Dismissal dismissal) {
 	return (getDegreeModule() == dismissal.getDegreeModule() || 
-		getCurricularCourse().getCompetenceCourse() == dismissal.getCurricularCourse().getCompetenceCourse()) && 
+		getCurricularCourse().isEquivalent(dismissal.getCurricularCourse())) && 
 		getSourceIEnrolments().containsAll(dismissal.getSourceIEnrolments());
     }
 
