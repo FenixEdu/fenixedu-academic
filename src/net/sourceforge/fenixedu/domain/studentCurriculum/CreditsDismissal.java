@@ -69,4 +69,10 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     public boolean isCreditsDismissal() {
         return true;
     }
+    
+    @Override
+    public boolean isSimilar(final Dismissal dismissal) {
+	return false;
+    }
+
 }
