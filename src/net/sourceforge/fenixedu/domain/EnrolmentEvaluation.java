@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -284,7 +285,9 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         
         if (examDate != null) {
             final RegistrationState stateInExamDate = getRegistration().getStateInDate(YearMonthDay.fromDateFields(examDate).toDateTimeAtMidnight());
-	    if (stateInExamDate == null || !stateInExamDate.isActive()) {
+	    if (stateInExamDate == null || !(stateInExamDate.isActive()
+		    || (stateInExamDate.getStateType() == RegistrationStateType.TRANSITED
+			    && getEnrolment().getCurricularCourse().isDissertation()))) {
         	throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState", getEnrolment().getRegistration().getNumber().toString());
 	    }
             setExamDateYearMonthDay(YearMonthDay.fromDateFields(examDate));
