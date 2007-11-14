@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Grade;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -46,10 +47,6 @@ public class InfoEnrolmentHistoricReport implements Serializable {
 	return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.IMPROVEMENT);
     }
 
-    public String getLatestEquivalenceEnrolmentEvaluationInformation() {
-	return getLatestEnrolmentEvaluationInformation(EnrolmentEvaluationType.EQUIVALENCE);
-    }
-    
     private String getLatestEnrolmentEvaluationInformation(final EnrolmentEvaluationType enrolmentEvaluationType) {
 	final EnrolmentEvaluation latestEnrolmentEvaluation = getEnrolment().getLatestEnrolmentEvaluationBy(enrolmentEvaluationType);
 	if (latestEnrolmentEvaluation == null) {
@@ -71,10 +68,10 @@ public class InfoEnrolmentHistoricReport implements Serializable {
     }
 
     public String getLatestEnrolmentEvaluationInformation() {
-	if (getEnrolment().isEnrolmentStateApproved()) {
+	if (getEnrolment().isApproved()) {
 	    final Grade grade = getEnrolment().getGrade();
 	    
-	    if (grade.isApproved()) {
+	    if (grade.getGradeScale() == GradeScale.TYPEAP) {
 		return bundle.getString("msg.approved");
 	    } else {
 		return grade.getValue();

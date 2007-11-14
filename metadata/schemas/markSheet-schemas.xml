@@ -384,6 +384,5 @@
 	<slot name="latestNormalEnrolmentEvaluationInformation" key="label.normal.mark"/>
 	<slot name="latestSpecialSeasonEnrolmentEvaluationInformation" key="label.special.season.mark"/>
 	<slot name="latestImprovementEnrolmentEvaluationInformation" key="label.improvment.mark"/>
-	<slot name="latestEquivalenceEnrolmentEvaluationInformation" key="label.equivalence.mark"/>
 	<slot name="latestEnrolmentEvaluationInformation" key="label.mark"/>
 </schema>
