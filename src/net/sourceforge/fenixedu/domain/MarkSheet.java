@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -81,7 +82,22 @@ public class MarkSheet extends MarkSheet_Base {
     private void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
 	    Teacher responsibleTeacher, MarkSheetType markSheetType) throws DomainException {
 
-	if (markSheetType == MarkSheetType.IMPROVEMENT
+	if (curricularCourse.isDissertation()) {
+	    if (responsibleTeacher.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+		return;
+	    }
+	    for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+		if (executionCourse.getExecutionPeriod().getExecutionYear() == executionPeriod.getExecutionYear()) {
+		    for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
+			if (professorship.isResponsibleFor() && professorship.getTeacher() == responsibleTeacher) {
+			    return;
+			}
+		    }
+		}
+	    }
+	}
+
+    	if (markSheetType == MarkSheetType.IMPROVEMENT
 		&& curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod).isEmpty()) {
 
 	    if (!responsibleTeacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse,
@@ -98,6 +114,7 @@ public class MarkSheet extends MarkSheet_Base {
 	} else if (!responsibleTeacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse, executionPeriod)) {
 	    throw new DomainException("error.teacherNotResponsibleOrNotCoordinator");
 	}
+	
     }
     
     private void checkIfEvaluationDateIsInExamsPeriod(ExecutionDegree executionDegree,
