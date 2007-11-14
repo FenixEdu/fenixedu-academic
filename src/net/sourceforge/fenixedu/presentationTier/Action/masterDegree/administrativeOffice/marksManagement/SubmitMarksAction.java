@@ -1,16 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.marksManagement;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -34,6 +35,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -44,7 +46,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer curricularCourseCode = new Integer(MarksManagementDispatchAction.getFromRequest(
+        Integer curricularCourseCode = Integer.valueOf(MarksManagementDispatchAction.getFromRequest(
                 "courseId", request));
         MarksManagementDispatchAction.getFromRequest("objectCode", request);
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
@@ -102,58 +104,54 @@ public class SubmitMarksAction extends FenixDispatchAction {
     }
 
     public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+            HttpServletResponse response) throws FenixFilterException, FenixActionException {
 
         MarksManagementDispatchAction.getFromRequest("courseId", request);
         MarksManagementDispatchAction.getFromRequest("objectCode", request);
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
-        List evaluations = new ArrayList();
-        Integer sizeList = new Integer(MarksManagementDispatchAction.getFromRequest("sizeList", request));
-
         // transform form into list with student's code and students's grade
+        final Collection<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new HashSet<InfoEnrolmentEvaluation>();
+        final Integer sizeList = Integer.valueOf(MarksManagementDispatchAction.getFromRequest("sizeList", request));
         for (int i = 0; i < sizeList.intValue(); i++) {
-            InfoEnrolmentEvaluation infoEnrolmentEvaluation = getFinalEvaluation(request, i);
+            final InfoEnrolmentEvaluation infoEnrolmentEvaluation = getFinalEvaluation(request, i);
             if (infoEnrolmentEvaluation != null) {
-                evaluations.add(infoEnrolmentEvaluation);
+                infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
             }
         }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setLenient(false);
-        // get information from form
-        DynaValidatorForm marksForm = (DynaValidatorForm) form;
-        Integer teacherNumber = new Integer((String) marksForm.get("teacherNumber"));
-        int year = new Integer((String) marksForm.get("year")).intValue();
-        int month = new Integer((String) marksForm.get("month")).intValue();
-        int day = new Integer((String) marksForm.get("day")).intValue();
-        calendar.set(year, month - 1, day);
-        Date evaluationDate = calendar.getTime();
+        final DynaValidatorForm marksForm = (DynaValidatorForm) form;
 
+        int year = Integer.valueOf((String) marksForm.get("year")).intValue();
+        int month = Integer.valueOf((String) marksForm.get("month")).intValue();
+        int day = Integer.valueOf((String) marksForm.get("day")).intValue();
+        final Date evaluationDate = new YearMonthDay(year, month, day).toDateMidnight().toDate();
         if (evaluationDate.after(Calendar.getInstance().getTime())) {
             sendErrors(request, "nonExisting", "message.masterDegree.evaluation.invalidDate");
             return mapping.findForward("ShowMarksManagementMenu");
         }
 
-        // Insert final evaluation
-        IUserView userView = SessionUtils.getUserView(request);
-        Object args[] = { evaluations, teacherNumber, evaluationDate, userView };
-        List evaluationsWithError = null;
-        try {
-            evaluationsWithError = (List) ServiceManagerServiceFactory.executeService(userView,
-                    "InsertStudentsFinalEvaluation", args);
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException(teacherNumber.toString(), e);
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            throw new FenixActionException(e);
-        }
+        final Integer teacherNumber = Integer.valueOf((String) marksForm.get("teacherNumber"));
 
+        // Insert final evaluation
+        final Collection<InfoEnrolmentEvaluation> errors = new HashSet<InfoEnrolmentEvaluation>();
+        for (final InfoEnrolmentEvaluation infoEnrolmentEvaluation : infoEnrolmentEvaluations) {
+            try {
+        	final Object args[] = { infoEnrolmentEvaluation, teacherNumber, evaluationDate };
+        	ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request), "InsertStudentsFinalEvaluation", args);
+            } catch (NonExistingServiceException e) {
+                throw new NonExistingActionException(teacherNumber.toString(), e);
+            } catch (DomainException e) {
+                errors.add(infoEnrolmentEvaluation);
+            } catch (FenixServiceException e) {
+                e.printStackTrace();
+                throw new FenixActionException(e);
+            }
+        }
+        
         // check for invalid marks
-        ActionErrors actionErrors = null;
-        actionErrors = checkForErrors(evaluationsWithError);
-        if (actionErrors != null) {
-            saveErrors(request, actionErrors);
+        if (!errors.isEmpty()) {
+            saveErrors(request, getErrors(errors));
             return mapping.getInputForward();
         }
 
@@ -165,6 +163,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
         Integer enrolmentCode = null;
         Integer evaluationId = null;
         String evaluation = request.getParameter("enrolmentEvaluation[" + index + "].grade");
+        
         if (!StringUtils.isEmpty(evaluation) && request.getParameter("enrolmentEvaluation[" + index + "].studentCode") != null) {
             studentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index
                     + "].studentCode"));
@@ -176,6 +175,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
                     + "].idInternal"));
 
         }
+        
         if (studentCode != null) {
 
             final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrolmentCode);
@@ -186,25 +186,21 @@ public class SubmitMarksAction extends FenixDispatchAction {
             infoEnrolmentEvaluation.setIdInternal(evaluationId);
             return infoEnrolmentEvaluation;
         }
+        
         return null;
     }
 
-    private ActionErrors checkForErrors(List evaluationsWithError) {
-        ActionErrors actionErrors = null;
+    private ActionErrors getErrors(final Collection<InfoEnrolmentEvaluation> errors) {
+        final ActionErrors actionErrors = new ActionErrors();
 
-        if (evaluationsWithError != null && evaluationsWithError.size() > 0) {
-            actionErrors = new ActionErrors();
-            Iterator iterator = evaluationsWithError.listIterator();
-            while (iterator.hasNext()) {
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) iterator
-                        .next();
+        for (final InfoEnrolmentEvaluation error : errors) {
+            actionErrors.add("invalidGrade", new ActionError(
+        	    "errors.invalidMark",
+        	    error.getGradeValue(), 
+                    String.valueOf(error.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getNumber().intValue())));
+	}
 
-                actionErrors.add("invalidGrade", new ActionError("errors.invalidMark",
-                        infoEnrolmentEvaluation.getGradeValue(), String.valueOf(infoEnrolmentEvaluation
-                                .getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent()
-                                .getNumber().intValue())));
-            }
-        }
         return actionErrors;
     }
+
 }
