@@ -27,5 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Updated names in the library menu" changes-20071113151117.sql
-execute "Create card generation tables." cardGeneration.sql
