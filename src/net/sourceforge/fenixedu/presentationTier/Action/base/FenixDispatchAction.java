@@ -333,7 +333,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     protected Map<String, String> getMessageResourceProviderBundleMappings() {
 	final Map<String, String> bundleMappings = new HashMap<String, String>();
 	bundleMappings.put("enum", "ENUMERATION_RESOURCES");
-	bundleMappings.put("application", "DEFAULT");
+	bundleMappings.put("application", "APPLICATION_RESOURCES");
 
 	return bundleMappings;
     }
