@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -63,10 +64,26 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 		libraryCardSearch = new LibraryCardSearch();
 		libraryCardSearch.setPartyClassification(partyClassification);
 	    }
+	    String partyClassificationString = request.getParameter("partyClassification");
+	    if (!StringUtils.isEmpty(partyClassificationString)) {
+		libraryCardSearch.setPartyClassification(PartyClassification
+			.valueOf(partyClassificationString));
+	    }
+	    String userName = request.getParameter("userName");
+	    if (!StringUtils.isEmpty(userName)) {
+		libraryCardSearch.setUserName(userName);
+	    }
+	    String number = request.getParameter("number");
+	    if (!StringUtils.isEmpty(number)) {
+		libraryCardSearch.setNumber(Integer.valueOf(number));
+	    }
 	}
 
-	libraryCardSearch.doSearch();
+	if (request.getParameter("dontSearch") == null) {
+	    libraryCardSearch.doSearch();
+	}
 	RenderUtils.invalidateViewState();
+	request.setAttribute("dontSearch", request.getParameter("dontSearch"));
 	request.setAttribute("libraryCardSearch", libraryCardSearch);
 	return mapping.findForward("show-users");
     }

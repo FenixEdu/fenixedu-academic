@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.parking;
 
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -23,8 +22,8 @@ public class ParkingFile extends ParkingFile_Base {
     }
 
     public void delete() {
-        setRootDomainObject(null);
-        setNewParkingDocument(null);
+	removeRootDomainObject();
+        removeNewParkingDocument();  
         setPermittedGroup(null);
         new DeleteFileRequest(AccessControl.getPerson(),getExternalStorageIdentification());
         deleteDomainObject();

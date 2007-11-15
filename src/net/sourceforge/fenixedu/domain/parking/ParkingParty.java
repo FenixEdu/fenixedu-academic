@@ -181,15 +181,6 @@ public class ParkingParty extends ParkingParty_Base {
 	return "";
     }
 
-    public ParkingDocument getParkingDocument(ParkingDocumentType documentType) {
-	for (ParkingDocument parkingDocument : getParkingDocuments()) {
-	    if (parkingDocument.getParkingDocumentType().equals(documentType)) {
-		return parkingDocument;
-	    }
-	}
-	return null;
-    }
-
     public String getParkingGroupToDisplay() {
 	if (getParkingGroup() != null) {
 	    return getParkingGroup().getGroupName();

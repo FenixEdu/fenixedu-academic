@@ -28,3 +28,5 @@ function executeWithTempFile() {
 }
 
 execute "Change Reason Column in TeacherServiceItem table" alterTableTeacherServiceItem.sql
+execute "Clean old parking documents" cleanOldParkingDocuments.sql
+execute "Updated Library Card menu" changes-20071115121117.sql

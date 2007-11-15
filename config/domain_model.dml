@@ -2962,10 +2962,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		NewParkingDocumentType parkingDocumentType;
 	}
 
-	class net.sourceforge.fenixedu.domain.parking.ParkingDocument extends net.sourceforge.fenixedu.domain.DomainObject {
-		ParkingDocumentType parkingDocumentType;
-	}
-
 	class net.sourceforge.fenixedu.domain.parking.ParkingGroup extends net.sourceforge.fenixedu.domain.DomainObject {
 		String groupName;
 	}
@@ -2980,16 +2976,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		ParkingDocumentState driverLicenseDocumentState;
 		ParkingDocumentState firstCarDeclarationDocumentState;
 		ParkingDocumentState firstCarInsuranceDocumentState;
-		String firstCarMake;
 		ParkingDocumentState firstCarOwnerIdDocumentState;
-		String firstCarPlateNumber;
 		ParkingDocumentState firstCarPropertyRegistryDocumentState;
 		Integer phdNumber;
 		ParkingDocumentState secondCarDeclarationDocumentState;
 		ParkingDocumentState secondCarInsuranceDocumentState;
-		String secondCarMake;
 		ParkingDocumentState secondCarOwnerIdDocumentState;
-		String secondCarPlateNumber;
 		ParkingDocumentState secondCarPropertyRegistryDocumentState;
 	}
 
@@ -3000,9 +2992,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String email;
 		ParkingDocumentState firstCarDeclarationDocumentState;
 		ParkingDocumentState firstCarInsuranceDocumentState;
-		String firstCarMake;
 		ParkingDocumentState firstCarOwnerIdDocumentState;
-		String firstCarPlateNumber;
 		ParkingDocumentState firstCarPropertyRegistryDocumentState;
 		Boolean firstRequest;
 		Boolean limitlessAccessCard;
@@ -3013,9 +3003,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		RoleType requestedAs;
 		ParkingDocumentState secondCarDeclarationDocumentState;
 		ParkingDocumentState secondCarInsuranceDocumentState;
-		String secondCarMake;
 		ParkingDocumentState secondCarOwnerIdDocumentState;
-		String secondCarPlateNumber;
 		ParkingDocumentState secondCarPropertyRegistryDocumentState;
 	}
 	
@@ -7402,21 +7390,9 @@ relation ParkingFileNewParkingDocument {
 	net.sourceforge.fenixedu.domain.parking.NewParkingDocument playsRole newParkingDocument;
 }
 
-relation ParkingFileParkingDocument {
-	net.sourceforge.fenixedu.domain.parking.ParkingFile playsRole parkingFile;
-	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocument;
-}
-
 relation ParkingPartyNewParkingDocument {
 	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParty;
 	net.sourceforge.fenixedu.domain.parking.NewParkingDocument playsRole driverLicenseDocument;
-}
-
-relation ParkingPartyParkingDocument {
-	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParty;
-	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocuments {
-		multiplicity *;
-	}
 }
 
 relation ParkingPartyParkingGroup {
@@ -7429,13 +7405,6 @@ relation ParkingPartyParkingGroup {
 relation ParkingRequestNewParkingDocument {
 	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequest;
 	net.sourceforge.fenixedu.domain.parking.NewParkingDocument playsRole driverLicenseDocument;
-}
-
-relation ParkingRequestParkingDocument {
-	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequest;
-	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocuments {
-		multiplicity *;
-	}
 }
 
 relation ParkingRequestParkingParty {
@@ -9852,13 +9821,6 @@ relation RootDomainObjectOldPublication {
 relation RootDomainObjectOrientation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.teacher.Orientation playsRole orientations {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectParkingDocument {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.parking.ParkingDocument playsRole parkingDocuments {
 		multiplicity *;
 	}
 }

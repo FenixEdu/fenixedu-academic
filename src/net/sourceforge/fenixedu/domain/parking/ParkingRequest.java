@@ -916,15 +916,6 @@ public class ParkingRequest extends ParkingRequest_Base {
 	return "";
     }
 
-    public ParkingDocument getParkingDocument(ParkingDocumentType documentType) {
-	for (ParkingDocument parkingDocument : getParkingDocuments()) {
-	    if (parkingDocument.getParkingDocumentType().equals(documentType)) {
-		return parkingDocument;
-	    }
-	}
-	return null;
-    }
-
     public void deleteDriverLicenseDocument() {
 	NewParkingDocument parkingDocument = getDriverLicenseDocument();
 	if (parkingDocument != null) {
@@ -935,8 +926,6 @@ public class ParkingRequest extends ParkingRequest_Base {
     public void delete() {
 	if (canBeDeleted()) {
 	    for (; getVehicles().size() != 0; getVehicles().get(0).delete())
-		;
-	    for (; getParkingDocuments().size() != 0; getParkingDocuments().get(0).delete())
 		;
 	    deleteDriverLicenseDocument();
 	    removeParkingParty();

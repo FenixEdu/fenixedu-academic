@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.parkingManager;
 import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -30,7 +29,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
-import net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -43,7 +41,6 @@ import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -83,6 +80,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 		parkingRequestSearch.setCarPlateNumber(carPlateNumber);
 	    }
 	}
+	request.setAttribute("dontSearch", request.getParameter("dontSearch"));
 	request.setAttribute("parkingRequestSearch", parkingRequestSearch);
 	return mapping.findForward("showParkingRequests");
     }
