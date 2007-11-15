@@ -30,6 +30,21 @@
 </fr:form>
 
 <logic:notPresent name="dontSearch">
+
+	<bean:define id="query" value=""/>
+	<logic:notEmpty name="libraryCardSearch" property="partyClassification">
+		<bean:define id="partyClassification" name="libraryCardSearch" property="partyClassification"/>
+		<bean:define id="query" value="<%="&partyClassification="+ partyClassification.toString()%>"/>
+	</logic:notEmpty>
+	<logic:notEmpty name="libraryCardSearch" property="userName">
+		<bean:define id="userName" name="libraryCardSearch" property="userName"/>
+		<bean:define id="query" value="<%=query+"&userName="+ userName%>"/>
+	</logic:notEmpty>
+	<logic:notEmpty name="libraryCardSearch" property="number">
+		<bean:define id="number" name="libraryCardSearch" property="number"/>
+		<bean:define id="query" value="<%=query+"&number="+ number.toString()%>"/>
+	</logic:notEmpty>
+		
 	<bean:define id="sortedBy">
 		<%= request.getParameter("sortBy") == null ? "number" : request.getParameter("sortBy") %>
 	</bean:define>
@@ -69,7 +84,7 @@
 				<fr:property name="rowClasses" value=",bgfafafa"/>
 				
 				<fr:property name="sortParameter" value="sortBy"/>
-		        <fr:property name="sortUrl" value="/cardManagement.do?method=showUsers"/>
+		        <fr:property name="sortUrl" value="<%="/cardManagement.do?method=showUsers"+query.toString()%>"/>
 		        <fr:property name="sortBy" value="<%= sortedBy %>"/>
 		        
 		        <fr:property name="link(generate)" value="<%= "/cardManagement.do?method=prepareGenerateCard&name=" + searchName + "&number=" + searchNumber %>"/>
