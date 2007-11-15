@@ -28,7 +28,8 @@ public class AcademicInterval2SqlAcademicIntervalConversion implements FieldConv
 	    String[] split = src.split(":");	  
 	    String entryClassName = split[0];
 	    Integer entryIdInternal = Integer.valueOf(split[1]);
-	    return new AcademicInterval(entryIdInternal, entryClassName);	    	   
+	    Integer academicCalendarIdInternal = Integer.valueOf(split[2]);
+	    return new AcademicInterval(entryIdInternal, entryClassName, academicCalendarIdInternal);	    	   
 	}
 	return source;
     }

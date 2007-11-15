@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
  * @author Ricardo Rodrigues
@@ -24,29 +23,29 @@ public class ReadAllTeacherCredits extends Service {
 
     public List<CreditLineDTO> run(Integer teacherID) throws ExcepcaoPersistencia, ParseException {
 
-        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);        
-        ExecutionPeriod executionPeriod = TeacherService.getStartExecutionPeriodForCredits();        
+	List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
+        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         
-        ExecutionPeriod tempExecutionPeriod = executionPeriod;
-        List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
-       
-        while (tempExecutionPeriod.getNextExecutionPeriod() != null || tempExecutionPeriod.getState().equals(PeriodState.CURRENT)) {
+        ExecutionPeriod executionPeriod = TeacherService.getStartExecutionPeriodForCredits();                              
+                
+        while (executionPeriod != null) {
+                        
+            double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
+            double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionPeriod);
+            double thesesCredits = teacher.getThesesCredits(executionPeriod);
+            int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);                               
+            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
             
-            double managementCredits = teacher.getManagementFunctionsCredits(tempExecutionPeriod);
-            double serviceExemptionsCredits = teacher.getServiceExemptionCredits(tempExecutionPeriod);
-            double thesesCredits = teacher.getThesesCredits(tempExecutionPeriod);
-            int mandatoryLessonHours = teacher.getMandatoryLessonHours(tempExecutionPeriod);                               
-            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(tempExecutionPeriod);
-            
-            CreditLineDTO creditLineDTO = new CreditLineDTO(tempExecutionPeriod, teacherService, managementCredits, serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
+            CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService, managementCredits, serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
             creditLines.add(creditLineDTO);
             
-            if (tempExecutionPeriod.getState().equals(PeriodState.CURRENT)) {
+            if (executionPeriod.isCurrent()) {
                 break;
             }
-            
-            tempExecutionPeriod = tempExecutionPeriod.getNextExecutionPeriod();
+                        
+            executionPeriod = executionPeriod.getNextExecutionPeriod();
         }
+        
         return creditLines;
     }
 }

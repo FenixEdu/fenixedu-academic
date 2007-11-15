@@ -7,10 +7,10 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.YearMonthDay;
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
 
@@ -132,12 +132,15 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     }
 
     public boolean intersects(final Date begin, final Date end) {
-	return DateFormatUtil.compareDates("yyyyMMdd", getBegin(), end) < 0
-		&& (getEnd() == null || DateFormatUtil.compareDates("yyyyMMdd", getEnd(), begin) > 0);
+	return intersects(YearMonthDay.fromDateFields(begin), YearMonthDay.fromDateFields(end));
+    }
+    
+    public boolean intersects(final YearMonthDay begin, final YearMonthDay end) {
+	return !getBeginYearMonthDay().isAfter(end) && (getEndYearMonthDay() == null || !getEndYearMonthDay().isBefore(begin));	
     }
 
     public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	return intersects(executionPeriod.getBeginDate(), executionPeriod.getEndDate())
+	return intersects(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay())
 		&& executionPeriod.getSemester().equals(getCurricularSemester().getSemester());
     }
 

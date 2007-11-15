@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
+import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -13,15 +16,22 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
 	super();
-	super.initEntry(parentEntry, title, description, begin, end, rootEntry);
-	createNewExecutionPeriod();
+	super.initEntry(parentEntry, title, description, begin, end, rootEntry);	
+	createNewExecutionPeriod();	
     }       
 
     private AcademicSemesterCE(AcademicCalendarEntry parentEntry, AcademicSemesterCE academicSemesterCE) {
 	super();
 	super.initVirtualEntry(parentEntry, academicSemesterCE);
     }
-    
+
+    @Override
+    public void delete(AcademicCalendarRootEntry rootEntry) {		
+	ExecutionPeriod executionPeriod = ExecutionPeriod.getExecutionPeriod(this);
+	executionPeriod.delete();	
+	super.delete(rootEntry);
+    }
+
     @Override
     protected void afterRedefineEntry() {
 	createNewExecutionPeriod();
@@ -47,12 +57,12 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 
     @Override
     protected boolean areIntersectionsPossible() {	
-	return true;
+	return false;
     }
 
     @Override
     protected boolean areOutOfBoundsPossible() { 
-	return true;
+	return false;
     }
 
     @Override
@@ -67,9 +77,9 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
     }
 
     @Override
-    public int getAcademicSemesterOfAcademicYear(final AcademicChronology academicChronology) {
-	final AcademicYearCE academicYearCE = (AcademicYearCE) academicChronology.findParentOf(this);
-	return academicYearCE.countAcademicSemesterOfAcademicYear(this, 1, academicYearCE);
-    }
-
+    public int getAcademicSemesterOfAcademicYear(final AcademicChronology academicChronology) {		
+	final AcademicYearCE academicYearCE = (AcademicYearCE) academicChronology.findParentOf(this);	
+	List<AcademicCalendarEntry> list = academicYearCE.getChildEntriesWithTemplateEntries(academicYearCE.getBegin(), getBegin().minusDays(1), getClass());
+	return list.size() + 1;	
+    }  
 }

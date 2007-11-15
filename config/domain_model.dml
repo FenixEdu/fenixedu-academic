@@ -592,9 +592,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime teacherCreditsPeriodBegin;
 		DateTime teacherCreditsPeriodEnd;
 		
-		Integer semester;
+		/*Integer semester;
 		YearMonthDay beginDateYearMonthDay;
-		YearMonthDay endDateYearMonthDay;		
+		YearMonthDay endDateYearMonthDay;*/		
 	}
 
 	class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -602,8 +602,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		PeriodState state;
 		String year;
 				
-		YearMonthDay beginDateYearMonthDay;
-		YearMonthDay endDateYearMonthDay; 
+		/*YearMonthDay beginDateYearMonthDay;
+		YearMonthDay endDateYearMonthDay;*/ 
 	}
 
 	class net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -12288,7 +12288,8 @@ relation PhDCandidacyEventPhDProgramCandidacy {
 	net.sourceforge.fenixedu.domain.candidacy.PHDProgramCandidacy playsRole phdCandidacy;
 }
 
+/*
 relation ExecutionPeriodExecutionPeriod {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole nextExecutionPeriod;
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole previousExecutionPeriod;
-}
+}*/

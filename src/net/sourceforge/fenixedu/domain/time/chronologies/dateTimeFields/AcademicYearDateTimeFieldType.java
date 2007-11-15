@@ -42,6 +42,6 @@ public class AcademicYearDateTimeFieldType extends DateTimeFieldType {
     }
     
     private UnsupportedOperationException unsupported() {
-        return new UnsupportedOperationException(ACADEMIC_YEAR_TYPE + " field is unsupported");
+        return new UnsupportedOperationException(ACADEMIC_YEAR_TYPE.getName() + " field is unsupported");
     }
 }

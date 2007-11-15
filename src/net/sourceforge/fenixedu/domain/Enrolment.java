@@ -601,12 +601,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    throw new DomainException("Enrolment.cannot.improve.enrolment.prior.to.its.execution.period");
 	}
 
-	if (improvementExecutionPeriod == enrolmentExecutionPeriod.getNextExecutionPeriod()) {
+	ExecutionPeriod enrolmentNextExecutionPeriod = enrolmentExecutionPeriod.getNextExecutionPeriod();
+	if (improvementExecutionPeriod == enrolmentNextExecutionPeriod) {
 	    return true;
 	}
 
-	for (ExecutionPeriod executionPeriod = enrolmentExecutionPeriod.getNextExecutionPeriod(); executionPeriod != improvementExecutionPeriod
-		&& executionPeriod != null; executionPeriod = executionPeriod.getNextExecutionPeriod()) {
+	for (ExecutionPeriod executionPeriod = enrolmentNextExecutionPeriod; executionPeriod != null && executionPeriod != improvementExecutionPeriod; executionPeriod = executionPeriod.getNextExecutionPeriod()) {
 	    if (degreeModule.hasAnyParentContexts(executionPeriod)) {
 		return false;
 	    }

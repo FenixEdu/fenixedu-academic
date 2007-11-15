@@ -30,7 +30,7 @@ import dml.runtime.RelationAdapter;
  * @author João Mota ciapl Dominio
  * 
  */
-public class ExecutionYear extends ExecutionYear_Base implements Comparable {
+public class ExecutionYear extends ExecutionYear_Base implements Comparable<ExecutionYear> {
 
     static {
 	ExecutionPeriodExecutionYear.addListener(new ExecutionPeriodExecutionYearListener());
@@ -66,13 +66,13 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	super.setExecutionInterval(executionInterval);
     }
 
-//    public YearMonthDay getBeginDateYearMonthDay() {
-//	return getExecutionInterval().getBeginYearMonthDay();
-//    }
-//
-//    public YearMonthDay getEndDateYearMonthDay() {
-//	return getExecutionInterval().getEndYearMonthDay();
-//    }
+    public YearMonthDay getBeginDateYearMonthDay() {
+	return getExecutionInterval().getBeginYearMonthDayWithoutChronology();
+    }
+
+    public YearMonthDay getEndDateYearMonthDay() {
+	return getExecutionInterval().getEndYearMonthDayWithoutChronology();
+    }
 
     public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
 	return CollectionUtils.select(getExecutionDegrees(), new Predicate() {
@@ -83,36 +83,21 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	});
     }
 
-    public ExecutionYear getPreviousExecutionYear() {
-	ExecutionYear previousExecutionYear = null;
-	ExecutionPeriod currentExecutionPeriod = getExecutionPeriods().get(0);
-
-	while (currentExecutionPeriod.getPreviousExecutionPeriod() != null) {
-	    currentExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
-
-	    if (!currentExecutionPeriod.getExecutionYear().equals(this)) {
-		previousExecutionYear = currentExecutionPeriod.getExecutionYear();
-		break;
-	    }
-	}
-
-	return previousExecutionYear;    
-    }    
-    
-    public ExecutionYear getPreviousExecutionYear(final Integer previousCivilYears) {
-	ExecutionYear previousExecutionYear = getPreviousExecutionYear();
-	for (int i = 1; i < previousCivilYears.intValue(); i++) {
-	    previousExecutionYear = previousExecutionYear.getPreviousExecutionYear();
-	}
-	return previousExecutionYear;
+    public ExecutionYear getNextExecutionYear() {	
+	AcademicYearCE year = getExecutionInterval().plusYear(1);
+	return getExecutionYear(year);
     }
-    
-    public ExecutionYear getNextExecutionYear() {
-	for (ExecutionPeriod executionPeriod = getExecutionPeriods().get(0); executionPeriod != null; executionPeriod = executionPeriod.getNextExecutionPeriod()) {
-	    if (executionPeriod.getExecutionYear() != this) {
-		return executionPeriod.getExecutionYear();
-	    }
-	}
+
+    public ExecutionYear getPreviousExecutionYear() {
+	AcademicYearCE year = getExecutionInterval().minusYear(1);
+	return getExecutionYear(year);
+    }    
+
+    public ExecutionYear getPreviousExecutionYear(final Integer previousCivilYears) {	
+	if(previousCivilYears >= 0) {
+	    AcademicYearCE year = getExecutionInterval().minusYear(previousCivilYears);
+	    return getExecutionYear(year);
+	}	
 	return null;
     }
 
@@ -124,9 +109,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return getNextExecutionYear() != null;
     }
 
-    public int compareTo(Object object) {
-	final ExecutionYear executionYear = (ExecutionYear) object;
-	return executionYear == null ? -1 : getYear().compareTo(executionYear.getYear());
+    public int compareTo(ExecutionYear object) {	
+	return getExecutionInterval().getStartDateTimeWithoutChronology().compareTo(object.getExecutionInterval().getStartDateTimeWithoutChronology());
     }
 
     public boolean isAfter(final ExecutionYear executionYear) {
@@ -409,15 +393,15 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable {
 	return null;
     }
 
-//    @Deprecated   
-//    public java.util.Date getBeginDate(){  
-//	YearMonthDay day = getBeginDateYearMonthDay(); 
-//	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
-//    }
-//
-//    @Deprecated   
-//    public java.util.Date getEndDate(){  
-//	YearMonthDay day = getEndDateYearMonthDay(); 
-//	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
-//    }
+    @Deprecated   
+    public java.util.Date getBeginDate(){  
+	YearMonthDay day = getBeginDateYearMonthDay(); 
+	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
+    }
+
+    @Deprecated   
+    public java.util.Date getEndDate(){  
+	YearMonthDay day = getEndDateYearMonthDay(); 
+	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
+    }
 }

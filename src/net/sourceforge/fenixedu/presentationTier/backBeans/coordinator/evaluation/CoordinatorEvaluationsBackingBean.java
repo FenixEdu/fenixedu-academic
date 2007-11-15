@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -38,7 +36,6 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -129,18 +126,20 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
     }
 
-    private ExecutionPeriod getCurrentExecutionPeriod() throws FenixFilterException,
-    FenixServiceException {
-	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+    private ExecutionPeriod getCurrentExecutionPeriod() throws FenixFilterException, FenixServiceException {		
+	ExecutionPeriod lastExecutionPeriod = null;
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();	
 	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
 	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
 	    for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-		if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+		if (executionPeriod.isCurrent()) {
 		    return executionPeriod;
+		} else if(lastExecutionPeriod == null || executionPeriod.isAfter(lastExecutionPeriod)) {
+		    lastExecutionPeriod = executionPeriod;
 		}
 	    }
-	}
-	return null;
+	}		
+	return lastExecutionPeriod;	
     }
 
     public List<SelectItem> getExecutionPeriodSelectItems() throws FenixFilterException,
@@ -350,18 +349,13 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
     private boolean isActiveInExecutionPeriodAndYear(final CurricularCourse curricularCourse,
 	    final ExecutionPeriod executionPeriod, final CurricularYear curricularYear) {
-	for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-	    final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
-	    if (curricularSemester.getSemester().equals(executionPeriod.getSemester())
-		    && (curricularCourseScope.getBeginDate().getTime().getTime() <= executionPeriod
-			    .getBeginDate().getTime())
-			    && ((curricularCourseScope.getEndDate() == null) || (curricularCourseScope
-				    .getEndDate().getTime().getTime() >= executionPeriod.getEndDate().getTime()))) {
-		if (curricularYear == null || curricularYear == curricularSemester.getCurricularYear()) {
-		    return true;
-		}
+
+	for (final DegreeModuleScope curricularCourseScope : curricularCourse.getDegreeModuleScopes()) {	    
+	    if (curricularCourseScope.isActiveForExecutionPeriod(executionPeriod) && 
+		    (curricularYear == null || curricularYear.getYear().equals(curricularCourseScope.getCurricularYear()))) {
+		return true;
 	    }
-	}
+	}	
 	return false;
     }
 
@@ -533,7 +527,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	executionCourseIDs.add(this.getExecutionCourseID().toString());
 
 	final List<String> degreeModuleScopeIDs = getDegreeModuleScopeIDs(executionCourse);
-	
+
 	try {
 	    final Object[] args = { getExecutionCourseID(),
 		    DateFormatUtil.parse("dd/MM/yyyy", getDate()),
@@ -541,9 +535,9 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 		    DateFormatUtil.parse("HH:mm", getEndTime()),
 		    executionCourseIDs, degreeModuleScopeIDs,
 		    null, null, getDescription() };
-	    
+
 	    ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
-	    
+
 	} catch (ParseException ex) {
 	    setErrorMessage("error.invalid.date");
 	    return "viewCreationPage";
@@ -559,7 +553,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	executionCourseIDs.add(this.getExecutionCourseID().toString());
 
 	final List<String> degreeModuleScopeIDs = getDegreeModuleScopeIDs(executionCourse);
-	
+
 	try {
 	    final Object[] args = { executionCourse.getIdInternal(),
 		    DateFormatUtil.parse("dd/MM/yyyy", getDate()),
@@ -567,9 +561,9 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 		    DateFormatUtil.parse("HH:mm", getEndTime()),
 		    executionCourseIDs, degreeModuleScopeIDs, 
 		    null, getEvaluationID(), null, getDescription() };
-	    
+
 	    ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
-	
+
 	} catch (ParseException ex) {
 	    setErrorMessage("error.invalid.date");
 	    return "viewEditPage";

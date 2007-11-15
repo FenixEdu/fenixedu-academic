@@ -49,8 +49,8 @@ public class AcademicChronology extends AssembledChronology {
     
     // Override Methods
     
-    public AcademicChronology(AcademicCalendarRootEntry academicCalendar) {
-	super(ISO_INSTANCE, null);
+    public AcademicChronology(AcademicCalendarRootEntry academicCalendar) {	
+	super(ISO_INSTANCE, null);	
 	this.academicCalendar = academicCalendar;	
     }     
     
@@ -117,13 +117,17 @@ public class AcademicChronology extends AssembledChronology {
     
     
     // Auxiliar Methods
-
-    public AcademicSemesterCE getAcademicSemesterIn(int value) {
-	return (AcademicSemesterCE) academicCalendar.getEntryByValue(value, AcademicSemesterCE.class, AcademicYearCE.class);
+    
+    public AcademicSemesterCE getAcademicSemesterIn(int index) {
+	return (AcademicSemesterCE) academicCalendar.getEntryByIndex(index, AcademicSemesterCE.class, AcademicYearCE.class);
+    }
+        
+    public AcademicYearCE getAcademicYearIn(int index) {
+	return (AcademicYearCE) academicCalendar.getEntryByIndex(index, AcademicYearCE.class, AcademicCalendarRootEntry.class);
     }
     
     public int getAcademicSemester(long instant) {	
-	Integer entryValueByInstant = academicCalendar.getEntryValueByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
+	Integer entryValueByInstant = academicCalendar.getEntryIndexByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
 	if(entryValueByInstant != null) {
 	    return entryValueByInstant;
 	}
@@ -131,7 +135,7 @@ public class AcademicChronology extends AssembledChronology {
     }
     
     public int getAcademicYear(long instant) {
-	Integer entryValueByInstant = academicCalendar.getEntryValueByInstant(instant, AcademicYearCE.class, AcademicCalendarRootEntry.class);
+	Integer entryValueByInstant = academicCalendar.getEntryIndexByInstant(instant, AcademicYearCE.class, AcademicCalendarRootEntry.class);
 	if(entryValueByInstant != null) {
 	    return entryValueByInstant;
 	}
@@ -152,15 +156,9 @@ public class AcademicChronology extends AssembledChronology {
     }
     
     public int getAcademicSemesterOfAcademicYear(long instant) {	
-	final AcademicCalendarEntry entry = academicCalendar.getEntryByInstant(instant, AcademicYearCE.class, AcademicCalendarRootEntry.class);
-	int counter = 1;
-	for (final AcademicCalendarEntry subEntry : entry.getChildEntriesSet()) {
-	    if (subEntry.getClass().equals(AcademicSemesterCE.class) && AcademicCalendarEntry.COMPARATOR_BEGIN_DATE.compare(subEntry, entry) < 0) {
-		counter++;
-	    }
-	}
-	return counter;
-    }
+	AcademicSemesterCE entryByInstant = (AcademicSemesterCE) academicCalendar.getEntryByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
+	return entryByInstant.getAcademicSemesterOfAcademicYear(this);		
+    }       
     
     public int getMaximumValueForAcademicSemesterOfAcademicYear(long instant) {	
 	int academicSemesterOfAcademicYear = getAcademicSemesterOfAcademicYear(instant);		
@@ -177,5 +175,4 @@ public class AcademicChronology extends AssembledChronology {
     public AcademicCalendarEntry findParentOf(final AcademicCalendarEntry child) {
 	return child.getParentEntry().getEntryForCalendar(academicCalendar);
     }
-
 }

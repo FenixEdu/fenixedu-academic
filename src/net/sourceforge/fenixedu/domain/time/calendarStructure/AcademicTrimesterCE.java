@@ -40,7 +40,7 @@ public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
 
     @Override
     protected boolean areOutOfBoundsPossible() {	
-	return true;
+	return false;
     }
 
     @Override

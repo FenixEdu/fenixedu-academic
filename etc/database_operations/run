@@ -26,3 +26,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+executeWithTempFile "Add AcademicChronology to ExecutionPeriod and ExecutionYear ExecutionInterval" alterTableAcademicCalendarEntry.sql

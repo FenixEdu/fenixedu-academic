@@ -3,12 +3,9 @@ package net.sourceforge.fenixedu.domain.time.calendarStructure;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Language;
@@ -22,7 +19,6 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -34,6 +30,8 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     protected abstract boolean areIntersectionsPossible();
     protected abstract boolean areOutOfBoundsPossible();
     protected void afterRedefineEntry() {}
+
+    private transient AcademicChronology academicChronology;
 
     public static final Comparator<AcademicCalendarEntry> COMPARATOR_BEGIN_DATE = new ComparatorChain();
     static {
@@ -66,29 +64,32 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	if(isRoot() || rootEntry == null) {
 	    throw new DomainException("error.unsupported.operation");
 	}
-	
+
 	if(!rootEntry.equals(getRootEntry())) {	    	    	    	
+
 	    if(getBegin().isEqual(begin) && getEnd().isEqual(end)) {
-		throw new DomainException("error.AcademicCalendarEntry.unchanged.dates");
+		throw new DomainException("error.AcademicCalendarEntry.unchanged.dates");	    
 	    }	    	    
+
 	    AcademicCalendarEntry newParentEntry = createVirtualPathUntil(getParentEntry(), rootEntry);	    
 	    AcademicCalendarEntry newEntry = createVirtualEntry(newParentEntry);
 	    newEntry.edit(title, description, begin, end, rootEntry, seasonType, templateEntry);	    
 	    return newEntry;
 
 	} else {
+
 	    boolean redefinedEntry = isVirtual();	    	    
 	    setTitle(title);
 	    setDescription(description);
 	    setTimeInterval(begin, end, getParentEntry());	    
-	    
+
 	    if(redefinedEntry) {
 		afterRedefineEntry();
 	    }	    
 	    return this;
 	}
     }   
-    
+
     protected void initEntry(AcademicCalendarEntry parentEntry, MultiLanguageString title, MultiLanguageString description, 
 	    DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
@@ -171,7 +172,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	}
 	return this;
     }
-    
+
     @Override
     public void setParentEntry(AcademicCalendarEntry parentEntry) {
 	if(parentEntry == null) {
@@ -253,8 +254,8 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	    }
 	}
 
-	setBegin(begin);
-	setEnd(end);
+	super.setBegin(begin);
+	super.setEnd(end);
     }
 
     @Override
@@ -316,83 +317,79 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	return getParentEntry().getRootEntry();
     }
 
-    public List<AcademicCalendarEntry> getAllChildEntriesOrderByDate(Class<? extends AcademicCalendarEntry> entryClass, 
-	    Class<? extends AcademicCalendarEntry> parentEntryClass) {
-
-	List<AcademicCalendarEntry> allChildEntries = getAllChildEntries(entryClass, parentEntryClass);
-	Collections.sort(allChildEntries, AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
-	return allChildEntries;
+    public AcademicChronology getAcademicChronology() {
+	if(academicChronology == null) {
+	    academicChronology = getRootEntry().getAcademicChronology();
+	}
+	return academicChronology;
     }
-    
-    public List<AcademicCalendarEntry> getAllChildEntriesOrderByDateInReverseMode(Class<? extends AcademicCalendarEntry> entryClass, 
+
+    public List<AcademicCalendarEntry> getAllChildEntries(Class<? extends AcademicCalendarEntry> entryClass, 
 	    Class<? extends AcademicCalendarEntry> parentEntryClass) {
 
-	List<AcademicCalendarEntry> allChildEntries = getAllChildEntries(entryClass, parentEntryClass);
-	Collections.sort(allChildEntries, new ReverseComparator(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE));
+	return getAllChildEntries(null, entryClass, parentEntryClass);
+    }   
+
+    public List<AcademicCalendarEntry> getAllChildEntries(Long instant, Class<? extends AcademicCalendarEntry> entryClass, 
+	    Class<? extends AcademicCalendarEntry> parentEntryClass) {
+
+	List<AcademicCalendarEntry> allChildEntries = new ArrayList<AcademicCalendarEntry>();
+	getAllChildEntries(instant, entryClass, parentEntryClass, allChildEntries);	
 	return allChildEntries;	
     }   
 
-    public List<AcademicCalendarEntry> getAllChildEntries(Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {
-	List<AcademicCalendarEntry> result = new ArrayList<AcademicCalendarEntry>();
-	for (AcademicCalendarEntry subEntry : getChildEntriesWithTemplateEntries()) {
-	    if (subEntry.getClass().equals(entryClass) && subEntry.getParentEntry().getClass().equals(parentEntryClass)) {
-		result.add(subEntry);		
-	    }
-	    result.addAll(subEntry.getAllChildEntries(entryClass, parentEntryClass));
-	}		
-	return result;	
+    private void getAllChildEntries(Long instant, Class<? extends AcademicCalendarEntry> entryClass,
+	    Class<? extends AcademicCalendarEntry> parentEntryClass, List<AcademicCalendarEntry> childrenEntriesList) {
+
+	if(instant == null || containsInstant(instant)) {
+	    if (getClass().equals(parentEntryClass)) {
+		getChildEntriesWithTemplateEntries(instant, childrenEntriesList, null, null, entryClass);
+	    } else {
+		for (AcademicCalendarEntry subEntry : getChildEntries()) {
+		    subEntry.getAllChildEntries(instant, entryClass, parentEntryClass, childrenEntriesList);
+		}
+	    }	
+	}
     } 
 
-    public List<AcademicCalendarEntry> getChildEntriesWithTemplateEntries() {	
-	List<AcademicCalendarEntry> childEntriesWithTemplateEntries = getChildEntriesWithTemplateEntries(null, null);	
-	return childEntriesWithTemplateEntries;
-    }
-       
     public List<AcademicCalendarEntry> getChildEntriesWithTemplateEntriesOrderByDate(DateTime begin, DateTime end) {	
-	List<AcademicCalendarEntry> childEntriesWithTemplateEntries = getChildEntriesWithTemplateEntries(begin, end);
-	Collections.sort(childEntriesWithTemplateEntries, COMPARATOR_BEGIN_DATE);
-	return childEntriesWithTemplateEntries;
+	List<AcademicCalendarEntry> result = getChildEntriesWithTemplateEntries(begin, end, null);	
+	Collections.sort(result, COMPARATOR_BEGIN_DATE);
+	return result;
+    }  
+
+    public List<AcademicCalendarEntry> getChildEntriesWithTemplateEntries(DateTime begin, DateTime end, Class<? extends AcademicCalendarEntry> entryClass) {	
+	List<AcademicCalendarEntry> result = new ArrayList<AcademicCalendarEntry>();
+	getChildEntriesWithTemplateEntries(null, result, begin, end, entryClass);	
+	return result;
     }
 
-    public List<AcademicCalendarEntry> getChildEntriesWithTemplateEntries(DateTime begin, DateTime end) {
+    private List<AcademicCalendarEntry> getChildEntriesWithTemplateEntries(Long instant, List<AcademicCalendarEntry> result, 
+	    DateTime begin, DateTime end, Class<? extends AcademicCalendarEntry> entryClass) {
 
-	List<AcademicCalendarEntry> result = new ArrayList<AcademicCalendarEntry>();
-	Set<AcademicCalendarEntry> templateEntriesToRemove = new HashSet<AcademicCalendarEntry>();
-	
-	for (AcademicCalendarEntry entry : getChildEntries()) {
-	    if(entry.isRedefined() || entry.isVirtual()) {		
-		templateEntriesToRemove.add(entry.getTemplateEntry());		
-	    }
-	    if(begin == null || entry.belongsToPeriod(begin, end)) {
-		result.add(entry);	    	    
+	boolean hasTemplateEntry = hasTemplateEntry();	
+	List<AcademicCalendarEntry> templateEntriesToRemove = hasTemplateEntry ? new ArrayList<AcademicCalendarEntry>() : null;
+
+	for (AcademicCalendarEntry entry : getChildEntries()) {	
+	    if((entryClass == null || entry.getClass().equals(entryClass)) && (instant == null || entry.containsInstant(instant))) {
+		if(hasTemplateEntry && entry.isRedefined()) {		
+		    templateEntriesToRemove.add(entry.getTemplateEntry());		
+		}
+		if(begin == null || entry.belongsToPeriod(begin, end)) {
+		    result.add(entry);	    	    
+		}
 	    }
 	}	
-	if(hasTemplateEntry()) {	    
-	    for (AcademicCalendarEntry entry : getTemplateEntry().getChildEntriesWithTemplateEntries(begin, end)) {
+	if(hasTemplateEntry) {	    
+	    for (AcademicCalendarEntry entry : getTemplateEntry().getChildEntriesWithTemplateEntries(instant, result, begin, end, entryClass)) {
 		if(!templateEntriesToRemove.contains(entry)) {
 		    result.add(entry);	    	    
 		}
 	    }	    	   	    
 	}
-	
-	return result;
-    }      
-       
-    public Set<AcademicCalendarEntry> getChildEntriesOrderByDate(){
-	Set<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(COMPARATOR_BEGIN_DATE);
-	result.addAll(getChildEntries());
-	return result;
-    }
 
-    public Set<AcademicCalendarEntry> getChildEntriesOrderByDate(DateTime begin, DateTime end){	
-	Set<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);	
-	for (AcademicCalendarEntry academicCalendarEntry : getChildEntriesSet()) {
-	    if(academicCalendarEntry.belongsToPeriod(begin, end)) {
-		result.add(academicCalendarEntry);
-	    }
-	}	
 	return result;
-    }   
+    }  
 
     public List<AcademicCalendarEntry> getChildEntries(Class<? extends AcademicCalendarEntry> entryClass){
 	List<AcademicCalendarEntry> result = new ArrayList<AcademicCalendarEntry>();
@@ -404,12 +401,57 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	return result;
     }  
     
-    public List<AcademicCalendarEntry> getChildEntriesOrderByDateInReverseMode(Class<? extends AcademicCalendarEntry> entryClass){
-	List<AcademicCalendarEntry> childEntries = getChildEntries(entryClass);
-	Collections.sort(childEntries, new ReverseComparator(COMPARATOR_BEGIN_DATE));
-	return childEntries;
+    public AcademicCalendarEntry getEntryByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {			
+	AcademicCalendarEntry entryResult = null;
+	for (AcademicCalendarEntry entry : getAllChildEntries(Long.valueOf(instant), entryClass, parentEntryClass)) {	    
+	    entryResult = (entryResult == null || entry.getBegin().isAfter(entryResult.getBegin())) ? entry : entryResult;	    
+	}
+	return entryResult;
     }
-   
+
+    public Integer getEntryIndexByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {					
+	Integer counter = null;	
+	for (AcademicCalendarEntry entry : getAllChildEntries(entryClass, parentEntryClass)) {	    	    	    
+	    if(entry.containsInstant(instant) || entry.getEnd().isBefore(instant)) {						
+		counter = counter == null ? 1 : counter.intValue() + 1;
+	    }    
+	}	
+	return counter;
+    }
+
+    public AcademicCalendarEntry getEntryByIndex(int index, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {
+	List<AcademicCalendarEntry> allChildEntries = getAllChildEntries(entryClass, parentEntryClass);		
+	Collections.sort(allChildEntries, COMPARATOR_BEGIN_DATE);
+	return index > 0 && index <= allChildEntries.size() ? allChildEntries.get(index - 1) : null;	
+    }
+
+    public AcademicCalendarEntry getEntryForCalendar(final AcademicCalendarRootEntry academicCalendar) {
+
+	AcademicCalendarRootEntry rootEntry = getRootEntry();
+	if(rootEntry.equals(academicCalendar)) {
+	    return this;
+	}
+
+	for (final AcademicCalendarEntry basedEntry : getBasedEntriesSet()) {
+	    final AcademicCalendarEntry basedEntryFor = basedEntry.getEntryForCalendar(academicCalendar);
+	    if (basedEntryFor != null) {
+		return basedEntryFor;
+	    }
+	}
+
+	for (AcademicCalendarEntry otherRoot = academicCalendar; otherRoot != null; otherRoot = otherRoot.getTemplateEntry()) {
+	    if (otherRoot == rootEntry) {
+		return this;
+	    }
+	}
+
+	return null;
+    }   
+    
+    public int getAcademicSemesterOfAcademicYear(final AcademicChronology academicChronology) {	
+	return getBegin().withChronology(academicChronology).get(AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear());	
+    }
+    
     public long getDurationMillis() {
 	return getEnd().getMillis() - getBegin().getMillis();
     }
@@ -485,77 +527,5 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     public boolean isRoot() {
 	return false;
-    }
-
-    protected AcademicCalendarEntry getEntryByInstant(final long instant,
-	    final Class<? extends AcademicCalendarEntry> entryClass,
-	    final Class<? extends AcademicCalendarEntry> parentEntryClass,
-	    final AcademicCalendarEntry first) {
-
-	if (containsInstant(instant)) {
-	    if (this.getClass().equals(entryClass) && getParentEntry().getClass().equals(parentEntryClass) && !isRedefinedBy(this, first)) {
-		return this;
-	    } else {
-		AcademicCalendarEntry result = null;
-
-		for (final AcademicCalendarEntry childEntry : getChildEntriesSet()) {
-		    if (this == first || !isRedefinedBy(childEntry, first)) {
-			final AcademicCalendarEntry childEntryResult = childEntry.getEntryByInstant(instant, entryClass, parentEntryClass);
-			if (childEntryResult != null && (result == null || childEntryResult.getBegin().isAfter(result.getBegin()))) {
-			    result = childEntryResult;
-			}
-		    }
-		}
-
-		final AcademicCalendarEntry templateEntry = getTemplateEntry();
-		if (templateEntry != null) {
-		    final AcademicCalendarEntry templateEntryResult = templateEntry.getEntryByInstant(instant, entryClass, parentEntryClass, first);
-		    if (templateEntry != null && (result == null || templateEntryResult.getBegin().isAfter(result.getBegin()))) {
-			result = templateEntryResult;
-		    }
-		}
-
-		return result;
-	    }
-	}
-	return null;
-    }
-
-    public AcademicCalendarEntry getEntryByInstant(final long instant, final Class<? extends AcademicCalendarEntry> entryClass, final Class<? extends AcademicCalendarEntry> parentEntryClass) {
-	return getEntryByInstant(instant, entryClass, parentEntryClass, this);
-    }
-
-    protected boolean isRedefinedBy(final AcademicCalendarEntry child, final AcademicCalendarEntry currentParentEntry) {
-	for (final AcademicCalendarEntry redefinedEntry : getBasedEntriesSet()) {
-	    if (currentParentEntry.hasChildEntriesOrTemplatedEntry(redefinedEntry)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    protected boolean hasChildEntriesOrTemplatedEntry(final AcademicCalendarEntry academicCalendarEntry) {
-	return getChildEntriesSet().contains(academicCalendarEntry)
-		|| (hasTemplateEntry() && getTemplateEntry().hasChildEntriesOrTemplatedEntry(academicCalendarEntry));
-    }
-
-    public int getAcademicSemesterOfAcademicYear(final AcademicChronology academicChronology) {
-	return getBegin().get(AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear());
-    }
-
-    public AcademicCalendarEntry getEntryForCalendar(final AcademicCalendarRootEntry academicCalendar) {
-	for (AcademicCalendarEntry parent = getParentEntry(); parent != null; parent = parent.getParentEntry()) {
-	    if (parent == academicCalendar) {
-		return this;
-	    }
-	}
-	for (final AcademicCalendarEntry basedEntry : getBasedEntriesSet()) {
-	    final AcademicCalendarEntry basedEntryFor = basedEntry.getEntryForCalendar(academicCalendar);
-	    if (basedEntryFor != null) {
-		return basedEntryFor;
-	    }
-	}
-	return null;
-    }
-
+    }         
 }

@@ -48,24 +48,18 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
     }
 
     private void verifyOverlappings() {
-
-        getTeacherService().verifyOverlappingWithSupportLesson(getStartTime(), getEndTime(),
-                getWeekDay());
-        getTeacherService().verifyOverlappingWithTeachingService(getStartTime(), getEndTime(),
-                getWeekDay());
-
+        getTeacherService().verifyOverlappingWithSupportLesson(getStartTime(), getEndTime(), getWeekDay());
+        getTeacherService().verifyOverlappingWithTeachingService(getStartTime(), getEndTime(), getWeekDay());
         verifyOverlappingWithOtherInstitutionWorkingTimes();
     }
 
     private void verifyOverlappingWithOtherInstitutionWorkingTimes() {
-        for (InstitutionWorkTime teacherInstitutionWorkTime : getTeacherService()
-                .getInstitutionWorkTimes()) {
+        for (InstitutionWorkTime teacherInstitutionWorkTime : getTeacherService().getInstitutionWorkTimes()) {
             if (this != teacherInstitutionWorkTime) {
                 if (teacherInstitutionWorkTime.getWeekDay().equals(getWeekDay())) {
                     Date startWorkTime = teacherInstitutionWorkTime.getStartTime();
                     Date endWorkTime = teacherInstitutionWorkTime.getEndTime();
-                    if (CalendarUtil.intersectTimes(getStartTime(), getEndTime(), startWorkTime,
-                            endWorkTime)) {
+                    if (CalendarUtil.intersectTimes(getStartTime(), getEndTime(), startWorkTime, endWorkTime)) {
                         throw new DomainException("message.overlapping.institution.working.period");
                     }
                 }

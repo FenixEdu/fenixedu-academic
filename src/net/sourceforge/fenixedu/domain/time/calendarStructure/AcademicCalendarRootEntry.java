@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -117,38 +116,10 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     @Override
     public boolean isRoot() {
         return true;
-    }
-
-    public Integer getEntryValueByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {
-	List<AcademicCalendarEntry> allEntriesByType = getAllChildEntriesOrderByDateInReverseMode(entryClass, parentEntryClass);	
-	Integer counter = allEntriesByType.size();
-	for (AcademicCalendarEntry entry : allEntriesByType) {	    
-	    if (entry.containsInstant(instant)) {
-		return counter;
-	    }
-	    counter--;
-	}
-	return null;
-    }
-
-    public AcademicCalendarEntry getEntryByValue(int index, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {			
-	List<AcademicCalendarEntry> allEntriesByType = getAllChildEntriesOrderByDateInReverseMode(entryClass, parentEntryClass);			
-	if(index > allEntriesByType.size() || index < 1) {
-	    return null;
-	}	
-	Integer counter = allEntriesByType.size();
-	for (AcademicCalendarEntry entry : allEntriesByType) {	    
-	    if (counter == index) {
-		return entry;
-	    }
-	    counter--;
-	}
-	return null;	
-    }
+    }     
 
     @Override
     public boolean containsInstant(final long instant) {
 	return true;
-    }
-
+    }   
 }

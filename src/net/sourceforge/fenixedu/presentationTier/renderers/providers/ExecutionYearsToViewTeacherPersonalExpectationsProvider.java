@@ -14,9 +14,11 @@ public class ExecutionYearsToViewTeacherPersonalExpectationsProvider implements 
 	List<ExecutionYear> result = new ArrayList<ExecutionYear>();	
 	ExecutionYear year = ExecutionYear.readExecutionYearByName("2005/2006");
 	result.add(year);
-	while(year.getNextExecutionYear() != null) {
-	    result.add(year.getNextExecutionYear());
-	    year = year.getNextExecutionYear();
+	
+	ExecutionYear nextExecutionYear = year.getNextExecutionYear();
+	while(nextExecutionYear != null) {	    
+	    result.add(nextExecutionYear);
+	    nextExecutionYear = nextExecutionYear.getNextExecutionYear();
 	}
 	return result;
     }
