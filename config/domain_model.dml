@@ -1376,19 +1376,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaPhdProgramDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
 					}
 					
-				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.InternalDegreeChangeRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-				}
-				
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 				
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.EquivalencePlanRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 				
-			class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.ExternalDegreeChangeRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent {
-			}
-			
-
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 			YearMonthDay creationDate;
 		}
@@ -1397,7 +1390,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		}
 		
 		class net.sourceforge.fenixedu.domain.accounting.events.phd.PhDRegistrationEvent extends net.sourceforge.fenixedu.domain.accounting.Event { 
+		}
 		
+		class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.ExternalDegreeChangeEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+		}
+		
+		class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.InternalDegreeChangeEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 		}
 			
 	class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3602,9 +3600,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					CycleType requestedCycle;
 				}
 			
-			class net.sourceforge.fenixedu.domain.serviceRequests.InternalDegreeChangeRequest extends net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest {
-			}
-			
 			class net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionRequest extends net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest {
 			}
 			
@@ -3626,12 +3621,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 						
 		class net.sourceforge.fenixedu.domain.serviceRequests.PersonAcademicServiceRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
 		}
-	
-			class net.sourceforge.fenixedu.domain.serviceRequests.ExternalDegreeChangeRequest extends net.sourceforge.fenixedu.domain.serviceRequests.PersonAcademicServiceRequest {
-			}
-			
-			
-		
+
 
 	class net.sourceforge.fenixedu.domain.sms.SentSms extends net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime deliveryDateDateTime;
@@ -4556,20 +4546,6 @@ relation PersonAcademicServiceRequestPerson {
 relation AcademicServiceRequestSituationEmployee {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
-		multiplicity *;
-	}
-}
-
-relation DestinationDegreeCurricularPlanExternalDegreeChangeRequest {
-	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole destination;
-	net.sourceforge.fenixedu.domain.serviceRequests.ExternalDegreeChangeRequest playsRole destinationExternalDegreeChangeRequests {
-		multiplicity *;
-	}
-}
-
-relation DestinationDegreeCurricularPlanInternalDegreeChangeRequest {
-	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole destination;
-	net.sourceforge.fenixedu.domain.serviceRequests.InternalDegreeChangeRequest playsRole destinationInternalDegreeChangeRequests {
 		multiplicity *;
 	}
 }

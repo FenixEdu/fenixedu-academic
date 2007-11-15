@@ -177,13 +177,19 @@
 <bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 <p>
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.createDocumentRequest"/>:
-	<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest&schema=DocumentRequestCreateBean.chooseDocumentRequestQuickType" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+	<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequestQuick" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="declarations"/>
 	</html:link>	
 	|
-	<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest&schema=DocumentRequestCreateBean.chooseDocumentRequestType" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+	<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="certificates"/>
 	</html:link>
+	<%-- 
+	|
+	<html:link action="/academicServiceRequestsManagement.do?method=chooseServiceRequestType" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.serviceRequests"/>
+	</html:link>
+	--%>
 </p>
 
 <p class="mtop1">

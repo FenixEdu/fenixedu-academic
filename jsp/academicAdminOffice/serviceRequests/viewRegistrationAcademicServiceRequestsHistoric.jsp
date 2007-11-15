@@ -29,7 +29,7 @@
 
 
 <h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="registration" schema="student.registrationDetail" >
+<fr:view name="registration" schema="student.registrationDetail.short" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
 	</fr:layout>

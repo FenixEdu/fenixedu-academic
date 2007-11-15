@@ -13,10 +13,11 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 public class AcademicServiceRequestBean implements Serializable {
     
     private AcademicServiceRequestSituationType academicServiceRequestSituationType;
-    private DateTime situationDate;
-    private DomainReference<Unit> situationUnit;
     private Employee employee;
     private String justification;
+    
+    private DateTime situationDate;
+    private DomainReference<Unit> situationUnit;
     
     protected AcademicServiceRequestBean() {
 	super();

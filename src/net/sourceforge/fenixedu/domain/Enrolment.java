@@ -296,6 +296,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     public void delete() {
+	
+	checkRulesToDelete();
+	
 	createEnrolmentLog(EnrolmentAction.UNENROL);
 	// TODO: falta ver se é dos antigos enrolments ou dos novos
 	final Registration registration = getRegistration();
@@ -358,6 +361,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	super.delete();
 
+    }
+
+    private void checkRulesToDelete() {
+	if (hasAnyExtraExamRequests()) {
+	    throw new DomainException("Enrolment.cannot.delete");
+	}
     }
 
     final public Collection<Enrolment> getBrothers() {

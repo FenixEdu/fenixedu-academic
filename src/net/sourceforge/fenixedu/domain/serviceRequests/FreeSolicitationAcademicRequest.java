@@ -5,12 +5,17 @@ import org.apache.commons.lang.StringUtils;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicRequest_Base {
     
     protected FreeSolicitationAcademicRequest() {
         super();
+    }
+    
+    public FreeSolicitationAcademicRequest(final Registration registration, final ExecutionYear executionYear, final String purpose) {
+	this(registration, executionYear, purpose, false, false);
     }
     
     public FreeSolicitationAcademicRequest(final Registration registration, final ExecutionYear executionYear, final String purpose, final Boolean urgentRequest, final Boolean freeProcessed) {
@@ -33,7 +38,7 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
 
     @Override
     public String getDescription() {
-        return getDescription("AcademicServiceRequestType.FREE_SOLICITATION_ACADEMIC_REQUEST");
+        return getDescription(AcademicServiceRequestType.FREE_SOLICITATION_ACADEMIC_REQUEST);
     }
     
     @Override

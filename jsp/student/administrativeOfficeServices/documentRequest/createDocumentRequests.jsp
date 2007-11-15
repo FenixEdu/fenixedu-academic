@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" %> 
 <html:xhtml/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
@@ -34,7 +33,7 @@
 
 <logic:present name="documentRequestCreateBean" property="registration.ingressionEnum">
 <h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="documentRequestCreateBean" property="registration" schema="student.registrationDetail" >
+<fr:view name="documentRequestCreateBean" property="registration" schema="student.registrationDetail.short" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
 		<fr:property name="rowClasses" value=",tdhl1,,,,,,"/>

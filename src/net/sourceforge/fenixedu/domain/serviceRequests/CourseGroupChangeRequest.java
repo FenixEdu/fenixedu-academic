@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
@@ -11,6 +12,10 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     
     protected CourseGroupChangeRequest() {
         super();
+    }
+    
+    public CourseGroupChangeRequest(final Registration registration, final CurriculumGroup curriculumGroup, final CourseGroup newCourseGroup, final ExecutionYear executionYear) {
+	this(registration, curriculumGroup, newCourseGroup, executionYear, false, false);
     }
     
     public CourseGroupChangeRequest(final Registration registration, final CurriculumGroup curriculumGroup, final CourseGroup newCourseGroup, final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
@@ -55,7 +60,7 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
 
     @Override
     public String getDescription() {
-	return getDescription("AcademicServiceRequestType.COURSE_GROUP_CHANGE_REQUEST");
+	return getDescription(AcademicServiceRequestType.COURSE_GROUP_CHANGE_REQUEST);
     }
 
     @Override

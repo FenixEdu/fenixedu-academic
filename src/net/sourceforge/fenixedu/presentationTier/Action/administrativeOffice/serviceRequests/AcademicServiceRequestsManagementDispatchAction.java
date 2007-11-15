@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.factoryExecutors.RegistrationAcademicServiceRequestCreator;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -23,6 +24,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -45,8 +47,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
-	final Registration registration = rootDomainObject
-		.readRegistrationByOID(getRequestParameterAsInteger(request, "registrationID"));
+	final Registration registration = rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request, "registrationID"));
 	request.setAttribute("registration", registration);
 	return registration;
     }
@@ -179,8 +180,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	if (academicServiceRequest.isDocumentRequest()) {
 	    return mapping.findForward("prepareConcludeDocumentRequest");
 	} else {
-	    request.setAttribute("registration", academicServiceRequest.getRegistration());
-	    return mapping.findForward("viewRegistrationDetails");
+	    return mapping.findForward("prepareConcludeServiceRequest");
 	}
     }
 
@@ -261,4 +261,45 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	return getEmployee().getAdministrativeOffice();
     }
 
+    public ActionForward chooseServiceRequestType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("academicServiceRequestCreateBean", new RegistrationAcademicServiceRequestCreator(getAndSetRegistration(request)));
+	return mapping.findForward("prepareCreateServiceRequest");
+    }
+    
+    public ActionForward chooseServiceRequestTypePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("academicServiceRequestCreateBean", getRenderedObject("academicServiceRequestCreateBean"));
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("prepareCreateServiceRequest");
+    }
+    
+    public ActionForward chooseServiceRequestTypeInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("academicServiceRequestCreateBean", getRenderedObject("academicServiceRequestCreateBean"));
+	return mapping.findForward("prepareCreateServiceRequest");
+    }
+    
+    public ActionForward backToViewRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	getAndSetRegistration(request);
+	return mapping.findForward("viewRegistrationDetails");
+    }
+    
+    public ActionForward confirmCreateServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("academicServiceRequestCreateBean", getRenderedObject("academicServiceRequestCreateBean"));
+	return mapping.findForward("confirmCreateServiceRequest");
+    }
+    
+    public ActionForward createServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    executeFactoryMethod(request);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return confirmCreateServiceRequest(mapping, actionForm, request, response);
+	}
+	
+	final RegistrationAcademicServiceRequestCreator bean = (RegistrationAcademicServiceRequestCreator) getRenderedObject("academicServiceRequestCreateBean");
+	request.setAttribute("registration", bean.getRegistration());
+	return mapping.findForward("viewRegistrationDetails");
+    }
 }

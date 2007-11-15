@@ -2,12 +2,17 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionRequest_Base {
     
     protected EquivalencePlanRevisionRequest() {
         super();
+    }
+    
+    public EquivalencePlanRevisionRequest(final Registration registration, final ExecutionYear executionYear) {
+	this(registration, executionYear, false, false);
     }
     
     public EquivalencePlanRevisionRequest(final Registration registration, final ExecutionYear executionYear,
@@ -25,7 +30,7 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
 
     @Override
     public String getDescription() {
-	return getDescription("AcademicServiceRequestType.REVISION_EQUIVALENCE_PLAN");
+	return getDescription(AcademicServiceRequestType.REVISION_EQUIVALENCE_PLAN);
     }
 
     @Override

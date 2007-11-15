@@ -34,7 +34,7 @@
 			<form-property name="numberOfPages" type="java.lang.Integer" />
 	    </form-bean>
 
-		<!-- Document Requests Management -->	    
+		<!-- Document Requests Management -->
    		<form-bean name="documentRequestsManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="documentRequestType" type="java.lang.String" />
@@ -371,6 +371,10 @@
 				<forward name="prepareCancelAcademicServiceRequest" path="academicServiceRequests.management.prepareCancelAcademicServiceRequest"/>
 				<forward name="prepareConcludeDocumentRequest" path="/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"/>
 				<forward name="searchResults" path="academicServiceRequests.management.searchResults"/>
+				
+				<forward name="prepareCreateServiceRequest" path="academicServiceRequests.management.prepareCreateServiceRequest"/>
+				<forward name="confirmCreateServiceRequest" path="academicServiceRequests.management.confirmCreateServiceRequest"/>
+				<forward name="prepareConcludeServiceRequest" path="academicServiceRequests.management.prepareConcludeServiceRequest"/>
 		</action>
 
 		<!-- Document Requests Management -->
@@ -391,7 +395,7 @@
 				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
 				<forward name="processNewAcademicServiceRequest" path="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest"/>
 		</action>
-
+		
 		<!-- Begin Payments -->
 		<action path="/payments"
 				parameter="method"

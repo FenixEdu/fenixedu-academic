@@ -130,7 +130,18 @@
 	<definition name="academicServiceRequests.management.searchResults" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/searchResults.jsp"/>
 	</definition>
+	
+	<definition name="academicServiceRequests.management.prepareCreateServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/prepareCreateServiceRequest.jsp"/>
+	</definition>
 
+	<definition name="academicServiceRequests.management.confirmCreateServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/confirmCreateServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="academicServiceRequests.management.prepareConcludeServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/concludeServiceRequest.jsp"/>
+	</definition>
 
 	<!-- ************* Document Requests Management ************* -->
 	<definition name="documentRequests.management.printDocument" extends="academicAdminOffice.masterPage">

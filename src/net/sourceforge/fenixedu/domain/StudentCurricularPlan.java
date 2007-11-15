@@ -479,7 +479,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return results;
     }
 
-    final protected Collection<Enrolment> getStudentEnrollmentsWithEnrolledState() {
+    final public Collection<Enrolment> getStudentEnrollmentsWithEnrolledState() {
 	return (List) CollectionUtils.select(getEnrolmentsSet(), new Predicate() {
 	    final public boolean evaluate(Object obj) {
 		Enrolment enrollment = (Enrolment) obj;

@@ -134,9 +134,24 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public boolean overlaps(PostingRule postingRule) {
-	return (getEventType() == postingRule.getEventType() && (isActiveForDate(postingRule.getStartDate()) || isActiveForDate(postingRule
-		.getEndDate())));
-
+	if (getEventType() == postingRule.getEventType()) {
+	    
+	    if (hasEndDate() && postingRule.hasEndDate()) {
+		return isActiveForDate(postingRule.getStartDate()) || isActiveForDate(postingRule.getEndDate());
+		
+	    } else if (hasEndDate()) {
+		return !postingRule.getStartDate().isAfter(getEndDate());
+		
+	    } else if (postingRule.hasEndDate()) {
+		return !getStartDate().isAfter(postingRule.getEndDate());
+		
+	    } else {
+		return true;
+	    }
+	    
+	} else {
+	    return false;
+	}
     }
 
     @Override

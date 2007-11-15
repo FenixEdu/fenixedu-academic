@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.Academi
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -62,7 +63,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setFreeProcessed(freeProcessed);
 	super.setExecutionYear(executionYear);
 	
-	AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
+	createAcademicServiceRequestSituations(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
 		AccessControl.getPerson().getEmployee()));
     }
     
@@ -129,10 +130,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return isPayed();
     }
 
-    protected String getDescription(final String academicServiceRequestType, final String specificServiceType) {
+    protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
 	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 	final StringBuilder result = new StringBuilder();
-	result.append(enumerationResources.getString(academicServiceRequestType));
+	result.append(enumerationResources.getString(academicServiceRequestType.getQualifiedName()));
 	if (specificServiceType != null) {
 	    result.append(": ");
 	    result.append(enumerationResources.getString(specificServiceType));
@@ -140,7 +141,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return result.toString();
     }
     
-    protected String getDescription(final String academicServiceRequestType) {
+    protected String getDescription(final AcademicServiceRequestType academicServiceRequestType) {
 	return getDescription(academicServiceRequestType, null);
     }
 
@@ -258,7 +259,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	if (getAcademicServiceRequestSituationType() != academicServiceRequestBean.getAcademicServiceRequestSituationType()) {
 	    checkRulesToChangeState(academicServiceRequestBean.getAcademicServiceRequestSituationType());
 	    internalChangeState(academicServiceRequestBean);
-	    AcademicServiceRequestSituation.create(this, academicServiceRequestBean);
+	    createAcademicServiceRequestSituations(academicServiceRequestBean);
 	    
 	} else {
 	    getActiveSituation().edit(academicServiceRequestBean);
@@ -320,6 +321,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 	}
+    }
+    
+    protected void createAcademicServiceRequestSituations(final AcademicServiceRequestBean academicServiceRequestBean) {
+	AcademicServiceRequestSituation.create(this, academicServiceRequestBean);
     }
 
     final public boolean isNewRequest() {

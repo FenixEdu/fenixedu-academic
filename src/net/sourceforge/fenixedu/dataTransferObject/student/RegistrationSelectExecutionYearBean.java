@@ -9,10 +9,13 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class RegistrationSelectExecutionYearBean implements Serializable {
 
     private DomainReference<Registration> registration;
-
     private DomainReference<ExecutionYear> executionYear;
+    
+    protected RegistrationSelectExecutionYearBean() {
+    }
 
     public RegistrationSelectExecutionYearBean(Registration registration) {
+	this();
 	setRegistration(registration);
     }
 

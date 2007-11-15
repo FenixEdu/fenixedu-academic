@@ -5,12 +5,17 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.EquivalencePlanRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     
     protected EquivalencePlanRequest() {
         super();
+    }
+    
+    public EquivalencePlanRequest(final Registration registration, final ExecutionYear executionYear) {
+	this(registration, executionYear, false, false);
     }
     
     public EquivalencePlanRequest(final Registration registration, final ExecutionYear executionYear,
@@ -28,7 +33,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 
     @Override
     public String getDescription() {
-	return getDescription("AcademicServiceRequestType.EQUIVALENCE_PLAN");
+	return getDescription(AcademicServiceRequestType.EQUIVALENCE_PLAN);
     }
 
     @Override

@@ -1,17 +1,31 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 public class StudentReingressionRequest extends StudentReingressionRequest_Base {
     
-    protected StudentReingressionRequest() {
+    static final private List<RegistrationStateType> ALLOWED_TYPES = 
+	Arrays.asList(RegistrationStateType.FLUNKED, RegistrationStateType.INTERRUPTED);
+    
+    private StudentReingressionRequest() {
         super();
+    }
+    
+    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear) {
+	this(registration, executionYear, false, false);
     }
     
     public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
@@ -19,6 +33,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	checkParameters(executionYear);
 	checkRulesToCreate(registration);
 	super.init(registration, executionYear, urgentRequest, freeProcessed);
+	new StudentReingressionRequestEvent(getAdministrativeOffice(), getPerson(), this);
     }
 
     private void checkParameters(final ExecutionYear executionYear) {
@@ -33,7 +48,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    throw new DomainException("error.StudentReingressionRequest.registration.with.invalid.state");
 	}
 	
-	if (wasFlunkedAtLeastThreeTimes(registration)) {
+	if (hasInterruptedAtLeastThreeTimes(registration)) {
 	    throw new DomainException("error.StudentReingressionRequest.registration.was.flunked.at.least.three.times");
 	}
 	
@@ -43,20 +58,20 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     }
 
     private boolean hasValidState(final Registration registration) {
-	return registration.isInterrupted() || registration.isFlunked();
+	return registration.hasAnyState(ALLOWED_TYPES);
     }
     
-    private boolean wasFlunkedAtLeastThreeTimes(final Registration registration) {
-	return registration.getRegistrationStates(RegistrationStateType.FLUNKED).size() >= 3;
+    private boolean hasInterruptedAtLeastThreeTimes(final Registration registration) {
+	return registration.getRegistrationStates(ALLOWED_TYPES).size() >= 3;
     }
 
     private boolean isEnrolmentPeriodOpen(final Registration registration) {
 	return registration.getLastDegreeCurricularPlan().hasActualEnrolmentPeriodInCurricularCourses();
     }
-
+    
     @Override
     public String getDescription() {
-	return getDescription("AcademicServiceRequestType.REINGRESSION");
+	return getDescription(AcademicServiceRequestType.REINGRESSION);
     }
 
     @Override
@@ -70,16 +85,23 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	    
-	} else if (academicServiceRequestBean.isNew()) {
-	    if (hasEvent()) {
-		throw new DomainException("AcademicServiceRequest.already.has.event");
-	    }
-	    new StudentReingressionRequestEvent(getAdministrativeOffice(), getPerson(), this);
-	    
 	} else if (academicServiceRequestBean.isToProcess()) {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
+	} else if (academicServiceRequestBean.isToConclude()) {
+	    RegistrationState.createState(getRegistration(), academicServiceRequestBean.getEmployee().getPerson(),
+		    new DateTime(), RegistrationStateType.REGISTERED);
 	}
+    }
+    
+    @Override
+    protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
+        super.createAcademicServiceRequestSituations(academicServiceRequestBean);
+        
+        if (academicServiceRequestBean.isToConclude()) {
+            AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
+		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
+        }
     }
 }

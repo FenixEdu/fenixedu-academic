@@ -347,7 +347,6 @@
 	</slot>		
 </schema>
 
-
 <schema name="student.registrationDetail" extends="student.registrationsWithStartData" 
 		type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="ingressionEnum" layout="format" key="label.ingression" >
@@ -357,6 +356,12 @@
 		<property name="format" value="${name}" />
 	</slot>			
 </schema>
+
+<schema name="student.registrationDetail.short" extends="student.registrationsToList"  
+		type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<remove name="registrationAgreement" />
+</schema>
+
 
 <schema name="student.studentCurricularPlans" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="startDateYearMonthDay" key="label.startDate" />

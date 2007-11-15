@@ -21,7 +21,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
     @Override
     public String getDescription() {
-	return getDescription("AcademicServiceRequestType.DOCUMENT", getDocumentRequestType().getQualifiedName());
+	return getDescription(AcademicServiceRequestType.DOCUMENT, getDocumentRequestType().getQualifiedName());
     }
 
     abstract public DocumentRequestType getDocumentRequestType();

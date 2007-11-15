@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -114,7 +113,7 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 	return null;
     }
 
-    private Collection<CycleCourseGroup> getCycleCourseGroups() {
+    public Collection<CycleCourseGroup> getCycleCourseGroups() {
 	Collection<CycleCourseGroup> result = new HashSet<CycleCourseGroup>();
 	for (Context context : getChildContextsSet()) {
 	    if (context.getChildDegreeModule().isCycleCourseGroup()) {

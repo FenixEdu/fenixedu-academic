@@ -336,8 +336,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     private Boolean getCanBeDeleted() {
 	return ((getRoot() == null || getRoot().getCanBeDeleted()) && !(hasAnyStudentCurricularPlans()
 		|| hasAnyCurricularCourseEquivalences() || hasAnyEnrolmentPeriods() || hasAnyCurricularCourses()
-		|| hasAnyExecutionDegrees() || hasAnyAreas() || hasServiceAgreementTemplate()
-		|| hasAnyDestinationExternalDegreeChangeRequests() || hasAnyDestinationInternalDegreeChangeRequests()));
+		|| hasAnyExecutionDegrees() || hasAnyAreas() || hasServiceAgreementTemplate()));
     }
 
     public void delete() {

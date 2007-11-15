@@ -29,14 +29,12 @@ import org.apache.struts.action.DynaActionForm;
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
     private DocumentRequest getDocumentRequest(HttpServletRequest request) {
-	return (DocumentRequest) rootDomainObject
-		.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
-			"documentRequestId"));
+	return (DocumentRequest) rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
+		"documentRequestId"));
     }
 
     private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
-	Integer academicServiceRequestId = getRequestParameterAsInteger(request,
-		"academicServiceRequestId");
+	Integer academicServiceRequestId = getRequestParameterAsInteger(request, "academicServiceRequestId");
 	if (academicServiceRequestId == null) {
 	    academicServiceRequestId = (Integer) request.getAttribute("academicServiceRequestId");
 	}
@@ -46,21 +44,20 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	return academicServiceRequest;
     }
 
-    public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws JRException, IOException {
+    public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws JRException, IOException {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
 	final AdministrativeOfficeDocument administrativeOfficeDocument = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		.create(documentRequest);
 
-	byte[] data = ReportsUtils.exportToPdf(administrativeOfficeDocument.getReportTemplateKey(),
-		administrativeOfficeDocument.getParameters(), administrativeOfficeDocument
-			.getResourceBundle(), administrativeOfficeDocument.getDataSource());
+	byte[] data = ReportsUtils.exportToPdf(administrativeOfficeDocument.getReportTemplateKey(), administrativeOfficeDocument
+		.getParameters(), administrativeOfficeDocument.getResourceBundle(), administrativeOfficeDocument.getDataSource());
 
 	response.setContentLength(data.length);
 	response.setContentType("application/pdf");
-	response.addHeader("Content-Disposition", "attachment; filename="
-		+ administrativeOfficeDocument.getReportFileName() + ".pdf");
+	response.addHeader("Content-Disposition", "attachment; filename=" + administrativeOfficeDocument.getReportFileName()
+		+ ".pdf");
 
 	final ServletOutputStream writer = response.getOutputStream();
 	writer.write(data);
@@ -138,11 +135,22 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
     public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
+	return prepareCreateDocumentRequest(mapping, form, request, response,
+		"DocumentRequestCreateBean.chooseDocumentRequestType");
+    }
+    
+    public ActionForward prepareCreateDocumentRequestQuick(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepareCreateDocumentRequest(mapping, form, request, response,
+		"DocumentRequestCreateBean.chooseDocumentRequestQuickType");
+    }
+    
+    private ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response, String schema) {
 
-	DocumentRequestCreator creator = new DocumentRequestCreator(getRegistration(request));
-	creator.setSchema(request.getParameter("schema"));
+	final DocumentRequestCreator creator = new DocumentRequestCreator(getRegistration(request));
+	creator.setSchema(schema);
 	request.setAttribute("documentRequestCreateBean", creator);
-
 	return mapping.findForward("createDocumentRequests");
     }
 
@@ -158,21 +166,18 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	return mapping.findForward("createDocumentRequests");
     }
 
-    private void setAdditionalInformationSchemaName(HttpServletRequest request,
-	    final DocumentRequestCreateBean requestCreateBean) {
+    private void setAdditionalInformationSchemaName(HttpServletRequest request, final DocumentRequestCreateBean requestCreateBean) {
 	if (requestCreateBean.getHasAdditionalInformation()) {
-	    request
-		    .setAttribute("additionalInformationSchemaName", "DocumentRequestCreateBean."
-			+ requestCreateBean.getChosenDocumentRequestType().name()
-			+ ".AdditionalInformation");
+	    request.setAttribute("additionalInformationSchemaName", "DocumentRequestCreateBean."
+		    + requestCreateBean.getChosenDocumentRequestType().name() + ".AdditionalInformation");
 	}
     }
 
-    public ActionForward viewDocumentRequestToCreate(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewDocumentRequestToCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) RenderUtils
-		.getViewState().getMetaObject().getObject();
+	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) RenderUtils.getViewState()
+		.getMetaObject().getObject();
 
 	setAdditionalInformationSchemaName(request, requestCreateBean);
 	request.setAttribute("documentRequestCreateBean", requestCreateBean);
