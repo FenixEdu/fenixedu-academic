@@ -111,9 +111,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getFreeProcessed();
     }
     
-    /**
-     * This method is overwritten in the subclasses
-     */
     public boolean isFree() {
 	return !isPayable() || isFreeProcessed();
     }
