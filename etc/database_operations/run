@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change Reason Column in TeacherServiceItem table" alterTableTeacherServiceItem.sql

@@ -61,9 +61,7 @@
 			<th><bean:message key="label.support-lesson.delete"/></th>																		
 		</tr>
 
-		<bean:define id="linkDelete" type="java.lang.String">
-			/supportLessonsManagement.do?method=deleteSupportLesson&amp;page=0&amp;professorshipID=<bean:write name="professorship" property="idInternal"/>
-		</bean:define>
+		<bean:define id="linkDelete" type="java.lang.String">/supportLessonsManagement.do?method=deleteSupportLesson&amp;page=0&amp;professorshipID=<bean:write name="professorship" property="idInternal"/></bean:define>
 		<logic:iterate id="supportLesson" name="supportLessonList">
 			<tr>
 				<td>

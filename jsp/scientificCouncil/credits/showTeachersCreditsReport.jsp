@@ -21,7 +21,7 @@
 	<bean:define id="fromExecutionYearID" name="fromExecutionYearID"/>
 	<bean:define id="untilExecutionYearID" name="untilExecutionYearID"/>	
 	
-	<ul class="mtop15 mbottom05">
+	<ul class="mtop15 mbottom1">
 		<li>
 			<html:link page="<%= "/creditsReport.do?method=exportToExcel&amp;departmentID=" + departmentID 
 				+ "&amp;untilExecutionYearID=" + untilExecutionYearID + "&amp;fromExecutionYearID=" + fromExecutionYearID %>">
@@ -136,8 +136,12 @@
 		</logic:iterate>
 	</logic:iterate>
 	
-	<html:link page="<%= "/creditsReport.do?method=exportToExcel&amp;departmentID=" + departmentID 
-		+ "&amp;untilExecutionYearID=" + untilExecutionYearID + "&amp;fromExecutionYearID=" + fromExecutionYearID %>">
-		<bean:message key="link.credits.xlsFileToDownload"/>
-	</html:link>
+	<ul>
+		<li>
+			<html:link page="<%= "/creditsReport.do?method=exportToExcel&amp;departmentID=" + departmentID 
+				+ "&amp;untilExecutionYearID=" + untilExecutionYearID + "&amp;fromExecutionYearID=" + fromExecutionYearID %>">
+				<bean:message key="link.credits.xlsFileToDownload"/>
+			</html:link>	
+		</li>
+	</ul>
 </logic:notEmpty>

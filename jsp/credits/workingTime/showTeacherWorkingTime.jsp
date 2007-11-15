@@ -24,10 +24,7 @@
 </html:messages>
 
 
-<bean:define id="editLink" type="java.lang.String">
-	/institutionWorkingTimeManagement.do?method=prepareEdit&amp;page=0&amp;teacherId=<bean:write name="teacher" property="idInternal"/>
-	&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>
-</bean:define>
+<bean:define id="editLink" type="java.lang.String">/institutionWorkingTimeManagement.do?method=prepareEdit&amp;page=0&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/></bean:define>
 
 <ul>
 	<li>
@@ -50,9 +47,7 @@
 		
 <logic:present name="institutionWorkTimeList">
 
-	<bean:define id="linkDelete" type="java.lang.String">
-		/institutionWorkingTimeManagement.do?method=deleteInstitutionWorkingTime&amp;page=0&amp;teacherNumber=<bean:write name="teacherNumber"/>&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>
-	</bean:define>
+	<bean:define id="linkDelete" type="java.lang.String">/institutionWorkingTimeManagement.do?method=deleteInstitutionWorkingTime&amp;page=0&amp;teacherNumber=<bean:write name="teacherNumber"/>&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/></bean:define>
 	
 	<table class="tstyle4">
 		<tr>
