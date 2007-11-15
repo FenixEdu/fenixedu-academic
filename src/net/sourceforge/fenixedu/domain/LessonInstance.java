@@ -62,7 +62,7 @@ public class LessonInstance extends LessonInstance_Base {
 	lessonInstanceSpaceOccupationManagement(room);	
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances")
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
     public LessonInstance(Lesson lesson, YearMonthDay day) {
 	
 	super();

@@ -51,7 +51,8 @@ public class ResourceAllocationRolePredicates {
 	    }
 	    
 	    ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();	    	   
-	    if(loggedPerson.hasTeacher() && loggedPerson.getTeacher().hasProfessorshipForExecutionCourse(executionCourse)) {
+	    if(loggedPerson.hasTeacher() && loggedPerson.hasRole(RoleType.TEACHER) 
+		    && loggedPerson.getTeacher().hasProfessorshipForExecutionCourse(executionCourse)) {
 		return true;
 	    }	
 	    
