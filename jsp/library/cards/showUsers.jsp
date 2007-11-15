@@ -71,6 +71,10 @@
 			<em><bean:message key="message.card.numberOfPersons" bundle="LIBRARY_RESOURCES" arg0="<%= numberOfElements.toString() %>"/></em>
 		</p>
 		
+		<html:link page="<%= "/cardManagement.do?method=exportToExcel" + query.toString()%>">
+			<bean:message key="link.exportToExcel" bundle="LIBRARY_RESOURCES"/>
+		</html:link>
+		
 		<bean:define id="searchName" value="" type="java.lang.String"/>
 		<logic:notEmpty name="libraryCardSearch" property="userName">
 			<bean:define id="searchName" name="libraryCardSearch" property="userName" type="java.lang.String"/>

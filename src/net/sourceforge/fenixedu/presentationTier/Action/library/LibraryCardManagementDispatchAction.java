@@ -20,13 +20,14 @@ import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
-import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
+import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -64,19 +65,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 		libraryCardSearch = new LibraryCardSearch();
 		libraryCardSearch.setPartyClassification(partyClassification);
 	    }
-	    String partyClassificationString = request.getParameter("partyClassification");
-	    if (!StringUtils.isEmpty(partyClassificationString)) {
-		libraryCardSearch.setPartyClassification(PartyClassification
-			.valueOf(partyClassificationString));
-	    }
-	    String userName = request.getParameter("userName");
-	    if (!StringUtils.isEmpty(userName)) {
-		libraryCardSearch.setUserName(userName);
-	    }
-	    String number = request.getParameter("number");
-	    if (!StringUtils.isEmpty(number)) {
-		libraryCardSearch.setNumber(Integer.valueOf(number));
-	    }
+	    setSearchCriteria(request, libraryCardSearch);
 	}
 
 	if (request.getParameter("dontSearch") == null) {
@@ -86,6 +75,22 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	request.setAttribute("dontSearch", request.getParameter("dontSearch"));
 	request.setAttribute("libraryCardSearch", libraryCardSearch);
 	return mapping.findForward("show-users");
+    }
+
+    private void setSearchCriteria(HttpServletRequest request, LibraryCardSearch libraryCardSearch) {
+	String partyClassificationString = request.getParameter("partyClassification");
+	if (!StringUtils.isEmpty(partyClassificationString)) {
+	    libraryCardSearch.setPartyClassification(PartyClassification
+		    .valueOf(partyClassificationString));
+	}
+	String userName = request.getParameter("userName");
+	if (!StringUtils.isEmpty(userName)) {
+	    libraryCardSearch.setUserName(userName);
+	}
+	String number = request.getParameter("number");
+	if (!StringUtils.isEmpty(number)) {
+	    libraryCardSearch.setNumber(Integer.valueOf(number));
+	}
     }
 
     public ActionForward prepareGenerateCard(ActionMapping mapping, ActionForm actionForm,
@@ -527,6 +532,51 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("create-card");
     }
 
+
+    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+	LibraryCardSearch libraryCardSearch = new LibraryCardSearch();
+	setSearchCriteria(request, libraryCardSearch);
+	libraryCardSearch.doSearch();
+	Spreadsheet spreadsheet = new Spreadsheet("Utilizadores_Biblioteca");
+	spreadsheet.setHeader("Categoria");
+	spreadsheet.setHeader("Número");
+	spreadsheet.setHeader("Nome");
+	spreadsheet.setHeader("Unidade");
+	spreadsheet.setHeader("Telefone");
+	spreadsheet.setHeader("Telemóvel");
+	spreadsheet.setHeader("Email");
+	spreadsheet.setHeader("Pin");
+	spreadsheet.setHeader("Morada");
+	spreadsheet.setHeader("Localidade");
+	spreadsheet.setHeader("Código Postal");
+
+	for (LibraryCardDTO libraryCardDTO : libraryCardSearch.getSearchResult()) {
+	    if (libraryCardDTO.getPin() != null) {
+		Person person = libraryCardDTO.getPerson();
+		final Row row = spreadsheet.addRow();
+		row.setCell(libraryCardDTO.getCategory());
+		row.setCell(libraryCardDTO.getNumberToPDF());
+		row.setCell(libraryCardDTO.getUserName());
+		row.setCell(libraryCardDTO.getUnitName());
+		row.setCell(libraryCardDTO.getPhone());
+		row.setCell(libraryCardDTO.getMobile());
+		row.setCell(person.getEmail());
+		row.setCell(libraryCardDTO.getPinToShow());
+		row.setCell(person.getAddress());
+		row.setCell(person.getParishOfResidence());
+		row.setCell(person.getPostalCode());
+	    }
+	}
+	response.setContentType("application/vnd.ms-excel");
+	response.setHeader("Content-Disposition", "attachment; filename=utentes_biblioteca.xls");
+	final ServletOutputStream writer = response.getOutputStream();
+	spreadsheet.exportToXLSSheet(writer);
+	writer.flush();
+	response.flushBuffer();
+	return null;
+    }
+    
     private boolean validateNamesMaxLength(HttpServletRequest request, LibraryCardDTO libraryCardDTO) {
 	boolean validationError = Boolean.FALSE;
 	if (libraryCardDTO.getUserName().length() > maxUserNameLength) {
@@ -552,12 +602,6 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    }
 	}
 	return pins;
-    }
-
-    private void addMessage(HttpServletRequest request, String msg) {
-	ActionMessages actionMessages = getMessages(request);
-	actionMessages.add("message", new ActionMessage(msg));
-	saveMessages(request, actionMessages);
     }
 
     private void addMessage(HttpServletRequest request, String msg, int parameter1, int parameter2) {
