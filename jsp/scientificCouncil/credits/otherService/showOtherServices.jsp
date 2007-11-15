@@ -15,9 +15,7 @@
 	<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>	
 </div>
 	
-	<bean:define id="link">
-		/otherServiceManagement.do?executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;
-	</bean:define>
+	<bean:define id="link">/otherServiceManagement.do?executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/></bean:define>
 
 <ul>	
 	<li>
