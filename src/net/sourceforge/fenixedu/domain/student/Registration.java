@@ -1840,13 +1840,16 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    final public boolean hasState(final RegistrationStateType stateType) {
+    public boolean hasState(final RegistrationStateType stateType) {
+	return hasAnyState(Collections.singletonList(stateType));
+    }
+    
+    public boolean hasAnyState(final Collection<RegistrationStateType> stateTypes) {
 	for (final RegistrationState registrationState : getRegistrationStates()) {
-	    if (registrationState.getStateType() == stateType) {
+	    if (stateTypes.contains(registrationState.getStateType())) {
 		return true;
 	    }
 	}
-
 	return false;
     }
 
@@ -1854,15 +1857,17 @@ public class Registration extends Registration_Base {
 	return getRegistrationStatesTypes(executionYear).contains(registrationStateType);
     }
 
-    final public Collection<RegistrationState> getRegistrationStates(final RegistrationStateType registrationStateType) {
+    public Collection<RegistrationState> getRegistrationStates(final RegistrationStateType registrationStateType) {
+	return getRegistrationStates(Collections.singletonList(registrationStateType));
+    }
+    
+    public Collection<RegistrationState> getRegistrationStates(final Collection<RegistrationStateType> registrationStateTypes) {
 	final Collection<RegistrationState> result = new HashSet<RegistrationState>();
-
 	for (final RegistrationState registrationState : getRegistrationStates()) {
-	    if (registrationState.getStateType() == registrationStateType) {
+	    if (registrationStateTypes.contains(registrationState.getStateType())) {
 		result.add(registrationState);
 	    }
 	}
-
 	return result;
     }
 
