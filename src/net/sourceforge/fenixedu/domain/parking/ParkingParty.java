@@ -345,17 +345,19 @@ public class ParkingParty extends ParkingParty_Base {
 	    Person person = (Person) getParty();
 	    Student student = person.getStudent();
 	    if (student != null && person.getPersonRole(RoleType.STUDENT) != null) {
-		if (student.getActiveRegistrations().size() == 1) {
-		    Registration registration = student.getActiveRegistrations().get(0);
+		for (Registration registration : student.getActiveRegistrations()) {
 		    StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
 		    if (scp != null) {
+			stringBuilder.append(scp.getDegreeCurricularPlan().getName());
 			if (!registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-			    stringBuilder.append(registration.getCurricularYear()).append("º ano");
+			    stringBuilder.append(" ").append(registration.getCurricularYear()).append(
+				    "º ano");
 			    if (isFirstTimeEnrolledInCurrentYear(registration, registration
 				    .getCurricularYear())) {
 				stringBuilder.append(" - 1ª vez");
 			    }
 			}
+			stringBuilder.append("<br/>");
 		    }
 		}
 	    }
