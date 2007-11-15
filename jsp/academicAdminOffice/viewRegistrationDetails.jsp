@@ -207,14 +207,27 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
 				<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,nowrap,,acenter nowrap,nowrap" />
+				
+				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
+				<fr:property name="key(view)" value="view"/>
+				
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
  				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>
+ 				
+ 				<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
+				<fr:property name="key(payments)" value="payments"/>
+				<fr:property name="visibleIfNot(payments)" value="isPayed"/>
+ 				
 				<fr:property name="linkFormat(processing)" value="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(processing)" value="processing"/>
 				<%--<fr:property name="visibleIf(processing)" value="availableForEmployeeToActUpon"/>--%>
-				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
-				<fr:property name="key(view)" value="view"/>
+				
+				<fr:property name="order(view)" value="1" />
+				<fr:property name="order(reject)" value="2" />
+				<fr:property name="order(payments)" value="3" />
+				<fr:property name="order(processing)" value="4" />
+				
 				<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
 		</fr:view>
@@ -237,14 +250,22 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop0" />
 				<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,nowrap,,acenter nowrap,nowrap" />
+				
+				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
+				<fr:property name="key(view)" value="view"/>
+
 				<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(reject)" value="reject"/>
 				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>				
+
 				<fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(conclude)" value="conclude"/>
 				<%--<fr:property name="visibleIf(conclude)" value="availableForEmployeeToActUpon"/>--%>				
-				<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
-				<fr:property name="key(view)" value="view"/>
+
+				<fr:property name="order(view)" value="1" />
+				<fr:property name="order(reject)" value="2" />
+				<fr:property name="order(conclude)" value="3" />
+				
 				<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
 		</fr:view>
@@ -287,6 +308,7 @@
 				<fr:property name="order(print)" value="2"/>
 				<fr:property name="order(payments)" value="3"/>
 				<fr:property name="order(deliver)" value="4"/>
+				
 				<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
 		</fr:view>
