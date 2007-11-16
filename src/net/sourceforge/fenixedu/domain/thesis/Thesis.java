@@ -849,7 +849,6 @@ public class Thesis extends Thesis_Base {
 
     public boolean isWaitingConfirmation() {
 	ThesisState state = getState();
-
 	return state == ThesisState.APPROVED || state == ThesisState.REVISION;
     }
 
@@ -859,6 +858,10 @@ public class Thesis extends Thesis_Base {
 
     public boolean isEvaluated() {
 	return getState() == ThesisState.EVALUATED;
+    }
+    
+    public boolean isInRevision() {
+	return getState() == ThesisState.REVISION;
     }
 
     public boolean isRejected() {
@@ -1317,4 +1320,10 @@ public class Thesis extends Thesis_Base {
 	setOrientatorCreditsDistribution(percent != null ? 100 - percent : null);
     }
 
+    public DateTime getCurrentDiscussedDate() {
+	if(isConfirmed() || isEvaluated() || isInRevision()) {
+	    return getDiscussed();
+	}
+	return getProposedDiscussed();
+    }
 }

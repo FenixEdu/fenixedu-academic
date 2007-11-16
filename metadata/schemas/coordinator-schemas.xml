@@ -132,6 +132,13 @@
     <slot name="proposedPlace" key="label.coordinator.thesis.place" layout="null-as-label"/>
 </schema>
 
+<schema name="thesis.discussion.date" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="currentDiscussedDate" key="label.coordinator.thesis.discussed" layout="null-as-label">
+        <property name="label" value="-"/>
+        <property name="subLayout" value="dataDependent"/>
+    </slot>    
+</schema>
+
 <schema name="thesis.jury.proposal.discussion.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="proposedDiscussed" key="label.coordinator.thesis.discussed"/>
     <slot name="proposedPlace" key="label.coordinator.thesis.place"/>
