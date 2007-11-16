@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest;
@@ -13,8 +12,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
-public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements
-	FactoryExecutor {
+public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements FactoryExecutor {
 
     public RegistrationAcademicServiceRequestCreator(final Registration registration) {
 	super(registration);
@@ -38,8 +36,7 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 
 	case COURSE_GROUP_CHANGE_REQUEST:
 	    result = new CourseGroupChangeRequest(getRegistration(), getCurriculumGroup(), getCourseGroup(), ExecutionYear.readCurrentExecutionYear());
-	    throw new DomainException("not.implemented");
-	    //break;
+	    break;
 
 	case EXTRA_EXAM_REQUEST:
 	    result = new ExtraExamRequest(getRegistration(), getEnrolment(), ExecutionYear.readCurrentExecutionYear());
