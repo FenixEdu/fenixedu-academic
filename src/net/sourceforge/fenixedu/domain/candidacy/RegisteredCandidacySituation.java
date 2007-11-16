@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EntryPhase;
 
@@ -121,11 +122,13 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
     }
 
     @Override
-    public void nextState() {
+    public IState nextState() {
+	return null;
     }
 
     @Override
-    public void nextState(String nextState) {
+    public IState nextState(String nextState) {
+	return null;
     }
 
 }

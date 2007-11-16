@@ -5,6 +5,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.workflow.IState;
 
 import org.joda.time.DateTime;
 
@@ -34,7 +35,8 @@ public class TransitedState extends TransitedState_Base {
 	return Collections.emptySet();
     }
 
-    public void nextState() {
+    public IState nextState() {
+	return null;
     }
 
 }

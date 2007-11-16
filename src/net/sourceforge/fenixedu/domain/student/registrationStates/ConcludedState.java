@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
+import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -68,12 +69,12 @@ public class ConcludedState extends ConcludedState_Base {
 	return new HashSet<String>();
     }
 
-    public void nextState() {
+    public IState nextState() {
 	throw new DomainException("error.impossible.to.forward.from.concluded");
     }
 
     @Override
-    public void nextState(String nextState) {
+    public IState nextState(String nextState) {
 	throw new DomainException("error.impossible.to.forward.from.concluded");
     }
 

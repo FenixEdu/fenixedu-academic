@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -127,7 +128,7 @@ public abstract class Candidacy extends Candidacy_Base {
 
     public abstract String getDefaultState();
 
-    public void nextState(String nextState) {
+    public CandidacySituation nextState(String nextState) {
 	CandidacySituationType situationType = CandidacySituationType.valueOf(nextState);
 
 	if (!situationType.equals(this.getActiveCandidacySituation().getCandidacySituationType())
@@ -135,41 +136,33 @@ public abstract class Candidacy extends Candidacy_Base {
 
 	    switch (situationType) {
 	    case CANCELLED:
-		new CancelledCandidacySituation(this);
-		break;
+		return new CancelledCandidacySituation(this);
 	    case PRE_CANDIDACY:
-		new PreCandidacySituation(this);
-		break;
+		return new PreCandidacySituation(this);
 	    case STAND_BY:
-		new StandByCandidacySituation(this);
-		break;
+		return new StandByCandidacySituation(this);
 	    case STAND_BY_CONFIRMED_DATA:
-		new StandByConfirmedDataCandidacySituation(this);
-		break;
+		return new StandByConfirmedDataCandidacySituation(this);
 	    case STAND_BY_FILLED_DATA:
-		new StandByFilledDataCandidacySituation(this);
-		break;
+		return new StandByFilledDataCandidacySituation(this);
 	    case REGISTERED:
-		new RegisteredCandidacySituation(this);
-		break;
+		return new RegisteredCandidacySituation(this);
 	    case ADMITTED:
-		new AdmittedCandidacySituation(this);
-		break;
+		return new AdmittedCandidacySituation(this);
 	    case NOT_ADMITTED:
-		new NotAdmittedCandidacySituation(this);
-		break;
+		return new NotAdmittedCandidacySituation(this);
 	    case SUBSTITUTE:
-		new SubstituteCandidacySituation(this);
-		break;
+		return new SubstituteCandidacySituation(this);
 	    default:
 		break;
 	    }
 	}
+	return null;
     }
 
 
-    public void nextState() {
-	nextState(getDefaultState());
+    public IState  nextState() {
+	return nextState(getDefaultState());
     }
     
     public void checkConditionsToForward() {

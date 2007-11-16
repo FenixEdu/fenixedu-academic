@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.workflow.IState;
 
 /**
  * 
@@ -44,8 +45,8 @@ public class SchoolPartConcludedState extends SchoolPartConcludedState_Base {
 	return states;
     }
 
-    public void nextState() {
-	nextState(RegistrationStateType.CONCLUDED.toString());
+    public IState nextState() {
+	return nextState(RegistrationStateType.CONCLUDED.toString());
     }
 
 }

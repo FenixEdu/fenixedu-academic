@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.workflow.IState;
 
 import org.joda.time.DateTime;
 
@@ -50,8 +51,8 @@ public class RegisteredState extends RegisteredState_Base {
 	return states;
     }
 
-    public void nextState() {
-	// TODO Auto-generated method stub	
+    public IState nextState() {
+	return null;	
     }
     
     @Override

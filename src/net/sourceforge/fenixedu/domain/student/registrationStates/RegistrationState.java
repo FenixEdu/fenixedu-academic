@@ -86,8 +86,8 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	init(registration, null, null);
     }
 
-    public void nextState(String nextState) {
-	createState(getRegistration(), AccessControl.getPerson(), null, RegistrationStateType.valueOf(nextState));
+    public IState nextState(String nextState) {
+	return createState(getRegistration(), AccessControl.getPerson(), null, RegistrationStateType.valueOf(nextState));
     }
 
     public abstract RegistrationStateType getStateType();
@@ -189,8 +189,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    if (previousState == null) {
 		createdState = RegistrationState.createState(getRegistration(), null, stateDateTime, getStateType());
 	    } else {
-		StateMachine.execute(previousState, getStateType().name());
-		createdState = getRegistration().getActiveState();
+		createdState = (RegistrationState) StateMachine.execute(previousState, getStateType().name());
 		createdState.setStateDate(stateDateTime);
 	    }
 	    createdState.setRemarks(getRemarks());

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.IStateWithOperations;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -115,12 +116,12 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
 	getCandidacy().moveToNextState(((CandidacyOperation) operation).getType(), person);
     }
 
-    public void nextState() {
-	this.getCandidacy().nextState(); 
+    public IState nextState() {
+	return this.getCandidacy().nextState(); 
     }
 
-    public void nextState(String nextState)  {
-	this.getCandidacy().nextState(nextState);
+    public IState nextState(String nextState)  {
+	return (IState) this.getCandidacy().nextState(nextState);
     }
     
     public Set<String> getValidNextStates() {
