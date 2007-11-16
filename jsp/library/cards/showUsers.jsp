@@ -71,6 +71,7 @@
 			<em><bean:message key="message.card.numberOfPersons" bundle="LIBRARY_RESOURCES" arg0="<%= numberOfElements.toString() %>"/></em>
 		</p>
 		
+		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
 		<html:link page="<%= "/cardManagement.do?method=exportToExcel" + query.toString()%>">
 			<bean:message key="link.exportToExcel" bundle="LIBRARY_RESOURCES"/>
 		</html:link>
