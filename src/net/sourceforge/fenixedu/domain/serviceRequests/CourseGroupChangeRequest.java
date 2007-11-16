@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -75,4 +76,13 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
         super.delete();
     }
 
+    @Override
+    protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
+        super.createAcademicServiceRequestSituations(academicServiceRequestBean);
+        
+        if (academicServiceRequestBean.isToConclude()) {
+            AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
+		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
+        }
+    }
 }
