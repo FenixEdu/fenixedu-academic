@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
@@ -225,8 +224,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public AcademicServiceRequestSituation getActiveSituation() {
-	return (!getAcademicServiceRequestSituations().isEmpty()) ? (AcademicServiceRequestSituation) Collections
-		.max(getAcademicServiceRequestSituations(), new BeanComparator("creationDate"))
+	return (!getAcademicServiceRequestSituations().isEmpty()) ? (AcademicServiceRequestSituation) Collections.min(
+		getAcademicServiceRequestSituations(), AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID)
 		: null;
     }
     
