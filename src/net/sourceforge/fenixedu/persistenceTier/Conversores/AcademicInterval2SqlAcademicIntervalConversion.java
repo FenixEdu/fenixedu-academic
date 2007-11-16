@@ -14,7 +14,8 @@ public class AcademicInterval2SqlAcademicIntervalConversion implements FieldConv
     public Object javaToSql(Object source) throws ConversionException {
 	if (source instanceof AcademicInterval) {
 	    AcademicInterval academicInterval = (AcademicInterval) source;	    
-	    return academicInterval.getEntryClassName() + ":" + academicInterval.getEntryIdInternal();
+	    return academicInterval.getEntryClassName() + ":" + academicInterval.getEntryIdInternal()
+	    	+ ":" + academicInterval.getAcademicCalendarIdInternal();
 	}
 	return source;
     }
