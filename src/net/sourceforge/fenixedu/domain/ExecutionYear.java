@@ -109,7 +109,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return getNextExecutionYear() != null;
     }
 
-    public int compareTo(ExecutionYear object) {	
+    public int compareTo(ExecutionYear object) {
+	if(object == null) {
+	    return 1;
+	}
 	return getExecutionInterval().getStartDateTimeWithoutChronology().compareTo(object.getExecutionInterval().getStartDateTimeWithoutChronology());
     }
 

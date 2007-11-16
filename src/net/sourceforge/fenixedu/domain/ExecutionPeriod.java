@@ -104,6 +104,9 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
     }
 
     public int compareTo(ExecutionPeriod object) {
+	if(object == null) {
+	    return 1;
+	}
 	return EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR.compare(this, object);
     }
 
