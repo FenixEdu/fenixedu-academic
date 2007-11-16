@@ -11,13 +11,13 @@ import org.joda.time.DateTime;
 
 public class AcademicServiceRequestSituation extends AcademicServiceRequestSituation_Base {
 
-    public static Comparator<AcademicServiceRequestSituation> COMPARATOR_BY_MOST_RECENT_CREATION_DATE = new Comparator<AcademicServiceRequestSituation>() {
+    public static Comparator<AcademicServiceRequestSituation> COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID = new Comparator<AcademicServiceRequestSituation>() {
 	public int compare(AcademicServiceRequestSituation leftAcademicServiceRequestSituation,
 		AcademicServiceRequestSituation rightAcademicServiceRequestSituation) {
-	    int comparationResult = -(leftAcademicServiceRequestSituation.getCreationDate()
-		    .compareTo(rightAcademicServiceRequestSituation.getCreationDate()));
-	    return (comparationResult == 0) ? leftAcademicServiceRequestSituation.getIdInternal().compareTo(
-		    rightAcademicServiceRequestSituation.getIdInternal()) : comparationResult;
+	    int comparationResult = leftAcademicServiceRequestSituation.getCreationDate().compareTo(
+		    rightAcademicServiceRequestSituation.getCreationDate());
+	    return -((comparationResult == 0) ? COMPARATOR_BY_ID.compare(leftAcademicServiceRequestSituation,
+		    rightAcademicServiceRequestSituation) : comparationResult);
 	}
     };
 
