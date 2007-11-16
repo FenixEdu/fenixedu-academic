@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -49,7 +50,7 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     private boolean studentHasValidStatutes(final Registration registration, final Enrolment enrolment) {
 	final Student student = registration.getStudent();
 	for (final StudentStatuteBean bean : student.getStatutes(enrolment.getExecutionPeriod())) {
-	    if (!acceptedStatutes.contains(bean.getStatuteType())) {
+	    if (acceptedStatutes.contains(bean.getStatuteType())) {
 		return true;
 	    }
 	}
@@ -75,5 +76,15 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     public void delete() {
         super.setEnrolment(null);
         super.delete();
+    }
+    
+    @Override
+    protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
+        super.createAcademicServiceRequestSituations(academicServiceRequestBean);
+        
+        if (academicServiceRequestBean.isToConclude()) {
+            AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
+		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
+        }
     }
 }
