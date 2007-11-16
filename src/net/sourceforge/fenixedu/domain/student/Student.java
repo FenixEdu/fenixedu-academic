@@ -767,6 +767,16 @@ public class Student extends Student_Base {
 	}
 	return null;
     }
+
+    public Registration getRegistrationFor(Degree degree) {
+	for (Registration registration : super.getRegistrations()) {
+	    if (registration.getDegree() == degree) {
+		return registration;
+	    }
+	}
+	return null;
+    }
+    
     
     public Registration getActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
 	for (final Registration registration : getActiveRegistrations()) {
