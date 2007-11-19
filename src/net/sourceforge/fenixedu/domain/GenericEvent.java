@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -191,7 +192,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	    GenericEventSpaceOccupation occupation = getGenericEventSpaceOccupations().get(0);
 	    return occupation.getEventSpaceOccupationIntervals(begin, end);	    
 	}
-	return new ArrayList<Interval>();
+	return Collections.emptyList();
     }
     
     public boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
@@ -251,7 +252,10 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     }
 
     public List<Interval> getGanttDiagramEventSortedIntervals() {	
-	return (!getGenericEventSpaceOccupations().isEmpty()) ? getGenericEventSpaceOccupations().get(0).getEventSpaceOccupationIntervals() : new ArrayList<Interval>();
+	if(!getGenericEventSpaceOccupations().isEmpty()) {
+	    return getGenericEventSpaceOccupations().get(0).getEventSpaceOccupationIntervals(null, null);
+	}
+	return Collections.emptyList();
     }
 
     public String getGanttDiagramEventPeriod() {

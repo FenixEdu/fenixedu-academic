@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -36,13 +37,13 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 	if(hasWrittenEvaluations(writtenEvaluation)) {
 	    removeWrittenEvaluations(writtenEvaluation);
 	}
-	
+
 	if(!getRoom().isFree(writtenEvaluation.getBeginningDateTime().toYearMonthDay(), writtenEvaluation.getEndDateTime().toYearMonthDay(),
 		writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond(),
 		writtenEvaluation.getDayOfWeek(), null, null, null)) {		
 	    throw new DomainException("error.roomOccupied", getRoom().getName());
 	}
-	
+
 	addWrittenEvaluations(writtenEvaluation);
     }
 
@@ -58,12 +59,17 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     }
 
     @Override
-    public List<Interval> getEventSpaceOccupationIntervals() {
+    public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
 	List<Interval> result = new ArrayList<Interval>();
 	List<WrittenEvaluation> writtenEvaluations = getWrittenEvaluations();
-	for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {	    
-	    result.add(createNewInterval(writtenEvaluation.getDayDateYearMonthDay(), writtenEvaluation.getDayDateYearMonthDay(),
-		    writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
+		
+	for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {	   
+	    if((startDateToSearch == null || !writtenEvaluation.getDayDateYearMonthDay().isBefore(startDateToSearch)) 
+		    && (endDateToSearch == null || !writtenEvaluation.getDayDateYearMonthDay().isAfter(endDateToSearch))) {
+		
+		result.add(createNewInterval(writtenEvaluation.getDayDateYearMonthDay(), writtenEvaluation.getDayDateYearMonthDay(),
+			writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
+	    }
 	}
 	return result;
     }
