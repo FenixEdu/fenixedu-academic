@@ -759,7 +759,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     @SuppressWarnings("unchecked")
     public Curriculum getCurriculum(final ExecutionYear executionYear) {
-	return getExecutionYear().isBefore(executionYear) && isApproved() ? 
+	return (executionYear == null || getExecutionYear().isBefore(executionYear)) && 
+		isApproved() && 
+		!getCurriculumGroup().isPropaedeutic() && 
+		!getCurriculumGroup().isExtraCurriculum() ? 
 		new Curriculum(
 			this, 
 			executionYear, 
