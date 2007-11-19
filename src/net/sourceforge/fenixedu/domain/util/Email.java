@@ -6,12 +6,17 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class Email extends Email_Base {
+    
+    public Email() {
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+    }
 
     public Email(final String fromName, final String fromAddress, final String[] replyTos,
 	    final Collection<String> toAddresses, final Collection<String> ccAddresses,
 	    final Collection<String> bccAddresses, final String subject, final String body) {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
+	
+	this();
 	setFromName(fromName);
 	setFromAddress(fromAddress);
 	setReplyTos(new EmailAddressList(replyTos == null ? null : Arrays.asList(replyTos)));
@@ -20,10 +25,6 @@ public class Email extends Email_Base {
 	setBccAddresses(new EmailAddressList(bccAddresses));
 	setSubject(subject);
 	setBody(body);
-    }
-
-    public Email() {
-        super();
     }
 
     public void delete() {
