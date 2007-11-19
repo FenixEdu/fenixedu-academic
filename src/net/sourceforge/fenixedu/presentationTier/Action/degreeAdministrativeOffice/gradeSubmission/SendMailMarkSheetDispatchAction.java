@@ -24,99 +24,100 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
-	
-	public ActionForward prepareSearchSendMail(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-		MarkSheetSendMailBean bean = new MarkSheetSendMailBean();
-		request.setAttribute("bean", bean);
-		return mapping.findForward("searchSendMail");
-	}
-	
-    public ActionForward prepareSearchSendMailPostBack(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        
-        Object object = RenderUtils.getViewState().getMetaObject().getObject();
-        RenderUtils.invalidateViewState();
-        request.setAttribute("bean", object);
-        
-        return mapping.getInputForward();
+
+    public ActionForward prepareSearchSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	MarkSheetSendMailBean bean = new MarkSheetSendMailBean();
+	request.setAttribute("bean", bean);
+	return mapping.findForward("searchSendMail");
     }
-    
-    public ActionForward prepareSearchSendMailInvalid(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-        
-        request.setAttribute("bean", RenderUtils.getViewState().getMetaObject().getObject());        
-        return mapping.getInputForward();
+
+    public ActionForward prepareSearchSendMailPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	Object object = RenderUtils.getViewState().getMetaObject().getObject();
+	RenderUtils.invalidateViewState();
+	request.setAttribute("bean", object);
+
+	return mapping.getInputForward();
     }
-	
-	public ActionForward searchSendMail(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-		MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState().getMetaObject().getObject();
-		Collection<MarkSheet> markSheets = bean.getExecutionPeriod().getMarkSheetsToConfirm(bean.getDegreeCurricularPlan());
-		Collection<ExecutionCourse> executionCourses = bean.getExecutionPeriod().getExecutionCoursesWithDegreeGradesToSubmit(bean.getDegreeCurricularPlan());
-		if(!markSheets.isEmpty()) {
-			Map<CurricularCourse, MarkSheetToConfirmSendMailBean> map = new HashMap<CurricularCourse, MarkSheetToConfirmSendMailBean>();
-			for (MarkSheet markSheet : markSheets) {
-				if(map.get(markSheet.getCurricularCourse()) == null) {
-					map.put(markSheet.getCurricularCourse(), new MarkSheetToConfirmSendMailBean(markSheet, true));
-				}
-			}
-			bean.setMarkSheetToConfirmSendMailBean(new ArrayList<MarkSheetToConfirmSendMailBean>(map.values()));
+
+    public ActionForward prepareSearchSendMailInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("bean", RenderUtils.getViewState().getMetaObject().getObject());
+	return mapping.getInputForward();
+    }
+
+    public ActionForward searchSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState().getMetaObject().getObject();
+	Collection<MarkSheet> markSheets = bean.getExecutionPeriod().getMarkSheetsToConfirm(bean.getDegreeCurricularPlan());
+	Collection<ExecutionCourse> executionCourses = bean.getExecutionPeriod().getExecutionCoursesWithDegreeGradesToSubmit(
+		bean.getDegreeCurricularPlan());
+	if (!markSheets.isEmpty()) {
+	    Map<CurricularCourse, MarkSheetToConfirmSendMailBean> map = new HashMap<CurricularCourse, MarkSheetToConfirmSendMailBean>();
+	    for (MarkSheet markSheet : markSheets) {
+		if (map.get(markSheet.getCurricularCourse()) == null) {
+		    map.put(markSheet.getCurricularCourse(), new MarkSheetToConfirmSendMailBean(markSheet, true));
 		}
-		if(!executionCourses.isEmpty()) {
-			Collection<GradesToSubmitExecutionCourseSendMailBean> executionCoursesBean =  new ArrayList<GradesToSubmitExecutionCourseSendMailBean>();
-			for (ExecutionCourse course : executionCourses) {
-				executionCoursesBean.add(new GradesToSubmitExecutionCourseSendMailBean(course, true));
-			}
-			bean.setGradesToSubmitExecutionCourseSendMailBean(executionCoursesBean);
-		}
-		request.setAttribute("bean", bean);
-		return mapping.findForward("searchSendMail");
+	    }
+	    bean.setMarkSheetToConfirmSendMailBean(new ArrayList<MarkSheetToConfirmSendMailBean>(map.values()));
 	}
-	
-	public ActionForward prepareMarkSheetsToConfirmSendMail(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-		MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState("sendMailBean").getMetaObject().getObject();
-		bean.setFrom(getResources(request, "GLOBAL_RESOURCES").getMessage("degreeAdminOffice.mail"));
-		request.setAttribute("bean", bean);
-		return mapping.findForward("prepareMarkSheetsToConfirmSendMail");
+	if (!executionCourses.isEmpty()) {
+	    Collection<GradesToSubmitExecutionCourseSendMailBean> executionCoursesBean = new ArrayList<GradesToSubmitExecutionCourseSendMailBean>();
+	    for (ExecutionCourse course : executionCourses) {
+		executionCoursesBean.add(new GradesToSubmitExecutionCourseSendMailBean(course, true));
+	    }
+	    bean.setGradesToSubmitExecutionCourseSendMailBean(executionCoursesBean);
 	}
-	
-	public ActionForward markSheetsToConfirmSendMail(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState().getMetaObject().getObject();
-		Object[] args = new Object[] { bean.getMarkSheetToConfirmSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(), bean.getSubject(), bean.getMessage() };
-		
-		ServiceUtils.executeService(getUserView(request), "MarkSheetsToConfirmSendMail", args);
-		resetMail(bean);
-		return searchSendMail(mapping, actionForm, request, response);
-	}
+	request.setAttribute("bean", bean);
+	return mapping.findForward("searchSendMail");
+    }
 
+    public ActionForward prepareMarkSheetsToConfirmSendMail(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState("sendMailBean").getMetaObject().getObject();
+	bean.setFrom(getResources(request, "GLOBAL_RESOURCES").getMessage("degreeAdminOffice.mail"));
+	request.setAttribute("bean", bean);
+	return mapping.findForward("prepareMarkSheetsToConfirmSendMail");
+    }
 
-	public ActionForward prepareGradesToSubmitSendMail(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-		MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState("sendMailBean").getMetaObject().getObject();
-		bean.setFrom(getResources(request, "GLOBAL_RESOURCES").getMessage("degreeAdminOffice.mail"));
-		request.setAttribute("bean", bean);
-		return mapping.findForward("prepareGradesToSubmitSendMail");
-	}
+    public ActionForward markSheetsToConfirmSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState().getMetaObject().getObject();
+	Object[] args = new Object[] { bean.getMarkSheetToConfirmSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(),
+		bean.getSubject(), bean.getMessage() };
 
-	public ActionForward gradesToSubmitSendMail(ActionMapping mapping,
-            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState().getMetaObject().getObject();
-		Object[] args = new Object[] { bean.getGradesToSubmitExecutionCourseSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(), bean.getSubject(), bean.getMessage() };
-		
-		ServiceUtils.executeService(getUserView(request), "GradesToSubmitSendMail", args);
-		resetMail(bean);
-		return searchSendMail(mapping, actionForm, request, response);
-	}
+	ServiceUtils.executeService(getUserView(request), "MarkSheetsToConfirmSendMail", args);
+	resetMail(bean);
+	return searchSendMail(mapping, actionForm, request, response);
+    }
 
-	private void resetMail(MarkSheetSendMailBean bean) {
-		bean.setCc(null);
-		bean.setSubject(null);
-		bean.setMessage(null);
-		bean.setFrom(null);
-	}
+    public ActionForward prepareGradesToSubmitSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState("sendMailBean").getMetaObject().getObject();
+	bean.setFrom(getResources(request, "GLOBAL_RESOURCES").getMessage("degreeAdminOffice.mail"));
+	request.setAttribute("bean", bean);
+	return mapping.findForward("prepareGradesToSubmitSendMail");
+    }
 
-    
+    public ActionForward gradesToSubmitSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState().getMetaObject().getObject();
+	Object[] args = new Object[] { bean.getGradesToSubmitExecutionCourseSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(),
+		bean.getSubject(), bean.getMessage() };
+
+	ServiceUtils.executeService(getUserView(request), "GradesToSubmitSendMail", args);
+	resetMail(bean);
+	return searchSendMail(mapping, actionForm, request, response);
+    }
+
+    private void resetMail(MarkSheetSendMailBean bean) {
+	bean.setCc(null);
+	bean.setSubject(null);
+	bean.setMessage(null);
+	bean.setFrom(null);
+    }
+
 }
