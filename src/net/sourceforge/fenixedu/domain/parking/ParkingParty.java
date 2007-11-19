@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
@@ -280,18 +281,15 @@ public class ParkingParty extends ParkingParty_Base {
 			    stringBuilder.append(student.getNumber()).append("<br/>");
 			}
 			stringBuilder.append("\n").append(scp.getDegreeCurricularPlan().getName());
-			if (!registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-			    stringBuilder.append("\n (").append(registration.getCurricularYear())
-				    .append("º ano");
-
-			    if (isFirstTimeEnrolledInCurrentYear(registration, registration
-				    .getCurricularYear())) {
-				stringBuilder.append(" - 1ª vez)");
-			    } else {
-				stringBuilder.append(")");
-			    }
-			    stringBuilder.append("<br/>Média: ").append(registration.getAverage());
+			stringBuilder.append("\n (").append(registration.getCurricularYear()).append(
+				"º ano");
+			if (isFirstTimeEnrolledInCurrentYear(registration, registration
+				.getCurricularYear())) {
+			    stringBuilder.append(" - 1ª vez)");
+			} else {
+			    stringBuilder.append(")");
 			}
+			stringBuilder.append("<br/>Média: ").append(registration.getAverage());
 			stringBuilder.append("<br/>");
 		    }
 		}
@@ -335,11 +333,25 @@ public class ParkingParty extends ParkingParty_Base {
 		    occupations.add(stringBuilder.toString());
 		}
 	    }
+	    List<Invitation> invitations = person.getActiveInvitations();
+	    if (!invitations.isEmpty()) {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<strong>Convidado</strong>");
+		for (Invitation invitation : invitations) {
+		    stringBuilder.append("<strong>Por:</strong> ")
+			    .append(invitation.getUnit().getName()).append("<br/>");
+		    stringBuilder.append("<strong>Início:</strong> "
+			    + invitation.getBeginDate().toString("dd/MM/yyyy"));
+		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
+			    + invitation.getEndDate().toString("dd/MM/yyyy"));
+		    occupations.add(stringBuilder.toString());
+		}
+	    }
 	}
 	return occupations;
     }
 
-    public String getYearInformation() {
+    public String getDegreesInformation() {
 	StringBuilder stringBuilder = new StringBuilder();
 	if (getParty().isPerson()) {
 	    Person person = (Person) getParty();
@@ -349,13 +361,11 @@ public class ParkingParty extends ParkingParty_Base {
 		    StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
 		    if (scp != null) {
 			stringBuilder.append(scp.getDegreeCurricularPlan().getName());
-			if (!registration.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-			    stringBuilder.append(" ").append(registration.getCurricularYear()).append(
-				    "º ano");
-			    if (isFirstTimeEnrolledInCurrentYear(registration, registration
-				    .getCurricularYear())) {
-				stringBuilder.append(" - 1ª vez");
-			    }
+			stringBuilder.append(" ").append(registration.getCurricularYear()).append(
+				"º ano");
+			if (isFirstTimeEnrolledInCurrentYear(registration, registration
+				.getCurricularYear())) {
+			    stringBuilder.append(" - 1ª vez");
 			}
 			stringBuilder.append("<br/>");
 		    }
@@ -397,7 +407,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     private boolean canBeDeleted() {
-	return !getVehicles().isEmpty();
+	return getVehicles().isEmpty();
     }
 
     public boolean hasFirstTimeRequest() {

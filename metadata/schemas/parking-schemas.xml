@@ -346,7 +346,7 @@
 	<slot name="parkingParty.party.name" key="label.name" bundle="PARKING_RESOURCES" />
 	<slot name="parkingRequestState" key="label.state" bundle="PARKING_RESOURCES" />
 	<slot name="creationDate" key="label.creationDate" bundle="PARKING_RESOURCES" />
-	<slot name="parkingParty.yearInformation" key="label.aditionalInformation" bundle="PARKING_RESOURCES">
+	<slot name="parkingParty.degreesInformation" key="label.aditionalInformation" bundle="PARKING_RESOURCES">
 		<property name="escaped" value="false"/>
 	</slot>
 </schema>
