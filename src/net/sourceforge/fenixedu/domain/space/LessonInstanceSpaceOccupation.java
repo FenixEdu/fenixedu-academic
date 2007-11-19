@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
 public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation_Base {
@@ -72,10 +73,12 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
     @Override
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {	
+	
 	List<Interval> result = new ArrayList<Interval>();	
 	List<LessonInstance> lessonInstances = getLessonInstances();	
+	
 	DateTime startDateTime = startDateToSearch != null ? startDateToSearch.toDateTimeAtMidnight() : null;
-	DateTime endDateTime = endDateToSearch != null ? endDateToSearch.toDateTimeAtMidnight() : null;
+	DateTime endDateTime = endDateToSearch != null ? endDateToSearch.toDateTime(new TimeOfDay(23, 59, 59)) : null;
 
 	for (LessonInstance lessonInstance : lessonInstances) {	
 	    if((startDateTime == null || !lessonInstance.getEndDateTime().isBefore(startDateTime)) 
