@@ -66,7 +66,7 @@
     pedidos que lhe sejam formulados, por parte de instituições de ensino ou de
     investigação bem como por parte de Centros de Documentação ou de Bibliotecas, e
     desde que desses pedidos resulte que a reprodução solicitada da minha
-    dissertação apenas se destina apenas ou a fins pedagógicos ou de investigação.
+    dissertação apenas se destina a fins pedagógicos ou de investigação.
 </p>
 
 </div>
