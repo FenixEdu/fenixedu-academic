@@ -31,7 +31,7 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	    break;
 
 	case REVISION_EQUIVALENCE_PLAN:
-	    result = new EquivalencePlanRevisionRequest(getRegistration(), getExecutionYear());
+	    result = new EquivalencePlanRevisionRequest(getEquivalencePlanRequest(), getExecutionYear());
 	    break;
 
 	case COURSE_GROUP_CHANGE_REQUEST:

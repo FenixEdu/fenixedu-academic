@@ -167,6 +167,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public void delete() {
+	checkRulesToDelete();
+	
 	for (;!getAcademicServiceRequestSituations().isEmpty(); getAcademicServiceRequestSituations().iterator().next().delete());
 	super.setAdministrativeOffice(null);
         if (hasEvent()) {
@@ -177,6 +179,9 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.deleteDomainObject();
     }
     
+    protected void checkRulesToDelete() {
+    }
+
     @Override
     public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	throw new DomainException("error.serviceRequests.RegistrationAcademicServiceRequest.cannot.modify.administrativeOffice");
@@ -368,7 +373,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
     
     final public boolean createdByStudent(){
-        return getCreationSituation().getEmployee() == null;
+        return !getCreationSituation().hasEmployee();
     }
     
     final public boolean getStudentCanCancel() {
@@ -398,4 +403,5 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     
     abstract public EventType getEventType();
     abstract public String getDescription();
+    abstract public Person getPerson();
 }

@@ -38,7 +38,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     private void checkParameters(final ExecutionYear executionYear) {
 	if (executionYear == null) {
-	    throw new RuntimeException("error.StudentReingressionRequest.executionYear.cannot.be.null");
+	    throw new DomainException("error.StudentReingressionRequest.executionYear.cannot.be.null");
 	}
     }
 

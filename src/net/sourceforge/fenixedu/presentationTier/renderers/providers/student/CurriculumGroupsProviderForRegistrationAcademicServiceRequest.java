@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.student;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -14,8 +16,9 @@ public class CurriculumGroupsProviderForRegistrationAcademicServiceRequest imple
     public Object provide(Object source, Object currentValue) {
 	final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
 	final StudentCurricularPlan studentCurricularPlan = bean.getRegistration().getLastStudentCurricularPlan();
-	final Set<CurriculumGroup> curriculumGroups = studentCurricularPlan.getRoot().getAllCurriculumGroups();
+	final List<CurriculumGroup> curriculumGroups = new ArrayList<CurriculumGroup>(studentCurricularPlan.getRoot().getAllCurriculumGroups());
 	curriculumGroups.removeAll(studentCurricularPlan.getRoot().getCycleCurriculumGroups());
+	Collections.sort(curriculumGroups, CurriculumGroup.COMPARATOR_BY_NAME_AND_ID);
 	return curriculumGroups;
     }
 

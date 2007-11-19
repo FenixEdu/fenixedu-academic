@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExe
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -14,6 +15,7 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
     private DomainReference<CurriculumGroup> curriculumGroup;
     private DomainReference<CourseGroup> courseGroup;
     private DomainReference<Enrolment> enrolment;
+    private DomainReference<EquivalencePlanRequest> equivalencePlanRequest;
     private String purpose;
     
     public RegistrationAcademicServiceRequestCreateBean(final Registration registration) {
@@ -50,6 +52,14 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
 
     public void setEnrolment(Enrolment enrolment) {
 	this.enrolment = (enrolment != null) ? new DomainReference<Enrolment>(enrolment) : null;
+    }
+    
+    public EquivalencePlanRequest getEquivalencePlanRequest() {
+	return (this.equivalencePlanRequest != null) ? this.equivalencePlanRequest.getObject() : null;
+    }
+
+    public void setEquivalencePlanRequest(EquivalencePlanRequest equivalencePlanRequest) {
+	this.equivalencePlanRequest = (equivalencePlanRequest != null) ? new DomainReference<EquivalencePlanRequest>(equivalencePlanRequest) : null;
     }
 
     public String getPurpose() {

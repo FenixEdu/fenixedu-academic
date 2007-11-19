@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public abstract class CurriculumModule extends CurriculumModule_Base {
@@ -36,6 +37,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public CurriculumModule() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setCreationDateDateTime(new DateTime());
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")

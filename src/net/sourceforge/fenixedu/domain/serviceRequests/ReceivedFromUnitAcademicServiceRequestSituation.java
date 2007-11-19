@@ -21,7 +21,7 @@ public class ReceivedFromUnitAcademicServiceRequestSituation extends ReceivedFro
 
     @Override
     public void setReceivedDate(DateTime receivedDate) {
-	throw new RuntimeException("error.ReceivedFromUnitAcademicServiceRequestSituation.cannot.modify.situation.date");
+	throw new DomainException("error.ReceivedFromUnitAcademicServiceRequestSituation.cannot.modify.situation.date");
     }
 
     private void checkParameters(final AcademicServiceRequestBean academicServiceRequestBean) {

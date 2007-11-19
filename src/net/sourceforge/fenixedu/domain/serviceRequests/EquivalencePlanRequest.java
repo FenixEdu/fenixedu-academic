@@ -28,7 +28,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 
     private void checkParameters(final ExecutionYear executionYear) {
 	if (executionYear == null) {
-	    throw new RuntimeException("error.StudentReingressionRequest.executionYear.cannot.be.null");
+	    throw new DomainException("error.EquivalencePlanRequest.executionYear.cannot.be.null");
 	}
     }
 
@@ -54,5 +54,11 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 	    }
 	}
     }
-    
+
+    @Override
+    protected void checkRulesToDelete() {
+	if (hasAnyEquivalencePlanRevisionRequests()) {
+	    throw new DomainException("error.AcademicServiceRequest.cannot.be.deleted");
+	}
+    }
 }

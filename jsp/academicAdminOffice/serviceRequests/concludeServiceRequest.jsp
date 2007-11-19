@@ -38,7 +38,11 @@
 
 <html:form action="<%= "/academicServiceRequestsManagement.do?registrationID=" + registrationID.toString() + "&amp;academicServiceRequestId=" + academicServiceRequestId.toString() %>">
 	<html:hidden property="method" value="concludeAcademicServiceRequest" />
-
+	
+	<br/>
+	<strong><bean:message key="label.serviceRequests.sendEmailToStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong><html:radio property="sendEmailToStudent" value="true"><bean:message key="label.yes" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:radio><html:radio property="sendEmailToStudent" value="false"><bean:message key="label.no" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:radio>
+	<br/>
+	<br/>
 	<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	<html:cancel onclick="this.form.method.value='backToViewRegistration'"><bean:message key="back" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
 </html:form>

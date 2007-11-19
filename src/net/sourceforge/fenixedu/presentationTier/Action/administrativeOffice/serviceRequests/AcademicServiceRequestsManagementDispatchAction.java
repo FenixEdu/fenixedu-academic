@@ -176,7 +176,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    throws FenixFilterException, FenixServiceException {
 
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-
+	((DynaActionForm) actionForm).set("sendEmailToStudent", Boolean.FALSE);
+	
 	if (academicServiceRequest.isDocumentRequest()) {
 	    return mapping.findForward("prepareConcludeDocumentRequest");
 	} else {
@@ -189,10 +190,11 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    FenixServiceException {
 
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-
+	final DynaActionForm form = (DynaActionForm) actionForm;
+	
 	try {
 	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
-		    "ConcludeAcademicServiceRequest", new Object[] { academicServiceRequest });
+		    "ConcludeAcademicServiceRequest", new Object[] { academicServiceRequest, getSendEmailToStudent(form) });
 	    addActionMessage(request, "academic.service.request.concluded.with.success");
 	    
 	    if (academicServiceRequest.isDocumentRequest() && ((DocumentRequest) academicServiceRequest).getDocumentRequestType().isAllowedToQuickDeliver()) {
@@ -204,6 +206,10 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	
 	request.setAttribute("registration", academicServiceRequest.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
+    }
+    
+    private Boolean getSendEmailToStudent(final DynaActionForm form) {
+	return (Boolean) form.get("sendEmailToStudent");
     }
 
     public ActionForward deliveredAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,

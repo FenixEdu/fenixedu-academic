@@ -32,6 +32,7 @@
    		<form-bean name="academicServiceRequestsManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="justification" type="java.lang.String" />
 			<form-property name="numberOfPages" type="java.lang.Integer" />
+			<form-property name="sendEmailToStudent" type="java.lang.Boolean" />
 	    </form-bean>
 
 		<!-- Document Requests Management -->

@@ -51,12 +51,12 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
 
     @Override
     public void setOldCourseGroup(CourseGroup oldCourseGroup) {
-        throw new DomainException("error.BranchChangeRequest.cannot.modify.oldCourseGroup");
+        throw new DomainException("error.CourseGroupChangeRequest.cannot.modify.oldCourseGroup");
     }
     
     @Override
     public void setNewCourseGroup(CourseGroup newCourseGroup) {
-	throw new DomainException("error.BranchChangeRequest.cannot.modify.newCourseGroup");
+	throw new DomainException("error.CourseGroupChangeRequest.cannot.modify.newCourseGroup");
     }
 
     @Override

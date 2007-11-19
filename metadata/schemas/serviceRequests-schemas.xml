@@ -255,6 +255,10 @@
 		<property name="eachLayout" value=""/>
 		<property name="destination" value="academicServiceRequestTypeChoosedPostBack"/>
 	</slot>
+	<slot name="executionYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider" />
+		<property name="format" value="${year}" />
+	</slot>
 </schema>
 
 <schema name="RegistrationAcademicServiceRequestCreateBean.REINGRESSION"
@@ -269,10 +273,6 @@
 <schema name="RegistrationAcademicServiceRequestCreateBean.EQUIVALENCE_PLAN"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
 	extends="RegistrationAcademicServiceRequestCreateBean.choose.type">
-	<slot name="executionYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider" />
-		<property name="format" value="${year}" />
-	</slot>
 </schema>
 
 <schema name="EquivalencePlanRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest"
@@ -282,14 +282,17 @@
 <schema name="RegistrationAcademicServiceRequestCreateBean.REVISION_EQUIVALENCE_PLAN"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
 	extends="RegistrationAcademicServiceRequestCreateBean.choose.type">
-	<slot name="executionYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsForRegistrationProvider" />
-		<property name="format" value="${year}" />
+	<slot name="equivalencePlanRequest" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.serviceRequests.equivalencePlanRequest">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.EquivalencePlanRequestsForRegistrationAcademicServiceRequest" />
+		<property name="format" value="${description} - Nº${serviceRequestNumber}" />
 	</slot>
 </schema>
 
 <schema name="EquivalencePlanRevisionRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest"
 		extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="equivalencePlanRequest" key="label.serviceRequests.equivalencePlanRequest">
+		<property name="format" value="${description} - Nº${serviceRequestNumber}" />
+	</slot>
 </schema>
 
 <schema name="RegistrationAcademicServiceRequestCreateBean.COURSE_GROUP_CHANGE_REQUEST"

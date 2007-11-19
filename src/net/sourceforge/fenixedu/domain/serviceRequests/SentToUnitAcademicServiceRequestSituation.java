@@ -21,7 +21,7 @@ public class SentToUnitAcademicServiceRequestSituation extends SentToUnitAcademi
 
     @Override
     public void setSentDate(DateTime sentDate) {
-	throw new RuntimeException("error.SentToUnitAcademicServiceRequestSituation.cannot.modify.situation.date");
+	throw new DomainException("error.SentToUnitAcademicServiceRequestSituation.cannot.modify.situation.date");
     }
 
     private void checkParameters(final AcademicServiceRequestBean academicServiceRequestBean) {

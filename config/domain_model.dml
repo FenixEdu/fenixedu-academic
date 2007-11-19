@@ -3787,6 +3787,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				}
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule extends net.sourceforge.fenixedu.domain.DomainObject {
+		DateTime creationDateDateTime;
 	}
 
 		class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule {
@@ -3815,7 +3816,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 			class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
 				String createdBy;
-				DateTime creationDateDateTime;
 				EnrollmentState enrollmentState;
 				EnrollmentCondition enrolmentCondition;
 				EnrolmentEvaluationType enrolmentEvaluationType;
@@ -4534,6 +4534,13 @@ relation PersonAcademicServiceRequestPerson {
 relation AcademicServiceRequestSituationEmployee {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
+		multiplicity *;
+	}
+}
+
+relation EquivalencePlanRevisionRequestEquivalencePlanRequest {
+	net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest playsRole equivalencePlanRequest;
+	net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest playsRole equivalencePlanRevisionRequests {
 		multiplicity *;
 	}
 }
