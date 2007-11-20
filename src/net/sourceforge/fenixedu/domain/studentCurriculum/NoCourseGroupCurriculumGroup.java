@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -169,6 +171,11 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
         res.add(this);
         res.addAll(super.getNoCourseGroupCurriculumGroups());
         return res;
+    }
+    
+    @Override
+    public ICurricularRule getCurricularRuleMostRecent(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+	return null;
     }
 
 }

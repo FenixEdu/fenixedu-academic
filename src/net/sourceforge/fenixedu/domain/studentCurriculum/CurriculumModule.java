@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -141,6 +142,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	result.addAll(getDegreeModule().getCurricularRules(executionPeriod));
 	
 	return result;
+    }
+
+    public ICurricularRule getCurricularRuleMostRecent(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+	return getDegreeModule().getCurricularRuleMostRecent(ruleType, getCurriculumGroup().getDegreeModule(), executionYear);
     }
 
     public String getFullPath() {

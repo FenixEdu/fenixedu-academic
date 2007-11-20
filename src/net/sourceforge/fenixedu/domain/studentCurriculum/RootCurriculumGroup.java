@@ -6,14 +6,14 @@ import java.util.HashSet;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
-
-import org.joda.time.YearMonthDay;
 
 /**
  * 
@@ -229,6 +229,11 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	}
 
 	return false;
+    }
+    
+    @Override
+    public ICurricularRule getCurricularRuleMostRecent(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+	return getDegreeModule().getCurricularRuleMostRecent(ruleType, null, executionYear);
     }
 
 }
