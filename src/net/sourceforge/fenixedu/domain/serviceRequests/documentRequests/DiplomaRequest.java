@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
@@ -87,6 +88,13 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	super.internalChangeState(academicServiceRequestBean);
 
 	if (academicServiceRequestBean.isToProcess()) {
+	    final Collection<DocumentRequest> diplomaRequests = getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST);
+	    if (!diplomaRequests.isEmpty() && 
+		    (getRequestedCycle() == null ||
+			    hasDiplomaRequestForRequestedCycle(diplomaRequests, getRequestedCycle()))) {
+		throw new DomainException("DiplomaRequest.diploma.already.successfully.finished");
+	    }
+	    
 	    if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {
 		throw new DomainException("DiplomaRequest.diploma.not.available");
 	    }
@@ -106,6 +114,17 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	} else if (academicServiceRequestBean.isToConclude() && !isFree()) {
 	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
+    }
+
+    private boolean hasDiplomaRequestForRequestedCycle(Collection<DocumentRequest> diplomaRequests, final CycleType requestedCycleType) {
+	for (final DocumentRequest documentRequest : diplomaRequests) {
+	    final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
+	    if (diplomaRequest.getRequestedCycle() == requestedCycleType) {
+		return true;
+	    }
+	}
+	
+	return false;
     }
 
     static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] {
