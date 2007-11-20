@@ -129,12 +129,20 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     public void delete() {
+	checkRulesToDelete();
+	
 	removeExecutionPeriod();
 	removeExternalCurricularCourse();
 	removeRegistration();
 	removeRootDomainObject();
 	getNotNeedToEnrollCurricularCourses().clear();
 	super.deleteDomainObject();
+    }
+
+    private void checkRulesToDelete() {
+	if (hasAnyEnrolmentWrappers()) {
+	    throw new DomainException("error.ExternalEnrolment.cannot.delete");
+	}
     }
 
     final public boolean isApproved() {

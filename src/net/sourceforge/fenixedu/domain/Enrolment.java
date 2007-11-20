@@ -365,7 +365,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     private void checkRulesToDelete() {
 	if (hasAnyExtraExamRequests()) {
-	    throw new DomainException("Enrolment.cannot.delete");
+	    throw new DomainException("error.Enrolment.cannot.delete");
+	}
+	if (hasAnyEnrolmentWrappers()) {
+	    throw new DomainException("error.Enrolment.cannot.delete");
 	}
     }
 

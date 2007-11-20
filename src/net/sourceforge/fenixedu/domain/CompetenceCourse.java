@@ -872,45 +872,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public void transfer(CompetenceCourseGroupUnit competenceCourseGroupUnit) {
 	super.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
     }
-
-    // -------------------------------------------------------------
-    // read static methods
-    // -------------------------------------------------------------
-    public static List<CompetenceCourse> readOldCompetenceCourses() {
-	final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
-	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance()
-		.getCompetenceCoursesSet()) {
-	    if (!competenceCourse.isBolonha()) {
-		result.add(competenceCourse);
-	    }
-	}
-	return result;
-    }
-
-    public static Collection<CompetenceCourse> readBolonhaCompetenceCourses() {
-	final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
-		COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance()
-		.getCompetenceCoursesSet()) {
-	    if (competenceCourse.isBolonha()) {
-		result.add(competenceCourse);
-	    }
-	}
-	return result;
-    }
-
-    public static Collection<CompetenceCourse> readApprovedBolonhaCompetenceCourses() {
-	final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
-		COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance()
-		.getCompetenceCoursesSet()) {
-	    if (competenceCourse.isBolonha() && competenceCourse.isApproved()) {
-		result.add(competenceCourse);
-	    }
-	}
-	return result;
-    }
-
+    
     public MultiLanguageString getNameI18N() {
 	final MultiLanguageString multiLanguageString = new MultiLanguageString();
 	if (getName() != null && getName().length() > 0) {
@@ -999,5 +961,48 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             throw new DomainException("error.can.only.exist.one.request.per.execution.period");
         }
         super.addCompetenceCourseInformationChangeRequests(request);
+    }
+
+    // -------------------------------------------------------------
+    // read static methods
+    // -------------------------------------------------------------
+    static public List<CompetenceCourse> readOldCompetenceCourses() {
+	final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
+	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+	    if (!competenceCourse.isBolonha()) {
+		result.add(competenceCourse);
+	    }
+	}
+	return result;
+    }
+
+    static public Collection<CompetenceCourse> readBolonhaCompetenceCourses() {
+	final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+	    if (competenceCourse.isBolonha()) {
+		result.add(competenceCourse);
+	    }
+	}
+	return result;
+    }
+
+    static public Collection<CompetenceCourse> readApprovedBolonhaCompetenceCourses() {
+	final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+	    if (competenceCourse.isBolonha() && competenceCourse.isApproved()) {
+		result.add(competenceCourse);
+	    }
+	}
+	return result;
+    }
+
+    static public Collection<CompetenceCourse> readApprovedBolonhaDissertations() {
+	final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
+	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+	    if (competenceCourse.isBolonha() && competenceCourse.isApproved() && competenceCourse.isDissertation()) {
+		result.add(competenceCourse);
+	    }
+	}
+	return result;
     }
 }

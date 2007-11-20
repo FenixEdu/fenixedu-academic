@@ -142,7 +142,7 @@ public class Credits extends Credits_Base {
     private void addEnrolments(final Collection<IEnrolment> enrolments) {
 	if (enrolments != null) {
 	    for (final IEnrolment enrolment : enrolments) {
-		super.addEnrolments(new EnrolmentWrapper(enrolment));
+		EnrolmentWrapper.create(this, enrolment);
 	    }
 	}
     }

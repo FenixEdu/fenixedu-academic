@@ -3844,9 +3844,13 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				}
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper extends net.sourceforge.fenixedu.domain.DomainObject {
-		String className;
-		Integer objectId;
 	}
+	
+		class net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper extends net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper {
+		}
+		
+		class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolmentWrapper extends net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper {
+		}
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 		String createdBy;
@@ -5914,6 +5918,20 @@ relation EnrolmentWrapperCredits {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits;
+}
+
+relation InternalEnrolmentWrapperEnrolment {
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
+	net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper playsRole enrolmentWrappers {
+		multiplicity *;
+	}
+}
+
+relation ExternalEnrolmentWrapperEnrolment {
+	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole enrolment;
+	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolmentWrapper playsRole enrolmentWrappers {
+		multiplicity *;
+	}
 }
 
 relation EquivalencePlanEntryNewDegreeModule {

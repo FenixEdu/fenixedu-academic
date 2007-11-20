@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add new columns to EnrolmentWrapper" alterTableEnrolmentWrapper.sql
+execute "Migrate EnrolmentWrapper data to new structure" migrateEnrolmentWrapperData.sql
