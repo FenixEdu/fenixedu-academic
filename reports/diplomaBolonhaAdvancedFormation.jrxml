@@ -37,7 +37,6 @@
 	<parameter name="finalAverageDescription" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="conclusionStatus" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="degreeDescription" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -66,33 +65,33 @@
 						key="textField-19"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-						<font fontName="Quadraat-BoldItalic" pdfFontName="QUAD____.ttf" size="21" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-BoldItalic" pdfFontName="QUAD____.ttf" size="23" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="187"
-						y="241"
+						y="239"
 						width="468"
 						height="15"
 						key="textField-25"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" lineSpacing="Single">
-						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="15" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["O " + $P{institutionName} + " certifica que"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="187"
-						y="297"
+						y="294"
 						width="468"
 						height="15"
 						key="textField-28"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" lineSpacing="Single">
-						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="15" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["concluiu o " + $P{conclusionStatus} + " em "]]></textFieldExpression>
 				</textField>
@@ -105,23 +104,23 @@
 						key="textField-30"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-						<font fontName="Quadraat-BoldItalic" pdfFontName="QUAD____.ttf" size="20" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-BoldItalic" pdfFontName="QUAD____.ttf" size="22" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getDegree().getFilteredName()]]></textFieldExpression>
 				</textField>
 				<elementGroup><!--  Start: 1 !-->
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="209"
-						y="362"
-						width="424"
+						x="179"
+						y="365"
+						width="484"
 						height="17"
 						key="textField-31"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="12" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="14" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["em " + $P{conclusionDate} + ", com a qualificação final de " + $P{finalAverageDescription} + " Valores (" + $P{registration}.getFinalAverageQualified($P{documentRequest}.getRequestedCycle()) + ")"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["em " + $P{conclusionDate} + ", com a qualificação final de " + $P{finalAverageDescription} + " Valores (" + $P{registration}.getFinalAverageQualified($P{documentRequest}.getRequestedCycle()) + ")."]]></textFieldExpression>
 				</textField>
 				</elementGroup><!-- End 1 !-->
 			</band>
