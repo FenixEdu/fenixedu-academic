@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding EquivalencePlanRequest column to AcademicServiceRequest table" alterTableAcademicServiceRequest.sql
