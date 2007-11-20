@@ -2294,6 +2294,22 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    final public Collection<DocumentRequest> getSucessfullyFinishedDocumentRequests(final DocumentRequestType documentRequestType) {
+	final Collection<DocumentRequest> result = new HashSet<DocumentRequest>();
+
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (academicServiceRequest instanceof DocumentRequest) {
+		final DocumentRequest documentRequest = (DocumentRequest) academicServiceRequest;
+		if (documentRequest.getDocumentRequestType() == documentRequestType && 
+			documentRequest.finishedSuccessfully()) {
+		    result.add((DocumentRequest) academicServiceRequest);
+		}
+	    }
+	}
+	
+	return result;
+    }
+
     final public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
 	    final Class<? extends AcademicServiceRequest> clazz) {
 	final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
