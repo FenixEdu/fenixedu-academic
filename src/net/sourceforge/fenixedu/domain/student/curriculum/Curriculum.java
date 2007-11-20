@@ -124,8 +124,12 @@ public class Curriculum implements Serializable, ICurriculum {
 	return curriculumModule == null ? null : curriculumModule.getStudentCurricularPlan();
     }
     
+    public boolean hasAverageEntry() {
+	return curriculumModule != null && !getCurriculumEntries().isEmpty();
+    }
+    
     public boolean isEmpty() {
-	return curriculumModule == null || this.curricularYearEntries.isEmpty();
+	return curriculumModule == null || (getCurriculumEntries().isEmpty() && this.curricularYearEntries.isEmpty());
     }
     
     public Collection<ICurriculumEntry> getCurriculumEntries() {
