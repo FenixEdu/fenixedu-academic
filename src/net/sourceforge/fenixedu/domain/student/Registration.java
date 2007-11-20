@@ -264,7 +264,7 @@ public class Registration extends Registration_Base {
     }
 
     public StudentCurricularPlan getFirstStudentCurricularPlan() {
-	return (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(), new BeanComparator("startDateYearMonthDay"));
+	return hasAnyStudentCurricularPlans() ? (StudentCurricularPlan) Collections.min(getStudentCurricularPlans(), new BeanComparator("startDateYearMonthDay")) : null;
     }
 
     public List<StudentCurricularPlan> getSortedStudentCurricularPlans() {
@@ -1718,23 +1718,15 @@ public class Registration extends Registration_Base {
     public boolean isInRegisteredState(ExecutionPeriod executionPeriod) {
 	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionPeriod);
 
-	return (registrationStatesTypes.contains(RegistrationStateType.REGISTERED) || hasAnyEnrolmentsIn(executionPeriod) || registrationStatesTypes
-		.contains(RegistrationStateType.MOBILITY))
-		&& (!registrationStatesTypes.contains(RegistrationStateType.CANCELED)
-			&& !registrationStatesTypes.contains(RegistrationStateType.INTERRUPTED)
-			&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON) && !registrationStatesTypes
-			.contains(RegistrationStateType.EXTERNAL_ABANDON));
+	return registrationStatesTypes.contains(RegistrationStateType.REGISTERED) || hasAnyEnrolmentsIn(executionPeriod) || registrationStatesTypes
+		.contains(RegistrationStateType.MOBILITY);	
     }
 
     final public boolean isInRegisteredState(ExecutionYear executionYear) {
 	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionYear);
 
-	return (registrationStatesTypes.contains(RegistrationStateType.REGISTERED) || hasAnyEnrolmentsIn(executionYear) || registrationStatesTypes
-		.contains(RegistrationStateType.MOBILITY))
-		&& (!registrationStatesTypes.contains(RegistrationStateType.CANCELED)
-			&& !registrationStatesTypes.contains(RegistrationStateType.INTERRUPTED)
-			&& !registrationStatesTypes.contains(RegistrationStateType.INTERNAL_ABANDON) && !registrationStatesTypes
-			.contains(RegistrationStateType.EXTERNAL_ABANDON));
+	return registrationStatesTypes.contains(RegistrationStateType.REGISTERED) || hasAnyEnrolmentsIn(executionYear) || registrationStatesTypes
+		.contains(RegistrationStateType.MOBILITY);
     }
 
     final public RegistrationState getActiveState() {
