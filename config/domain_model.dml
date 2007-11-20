@@ -8216,7 +8216,9 @@ relation RegistrationDataByExecutionYearRootDomainObject {
 }
 
 relation RegistrationSourceDestiny {
-	net.sourceforge.fenixedu.domain.student.Registration playsRole destinyRegistration;
+	net.sourceforge.fenixedu.domain.student.Registration playsRole destinyRegistrations {
+		multiplicity *;
+	}	
 	net.sourceforge.fenixedu.domain.student.Registration playsRole sourceRegistration;
 }
 
