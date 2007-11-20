@@ -109,10 +109,8 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     }
 
     static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] {
-	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA,
 	    DegreeType.BOLONHA_PHD_PROGRAM,
-	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE, 
-	    DegreeType.MASTER_DEGREE});
+	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE});
     
     final public boolean hasFinalAverageDescription() {
 	return !hasDissertationTitle();
