@@ -234,7 +234,6 @@ public class Registration extends Registration_Base {
 	}
 
 	removeSourceRegistration();
-	removeDestinyRegistration();
 	removeRegistrationYear();
 	removeDegree();
 	removeStudent();
