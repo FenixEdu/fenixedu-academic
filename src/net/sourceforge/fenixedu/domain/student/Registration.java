@@ -1899,7 +1899,8 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isQualifiedToRegistrationConclusionProcess() {
-	return getLastStudentCurricularPlan().isBoxStructure() && !isRegistrationConclusionProcessed()
+	final DegreeType degreeType = getDegreeType();
+	return degreeType != DegreeType.MASTER_DEGREE && degreeType != DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE && !isRegistrationConclusionProcessed()
 		&& (getActiveState().isActive() || isConcluded());
     }
 
