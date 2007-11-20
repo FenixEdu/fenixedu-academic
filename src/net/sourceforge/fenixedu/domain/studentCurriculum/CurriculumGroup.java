@@ -780,5 +780,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return res;
     }
 
+    public int getNoCourseGroupCurriculumGroupsCount() {
+	return getNoCourseGroupCurriculumGroups().size();
+    }
 
 }
