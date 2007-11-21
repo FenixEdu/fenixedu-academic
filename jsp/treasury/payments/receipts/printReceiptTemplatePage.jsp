@@ -60,7 +60,7 @@
 
 
 
-<p style="margin-bottom: 0.5em; margin-top: 2em;"><strong><bean:message bundle="TREASURY_RESOURCES"  key="label.payments.printTemplates.processFrom"/></strong></p>
+<p style="margin-bottom: 0.5em; margin-top: 1em;"><strong><bean:message bundle="TREASURY_RESOURCES"  key="label.payments.printTemplates.processFrom"/></strong></p>
 
 <table style="margin-top: 0.5em;">
 	<tr>
@@ -138,12 +138,14 @@
 
 
 
-	<p style="text-align: left; margin-top: 4em; font-size: 10pt;">
+	<p style="text-align: left; margin-top: 3em; font-size: 10pt;">
+		<bean:message  key="label.payments.printTemplates.vatExemptionNotice" bundle="TREASURY_RESOURCES"/>
+		<br/>
 		<bean:define id="receiptCreationDate" name="receipt" property="whenCreated" />
 		<bean:message bundle="TREASURY_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= ((DateTime)receiptCreationDate).toString("dd MMMM yyyy", net.sourceforge.fenixedu.util.LanguageUtils.getLocale()) %>
 	</p>
 
-	<p style="text-align: right; margin-top: 2em; padding-right: 15em; font-size: 10pt;">
+	<p style="text-align: right; margin-top: 1em; padding-right: 15em; font-size: 10pt;">
 		<b><bean:message bundle="TREASURY_RESOURCES"  key="label.payments.printTemplates.theEmployee"/></b>
 	</p>
 	<p style="text-align: right; padding-right: 10em; font-size: 10pt;">
@@ -152,7 +154,7 @@
 
 
 	<bean:size id="entriesSize" name="sortedEntries"/>
-	<div style="<%= "margin-top: " + (12 - ((entriesSize - 1) * 2))  + "em;"%>">
+	<div style="<%= "margin-top: " + (9 - ((entriesSize - 1) * 2))  + "em;"%>">
 		<jsp:include page="/treasury/payments/commons/footer.jsp" flush="true" />
 	</div>
 

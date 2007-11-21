@@ -90,7 +90,9 @@
 
 
 
-	<p style="text-align: left; margin-top: 12em; font-size: 10pt;">
+	<p style="text-align: left; margin-top: 10em; font-size: 10pt;">
+		<bean:message  key="label.payments.printTemplates.vatExemptionNotice" bundle="TREASURY_RESOURCES"/>
+		<br/>
 		<bean:message bundle="TREASURY_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", net.sourceforge.fenixedu.util.LanguageUtils.getLocale()).format(new java.util.Date()) %>
 	</p>
 

@@ -1321,6 +1321,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 				YearMonthDay paymentEndDate;
 			}
+			
+			class net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
+				Money pastAdministrativeOfficeFeeAndInsuranceAmount;
+			}
 
 			class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 			}
@@ -1329,6 +1333,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				}
 
 				class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
+				}
+				
+				class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
+					Money pastDegreeGratuityAmount;
 				}
 
 			class net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
@@ -1543,6 +1551,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			}
 
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+			
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+			
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 			}
 
 	class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {

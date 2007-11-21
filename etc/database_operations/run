@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing Table Event" AlterTableEvent.sql
