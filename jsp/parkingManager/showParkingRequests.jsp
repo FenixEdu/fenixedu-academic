@@ -55,6 +55,11 @@
 			}
 		%>
 			
+		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
+		<html:link page="<%= "/parking.do?method=exportToExcel" + query.toString()%>">
+			<bean:message key="link.exportToExcel" bundle="PARKING_RESOURCES"/>
+		</html:link>
+		
 		<logic:notEmpty name="parkingRequests">
 			<fr:view name="parkingRequests" schema="show.parkingRequest.noDetail">
 				<fr:layout name="tabular-sortable">

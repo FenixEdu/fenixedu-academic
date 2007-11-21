@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.parkingManager;
 
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -39,7 +41,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
+import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -48,6 +53,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.joda.time.format.DateTimeFormat;
 
 public class ParkingManagerDispatchAction extends FenixDispatchAction {
     private static final int MAX_NOTE_LENGTH = 250;
@@ -60,29 +66,33 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	if (parkingRequestSearch == null) {
 	    parkingRequestSearch = new ParkingRequestSearch();
 	    parkingRequestSearch.setParkingRequestState(ParkingRequestState.PENDING);
-	    String parkingRequestState = request.getParameter("parkingRequestState");
-	    if (!StringUtils.isEmpty(parkingRequestState)) {
-		parkingRequestSearch.setParkingRequestState(ParkingRequestState
-			.valueOf(parkingRequestState));
-	    }
-	    String partyClassification = request.getParameter("partyClassification");
-	    if (!StringUtils.isEmpty(partyClassification)) {
-		parkingRequestSearch.setPartyClassification(PartyClassification
-			.valueOf(partyClassification));
-	    }
-	    String personName = request.getParameter("personName");
-	    if (!StringUtils.isEmpty(personName)) {
-		parkingRequestSearch.setPersonName(personName);
-	    }
-
-	    String carPlateNumber = request.getParameter("carPlateNumber");
-	    if (!StringUtils.isEmpty(carPlateNumber)) {
-		parkingRequestSearch.setCarPlateNumber(carPlateNumber);
-	    }
+	    setSearchCriteria(request, parkingRequestSearch);
 	}
 	request.setAttribute("dontSearch", request.getParameter("dontSearch"));
 	request.setAttribute("parkingRequestSearch", parkingRequestSearch);
 	return mapping.findForward("showParkingRequests");
+    }
+
+    private void setSearchCriteria(HttpServletRequest request, ParkingRequestSearch parkingRequestSearch) {
+	String parkingRequestState = request.getParameter("parkingRequestState");
+	if (!StringUtils.isEmpty(parkingRequestState)) {
+	parkingRequestSearch.setParkingRequestState(ParkingRequestState
+		.valueOf(parkingRequestState));
+	}
+	String partyClassification = request.getParameter("partyClassification");
+	if (!StringUtils.isEmpty(partyClassification)) {
+	parkingRequestSearch.setPartyClassification(PartyClassification
+		.valueOf(partyClassification));
+	}
+	String personName = request.getParameter("personName");
+	if (!StringUtils.isEmpty(personName)) {
+	parkingRequestSearch.setPersonName(personName);
+	}
+
+	String carPlateNumber = request.getParameter("carPlateNumber");
+	if (!StringUtils.isEmpty(carPlateNumber)) {
+	parkingRequestSearch.setCarPlateNumber(carPlateNumber);
+	}
     }
 
     public ActionForward showRequest(ActionMapping mapping, ActionForm actionForm,
@@ -527,6 +537,43 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	return showParkingPartyRequests(mapping, actionForm, request, response);
     }
 
+    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+	ParkingRequestSearch parkingRequestSearch = new ParkingRequestSearch();
+	setSearchCriteria(request, parkingRequestSearch);
+	List<ParkingRequest> parkingRequestList = parkingRequestSearch.getSearch();
+	Spreadsheet spreadsheet = new Spreadsheet("Pedidos_Parque");
+	spreadsheet.setHeader("Categoria");
+	spreadsheet.setHeader("Número");
+	spreadsheet.setHeader("Nome");
+	spreadsheet.setHeader("Estado");
+	spreadsheet.setHeader("Data Pedido");
+	spreadsheet.setHeader("Outras Informações");
+
+	final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
+		"resources.EnumerationResources", LanguageUtils.getLocale());	
+	for (ParkingRequest parkingRequest : parkingRequestList) {
+	    if(parkingRequest.getParkingParty().getParty().isPerson()) {
+		Person person = (Person) parkingRequest.getParkingParty().getParty();
+		final Row row = spreadsheet.addRow();
+		row.setCell(enumerationBundle.getString(parkingRequestSearch.getPartyClassification().name()));
+		row.setCell(parkingRequest.getParkingParty().getMostSignificantNumber().toString());
+		row.setCell(person.getName());
+		row.setCell(enumerationBundle.getString(parkingRequest.getParkingRequestState().name()));
+		row.setCell(parkingRequest.getCreationDate().toString(DateTimeFormat
+			    .forPattern("dd/MM/yyyy HH:mm")));
+		row.setCell(parkingRequest.getParkingParty().getDegreesInformation());
+	    }	    
+	}
+	response.setContentType("application/vnd.ms-excel");
+	response.setHeader("Content-Disposition", "attachment; filename=pedidos_parque.xls");
+	final ServletOutputStream writer = response.getOutputStream();
+	spreadsheet.exportToXLSSheet(writer);
+	writer.flush();
+	response.flushBuffer();
+	return null;
+    }
+    
     private boolean isRepeatedCardNumber(Long cardNumber, ParkingParty parkingParty) {
 	for (ParkingParty tempParkingParty : rootDomainObject.getParkingParties()) {
 	    if (tempParkingParty.getCardNumber() != null
