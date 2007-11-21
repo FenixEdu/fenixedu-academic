@@ -569,9 +569,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     @Override
     @SuppressWarnings("unchecked")
     public Double getCreditsConcluded(ExecutionYear executionYear) {
-
-	final CourseGroup courseGroup = isRoot() ? getDegreeModule() : getCurriculumGroup().getDegreeModule();
-	final CreditsLimit creditsLimit = (CreditsLimit) getDegreeModule().getCurricularRuleMostRecent(CurricularRuleType.CREDITS_LIMIT, courseGroup, executionYear);
+	final CreditsLimit creditsLimit = (CreditsLimit) getCurricularRuleMostRecent(CurricularRuleType.CREDITS_LIMIT, executionYear);
 
 	Double creditsConcluded = 0d;
 	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
