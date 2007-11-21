@@ -177,16 +177,16 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
 
     protected String getCurrentUser() {
     	if(AccessControl.getUserView() != null) {
-    		return AccessControl.getUserView().getUtilizador();
+    	    return AccessControl.getUserView().getUtilizador();
     	} else {
-    		return System.getProperty("user.name", "FENIX");
+    	    return System.getProperty("user.name", "FENIX");
     	}
     }
 
-	@Override
-	public final String toString() {
-		return StringAppender.append(getClass().getName(), "(", getIdInternal().toString(), ")");
-	}
+    @Override
+    public final String toString() {
+	return StringAppender.append(getClass().getName(), "(", getIdInternal().toString(), ")");
+    }
 
     public final void readFromResultSet(java.sql.ResultSet rs) throws java.sql.SQLException {
         int txNumber = Transaction.current().getNumber();
