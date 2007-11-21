@@ -82,7 +82,7 @@ public class InfoCabimentosReportLine extends InfoReportLine {
         HSSFRow row = sheet.createRow(nextRow);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue(getString("label.total.cabimentosReport"));
-        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+        //sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue(getCabimentos().doubleValue());
@@ -94,7 +94,7 @@ public class InfoCabimentosReportLine extends InfoReportLine {
         row = sheet.createRow(nextRow);
         cell = row.createCell((short) 0);
         cell.setCellValue(getString("label.returnsExecuted.cabimentosReport"));
-        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+        //sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue(getJustifications().doubleValue());
@@ -106,7 +106,7 @@ public class InfoCabimentosReportLine extends InfoReportLine {
         row = sheet.createRow(nextRow);
         cell = row.createCell((short) 0);
         cell.setCellValue(getString("label.toExecute.cabimentosReport"));
-        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+        //sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue(getTotal().doubleValue());

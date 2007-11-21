@@ -96,7 +96,7 @@ public class InfoSummaryPTEReportLine extends InfoReportLine {
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue(StringAppender.append(getString("link.revenue"), " ", getString("label.pte"), ":"));
         cell.setCellStyle(excelStyle.getLabelStyle());
-        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+//        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
         cell = row.createCell((short) 3);
         cell.setCellValue(getRevenue().doubleValue());
         if (getRevenue().doubleValue() < 0)
@@ -107,7 +107,7 @@ public class InfoSummaryPTEReportLine extends InfoReportLine {
         row = sheet.createRow(nextRow);
         cell = row.createCell((short) 0);
         cell.setCellValue(StringAppender.append(getString("link.expenses"), " ", getString("label.pte"), ":"));
-        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+//        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue(getExpense().doubleValue());
@@ -119,7 +119,7 @@ public class InfoSummaryPTEReportLine extends InfoReportLine {
         row = sheet.createRow(nextRow);
         cell = row.createCell((short) 0);
         cell.setCellValue(StringAppender.append(getString("label.tax"), " ", getString("label.pte"), ":"));
-        sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
+        //sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0, (short) row.getRowNum(), (short) 2));
         cell.setCellStyle(excelStyle.getLabelStyle());
         cell = row.createCell((short) 3);
         cell.setCellValue(getTax().doubleValue());
