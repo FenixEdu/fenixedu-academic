@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.EnrolmentsPeriodCE
 import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 
 public class CreateAcademicCalendarEntry extends Service {
 
@@ -43,6 +44,9 @@ public class CreateAcademicCalendarEntry extends Service {
 		
 	    } else if(type.equals(EnrolmentsPeriodCE.class)) {
 		return new EnrolmentsPeriodCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+	    
+	    } else if(type.equals(TeacherCreditsFillingCE.class)) {
+		// Do Nothing: this was created in scientific council interface. 
 	    }
 
 	} else {	    	    	 

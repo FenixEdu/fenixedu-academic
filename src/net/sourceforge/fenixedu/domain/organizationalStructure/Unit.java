@@ -69,14 +69,12 @@ import org.joda.time.YearMonthDay;
 
 public class Unit extends Unit_Base {
 
+    private static final ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt"));
     public static OrderedRelationAdapter<Unit, Function> FUNCTION_ORDERED_ADAPTER;
     static {
-	FUNCTION_ORDERED_ADAPTER = new OrderedRelationAdapter<Unit, Function>("activeFunctions",
-		"functionOrder");
+	FUNCTION_ORDERED_ADAPTER = new OrderedRelationAdapter<Unit, Function>("activeFunctions", "functionOrder");
 	UnitFunction.addListener(FUNCTION_ORDERED_ADAPTER);
-    }
-    static final private ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle(
-	    "resources.ApplicationResources", new Locale("pt"));
+    }    
 
     protected Unit() {
 	super();

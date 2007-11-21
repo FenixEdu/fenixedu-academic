@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -14,8 +16,14 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.CreditsEntity;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -37,6 +45,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
  */
 public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<ExecutionPeriod> {
 
+    private static final ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt"));
     private transient OccupationPeriod lessonsPeriod;
 
     public static final Comparator<ExecutionPeriod> EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR = new ComparatorChain();
@@ -103,6 +112,60 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	return getNextExecutionPeriod() != null;
     }
 
+    public DateTime getDepartmentAdmOfficeCreditsPeriodBegin() {
+	return getDepartmentAdmOfficeCreditsPeriodInterval() != null ? getDepartmentAdmOfficeCreditsPeriodInterval().getStartDateTimeWithoutChronology() : null;
+    }
+
+    public DateTime getDepartmentAdmOfficeCreditsPeriodEnd() {
+	return getDepartmentAdmOfficeCreditsPeriodInterval() != null ? getDepartmentAdmOfficeCreditsPeriodInterval().getEndDateTimeWithoutChronology() : null;
+    }
+    
+    public DateTime getTeacherCreditsPeriodBegin() {
+	return getTeacherCreditsPeriodInterval() != null ? getTeacherCreditsPeriodInterval().getStartDateTimeWithoutChronology() : null;	
+    }
+
+    public DateTime getTeacherCreditsPeriodEnd() {
+	return getTeacherCreditsPeriodInterval() != null ? getTeacherCreditsPeriodInterval().getEndDateTimeWithoutChronology() : null;	
+    }
+    
+    @Checked("TeacherCreditsPredicates.checkPermissionsToManageCreditsPeriods")
+    public void editDepartmentOfficeCreditsPeriod(DateTime begin, DateTime end) {
+	if(getDepartmentAdmOfficeCreditsPeriodInterval() == null) {
+	    
+	    AcademicCalendarEntry parentEntry = getExecutionInterval().getAcademicCalendarEntry();
+	    AcademicCalendarRootEntry rootEntry = getExecutionInterval().getAcademicCalendar();
+	    
+	    TeacherCreditsFillingCE creditsPeriod = new TeacherCreditsFillingCE(parentEntry, 
+		    new MultiLanguageString(applicationResourcesBundle.getString("label.TeacherCreditsFillingCE.entry.title")), 
+		    null, begin, end, parentEntry.getRootEntry(), CreditsEntity.DEPARTMENT_ADM_OFFICE);
+	    
+	    setDepartmentAdmOfficeCreditsPeriodInterval(new AcademicInterval(creditsPeriod, rootEntry));
+	    
+	} else {	
+	    TeacherCreditsFillingCE entry = (TeacherCreditsFillingCE) getDepartmentAdmOfficeCreditsPeriodInterval().getAcademicCalendarEntry();
+	    entry.edit(begin, end);
+	}	
+    }       
+                   
+    @Checked("TeacherCreditsPredicates.checkPermissionsToManageCreditsPeriods")
+    public void editTeacherCreditsPeriod(DateTime begin, DateTime end) {
+	if(getTeacherCreditsPeriodInterval() == null) {
+	    
+	    AcademicCalendarEntry parentEntry = getExecutionInterval().getAcademicCalendarEntry();
+	    AcademicCalendarRootEntry rootEntry = getExecutionInterval().getAcademicCalendar();
+	    
+	    TeacherCreditsFillingCE creditsPeriod = new TeacherCreditsFillingCE(parentEntry, 
+		    new MultiLanguageString(applicationResourcesBundle.getString("label.TeacherCreditsFillingCE.entry.title")), 
+		    null, begin, end, parentEntry.getRootEntry(), CreditsEntity.TEACHER);
+	    
+	    setTeacherCreditsPeriodInterval(new AcademicInterval(creditsPeriod, rootEntry));
+	    
+	} else {	    
+	    TeacherCreditsFillingCE entry = (TeacherCreditsFillingCE) getTeacherCreditsPeriodInterval().getAcademicCalendarEntry();
+	    entry.edit(begin, end);
+	}	
+    }
+    
     public int compareTo(ExecutionPeriod object) {
 	if(object == null) {
 	    return 1;
@@ -400,6 +463,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 
     public static ExecutionPeriod getExecutionPeriod(AcademicSemesterCE entry) {
 	if (entry != null) {
+	    entry = (AcademicSemesterCE) entry.getOriginalTemplateEntry();
 	    for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
 		if (executionPeriod.getExecutionInterval().getAcademicCalendarEntry().equals(entry)) {
 		    return executionPeriod;

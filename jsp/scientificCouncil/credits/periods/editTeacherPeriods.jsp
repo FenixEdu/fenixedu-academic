@@ -25,7 +25,7 @@
 		/defineCreditsPeriods.do?method=beforeShowPeriods&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>
 	</bean:define>
 	
-	<fr:edit name="executionPeriod" schema="teacher.credits.period.view" action="<%= actionName %>" service="EditCreditsPeriods">
+	<fr:edit name="executionPeriod" schema="teacher.credits.period.view" action="<%= actionName %>">
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>

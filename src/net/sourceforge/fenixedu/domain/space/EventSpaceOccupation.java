@@ -160,31 +160,28 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 	List<Interval> result = new ArrayList<Interval>();		
 	begin = getBeginDateInSpecificWeekDay(diaSemana, begin);
 
-	if(frequency == null) {            
-	    if (!begin.isAfter(end) 
-		    && (startDateToSearch == null || !end.isBefore(startDateToSearch)) 
-		    && (endDateToSearch == null || !begin.isAfter(endDateToSearch))) {		
-
+	if(frequency == null) {            	
+	    if (!begin.isAfter(end) && (startDateToSearch == null || (!end.isBefore(startDateToSearch) && !begin.isAfter(endDateToSearch)))) {		
 		result.add(createNewInterval(begin, end, beginTime, endTime));
 		return result;
 	    }   	    
 	} else {	    
-	    int numberOfDaysToSum = frequency.getNumberOfDays();            	    
-	    while (true) {		
+	    int numberOfDaysToSum = frequency.getNumberOfDays();            	    	    
+	    while (true) {				
 		if (begin.isAfter(end)) {
 		    break;
-		}		
-		if((startDateToSearch == null || !begin.isBefore(startDateToSearch)) 
-			&& (endDateToSearch == null || !begin.isAfter(endDateToSearch))) {
-
-		    Interval interval = createNewInterval(begin, begin, beginTime, endTime);                              
+		}				
+		if(startDateToSearch == null || (!begin.isBefore(startDateToSearch) && !begin.isAfter(endDateToSearch))) {
+		    
+		    Interval interval = createNewInterval(begin, begin, beginTime, endTime);                           
+		    
 		    if(!frequency.equals(FrequencyType.DAILY) 
 			    || ((dailyFrequencyMarkSaturday || interval.getStart().getDayOfWeek() != SATURDAY_IN_JODA_TIME) 
 				    && (dailyFrequencyMarkSunday || interval.getStart().getDayOfWeek() != SUNDAY_IN_JODA_TIME))) {
 
 			result.add(interval);   
 		    }                
-		}
+		}		
 		begin = begin.plusDays(numberOfDaysToSum);
 	    }
 	}
@@ -198,14 +195,14 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 	DateTime instantResult = null; 		
 	begin = getBeginDateInSpecificWeekDay(diaSemana, begin);
 
-	if(frequency == null) {            
+	if(frequency == null) {            	    
 	    if (!begin.isAfter(end)) {
 		if(firstInstant) {
 		    return begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0));		               
 		} else {
 		    return end.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)); 
 		}
-	    }            
+	    }	    
 	} else {	    
 	    int numberOfDaysToSum = frequency.getNumberOfDays();	   
 	    while (true) {		

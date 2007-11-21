@@ -5,9 +5,11 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.CreditsEntity;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.SeasonType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -28,6 +30,7 @@ public class CalendarEntryBean implements Serializable {
     
     private SeasonType seasonType;
     
+    private CreditsEntity creditsEntity;
     
     private Class<? extends AcademicCalendarEntry> type;
     
@@ -89,6 +92,10 @@ public class CalendarEntryBean implements Serializable {
 	} else if(entry.isGradeSubmissionPeriod()) {
 	    GradeSubmissionCE gradeSubmissionCE = (GradeSubmissionCE) entry;
 	    bean.setSeasonType(gradeSubmissionCE.getSeasonType());
+	
+	} else if(entry.isTeacherCreditsFilling()) {
+	    TeacherCreditsFillingCE creditsFillingCE = (TeacherCreditsFillingCE) entry;
+	    bean.setCreditsEntity(creditsFillingCE.getCreditsEntity());
 	}
 	
 	return bean;
@@ -218,5 +225,13 @@ public class CalendarEntryBean implements Serializable {
     
     public YearMonthDay getEndDateToDisplayInYearMonthDayFormat() {
 	return getDateFromPartial(getEndDateToDisplay()); 	
+    }
+
+    public CreditsEntity getCreditsEntity() {
+        return creditsEntity;
+    }
+
+    public void setCreditsEntity(CreditsEntity creditsEntity) {
+        this.creditsEntity = creditsEntity;
     }
 }

@@ -18,7 +18,8 @@ public class AcademicInterval extends AbstractInterval {
     private Integer entryIdInternal;       
     private String entryClassName;    
     
-    private transient AcademicCalendarEntry academicCalendarEntry;  
+    private transient AcademicCalendarEntry academicCalendarEntry;
+    private transient AcademicCalendarRootEntry academicCalendarRootEntry;
     private transient AcademicChronology academicChronology;
     
     
@@ -28,9 +29,10 @@ public class AcademicInterval extends AbstractInterval {
 	setAcademicCalendarIdInternal(academicCalendarIdInternal);
     }
     
-    public AcademicInterval(AcademicCalendarEntry entry) {
+    public AcademicInterval(AcademicCalendarEntry entry, AcademicCalendarRootEntry rootEntry) {
 	setEntryIdInternal(entry.getIdInternal());	
 	setEntryClassName(entry.getClass().getName());
+	setAcademicCalendarIdInternal(rootEntry.getIdInternal());
     }
     
     public AcademicChronology getAcademicChronology() {
@@ -39,13 +41,12 @@ public class AcademicInterval extends AbstractInterval {
 
     @Override
     public Chronology getChronology() {
-	if(academicChronology == null) {
-	    AcademicCalendarRootEntry rootEntry = (AcademicCalendarRootEntry) RootDomainObject.getInstance().readAcademicCalendarEntryByOID(getAcademicCalendarIdInternal());
-	    academicChronology = rootEntry.getAcademicChronology();	    
+	if(academicChronology == null) {	    
+	    academicChronology = getAcademicCalendar().getAcademicChronology();	    
 	}
 	return academicChronology;
-    }
-
+    }   
+    
     @Override
     public long getStartMillis() {
 	return getAcademicCalendarEntry().getBegin().getMillis();	
@@ -55,6 +56,23 @@ public class AcademicInterval extends AbstractInterval {
     public long getEndMillis() {
 	return getAcademicCalendarEntry().getEnd().getMillis();
     }
+    
+    public AcademicCalendarRootEntry getAcademicCalendar() {
+	if(academicCalendarRootEntry == null) {
+	    academicCalendarRootEntry = (AcademicCalendarRootEntry) RootDomainObject.getInstance().readAcademicCalendarEntryByOID(getAcademicCalendarIdInternal());
+	}
+	return academicCalendarRootEntry;
+    }
+    
+    public AcademicCalendarEntry getAcademicCalendarEntry() {
+	if(academicCalendarEntry == null) {
+	    academicCalendarEntry = RootDomainObject.getInstance().readAcademicCalendarEntryByOID(getEntryIdInternal());
+	}	
+	if(!academicCalendarEntry.getClass().getName().equals(getEntryClassName())) {
+	    throw new DomainException("error.AcademicInterval.invalid.class.names");
+	}	
+        return academicCalendarEntry;
+    }   
     
     public int getAcademicSemesterOfAcademicYear() {			
 	return getAcademicCalendarEntry().getAcademicSemesterOfAcademicYear(getAcademicChronology());
@@ -99,17 +117,7 @@ public class AcademicInterval extends AbstractInterval {
     public boolean isEqual(AcademicInterval academicInterval) {
 	return academicInterval != null ? getAcademicCalendarEntry().equals(academicInterval.getAcademicCalendarEntry()) 
 		&& getChronology().equals(academicInterval.getChronology()): false;
-    }
-    
-    public AcademicCalendarEntry getAcademicCalendarEntry() {
-	if(academicCalendarEntry == null) {
-	    academicCalendarEntry = RootDomainObject.getInstance().readAcademicCalendarEntryByOID(getEntryIdInternal());
-	}	
-	if(!academicCalendarEntry.getClass().getName().equals(getEntryClassName())) {
-	    throw new DomainException("error.AcademicInterval.invalid.class.names");
-	}	
-        return academicCalendarEntry;
-    }     
+    }        
           
     public Integer getEntryIdInternal() {
         return entryIdInternal;

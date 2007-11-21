@@ -34,12 +34,12 @@ public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
     }
 
     @Override
-    protected boolean areIntersectionsPossible() {	
+    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {	
 	return false;
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible() {	
+    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {	
 	return false;
     }
 

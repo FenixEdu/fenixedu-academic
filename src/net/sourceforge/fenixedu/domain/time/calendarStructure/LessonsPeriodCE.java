@@ -34,12 +34,12 @@ public class LessonsPeriodCE extends LessonsPeriodCE_Base {
     }
 
     @Override
-    protected boolean areIntersectionsPossible() {	
+    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {	
 	return false;
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible() {	
+    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {	
 	return false;
     }
 

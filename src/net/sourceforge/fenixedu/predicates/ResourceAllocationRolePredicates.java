@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -27,6 +28,15 @@ public class ResourceAllocationRolePredicates {
     
     public static final AccessControlPredicate<Shift> checkPermissionsToManageShifts = new AccessControlPredicate<Shift>() {
 	public boolean evaluate(Shift shift) {
+	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());	    
+	    return true;
+	}
+    };
+    
+    // SchoolClass Predicates
+    
+    public static final AccessControlPredicate<SchoolClass> checkPermissionsToManageSchoolClass = new AccessControlPredicate<SchoolClass>() {
+	public boolean evaluate(SchoolClass schoolClass) {
 	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());	    
 	    return true;
 	}

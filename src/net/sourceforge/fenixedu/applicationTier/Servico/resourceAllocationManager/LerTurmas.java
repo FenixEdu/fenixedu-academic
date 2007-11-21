@@ -22,8 +22,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerTurmas extends Service {
 
-    public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
+    public List<InfoClass> run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
             Integer curricularYear) throws ExcepcaoPersistencia {
+	
         final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
         final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
 
@@ -34,7 +35,8 @@ public class LerTurmas extends Service {
         	classes = executionDegree.findSchoolClassesByExecutionPeriod(executionPeriod);
         }
 
-        final List infoClassesList = new ArrayList();
+        final List<InfoClass> infoClassesList = new ArrayList<InfoClass>();
+        
         for (final SchoolClass schoolClass : classes) {
             InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
             infoClassesList.add(infoClass);

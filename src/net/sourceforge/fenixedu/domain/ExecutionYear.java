@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -53,11 +54,20 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public ExecutionYear(AcademicInterval academicInterval) {
+    public ExecutionYear(AcademicInterval academicInterval, String year) {
 	this();
 	setExecutionInterval(academicInterval);
+	setYear(year);
     }
 
+    @Override
+    public void setYear(String year) {
+        if(year == null || StringUtils.isEmpty(year.trim())) {
+            throw new DomainException("error.ExecutionYear.empty.year");
+        }
+        super.setYear(year);
+    }
+    
     @Override
     public void setExecutionInterval(AcademicInterval executionInterval) {
 	if(executionInterval == null) {
@@ -285,6 +295,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public static ExecutionYear getExecutionYear(AcademicYearCE entry) {
 	if(entry != null) {
+	    entry = (AcademicYearCE) entry.getOriginalTemplateEntry();
 	    for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
 		if(executionYear.getExecutionInterval().getAcademicCalendarEntry().equals(entry)) {
 		    return executionYear;

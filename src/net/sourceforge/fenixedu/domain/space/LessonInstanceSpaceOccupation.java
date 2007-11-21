@@ -81,9 +81,9 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 	DateTime endDateTime = endDateToSearch != null ? endDateToSearch.toDateTime(new TimeOfDay(23, 59, 59)) : null;
 
 	for (LessonInstance lessonInstance : lessonInstances) {	
-	    if((startDateTime == null || !lessonInstance.getEndDateTime().isBefore(startDateTime)) 
-		    && (endDateTime == null || !lessonInstance.getBeginDateTime().isAfter(endDateTime))) {
-
+	    if(startDateTime == null || (!lessonInstance.getEndDateTime().isBefore(startDateTime) &&
+		    !lessonInstance.getBeginDateTime().isAfter(endDateTime))) {
+		
 		result.add(new Interval(lessonInstance.getBeginDateTime(), lessonInstance.getEndDateTime()));
 	    }
 	}

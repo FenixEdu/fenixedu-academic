@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -60,15 +59,16 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 
     @Override
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
+
 	List<Interval> result = new ArrayList<Interval>();
 	List<WrittenEvaluation> writtenEvaluations = getWrittenEvaluations();
 		
 	for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {	   
-	    if((startDateToSearch == null || !writtenEvaluation.getDayDateYearMonthDay().isBefore(startDateToSearch)) 
-		    && (endDateToSearch == null || !writtenEvaluation.getDayDateYearMonthDay().isAfter(endDateToSearch))) {
+	    YearMonthDay writtenEvaluationDay = writtenEvaluation.getDayDateYearMonthDay();
+	    if(startDateToSearch == null || (!writtenEvaluationDay.isBefore(startDateToSearch)
+		    && !writtenEvaluationDay.isAfter(endDateToSearch))) {
 		
-		result.add(createNewInterval(writtenEvaluation.getDayDateYearMonthDay(), writtenEvaluation.getDayDateYearMonthDay(),
-			writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
+		result.add(createNewInterval(writtenEvaluationDay, writtenEvaluationDay, writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
 	    }
 	}
 	return result;

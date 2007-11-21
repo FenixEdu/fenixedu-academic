@@ -201,7 +201,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	} catch(DomainException domainException) {
 	    addActionMessage(request, domainException.getMessage());
 	    return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(rootEntry, entry, beginPartial, endPartial));
-	}
+	} 
 
 	if(deletedRootEntry) {
 	    return prepareChooseCalendar(mapping, actionForm, request, response);    
@@ -238,10 +238,8 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	DateTime endDateTime = end.toDateTimeAtMidnight();
 
 	List<GanttDiagramEvent> result = new ArrayList<GanttDiagramEvent>();
-	for (AcademicCalendarEntry entry : academicCalendar.getChildEntriesWithTemplateEntriesOrderByDate(beginDateTime, endDateTime)) {
-	    if(!result.contains(entry)) {
-		getSubEntriesTree(entry, result, beginDateTime, endDateTime);
-	    }
+	for (AcademicCalendarEntry entry : academicCalendar.getChildEntriesWithTemplateEntriesOrderByDate(beginDateTime, endDateTime)) {	   
+	    getSubEntriesTree(entry, result, beginDateTime, endDateTime);	    
 	}
 	return result;
     }

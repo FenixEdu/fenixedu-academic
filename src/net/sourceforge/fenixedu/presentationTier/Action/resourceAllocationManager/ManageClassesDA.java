@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -48,7 +49,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
         Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
 
-        List classesList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request), "LerTurmas", argsLerTurmas);
+        List<InfoClass> classesList = (List<InfoClass>) ServiceUtils.executeService(SessionUtils.getUserView(request), "LerTurmas", argsLerTurmas);
 
         if (classesList != null && !classesList.isEmpty()) {
             BeanComparator nameComparator = new BeanComparator("nome");
@@ -66,24 +67,20 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
             HttpServletResponse response) throws Exception {
 
         DynaValidatorForm classForm = (DynaValidatorForm) form;
-
         String className = (String) classForm.get("className");
-
         IUserView userView = SessionUtils.getUserView(request);
 
-        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request
-                .getAttribute(SessionConstants.CURRICULAR_YEAR);
+        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);        
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
         Integer curricularYear = infoCurricularYear.getYear();
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-                .getAttribute(SessionConstants.EXECUTION_DEGREE);
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
-
+        
         Object argsCriarTurma[] = { className, curricularYear, infoExecutionDegree, infoExecutionPeriod };
 
         try {
             ServiceUtils.executeService(userView, "CriarTurma", argsCriarTurma);
-        } catch (ExistingServiceException e) {
+            
+        } catch (DomainException e) {
             throw new ExistingActionException("A SchoolClass", e);
         }
 

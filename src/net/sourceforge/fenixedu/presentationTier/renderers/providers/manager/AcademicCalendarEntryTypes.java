@@ -20,7 +20,7 @@ public class AcademicCalendarEntryTypes implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 	
 	List<Class<? extends AcademicCalendarEntry>> result = new ArrayList<Class<? extends AcademicCalendarEntry>>();	
-	CalendarEntryBean bean = (CalendarEntryBean) source;	
+	CalendarEntryBean bean = (CalendarEntryBean) source;		
 	
 	if(bean.getEntry() != null && bean.getEntry().isRoot()) {
 	    

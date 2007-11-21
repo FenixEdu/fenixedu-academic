@@ -9484,15 +9484,6 @@
 		<isTransactional>true</isTransactional>
 		<filterChains>
 		</filterChains>
-	</service>
-	<service>
-		<name>EditCreditsPeriods</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.EditCreditsPeriods</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>		
-		<filterChains>
-			<chain name="ScientificCouncilAuthorization" />
-		</filterChains>
 	</service>	
 	<service>
 		<name>DeleteRoomClassification</name>

@@ -438,6 +438,9 @@
 	<slot name="seasonType" key="label.entry.season.type"/>	
 </schema>
 
+<schema name="TeacherCreditsFillingCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">
+	<slot name="creditsEntity" key="label.entry.credits.entity"/>	
+</schema>
 
 <schema name="ChooseAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
 	<slot name="type" layout="menu-select-postback" key="label.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
@@ -491,7 +494,6 @@
 	<slot name="seasonType" key="label.entry.season.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
-
 <schema name="EditAcademicCalendarRootEntryCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">
 	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="description" key="label.academicCalendar.description"/>
@@ -530,6 +532,10 @@
 
 <schema name="EditGradeSubmissionCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">
 	<slot name="seasonType" key="label.entry.season.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+</schema>
+
+<schema name="EditTeacherCreditsFillingCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">
+	<slot name="creditsEntity" key="label.entry.credits.entity" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
 </schema>
 
 

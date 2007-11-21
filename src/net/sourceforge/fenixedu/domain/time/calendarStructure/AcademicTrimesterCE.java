@@ -34,12 +34,12 @@ public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
     }
 
     @Override
-    protected boolean areIntersectionsPossible() { 
+    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) { 
 	return true;
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible() {	
+    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {	
 	return false;
     }
 

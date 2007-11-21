@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Collections;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -63,9 +63,47 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
                   
     @Override
     public DateTime getBegin() {
-	SortedSet<AcademicCalendarEntry> result = new TreeSet<AcademicCalendarEntry>(AcademicCalendarEntry.COMPARATOR_BEGIN_DATE);
-	result.addAll(getChildEntries());
-	return (result.isEmpty()) ? null : result.first().getBegin();
+	
+	DateTime begin = null;
+	List<AcademicCalendarEntry> result = null;
+	
+	if(!hasTemplateEntry()) {
+	    result = getChildEntries();
+	} else {
+	    result = getChildEntriesWithTemplateEntries();
+	}
+	
+	for (AcademicCalendarEntry entry : result) {
+	    if(begin == null || entry.getBegin().isBefore(begin)) {
+		begin = entry.getBegin();
+	    }
+	}
+	
+	return begin;
+    }
+        
+    public AcademicCalendarEntry getEntryByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {			
+	AcademicCalendarEntry entryResult = null;
+	for (AcademicCalendarEntry entry : getChildEntriesWithTemplateEntries(Long.valueOf(instant), entryClass, parentEntryClass)) {	    
+	    entryResult = (entryResult == null || entry.getBegin().isAfter(entryResult.getBegin())) ? entry : entryResult;	    
+	}
+	return entryResult;
+    }
+
+    public Integer getEntryIndexByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {					
+	Integer counter = null;	
+	for (AcademicCalendarEntry entry : getChildEntriesWithTemplateEntries(entryClass, parentEntryClass)) {	    	    	    
+	    if(entry.containsInstant(instant) || entry.getEnd().isBefore(instant)) {						
+		counter = counter == null ? 1 : counter.intValue() + 1;
+	    }    
+	}	
+	return counter;
+    }
+
+    public AcademicCalendarEntry getEntryByIndex(int index, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {
+	List<AcademicCalendarEntry> allChildEntries = getChildEntriesWithTemplateEntries(entryClass, parentEntryClass);		
+	Collections.sort(allChildEntries, COMPARATOR_BEGIN_DATE);
+	return index > 0 && index <= allChildEntries.size() ? allChildEntries.get(index - 1) : null;	
     }
            
     @Override
@@ -94,12 +132,12 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     }
                 
     @Override
-    protected boolean areIntersectionsPossible() {	
+    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {	
 	return false;
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible() {	
+    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {	
 	return true;
     }
 

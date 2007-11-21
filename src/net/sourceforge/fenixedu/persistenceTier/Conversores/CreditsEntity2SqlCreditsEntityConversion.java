@@ -1,15 +1,15 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.domain.time.calendarStructure.SeasonType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.CreditsEntity;
 
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class SeasonType2SqlSeasonTypeConversion implements FieldConversion {
+public class CreditsEntity2SqlCreditsEntityConversion implements FieldConversion {
 
     public Object javaToSql(Object source) throws ConversionException {
-	if (source instanceof SeasonType) {
-	    SeasonType s = (SeasonType) source;
+	if (source instanceof CreditsEntity) {
+	    CreditsEntity s = (CreditsEntity) source;
 	    return s.name();
 	}
 	return source;
@@ -21,7 +21,7 @@ public class SeasonType2SqlSeasonTypeConversion implements FieldConversion {
 	}
 	if (source instanceof String) {
 	    String src = (String) source;
-	    return SeasonType.valueOf(src);
+	    return CreditsEntity.valueOf(src);
 	}
 	return source;
     }

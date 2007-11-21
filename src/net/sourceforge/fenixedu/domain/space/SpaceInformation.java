@@ -83,8 +83,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
     }
 
     public boolean isActive(YearMonthDay currentDate) {
-	return (!this.getValidFrom().isAfter(currentDate) && (this.getValidUntil() == null || !this
-		.getValidUntil().isBefore(currentDate)));
+	return (!this.getValidFrom().isAfter(currentDate) && (this.getValidUntil() == null || !this.getValidUntil().isBefore(currentDate)));
     }    
 
     protected YearMonthDay getNextPossibleValidFromDate() {

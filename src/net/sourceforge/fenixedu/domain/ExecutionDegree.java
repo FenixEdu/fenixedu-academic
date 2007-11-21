@@ -13,7 +13,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
@@ -28,7 +27,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -292,8 +290,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return schoolClasses;
     }
 
-    public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(
-	    final ExecutionPeriod executionPeriod, final Integer curricularYear) {
+    public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(final ExecutionPeriod executionPeriod, final Integer curricularYear) {
 	final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
 	for (final SchoolClass schoolClass : getSchoolClasses()) {
 	    if (schoolClass.getExecutionPeriod() == executionPeriod
@@ -304,11 +301,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return schoolClasses;
     }
 
-    public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionPeriod executionPeriod,
-	    final String name) {
+    public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionPeriod executionPeriod, final String name) {
 	for (final SchoolClass schoolClass : getSchoolClasses()) {
 	    if (schoolClass.getExecutionPeriod() == executionPeriod
-		    && schoolClass.getNome().equals(name)) {
+		    && schoolClass.getNome().equalsIgnoreCase(name)) {
 		return schoolClass;
 	    }
 	}

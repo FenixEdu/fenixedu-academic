@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.time.calendarStructure;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
-import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicYearDateTimeFieldType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -25,14 +24,16 @@ public class AcademicYearCE extends AcademicYearCE_Base {
 
     @Override
     public void delete(AcademicCalendarRootEntry rootEntry) {	
-	ExecutionYear executionYear = ExecutionYear.getExecutionYear(this);
-	executionYear.delete();	
+	if(!isVirtual()) {
+	    ExecutionYear executionYear = ExecutionYear.getExecutionYear(this);
+	    executionYear.delete();
+	}
 	super.delete(rootEntry);
     }
 
     @Override
-    protected void afterRedefineEntry() {
-	createExecutionYear();
+    protected void beforeRedefineEntry(){
+	throw new DomainException("error.unsupported.operation");
     }
 
     @Override
@@ -48,21 +49,21 @@ public class AcademicYearCE extends AcademicYearCE_Base {
     @Override
     protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {	
 	if(childEntry.isAcademicSemester()) {
-	    return getChildEntries(AcademicSemesterCE.class).size() >= 2;
+	    return getChildEntriesWithTemplateEntries(childEntry.getClass()).size() >= 2;
 	}
 	if(childEntry.isAcademicTrimester()) {
-	    return getChildEntries(AcademicTrimesterCE.class).size() >= 4;
+	    return getChildEntriesWithTemplateEntries(childEntry.getClass()).size() >= 4;
 	}
 	return false;
     }
 
     @Override
-    protected boolean areIntersectionsPossible() {	
+    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {	
 	return false;
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible() {	
+    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {	
 	return false;
     }
 
@@ -74,7 +75,7 @@ public class AcademicYearCE extends AcademicYearCE_Base {
     private void createExecutionYear() {	
 	ExecutionYear executionYear = ExecutionYear.readBy(getBegin().toYearMonthDay(), getEnd().toYearMonthDay());
 	if(executionYear == null) {
-	    new ExecutionYear(new AcademicInterval(this));	
+	    new ExecutionYear(new AcademicInterval(this, getRootEntry()), getTitle().getContent());	
 	}
     }  
 
