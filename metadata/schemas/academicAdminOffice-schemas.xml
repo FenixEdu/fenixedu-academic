@@ -481,7 +481,7 @@
 </schema>
 
 <schema name="student.manageRegistrationState" 
-	type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
+	type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="stateDate" key="label.editDate" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateInExecutionPeriodValidator"/>
 	</slot>		
@@ -766,6 +766,7 @@
 <schema name="DismissalBean.SelectedEnrolment.view" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedEnrolment" >
 	<slot name="enrolment.studentCurricularPlan.degreeCurricularPlan.name" key="label.degree" read-only="true"/>	
+	<slot name="enrolment.code" key="label.code" read-only="true" layout="null-as-label"/>
 	<slot name="enrolment.name" key="label.name" read-only="true"/>
 	<slot name="enrolment.executionPeriod" layout="format" key="lable.year.semester" read-only="true">
 		<property name="format" value="${executionYear.year} ${semester}º Sem"/>
@@ -790,6 +791,7 @@
 
 <schema name="DismissalBean.SelectedCurricularCourse.chooseParent" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedCurricularCourse">
+	<slot name="curricularCourse.code" key="label.code" read-only="true" layout="null-as-label"/>
 	<slot name="curricularCourse.name" key="label.name" read-only="true"/>
 	<slot name="curriculumGroup" layout="menu-select" key="label.curriculumGroup" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCoursePathsProvider" />
@@ -799,6 +801,7 @@
 
 <schema name="DismissalBean.SelectedOptionalCurricularCourse.chooseParent" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedOptionalCurricularCourse">
+	<slot name="curricularCourse.code" key="label.code" read-only="true" layout="null-as-label"/>
 	<slot name="curricularCourse.name" key="label.name" read-only="true"/>
 	<slot name="curriculumGroup" layout="menu-select" key="label.curriculumGroup" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCoursePathsProvider" />
@@ -807,12 +810,13 @@
 	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
-	</slot>
+	</slot>		
 </schema>
 
 
 <schema name="student.dismissal.view.equivalences" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.IEnrolment">
+	<slot name="code" key="label.code" layout="null-as-label"/>	
 	<slot name="name" key="label.name" />
 	<slot name="grade" key="label.grade" />
 </schema>
@@ -829,9 +833,9 @@
 	<slot name="curriculumGroup.name.content" key="label.name" />
 </schema>
 
-
 <schema name="student.dismissal.view.not.need.to.enrol" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedCurricularCourse">
+	<slot name="curricularCourse.code" key="label.code" layout="null-as-label"/>
 	<slot name="curricularCourse.name" key="label.curricularCourse.name" />
 </schema>
 
@@ -889,6 +893,7 @@
 
 <schema name="DismissalBean.SelectedCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean$SelectedCurricularCourse">
+	<slot name="curricularCourse.code" key="label.code" layout="null-as-label"/>
 	<slot name="curricularCourse.name" key="label.name" />
 </schema>
 
@@ -1103,6 +1108,7 @@
 <schema name="ExternalEnrolmentBean" bundle="ACADEMIC_OFFICE_RESOURCES" 
 		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.EditExternalEnrolmentBean" >
 		
+	<slot name="externalCurricularCourse.code" read-only="true" key="label.code"/>
 	<slot name="externalCurricularCourse.name" read-only="true" key="label.externalUnits.externalCurricularCourse"/>
 	<slot name="studentNumber" read-only="true" key="label.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" >
@@ -1382,11 +1388,10 @@
 
 
 <schema name="DegreeCurricularPlan.view" 
-	type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="APPLICATION_RESOURCES">
+	type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="APPLICATION_RESOURCES" >
 	<slot name="degree.name"/>
 	<slot name="name" />
 </schema>
-
 <schema name="StudentDataByExecutionYear" type="net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear" bundle="APPLICATION_RESOURCES">
 	<slot name="executionYear.year" label="label.executionYear.year" />
 	<slot name="personalDataAuthorization" label="label.personalDataAuthorization" />
