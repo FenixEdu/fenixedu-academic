@@ -149,6 +149,11 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 		(writtenEvaluationGroup != null && writtenEvaluationGroup.getElementsCount() > 0);
     }
     
+    public boolean isForPunctualOccupation() {
+	Group group = getGenericEventOccupationsAccessGroup();	
+	return group != null && group.getElementsCount() > 0;
+    }
+    
     public static AllocatableSpace findAllocatableSpaceForEducationByName(String name) {
         for (Resource space : RootDomainObject.getInstance().getResources()) {
             if (space.isAllocatableSpace() && ((AllocatableSpace)space).isForEducation() 
@@ -187,6 +192,18 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
         for (Resource space : RootDomainObject.getInstance().getResources()) {
             if (space.isAllocatableSpace() && ((AllocatableSpace)space).isActive()
         	    && ((AllocatableSpace)space).isForEducation()) {
+        	result.add((AllocatableSpace) space);
+            }
+        }
+        return result;
+    }   
+    
+    public static List<AllocatableSpace> getAllActiveAllocatableSpacesForEducationAndPunctualOccupations() {	
+        List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
+        for (Resource space : RootDomainObject.getInstance().getResources()) {
+            if (space.isAllocatableSpace() && ((AllocatableSpace)space).isActive()
+        	    && (((AllocatableSpace)space).isForEducation() 
+        		    || ((AllocatableSpace)space).isForPunctualOccupation())) {
         	result.add((AllocatableSpace) space);
             }
         }

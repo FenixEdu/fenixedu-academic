@@ -37,7 +37,7 @@ public class FreeRoomsToPunctualSchedulingProvider implements DataProvider {
 	HourMinuteSecond startTimeHMS = new HourMinuteSecond(beginTime.get(DateTimeFieldType.hourOfDay()), beginTime.get(DateTimeFieldType.minuteOfHour()), 0);
 	HourMinuteSecond endTimeHMS = new HourMinuteSecond(endTime.get(DateTimeFieldType.hourOfDay()), endTime.get(DateTimeFieldType.minuteOfHour()), 0);
 	
-	for (AllocatableSpace room :  AllocatableSpace.getAllActiveAllocatableSpacesForEducation()) {	    
+	for (AllocatableSpace room :  AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations()) {	    
 	    if (!selectedRooms.contains(room)) {				
 		if(room.isFree(beginDate, endDate, startTimeHMS, endTimeHMS, diaSemana, frequency, markSaturday, markSunday)) {
 		    result.add(room);

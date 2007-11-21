@@ -56,7 +56,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	    removeRootDomainObject();
 	    deleteDomainObject();
 	}	
-	//throw new DomainException("error.now.its.impossible.delete.entry.but.in.the.future.will.be.possible");
+	throw new DomainException("error.now.its.impossible.delete.entry.but.in.the.future.will.be.possible");
     }
 
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
