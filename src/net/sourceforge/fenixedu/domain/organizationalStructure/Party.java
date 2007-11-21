@@ -144,6 +144,14 @@ public abstract class Party extends Party_Base {
 	}
 	return null;
     }
+    
+    public Account getInternalAccount() {
+	return getAccountBy(AccountType.INTERNAL);
+    }
+
+    public Account getExternalAccount() {
+	return getAccountBy(AccountType.EXTERNAL);
+    }
 
     public PartyTypeEnum getType() {
 	return getPartyType() != null ? getPartyType().getType() : null;

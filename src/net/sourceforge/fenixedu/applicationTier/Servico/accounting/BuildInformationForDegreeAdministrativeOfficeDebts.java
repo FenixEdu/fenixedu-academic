@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 
 public abstract class BuildInformationForDegreeAdministrativeOfficeDebts extends Service {
@@ -33,7 +34,7 @@ public abstract class BuildInformationForDegreeAdministrativeOfficeDebts extends
 
     protected Map<Person, List<Event>> getNotPayedEventsGroupedByPerson(final ExecutionYear executionYear) {
 	final Map<Person, List<Event>> result = new HashMap<Person, List<Event>>();
-	for (final Event event : Event.readNotPayedBy(executionYear)) {
+	for (final AnnualEvent event : AnnualEvent.readNotPayedBy(executionYear)) {
 	    if (acceptedEventClasses.contains(event.getClass())) {
 		getEventsForPerson(result, event).add(event);
 	    }

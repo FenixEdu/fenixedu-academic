@@ -38,8 +38,10 @@ public enum EntryType {
     
     STUDENT_REINGRESSION_REQUEST_FEE,
     
-    EQUIVALENCE_PLAN_REQUEST_FEE;
-    
+    EQUIVALENCE_PLAN_REQUEST_FEE,
+
+    ADMINISTRATIVE_OFFICE_FEE_INSURANCE;
+
     public String getName() {
 	return name();
     }

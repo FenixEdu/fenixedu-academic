@@ -1,7 +1,13 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.EventState;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
@@ -21,8 +27,7 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 	init(null, eventType, person, executionYear);
     }
 
-    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
-	    ExecutionYear executionYear) {
+    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person, ExecutionYear executionYear) {
 	super.init(administrativeOffice, eventType, person);
 	checkParameters(executionYear);
 	super.setExecutionYear(executionYear);
@@ -52,8 +57,7 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 
     @Override
     public PostingRule getPostingRule() {
-	return getServiceAgreementTemplate().findPostingRuleBy(getEventType(), getStartDate(),
-		getEndDate());
+	return getServiceAgreementTemplate().findPostingRuleBy(getEventType(), getStartDate(), getEndDate());
     }
 
     public boolean isFor(final ExecutionYear executionYear) {
@@ -67,6 +71,26 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 	super.setExecutionYear(null);
 
 	super.delete();
+    }
+
+    @Override
+    public boolean isAnnual() {
+	return true;
+    }
+
+    private static List<AnnualEvent> readBy(final ExecutionYear executionYear, final EventState eventState) {
+	final List<AnnualEvent> result = new ArrayList<AnnualEvent>();
+	for (final Event event : RootDomainObject.getInstance().getAccountingEventsSet()) {
+	    if (event.isAnnual() && event.isInState(eventState) && ((AnnualEvent) event).getExecutionYear() == executionYear) {
+		result.add((AnnualEvent) event);
+	    }
+	}
+
+	return result;
+    }
+
+    public static List<AnnualEvent> readNotPayedBy(final ExecutionYear executionYear) {
+	return readBy(executionYear, EventState.OPEN);
     }
 
     abstract protected ServiceAgreementTemplate getServiceAgreementTemplate();

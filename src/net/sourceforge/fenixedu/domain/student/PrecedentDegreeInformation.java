@@ -35,7 +35,6 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	this.setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
 	this.setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
 	this.setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
-	this.setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
 	this.setCountry(precedentDegreeInformationBean.getCountry());
     }
     

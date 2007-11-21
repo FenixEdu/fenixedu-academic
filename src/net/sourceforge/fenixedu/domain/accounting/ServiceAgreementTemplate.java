@@ -51,7 +51,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 	return getActivePostingRules(new DateTime());
     }
 
-    private Set<PostingRule> getActivePostingRules(DateTime when) {
+    public Set<PostingRule> getActivePostingRules(DateTime when) {
 	final Set<PostingRule> activePostingRules = new HashSet<PostingRule>();
 	for (final PostingRule postingRule : getPostingRules()) {
 	    if (postingRule.isActiveForDate(when)) {

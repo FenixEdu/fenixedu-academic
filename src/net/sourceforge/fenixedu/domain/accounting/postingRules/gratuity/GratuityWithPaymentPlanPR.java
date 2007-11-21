@@ -29,7 +29,7 @@ import org.joda.time.DateTime;
 
 public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 
-    public GratuityWithPaymentPlanPR() {
+    protected GratuityWithPaymentPlanPR() {
 	super();
     }
 

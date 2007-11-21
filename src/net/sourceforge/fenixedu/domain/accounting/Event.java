@@ -568,17 +568,6 @@ public abstract class Event extends Event_Base {
 	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.remove.paymentCode");
     }
 
-    private static List<Event> readBy(final ExecutionYear executionYear, EventState eventState) {
-	final List<Event> result = new ArrayList<Event>();
-	for (final Event event : RootDomainObject.getInstance().getAccountingEventsSet()) {
-	    if (event.isInState(eventState) && executionYear.containsDate(event.getWhenOccured())) {
-		result.add(event);
-	    }
-	}
-
-	return result;
-    }
-
     public static List<Event> readNotCancelled() {
 	final List<Event> result = new ArrayList<Event>();
 
@@ -590,10 +579,6 @@ public abstract class Event extends Event_Base {
 
 	return result;
 
-    }
-
-    public static List<Event> readNotPayedBy(final ExecutionYear executionYear) {
-	return readBy(executionYear, EventState.OPEN);
     }
 
     public PaymentCodeState getPaymentCodeStateFor(final PaymentMode paymentMode) {
@@ -891,6 +876,10 @@ public abstract class Event extends Event_Base {
 
     public boolean isNotCancelled() {
 	return !isCancelled();
+    }
+    
+    public boolean isAnnual() {
+	return false;
     }
 
 }
