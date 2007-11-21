@@ -2576,8 +2576,11 @@ public class Registration extends Registration_Base {
     @Checked("RegistrationPredicates.transitToBolonha")
     public void transitToBolonha(final Person person) {
 	
+	if (isTransited()) {
+	    return;
+	}
+	
 	final RegistrationState actualState = getActiveState();
-
 	RegistrationState.createState(this, person, new DateTime(), RegistrationStateType.TRANSITED);
 
 	for (final Registration registration : getTargetTransitionRegistrations()) {
@@ -2589,10 +2592,8 @@ public class Registration extends Registration_Base {
 	    }
 	    	    
 	    registration.setRegistrationAgreement(getRegistrationAgreement());	    
-	    
 	    transferCurrentExecutionPeriodAttends(registration);
 	}
-
 	transferAnyRemainingCurrentExecutionPeriodAttends();
     }
 

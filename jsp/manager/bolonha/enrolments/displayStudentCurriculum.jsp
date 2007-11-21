@@ -30,8 +30,9 @@
 		</span>
 	</p>
 	
-	<bean:define id="detailedView" name="bolonhaStudentEnrolmentForm" property="detailed" />
 	<bean:define id="scpId" name="studentCurricularPlan" property="idInternal" />
+	<bean:define id="detailedView" name="bolonhaStudentEnrolmentForm" property="detailed" />
+	<bean:define id="studentId" name="studentCurricularPlan" property="registration.student.idInternal" />
 	
 	<html:form action="<%= "/bolonhaStudentEnrolment.do?method=viewStudentCurriculum&scpId=" + scpId.toString() %>">
 		<strong><bean:message key="label.show.detail" bundle="MANAGER_RESOURCES" />: </strong>
@@ -40,7 +41,10 @@
 			<html:option value="false"><bean:message key="label.manager.no" bundle="MANAGER_RESOURCES" /></html:option>
 		</html:select>
 	</html:form>
-	
+	<br/>
+	<html:form action="<%= "/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans&studentId=" + studentId.toString() %>">
+		<html:cancel><bean:message bundle="MANAGER_RESOURCES"  key="label.return" /></html:cancel>
+	</html:form>
 	<br/>
 
 	<fr:edit name="studentCurricularPlan" nested="true">
@@ -51,5 +55,10 @@
 			<fr:property name="detailed" value="<%= detailedView.toString() %>" />
 		</fr:layout>
 	</fr:edit>
+	
+	<br/>
+	<html:form action="<%= "/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans&studentId=" + studentId.toString() %>">
+		<html:cancel><bean:message bundle="MANAGER_RESOURCES"  key="label.return" /></html:cancel>
+	</html:form>
 
 </logic:present>

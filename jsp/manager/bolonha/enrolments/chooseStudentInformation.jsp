@@ -29,39 +29,48 @@
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.submit" /></html:submit>
 	</fr:form>
 	
-	<logic:present name="studentCurricularPlans">
-	
-		<logic:notEmpty name="studentCurricularPlans">
-		
-			<fr:view name="studentCurricularPlans" schema="StudentCurricularPlan.manager.view">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 mtop15" />
-				
-				<fr:property name="linkFormat(view)" value="<%="/bolonhaStudentEnrolment.do?method=viewStudentCurriculum&amp;scpId=${idInternal}"%>"/>
-				<fr:property name="key(view)" value="link.student.viewCurriculum"/>
-				<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
-				<fr:property name="order(view)" value="1"/>
-				
-				<fr:property name="linkFormat(enrol)" value="<%="/bolonhaStudentEnrolment.do?method=prepareChooseExecutionPeriod&amp;scpId=${idInternal}"%>"/>
-				<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
-				<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
-				<fr:property name="order(enrol)" value="2"/>
-
-				<fr:property name="linkFormat(moveCurriculumLines)" value="<%="/curriculumLinesLocationManagement.do?method=prepare&amp;scpID=${idInternal}"%>"/>
-				<fr:property name="key(moveCurriculumLines)" value="label.course.moveEnrolments"/>
-				<fr:property name="bundle(moveCurriculumLines)" value="ACADEMIC_OFFICE_RESOURCES"/>
-				<fr:property name="order(moveCurriculumLines)" value="3"/>
-				
-				<fr:property name="linkFormat(dismissal)" value="/studentDismissals.do?method=manage&amp;scpID=${idInternal}" />
-				<fr:property name="key(dismissal)" value="link.student.dismissal.management"/>
-				<fr:property name="bundle(dismissal)" value="ACADEMIC_OFFICE_RESOURCES"/>
-				<fr:property name="contextRelative(dismissal)" value="true"/>      	
-				<fr:property name="order(dismissal)" value="4"/>
-			</fr:layout>
-		</fr:view>
-		
+	<logic:present name="registrations">
+		<logic:notEmpty name="registrations">
+			<br/>
+			<logic:iterate id="registration" name="registrations">
+				<br/>
+				<strong><bean:write name="registration" property="lastDegreeCurricularPlan.degree.sigla"/> - <bean:write name="registration" property="lastDegreeCurricularPlan.degree.name"/></strong> (<bean:message name="registration" property="activeStateType.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
+				<logic:notEmpty name="registration" property="studentCurricularPlans">
+					<table class="tstyle4">
+						<tr>
+							<th scope="col"><bean:message key="label.startDate" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+							<th scope="col"><bean:message key="label.degreeType" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+							<th scope="col"><bean:message key="label.curricularPlan" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+							<th scope="col"> </th>
+						</tr>
+						<logic:iterate id="studentCurricularPlan" name="registration" property="studentCurricularPlans">
+						<tr>
+							<td><bean:write name="studentCurricularPlan" property="startDateYearMonthDay"/></td>
+							<td><bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.localizedName"/></td>
+							<td><bean:write name="studentCurricularPlan" property="degreeCurricularPlan.name"/></td>
+							<td>
+								<html:link action="/bolonhaStudentEnrolment.do?method=viewStudentCurriculum" paramId="scpId" paramName="studentCurricularPlan" paramProperty="idInternal"><bean:message key="link.student.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+								<logic:equal name="studentCurricularPlan" property="transition" value="false">
+									, 
+									<html:link action="/bolonhaStudentEnrolment.do?method=prepareChooseExecutionPeriod" paramId="scpId" paramName="studentCurricularPlan" paramProperty="idInternal"><bean:message key="link.student.enrolInCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+								</logic:equal>
+								<logic:equal name="studentCurricularPlan" property="transition" value="false">
+									, 
+									<html:link action="/curriculumLinesLocationManagement.do?method=prepare" paramId="scpId" paramName="studentCurricularPlan" paramProperty="idInternal"><bean:message key="label.course.moveEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+								</logic:equal>
+								, 
+								<html:link action="/studentDismissals.do?method=manage" paramId="scpId" paramName="studentCurricularPlan" paramProperty="idInternal"><bean:message key="link.student.dismissal.management" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+								<logic:equal name="studentCurricularPlan" property="transition" value="true">
+									,
+									<html:link action="/bolonhaStudentEnrolment.do?method=prepareTransit" paramId="scpId" paramName="studentCurricularPlan" paramProperty="idInternal"><bean:message key="link.student.transitToBolonha" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+								</logic:equal>
+							</td>
+						</tr>
+						</logic:iterate>
+					</table>
+				</logic:notEmpty>
+			</logic:iterate>
 		</logic:notEmpty>
-	
 	</logic:present>
 
 </logic:present>

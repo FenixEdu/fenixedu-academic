@@ -1,22 +1,27 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.commons.student.StudentNumberBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,7 +41,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	    final Student student = getStudent(numberBean);
 	    if (student != null) {
 		RenderUtils.invalidateViewState();
-		request.setAttribute("studentCurricularPlans", getAllStudentCurricularPlans(student));
+		request.setAttribute("registrations", getAllRegistrations(student));
 		request.setAttribute("studentNumberBean", numberBean);
 	    }
 	}
@@ -52,21 +57,20 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	studentNumberBean.setNumber(student.getNumber());
 
 	request.setAttribute("studentNumberBean", studentNumberBean);
-	request.setAttribute("studentCurricularPlans", getAllStudentCurricularPlans(student));
+	request.setAttribute("registrations", getAllRegistrations(student));
 
 	return mapping.findForward("chooseStudentInformation");
-
     }
 
     private Student getStudent(final HttpServletRequest request) {
 	return rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
     }
 
-    private List<StudentCurricularPlan> getAllStudentCurricularPlans(final Student student) {
-	final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-	for (final Registration registration : student.getRegistrations()) {
-	    result.addAll(registration.getStudentCurricularPlans());
-	}
+    private List<Registration> getAllRegistrations(final Student student) {
+	final List<Registration> result = new ArrayList<Registration>();
+	result.addAll(student.getRegistrations());
+	result.addAll(student.getTransitionRegistrations());
+	Collections.sort(result, new ReverseComparator(Registration.COMPARATOR_BY_START_DATE));
 	return result;
     }
 
@@ -147,4 +151,22 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	return null;
     }
 
+    public ActionForward prepareTransit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
+	return mapping.findForward("transitToBolonha");
+    }
+    
+    public ActionForward transitToBolonha(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
+	try {
+	    executeService("TransitToBolonha", new Object[] { null,
+		    studentCurricularPlan.getRegistration().getSourceRegistrationForTransition() });
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	    return prepareTransit(mapping, actionForm, request, response);
+	}
+	return showAllStudentCurricularPlans(mapping, actionForm, request, response);
+    }
 }

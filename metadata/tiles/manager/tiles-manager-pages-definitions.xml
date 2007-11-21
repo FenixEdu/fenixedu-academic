@@ -931,10 +931,7 @@
 	</definition>
 	<definition name="transition.bolonha.showStudentCurricularPlan" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/transition/bolonha/showStudentCurricularPlan.jsp"/>
-	</definition>	
-	<!-- End: Bolonha Transition Management -->
-	
-	<!-- Begin: Bolonha Transition Management -->
+	</definition>
 	<definition name="student.enrolment.bolonha.viewStudentCurriculum" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/bolonha/enrolments/displayStudentCurriculum.jsp"/>
 	</definition>
@@ -952,6 +949,9 @@
 	</definition>
 	<definition name="student.enrolment.bolonha.chooseCycleCourseGroupToEnrol" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/bolonha/enrolments/chooseCycleCourseGroupToEnrol.jsp"/>
+	</definition>
+	<definition name="student.enrolment.bolonha.transitToBolonha" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/bolonha/enrolments/transitToBolonha.jsp"/>
 	</definition>
 	
 	<!-- End: Bolonha Transition Management -->
