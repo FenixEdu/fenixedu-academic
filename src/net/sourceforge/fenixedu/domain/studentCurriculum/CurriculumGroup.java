@@ -565,6 +565,25 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return Double.valueOf(bigDecimal.doubleValue());
     }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    public Double getCreditsConcluded(ExecutionYear executionYear) {
+
+	final CourseGroup courseGroup = isRoot() ? getDegreeModule() : getCurriculumGroup().getDegreeModule();
+	final CreditsLimit creditsLimit = (CreditsLimit) getDegreeModule().getCurricularRuleMostRecent(CurricularRuleType.CREDITS_LIMIT, courseGroup, executionYear);
+
+	Double creditsConcluded = 0d;
+	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    creditsConcluded += curriculumModule.getCreditsConcluded(executionYear);
+	}
+
+	if (creditsLimit == null) {
+	    return creditsConcluded;
+	} else {
+	    return Math.min(creditsLimit.getMaximumCredits(), creditsConcluded);
+	}
+    }
 
     final public int getNumberOfChildCurriculumGroupsWithCourseGroup() {
 	int result = 0;
@@ -691,25 +710,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    }
 
 	    return creditsConcluded >= creditsLimit.getMinimumCredits();
-	}
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public Double getCreditsConcluded(ExecutionYear executionYear) {
-
-	final CourseGroup courseGroup = isRoot() ? getDegreeModule() : getCurriculumGroup().getDegreeModule();
-	final CreditsLimit creditsLimit = (CreditsLimit) getDegreeModule().getCurricularRuleMostRecent(CurricularRuleType.CREDITS_LIMIT, courseGroup, executionYear);
-
-	Double creditsConcluded = 0d;
-	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    creditsConcluded += curriculumModule.getCreditsConcluded(executionYear);
-	}
-
-	if (creditsLimit == null) {
-	    return creditsConcluded;
-	} else {
-	    return Math.min(creditsLimit.getMaximumCredits(), creditsConcluded);
 	}
     }
 
