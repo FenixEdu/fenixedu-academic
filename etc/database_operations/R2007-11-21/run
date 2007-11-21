@@ -27,3 +27,13 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Add new columns to EnrolmentWrapper" alterTableEnrolmentWrapper.sql
+execute "Migrate EnrolmentWrapper data to new structure" migrateEnrolmentWrapperData.sql
+
+
+execute "Alter ExecutionPeriod table" alterExecutionPeriodTable.sql
+executeWithTempFile "Alter AcademicCalendarEntry table" alterAcademicCalendarEntryTable.sql
+executeWithTempFile "Alter ExecutionPeriod table - Step 2" alterExecutionPeriodTable2.sql
+execute "drop unnecessary slots" alterExecutionPeriodAndYearTables.sql
+
