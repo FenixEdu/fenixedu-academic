@@ -351,13 +351,14 @@ public class ParkingParty extends ParkingParty_Base {
 	return occupations;
     }
 
-    public String getDegreesInformation() {
-	StringBuilder stringBuilder = new StringBuilder();
+    public List<String> getDegreesInformation() {
+	List<String> result = new ArrayList<String>();
 	if (getParty().isPerson()) {
 	    Person person = (Person) getParty();
 	    Student student = person.getStudent();
 	    if (student != null && person.getPersonRole(RoleType.STUDENT) != null) {
 		for (Registration registration : student.getActiveRegistrations()) {
+		    StringBuilder stringBuilder = new StringBuilder();
 		    StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
 		    if (scp != null) {
 			stringBuilder.append(scp.getDegreeCurricularPlan().getName());
@@ -367,12 +368,12 @@ public class ParkingParty extends ParkingParty_Base {
 				.getCurricularYear())) {
 			    stringBuilder.append(" - 1ª vez");
 			}
-			stringBuilder.append("<br/>");
+			result.add(stringBuilder.toString());
 		    }
 		}
 	    }
 	}
-	return stringBuilder.toString();
+	return result;
     }
 
     public boolean hasVehicleContainingPlateNumber(String plateNumber) {

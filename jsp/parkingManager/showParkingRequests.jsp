@@ -53,17 +53,17 @@
 			if (sortCriteria == null) {
 			    sortCriteria = "parkingParty.mostSignificantNumber=ascending";
 			}
-		%>
-			
-		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
-		<html:link page="<%= "/parking.do?method=exportToExcel" + query.toString()%>">
-			<bean:message key="link.exportToExcel" bundle="PARKING_RESOURCES"/>
-		</html:link>
+		%>					
 		
 		<logic:notEmpty name="parkingRequests">
+			<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
+			<html:link page="<%= "/parking.do?method=exportToExcel" + query.toString()%>">
+				<bean:message key="link.exportToExcel" bundle="PARKING_RESOURCES"/>
+			</html:link>
+		
 			<fr:view name="parkingRequests" schema="show.parkingRequest.noDetail">
 				<fr:layout name="tabular-sortable">
-					<fr:property name="classes" value="tstyle1" />
+					<fr:property name="classes" value="tstyle1 ulnomargin" />
 					<fr:property name="columnClasses" value="acenter,,,," />
 					<fr:property name="link(viewUser)" value="/parking.do?method=showParkingPartyRequests" />
 					<fr:property name="key(viewUser)" value="link.viewUser" />

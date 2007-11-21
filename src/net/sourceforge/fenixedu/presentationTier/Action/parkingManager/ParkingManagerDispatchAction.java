@@ -43,17 +43,16 @@ import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.ReportsUtils;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.util.Region;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
-import org.joda.time.format.DateTimeFormat;
 
 public class ParkingManagerDispatchAction extends FenixDispatchAction {
     private static final int MAX_NOTE_LENGTH = 250;
@@ -76,22 +75,22 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     private void setSearchCriteria(HttpServletRequest request, ParkingRequestSearch parkingRequestSearch) {
 	String parkingRequestState = request.getParameter("parkingRequestState");
 	if (!StringUtils.isEmpty(parkingRequestState)) {
-	parkingRequestSearch.setParkingRequestState(ParkingRequestState
-		.valueOf(parkingRequestState));
+	    parkingRequestSearch
+		    .setParkingRequestState(ParkingRequestState.valueOf(parkingRequestState));
 	}
 	String partyClassification = request.getParameter("partyClassification");
 	if (!StringUtils.isEmpty(partyClassification)) {
-	parkingRequestSearch.setPartyClassification(PartyClassification
-		.valueOf(partyClassification));
+	    parkingRequestSearch
+		    .setPartyClassification(PartyClassification.valueOf(partyClassification));
 	}
 	String personName = request.getParameter("personName");
 	if (!StringUtils.isEmpty(personName)) {
-	parkingRequestSearch.setPersonName(personName);
+	    parkingRequestSearch.setPersonName(personName);
 	}
 
 	String carPlateNumber = request.getParameter("carPlateNumber");
 	if (!StringUtils.isEmpty(carPlateNumber)) {
-	parkingRequestSearch.setCarPlateNumber(carPlateNumber);
+	    parkingRequestSearch.setCarPlateNumber(carPlateNumber);
 	}
     }
 
@@ -542,38 +541,59 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	ParkingRequestSearch parkingRequestSearch = new ParkingRequestSearch();
 	setSearchCriteria(request, parkingRequestSearch);
 	List<ParkingRequest> parkingRequestList = parkingRequestSearch.getSearch();
-	Spreadsheet spreadsheet = new Spreadsheet("Pedidos_Parque");
-	spreadsheet.setHeader("Categoria");
-	spreadsheet.setHeader("Número");
-	spreadsheet.setHeader("Nome");
-	spreadsheet.setHeader("Estado");
-	spreadsheet.setHeader("Data Pedido");
-	spreadsheet.setHeader("Outras Informações");
+	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Pedidos_Parque",15);
+	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader("Categoria");
+	spreadsheet.addHeader("Número");
+	spreadsheet.addHeader("Nome",9000);
+	spreadsheet.addHeader("Estado");
+	spreadsheet.addHeader("Data Pedido");
+	spreadsheet.addHeader("Outras Informações",6000);
 
 	final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
-		"resources.EnumerationResources", LanguageUtils.getLocale());	
+		"resources.EnumerationResources", LanguageUtils.getLocale());
 	for (ParkingRequest parkingRequest : parkingRequestList) {
-	    if(parkingRequest.getParkingParty().getParty().isPerson()) {
+	    if (parkingRequest.getParkingParty().getParty().isPerson()) {
 		Person person = (Person) parkingRequest.getParkingParty().getParty();
-		final Row row = spreadsheet.addRow();
-		row.setCell(enumerationBundle.getString(parkingRequestSearch.getPartyClassification().name()));
-		row.setCell(parkingRequest.getParkingParty().getMostSignificantNumber().toString());
-		row.setCell(person.getName());
-		row.setCell(enumerationBundle.getString(parkingRequest.getParkingRequestState().name()));
-		row.setCell(parkingRequest.getCreationDate().toString(DateTimeFormat
-			    .forPattern("dd/MM/yyyy HH:mm")));
-		row.setCell(parkingRequest.getParkingParty().getDegreesInformation());
-	    }	    
+		spreadsheet.newRow();
+		int firstRow = spreadsheet.getRow().getRowNum();
+		spreadsheet.addCell(enumerationBundle.getString(parkingRequestSearch
+			.getPartyClassification().name()));
+		spreadsheet.addCell(parkingRequest.getParkingParty().getMostSignificantNumber());
+		spreadsheet.addCell(person.getName());
+		spreadsheet.addCell(enumerationBundle.getString(parkingRequest.getParkingRequestState()
+			.name()));
+		spreadsheet.addDateTimeCell(parkingRequest.getCreationDate());
+		if (!parkingRequest.getParkingParty().getDegreesInformation().isEmpty()) {
+		    Iterator<String> iterator = parkingRequest.getParkingParty().getDegreesInformation()
+			    .iterator();
+		    String degreeInfo = (String) iterator.next();
+		    spreadsheet.addCell(degreeInfo);
+		    while (iterator.hasNext()) {
+			spreadsheet.newRow();
+			degreeInfo = (String) iterator.next();
+			spreadsheet.addCell(degreeInfo, 5);
+		    }
+		    int lastRow = firstRow
+			    + parkingRequest.getParkingParty().getDegreesInformation().size() - 1;
+		    if (firstRow != lastRow) {
+			for (int iter = 0; iter < 5; iter++) {
+			    spreadsheet.getSheet().addMergedRegion(
+				    new Region(firstRow, (short) iter, lastRow, (short) iter));
+			}
+		    }
+		}
+	    }
 	}
 	response.setContentType("application/vnd.ms-excel");
 	response.setHeader("Content-Disposition", "attachment; filename=pedidos_parque.xls");
 	final ServletOutputStream writer = response.getOutputStream();
-	spreadsheet.exportToXLSSheet(writer);
+	spreadsheet.getWorkbook().write(writer);
 	writer.flush();
 	response.flushBuffer();
 	return null;
     }
-    
+
     private boolean isRepeatedCardNumber(Long cardNumber, ParkingParty parkingParty) {
 	for (ParkingParty tempParkingParty : rootDomainObject.getParkingParties()) {
 	    if (tempParkingParty.getCardNumber() != null

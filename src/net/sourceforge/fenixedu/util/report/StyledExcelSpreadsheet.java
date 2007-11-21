@@ -49,6 +49,15 @@ public class StyledExcelSpreadsheet {
 	this.wrapText = wrapText;
     }
 
+    public StyledExcelSpreadsheet(final String sheetName, int defaultColumnWith) {
+	workbook = new HSSFWorkbook();
+	excelStyle = new ExcelStyle(workbook);
+	sheet = workbook.createSheet(sheetName);
+	sheet.setDefaultColumnWidth((short)defaultColumnWith);
+	sheet.setGridsPrinted(false);
+	wrapText = true;
+    }
+    
     public ExcelStyle getExcelStyle() {
 	return excelStyle;
     }

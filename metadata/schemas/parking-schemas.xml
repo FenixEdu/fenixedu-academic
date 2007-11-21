@@ -348,6 +348,7 @@
 	<slot name="creationDate" key="label.creationDate" bundle="PARKING_RESOURCES" />
 	<slot name="parkingParty.degreesInformation" key="label.aditionalInformation" bundle="PARKING_RESOURCES">
 		<property name="escaped" value="false"/>
+		<property name="classes" value="nobullet"/>
 	</slot>
 </schema>
 
