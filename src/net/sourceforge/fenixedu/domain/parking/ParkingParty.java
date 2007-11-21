@@ -368,6 +368,7 @@ public class ParkingParty extends ParkingParty_Base {
 				.getCurricularYear())) {
 			    stringBuilder.append(" - 1ª vez");
 			}
+			stringBuilder.append(" - ").append(registration.getAverage());
 			result.add(stringBuilder.toString());
 		    }
 		}
