@@ -3803,10 +3803,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			}
 
 		class net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule {
+			String createdBy;
 		}
 
 			class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine {
-				String createdBy;
 				EnrollmentState enrollmentState;
 				EnrollmentCondition enrolmentCondition;
 				EnrolmentEvaluationType enrolmentEvaluationType;
