@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 
 public class StudentDismissalRenderer extends InputRenderer {
     
@@ -266,8 +267,13 @@ public class StudentDismissalRenderer extends InputRenderer {
 		htmlTableRow.setClasses(getCurricularCourseRowClasses());
 		
 		final HtmlTableCell nameCell = htmlTableRow.createCell(); 
-    	    	nameCell.setBody(new HtmlText(curricularCourse.getName()));
-    	    	nameCell.setClasses(getCurricularCourseNameClasses());
+    	    	
+		final String code = curricularCourse.getCode();
+		final String name = curricularCourse.getName();
+		final String codeAndname = StringUtils.isEmpty(code) ? name : code + " - " + name;
+		nameCell.setBody(new HtmlText(codeAndname));
+    	    	
+		nameCell.setClasses(getCurricularCourseNameClasses());
     	    
     	    	final HtmlTableCell checkBoxCell = htmlTableRow.createCell();
     	    	checkBoxCell.setClasses(getCurricularCourseCheckBoxClasses());
