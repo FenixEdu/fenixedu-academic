@@ -149,8 +149,18 @@ public class Registration extends Registration_Base {
 
 	this(person, null, agreement, studentCandidacy, degreeCurricularPlan, executionYear);
 
-	StudentCurricularPlan scp = StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
-		new YearMonthDay(), ExecutionPeriod.readActualExecutionPeriod(), cycleType);
+	final YearMonthDay startDay;
+	final ExecutionPeriod executionPeriod;
+	if (executionYear == null || executionYear.isCurrent()) {
+	    startDay = new YearMonthDay();
+	    executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	} else {
+	    startDay = executionYear.getBeginDateYearMonthDay();
+	    executionPeriod = executionYear.getFirstExecutionPeriod();
+	}
+	
+	final StudentCurricularPlan scp = StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
+		startDay, executionPeriod, cycleType);
 	
 	EventGenerator.generateNecessaryEvents(scp, person, executionYear);
     }
@@ -169,7 +179,7 @@ public class Registration extends Registration_Base {
 
     private Registration(Person person, Integer registrationNumber, RegistrationAgreement agreement,
 	    StudentCandidacy studentCandidacy, ExecutionYear executionYear) {
-	this(executionYear == null ? new DateTime() : executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight());
+	this(executionYear == null || executionYear.isCurrent() ? new DateTime() : executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight());
 	if (person.hasStudent()) {
 	    setStudent(person.getStudent());
 	} else {
@@ -1985,22 +1995,14 @@ public class Registration extends Registration_Base {
      * executionYear) method
      */
     public boolean hasConcluded() {
-	final DegreeType degreeType = getDegreeType();
-	
-	if (degreeType.hasAnyCycleTypes()) {
-	    final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
-	    
-	    for (final CycleType cycleType : degreeType.getCycleTypes()) {
-		final CurriculumGroup cycle = lastStudentCurricularPlan.getCycle(cycleType);
-		if (cycle == null || cycle.getCreditsConcluded(null) < cycleType.getDefaultEcts()) {
-		    return false;
-		}
+	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
+	    final CurriculumGroup cycle = lastStudentCurricularPlan.getCycle(cycleType);
+	    if (cycle == null || cycle.getCreditsConcluded(null) < cycleType.getDefaultEcts()) {
+		return false;
 	    }
-	    
-	    return true;
-	} else {
-	    return degreeType.getDefaultEctsCredits() > getEctsCredits();
 	}
+	return true;
     }
 
     public boolean getHasConcluded() {
@@ -2581,6 +2583,7 @@ public class Registration extends Registration_Base {
 	}
 	
 	final RegistrationState actualState = getActiveState();
+
 	RegistrationState.createState(this, person, new DateTime(), RegistrationStateType.TRANSITED);
 
 	for (final Registration registration : getTargetTransitionRegistrations()) {
@@ -2592,8 +2595,10 @@ public class Registration extends Registration_Base {
 	    }
 	    	    
 	    registration.setRegistrationAgreement(getRegistrationAgreement());	    
+	    
 	    transferCurrentExecutionPeriodAttends(registration);
 	}
+
 	transferAnyRemainingCurrentExecutionPeriodAttends();
     }
 
