@@ -686,22 +686,15 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         final InputStreamReader input = new InputStreamReader(inputStream);
         final BufferedReader reader = new BufferedReader(input);
 
-        // parsing uploaded file
-        int n = 0;
+	char[] buffer = new char[4096];
+	StringBuffer fileContents = new StringBuffer();
+	int i = 0;
+	while ((i = reader.read(buffer)) != -1) {
+	    fileContents.append(buffer, 0, i);
+	}
 
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String lineReader = reader.readLine(); lineReader != null; lineReader = reader.readLine(), n++) {
-            if ((lineReader != null) && (lineReader.length() != 0)) {
-        	stringBuilder.append(lineReader);
-            }
-        }
-
-        if (n == 0) {
-            throw new IOException("error.file.empty");        
-        }
-        
         try {
-            final StringTokenizer stringTokenizer = new StringTokenizer(stringBuilder.toString());
+            final StringTokenizer stringTokenizer = new StringTokenizer(fileContents.toString());
             while(true) {
         	String studentNumber = getNextToken(stringTokenizer);
         	if(studentNumber == null) {
