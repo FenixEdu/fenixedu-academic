@@ -26,3 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Create AcademicPeriod table" createAcademicPeriodTable.sql
+execute "Alter Academic Calendar Entry table" alterTableAcademicCalendarEntry.sql
