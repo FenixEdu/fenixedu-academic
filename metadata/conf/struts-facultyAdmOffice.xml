@@ -673,6 +673,15 @@
    			<forward name="correct-grant-contract-move" path="correctMoveGrantContract"/>
     </action>
 
+	<!-- =====================  EXPORT GRANTS============================== -->
+	<action path="/exportGrants" 
+			scope="request"
+   			parameter="method"
+		    validate="true"
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.export.ExportGrantsAction">
+   			<forward name="search-grants" path="search-grants"/>
+    </action>
+    
     <!-- ================================================================================= -->
 	</action-mappings>
 

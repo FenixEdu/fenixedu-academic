@@ -48,11 +48,20 @@
 <table class="tstyle1">
 	<tr>
 		<th><bean:message key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
+		<th><bean:message key="label.protocol.country" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
 		<th></th>				
 	</tr>
 	<logic:iterate id="partnerUnit" name="protocolFactory" property="partnerUnits" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	<tr>
 		<td><bean:write name="partnerUnit" property="presentationNameWithParents"/></td>
+		<td>
+			<logic:notEmpty name="partnerUnit" property="country">
+				<bean:write name="partnerUnit" property="country.name"/>
+			</logic:notEmpty>
+			<logic:empty name="partnerUnit" property="country">
+				-
+			</logic:empty>
+		</td>
 		<td>
 			<html:submit onclick="<%= "this.form.unitID.value=" + partnerUnit.getIdInternal().toString() + ";this.form.method.value='removePartnerUnit'"%>">
 				<bean:message key="button.remove" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
@@ -92,7 +101,7 @@
 <logic:equal name="protocolFactory" property="internalUnit" value="true">
 <fr:edit id="unit" name="protocolFactory" schema="search.unit">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight"/>
+		<fr:property name="classes" value="tstyle5 thlight mbottom05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	<fr:destination name="changeUnitType" path="/editProtocol.do?method=prepareEditUnits"/>

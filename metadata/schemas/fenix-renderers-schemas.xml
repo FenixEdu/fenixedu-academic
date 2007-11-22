@@ -45,6 +45,7 @@
     <!ENTITY pedagogicalCouncilSchemas SYSTEM "pedagogicalCouncil-schemas.xml">
     <!ENTITY delegatesSchemas SYSTEM "delegates-schemas.xml">
     <!ENTITY directiveCouncil SYSTEM "directiveCouncil-schemas.xml">
+    <!ENTITY facultyAdmOffice SYSTEM "facultyAdmOffice-schemas.xml">
 ]>
 
 <schemas>
@@ -700,5 +701,6 @@
     &pedagogicalCouncilSchemas;
     &delegatesSchemas;
     &directiveCouncil;
+    &facultyAdmOffice;
     
 </schemas>

@@ -135,6 +135,7 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
         if (request.getParameter("export") != null) {
             return exportProtocols(mapping, actionForm, request, response, protocolSearch);
         }
+        request.setAttribute("showAllNationalityTypes", request.getParameter("showAllNationalityTypes"));
         request.setAttribute("protocolSearch", protocolSearch);
         return mapping.findForward("search-protocols");
     }

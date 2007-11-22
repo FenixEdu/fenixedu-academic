@@ -1,0 +1,63 @@
+<schema name="search.grants.contract" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
+	<slot name="grantYearMonth.year" key="label.year">
+		<validator name="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			<property name="required" value="false" />
+		</validator>
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+	</slot>
+	<slot name="grantYearMonth.month" layout="menu-select" key="label.month">
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.util.Month" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="responsible" layout="autoComplete" key="label.grant.paymententity.teacher">
+		<property name="size" value="80"/>
+		<property name="labelField" value="person.name"/>	
+		<property name="rawSlotName" value="responsibleName"/>
+		<property name="format" value="${person.name}"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=person.name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Teacher"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+	<slot name="active" key="label.grant.contract.regime.active" layout="option-select"/>
+	<slot name="inactive" key="label.grant.contract.regime.desactive" layout="option-select"/>
+</schema>
+
+<schema name="search.grants.subsidy" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
+	<slot name="isSubsidyCostCenter" key="label.grant.owner.infoperson.documentIdType" layout="radio">
+        <property name="trueLabel" value="label.grant.part.paymentEntity.costCenter"/>
+        <property name="falseLabel" value="label.grant.part.paymentEntity.project"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+	<slot name="subsidyCostCenterOrProject" key="label.list.byCriteria.grant.owner.numberCostCenter"/>
+</schema>
+
+<schema name="search.grants.insurance" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
+	<slot name="isInsuranceCostCenter" key="label.grant.owner.infoperson.documentIdType" layout="radio">
+        <property name="trueLabel" value="label.grant.part.paymentEntity.costCenter"/>
+        <property name="falseLabel" value="label.grant.part.paymentEntity.project"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+	<slot name="insuranceCostCenterOrProject" key="label.list.byCriteria.grant.owner.numberCostCenter"/>
+</schema>
+
+<schema name="show.grantContractRegime" type="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime">
+	<slot name="grantContract.grantOwner.number" key="label.grant.owner.number"/>
+	<slot name="grantContract.grantOwner.person.name" key="label.grant.owner.name"/>
+	<slot name="grantContract.contractNumber" key="label.grant.contract.contractnumber"/>
+	<slot name="grantContract.grantType.sigla" key="label.grant.contract.type"/>
+	<slot name="dateBeginContractYearMonthDay" key="label.grant.subsidy.dateBeginSubsidy"/>
+	<slot name="dateEndContractYearMonthDay" key="label.grant.subsidy.dateEndSubsidy"/>
+  	<slot name="grantSubsidy" key="label.grantValue" schema="show.grantSubsidy" layout="values">
+	  	<property name="htmlSeparator" value="/"/>
+  	</slot>
+</schema>
+
+<schema name="show.grantSubsidy" type="net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy">
+	<slot name="value" key="label.list.byCriteria.grant.owner.valueOfGrantPayment"/>
+  	<slot name="totalCost" key="label.list.byCriteria.grant.owner.totalOfGrantPayment"/>
+</schema>

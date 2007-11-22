@@ -54,7 +54,7 @@
 		  	</html:link>
 		</li>
 		<li>
-			<html:link page="/protocols.do?method=searchProtocols">
+			<html:link page="/protocols.do?method=searchProtocols&amp;showAllNationalityTypes">
 		  		<bean:message key="link.protocols.search" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 		  	</html:link>
 		</li>			

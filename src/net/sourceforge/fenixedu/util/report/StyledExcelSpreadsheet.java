@@ -10,7 +10,10 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.contrib.HSSFCellUtil;
+import org.apache.poi.hssf.usermodel.contrib.HSSFRegionUtil;
 import org.apache.poi.hssf.util.CellReference;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTime;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
@@ -89,6 +92,13 @@ public class StyledExcelSpreadsheet {
 	cell.setCellStyle(excelStyle.getHeaderStyle());
     }
 
+    public void addHeader(int columnNumber, String value) {
+	HSSFRow currentRow = getRow();
+	HSSFCell cell = currentRow.createCell((short) columnNumber);
+	cell.setCellValue(value);
+	cell.setCellStyle(excelStyle.getHeaderStyle());
+    }
+
     public void addHeader(String value, int columnSize) {
 	HSSFRow currentRow = getRow();
 	short thisCellNumber = (short) (currentRow.getLastCellNum() + 1);
@@ -155,56 +165,64 @@ public class StyledExcelSpreadsheet {
 	addCell(value, getDefaultExcelStyle(value), columnNumber);
     }
 
+    public void addCell(Object value, int columnNumber, boolean wrap) {
+	addCell(value, getDefaultExcelStyle(value), columnNumber, wrap);
+    }
+
     public void addCell(Object value, HSSFCellStyle newStyle, int columnNumber) {
+	addCell(value, newStyle, columnNumber, wrapText);
+    }
+
+    private void addCell(Object value, HSSFCellStyle newStyle, int columnNumber, boolean wrap) {
 	if (value instanceof String) {
-	    addCell((String) value, newStyle, columnNumber);
+	    addCell((String) value, newStyle, columnNumber, wrap);
 	} else if (value instanceof Integer) {
-	    addCell((Integer) value, newStyle, columnNumber);
+	    addCell((Integer) value, newStyle, columnNumber, wrap);
 	} else if (value instanceof Double) {
-	    addCell((Double) value, newStyle, columnNumber);
+	    addCell((Double) value, newStyle, columnNumber, wrap);
 	}
     }
 
-    private void addCell(String value, HSSFCellStyle newStyle, int columnNumber) {
+    private void addCell(String value, HSSFCellStyle newStyle, int columnNumber, boolean wrap) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) columnNumber);
 	cell.setCellValue(value);
-	cell.setCellStyle(getExcelStyle(newStyle));
+	cell.setCellStyle(getExcelStyle(newStyle, wrap));
     }
 
-    private void addCell(Double value, HSSFCellStyle newStyle, int columnNumber) {
+    private void addCell(Double value, HSSFCellStyle newStyle, int columnNumber, boolean wrap) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) columnNumber);
 	cell.setCellValue(value);
-	cell.setCellStyle(getExcelStyle(newStyle));
+	cell.setCellStyle(getExcelStyle(newStyle, wrap));
     }
 
-    private void addCell(Integer value, HSSFCellStyle newStyle, int columnNumber) {
+    private void addCell(Integer value, HSSFCellStyle newStyle, int columnNumber, boolean wrap) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) columnNumber);
 	cell.setCellValue(value);
-	cell.setCellStyle(newStyle);
+	cell.setCellStyle(getExcelStyle(newStyle, wrap));
     }
 
     public void addDateTimeCell(DateTime value) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
 	cell.setCellValue(dateTimeFormat.print(value));
-	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle()));
+	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle(), wrapText));
     }
 
     public void addDateCell(YearMonthDay value) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
 	cell.setCellValue(dateFormat.print(value));
-	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle()));
+	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle(), wrapText));
     }
 
     public void addTimeCell(TimeOfDay value) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
 	cell.setCellValue(timeFormat.print(value));
-	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle()));
+	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle(), wrapText));
     }
 
     public void sumColumn(int firstRow, int lastRow, int firstColumn, int lastColumn,
@@ -214,7 +232,7 @@ public class StyledExcelSpreadsheet {
 	    CellReference cellRef2 = new CellReference(lastRow, col);
 	    HSSFRow currentRow = getRow();
 	    HSSFCell cell = currentRow.createCell((short) col);
-	    cell.setCellStyle(getExcelStyle(newStyle));
+	    cell.setCellStyle(getExcelStyle(newStyle, wrapText));
 	    cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
 	}
     }
@@ -228,7 +246,7 @@ public class StyledExcelSpreadsheet {
 	    }
 	    HSSFRow currentRow = sheet.getRow(row);
 	    HSSFCell cell = currentRow.createCell((short) (lastColumn + 1));
-	    cell.setCellStyle(getExcelStyle(newStyle));
+	    cell.setCellStyle(getExcelStyle(newStyle, wrapText));
 	    StringBuilder formula = new StringBuilder();
 	    for (int index = 0; index < refs.length; index++) {
 		if (refs[index] != null) {
@@ -267,6 +285,24 @@ public class StyledExcelSpreadsheet {
 	}
     }
 
+    public void mergeCells(int firstRow, int lastRow, int firstColumn, int lastColumn) {
+	Region region = new Region((short) firstRow, (short) firstColumn, (short) lastRow,
+		(short) lastColumn);
+	getSheet().addMergedRegion(region);
+	try {
+	    HSSFRegionUtil.setBorderBottom(HSSFCellStyle.BORDER_THIN, region, getSheet(), getWorkbook());
+	    HSSFRegionUtil.setBorderTop(HSSFCellStyle.BORDER_THIN, region, getSheet(), getWorkbook());
+	    HSSFRegionUtil.setBorderLeft(HSSFCellStyle.BORDER_THIN, region, getSheet(), getWorkbook());
+	    HSSFRegionUtil.setBorderRight(HSSFCellStyle.BORDER_THIN, region, getSheet(), getWorkbook());
+	    HSSFRegionUtil
+		    .setBottomBorderColor(HSSFColor.BLACK.index, region, getSheet(), getWorkbook());
+	    HSSFRegionUtil.setTopBorderColor(HSSFColor.BLACK.index, region, getSheet(), getWorkbook());
+	    HSSFRegionUtil.setLeftBorderColor(HSSFColor.BLACK.index, region, getSheet(), getWorkbook());
+	    HSSFRegionUtil.setRightBorderColor(HSSFColor.BLACK.index, region, getSheet(), getWorkbook());
+	} catch (NestableException e) {
+	}
+    }
+
     public int getMaxiumColumnNumber() {
 	int result = 0;
 	for (int row = 0; row <= sheet.getLastRowNum(); row++) {
@@ -285,8 +321,8 @@ public class StyledExcelSpreadsheet {
 	getSheet().setMargin(HSSFSheet.RightMargin, 0.10);
     }
 
-    private HSSFCellStyle getExcelStyle(HSSFCellStyle style) {
-	if (!wrapText) {
+    private HSSFCellStyle getExcelStyle(HSSFCellStyle style, boolean wrap) {
+	if (!wrap) {
 	    style.setWrapText(false);
 	}
 	return style;
@@ -294,11 +330,10 @@ public class StyledExcelSpreadsheet {
 
     private HSSFCellStyle getDefaultExcelStyle(Object value) {
 	if (value instanceof Integer) {
-	    return getExcelStyle(getExcelStyle().getIntegerStyle());
+	    return getExcelStyle(getExcelStyle().getIntegerStyle(), wrapText);
 	} else if (value instanceof Double) {
-	    return getExcelStyle(getExcelStyle().getDoubleStyle());
+	    return getExcelStyle(getExcelStyle().getDoubleStyle(), wrapText);
 	}
-	return getExcelStyle(getExcelStyle().getValueStyle());
+	return getExcelStyle(getExcelStyle().getValueStyle(), wrapText);
     }
-
 }

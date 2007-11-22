@@ -74,7 +74,7 @@ public class Unit extends Unit_Base {
     static {
 	FUNCTION_ORDERED_ADAPTER = new OrderedRelationAdapter<Unit, Function>("activeFunctions", "functionOrder");
 	UnitFunction.addListener(FUNCTION_ORDERED_ADAPTER);
-    }    
+    }
 
     protected Unit() {
 	super();
@@ -559,7 +559,8 @@ public class Unit extends Unit_Base {
 	List<Employee> employees = getAllWorkingEmployees(begin, end);
 	for (Employee employee : employees) {
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
+	    if (teacher != null
+		    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
 		teachers.add(teacher);
 	    }
 	}
@@ -1571,4 +1572,16 @@ public class Unit extends Unit_Base {
 	return publications;
     }
 
+    @Override
+    public Country getCountry() {
+	if (super.getCountry() != null) {
+	    return super.getCountry();
+	}
+	for (Unit unit : getParentUnits()) {
+	    if (unit.getCountry() != null) {
+		return unit.getCountry();
+	    }
+	}
+	return null;
+    }
 }

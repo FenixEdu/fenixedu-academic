@@ -21,7 +21,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 public class ProtocolSearch implements Serializable {
 
     public enum SearchNationalityType {
-        NATIONAL, INTERNATIONAL, COUNTRY;
+	NATIONAL, INTERNATIONAL, WITHOUT_NATIONALITY, COUNTRY;
     }
 
     private String protocolNumber;
@@ -55,241 +55,243 @@ public class ProtocolSearch implements Serializable {
     private SearchNationalityType searchNationalityType;
 
     public ProtocolSearch() {
-        super();
-        setActives(true);
+	super();
+	setActives(true);
     }
 
     public List<Protocol> getSearch() {
-        List<Protocol> protocols = new ArrayList<Protocol>();
-        for (Protocol protocol : RootDomainObject.getInstance().getProtocols()) {
-            if (satisfiedProtocolNumber(protocol)
-                    && satisfiedDates(getBeginProtocolBeginDate(), getEndProtocolBeginDate(), protocol
-                            .getLastProtocolHistory().getBeginDate())
-                    && satisfiedDates(getBeginProtocolEndDate(), getEndProtocolEndDate(), protocol
-                            .getLastProtocolHistory().getBeginDate())
-                    && satisfiedDates(getBeginSignedDate(), getEndSignedDate(), protocol.getSignedDate())
-                    && satisfiedOtherProtocolActionTypes(protocol)
-                    && satiefiedProtocolActionTypes(protocol) && satisfiedProtocolPartner(protocol)
-                    && satisfiedNationality(protocol) && satisfiedActivity(protocol)) {
-                protocols.add(protocol);
-            }
-        }
-        return protocols;
+	List<Protocol> protocols = new ArrayList<Protocol>();
+	for (Protocol protocol : RootDomainObject.getInstance().getProtocols()) {
+	    if (satisfiedProtocolNumber(protocol)
+		    && satisfiedDates(getBeginProtocolBeginDate(), getEndProtocolBeginDate(), protocol
+			    .getLastProtocolHistory().getBeginDate())
+		    && satisfiedDates(getBeginProtocolEndDate(), getEndProtocolEndDate(), protocol
+			    .getLastProtocolHistory().getBeginDate())
+		    && satisfiedDates(getBeginSignedDate(), getEndSignedDate(), protocol.getSignedDate())
+		    && satisfiedOtherProtocolActionTypes(protocol)
+		    && satiefiedProtocolActionTypes(protocol) && satisfiedProtocolPartner(protocol)
+		    && satisfiedNationality(protocol) && satisfiedActivity(protocol)) {
+		protocols.add(protocol);
+	    }
+	}
+	return protocols;
     }
 
     public boolean satisfiedActivity(Protocol protocol) {
-        if ((protocol.isActive() && isActives()) || (isInactives() && !protocol.isActive())) {
-            return true;
-        }
-        return false;
+	if ((protocol.isActive() && isActives()) || (isInactives() && !protocol.isActive())) {
+	    return true;
+	}
+	return false;
     }
 
     private boolean satisfiedNationality(Protocol protocol) {
-        if (getSearchNationalityType() == null
-                || getSearchNationalityType().equals(SearchNationalityType.COUNTRY)) {
-            return satisfiedCountry(protocol);
-        }
-        for (Unit partner : protocol.getPartners()) {
-            if (partner.getCountry() != null
-                    && ((getSearchNationalityType().equals(SearchNationalityType.NATIONAL) && partner
-                            .getCountry().getName().equalsIgnoreCase("PORTUGAL")) || (getSearchNationalityType()
-                            .equals(SearchNationalityType.INTERNATIONAL) && !partner.getCountry()
-                            .getName().equalsIgnoreCase("PORTUGAL")))) {
-                return true;
-            }
-        }
-        return false;
+	if (getSearchNationalityType() == null
+		|| getSearchNationalityType().equals(SearchNationalityType.COUNTRY)) {
+	    return satisfiedCountry(protocol);
+	}
+	for (Unit partner : protocol.getPartners()) {
+	    if ((partner.getCountry() != null && ((getSearchNationalityType().equals(
+		    SearchNationalityType.NATIONAL) && partner.getCountry().getName().equalsIgnoreCase(
+		    "PORTUGAL")) || (getSearchNationalityType().equals(
+		    SearchNationalityType.INTERNATIONAL) && !partner.getCountry().getName()
+		    .equalsIgnoreCase("PORTUGAL"))))
+		    || (partner.getCountry() == null && getSearchNationalityType().equals(
+			    SearchNationalityType.WITHOUT_NATIONALITY))) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean satisfiedCountry(Protocol protocol) {
-        if (getCountry() == null) {
-            return true;
-        }
-        for (Unit partner : protocol.getPartners()) {
-            if (partner.getCountry() != null
-                    && partner.getCountry().getName().equals(getCountry().getName())) {
-                return true;
-            }
-        }
-        return false;
+	if (getCountry() == null) {
+	    return true;
+	}
+	for (Unit partner : protocol.getPartners()) {
+	    if (partner.getCountry() != null
+		    && partner.getCountry().getName().equals(getCountry().getName())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean satiefiedProtocolActionTypes(Protocol protocol) {
-        return (getProtocolActionTypes() == null || protocol.getProtocolAction().contains(
-                getProtocolActionTypes()));
+	return (getProtocolActionTypes() == null || protocol.getProtocolAction().contains(
+		getProtocolActionTypes()));
     }
 
     private boolean satisfiedProtocolPartner(Protocol protocol) {
-        if (getPartnerName() != null && getPartnerName().getUnit() != null) {
-            return protocol.getPartners().contains(getPartnerName().getUnit());
-        }
-        if (getPartnerName() == null && getPartnerNameString() != null) {
-            String[] values = StringNormalizer.normalize(getPartnerNameString()).toLowerCase().split(
-                    "\\p{Space}+");
-            boolean result = false;
-            for (Unit unit : protocol.getPartners()) {
-                String normalizedValue = StringNormalizer.normalize(unit.getName()).toLowerCase();
-                for (int i = 0; i < values.length; i++) {
-                    String part = values[i];
-                    if (!normalizedValue.contains(part)) {
-                        result = false;
-                        break;
-                    } else {
-                        result = true;
-                    }
-                }
-                if(result) {
-                    return result;
-                }
-            }
-            return result;
-        }
-        return true;
+	if (getPartnerName() != null && getPartnerName().getUnit() != null) {
+	    return protocol.getPartners().contains(getPartnerName().getUnit());
+	}
+	if (getPartnerName() == null && getPartnerNameString() != null) {
+	    String[] values = StringNormalizer.normalize(getPartnerNameString()).toLowerCase().split(
+		    "\\p{Space}+");
+	    boolean result = false;
+	    for (Unit unit : protocol.getPartners()) {
+		String normalizedValue = StringNormalizer.normalize(unit.getName()).toLowerCase();
+		for (int i = 0; i < values.length; i++) {
+		    String part = values[i];
+		    if (!normalizedValue.contains(part)) {
+			result = false;
+			break;
+		    } else {
+			result = true;
+		    }
+		}
+		if (result) {
+		    return result;
+		}
+	    }
+	    return result;
+	}
+	return true;
     }
 
     private boolean satisfiedOtherProtocolActionTypes(Protocol protocol) {
-        return org.apache.commons.lang.StringUtils.isEmpty(getOtherProtocolActionTypes())
-                || StringUtils.verifyContainsWithEquality(protocol.getProtocolAction().getOtherTypes(),
-                        getOtherProtocolActionTypes());
+	return org.apache.commons.lang.StringUtils.isEmpty(getOtherProtocolActionTypes())
+		|| StringUtils.verifyContainsWithEquality(protocol.getProtocolAction().getOtherTypes(),
+			getOtherProtocolActionTypes());
     }
 
     private boolean satisfiedDates(YearMonthDay beginDate, YearMonthDay endDate, YearMonthDay date) {
-        if (beginDate != null && date != null) {
-            if (endDate != null) {
-                Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), endDate
-                        .toDateTimeAtMidnight().plus(1));
-                return interval.contains(date.toDateTimeAtMidnight());
-            } else {
-                return !beginDate.isAfter(date);
-            }
-        }
-        return true;
+	if (beginDate != null && date != null) {
+	    if (endDate != null) {
+		Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), endDate
+			.toDateTimeAtMidnight().plus(1));
+		return interval.contains(date.toDateTimeAtMidnight());
+	    } else {
+		return !beginDate.isAfter(date);
+	    }
+	}
+	return true;
     }
 
     private boolean satisfiedProtocolNumber(Protocol protocol) {
-        return (org.apache.commons.lang.StringUtils.isEmpty(getProtocolNumber()) || StringUtils
-                .normalize(protocol.getProtocolNumber()).indexOf(
-                        StringUtils.normalize(getProtocolNumber())) != -1);
+	return (org.apache.commons.lang.StringUtils.isEmpty(getProtocolNumber()) || StringUtils
+		.normalize(protocol.getProtocolNumber()).indexOf(
+			StringUtils.normalize(getProtocolNumber())) != -1);
     }
 
     public YearMonthDay getBeginProtocolBeginDate() {
-        return beginProtocolBeginDate;
+	return beginProtocolBeginDate;
     }
 
     public void setBeginProtocolBeginDate(YearMonthDay beginProtocolBeginDate) {
-        this.beginProtocolBeginDate = beginProtocolBeginDate;
+	this.beginProtocolBeginDate = beginProtocolBeginDate;
     }
 
     public YearMonthDay getBeginProtocolEndDate() {
-        return beginProtocolEndDate;
+	return beginProtocolEndDate;
     }
 
     public void setBeginProtocolEndDate(YearMonthDay beginProtocolEndDate) {
-        this.beginProtocolEndDate = beginProtocolEndDate;
+	this.beginProtocolEndDate = beginProtocolEndDate;
     }
 
     public YearMonthDay getBeginSignedDate() {
-        return beginSignedDate;
+	return beginSignedDate;
     }
 
     public void setBeginSignedDate(YearMonthDay beginSignedDate) {
-        this.beginSignedDate = beginSignedDate;
+	this.beginSignedDate = beginSignedDate;
     }
 
     public YearMonthDay getEndProtocolBeginDate() {
-        return endProtocolBeginDate;
+	return endProtocolBeginDate;
     }
 
     public void setEndProtocolBeginDate(YearMonthDay endProtocolBeginDate) {
-        this.endProtocolBeginDate = endProtocolBeginDate;
+	this.endProtocolBeginDate = endProtocolBeginDate;
     }
 
     public YearMonthDay getEndProtocolEndDate() {
-        return endProtocolEndDate;
+	return endProtocolEndDate;
     }
 
     public void setEndProtocolEndDate(YearMonthDay endProtocolEndDate) {
-        this.endProtocolEndDate = endProtocolEndDate;
+	this.endProtocolEndDate = endProtocolEndDate;
     }
 
     public YearMonthDay getEndSignedDate() {
-        return endSignedDate;
+	return endSignedDate;
     }
 
     public void setEndSignedDate(YearMonthDay endSignedDate) {
-        this.endSignedDate = endSignedDate;
+	this.endSignedDate = endSignedDate;
     }
 
     public String getOtherProtocolActionTypes() {
-        return otherProtocolActionTypes;
+	return otherProtocolActionTypes;
     }
 
     public void setOtherProtocolActionTypes(String otherProtocolActionTypes) {
-        this.otherProtocolActionTypes = otherProtocolActionTypes;
+	this.otherProtocolActionTypes = otherProtocolActionTypes;
     }
 
     public UnitName getPartnerName() {
-        return partnerName != null ? partnerName.getObject() : null;
+	return partnerName != null ? partnerName.getObject() : null;
     }
 
     public void setPartnerName(UnitName partnerName) {
-        this.partnerName = new DomainReference<UnitName>(partnerName);
+	this.partnerName = new DomainReference<UnitName>(partnerName);
     }
 
     public List<ProtocolActionType> getProtocolActionTypes() {
-        return protocolActionTypes;
+	return protocolActionTypes;
     }
 
     public void setProtocolActionTypes(List<ProtocolActionType> protocolActionTypes) {
-        this.protocolActionTypes = protocolActionTypes;
+	this.protocolActionTypes = protocolActionTypes;
     }
 
     public String getProtocolNumber() {
-        return protocolNumber;
+	return protocolNumber;
     }
 
     public void setProtocolNumber(String protocolNumber) {
-        this.protocolNumber = protocolNumber;
+	this.protocolNumber = protocolNumber;
     }
 
     public String getPartnerNameString() {
-        return partnerNameString;
+	return partnerNameString;
     }
 
     public void setPartnerNameString(String partnerNameString) {
-        this.partnerNameString = partnerNameString;
+	this.partnerNameString = partnerNameString;
     }
 
     public Country getCountry() {
-        return country != null ? country.getObject() : null;
+	return country != null ? country.getObject() : null;
     }
 
     public void setCountry(Country country) {
-        this.country = new DomainReference<Country>(country);
+	this.country = new DomainReference<Country>(country);
     }
 
     public boolean isActives() {
-        return actives;
+	return actives;
     }
 
     public void setActives(boolean actives) {
-        this.actives = actives;
+	this.actives = actives;
     }
 
     public boolean isInactives() {
-        return inactives;
+	return inactives;
     }
 
     public void setInactives(boolean inactives) {
-        this.inactives = inactives;
+	this.inactives = inactives;
     }
 
     public SearchNationalityType getSearchNationalityType() {
-        return searchNationalityType;
+	return searchNationalityType;
     }
 
     public void setSearchNationalityType(SearchNationalityType searchNationalityType) {
-        this.searchNationalityType = searchNationalityType;
+	this.searchNationalityType = searchNationalityType;
     }
 
 }

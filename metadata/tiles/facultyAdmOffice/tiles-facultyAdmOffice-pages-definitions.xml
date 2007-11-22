@@ -145,5 +145,9 @@
 	<definition name="correctMoveGrantContract" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/correction/grantContractMove.jsp"></put>
 	</definition>
-		
+	
+	<!-- GRANT EXPORTS -->
+	<definition name="search-grants" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/export/searchGrants.jsp"></put>
+	</definition>
 </tiles-definitions>

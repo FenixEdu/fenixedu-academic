@@ -53,7 +53,13 @@
 		    	<bean:message key="link.grant.owner.list.byInsurance"/>
 		    </html:link>
 		</li>
-
+		<%-- 
+		<li>
+			<html:link page="/exportGrants.do?method=searchGrants">
+		    	<bean:message key="link.export"/>
+		    </html:link>
+		</li>
+		--%>
 		<li class="navheader"><bean:message key="link.grant.stats"/></li>
 		<li>
 			<html:link page="/grantOwnerStats.do?method=actionStart">

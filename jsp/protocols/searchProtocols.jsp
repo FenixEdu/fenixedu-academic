@@ -24,13 +24,24 @@
 			</fr:layout>
 		</fr:edit>
 
-		<fr:edit name="protocolSearch" id="protocolSearchNationalityType" schema="edit.protocolSearch.nationalityType">
-			<fr:layout name="tabular">
+		<logic:present name="showAllNationalityTypes">
+			<fr:edit name="protocolSearch" id="protocolSearchNationalityType" schema="edit.protocolSearch.allNationalityType">
+				<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 liinline"/>
-				<fr:property name="columnClasses" value="width100px,width500px inobullet,tdclear tderror1"/>
-			</fr:layout>
-			<fr:destination name="searchCountry" path="/protocols.do?method=searchProtocols"/>
-		</fr:edit>
+					<fr:property name="columnClasses" value="width100px,width500px inobullet,tdclear tderror1"/>
+				</fr:layout>
+				<fr:destination name="searchCountry" path="/protocols.do?method=searchProtocols"/>
+			</fr:edit>
+		</logic:present>
+		<logic:notPresent name="showAllNationalityTypes">
+			<fr:edit name="protocolSearch" id="protocolSearchNationalityType" schema="edit.protocolSearch.nationalityType">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05 liinline"/>
+					<fr:property name="columnClasses" value="width100px,width500px inobullet,tdclear tderror1"/>
+				</fr:layout>
+				<fr:destination name="searchCountry" path="/protocols.do?method=searchProtocols"/>
+			</fr:edit>
+		</logic:notPresent>
 		
 		<logic:notEmpty name="protocolSearch" property="searchNationalityType">
 			<logic:equal name="protocolSearch" property="searchNationalityType" value="<%= net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch.SearchNationalityType.COUNTRY.toString()%>">
@@ -82,21 +93,21 @@
 			</td>
 		</tr>
 		</table>
-		
+
 		<p class="mbottom15">
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-				<bean:message key="button.ok" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-			</html:submit>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.export" property="export">
-				<bean:message key="link.export" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-			</html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.ok" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+		</html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.export" property="export">
+			<bean:message key="link.export" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+		</html:submit>
 		</p>
 	</fr:form>
 
 	<p>
 		<em>
-			<bean:size id="protocolNumber" name="protocolSearch" property="search"/>
-			<bean:message key="message.protocol.number" arg0="<%= protocolNumber.toString()%>" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<bean:size id="protocolNumber" name="protocolSearch" property="search"/>
+	<bean:message key="message.protocol.number" arg0="<%= protocolNumber.toString()%>" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 		</em>
 	</p>
 	<logic:notEmpty name="protocolSearch" property="search">

@@ -117,7 +117,7 @@ public abstract class Party extends Party_Base {
 	setCountry(country);
     }
 
-    final public Country getCountry() {
+    public Country getCountry() {
 	return super.getNationality();
     }
 

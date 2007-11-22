@@ -135,7 +135,7 @@
 			  	</html:link>
 			</li>
 			<li>
-				<html:link page="/protocols.do?method=searchProtocols">
+				<html:link page="/protocols.do?method=searchProtocols&amp;showAllNationalityTypes">
 			  		<bean:message key="link.protocols.search"/>
 			  	</html:link>
 			</li>		
