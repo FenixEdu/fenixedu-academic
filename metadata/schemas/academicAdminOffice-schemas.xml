@@ -487,9 +487,7 @@
 	</slot>		
 	<slot name="stateType" key="label.newState" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="TRANSITION" />
-<!--
 		<property name="excludedValues" value="CONCLUDED" />
- -->
 	</slot>
     <slot name="remarks" layout="longText">
     	<property name="columns" value="50" />

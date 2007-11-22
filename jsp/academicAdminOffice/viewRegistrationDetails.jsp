@@ -107,7 +107,6 @@
 			</html:link>
 		</span>	
 	</logic:equal>
-<%--
 	<logic:equal name="registration" property="qualifiedToRegistrationConclusionProcess" value="true">
 		<span class="pleft1">	
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -116,7 +115,6 @@
 			</html:link>
 		</span>	
 	</logic:equal>
---%>
 </p>
 
 
