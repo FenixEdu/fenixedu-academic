@@ -25,6 +25,10 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	    this.checkParameters(requestedCyle);
 	    super.setRequestedCycle(requestedCyle);
 	}
+	
+	if (!isFree()) {
+	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
+	}
     }
 
     final private void checkParameters(final CycleType requestedCyle) {
@@ -85,9 +89,15 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-	super.internalChangeState(academicServiceRequestBean);
-
 	if (academicServiceRequestBean.isToProcess()) {
+	    if (getRegistration().hasGratuityDebtsCurrently() && !getFreeProcessed()) {
+		throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+	    }
+	    
+	    if (isPayable() && !isPayed()) {
+		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
+	    }
+
 	    final Collection<DocumentRequest> diplomaRequests = getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST);
 	    if (!diplomaRequests.isEmpty() && 
 		    (getRequestedCycle() == null ||
@@ -110,9 +120,10 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	    if (hasDissertationTitle() && !getRegistration().hasDissertationThesis()) {
 		throw new DomainException("DiplomaRequest.registration.doesnt.have.dissertation.thesis");
 	    }
-	    
-	} else if (academicServiceRequestBean.isToConclude() && !isFree()) {
-	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
+	}
+	
+	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
+	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	}
     }
 
