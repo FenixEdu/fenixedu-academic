@@ -317,13 +317,16 @@ public enum GradeScale {
     }
 
     public boolean isValid(final String value, final EvaluationType evaluationType) {
-	final Grade grade = Grade.createGrade(value, this);
-	if (EvaluationType.FINAL_TYPE.equals(evaluationType)) {
-	    return checkFinal(grade);
-	} else {
-	    return checkNotFinal(grade);
+	try {
+	    final Grade grade = Grade.createGrade(value, this);
+	    if (EvaluationType.FINAL_TYPE.equals(evaluationType)) {
+		return checkFinal(grade);
+	    } else {
+		return checkNotFinal(grade);
+	    }
+	} catch (DomainException de) {
+	    return false;
 	}
-
     }
 
     abstract protected boolean checkFinal(final Grade grade);

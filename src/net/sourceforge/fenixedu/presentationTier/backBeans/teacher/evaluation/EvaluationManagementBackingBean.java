@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -642,42 +643,41 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public String loadMarks() throws FenixFilterException, FenixServiceException, FileUploadException {
-        final HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        final MultipartRequestWrapper multipartRequestWrapper = (MultipartRequestWrapper) httpServletRequest.getAttribute("multipartRequestWrapper");
+	final HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+		.getRequest();
+	final MultipartRequestWrapper multipartRequestWrapper = (MultipartRequestWrapper) httpServletRequest
+		.getAttribute("multipartRequestWrapper");
 
-        final FileItem fileItem = multipartRequestWrapper.getFileItem("theFile");
-        InputStream inputStream = null;
-        try {
-            inputStream = fileItem.getInputStream();
-            final Map<Integer, String> marks = loadMarks(inputStream);
-            
-            final Object[] args = { getExecutionCourseID(), getEvaluationID(), marks };
-            
-        	ServiceUtils.executeService(getUserView(), "WriteMarks", args);
-        	
-            /*final Object[] args = { getExecutionCourseID(), getEvaluationID(), marks };
-            TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(getUserView(), "InsertEvaluationMarks", args);
-            processServiceErrors(siteView);*/
-            
-            return "success";
+	final FileItem fileItem = multipartRequestWrapper.getFileItem("theFile");
+	InputStream inputStream = null;
+	try {
+	    inputStream = fileItem.getInputStream();
+	    final Map<Integer, String> marks = loadMarks(inputStream);
 
-        } catch (FenixServiceMultipleException e) {
-			for(DomainException domainException: e.getExceptionList()) {
-				addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException.getArgs()));
-			}
-			return "";
-        } catch (IOException e) {
-            addErrorMessages(getResourceBundle("resources/ApplicationResources"), e.getMessage(), null);
-            return "";
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    // Nothing to do ...
-                }
-            }
-        }
+	    final Object[] args = { getExecutionCourseID(), getEvaluationID(), marks };
+
+	    ServiceUtils.executeService(getUserView(), "WriteMarks", args);
+
+	    return "success";
+
+	} catch (FenixServiceMultipleException e) {
+	    for (DomainException domainException : e.getExceptionList()) {
+		addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException
+			.getArgs()));
+	    }
+	    return "";
+	} catch (IOException e) {
+	    addErrorMessages(getResourceBundle("resources/ApplicationResources"), e.getMessage(), null);
+	    return "";
+	} finally {
+	    if (inputStream != null) {
+		try {
+		    inputStream.close();
+		} catch (IOException e) {
+		    // Nothing to do ...
+		}
+	    }
+	}
     }
 
     private Map<Integer, String> loadMarks(final InputStream inputStream) throws IOException {
@@ -689,24 +689,44 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         // parsing uploaded file
         int n = 0;
 
+        StringBuilder stringBuilder = new StringBuilder();
         for (String lineReader = reader.readLine(); lineReader != null; lineReader = reader.readLine(), n++) {
             if ((lineReader != null) && (lineReader.length() != 0)) {
-                try {
-                    final StringTokenizer stringTokenizer = new StringTokenizer(lineReader.trim());
-                    final String studentNumber = stringTokenizer.nextToken().trim();
-                    final String mark = stringTokenizer.nextToken().trim();
-                    marks.put(Integer.valueOf(studentNumber), mark);
-                } catch (Exception e) {
-                    throw new IOException("error.file.badFormat");
-                }
+        	stringBuilder.append(lineReader);
             }
         }
 
         if (n == 0) {
             throw new IOException("error.file.empty");        
         }
+        
+        try {
+            final StringTokenizer stringTokenizer = new StringTokenizer(stringBuilder.toString());
+            while(true) {
+        	String studentNumber = getNextToken(stringTokenizer);
+        	if(studentNumber == null) {
+        	    return marks;
+        	}
+        	
+        	String mark = getNextToken(stringTokenizer);
+        	if(mark == null) {
+        	    throw new Exception();
+        	}
+        	marks.put(Integer.valueOf(studentNumber), mark);
+            }
+        } catch (Exception e) {
+            throw new IOException("error.file.badFormat");
+        }
+    }
 
-        return marks;
+    private String getNextToken(StringTokenizer stringTokenizer) {
+	while(stringTokenizer.hasMoreTokens()) {
+	    String token = stringTokenizer.nextToken().trim();
+	    if(token.length() > 0) {
+		return token;
+	    }
+	}
+	return null;
     }
 
     public String editWrittenTest() throws Exception {
