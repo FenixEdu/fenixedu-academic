@@ -187,10 +187,8 @@ valueType org.joda.time.TimeOfDay                                               
 valueType org.joda.time.YearMonthDay                                                                                 as YearMonthDay;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.YearMonthList 											 as YearMonthList;
 valueType net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType 						 as BonusType;
-valueType net.sourceforge.fenixedu.domain.PartyClassification														 as PartyClassification;
-valueType net.sourceforge.fenixedu.domain.time.calendarStructure.SeasonType											 as SeasonType; 
+valueType net.sourceforge.fenixedu.domain.PartyClassification														 as PartyClassification; 
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval									 as AcademicInterval;
-valueType net.sourceforge.fenixedu.domain.time.calendarStructure.CreditsEntity										 as CreditsEntity;
 
 /*
 *
@@ -583,19 +581,17 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean temporaryExamMap;							
 	}
 
-	class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
-		AcademicInterval executionInterval;		
-		AcademicInterval departmentAdmOfficeCreditsPeriodInterval;
-		AcademicInterval teacherCreditsPeriodInterval;											
-		String name;		
-		PeriodState state;						
-	}
-
-	class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
-		AcademicInterval executionInterval;		
+	class net.sourceforge.fenixedu.domain.AcademicPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+		AcademicInterval executionInterval;
 		PeriodState state;
-		String year;
+		String name;		
 	}
+		
+		class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.AcademicPeriod {																													
+		}
+	
+		class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.AcademicPeriod {											
+		}
 
 	class net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup extends net.sourceforge.fenixedu.domain.DomainObject {
 	}
@@ -4329,19 +4325,31 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		}
 
 		class net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
-			SeasonType seasonType;
-		}
+		}		
+			class net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodInNormalSeasonCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE {			
+			}
+			
+			class net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodInSpecialSeasonCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE {			
+			}					
 
 		class net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
 		}
 
-		class net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
-			SeasonType seasonType;
+		class net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {			
 		}
+			class net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInNormalSeasonCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE {			
+			}
+			
+			class net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInSpecialSeasonCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE {			
+			}
 		
-		class net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
-			CreditsEntity creditsEntity;		
+		class net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {						
 		}			
+			class net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE {				
+			}
+			
+			class net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE {				
+			}
 
 	class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourceforge.fenixedu.domain.DomainObject {
 		PaymentType paymentType;
@@ -9187,15 +9195,22 @@ relation RootDomainObjectExecutionDegree {
 }
 
 relation RootDomainObjectExecutionPeriod {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObjectForExecutionPeriod;
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriods {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectExecutionYear {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObjectForExecutionYear;
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYears {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAcademicPeriod {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.AcademicPeriod playsRole academicPeriods {
 		multiplicity *;
 	}
 }

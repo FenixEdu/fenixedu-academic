@@ -51,7 +51,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     private ExecutionYear() {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
+	setRootDomainObjectForExecutionYear(RootDomainObject.getInstance());
     }
 
     public ExecutionYear(AcademicInterval academicInterval, String year) {
@@ -60,30 +60,18 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	setYear(year);
     }
 
-    @Override
+    
+    public String getYear() {
+	return getName();
+    }
+    
     public void setYear(String year) {
         if(year == null || StringUtils.isEmpty(year.trim())) {
             throw new DomainException("error.ExecutionYear.empty.year");
         }
-        super.setYear(year);
+        super.setName(year);
     }
-    
-    @Override
-    public void setExecutionInterval(AcademicInterval executionInterval) {
-	if(executionInterval == null) {
-	    throw new DomainException("error.ExecutionYear.empty.executionInterval");
-	}
-	super.setExecutionInterval(executionInterval);
-    }
-
-    public YearMonthDay getBeginDateYearMonthDay() {
-	return getExecutionInterval().getBeginYearMonthDayWithoutChronology();
-    }
-
-    public YearMonthDay getEndDateYearMonthDay() {
-	return getExecutionInterval().getEndYearMonthDayWithoutChronology();
-    }
-
+        
     public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
 	return CollectionUtils.select(getExecutionDegrees(), new Predicate() {
 	    public boolean evaluate(Object arg0) {
@@ -405,17 +393,5 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	    }
 	}
 	return null;
-    }
-
-    @Deprecated   
-    public java.util.Date getBeginDate(){  
-	YearMonthDay day = getBeginDateYearMonthDay(); 
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
-    }
-
-    @Deprecated   
-    public java.util.Date getEndDate(){  
-	YearMonthDay day = getEndDateYearMonthDay(); 
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
-    }
+    }   
 }

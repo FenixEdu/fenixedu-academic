@@ -40,7 +40,7 @@ public class AcademicChronology extends AssembledChronology {
 
     private transient DateTimeField acDayOfAcademicSemester;          
     
-    
+        
     // Static Variables
     private static final ISOChronology ISO_INSTANCE;    
     static {
@@ -171,8 +171,8 @@ public class AcademicChronology extends AssembledChronology {
     public int getMaximumValueForAcademicSemesterOfAcademicYear() {
 	return 2;   
     }
-
-    public AcademicCalendarEntry findParentOf(final AcademicCalendarEntry child) {
-	return child.getParentEntry().getEntryForCalendar(academicCalendar);
+       
+    public AcademicCalendarEntry findSameEntry(final AcademicCalendarEntry entry) {
+	return entry.getEntryForCalendar(academicCalendar);
     }
 }

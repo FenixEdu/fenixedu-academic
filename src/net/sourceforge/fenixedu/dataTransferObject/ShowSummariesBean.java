@@ -23,6 +23,8 @@ public class ShowSummariesBean implements Serializable {
     
     private DomainReference<Professorship> professorshipLoggedReference;
     
+    private SummariesOrder summariesOrder;
+    
     protected ShowSummariesBean() {
 	// TODO Auto-generated constructor stub
     }
@@ -32,6 +34,7 @@ public class ShowSummariesBean implements Serializable {
 	setExecutionCourse(executionCourse);
 	setListSummaryType(type);
 	setProfessorshipLogged(loggedProfessorship);
+	setSummariesOrder(SummariesOrder.DECREASING);
     }
     
     public Professorship getProfessorshipLogged() {
@@ -83,11 +86,30 @@ public class ShowSummariesBean implements Serializable {
         this.executionCourseReference = (executionCourse != null) ? new DomainReference<ExecutionCourse>(
                 executionCourse) : null;
     }
+     
+    public SummariesOrder getSummariesOrder() {
+        return summariesOrder;
+    }
+
+    public void setSummariesOrder(SummariesOrder summariesOrder) {
+        this.summariesOrder = summariesOrder;
+    }
     
     public static enum ListSummaryType {
-        ALL_CONTENT, SUMMARIZED;
-        public String getName() {
+    
+	ALL_CONTENT, SUMMARIZED;
+        
+	public String getName() {
             return name();
         }
     }
+    
+    public static enum SummariesOrder {
+	
+	GROWING, DECREASING;
+        
+	public String getName() {
+            return name();
+        }
+    }   
 }

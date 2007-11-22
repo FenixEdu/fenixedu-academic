@@ -449,8 +449,12 @@
 		<property name="destination" value="postBack"/>
 	</slot>	
 </schema>
-<schema name="ShowSummariesFilterToDepartmentAdmOffice" type="net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean" bundle="DEFAULT">	
+<schema name="ShowSummariesFilterToDepartmentAdmOffice" type="net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean" bundle="DEFAULT">		
 	<slot name="listSummaryType" layout="radio-postback"  key="label.type">
+		<property name="classes" value="list2 liinline" />
+		<property name="destination" value="postBack"/>
+	</slot>	
+	<slot name="summariesOrder" layout="radio-postback" key="label.summaries.order">
 		<property name="classes" value="list2 liinline" />
 		<property name="destination" value="postBack"/>
 	</slot>

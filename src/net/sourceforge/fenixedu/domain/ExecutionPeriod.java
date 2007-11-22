@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEn
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.CreditsEntity;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
-import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -56,7 +56,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 
     private ExecutionPeriod() {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
+	setRootDomainObjectForExecutionPeriod(RootDomainObject.getInstance());
     }
 
     public ExecutionPeriod(ExecutionYear executionYear, AcademicInterval academicInterval, String name) {
@@ -67,29 +67,13 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
     }
 
     @Override
-    public void setExecutionInterval(AcademicInterval executionInterval) {
-	if (executionInterval == null) {
-	    throw new DomainException("error.ExecutionPeriod.empty.executionInterval");
-	}
-	super.setExecutionInterval(executionInterval);
-    }
-
-    @Override
     public void setExecutionYear(ExecutionYear executionYear) {
 	if (executionYear == null) {
 	    throw new DomainException("error.ExecutionPeriod.empty.executionYear");
 	}
 	super.setExecutionYear(executionYear);
     }
-
-    public YearMonthDay getBeginDateYearMonthDay() {
-	return getExecutionInterval().getBeginYearMonthDayWithoutChronology();
-    }
-
-    public YearMonthDay getEndDateYearMonthDay() {
-	return getExecutionInterval().getEndYearMonthDayWithoutChronology();
-    }
-
+    
     public Integer getSemester() {
 	return getExecutionInterval().getAcademicSemesterOfAcademicYear();
     }
@@ -111,58 +95,48 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
     public boolean hasNextExecutionPeriod() {
 	return getNextExecutionPeriod() != null;
     }
-
-    public DateTime getDepartmentAdmOfficeCreditsPeriodBegin() {
-	return getDepartmentAdmOfficeCreditsPeriodInterval() != null ? getDepartmentAdmOfficeCreditsPeriodInterval().getStartDateTimeWithoutChronology() : null;
-    }
-
-    public DateTime getDepartmentAdmOfficeCreditsPeriodEnd() {
-	return getDepartmentAdmOfficeCreditsPeriodInterval() != null ? getDepartmentAdmOfficeCreditsPeriodInterval().getEndDateTimeWithoutChronology() : null;
+       
+    public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacherPeriod() {	
+	return getExecutionInterval().getTeacherCreditsFillingForTeacher();
     }
     
-    public DateTime getTeacherCreditsPeriodBegin() {
-	return getTeacherCreditsPeriodInterval() != null ? getTeacherCreditsPeriodInterval().getStartDateTimeWithoutChronology() : null;	
+    public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOfficePeriod() {	
+	return getExecutionInterval().getTeacherCreditsFillingForDepartmentAdmOffice();
     }
-
-    public DateTime getTeacherCreditsPeriodEnd() {
-	return getTeacherCreditsPeriodInterval() != null ? getTeacherCreditsPeriodInterval().getEndDateTimeWithoutChronology() : null;	
-    }
-    
-    @Checked("TeacherCreditsPredicates.checkPermissionsToManageCreditsPeriods")
+           
     public void editDepartmentOfficeCreditsPeriod(DateTime begin, DateTime end) {
-	if(getDepartmentAdmOfficeCreditsPeriodInterval() == null) {
+	
+	TeacherCreditsFillingForDepartmentAdmOfficeCE creditsFillingCE = getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
+	
+	if(creditsFillingCE == null) {
 	    
 	    AcademicCalendarEntry parentEntry = getExecutionInterval().getAcademicCalendarEntry();
 	    AcademicCalendarRootEntry rootEntry = getExecutionInterval().getAcademicCalendar();
 	    
-	    TeacherCreditsFillingCE creditsPeriod = new TeacherCreditsFillingCE(parentEntry, 
+	    new TeacherCreditsFillingForDepartmentAdmOfficeCE(parentEntry,
 		    new MultiLanguageString(applicationResourcesBundle.getString("label.TeacherCreditsFillingCE.entry.title")), 
-		    null, begin, end, parentEntry.getRootEntry(), CreditsEntity.DEPARTMENT_ADM_OFFICE);
+		    null, begin, end, rootEntry);	    
 	    
-	    setDepartmentAdmOfficeCreditsPeriodInterval(new AcademicInterval(creditsPeriod, rootEntry));
-	    
-	} else {	
-	    TeacherCreditsFillingCE entry = (TeacherCreditsFillingCE) getDepartmentAdmOfficeCreditsPeriodInterval().getAcademicCalendarEntry();
-	    entry.edit(begin, end);
+	} else {		    
+	    creditsFillingCE.edit(begin, end);
 	}	
     }       
-                   
-    @Checked("TeacherCreditsPredicates.checkPermissionsToManageCreditsPeriods")
+                      
     public void editTeacherCreditsPeriod(DateTime begin, DateTime end) {
-	if(getTeacherCreditsPeriodInterval() == null) {
+	
+	TeacherCreditsFillingForTeacherCE creditsFillingCE = getTeacherCreditsFillingForTeacherPeriod();
+	
+	if(creditsFillingCE == null) {
 	    
 	    AcademicCalendarEntry parentEntry = getExecutionInterval().getAcademicCalendarEntry();
 	    AcademicCalendarRootEntry rootEntry = getExecutionInterval().getAcademicCalendar();
 	    
-	    TeacherCreditsFillingCE creditsPeriod = new TeacherCreditsFillingCE(parentEntry, 
+	    new TeacherCreditsFillingForTeacherCE(parentEntry, 
 		    new MultiLanguageString(applicationResourcesBundle.getString("label.TeacherCreditsFillingCE.entry.title")), 
-		    null, begin, end, parentEntry.getRootEntry(), CreditsEntity.TEACHER);
-	    
-	    setTeacherCreditsPeriodInterval(new AcademicInterval(creditsPeriod, rootEntry));
+		    null, begin, end, rootEntry);	    	   
 	    
 	} else {	    
-	    TeacherCreditsFillingCE entry = (TeacherCreditsFillingCE) getTeacherCreditsPeriodInterval().getAcademicCalendarEntry();
-	    entry.edit(begin, end);
+	    creditsFillingCE.edit(begin, end);
 	}	
     }
     
@@ -363,30 +337,26 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 
     public void checkValidCreditsPeriod(RoleType roleType) {
 	if (roleType != RoleType.SCIENTIFIC_COUNCIL) {
-	    Interval validCreditsPerid = getValidCreditsPeriod(roleType);
+	    
+	    TeacherCreditsFillingCE validCreditsPerid = getValidCreditsPeriod(roleType);
+	    
 	    if (validCreditsPerid == null) {
 		throw new DomainException("message.invalid.credits.period2");
-	    } else if (!validCreditsPerid.containsNow()) {
-		throw new DomainException("message.invalid.credits.period", validCreditsPerid.getStart().toString(
-		"dd-MM-yyy HH:mm"), validCreditsPerid.getEnd().toString("dd-MM-yyy HH:mm"));
+		
+	    } else if (!validCreditsPerid.containsNow()) {		
+		throw new DomainException("message.invalid.credits.period", 
+			validCreditsPerid.getBegin().toString("dd-MM-yyy HH:mm"),
+			validCreditsPerid.getEnd().toString("dd-MM-yyy HH:mm"));
 	    }
 	}
     }
 
-    public Interval getValidCreditsPeriod(RoleType roleType) {
+    public TeacherCreditsFillingCE getValidCreditsPeriod(RoleType roleType) {
 	switch (roleType) {
-	case DEPARTMENT_MEMBER:
-	    if (getTeacherCreditsPeriodBegin() != null && getTeacherCreditsPeriodEnd() != null) {
-		return new Interval(getTeacherCreditsPeriodBegin(), getTeacherCreditsPeriodEnd());
-	    } else {
-		return null;
-	    }
+	case DEPARTMENT_MEMBER:	    
+	    return getTeacherCreditsFillingForTeacherPeriod();	    
 	case DEPARTMENT_ADMINISTRATIVE_OFFICE:
-	    if (getDepartmentAdmOfficeCreditsPeriodBegin() != null && getDepartmentAdmOfficeCreditsPeriodEnd() != null) {
-		return new Interval(getDepartmentAdmOfficeCreditsPeriodBegin(), getDepartmentAdmOfficeCreditsPeriodEnd());
-	    } else {
-		return null;
-	    }
+	    return getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
 	default:
 	    throw new DomainException("invalid.role.type");
 	}
@@ -580,17 +550,5 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	    }
 	}
 	return null;
-    }
-
-    @Deprecated
-    public java.util.Date getBeginDate() {
-	YearMonthDay day = getBeginDateYearMonthDay();
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());
-    }
-
-    @Deprecated
-    public java.util.Date getEndDate() {
-	YearMonthDay day = getEndDateYearMonthDay();
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());
     }
 }

@@ -112,11 +112,8 @@
         <put name="body" value="/scientificCouncil/credits/periods/showPeriods.jsp"/>
     </definition>  
     <definition name="edit-teacher-credits-periods" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/credits/periods/editTeacherPeriods.jsp"/>
+        <put name="body" value="/scientificCouncil/credits/periods/editTeacherCreditsPeriod.jsp"/>
     </definition>  
-    <definition name="edit-departmentAdmOffice-credits-periods" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/credits/periods/editDepartmentAdmOfficePeriods.jsp"/>
-    </definition>         
     
     <!-- Schedules Print -->  
     <definition name="show-empty-schedules-resume-print" page="/layout/fenixPrint.jsp">

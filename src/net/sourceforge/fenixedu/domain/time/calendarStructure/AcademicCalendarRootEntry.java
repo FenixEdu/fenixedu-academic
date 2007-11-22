@@ -24,7 +24,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
                  
     @Override
     public AcademicCalendarEntry edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end,
-	    AcademicCalendarRootEntry rootEntryDestination, SeasonType seasonType, AcademicCalendarEntry templateEntry) {
+	    AcademicCalendarRootEntry rootEntryDestination, AcademicCalendarEntry templateEntry) {
 	
 	setTitle(title);
 	setDescription(description);
@@ -47,7 +47,8 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     
     @Override
     public void setTemplateEntry(AcademicCalendarEntry templateEntry) {
-	if(!getChildEntries().isEmpty() && (!hasTemplateEntry() || !getTemplateEntry().equals(templateEntry))) {
+	if(templateEntry != null && !getChildEntries().isEmpty() && 
+		(!hasTemplateEntry() || !getTemplateEntry().equals(templateEntry))) {
 	    throw new DomainException("error.RootEntry.invalid.templateEntry");    
 	}	
         super.setTemplateEntry(templateEntry);

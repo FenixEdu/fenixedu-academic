@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesCalendarBean;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.ListSummaryType;
+import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.SummariesOrder;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesCalendarBean.LessonCalendarViewType;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean.SummaryType;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
@@ -34,6 +35,7 @@ import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -388,8 +390,12 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	SummaryTeacherBean summaryTeacher = bean.getSummaryTeacher();
 	Professorship teacher = (summaryTeacher != null) ? summaryTeacher.getProfessorship() : null;
 	Boolean otherTeachers = (summaryTeacher != null) ? summaryTeacher.getOthers() : null;
-
-	Set<Summary> summariesToShow = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
+	SummariesOrder summariesOrder = bean.getSummariesOrder();
+		
+	Set<Summary> summariesToShow = summariesOrder == null || summariesOrder.equals(SummariesOrder.DECREASING) ? 
+		new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR) :
+		    new TreeSet<Summary>(new ReverseComparator(Summary.COMPARATOR_BY_DATE_AND_HOUR));	
+	
 	for (Summary summary : executionCourse.getAssociatedSummariesSet()) {
 	    boolean insert = true;
 	    if ((shift != null && (summary.getShift() == null || !summary.getShift().equals(shift)))

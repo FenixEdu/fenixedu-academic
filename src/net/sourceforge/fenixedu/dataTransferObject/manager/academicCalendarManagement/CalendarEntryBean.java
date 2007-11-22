@@ -5,11 +5,6 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.CreditsEntity;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.SeasonType;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -18,8 +13,7 @@ import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 public class CalendarEntryBean implements Serializable {
-       
-    
+           
     private MultiLanguageString title;
     
     private MultiLanguageString description;
@@ -27,18 +21,13 @@ public class CalendarEntryBean implements Serializable {
     private DateTime begin;
     
     private DateTime end;
-    
-    private SeasonType seasonType;
-    
-    private CreditsEntity creditsEntity;
-    
+      
     private Class<? extends AcademicCalendarEntry> type;
     
     private Partial beginDateToDisplay;
     
     private Partial endDateToDisplay;
-
-    
+  
     private DomainReference<AcademicCalendarEntry> entryReference;
     
     private DomainReference<AcademicCalendarEntry> templateEntryReference;
@@ -84,19 +73,6 @@ public class CalendarEntryBean implements Serializable {
 	bean.setDescription(entry.getDescription());
 	bean.setBegin(entry.getBegin());
 	bean.setEnd(entry.getEnd());
-	
-	if(entry.isExamsPeriod()) {
-	    ExamsPeriodCE examsPeriodCE = (ExamsPeriodCE) entry;
-	    bean.setSeasonType(examsPeriodCE.getSeasonType());
-	    
-	} else if(entry.isGradeSubmissionPeriod()) {
-	    GradeSubmissionCE gradeSubmissionCE = (GradeSubmissionCE) entry;
-	    bean.setSeasonType(gradeSubmissionCE.getSeasonType());
-	
-	} else if(entry.isTeacherCreditsFilling()) {
-	    TeacherCreditsFillingCE creditsFillingCE = (TeacherCreditsFillingCE) entry;
-	    bean.setCreditsEntity(creditsFillingCE.getCreditsEntity());
-	}
 	
 	return bean;
     }
@@ -183,15 +159,7 @@ public class CalendarEntryBean implements Serializable {
 
     public void setEnd(DateTime end) {
         this.end = end;
-    }
-    
-    public SeasonType getSeasonType() {
-        return seasonType;
-    }
-
-    public void setSeasonType(SeasonType seasonType) {
-        this.seasonType = seasonType;
-    }   
+    }  
     
     public String getBeginPartialString() {
 	return getPartialString(getBeginDateToDisplay());
@@ -225,13 +193,5 @@ public class CalendarEntryBean implements Serializable {
     
     public YearMonthDay getEndDateToDisplayInYearMonthDayFormat() {
 	return getDateFromPartial(getEndDateToDisplay()); 	
-    }
-
-    public CreditsEntity getCreditsEntity() {
-        return creditsEntity;
-    }
-
-    public void setCreditsEntity(CreditsEntity creditsEntity) {
-        this.creditsEntity = creditsEntity;
     }
 }

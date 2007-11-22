@@ -227,7 +227,7 @@ public class AcademicSemesterDateTimeField extends DateTimeField {
 
     @Override
     public DateTimeFieldType getType() {
-
+	
 	throw unsupported();
     }
 

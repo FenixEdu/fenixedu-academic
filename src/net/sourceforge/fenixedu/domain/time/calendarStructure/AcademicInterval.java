@@ -74,6 +74,14 @@ public class AcademicInterval extends AbstractInterval {
         return academicCalendarEntry;
     }   
     
+    public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacher() {
+	return getAcademicCalendarEntry().getTeacherCreditsFillingForTeacher(getAcademicChronology());	
+    }
+    
+    public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOffice() {
+	return getAcademicCalendarEntry().getTeacherCreditsFillingForDepartmentAdmOffice(getAcademicChronology());	
+    }
+    
     public int getAcademicSemesterOfAcademicYear() {			
 	return getAcademicCalendarEntry().getAcademicSemesterOfAcademicYear(getAcademicChronology());
     }                       

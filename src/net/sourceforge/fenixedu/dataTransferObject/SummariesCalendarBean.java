@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
-
 public class SummariesCalendarBean extends ShowSummariesBean {
    
     private LessonCalendarViewType calendarViewType;
@@ -21,8 +20,10 @@ public class SummariesCalendarBean extends ShowSummariesBean {
     }
              
     public static enum LessonCalendarViewType {
+	
 	ALL_LESSONS, PAST_LESSON, PAST_LESSON_WITHOUT_SUMMARY;
-        public String getName() {
+        
+	public String getName() {
             return name();
         }
     }

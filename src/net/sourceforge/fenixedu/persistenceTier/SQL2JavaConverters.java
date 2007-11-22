@@ -166,7 +166,5 @@ public class SQL2JavaConverters {
     public static FieldConversion YearMonthList2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.YearMonthList2SqlVarcharConverter();
     public static FieldConversion BonusType2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.BonusType2SqlVarcharConverter();
     public static FieldConversion PartyClassification2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.PartyClassification2SqlVarcharConverter();
-    public static FieldConversion SeasonType2SqlSeasonTypeConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.SeasonType2SqlSeasonTypeConversion();
-    public static FieldConversion AcademicInterval2SqlAcademicIntervalConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicInterval2SqlAcademicIntervalConversion();
-    public static FieldConversion CreditsEntity2SqlCreditsEntityConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.CreditsEntity2SqlCreditsEntityConversion();
+    public static FieldConversion AcademicInterval2SqlAcademicIntervalConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicInterval2SqlAcademicIntervalConversion();    
 }

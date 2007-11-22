@@ -350,30 +350,36 @@
     <slot name="secondEctsCredits" key="ectsCredits"/>
 </schema>
 
-<schema name="teacher.credits.period.view" type="net.sourceforge.fenixedu.domain.ExecutionPeriod">		
-	<slot name="teacherCreditsPeriodBegin" key="label.credits.periods.begin">
+<schema name="teacher.credits.list.execution.periods" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
+	<slot name="executionPeriod" key="label.teacher.credits.execution.period" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
+    	<property name="format" value="${year} - ${semester}º Sem."/>	
+    	<property name="destination" value="postBack"/>
+    </slot>
+</schema>
+
+<schema name="teacher.credits.period.view" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">		
+	<slot name="beginForTeacher" key="label.credits.periods.begin">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
 			<property name="required" value="true"/>
 		</validator>
 	</slot>
-	<slot name="teacherCreditsPeriodEnd" key="label.credits.periods.end">
+	<slot name="endForTeacher" key="label.credits.periods.end">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
 			<property name="required" value="true"/>
 		</validator>
-	</slot>
-	<setter signature="editTeacherCreditsPeriod(teacherCreditsPeriodBegin, teacherCreditsPeriodEnd)" />
+	</slot>	
 </schema>	
 	
-<schema name="departmentAdmOffice.credits.period.view" type="net.sourceforge.fenixedu.domain.ExecutionPeriod">		
-	<slot name="departmentAdmOfficeCreditsPeriodBegin" key="label.credits.periods.begin">
+<schema name="departmentAdmOffice.credits.period.view" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">		
+	<slot name="beginForDepartmentAdmOffice" key="label.credits.periods.begin">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
 			<property name="required" value="true"/>
 		</validator>
 	</slot>
-	<slot name="departmentAdmOfficeCreditsPeriodEnd" key="label.credits.periods.end">
+	<slot name="endForDepartmentAdmOffice" key="label.credits.periods.end">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
 			<property name="required" value="true"/>
 		</validator> 
-	</slot>		
-	<setter signature="editDepartmentOfficeCreditsPeriod(departmentAdmOfficeCreditsPeriodBegin, departmentAdmOfficeCreditsPeriodEnd)" />
+	</slot>			
 </schema>

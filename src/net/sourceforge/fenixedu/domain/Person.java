@@ -103,8 +103,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class Person extends Person_Base {
 
-    final static Comparator<SentSms> PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator(
-	    "sendDate");
+    final static Comparator<SentSms> PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator("sendDate");
     static {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }

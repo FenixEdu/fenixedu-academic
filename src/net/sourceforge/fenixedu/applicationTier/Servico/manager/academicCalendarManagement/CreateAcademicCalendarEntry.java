@@ -8,8 +8,10 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicTrimesterCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.EnrolmentsPeriodCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodInNormalSeasonCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodInSpecialSeasonCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInNormalSeasonCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInSpecialSeasonCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 
@@ -29,28 +31,34 @@ public class CreateAcademicCalendarEntry extends Service {
 
 	    } else if(type.equals(AcademicSemesterCE.class)) {
 		return new AcademicSemesterCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
-		
+
 	    } else if(type.equals(AcademicTrimesterCE.class)) {
 		return new AcademicTrimesterCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
-		
+
 	    } else if(type.equals(LessonsPeriodCE.class)) {
 		return new LessonsPeriodCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+
+	    } else if(type.equals(ExamsPeriodInNormalSeasonCE.class)) {
+		return new ExamsPeriodInNormalSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+
+	    } else if(type.equals(ExamsPeriodInSpecialSeasonCE.class)) {
+		return new ExamsPeriodInSpecialSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
 		
-	    } else if(type.equals(ExamsPeriodCE.class)) {
-		return new ExamsPeriodCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getSeasonType(), bean.getRootEntry());
-		
-	    } else if(type.equals(GradeSubmissionCE.class)) {
-		return new GradeSubmissionCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getSeasonType(), bean.getRootEntry());
-		
+	    } else if(type.equals(GradeSubmissionInNormalSeasonCE.class)) {
+		return new GradeSubmissionInNormalSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+
+	    }else if(type.equals(GradeSubmissionInSpecialSeasonCE.class)) {
+		return new GradeSubmissionInSpecialSeasonCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
+	    
 	    } else if(type.equals(EnrolmentsPeriodCE.class)) {
 		return new EnrolmentsPeriodCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry());
-	    
+
 	    } else if(type.equals(TeacherCreditsFillingCE.class)) {
 		// Do Nothing: this was created in scientific council interface. 
 	    }
 
 	} else {	    	    	 
-	    return bean.getEntry().edit(bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry(), bean.getSeasonType(), bean.getTemplateEntry());	   	   	    
+	    return bean.getEntry().edit(bean.getTitle(), bean.getDescription(), bean.getBegin(), bean.getEnd(), bean.getRootEntry(), bean.getTemplateEntry());	   	   	    
 	}
 
 	return null;

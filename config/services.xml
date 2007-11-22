@@ -12551,4 +12551,13 @@
 			<chain name="ResourceAllocationManagerAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>CreateTeacherCreditsFillingPeriod</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.CreateTeacherCreditsFillingPeriod</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+	</service>	
 </serviceDefinitions>

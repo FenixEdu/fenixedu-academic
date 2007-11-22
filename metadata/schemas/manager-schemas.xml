@@ -430,16 +430,22 @@
 <schema name="EnrolmentsPeriodCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">
 </schema>
 
-<schema name="ExamsPeriodCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">
-	<slot name="seasonType" key="label.entry.season.type"/>	
+<schema name="ExamsPeriodInNormalSeasonCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">	
 </schema>
 
-<schema name="GradeSubmissionCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">
-	<slot name="seasonType" key="label.entry.season.type"/>	
+<schema name="ExamsPeriodInSpecialSeasonCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">	
 </schema>
 
-<schema name="TeacherCreditsFillingCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">
-	<slot name="creditsEntity" key="label.entry.credits.entity"/>	
+<schema name="GradeSubmissionInNormalSeasonCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">	
+</schema>
+
+<schema name="GradeSubmissionInSpecialSeasonCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">	
+</schema>
+
+<schema name="TeacherCreditsFillingForTeacherCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">	
+</schema>
+
+<schema name="TeacherCreditsFillingForDepartmentAdmOfficeCEEntryInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">	
 </schema>
 
 <schema name="ChooseAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
@@ -486,13 +492,18 @@
 <schema name="CreateEnrolmentsPeriodCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
 </schema>
 
-<schema name="CreateExamsPeriodCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
-	<slot name="seasonType" key="label.entry.season.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+<schema name="CreateExamsPeriodInNormalSeasonCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
 </schema>
 
-<schema name="CreateGradeSubmissionCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
-	<slot name="seasonType" key="label.entry.season.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+<schema name="CreateExamsPeriodInSpecialSeasonCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
 </schema>
+
+<schema name="CreateGradeSubmissionInNormalSeasonCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
+</schema>
+
+<schema name="CreateGradeSubmissionInSpecialSeasonCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
+</schema>
+
 
 <schema name="EditAcademicCalendarRootEntryCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">
 	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
@@ -526,16 +537,22 @@
 <schema name="EditEnrolmentsPeriodCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">
 </schema>
 
-<schema name="EditExamsPeriodCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">
-	<slot name="seasonType" key="label.entry.season.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+<schema name="EditExamsPeriodInNormalSeasonCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">	
 </schema>
 
-<schema name="EditGradeSubmissionCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">
-	<slot name="seasonType" key="label.entry.season.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+<schema name="EditExamsPeriodInSpecialSeasonCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">	
 </schema>
 
-<schema name="EditTeacherCreditsFillingCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">
-	<slot name="creditsEntity" key="label.entry.credits.entity" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+<schema name="EditGradeSubmissionInNormalSeasonCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">	
+</schema>
+
+<schema name="EditGradeSubmissionInSpecialSeasonCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">	
+</schema>
+
+<schema name="EditTeacherCreditsFillingForTeacherCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">	
+</schema>
+
+<schema name="EditTeacherCreditsFillingForDepartmentAdmOfficeCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">	
 </schema>
 
 

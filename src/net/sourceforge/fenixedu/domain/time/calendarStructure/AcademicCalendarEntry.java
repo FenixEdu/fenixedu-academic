@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
+import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeFieldType;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -61,7 +62,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     public AcademicCalendarEntry edit(MultiLanguageString title, MultiLanguageString description, DateTime begin, DateTime end, 
-	    AcademicCalendarRootEntry rootEntry, SeasonType seasonType, AcademicCalendarEntry templateEntry) {
+	    AcademicCalendarRootEntry rootEntry, AcademicCalendarEntry templateEntry) {
 
 	if(isRoot() || rootEntry == null) {
 	    throw new DomainException("error.unsupported.operation");
@@ -75,7 +76,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
 	    AcademicCalendarEntry newParentEntry = createVirtualPathUntil(getParentEntry(), rootEntry);	    
 	    AcademicCalendarEntry newEntry = createVirtualEntry(newParentEntry);
-	    newEntry.edit(title, description, begin, end, rootEntry, seasonType, templateEntry);	    
+	    newEntry.edit(title, description, begin, end, rootEntry, templateEntry);	    
 	    return newEntry;
 
 	} else {
@@ -488,6 +489,18 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	return getBegin().withChronology(academicChronology).get(AcademicSemesterOfAcademicYearDateTimeFieldType.academicSemesterOfAcademicYear());	
     }
 
+    public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacher(AcademicChronology academicChronology) {
+	int index = getBegin().withChronology(academicChronology).get(AcademicSemesterDateTimeFieldType.academicSemester());
+	AcademicSemesterCE academicSemester = academicChronology.getAcademicSemesterIn(index);
+	return academicSemester != null ? academicSemester.getTeacherCreditsFillingForTeacher(academicChronology) : null;	
+    }
+    
+    public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOffice(AcademicChronology academicChronology) {
+	int index = getBegin().withChronology(academicChronology).get(AcademicSemesterDateTimeFieldType.academicSemester());
+	AcademicSemesterCE academicSemester = academicChronology.getAcademicSemesterIn(index);
+	return academicSemester != null ? academicSemester.getTeacherCreditsFillingForDepartmentAdmOffice(academicChronology) : null;	
+    }
+    
     public long getDurationMillis() {
 	return getEnd().getMillis() - getBegin().getMillis();
     }
@@ -567,5 +580,5 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     public boolean isTeacherCreditsFilling() {
 	return false;
-    }
+    }    
 }
