@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -52,11 +56,20 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	if (academicServiceRequestBean.isToProcess()) {
 	    if (!getRegistration().isConcluded()) {
 		throw new DomainException("DegreeFinalizationCertificateRequest.registration.is.not.concluded");
-	    } else if (!getRegistration().hasDiplomaRequest()) {
+	    }
+	    
+	    if (!getRegistration().hasDiplomaRequest()) {
 		throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutDiplomaRequest");
+	    }
+	    
+	    if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {
+		throw new DomainException("DegreeFinalizationCertificateRequest.not.available");
 	    }
 	}
     }
+    
+    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] {
+	    DegreeType.BOLONHA_MASTER_DEGREE});
     
     @Override
     final public DocumentRequestType getDocumentRequestType() {
