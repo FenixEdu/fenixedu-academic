@@ -7,6 +7,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
@@ -49,7 +50,11 @@ public class ConcludedState extends ConcludedState_Base {
 
     @Override
     public void delete() {
-	if (getRegistration().hasConcludedDiplomaRequest()) {
+	if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE).isEmpty()) {
+	    throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.degree.finalization.request");
+	} 
+	
+	if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST).isEmpty()) {
 	    throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
 	} 
 	
