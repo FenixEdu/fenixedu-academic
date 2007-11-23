@@ -520,7 +520,7 @@ public class Registration extends Registration_Base {
 	}
 	
 	if (getDegreeType().isBolonhaType()) {
-	    final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(executionYear);
+	    final StudentCurricularPlan studentCurricularPlan = getLastStudentCurricularPlan();
 	    if (studentCurricularPlan == null) {
 		return Curriculum.createEmpty(executionYear);
 	    }
