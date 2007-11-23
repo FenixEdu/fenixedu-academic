@@ -27,4 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Remove unnecessary columns in EnrolmentWrapper table" alterTableEnrolmentWrapper2.sql
