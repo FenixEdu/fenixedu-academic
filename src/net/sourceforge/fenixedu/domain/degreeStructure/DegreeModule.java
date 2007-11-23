@@ -345,14 +345,15 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	return result;
     }
 
-    public ICurricularRule getCurricularRuleMostRecent(final CurricularRuleType ruleType, final CourseGroup parentCourseGroup, final ExecutionYear executionYear) {
+    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final CourseGroup parentCourseGroup, final ExecutionYear executionYear) {
 	final SortedSet<ICurricularRule> curricularRules = new TreeSet<ICurricularRule>(ICurricularRule.COMPARATOR_BY_BEGIN);
 	curricularRules.addAll(getCurricularRules(ruleType, parentCourseGroup, null));
 	
 	if (curricularRules.isEmpty()) {
 	    return null;
 	} else if (executionYear == null) {
-	    return curricularRules.last();
+	    final ICurricularRule curricularRule = curricularRules.last();
+	    return curricularRule.isActive() ? curricularRule : null;
 	} else {
 	    ICurricularRule result = null;
 	    
