@@ -55,8 +55,9 @@
 				 name="externalCurricularCourseEnrolmentBeans"
 				 schema="ExternalCurricularCourseEnrolmentBean.edit">
 				 
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 mtop15" />
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thright" />
+				<fr:property name="columnClasses" value=",,tderror1 tdclear" />
 			</fr:layout>
 			<fr:destination name="invalid" path="<%= contextInformation.toString() + "method=createExternalEnrolmentsInvalid&registrationId=" + registrationId + parameters +"&externalUnitId=" + externalUnitId %>" />
 		</fr:edit>

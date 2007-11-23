@@ -40,21 +40,20 @@
 <fr:form action="<%= contextInformation.toString() + "registrationId=" + registrationId + parameters.toString()  %>">
 
 	<html:hidden property="method" value="deleteExternalEnrolments"/>
-	
+
 	<logic:notEmpty name="registration" property="externalEnrolments">
+		<p class="mtop15 mbottom05"><strong><bean:message key="label.student.existingExternalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 		<fr:view name="registration" property="externalEnrolments" schema="ExternalEnrolment.view-externalCurricularCourse">
 			<fr:layout name="tabular">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thlight thcenter" />
-					<fr:property name="columnClasses" value=",inobullet ulmvert0,inobullet ulmvert0,," />
-					<fr:property name="checkable" value="true" />
-					<fr:property name="checkboxName" value="externalEnrolmentsToDelete" />
-					<fr:property name="checkboxValue" value="idInternal" />	
-					
-					<fr:property name="linkFormat(edit)" value="<%= contextInformation.toString() + "method=prepareEditExternalEnrolment&externalEnrolmentId=${idInternal}" %>" />
-					<fr:property name="key(edit)" value="label.edit"/>
-					<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
-				</fr:layout>
+				<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
+				<fr:property name="columnClasses" value=",inobullet ulmvert0 acenter,inobullet ulmvert0,acenter,acenter,acenter,acenter" />
+				<fr:property name="checkable" value="true" />
+				<fr:property name="checkboxName" value="externalEnrolmentsToDelete" />
+				<fr:property name="checkboxValue" value="idInternal" />	
+				
+				<fr:property name="linkFormat(edit)" value="<%= contextInformation.toString() + "method=prepareEditExternalEnrolment&externalEnrolmentId=${idInternal}" %>" />
+				<fr:property name="key(edit)" value="label.edit"/>
+				<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			</fr:layout>
 		</fr:view>
 		<html:submit><bean:message key="button.delete" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>

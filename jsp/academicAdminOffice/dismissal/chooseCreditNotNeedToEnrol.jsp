@@ -25,8 +25,8 @@
 </span>
 </p>
 
-<br/>
-<h3><bean:message key="label.studentDismissal.add.courses" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+
+<h3 class="mtop2 mbottom05"><bean:message key="label.studentDismissal.add.courses" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <bean:define id="dismissalTypeName" name="dismissalBean" property="dismissalType.name" />
 <bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
 

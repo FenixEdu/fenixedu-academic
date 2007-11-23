@@ -7,7 +7,6 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.studentDismissal.management" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
 		<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
@@ -39,9 +38,8 @@
 		<bean:define id="url3">/studentCredits.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
 		<html:link action='<%= url3 %>'><bean:message key="label.studentCredits.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
-	
-
 </ul>
+
 <bean:define id="scpID" name="studentCurricularPlan" property="idInternal" />
 <bean:define id="registrationId" name="studentCurricularPlan" property="registration.idInternal" />
 <bean:define id="studentId" name="studentCurricularPlan" property="registration.student.idInternal" />
@@ -50,10 +48,11 @@
 	<html:hidden property="method" value="deleteCredits"/>
 	
 	<logic:notEmpty name="studentCurricularPlan" property="credits">
+		<p class="mtop15 mbottom05"><strong><bean:message key="label.existingStudentDismissal" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 		<fr:view name="studentCurricularPlan" property="credits" schema="student.Dismissal.view.dismissals">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight thcenter" />
-				<fr:property name="columnClasses" value=",inobullet ulmvert0,inobullet ulmvert0,," />
+				<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
+				<fr:property name="columnClasses" value=",inobullet ulmvert0,acenter,inobullet ulmvert0,nowrap,nowrap" />
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="creditsToDelete" />
 				<fr:property name="checkboxValue" value="idInternal" />	
