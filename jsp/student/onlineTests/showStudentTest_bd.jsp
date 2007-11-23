@@ -243,7 +243,7 @@
 							</tr></td><tr><td>
 							<logic:equal name="checkDisable" value="true">
 									<logic:equal name="responsed" value="true">
-										<input alt="<%=questionValue%>" type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" disabled="<%=new Boolean(checkDisable).booleanValue()%>" checked/>
+										<input alt="<%=questionValue%>" type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" disabled="<%=new Boolean(checkDisable).booleanValue()%>" checked="checked"/>
 									</logic:equal>
 									<logic:equal name="responsed" value="false">
 										<input alt="<%=questionValue%>" type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
@@ -251,7 +251,7 @@
 							</logic:equal>
 							<logic:equal name="checkDisable" value="false">
 									<logic:equal name="responsed" value="true">
-										<input alt="<%=questionValue%>" type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" checked/>
+										<input alt="<%=questionValue%>" type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" checked="checked"/>
 									</logic:equal>
 									<logic:equal name="responsed" value="false">
 										<input alt="<%=questionValue%>" type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
@@ -274,7 +274,7 @@
 							</tr></td><tr><td>
 							<logic:equal name="checkDisable" value="true">
 								<logic:equal name="responsed" value="true">
-									<input alt="<%=questionValue%>" type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>" checked>
+									<input alt="<%=questionValue%>" type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>" checked="checked">
 								</logic:equal>
 								<logic:equal name="responsed" value="false">
 									<input alt="<%=questionValue%>" type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>">
@@ -282,7 +282,7 @@
 							</logic:equal>
 							<logic:equal name="checkDisable" value="false">
 								<logic:equal name="responsed" value="true">
-									<input alt="<%=questionValue%>" type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" checked>
+									<input alt="<%=questionValue%>" type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" checked="checked">
 								</logic:equal>
 								<logic:equal name="responsed" value="false">
 									<input alt="<%=questionValue%>" type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>">
