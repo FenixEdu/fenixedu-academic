@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import java.math.BigDecimal;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -150,6 +151,9 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
     }
 
     public void updateAmount() {
-	setAmount(getHolidayAmount() + getSaturdayAmount() + getSundayAmount());
+	BigDecimal holidayAmount = new BigDecimal(getHolidayAmount().toString());
+	BigDecimal saturdayAmount = new BigDecimal(getSaturdayAmount().toString());
+	BigDecimal sundayAmount = new BigDecimal(getSundayAmount().toString());
+	setAmount(holidayAmount.add(saturdayAmount).add(sundayAmount).doubleValue());
     }
 }
