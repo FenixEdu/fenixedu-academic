@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.MenuOptionListRenderer;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.renderers.contexts.InputContext;
+import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -87,7 +89,8 @@ public class InputMenuOptionListRenderer extends MenuOptionListRenderer {
             return super.getPossibleObjects();
         }
         else {
-            Object object = getInputContext().getParentContext().getMetaObject().getObject();
+            PresentationContext parentContext = getInputContext().getParentContext();
+            Object object = parentContext == null ? getInputContext().getMetaObject().getObject() : parentContext.getMetaObject().getObject();
             
             String choiceType = getChoiceType();
             String filterClassName = getFilterClass();
