@@ -54,7 +54,7 @@
 <fr:view name="student" property="registrations" schema="student.registrationsToList" >
 	<fr:layout name="tabular">
 		<fr:property name="sortBy" value="startDate=desc"/>
-		<fr:property name="classes" value="tstyle1 thlight mtop025 asdasd"/>
+		<fr:property name="classes" value="tstyle1 thlight mtop025 boldlink1"/>
 		<fr:property name="columnClasses" value=",,tdhl1,,"/>
 		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${idInternal}" />
 		<fr:property name="key(view)" value="link.student.visualizeRegistration"/>

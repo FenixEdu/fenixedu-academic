@@ -927,7 +927,7 @@ border: 1px solid #ddd;
 text-align: left;
 }
 
-table.asdasd tr td a { font-weight: bold; padding: 0.25em; margin: 0.25em; }
+table.boldlink1 tr td a { font-weight: bold; padding: 0.25em; margin: 0.25em; }
 
 /* list teachers */
 table.ts01 {
