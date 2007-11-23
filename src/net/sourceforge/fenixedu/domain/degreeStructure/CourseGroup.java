@@ -512,10 +512,11 @@ public class CourseGroup extends CourseGroup_Base {
     private Double countMaxEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
 	    final ExecutionPeriod executionPeriod, final Integer maximumLimit) {
 
-	final Set<Double> ectsCredits = new TreeSet<Double>(new ReverseComparator());
+	final List<Double> ectsCredits = new ArrayList<Double>();
 	for (final DegreeModule degreeModule : modulesByExecutionPeriod) {
 	    ectsCredits.add(degreeModule.getMaxEctsCredits(executionPeriod));
 	}
+	Collections.sort(ectsCredits, new ReverseComparator());
 	return sumEctsCredits(ectsCredits, maximumLimit.intValue());
     }
 
@@ -563,14 +564,15 @@ public class CourseGroup extends CourseGroup_Base {
     private Double countMinEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
 	    final ExecutionPeriod executionPeriod, final Integer minimumLimit) {
 
-	final Set<Double> ectsCredits = new TreeSet<Double>();
+	final List<Double> ectsCredits = new ArrayList<Double>();
 	for (final DegreeModule degreeModule : modulesByExecutionPeriod) {
 	    ectsCredits.add(degreeModule.getMinEctsCredits(executionPeriod));
 	}
+	Collections.sort(ectsCredits, new ReverseComparator());
 	return sumEctsCredits(ectsCredits, minimumLimit.intValue());
     }
 
-    private Double sumEctsCredits(final Set<Double> ectsCredits, int limit) {
+    private Double sumEctsCredits(final List<Double> ectsCredits, int limit) {
 	double result = 0d;
 	final Iterator<Double> ectsCreditsIter = ectsCredits.iterator();
 	for (; ectsCreditsIter.hasNext() && limit > 0; limit--) {
