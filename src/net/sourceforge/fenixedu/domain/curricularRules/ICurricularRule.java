@@ -50,6 +50,8 @@ public interface ICurricularRule {
     public boolean isValid(ExecutionYear executionYear);
 
     public boolean isVisible();
+    
+    public boolean isActive();
 
     public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
 

@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.curricularRules;
 
 import java.util.List;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -127,6 +129,10 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	    }
 	}
 	return false;
+    }
+    
+    public boolean isActive() {
+        return !hasEnd() || getEnd().containsDay(new YearMonthDay());
     }
 
     protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
