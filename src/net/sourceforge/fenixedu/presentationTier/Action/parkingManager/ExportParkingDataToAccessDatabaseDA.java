@@ -317,7 +317,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    response.setContentType("text/xml");
 	    response.setHeader("Content-Disposition", "attachment; filename=parque.xml");
 
-	    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat().setEncoding("ISO-8859-1"));
+	    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat().setEncoding("UTF-8"));
 	    outputter.output(document, response.getWriter());
 	}
 	return null;
