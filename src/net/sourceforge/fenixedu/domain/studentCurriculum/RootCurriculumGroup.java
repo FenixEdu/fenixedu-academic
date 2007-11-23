@@ -232,8 +232,8 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     }
     
     @Override
-    public ICurricularRule getCurricularRuleMostRecent(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
-	return getDegreeModule().getCurricularRuleMostRecent(ruleType, null, executionYear);
+    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+	return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, null, executionYear);
     }
 
 }

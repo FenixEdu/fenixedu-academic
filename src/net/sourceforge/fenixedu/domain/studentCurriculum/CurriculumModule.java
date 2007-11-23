@@ -144,8 +144,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return result;
     }
 
-    public ICurricularRule getCurricularRuleMostRecent(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
-	return getDegreeModule().getCurricularRuleMostRecent(ruleType, getCurriculumGroup().getDegreeModule(), executionYear);
+    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+	return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, getCurriculumGroup().getDegreeModule(), executionYear);
     }
 
     public String getFullPath() {

@@ -174,7 +174,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
     
     @Override
-    public ICurricularRule getCurricularRuleMostRecent(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
 	return null;
     }
 
