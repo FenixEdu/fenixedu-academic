@@ -336,7 +336,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    List<Invitation> invitations = person.getActiveInvitations();
 	    if (!invitations.isEmpty()) {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("<strong>Convidado</strong>");
+		stringBuilder.append("<strong>Convidado</strong><br/>");
 		for (Invitation invitation : invitations) {
 		    stringBuilder.append("<strong>Por:</strong> ")
 			    .append(invitation.getUnit().getName()).append("<br/>");

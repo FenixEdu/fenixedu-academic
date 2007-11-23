@@ -28,6 +28,9 @@
 			<form-property name="selectedParkingCards" type="java.lang.String[]" />
 			<form-property name="parkingCardsToRemove" type="java.lang.String[]" />
 		</form-bean>
+		<form-bean name="exportFile" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+		</form-bean>
 	</form-beans>
 
 	<!-- ========== Global Exception Definitions ============================== -->
@@ -79,7 +82,8 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.parkingManager.ExportParkingDataToAccessDatabaseDA"
 				scope="request"
 				input="/exportParkingDB.do?method=prepareExportFile"
-				parameter="method">
+				parameter="method"
+				name="exportFile">
        		<forward name="exportFile" path="export-file"/>
        	</action>
 				

@@ -26,6 +26,10 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -83,7 +87,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	}
 	row.setCell("0"); // garage
 	row.setCell(parkingParty.getCardNumber().toString()); // cardNumber
-	row.setCell("3"); // type Mirafe confirm this in the real aplication
+	row.setCell("3"); // type Mirafe
 	row.setCell("TRUE"); // access (if the card is active or not)
 	row.setCell(convertParkingGroupToAccessDB(parkingParty.getParkingGroup()));
 	row.setCell("1"); // fee
@@ -127,6 +131,71 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	String startValidityDate = parkingParty.getCardStartDate() == null ? "" : parkingParty
 		.getCardStartDate().toString("dd/MM/yyyy HH:mm:ss");
 	row.setCell(startValidityDate);
+    }
+
+    private Element generateParkingCardElement(ParkingParty parkingParty) throws FenixServiceException {
+	long thisInstant = Calendar.getInstance().getTimeInMillis();
+	DateTime dateTime = new DateTime(thisInstant);
+	Person person = null;
+	if (parkingParty.getParty().isPerson()) {
+	    person = (Person) parkingParty.getParty();
+	}
+	String vehicle1PlateNumber = ""; // license
+	String vehicle2PlateNumber = ""; // licenseAlt
+	int counter = 1;
+	for (Vehicle vehicle : parkingParty.getVehicles()) {
+	    if (counter == 1) {
+		vehicle1PlateNumber = vehicle.getPlateNumber();
+	    } else if (counter == 2) {
+		vehicle2PlateNumber = vehicle.getPlateNumber();
+	    } else {
+		break;
+	    }
+	    counter++;
+	}
+
+	String endValidityDate = parkingParty.getCardEndDate() == null ? "" : parkingParty
+		.getCardEndDate().toString("dd/MM/yyyy HH:mm:ss");
+	String startValidityDate = parkingParty.getCardStartDate() == null ? "" : parkingParty
+		.getCardStartDate().toString("dd/MM/yyyy HH:mm:ss");
+
+	Element element = new Element("XML");
+
+	element.addContent(new Element("Garage").setText("0")).addContent(
+		new Element("Card").setText(parkingParty.getCardNumber().toString())).addContent(
+		new Element("Type").setText("3")).addContent(new Element("Access").setText("TRUE"))
+		.addContent(
+			new Element("AccessGroup").setText(convertParkingGroupToAccessDB(parkingParty
+				.getParkingGroup()))).addContent(new Element("Fee").setText("1"))
+		.addContent(new Element("SAC").setText("0")).addContent(
+			new Element("AlterDate").setText("1/1/2000")).addContent(
+			new Element("CreatedDate").setText(dateTime.toString("dd/MM/yyyy HH:mm:ss")))
+		.addContent(new Element("EditedDate").setText(dateTime.toString("dd/MM/yyyy HH:mm:ss")))
+		.addContent(
+			new Element("Name").setText(person != null ? getName(person.getNickname())
+				: getName(parkingParty.getParty().getName()))).addContent(
+			new Element("Address").setText("")).addContent(
+			new Element("License").setText(vehicle1PlateNumber)).addContent(
+			new Element("LicenseAlt").setText(vehicle2PlateNumber)).addContent(
+			new Element("Registration").setText(person != null
+				&& person.getWorkPhone() != null ? person.getWorkPhone() : ""))
+		.addContent(
+			new Element("RegistrationAlt").setText(person != null
+				&& person.getMobile() != null ? person.getMobile() : "")).addContent(
+			new Element("ClientRef").setText("")).addContent(
+			new Element("Comment").setText(""))
+		.addContent(new Element("Price").setText("0")).addContent(
+			new Element("EndValidityDate").setText(endValidityDate)).addContent(
+			new Element("LastUsedDate").setText("1/1/2000")).addContent(
+			new Element("Invoice").setText("FALSE")).addContent(
+			new Element("Unlimited")
+				.setText(parkingParty.getCardStartDate() != null ? "FALSE" : "TRUE"))
+		.addContent(new Element("Present").setText("FALSE")).addContent(
+			new Element("PayDirect").setText("FALSE")).addContent(
+			new Element("APBCorrect").setText("FALSE")).addContent(
+			new Element("NoFee").setText("TRUE")).addContent(
+			new Element("StartValidityDate").setText(startValidityDate));
+	return element;
     }
 
     private String getName(String name) {
@@ -219,20 +288,52 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	throw new FenixServiceException();
     }
 
-    public ActionForward mergeFilesAndExport(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward mergeFilesAndExportXML(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	OpenFileBean openFileBean = (OpenFileBean) getRenderedObject();
 	if (openFileBean != null) {
 
+	    Database database = Database.open(FileUtils.copyToTemporaryFile(openFileBean
+		    .getInputStream()));
+	    Table table = database.getTable("XML");
+	    List<ParkingParty> parkingParties = getValidParkingParties();
+	    Element root = new Element("parking");
+	    for (Map<String, Object> row = table.getNextRow(); row != null; row = table.getNextRow()) {
+		Long cardNumber = new Long((String) row.get("Card"));
+		ParkingParty parkingParty = getParkingPartyCardNumber(cardNumber, parkingParties);
+		if (parkingParty != null) {
+		    root.addContent(mergeAndGenerateParkingCardElement(parkingParty, row));
+		}
+	    }
+
+	    for (ParkingParty parkingParty : parkingParties) {
+		root.addContent(generateParkingCardElement(parkingParty));
+	    }
+
+	    database.close();
+	    Document document = new Document();
+	    document.setRootElement(root);
+
+	    response.setContentType("text/xml");
+	    response.setHeader("Content-Disposition", "attachment; filename=parque.xml");
+
+	    XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat().setEncoding("ISO-8859-1"));
+	    outputter.output(document, response.getWriter());
+	}
+	return null;
+    }
+
+    public ActionForward mergeFilesAndExport(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	OpenFileBean openFileBean = (OpenFileBean) getRenderedObject();
+	if (openFileBean != null) {
 	    response.setContentType("text/plain");
 	    response.setHeader("Content-disposition", "attachment; filename=parkingDB_merge.xls");
-
 	    Database database = Database.open(FileUtils.copyToTemporaryFile(openFileBean
 		    .getInputStream()));
 	    Table table = database.getTable("XML");
 
 	    List<ParkingParty> parkingParties = getValidParkingParties();
-
 	    final HSSFWorkbook workbook = new HSSFWorkbook();
 	    final ExcelStyle excelStyle = new ExcelStyle(workbook);
 	    final ServletOutputStream writer = response.getOutputStream();
@@ -250,6 +351,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    for (ParkingParty parkingParty : parkingParties) {
 		fillInRow(parkingBDSpreadsheet, parkingParty);
 	    }
+
 	    database.close();
 	    parkingBDSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle
 		    .getStringStyle());
@@ -279,6 +381,92 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    }
 	}
 	return null;
+    }
+
+    private Element mergeAndGenerateParkingCardElement(ParkingParty parkingParty,
+	    Map<String, Object> accessTableRow) throws FenixServiceException {
+	long thisInstant = Calendar.getInstance().getTimeInMillis();
+	DateTime dateTime = new DateTime(thisInstant);
+	Person person = null;
+	if (parkingParty.getParty().isPerson()) {
+	    person = (Person) parkingParty.getParty();
+	}
+
+	String garage = ((Short) accessTableRow.get("Garage")).toString();
+	String cardNumber = parkingParty.getCardNumber().toString(); // cardNumber
+	String type = ((Short) accessTableRow.get("Type")).toString();
+	String access = getBooleanString(accessTableRow.get("Access")); // if the card is active or not
+	String accessGroup = convertParkingGroupToAccessDB(parkingParty.getParkingGroup()); // accessGroup
+	String fee = ((Short) accessTableRow.get("Fee")).toString();
+	String sac = ((Short) accessTableRow.get("SAC")).toString();
+	String alterDate = DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", (Date) accessTableRow
+		.get("AlterDate"));
+	String createdDate = DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", (Date) accessTableRow
+		.get("CreatedDate"));
+	String editedDate = dateTime.toString("dd/MM/yyyy HH:mm:ss"); // editedDate
+	String name = person != null ? getName(person.getNickname()) : getName(parkingParty.getParty()
+		.getName()); // name
+	String address = (String) accessTableRow.get("Address");
+	String vehicle1PlateNumber = ""; // license
+	String vehicle2PlateNumber = ""; // licenseAlt
+	int counter = 1;
+	for (Vehicle vehicle : parkingParty.getVehicles()) {
+	    if (counter == 1) {
+		vehicle1PlateNumber = vehicle.getPlateNumber();
+	    } else if (counter == 2) {
+		vehicle2PlateNumber = vehicle.getPlateNumber();
+	    } else {
+		break;
+	    }
+	    counter++;
+	}
+	String workPhone = person != null && person.getWorkPhone() != null ? person.getWorkPhone() : ""; // registration
+	String mobilePhone = person != null && person.getMobile() != null ? person.getMobile() : ""; // registrationAlt
+	String clientRef = (String) accessTableRow.get("ClientRef");
+	String comment = (String) accessTableRow.get("Comment");
+	String price = ((Integer) accessTableRow.get("Price")).toString();
+	String endValidityDate = parkingParty.getCardEndDate() == null ? "" : parkingParty
+		.getCardEndDate().toString("dd/MM/yyyy HH:mm:ss");
+	String lastUsedDate = DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", (Date) accessTableRow
+		.get("LastUsedDate"));
+	String invoice = getBooleanString(accessTableRow.get("Invoice"));
+	String unlimited = parkingParty.getCardEndDate() != null ? "FALSE" : "TRUE"; // if true, start and end validity dates are ignored
+	String present = getBooleanString(accessTableRow.get("Present"));
+	String payDirect = getBooleanString(accessTableRow.get("PayDirect"));
+	String apbCorrect = getBooleanString(accessTableRow.get("APBCorrect")); // if it's already in the park
+	String noFee = getBooleanString(accessTableRow.get("NoFee"));
+	String startValidityDate = parkingParty.getCardStartDate() == null ? "" : parkingParty
+		.getCardStartDate().toString("dd/MM/yyyy HH:mm:ss");
+
+	Element element = new Element("XML");
+
+	element.addContent(new Element("Garage").setText(garage)).addContent(
+		new Element("Card").setText(cardNumber)).addContent(new Element("Type").setText(type))
+		.addContent(new Element("Access").setText(access)).addContent(
+			new Element("AccessGroup").setText(accessGroup)).addContent(
+			new Element("Fee").setText(fee)).addContent(new Element("SAC").setText(sac))
+		.addContent(new Element("AlterDate").setText(alterDate)).addContent(
+			new Element("CreatedDate").setText(createdDate)).addContent(
+			new Element("EditedDate").setText(editedDate)).addContent(
+			new Element("Name").setText(name)).addContent(
+			new Element("Address").setText(address)).addContent(
+			new Element("License").setText(vehicle1PlateNumber)).addContent(
+			new Element("LicenseAlt").setText(vehicle2PlateNumber)).addContent(
+			new Element("Registration").setText(workPhone)).addContent(
+			new Element("RegistrationAlt").setText(mobilePhone)).addContent(
+			new Element("ClientRef").setText(clientRef)).addContent(
+			new Element("Comment").setText(comment)).addContent(
+			new Element("Price").setText(price)).addContent(
+			new Element("EndValidityDate").setText(endValidityDate)).addContent(
+			new Element("LastUsedDate").setText(lastUsedDate)).addContent(
+			new Element("Invoice").setText(invoice)).addContent(
+			new Element("Unlimited").setText(unlimited)).addContent(
+			new Element("Present").setText(present)).addContent(
+			new Element("PayDirect").setText(payDirect)).addContent(
+			new Element("APBCorrect").setText(apbCorrect)).addContent(
+			new Element("NoFee").setText(noFee)).addContent(
+			new Element("StartValidityDate").setText(startValidityDate));
+	return element;
     }
 
     private void addRow(final Spreadsheet parkingBDSpreadsheet, ParkingParty parkingParty,

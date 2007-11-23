@@ -15,10 +15,15 @@
 	</span>	
 </p>
 
-<fr:edit name="openFileBean" schema="read.msAccessFile">
-	<fr:destination name="success" path="/exportParkingDB.do?method=mergeFilesAndExport"/>
-	<fr:layout>
-		<fr:property name="classes" value="tstyle5 thlight thmiddle"/>
-		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-	</fr:layout>
-</fr:edit>
+<fr:form action="/exportParkingDB.do" encoding="multipart/form-data">
+	<html:hidden property="method" value="mergeFilesAndExport"/>
+	<fr:edit name="openFileBean" schema="read.msAccessFile">
+		<fr:layout>
+			<fr:property name="classes" value="tstyle5 thlight thmiddle"/>
+			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+		</fr:layout>
+	</fr:edit>
+	
+	<p><html:submit><bean:message key="button.exportExcel" bundle="PARKING_RESOURCES"/></html:submit></p>
+	<p><html:submit onclick="this.form.method.value='mergeFilesAndExportXML'"><bean:message key="button.exportXML" bundle="PARKING_RESOURCES"/></html:submit></p>
+</fr:form>
