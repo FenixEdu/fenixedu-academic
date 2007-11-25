@@ -131,13 +131,7 @@ class DBChanges {
 	RelationTupleInfo info = new RelationTupleInfo(relation, obj1, colNameOnObj1, obj2, colNameOnObj2, remove);
 	RelationTupleInfo previous = mToNTuples.get(info);
 
-	if (previous == null) {
-	    mToNTuples.put(info, info);
-	} else {
-	    if (previous.remove != remove) {
-		mToNTuples.remove(previous);
-	    }
-	}
+	mToNTuples.put(info, info);
     }
 
     void cache() {
