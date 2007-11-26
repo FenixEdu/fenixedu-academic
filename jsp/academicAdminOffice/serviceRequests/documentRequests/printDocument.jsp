@@ -56,19 +56,12 @@
 
 <bean:define id="documentRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
 <p>
-	<logic:equal name="documentRequest" property="toBePrintedInAplica" value="true">
-		<span class="warning0">
-			<bean:message key="print.preBolonha.documentRequest.in.aplica" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</span>
-	</logic:equal>
-	<logic:equal name="documentRequest" property="toBePrintedInAplica" value="false">
-		<span class="gen-button">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="/documentRequestsManagement.do?method=printDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
-			<bean:message key="print" bundle="APPLICATION_RESOURCES"/>
-		</html:link>
-		</span>
-	</logic:equal>
+	<span class="gen-button">
+	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+	<html:link page="/documentRequestsManagement.do?method=printDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
+		<bean:message key="print" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+	</span>
 </p>
 
 <bean:define id="registrationID" name="academicServiceRequest" property="registration.idInternal" />

@@ -9854,7 +9854,7 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="StudentAuthorization" />
+			<chain name="StudentOrAcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
 	<service>

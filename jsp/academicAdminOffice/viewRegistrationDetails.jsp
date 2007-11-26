@@ -213,6 +213,10 @@
 				<fr:property name="key(reject)" value="reject"/>
  				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>
  				
+				<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
+				<fr:property name="key(cancel)" value="cancel"/>
+				<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>				
+ 				
  				<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
 				<fr:property name="key(payments)" value="payments"/>
 				<fr:property name="visibleIfNot(payments)" value="isPayed"/>
@@ -223,8 +227,9 @@
 				
 				<fr:property name="order(view)" value="1" />
 				<fr:property name="order(reject)" value="2" />
-				<fr:property name="order(payments)" value="3" />
-				<fr:property name="order(processing)" value="4" />
+				<fr:property name="order(cancel)" value="3" />
+				<fr:property name="order(payments)" value="4" />
+				<fr:property name="order(processing)" value="5" />
 				
 				<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
@@ -292,7 +297,7 @@
 
 				<fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
 				<fr:property name="key(print)" value="print"/>
-				<fr:property name="visibleIf(print)" value="documentRequestPrintedInFenix"/>
+				<fr:property name="visibleIf(print)" value="documentRequest"/>
 
 				<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
 				<fr:property name="key(payments)" value="payments"/>

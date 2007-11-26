@@ -368,18 +368,14 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return this instanceof DocumentRequest;
     }
     
-    final public boolean isDocumentRequestPrintedInFenix() {
-	return isDocumentRequest() && !((DocumentRequest) this).isToBePrintedInAplica();
-    }
-    
     final public boolean createdByStudent(){
         return !getCreationSituation().hasEmployee();
     }
     
-    final public boolean getStudentCanCancel() {
-        return isNewRequest() && createdByStudent();
+    final public boolean getLoggedPersonCanCancel() {
+        return isNewRequest() && (createdByStudent() || getAdministrativeOffice() == AccessControl.getPerson().getEmployee().getAdministrativeOffice());
     }
-
+    
     final public DateTime getCreationDate() {
 	return getCreationSituation().getCreationDate();
     }
