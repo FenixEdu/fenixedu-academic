@@ -69,7 +69,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
     
     static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] {
-	    DegreeType.BOLONHA_MASTER_DEGREE});
+	    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE});
     
     @Override
     final public DocumentRequestType getDocumentRequestType() {
