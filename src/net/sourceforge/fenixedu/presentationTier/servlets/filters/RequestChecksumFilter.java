@@ -137,7 +137,7 @@ public class RequestChecksumFilter implements Filter {
 	    if (indexOfAopen >= 0 && (indexOfFormOpen < 0 || indexOfAopen < indexOfFormOpen)
 		    && (indexOfImgOpen < 0 || indexOfAopen < indexOfImgOpen)
 		    && (indexOfAreaOpen < 0 || indexOfAopen < indexOfAreaOpen)) {
-		final int indexOfAclose = source.indexOf(">", indexOfAopen);
+		final int indexOfAclose = findCloseOfTag(source, indexOfAopen);
 		if (indexOfAclose >= 0) {
 		    final int indexOfHrefBodyStart = findHrefBodyStart(source, indexOfAopen, indexOfAclose);
 		    if (indexOfHrefBodyStart >= 0) {
@@ -282,6 +282,25 @@ public class RequestChecksumFilter implements Filter {
 		}
 	    }
 	    response.append(source.substring(iOffset));
+	}
+
+	private int findCloseOfTag(final StringBuilder source, final int indexOfAopen) {
+	    boolean skip = false;
+	    for (int i = indexOfAopen; i < source.length(); i++) {
+		final char c = source.charAt(i);
+		if (skip) {
+		    if (c == '"') {
+			skip = false;
+		    }
+		} else {
+		    if (c == '>') {
+			return i;
+		    } else if (c == '"') {
+			skip = true;
+		    }
+		}
+	    }
+	    return -1;
 	}
 
 	private int findFormActionBodyEnd(final StringBuilder source, final int offset) {
