@@ -212,6 +212,7 @@
 		<form-bean name="weeklyWorkLoadForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">	
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="executionPeriodID" type="java.lang.String" />
+			<form-property name="weekOffset" type="java.lang.String" />
 			<form-property name="attendsID" type="java.lang.String" />
 			<form-property name="contact" type="java.lang.String"/>
 			<form-property name="autonomousStudy" type="java.lang.String"/>
