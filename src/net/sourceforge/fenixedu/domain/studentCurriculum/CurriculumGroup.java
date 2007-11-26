@@ -660,6 +660,14 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     private boolean checkAllModules(final ExecutionYear executionYear) {
+
+	// FIXME: Temporary solution until correct implementation of this method
+	// is finished
+	final CycleCurriculumGroup cycleCurriculumGroup = getStudentCurricularPlan().getFirstCycle();
+	if (cycleCurriculumGroup != null && cycleCurriculumGroup.hasCurriculumModule(this)) {
+	    return true;
+	}
+
 	throw new DomainException("error.net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup.checkAllModules");
     }
 
@@ -729,7 +737,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    curriculum.add(curriculumModule.getCurriculum(executionYear));
 	}
-	
+
 	return curriculum;
     }
 
