@@ -11,12 +11,12 @@
 	<em><bean:message key="DIRECTIVE_COUNCIL" /></em>
 	<h2><bean:message key="link.summaries.control"/></h2>
 		
-	<p><span class="warning0"><!-- Error messages go here --><html:errors /></span></p>
+	<p><em><!-- Error messages go here --><html:errors /></em></p>
 	<html:messages id="message" message="true" bundle="DEFAULT">
 		<p>
-			<span class="warning0"><!-- Error messages go here -->
+			<em><!-- Error messages go here -->
 				<bean:write name="message"/>
-			</span>
+			</em>
 		</p>
 	</html:messages>
 	

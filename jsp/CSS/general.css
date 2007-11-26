@@ -392,7 +392,7 @@ ul li.tree_label span { border-bottom: 1px dotted #aaa; }
 ul.unit1 li {
 background-color: #fff;
 list-style: none;
-color: #808060;
+color: #5a7086;
 }
 ul.unit2 li {
 background-color: #fff;
@@ -401,7 +401,7 @@ list-style: circle;
 ul.unit3 li {
 background-color: #fff;
 list-style: none;
-color: #606080;
+color: #86705a;
 }
 
 ul.padding1 li { padding: 0.25em 0; }
