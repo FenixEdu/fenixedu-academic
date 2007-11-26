@@ -565,11 +565,12 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return Double.valueOf(bigDecimal.doubleValue());
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public Double getCreditsConcluded(ExecutionYear executionYear) {
-	final CreditsLimit creditsLimit = (CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT, executionYear);
+	final CreditsLimit creditsLimit = (CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT,
+		executionYear);
 
 	Double creditsConcluded = 0d;
 	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
@@ -659,26 +660,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     private boolean checkAllModules(final ExecutionYear executionYear) {
-	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if (!curriculumModule.isConcluded(executionYear)) {
-		return false;
-	    }
-	}
-	return hasAnyCurriculumModules();
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup.checkAllModules");
     }
 
     @SuppressWarnings("unchecked")
     private boolean checkDegreeModulesSelectionLimit(ExecutionYear executionYear) {
-	List<DegreeModulesSelectionLimit> curricularRules = (List<DegreeModulesSelectionLimit>) getDegreeModule()
-		.getCurricularRules(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionYear);
-	if (curricularRules.size() > 1) {
-	    throw new DomainException("error.degree.module.has.more.than.one.degree.modules.limit.for.executionYear");
-	}
+	final DegreeModulesSelectionLimit degreeModulesSelectionLimit = (DegreeModulesSelectionLimit) getMostRecentActiveCurricularRule(
+		CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionYear);
 
-	if (curricularRules.isEmpty()) {
+	if (degreeModulesSelectionLimit == null) {
 	    return false;
 	} else {
-	    DegreeModulesSelectionLimit degreeModulesSelectionLimit = curricularRules.get(0);
 	    int modulesConcluded = 0;
 	    for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 		if (curriculumModule.isConcluded(executionYear)) {
@@ -692,19 +684,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @SuppressWarnings("unchecked")
     private boolean checkCreditsLimits(ExecutionYear executionYear) {
-	List<CreditsLimit> curricularRules = (List<CreditsLimit>) getDegreeModule().getCurricularRules(
-		CurricularRuleType.CREDITS_LIMIT, executionYear);
-	if (curricularRules.size() > 1) {
-	    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionYear");
-	}
+	final CreditsLimit creditsLimit = (CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT,
+		executionYear);
 
-	if (curricularRules.isEmpty()) {
+	if (creditsLimit == null) {
 	    return false;
 	} else {
-	    CreditsLimit creditsLimit = curricularRules.get(0);
 	    Double creditsConcluded = 0d;
 	    for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-		creditsConcluded += curriculumModule.getCreditsConcluded(executionYear);
+		if (curriculumModule.isConcluded(executionYear)) {
+		    creditsConcluded += curriculumModule.getCreditsConcluded(executionYear);
+		}
 	    }
 
 	    return creditsConcluded >= creditsLimit.getMinimumCredits();
@@ -742,7 +732,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	
 	return curriculum;
     }
-    
+
     @Override
     public boolean isPropaedeutic() {
 	return hasCurriculumGroup() && getCurriculumGroup().isPropaedeutic();
@@ -756,20 +746,20 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return !curriculumLine.hasCurricularCourse()
 		|| getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
     }
-    
+
     public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(final CurricularCourse curricularCourse) {
 	Collection<CurriculumGroup> result = new HashSet<CurriculumGroup>();
-	if(getDegreeModule().hasDegreeModuleOnChilds(curricularCourse)) {
+	if (getDegreeModule().hasDegreeModuleOnChilds(curricularCourse)) {
 	    result.add(this);
 	}
-	
+
 	for (CurriculumGroup curriculumGroup : this.getCurriculumGroups()) {
 	    result.addAll(curriculumGroup.getCurricularCoursePossibleGroups(curricularCourse));
 	}
-	
+
 	return result;
     }
-    
+
     public Collection<NoCourseGroupCurriculumGroup> getNoCourseGroupCurriculumGroups() {
 	Collection<NoCourseGroupCurriculumGroup> res = new HashSet<NoCourseGroupCurriculumGroup>();
 	for (CurriculumGroup curriculumGroup : getCurriculumGroups()) {

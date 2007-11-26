@@ -93,12 +93,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	return getCycleCourseGroup().getCycleType();
     }
 
-    @Override
-    public boolean isConcluded(ExecutionYear executionYear) {
-	final Double defaultEctsCredits = getCycleType().getDefaultEcts();
-	final Double creditsConcluded = getCreditsConcluded(executionYear);
-	return creditsConcluded >= defaultEctsCredits;
-    }
 
     @Override
     public RootCurriculumGroup getCurriculumGroup() {
