@@ -35,7 +35,8 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	parameters.put("degreeFinalizationDate", registration.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 	parameters.put("degreeFinalizationGrade", degreeFinalizationCertificateRequest.getAverage() ? getDegreeFinalizationGrade(registration.getFinalAverage()) : "");
-	parameters.put("degreeFinalizationEcts", String.valueOf(registration.getEctsCredits()));
+	
+	parameters.put("degreeFinalizationEcts", getDegreeFinalizationEcts(registration));
 	parameters.put("creditsDescription", getCreditsDescription());
 	parameters.put("graduateTitle", getGraduateTitle());
 	parameters.put("diplomaDescription", getDiplomaDescription());
@@ -55,12 +56,25 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	return result.toString();
     }
 
+    final private String getDegreeFinalizationEcts(final Registration registration) {
+	final StringBuilder result = new StringBuilder();
+	
+	final DegreeType degreeType = getDocumentRequest().getDegreeType();
+	if (degreeType.isBolonhaType()) {
+	    result.append(", tendo obtido o total de ");
+	    result.append(String.valueOf(registration.getEctsCredits())).append(getCreditsDescription());
+	    result.append(",");
+	}
+	
+	return result.toString();
+    }
+
     final private String getGraduateTitle() {
 	final StringBuilder result = new StringBuilder();
 	
 	final DegreeType degreeType = getDocumentRequest().getDegreeType();
 	if (degreeType.getQualifiesForGraduateTitle()) {
-	    result.append("pelo que tem direito ao grau académico de ");
+	    result.append(" pelo que tem direito ao grau académico de ");
 	    result.append(degreeType.getGraduateTitle());
 	    result.append(", ");
 	}
