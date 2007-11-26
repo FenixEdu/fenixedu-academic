@@ -13,7 +13,7 @@
 <bean:define id="unitId">&oid=<bean:write name="createUnitBean" property="parentUnit.idInternal" /></bean:define>
 
 <html:messages property="error" message="true" id="errMsg" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<p>
+	<p class="mtop15 mbottom05">
 		<span class="error0"><!-- Error messages go here --><bean:write name="errMsg" /></span>
 	</p>
 </html:messages>
@@ -23,7 +23,7 @@
 		 action="/externalUnits.do?method=createExternalUnit">
 	
 	<fr:layout name="tabular-editable">
-		<fr:property name="classes" value="tstyle5 thlight thright"/>
+		<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 	

@@ -26,12 +26,14 @@
 	<logic:notEmpty name="searchParametersBean" property="degree">
 		<fr:edit id="chooseParameters" name="searchParametersBean" schema="student.list.searchByDegree.parameters">
 			<fr:layout name="tabular-row">
-				<fr:property name="classes" value="tdtop"/>
+				<fr:property name="classes" value="tdtop ulnomargin"/>
 			</fr:layout>
 		</fr:edit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='searchByDegree';this.form.submit();">
-		<bean:message key="button.search" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:submit>		
+		<p class="mtop1">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='searchByDegree';this.form.submit();">
+				<bean:message key="button.search" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:submit>
+		</p>
 	</logic:notEmpty>
 
 <logic:present name="studentCurricularPlanList">

@@ -54,10 +54,10 @@
 
 		<fr:view name="infoCurriculumHistoricReport" property="enrolments" schema="info.enrolment.historic.report">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thbold tacenter mtop05" />
+				<fr:property name="classes" value="tstyle4 thbold tdcenter mtop05" />
+				<fr:property name="columnClasses" value=",aleft,,,,," />
 			</fr:layout>
 		</fr:view>
-
 	</logic:notEmpty>
 
 	<p>
