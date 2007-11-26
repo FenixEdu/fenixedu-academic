@@ -188,6 +188,7 @@
    	<message-resources parameter="resources.TestsResources" key="TESTS_RESOURCES" null="false" />
     <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
     <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.CardGenerationResources" key="CARD_GENERATION_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

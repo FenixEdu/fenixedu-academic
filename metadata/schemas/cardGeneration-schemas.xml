@@ -1,0 +1,17 @@
+<schema name="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.CardGenerationContext.selectExecutionYear" type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.CardGenerationContext">
+	<slot name="executionYear" bundle="CARD_GENERATION_RESOURCES" key="label.execution.year" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
+		<property name="format" value="${year}" />
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.domain.Degree.card.generation.edit" type="net.sourceforge.fenixedu.domain.Degree">
+	<slot name="ministryCode" bundle="CARD_GENERATION_RESOURCES" key="label.degree.ministery.code"
+			validator="net.sourceforge.fenixedu.renderers.validators.MinistryDegreeCodeValidator">
+		<property name="size" value="4" />
+	</slot>
+	<slot name="idCardName" bundle="CARD_GENERATION_RESOURCES" key="label.degree.card.name"
+			validator="net.sourceforge.fenixedu.renderers.validators.DegreeIdCardNameValidator">
+		<property name="size" value="42" />
+	</slot>
+</schema>

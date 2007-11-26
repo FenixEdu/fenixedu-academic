@@ -26,4 +26,16 @@
      <definition name="create-assiduousness-person-function" extends="definition.directiveCouncil.masterPage">
         <put name="body" value="/directiveCouncil/assiduousnessStructure/createAssiduousnessPersonFunction.jsp"/>
     </definition>
+     <definition name="df.page.card.generation.firstPage" extends="definition.directiveCouncil.masterPage">
+        <put name="body" value="/directiveCouncil/cardGenerationFirstPage.jsp"/>
+    </definition>
+     <definition name="df.page.card.generation.showCategoryCodes" extends="definition.directiveCouncil.masterPage">
+        <put name="body" value="/directiveCouncil/showCategoryCodes.jsp"/>
+    </definition>
+     <definition name="df.page.card.generation.showDegreeCodesAndLabels" extends="definition.directiveCouncil.masterPage">
+        <put name="body" value="/directiveCouncil/showDegreeCodesAndLabels.jsp"/>
+    </definition>
+     <definition name="df.page.card.generation.editDegree" extends="definition.directiveCouncil.masterPage">
+        <put name="body" value="/directiveCouncil/editDegree.jsp"/>
+    </definition>
 </tiles-definitions>

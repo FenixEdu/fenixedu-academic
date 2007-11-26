@@ -27,4 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Create Card Generation Tables" cardGeneration.sql

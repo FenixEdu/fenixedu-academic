@@ -45,6 +45,7 @@
     <!ENTITY pedagogicalCouncilSchemas SYSTEM "pedagogicalCouncil-schemas.xml">
     <!ENTITY delegatesSchemas SYSTEM "delegates-schemas.xml">
     <!ENTITY directiveCouncil SYSTEM "directiveCouncil-schemas.xml">
+    <!ENTITY cardGeneration SYSTEM "cardGeneration-schemas.xml">
     <!ENTITY facultyAdmOffice SYSTEM "facultyAdmOffice-schemas.xml">
 ]>
 
@@ -370,6 +371,32 @@
 	<schema name="student.curricular.plan.start.date" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan">
 		<slot name="startDate"/>
 	</schema>
+
+	<schema name="teacher.credits.period.view" type="net.sourceforge.fenixedu.domain.ExecutionPeriod">		
+		<slot name="teacherCreditsPeriodBegin" key="label.credits.periods.begin">
+			<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+				<property name="required" value="true"/>
+			</validator>
+		</slot>
+		<slot name="teacherCreditsPeriodEnd" key="label.credits.periods.end">
+			<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+				<property name="required" value="true"/>
+			</validator>
+		</slot>
+	</schema>	
+	
+	<schema name="departmentAdmOffice.credits.period.view" type="net.sourceforge.fenixedu.domain.ExecutionPeriod">		
+		<slot name="departmentAdmOfficeCreditsPeriodBegin" key="label.credits.periods.begin">
+			<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+				<property name="required" value="true"/>
+			</validator>
+		</slot>
+		<slot name="departmentAdmOfficeCreditsPeriodEnd" key="label.credits.periods.end">
+ 			<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+				<property name="required" value="true"/>
+			</validator> 
+		</slot>		
+	</schema>	
 
 	<schema name="degree.info.description" type="net.sourceforge.fenixedu.domain.DegreeInfo">
 		<slot name="description" layout="rich-text" key="label.brief.introduction">
@@ -701,6 +728,6 @@
     &pedagogicalCouncilSchemas;
     &delegatesSchemas;
     &directiveCouncil;
-    &facultyAdmOffice;
+    &cardGeneration;
     
 </schemas>

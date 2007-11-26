@@ -96,6 +96,14 @@
 		<forward name="create-assiduousness-person-function" path="create-assiduousness-person-function"/>
 	</action>
 	
+	<action path="/manageCardGeneration"
+			type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.ManageCardGenerationDA"
+			parameter="method">
+		<forward name="firstPage" path="df.page.card.generation.firstPage"/>
+		<forward name="showCategoryCodes" path="df.page.card.generation.showCategoryCodes"/>
+		<forward name="showDegreeCodesAndLabels" path="df.page.card.generation.showDegreeCodesAndLabels"/>
+		<forward name="editDegree" path="df.page.card.generation.editDegree"/>
+	</action>
 	
       		  
  	</action-mappings>
@@ -115,6 +123,7 @@
 	<message-resources parameter="resources.CurriculumHistoricResources" key="CURRICULUM_HISTORIC_RESOURCES" null="false"/>
 	<message-resources parameter="resources.InquiriesResources" key="INQUIRIES_RESOURCES" null="false"/>
     <message-resources parameter="resources.PublicDegreeInformation" key="PUBLIC_DEGREE_INFORMATION" null="false"/>
+    <message-resources parameter="resources.CardGenerationResources" key="CARD_GENERATION_RESOURCES" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

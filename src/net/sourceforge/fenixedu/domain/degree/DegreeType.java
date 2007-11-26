@@ -17,6 +17,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -37,7 +38,8 @@ public enum DegreeType {
 	    AdministrativeOfficeType.DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
 	    false, // isThirdCycle
-	    true) { // qualifiesForGraduateTitle
+	    true // qualifiesForGraduateTitle
+	    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -56,7 +58,8 @@ public enum DegreeType {
 	    AdministrativeOfficeType.MASTER_DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
 	    false, // isThirdCycle
-	    true) { // qualifiesForGraduateTitle
+	    true // qualifiesForGraduateTitle
+	    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -75,7 +78,8 @@ public enum DegreeType {
 	    AdministrativeOfficeType.DEGREE, true, // isFirstCycle
 	    false, // isSecondCycle
 	    false, // isThirdCycle
-	    true) { // qualifiesForGraduateTitle
+	    true // qualifiesForGraduateTitle
+	    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -99,7 +103,8 @@ public enum DegreeType {
 	    AdministrativeOfficeType.DEGREE, false, // isFirstCycle
 	    true, // isSecondCycle
 	    false, // isThirdCycle
-	    true) { // qualifiesForGraduateTitle
+	    true // qualifiesForGraduateTitle
+	    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -118,7 +123,8 @@ public enum DegreeType {
 	    AdministrativeOfficeType.DEGREE, true, // isFirstCycle
 	    true, // isSecondCycle
 	    false, // isThirdCycle
-	    true) { // qualifiesForGraduateTitle
+	    true // qualifiesForGraduateTitle
+	    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -142,7 +148,8 @@ public enum DegreeType {
 	    AdministrativeOfficeType.MASTER_DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
 	    true, // isThirdCycle
-	    true) { // qualifiesForGraduateTitle
+	    true // qualifiesForGraduateTitle
+	    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -161,7 +168,8 @@ public enum DegreeType {
 	    AdministrativeOfficeType.MASTER_DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
 	    true, // isThirdCycle
-	    false) { // qualifiesForGraduateTitle
+	    false // qualifiesForGraduateTitle
+	) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -180,7 +188,8 @@ public enum DegreeType {
 	    AdministrativeOfficeType.MASTER_DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
 	    false, // isThirdCycle
-	    false) { // qualifiesForGraduateTitle
+	    false // qualifiesForGraduateTitle
+	    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -220,6 +229,8 @@ public enum DegreeType {
 
     private boolean qualifiesForGraduateTitle;
 
+    private Category studentCategoryCode;
+
     private DegreeType(GradeScale gradeScale, CurricularPeriodType curricularPeriodType, boolean canCreateStudent,
 	    boolean canCreateStudentOnlyWithCandidacy, AdministrativeOfficeType administrativeOfficeType, boolean isFirstCycle,
 	    boolean isSecondCycle, boolean isThirdCycle, boolean qualifiesForGraduateTitle) {
@@ -236,6 +247,10 @@ public enum DegreeType {
 
     public String getName() {
 	return name();
+    }
+
+    public Category getStudentCategoryCode() {
+	return studentCategoryCode;
     }
 
     public GradeScale getGradeScale() {
