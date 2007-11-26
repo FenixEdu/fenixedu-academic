@@ -728,6 +728,6 @@
     &pedagogicalCouncilSchemas;
     &delegatesSchemas;
     &directiveCouncil;
+    &facultyAdmOffice;
     &cardGeneration;
-    
 </schemas>
