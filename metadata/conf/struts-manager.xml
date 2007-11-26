@@ -692,6 +692,20 @@
          	<form-property name="selectedExternalCurricularCourses" type="java.lang.String[]" />
          	<form-property name="externalEnrolmentsToDelete" type="java.lang.String[]" />
       </form-bean>
+      
+ 		<form-bean name="markSheetManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="epID" type="java.lang.Integer" />
+			<form-property name="dID" type="java.lang.Integer" />
+			<form-property name="dcpID" type="java.lang.Integer" />
+			<form-property name="ccID" type="java.lang.Integer" />
+			<form-property name="msID" type="java.lang.Integer" />
+			<form-property name="tn" type="java.lang.String" />
+			<form-property name="ed" type="java.lang.String" />
+			<form-property name="mss" type="java.lang.String" />
+			<form-property name="mst" type="java.lang.String" />
+			<form-property name="evaluationsToRemove" type="java.lang.Integer[]" />
+ 		</form-bean>
+      
     	
     </form-beans>
     
@@ -2517,6 +2531,17 @@
 			    
 		</action>
 		<!-- End: Posting Rules Management -->
+		
+	<action path="/markSheetManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchDispatchAction"
+			input="show.markSheetManagement.search.page"
+			parameter="method"
+			name="markSheetManagementForm"
+			scope="request">
+	     		<forward name="searchMarkSheet" path="show.markSheetManagement.search.page"/>
+	     		<forward name="listMarkSheet" path="show.markSheetManagement.list.markSheet"/>
+	</action>
+		
 
 	</action-mappings>
  

@@ -8,9 +8,11 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
@@ -684,6 +686,61 @@ public class MarkSheet extends MarkSheet_Base {
 
     public AdministrativeOfficeType getAdministrativeOfficeType() {
 	return getCurricularCourse().getDegreeType().getAdministrativeOfficeType();
+    }
+    
+    
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void removeGrades(Collection<EnrolmentEvaluation> enrolmentEvaluations) {
+	if(enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
+	    if(getMarkSheetState() == MarkSheetState.CONFIRMED) {
+		super.setMarkSheetState(MarkSheetState.NOT_CONFIRMED);
+	    }
+	    if(getMarkSheetState() == MarkSheetState.RECTIFICATION) {
+		super.setMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED);
+	    }	
+	    
+	    setConfirmationEmployee(null);
+	    setConfirmationDateDateTime(null);
+	    
+	    for (EnrolmentEvaluation enrolmentEvaluation : getEnrolmentEvaluationsSet()) {
+		if(enrolmentEvaluations.contains(enrolmentEvaluation)) {
+		    if(enrolmentEvaluation.hasRectification()) {
+			throw new DomainException("error.enrolment.evaluation.has.rectification");
+		    }
+		    removeEvaluationFromMarkSheet(enrolmentEvaluation);
+		} else {
+		    changeEvaluationStateToTemporaryState(enrolmentEvaluation);
+		}
+	    }
+	    generateCheckSum();
+	}
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    private void removeEvaluationFromMarkSheet(EnrolmentEvaluation enrolmentEvaluation) {
+	changeEvaluationStateToTemporaryState(enrolmentEvaluation);
+	enrolmentEvaluation.removeMarkSheet();
+	enrolmentEvaluation.setGrade(Grade.createEmptyGrade());
+	enrolmentEvaluation.setCheckSum(null);
+	enrolmentEvaluation.setExamDateYearMonthDay(null);
+	enrolmentEvaluation.removeEmployee();
+	enrolmentEvaluation.setGradeAvailableDateYearMonthDay(null);
+	enrolmentEvaluation.removePersonResponsibleForGrade();
+	enrolmentEvaluation.removeRectified();
+    }
+
+    
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    private void changeEvaluationStateToTemporaryState(final EnrolmentEvaluation enrolmentEvaluation) {
+	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+	
+	Enrolment enrolment = enrolmentEvaluation.getEnrolment();
+	
+	if(enrolment.getAllFinalEnrolmentEvaluations().isEmpty()) {
+	    enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
+	} else {
+	    enrolment.setEnrollmentState(enrolment.getLatestEnrolmentEvaluation().getEnrollmentStateByGrade());
+	}
     }
     
 }

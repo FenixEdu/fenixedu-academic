@@ -42,6 +42,51 @@
 	</slot>
 </schema>
 
+<schema name="markSheet.base.manager" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean">
+	<slot name="executionPeriod" key="label.executionPeriod"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.ExecutionPeriod" />
+		<property name="format"
+			value="${executionYear.year} - ${semester}º Sem" />
+	</slot>
+	<slot name="degree" key="label.degree"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.markSheet.DegreeTypeDegreesManager" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.Degree" />
+		<property name="format" value="${tipoCurso.localizedName} - ${name}" />
+		<property name="destination" value="postBack"/>
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select-postback"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.markSheet.DegreeCurricularPlansForDegreeManager" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="postBack"/>
+	</slot>
+	<slot name="curricularCourse" key="label.curricularCourse"
+		layout="menu-select"
+		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularCoursesForDegreeCurricularPlan" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.CurricularCourse" />
+		<property name="eachLayout" value="values-dash" />
+		<property name="eachSchema" value="curricularCourse.name.code" />
+	</slot>
+</schema>
+
+
 <schema name="curricularCourse.name.code" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.CurricularCourse">
 	<slot name="name" />
@@ -386,3 +431,20 @@
 	<slot name="latestImprovementEnrolmentEvaluationInformation" key="label.improvment.mark"/>
 	<slot name="latestEnrolmentEvaluationInformation" key="label.mark"/>
 </schema>
+
+<schema name="markSheet.manager.confirmed.list" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.MarkSheet">
+	<slot name="responsibleTeacher.teacherNumber" key="label.responsibleTeacher"/>
+	<slot name="evaluationDateDateTime" key="label.evaluationDate"/>	
+	<slot name="markSheetType" key="label.markSheetType"/>
+	<slot name="enrolmentEvaluationsCount" key="label.markSheet.evaluatedStudents"/>	
+</schema>
+
+<schema name="markSheet.manager.evaluations" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
+	<slot name="student.number" key="label.number"/>
+	<slot name="student.person.name" key="label.name"/>	
+	<slot name="examDateYearMonthDay" key="label.evaluationDate"/>
+	<slot name="gradeValue" key="label.grade"/>	
+</schema>
+

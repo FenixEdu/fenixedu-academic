@@ -4,6 +4,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +23,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -148,6 +152,90 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         request.setAttribute("markSheet", markSheetID.toString());
         return mapping.findForward("choosePrinter");
     }
+
+    public ActionForward searchConfirmedMarkSheets(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException  {
+	MarkSheetManagementSearchBean searchBean = (MarkSheetManagementSearchBean) getRenderedObject();
+	
+	Collection<MarkSheet> result = new ArrayList<MarkSheet>();
+	for (MarkSheet markSheet : searchBean.getCurricularCourse().getMarkSheetsSet()) {
+	    if(markSheet.getExecutionPeriod() == searchBean.getExecutionPeriod() && 
+		    markSheet.isConfirmed()) {
+		result.add(markSheet);
+	    }
+	}
+	
+        request.setAttribute("edit", searchBean);
+        request.setAttribute("searchResult", result);
+        request.setAttribute("url", buildSearchUrl(searchBean));        
+	
+        return mapping.findForward("searchMarkSheet");
+    }
+
+    
+    public ActionForward listMarkSheet(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException  {
+	DynaActionForm form = (DynaActionForm) actionForm;
+	Integer markSheetID = (Integer) form.get("msID");
+	
+	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+	
+	
+        request.setAttribute("markSheet", markSheet);
+        request.setAttribute("url", buildUrl(form));        
+	
+        return mapping.findForward("listMarkSheet");
+    }
+    
+    public ActionForward searchConfirmedMarkSheetsFilled(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException  {
+        MarkSheetManagementSearchBean searchBean = new MarkSheetManagementSearchBean();
+        fillMarkSheetBean(actionForm, request, searchBean);
+        
+	Collection<MarkSheet> result = new ArrayList<MarkSheet>();
+	for (MarkSheet markSheet : searchBean.getCurricularCourse().getMarkSheetsSet()) {
+	    if(markSheet.getExecutionPeriod() == searchBean.getExecutionPeriod() && 
+		    markSheet.isConfirmed()) {
+		result.add(markSheet);
+	    }
+	}
+	
+        request.setAttribute("edit", searchBean);
+        request.setAttribute("searchResult", result);
+        request.setAttribute("url", buildSearchUrl(searchBean));        
+	
+        return mapping.findForward("searchMarkSheet");
+    }
+
+    public ActionForward removeGrades(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException  {
+	DynaActionForm form = (DynaActionForm) actionForm;
+	Integer markSheetID = (Integer) form.get("msID");
+
+	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+	List<EnrolmentEvaluation> evaluations = getEvaluationsToRemove(form);
+	try {
+	    executeService("RemoveGradesFromConfirmedMarkSheet", markSheet, evaluations);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	    return listMarkSheet(mapping, actionForm, request, response);
+	}
+	
+	return searchConfirmedMarkSheetsFilled(mapping, actionForm, request, response);
+    }
+
+    private List<EnrolmentEvaluation> getEvaluationsToRemove(DynaActionForm actionForm) {
+	List<EnrolmentEvaluation> res = new ArrayList<EnrolmentEvaluation>();
+	Integer[] evaluationsToRemove = (Integer[]) actionForm.get("evaluationsToRemove");
+	for (Integer eeID : evaluationsToRemove) {
+	    EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(eeID);
+	    if(enrolmentEvaluation != null) {
+		res.add(enrolmentEvaluation);
+	    }
+	}
+	return res;
+    }
+
     
 
 }

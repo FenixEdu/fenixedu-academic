@@ -12559,5 +12559,14 @@
 		<filterChains>
 			<chain name="ScientificCouncilAuthorization" />
 		</filterChains>
-	</service>	
+	</service>
+	<service>
+		<name>RemoveGradesFromConfirmedMarkSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveGradesFromConfirmedMarkSheet</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
+	</service>			
 </serviceDefinitions>
