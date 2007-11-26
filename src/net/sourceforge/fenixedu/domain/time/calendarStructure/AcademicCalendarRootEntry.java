@@ -106,7 +106,16 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 	Collections.sort(allChildEntries, COMPARATOR_BEGIN_DATE);
 	return index > 0 && index <= allChildEntries.size() ? allChildEntries.get(index - 1) : null;	
     }
-           
+    
+    public static AcademicCalendarRootEntry getAcademicCalendarByTitle(String title) {
+	for (AcademicCalendarRootEntry rootEntry : RootDomainObject.getInstance().getAcademicCalendarsSet()) {
+	    if(rootEntry.getTitle().getContent().equals(title)) {
+		return rootEntry;
+	    }
+	}
+	return null;
+    }
+    
     @Override
     public DateTime getEnd() {
         return null;
