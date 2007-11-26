@@ -27,4 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "changes-20071126180446.sql" changes-20071126180446.sql
+
