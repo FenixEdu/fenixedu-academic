@@ -4,14 +4,17 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class GrantPart extends GrantPart_Base {
 
-	public GrantPart() {
-		super();
-		setRootDomainObject(RootDomainObject.getInstance());
-	}
+    public GrantPart() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
 
     public void delete() {
-        removeRootDomainObject();
-        super.deleteDomainObject();
+	removeGrantPaymentEntity();
+	removeGrantSubsidy();
+	removeResponsibleTeacher();
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 
 }
