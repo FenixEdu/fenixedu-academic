@@ -95,7 +95,7 @@
 							<fr:property name="key(remove)" value="researcher.activity.remove"/>
 							<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 						</logic:notEqual>
-			    	    <fr:property name="classes" value="tstyle1 thlight mtop05"/>
+			    	    <fr:property name="classes" value="tstyle5 tdtop mtop05"/>
 					</fr:layout>
 					<fr:destination name="invalid" path="<%="/activities/editResearchActivity.do?method=prepareEditParticipants&amp;" + parameter %>"/>
 				</fr:edit>
