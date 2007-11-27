@@ -144,10 +144,10 @@
 									</dt:format>
 								</td>
 								<td>
-									<logic:notEmpty name="lesson" property="sala.nome">
+									<logic:notEmpty name="lesson" property="sala">
 										<bean:write name="lesson" property="sala.nome"/>
 									</logic:notEmpty>	
-									<logic:empty name="lesson" property="sala.nome">
+									<logic:empty name="lesson" property="sala">
 										-
 									</logic:empty>				
 								</td>						
