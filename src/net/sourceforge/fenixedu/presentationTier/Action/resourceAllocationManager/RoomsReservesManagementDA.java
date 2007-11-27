@@ -170,7 +170,11 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
 		
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
-	executeService("OpenPunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
+	try {
+	    executeService("OpenPunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
+	} catch(DomainException domainException) {
+            saveMessages(request, domainException);                   
+	} 	
 	return seeRoomsReserveRequests(mapping, form, request, response);	
     } 
     
@@ -178,7 +182,12 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
 		
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
-	executeService("OpenPunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
+	try{
+	    executeService("OpenPunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
+	} catch(DomainException domainException) {
+            saveMessages(request, domainException);                   
+	} 	
+	
 	return seeSpecifiedRoomsReserveRequest(mapping, form, request, response);	
     } 
 
@@ -186,7 +195,11 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
 		
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
-	executeService("ClosePunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
+	try{
+	    executeService("ClosePunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
+	} catch(DomainException domainException) {
+            saveMessages(request, domainException);                   
+	} 	
 	return seeRoomsReserveRequests(mapping, form, request, response);	
     }  
     
@@ -194,7 +207,11 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException, InvalidArgumentException {
 		
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
-	executeService("ClosePunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
+	try{
+	    executeService("ClosePunctualRoomsOccupationRequest", new Object[] {roomsReserveRequest, getLoggedPerson(request)});	    	
+	} catch(DomainException domainException) {
+            saveMessages(request, domainException);                   
+	} 	
 	return seeSpecifiedRoomsReserveRequest(mapping, form, request, response);	
     }  
     

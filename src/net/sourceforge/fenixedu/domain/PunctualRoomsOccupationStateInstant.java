@@ -17,7 +17,7 @@ public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupation
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationStateInstant")
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationStateInstants")
     public PunctualRoomsOccupationStateInstant(PunctualRoomsOccupationRequest request, RequestState state, DateTime instant) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());

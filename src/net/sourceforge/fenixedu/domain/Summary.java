@@ -201,7 +201,7 @@ public class Summary extends Summary_Base {
 	    if (!lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), date)) {
 		throw new DomainException("error.summary.no.valid.time.to.lesson");	       
 	    }
-	} else if (date.isAfter(new YearMonthDay()) || date.isBefore(executionPeriod.getBeginDateYearMonthDay())) {
+	} else if (date.isAfter(new YearMonthDay())) {
 	    throw new DomainException("error.summary.no.valid.date");
 	}
     }

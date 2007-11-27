@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -28,6 +29,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationRequests")
     public PunctualRoomsOccupationRequest(Person requestor, MultiLanguageString subject, MultiLanguageString description) {
         super();
         checkIfRequestAlreadyExists(requestor, subject, description);
@@ -70,7 +72,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	openRequestWithoutAssociateOwner(instant);
 	setOwner(person);
     }
-    
+       
     public void createNewTeacherOrEmployeeComment(MultiLanguageString description, Person commentOwner, DateTime instant) {		
 	new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);			
 	if(commentOwner.equals(getRequestor())) {
@@ -80,7 +82,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	    setEmployeeReadComments(getCommentsCount());	    
 	}	
     }
-       
+    
     public void createNewTeacherCommentAndOpenRequest(MultiLanguageString description, Person commentOwner, DateTime instant) {
 	openRequestWithoutAssociateOwner(instant);
 	new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);			
@@ -93,6 +95,34 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	setOwner(commentOwner);
 	setEmployeeReadComments(getCommentsCount());	
     }
+     
+    public void closeRequestAndAssociateOwnerOnlyForEmployees(DateTime instant, Person person) {
+	closeRequestWithoutAssociateOwner(instant);	
+	if(!getOwner().equals(person)) {	    
+	    setEmployeeReadComments(0);
+	    setOwner(person);
+	}		
+    }  
+
+    public void openRequestAndAssociateOwnerOnlyForEmployess(DateTime instant, Person person) {
+	openRequestWithoutAssociateOwner(instant);	
+	if(getOwner() == null || !getOwner().equals(person)) {
+	    setEmployeeReadComments(0);
+	    setOwner(person);
+	}	
+    }  
+    
+    private void closeRequestWithoutAssociateOwner(DateTime instant) {
+	if(!getCurrentState().equals(RequestState.RESOLVED)) {
+	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.RESOLVED, instant));
+	}
+    }  
+
+    private void openRequestWithoutAssociateOwner(DateTime instant) {
+	if(!getCurrentState().equals(RequestState.OPEN)) {
+	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.OPEN, instant));
+	}
+    }  
     
     private MultiLanguageString getCommentSubject() {
 	StringBuilder subject = new StringBuilder();
@@ -102,7 +132,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	    subject.append(firstComment.getSubject().getContent());
 	}
 	return new MultiLanguageString(subject.toString());
-    }
+    }    
     
     @Override
     public void setOwner(Person owner) {
@@ -133,35 +163,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	    throw new DomainException("error.PunctualRoomsOccupationRequest.empty.instant"); 
 	}
 	super.setInstant(instant);
-    }
-    
-    private void closeRequestWithoutAssociateOwner(DateTime instant) {
-	if(!getCurrentState().equals(RequestState.RESOLVED)) {
-	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.RESOLVED, instant));
-	}
-    }  
-
-    private void openRequestWithoutAssociateOwner(DateTime instant) {
-	if(!getCurrentState().equals(RequestState.OPEN)) {
-	    addStateInstants(new PunctualRoomsOccupationStateInstant(this, RequestState.OPEN, instant));
-	}
-    }  
-    
-    public void closeRequestAndAssociateOwnerOnlyForEmployees(DateTime instant, Person person) {
-	closeRequestWithoutAssociateOwner(instant);	
-	if(!getOwner().equals(person)) {	    
-	    setEmployeeReadComments(0);
-	    setOwner(person);
-	}		
-    }  
-
-    public void openRequestAndAssociateOwnerOnlyForEmployess(DateTime instant, Person person) {
-	openRequestWithoutAssociateOwner(instant);	
-	if(getOwner() == null || !getOwner().equals(person)) {
-	    setEmployeeReadComments(0);
-	    setOwner(person);
-	}	
-    }      
+    }         
                
     public String getPresentationInstant() {
 	return getInstant().toString("dd/MM/yyyy HH:mm");

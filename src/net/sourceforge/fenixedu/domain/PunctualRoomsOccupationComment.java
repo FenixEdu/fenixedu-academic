@@ -19,7 +19,7 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
 	((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
     
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationComment")
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationComments")
     public PunctualRoomsOccupationComment(PunctualRoomsOccupationRequest request, MultiLanguageString subject, 
 	    MultiLanguageString description, Person owner, DateTime instant) {
         
@@ -33,7 +33,7 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
         setInstant(instant);               
     }  
            
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationComment")
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationComments")
     public void edit(MultiLanguageString subject, MultiLanguageString description) {
 	if(!getRequest().getCurrentState().equals(RequestState.NEW)) {
 	    throw new DomainException("error.PunctualRoomsOccupationRequest.impossible.edit");

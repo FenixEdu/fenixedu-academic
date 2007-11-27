@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
+import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -74,8 +75,8 @@ public class ResourceAllocationRolePredicates {
     
     // Punctual Rooms Occupation Management Predicates
     
-    public static final AccessControlPredicate<PunctualRoomsOccupationComment> checkPermissionsToManagePunctualRoomsOccupationComment = new AccessControlPredicate<PunctualRoomsOccupationComment>() {
-	public boolean evaluate(PunctualRoomsOccupationComment comment) {
+    public static final AccessControlPredicate<PunctualRoomsOccupationRequest> checkPermissionsToManagePunctualRoomsOccupationRequests = new AccessControlPredicate<PunctualRoomsOccupationRequest>() {
+	public boolean evaluate(PunctualRoomsOccupationRequest request) {
 	    
 	    Person loggedPerson = AccessControl.getPerson();
 	    
@@ -83,25 +84,23 @@ public class ResourceAllocationRolePredicates {
 		return true;
 	    }
 
-	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSpacesAllocation(loggedPerson);	    
+	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);	    
 	    return true;
 	}
     };
     
-    public static final AccessControlPredicate<PunctualRoomsOccupationStateInstant> checkPermissionsToManagePunctualRoomsOccupationStateInstant = new AccessControlPredicate<PunctualRoomsOccupationStateInstant>() {
-	public boolean evaluate(PunctualRoomsOccupationStateInstant instant) {
-	    
-	    Person loggedPerson = AccessControl.getPerson();
-	    
-	    if(loggedPerson.hasRole(RoleType.TEACHER)) {
-		return true;
-	    }
-
-	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSpacesAllocation(loggedPerson);	    
-	    return true;
+    public static final AccessControlPredicate<PunctualRoomsOccupationComment> checkPermissionsToManagePunctualRoomsOccupationComments = new AccessControlPredicate<PunctualRoomsOccupationComment>() {
+	public boolean evaluate(PunctualRoomsOccupationComment comment) {	    
+	   return checkPermissionsToManagePunctualRoomsOccupationRequests.evaluate(comment.getRequest());
 	}
-    };    
+    };
     
+    public static final AccessControlPredicate<PunctualRoomsOccupationStateInstant> checkPermissionsToManagePunctualRoomsOccupationStateInstants = new AccessControlPredicate<PunctualRoomsOccupationStateInstant>() {
+	public boolean evaluate(PunctualRoomsOccupationStateInstant stateInstant) {	    
+	   return checkPermissionsToManagePunctualRoomsOccupationRequests.evaluate(stateInstant.getRequest());
+	}
+    };
+          
     // Resource Allocation Access Groups Predicates
     
     public static final AccessControlPredicate<ResourceAllocationRole> checkPermissionsToManageAccessGroups = new AccessControlPredicate<ResourceAllocationRole>() {
