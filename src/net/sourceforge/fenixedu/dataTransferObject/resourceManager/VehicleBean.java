@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.resourceManager;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import org.joda.time.YearMonthDay;
 
@@ -15,7 +16,10 @@ public class VehicleBean implements Serializable {
     private YearMonthDay acquisition;
     
     private YearMonthDay cease;
-
+    
+    private BigDecimal allocationCostMultiplier; 
+    
+    
     public VehicleBean() {
     }
     
@@ -57,5 +61,13 @@ public class VehicleBean implements Serializable {
 
     public void setCease(YearMonthDay cease) {
         this.cease = cease;
-    }           
+    }
+    
+    public BigDecimal getAllocationCostMultiplier() {
+        return allocationCostMultiplier;
+    }
+
+    public void setAllocationCostMultiplier(BigDecimal allocationCostMultiplier) {
+        this.allocationCostMultiplier = allocationCostMultiplier;
+    }
 }

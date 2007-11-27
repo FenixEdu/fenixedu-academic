@@ -2270,8 +2270,7 @@
        			parameter="method">       			       			
        			<forward name="prepareChooseCalendar" path="prepare-choose-calendar"/>
        			<forward name="viewAcademicCalendar" path="view-academic-calendar"/>
-       			<forward name="prepareCreateCalendarEntry" path="prepare-create-calendar-entry"/>
-       			<forward name="prepareEditAcademicCalendar" path="prepare-edit-academic-calendar"/>
+       			<forward name="prepareCreateCalendarEntry" path="prepare-create-calendar-entry"/>       			
        	</action>
       	      	
 		<!-- =================== Units Merge =================== -->

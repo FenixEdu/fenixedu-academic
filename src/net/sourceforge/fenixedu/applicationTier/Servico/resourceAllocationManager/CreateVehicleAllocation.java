@@ -8,7 +8,8 @@ public class CreateVehicleAllocation extends Service {
 
     public void run(VehicleAllocationBean bean) {
 	if(bean != null) {	    	  
-	    new VehicleAllocation(bean.getBeginDateTime(), bean.getEndDateTime(), bean.getVehicle(), bean.getRequestor(), bean.getReason());
+	    new VehicleAllocation(bean.getBeginDateTime(), bean.getEndDateTime(), bean.getVehicle(), 
+		    bean.getRequestor(), bean.getReason(), bean.getDistance(), bean.getAmountCharged());
 	}
     }
 }

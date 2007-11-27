@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.resource;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,23 +14,25 @@ import org.joda.time.YearMonthDay;
 public class Vehicle extends Vehicle_Base {
     
     @Checked("ResourcePredicates.checkPermissionsToManageVehicle")
-    public Vehicle(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease) {
+    public Vehicle(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease, BigDecimal allocationCostMultiplier) {
         super();
         setNumberPlate(numberPlate);
         setMake(make);
         setModel(model);
         setAcquisition(acquisition);
 	setCease(cease);
+	setAllocationCostMultiplier(allocationCostMultiplier);
     }     
     
     @Checked("ResourcePredicates.checkPermissionsToManageVehicle")
-    public void edit(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease) {
+    public void edit(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease, BigDecimal allocationCostMultiplier) {
 	setNumberPlate(numberPlate);
         setMake(make);
         setModel(model);
         setAcquisition(acquisition);
 	setCease(cease);
-    }
+	setAllocationCostMultiplier(allocationCostMultiplier);
+    }     
     
     @Checked("ResourcePredicates.checkPermissionsToManageVehicle")
     @Override
@@ -40,6 +43,14 @@ public class Vehicle extends Vehicle_Base {
     @Override
     public boolean isVehicle() {
         return true;
+    }
+    
+    @Override
+    public void setAllocationCostMultiplier(BigDecimal allocationCostMultiplier) {
+        if(allocationCostMultiplier == null || allocationCostMultiplier.compareTo(BigDecimal.ZERO) == -1) {
+            throw new DomainException("error.Vehicle.invalid.allocation.cost.multiplier");
+        }
+        super.setAllocationCostMultiplier(allocationCostMultiplier);
     }
     
     @Override

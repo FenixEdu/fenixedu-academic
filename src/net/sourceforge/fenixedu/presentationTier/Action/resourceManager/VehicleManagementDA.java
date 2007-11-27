@@ -93,7 +93,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
 	
 	try {
 	    executeService("CreateVehicle", new Object[]{bean.getNumberPlate(), bean.getMake(), bean.getModel(),
-		bean.getAcquisition(), bean.getCease()});
+		bean.getAcquisition(), bean.getCease(), bean.getAllocationCostMultiplier()});
 	
 	}  catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());

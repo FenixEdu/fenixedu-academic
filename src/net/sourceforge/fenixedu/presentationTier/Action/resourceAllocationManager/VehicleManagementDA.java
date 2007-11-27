@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ResourceAllocationHistoryBean;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationBean;
+import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationHistoryBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.VehicleAllocation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -83,17 +83,17 @@ public class VehicleManagementDA extends FenixDispatchAction {
     public ActionForward seeVehicleAllocationHistory(ActionMapping mapping, ActionForm form,	   	        
 	    HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException {
 	
-	ResourceAllocationHistoryBean bean = (ResourceAllocationHistoryBean) getRenderedObject();
+	VehicleAllocationHistoryBean bean = (VehicleAllocationHistoryBean) getRenderedObject();
 	if(bean == null) {
-	    bean = new ResourceAllocationHistoryBean();
+	    bean = new VehicleAllocationHistoryBean();
 	}
 	
 	request.setAttribute("vehicleAllocationHistoryBean", bean);
 	
-	if(bean.getYear() != null && bean.getMonth() != null) {
+	if(bean.getYear() != null && bean.getMonth() != null) {	    
 	    DateTime firstDayOfMonth = new DateTime(bean.getYear().get(DateTimeFieldType.year()), bean.getMonth().get(DateTimeFieldType.monthOfYear()), 1, 0, 0, 0, 0);
 	    DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
-	    Set<VehicleAllocation> pastVehicleAllocations = VehicleAllocation.getPastVehicleAllocations(firstDayOfMonth, lastDayOfMonth);
+	    Set<VehicleAllocation> pastVehicleAllocations = VehicleAllocation.getPastVehicleAllocations(firstDayOfMonth, lastDayOfMonth, bean.getVehicle());
 	    request.setAttribute("pastVehicleAllocations", pastVehicleAllocations);	
 	}
 			

@@ -57,7 +57,9 @@
 	            <fr:property name="param(delete)" value="idInternal/allocationID"/>
 		        <fr:property name="key(delete)" value="link.delete"/>
 	            <fr:property name="bundle(delete)" value="SOP_RESOURCES"/>
-	            <fr:property name="order(delete)" value="2"/>                                           
+	            <fr:property name="order(delete)" value="2"/> 
+				<fr:property name="confirmationKey(delete)" value="label.delete.vehicle.allocation.confirmation"/>
+				<fr:property name="confirmationBundle(delete)" value="SOP_RESOURCES"/>	                                                      
 	            
 	    	</fr:layout>
 		</fr:view>

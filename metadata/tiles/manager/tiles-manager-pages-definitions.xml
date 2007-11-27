@@ -839,9 +839,6 @@
 	</definition>		
 	<definition name="prepare-create-calendar-entry" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/academicCalendarsManagement/createCalendarEntry.jsp" />
-	</definition>
-	<definition name="prepare-edit-academic-calendar" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/academicCalendarsManagement/createAcademicCalendar.jsp" />
 	</definition>	
 	
 	<!--  ###################  Units Merge ####################### -->

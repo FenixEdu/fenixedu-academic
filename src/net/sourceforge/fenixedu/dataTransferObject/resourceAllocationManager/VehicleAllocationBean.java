@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -11,55 +12,77 @@ import org.joda.time.DateTime;
 public class VehicleAllocationBean implements Serializable {
 
     private String reason;
-    
+
     private DateTime beginDateTime;
-    
+
     private DateTime endDateTime;
-    
+
     private DomainReference<Party> partyReference;
-    
+
     private DomainReference<Vehicle> vehicleReference;
+
+    private BigDecimal distance;
     
+    private BigDecimal amountCharged;
+
+        
     public VehicleAllocationBean() {
+    }
+
+    
+    public BigDecimal getAmountCharged() {
+        return amountCharged;
+    }
+
+    public void setAmountCharged(BigDecimal amountCharged) {
+        this.amountCharged = amountCharged;
     }
     
     public Party getRequestor() {
-	 return (this.partyReference != null) ? this.partyReference.getObject() : null;	
+	return (this.partyReference != null) ? this.partyReference.getObject() : null;	
     }
-    
+
     public void setRequestor(Party requestor) {
 	this.partyReference = (requestor != null) ? new DomainReference<Party>(requestor) : null;
     }
-    
+
     public Vehicle getVehicle() {
-	 return (this.vehicleReference != null) ? this.vehicleReference.getObject() : null;
+	return (this.vehicleReference != null) ? this.vehicleReference.getObject() : null;
     }
-    
+
     public void setVehicle(Vehicle vehicle) {
 	this.vehicleReference = (vehicle != null) ? new DomainReference<Vehicle>(vehicle) : null;
     }
-    
+
     public String getReason() {
-        return reason;
+	return reason;
     }
 
     public void setReason(String reason) {
-        this.reason = reason;
+	this.reason = reason;
     }
 
     public DateTime getBeginDateTime() {
-        return beginDateTime;
+	return beginDateTime;
     }
 
     public void setBeginDateTime(DateTime beginDateTime) {
-        this.beginDateTime = beginDateTime;
+	this.beginDateTime = beginDateTime;
     }
 
     public DateTime getEndDateTime() {
-        return endDateTime;
+	return endDateTime;
     }
 
     public void setEndDateTime(DateTime endDateTime) {
-        this.endDateTime = endDateTime;
+	this.endDateTime = endDateTime;
     }
+
+    public BigDecimal getDistance() {
+        return distance;
+    }
+
+    public void setDistance(BigDecimal distance) {
+        this.distance = distance;
+    }  
 }

@@ -99,6 +99,7 @@
     <slot name="model" key="label.vehicle.model" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="acquisition" key="label.vehicle.acquisition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="cease" key="label.vehicle.cease"/> 	
+    <slot name="allocationCostMultiplier" key="label.vehicle.allocation.cost.multiplier"/>
 </schema>
 
 <schema name="SeeVehicleDetails" type="net.sourceforge.fenixedu.domain.resource.Vehicle" bundle="RESOURCE_MANAGER_RESOURCES">		
@@ -106,6 +107,7 @@
     <slot name="make" key="label.vehicle.make" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="model" key="label.vehicle.model" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     <slot name="acquisition" key="label.vehicle.acquisition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="cease" key="label.vehicle.cease"/>       
-    <setter signature="edit(numberPlate, make, model, acquisition, cease)" />
+    <slot name="cease" key="label.vehicle.cease"/>      
+    <slot name="allocationCostMultiplier" key="label.vehicle.allocation.cost.multiplier"/> 
+    <setter signature="edit(numberPlate, make, model, acquisition, cease, allocationCostMultiplier)" />
 </schema>

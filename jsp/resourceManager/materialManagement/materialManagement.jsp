@@ -51,7 +51,7 @@
 		<bean:define id="schemaName">See<bean:write name="materialBean" property="materialType.materialClass.simpleName"/>Material</bean:define>						
 		<fr:view name="materials" schema="<%= schemaName %>">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle1 tdcenter"/>
+				<fr:property name="classes" value="tstyle4 thlight tdcenter"/>
 					
 				<fr:property name="link(edit)" value="<%="/materialManagement.do?method=prepareEditMaterial"%>"/>
             	<fr:property name="param(edit)" value="idInternal/materialID"/>

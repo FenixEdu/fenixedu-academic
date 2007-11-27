@@ -51,7 +51,8 @@
 			<fr:form action="/materialManagement.do?method=prepareCreateMaterial">
 				<fr:edit id="prepareCreateMaterialBeanID" name="materialBean" schema="PrepareCreateMaterial">
 					<fr:layout name="tabular" >
-						<fr:property name="classes" value="tstyle1"/>		        
+						<fr:property name="classes" value="tstyle4 thlight"/>	
+						<fr:property name="columnClasses" value=",,tdclear tderror1"/>		        
 					</fr:layout>
 					<fr:destination name="postBack" path="/materialManagement.do?method=prepareCreateMaterial"/>
 				</fr:edit>
@@ -61,7 +62,8 @@
 				<bean:define id="schemaName">Create<bean:write name="materialBean" property="materialType.materialClass.simpleName"/>Material</bean:define>				
 				<fr:edit id="createMaterialBeanID" name="materialBean" action="/materialManagement.do?method=createMaterial" schema="<%= schemaName %>">
 					<fr:layout name="tabular" >
-						<fr:property name="classes" value="tstyle1"/>		        
+						<fr:property name="classes" value="tstyle4 thlight"/>
+						<fr:property name="columnClasses" value=",,tdclear tderror1"/>			        
 					</fr:layout>
 					<fr:destination name="invalid" path="/materialManagement.do?method=prepareCreateMaterial"/>	
 					<fr:destination name="cancel" path="/materialManagement.do?method=listMaterial"/>						
@@ -83,7 +85,8 @@
 		<bean:define id="schemaName">Edit<bean:write name="material" property="class.simpleName"/>Material</bean:define>					
 		<fr:edit id="materialEditID" name="material" schema="<%= schemaName %>" action="/materialManagement.do?method=listMaterial">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle1"/>		        
+				<fr:property name="classes" value="tstyle4 thlight"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>			        
 			</fr:layout>
 			<fr:destination name="cancel" path="/materialManagement.do?method=listMaterial"/>			
 		</fr:edit>

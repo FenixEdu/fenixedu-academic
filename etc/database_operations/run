@@ -27,4 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Resource Allocation Table" alterResourceAllocationTable.sql
 

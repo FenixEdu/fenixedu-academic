@@ -32,7 +32,8 @@
 	<logic:notEmpty name="vehicleAllocation">
 		<fr:view schema="SeeVehicleAllocationWithReason" name="vehicleAllocation">	
 			<fr:layout name="tabular">			      			
-				<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>	   				  
+				<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+				<fr:property name="rowClasses" value="bold,,,,,,,bold" />			   				  
 		   	</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

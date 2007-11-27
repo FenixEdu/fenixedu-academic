@@ -95,7 +95,7 @@
 	<slot name="beginDateTime" key="label.vehicleAllocation.begin.date.time"/>
 	<slot name="endDateTime" key="label.vehicleAllocation.end.date.time"/>
 	<slot name="requestor.partyPresentationName" key="label.vehicleAllocation.requestor.name"/>
-	<slot name="reasonAvailable" key="label.vehicleAllocation.reason.available"/>	
+	<slot name="reasonAvailable" key="label.vehicleAllocation.reason.available"/>
 </schema>
 
 <schema name="SeeVehicleAllocationWithReason" type="net.sourceforge.fenixedu.domain.resource.VehicleAllocation" bundle="SOP_RESOURCES">	
@@ -103,7 +103,17 @@
 	<slot name="beginDateTime" key="label.vehicleAllocation.begin.date.time"/>
 	<slot name="endDateTime" key="label.vehicleAllocation.end.date.time"/>
 	<slot name="requestor.partyPresentationName" key="label.vehicleAllocation.requestor.name"/>
-	<slot name="reason" key="label.vehicleAllocation.reason"/>	
+	<slot name="reason" key="label.vehicleAllocation.reason"/>
+	<slot name="distance" key="label.vehicle.allocation.distance" layout="null-as-label">
+		<property name="label" value="--"/>	
+	</slot>
+	<slot name="numberOfAllocationHours" key="label.vehicle.allocation.hours.number" />
+	<slot name="allocationCost" layout="null-as-label" key="label.vehicle.allocation.cost">
+		<property name="label" value="--"/>	
+	</slot>	
+	<slot name="amountCharged" key="label.vehicle.allocation.amountCharged" layout="null-as-label">
+		<property name="label" value="--"/>	
+	</slot>	
 </schema>
 
 <schema name="CreateVehicleAllocation" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationBean" bundle="SOP_RESOURCES">
@@ -122,6 +132,12 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
 		<property name="minChars" value="2"/>	
 	</slot>
+	<slot name="distance" key="label.vehicle.allocation.distance" >
+		<property name="size" value="5"/>
+	</slot>	
+	<slot name="amountCharged" key="label.vehicle.allocation.amountCharged" >
+		<property name="size" value="5"/>
+	</slot>		
 	<slot name="reason" key="label.vehicleAllocation.reason" layout="longText">
 		<property name="columns" value="40"/>
 		<property name="rows" value="6"/>
@@ -148,10 +164,16 @@
 		<property name="columns" value="40"/>
 		<property name="rows" value="6"/>
 	</slot>
-	<setter signature="edit(beginDateTime, endDateTime, vehicle, requestor, reason)"/>	
+	<slot name="amountCharged" key="label.vehicle.allocation.amountCharged" >
+		<property name="size" value="5"/>
+	</slot>	
+	<slot name="distance" key="label.vehicle.allocation.distance" >
+		<property name="size" value="5"/>
+	</slot>
+	<setter signature="edit(beginDateTime, endDateTime, vehicle, requestor, reason, distance, amountCharged)"/>	
 </schema>
 
-<schema name="VehicleAllocationHistory" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ResourceAllocationHistoryBean" bundle="SOP_RESOURCES">	
+<schema name="VehicleAllocationHistory" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationHistoryBean" bundle="SOP_RESOURCES">	
 	<slot name="year" key="label.vehicle.allocation.year" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.YearsPartialProvider"/>		
 		<property name="destination" value="postBack"/>				
@@ -163,6 +185,11 @@
 		<property name="eachLayout" value="month" />
 		<property name="saveOptions" value="true"/>
     </slot>        
+    <slot name="vehicle" layout="menu-select-postback" key="label.vehicleAllocation.vehicle" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveVehiclesProvider"/>		
+		<property name="eachLayout"	value="vehicle-plain" />
+		<property name="destination" value="postBack"/>			
+	</slot>
 </schema>
 
 <!-- ExecutionCourse CourseLoad Management Schemas -->

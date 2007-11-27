@@ -37,7 +37,8 @@
 										
 			<fr:edit id="createVehicleBeanID" name="vehicleBean" action="/vehicleManagement.do?method=createVehicle" schema="CreateVehicleSchema">
 				<fr:layout name="tabular" >
-					<fr:property name="classes" value="tstyle1"/>		        
+					<fr:property name="classes" value="tstyle4 thlight"/>
+					<fr:property name="columnClasses" value=",,tdclear tderror1"/>			        
 				</fr:layout>
 				<fr:destination name="invalid" path="/vehicleManagement.do?method=prepareCreateVehicle"/>	
 				<fr:destination name="cancel" path="/vehicleManagement.do?method=prepareVehicleManage"/>						
@@ -54,7 +55,8 @@
 		
 		<fr:edit id="vehicleEditID" name="vehicle" schema="SeeVehicleDetails" action="/vehicleManagement.do?method=listVehicles">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle1"/>		        
+				<fr:property name="classes" value="tstyle4 thlight"/>	
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>		        
 			</fr:layout>
 			<fr:destination name="cancel" path="/vehicleManagement.do?method=prepareVehicleManage"/>			
 		</fr:edit>
