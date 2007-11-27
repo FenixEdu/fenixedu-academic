@@ -50,7 +50,7 @@
 <strong><bean:message key="label.vigilancy.vigilantsThatTeachCourse" bundle="VIGILANCY_RESOURCES"/>:</strong><br/>
 
 
-<form id="convokeForm" action="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do"%>">
+<form id="convokeForm" action="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do"%>" method="post">
 	<input type="hidden" name="writtenEvaluationId" value="<%= writtenEvaluationId %>"/>
 	<input type="hidden" name="method" value=""/>
 	<input type="hidden" name="oid" value=""/>

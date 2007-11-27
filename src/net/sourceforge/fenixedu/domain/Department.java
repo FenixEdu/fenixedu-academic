@@ -151,12 +151,7 @@ public class Department extends Department_Base {
 
     public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
 	Unit departmentUnit = this.getDepartmentUnit();
-	List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
-	for (Unit unit : departmentUnit.getSubUnits()) {
-	    groups.addAll(unit.getVigilantGroupsForGivenExecutionYear(executionYear));
-	}
-	groups.addAll(departmentUnit.getVigilantGroupsForGivenExecutionYear(executionYear));
-	return groups;
+	return departmentUnit.getVigilantGroupsForGivenExecutionYear(executionYear);
     }
 
     public List<CompetenceCourse> getBolonhaCompetenceCourses() {

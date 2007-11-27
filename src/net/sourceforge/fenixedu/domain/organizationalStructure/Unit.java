@@ -847,16 +847,17 @@ public class Unit extends Unit_Base {
     }
 
     public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
-	List<VigilantGroup> vigilantGroups = this.getVigilantGroups();
-	List<VigilantGroup> vigilantGroupsInExecutionYear = new ArrayList<VigilantGroup>();
-
-	for (VigilantGroup group : vigilantGroups) {
+	
+	List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
+	for (Unit unit : getSubUnits()) {
+	    groups.addAll(unit.getVigilantGroupsForGivenExecutionYear(executionYear));
+	}
+	for (VigilantGroup group : getVigilantGroups()) {
 	    if (group.getExecutionYear().equals(executionYear)) {
-		vigilantGroupsInExecutionYear.add(group);
+		groups.add(group);
 	    }
 	}
-
-	return vigilantGroupsInExecutionYear;
+	return groups;
     }
 
     public List<ExamCoordinator> getExamCoordinatorsForGivenYear(ExecutionYear executionYear) {

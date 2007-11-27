@@ -669,7 +669,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 			List<VigilantGroup> groups = unit.getVigilantGroupsForGivenExecutionYear(selectedYear);
 			bean.setUnit(unit);
 			bean.setSelectedUnit(unit);
-			bean.setSelectedDepartment(unit.getDepartment());
+			bean.setSelectedDepartment(getDepartment(unit));
 			bean.setVigilantGroups(groups);
 			bean.setExamCoordinator(coordinator);
 		}

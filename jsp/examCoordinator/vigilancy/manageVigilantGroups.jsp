@@ -116,7 +116,7 @@
 	</logic:equal>
 	</logic:equal>
 	
-	<%= group.getName() %><span style="font-weight: normal;"> (<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=attributes&oid=" + group.getIdInternal() %>"><bean:message key="label.edit" bundle="VIGILANCY_RESOURCES"/></a>, <a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteVigilantGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.delete" bundle="VIGILANCY_RESOURCES"/></a>, <a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=generateReportForGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.generateStats" bundle="VIGILANCY_RESOURCES"/></a>)</span></th>
+	<%= group.getName() + ", " + group.getUnit().getName() %><span style="font-weight: normal;"> (<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=attributes&oid=" + group.getIdInternal() %>"><bean:message key="label.edit" bundle="VIGILANCY_RESOURCES"/></a>, <a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteVigilantGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.delete" bundle="VIGILANCY_RESOURCES"/></a>, <a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=generateReportForGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.generateStats" bundle="VIGILANCY_RESOURCES"/></a>)</span></th>
 </tr>
 <tr>
 		<logic:equal name="bean" property="showVigilantColumn" value="true">
