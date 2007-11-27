@@ -457,6 +457,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract public void getAllDegreeModules(final Collection<DegreeModule> degreeModules);
     
+    abstract public Set<CurricularCourse> getAllCurricularCourses(final ExecutionPeriod executionPeriod);
+    
     abstract public Set<CurricularCourse> getAllCurricularCourses();
 
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {

@@ -639,10 +639,6 @@
 
 <schema name="substitution.DismissalBean.DismissalType.CURRICULUM_GROUP_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
-	</slot>	
 	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
@@ -651,10 +647,6 @@
 
 <schema name="substitution.DismissalBean.DismissalType.NO_COURSE_GROUP_CURRICULUM_GROUP_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
-	</slot>	
 	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
@@ -663,18 +655,10 @@
 
 <schema name="substitution.DismissalBean.DismissalType.CURRICULAR_COURSE_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean">
-	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
-	</slot>	
 </schema>
 
 <schema name="credit.DismissalBean.DismissalType.CURRICULUM_GROUP_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
-	</slot>	
 	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
@@ -683,10 +667,6 @@
 
 <schema name="credit.DismissalBean.DismissalType.NO_COURSE_GROUP_CURRICULUM_GROUP_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
-	</slot>	
 	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
@@ -696,19 +676,11 @@
 
 <schema name="credit.DismissalBean.DismissalType.CURRICULAR_COURSE_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean">
-	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
-	</slot>	
 </schema>
 
 
 <schema name="equivalence.DismissalBean.DismissalType.CURRICULUM_GROUP_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
-	</slot>	
 	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
@@ -722,10 +694,6 @@
 
 <schema name="equivalence.DismissalBean.DismissalType.NO_COURSE_GROUP_CURRICULUM_GROUP_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
-	</slot>	
 	<slot name="credits" key="label.creditsNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="7"/>
 		<property name="maxLength" value="6"/>
@@ -740,10 +708,6 @@
 
 <schema name="equivalence.DismissalBean.DismissalType.CURRICULAR_COURSE_CREDITS" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean">
-	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
-	</slot>	
 	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" >
 		<property name="maxLength" value="5" />
 		<property name="required" value="true" />
@@ -753,7 +717,11 @@
 
 <schema name="DismissalBean.chooseEquivalents" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
-	
+	<slot name="executionPeriod" layout="menu-select-postback" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
+		<property name="destination" value="dismissalTypePostBack"/>
+		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
+	</slot>		
 	<slot name="dismissalType" layout="radio-postback" key="label.dismissalType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>
 		<property name="destination" value="dismissalTypePostBack"/>

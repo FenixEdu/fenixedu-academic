@@ -81,6 +81,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	DismissalBean dismissalBean = (DismissalBean) getRenderedObject("dismissalBean");
 	dismissalBean.setDismissalType(DismissalType.CURRICULAR_COURSE_CREDITS);
+	dismissalBean.setExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
 	request.setAttribute("dismissalBean", dismissalBean);
 	return mapping.findForward("chooseEquivalents");
     }
@@ -123,7 +124,6 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
-	dismissalBean.setExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
 	request.setAttribute("dismissalBean", dismissalBean);
 	
 	try {

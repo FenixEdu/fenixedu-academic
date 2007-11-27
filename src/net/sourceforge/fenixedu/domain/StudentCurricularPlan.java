@@ -2346,13 +2346,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getPropaedeuticCurriculumGroup() != null;
     }
 
-    public Collection<CurricularCourse> getAllCurricularCoursesToDismissal() {
+    public Collection<CurricularCourse> getAllCurricularCoursesToDismissal(final ExecutionPeriod executionPeriod) {
 	final Collection<CurricularCourse> result = new HashSet<CurricularCourse>();
 	if (isBolonhaDegree()) {
 	    for (final CycleType cycleType : getDegreeType().getSupportedCyclesToEnrol()) {
 		final CourseGroup courseGroup = getCourseGroupWithCycleTypeToCollectCurricularCourses(cycleType);
 		if (courseGroup != null) {
-		    for (final CurricularCourse curricularCourse : courseGroup.getAllCurricularCourses()) {
+		    for (final CurricularCourse curricularCourse : courseGroup.getAllCurricularCourses(executionPeriod)) {
 			if (!isApproved(curricularCourse)) {
 			    result.add(curricularCourse);
 			}
@@ -2367,6 +2367,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	}
 	return result;
+    }
+    
+    public Collection<CurricularCourse> getAllCurricularCoursesToDismissal() {
+	return getAllCurricularCoursesToDismissal(null);
     }
 
     private CourseGroup getCourseGroupWithCycleTypeToCollectCurricularCourses(final CycleType cycleType) {

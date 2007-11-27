@@ -1932,4 +1932,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Set<CurricularCourse> getAllCurricularCourses() {
         return Collections.singleton(this);
     }
+    
+    @Override
+    public Set<CurricularCourse> getAllCurricularCourses(ExecutionPeriod executionPeriod) {
+        return getAllCurricularCourses();
+    }
 }

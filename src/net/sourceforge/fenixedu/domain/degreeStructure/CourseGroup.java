@@ -178,6 +178,13 @@ public class CourseGroup extends CourseGroup_Base {
 	Collections.sort(result);
 	return result;
     }
+    
+    public List<Context> getSortedOpenChildContextsWithCourseGroups(final ExecutionPeriod executionPeriod) {
+	final List<Context> result = this.getOpenChildContexts(CourseGroup.class, executionPeriod);
+	Collections.sort(result);
+	return result;
+    }
+
 
     public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
 	final List<Context> result = new ArrayList<Context>();
@@ -736,11 +743,19 @@ public class CourseGroup extends CourseGroup_Base {
 	return true;
     }
     
-    public Set<CurricularCourse> getAllCurricularCourses() {
+    @Override
+    public Set<CurricularCourse> getAllCurricularCourses(final ExecutionPeriod executionPeriod) {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 	for (final Context context : getChildContexts()) {
-	    result.addAll(context.getChildDegreeModule().getAllCurricularCourses());
+	    if(executionPeriod == null || context.isOpen(executionPeriod)) {
+		result.addAll(context.getChildDegreeModule().getAllCurricularCourses());
+	    }
 	}
 	return result;
+    }
+    
+    @Override
+    public Set<CurricularCourse> getAllCurricularCourses() {
+	return getAllCurricularCourses(null);
     }
 }
