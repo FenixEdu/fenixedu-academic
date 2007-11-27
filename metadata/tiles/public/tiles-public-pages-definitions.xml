@@ -421,10 +421,6 @@
 
 
 	<!--  View Research Result -->
-	<definition name="show-result" extends="definition.public.homepage">
-		<put name="body" value="/publico/researcher/showResearchResult.jsp" />
-	</definition>
-
 	<definition name="view.prize" extends="definition.public.homepage">
 		<put name="body" value="/publico/researcher/viewPrize.jsp" />
 	</definition>
@@ -518,14 +514,6 @@
         <put name="body-context" value="/publico/department/announcement-context.jsp"/>
         <put name="body" value="/commons/sites/unitSite/boards/showEvent.jsp" />
     </definition>
-
-    <definition name="show.journal" extends="definition.public.homepage">
-       <put name="body" value="/publico/researcher/showJournal.jsp"/>  
-    </definition>
-
-    <definition name="show.event" extends="definition.public.homepage">
-       <put name="body" value="/publico/researcher/showEvent.jsp"/>  
-    </definition>    
 
 	<!-- ========== PEDAGOGICAL COUNCIL SITE -->
     <definition name="pedagogicalCouncil-site-front-page-banner-intro" extends="definition.public.pedagogicalCouncil.frontPage">

@@ -1,0 +1,80 @@
+/* --------------------------------------------------------
+	webservice css
+	made by: Bruno Monteiro (GAEL)
+	date: 20.03.2006
+---------------------------------------------------------*/
+
+body {
+	font: 62.5%/1.5em "Lucida Grande", "Lucida Bright", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	background:#fff url(../images/header_bck.gif) repeat-x left top;
+	}
+
+h1 {
+	text-indent: -9999px;
+	width: 234px;
+	margin: 0;
+	padding: 0;
+	}
+	
+	h1 a:link, h1 a:visited, h1 a:hover {
+		background: url("http://www.ist.utl.pt/img/wwwist.gif") no-repeat top left;
+		width: 234px;
+		height: 51px;
+		display: block;
+		text-decoration: none;
+		border: none;
+		overflow: hidden;
+		}
+
+h2 {
+	font: 2.8em Arial, "Lucida Grande", "Lucida Bright", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #A2AEBC;
+	/* color: #0062af; */
+	letter-spacing: -1px;
+	}
+
+a:link, a:visited {
+ 	color: #369;
+ 	text-decoration: underline;
+ 	}
+	
+a:hover {
+	text-decoration: none;
+	}
+
+
+#container {
+ 	position: relative;
+ 	width: 500px;
+ 	margin: 0 auto;
+ 	}
+
+#wrapper {
+	float: left;
+	position: absolute;	
+	top: 125px;
+ 	padding-bottom: 4em;
+	}
+
+	#wrapper p {
+	font: 1.1em/1.5em "Lucida Grande", "Lucida Bright", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #666;
+	}
+	
+.skipnav {
+	display: none;
+	}
+	
+.username {
+	font-weight: bold;
+	color: #45556A;
+	}
+
+.info {
+	background: url(../images/icon_info.gif) no-repeat 0 50%;
+	padding-left: 2em;
+	}
+	
+	
+

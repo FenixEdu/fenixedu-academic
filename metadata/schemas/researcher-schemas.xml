@@ -2268,7 +2268,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	</slot>
 	<slot name="note"/>
 	<slot name="keywords"/>
-	<slot name="resultUnitAssociations" key="researcher.project.editProject.units">
+	<slot name="resultUnitAssociations" key="label.units">
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="resultUnit.name"/>
 		<property name="sortBy" value="unit.name"/>
@@ -2367,7 +2367,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	<slot name="unit" layout="unit-link">
 		<property name="unitLayout" value="values"/>
 		<property name="unitSchema" value="unit.name"/>
-		<property name="targetBlank" value="true"/>
+		<property name="targetBlank" value="false"/>
 		<property name="parenteShown" value="true"/>
 	</slot>
 </schema>

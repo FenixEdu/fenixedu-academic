@@ -182,4 +182,16 @@
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
 	
+	<definition name="show-result" page="/layout/secondaryIstLayout.jsp">
+		<put name="body" value="/publico/researcher/showResearchResult.jsp" />
+	</definition>
+	
+	 <definition name="show.journal" page="/layout/secondaryIstLayout.jsp">
+       <put name="body" value="/publico/researcher/showJournal.jsp"/>  
+    </definition>
+
+    <definition name="show.event" page="/layout/secondaryIstLayout.jsp">
+       <put name="body" value="/publico/researcher/showEvent.jsp"/>  
+    </definition>    
+	
 </tiles-definitions>

@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.research"/></em>
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.journal"/></h2>
 	
 <fr:view name="journal" layout="tabular-nonNullValues" schema="presentJournal">
