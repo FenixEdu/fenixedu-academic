@@ -465,8 +465,12 @@
         <put name="body" value="/publico/department/showDepartmentThesisDetails.jsp"/>
     </definition>
 
-    <definition name="department-show-publications" extends="definition.public.department">
+    <definition name="department-show-publications" extends="definition.public.department.site">
         <put name="body" value="/publico/department/showPublications.jsp"/>
+    </definition>
+
+    <definition name="department-search-publications" extends="definition.public.department.site">
+        <put name="body" value="/publico/department/searchPublications.jsp"/>
     </definition>
 
     <definition name="definition.public.department.site" extends="definition.public.department">
@@ -657,16 +661,12 @@
     </definition>   
 
 	 <definition name="show-research-unit-publications" extends="definition.public.researchUnit">
-        <put name="body" value="/publico/researchUnitSite/showPublications.jsp"/>
+	 	<put name="body" value="/publico/researchUnitSite/showPublications.jsp"/>
     </definition>   
    
    	 <definition name="search-research-unit-publications" extends="definition.public.researchUnit">
-        <put name="body" value="/publico/unitSite/searchPublications.jsp"/>
-    </definition>      
-   
-	 <definition name="show-unit-publications" extends="definition.public.researchUnit">
-        <put name="body" value="/publico/unitSite/showPublications.jsp"/>
-    </definition>      
+	 	<put name="body" value="/publico/researchUnitSite/searchPublications.jsp"/>
+    </definition>
 
 	<definition name="view-researchUnit-section" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
@@ -774,6 +774,10 @@
 	<definition name="scientific-area-publications" extends="definition.public.basicUnit">
 		<put name="body" value="/publico/scientificAreaSite/showPublications.jsp"/>
 	</definition>		
+
+	<definition name="scientific-area-search-publications" extends="definition.public.basicUnit">
+		<put name="body" value="/publico/scientificAreaSite/searchPublications.jsp"/>
+	</definition>
 
 	<definition name="show-scientificArea-unit-result" extends="definition.public.basicUnit">
         <put name="body" value="/publico/researcher/showResearchResult.jsp"/>

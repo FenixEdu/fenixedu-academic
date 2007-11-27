@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpacePublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.SearchPublicationsAction;
@@ -36,6 +37,7 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
 	searchElement.setQueryValue(site.getUnit().getName());
 
 	request.setAttribute("bean", bean);
+	
 	return mapping.findForward("SearchPublication");
     }
 
@@ -43,11 +45,15 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	// TODO Auto-generated method stub
+	setRequestDomainObject(request);
+	
+	return super.execute(mapping, actionForm, request, response);
+    }
+
+    protected void setRequestDomainObject(HttpServletRequest request) {
 	String siteID = request.getParameter("siteID");
 	Site site = rootDomainObject.readSiteByOID(new Integer(siteID));
-
 	request.setAttribute("site", site);
-	return super.execute(mapping, actionForm, request, response);
     }
 
     @Override

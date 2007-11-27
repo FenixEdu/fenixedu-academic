@@ -229,11 +229,6 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
 	teachers.add(teacher);
     }
-
-    @Override
-    protected ExecutionYearIntervalBean generateSearchBean() {
-	return new ExecutionYearIntervalBean(ExecutionYear.readFirstExecutionYear(), ExecutionYear.readCurrentExecutionYear());
-    }
     
     @Override
     protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit,

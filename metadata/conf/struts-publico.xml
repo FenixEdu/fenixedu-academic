@@ -1001,6 +1001,12 @@
             <forward name="eventsRSSAction" path="/department/eventsRSS.do"/>
         </action>
 
+       <action path="/department/searchPublication"
+        parameter="method"
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.PublicDepartmentSiteSearchPublicationsDA">
+        	<forward name="SearchPublication"  path="search-research-unit-publications"/>
+        </action>
+
         <action path="/department/departmentEmployees" forward="/department/departmentSite.do?method=employees"/>
         <action path="/department/degrees" forward="/department/departmentSite.do?method=degrees"/>
         <action path="/department/teachers" forward="/department/departmentSite.do?method=teachers"/>
@@ -1192,6 +1198,18 @@
         parameter="method"
         type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA">
         	<forward name="SearchPublication"  path="search-research-unit-publications"/>
+        </action>
+       
+       <action path="/department/searchPublication"
+        parameter="method"
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.PublicDepartmentSiteSearchPublicationsDA">
+        	<forward name="SearchPublication"  path="department-search-publications"/>
+        </action>
+       
+       <action path="/scientificArea/searchPublication"
+        parameter="method"
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.scientificalArea.PublicScientificAreaSiteSearchPublicationsDA">
+        	<forward name="SearchPublication"  path="scientific-area-search-publications"/>
         </action>
        
         <action path="/researchSite/manageResearchUnitAnnouncements"

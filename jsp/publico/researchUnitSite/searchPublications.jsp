@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h1 class="mbottom03 cnone"><fr:view name="researchUnit" property="nameWithAcronym" /></h1>
+<h1 class="mbottom03 cnone"><fr:view name="site" property="unit.nameWithAcronym" /></h1>
 
 <h2 class="mtop15"><bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES" /></h2>
 
@@ -16,4 +16,5 @@
 <bean:define id="showMethod" value="&method=showPublications" toScope="request" />
 <bean:define id="searchMethod" value="&method=prepareSearchPublication" toScope="request" />
 
-<jsp:include page="../../commons/sites/unitSite/showPublications.jsp" />
+<jsp:include page="../../commons/sites/unitSite/searchPublications.jsp" />
+

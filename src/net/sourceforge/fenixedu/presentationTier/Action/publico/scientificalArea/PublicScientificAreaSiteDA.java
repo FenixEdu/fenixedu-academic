@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ResearchUnitSite;
+import net.sourceforge.fenixedu.domain.ScientificAreaSite;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
@@ -96,4 +98,5 @@ public class PublicScientificAreaSiteDA extends UnitSiteVisualizationDA {
 
 	teachers.add(teacher.getPerson());
     }
+
 }
