@@ -142,7 +142,7 @@ public class SpacePredicates {
 	    
 	    Person loggedPerson = AccessControl.getPerson();
 	    
-	    if(loggedPerson.hasRole(RoleType.TEACHER)) {
+	    if(loggedPerson.hasRole(RoleType.TEACHER) || loggedPerson.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
 		return true;
 	    }
 	    
