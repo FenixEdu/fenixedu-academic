@@ -19,7 +19,7 @@ import org.joda.time.YearMonthDay;
 
 public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation_Base {
 
-    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupations")
+    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck")
     public LessonInstanceSpaceOccupation(AllocatableSpace allocatableSpace) {
 
 	super();
