@@ -2,13 +2,11 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
 
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
-import net.sourceforge.fenixedu.util.WeekDay;
+
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class LeaveBean implements Serializable {
 
@@ -29,19 +27,6 @@ public class LeaveBean implements Serializable {
 	setDate(leave.getDate());
 	setEndYearMonthDay(nextLeave.getEndYearMonthDay());
     }
-//    
-//    public int getUtilDaysBetween(Interval interval) {
-//        int days = 0;
-//        for (YearMonthDay thisDay = interval.getStart().toYearMonthDay(); !thisDay.isAfter(interval
-//                .getEnd().toYearMonthDay()); thisDay = thisDay.plusDays(1)) {
-//            WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(thisDay.toDateTimeAtMidnight());
-//            if ((!dayOfWeek.equals(WeekDay.SATURDAY)) && (!dayOfWeek.equals(WeekDay.SUNDAY))
-//                    && (!getLeave().getAssiduousness().isHoliday(thisDay))) {
-//                days++;
-//            }
-//        }
-//        return days;
-//    }
     
     public Leave getLeave() {
 	return leave != null ? leave.getObject() : null;
