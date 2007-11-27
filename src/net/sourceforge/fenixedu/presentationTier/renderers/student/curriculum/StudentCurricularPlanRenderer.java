@@ -390,7 +390,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 		for (final ExecutionPeriod enrolmentsExecutionPeriod : enrolmentExecutionPeriods) {
 		    generateGroupRowWithText(mainTable, enrolmentsExecutionPeriod.getYear() + ", "
-			    + enrolmentsExecutionPeriod.getName(), true, 0);
+			    + enrolmentsExecutionPeriod.getName(), true, 0, (CurriculumGroup) null);
 		    generateEnrolmentRows(mainTable, this.studentCurricularPlan
 			    .getEnrolmentsByExecutionPeriod(enrolmentsExecutionPeriod), 0);
 		}
@@ -399,7 +399,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    if (isToShowDismissals()) {
 		final List<Dismissal> dismissals = this.studentCurricularPlan.getDismissals();
 		if (!dismissals.isEmpty()) {
-		    generateGroupRowWithText(mainTable, studentResources.getString("label.dismissals"), true, 0);
+		    generateGroupRowWithText(mainTable, studentResources.getString("label.dismissals"), true, 0, (CurriculumGroup) null);
 		    generateDismissalRows(mainTable, dismissals, 0);
 		}
 	    }
@@ -417,21 +417,30 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		final int level) {
 
 	    generateGroupRowWithText(mainTable, curriculumGroup.getName().getContent(), curriculumGroup.hasCurriculumLines(),
-		    level);
+		    level, curriculumGroup);
 	    generateCurriculumLineRows(mainTable, curriculumGroup, level + 1);
 	    generateChildGroupRows(mainTable, curriculumGroup, level + 1);
 	}
 
-	private void generateGroupRowWithText(final HtmlTable mainTable, final String text, boolean addHeaders, final int level) {
+	private void generateGroupRowWithText(final HtmlTable mainTable, final String text, boolean addHeaders, final int level, final CurriculumGroup curriculumGroup) {
 
 	    final HtmlTableRow groupRow = mainTable.createRow();
 	    groupRow.setClasses(getCurriculumGroupRowClass());
 	    addTabsToRow(groupRow, level);
 
+	    final HtmlTableCell cell = groupRow.createCell();
+	    cell.setClasses(getLabelCellClass());
+	    cell.setBody(curriculumGroup != null && curriculumGroup.isRoot() ? 
+		    createDegreeCurricularPlanNameLink(
+			    curriculumGroup.getDegreeCurricularPlanOfDegreeModule(), 
+			    curriculumGroup.getStudentCurricularPlan().getStartExecutionPeriod()) : 
+			new HtmlText(text));
+
 	    if (!addHeaders) {
-		generateCellWithText(groupRow, text, getLabelCellClass(), MAX_LINE_SIZE - level);
+		cell.setColspan(MAX_LINE_SIZE - level);
 	    } else {
-		generateCellWithText(groupRow, text, getLabelCellClass(), MAX_COL_SPAN_FOR_TEXT_ON_GROUPS_WITH_CHILDS - level);
+		cell.setColspan(MAX_COL_SPAN_FOR_TEXT_ON_GROUPS_WITH_CHILDS - level);
+		
 		generateHeadersForGradeWeightAndEctsCredits(groupRow);
 		final HtmlTableCell cellAfterEcts = groupRow.createCell();
 		cellAfterEcts.setColspan(MAX_LINE_SIZE - MAX_COL_SPAN_FOR_TEXT_ON_GROUPS_WITH_CHILDS - HEADERS_SIZE);
