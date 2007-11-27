@@ -66,7 +66,7 @@
 		<p class="infoop mtop15"><span class="emphasis-box">1</span>
 		<bean:message key="message.teacherInformation.qualifications" /></p>		
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoQualifications">
-			<table class="tstyle4" class="tstyle4" width="100%" style="margin-top:10px">	
+			<table class="tstyle4" width="100%" style="margin-top:10px">	
 				<tr>
 					<th><bean:message key="message.teacherInformation.year" bundle="GEP_RESOURCES" /></th>
 					<th><bean:message key="message.teacherInformation.school" bundle="GEP_RESOURCES"/></th>
@@ -76,7 +76,7 @@
 				</tr>
 				<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
 					<tr>
-						<td>				
+						<td class="acenter">				
 							<logic:notEmpty name="infoQualification" property="year">
 								<bean:write name="infoQualification" property="year" />							
 							</logic:notEmpty>			 								
@@ -114,7 +114,7 @@
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoQualifications">
 			<br/>&nbsp;<br/>
-			<bean:message key="label.teachersInformation.notModified" />
+			<em><bean:message key="label.teachersInformation.notModified"/></em>
 			<br/>&nbsp;<br/>			
 		</logic:empty>
 		<br />
@@ -134,7 +134,7 @@
 				</tr>
 				<logic:iterate id="infoTeachingCareer" name="infoSiteTeacherInformation" property="infoTeachingCareers">
 				<tr>
-					<td><bean:write name="infoTeachingCareer" property="beginYear"/>
+					<td class="acenter" style="width: 110px;"><bean:write name="infoTeachingCareer" property="beginYear"/>
 						-<bean:write name="infoTeachingCareer" property="endYear"/>
 					</td>
 					<td>
@@ -150,7 +150,7 @@
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoTeachingCareers">
 			<br/>&nbsp;<br/>
-			<bean:message key="label.teachersInformation.notModified" />
+			<em><bean:message key="label.teachersInformation.notModified" /></em>
 			<br/>&nbsp;<br/>
 		</logic:empty>
 		<br />
@@ -184,7 +184,7 @@
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoProfessionalCareers">
 			<br/>&nbsp;<br/>
-			<bean:message key="label.teachersInformation.notModified" />
+			<em><bean:message key="label.teachersInformation.notModified" /></em>
 			<br/>&nbsp;<br/>
 		</logic:empty>
 		<br />
@@ -212,7 +212,7 @@
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoExternalActivities">
 			<br/>&nbsp;<br/>
-			<bean:message key="label.teachersInformation.notModified" />
+			<em><bean:message key="label.teachersInformation.notModified" /></em>
 			<br/>&nbsp;<br/>
 		</logic:empty>
 		<br />
@@ -240,7 +240,7 @@
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoDidaticPublications">
 			<br/>&nbsp;<br/>
-			<bean:message key="label.teachersInformation.notModified" />
+			<em><bean:message key="label.teachersInformation.notModified" /></em>
 			<br/>&nbsp;<br/>
 		</logic:empty>
 		--%>
@@ -253,7 +253,8 @@
 			</html:link>
 		</div>
 		<logic:notEmpty name="didaticResults">
-			<table class="tstyle4" width="100%"  style="margin-top:10px">	
+			<table class="tstyle4" 
+>	
 				<logic:iterate id="didaticResult" name="didaticResults">
 					<tr>
 						<td style="text-align:left">
@@ -265,7 +266,7 @@
 		</logic:notEmpty>
 		<logic:empty name="didaticResults">
 			<br/>&nbsp;<br/>
-			<bean:message key="label.teachersInformation.notModified" />
+			<em><bean:message key="label.teachersInformation.notModified" /></em>
 			<br/>&nbsp;<br/>
 		</logic:empty>
 
@@ -293,7 +294,7 @@
 		</logic:notEmpty>
 		<logic:empty name="infoSiteTeacherInformation" property="infoCientificPublications">
 			<br/>&nbsp;<br/>
-			<bean:message key="label.teachersInformation.notModified" />
+			<em><bean:message key="label.teachersInformation.notModified" /></em>
 			<br/>&nbsp;<br/>
 		</logic:empty>
 		--%>
@@ -318,7 +319,7 @@
 		</logic:notEmpty>
 		<logic:empty name="cientificResults">
 			<br/>&nbsp;<br/>
-			<bean:message key="label.teachersInformation.notModified" />
+			<em><bean:message key="label.teachersInformation.notModified" /></em>
 			<br/>&nbsp;<br/>
 		</logic:empty>
 		
@@ -395,7 +396,7 @@
 				<logic:iterate id="infoExecutionCourse" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses">
 					<logic:iterate id="infoCurricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
 						<tr>
-								<td>
+								<td class="acenter">
 									<bean:write name="infoExecutionCourse" 
 												property="infoExecutionPeriod.semester" />
 								</td>

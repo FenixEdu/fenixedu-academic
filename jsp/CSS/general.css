@@ -362,7 +362,9 @@ border-bottom: none;
 border-top: none;
 background: none;
 }
-
+thdnone {
+display: none:
+}
 td.tdwarning span {
 background-color: #fff8bb; color: #664400;
 }

@@ -39,7 +39,7 @@
 				<fr:edit id="author" name="publicationBean" schema="<%= publicationBean.getParticipationSchema() %>" nested="true">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight"/>
-						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						<fr:property name="columnClasses" value="dnone,,tdclear tderror1"/>
 					</fr:layout>
 			   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
 				</fr:edit>	
