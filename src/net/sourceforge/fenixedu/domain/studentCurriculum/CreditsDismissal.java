@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreditsDismissal extends CreditsDismissal_Base {
@@ -18,11 +19,18 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     
     public CreditsDismissal(Credits credits, CurriculumGroup curriculumGroup, Collection<CurricularCourse> noEnrolCurricularCourses) {
 	init(credits, curriculumGroup);
+	checkParameters(credits);
 	if(noEnrolCurricularCourses != null) {
 	    getNoEnrolCurricularCourses().addAll(noEnrolCurricularCourses);
 	}
     }
     
+    private void checkParameters(final Credits credits) {
+	if (credits.getGivenCredits() == null) {
+	    throw new DomainException("error.CreditsDismissal.invalid.credits");
+	}
+    }
+
     @Override
     public boolean isApproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	return (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) && hasEquivalentNoEnrolCurricularCourse(curricularCourse);

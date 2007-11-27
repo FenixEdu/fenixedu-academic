@@ -92,13 +92,10 @@ public class Credits extends Credits_Base {
 	}
     }
 
-    private boolean allowsEctsCredits(final StudentCurricularPlan studentCurricularPlan,
-	    final CourseGroup courseGroup, final ExecutionPeriod executionPeriod,
-	    final double ectsCredits) {
-	final double ectsCreditsForCourseGroup = studentCurricularPlan.getEctsCreditsForCourseGroup(
-		courseGroup).doubleValue();
-	if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionPeriod)
-		.doubleValue()) {
+    private boolean allowsEctsCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
+	    final ExecutionPeriod executionPeriod, final double ectsCredits) {
+	final double ectsCreditsForCourseGroup = studentCurricularPlan.getEctsCreditsForCourseGroup(courseGroup).doubleValue();
+	if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionPeriod).doubleValue()) {
 	    return false;
 	}
 	if (courseGroup.isRoot()) {
@@ -106,8 +103,7 @@ public class Credits extends Credits_Base {
 	}
 	for (final Context context : courseGroup.getParentContexts()) {
 	    if (context.isOpen(executionPeriod)) {
-		if (allowsEctsCredits(studentCurricularPlan, context.getParentCourseGroup(),
-			executionPeriod, ectsCredits)) {
+		if (allowsEctsCredits(studentCurricularPlan, context.getParentCourseGroup(), executionPeriod, ectsCredits)) {
 		    return true;
 		}
 	    }
