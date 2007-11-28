@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -531,13 +533,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	private void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container,
 		final StudentCurricularPlan studentCurricularPlan, int depth) {
 
-	    for (final CycleType cycleType : studentCurricularPlan.getDegreeType().getSupportedCyclesToEnrol()) {
-
-		if (!studentCurricularPlan.hasCycleCurriculumGroup(cycleType)) {
-		    generateCycleCourseGroupToEnrol(container, cycleType, depth + getWidthDecreasePerLevel());
-		}
+	    for (final CycleType cycleType : studentCurricularPlan.getSupportedCycleTypesToEnrol()) {
+		generateCycleCourseGroupToEnrol(container, cycleType, depth + getWidthDecreasePerLevel());
 	    }
-
 	}
 
 	private void generateCycleCourseGroupToEnrol(HtmlBlockContainer container, CycleType cycleType, int depth) {

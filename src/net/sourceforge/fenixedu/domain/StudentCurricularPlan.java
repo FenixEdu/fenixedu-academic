@@ -2667,6 +2667,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public CycleCurriculumGroup getSecondCycle() {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.SECOND_CYCLE) : null;
     }
+    
+    public List<CycleType> getSupportedCycleTypesToEnrol() {
+	final List<CycleType> result = new ArrayList<CycleType>();
+	
+	final List<CycleType> supportedCyclesToEnrol = new ArrayList<CycleType>(getDegreeType().getSupportedCyclesToEnrol());
+	Collections.sort(supportedCyclesToEnrol, CycleType.COMPARATOR_BY_GREATER_WEIGHT);
+	
+	for (final CycleType cycleType : supportedCyclesToEnrol) {
+	    if (hasCycleCurriculumGroup(cycleType)) {
+		break;
+	    } else {
+		result.add(0, cycleType);
+	    }
+	}
+	
+	return result;
+    }
 
     public boolean isEmpty() {
 	if (hasAnyEnrolments())
