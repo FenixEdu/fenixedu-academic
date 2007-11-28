@@ -149,22 +149,20 @@
 								<td><bean:write name="teacher" property="person.name"/></td>														
 								
 								<% 
+									TeacherMasterDegreeService masterDegreeService = null;
 									TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
 									if(teacherService != null){
-										TeacherMasterDegreeService masterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);
-										request.setAttribute("masterDegreeService",masterDegreeService);
+										masterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);										
 									} 
 								%>
-																	
-								<logic:notEmpty name="masterDegreeService">						
-									<td class="aright"><bean:write name="masterDegreeService" property="hours"/></td>
-									<td class="aright"><bean:write name="masterDegreeService" property="credits"/></td>						
-								</logic:notEmpty>
-								
-								<logic:empty name="masterDegreeService">
-									<td>-</td>
-									<td>-</td>
-								</logic:empty>
+									
+								<% if(masterDegreeService != null) { %>																						
+									<td class="acenter"><%= masterDegreeService.getHours() %></td>
+									<td class="acenter"><%= masterDegreeService.getCredits() %></td>														
+								<% } else { %>															
+									<td class="acenter">-</td>
+									<td class="acenter">-</td>
+								<% } %>
 								
 								<%-- Observations --%>
 								<logic:equal name="isLastCellDone" value="false">
