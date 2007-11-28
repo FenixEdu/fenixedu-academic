@@ -270,6 +270,11 @@
 			<form-property name="method" type="java.lang.String" />
 			<form-property name="registrationId" type="java.lang.Integer" />
 	    </form-bean>
+	    
+	    <!-- vote -->
+		<form-bean name="voteForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+	    </form-bean>
 
     </form-beans>
     
