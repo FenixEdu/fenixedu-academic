@@ -288,7 +288,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	    if (stateInExamDate == null || !(stateInExamDate.isActive()
 		    || (stateInExamDate.getStateType() == RegistrationStateType.TRANSITED
 			    && getEnrolment().getCurricularCourse().isDissertation()))) {
-        	throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState", getEnrolment().getRegistration().getNumber().toString());
+		final Enrolment enrolment = getEnrolment();
+		final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+		final Registration registration = studentCurricularPlan.getRegistration();
+        	throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState", registration.getNumber().toString());
 	    }
             setExamDateYearMonthDay(YearMonthDay.fromDateFields(examDate));
         } else if (grade.isEmpty()) {

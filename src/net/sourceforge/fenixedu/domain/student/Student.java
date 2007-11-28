@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
@@ -610,7 +611,8 @@ public class Student extends Student_Base {
 
     public boolean isCurrentlyEnroled(DegreeCurricularPlan degreeCurricularPlan) {
 	for (Registration registration : getRegistrations()) {
-	    if (!registration.isActive()) {
+	    final RegistrationState registrationState = registration.getActiveState();
+	    if (!registration.isActive() && registrationState.getStateType() != RegistrationStateType.TRANSITED) {
 		continue;
 	    }
 

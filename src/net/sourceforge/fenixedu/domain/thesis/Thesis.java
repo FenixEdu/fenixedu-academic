@@ -664,11 +664,12 @@ public class Thesis extends Thesis_Base {
 		continue;
 	    }
 
-	    String gradeValue = evaluation.getGradeValue();
-	    if (gradeValue.equals(getEvaluationMark())) {
+	    final String gradeValue = evaluation.getGradeValue();
+	    final Grade evaluationMark = getEvaluationMark();
+	    final String evaluationMarkValue = evaluationMark == null ? null : evaluationMark.getValue(); 
+	    if (gradeValue.equals(evaluationMarkValue)) {
 		return true;
-	    }
-	    else {
+	    } else {
 		throw new DomainException("thesis.approve.evaluation.has.different.mark", gradeValue);
 	    }
 	}
@@ -740,12 +741,14 @@ public class Thesis extends Thesis_Base {
     }
 
     private Teacher getExecutionCourseTeacher() {
-	ExecutionCourse executionCourse = getExecutionCourse();
+	final List<Teacher> teachers = new ArrayList<Teacher>();
 
-	List<Teacher> teachers = new ArrayList<Teacher>();
-	for (Professorship professorship : executionCourse.getProfessorships()) {
-	    if (professorship.isResponsibleFor()) {
-		teachers.add(professorship.getTeacher());
+	final ExecutionCourse executionCourse = getExecutionCourse();
+	if (executionCourse != null) {
+	    for (Professorship professorship : executionCourse.getProfessorships()) {
+		if (professorship.isResponsibleFor()) {
+		    teachers.add(professorship.getTeacher());
+		}
 	    }
 	}
 
