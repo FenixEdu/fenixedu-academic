@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum;
 
-import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
@@ -239,15 +238,15 @@ public class CurriculumRenderer extends InputRenderer {
 
 	private void generateAverageRows(final HtmlTable mainTable) {
 
-	    final Set<ICurriculumEntry> sortedIAverageEntries = new HashSet<ICurriculumEntry>();//ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    final Set<ICurriculumEntry> sortedIAverageEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	    sortedIAverageEntries.addAll(this.curriculum.getEnrolmentRelatedEntries());
 	    if (!sortedIAverageEntries.isEmpty()) {
 		generateGroupRowWithText(mainTable, "Inscrições", true, 0);
 		generateRows(mainTable, sortedIAverageEntries, 0);
 	    }
 
-	    final Set<ICurriculumEntry> sortedEquivalenceEntries = new HashSet<ICurriculumEntry>();//ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-	    final Set<ICurriculumEntry> sortedSubstitutionsEntries = new HashSet<ICurriculumEntry>();//ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    final Set<ICurriculumEntry> sortedEquivalenceEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
+	    final Set<ICurriculumEntry> sortedSubstitutionsEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	    for (final ICurriculumEntry entry : this.curriculum.getDismissalRelatedEntries()) {
 		if (entry instanceof Dismissal) {
 		    sortedEquivalenceEntries.add(entry);
@@ -341,8 +340,7 @@ public class CurriculumRenderer extends InputRenderer {
 		    
 	    if (entry instanceof OptionalEnrolment) {
 		final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) entry;
-		return optionalEnrolment.getOptionalCurricularCourse().getName() + " (" + code
-			+ optionalEnrolment.getCurricularCourse().getName() + ")";
+		return code + optionalEnrolment.getCurricularCourse().getName();
 	    } else {
 		return code + entry.getName().getContent();
 	    }
@@ -435,7 +433,7 @@ public class CurriculumRenderer extends InputRenderer {
 	}
 
 	private void generateCurricularYearRows(final HtmlTable table) {
-	    final Set<ICurriculumEntry> sortedEntries = new HashSet<ICurriculumEntry>();//ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    final Set<ICurriculumEntry> sortedEntries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	    sortedEntries.addAll(this.curriculum.getCurricularYearEntries());
 	    if (!sortedEntries.isEmpty()) {
 		generateCurricularYearHeaderRowWithText(table, "", true, 0);
