@@ -225,7 +225,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 	final List executionDegreeList = (List) ServiceUtils.executeService(userView,
 		"ReadExecutionDegreesByExecutionYearAndDegreeType", new Object[] {
-			infoExecutionYear.getYear(), DegreeType.DEGREE });
+			infoExecutionYear.getYear(), null });
 	final BeanComparator name = new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
 	Collections.sort(executionDegreeList, name);
 	request.setAttribute("executionDegreeList", executionDegreeList);
