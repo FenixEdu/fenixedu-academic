@@ -21,4 +21,8 @@ public class CreditsInAnySecundaryAreaCurriculumEntry extends CreditsCurriculumE
 	return BigDecimal.valueOf(getCreditsInAnySecundaryArea().getEctsCredits());
     }
 
+    public Integer getIdInternal() {
+	return getCreditsInAnySecundaryArea().getIdInternal();
+    }
+
 }

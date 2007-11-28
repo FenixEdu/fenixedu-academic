@@ -43,4 +43,8 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
 	return getEnrolment().getExecutionPeriod();
     }
 
+    public Integer getIdInternal() {
+	return getEnrolment().getIdInternal();
+    }
+
 }

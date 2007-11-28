@@ -38,4 +38,8 @@ public class EnrolmentCurriculumEntry extends SimpleCurriculumEntry {
 	return getEnrolment().getGrade();
     }
 
+    public Integer getIdInternal() {
+	return getEnrolment().getIdInternal();
+    }
+
 }

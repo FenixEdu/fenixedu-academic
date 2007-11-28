@@ -55,4 +55,8 @@ public class DismissalEntry extends CurriculumEntry {
 	return null;
     }
 
+    public Integer getIdInternal() {
+	return getDismissal().getIdInternal();
+    }
+
 }

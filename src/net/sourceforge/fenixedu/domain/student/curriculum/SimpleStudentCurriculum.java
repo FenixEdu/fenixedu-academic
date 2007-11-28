@@ -29,7 +29,7 @@ public class SimpleStudentCurriculum extends StudentCurriculumBase {
         }
 
         final List<ICurriculumEntry> result = new ArrayList<ICurriculumEntry>();
-        Collections.sort(result, ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+        Collections.sort(result, ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 
         addCurricularEnrolments(result, studentCurricularPlan, getApprovedEnrolments());
         addNotNeedToEnrols(result, studentCurricularPlan);

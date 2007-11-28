@@ -45,4 +45,8 @@ public class NotNeedToEnrolCurriculumEntry extends SimpleCurriculumEntry {
 	return null;
     }
 
+    public Integer getIdInternal() {
+	return getNotNeedToEnrol().getIdInternal();
+    }
+
 }

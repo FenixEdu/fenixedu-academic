@@ -69,4 +69,8 @@ public class EquivalanteCurriculumEntry extends CurriculumEntry {
 	return null;
     }
 
+    public Integer getIdInternal() {
+	return hashCode();
+    }
+
 }
