@@ -222,6 +222,7 @@ table.tacenter th, table.tacenter td { text-align: center; }
 table.thleft th { text-align: left; }
 table.thright th { text-align: right; }
 table.thcenter th { text-align: center; }
+.thdnone tr th { display: none; }
 .tdleft td { text-align: left; }
 .tdright td { text-align: right; } /* take table from all, to work with tr ? */
 .tdcenter td { text-align: center; }

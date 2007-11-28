@@ -144,44 +144,46 @@
 
 <!-- STUDENT THAT HAS NOT VOTED YET -->
 <logic:present name="notVotedYearDelegate" >
-	<p class="mtop1 mbottom05">
-		<b><bean:message key="label.elections.votingPeriod" bundle="APPLICATION_RESOURCES"/></b></p>
-		
-		<p class="infoop2">
-		<bean:message key="label.elections.votingPeriod.notVoted.help" bundle="APPLICATION_RESOURCES" />
-	</p>
 	
 	<fr:view name="notVotedYearDelegate" layout="tabular-nonNullValues" schema="student.elections.electionPeriod" >
 		<fr:layout>
-			<fr:property name="classes" value="tstyle2 thlight thright mtop05"/>
+			<fr:property name="classes" value="tstyle2 thlight thright mvert05"/>
 			<fr:property name="columnClasses" value="nowrap, nowrap"/>
 			<fr:property name="rowClasses" value="bold,,,,"/>
 		</fr:layout>
 	</fr:view>
+
+	<p class="mtop1 mbottom05">
+		<b><bean:message key="label.elections.votingPeriod" bundle="APPLICATION_RESOURCES"/></b>
+	</p>
+	<p class="infoop2">
+		<bean:message key="label.elections.votingPeriod.notVoted.help" bundle="APPLICATION_RESOURCES" />
+	</p>
 	
 	<logic:present name="candidatesBeanList">
 		<logic:notEmpty name="candidatesBeanList">	
 		
-		<h4><bean:message key="label.elections.candidatesList" bundle="APPLICATION_RESOURCES" /></h4>
-		<p class="mtop1 mbottom05">
-			<span class="warning0"><bean:message key="message.warning.votingDelegate" bundle="DELEGATES_RESOURCES" /></span>	
-		</p>
-		<fr:form action="/yearDelegateManagement.do">
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="vote" />
-		
-			<fr:edit id="candidate" name="otherStudentsBeanList" schema="student.yearDelegateElection.voteCandidate">
-				<fr:layout name="tabular-row">
-					<fr:property name="classes" value=" thlight tdcenter mtop05 mbottom05"/>
-					<fr:property name="columnClasses" value="tdclear,tdclear,tdclear"/>
-				</fr:layout>
-				<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare"/>
-			</fr:edit>
-		
+		<div class="mvert15" style="background: #fafafa; padding: 0.5em 1em; border: 1px solid #ddd;">
+			<h4 class="mvert05"><bean:message key="label.elections.candidatesList" bundle="APPLICATION_RESOURCES" /></h4>
 	
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
-			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.cancel"/></html:cancel>
-		</fr:form>
-	
+			<fr:form action="/yearDelegateManagement.do">
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="vote" />
+			
+				<fr:edit id="candidate" name="otherStudentsBeanList" schema="student.yearDelegateElection.voteCandidate">
+					<fr:layout name="tabular-row">
+						<fr:property name="classes" value="tstyle2 thmiddle thright thlight mtop05 thdnone tstylenone"/>
+						<fr:property name="columnClasses" value="tdclear,tdclear,tdclear"/>
+					</fr:layout>
+					<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare"/>
+				</fr:edit>
+			
+				<p class="mtop15 mbottom05">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
+					<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.clear"/></html:cancel>
+				</p>
+			</fr:form>
+		</div>
+		
 		</logic:notEmpty>
 	</logic:present>
 	
@@ -189,22 +191,24 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="vote" />
 		<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
 		
-		<h4><bean:message key="label.elections.otherStudentsList" bundle="APPLICATION_RESOURCES" /></h4>
-		<p class="mtop1 mbottom05">
-			<span class="warning0"><bean:message key="message.warning.votingDelegate" bundle="DELEGATES_RESOURCES" /></span>	
-		</p>
+		<div class="mtop15" style="background: #fafafa; padding: 0.5em 1em; border: 1px solid #ddd;">
 		
-		
-		<fr:edit id="otherStudentsBeanList" name="otherStudentsBeanList"  schema="student.yearDelegateElection.vote" >
-			<fr:layout>
-				<fr:property name="classes" value="tstyle2 thmiddle thright thlight"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>	
-			</fr:layout>
-		<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare" />
-		</fr:edit>
-		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.cancel"/></html:cancel>
+			<h4 class="mvert05"><bean:message key="label.elections.otherStudentsList" bundle="APPLICATION_RESOURCES" /></h4>
+			
+			<fr:edit id="otherStudentsBeanList" name="otherStudentsBeanList"  schema="student.yearDelegateElection.vote" >
+				<fr:layout>
+					<fr:property name="classes" value="tstyle2 thmiddle thright thlight mtop05 thdnone tstylenone"/>
+					<fr:property name="columnClasses" value=",,tdclear tderror1"/>	
+				</fr:layout>
+			<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare" />
+			</fr:edit>
+			
+			<p class="mtop15 mbottom05">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
+				<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.clear"/></html:cancel>
+			</p>
+			
+		</div>
 	</fr:form>
 
 	
