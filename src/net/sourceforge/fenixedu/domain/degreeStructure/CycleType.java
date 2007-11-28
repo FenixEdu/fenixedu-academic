@@ -20,9 +20,15 @@ public enum CycleType {
 
     THIRD_CYCLE(3, 300d);
 
-    public static final Comparator<CycleType> CYCLE_TYPE_COMPARATOR = new Comparator<CycleType>() {
+    static final public Comparator<CycleType> COMPARATOR_BY_LESS_WEIGHT = new Comparator<CycleType>() {
 	public int compare(CycleType o1, CycleType o2) {
 	    return o1.getWeight().compareTo(o2.getWeight());
+	}
+    };
+    
+    static final public Comparator<CycleType> COMPARATOR_BY_GREATER_WEIGHT = new Comparator<CycleType>() {
+	public int compare(CycleType o1, CycleType o2) {
+	    return -COMPARATOR_BY_LESS_WEIGHT.compare(o1, o2);
 	}
     };
 
@@ -60,13 +66,13 @@ public enum CycleType {
     }
 
     static final public Collection<CycleType> getSortedValues() {
-	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.CYCLE_TYPE_COMPARATOR);
+	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 	result.addAll(Arrays.asList(values()));
 	return result;
     }
 
     public boolean isBeforeOrEquals(final CycleType cycleType) {
-	return CYCLE_TYPE_COMPARATOR.compare(this, cycleType) <= 0;
+	return COMPARATOR_BY_LESS_WEIGHT.compare(this, cycleType) <= 0;
     }
 
     public boolean hasSourceCycleAffinity() {

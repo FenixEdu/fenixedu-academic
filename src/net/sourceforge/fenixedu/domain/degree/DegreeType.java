@@ -456,16 +456,16 @@ public enum DegreeType {
 
     public CycleType getFirstCycleType() {
 	final Collection<CycleType> cycleTypes = getCycleTypes();
-	return cycleTypes.isEmpty() ? null : Collections.min(cycleTypes, CycleType.CYCLE_TYPE_COMPARATOR);
+	return cycleTypes.isEmpty() ? null : Collections.min(cycleTypes, CycleType.COMPARATOR_BY_LESS_WEIGHT);
     }
 
     public CycleType getLastCycleType() {
 	final Collection<CycleType> cycleTypes = getCycleTypes();
-	return cycleTypes.isEmpty() ? null : Collections.max(cycleTypes, CycleType.CYCLE_TYPE_COMPARATOR);
+	return cycleTypes.isEmpty() ? null : Collections.max(cycleTypes, CycleType.COMPARATOR_BY_LESS_WEIGHT);
     }
     
     public Collection<CycleType> getOrderedCycleTypes() {
-	TreeSet<CycleType> result = new TreeSet<CycleType>(CycleType.CYCLE_TYPE_COMPARATOR);
+	TreeSet<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 	result.addAll(getCycleTypes());
 	return result;
     }
