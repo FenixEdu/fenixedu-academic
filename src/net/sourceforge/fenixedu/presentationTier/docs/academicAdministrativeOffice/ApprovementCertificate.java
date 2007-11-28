@@ -34,13 +34,13 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	Registration registration = getDocumentRequest().getRegistration();
 	final ICurriculum curriculum = registration.getCurriculum();
 	
-	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	entries.addAll(curriculum.getCurriculumEntries());
 
 	final Map<Unit,String> academicUnitIdentifiers = new HashMap<Unit,String>();
 	reportEntries(result, entries, academicUnitIdentifiers);
 	
-	final SortedSet<Enrolment> remainingEntries = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	final SortedSet<Enrolment> remainingEntries = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	remainingEntries.addAll(registration.getExtraCurricularEnrolments());
 	if (!remainingEntries.isEmpty()) {
 	    reportRemainingEnrolments(result, remainingEntries, "Extra-Curriculares");
