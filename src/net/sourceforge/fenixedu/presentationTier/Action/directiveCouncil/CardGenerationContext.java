@@ -5,10 +5,17 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
-
 public class CardGenerationContext implements Serializable {
 
-    private DomainReference<ExecutionYear> executionYear = executionYearDR(ExecutionYear.readCurrentExecutionYear());
+    private DomainReference<ExecutionYear> executionYear;
+
+    public CardGenerationContext() {
+	executionYear = executionYearDR(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public CardGenerationContext(final ExecutionYear executionYear) {
+	setExecutionYear(executionYear);
+    }
 
     public ExecutionYear getExecutionYear() {
         return executionYear == null ? null : executionYear.getObject();

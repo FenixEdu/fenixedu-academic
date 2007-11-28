@@ -38,4 +38,7 @@
      <definition name="df.page.card.generation.editDegree" extends="definition.directiveCouncil.masterPage">
         <put name="body" value="/directiveCouncil/editDegree.jsp"/>
     </definition>
+     <definition name="df.page.card.generation.manageCardGenerationBatch" extends="definition.directiveCouncil.masterPage">
+        <put name="body" value="/directiveCouncil/manageCardGenerationBatch.jsp"/>
+    </definition>
 </tiles-definitions>

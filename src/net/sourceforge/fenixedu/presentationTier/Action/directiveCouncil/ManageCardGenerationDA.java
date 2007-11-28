@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
 import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchCreator;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchDeleter;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -22,21 +24,21 @@ import org.apache.struts.action.ActionMapping;
 public class ManageCardGenerationDA extends FenixDispatchAction {
 
     public ActionForward firstPage(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-	    final HttpServletResponse response) throws Exception {
+	    final HttpServletResponse response) {
 	checkForProblemasInCategoryCodes(request);
 	setContext(request);
 	return mapping.findForward("firstPage");
     }
 
     public ActionForward showCategoryCodes(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	request.setAttribute("categories", Category.values());
 	checkForProblemasInDegrees(request);
 	return mapping.findForward("showCategoryCodes");
     }
 
     public ActionForward showDegreeCodesAndLabels(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	final DegreeType degreeType = getDegreeType(request);
 	final Set<Degree> degrees = getDegrees(degreeType);
 	request.setAttribute("degrees", degrees);
@@ -44,7 +46,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     }
 
     public ActionForward editDegree(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	final Degree degree = getDegree(request);
 	request.setAttribute("degree", degree);
 	return mapping.findForward("editDegree");
@@ -58,6 +60,21 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	return firstPage(mapping, actionForm, request, response);
     }
 
+    public ActionForward deleteCardGenerationBatch(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
+	final CardGenerationBatchDeleter cardGenerationBatchDeleter = new CardGenerationBatchDeleter(cardGenerationBatch);
+	executeFactoryMethod(cardGenerationBatchDeleter);
+	return firstPage(mapping, actionForm, request, response);
+    }
+
+    public ActionForward manageCardGenerationBatch(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
+	request.setAttribute("cardGenerationBatch", cardGenerationBatch);
+	return mapping.findForward("manageCardGenerationBatch");
+    }
+    
     protected Degree getDegree(final HttpServletRequest request) {
 	final String degreeIdParam = request.getParameter("degreeID");
 	final Integer degreeID = degreeIdParam == null || degreeIdParam.length() == 0 ? null : Integer.valueOf(degreeIdParam);
@@ -125,7 +142,8 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     protected void setContext(final HttpServletRequest request) {
 	CardGenerationContext cardGenerationContext = (CardGenerationContext) getRenderedObject("cardGenerationContext");
 	if (cardGenerationContext == null) {
-	    cardGenerationContext = new CardGenerationContext();
+	    final ExecutionYear executionYear = getExecutionYear(request);
+	    cardGenerationContext = executionYear == null ? new CardGenerationContext() : new CardGenerationContext(executionYear);
 	}
 	request.setAttribute("cardGenerationContext", cardGenerationContext);
     }
@@ -133,7 +151,13 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     private ExecutionYear getExecutionYear(final HttpServletRequest request) {
 	final String executionYearParam = request.getParameter("executionYearID");
 	final Integer executionYearID = executionYearParam == null || executionYearParam.length() == 0 ? null : Integer.valueOf(executionYearParam);
-	return rootDomainObject.readExecutionYearByOID(executionYearID);
+	return executionYearID == null ? null : rootDomainObject.readExecutionYearByOID(executionYearID);
+    }
+
+    protected CardGenerationBatch getCardGenerationBatch(HttpServletRequest request) {
+	final String cardGenerationBatchParam = request.getParameter("cardGenerationBatchID");
+	final Integer cardGenerationBatchID = cardGenerationBatchParam == null || cardGenerationBatchParam.length() == 0 ? null : Integer.valueOf(cardGenerationBatchParam);
+	return cardGenerationBatchID == null ? null : rootDomainObject.readCardGenerationBatchByOID(cardGenerationBatchID);	
     }
 
 }

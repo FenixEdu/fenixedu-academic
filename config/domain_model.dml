@@ -273,16 +273,22 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		State validation;
 	}
 
-        class net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch extends net.sourceforge.fenixedu.domain.DomainObject {
-                DateTime created;
-                DateTime updated;
-                DateTime sent;
-        }
+	class net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch extends net.sourceforge.fenixedu.domain.DomainObject {
+		DateTime created;
+		DateTime updated;
+		DateTime sent;
+		String peopleForEntryCreation;
+	}
 
-        class net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	class net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 		String line;
-        DateTime created;
-        }
+		DateTime created;
+	}
+
+	class net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem extends net.sourceforge.fenixedu.domain.DomainObject {
+		String descriptionKey;
+		String arg;
+	}
 
 	class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 		String code;
@@ -12374,6 +12380,13 @@ relation RootDomainObjectCardGenerationEntry {
         }
 }
 
+relation RootDomainObjectCardGenerationProblem {
+        net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+        net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem playsRole cardGenerationProblem {
+                multiplicity *;
+        }
+}
+
 relation ExecutionYearCardGenerationBatch {
         net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
         net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch playsRole cardGenerationBatches {
@@ -12384,6 +12397,13 @@ relation ExecutionYearCardGenerationBatch {
 relation CardGenerationBatchCardGenerationEntry {
         net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch playsRole cardGenerationBatch;
         net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry playsRole cardGenerationEntries {
+                multiplicity *;
+        }
+}
+
+relation CardGenerationBatchCardGenerationProblem {
+        net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch playsRole cardGenerationBatch;
+        net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem playsRole cardGenerationProblems {
                 multiplicity *;
         }
 }

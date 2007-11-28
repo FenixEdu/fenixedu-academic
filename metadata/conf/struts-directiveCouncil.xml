@@ -103,6 +103,7 @@
 		<forward name="showCategoryCodes" path="df.page.card.generation.showCategoryCodes"/>
 		<forward name="showDegreeCodesAndLabels" path="df.page.card.generation.showDegreeCodesAndLabels"/>
 		<forward name="editDegree" path="df.page.card.generation.editDegree"/>
+		<forward name="manageCardGenerationBatch" path="df.page.card.generation.manageCardGenerationBatch"/>
 	</action>
 	
       		  

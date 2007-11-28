@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <html:xhtml/>
 
 <h2>
@@ -21,7 +22,7 @@
 
 <br/>
 <br/>
-<fr:form>
+<fr:form action="/manageCardGeneration.do?method=firstPage">
 	<fr:edit id="cardGenerationContext"
 			 name="cardGenerationContext"
 			 schema="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.CardGenerationContext.selectExecutionYear"
@@ -34,17 +35,51 @@
 </fr:form>
 
 <bean:define id="url" type="java.lang.String">/manageCardGeneration.do?method=createCardGenerationBatch&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
-<html:link page="<%= url %>">
-	<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.create.batch" />
-</html:link>
+<logic:notEqual name="categoryCondesProblem" value="true">
+	<html:link page="<%= url %>">
+		<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.create.batch" />
+	</html:link>
+</logic:notEqual>
 
 <table class="tstyle4 thlight mtop05">
 	<tr>
-		<th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.category.code"/></th>
+		<th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.created"/></th>
+		<th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.updated"/></th>
+		<th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.sent"/></th>
+		<th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.number.entries"/></th>
+		<th></th>
 	</tr>
 	<logic:iterate id="cardGenerationBatch" name="cardGenerationContext" property="executionYear.cardGenerationBatches">
 	  	<tr>
-    		<td><bean:write name="cardGenerationBatch" property="idInternal"/></td>
+    		<td>
+				<logic:present name="cardGenerationBatch" property="created">
+	    			<dt:format pattern="yyyy-MM-dd HH:mm:ss"><bean:write name="cardGenerationBatch" property="created.millis"/></dt:format>
+				</logic:present>
+			</td>
+    		<td>
+				<logic:present name="cardGenerationBatch" property="updated">
+    				<dt:format pattern="yyyy-MM-dd HH:mm:ss"><bean:write name="cardGenerationBatch" property="updated.millis"/></dt:format>
+				</logic:present>
+			</td>
+    		<td>
+				<logic:present name="cardGenerationBatch" property="sent">
+    				<dt:format pattern="yyyy-MM-dd HH:mm:ss"><bean:write name="cardGenerationBatch" property="sent.millis"/></dt:format>
+				</logic:present>
+			</td>
+    		<td>
+				<bean:size id="numberEntries" name="cardGenerationBatch" property="cardGenerationEntries"/>
+    			<bean:write name="numberEntries"/>
+			</td>
+    		<td>
+				<bean:define id="urlManage" type="java.lang.String">/manageCardGeneration.do?method=manageCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
+				<html:link page="<%= urlManage %>">
+					<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.manage"/>
+				</html:link>
+				<bean:define id="urlDelete" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/>&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
+				<html:link page="<%= urlDelete %>">
+					<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.delete"/>
+				</html:link>
+			</td>
   		</tr>
 	</logic:iterate>
 </table>

@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create more stuff for id card generation." updates.sql
+execute "Remove this script from svn after it runs." updateDegreeInfo,sql
