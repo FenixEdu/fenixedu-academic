@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
@@ -50,39 +51,9 @@ import org.joda.time.YearMonthDay;
 
 public class Enrolment extends Enrolment_Base implements IEnrolment {
 
-    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_ID = new Comparator<Enrolment>() {
-	final public int compare(Enrolment o1, Enrolment o2) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD);
-	    comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
-
-	    return comparatorChain.compare(o1, o2);
-	}
-    };
-
     static final public Comparator<Enrolment> REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID = new Comparator<Enrolment>() {
 	public int compare(Enrolment o1, Enrolment o2) {
 	    return -COMPARATOR_BY_EXECUTION_PERIOD_AND_ID.compare(o1, o2);
-	}
-    };
-
-    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID = new Comparator<Enrolment>() {
-	final public int compare(Enrolment o1, Enrolment o2) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-	    comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
-
-	    return comparatorChain.compare(o1, o2);
-	}
-    };
-
-    static final public Comparator<Enrolment> COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID = new Comparator<Enrolment>() {
-	final public int compare(Enrolment o1, Enrolment o2) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME);
-	    comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
-
-	    return comparatorChain.compare(o1, o2);
 	}
     };
 
@@ -97,7 +68,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	final public int compare(Enrolment o1, Enrolment o2) {
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION);
-	    comparatorChain.addComparator(Enrolment.COMPARATOR_BY_ID);
+	    comparatorChain.addComparator(CurriculumLine.COMPARATOR_BY_ID);
 
 	    return comparatorChain.compare(o1, o2);
 	}
