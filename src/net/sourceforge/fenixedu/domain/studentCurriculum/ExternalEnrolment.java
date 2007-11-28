@@ -33,8 +33,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     static final public Comparator<ExternalEnrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_EVALUATION_DATE = new Comparator<ExternalEnrolment>() {
 	public int compare(ExternalEnrolment o1, ExternalEnrolment o2) {
 	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(IEnrolment.COMPARATOR_BY_EXECUTION_PERIOD);
-	    comparatorChain.addComparator(IEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
+	    comparatorChain.addComparator(ExternalEnrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
+	    comparatorChain.addComparator(ExternalEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
 
 	    return comparatorChain.compare(o1, o2);
 	}
