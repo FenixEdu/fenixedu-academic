@@ -61,7 +61,10 @@
             <fr:property name="param(delete)" value="idInternal/materialOccupationID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
-            <fr:property name="order(delete)" value="0"/>                                           
+            <fr:property name="order(delete)" value="0"/>             
+            <fr:property name="confirmationKey(delete)" value="label.delete.material.space.occupation.confirmation"/>
+            <fr:property name="confirmationBundle(delete)" value="SPACE_RESOURCES"/>                               
+    	
     	</fr:layout>
 	</fr:view>	
 
@@ -87,7 +90,10 @@
             <fr:property name="param(delete)" value="idInternal/materialOccupationID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
-            <fr:property name="order(delete)" value="0"/>                                           
+            <fr:property name="order(delete)" value="0"/>    
+  			<fr:property name="confirmationKey(delete)" value="label.delete.material.space.occupation.confirmation"/>
+            <fr:property name="confirmationBundle(delete)" value="SPACE_RESOURCES"/>
+                                                                   
     	</fr:layout>
 	</fr:view>	
 

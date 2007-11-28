@@ -49,9 +49,7 @@
 					<jsp:include page="spaceBlueprintVersions.jsp"/>
 				</logic:equal>
 				<logic:notEqual name="blueprint" property="idInternal" value="<%= selectedSpaceBlueprintId.toString() %>">
-					<bean:define id="versionLink">
-						/manageBlueprints.do?method=showBlueprintVersions&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="blueprint" property="idInternal"/> 
-					</bean:define>
+					<bean:define id="versionLink">/manageBlueprints.do?method=showBlueprintVersions&page=0&spaceInformationID=<bean:write name="selectedSpaceInformation" property="idInternal"/>&spaceBlueprintID=<bean:write name="blueprint" property="idInternal"/></bean:define>
 					<html:link page="<%= versionLink %>">
 						<jsp:include page="spaceBlueprintVersions.jsp"/>
 					</html:link>
