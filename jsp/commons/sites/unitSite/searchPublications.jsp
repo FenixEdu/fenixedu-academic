@@ -133,8 +133,8 @@
 				<fr:property name="htmlSeparator" value=", "/>
 				<fr:property name="indentation" value="false"/>
 			</fr:layout>
-																	
-			<fr:destination name="view.publication" path="<%="/unitSite/showResearchResult.do?resultId=" + resultId + "&siteID=" + request.getParameter("siteID") + "&method=showPublication" %>"/>
+																
+			<fr:destination name="view.publication" path="<%="showResearchResult.do?resultId=" + resultId + "&method=showPublication" %>"/>
 		</fr:view>
 		
         		<logic:notEqual name="result" property="class.simpleName" value="Unstructured">

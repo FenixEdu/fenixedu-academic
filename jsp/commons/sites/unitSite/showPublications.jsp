@@ -65,7 +65,7 @@
 						<fr:property name="defaultText" value="label.all"/>
 						<fr:property name="key" value="true"/>
 						<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
-						<fr:property name="sort" value="true"/>
+						<fr:property name="eachLayout" value="default"/>
 					</fr:layout>
 				</fr:edit>
 	

@@ -5,6 +5,7 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
@@ -177,6 +178,11 @@ public class UnitSiteRenderer extends OutputRenderer {
 			}
 			if(unit instanceof ResearchUnit) {
 				return ResearchUnitProcessor.getResearchUnitPath((ResearchUnit)unit);
+			}
+			// hardcoded link this will disapear when the content refactor gets merged,
+			// that's why a PathProcessor wasn't written.
+			if(unit instanceof ScientificAreaUnit) {
+			    return "/publico/scientificArea/viewSite.do?method=presentation&unitID=" + unit.getIdInternal() ; 
 			}
 			return null;
 		}

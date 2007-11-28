@@ -2244,7 +2244,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	<property name="linkFormat" value="/homepage/${istUsername}"/>	
 	<property name="subLayout" value="values"/>
 	<property name="subSchema" value="showName"/>
-	<property name="blankTarget" value="true"/>
+	<property name="blankTarget" value="false"/>
 	</slot>
 </schema>
 
