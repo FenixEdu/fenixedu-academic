@@ -2024,7 +2024,7 @@ public class Registration extends Registration_Base {
      * Retrieve concluded cycles before or equal to the given cycle
      */
     final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
-	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.CYCLE_TYPE_COMPARATOR);
+	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 
 	for (final CycleType cycleType : CycleType.getSortedValues()) {
 	    if ((lastCycleTypeToInspect == null || cycleType.isBeforeOrEquals(lastCycleTypeToInspect))
