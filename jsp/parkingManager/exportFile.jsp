@@ -23,7 +23,7 @@
 			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 		</fr:layout>
 	</fr:edit>
-	
-	<p><html:submit><bean:message key="button.exportExcel" bundle="PARKING_RESOURCES"/></html:submit></p>
-	<p><html:submit onclick="this.form.method.value='mergeFilesAndExportXML'"><bean:message key="button.exportXML" bundle="PARKING_RESOURCES"/></html:submit></p>
+		
+	<p><html:submit><bean:message key="button.export" bundle="PARKING_RESOURCES"/></html:submit></p>
+	<p><html:submit onclick="this.form.method.value='mergeFilesAndExportToExcel'"><bean:message key="button.exportExcel" bundle="PARKING_RESOURCES"/></html:submit></p>
 </fr:form>

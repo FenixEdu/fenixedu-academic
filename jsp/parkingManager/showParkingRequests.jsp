@@ -22,7 +22,7 @@
 	</fr:form>
 
 	<logic:notPresent name="dontSearch">
-		<bean:define id="parkingRequests" name="parkingRequestSearch" property="search" />
+		<bean:define id="parkingRequests" name="parkingRequestSearch" property="searchResult" />
 		<bean:size id="parkingRequestsNumber" name="parkingRequests"/>
 	
 		<p class="mtop15">

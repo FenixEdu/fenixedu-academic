@@ -4,14 +4,12 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
@@ -20,7 +18,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
@@ -284,9 +281,10 @@ public class ParkingParty extends ParkingParty_Base {
 			stringBuilder.append("\n (").append(registration.getCurricularYear()).append(
 				"º ano");
 			if (isFirstTimeEnrolledInCurrentYear(registration, registration
-				.getCurricularYear())) {
+				.getCurricularYear())) {			   
 			    stringBuilder.append(" - 1ª vez)");
-			} else {
+			} 
+			else {
 			    stringBuilder.append(")");
 			}
 			stringBuilder.append("<br/>Média: ").append(registration.getAverage());
@@ -608,26 +606,9 @@ public class ParkingParty extends ParkingParty_Base {
 
     }
 
-    private boolean isFirstTimeEnrolledInCurrentYear(Registration registration, int curricularYear) {
+    public boolean isFirstTimeEnrolledInCurrentYear(Registration registration, int curricularYear) {
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	if (registration.getEnrolments(executionYear).isEmpty()) {
-	    return Boolean.FALSE;
-	}
-	final Collection<Enrolment> enrolments = new HashSet<Enrolment>();
-	for (final StudentCurricularPlan studentCurricularPlan : registration
-		.getStudentCurricularPlansSet()) {
-	    enrolments.addAll(studentCurricularPlan.getEnrolments());
-	}
-	for (Enrolment enrolment : enrolments) {
-	    for (Context context : enrolment.getCurricularCourse().getParentContexts()) {
-		if (executionYear != enrolment.getExecutionYear()
-			&& context.getCurricularYear() == curricularYear
-			&& registration.getCurricularYear(enrolment.getExecutionYear()) == curricularYear) {
-		    return Boolean.FALSE;
-		}
-	    }
-	}
-	return Boolean.TRUE;
+	return registration.getCurricularYear(executionYear.getPreviousExecutionYear()) != curricularYear;
     }
 
     private Registration getRegistrationByDegreeType(Student student, DegreeType degreeType) {

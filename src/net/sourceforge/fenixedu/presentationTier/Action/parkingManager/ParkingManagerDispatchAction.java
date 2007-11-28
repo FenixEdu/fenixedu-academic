@@ -67,6 +67,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    parkingRequestSearch.setParkingRequestState(ParkingRequestState.PENDING);
 	    setSearchCriteria(request, parkingRequestSearch);
 	}
+	if (request.getParameter("dontSearch") == null) {
+	    parkingRequestSearch.doSearch();
+	}
 	request.setAttribute("dontSearch", request.getParameter("dontSearch"));
 	request.setAttribute("parkingRequestSearch", parkingRequestSearch);
 	return mapping.findForward("showParkingRequests");
@@ -540,15 +543,15 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws IOException {
 	ParkingRequestSearch parkingRequestSearch = new ParkingRequestSearch();
 	setSearchCriteria(request, parkingRequestSearch);
-	List<ParkingRequest> parkingRequestList = parkingRequestSearch.getSearch();
-	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Pedidos_Parque",15);
+	List<ParkingRequest> parkingRequestList = parkingRequestSearch.getSearchResult();
+	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Pedidos_Parque", 15);
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader("Categoria");
 	spreadsheet.addHeader("Número");
-	spreadsheet.addHeader("Nome",9000);
+	spreadsheet.addHeader("Nome", 9000);
 	spreadsheet.addHeader("Estado");
 	spreadsheet.addHeader("Data Pedido");
-	spreadsheet.addHeader("Outras Informações",6000);
+	spreadsheet.addHeader("Outras Informações", 6000);
 
 	final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
 		"resources.EnumerationResources", LanguageUtils.getLocale());
