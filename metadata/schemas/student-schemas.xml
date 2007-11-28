@@ -393,14 +393,37 @@
 </schema>
 
 <schema name="student.yearDelegateElection.vote" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
-	<slot name="student.number" read-only="true" key="label.studentNumber" />
-	<slot name="student.person.name" read-only="true" key="label.name" />
-	<slot name="selectedStudent" key="label.elections.vote" layout="option-select-postback" />
+	<slot name="student"  key="label.empty" bundle="DELEGATES_RESOURCES" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.YearDelegateManagementProvider"/>
+		<property name="eachSchema" value="student.vote"/>
+		<property name="eachLayout" value="values" />
+		
+	</slot>	
 </schema>
 
-<schema name="student.yearDelegateElection.voteCandidate" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
-<!--	<slot name="selectedStudent" key="label.elections.vote" layout="option-select-postback" />-->
-	<slot name="selectedStudent" key="label.elections.vote" layout="option-select-postback" />
+<schema name="student.yearDelegateElection.photo" bundle="APPLICATION_RESOURCES"  type="net.sourceforge.fenixedu.domain.student.Student">
+	<slot name="number" />	
+	<slot name="person.name" >
+		<property name="length" value="100"/>
+	</slot>
+	<slot name="person" key="label.empty" layout="view-as-image" bundle="DELEGATES_RESOURCES">
+		<property name="availablePhoto" value="true"/>
+		<property name="contextRelative" value="true"/>
+		<property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${student.person.idInternal}"/>	
+	</slot>		
+</schema>
+
+<schema name="student.vote" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">
+	<slot name="number"/>
+	<slot name="person.name"/>
+</schema>
+
+<schema name="student.yearDelegateElection.voteCandidate"  bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
+	<slot name="student" key="label.empty" bundle="DELEGATES_RESOURCES" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.YearCandidateDelegateManagementProvider"/>
+		<property name="eachSchema" value="student.yearDelegateElection.photo"/>
+		<property name="eachLayout" value="values-dash" />
+	</slot>
 </schema>
 
 <schema name="student.elections.electionPeriod" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.elections.YearDelegateElection" >
