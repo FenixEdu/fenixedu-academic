@@ -147,7 +147,7 @@
 	<p class="mtop1 mbottom05">
 		<b><bean:message key="label.elections.votingPeriod" bundle="APPLICATION_RESOURCES"/></b></p>
 		
-	<p class="infoop2">
+		<p class="infoop2">
 		<bean:message key="label.elections.votingPeriod.notVoted.help" bundle="APPLICATION_RESOURCES" />
 	</p>
 	
@@ -166,60 +166,46 @@
 		<p class="mtop1 mbottom05">
 			<span class="warning0"><bean:message key="message.warning.votingDelegate" bundle="DELEGATES_RESOURCES" /></span>	
 		</p>
-		<table class="tstyle2 mtop15 tdleft">
-			<logic:iterate id="candidate" name="candidatesBeanList">	
-			
-					<tr>			
-						<td class="personInfo_photo">
-						
-				          	<logic:notEqual name="candidate" property="student.person.availablePhoto" value="true">
-				          		<bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
-								<div><img src="<%= request.getContextPath() %>/images/photo_placer01_<%= language == null ? "pt" : String.valueOf(language) %>.gif"/></div>
-				          	</logic:notEqual>
-				
-				          	<logic:equal name="candidate" property="student.person.availablePhoto" value="true">
-				      			<bean:define id="personID" name="candidate" property="student.person.idInternal"/>
-				      			<div><img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>"/></div>
-				   			</logic:equal>
-						</td>			
-									
-						<td> <bean:write name="candidate" property="student.person.name" /> (<bean:write name="candidate" property="student.number" />)</td>
-					
-						<td>
-							<fr:form action="/yearDelegateManagement.do?method=vote">
-								<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
-								
-								<fr:edit id="candidate" name="candidate" layout="tabular-editable" schema="student.yearDelegateElection.voteCandidate">
-									<fr:layout>
-										<fr:property name="classes" value=" thlight tdcenter mtop05 mbottom05"/>
-										<fr:property name="columnClasses" value="tdclear,tdclear,tdclear"/>
-									</fr:layout>
-									
-									<fr:destination name="invalid" path="/yearDelegateManagement.do?method=vote" />
-									<fr:destination name="postBack" path="/yearDelegateManagement.do?method=vote"/>
-								</fr:edit>
-							</fr:form>
-						</td>
-					
-					</tr>
-			</logic:iterate>	
-		</table>	
+		<fr:form action="/yearDelegateManagement.do">
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="vote" />
+		
+			<fr:edit id="candidate" name="otherStudentsBeanList" schema="student.yearDelegateElection.voteCandidate">
+				<fr:layout name="tabular-row">
+					<fr:property name="classes" value=" thlight tdcenter mtop05 mbottom05"/>
+					<fr:property name="columnClasses" value="tdclear,tdclear,tdclear"/>
+				</fr:layout>
+				<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare"/>
+			</fr:edit>
+		
+	
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.cancel"/></html:cancel>
+		</fr:form>
 	
 		</logic:notEmpty>
 	</logic:present>
-		
-	<fr:form action="/yearDelegateManagement.do?method=vote">
+	
+	<fr:form action="/yearDelegateManagement.do">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="vote" />
 		<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
 		
 		<h4><bean:message key="label.elections.otherStudentsList" bundle="APPLICATION_RESOURCES" /></h4>
+		<p class="mtop1 mbottom05">
+			<span class="warning0"><bean:message key="message.warning.votingDelegate" bundle="DELEGATES_RESOURCES" /></span>	
+		</p>
 		
-		<fr:edit id="otherStudentsBeanList" name="otherStudentsBeanList" layout="tabular-editable" schema="student.yearDelegateElection.vote">
+		
+		<fr:edit id="otherStudentsBeanList" name="otherStudentsBeanList"  schema="student.yearDelegateElection.vote" >
 			<fr:layout>
-				<fr:property name="classes" value="tstyle1 thlight tdcenter mtop05 mbottom05"/>
-				<fr:property name="columnClasses" value=",aleft,"/>
+				<fr:property name="classes" value="tstyle2 thmiddle thright thlight"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>	
 			</fr:layout>
-		<fr:destination name="invalid" path="/yearDelegateManagement.do?method=vote" />
-		<fr:destination name="postBack" path="/yearDelegateManagement.do?method=vote"/>
+		<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare" />
 		</fr:edit>
+		
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.cancel"/></html:cancel>
 	</fr:form>
+
+	
 </logic:present>
