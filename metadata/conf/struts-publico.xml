@@ -793,9 +793,14 @@
 		
 		<action path="/showPublications"
     			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA"
-    			parameter="method"
-    			>
+    			parameter="method">
     		<forward name="showPublications" path="show-publications"/>	
+		</action>
+		
+		<action path="/searchPublications"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.HomepageSearchPublicationsDA"
+    			parameter="method">
+        	<forward name="SearchPublication"  path="search-homepage-publications"/>	
 		</action>
 
 		<action path="/showPatents"
