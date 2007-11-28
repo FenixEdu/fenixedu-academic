@@ -18,8 +18,8 @@
 	
 	<fr:create schema="<%= "contacts." + partyContactName + ".manage" %>" type="<%= "net.sourceforge.fenixedu.domain.contacts." + partyContactName  %>" >
 		<fr:layout name="tabular-editable" >
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 		<fr:hidden slot="party" name="person" />
 	</fr:create>

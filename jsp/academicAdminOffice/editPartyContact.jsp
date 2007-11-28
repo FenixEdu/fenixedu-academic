@@ -17,8 +17,8 @@
 
 	<fr:edit name="partyContact" schema="<%= "contacts." + partyContactClass + ".manage" %>">
 		<fr:layout name="tabular-editable" >
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle"/>
+	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 	
