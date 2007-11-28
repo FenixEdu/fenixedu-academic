@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -188,11 +190,6 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	return mapping.findForward("showPublications");
     }
 
-    protected ExecutionYearIntervalBean generateSearchBean() {
-	return new ExecutionYearIntervalBean(ExecutionYear.readCurrentExecutionYear()
-		.getPreviousExecutionYear(3), ExecutionYear.readCurrentExecutionYear());
-    }
-
     protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit,
 	    ExecutionYearIntervalBean bean) {
 	putPublicationsOnRequest(request, unit, bean, Boolean.FALSE);
@@ -201,13 +198,13 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     protected void putPublicationsOnRequest(HttpServletRequest request, Unit unit,
 	    ExecutionYearIntervalBean bean, Boolean checkSubunits) {
 
-	// String[] publicationTypes = new String[] {"articles", "books",
-	// "inbooks", "inproceedings", "proceedings", "theses", "manuals",
-	// "technical-reports", "other-publications", "unstructureds"};
-
 	ExecutionYear firstExecutionYear = bean.getFirstExecutionYear();
 	ExecutionYear finalExecutionYear = bean.getFinalExecutionYear();
 	ResultPublicationType resultPublicationType = bean.getPublicationType();
+
+	// String[] publicationTypes = new String[] {"articles", "books",
+	// "inbooks", "inproceedings", "proceedings", "theses", "manuals",
+	// "technical-reports", "other-publications", "unstructureds"};
 
 	if (resultPublicationType == null) {
 	    request.setAttribute("international-articles", ResearchResultPublication.sort(unit
@@ -241,33 +238,45 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 		    .getOtherPublications(firstExecutionYear, finalExecutionYear, checkSubunits)));
 	    request.setAttribute("unstructureds", ResearchResultPublication.sort(unit.getUnstructureds(
 		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	} else if (resultPublicationType.equals(ResultPublicationType.Article)) {
-	    request.setAttribute("articles", ResearchResultPublication.sort(unit.getArticles(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	} else if (resultPublicationType.equals(ResultPublicationType.Book)) {
-	    request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	} else if (resultPublicationType.equals(ResultPublicationType.BookPart)) {
-	    request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	} else if (resultPublicationType.equals(ResultPublicationType.Inproceedings)) {
-	    request.setAttribute("inproceedings", ResearchResultPublication.sort(unit.getInproceedings(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	} else if (resultPublicationType.equals(ResultPublicationType.Manual)) {
-	    request.setAttribute("manuals", ResearchResultPublication.sort(unit.getManuals(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	} else if (resultPublicationType.equals(ResultPublicationType.OtherPublication)) {
-	    request.setAttribute("other-publications", ResearchResultPublication.sort(unit
-		    .getOtherPublications(firstExecutionYear, finalExecutionYear, checkSubunits)));
-	} else if (resultPublicationType.equals(ResultPublicationType.Proceedings)) {
-	    request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	} else if (resultPublicationType.equals(ResultPublicationType.TechnicalReport)) {
-	    request.setAttribute("technical-reports", ResearchResultPublication.sort(unit
-		    .getTechnicalReports(firstExecutionYear, finalExecutionYear, checkSubunits)));
-	} else if (resultPublicationType.equals(ResultPublicationType.Thesis)) {
-	    request.setAttribute("theses", ResearchResultPublication.sort(unit.getTheses(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	} else {
+	    switch (resultPublicationType) {
+	    case Article:
+		request.setAttribute("articles", ResearchResultPublication.sort(unit.getArticles(
+			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		break;
+	    case Book:
+		request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(
+			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		break;
+	    case BookPart:
+		request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(
+			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		break;
+	    case Inproceedings:
+		request.setAttribute("inproceedings", ResearchResultPublication.sort(unit
+			.getInproceedings(firstExecutionYear, finalExecutionYear, checkSubunits)));
+		break;
+	    case Manual:
+		request.setAttribute("manuals", ResearchResultPublication.sort(unit.getManuals(
+			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		break;
+	    case OtherPublication:
+		request.setAttribute("other-publications", ResearchResultPublication.sort(unit
+			.getOtherPublications(firstExecutionYear, finalExecutionYear, checkSubunits)));
+		break;
+	    case Proceedings:
+		request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(
+			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		break;
+	    case TechnicalReport:
+		request.setAttribute("technical-reports", ResearchResultPublication.sort(unit
+			.getTechnicalReports(firstExecutionYear, finalExecutionYear, checkSubunits)));
+		break;
+	    case Thesis:
+		request.setAttribute("theses", ResearchResultPublication.sort(unit.getTheses(
+			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		break;
+	    }
 	}
     }
 

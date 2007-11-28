@@ -13,11 +13,14 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -37,6 +40,8 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -358,7 +363,18 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
 		.valueOf(homepageId));
 
-	setPublicationsInRequest(request, homepage.getPerson());
+	IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
+
+	ExecutionYearIntervalBean bean;
+	if (viewState != null) {
+	    bean = (ExecutionYearIntervalBean) viewState.getMetaObject().getObject();
+	} else {
+	    bean = generateSearchBean();
+	}
+
+	request.setAttribute("executionYearIntervalBean", bean);
+
+	setPublicationsInRequest(request, bean, homepage.getPerson());
 
 	return mapping.findForward("showPublications");
     }
@@ -412,26 +428,78 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	return mapping.findForward("showPrizes");
     }
 
-    private void setPublicationsInRequest(HttpServletRequest request, Person person) {
+    private void setPublicationsInRequest(HttpServletRequest request, ExecutionYearIntervalBean bean,
+	    Person person) {
 
-	request.setAttribute("books", ResearchResultPublication.sort(person.getBooks()));
-	request.setAttribute("national-articles", ResearchResultPublication.sort(person
-		.getArticles(ScopeType.NATIONAL)));
-	request.setAttribute("international-articles", ResearchResultPublication.sort(person
-		.getArticles(ScopeType.INTERNATIONAL)));
-	request.setAttribute("national-inproceedings", ResearchResultPublication.sort(person
-		.getInproceedings(ScopeType.NATIONAL)));
-	request.setAttribute("international-inproceedings", ResearchResultPublication.sort(person
-		.getInproceedings(ScopeType.INTERNATIONAL)));
-	request.setAttribute("proceedings", ResearchResultPublication.sort(person.getProceedings()));
-	request.setAttribute("theses", ResearchResultPublication.sort(person.getTheses()));
-	request.setAttribute("manuals", ResearchResultPublication.sort(person.getManuals()));
-	request.setAttribute("technicalReports", ResearchResultPublication.sort(person
-		.getTechnicalReports()));
-	request.setAttribute("otherPublications", ResearchResultPublication.sort(person
-		.getOtherPublications()));
-	request.setAttribute("unstructureds", ResearchResultPublication.sort(person.getUnstructureds()));
-	request.setAttribute("inbooks", ResearchResultPublication.sort(person.getInbooks()));
+	ExecutionYear firstExecutionYear = bean.getFirstExecutionYear();
+	ExecutionYear finalExecutionYear = bean.getFinalExecutionYear();
+	ResultPublicationType resultPublicationType = bean.getPublicationType();
+
+	if (resultPublicationType == null) {
+	    request.setAttribute("books", ResearchResultPublication.sort(person.getBooks(
+		    firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("national-articles", ResearchResultPublication.sort(person.getArticles(
+		    ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("international-articles", ResearchResultPublication.sort(person
+		    .getArticles(ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("national-inproceedings", ResearchResultPublication.sort(person
+		    .getInproceedings(ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("international-inproceedings", ResearchResultPublication.sort(person
+		    .getInproceedings(ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("proceedings", ResearchResultPublication.sort(person.getProceedings(
+		    firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("theses", ResearchResultPublication.sort(person.getTheses(
+		    firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("manuals", ResearchResultPublication.sort(person.getManuals(
+		    firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("technicalReports", ResearchResultPublication.sort(person
+		    .getTechnicalReports(firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("otherPublications", ResearchResultPublication.sort(person
+		    .getOtherPublications(firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("unstructureds", ResearchResultPublication.sort(person
+		    .getUnstructureds(firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("inbooks", ResearchResultPublication.sort(person.getInbooks(
+		    firstExecutionYear, finalExecutionYear)));
+	} else {
+	    switch (resultPublicationType) {
+	    case Article:
+		request.setAttribute("articles", ResearchResultPublication.sort(person.getArticles(
+			firstExecutionYear, finalExecutionYear)));
+		break;
+	    case Book:
+		request.setAttribute("books", ResearchResultPublication.sort(person.getBooks(
+			firstExecutionYear, finalExecutionYear)));
+		break;
+	    case BookPart:
+		request.setAttribute("inbooks", ResearchResultPublication.sort(person.getInbooks(
+			firstExecutionYear, finalExecutionYear)));
+		break;
+	    case Inproceedings:
+		request.setAttribute("inproceedings", ResearchResultPublication.sort(person
+			.getInproceedings(firstExecutionYear, finalExecutionYear)));
+		break;
+	    case Manual:
+		request.setAttribute("manuals", ResearchResultPublication.sort(person.getManuals(
+			firstExecutionYear, finalExecutionYear)));
+		break;
+	    case OtherPublication:
+		request.setAttribute("otherPublications", ResearchResultPublication.sort(person
+			.getOtherPublications(firstExecutionYear, finalExecutionYear)));
+		break;
+	    case Proceedings:
+		request.setAttribute("proceedings", ResearchResultPublication.sort(person
+			.getProceedings(firstExecutionYear, finalExecutionYear)));
+		break;
+	    case TechnicalReport:
+		request.setAttribute("technicalReports", ResearchResultPublication.sort(person
+			.getTechnicalReports(firstExecutionYear, finalExecutionYear)));
+		break;
+	    case Thesis:
+		request.setAttribute("theses", ResearchResultPublication.sort(person.getTheses(
+			firstExecutionYear, finalExecutionYear)));
+		break;
+	    }
+	}
 
 	request.setAttribute("person", getLoggedPerson(request));
     }

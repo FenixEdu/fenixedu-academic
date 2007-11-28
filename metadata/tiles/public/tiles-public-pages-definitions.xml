@@ -188,7 +188,10 @@
 		<put name="body" value="/publico/homepage/home.jsp"/>
 	</definition>
 	<definition name="show-publications" extends="definition.public.homepage">
-		<put name="body" value="/publico/homepage/research/publications.jsp"/>
+		<put name="body" value="/publico/homepage/research/showPublications.jsp"/>
+	</definition>
+	<definition name="search-homepage-publications" extends="definition.public.homepage">
+		<put name="body" value="/publico/homepage/research/searchPublications.jsp"/>
 	</definition>
 	<definition name="show-patents" extends="definition.public.homepage">
 		<put name="body" value="/publico/homepage/research/patents.jsp"/>

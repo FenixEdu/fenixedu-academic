@@ -10,18 +10,24 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ProtectedItem;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.SimpleFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 /**
  * Generic action to coordinate the visualization of a website.
@@ -235,5 +241,10 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
     
     protected String getDirectLinkContext(HttpServletRequest request) {
         return null;
+    }
+
+    protected ExecutionYearIntervalBean generateSearchBean() {
+    	return new ExecutionYearIntervalBean(ExecutionYear.readCurrentExecutionYear()
+    		.getPreviousExecutionYear(3), ExecutionYear.readCurrentExecutionYear());
     }
 }

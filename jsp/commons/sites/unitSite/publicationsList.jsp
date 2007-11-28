@@ -157,14 +157,22 @@
 <logic:empty name="books">
 	<logic:empty name="inbooks">
 		<logic:empty name="articles">
-			<logic:empty name="inproceedings">
-				<logic:empty name="proceedings">
-					<logic:empty name="theses">
-						<logic:empty name="manuals">
-							<logic:empty name="technicalReports">
-								<logic:empty name="otherPublications">
-									<logic:empty name="unstructureds">
-										<bean:message key="label.search.noResultsFound" />
+			<logic:empty name="international-articles">
+				<logic:empty name="national-articles">
+					<logic:empty name="inproceedings">
+						<logic:empty name="international-inproceedings">
+							<logic:empty name="national-inproceedings">
+								<logic:empty name="proceedings">
+									<logic:empty name="theses">
+										<logic:empty name="manuals">
+											<logic:empty name="technicalReports">
+												<logic:empty name="otherPublications">
+													<logic:empty name="unstructureds">
+														<bean:message key="label.search.noResultsFound" />
+													</logic:empty>
+												</logic:empty>
+											</logic:empty>
+										</logic:empty>
 									</logic:empty>
 								</logic:empty>
 							</logic:empty>
