@@ -359,11 +359,11 @@ public class CurriculumRenderer extends InputRenderer {
 	}	
 	
 	private void generateWeightCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
-	    generateCellWithText(enrolmentRow, entry.getWeigthForCurriculum().toString(), getWeightCellClass());
+	    generateCellWithText(enrolmentRow, entry.getGrade().isNumeric() ? entry.getWeigthForCurriculum().toString() : "-", getWeightCellClass());
 	}
 
 	private void generateWeightTimesGradeCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
-	    generateCellWithText(enrolmentRow, entry.getWeigthTimesGrade().toString(), getWeightCellClass());
+	    generateCellWithText(enrolmentRow, entry.getGrade().isNumeric() ? entry.getWeigthTimesGrade().toString() : "-", getWeightCellClass());
 	}
 
 	private void generateEctsCreditsCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {

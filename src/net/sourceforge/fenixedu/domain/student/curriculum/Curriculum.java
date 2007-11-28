@@ -62,24 +62,24 @@ public class Curriculum implements Serializable, ICurriculum {
     public Curriculum(final CurriculumModule curriculumModule, final ExecutionYear executionYear, final Collection<ICurriculumEntry> entries, final Collection<ICurriculumEntry> dismissalRelatedEntries, final Collection<ICurriculumEntry> curricularYearEntries) {
 	this(curriculumModule, executionYear);
 	
-	addEntries(this.enrolmentRelatedEntries, entries, true);
-	addEntries(this.dismissalRelatedEntries, dismissalRelatedEntries, true);
-	addEntries(this.curricularYearEntries, curricularYearEntries, false);
+	addEntries(this.enrolmentRelatedEntries, entries);
+	addEntries(this.dismissalRelatedEntries, dismissalRelatedEntries);
+	addEntries(this.curricularYearEntries, curricularYearEntries);
     }
 
     public void add(final Curriculum curriculum) {
-	addEntries(this.enrolmentRelatedEntries, curriculum.getEnrolmentRelatedEntries(), true);
-	addEntries(this.dismissalRelatedEntries, curriculum.getDismissalRelatedEntries(), true);
-	addEntries(this.curricularYearEntries, curriculum.getCurricularYearEntries(), false);
+	addEntries(this.enrolmentRelatedEntries, curriculum.getEnrolmentRelatedEntries());
+	addEntries(this.dismissalRelatedEntries, curriculum.getDismissalRelatedEntries());
+	addEntries(this.curricularYearEntries, curriculum.getCurricularYearEntries());
 
 	forceCalculus = true;
     }
 
-    private void addEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries, boolean mustBeNumeric) {
+    private void addEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries) {
 	final boolean bolonhaDegree = curriculumModule.getStudentCurricularPlan().isBolonhaDegree();
 	
 	for (final ICurriculumEntry newEntry : newEntries) {
-	    if ((newEntry.getGrade().isNumeric() || !mustBeNumeric) && (bolonhaDegree || shouldAdd(newEntry))) {
+	    if (bolonhaDegree || shouldAdd(newEntry)) {
 		entries.add(newEntry);
 	    }
 	}
@@ -231,16 +231,18 @@ public class Curriculum implements Serializable, ICurriculum {
 	
     private void countAverage(final Set<ICurriculumEntry> entries) {
 	for (final ICurriculumEntry entry : entries) {
-	    final BigDecimal weigth = entry.getWeigthForCurriculum();
-
-	    if (averageType == AverageType.WEIGHTED) {
-		sumPi = sumPi.add(weigth);
-		sumPiCi = sumPiCi.add(entry.getWeigthTimesGrade());
-	    } else if (averageType == AverageType.SIMPLE) {
-		sumPi = sumPi.add(BigDecimal.ONE);
-		sumPiCi = sumPiCi.add(entry.getGrade().getNumericValue());
-	    } else {
-		throw new DomainException("Curriculum.average.type.not.supported");
+	    if (entry.getGrade().isNumeric()) {
+		final BigDecimal weigth = entry.getWeigthForCurriculum();
+		
+		if (averageType == AverageType.WEIGHTED) {
+		    sumPi = sumPi.add(weigth);
+		    sumPiCi = sumPiCi.add(entry.getWeigthTimesGrade());
+		} else if (averageType == AverageType.SIMPLE) {
+		    sumPi = sumPi.add(BigDecimal.ONE);
+		    sumPiCi = sumPiCi.add(entry.getGrade().getNumericValue());
+		} else {
+		    throw new DomainException("Curriculum.average.type.not.supported");
+		}
 	    }
 	}
     }
