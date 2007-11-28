@@ -359,12 +359,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		return container;
 	    }
 
-	    if (this.studentCurricularPlan.getEnrolmentsSet().isEmpty() && this.studentCurricularPlan.getDismissals().isEmpty()) {
-		container.addChild(createHtmlTextItalic(studentResources.getString("message.no.enrolments")));
-
-		return container;
-	    }
-
 	    final HtmlTable mainTable = new HtmlTable();
 	    container.addChild(mainTable);
 	    mainTable.setClasses(getStudentCurricularPlanClass());
