@@ -59,8 +59,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     final private String getDegreeFinalizationEcts(final Registration registration) {
 	final StringBuilder result = new StringBuilder();
 	
-	final DegreeType degreeType = getDocumentRequest().getDegreeType();
-	if (degreeType.isBolonhaType()) {
+	if (getDocumentRequest().isToShowCredits()) {
 	    result.append(", tendo obtido o total de ");
 	    result.append(String.valueOf(registration.getEctsCredits())).append(getCreditsDescription());
 	    result.append(",");
