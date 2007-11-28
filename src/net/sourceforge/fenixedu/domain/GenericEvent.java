@@ -187,6 +187,15 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	return result;
     }
     
+    public boolean constainsRoom(AllocatableSpace room) {
+	for (GenericEventSpaceOccupation occupation : getGenericEventSpaceOccupations()) {
+	    if(occupation.getRoom().equals(room)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
     public List<Interval> getGenericEventIntervals(YearMonthDay begin, YearMonthDay end){
 	if(!getGenericEventSpaceOccupations().isEmpty()) {
 	    GenericEventSpaceOccupation occupation = getGenericEventSpaceOccupations().get(0);
@@ -289,10 +298,10 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	return false;
     }
     
-    public static Set<GenericEvent> getAllGenericEvents(DateTime begin, DateTime end){
+    public static Set<GenericEvent> getAllGenericEvents(DateTime begin, DateTime end, AllocatableSpace allocatableSpace){
 	Set<GenericEvent> events = new TreeSet<GenericEvent>(GenericEvent.COMPARATOR_BY_DATE_AND_TIME);
 	for (GenericEvent genericEvent : RootDomainObject.getInstance().getGenericEvents()) {
-	    if(genericEvent.intersectPeriod(begin, end)) {
+	    if(genericEvent.intersectPeriod(begin, end) && (allocatableSpace == null || genericEvent.constainsRoom(allocatableSpace))) {
 		events.add(genericEvent);
 	    }
 	}	    	   

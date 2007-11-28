@@ -27,8 +27,8 @@ public class VehicleAllocationBean implements Serializable {
 
         
     public VehicleAllocationBean() {
+	
     }
-
     
     public BigDecimal getAmountCharged() {
         return amountCharged;

@@ -85,7 +85,12 @@
 		<property name="destination" value="postBack"/>		
 		<property name="eachLayout" value="month" />
 		<property name="saveOptions" value="true"/>
-    </slot>        
+    </slot>      
+    <slot name="allocatableSpace" layout="menu-select-postback" key="label.room" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.RoomsForEducationProvider" />
+		<property name="format" value="${completeIdentification}" />
+		<property name="destination" value="postBack"/>	
+	</slot>	      
 </schema>
 
 <!-- Vehicle Management Schemas -->
