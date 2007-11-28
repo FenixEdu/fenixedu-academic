@@ -10,6 +10,7 @@
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="student" property="registrations" schema="student.registrationsToList" >
 	<fr:layout name="tabular">
+		<fr:property name="sortBy" value="startDate=desc"/>	
 		<fr:property name="classes" value="tstyle1 thlight mtop025"/>
 		<fr:property name="columnClasses" value="acenter,acenter,,,acenter,"/>
 		<fr:property name="linkFormat(view)" value="/viewCurriculum.do?method=prepare&amp;registrationOID=${idInternal}" />
