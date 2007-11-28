@@ -163,21 +163,51 @@
 	<logic:present name="candidatesBeanList">
 		<logic:notEmpty name="candidatesBeanList">	
 		
-		<div class="mvert15" style="background: #fafafa; padding: 0.5em 1em; border: 1px solid #ddd;">
+		<div class="mvert15" style="background: #f8f8f8; padding: 0.5em 1em; border: 1px solid #ccc;">
 			<h4 class="mvert05"><bean:message key="label.elections.candidatesList" bundle="APPLICATION_RESOURCES" /></h4>
 	
 			<fr:form action="/yearDelegateManagement.do">
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="vote" />
+
+<style>
+.column1, .column2, .column3 {
+display: block;
+}
+.column1 {
+display: block;
+width: 40px;
+padding-left: 0.5em;
+margin-top: 3em;
+}
+.column2 {
+display: block;
+width: 250px;
+margin-top: 3em;
+}
+.column3 {
+display: block;
+}
+.delegate tr td ul li {
+clear: both;
+display: block;
+padding-top: 1.5em !important;
+}
+.delegate tr td ul li input {
+margin-top: 2.7em;
+}
+.delegate tr td ul li * {
+float: left;
+}
+</style>
+
 			
 				<fr:edit id="candidate" name="otherStudentsBeanList" schema="student.yearDelegateElection.voteCandidate">
-					<fr:layout name="tabular-row">
-						<fr:property name="classes" value="tstyle2 thmiddle thright thlight mtop05 thdnone tstylenone"/>
-						<fr:property name="columnClasses" value="tdclear,tdclear,tdclear"/>
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="noborder thdnone mtop05 ulnomargin width100 delegate"/>
 					</fr:layout>
 					<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare"/>
 				</fr:edit>
-			
-				<p class="mtop15 mbottom05">
+						<p class="mtop15 mbottom05">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
 					<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.clear"/></html:cancel>
 				</p>
@@ -191,7 +221,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="vote" />
 		<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
 		
-		<div class="mtop15" style="background: #fafafa; padding: 0.5em 1em; border: 1px solid #ddd;">
+		<div class="mvert15" style="background: #f8f8f8; padding: 0.5em 1em; border: 1px solid #ccc;">
 		
 			<h4 class="mvert05"><bean:message key="label.elections.otherStudentsList" bundle="APPLICATION_RESOURCES" /></h4>
 			
