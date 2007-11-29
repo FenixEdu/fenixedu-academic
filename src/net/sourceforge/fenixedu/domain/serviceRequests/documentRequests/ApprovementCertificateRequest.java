@@ -36,7 +36,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     final private void checkParameters(final MobilityProgram mobilityProgram) {
-	if (mobilityProgram == null && getRegistration().hasAnyExternalEnrolments()) {
+	if (mobilityProgram == null && getRegistration().hasAnyExternalApprovedEnrolment()) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null.for.registration.with.external.enrolments");
 	}
     }
