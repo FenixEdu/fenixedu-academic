@@ -40,7 +40,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
     
     public YearMonthDay getApprovementDate() {
-	return isApproved() ? getConclusionDate() : null;
+	return isApproved() ? calculateConclusionDate() : null;
     }
     
     @Override
@@ -168,6 +168,11 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     final public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
 	degreeModules.add(getDegreeModule());
     }
+    
+    @Override
+    public Set<CurriculumLine> getAllCurriculumLines() {
+        return Collections.singleton(this);
+    }
 
     @Override
     public MultiLanguageString getName() {
@@ -205,7 +210,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
     
     @Override
-    public boolean isConcluded(DegreeModule degreeModule, ExecutionYear executionYear) {
+    public boolean hasConcluded(final DegreeModule degreeModule, final ExecutionYear executionYear) {
 	return getDegreeModule() == degreeModule && isConcluded(executionYear);
     }
 

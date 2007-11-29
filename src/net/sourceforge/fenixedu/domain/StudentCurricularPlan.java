@@ -258,19 +258,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getDegreeType().isSecondCycle();
     }
 
-    final public boolean hasConcludedCycle(CycleType cycleType, ExecutionYear executionYear) {
-	return getRoot().hasConcludedCycle(cycleType, executionYear);
-    }
-
-    final public YearMonthDay getConclusionDate() {
-	return getLastApprovementDate();
+    final public boolean hasConcludedCycle(CycleType cycleType) {
+	return getRoot().hasConcludedCycle(cycleType);
     }
 
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {
-	if (cycleType == null) {
-	    return getConclusionDate();
-	}
-
 	if (getDegreeType().getCycleTypes().isEmpty()) {
 	    throw new DomainException("StudentCurricularPlan.has.no.cycle.type");
 	}
@@ -281,11 +273,26 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return getCycle(cycleType).getConclusionDate();
     }
+    
+    public YearMonthDay calculateConclusionDate(final CycleType cycleType) {
+	if (cycleType == null) {
+	    return getLastApprovementDate();
+	}
+
+	if (getDegreeType().getCycleTypes().isEmpty()) {
+	    throw new DomainException("StudentCurricularPlan.has.no.cycle.type");
+	}
+
+	if (!getDegreeType().hasCycleTypes(cycleType)) {
+	    throw new DomainException("StudentCurricularPlan.doesnt.have.such.cycle.type");
+	}
+
+	return getCycle(cycleType).calculateConclusionDate();
+    }
 
     final public Curriculum getCurriculum(final ExecutionYear executionYear) {
 	final RootCurriculumGroup rootCurriculumGroup = getRoot();
 	if (rootCurriculumGroup == null) {
-	    //System.out.println("[NO ROOT CURRICULUM GROUP!]" + "[STUDENT]" + getRegistration().getStudent().getNumber() + " [REGISTRATION]" + getRegistration().getNumber() + " [SCP NAME]" + getName());
 	    return Curriculum.createEmpty(executionYear);
 	} else {
 	    return rootCurriculumGroup.getCurriculum(executionYear);
@@ -2497,7 +2504,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
     
     public boolean isConcluded(final DegreeModule degreeModule,final ExecutionYear executionYear){
-	return isBoxStructure() ? getRoot().isConcluded(degreeModule, executionYear) : false;
+	return isBoxStructure() ? getRoot().hasConcluded(degreeModule, executionYear) : false;
     }
     
 

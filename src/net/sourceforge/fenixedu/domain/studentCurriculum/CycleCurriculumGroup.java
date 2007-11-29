@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
+import org.joda.time.YearMonthDay;
+
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -93,7 +95,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	return getCycleCourseGroup().getCycleType();
     }
 
-
     @Override
     public RootCurriculumGroup getCurriculumGroup() {
 	return (RootCurriculumGroup) super.getCurriculumGroup();
@@ -106,13 +107,12 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	super.delete();
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void deleteRecursive() {
 	for (final CurriculumModule child : getCurriculumModules()) {
 	    child.deleteRecursive();
 	}
-
 	super.delete();
     }
     
@@ -122,11 +122,39 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	    throw new DomainException("error.studentCurriculum.CycleCurriculumGroup.degree.type.requires.this.cycle.to.exist",
 		    getName().getContent());
 	}
-
     }
 
     public boolean isExternal() {
 	return false;
     }
-
+    
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void conclude() {
+	if (!isConcluded()) {
+	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.not.concluded");
+	}
+	
+	super.setFinalAverage(getCurriculum().getRoundedAverage());
+	super.setConclusionDate(calculateConclusionDate());
+    }
+    
+    @Override
+    protected boolean isConcluded(final ExecutionYear executionYear) {
+        return hasFinalAverage() || super.isConcluded(executionYear);
+    }
+    
+    public boolean hasFinalAverage() {
+	return super.getFinalAverage() != null;
+    }
+    
+    @Override
+    public void setFinalAverage(Integer finalAverage) {
+	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.final.average");
+    }
+    
+    @Override
+    public void setConclusionDate(YearMonthDay conclusionDate) {
+	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.conclusion.date");
+    }
+        
 }

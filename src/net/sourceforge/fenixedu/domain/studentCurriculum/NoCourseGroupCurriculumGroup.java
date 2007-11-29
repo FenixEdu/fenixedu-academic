@@ -139,7 +139,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
 
     @Override
-    public boolean isConcluded(ExecutionYear executionYear) {
+    protected boolean isConcluded(ExecutionYear executionYear) {
 	return true;
     }
 

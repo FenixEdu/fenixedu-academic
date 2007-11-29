@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
@@ -107,6 +108,12 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     @Override
     public Curriculum getCurriculum(final ExecutionYear executionYear) {
 	return Curriculum.createEmpty(this, executionYear);
+    }
+    
+    @Override
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void conclude() {
+        throw new DomainException("error.ExternalCurriculumGroup.cannot.conclude.external.curriculumGroups");
     }
     
 }

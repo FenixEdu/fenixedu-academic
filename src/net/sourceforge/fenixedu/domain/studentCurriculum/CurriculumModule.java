@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -163,6 +166,32 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public boolean isFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getDegreeModule().getParentDegreeCurricularPlan() == degreeCurricularPlan;
     }
+    
+    public boolean isConcluded() {
+	return isConcluded(getLastCurriculumLineExecutionYear());
+    }
+    
+    public ExecutionYear getLastCurriculumLineExecutionYear() {
+	final SortedSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
+	for (final CurriculumLine curriculumLine : getAllCurriculumLines()) {
+	    if (curriculumLine.hasExecutionPeriod()) {
+		executionYears.add(curriculumLine.getExecutionPeriod().getExecutionYear());
+	    }
+	}
+	return executionYears.last();
+    }
+    
+    public Curriculum getCurriculum() {
+	return getCurriculum(null);
+    }
+    
+    public BigDecimal calculateAverage() {
+        return getCurriculum().getAverage();
+    }
+    
+    public Integer calculateRoundedAverage() {
+        return getCurriculum().getRoundedAverage();
+    }
 
     abstract public Double getEctsCredits();
 
@@ -197,18 +226,19 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public void collectDismissals(final List<Dismissal> result);
 
     abstract public void getAllDegreeModules(Collection<DegreeModule> degreeModules);
-
-    abstract public boolean isConcluded(ExecutionYear executionYear);
     
-    abstract public boolean isConcluded(DegreeModule degreeModule, ExecutionYear executionYear);
+    abstract public Set<CurriculumLine> getAllCurriculumLines();
 
-    abstract public YearMonthDay getConclusionDate();
+    abstract protected boolean isConcluded(ExecutionYear executionYear);
+    
+    abstract public boolean hasConcluded(DegreeModule degreeModule, ExecutionYear executionYear);
+
+    public abstract YearMonthDay calculateConclusionDate();
 
     abstract public Curriculum getCurriculum(final ExecutionYear executionYear);
     
     abstract public Double getCreditsConcluded(ExecutionYear executionYear);
 
     abstract public boolean isPropaedeutic();
-          
 
 }

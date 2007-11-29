@@ -598,13 +598,8 @@ public class Registration extends Registration_Base {
 		.valueOf(getFinalAverage()) : getCurriculum(executionYear, cycleType).getAverage();
     }
 
-    @Override
-    final public Integer getFinalAverage() {
-	return isConcluded() ? super.getFinalAverage() : null;
-    }
-
     final public Integer getFinalAverage(final CycleType cycleType) {
-	if (cycleType == null || cycleType == getDegreeType().getLastCycleType()) {
+	if (cycleType == null) {
 	    return getFinalAverage();
 	}
 
@@ -617,6 +612,15 @@ public class Registration extends Registration_Base {
 	}
 
 	return hasConcludedCycle(cycleType) ? getAverage(cycleType).intValue() : null;
+    }
+    
+    @Override
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void setFinalAverage(Integer finalAverage) {
+	if (isBolonha()) {
+	    throw new DomainException("error.Registration.cannot.modify.final.average.in.registration.for.bolonha");
+	}
+        super.setFinalAverage(finalAverage);
     }
 
     final public String getFinalAverageDescription() {
@@ -800,10 +804,6 @@ public class Registration extends Registration_Base {
 	return getLastStudentCurricularPlan().hasAnyApprovedCurriculumLines();
     }
 
-    final public YearMonthDay getLastApprovementDate() {
-	return getLastStudentCurricularPlan().getLastApprovementDate();
-    }
-
     final public Collection<IEnrolment> getApprovedIEnrolments() {
 	final Collection<IEnrolment> result = new HashSet<IEnrolment>();
 
@@ -893,18 +893,6 @@ public class Registration extends Registration_Base {
 
     final public ExecutionYear getLastEnrolmentExecutionYear() {
 	return getSortedEnrolmentsExecutionYears().last();
-    }
-
-    public ExecutionYear getLastCurriculumLineExecutionYear() {
-	final SortedSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
-
-	for (final CurriculumLine curriculumLine : getLastStudentCurricularPlan().getRoot().getAllCurriculumLines()) {
-	    if (curriculumLine.hasExecutionPeriod()) {
-		executionYears.add(curriculumLine.getExecutionPeriod().getExecutionYear());
-	    }
-	}
-
-	return executionYears.last();
     }
 
     final public Collection<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
@@ -1944,9 +1932,13 @@ public class Registration extends Registration_Base {
     final public boolean isTransited() {
 	return getActiveStateType() == RegistrationStateType.TRANSITED;
     }
-
-    final public YearMonthDay getConclusionDate() {
-	return isConcluded() ? getLastApprovementDate() : null;
+    
+    @Override
+    public YearMonthDay getConclusionDate() {
+        if (isBolonha()) {
+            throw new DomainException("error.Registration.for.cannot.get.conclusion.date.in.registration.for.bolonha");
+        }
+        return super.getConclusionDate();
     }
 
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {
@@ -1965,7 +1957,33 @@ public class Registration extends Registration_Base {
 
 	return lastStudentCurricularPlan.getConclusionDate(cycleType);
     }
+    
+    @Override
+    public void setConclusionDate(YearMonthDay conclusionDate) {
+        throw new DomainException("error.Registration.cannot.modify.conclusion.date");
+    }
 
+    public YearMonthDay calculateConclusionDate() {
+	return getLastStudentCurricularPlan().getLastApprovementDate();
+    }
+    
+    public YearMonthDay calculateConclusionDate(final CycleType cycleType) {
+	if (!getDegreeType().hasAnyCycleTypes()) {
+	    return calculateConclusionDate();
+	}
+
+	if (!hasConcludedCycle(cycleType)) {
+	    throw new DomainException("Registration.hasnt.finished.given.cycle");
+	}
+
+	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+	if (lastStudentCurricularPlan == null) {
+	    throw new DomainException("Registration.has.no.student.curricular.plan");
+	}
+	
+	return lastStudentCurricularPlan.calculateConclusionDate(cycleType);
+    }
+    
     final public String getGraduateTitle() {
 	if (isConcluded()) {
 	    return getLastDegreeCurricularPlan().getGraduateTitle();
@@ -1995,40 +2013,27 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasConcludedCycle(final CycleType cycleType) {
-	return hasConcludedCycle(cycleType, (ExecutionYear) null);
-    }
-
-    final public boolean hasConcludedCycle(final CycleType cycleType, final ExecutionYear executionYear) {
-	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
-	if (lastStudentCurricularPlan == null) {
-	    throw new DomainException("error.registration.has.no.student.curricular.plan");
-	}
-
-	return lastStudentCurricularPlan.hasConcludedCycle(cycleType, executionYear);
+	return getLastStudentCurricularPlan().hasConcludedCycle(cycleType);
     }
 
     public boolean hasConcluded() {
-
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
-
 	if (!lastStudentCurricularPlan.isBolonhaDegree()) {
 	    return true;
 	}
 
 	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getCycleCurriculumGroups()) {
-	    if (cycleCurriculumGroup.isExternal()
-		    || !getDegreeType().getCycleTypes().contains(cycleCurriculumGroup.getCycleType())) {
+	    if (cycleCurriculumGroup.isExternal() || !getDegreeType().getCycleTypes().contains(cycleCurriculumGroup.getCycleType())) {
 		continue;
 	    }
-
-	    if (!cycleCurriculumGroup.isConcluded(getLastCurriculumLineExecutionYear())) {
+	    if (!cycleCurriculumGroup.isConcluded()) {
 		return false;
 	    }
 	}
 
 	return !lastStudentCurricularPlan.getCycleCurriculumGroups().isEmpty();
     }
-
+    
     public boolean getHasConcluded() {
 	return hasConcluded();
     }

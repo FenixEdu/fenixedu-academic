@@ -165,10 +165,10 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return getStudentCurricularPlan().getDegreeType();
     }
 
-    public boolean hasConcludedCycle(CycleType cycleType, ExecutionYear executionYear) {
+    public boolean hasConcludedCycle(CycleType cycleType) {
 	for (CycleType degreeCycleType : getDegreeType().getCycleTypes()) {
 	    if (cycleType == null || degreeCycleType == cycleType) {
-		if (!isConcluded(degreeCycleType, executionYear)) {
+		if (!isConcluded(degreeCycleType)) {
 		    return false;
 		}
 	    }
@@ -177,10 +177,10 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return cycleType == null || getDegreeType().getCycleTypes().contains(cycleType);
     }
 
-    private boolean isConcluded(CycleType cycleType, ExecutionYear executionYear) {
-	CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
+    private boolean isConcluded(CycleType cycleType) {
+	final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
 	if (cycleCurriculumGroup != null) {
-	    return cycleCurriculumGroup.isConcluded(executionYear);
+	    return cycleCurriculumGroup.isConcluded();
 	} else {
 	    return false;
 	}

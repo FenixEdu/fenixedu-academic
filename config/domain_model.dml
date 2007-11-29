@@ -3632,6 +3632,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Character arithmeticMeanClassification;
 		Character entryGradeClassification;
 		Integer finalAverage;
+		YearMonthDay conclusionDate;
 		YearMonthDay homologationDate;
 		Integer number;
 		Boolean payedTuition;
@@ -3748,6 +3749,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		}
 
 			class net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup {
+				Integer finalAverage;
+				YearMonthDay conclusionDate;
 			}
 
 				class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup extends net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup {

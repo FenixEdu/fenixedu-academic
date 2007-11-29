@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@page import="java.math.RoundingMode"%>
-<%@page import="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType"%>
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
 <%@page import="net.sourceforge.fenixedu.domain.Employee"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
@@ -50,7 +49,7 @@
 </fr:view>
 
 <%
-	request.setAttribute("degreeFinalizationDate", registration.getLastApprovementDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	request.setAttribute("degreeFinalizationDate", registration.calculateConclusionDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 	final Integer finalAverage = registration.getAverage().setScale(0, RoundingMode.HALF_UP).intValue();	
 	request.setAttribute("finalAverage", finalAverage);
 	request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(finalAverage));

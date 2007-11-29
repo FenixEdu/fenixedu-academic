@@ -207,7 +207,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public boolean isConcluded(final ExecutionYear executionYear) {
+    protected boolean isConcluded(final ExecutionYear executionYear) {
 	return executionYear == null || !hasExecutionPeriod() || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
     }
 
@@ -217,8 +217,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public YearMonthDay getConclusionDate() {
-	if (!isConcluded((ExecutionYear) null)) {
+    public YearMonthDay calculateConclusionDate() {
+	if (!isConcluded()) {
 	    throw new DomainException("Dismissal.is.not.concluded");
 	}
 

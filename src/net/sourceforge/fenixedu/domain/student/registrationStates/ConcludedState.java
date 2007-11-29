@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.StateMachine;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -29,17 +30,6 @@ public class ConcludedState extends ConcludedState_Base {
 	if (!registration.hasConcluded()) {
 	    throw new DomainException("error.registration.is.not.concluded");
 	}
-	
-	//TODO: Add cycle verification rule here
-	
-//	for (final CycleType cycleType : registration.getDegreeType().getCycleTypes()) {
-//	    if (!registration.hasConcludedCycle(cycleType, (ExecutionYear) null)) {
-//		final LabelFormatter labelFormatter = new LabelFormatter();
-//		labelFormatter.appendLabel(cycleType.getDescription());
-//		
-//		throw new DomainExceptionWithLabelFormatter("error.registration.has.not.concluded.cycle", labelFormatter);
-//	    }
-//	}
 	
 	init(registration, person, dateTime);
 	registration.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
@@ -93,7 +83,7 @@ public class ConcludedState extends ConcludedState_Base {
 	public RegistrationConcludedStateCreator(Registration registration) {
 	    super(registration);
 	    setStateType(RegistrationStateType.CONCLUDED);
-	    setStateDate(registration.getLastApprovementDate()); // just for interface viewing purposes
+	    setStateDate(registration.calculateConclusionDate()); // just for interface viewing purposes
 	    setFinalAverage(registration.getAverage().setScale(0, RoundingMode.HALF_UP).intValue());
 	}
 
@@ -108,6 +98,7 @@ public class ConcludedState extends ConcludedState_Base {
 	}
 
 	@Override
+	@Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
 	public Object execute() {
 	    if (getRegistration().isRegistrationConclusionProcessed()) {
 		throw new DomainException("ConcludedState.cannot.create.concluded.state.on.registration.with.average");
@@ -135,7 +126,9 @@ public class ConcludedState extends ConcludedState_Base {
 		throw new DomainException("error.cannot.add.registrationState.incoherentState");
 	    }
 
-	    getRegistration().setFinalAverage(getFinalAverage());
+	    if (!getRegistration().isBolonha()) {
+		getRegistration().setFinalAverage(getFinalAverage());
+	    }
 	    return conclusionState;
 	}
 	

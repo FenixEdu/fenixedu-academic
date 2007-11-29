@@ -462,12 +462,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     public Set<CurriculumLine> getAllCurriculumLines() {
 	Set<CurriculumLine> result = new HashSet<CurriculumLine>();
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
-	    if (curriculumModule.isLeaf()) {
-		result.add((CurriculumLine) curriculumModule);
-	    } else {
-		final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
-		result.addAll(curriculumGroup.getAllCurriculumLines());
-	    }
+	    result.addAll(curriculumModule.getAllCurriculumLines());
 	}
 	return result;
     }
@@ -655,7 +650,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    public boolean isConcluded(ExecutionYear executionYear) {
+    protected boolean isConcluded(ExecutionYear executionYear) {
 	if (isToCheckCreditsLimits(executionYear)) {
 	    return checkCreditsLimits(executionYear);
 	} else if (isToCheckDegreeModulesSelectionLimit(executionYear)) {
@@ -752,13 +747,13 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    public boolean isConcluded(DegreeModule degreeModule, ExecutionYear executionYear) {
+    public boolean hasConcluded(final DegreeModule degreeModule, final ExecutionYear executionYear) {
 	if (getDegreeModule() == degreeModule) {
 	    return isConcluded(executionYear);
 	}
 
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if (curriculumModule.isConcluded(degreeModule, executionYear)) {
+	    if (curriculumModule.hasConcluded(degreeModule, executionYear)) {
 		return true;
 	    }
 	}
@@ -768,17 +763,16 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    final public YearMonthDay getConclusionDate() {
-	if (!isConcluded((ExecutionYear) null)) {
+    public YearMonthDay calculateConclusionDate() {
+	if (!isConcluded()) {
 	    throw new DomainException("CurriculumGroup.is.not.concluded");
 	}
 
 	final Collection<CurriculumModule> curriculumModules = new HashSet<CurriculumModule>(getCurriculumModulesSet());
-
 	YearMonthDay result = null;
 	for (final CurriculumModule curriculumModule : curriculumModules) {
-	    if (curriculumModule.isConcluded((ExecutionYear) null)) {
-		final YearMonthDay curriculumModuleConclusionDate = curriculumModule.getConclusionDate();
+	    if (curriculumModule.isConcluded()) {
+		final YearMonthDay curriculumModuleConclusionDate = curriculumModule.calculateConclusionDate();
 		if (result == null || curriculumModuleConclusionDate.isAfter(result)) {
 		    result = curriculumModuleConclusionDate;
 		}
