@@ -4,7 +4,7 @@
 
 <schema name="researcher.person.personalInfo" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="nickname" key="researcher.viewCurriculum.name"/>
-</schema>
+</schema>; 
 
 <schema name="researchInterest.summary" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
 	<slot name="order"/>
@@ -2391,6 +2391,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+		<property name="style" value="overflow: hidden; display: block;"/>
 	</slot>
 </schema>
 
@@ -2403,6 +2404,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+		<property name="style" value="overflow: hidden; display: block;"/>
 	</slot>
 </schema>
 
@@ -2432,6 +2434,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+		<property name="style" value="overflow: hidden; display: block;"/>
 	</slot>
 </schema>
 
@@ -2482,6 +2485,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+		<property name="style" value="overflow: hidden; display: block;"/>
 	</slot>
 </schema>
 
@@ -2504,6 +2508,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+		<property name="style" value="overflow: hidden; display: block;"/>
 	</slot>
 </schema>
 
@@ -2525,6 +2530,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+		<property name="style" value="overflow: hidden; display: block;"/>
 	</slot>
 </schema>
 
@@ -2543,6 +2549,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+		<property name="style" value="overflow: hidden; display: block;"/>
 	</slot>
 </schema>
 
@@ -2563,6 +2570,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+		<property name="style" value="overflow: hidden; display: block;"/>
 	</slot>
 </schema>
 
@@ -2573,6 +2581,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+		<property name="style" value="overflow: hidden; display: block;"/>
 	</slot>
 	<slot name="note"/>
 </schema>
@@ -2589,6 +2598,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
+		<property name="style" value="overflow: hidden; display: block;"/>
 	</slot>
 	<slot name="note"/>
 </schema>
