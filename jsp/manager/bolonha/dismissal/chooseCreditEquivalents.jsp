@@ -41,7 +41,7 @@
 	
 	<fr:edit id="dismissalType" name="dismissalBean" schema="DismissalBean.chooseEquivalents">
 		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4 thlight"/>
+			<fr:property name="classes" value="tstyle4 thlight width60em"/>
 			<fr:property name="columnClasses" value=",,tdclear"/>
 		</fr:layout>
 		<fr:destination name="dismissalTypePostBack" path="<%= "/studentCredits.do?method=dismissalTypePostBack&scpID=" + scpID.toString()%>"/>
@@ -55,6 +55,7 @@
 		</p>
 	</html:messages>
 
+	<br/>
 	<fr:edit id="b" name="dismissalBean" layout="student-dismissal"/>
 	
 	<p class="mtop15 mbottom15">
