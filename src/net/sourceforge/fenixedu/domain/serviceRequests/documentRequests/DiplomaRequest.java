@@ -133,7 +133,8 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 		throw new DomainException("DiplomaRequest.diploma.not.available");
 	    }
 	    
-	    if ((getRequestedCycle() == null || getRequestedCycle() == getRegistration().getDegreeType().getLastCycleType()) && !getRegistration().isConcluded()) {
+	    if ((getRequestedCycle() == null || getRequestedCycle() == getRegistration().getDegreeType().getLastCycleType()) 
+		    && !getRegistration().isConcluded() || !getRegistration().isRegistrationConclusionProcessed()) {
 		throw new DomainException("DiplomaRequest.registration.hasnt.concluded");
 	    }
 	    
