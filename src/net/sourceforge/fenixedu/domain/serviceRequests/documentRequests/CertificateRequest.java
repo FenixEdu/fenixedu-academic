@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServi
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -33,7 +34,8 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     static final public CertificateRequest create(Registration registration,
 	    DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose,
-	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear, MobilityProgram mobilityProgram) {
+	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear, 
+	    MobilityProgram mobilityProgram, CycleType requestedCycle) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
@@ -47,7 +49,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 		    otherPurpose, urgentRequest, mobilityProgram);
 	case DEGREE_FINALIZATION_CERTIFICATE:
 	    return new DegreeFinalizationCertificateRequest(registration, chosenDocumentPurposeType,
-		    otherPurpose, urgentRequest, average, detailed, mobilityProgram);
+		    otherPurpose, urgentRequest, average, detailed, mobilityProgram, requestedCycle);
 	}
 
 	return null;

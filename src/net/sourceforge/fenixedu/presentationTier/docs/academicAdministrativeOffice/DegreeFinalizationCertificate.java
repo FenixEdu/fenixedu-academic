@@ -11,12 +11,15 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -33,12 +36,13 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	final DegreeFinalizationCertificateRequest degreeFinalizationCertificateRequest = (DegreeFinalizationCertificateRequest) getDocumentRequest();
 	final Registration registration = degreeFinalizationCertificateRequest.getRegistration();
 
-	parameters.put("degreeFinalizationDate", registration.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
-	parameters.put("degreeFinalizationGrade", degreeFinalizationCertificateRequest.getAverage() ? getDegreeFinalizationGrade(registration.getFinalAverage()) : "");
+	final CycleType requestedCycle = degreeFinalizationCertificateRequest.getRequestedCycle();
+	parameters.put("degreeFinalizationDate", registration.getConclusionDate(requestedCycle).toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	parameters.put("degreeFinalizationGrade", degreeFinalizationCertificateRequest.getAverage() ? getDegreeFinalizationGrade(registration.getFinalAverage(requestedCycle)) : "");
 	
 	parameters.put("degreeFinalizationEcts", getDegreeFinalizationEcts(registration));
 	parameters.put("creditsDescription", getCreditsDescription());
-	parameters.put("graduateTitle", getGraduateTitle());
+	parameters.put("graduateTitle", getGraduateTitle(registration, requestedCycle));
 	parameters.put("diplomaDescription", getDiplomaDescription());
 	parameters.put("degreeFinalizationInfo", getDegreeFinalizationInfo(degreeFinalizationCertificateRequest, registration));
     }
@@ -68,13 +72,13 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	return result.toString();
     }
 
-    final private String getGraduateTitle() {
+    final private String getGraduateTitle(final Registration registration, final CycleType requestedCycle) {
 	final StringBuilder result = new StringBuilder();
 	
 	final DegreeType degreeType = getDocumentRequest().getDegreeType();
 	if (degreeType.getQualifiesForGraduateTitle()) {
 	    result.append(" pelo que tem direito ao grau académico de ");
-	    result.append(degreeType.getGraduateTitle());
+	    result.append(registration.getGraduateTitle(requestedCycle));
 	    result.append(", ");
 	}
 	
@@ -124,7 +128,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	    }
 		
 	    if (getDocumentRequest().isToShowCredits()) {
-		result.append(getCreditsDismissalsEctsCreditsInfo(curriculum));
+		result.append(getRemainingCreditsInfo(curriculum));
 	    }
 	    
 	    result.append(generateEndLine());
@@ -139,7 +143,9 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
     final private void reportEntries(final StringBuilder result, final SortedSet<ICurriculumEntry> entries, final Map<Unit, String> academicUnitIdentifiers) {
 	for (final ICurriculumEntry entry : entries) {
-	    reportEntry(result, entry, academicUnitIdentifiers);
+	    if (!(entry instanceof Equivalence || entry instanceof CreditsDismissal)) {
+		reportEntry(result, entry, academicUnitIdentifiers);
+	    }
 	}
     }
 

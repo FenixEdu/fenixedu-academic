@@ -156,31 +156,30 @@
 <schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
-	<slot name="mobilityProgram" key="label.mobilityProgram"/>
 </schema>
-
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed"></slot>
 	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average"></slot>
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
-	<slot name="mobilityProgram" key="label.mobilityProgram"/>
 </schema>
 
+<schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="year" key="label.year"/>
+</schema>
 
-<schema name="DocumentRequestCreateBean.DIPLOMA_REQUEST.AdditionalInformation"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" 
-	bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="DocumentRequestCreateBean.requestedCycle"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="requestedCycle" key="label.cycleType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="THIRD_CYCLE" />	
 	</slot>
 </schema>
 
-
-<schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation"
+<schema name="DocumentRequestCreateBean.mobilityProgram"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="year" key="label.year"/>
+	<slot name="mobilityProgram" key="label.mobilityProgram" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">

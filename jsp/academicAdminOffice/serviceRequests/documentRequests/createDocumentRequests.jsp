@@ -59,6 +59,7 @@
 
 <p class="mbottom025"><strong><bean:message key="message.document.to.request" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
 
+	<!-- Choose Document Request Type -->
 	<bean:define id="schema" name="documentRequestCreateBean" property="schema" type="java.lang.String"/>
 	<fr:edit name="documentRequestCreateBean" schema="<%=schema%>" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 		<fr:destination name="documentRequestTypeChoosedPostBack" path="/documentRequestsManagement.do?method=documentRequestTypeChoosedPostBack"/>	
@@ -68,6 +69,7 @@
 		</fr:layout>	
 	</fr:edit>
 	
+	<!-- Insert additional Information (if any) -->
 	<logic:present name="additionalInformationSchemaName">
 		<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>
 		<fr:edit name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
@@ -79,17 +81,38 @@
 	</logic:present>
 	
 	<logic:notEmpty name="documentRequestCreateBean" property="chosenDocumentRequestType">
+		
+		<!-- Requested Cycle -->
+		<logic:equal name="documentRequestCreateBean" property="hasCycleTypeDependency" value="true">
+			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.requestedCycle" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
+					<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
+				</fr:layout>	
+			</fr:edit>
+		</logic:equal>
+
+		<!-- Mobility Program -->
+		<logic:equal name="documentRequestCreateBean" property="hasMobilityProgramDependency" value="true">
+			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.mobilityProgram" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
+					<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
+				</fr:layout>	
+			</fr:edit>
+		</logic:equal>
+
+		<!-- Purposes -->
 		<logic:notEqual name="documentRequestCreateBean" property="chosenDocumentRequestType" value="<%=DocumentRequestType.DIPLOMA_REQUEST.name()%>">
-	
 			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 					<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
 				</fr:layout>	
 			</fr:edit>
-	
 		</logic:notEqual>
 
+		<!-- Can be free processed? -->
 		<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">
 			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
