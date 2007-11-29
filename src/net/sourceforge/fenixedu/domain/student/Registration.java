@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -599,6 +600,10 @@ public class Registration extends Registration_Base {
     final public BigDecimal getAverage(final ExecutionYear executionYear, final CycleType cycleType) {
 	return executionYear == null && cycleType == null && isConcluded() && isRegistrationConclusionProcessed() ? BigDecimal
 		.valueOf(getFinalAverage()) : getCurriculum(executionYear, cycleType).getAverage();
+    }
+
+    public Integer calculateFinalAverage() {
+	return getAverage().intValue();
     }
 
     final public Integer getFinalAverage(final CycleType cycleType) {
