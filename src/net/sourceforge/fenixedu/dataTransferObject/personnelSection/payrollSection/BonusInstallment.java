@@ -75,7 +75,7 @@ public class BonusInstallment implements Serializable {
 	spreadsheet.addHeader(bundle.getString("label.workingUnit"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.subCostCenter"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.explorationUnit"), 2000);
-
+	int nextFirstRow = spreadsheet.getRow().getLastCellNum() + 1;
 	AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment.readByYearAndInstallment(
 		getYear(), getInstallment());
 
@@ -90,13 +90,13 @@ public class BonusInstallment implements Serializable {
 	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
 	}
 
-	for (int columnIndex = 0; columnIndex < 7; columnIndex++) {
+	for (int columnIndex = 0; columnIndex < nextFirstRow; columnIndex++) {
 	    spreadsheet.getSheet().addMergedRegion(
 		    new Region(0, (short) columnIndex, 1, (short) columnIndex));
 	}
 	spreadsheet.newHeaderRow();
 	int rowNumber = spreadsheet.getSheet().getLastRowNum() - 1;
-	for (int index = 7, monthIndex = 0; monthIndex < sortedYearMonths.size(); monthIndex++, index += 5) {
+	for (int index = nextFirstRow, monthIndex = 0; monthIndex < sortedYearMonths.size(); monthIndex++, index += 5) {
 	    spreadsheet.addHeader(bundle.getString("label.maximumWorkingDays"), 2000, index);
 	    spreadsheet.addHeader(bundle.getString("label.workedDays"), 2000, index + 1);
 	    spreadsheet.addHeader(bundle.getString("label.absences"), 2000, index + 2);
