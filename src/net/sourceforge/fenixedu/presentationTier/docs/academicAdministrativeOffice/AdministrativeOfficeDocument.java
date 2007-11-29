@@ -211,13 +211,13 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	result.append(entry.getEctsCreditsForCurriculum()).append(getCreditsDescription()).append(", ");
     }
     
-    final protected String getCreditsDismissalsEctsCreditsInfo(final ICurriculum curriculum) {
-	final BigDecimal creditsDismissalsEctsCredits = curriculum.getCreditsEctsCredits();
+    final protected String getRemainingCreditsInfo(final ICurriculum curriculum) {
+	final BigDecimal remainingCredits = curriculum.getRemainingCredits();
 	
 	final StringBuilder result = new StringBuilder();
-	if (creditsDismissalsEctsCredits != BigDecimal.ZERO) {
+	if (remainingCredits != BigDecimal.ZERO) {
 	    result.append("\n");
-	    result.append(StringUtils.multipleLineRightPadWithSuffix("Créditos por Dispensas:", LINE_LENGTH, '-', creditsDismissalsEctsCredits + getCreditsDescription()));
+	    result.append(StringUtils.multipleLineRightPadWithSuffix("Créditos:", LINE_LENGTH, '-', remainingCredits + getCreditsDescription()));
 	    result.append("\n");
 	}
 	

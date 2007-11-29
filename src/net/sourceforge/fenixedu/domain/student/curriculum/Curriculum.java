@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 
 public class Curriculum implements Serializable, ICurriculum {
     
@@ -179,7 +180,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	
 	return average.setScale(SCALE, ROUNDING_MODE);
     }
-    
+
     public Integer getRoundedAverage() {
 	return getAverage().setScale(0, RoundingMode.HALF_UP).intValue();
     }
@@ -202,12 +203,15 @@ public class Curriculum implements Serializable, ICurriculum {
 	return curricularYear;
     }
 
-    public BigDecimal getCreditsEctsCredits() {
+    public BigDecimal getRemainingCredits() {
 	BigDecimal result = BigDecimal.ZERO;
 
 	for (final ICurriculumEntry entry : this.curricularYearEntries) {
-	    if (entry instanceof CreditsDismissal) {
-		result = result.add(entry.getEctsCreditsForCurriculum());
+	    if (entry instanceof Dismissal) {
+		final Dismissal dismissal = (Dismissal) entry;
+		if (dismissal instanceof CreditsDismissal || dismissal.getCredits() instanceof Equivalence) {
+		    result = result.add(entry.getEctsCreditsForCurriculum());
+		}
 	    }
 	}
 	

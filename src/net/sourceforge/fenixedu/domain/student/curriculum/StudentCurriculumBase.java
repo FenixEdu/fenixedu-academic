@@ -118,7 +118,7 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
 	return averageCalculator.sumPi;
     }
 
-    final public BigDecimal getCreditsEctsCredits() {
+    final public BigDecimal getRemainingCredits() {
 	return BigDecimal.valueOf(getStudentCurricularPlan().getGivenCredits());
     }
 

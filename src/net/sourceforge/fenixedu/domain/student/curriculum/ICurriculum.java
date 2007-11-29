@@ -21,7 +21,7 @@ public interface ICurriculum {
 
     abstract public boolean isEmpty();
 
-    abstract public BigDecimal getCreditsEctsCredits();
+    abstract public BigDecimal getRemainingCredits();
     
     abstract public StudentCurricularPlan getStudentCurricularPlan();
     
