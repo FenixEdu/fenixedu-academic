@@ -41,18 +41,19 @@ public class Diploma extends AdministrativeOfficeDocument {
 	parameters.put("nameOfMother", StringFormatter.prettyPrint(person.getNameOfMother()));
 	parameters.put("birthLocale", StringFormatter.prettyPrint(person.getDistrictOfBirth()));
 
-	parameters.put("conclusionDate", registration.getConclusionDate(diplomaRequest.getRequestedCycle()).toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	final CycleType requestedCycle = diplomaRequest.getRequestedCycle();
+	parameters.put("conclusionDate", registration.getConclusionDate(requestedCycle).toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 	parameters.put("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 
 	if (diplomaRequest.hasFinalAverageDescription()) {
-	    parameters.put("finalAverageDescription", StringUtils.capitalize(registration.getFinalAverageDescription(diplomaRequest.getRequestedCycle())));
+	    parameters.put("finalAverageDescription", StringUtils.capitalize(registration.getFinalAverageDescription(requestedCycle)));
 	} else if (diplomaRequest.hasDissertationTitle()) {
 	    parameters.put("dissertationTitle", registration.getDissertationEnrolment().getThesis().getFinalFullTitle().getContent());
 	}
 	
 	parameters.put("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, registration));
-	parameters.put("graduateTitle", registration.getGraduateTitle(diplomaRequest.getRequestedCycle()));
+	parameters.put("graduateTitle", registration.getGraduateTitle(requestedCycle));
 	parameters.put("degreeDescription", getDegreeDescription());
     }
 
