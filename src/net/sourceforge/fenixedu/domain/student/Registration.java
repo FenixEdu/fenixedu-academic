@@ -65,6 +65,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -1912,13 +1913,26 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isRegistrationConclusionProcessed() {
-	return getFinalAverage() != null;
+	if (getDegreeType().isBolonhaType()) {
+	    return getLastStudentCurricularPlan().isConclusionProcessed();
+	} else {
+	    return getFinalAverage() != null;
+	}
+    }
+
+    public boolean isRegistrationConclusionProcessed(final CycleType cycleType) {
+	if (cycleType == null) {
+	    return isRegistrationConclusionProcessed();
+	} else if (getDegreeType().isBolonhaType() && getDegreeType().hasCycleTypes(cycleType)) {
+	    return getLastStudentCurricularPlan().isConclusionProcessed(cycleType);
+	} 
+	
+	throw new DomainException("Registration.degree.type.has.no.such.cycle.type");
     }
 
     public boolean isQualifiedToRegistrationConclusionProcess() {
 	final DegreeType degreeType = getDegreeType();
-	return degreeType != DegreeType.MASTER_DEGREE && degreeType != DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
-		&& !isRegistrationConclusionProcessed() && (getActiveState().isActive() || isConcluded());
+	return degreeType != DegreeType.MASTER_DEGREE && !isRegistrationConclusionProcessed() && (getActiveState().isActive() || isConcluded());
     }
 
     final public boolean isTransition() {
@@ -1932,7 +1946,7 @@ public class Registration extends Registration_Base {
     final public boolean isTransited() {
 	return getActiveStateType() == RegistrationStateType.TRANSITED;
     }
-    
+
     @Override
     public YearMonthDay getConclusionDate() {
         if (isBolonha()) {
@@ -1957,7 +1971,7 @@ public class Registration extends Registration_Base {
 
 	return lastStudentCurricularPlan.getConclusionDate(cycleType);
     }
-    
+
     @Override
     public void setConclusionDate(YearMonthDay conclusionDate) {
         throw new DomainException("error.Registration.cannot.modify.conclusion.date");
@@ -2017,7 +2031,9 @@ public class Registration extends Registration_Base {
     }
 
     public boolean hasConcluded() {
+
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+
 	if (!lastStudentCurricularPlan.isBolonhaDegree()) {
 	    return true;
 	}
@@ -2033,7 +2049,7 @@ public class Registration extends Registration_Base {
 
 	return !lastStudentCurricularPlan.getCycleCurriculumGroups().isEmpty();
     }
-    
+
     public boolean getHasConcluded() {
 	return hasConcluded();
     }
@@ -2257,10 +2273,13 @@ public class Registration extends Registration_Base {
 	return getInterruptedStudies() ? false : getRegistrationAgreement() == RegistrationAgreement.NORMAL;
     }
 
-    final public boolean hasDiplomaRequest() {
+    final public boolean hasDiplomaRequest(final CycleType cycleType) {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
 	    if (documentRequest.isDiploma()) {
-		return true;
+		final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
+		if (cycleType == null || cycleType == diplomaRequest.getRequestedCycle()) {
+		    return true;
+		}
 	    }
 	}
 
