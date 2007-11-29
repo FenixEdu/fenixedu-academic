@@ -683,6 +683,10 @@ public class Thesis extends Thesis_Base {
 	Teacher teacher = getResponsibleTeacher();
 
 	for (MarkSheet markSheet : curricularCourse.getMarkSheets()) {
+	    if (getEnrolment().getExecutionPeriod() != markSheet.getExecutionPeriod()) {
+		continue;
+	    }
+
 	    if (markSheet.isConfirmed()) {
 		continue;
 	    }
