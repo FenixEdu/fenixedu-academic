@@ -9,8 +9,8 @@
 	
 <fr:view name="journal" layout="tabular-nonNullValues" schema="presentJournal">
 	<fr:layout name="tabular-nonNullValues">
-		<fr:property name="classes" value="tstyle2 thright thlight thtop"/>
-		<fr:property name="rowClasses" value="tdbold,,,,"/>
+		<fr:property name="classes" value="tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc"/>
+		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
 </fr:view>
  
@@ -19,7 +19,6 @@
 <fr:view name="journal" property="articles" schema="presentArticlesInJournal">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
-		<fr:property name="rowClasses" value=",bgcolorfafafa"/>
 		<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
 		<fr:property name="sortBy" value="volume, number"/>
 	</fr:layout>

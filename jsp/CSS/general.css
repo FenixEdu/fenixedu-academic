@@ -205,9 +205,7 @@ table.tdtop td { vertical-align: top; }
 table.tdmiddle td { vertical-align: middle !important; }
 table.vamiddle td, table.vamiddle th { vertical-align: middle; }
 
-.thwhite th {
-background: #fff !important;
-}
+.thwhite th { background: #fff !important; }
 
 /* font */
 table.thlight th { font-weight: normal; }
@@ -280,7 +278,7 @@ table td.cornerright { }
 .tderror1 { color: #c00; }
 .tderror1 span { background-color: #ffeadd; }
 
-table.thnowrap { white-space: nowrap; }
+table.thnowrap tr th { white-space: nowrap; }
 .nowrap { white-space: nowrap; }
 .breakword { word-wrap: break-word; }
 

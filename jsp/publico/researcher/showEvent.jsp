@@ -9,8 +9,8 @@
  
 <fr:view name="event" layout="tabular-nonNullValues" schema="presentEvent">
 	<fr:layout name="tabular-nonNullValues">
-		<fr:property name="classes" value="tstyle2 thright thlight thtop"/>
-		<fr:property name="rowClasses" value="tdbold,,,,"/>
+		<fr:property name="classes" value="tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc"/>
+		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
 </fr:view>
 
@@ -19,7 +19,6 @@
 	<fr:view name="event" property="articles" schema="presentArticlesInEvent">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
-			<fr:property name="rowClasses" value=",bgcolorfafafa"/>
 			<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
 		</fr:layout>
 	</fr:view>
