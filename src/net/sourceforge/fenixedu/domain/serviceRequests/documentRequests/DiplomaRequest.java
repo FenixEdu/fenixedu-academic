@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
@@ -45,27 +44,13 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	    super.setRequestedCycle(requestedCycle);
 	}
 	
-	checkExistingDiploma(requestedCycle);
+	checkForDuplicate(requestedCycle);
     }
     
-    private void checkExistingDiploma(final CycleType requestedCycle) {
-	final Collection<DocumentRequest> diplomaRequests = getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST);
-	if (!diplomaRequests.isEmpty() && 
-		(requestedCycle == null ||
-			hasDiplomaRequestForRequestedCycle(diplomaRequests, requestedCycle))) {
-	    throw new DomainException("DiplomaRequest.diploma.already.successfully.finished");
+    private void checkForDuplicate(final CycleType requestedCycle) {
+	if (getRegistration().hasDiplomaRequest(requestedCycle)) {
+	    throw new DomainException("DiplomaRequest.diploma.already.requested");
 	}
-    }
-    
-    private boolean hasDiplomaRequestForRequestedCycle(final Collection<DocumentRequest> diplomaRequests, final CycleType requestedCycleType) {
-	for (final DocumentRequest documentRequest : diplomaRequests) {
-	    final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
-	    if (diplomaRequest.getRequestedCycle() == requestedCycleType) {
-		return true;
-	    }
-	}
-	
-	return false;
     }
 
     @Override
@@ -127,19 +112,14 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 
-	    checkExistingDiploma(getRequestedCycle());
+	    checkForDuplicate(getRequestedCycle());
 	    
 	    if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {
 		throw new DomainException("DiplomaRequest.diploma.not.available");
 	    }
 	    
-	    if ((getRequestedCycle() == null || getRequestedCycle() == getRegistration().getDegreeType().getLastCycleType()) 
-		    && (!getRegistration().isConcluded() || !getRegistration().isRegistrationConclusionProcessed())) {
-		throw new DomainException("DiplomaRequest.registration.hasnt.concluded");
-	    }
-	    
-	    if (getRequestedCycle() != null && !getRegistration().hasConcludedCycle(getRequestedCycle())) {
-		throw new DomainException("DiplomaRequest.registration.hasnt.concluded.requested.cycle");
+	    if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
+		throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
 	    }
 	    
 	    if (hasDissertationTitle() && !getRegistration().hasDissertationThesis()) {
