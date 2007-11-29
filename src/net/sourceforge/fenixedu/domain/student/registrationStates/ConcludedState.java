@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
-import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,12 +8,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.StateMachine;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
 /**
  * 
@@ -39,18 +35,19 @@ public class ConcludedState extends ConcludedState_Base {
 
     @Override
     public void delete() {
-	if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE).isEmpty()) {
+	if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE)
+		.isEmpty()) {
 	    throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.degree.finalization.request");
-	} 
-	
+	}
+
 	if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST).isEmpty()) {
 	    throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
-	} 
-	
+	}
+
 	getRegistration().setFinalAverage(null);
-        super.delete();
+	super.delete();
     }
-    
+
     public void checkConditionsToForward() {
 	throw new DomainException("error.impossible.to.forward.from.concluded");
     }
@@ -77,59 +74,4 @@ public class ConcludedState extends ConcludedState_Base {
 	return RegistrationStateType.CONCLUDED;
     }
 
-    static public class RegistrationConcludedStateCreator extends RegistrationStateCreator {
-
-	public RegistrationConcludedStateCreator(Registration registration) {
-	    super(registration);
-	    setStateType(RegistrationStateType.CONCLUDED);
-	    setStateDate(registration.calculateConclusionDate()); // just for interface viewing purposes
-	    setFinalAverage(registration.getAverage().setScale(0, RoundingMode.HALF_UP).intValue());
-	}
-
-	Integer finalAverage;
-	
-	public Integer getFinalAverage() {
-	    return finalAverage;
-	}
-
-	public void setFinalAverage(Integer finalAverage) {
-	    this.finalAverage = finalAverage;
-	}
-
-	@Override
-	public Object execute() {
-	    if (getRegistration().isRegistrationConclusionProcessed()) {
-		throw new DomainException("ConcludedState.cannot.create.concluded.state.on.registration.with.average");
-	    }
-	    
-	    // conclusion state date is always current state
-	    final DateTime stateDateTime = new YearMonthDay().toDateTimeAtCurrentTime();
-
-	    RegistrationState conclusionState = null;
-	    final RegistrationState previousState = getRegistration().getStateInDate(stateDateTime);
-	    if (previousState == null) {
-		conclusionState = RegistrationState.createState(getRegistration(), null, stateDateTime, getStateType());
-	    } else if (previousState.getStateType() == RegistrationStateType.CONCLUDED) {
-		conclusionState = previousState;
-	    } else {
-		StateMachine.execute(previousState, getStateType().name());
-		conclusionState = getRegistration().getActiveState();
-	    }
-	    conclusionState.setStateDate(stateDateTime);
-	    conclusionState.setResponsiblePerson(AccessControl.getUserView() == null ? null : AccessControl.getPerson());
-	    conclusionState.setRemarks(getRemarks());
-
-	    RegistrationState nextState = conclusionState.getNext();
-	    if (nextState != null && !conclusionState.getValidNextStates().contains(nextState.getStateType().name())) {
-		throw new DomainException("error.cannot.add.registrationState.incoherentState");
-	    }
-
-	    if (!getRegistration().isBolonha()) {
-		getRegistration().setFinalAverage(getFinalAverage());
-	    }
-	    return conclusionState;
-	}
-	
-    }
-    
 }
