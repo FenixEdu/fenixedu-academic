@@ -2751,4 +2751,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	
     }
     
+    public List<CycleCurriculumGroup> getInternalCycleCurriculumGrops() {
+	return getRoot().getInternalCycleCurriculumGroups();
+    }
+    
 }
