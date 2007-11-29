@@ -269,11 +269,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	if (!getDegreeType().hasCycleTypes(cycleType)) {
 	    throw new DomainException("StudentCurricularPlan.doesnt.have.such.cycle.type");
-	}
+    }
 
 	return getCycle(cycleType).getConclusionDate();
     }
-    
+
     public YearMonthDay calculateConclusionDate(final CycleType cycleType) {
 	if (cycleType == null) {
 	    return getLastApprovementDate();
@@ -290,6 +290,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getCycle(cycleType).calculateConclusionDate();
     }
 
+    final public boolean isConclusionProcessed() {
+	return getLastCycleCurriculumGroup().isConclusionProcessed();
+    }
+    
+    final public boolean isConclusionProcessed(final CycleType cycleType) {
+	final CycleCurriculumGroup cycleCurriculumGroup = getCycle(cycleType);
+	return cycleCurriculumGroup != null && cycleCurriculumGroup.isConclusionProcessed();
+    }
+    
     final public Curriculum getCurriculum(final ExecutionYear executionYear) {
 	final RootCurriculumGroup rootCurriculumGroup = getRoot();
 	if (rootCurriculumGroup == null) {
@@ -2642,6 +2651,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 	    checkEnrolmentRules(responsiblePerson, moveCurriculumLinesBean.getIDegreeModulesToEvaluate(executionPeriod), executionPeriod);
 	}
+
     }
 
     @SuppressWarnings("unchecked")
@@ -2674,6 +2684,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     
     public CycleCurriculumGroup getSecondCycle() {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.SECOND_CYCLE) : null;
+    }
+    
+    public CycleCurriculumGroup getLastCycleCurriculumGroup() {
+	return isBoxStructure() ? getRoot().getLastCycleCurriculumGroup() : null;
+    }
+    
+    public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {
+	return getRoot().getCycleCurriculumGroups();
     }
     
     public List<CycleType> getSupportedCycleTypesToEnrol() {
@@ -2731,10 +2749,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	}
 	
-    }
-    
-    public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {
-	return getRoot().getCycleCurriculumGroups();
     }
     
 }
