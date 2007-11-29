@@ -1,7 +1,7 @@
 <schema name="scientificCouncil.thesis.table" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="student.number" key="label.student.number.short"/>
     <slot name="student.person.name" key="student"/>
-    <slot name="title" key="label.scientificCouncil.title" layout="short">
+    <slot name="finalTitle" key="label.scientificCouncil.title" layout="short">
         <property name="length" value="60"/>
     </slot>
     <slot name="state" key="label.thesis.state">
@@ -13,7 +13,7 @@
     <slot name="student" layout="format" key="label.scientificCouncil.student">
         <property name="format" value="${person.name} (${number})"/>
     </slot>
-    <slot name="title" layout="null-as-label" key="label.scientificCouncil.title">
+    <slot name="finalTitle" layout="null-as-label" key="label.scientificCouncil.title">
         <property name="label" value="--"/>
     </slot>
     <slot name="submission" key="label.scientificCouncil.whenSubmitted"/>
@@ -23,7 +23,7 @@
     <slot name="student" layout="format" key="label.scientificCouncil.student">
         <property name="format" value="${person.name} (${number})"/>
     </slot>
-    <slot name="title" layout="null-as-label" key="label.scientificCouncil.title">
+    <slot name="finalTitle" layout="null-as-label" key="label.scientificCouncil.title">
         <property name="label" value="--"/>
     </slot>
     <slot name="approval" key="label.scientificCouncil.whenApproved"/>
@@ -33,7 +33,7 @@
     <slot name="student" layout="format">
         <property name="format" value="${person.name} (${number})"/>
     </slot>
-    <slot name="title"/>
+    <slot name="finalTitle" key="label.scientificCouncil.title"/>
     <slot name="comment" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
@@ -56,7 +56,7 @@
 </schema>
 
 <schema name="thesis.review.information" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
-    <slot name="title"/>
+    <slot name="finalTitle" key="label.scientificCouncil.title"/>
     <slot name="comment"/>
 </schema>
 

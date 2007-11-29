@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -1333,4 +1334,27 @@ public class Thesis extends Thesis_Base {
 	}
 	return getProposedDiscussed();
     }
+
+    public void setState(final ThesisState state) {
+	if (hasFutureEnrolment()) {
+	    throw new DomainException("thesis.has.enrolment.in.future");
+	}
+	super.setState(state);
+    }
+
+    protected boolean hasFutureEnrolment() {
+	final Enrolment enrolment = getEnrolment();
+	if (enrolment != null) {
+	    final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
+	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+	    final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+	    for (final Enrolment otherEnrolment : studentCurricularPlan.getEnrolments(curricularCourse)) {
+		if (otherEnrolment.getExecutionPeriod().isAfter(executionPeriod)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
 }

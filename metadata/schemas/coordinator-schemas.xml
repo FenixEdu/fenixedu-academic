@@ -118,7 +118,8 @@
     <slot name="student" layout="format" key="student">
         <property name="format" value="${person.name} (${number})"/>
     </slot>
-    <slot name="title" key="label.coordinator.title"/>
+    <slot name="finalTitle" key="label.coordinator.title"/>
+    <slot name="finalSubtitle" key="label.thesis.subtitle"/>
     <slot name="comment" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
