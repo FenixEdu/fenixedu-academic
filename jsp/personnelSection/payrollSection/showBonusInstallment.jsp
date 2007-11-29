@@ -57,8 +57,9 @@
 				<logic:present name="bonusInstallment" property="bonusInstallmentList">
 					<logic:notEmpty name="bonusInstallment" property="bonusInstallmentList">
 						<html:submit onclick="this.form.method.value='exportBonusInstallment';">
-							<bean:message key="button.export"/>
+							<bean:message key="button.exportExcel"/>
 						</html:submit>
+						<%-- 
 						<html:submit onclick="this.form.method.value='exportBonusInstallmentToGIAF';">
 							<bean:message key="button.exportGIAF"/>
 						</html:submit>
@@ -68,8 +69,9 @@
 						<html:submit onclick="this.form.method.value='exportBonusInstallmentToGIAFP2';">
 							<bean:message key="button.exportGIAFP2"/>
 						</html:submit>
+						--%>
 						<html:submit onclick="this.form.method.value='exportBonusInstallmentToGIAFP3';">
-							GIAF
+							<bean:message key="button.exportGIAF"/>
 						</html:submit>
 					</logic:notEmpty>
 				</logic:present>
