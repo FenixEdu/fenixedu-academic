@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 public class EvenOddRuleVerifier extends VerifyRuleExecutor {
 
     @Override
-    protected RuleResult verify(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+    protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
 	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
 	final EvenOddRule evenOddRule = (EvenOddRule) curricularRule;
 	
@@ -27,9 +27,9 @@ public class EvenOddRuleVerifier extends VerifyRuleExecutor {
     }
 
     @Override
-    protected RuleResult verifyWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+    protected RuleResult verifyEnrolmentWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
 	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
-	return verify(curricularRule, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
+	return verifyEnrolmentWithRules(curricularRule, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
     }
 
 }

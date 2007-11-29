@@ -147,7 +147,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
 	return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, getCurriculumGroup().getDegreeModule(), executionYear);
     }
-
+    
     public String getFullPath() {
 	if (isRoot()) {
 	    return getName().getContent();
@@ -195,6 +195,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public void getAllDegreeModules(Collection<DegreeModule> degreeModules);
 
     abstract public boolean isConcluded(ExecutionYear executionYear);
+    
+    abstract public boolean isConcluded(DegreeModule degreeModule, ExecutionYear executionYear);
 
     abstract public YearMonthDay getConclusionDate();
 
@@ -203,5 +205,6 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public Double getCreditsConcluded(ExecutionYear executionYear);
 
     abstract public boolean isPropaedeutic();
+          
 
 }

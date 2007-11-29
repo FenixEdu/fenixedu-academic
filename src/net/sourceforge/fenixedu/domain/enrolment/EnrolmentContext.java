@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.enrolment;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +14,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class EnrolmentContext {
 
@@ -108,6 +111,20 @@ public class EnrolmentContext {
 
     public void setResponsiblePerson(Person responsiblePerson) {
 	this.responsiblePerson = responsiblePerson;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static EnrolmentContext createForVerifyWithRules(final Person person,
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
+	return createForVerifyWithRules(person, studentCurricularPlan, executionPeriod, Collections.EMPTY_SET);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static EnrolmentContext createForVerifyWithRules(final Person person,
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod,
+	    final Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate) {
+	return new EnrolmentContext(person, studentCurricularPlan, executionPeriod, degreeModulesToEvaluate,
+		Collections.EMPTY_LIST, CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
 
 }

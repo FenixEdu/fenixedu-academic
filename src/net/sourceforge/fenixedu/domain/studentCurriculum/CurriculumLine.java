@@ -203,6 +203,11 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	}
 	return result;
     }
+    
+    @Override
+    public boolean isConcluded(DegreeModule degreeModule, ExecutionYear executionYear) {
+	return getDegreeModule() == degreeModule && isConcluded(executionYear);
+    }
 
     abstract public boolean isApproved();
     abstract public ExecutionPeriod getExecutionPeriod();

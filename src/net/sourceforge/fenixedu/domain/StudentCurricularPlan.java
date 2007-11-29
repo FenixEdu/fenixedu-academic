@@ -2495,6 +2495,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
 	return isBoxStructure() ? getRoot().findCurriculumGroupFor(courseGroup) : null;
     }
+    
+    public boolean isConcluded(final DegreeModule degreeModule,final ExecutionYear executionYear){
+	return isBoxStructure() ? getRoot().isConcluded(degreeModule, executionYear) : false;
+    }
+    
 
     final public MasterDegreeCandidate getMasterDegreeCandidate() {
 	if (getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
@@ -2723,6 +2728,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	}
 	
+    }
+    
+    public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {
+	return getRoot().getCycleCurriculumGroups();
     }
     
 }

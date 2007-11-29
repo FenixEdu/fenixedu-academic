@@ -8,17 +8,18 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ExclusivenessVerifier extends VerifyRuleExecutor {
 
     @Override
-    protected RuleResult verify(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
-	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+    protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+	    DegreeModule degreeModuleToVerify, CourseGroup rootOrCycleCourseGroup) {
 
 	final Exclusiveness exclusiveness = (Exclusiveness) curricularRule;
 	final DegreeModule exclusiveDegreeModule = exclusiveness.getExclusiveDegreeModule();
 	final IDegreeModuleToEvaluate degreeModuleToEvaluate = getDegreeModuleToEvaluate(enrolmentContext, exclusiveDegreeModule,
-		parentCourseGroup);
+		rootOrCycleCourseGroup);
 
 	if (degreeModuleToEvaluate != null) {
 	    if (!degreeModuleToEvaluate.isLeaf()) {
@@ -26,7 +27,7 @@ public class ExclusivenessVerifier extends VerifyRuleExecutor {
 	    }
 
 	    final CurricularCourse curricularCourse = (CurricularCourse) exclusiveDegreeModule;
-	    if (isApproved(enrolmentContext, curricularCourse, parentCourseGroup) || degreeModuleToEvaluate.isEnroled()
+	    if (isApproved(enrolmentContext, curricularCourse, rootOrCycleCourseGroup) || degreeModuleToEvaluate.isEnroled()
 		    || degreeModuleToEvaluate.isEnroling()) {
 		return RuleResult.createFalse(degreeModuleToVerify);
 	    }
@@ -36,13 +37,13 @@ public class ExclusivenessVerifier extends VerifyRuleExecutor {
     }
 
     @Override
-    protected RuleResult verifyWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
-	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+    protected RuleResult verifyEnrolmentWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+	    DegreeModule degreeModuleToVerify, CourseGroup rootOrCycleCourseGroup) {
 
 	final Exclusiveness exclusiveness = (Exclusiveness) curricularRule;
 	final DegreeModule exclusiveDegreeModule = exclusiveness.getExclusiveDegreeModule();
 	final IDegreeModuleToEvaluate degreeModuleToEvaluate = getDegreeModuleToEvaluate(enrolmentContext, exclusiveDegreeModule,
-		parentCourseGroup);
+		rootOrCycleCourseGroup);
 
 	if (degreeModuleToEvaluate != null) {
 	    if (!degreeModuleToEvaluate.isLeaf()) {
@@ -50,7 +51,7 @@ public class ExclusivenessVerifier extends VerifyRuleExecutor {
 	    }
 
 	    final CurricularCourse curricularCourse = (CurricularCourse) exclusiveDegreeModule;
-	    if (isApproved(enrolmentContext, curricularCourse, parentCourseGroup)
+	    if (isApproved(enrolmentContext, curricularCourse, rootOrCycleCourseGroup)
 		    || hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod()
 			    .getPreviousExecutionPeriod())) {
 		return RuleResult.createFalse(degreeModuleToVerify);
@@ -61,9 +62,9 @@ public class ExclusivenessVerifier extends VerifyRuleExecutor {
     }
 
     private IDegreeModuleToEvaluate getDegreeModuleToEvaluate(final EnrolmentContext enrolmentContext,
-	    final DegreeModule degreeModule, final CourseGroup parentCourseGroup) {
+	    final DegreeModule degreeModule, final CourseGroup rootOrCycleCourseGroup) {
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
-		.getAllChildDegreeModulesToEvaluateFor(parentCourseGroup)) {
+		.getAllChildDegreeModulesToEvaluateFor(rootOrCycleCourseGroup)) {
 
 	    if (degreeModuleToEvaluate.isFor(degreeModule)) {
 		return degreeModuleToEvaluate;
@@ -75,4 +76,26 @@ public class ExclusivenessVerifier extends VerifyRuleExecutor {
 
     }
 
+    @Override
+    protected RuleResult verifyDegreeConclusionWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+	    DegreeModule degreeModuleToVerify, CourseGroup rootOrCycleCourseGroup) {
+
+	final Exclusiveness exclusiveness = (Exclusiveness) curricularRule;
+	final DegreeModule exclusiveDegreeModule = exclusiveness.getExclusiveDegreeModule();
+
+	if (exclusiveDegreeModule.isCourseGroup()) {
+	    if (isEnrolledIn(enrolmentContext, (CourseGroup) exclusiveDegreeModule)) {
+		return RuleResult.createFalse(degreeModuleToVerify);
+	    }
+	} else if (exclusiveDegreeModule.isCurricularCourse()) {
+	    if (isApproved(enrolmentContext, (CurricularCourse) exclusiveDegreeModule, rootOrCycleCourseGroup)) {
+		return RuleResult.createFalse(degreeModuleToVerify);
+	    }
+	} else {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.invalid.degree.module.to.verify");
+	}
+
+	return RuleResult.createTrue(degreeModuleToVerify);
+    }
 }

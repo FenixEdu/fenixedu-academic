@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 public class EnrolmentToBeApprovedByCoordinatorVerifier extends VerifyRuleExecutor {
 
     @Override
-    protected RuleResult verify(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+    protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
 	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
 
 	if (enrolmentContext.getResponsiblePerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
@@ -21,9 +21,9 @@ public class EnrolmentToBeApprovedByCoordinatorVerifier extends VerifyRuleExecut
     }
 
     @Override
-    protected RuleResult verifyWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+    protected RuleResult verifyEnrolmentWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
 	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
-	return verify(curricularRule, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
+	return verifyEnrolmentWithRules(curricularRule, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
     }
 
 }

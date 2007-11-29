@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
@@ -235,5 +236,21 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
 	return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, null, executionYear);
     }
+    
+    public CycleCurriculumGroup getCycleCurriculumGroupFor(final CurriculumModule curriculumModule) {
+	for (final CycleCurriculumGroup cycleCurriculumGroup : getCycleCurriculumGroups()) {
+	    if (cycleCurriculumGroup.hasCurriculumModule(curriculumModule)) {
+		return cycleCurriculumGroup;
+	    }
+	}
+
+	return null;
+    }
+
+    public CycleCourseGroup getCycleCourseGroupFor(final CurriculumModule curriculumModule) {
+	final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroupFor(curriculumModule);
+	return cycleCurriculumGroup != null ? cycleCurriculumGroup.getDegreeModule() : null;
+    }
+    
 
 }

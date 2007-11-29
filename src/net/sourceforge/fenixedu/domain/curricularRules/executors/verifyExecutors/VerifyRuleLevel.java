@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutor
 
 public enum VerifyRuleLevel {
 
-    WITH_RULES,
+    ENROLMENT_WITH_RULES,
 
-    WITH_RULES_AND_TEMPORARY;
+    ENROLMENT_WITH_RULES_AND_TEMPORARY,
+    
+    DEGREE_CONCLUSION_WITH_RULES;
 }

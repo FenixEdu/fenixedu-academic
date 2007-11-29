@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -646,6 +647,15 @@ public class CourseGroup extends CourseGroup_Base {
 
 	return result;
     }
+    
+    public Set<DegreeModule> getChildDegreeModulesValidOn(final ExecutionYear executionYear) {
+	final Set<DegreeModule> result = new HashSet<DegreeModule>();
+	for (final Context context : getValidChildContexts(executionYear)) {
+	    result.add(context.getChildDegreeModule());
+	}
+
+	return result;
+    }
 
     public Set<Context> getActiveChildContexts() {
 	final Set<Context> result = new HashSet<Context>();
@@ -758,4 +768,6 @@ public class CourseGroup extends CourseGroup_Base {
     public Set<CurricularCourse> getAllCurricularCourses() {
 	return getAllCurricularCourses(null);
     }
+    
+    
 }

@@ -115,9 +115,7 @@ public class Registration extends Registration_Base {
     };
 
     private transient Double approvationRatio;
-
     private transient Double arithmeticMean;
-
     private transient Integer approvedEnrollmentsNumber = 0;
 
     private Registration() {
@@ -895,6 +893,18 @@ public class Registration extends Registration_Base {
 
     final public ExecutionYear getLastEnrolmentExecutionYear() {
 	return getSortedEnrolmentsExecutionYears().last();
+    }
+
+    public ExecutionYear getLastCurriculumLineExecutionYear() {
+	final SortedSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
+
+	for (final CurriculumLine curriculumLine : getLastStudentCurricularPlan().getRoot().getAllCurriculumLines()) {
+	    if (curriculumLine.hasExecutionPeriod()) {
+		executionYears.add(curriculumLine.getExecutionPeriod().getExecutionYear());
+	    }
+	}
+
+	return executionYears.last();
     }
 
     final public Collection<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
@@ -1997,20 +2007,25 @@ public class Registration extends Registration_Base {
 	return lastStudentCurricularPlan.hasConcludedCycle(cycleType, executionYear);
     }
 
-    /**
-     * 
-     * FIXME:Temporary solution until correct implementation of 
-     * hasConcludedCycle(final CycleType cycleType, final ExecutionYear
-     * executionYear) method
-     */
     public boolean hasConcluded() {
+
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
-	for (final CycleType cycleType : getDegreeType().getCycleTypes()) {
-	    if (!lastStudentCurricularPlan.hasConcludedCycle(cycleType, null)) {
+
+	if (!lastStudentCurricularPlan.isBolonhaDegree()) {
+	    return true;
+	}
+
+	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getCycleCurriculumGroups()) {
+	    if (!getDegreeType().getCycleTypes().contains(cycleCurriculumGroup.getCycleType())) {
+		continue;
+	    }
+
+	    if (!cycleCurriculumGroup.isConcluded(getLastCurriculumLineExecutionYear())) {
 		return false;
 	    }
 	}
-	return true;
+
+	return !lastStudentCurricularPlan.getCycleCurriculumGroups().isEmpty();
     }
 
     public boolean getHasConcluded() {
@@ -2245,6 +2260,7 @@ public class Registration extends Registration_Base {
 
 	return false;
     }
+
 
     final public Collection<DocumentRequest> getDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();

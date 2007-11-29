@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 public class RestrictionDoneDegreeModuleVerifier extends VerifyRuleExecutor {
 
     @Override
-    protected RuleResult verify(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+    protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
 	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
 
 	final RestrictionDoneDegreeModule restrictionDoneDegreeModule = (RestrictionDoneDegreeModule) curricularRule;
@@ -23,7 +23,7 @@ public class RestrictionDoneDegreeModuleVerifier extends VerifyRuleExecutor {
     }
 
     @Override
-    protected RuleResult verifyWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+    protected RuleResult verifyEnrolmentWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
 	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
 	final RestrictionDoneDegreeModule restrictionDoneDegreeModule = (RestrictionDoneDegreeModule) curricularRule;
 
