@@ -693,7 +693,19 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
 	}
 
-	return degreeModulesToEnrol.isEmpty();
+	double childCreditsDismissal = 0d;
+	for (final Dismissal dismissal : getChildDismissals()) {
+	    if (dismissal.isCreditsDismissal()) {
+		childCreditsDismissal += dismissal.getCredits().getGivenCredits();
+	    }
+	}
+
+	double degreeModulesToEnrolCredits = 0d;
+	for (final DegreeModule degreeModule : degreeModulesToEnrol) {
+	    degreeModulesToEnrolCredits += degreeModule.getMinEctsCredits(executionYear.getLastExecutionPeriod());
+	}
+
+	return childCreditsDismissal >= degreeModulesToEnrolCredits;
     }
 
     private boolean isCurricularRulesSatisfied(final CourseGroup courseGroup, final DegreeModule degreeModule,
