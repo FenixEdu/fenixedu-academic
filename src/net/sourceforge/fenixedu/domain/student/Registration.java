@@ -2016,7 +2016,8 @@ public class Registration extends Registration_Base {
 	}
 
 	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getCycleCurriculumGroups()) {
-	    if (!getDegreeType().getCycleTypes().contains(cycleCurriculumGroup.getCycleType())) {
+	    if (cycleCurriculumGroup.isExternal()
+		    || !getDegreeType().getCycleTypes().contains(cycleCurriculumGroup.getCycleType())) {
 		continue;
 	    }
 
