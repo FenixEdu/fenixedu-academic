@@ -18,9 +18,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModuleToEvaluate {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 8730987603988026373L;
 
     private DomainReference<CurriculumModule> curriculumModule;

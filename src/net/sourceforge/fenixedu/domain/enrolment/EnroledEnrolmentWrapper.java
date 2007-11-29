@@ -10,9 +10,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnroledEnrolmentWrapper extends EnroledCurriculumModuleWrapper {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 8766503234444669518L;
 
     public EnroledEnrolmentWrapper(CurriculumModule curriculumModule, ExecutionPeriod executionPeriod) {

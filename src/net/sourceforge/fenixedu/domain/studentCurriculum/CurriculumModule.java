@@ -61,11 +61,11 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return getRootCurriculumGroup().getRootStudentCurricularPlan();
     }
 
-    public abstract boolean isLeaf();
-
-    public abstract boolean isRoot();
-
     public boolean isCycleCurriculumGroup() {
+	return false;
+    }
+    
+    public boolean isNoCourseGroupCurriculumGroup() {
 	return false;
     }
 
@@ -80,6 +80,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public boolean isCreditsDismissal() {
 	return false;
     }
+    
+    abstract public boolean isLeaf();
+
+    abstract public boolean isRoot();
 
     abstract public StringBuilder print(String tabs);
 

@@ -2,21 +2,21 @@ package net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleMoveWrapper;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 
 public class MoveCurriculumLinesBean implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
-
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
-
     private List<CurriculumLineLocationBean> curriculumLineLocations;
 
     public MoveCurriculumLinesBean() {
@@ -48,17 +48,21 @@ public class MoveCurriculumLinesBean implements Serializable {
 	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
 		studentCurricularPlan) : null;
     }
+    
+    public Set<IDegreeModuleToEvaluate> getIDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
+	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>();
+	for (final CurriculumLineLocationBean bean : this.curriculumLineLocations) {
+	    result.add(CurriculumModuleMoveWrapper.create(bean.getCurriculumGroup(), bean.getCurriculumLine(), executionPeriod));
+	}
+	return result;
+    }
 
-    public static MoveCurriculumLinesBean buildFrom(final List<CurriculumLine> curriculumLines) {
-
+    
+    static public MoveCurriculumLinesBean buildFrom(final List<CurriculumLine> curriculumLines) {
 	final MoveCurriculumLinesBean result = new MoveCurriculumLinesBean();
-
 	for (final CurriculumLine curriculumLine : curriculumLines) {
 	    result.addCurriculumLineLocation(CurriculumLineLocationBean.buildFrom(curriculumLine));
 	}
-
 	return result;
-
     }
-
 }

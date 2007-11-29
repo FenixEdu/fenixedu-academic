@@ -43,7 +43,7 @@ import org.apache.commons.lang.StringUtils;
 
 public class StudentDismissalRenderer extends InputRenderer {
     
-    private Integer initialWidth = 50;
+    private Integer initialWidth = 60;
 
     private Integer widthDecreasePerLevel = 3;
 
@@ -55,7 +55,7 @@ public class StudentDismissalRenderer extends InputRenderer {
     
     private String groupCellClasses = "smalltxt, aright";
     
-    private String curricularCourseCellClasses = "smalltxt, aright";
+    private String curricularCourseCellClasses = ", aright";
     
     private String dismissalType;
     
@@ -273,9 +273,10 @@ public class StudentDismissalRenderer extends InputRenderer {
 		final HtmlTableCell nameCell = htmlTableRow.createCell(); 
     	    	
 		final String code = curricularCourse.getCode();
-		final String name = curricularCourse.getName();
+		final String oneFullName = curricularCourse.getOneFullName();
+		final String name = " <span class='bold'>" + curricularCourse.getName()  + "</span> (" + oneFullName.substring(0, oneFullName.lastIndexOf(">")) + ")"; 
 		final String codeAndname = StringUtils.isEmpty(code) ? name : code + " - " + name;
-		nameCell.setBody(new HtmlText(codeAndname));
+		nameCell.setBody(new HtmlText(codeAndname, false));
     	    	
 		nameCell.setClasses(getCurricularCourseNameClasses());
     	    

@@ -2632,19 +2632,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	if (runRules && !responsiblePerson.hasRole(RoleType.MANAGER)) {
-	    checkEnrolmentRules(responsiblePerson);
+	    final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	    checkEnrolmentRules(responsiblePerson, moveCurriculumLinesBean.getIDegreeModulesToEvaluate(executionPeriod), executionPeriod);
 	}
-
-    }
-
-    public void checkEnrolmentRules(final Person responsiblePerson) {
-	checkEnrolmentRules(responsiblePerson, ExecutionPeriod.readActualExecutionPeriod());
-
     }
 
     @SuppressWarnings("unchecked")
-    public void checkEnrolmentRules(final Person responsiblePerson, final ExecutionPeriod executionPeriod) {
-	enrol(responsiblePerson, executionPeriod, Collections.EMPTY_SET, Collections.EMPTY_LIST,
+    private void checkEnrolmentRules(final Person responsiblePerson, final Set<IDegreeModuleToEvaluate> degreeModuleToEvaluate,
+	    final ExecutionPeriod executionPeriod) {
+	enrol(responsiblePerson, executionPeriod, degreeModuleToEvaluate, Collections.EMPTY_LIST,
 		CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
     

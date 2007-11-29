@@ -529,7 +529,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateDismissalLabelCell(final HtmlTable mainTable, HtmlTableRow dismissalRow, Dismissal dismissal, int level) {
-	    if (dismissal.hasCurricularCourse() || loggedPersonIsManager()) {
+//	    if (dismissal.hasCurricularCourse() || loggedPersonIsManager()) {
 		final HtmlTableCell cell = dismissalRow.createCell();
 		cell.setColspan(MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
 		cell.setClasses(getLabelCellClass());
@@ -559,10 +559,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    container.addChild(curricularCourseLink);
 		}
 
-	    } else {
-		generateCellWithText(dismissalRow, studentResources.getString("label.dismissal." + dismissal.getCredits().getClass().getSimpleName()), getLabelCellClass(),
-			MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
-	    }
+//	    } else {
+//		generateCellWithText(dismissalRow, studentResources.getString("label.dismissal." + dismissal.getCredits().getClass().getSimpleName()), getLabelCellClass(),
+//			MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
+//	    }
 
 	    if (isDetailed()) {
 		generateDismissalDetails(mainTable, dismissal, level);

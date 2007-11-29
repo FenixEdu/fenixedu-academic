@@ -132,6 +132,11 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
 	return Collections.EMPTY_SET;
     }
+    
+    @Override
+    public Set<ICurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
+        return Collections.emptySet();
+    }
 
     @Override
     public boolean isConcluded(ExecutionYear executionYear) {

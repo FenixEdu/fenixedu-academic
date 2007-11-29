@@ -540,10 +540,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return null;
     }
 
-    public boolean isNoCourseGroupCurriculumGroup() {
-	return false;
-    }
-
     @Override
     final public Double getEctsCredits() {
 	BigDecimal bigDecimal = BigDecimal.ZERO;
