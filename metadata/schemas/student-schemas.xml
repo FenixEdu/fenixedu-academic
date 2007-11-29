@@ -421,11 +421,11 @@
 	<slot name="person.name"/>
 </schema>
 
-<schema name="student.yearDelegateElection.voteCandidate"  bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
+<schema name="student.yearDelegateElection.voteCandidate" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
 	<slot name="student" key="label.empty" bundle="DELEGATES_RESOURCES" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.YearCandidateDelegateManagementProvider"/>
 		<property name="eachSchema" value="student.yearDelegateElection.photo"/>
-		<property name="eachLayout" value="values" />
+		<property name="eachLayout" value="values-dash" />
 	</slot>
 </schema>
 

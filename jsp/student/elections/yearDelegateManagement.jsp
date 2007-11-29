@@ -176,16 +176,16 @@ display: block;
 .column1 {
 display: block;
 width: 40px;
-padding-left: 0.5em;
-margin-top: 3em;
+padding-left: 0.3em;
 }
 .column2 {
 display: block;
 width: 250px;
-margin-top: 3em;
+padding: 0 0.3em;
 }
 .column3 {
 display: block;
+padding: 0 0.3em;
 }
 .delegate tr td ul li {
 clear: both;
@@ -193,10 +193,15 @@ display: block;
 padding-top: 1.5em !important;
 }
 .delegate tr td ul li input {
-margin-top: 2.7em;
 }
 .delegate tr td ul li * {
 float: left;
+}
+.delegate tr td ul li span {
+margin-top: 2.5em;
+}
+.delegate tr td ul li span span {
+margin-top: 0;
 }
 </style>
 
@@ -207,7 +212,7 @@ float: left;
 					</fr:layout>
 					<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare"/>
 				</fr:edit>
-						<p class="mtop15 mbottom05">
+				<p class="mtop2 mbottom05">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
 					<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.clear"/></html:cancel>
 				</p>
