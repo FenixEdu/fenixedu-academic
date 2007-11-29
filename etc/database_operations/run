@@ -27,3 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alter Execution Degree Table" alterExecutionDegreeTable.sqlexecute "Create more stuff for id card generation." updates.sql

@@ -273,22 +273,22 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		State validation;
 	}
 
-	class net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch extends net.sourceforge.fenixedu.domain.DomainObject {
-		DateTime created;
-		DateTime updated;
-		DateTime sent;
+        class net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch extends net.sourceforge.fenixedu.domain.DomainObject {
+                DateTime created;
+                DateTime updated;
+                DateTime sent;
 		String peopleForEntryCreation;
-	}
+        }
 
-	class net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+        class net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 		String line;
-		DateTime created;
+        DateTime created;
 	}
 
 	class net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem extends net.sourceforge.fenixedu.domain.DomainObject {
 		String descriptionKey;
 		String arg;
-	}
+        }
 
 	class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 		String code;
@@ -597,11 +597,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 	class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fenixedu.domain.DomainObject {
 		MultiLanguageString anotation;
-		Boolean temporaryExamMap;							
+		Boolean temporaryExamMap;
+		AcademicInterval executionInterval;
 	}
 
 	class net.sourceforge.fenixedu.domain.AcademicPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
-		AcademicInterval executionInterval;							
+		AcademicInterval executionInterval;		
 		PeriodState state;
 		String name;		
 	}
@@ -1336,11 +1337,11 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			class net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 				YearMonthDay paymentEndDate;
 			}
-			
+
 			class net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 				Money pastAdministrativeOfficeFeeAndInsuranceAmount;
 			}
-			
+
 			class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent {
 			}
 
@@ -1349,7 +1350,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 				class net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 				}
-
+				
 				class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 					Money pastDegreeGratuityAmount;
 				}
@@ -1388,14 +1389,14 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					}
 	
 					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaPhdProgramDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
-				}
-				
+					}
+					
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 				
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.EquivalencePlanRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
-
+				
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 			YearMonthDay creationDate;
 		}
@@ -1408,7 +1409,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		
 		class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.ExternalDegreeChangeEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 		}
-			
+		
 		class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.InternalDegreeChangeEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 		}
 			
@@ -1567,7 +1568,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 			}
-
+			
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 			}
 			
@@ -3632,10 +3633,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 						
 		class net.sourceforge.fenixedu.domain.serviceRequests.PersonAcademicServiceRequest extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest {
 		}
-	
-			
-			
-		
+
 
 	class net.sourceforge.fenixedu.domain.sms.SentSms extends net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime deliveryDateDateTime;
@@ -3876,7 +3874,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		}
 		
 		class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolmentWrapper extends net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper {
-	}
+		}
 
 	class net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 		String createdBy;
@@ -4366,15 +4364,15 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			}
 			
 			class net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInSpecialSeasonCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE {			
-			}
+		}
 		
-		class net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {						
+		class net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry {
 		}			
 			class net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE {				
 			}
 			
 			class net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE extends net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE {				
-		}
+		}			
 
 	class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourceforge.fenixedu.domain.DomainObject {
 		PaymentType paymentType;
@@ -4517,7 +4515,6 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionCandidacyPeriod 
 
 class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod extends net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod {
 }
-
 
 /*
  * Relations definitions
@@ -7473,7 +7470,7 @@ relation ParkingPartyParkingGroup {
 relation ParkingRequestNewParkingDocument {
 	net.sourceforge.fenixedu.domain.parking.ParkingRequest playsRole parkingRequest;
 	net.sourceforge.fenixedu.domain.parking.NewParkingDocument playsRole driverLicenseDocument;
-	}
+}
 
 relation ParkingRequestParkingParty {
 	net.sourceforge.fenixedu.domain.parking.ParkingParty playsRole parkingParty;
@@ -12360,7 +12357,6 @@ relation RootDomainObjectDelegateElectionPeriod {
 		multiplicity *;
 	}
 }
-
 relation PhDCandidacyEventPhDProgramCandidacy {
 	net.sourceforge.fenixedu.domain.accounting.events.phd.PhDCandidacyEvent playsRole phdCandidacyEvent;
 	net.sourceforge.fenixedu.domain.candidacy.PHDProgramCandidacy playsRole phdCandidacy;
