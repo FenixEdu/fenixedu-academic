@@ -98,7 +98,6 @@ public class ConcludedState extends ConcludedState_Base {
 	}
 
 	@Override
-	@Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
 	public Object execute() {
 	    if (getRegistration().isRegistrationConclusionProcessed()) {
 		throw new DomainException("ConcludedState.cannot.create.concluded.state.on.registration.with.average");
