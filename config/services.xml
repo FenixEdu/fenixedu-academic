@@ -9653,6 +9653,15 @@
 		</filterChains>		
 	</service>
 	<service>
+		<name>ExportToGIAF</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportToGIAF</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
 		<name>CloseExtraWorkMonth</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.CloseExtraWorkMonth</implementationClass>
 		<description />

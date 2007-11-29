@@ -30,7 +30,7 @@
 	<fr:form action="/monthClosure.do?method=exportExtraWorkMonth">
 		<fr:edit id="yearMonthToExport" name="yearMonthToExport" schema="show.date" visible="false"/>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-			<bean:message key="button.exportGIAF" />
+			<bean:message key="button.exportMovementsToGIAF" />
 		</html:submit>
 	</fr:form>
 	</p>

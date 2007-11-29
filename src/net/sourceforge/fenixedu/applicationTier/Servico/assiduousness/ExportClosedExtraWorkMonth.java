@@ -72,6 +72,10 @@ public class ExportClosedExtraWorkMonth extends Service {
     public static String extraWorkHolidayMovementCode = "212";
 
     public String run(ClosedMonth closedMonth) {
+	return run(closedMonth, true, true);
+    }
+
+    public String run(ClosedMonth closedMonth, Boolean getMonthMovements, Boolean getExtraWorkMovements) {
 	YearMonthDay beginDate = new YearMonthDay().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(
 		DateTimeFieldType.monthOfYear(),
@@ -95,15 +99,18 @@ public class ExportClosedExtraWorkMonth extends Service {
 	    unjustifiedDays = new ArrayList<YearMonthDay>();
 	    if (assiduousness.isStatusActive(beginDate, endDate)
 		    && !isADISTEmployee(assiduousness, beginDate, endDate)) {
-		result.append(getAssiduousnessMonthBalance(assiduousness, joinLeaves(allLeaves
-			.get(assiduousness)), allAssiduousnessClosedMonths.get(assiduousness),
-			closedMonth, beginDate, endDate));
-
-		extraWorkResult.append(getAssiduousnessExtraWork(assiduousness,
-			allAssiduousnessClosedMonths.get(assiduousness), beginDate, endDate));
+		if (getMonthMovements) {
+		    result.append(getAssiduousnessMonthBalance(assiduousness, joinLeaves(allLeaves
+			    .get(assiduousness)), allAssiduousnessClosedMonths.get(assiduousness),
+			    closedMonth, beginDate, endDate));
+		}
+		if (getExtraWorkMovements) {
+		    extraWorkResult.append(getAssiduousnessExtraWork(assiduousness,
+			    allAssiduousnessClosedMonths.get(assiduousness), beginDate, endDate));
+		}
 	    }
 	}
-	if (endDate.getDayOfMonth() != 30) {
+	if (endDate.getDayOfMonth() != 30 && getExtraWorkMovements) {
 	    StringBuilder maternityJustificationResult = new StringBuilder();
 	    Integer daysNumber = endDate.getDayOfMonth() - 30;
 	    for (Assiduousness assiduousness : maternityJustificationList) {

@@ -31,6 +31,16 @@
 			</html:submit>
 		</fr:form>
 	</p>
+	<%--
+	<p>
+		<fr:form action="/monthClosure.do?method=exportClosedMonthToGIAF">
+			<fr:edit id="yearMonthToExport" name="yearMonthToExport" schema="show.date" visible="false"/>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.open" styleClass="invisible">
+				<bean:message key="button.exportLeavesToGIAF" />
+			</html:submit>
+		</fr:form>
+	</p>
+	--%>
 	<p>
 		<fr:form action="/monthClosure.do?method=openMonth">
 			<fr:edit id="yearMonthToOpen" name="yearMonthToExport" schema="show.date" visible="false"/>

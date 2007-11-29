@@ -132,7 +132,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     private StyledExcelSpreadsheet getSpreadSheet(ClosedMonth closedMonth) {
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Listagem Fecho Mês");
-        spreadsheet.newHeaderRow();
+	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader("Nº Mec");
 	spreadsheet.addHeader("Saldo");
 	spreadsheet.addHeader("Inj/V");
@@ -323,7 +323,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    saveMessages(request, actionMessages);
 	    return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
 	}
-        RenderUtils.invalidateViewState();
+	RenderUtils.invalidateViewState();
 	response.setContentType("text/plain");
 	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
 		LanguageUtils.getLocale());
@@ -381,5 +381,53 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	}
 	RenderUtils.invalidateViewState();
 	return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
+    }
+
+    public ActionForward exportClosedMonthToGIAF(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExport");
+	if (yearMonth == null) {
+	    return prepareToCloseMonth(mapping, actionForm, request, response);
+	}
+
+	final IUserView userView = SessionUtils.getUserView(request);
+	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
+	String result = null;
+	try {
+	    result = (String) ServiceUtils.executeService(userView, "ExportClosedExtraWorkMonth",
+		    new Object[] { closedMonth, true, false });
+	} catch (InvalidGiafCodeException e) {
+	    ActionMessages actionMessages = getMessages(request);
+	    actionMessages.add("message", new ActionMessage(e.getMessage(), e.getArgs()));
+	    saveMessages(request, actionMessages);
+	    return prepareToCloseMonth(mapping, actionForm, request, response);
+	}
+	ActionMessage error = (ActionMessage) ServiceUtils.executeService(userView, "ExportToGIAF",
+		new Object[] { result });
+	if (error != null) {
+	    ActionMessages actionMessages = getMessages(request);
+	    actionMessages.add("message", error);
+	    saveMessages(request, actionMessages);
+	    return prepareToCloseMonth(mapping, actionForm, request, response);
+	}
+
+	RenderUtils.invalidateViewState();
+	response.setContentType("text/plain");
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
+		LanguageUtils.getLocale());
+	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
+	response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=").append(
+		month).append("-").append(yearMonth.getYear()).toString()
+		+ ".txt");
+
+	byte[] data = result.getBytes();
+	response.setContentLength(data.length);
+	ServletOutputStream writer = response.getOutputStream();
+	writer.write(data);
+	writer.flush();
+	writer.close();
+	response.flushBuffer();
+
+	return null;
     }
 }

@@ -2628,76 +2628,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String who;
 	}
 
-	class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
-		HourMinuteSecond beginHourHourMinuteSecond;
-		Boolean dayPerWeek;
-		YearMonthDay dayYearMonthDay;
-		Boolean diurnalAfterSecondHourAuthorized;
-		HourMinuteSecond diurnalAfterSecondHourHourMinuteSecond;
-		Boolean diurnalFirstHourAuthorized;
-		HourMinuteSecond diurnalFirstHourHourMinuteSecond;
-		HourMinuteSecond endHourHourMinuteSecond;
-		Boolean holiday;
-		Integer mealSubsidy;
-		Boolean mealSubsidyAuthorized;
-		Boolean nocturnalAfterSecondHourAuthorized;
-		HourMinuteSecond nocturnalAfterSecondHourHourMinuteSecond;
-		Boolean nocturnalFirstHourAuthorized;
-		HourMinuteSecond nocturnalFirstHourHourMinuteSecond;
-		String observation;
-		Boolean remuneration;
-		Boolean restDayAuthorized;
-		HourMinuteSecond restDayHourMinuteSecond;
-		Date totalExtraWork;
-		DateTime whenDateTime;
-	}
-
-	class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation extends net.sourceforge.fenixedu.domain.DomainObject {
-		YearMonthDay beginDateYearMonthDay;
-		Boolean dayPerWeek;
-		YearMonthDay endDateYearMonthDay;
-		Boolean holiday;
-		Boolean remuneration;
-		DateTime whenDateTime;
-	}
-
-	class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric extends net.sourceforge.fenixedu.domain.DomainObject {
-		Integer holidaysNumberPerYear;
-		HourMinuteSecond hoursExtraWorkPerDayHourMinuteSecond;
-		HourMinuteSecond hoursExtraWorkPerYearHourMinuteSecond;
-		Integer serviceDismissalPerYear;
-		Date timeForHoliday;
-		Date timeForServiceDismissal;
-		DateTime whenDateTime;
-		Integer year;
-	}
-
-	class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests extends net.sourceforge.fenixedu.domain.DomainObject {
-		YearMonthDay beginDateYearMonthDay;
-		YearMonthDay endDateYearMonthDay;
-		Boolean option1;
-		Boolean option10;
-		Boolean option11;
-		Boolean option12;
-		Boolean option2;
-		Boolean option3;
-		Boolean option4;
-		Boolean option5;
-		Boolean option6;
-		Boolean option7;
-		Boolean option8;
-		Boolean option9;
-		DateTime whenDateTime;
-	}
-
-	class net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter extends net.sourceforge.fenixedu.domain.DomainObject {
-		Double initialValue;
-		Double spentValue;
-		Double totalValue;
-		DateTime whenDateTime;
-		Integer year;
-	}
-
 	class net.sourceforge.fenixedu.domain.material.PersonExtension extends net.sourceforge.fenixedu.domain.DomainObject {
 		YearMonthDay begin;
 		YearMonthDay end;
@@ -6411,88 +6341,11 @@ relation ExtraWorkAuthorizationWorkingUnit {
 	}
 }
 
-relation ExtraWorkCompensationEmployee {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation playsRole extraWorkCompensation {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Employee playsRole employee;
-}
-
-relation ExtraWorkCompensationWhoEmployee {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation playsRole whoExtraWorkCompensation {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
-}
-
-relation ExtraWorkCostCenter {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole extraWork {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.CostCenter playsRole costCenter;
-}
-
-relation ExtraWorkEmployee {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole extraWork {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Employee playsRole employee;
-}
-
-relation ExtraWorkHistoricEmployee {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric playsRole extraWorkHistoric {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Employee playsRole employee;
-}
-
-relation ExtraWorkHistoricWhoEmployee {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric playsRole whoExtraWorkHistoric {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
-}
-
 relation ExtraWorkRequestUnit {
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
 	net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest playsRole extraWorkRequests {
 		multiplicity *;
 	}
-}
-
-relation ExtraWorkRequestsCostCenter {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole extraWorkRequests {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.CostCenter playsRole costCenterExtraWork;
-}
-
-relation ExtraWorkRequestsEmployee {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole extraWorkRequests {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Employee playsRole employee;
-}
-
-relation ExtraWorkRequestsMoneyCostCenter {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole moneyExtraWorkRequests {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.CostCenter playsRole costCenterMoney;
-}
-
-relation ExtraWorkRequestsWhoEmployee {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole whoExtraWorkRequests {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
-}
-
-relation ExtraWorkWhoEmployee {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole whoExtraWork {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
 }
 
 relation FileEntryPerson {
@@ -7327,20 +7180,6 @@ relation ModuleHasSubModules {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.functionalities.Module playsRole parent;
-}
-
-relation MoneyCostCenterCostCenter {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter playsRole moneyCostCenters {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.CostCenter playsRole costCenter;
-}
-
-relation MoneyCostCenterWhoEmployee {
-	net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter playsRole moneyCostCenters {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Employee playsRole whoEmployee;
 }
 
 relation NonAffiliatedTeacherExecutionCourse {
@@ -9299,13 +9138,6 @@ relation RootDomainObjectExternalRegistrationData {
 	}
 }
 
-relation RootDomainObjectExtraWork {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole extraWorks {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectExtraWorkAuthorization {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization playsRole extraWorkAuthorizations {
@@ -9313,30 +9145,9 @@ relation RootDomainObjectExtraWorkAuthorization {
 	}
 }
 
-relation RootDomainObjectExtraWorkCompensation {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation playsRole extraWorkCompensations {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectExtraWorkHistoric {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric playsRole extraWorkHistorics {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectExtraWorkRequest {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest playsRole extraWorkRequests {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectExtraWorkRequests {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests playsRole extraWorkRequestss {
 		multiplicity *;
 	}
 }
@@ -9776,13 +9587,6 @@ relation RootDomainObjectMetadata {
 relation RootDomainObjectModality {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.Seminaries.Modality playsRole modalitys {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectMoneyCostCenter {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter playsRole moneyCostCenters {
 		multiplicity *;
 	}
 }
