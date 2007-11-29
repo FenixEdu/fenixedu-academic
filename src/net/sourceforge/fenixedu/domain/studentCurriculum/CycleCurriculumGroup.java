@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -9,7 +10,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
-import org.joda.time.YearMonthDay;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * 
@@ -17,6 +18,22 @@ import org.joda.time.YearMonthDay;
  * 
  */
 public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
+
+    static final private Comparator<CycleCurriculumGroup> COMPARATOR_BY_CYCLE_TYPE = new Comparator<CycleCurriculumGroup>() {
+	final public int compare(final CycleCurriculumGroup o1, final CycleCurriculumGroup o2) {
+            return CycleType.COMPARATOR_BY_LESS_WEIGHT.compare(o1.getCycleType(), o2.getCycleType());
+        }
+    };
+
+    static final public Comparator<CycleCurriculumGroup> COMPARATOR_BY_CYCLE_TYPE_AND_ID = new Comparator<CycleCurriculumGroup>() {
+	final public int compare(final CycleCurriculumGroup o1, final CycleCurriculumGroup o2) {
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE);
+	    comparatorChain.addComparator(CycleCurriculumGroup.COMPARATOR_BY_ID);
+
+	    return comparatorChain.compare(o1, o2);
+	}
+    };
 
     protected CycleCurriculumGroup() {
 	super();
@@ -95,6 +112,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	return getCycleCourseGroup().getCycleType();
     }
 
+
     @Override
     public RootCurriculumGroup getCurriculumGroup() {
 	return (RootCurriculumGroup) super.getCurriculumGroup();
@@ -113,6 +131,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	for (final CurriculumModule child : getCurriculumModules()) {
 	    child.deleteRecursive();
 	}
+
 	super.delete();
     }
     
@@ -122,13 +141,14 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	    throw new DomainException("error.studentCurriculum.CycleCurriculumGroup.degree.type.requires.this.cycle.to.exist",
 		    getName().getContent());
 	}
+
     }
 
     public boolean isExternal() {
 	return false;
     }
-    
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+
+   @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void conclude() {
 	if (!isConcluded()) {
 	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.not.concluded");
@@ -145,6 +165,10 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     
     public boolean hasFinalAverage() {
 	return super.getFinalAverage() != null;
+    }
+
+    public boolean isConclusionProcessed() {
+	return hasFinalAverage();
     }
     
     @Override
