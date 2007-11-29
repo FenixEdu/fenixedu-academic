@@ -222,7 +222,7 @@ table.tacenter th, table.tacenter td { text-align: center; }
 table.thleft th { text-align: left; }
 table.thright th { text-align: right; }
 table.thcenter th { text-align: center; }
-.thdnone tr th { display: none; }
+.thdnone tr th { display: none !important; }
 .tdleft td { text-align: left; }
 .tdright td { text-align: right; } /* take table from all, to work with tr ? */
 .tdcenter td { text-align: center; }
@@ -608,7 +608,6 @@ ul.indent0 { margin-left: 0; padding-left: 0; }
 .width550px { width: 550px; }
 .width600px { width: 600px; }
 .width700px { width: 700px; }
-.width1000px { width: 1000px; }
 
 .width25px { width: 25px; }
 .width35px { width: 35px; }
