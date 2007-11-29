@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -149,6 +151,13 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	    }
 	}
 	return null;
+    }
+
+    public CycleCurriculumGroup getLastCycleCurriculumGroup() {
+	final SortedSet<CycleCurriculumGroup> cycleCurriculumGroups = new TreeSet<CycleCurriculumGroup>(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
+	cycleCurriculumGroups.addAll(getCycleCurriculumGroups());
+	
+	return cycleCurriculumGroups.isEmpty() ? null : cycleCurriculumGroups.last();
     }
 
     public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {
