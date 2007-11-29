@@ -15,7 +15,7 @@ public enum DocumentRequestType {
     SCHOOL_REGISTRATION_DECLARATION(false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE), 
     ENROLMENT_DECLARATION(false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE), 
     IRS_DECLARATION(true, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE), 
-    DIPLOMA_REQUEST(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE);
+    DIPLOMA_REQUEST(false, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE);
 
     private boolean hasAdditionalInformation;
     
@@ -63,8 +63,8 @@ public enum DocumentRequestType {
 	return hasAdditionalInformation;
     }
 
-    final public boolean getHasAdditionalInformation(final DegreeType degreeType) {
-	return hasAdditionalInformation && (this != DIPLOMA_REQUEST || (this == DIPLOMA_REQUEST && degreeType.isComposite()));
+    final public boolean getHasCycleTypeDependency(final DegreeType degreeType) {
+	return degreeType.isComposite() && (this == DEGREE_FINALIZATION_CERTIFICATE || this == DIPLOMA_REQUEST);
     }
 
     public boolean isAllowedToQuickDeliver() {
