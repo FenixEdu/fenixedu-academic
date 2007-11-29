@@ -3,9 +3,11 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -346,23 +348,29 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final CourseGroup parentCourseGroup, final ExecutionYear executionYear) {
-	final SortedSet<ICurricularRule> curricularRules = new TreeSet<ICurricularRule>(ICurricularRule.COMPARATOR_BY_BEGIN);
-	curricularRules.addAll(getCurricularRules(ruleType, parentCourseGroup, null));
+	final List<ICurricularRule> curricularRules = new ArrayList<ICurricularRule>(getCurricularRules(ruleType, parentCourseGroup, null));
+	Collections.sort(curricularRules, ICurricularRule.COMPARATOR_BY_BEGIN);
 	
 	if (curricularRules.isEmpty()) {
 	    return null;
+	    
 	} else if (executionYear == null) {
-	    final ICurricularRule curricularRule = curricularRules.last();
-	    return curricularRule.isActive() ? curricularRule : null;
+	    final ListIterator<ICurricularRule> iter = curricularRules.listIterator(curricularRules.size());
+	    while (iter.hasPrevious()) {
+		final ICurricularRule curricularRule = iter.previous();
+		if (curricularRule.isActive()) {
+		    return curricularRule;
+		}
+	    }
+	    return null;
+	    
 	} else {
 	    ICurricularRule result = null;
-	    
 	    for (final ICurricularRule curricularRule : curricularRules) {
 		if (curricularRule.isValid(executionYear)) {
 		    if (result != null) {
 			throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionPeriod", getName());
 		    }
-		    
 		    result = curricularRule;
 		}
 	    }
