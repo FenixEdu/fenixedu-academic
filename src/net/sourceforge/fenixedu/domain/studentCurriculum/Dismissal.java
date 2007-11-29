@@ -213,7 +213,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public Double getCreditsConcluded(ExecutionYear executionYear) {
-	return isConcluded(executionYear) ? getEctsCredits() : Double.valueOf(0d);
+	return isConcluded(executionYear) && !getCredits().isTemporary() ? getEctsCredits() : Double.valueOf(0d);
     }
 
     @Override

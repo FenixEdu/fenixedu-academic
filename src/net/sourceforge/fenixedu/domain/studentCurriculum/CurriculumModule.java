@@ -178,7 +178,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 		executionYears.add(curriculumLine.getExecutionPeriod().getExecutionYear());
 	    }
 	}
-	return executionYears.last();
+	
+	return executionYears.isEmpty() ? ExecutionYear.readCurrentExecutionYear() : executionYears.last();
     }
     
     public Curriculum getCurriculum() {

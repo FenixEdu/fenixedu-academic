@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -265,6 +267,18 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     public CycleCourseGroup getCycleCourseGroupFor(final CurriculumModule curriculumModule) {
 	final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroupFor(curriculumModule);
 	return cycleCurriculumGroup != null ? cycleCurriculumGroup.getDegreeModule() : null;
+    }
+
+    public List<CycleCurriculumGroup> getInternalCycleCurriculumGroups() {
+	final List<CycleCurriculumGroup> result = new ArrayList<CycleCurriculumGroup>();
+
+	for (final CycleCurriculumGroup cycleCurriculumGroup : getCycleCurriculumGroups()) {
+	    if (!cycleCurriculumGroup.isExternal()) {
+		result.add(cycleCurriculumGroup);
+	    }
+	}
+
+	return result;
     }
 
 }
