@@ -18,27 +18,56 @@ public class DiplomaRequest extends DiplomaRequest_Base {
         super();
     }
 
-    public DiplomaRequest(final Registration registration, final CycleType requestedCyle) {
+    public DiplomaRequest(final Registration registration, final CycleType requestedCycle) {
 	this();
+	
+	this.init(registration, requestedCycle);
+    }
+
+    final private void init(final Registration registration, final CycleType requestedCycle) {
 	super.init(registration, Boolean.FALSE, Boolean.FALSE);
-	if (getDegreeType().isComposite()) {
-	    this.checkParameters(requestedCyle);
-	    super.setRequestedCycle(requestedCyle);
-	}
+	
+	this.checkParameters(requestedCycle);
 	
 	if (!isFree()) {
 	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
     }
 
-    final private void checkParameters(final CycleType requestedCyle) {
-	if (requestedCyle == null) {
-	    throw new DomainException("DiplomaRequest.diploma.requested.cycle.must.be.given");
-	} else if (!getDegreeType().getCycleTypes().contains(requestedCyle)) {
-	    throw new DomainException("DiplomaRequest.diploma.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
+    final private void checkParameters(final CycleType requestedCycle) {
+	if (getDegreeType().isComposite()) {
+	    if (requestedCycle == null) {
+		throw new DomainException("DiplomaRequest.diploma.requested.cycle.must.be.given");
+	    } else if (!getDegreeType().getCycleTypes().contains(requestedCycle)) {
+		throw new DomainException("DiplomaRequest.diploma.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
+	    }
+
+	    super.setRequestedCycle(requestedCycle);
+	}
+	
+	checkExistingDiploma(requestedCycle);
+    }
+    
+    private void checkExistingDiploma(final CycleType requestedCycle) {
+	final Collection<DocumentRequest> diplomaRequests = getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST);
+	if (!diplomaRequests.isEmpty() && 
+		(requestedCycle == null ||
+			hasDiplomaRequestForRequestedCycle(diplomaRequests, requestedCycle))) {
+	    throw new DomainException("DiplomaRequest.diploma.already.successfully.finished");
 	}
     }
     
+    private boolean hasDiplomaRequestForRequestedCycle(final Collection<DocumentRequest> diplomaRequests, final CycleType requestedCycleType) {
+	for (final DocumentRequest documentRequest : diplomaRequests) {
+	    final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
+	    if (diplomaRequest.getRequestedCycle() == requestedCycleType) {
+		return true;
+	    }
+	}
+	
+	return false;
+    }
+
     @Override
     final public void setRequestedCycle(final CycleType requestedCycle) {
 	throw new DomainException("DiplomaRequest.cannot.modify.requestedCycle");
@@ -98,12 +127,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 
-	    final Collection<DocumentRequest> diplomaRequests = getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST);
-	    if (!diplomaRequests.isEmpty() && 
-		    (getRequestedCycle() == null ||
-			    hasDiplomaRequestForRequestedCycle(diplomaRequests, getRequestedCycle()))) {
-		throw new DomainException("DiplomaRequest.diploma.already.successfully.finished");
-	    }
+	    checkExistingDiploma(getRequestedCycle());
 	    
 	    if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {
 		throw new DomainException("DiplomaRequest.diploma.not.available");
@@ -125,17 +149,6 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	}
-    }
-
-    private boolean hasDiplomaRequestForRequestedCycle(Collection<DocumentRequest> diplomaRequests, final CycleType requestedCycleType) {
-	for (final DocumentRequest documentRequest : diplomaRequests) {
-	    final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
-	    if (diplomaRequest.getRequestedCycle() == requestedCycleType) {
-		return true;
-	    }
-	}
-	
-	return false;
     }
 
     static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] {
