@@ -75,6 +75,10 @@ public class RegistrationConclusionBean implements Serializable {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCurriculum() : getRegistration().getCurriculum();
     }
 
+    public String getDegreeDescription() {
+	return hasCycleCurriculumGroup() ? getRegistration().getDegreeDescription(getCycleCurriculumGroup().getCycleType()) : getRegistration().getDegreeDescription();
+    }
+
     public boolean isConcluded() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
     }

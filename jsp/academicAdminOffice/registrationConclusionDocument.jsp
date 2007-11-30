@@ -101,7 +101,7 @@
 				<logic:equal name="registration" property="degreeType.administrativeOfficeType" value="AdministrativeOfficeType.MASTER_DEGREE">
 					a parte escolar d
 				</logic:equal>
-				o <bean:write name="registration" property="degreeDescription"/>
+				o <bean:write name="registrationConclusionBean" property="degreeDescription"/>
 				em <bean:write name="degreeFinalizationDate"/><bean:write name="degreeFinalizationGrade"/>, 
 				tendo obtido o total de <bean:write name="degreeFinalizationEcts"/><bean:write name="creditsDescription"/>.
 			</p>
