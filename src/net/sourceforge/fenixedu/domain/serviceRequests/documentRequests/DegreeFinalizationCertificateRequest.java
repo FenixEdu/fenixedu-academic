@@ -74,6 +74,10 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	if (academicServiceRequestBean.isToProcess()) {
 	    checkForDiplomaRequest(getRequestedCycle());
+	    
+	    if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
+		throw new DomainException("DegreeFinalizationCertificateRequest.registration.not.submited.to.conclusion.process");
+	    }
 	}
     }
 
