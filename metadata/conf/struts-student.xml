@@ -274,6 +274,7 @@
 	    <!-- vote -->
 		<form-bean name="voteForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String" />
+			<form-property name="studentId" type="java.lang.String" />
 	    </form-bean>
 
     </form-beans>
