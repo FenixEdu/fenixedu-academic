@@ -48,7 +48,8 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     }
     
     private void checkForDuplicate(final CycleType requestedCycle) {
-	if (getRegistration().getDiplomaRequest(requestedCycle) != this) {
+	final DiplomaRequest payedDiplomaRequest = getRegistration().getPayedDiplomaRequest(requestedCycle);
+	if (payedDiplomaRequest != null && payedDiplomaRequest != this) {
 	    throw new DomainException("DiplomaRequest.diploma.already.requested");
 	}
     }

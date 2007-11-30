@@ -116,7 +116,9 @@ public class Registration extends Registration_Base {
     };
 
     private transient Double approvationRatio;
+
     private transient Double arithmeticMean;
+
     private transient Integer approvedEnrollmentsNumber = 0;
 
     private Registration() {
@@ -911,7 +913,7 @@ public class Registration extends Registration_Base {
 
     final public ExecutionYear getLastEnrolmentExecutionYear() {
 	return getSortedEnrolmentsExecutionYears().last();
-	    }
+    }
 
     final public Collection<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
 	final Collection<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
@@ -1933,8 +1935,8 @@ public class Registration extends Registration_Base {
 	if (getDegreeType().isBolonhaType()) {
 	    return getLastStudentCurricularPlan().isConclusionProcessed();
 	} else {
-	return getFinalAverage() != null;
-    }
+	    return getFinalAverage() != null;
+	}
     }
 
     public boolean isRegistrationConclusionProcessed(final CycleType cycleType) {
@@ -2049,16 +2051,14 @@ public class Registration extends Registration_Base {
 
     final public boolean hasConcludedCycle(final CycleType cycleType) {
 	return getLastStudentCurricularPlan().hasConcludedCycle(cycleType);
-	}
+    }
 
     public boolean hasConcluded() {
-
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 
 	if (!lastStudentCurricularPlan.isBolonhaDegree()) {
 	    return true;
 	}
-
 	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getCycleCurriculumGroups()) {
 	    if (cycleCurriculumGroup.isExternal()
 		    || !getDegreeType().getCycleTypes().contains(cycleCurriculumGroup.getCycleType())) {
@@ -2068,7 +2068,6 @@ public class Registration extends Registration_Base {
 		return false;
 	    }
 	}
-
 	return !lastStudentCurricularPlan.getCycleCurriculumGroups().isEmpty();
     }
 
@@ -2330,13 +2329,13 @@ public class Registration extends Registration_Base {
 	return getInterruptedStudies() ? false : getRegistrationAgreement() == RegistrationAgreement.NORMAL;
     }
 
-    final public boolean hasDiplomaRequest(final CycleType cycleType) {
-	return getDiplomaRequest(cycleType) != null;
+    final public boolean hasPayedDiplomaRequest(final CycleType cycleType) {
+	return getPayedDiplomaRequest(cycleType) != null;
     }
 
-    final public DiplomaRequest getDiplomaRequest(final CycleType cycleType) {
+    final public DiplomaRequest getPayedDiplomaRequest(final CycleType cycleType) {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
-	    if (documentRequest.isDiploma()) {
+	    if (documentRequest.isDiploma() && documentRequest.hasEvent() && documentRequest.getEvent().isPayed()) {
 		final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
 		if (cycleType == null || cycleType == diplomaRequest.getRequestedCycle()) {
 		    return diplomaRequest;
@@ -2346,7 +2345,6 @@ public class Registration extends Registration_Base {
 
 	return null;
     }
-
 
     final public Collection<DocumentRequest> getDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
