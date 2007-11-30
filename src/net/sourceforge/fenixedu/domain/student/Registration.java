@@ -116,9 +116,7 @@ public class Registration extends Registration_Base {
     };
 
     private transient Double approvationRatio;
-
     private transient Double arithmeticMean;
-
     private transient Integer approvedEnrollmentsNumber = 0;
 
     private Registration() {
@@ -913,7 +911,7 @@ public class Registration extends Registration_Base {
 
     final public ExecutionYear getLastEnrolmentExecutionYear() {
 	return getSortedEnrolmentsExecutionYears().last();
-    }
+	    }
 
     final public Collection<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
 	final Collection<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
@@ -1935,8 +1933,8 @@ public class Registration extends Registration_Base {
 	if (getDegreeType().isBolonhaType()) {
 	    return getLastStudentCurricularPlan().isConclusionProcessed();
 	} else {
-	    return getFinalAverage() != null;
-	}
+	return getFinalAverage() != null;
+    }
     }
 
     public boolean isRegistrationConclusionProcessed(final CycleType cycleType) {
@@ -2051,14 +2049,16 @@ public class Registration extends Registration_Base {
 
     final public boolean hasConcludedCycle(final CycleType cycleType) {
 	return getLastStudentCurricularPlan().hasConcludedCycle(cycleType);
-    }
+	}
 
     public boolean hasConcluded() {
+
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 
 	if (!lastStudentCurricularPlan.isBolonhaDegree()) {
 	    return true;
 	}
+
 	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getCycleCurriculumGroups()) {
 	    if (cycleCurriculumGroup.isExternal()
 		    || !getDegreeType().getCycleTypes().contains(cycleCurriculumGroup.getCycleType())) {
@@ -2068,6 +2068,7 @@ public class Registration extends Registration_Base {
 		return false;
 	    }
 	}
+
 	return !lastStudentCurricularPlan.getCycleCurriculumGroups().isEmpty();
     }
 
@@ -2345,6 +2346,7 @@ public class Registration extends Registration_Base {
 
 	return null;
     }
+
 
     final public Collection<DocumentRequest> getDocumentRequests() {
 	final Set<DocumentRequest> result = new HashSet<DocumentRequest>();
@@ -2692,6 +2694,7 @@ public class Registration extends Registration_Base {
 	    }
 
 	    registration.setRegistrationAgreement(getRegistrationAgreement());
+	    registration.setSourceRegistration(this);
 
 	    transferCurrentExecutionPeriodAttends(registration);
 	}
