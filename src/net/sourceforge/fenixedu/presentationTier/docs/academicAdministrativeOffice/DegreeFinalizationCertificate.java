@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -199,9 +200,14 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     final private void reportEntries(final StringBuilder result, final SortedSet<ICurriculumEntry> entries,
 	    final Map<Unit, String> academicUnitIdentifiers) {
 	for (final ICurriculumEntry entry : entries) {
-	    if (!(entry instanceof Equivalence || entry instanceof CreditsDismissal)) {
-		reportEntry(result, entry, academicUnitIdentifiers);
+	    if (entry instanceof Dismissal) {
+		final Dismissal dismissal = (Dismissal) entry;
+		if (dismissal instanceof CreditsDismissal || dismissal.getCredits() instanceof Equivalence) {
+		    continue;
+		}
 	    }
+	    
+	    reportEntry(result, entry, academicUnitIdentifiers);
 	}
     }
 
