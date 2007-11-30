@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -2331,16 +2330,20 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasDiplomaRequest(final CycleType cycleType) {
+	return getDiplomaRequest(cycleType) != null;
+    }
+
+    final public DiplomaRequest getDiplomaRequest(final CycleType cycleType) {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
 	    if (documentRequest.isDiploma()) {
 		final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
 		if (cycleType == null || cycleType == diplomaRequest.getRequestedCycle()) {
-		    return true;
+		    return diplomaRequest;
 		}
 	    }
 	}
 
-	return false;
+	return null;
     }
 
     final public Collection<DocumentRequest> getDocumentRequests() {
