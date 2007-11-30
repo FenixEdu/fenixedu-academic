@@ -2648,12 +2648,11 @@ public class Registration extends Registration_Base {
     }
 
     public Registration getSourceRegistrationForTransition() {
-	if (!isTransition() || !getLastDegreeCurricularPlan().hasEquivalencePlan()) {
+	if (!getLastDegreeCurricularPlan().hasEquivalencePlan()) {
 	    return null;
 	}
-
-	return getStudent().getActiveRegistrationFor(
-		getLastDegreeCurricularPlan().getEquivalencePlan().getSourceDegreeCurricularPlan());
+	final DegreeCurricularPlanEquivalencePlan equivalencePlan = getLastDegreeCurricularPlan().getEquivalencePlan();
+	return getStudent().getRegistrationFor(equivalencePlan.getSourceDegreeCurricularPlan());
     }
 
     public List<Registration> getTargetTransitionRegistrations() {
