@@ -87,7 +87,13 @@
 	</logic:equal>
 
 	<p>
-		<html:link page="/registration.do?method=prepareRegistrationConclusionDocument" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+		<bean:define id="url">
+			/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId=<bean:write name="registration" property="idInternal"/>
+			<logic:notEmpty name="registrationConclusionBean" property="cycleCurriculumGroup">
+				&amp;cycleCurriculumGroupId=<bean:write name="registrationConclusionBean" property="cycleCurriculumGroup.idInternal"/>
+			</logic:notEmpty>
+		</bean:define>
+		<html:link page="<%=url%>" >
 			Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</p>

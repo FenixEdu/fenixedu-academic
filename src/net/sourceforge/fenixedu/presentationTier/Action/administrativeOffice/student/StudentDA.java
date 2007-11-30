@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -142,8 +143,19 @@ public class StudentDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 	RenderUtils.invalidateViewState();
 
-	request.setAttribute("registration", getRegistration(request));
+	final Registration registration = getRegistration(request);
+	request.setAttribute("registration", registration);
 
+	final Integer cyclyeCurriculumGroupId = getIntegerFromRequest(request, "cyclyeCurriculumGroupId");
+	final CycleCurriculumGroup cycleCurriculumGroup = (CycleCurriculumGroup) rootDomainObject.readCurriculumModuleByOID(cyclyeCurriculumGroupId);
+	final RegistrationConclusionBean registrationConclusionBean;
+	if (cyclyeCurriculumGroupId == null) {
+	    registrationConclusionBean = new RegistrationConclusionBean(registration);
+	} else {
+	    registrationConclusionBean = new RegistrationConclusionBean(registration, cycleCurriculumGroup);
+	}
+	request.setAttribute("registrationConclusionBean", registrationConclusionBean);
+	
 	return mapping.findForward("registrationConclusionDocument");
     }
 

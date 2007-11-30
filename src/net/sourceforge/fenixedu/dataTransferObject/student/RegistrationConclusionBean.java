@@ -67,6 +67,10 @@ public class RegistrationConclusionBean implements Serializable {
 		.calculateConclusionDate();
     }
 
+    public double getEctsCredits() {
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCreditsConcluded() : getRegistration().getEctsCredits();
+    }
+
     public ICurriculum getCurriculumForConclusion() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCurriculum() : getRegistration().getCurriculum();
     }

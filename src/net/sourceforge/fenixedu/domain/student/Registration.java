@@ -603,7 +603,20 @@ public class Registration extends Registration_Base {
     }
 
     public Integer calculateFinalAverage() {
-	return getAverage().intValue();
+	if (isBolonha()) {
+	    throw new DomainException("error.Registration.for.cannot.calculate.final.average.in.registration.for.bolonha");
+	}
+
+	return ((Curriculum) getCurriculum()).getRoundedAverage().intValue();
+    }
+
+    @Override
+    public Integer getFinalAverage() {
+	if (isBolonha()) {
+	    throw new DomainException("error.Registration.for.cannot.get.final.average.in.registration.for.bolonha");
+	}
+
+	return super.getFinalAverage();
     }
 
     final public Integer getFinalAverage(final CycleType cycleType) {

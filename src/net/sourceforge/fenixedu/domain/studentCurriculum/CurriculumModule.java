@@ -193,6 +193,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public Integer calculateRoundedAverage() {
         return getCurriculum().getRoundedAverage();
     }
+    
+    public Double getCreditsConcluded() {
+	return getCreditsConcluded(getLastCurriculumLineExecutionYear());
+    }
 
     abstract public Double getEctsCredits();
 

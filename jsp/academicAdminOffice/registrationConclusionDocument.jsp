@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<%@page import="java.math.RoundingMode"%>
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
 <%@page import="net.sourceforge.fenixedu.domain.Employee"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
@@ -15,6 +14,7 @@
 <html:xhtml />
 
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+<bean:define id="registrationConclusionBean" name="registrationConclusionBean" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean"/>
 
 <table width="90%">
 	<tr>
@@ -49,11 +49,11 @@
 </fr:view>
 
 <%
-	request.setAttribute("degreeFinalizationDate", registration.calculateConclusionDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
-	final Integer finalAverage = registration.getAverage().setScale(0, RoundingMode.HALF_UP).intValue();	
+	request.setAttribute("degreeFinalizationDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	final Integer finalAverage = registrationConclusionBean.getFinalAverage();	
 	request.setAttribute("finalAverage", finalAverage);
 	request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(finalAverage));
-	request.setAttribute("degreeFinalizationEcts", String.valueOf(registration.getEctsCredits()));
+	request.setAttribute("degreeFinalizationEcts", String.valueOf(registrationConclusionBean.getEctsCredits()));
 	request.setAttribute("creditsDescription", registration.getDegreeType().getCreditsDescription());
 	
 	final Employee employee = AccessControl.getPerson().getEmployee();
