@@ -88,12 +88,12 @@
 
 	<p>
 		<bean:define id="url">
-			/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId=<bean:write name="registrationConclusionBean" property="registration.idInternal"/>
+			<%="/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId="%><bean:write name="registrationConclusionBean" property="registration.idInternal"/>
 			<logic:notEmpty name="registrationConclusionBean" property="cycleCurriculumGroup">
-				&amp;cycleCurriculumGroupId=<bean:write name="registrationConclusionBean" property="cycleCurriculumGroup.idInternal"/>
+				<%="&amp;cycleCurriculumGroupId="%><bean:write name="registrationConclusionBean" property="cycleCurriculumGroup.idInternal"/>
 			</logic:notEmpty>
 		</bean:define>
-		<html:link page="<%=url%>" >
+		<html:link page="<%=url%>" target="_blank">
 			Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</p>
