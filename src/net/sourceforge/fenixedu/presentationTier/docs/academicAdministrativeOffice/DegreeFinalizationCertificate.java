@@ -40,7 +40,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	parameters.put("degreeFinalizationDate", registration.getConclusionDate(requestedCycle).toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 	parameters.put("degreeFinalizationGrade", degreeFinalizationCertificateRequest.getAverage() ? getDegreeFinalizationGrade(registration.getFinalAverage(requestedCycle)) : "");
 	
-	parameters.put("degreeFinalizationEcts", getDegreeFinalizationEcts(registration));
+	parameters.put("degreeFinalizationEcts", getDegreeFinalizationEcts(degreeFinalizationCertificateRequest));
 	parameters.put("creditsDescription", getCreditsDescription());
 	parameters.put("graduateTitle", getGraduateTitle(registration, requestedCycle));
 	parameters.put("diplomaDescription", getDiplomaDescription());
@@ -60,16 +60,31 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	return result.toString();
     }
 
-    final private String getDegreeFinalizationEcts(final Registration registration) {
+    final private String getDegreeFinalizationEcts(final DegreeFinalizationCertificateRequest degreeFinalizationCertificateRequest) {
 	final StringBuilder result = new StringBuilder();
 	
 	if (getDocumentRequest().isToShowCredits()) {
 	    result.append(", tendo obtido o total de ");
-	    result.append(String.valueOf(registration.getEctsCredits())).append(getCreditsDescription());
+	    result.append(String.valueOf(getEctsCredits(degreeFinalizationCertificateRequest))).append(getCreditsDescription());
 	    result.append(",");
 	}
 	
 	return result.toString();
+    }
+
+    private double getEctsCredits(final DegreeFinalizationCertificateRequest degreeFinalizationCertificateRequest) {
+	final CycleType requestedCycle = degreeFinalizationCertificateRequest.getRequestedCycle();
+	final Registration registration = degreeFinalizationCertificateRequest.getRegistration();
+	
+	if (requestedCycle == null) {
+	    if (registration.getDegreeType().hasExactlyOneCycleType()) {
+		return registration.getLastStudentCurricularPlan().getLastCycleCurriculumGroup().getCreditsConcluded();
+	    } else {
+		return registration.getEctsCredits();		
+	    }
+	} else {
+	    return registration.getLastStudentCurricularPlan().getCycle(requestedCycle).getCreditsConcluded();
+	}
     }
 
     final private String getGraduateTitle(final Registration registration, final CycleType requestedCycle) {
