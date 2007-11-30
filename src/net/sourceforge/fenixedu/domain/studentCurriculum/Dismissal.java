@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -221,12 +219,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	if (!isConcluded()) {
 	    throw new DomainException("Dismissal.is.not.concluded");
 	}
-
-	final SortedSet<IEnrolment> iEnrolments = new TreeSet<IEnrolment>(IEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
-	iEnrolments.addAll(getSourceIEnrolments());
-
-	// may not have source or all sources may not have approvement dates
-	return iEnrolments.isEmpty() || iEnrolments.last().getApprovementDate() == null ? getExecutionPeriod().getBeginDateYearMonthDay() : iEnrolments.last().getApprovementDate();
+	return getExecutionPeriod().getBeginDateYearMonthDay();
     }
 
     @Override

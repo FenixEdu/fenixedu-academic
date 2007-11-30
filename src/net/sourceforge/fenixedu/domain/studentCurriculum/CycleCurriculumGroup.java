@@ -23,8 +23,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     static final private Comparator<CycleCurriculumGroup> COMPARATOR_BY_CYCLE_TYPE = new Comparator<CycleCurriculumGroup>() {
 	final public int compare(final CycleCurriculumGroup o1, final CycleCurriculumGroup o2) {
-            return CycleType.COMPARATOR_BY_LESS_WEIGHT.compare(o1.getCycleType(), o2.getCycleType());
-        }
+	    return CycleType.COMPARATOR_BY_LESS_WEIGHT.compare(o1.getCycleType(), o2.getCycleType());
+	}
     };
 
     static final public Comparator<CycleCurriculumGroup> COMPARATOR_BY_CYCLE_TYPE_AND_ID = new Comparator<CycleCurriculumGroup>() {
@@ -87,10 +87,10 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	}
 	super.setDegreeModule(degreeModule);
     }
-    
+
     @Override
     public CycleCourseGroup getDegreeModule() {
-        return (CycleCourseGroup) super.getDegreeModule();
+	return (CycleCourseGroup) super.getDegreeModule();
     }
 
     @Override
@@ -114,7 +114,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	return getCycleCourseGroup().getCycleType();
     }
 
-
     @Override
     public RootCurriculumGroup getCurriculumGroup() {
 	return (RootCurriculumGroup) super.getCurriculumGroup();
@@ -136,7 +135,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
 	super.delete();
     }
-    
 
     private void checkRulesToDelete() {
 	if (!getCurriculumGroup().getDegreeType().canRemoveEnrolmentIn(getCycleType())) {
@@ -150,7 +148,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	return false;
     }
 
-   @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void conclude() {
 	if (hasFinalAverage()) {
 	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded", getCycleCourseGroup().getName());
@@ -158,16 +156,16 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	if (!isConcluded()) {
 	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.not.concluded");
 	}
-	
+
 	super.setFinalAverage(getCurriculum().getRoundedAverage());
 	super.setConclusionDate(calculateConclusionDate());
     }
     
     @Override
     protected boolean isConcluded(final ExecutionYear executionYear) {
-        return hasFinalAverage() || super.isConcluded(executionYear);
+	return hasFinalAverage() || super.isConcluded(executionYear);
     }
-    
+
     public boolean hasFinalAverage() {
 	return super.getFinalAverage() != null;
     }
@@ -175,12 +173,12 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     public boolean isConclusionProcessed() {
 	return hasFinalAverage();
     }
-    
+
     @Override
     public void setFinalAverage(Integer finalAverage) {
 	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.final.average");
     }
-    
+
     @Override
     public void setConclusionDate(YearMonthDay conclusionDate) {
 	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.conclusion.date");
@@ -191,5 +189,5 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	super.setFinalAverage(null);
 	super.setConclusionDate(null);
     }
-        
+
 }
