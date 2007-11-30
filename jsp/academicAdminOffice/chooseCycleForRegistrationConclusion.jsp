@@ -30,7 +30,7 @@
 	</p>
 	
 	
-	<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<h3 class="mtop2 mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<logic:present name="registrationConclusionBean" property="registration.ingressionEnum">
 		<fr:view name="registrationConclusionBean" property="registration" schema="student.registrationDetail" >
 			<fr:layout name="tabular">

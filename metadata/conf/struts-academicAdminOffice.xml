@@ -240,6 +240,7 @@
 			<forward name="registrationConclusion" path="registrationConclusion"/>
 			<forward name="registrationConclusionDocument" path="registrationConclusionDocument"/>
 			<forward name="chooseCycleForRegistrationConclusion" path="chooseCycleForRegistrationConclusion"/>
+			<forward name="viewRegistrationDetails" path="/student.do?method=visualizeRegistration"/>
 			
 		</action>	
 

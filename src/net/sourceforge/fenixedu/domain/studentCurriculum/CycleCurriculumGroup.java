@@ -153,7 +153,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void conclude() {
 	if (hasFinalAverage()) {
-	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded");
+	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded", getCycleCourseGroup().getName());
 	}
 	if (!isConcluded()) {
 	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.not.concluded");

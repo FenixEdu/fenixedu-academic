@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExe
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -124,15 +125,39 @@ public class StudentDA extends FenixDispatchAction {
 
     public ActionForward prepareRegistrationConclusionProcessInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("registrationConclusionBean", getObjectFromViewState("registrationConclusionBean"));
+	request.setAttribute("registrationConclusionBean", getRegistrationConclusionBeanFromViewState());
 
 	return mapping.findForward("chooseCycleForRegistrationConclusion");
+
+    }
+
+    private RegistrationConclusionBean getRegistrationConclusionBeanFromViewState() {
+	return (RegistrationConclusionBean) getObjectFromViewState("registrationConclusionBean");
+    }
+
+    public ActionForward doRegistrationConclusion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final RegistrationConclusionBean registrationConclusionBean = getRegistrationConclusionBeanFromViewState();
+
+	try {
+	    executeService("RegistrationConclusionProcess", registrationConclusionBean);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("registrationConclusionBean", registrationConclusionBean);
+
+	    return mapping.findForward("registrationConclusion");
+	}
+
+	request.setAttribute("registrationId", registrationConclusionBean.getRegistration().getIdInternal());
+	return visualizeRegistration(mapping, form, request, response);
+
     }
 
     public ActionForward chooseCycleCurriculumGroupForConclusion(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final RegistrationConclusionBean registrationConclusionBean = (RegistrationConclusionBean) getObjectFromViewState("registrationConclusionBean");
+	final RegistrationConclusionBean registrationConclusionBean = getRegistrationConclusionBeanFromViewState();
 	request.setAttribute("registrationConclusionBean", registrationConclusionBean);
 	request.setAttribute("registration", registrationConclusionBean.getRegistration());
 

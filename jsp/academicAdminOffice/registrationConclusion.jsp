@@ -8,7 +8,7 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<p>
 		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 	</p>
@@ -30,7 +30,7 @@
 <p class="mvert2">
 	<span class="showpersonid">
 	<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
-		<fr:view name="registration" property="student" schema="student.show.personAndStudentInformation.short">
+		<fr:view name="registrationConclusionBean" property="registration.student" schema="student.show.personAndStudentInformation.short">
 			<fr:layout name="flow">
 				<fr:property name="labelExcluded" value="true"/>
 			</fr:layout>
@@ -38,9 +38,9 @@
 	</span>
 </p>
 
-<logic:present name="registration" property="ingressionEnum">
+<logic:present name="registrationConclusionBean" property="registration.ingressionEnum">
 <h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="registration" schema="student.registrationDetail" >
+<fr:view name="registrationConclusionBean" property="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
 		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
@@ -49,9 +49,9 @@
 </logic:present>
 
 
-<logic:notPresent name="registration" property="ingressionEnum">
+<logic:notPresent name="registrationConclusionBean" property="registration.ingressionEnum">
 <h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="registration" schema="student.registrationsWithStartData" >
+<fr:view name="registrationConclusionBean" property="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
 		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
@@ -88,7 +88,7 @@
 
 	<p>
 		<bean:define id="url">
-			/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId=<bean:write name="registration" property="idInternal"/>
+			/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId=<bean:write name="registrationConclusionBean" property="registration.idInternal"/>
 			<logic:notEmpty name="registrationConclusionBean" property="cycleCurriculumGroup">
 				&amp;cycleCurriculumGroupId=<bean:write name="registrationConclusionBean" property="cycleCurriculumGroup.idInternal"/>
 			</logic:notEmpty>
@@ -108,3 +108,16 @@
 		</fr:layout>
 	</fr:view>
 </p>
+
+
+<logic:equal name="registrationConclusionBean" property="concluded" value="true">
+	<fr:form action="/registration.do?method=doRegistrationConclusion">
+	
+		<fr:edit id="registrationConclusionBean" name="registrationConclusionBean" visible="false" />
+		
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message bundle="APPLICATION_RESOURCES" key="label.finish"/>
+		</html:submit>
+	
+	</fr:form>
+</logic:equal>
