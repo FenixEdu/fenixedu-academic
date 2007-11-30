@@ -30,12 +30,12 @@
 	</p>
 	
 	
-	<h3 class="mtop2 mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<logic:present name="registrationConclusionBean" property="registration.ingressionEnum">
 		<fr:view name="registrationConclusionBean" property="registration" schema="student.registrationDetail" >
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thright thlight"/>
-				<fr:property name="rowClasses" value=",,,,,,,,"/>
+				<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 			</fr:layout>
 		</fr:view>
 	</logic:present>
@@ -43,7 +43,7 @@
 		<fr:view name="registrationConclusionBean" property="registration" schema="student.registrationsWithStartData" >
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thright thlight mtop0"/>
-				<fr:property name="rowClasses" value=",,,,,,,"/>
+				<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notPresent>

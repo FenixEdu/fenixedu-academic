@@ -39,10 +39,10 @@
 </p>
 
 <logic:present name="registrationConclusionBean" property="registration.ingressionEnum">
-<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registrationConclusionBean" property="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle2 thright thlight"/>
 		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 	</fr:layout>
 </fr:view>
@@ -50,29 +50,27 @@
 
 
 <logic:notPresent name="registrationConclusionBean" property="registration.ingressionEnum">
-<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registrationConclusionBean" property="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle2 thright thlight"/>
 		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:notPresent>
 
 <logic:equal name="registrationConclusionBean" property="concluded" value="false">
-	<ul class="list7 mtop2 error0" style="list-style: none;">
-		<li>
-			<span><bean:message key="registration.not.concluded" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
-		</li>
-	</ul>
+	<p>
+		<span class="error0"><bean:message key="registration.not.concluded" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
+	</p>
 </logic:equal>
 <logic:equal name="registrationConclusionBean" property="concluded" value="true">
-	<h3 class="mvert15"><bean:message key="label.summary" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<h3 class="mtop1 mbottom05"><bean:message key="label.summary" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
 	<logic:equal name="registrationConclusionBean" property="byCycle" value="true" >
 		<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForCycle">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+				<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
 				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 			</fr:layout>
 		</fr:view>
@@ -80,13 +78,13 @@
 	<logic:equal name="registrationConclusionBean" property="byCycle" value="false" >
 		<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForRegistration">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+				<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
 				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 			</fr:layout>
 		</fr:view>
 	</logic:equal>
 
-	<p>
+	<p class="mtop05">
 		<bean:define id="registrationId" name="registrationConclusionBean" property="registration.idInternal" />		
 		<logic:empty name="registrationConclusionBean" property="cycleCurriculumGroup">
 			<html:link action="<%="/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId=" + registrationId %>" target="_blank">
@@ -103,8 +101,8 @@
 
 </logic:equal>
 
-<h3 class="mvert15"><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<p class="mvert15">
+<h3 class="mtop15 mbottom05"><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<p>
 	<fr:view name="registrationConclusionBean" property="curriculumForConclusion">
 		<fr:layout>
 			<fr:property name="visibleCurricularYearEntries" value="false" />
@@ -118,9 +116,11 @@
 	
 		<fr:edit id="registrationConclusionBean" name="registrationConclusionBean" visible="false" />
 		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message bundle="APPLICATION_RESOURCES" key="label.finish"/>
-		</html:submit>
+		<p class="mtop15">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.finish"/>
+			</html:submit>
+		</p>
 	
 	</fr:form>
 </logic:equal>
