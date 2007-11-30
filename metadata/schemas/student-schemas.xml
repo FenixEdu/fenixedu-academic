@@ -417,8 +417,8 @@
 </schema>
 
 <schema name="student.vote" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">
-	<slot name="number"/>
-	<slot name="person.name"/>
+	<slot name="number" read-only="true"/>
+	<slot name="person.name" read-only="true"/>
 </schema>
 
 <schema name="student.yearDelegateElection.voteCandidate" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean">
