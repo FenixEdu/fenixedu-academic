@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,9 +14,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.joda.time.DateTime;
 
@@ -44,6 +47,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
         generateCheckSum();
     }
+    
     
     public static MarkSheet createNormal(CurricularCourse curricularCourse,
             ExecutionPeriod executionPeriod, Teacher responsibleTeacher, Date evaluationDate,
@@ -158,6 +162,7 @@ public class MarkSheet extends MarkSheet_Base {
         setCreationEmployee(employee);
     }
 
+    @Checked("MarkSheetPredicates.editPredicate")
     private void addEnrolmentEvaluationsWithoutResctrictions(Teacher responsibleTeacher,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans,
             EnrolmentEvaluationState enrolmentEvaluationState) {
@@ -179,6 +184,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
+    @Checked("MarkSheetPredicates.editPredicate")
     private void addEnrolmentEvaluationsWithResctrictions(Teacher responsibleTeacher,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans,
             EnrolmentEvaluationState enrolmentEvaluationState) {
@@ -198,6 +204,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
+    @Checked("MarkSheetPredicates.editPredicate")
     private void addEnrolmentEvaluationToMarkSheet(Teacher responsibleTeacher,
             EnrolmentEvaluationState enrolmentEvaluationState,
             final MarkSheetEnrolmentEvaluationBean evaluationBean, ExecutionDegree executionDegree) {
@@ -239,6 +246,7 @@ public class MarkSheet extends MarkSheet_Base {
 	return hasMarkSheetState(MarkSheetState.RECTIFICATION) || hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED);
     }
     
+    @Checked("MarkSheetPredicates.editPredicate")
     public void editNormal(Teacher responsibleTeacher, Date newEvaluationDate) {
         
         if (isConfirmed()) {
@@ -263,6 +271,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
     
+    @Checked("MarkSheetPredicates.editPredicate")
     public void editRectification(MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean) {
         
         if (isConfirmed()) {
@@ -280,6 +289,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
+    @Checked("MarkSheetPredicates.editPredicate")
     private void editMarkSheetEnrolmentEvaluationsWithSameEvaluationDate(Teacher responsibleTeacher,
             Date oldEvaluationDate, Date newEvaluationDate,
             Set<EnrolmentEvaluation> enrolmentEvaluationsToEdit) {
@@ -294,6 +304,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
     
+    @Checked("MarkSheetPredicates.editPredicate")
     public void editNormal(
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToEdit,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToAppend,
@@ -326,6 +337,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
     
+    @Checked("MarkSheetPredicates.editPredicate")
     private void editEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToEdit) {
         
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
@@ -348,6 +360,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
     
+    @Checked("MarkSheetPredicates.editPredicate")
     private void removeEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToRemove) {
         for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationBeansToRemove) {
             enrolmentEvaluationBean.getEnrolmentEvaluation().removeFromMarkSheet();
@@ -359,6 +372,8 @@ public class MarkSheet extends MarkSheet_Base {
         addEnrolmentEvaluationsWithResctrictions(getResponsibleTeacher(), evaluationBeansToAppend, EnrolmentEvaluationState.TEMPORARY_OBJ);
     }
 
+    
+    @Checked("MarkSheetPredicates.confirmPredicate")
     public void confirm(Employee employee) {
     	if(employee == null) {
     		throw new DomainException("error.markSheet.invalid.arguments");
@@ -741,6 +756,29 @@ public class MarkSheet extends MarkSheet_Base {
 	} else {
 	    enrolment.setEnrollmentState(enrolment.getLatestEnrolmentEvaluation().getEnrollmentStateByGrade());
 	}
+    }
+    
+    public boolean getCanRectify() {
+	return isConfirmed() && MarkSheetPredicates.checkRectification(this) && MarkSheetPredicates.checkDissertation(this);
+    }
+    
+    public boolean getCanEdit() {
+	return isNotConfirmed() && MarkSheetPredicates.editPredicate.evaluate(this);
+    }
+    
+    public boolean isDissertation() {
+	return getCurricularCourse().isDissertation();
+    }
+
+    public String getStateDiscription() {
+	StringBuilder stringBuilder = new StringBuilder();
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	stringBuilder.append(enumerationResources.getString(getMarkSheetState().getName()).trim());
+	if(getSubmittedByTeacher()) {
+	    final ResourceBundle academicResources = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
+	    stringBuilder.append(" (").append(academicResources.getString("label.markSheet.submittedByTeacher").trim()).append(")");
+	}
+	return stringBuilder.toString();
     }
     
 }

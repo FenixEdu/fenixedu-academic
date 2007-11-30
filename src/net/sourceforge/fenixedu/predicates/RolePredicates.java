@@ -24,6 +24,13 @@ public class RolePredicates {
 	    return MANAGER_PREDICATE.evaluate(domainObject) || ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE.evaluate(domainObject);
 	};
     };
+    
+    public static final AccessControlPredicate<DomainObject> SCIENTIFIC_COUNCIL_PREDICATE = new AccessControlPredicate<DomainObject>() {
+	public boolean evaluate(DomainObject domainObject) {
+	    return hasRole(RoleType.SCIENTIFIC_COUNCIL);
+	};
+    };
+
 
     
     private static boolean hasRole(final RoleType roleType) {

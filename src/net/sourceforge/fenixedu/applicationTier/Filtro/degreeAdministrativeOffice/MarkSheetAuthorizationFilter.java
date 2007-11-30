@@ -9,15 +9,15 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
 public abstract class MarkSheetAuthorizationFilter extends Filtro {
-	
-	@Override
-	public void execute(ServiceRequest request, ServiceResponse response)
-			throws Exception {
-		IUserView userView = getRemoteUser(request);
-        if(userView.getPerson().getEmployee() == null || !getAuthorizedEmployees().contains(userView.getPerson().getEmployee().getEmployeeNumber().toString())){
-            throw new NotAuthorizedFilterException("not.authorized");
-        } 
+
+    @Override
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+	IUserView userView = getRemoteUser(request);
+	if (userView.getPerson().getEmployee() == null
+		|| !getAuthorizedEmployees().contains(userView.getPerson().getEmployee().getEmployeeNumber().toString())) {
+	    throw new NotAuthorizedFilterException("not.authorized");
 	}
-    
+    }
+
     public abstract Set<String> getAuthorizedEmployees();
 }
