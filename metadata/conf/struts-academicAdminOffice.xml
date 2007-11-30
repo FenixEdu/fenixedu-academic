@@ -239,6 +239,8 @@
 			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
 			<forward name="registrationConclusion" path="registrationConclusion"/>
 			<forward name="registrationConclusionDocument" path="registrationConclusionDocument"/>
+			<forward name="chooseCycleForRegistrationConclusion" path="chooseCycleForRegistrationConclusion"/>
+			
 		</action>	
 
 		<action path="/viewCurriculum"

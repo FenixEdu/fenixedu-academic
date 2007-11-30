@@ -22,7 +22,13 @@ public class RegistrationConclusionBean implements Serializable {
     private DomainReference<CycleCurriculumGroup> cycleCurriculumGroup;
 
     public RegistrationConclusionBean(Registration registration) {
+	this(registration, null);
+
+    }
+
+    public RegistrationConclusionBean(Registration registration, CycleCurriculumGroup cycleCurriculumGroup) {
 	setRegistration(registration);
+	setCycleCurriculumGroup(cycleCurriculumGroup);
 
     }
 

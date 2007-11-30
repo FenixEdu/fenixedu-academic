@@ -16,14 +16,14 @@
 
 <ul class="mtop2">
 	<li>
-		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registrationConclusionBean" paramProperty="registration.idInternal">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</li>
 </ul>
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registrationConclusionBean" property="registration.student.person.idInternal"/>
 	<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -59,41 +59,44 @@
 </fr:view>
 </logic:notPresent>
 
-<logic:equal name="registration" property="hasConcluded" value="false">
+<logic:equal name="registrationConclusionBean" property="concluded" value="false">
 	<ul class="list7 mtop2 error0" style="list-style: none;">
 		<li>
 			<span><bean:message key="registration.not.concluded" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
 		</li>
 	</ul>
 </logic:equal>
-<logic:equal name="registration" property="hasConcluded" value="true">
-	<h3 class="mvert15"><bean:message key="label.title.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/> e <bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-	<p class="mvert15">
-		<p>
-			<bean:message key="conclusion.date.sugested" bundle="ACADEMIC_OFFICE_RESOURCES"/> <fr:view name="registration" property="lastApprovementDate"/>
-		</p>
-		<p>
-			<bean:message key="final.average.sugested" bundle="ACADEMIC_OFFICE_RESOURCES"/> <fr:view name="registration" property="average" type="java.lang.Integer"/> valores
-		</p>
-	
-		<fr:edit id="mata" name="registrationStateBean" schema="student.manageRegistrationState.conclusionProcess" action="/manageRegistrationState.do?method=createNewState">
+<logic:equal name="registrationConclusionBean" property="concluded" value="true">
+	<h3 class="mvert15"><bean:message key="label.summary" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+
+	<logic:equal name="registrationConclusionBean" property="byCycle" value="true" >
+		<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForCycle">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop025"/>
+				<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
 				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 			</fr:layout>
-		</fr:edit>
-		<p>
-			<html:link page="/registration.do?method=prepareRegistrationConclusionDocument" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-				Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</p>
+		</fr:view>
+	</logic:equal>
+	<logic:equal name="registrationConclusionBean" property="byCycle" value="false" >
+		<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForRegistration">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+			</fr:layout>
+		</fr:view>
+	</logic:equal>
+
+	<p>
+		<html:link page="/registration.do?method=prepareRegistrationConclusionDocument" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+			Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
 	</p>
+
 </logic:equal>
 
 <h3 class="mvert15"><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mvert15">
-	<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
-	<fr:view name="registration" property="curriculum">
+	<fr:view name="registrationConclusionBean" property="curriculumForConclusion">
 		<fr:layout>
 			<fr:property name="visibleCurricularYearEntries" value="false" />
 		</fr:layout>

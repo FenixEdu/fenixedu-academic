@@ -5,13 +5,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.registrationStates.ConcludedState.RegistrationConcludedStateCreator;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -29,14 +29,15 @@ public class StudentDA extends FenixDispatchAction {
     }
 
     private Registration getRegistration(final HttpServletRequest request) {
-	final Integer registrationID = getIntegerFromRequest(request, "registrationID") != null ? getIntegerFromRequest(request, "registrationID") : getIntegerFromRequest(request, "registrationId"); 
+	final Integer registrationID = getIntegerFromRequest(request, "registrationID") != null ? getIntegerFromRequest(request,
+		"registrationID") : getIntegerFromRequest(request, "registrationId");
 	final Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
 	request.setAttribute("registration", registration);
 	return registration;
     }
 
-    public ActionForward prepareEditPersonalData(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareEditPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final Student student = getStudent(request);
 
 	final Employee employee = student.getPerson().getEmployee();
@@ -49,31 +50,30 @@ public class StudentDA extends FenixDispatchAction {
 	return mapping.findForward("editPersonalData");
     }
 
-    public ActionForward editPersonalData(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward editPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	getStudent(request);
 	executeFactoryMethod(request);
 	RenderUtils.invalidateViewState();
 	addActionMessage(request, "message.student.personDataEditedWithSuccess");
 	return mapping.findForward("viewStudentDetails");
     }
-    
-    public ActionForward viewPersonalData(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward viewPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	request.setAttribute("personBean", new PersonBeanFactoryEditor(getStudent(request).getPerson()));
 	return mapping.findForward("viewPersonalData");
     }
 
-    public ActionForward visualizeRegistration(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward visualizeRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	getRegistration(request);
 	return mapping.findForward("viewRegistrationDetails");
     }
 
-    public ActionForward visualizeStudent(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward visualizeStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	getStudent(request);
 	return mapping.findForward("viewStudentDetails");
     }
@@ -88,12 +88,12 @@ public class StudentDA extends FenixDispatchAction {
 		bean.setExecutionYear(currentExecutionYear);
 	    }
 	}
-	
+
 	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
 	if (degreeCurricularPlanID != null) {
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
-	
+
 	request.setAttribute("bean", bean);
 	return mapping.findForward("view-registration-curriculum");
     }
@@ -101,19 +101,49 @@ public class StudentDA extends FenixDispatchAction {
     public ActionForward prepareRegistrationConclusionProcess(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	RenderUtils.invalidateViewState();
-	
+
 	final Registration registration = getRegistration(request);
-	request.setAttribute("registrationStateBean", new RegistrationConcludedStateCreator(registration));
-	
+
+	if (registration.isBolonha()) {
+	    if (registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops().size() > 1) {
+		request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration));
+		return mapping.findForward("chooseCycleForRegistrationConclusion");
+	    } else if (registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops().size() == 1) {
+		request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration, registration
+			.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops().iterator().next()));
+		return mapping.findForward("name");
+	    } else {
+		return mapping.findForward("chooseCycleForRegistrationConclusion");
+	    }
+	}
+
+	request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration));
+	return mapping.findForward("registrationConclusion");
+    }
+
+    public ActionForward prepareRegistrationConclusionProcessInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("registrationConclusionBean", getObjectFromViewState("registrationConclusionBean"));
+
+	return mapping.findForward("chooseCycleForRegistrationConclusion");
+    }
+
+    public ActionForward chooseCycleCurriculumGroupForConclusion(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final RegistrationConclusionBean registrationConclusionBean = (RegistrationConclusionBean) getObjectFromViewState("registrationConclusionBean");
+	request.setAttribute("registrationConclusionBean", registrationConclusionBean);
+	request.setAttribute("registration", registrationConclusionBean.getRegistration());
+
 	return mapping.findForward("registrationConclusion");
     }
 
     public ActionForward prepareRegistrationConclusionDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	RenderUtils.invalidateViewState();
-	
+
 	request.setAttribute("registration", getRegistration(request));
-	
+
 	return mapping.findForward("registrationConclusionDocument");
     }
 
