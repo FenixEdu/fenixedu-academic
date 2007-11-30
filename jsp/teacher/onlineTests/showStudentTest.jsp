@@ -356,22 +356,22 @@
 							<html:text alt="<%="question"+ optionOrder%>" maxlength="<%=maxchars.toString()%>" size="<%=textBoxSize%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 						</logic:empty>	
 					</logic:notEmpty>	
+
 					<logic:empty name="subQuestion" property="questionType.render.maxchars">
 						<logic:notEmpty name="subQuestion" property="questionType.render.rows">
 							<bean:define id="rows" name="subQuestion" property="questionType.render.rows"/>
 							<logic:notEmpty name="subQuestion" property="questionType.render.columns">
 								<bean:define id="cols" name="subQuestion" property="questionType.render.columns"/>
-								<html:textarea alt="<%="question"+ optionOrder%>" rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+								 <html:textarea alt="<%="question"+ optionOrder%>" rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' readonly="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:notEmpty>
 							<logic:empty name="subQuestion" property="questionType.render.columns">
-
-								<html:textarea alt="<%="question"+ optionOrder%>" rows="<%=rows.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+								<html:textarea alt="<%="question"+ optionOrder%>" rows="<%=rows.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' readonly="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:empty>
 						</logic:notEmpty>
 						<logic:empty name="subQuestion" property="questionType.render.rows">
 							<logic:notEmpty name="subQuestion" property="questionType.render.columns">
 								<bean:define id="cols" name="subQuestion" property="questionType.render.columns"/>
-								<html:textarea alt="<%="question"+ optionOrder%>" cols="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+								<html:textarea alt="<%="question"+ optionOrder%>" cols="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' readonly="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:notEmpty>
 							<logic:empty name="subQuestion" property="questionType.render.columns">
 								<html:text alt='<%="question"+ optionOrder%>' property='<%="question"+ optionOrder%>' value="<%=questionValue.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
