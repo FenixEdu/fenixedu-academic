@@ -808,7 +808,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final StudentCurricularPlan nextStudentCurricularPlan = getNextStudentCurricularPlan();
 	if (nextStudentCurricularPlan != null) {
 	    return nextStudentCurricularPlan.getStartDateYearMonthDay().minusDays(1);
-	} else if (!getRegistration().isActive()) {
+	} else if (getRegistration()!=null && !getRegistration().isActive()) {
 	    return getRegistration().getActiveState().getStateDate().toYearMonthDay();
 	}
 
@@ -816,12 +816,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private StudentCurricularPlan getNextStudentCurricularPlan() {
+    if(getRegistration()!=null){
 	for (Iterator<StudentCurricularPlan> iter = getRegistration().getSortedStudentCurricularPlans().iterator(); iter
 		.hasNext();) {
 	    if (iter.next() == this) {
 		return iter.hasNext() ? iter.next() : null;
 	    }
 	}
+    }
 	return null;
     }
 
