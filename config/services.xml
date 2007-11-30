@@ -12580,7 +12580,7 @@
 	</service>
 	<service>
 		<name>RegistrationConclusionProcess</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.RegistrationConclusionProcesst</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.RegistrationConclusionProcess</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
