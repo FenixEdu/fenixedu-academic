@@ -12577,5 +12577,14 @@
 		<filterChains>
 			<chain name="ManagerAuthorization" />
 		</filterChains>
-	</service>			
+	</service>
+	<service>
+		<name>RegistrationConclusionProcess</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.RegistrationConclusionProcesst</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>	
 </serviceDefinitions>

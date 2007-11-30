@@ -25,7 +25,7 @@ public class ConcludedState extends ConcludedState_Base {
 	if (!registration.hasConcluded()) {
 	    throw new DomainException("error.registration.is.not.concluded");
 	}
-	
+
 	init(registration, person, dateTime);
 	registration.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
 	if (registration.getStudent().getRegistrationsCount() == 1) {
@@ -44,7 +44,12 @@ public class ConcludedState extends ConcludedState_Base {
 	    throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
 	}
 
-	getRegistration().setFinalAverage(null);
+	if (!getRegistration().isBolonha()) {
+	    getRegistration().setFinalAverage(null);
+	    getRegistration().setConclusionDate(null);
+	} else {
+	    getRegistration().getLastStudentCurricularPlan().getLastCycleCurriculumGroup().removeConcludedInformation();
+	}
 	super.delete();
     }
 

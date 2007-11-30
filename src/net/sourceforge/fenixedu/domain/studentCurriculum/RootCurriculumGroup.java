@@ -163,7 +163,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     public CycleCurriculumGroup getLastCycleCurriculumGroup() {
 	final SortedSet<CycleCurriculumGroup> cycleCurriculumGroups = new TreeSet<CycleCurriculumGroup>(
 		CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
-	cycleCurriculumGroups.addAll(getCycleCurriculumGroups());
+	cycleCurriculumGroups.addAll(getInternalCycleCurriculumGroups());
 
 	return cycleCurriculumGroups.isEmpty() ? null : cycleCurriculumGroups.last();
     }

@@ -1982,7 +1982,10 @@ public class Registration extends Registration_Base {
 
     @Override
     public void setConclusionDate(YearMonthDay conclusionDate) {
-	throw new DomainException("error.Registration.cannot.modify.conclusion.date");
+	if (isBolonha()) {
+	    throw new DomainException("error.Registration.cannot.modify.conclusion.date");
+	}
+	super.setConclusionDate(conclusionDate);
     }
 
     public YearMonthDay calculateConclusionDate() {
@@ -2039,13 +2042,11 @@ public class Registration extends Registration_Base {
     }
 
     public boolean hasConcluded() {
-
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 
 	if (!lastStudentCurricularPlan.isBolonhaDegree()) {
 	    return true;
 	}
-
 	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getCycleCurriculumGroups()) {
 	    if (cycleCurriculumGroup.isExternal()
 		    || !getDegreeType().getCycleTypes().contains(cycleCurriculumGroup.getCycleType())) {
@@ -2055,7 +2056,6 @@ public class Registration extends Registration_Base {
 		return false;
 	    }
 	}
-
 	return !lastStudentCurricularPlan.getCycleCurriculumGroups().isEmpty();
     }
 
@@ -2086,6 +2086,39 @@ public class Registration extends Registration_Base {
     final public CycleType getLastConcludedCycleType() {
 	final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles());
 	return concludedCycles.isEmpty() ? null : concludedCycles.last();
+    }
+
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void conclude() {
+	if (isBolonha()) {
+	    throw new DomainException("error.Registration.cannot.apply.to.bolonha");
+	}
+
+	if (isRegistrationConclusionProcessed()) {
+	    throw new DomainException("error.Registration.already.concluded");
+	}
+
+	setFinalAverage(calculateFinalAverage());
+	setConclusionDate(calculateConclusionDate());
+
+	RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
+    }
+
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void conclude(final CycleCurriculumGroup cycleCurriculumGroup) {
+	if (!isBolonha()) {
+	    throw new DomainException("error.Registration.cannot.apply.to.preBolonha");
+	}
+
+	if (cycleCurriculumGroup == null || !getLastStudentCurricularPlan().hasCurriculumModule(cycleCurriculumGroup)) {
+	    throw new DomainException("error.Registration.invalid.cycleCurriculumGroup");
+	}
+
+	cycleCurriculumGroup.conclude();
+
+	if (!isConcluded() && hasConcluded()) {
+	    RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
+	}
     }
 
     final public CycleType getCurrentCycleType() {

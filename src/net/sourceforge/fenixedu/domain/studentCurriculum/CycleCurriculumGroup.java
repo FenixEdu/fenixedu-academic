@@ -152,6 +152,9 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void conclude() {
+	if (hasFinalAverage()) {
+	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded");
+	}
 	if (!isConcluded()) {
 	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.not.concluded");
 	}
@@ -181,6 +184,12 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     @Override
     public void setConclusionDate(YearMonthDay conclusionDate) {
 	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.conclusion.date");
+    }
+
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void removeConcludedInformation() {
+	super.setFinalAverage(null);
+	super.setConclusionDate(null);
     }
         
 }
