@@ -87,15 +87,18 @@
 	</logic:equal>
 
 	<p>
-		<bean:define id="url">
-			<%="/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId="%><bean:write name="registrationConclusionBean" property="registration.idInternal"/>
-			<logic:notEmpty name="registrationConclusionBean" property="cycleCurriculumGroup">
-				<%="&amp;cycleCurriculumGroupId="%><bean:write name="registrationConclusionBean" property="cycleCurriculumGroup.idInternal"/>
-			</logic:notEmpty>
-		</bean:define>
-		<html:link page="<%=url%>" target="_blank">
-			Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:link>
+		<bean:define id="registrationId" name="registrationConclusionBean" property="registration.idInternal" />		
+		<logic:empty name="registrationConclusionBean" property="cycleCurriculumGroup">
+			<html:link action="<%="/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId=" + registrationId %>" target="_blank">
+				Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
+		</logic:empty>
+		<logic:notEmpty name="registrationConclusionBean" property="cycleCurriculumGroup">
+			<bean:define id="cycleCurriculumGroupId" name="registrationConclusionBean" property="cycleCurriculumGroup.idInternal" />
+			<html:link action="<%="/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId=" + registrationId + "&amp;cycleCurriculumGroupId=" + cycleCurriculumGroupId %>" target="_blank">
+				Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
+		</logic:notEmpty>
 	</p>
 
 </logic:equal>
