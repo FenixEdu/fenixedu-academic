@@ -146,16 +146,17 @@ public class StudentDA extends FenixDispatchAction {
 	final Registration registration = getRegistration(request);
 	request.setAttribute("registration", registration);
 
-	final Integer cyclyeCurriculumGroupId = getIntegerFromRequest(request, "cyclyeCurriculumGroupId");
-	final CycleCurriculumGroup cycleCurriculumGroup = (CycleCurriculumGroup) rootDomainObject.readCurriculumModuleByOID(cyclyeCurriculumGroupId);
+	final Integer cycleCurriculumGroupId = getIntegerFromRequest(request, "cycleCurriculumGroupId");
+	final CycleCurriculumGroup cycleCurriculumGroup = (CycleCurriculumGroup) rootDomainObject
+		.readCurriculumModuleByOID(cycleCurriculumGroupId);
 	final RegistrationConclusionBean registrationConclusionBean;
-	if (cyclyeCurriculumGroupId == null) {
+	if (cycleCurriculumGroupId == null) {
 	    registrationConclusionBean = new RegistrationConclusionBean(registration);
 	} else {
 	    registrationConclusionBean = new RegistrationConclusionBean(registration, cycleCurriculumGroup);
 	}
 	request.setAttribute("registrationConclusionBean", registrationConclusionBean);
-	
+
 	return mapping.findForward("registrationConclusionDocument");
     }
 
