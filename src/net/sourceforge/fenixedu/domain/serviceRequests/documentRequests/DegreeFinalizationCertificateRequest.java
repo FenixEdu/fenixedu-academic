@@ -74,16 +74,9 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	if (academicServiceRequestBean.isToProcess()) {
 	    checkForDiplomaRequest(getRequestedCycle());
-	    
-	    if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {
-		throw new DomainException("DegreeFinalizationCertificateRequest.not.available");
-	    }
 	}
     }
 
-    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] {
-	    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE});
-    
     @Override
     final public String getDescription() {
 	final DegreeType degreeType = getDegreeType();

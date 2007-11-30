@@ -42,7 +42,7 @@
 	</tr>
 </table>
 
-<fr:view name="registration" property="curriculum">
+<fr:view name="registrationConclusionBean" property="curriculumForConclusion">
 	<fr:layout>
 		<fr:property name="visibleCurricularYearEntries" value="false" />
 	</fr:layout>

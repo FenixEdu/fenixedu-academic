@@ -113,7 +113,7 @@ public class StudentDA extends FenixDispatchAction {
 	    } else if (registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops().size() == 1) {
 		request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration, registration
 			.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops().iterator().next()));
-		return mapping.findForward("name");
+		return mapping.findForward("registrationConclusion");
 	    } else {
 		return mapping.findForward("chooseCycleForRegistrationConclusion");
 	    }
