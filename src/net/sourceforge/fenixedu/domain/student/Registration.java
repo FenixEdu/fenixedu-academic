@@ -2142,7 +2142,9 @@ public class Registration extends Registration_Base {
 	} else {
 	    final CycleType lastConcludedCycle = concludedCycles.last();
 
-	    if (lastConcludedCycle.hasNext()) {
+	    if (getDegreeType().getLastCycleType() == lastConcludedCycle) {
+		return lastConcludedCycle;
+	    } else if (lastConcludedCycle.hasNext()) {
 		return lastConcludedCycle.getNext();
 	    } else {
 		return lastConcludedCycle;
