@@ -70,7 +70,7 @@
 	</tr>
 	<tr>
 		<td style="padding: 5px;">Média Ponderada</td>
-		<td style="padding: 5px;"><bean:write name="registration" property="average"/></td>		
+		<td style="padding: 5px;"><bean:write name="registrationConclusionBean" property="average"/></td>		
 		<logic:equal name="registration" property="degreeType.administrativeOfficeType" value="AdministrativeOfficeType.MASTER_DEGREE">
 			<td width="50%" style="padding: 5px; padding-left: 15em;">O coordenador do curso,</td>
 		</logic:equal>
