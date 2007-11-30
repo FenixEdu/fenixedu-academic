@@ -34,7 +34,7 @@
 		<fr:destination name="input" path="/editScientificJournalMergeJournalIssues.do?method=prepare"/>
 		<fr:layout name="pages">
 			<fr:property name="classes" value="tstyle1 thcenter mbottom05"/>
-			<fr:property name="columnClasses" value="width35em,width5em,width5em"/>
+			<fr:property name="columnClasses" value="width35em,width5em aright,width5em acenter,"/>
 			<fr:property name="rowClasses" value=",bgcolorfafafa"/>
 			<fr:property name="objectsPerPage" value="20"/>
 			<fr:property name="subSchema" value="scientific.journal.merge.list.with.journal.issue.number"/>
