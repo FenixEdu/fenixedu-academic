@@ -37,6 +37,7 @@
 	<parameter name="finalAverageDescription" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="conclusionStatus" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>	
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -120,7 +121,7 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="14" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["em " + $P{conclusionDate} + ", com a qualificação final de " + $P{finalAverageDescription} + " Valores (" + $P{registration}.getFinalAverageQualified($P{documentRequest}.getRequestedCycle()) + ")."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["em " + $P{conclusionDate} + ", com a qualificação final de " + $P{finalAverageDescription} + " Valores (" + $P{finalAverageQualified} + ")."]]></textFieldExpression>
 				</textField>
 				</elementGroup><!-- End 1 !-->
 			</band>
