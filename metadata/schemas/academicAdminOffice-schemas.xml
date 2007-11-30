@@ -492,22 +492,6 @@
     </slot>	
 </schema>
 
-<schema name="student.manageRegistrationState.conclusionProcess"
-	type="net.sourceforge.fenixedu.domain.student.registrationStates.ConcludedState$RegistrationConcludedStateCreator" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="stateDate" key="label.conclusionDate" read-only="true">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.AdvancedDateValidator">
-			<property name="validationPeriod" value="pastOrToday" />
-		</validator>
-	</slot>		
-	<slot name="finalAverage" key="final.degree.average" read-only="true" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator">
-		<property name="size" value="4"/>
-		<property name="maxLength" value="2" />
-	</slot>		
-    <slot name="remarks" layout="longText">
-    	<property name="columns" value="50" />
-    	<property name="rows" value="10" />
-    </slot>	
-</schema>
 
 <schema name="student.viewRegistrationStatesHistoric" 
 	type="net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES">
