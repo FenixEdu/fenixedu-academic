@@ -108,16 +108,11 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="2" style="padding: 5px;">
+		<td style="text-align: center;">
 			Conferido em <bean:write name="day"/>
 		</td>
-	</tr>
-	<tr>
 		<td style="text-align: center;">
-			<div class="homologo">Homologo</div>
-		</td>
-		<td style="text-align: center;">
-			<div class="consid">Coordenador<bean:write name="administrativeOfficeCoordinatorGender"/> do <bean:write name="administrativeOfficeName"/></div>
+			<div class="homologo">Homologo,</div>
 		</td>
 	</tr>
 	<tr>
@@ -130,5 +125,9 @@
 	<tr>
 		<td style="text-align: center;"></td>
 		<td style="text-align: center;"><bean:write name="administrativeOfficeCoordinator" property="name"/></td>
+	</tr>
+	<tr>
+		<td style="text-align: center;"></td>
+		<td style="text-align: center;">Coordenador<bean:write name="administrativeOfficeCoordinatorGender"/> do <bean:write name="administrativeOfficeName"/></td>
 	</tr>
 </table>
