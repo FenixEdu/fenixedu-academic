@@ -1,11 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -66,15 +62,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 		    throw new DomainException("ApprovementCertificateRequest.registration.hasnt.finished.third.year");
 		}
 	    }
-	    
-	    if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {
-		throw new DomainException("ApprovementCertificateRequest.not.available");
-	    }
 	}
     }
-    
-    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] {
-	    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE});
     
    @Override
     final public DocumentRequestType getDocumentRequestType() {
