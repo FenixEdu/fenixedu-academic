@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -70,10 +71,10 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
     public void setExecutionYear(ExecutionYear executionYear) {
 	if (executionYear == null) {
 	    throw new DomainException("error.ExecutionPeriod.empty.executionYear");
-	}
+    }
 	super.setExecutionYear(executionYear);
     }
-    
+
     public Integer getSemester() {
 	return getExecutionInterval().getAcademicSemesterOfAcademicYear();
     }
@@ -95,19 +96,19 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
     public boolean hasNextExecutionPeriod() {
 	return getNextExecutionPeriod() != null;
     }
-       
+
     public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacherPeriod() {	
 	return getExecutionInterval().getTeacherCreditsFillingForTeacher();
     }
-    
+
     public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOfficePeriod() {	
 	return getExecutionInterval().getTeacherCreditsFillingForDepartmentAdmOffice();
     }
-           
+    
     public void editDepartmentOfficeCreditsPeriod(DateTime begin, DateTime end) {
-	
+
 	TeacherCreditsFillingForDepartmentAdmOfficeCE creditsFillingCE = getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
-	
+    
 	if(creditsFillingCE == null) {
 	    
 	    AcademicCalendarEntry parentEntry = getExecutionInterval().getAcademicCalendarEntry();
@@ -117,11 +118,11 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 		    new MultiLanguageString(applicationResourcesBundle.getString("label.TeacherCreditsFillingCE.entry.title")), 
 		    null, begin, end, rootEntry);	    
 	    
-	} else {		    
+	} else {	
 	    creditsFillingCE.edit(begin, end);
 	}	
     }       
-                      
+                   
     public void editTeacherCreditsPeriod(DateTime begin, DateTime end) {
 	
 	TeacherCreditsFillingForTeacherCE creditsFillingCE = getTeacherCreditsFillingForTeacherPeriod();
@@ -139,7 +140,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	    creditsFillingCE.edit(begin, end);
 	}	
     }
-    
+
     public int compareTo(ExecutionPeriod object) {
 	if(object == null) {
 	    return 1;
@@ -342,8 +343,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	    
 	    if (validCreditsPerid == null) {
 		throw new DomainException("message.invalid.credits.period2");
-		
-	    } else if (!validCreditsPerid.containsNow()) {		
+	    } else if (!validCreditsPerid.containsNow()) {
 		throw new DomainException("message.invalid.credits.period", 
 			validCreditsPerid.getBegin().toString("dd-MM-yyy HH:mm"),
 			validCreditsPerid.getEnd().toString("dd-MM-yyy HH:mm"));
@@ -353,7 +353,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 
     public TeacherCreditsFillingCE getValidCreditsPeriod(RoleType roleType) {
 	switch (roleType) {
-	case DEPARTMENT_MEMBER:	    
+	case DEPARTMENT_MEMBER:
 	    return getTeacherCreditsFillingForTeacherPeriod();	    
 	case DEPARTMENT_ADMINISTRATIVE_OFFICE:
 	    return getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
@@ -366,23 +366,23 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 
 	if (lessonsPeriod == null) {
 
-	    Collection<ExecutionDegree> degrees = getExecutionYear().getExecutionDegreesByType(DegreeType.DEGREE);
-	    if (degrees.isEmpty()) {
-		degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_DEGREE));
-	    }
-	    if (degrees.isEmpty()) {
-		degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-	    }
-	    if (degrees.isEmpty()) {
-		degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_MASTER_DEGREE));
-	    }
+	Collection<ExecutionDegree> degrees = getExecutionYear().getExecutionDegreesByType(DegreeType.DEGREE);
+	if (degrees.isEmpty()) {
+	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_DEGREE));
+	}
+	if (degrees.isEmpty()) {
+	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	}
+	if (degrees.isEmpty()) {
+	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_MASTER_DEGREE));
+	}
 
-	    for (ExecutionDegree executionDegree : degrees) {
-		if (getSemester() == 1) {
+	for (ExecutionDegree executionDegree : degrees) {
+	    if (getSemester() == 1) {
 		    OccupationPeriod lessonsPeriodFirstSemester = executionDegree.getPeriodLessonsFirstSemester();
 		    lessonsPeriod = (lessonsPeriod == null || lessonsPeriodFirstSemester.isGreater(lessonsPeriod)) ? lessonsPeriodFirstSemester
 			    : lessonsPeriod;
-		} else {
+	    } else {
 		    OccupationPeriod lessonsPeriodSecondSemester = executionDegree.getPeriodLessonsSecondSemester();
 		    lessonsPeriod = (lessonsPeriod == null || lessonsPeriodSecondSemester.isGreater(lessonsPeriod)) ? lessonsPeriodSecondSemester
 			    : lessonsPeriod;
@@ -445,6 +445,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 
     private static transient ExecutionPeriod currentExecutionPeriod = null;
 
+    private static transient ExecutionPeriod markSheetManagmentExecutionPeriod = null;
+    
     public static ExecutionPeriod readActualExecutionPeriod() {
 	if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()
 		|| !currentExecutionPeriod.isCurrent()) {
@@ -458,6 +460,22 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	return currentExecutionPeriod;
     }
 
+    public static ExecutionPeriod readMarkSheetManagmentExecutionPeriod() {
+	if (markSheetManagmentExecutionPeriod == null
+		|| markSheetManagmentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()) {
+
+	    final String yearString = PropertiesManager.getProperty("year.for.from.mark.sheet.managment");
+	    final String semesterString = PropertiesManager.getProperty("semester.for.from.mark.sheet.managment");
+
+	    if (yearString == null || yearString.length() == 0 || semesterString == null || semesterString.length() == 0) {
+		markSheetManagmentExecutionPeriod = null;
+	    } else {
+		markSheetManagmentExecutionPeriod = readBySemesterAndExecutionYear(Integer.valueOf(semesterString), yearString);
+	    }
+	}
+	return markSheetManagmentExecutionPeriod;
+    }  
+    
     public static ExecutionPeriod readFirstExecutionPeriod() {
 	final Set<ExecutionPeriod> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
 	return exeutionPeriods.isEmpty() ? null : Collections.min(exeutionPeriods);
