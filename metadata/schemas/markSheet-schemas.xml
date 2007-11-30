@@ -448,3 +448,15 @@
 	<slot name="gradeValue" key="label.grade"/>	
 </schema>
 
+<schema name="markSheet.search.result.list" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.MarkSheet">
+	<slot name="evaluationDateDateTime" key="label.evaluationDate">
+		<property name="format" value="${dayOfMonth,02d}/${monthOfYear,02d}/${year}"/>
+	</slot>
+	<slot name="markSheetType" key="label.markSheetType"/>
+	<slot name="enrolmentEvaluationsCount" key="label.markSheet.evaluatedStudents"/>
+	<slot name="responsibleTeacher.teacherNumber" key="label.responsibleTeacher"/>
+	<slot name="stateDiscription" key="label.markSheetState"/>
+	<slot name="prettyCheckSum" key="label.checksum"/>				
+</schema>	
+
