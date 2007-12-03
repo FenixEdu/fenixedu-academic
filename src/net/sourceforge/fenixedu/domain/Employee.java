@@ -268,9 +268,9 @@ public class Employee extends Employee_Base {
     public AdministrativeOffice getAdministrativeOffice() {
 	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null : getCurrentWorkingPlace().getAdministrativeOffice();
 	if (administrativeOffice == null) {
-	    for (PersonFunction personFunction : getPerson().getActivePersonFunctions()) {
+	    for (PersonFunction personFunction : getPerson().getPersonFunctions(AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE)) {
 		if (personFunction.getFunction().getFunctionType().equals(FunctionType.ASSIDUOUSNESS_RESPONSIBLE)
-			&& personFunction.getUnit().getAdministrativeOffice() != null) {
+			&& personFunction.getUnit() != null && personFunction.getUnit().getAdministrativeOffice() != null) {
 		    administrativeOffice = personFunction.getUnit().getAdministrativeOffice();
 		}
 	    }
