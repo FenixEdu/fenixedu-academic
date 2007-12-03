@@ -188,24 +188,14 @@ public class UnitUtils {
 	if (unitName == null) {
 	    return Collections.emptyList();
 	}
-
 	final String nameToSearch = unitName.replaceAll("%", ".*").toLowerCase();
-	return readExternalUnitsByNameAndTypesStartingEarth(nameToSearch, types, readEarthUnit());
-    }
-
-    private static List<Unit> readExternalUnitsByNameAndTypesStartingEarth(final String unitName, final List<PartyTypeEnum> types, final Unit unit) {
 	final List<Unit> result = new ArrayList<Unit>();
-	for (final Unit each : unit.getSubUnits()) {
-	    checkUnit(unitName, types, result, each);
-	    result.addAll(readExternalUnitsByNameAndTypesStartingEarth(unitName, types, each));
+	for (final UnitName name : RootDomainObject.getInstance().getUnitNameSet()) {
+	    if (name.getName().toLowerCase().matches(nameToSearch) && name.getIsExternalUnit() && types.contains(name.getUnit().getType())) {
+		result.add(name.getUnit());
+	    }
 	}
 	return result;
-    }
-
-    private static void checkUnit(String unitName, List<PartyTypeEnum> types, final List<Unit> result, final Unit unit) {
-	if (types.contains(unit.getType()) && unit.getName().toLowerCase().matches(unitName) && !unit.isInternal()) {
-	    result.add(unit);
-	}
     }
 
     public static Collection<Unit> readAllUnitsWithClassification(UnitClassification classification) {

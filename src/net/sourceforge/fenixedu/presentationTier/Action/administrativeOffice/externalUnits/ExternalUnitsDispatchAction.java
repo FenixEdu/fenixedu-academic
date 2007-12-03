@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -64,7 +63,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 
     private String buildNameToSearch(final String name) {
 	String result = name.replaceAll("[ ]", "%");
-	result = !name.startsWith("%") ? "%" + result  : result;
+	result = !name.startsWith("%") ? "%" + result : result;
 	result = !name.endsWith("%") ? result + "%" : result;
 	return result;
     }
