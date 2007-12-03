@@ -53,9 +53,11 @@
 		<bean:define id="degreeCurricularPlanID" name="edit" property="degreeCurricularPlan.idInternal" />
 		<bean:define id="curricularCourseID" name="edit" property="curricularCourse.idInternal" />
 	
-		<bean:define id="url" name="url"/>	
+		<bean:define id="url" name="url"/>
+		<logic:equal name="edit" property="curricularCourse.canCreateMarkSheet" value="true">
 		 - 
-		<html:link action='<%= "/createMarkSheet.do?method=prepareCreateMarkSheetFilled" + url %>'><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet"/></html:link>
+			<html:link action='<%= "/createMarkSheet.do?method=prepareCreateMarkSheetFilled" + url %>'><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet"/></html:link>
+		</logic:equal>
 	
 		<logic:empty name="searchResult">
 			<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.noMarkSheetsFound"/></em>

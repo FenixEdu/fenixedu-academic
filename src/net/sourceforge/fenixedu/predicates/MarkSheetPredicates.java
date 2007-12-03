@@ -31,8 +31,8 @@ public class MarkSheetPredicates {
 
 	public boolean evaluate(final MarkSheet markSheet) {
 	    return hasAcademinAdminOfficeRole() &&
-	    	(!markSheet.isRectification() || (markSheet.isRectification() && checkRectification(markSheet))) &&
-	    		(!markSheet.isDissertation() || (markSheet.isDissertation() && checkDissertation(markSheet)));
+	    	(!markSheet.isRectification() || (markSheet.isRectification() && checkRectification())) &&
+	    		(!markSheet.isDissertation() || (markSheet.isDissertation() && checkDissertation()));
 	}
 	
     };
@@ -42,8 +42,8 @@ public class MarkSheetPredicates {
 	public boolean evaluate(final MarkSheet markSheet) {
 	    return hasScientificCouncilRole() || 
 	    	(hasAcademinAdminOfficeRole() &&
-		    	(!markSheet.isRectification() || (markSheet.isRectification() && checkRectification(markSheet))) &&
-		    		(!markSheet.isDissertation() || (markSheet.isDissertation() && checkDissertation(markSheet))));
+		    	(!markSheet.isRectification() || (markSheet.isRectification() && checkRectification())) &&
+		    		(!markSheet.isDissertation() || (markSheet.isDissertation() && checkDissertation())));
 	}
 	
     };
@@ -57,7 +57,7 @@ public class MarkSheetPredicates {
     }
 
     
-    public static boolean checkRectification(MarkSheet markSheet) {
+    public static boolean checkRectification() {
 	Employee employee = AccessControl.getPerson().getEmployee();
 	if (employee != null) {
 	    return rectificationEmployees.contains(employee.getEmployeeNumber().toString());
@@ -66,7 +66,7 @@ public class MarkSheetPredicates {
 	}
     }
 
-    public static boolean checkDissertation(MarkSheet markSheet) {
+    public static boolean checkDissertation() {
 	Employee employee = AccessControl.getPerson().getEmployee();
 	if (employee != null) {
 	    return dissertationEmployees.contains(employee.getEmployeeNumber().toString());

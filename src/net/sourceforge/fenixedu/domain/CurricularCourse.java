@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -1937,4 +1938,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Set<CurricularCourse> getAllCurricularCourses(ExecutionPeriod executionPeriod) {
         return getAllCurricularCourses();
     }
+    
+    public boolean getCanCreateMarkSheet() {
+	return !isDissertation() || (isDissertation() && MarkSheetPredicates.checkDissertation());
+    }
+    
 }
