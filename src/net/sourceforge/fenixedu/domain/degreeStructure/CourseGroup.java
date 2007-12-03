@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -553,7 +552,7 @@ public class CourseGroup extends CourseGroup_Base {
 	if (!creditsLimitRules.isEmpty()) {
 	    for (final CreditsLimit creditsLimit : creditsLimitRules) {
 		if (getParentCourseGroups().contains(creditsLimit.getContextCourseGroup())) {
-		    return creditsLimit.getMaximumCredits();
+		    return creditsLimit.getMinimumCredits();
 		}
 	    }
 	    return creditsLimitRules.get(0).getMinimumCredits();
