@@ -803,7 +803,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public boolean canAdd(final CurriculumLine curriculumLine) {
-	return !curriculumLine.hasCurricularCourse()
+	return !curriculumLine.hasCurricularCourse() || !curriculumLine.isBolonhaDegree()  
 		|| getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
     }
 
