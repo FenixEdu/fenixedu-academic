@@ -141,7 +141,7 @@ public class GanttDiagramTagLib extends TagSupport {
 		    builder.append("<tr>");
 		}
 
-		builder.append("<td class=\"padded\">").append("<div style=\"overflow:hidden;\" class=\"nowrap\">");
+		builder.append("<td class=\"padded\">").append("<div style=\"overflow:hidden; width: 14.5em;\" class=\"nowrap\">");
 		builder.append("<span style=\"").append(paddingStyle).append("\" title=\"").append(eventName).append("\">");
 		builder.append("<a href=\"").append(eventUrl).append("\">").append("*").append(eventName);
 		builder.append("</a></span></div></td>");
@@ -295,7 +295,7 @@ public class GanttDiagramTagLib extends TagSupport {
 		    builder.append("<tr>");
 		}
 
-		builder.append("<td class=\"padded\">").append("<div style=\"overflow:hidden;\" class=\"nowrap\">");
+		builder.append("<td class=\"padded\">").append("<div style=\"overflow:hidden; width: 14.5em;\" class=\"nowrap\">");
 		builder.append("<span style=\"").append(paddingStyle).append("\" title=\"").append(eventName).append("\">");
 		builder.append("<a href=\"").append(eventUrl).append("\">").append("*").append(eventName);
 		builder.append("</a></span></div></td>");
