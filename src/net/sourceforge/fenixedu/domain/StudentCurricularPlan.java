@@ -291,7 +291,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public boolean isConclusionProcessed() {
-	return getLastCycleCurriculumGroup().isConclusionProcessed();
+	for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGrops()) {
+	    if (!cycleCurriculumGroup.isConclusionProcessed()) {
+		return false;
+	    }
+	}
+	
+	return true;
     }
     
     final public boolean isConclusionProcessed(final CycleType cycleType) {
