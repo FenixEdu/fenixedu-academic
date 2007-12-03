@@ -31,14 +31,17 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
 	super.setGenericEvent(null);
 	super.delete();
     }
-                   
+    
+    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
+    public void verifyIfIsPossibleCloseGenericEvent() {}
+    
     @Override
     public void setGenericEvent(GenericEvent genericEvent) {
 	if(genericEvent == null) {
 	    throw new DomainException("error.GenericEventSpaceOccupation.empty.genericEvent");
 	}
 	super.setGenericEvent(genericEvent);
-    }
+    }      
         
     @Override
     public boolean isGenericEventSpaceOccupation() {

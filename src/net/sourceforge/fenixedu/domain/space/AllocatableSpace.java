@@ -297,7 +297,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	    Integer piso, RoomClassification tipo, Integer capacidadeNormal, Integer capacidadeExame)
 	    throws ExcepcaoPersistencia {
 	
-	final List<AllocatableSpace> activeRoomsForEducation = AllocatableSpace.getAllActiveAllocatableSpacesForEducation();
+	final List<AllocatableSpace> activeRoomsForEducation = AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations();
 	final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
 	
 	for (AllocatableSpace room : activeRoomsForEducation) {

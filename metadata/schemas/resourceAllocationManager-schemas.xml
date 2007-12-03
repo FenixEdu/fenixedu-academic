@@ -87,7 +87,7 @@
 		<property name="saveOptions" value="true"/>
     </slot>      
     <slot name="allocatableSpace" layout="menu-select-postback" key="label.room" >
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.RoomsForEducationProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomsForEducationAndPunctualOccupationsProvider" />
 		<property name="format" value="${completeIdentification}" />
 		<property name="destination" value="postBack"/>	
 	</slot>	      
