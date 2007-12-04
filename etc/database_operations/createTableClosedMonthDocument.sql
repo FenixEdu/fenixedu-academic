@@ -1,0 +1,18 @@
+alter table FILE add column KEY_CLOSED_MONTH_DOCUMENT int(11);
+alter table FILE add index (KEY_CLOSED_MONTH_DOCUMENT);
+alter table CLOSED_MONTH_JUSTIFICATION add index (KEY_ASSIDUOUSNESS_STATUS);
+alter table PARKING_REQUEST_PERIOD add index (KEY_ROOT_DOMAIN_OBJECT);
+
+create table CLOSED_MONTH_DOCUMENT (
+  `CLOSED_MONTH_DOCUMENT_TYPE` text,
+  `CREATED_WHEN` datetime NOT NULL,
+  `ID_INTERNAL` int(11) NOT NULL auto_increment,
+  `KEY_CLOSED_MONTH` int(11),
+  `KEY_CLOSED_MONTH_FILE` int(11),
+  `KEY_ROOT_DOMAIN_OBJECT` int(11),
+  primary key (ID_INTERNAL),
+  index (KEY_CLOSED_MONTH),
+  index (KEY_CLOSED_MONTH_FILE),
+  index (KEY_ROOT_DOMAIN_OBJECT)
+) type=InnoDB ;
+
