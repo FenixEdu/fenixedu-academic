@@ -34,8 +34,13 @@
 			<br/>
 			<logic:iterate id="registration" name="registrations">
 				<br/>
-				<strong><bean:write name="registration" property="lastDegreeCurricularPlan.degree.sigla"/> - <bean:write name="registration" property="lastDegreeCurricularPlan.degree.name"/></strong> (<bean:message name="registration" property="activeStateType.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
-				<html:link action="/registrationConclusion.do?method=show" paramId="registrationId" paramName="registration" paramProperty="idInternal" ><bean:message  key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+				<logic:empty name="registration" property="lastStudentCurricularPlan" >
+					<strong><bean:write name="registration" /></strong> (<bean:message name="registration" property="activeStateType.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
+				</logic:empty>
+				<logic:notEmpty name="registration" property="lastStudentCurricularPlan" >
+					<strong><bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.degree.sigla"/> - <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.degree.name"/></strong> (<bean:message name="registration" property="activeStateType.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
+					<html:link action="/registrationConclusion.do?method=show" paramId="registrationId" paramName="registration" paramProperty="idInternal" ><bean:message  key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+				</logic:notEmpty>
 				<logic:notEmpty name="registration" property="studentCurricularPlans">
 					<table class="tstyle4">
 						<tr>
