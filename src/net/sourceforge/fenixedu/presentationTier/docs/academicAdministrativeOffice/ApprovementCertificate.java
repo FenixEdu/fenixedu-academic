@@ -123,8 +123,16 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 		    + ")",
 		    SUFFIX_LENGTH,
 		    ' '));
-	result.append(" ").append(resourceBundle.getString("label.in"));
-	result.append(" ").append(executionYear.getYear());
+	
+	result.append(" ");
+	final String in = resourceBundle.getString("label.in");
+	if (executionYear == null) {
+	    result.append(StringUtils.rightPad("", in.length(), ' '));
+	    result.append(" ").append(StringUtils.rightPad("", 9, ' '));
+	} else {
+	    result.append(in);
+	    result.append(" ").append(executionYear.getYear());
+	}
 	
 	return result.toString();
     }
