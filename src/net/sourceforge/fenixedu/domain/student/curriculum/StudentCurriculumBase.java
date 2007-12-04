@@ -49,6 +49,10 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
     
     abstract protected EnrolmentSet getApprovedEnrolments();
 
+    public boolean hasAnyExternalApprovedEnrolment() {
+	return false;
+    }
+    
     final public BigDecimal getSumEctsCredits() {
 	BigDecimal ectsCredits = BigDecimal.ZERO;
 	for (final ICurriculumEntry entry : getCurriculumEntries()) {

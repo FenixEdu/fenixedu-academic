@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class Curriculum implements Serializable, ICurriculum {
     
@@ -140,6 +141,16 @@ public class Curriculum implements Serializable, ICurriculum {
 	result.addAll(dismissalRelatedEntries);
 	
 	return result;
+    }
+    
+    public boolean hasAnyExternalApprovedEnrolment() {
+	for (final ICurriculumEntry entry : dismissalRelatedEntries) {
+	    if (entry instanceof ExternalEnrolment) {
+		return true;
+	    }
+	}
+	
+	return false;
     }
     
     public Set<ICurriculumEntry> getEnrolmentRelatedEntries() {
