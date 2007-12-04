@@ -40,6 +40,11 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
     }
 
     @Override
+    protected void afterRedefineEntry() {
+	throw new DomainException("error.unsupported.operation");
+    }
+    
+    @Override
     public boolean isAcademicSemester() {
 	return true;
     }
@@ -69,11 +74,8 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {	
-	if(entryToAdd.isTeacherCreditsFilling()) {
-	    return true;
-	}
-	return false;
+    protected boolean isPossibleToChangeTimeInterval() {
+        return true;
     }
 
     @Override

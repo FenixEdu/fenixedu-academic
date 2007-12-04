@@ -57,6 +57,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     public ExecutionYear(AcademicInterval academicInterval, String year) {
 	this();
 	setExecutionInterval(academicInterval);
+	setBeginDateYearMonthDay(academicInterval.getBeginYearMonthDayWithoutChronology());
+	setEndDateYearMonthDay(academicInterval.getEndYearMonthDayWithoutChronology());
 	setYear(year);
     }
 

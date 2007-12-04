@@ -14,14 +14,6 @@ public class AcademicPeriod extends AcademicPeriod_Base {
         setState(PeriodState.NOT_OPEN);
     }
     
-    public YearMonthDay getBeginDateYearMonthDay() {
-	return getExecutionInterval().getBeginYearMonthDayWithoutChronology();
-    }
-
-    public YearMonthDay getEndDateYearMonthDay() {
-	return getExecutionInterval().getEndYearMonthDayWithoutChronology();
-    }
-    
     @Override
     public void setExecutionInterval(AcademicInterval executionInterval) {
         if(executionInterval == null) {
@@ -38,15 +30,10 @@ public class AcademicPeriod extends AcademicPeriod_Base {
         super.setState(state);
     }  
     
-    @Deprecated   
-    public java.util.Date getBeginDate(){  
-	YearMonthDay day = getBeginDateYearMonthDay(); 
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
-    }
-
-    @Deprecated   
-    public java.util.Date getEndDate(){  
-	YearMonthDay day = getEndDateYearMonthDay(); 
-	return (day == null) ? null : new java.util.Date(day.getYear() - 1900, day.getMonthOfYear() - 1, day.getDayOfMonth());   
-    }
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+	final YearMonthDay start = getBeginDateYearMonthDay();
+	final YearMonthDay end = getEndDateYearMonthDay();	
+	return start != null && end != null && start.isBefore(end);
+    }        
 }

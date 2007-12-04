@@ -28,7 +28,7 @@ public abstract class ExamsPeriodCE extends ExamsPeriodCE_Base {
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {
-	return false;
-    }   
+    protected boolean isPossibleToChangeTimeInterval() {      
+        return false;
+    } 
 }

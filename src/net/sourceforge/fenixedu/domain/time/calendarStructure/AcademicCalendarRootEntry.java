@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,8 +13,8 @@ import org.joda.time.DateTime;
 
 public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 
-    private transient AcademicChronology academicChronology;
-    
+    private transient AcademicChronology academicChronology;  
+  
     public AcademicCalendarRootEntry(MultiLanguageString title, MultiLanguageString description, AcademicCalendarEntry templateCalendar) {
 	super();	
 	setRootDomainObjectForRootEntries(RootDomainObject.getInstance());
@@ -116,6 +117,19 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 	return null;
     }
     
+    public List<AcademicCalendarEntry> getChildEntriesWithTemplateEntries(Class<? extends AcademicCalendarEntry> subEntryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {
+	return getChildEntriesWithTemplateEntries(null, subEntryClass, parentEntryClass);		
+    }   
+
+    public List<AcademicCalendarEntry> getChildEntriesWithTemplateEntries(Long instant, Class<? extends AcademicCalendarEntry> subEntryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {
+	if(subEntryClass == null || parentEntryClass == null) {
+	    return Collections.emptyList();
+	}
+	List<AcademicCalendarEntry> allChildEntries = new ArrayList<AcademicCalendarEntry>();
+	getFirstChildEntriesWithTemplateEntries(instant, subEntryClass, parentEntryClass, allChildEntries);	
+	return allChildEntries;	
+    }   
+       
     @Override
     public DateTime getEnd() {
         return null;
@@ -142,15 +156,18 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     }
                 
     @Override
-    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {	
+    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {
+	if(entryToAdd.isAcademicYear()) {
+	    return true;
+	}
 	return false;
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {	
-	return true;
+    protected boolean isPossibleToChangeTimeInterval() {
+        return false;
     }
-
+    
     @Override
     protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {	
 	return false;

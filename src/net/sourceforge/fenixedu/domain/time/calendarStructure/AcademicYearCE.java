@@ -35,6 +35,11 @@ public class AcademicYearCE extends AcademicYearCE_Base {
     protected void beforeRedefineEntry(){
 	throw new DomainException("error.unsupported.operation");
     }
+    
+    @Override
+    protected void afterRedefineEntry() {
+	throw new DomainException("error.unsupported.operation");
+    }
 
     @Override
     public boolean isAcademicYear() {
@@ -59,12 +64,15 @@ public class AcademicYearCE extends AcademicYearCE_Base {
 
     @Override
     protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {	
+	if(entryToAdd.isAcademicSemester()) {
+	    return true;
+	}
 	return false;
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {	
-	return false;
+    protected boolean isPossibleToChangeTimeInterval() {
+        return true;
     }
 
     @Override

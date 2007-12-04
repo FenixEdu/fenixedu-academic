@@ -64,6 +64,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	this();
 	setExecutionYear(executionYear);
 	setExecutionInterval(academicInterval);
+	setBeginDateYearMonthDay(academicInterval.getBeginYearMonthDayWithoutChronology());
+	setEndDateYearMonthDay(academicInterval.getEndYearMonthDayWithoutChronology());
 	setName(name);
     }
 

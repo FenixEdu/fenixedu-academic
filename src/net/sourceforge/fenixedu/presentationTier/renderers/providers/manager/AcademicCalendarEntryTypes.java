@@ -9,8 +9,10 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicTrimesterCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.EnrolmentsPeriodCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodCE;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodInNormalSeasonCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.ExamsPeriodInSpecialSeasonCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInNormalSeasonCE;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.GradeSubmissionInSpecialSeasonCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.LessonsPeriodCE;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -34,8 +36,10 @@ public class AcademicCalendarEntryTypes implements DataProvider {
 	    result.add(AcademicTrimesterCE.class);
 	    result.add(LessonsPeriodCE.class);
 	    result.add(EnrolmentsPeriodCE.class);	   
-	    result.add(ExamsPeriodCE.class);
-	    result.add(GradeSubmissionCE.class);
+	    result.add(ExamsPeriodInNormalSeasonCE.class);
+	    result.add(ExamsPeriodInSpecialSeasonCE.class); 
+	    result.add(GradeSubmissionInNormalSeasonCE.class);
+	    result.add(GradeSubmissionInSpecialSeasonCE.class);
 	}
 	
 	return result;

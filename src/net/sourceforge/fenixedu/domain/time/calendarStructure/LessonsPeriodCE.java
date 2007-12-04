@@ -39,8 +39,8 @@ public class LessonsPeriodCE extends LessonsPeriodCE_Base {
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {	
-	return false;
+    protected boolean isPossibleToChangeTimeInterval() {     
+        return false;
     }
 
     @Override

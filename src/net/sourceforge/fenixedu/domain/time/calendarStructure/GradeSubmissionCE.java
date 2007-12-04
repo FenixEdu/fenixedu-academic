@@ -23,8 +23,8 @@ public abstract class GradeSubmissionCE extends GradeSubmissionCE_Base {
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {
-	return false;
+    protected boolean isPossibleToChangeTimeInterval() {        
+        return false;
     }
 
     @Override

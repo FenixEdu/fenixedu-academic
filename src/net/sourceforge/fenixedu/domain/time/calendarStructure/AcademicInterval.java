@@ -73,39 +73,7 @@ public class AcademicInterval extends AbstractInterval {
 	}	
         return academicCalendarEntry;
     }   
-    
-    public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacher() {
-	return getAcademicCalendarEntry().getTeacherCreditsFillingForTeacher(getAcademicChronology());	
-    }
-    
-    public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOffice() {
-	return getAcademicCalendarEntry().getTeacherCreditsFillingForDepartmentAdmOffice(getAcademicChronology());	
-    }
-    
-    public int getAcademicSemesterOfAcademicYear() {			
-	return getAcademicCalendarEntry().getAcademicSemesterOfAcademicYear(getAcademicChronology());
-    }                       
-    
-    public AcademicSemesterCE plusSemester(int amount) {
-	int index = getStart().get(AcademicSemesterDateTimeFieldType.academicSemester());
-	return getAcademicChronology().getAcademicSemesterIn(index + amount);
-    }
-    
-    public AcademicSemesterCE minusSemester(int amount) {
-	int index = getStart().get(AcademicSemesterDateTimeFieldType.academicSemester());
-	return getAcademicChronology().getAcademicSemesterIn(index - amount);
-    }
-    
-    public AcademicYearCE plusYear(int amount) {	
-	int index = getStart().get(AcademicYearDateTimeFieldType.academicYear());
-	return getAcademicChronology().getAcademicYearIn(index + amount);		
-    }
-
-    public AcademicYearCE minusYear(int amount) {
-	int index = getStart().get(AcademicYearDateTimeFieldType.academicYear());
-	return getAcademicChronology().getAcademicYearIn(index - amount);		
-    } 
-    
+           
     public YearMonthDay getBeginYearMonthDayWithoutChronology() {
 	return getAcademicCalendarEntry().getBegin().toYearMonthDay();
     }
@@ -158,5 +126,41 @@ public class AcademicInterval extends AbstractInterval {
 	    throw new DomainException("error.AcademicInterval.empty.academic.chronology.idInternal");
 	}
         this.academicCalendarIdInternal = academicCalendarIdInternal;
-    }   
+    }
+    
+    // Operations for get periods.
+    
+    public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacher() {
+	return getAcademicCalendarEntry().getTeacherCreditsFillingForTeacher(getAcademicChronology());	
+    }
+    
+    public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOffice() {
+	return getAcademicCalendarEntry().getTeacherCreditsFillingForDepartmentAdmOffice(getAcademicChronology());	
+    }
+    
+    public int getAcademicSemesterOfAcademicYear() {			
+	return getAcademicCalendarEntry().getAcademicSemesterOfAcademicYear(getAcademicChronology());
+    }                       
+    
+    public AcademicSemesterCE plusSemester(int amount) {
+	int index = getStart().get(AcademicSemesterDateTimeFieldType.academicSemester());
+	return getAcademicChronology().getAcademicSemesterIn(index + amount);
+    }
+    
+    public AcademicSemesterCE minusSemester(int amount) {
+	int index = getStart().get(AcademicSemesterDateTimeFieldType.academicSemester());
+	return getAcademicChronology().getAcademicSemesterIn(index - amount);
+    }
+    
+    public AcademicYearCE plusYear(int amount) {	
+	int index = getStart().get(AcademicYearDateTimeFieldType.academicYear());
+	return getAcademicChronology().getAcademicYearIn(index + amount);		
+    }
+
+    public AcademicYearCE minusYear(int amount) {
+	int index = getStart().get(AcademicYearDateTimeFieldType.academicYear());
+	return getAcademicChronology().getAcademicYearIn(index - amount);		
+    } 
+    
+    /////////
 }

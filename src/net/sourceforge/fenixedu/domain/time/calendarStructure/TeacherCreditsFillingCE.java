@@ -29,7 +29,7 @@ public abstract class TeacherCreditsFillingCE extends TeacherCreditsFillingCE_Ba
     }
       
     public void edit(DateTime begin, DateTime end) {
-	setTimeInterval(begin, end, getParentEntry());
+	setTimeInterval(begin, end);
     }
     
     @Override
@@ -38,8 +38,8 @@ public abstract class TeacherCreditsFillingCE extends TeacherCreditsFillingCE_Ba
     }
 
     @Override
-    protected boolean areOutOfBoundsPossible(AcademicCalendarEntry entryToAdd) {	
-	return false;
+    protected boolean isPossibleToChangeTimeInterval() {
+        return false;
     }
 
     @Override
@@ -59,5 +59,5 @@ public abstract class TeacherCreditsFillingCE extends TeacherCreditsFillingCE_Ba
 
     public boolean containsNow() {
 	return !getBegin().isAfterNow() && !getEnd().isBeforeNow();	
-    }      
+    }            
 }

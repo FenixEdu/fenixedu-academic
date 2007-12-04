@@ -605,13 +605,15 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		AcademicInterval executionInterval;							
 		PeriodState state;
 		String name;		
+		YearMonthDay beginDateYearMonthDay;
+		YearMonthDay endDateYearMonthDay;
 	}
 		
 		class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.AcademicPeriod {																													
-	}
+		}
 
 		class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.AcademicPeriod {											
-	}
+		}
 
 	class net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup extends net.sourceforge.fenixedu.domain.DomainObject {
 	}
