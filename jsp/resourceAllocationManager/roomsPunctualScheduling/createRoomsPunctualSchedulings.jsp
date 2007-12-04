@@ -8,7 +8,7 @@
 <em><bean:message key="link.rooms.reserve.management" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="label.create.room.punctual.scheduling.title" bundle="SOP_RESOURCES"/></h2>
 
-<p class="breadcumbs"><span class="actual"><bean:message key="label.step1" bundle="SOP_RESOURCES"/>: <bean:message key="label.create.room.punctual.scheduling.choosePeriod" bundle="SOP_RESOURCES"/></span> &gt; <span><bean:message key="label.step1" bundle="SOP_RESOURCES"/>: <bean:message key="label.create.room.punctual.scheduling.chooseRoom" bundle="SOP_RESOURCES"/></span></p>
+<p class="breadcumbs"><span class="actual"><bean:message key="label.step1" bundle="SOP_RESOURCES"/>: <bean:message key="label.create.room.punctual.scheduling.choosePeriod" bundle="SOP_RESOURCES"/></span> &gt; <span><bean:message key="label.step2" bundle="SOP_RESOURCES"/>: <bean:message key="label.create.room.punctual.scheduling.chooseRoom" bundle="SOP_RESOURCES"/></span></p>
 
 <logic:present role="RESOURCE_ALLOCATION_MANAGER">
 
