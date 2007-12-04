@@ -22,9 +22,10 @@ import org.joda.time.YearMonthDay;
 
 abstract public class CurriculumLine extends CurriculumLine_Base {
 
-    static final public Comparator<CurriculumLine> COMPARATOR_BY_APPROVEMENT_DATE = new Comparator<CurriculumLine>() {
+    static final public Comparator<CurriculumLine> COMPARATOR_BY_APPROVEMENT_DATE_AND_ID = new Comparator<CurriculumLine>() {
         public int compare(CurriculumLine o1, CurriculumLine o2) {
-            return o1.getApprovementDate().compareTo(o2.getApprovementDate());
+            int result = o1.getApprovementDate().compareTo(o2.getApprovementDate());
+            return result == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : result;  
         }
     };
 

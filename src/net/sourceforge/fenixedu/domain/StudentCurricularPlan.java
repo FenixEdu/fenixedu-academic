@@ -614,9 +614,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public Collection<CurriculumLine> getApprovedCurriculumLines() {
 	if (hasRoot()) {
 	    final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
-
 	    getRoot().addApprovedCurriculumLines(result);
-	    
 	    return result;
 	} else {
 	    return new HashSet<CurriculumLine>(getAprovedEnrolments());
@@ -624,7 +622,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public YearMonthDay getLastApprovementDate() {
-    	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE);
+    	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE_AND_ID);
 	curriculumLines.addAll(getApprovedCurriculumLines());
 
 	if (curriculumLines.isEmpty()) {
