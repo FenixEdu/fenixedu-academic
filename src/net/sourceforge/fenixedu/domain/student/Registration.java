@@ -631,7 +631,8 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("Registration.doesnt.have.such.cycle.type");
 	}
 
-	return hasConcludedCycle(cycleType) ? getAverage(cycleType).intValue() : null;
+	return getLastStudentCurricularPlan().getCycle(cycleType).getFinalAverage();
+
     }
 
     @Override
@@ -2789,7 +2790,7 @@ public class Registration extends Registration_Base {
 	attends.removeShifts();
 	attends.delete();
     }
-    
+
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void removeConcludedInformation() {
 	if (isBolonha()) {
