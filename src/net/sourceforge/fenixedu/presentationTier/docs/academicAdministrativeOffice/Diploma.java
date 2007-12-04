@@ -82,7 +82,7 @@ public class Diploma extends AdministrativeOfficeDocument {
     
     public Integer getFinalAverage() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateRoundedAverage() : getRegistration()
-		.calculateFinalAverage();
+		.getFinalAverage();
     }
 
     public BigDecimal getAverage() {
