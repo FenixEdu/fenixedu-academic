@@ -187,7 +187,7 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     }
 
     final public boolean getHasMobilityProgramDependency() {
-	return getRegistration().hasAnyExternalApprovedEnrolment();
+	return getRegistration().getCurriculum().hasAnyExternalApprovedEnrolment();
     }
 
     final public MobilityProgram getMobilityProgram() {
