@@ -2540,6 +2540,19 @@
 	     		<forward name="searchMarkSheet" path="show.markSheetManagement.search.page"/>
 	     		<forward name="listMarkSheet" path="show.markSheetManagement.list.markSheet"/>
 	</action>
+	
+	
+	<action path="/registrationConclusion"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.registration.conclusion.RegistrationConclusionDA"
+			input="show.markSheetManagement.search.page"
+			parameter="method"
+			scope="request">
+	     <forward name="showByCycles" path="registration.conclusion.showByCycles"/>
+	     <forward name="showForRegistration" path="registration.conclusion.showForRegistration"/>
+	     <forward name="editForCycle" path="registration.conclusion.editForCycle" />
+	     <forward name="editForRegistration" path="registration.conclusion.editForRegistration" />
+	</action>
+	
 		
 
 	</action-mappings>

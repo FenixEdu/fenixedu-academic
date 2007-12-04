@@ -764,10 +764,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @Override
     public YearMonthDay calculateConclusionDate() {
-	if (!isConcluded()) {
-	    throw new DomainException("CurriculumGroup.is.not.concluded");
-	}
-
 	final Collection<CurriculumModule> curriculumModules = new HashSet<CurriculumModule>(getCurriculumModulesSet());
 	YearMonthDay result = null;
 	for (final CurriculumModule curriculumModule : curriculumModules) {

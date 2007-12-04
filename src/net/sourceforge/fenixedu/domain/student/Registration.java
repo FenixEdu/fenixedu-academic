@@ -1993,6 +1993,7 @@ public class Registration extends Registration_Base {
     }
 
     @Override
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void setConclusionDate(YearMonthDay conclusionDate) {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.cannot.modify.conclusion.date");
@@ -2110,8 +2111,8 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("error.Registration.already.concluded");
 	}
 
-	setFinalAverage(calculateFinalAverage());
-	setConclusionDate(calculateConclusionDate());
+	super.setFinalAverage(calculateFinalAverage());
+	super.setConclusionDate(calculateConclusionDate());
 
 	RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
     }
@@ -2673,9 +2674,9 @@ public class Registration extends Registration_Base {
 
     @Checked("RegistrationPredicates.transitToBolonha")
     public void transitToBolonha(final Person person) {
-
-	if (isTransited()) {
-	    return;
+	
+	if (!isActive()) {
+	    throw new DomainException("error.student.Registration.cannot.transit.non.active.registrations");
 	}
 
 	final RegistrationState actualState = getActiveState();
@@ -2787,6 +2788,16 @@ public class Registration extends Registration_Base {
 	attends.getStudentGroups().clear();
 	attends.removeShifts();
 	attends.delete();
+    }
+    
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void removeConcludedInformation() {
+	if (isBolonha()) {
+	    throw new DomainException("error.Registration.cannot.remove.concluded.information.in.registration.for.bolonha");
+	}
+	
+	super.setFinalAverage(null);
+	super.setConclusionDate(null);
     }
 
 }

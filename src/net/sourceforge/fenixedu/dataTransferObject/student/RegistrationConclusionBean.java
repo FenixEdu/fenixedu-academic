@@ -54,6 +54,10 @@ public class RegistrationConclusionBean implements Serializable {
     }
 
     public Integer getFinalAverage() {
+	if (isConclusionProcessed()) {
+	    return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getFinalAverage() : getRegistration().getFinalAverage();
+	}
+
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateRoundedAverage() : getRegistration()
 		.calculateFinalAverage();
     }
@@ -63,6 +67,11 @@ public class RegistrationConclusionBean implements Serializable {
     }
 
     public YearMonthDay getConclusionDate() {
+	if (isConclusionProcessed()) {
+	    return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getConclusionDate() : getRegistration()
+		    .getConclusionDate();
+	}
+
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateConclusionDate() : getRegistration()
 		.calculateConclusionDate();
     }
@@ -76,11 +85,17 @@ public class RegistrationConclusionBean implements Serializable {
     }
 
     public String getDegreeDescription() {
-	return hasCycleCurriculumGroup() ? getRegistration().getDegreeDescription(getCycleCurriculumGroup().getCycleType()) : getRegistration().getDegreeDescription();
+	return hasCycleCurriculumGroup() ? getRegistration().getDegreeDescription(getCycleCurriculumGroup().getCycleType())
+		: getRegistration().getDegreeDescription();
     }
 
     public boolean isConcluded() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
+    }
+
+    public boolean isConclusionProcessed() {
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConclusionProcessed() : getRegistration()
+		.isRegistrationConclusionProcessed();
     }
 
     public boolean isByCycle() {

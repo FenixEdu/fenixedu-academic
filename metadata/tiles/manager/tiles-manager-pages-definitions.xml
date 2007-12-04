@@ -1084,4 +1084,21 @@
 	</definition>	
 	<!-- ====================== End MarkSheet Management ===================== -->
 	
+	<!-- Start: Registration Conclusion Management -->
+	<definition name="registration.conclusion.showForRegistration" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/registration/conclusion/showForRegistration.jsp"></put>
+	</definition>
+	<definition name="registration.conclusion.showByCycles" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/registration/conclusion/showByCycles.jsp"></put>
+	</definition>
+	<definition name="registration.conclusion.editForCycle" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/registration/conclusion/editForCycle.jsp"></put>
+	</definition>
+	<definition name="registration.conclusion.editForRegistration" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/registration/conclusion/editForRegistration.jsp"></put>
+	</definition>
+		
+	<!-- End: Posting Rules Management -->
+	
+	
 </tiles-definitions>

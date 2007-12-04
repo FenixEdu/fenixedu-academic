@@ -704,33 +704,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    protected
-    final boolean isConcluded(ExecutionYear executionYear) {
+    protected final boolean isConcluded(ExecutionYear executionYear) {
 	return isAproved(executionYear);
     }
 
     @Override
-    public
-    final YearMonthDay calculateConclusionDate() {
-	return getConclusionDate((EnrolmentEvaluationType) null);
+    public YearMonthDay calculateConclusionDate() {
+	return getLatestEnrolmentEvaluation().getExamDateYearMonthDay();
     }
 
-    final public YearMonthDay getConclusionDate(final EnrolmentEvaluationType enrolmentEvaluationType) {
-	if (!isConcluded()) {
-	    throw new DomainException("Enrolment.is.not.concluded");
-	}
-
-	final EnrolmentEvaluation enrolmentEvaluation;
-	if (enrolmentEvaluationType == null) {
-	    enrolmentEvaluation = getLatestEnrolmentEvaluation();
-	} else if (hasEnrolmentEvaluationByType(enrolmentEvaluationType)) {
-	    enrolmentEvaluation = getLatestEnrolmentEvaluationBy(enrolmentEvaluationType);
-	} else {
-	    return null;
-	}
-
-	return enrolmentEvaluation.getExamDateYearMonthDay();
-    }
 
     @Override
     @SuppressWarnings("unchecked")

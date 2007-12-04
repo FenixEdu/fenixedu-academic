@@ -217,11 +217,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public YearMonthDay calculateConclusionDate() {
-	if (!isConcluded()) {
-	    throw new DomainException("Dismissal.is.not.concluded");
-	}
-	
+    public YearMonthDay calculateConclusionDate() {	
 	final SortedSet<IEnrolment> iEnrolments = new TreeSet<IEnrolment>(IEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
 	iEnrolments.addAll(getSourceIEnrolments());
 	

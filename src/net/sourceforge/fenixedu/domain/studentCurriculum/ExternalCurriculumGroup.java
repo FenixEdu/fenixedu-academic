@@ -116,4 +116,9 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
         throw new DomainException("error.ExternalCurriculumGroup.cannot.conclude.external.curriculumGroups");
     }
     
+    @Override
+    public boolean isConclusionProcessed() {
+	return false;
+    }
+    
 }

@@ -60,10 +60,6 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return hasCurriculumGroup() ? getCurriculumGroup().getRootCurriculumGroup() : (RootCurriculumGroup) this;
     }
 
-    public StudentCurricularPlan getRootStudentCurricularPlan() {
-	return getRootCurriculumGroup().getRootStudentCurricularPlan();
-    }
-
     public boolean isCycleCurriculumGroup() {
 	return false;
     }

@@ -4,11 +4,13 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -160,7 +162,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	super.setFinalAverage(getCurriculum().getRoundedAverage());
 	super.setConclusionDate(calculateConclusionDate());
     }
-    
+
     @Override
     protected boolean isConcluded(final ExecutionYear executionYear) {
 	return hasFinalAverage() || super.isConcluded(executionYear);
@@ -186,8 +188,42 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void removeConcludedInformation() {
+	// checkRulesToRemoveConcludedInformation();
+
 	super.setFinalAverage(null);
 	super.setConclusionDate(null);
+    }
+
+    private void checkRulesToRemoveConcludedInformation() {
+	// TODO: Hack until requests are migrated to cycles instead of
+	// registrations
+	final DegreeType degreeType = getStudentCurricularPlan().getDegreeType();
+	if (degreeType.getCycleTypes().size() == 1) {
+	    if (!getStudentCurricularPlan().getRegistration().getSucessfullyFinishedDocumentRequests(
+		    DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE).isEmpty()) {
+		throw new DomainException(
+			"cannot.delete.concluded.state.of.registration.with.concluded.degree.finalization.request");
+	    }
+
+	    if (!getStudentCurricularPlan().getRegistration().getSucessfullyFinishedDocumentRequests(
+		    DocumentRequestType.DIPLOMA_REQUEST).isEmpty()) {
+		throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
+	    }
+	} else {
+	    final CycleType cycleType = getCycleType();
+
+	}
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void editConclusionInformation(final Integer finalAverage, final YearMonthDay conclusionDate) {
+	if (!isConclusionProcessed()) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup.its.only.possible.to.edit.after.conclusion.process.has.been.performed");
+	}
+
+	super.setFinalAverage(finalAverage);
+	super.setConclusionDate(conclusionDate);
     }
 
 }

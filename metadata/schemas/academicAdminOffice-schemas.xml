@@ -1367,10 +1367,39 @@
 	<slot name="finalAverage" />
 </schema>
 
-
 <schema name="RegistrationConclusionBean.confirmConclusionForRegistration" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="conclusionDate" />
 	<slot name="average" />
 	<slot name="finalAverage" />
+</schema>
+
+<schema name="Registration.editConclusionInformation" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="APPLICATION_RESOURCES">
+	<slot name="finalAverage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="conclusionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+</schema>
+
+
+<schema name="CycleCurriculumGroup.editConclusionInformation" type="net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup" bundle="APPLICATION_RESOURCES">
+	<slot name="name" read-only="true" />
+	<slot name="finalAverage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="conclusionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<setter signature="editConclusionInformation(finalAverage,conclusionDate)"/>
+</schema>
+
+<schema name="RegistrationConclusionBean.viewForCycleWithConclusionProcessedInformation" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+	<slot name="cycleCurriculumGroup.name" />
+	<slot name="conclusionDate" />
+	<slot name="average" />
+	<slot name="finalAverage" />
+	<slot name="concluded"/>
+	<slot name="conclusionProcessed" />
+</schema>
+
+<schema name="RegistrationConclusionBean.viewForRegistrationWithConclusionProcessedInformation" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+	<slot name="conclusionDate" />
+	<slot name="average" />
+	<slot name="finalAverage" />
+	<slot name="concluded" />
+	<slot name="conclusionProcessed" />
 </schema>
 
