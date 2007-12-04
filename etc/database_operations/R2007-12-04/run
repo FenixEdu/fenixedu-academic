@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 executeWithTempFile "Alter AcademicPeriod Table" alterAcademicPeriodTable.sql
+execute "Adding manager functionalities to manage registration conclusion" changes-20071203165336.sql
