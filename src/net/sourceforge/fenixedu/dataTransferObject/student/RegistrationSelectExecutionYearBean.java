@@ -23,7 +23,7 @@ public class RegistrationSelectExecutionYearBean implements Serializable {
 	return (this.registration != null) ? this.registration.getObject() : null;
     }
 
-    private void setRegistration(Registration registration) {
+    protected void setRegistration(Registration registration) {
 	this.registration = (registration != null) ? new DomainReference<Registration>(registration)
 		: null;
     }
