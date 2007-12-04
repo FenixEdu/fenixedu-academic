@@ -75,7 +75,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 	return run(closedMonth, true, true);
     }
 
-    public String run(ClosedMonth closedMonth, Boolean getMonthMovements, Boolean getExtraWorkMovements) {
+    public String run(ClosedMonth closedMonth, Boolean getWorkAbsences, Boolean getExtraWorkMovements) {
 	YearMonthDay beginDate = new YearMonthDay().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(
 		DateTimeFieldType.monthOfYear(),
@@ -99,7 +99,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 	    unjustifiedDays = new ArrayList<YearMonthDay>();
 	    if (assiduousness.isStatusActive(beginDate, endDate)
 		    && !isADISTEmployee(assiduousness, beginDate, endDate)) {
-		if (getMonthMovements) {
+		if (getWorkAbsences) {
 		    result.append(getAssiduousnessMonthBalance(assiduousness, joinLeaves(allLeaves
 			    .get(assiduousness)), allAssiduousnessClosedMonths.get(assiduousness),
 			    closedMonth, beginDate, endDate));

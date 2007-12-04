@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletOutputStream;
@@ -8,11 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthDocument;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
+import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
@@ -40,7 +45,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareToCloseMonth(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	YearMonth yearMonthToExport = getYearMonthToClose(false);
+	YearMonth yearMonthToExport = getYearMonthToClose(false, request);
 	YearMonth yearMonth = new YearMonth(2007, 01);
 	if (yearMonthToExport != null) {
 	    request.setAttribute("yearMonthToExport", yearMonthToExport);
@@ -51,13 +56,29 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("close-month");
     }
 
-    private YearMonth getYearMonthToClose(boolean extraWork) {
+    private YearMonth getYearMonthToClose(boolean extraWork, HttpServletRequest request) {
 	ClosedMonth lastClosedMonth = ClosedMonth.getLastMonthClosed(extraWork);
+	List<ClosedMonthDocument> closedMonthDocuments = getClosedMonthDocuments(extraWork,
+		lastClosedMonth);	
+	request.setAttribute("closedMonthDocuments", closedMonthDocuments);
 	if (lastClosedMonth == null) {
 	    return null;
 	}
 	return new YearMonth(lastClosedMonth.getClosedYearMonth().get(DateTimeFieldType.year()),
 		lastClosedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()));
+    }
+
+    private List<ClosedMonthDocument> getClosedMonthDocuments(boolean extraWork,
+	    ClosedMonth lastClosedMonth) {
+	List<ClosedMonthDocument> closedMonthDocuments = null;
+	if (extraWork) {
+	    closedMonthDocuments = lastClosedMonth
+		    .getClosedMonthDocumentsByType(ClosedMonthDocumentType.MOVEMENTS);
+	} else {
+	    closedMonthDocuments = lastClosedMonth
+		    .getClosedMonthDocumentsByType(ClosedMonthDocumentType.WORK_ABSENCES);
+	}
+	return closedMonthDocuments;
     }
 
     public ActionForward closeMonth(ActionMapping mapping, ActionForm actionForm,
@@ -278,7 +299,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareToCloseExtraWorkMonth(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	YearMonth yearMonthToExport = getYearMonthToClose(true);
+	YearMonth yearMonthToExport = getYearMonthToClose(true, request);
 	YearMonth yearMonth = new YearMonth(2007, 01);
 	if (yearMonthToExport != null) {
 	    request.setAttribute("yearMonthToExport", yearMonthToExport);
@@ -301,46 +322,6 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	}
 	RenderUtils.invalidateViewState();
 	return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
-    }
-
-    public ActionForward exportExtraWorkMonth(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExport");
-	if (yearMonth == null) {
-	    return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
-	}
-
-	final IUserView userView = SessionUtils.getUserView(request);
-	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
-	String result = null;
-	try {
-	    result = (String) ServiceUtils.executeService(userView, "ExportClosedExtraWorkMonth",
-		    new Object[] { closedMonth });
-	} catch (InvalidGiafCodeException e) {
-	    ActionMessages actionMessages = getMessages(request);
-	    actionMessages.add("message", new ActionMessage(e.getMessage(), e.getArgs()));
-	    saveMessages(request, actionMessages);
-	    return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
-	}
-	RenderUtils.invalidateViewState();
-	response.setContentType("text/plain");
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
-		LanguageUtils.getLocale());
-	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
-	response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=").append(
-		month).append("-").append(yearMonth.getYear()).toString()
-		+ ".txt");
-
-	byte[] data = result.getBytes();
-	response.setContentLength(data.length);
-	ServletOutputStream writer = response.getOutputStream();
-	writer.write(data);
-	writer.flush();
-	writer.close();
-	response.flushBuffer();
-
-	return mapping.findForward("");
     }
 
     public ActionForward openMonth(ActionMapping mapping, ActionForm actionForm,
@@ -383,51 +364,97 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
     }
 
-    public ActionForward exportClosedMonthToGIAF(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward verifyExportClosedaMonthMovements(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExport");
-	if (yearMonth == null) {
-	    return prepareToCloseMonth(mapping, actionForm, request, response);
+	ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed(Boolean.TRUE);
+	if (closedMonth.getClosedMonthDocumentsByType(ClosedMonthDocumentType.MOVEMENTS).isEmpty()) {
+	    return exportClosedMonthMovementsToGIAF(mapping, actionForm, request, response);
+	} else {
+	    request.setAttribute("yearMonthToExport", getYearMonthToClose(Boolean.TRUE, request));
+	    return mapping.findForward("export-movements-warning");
 	}
+    }
+
+    public ActionForward exportClosedMonthMovementsToGIAF(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	return exportClosedMonthData(mapping, actionForm, request, response,
+		ClosedMonthDocumentType.MOVEMENTS);
+    }
+
+    public ActionForward verifyExportClosedaMonthWorkAbsences(ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {	
+	ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed(Boolean.FALSE);
+	if (closedMonth.getClosedMonthDocumentsByType(ClosedMonthDocumentType.WORK_ABSENCES).isEmpty()) {
+	    return exportClosedMonthWorkAbsencesToGIAF(mapping, actionForm, request, response);
+	} else {
+	    request.setAttribute("yearMonthToExport", getYearMonthToClose(Boolean.FALSE, request));
+	    return mapping.findForward("export-work-absences-warning");
+	}
+    }
+
+    public ActionForward exportClosedMonthWorkAbsencesToGIAF(ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	return exportClosedMonthData(mapping, actionForm, request, response,
+		ClosedMonthDocumentType.WORK_ABSENCES);
+    }
+
+    private ActionForward exportClosedMonthData(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response,
+	    ClosedMonthDocumentType closedMonthDocumentType) throws FenixServiceException,
+	    FenixFilterException {
+
+	ActionForward actionForward = null;
+	if (closedMonthDocumentType == ClosedMonthDocumentType.WORK_ABSENCES) {
+	    actionForward = prepareToCloseMonth(mapping, actionForm, request, response);
+	} else {
+	    actionForward = prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
+	}
+
+	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExport");
+	RenderUtils.invalidateViewState();
+	if (yearMonth == null) {
+	    return actionForward;
+	}
+	request.setAttribute("yearMonthToExport", yearMonth);
 
 	final IUserView userView = SessionUtils.getUserView(request);
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	String result = null;
 	try {
 	    result = (String) ServiceUtils.executeService(userView, "ExportClosedExtraWorkMonth",
-		    new Object[] { closedMonth, true, false });
+		    new Object[] { closedMonth,
+			    closedMonthDocumentType == ClosedMonthDocumentType.WORK_ABSENCES,
+			    closedMonthDocumentType == ClosedMonthDocumentType.MOVEMENTS });
 	} catch (InvalidGiafCodeException e) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", new ActionMessage(e.getMessage(), e.getArgs()));
 	    saveMessages(request, actionMessages);
-	    return prepareToCloseMonth(mapping, actionForm, request, response);
+	    return actionForward;
 	}
-	ActionMessage error = (ActionMessage) ServiceUtils.executeService(userView, "ExportToGIAF",
-		new Object[] { result });
+
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
+		LanguageUtils.getLocale());
+	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
+	String fileName = new StringBuilder().append(
+		bundleEnumeration.getString(closedMonthDocumentType.name())).append("-").append(month)
+		.append("-").append(yearMonth.getYear()).append(".txt").toString();
+
+	ActionMessage error = (ActionMessage) ServiceUtils.executeService(userView,
+		"ExportToGIAFAndSaveFile", new Object[] { closedMonth, fileName,
+			closedMonthDocumentType, result });
 	if (error != null) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", error);
 	    saveMessages(request, actionMessages);
-	    return prepareToCloseMonth(mapping, actionForm, request, response);
+	    return actionForward;
 	}
-
 	RenderUtils.invalidateViewState();
-	response.setContentType("text/plain");
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
-		LanguageUtils.getLocale());
-	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
-	response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=").append(
-		month).append("-").append(yearMonth.getYear()).toString()
-		+ ".txt");
-
-	byte[] data = result.getBytes();
-	response.setContentLength(data.length);
-	ServletOutputStream writer = response.getOutputStream();
-	writer.write(data);
-	writer.flush();
-	writer.close();
-	response.flushBuffer();
-
-	return null;
+	if (closedMonthDocumentType == ClosedMonthDocumentType.WORK_ABSENCES) {
+	    return prepareToCloseMonth(mapping, actionForm, request, response);
+	} else {
+	    return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
+	}
     }
 }

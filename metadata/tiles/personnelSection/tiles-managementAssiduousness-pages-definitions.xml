@@ -100,4 +100,10 @@
 	<definition name="close-extra-work-month" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/closeExtraWorkMonth.jsp"/>
 	</definition>
+	<definition name="export-work-absences-warning" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/exportWorkAbsencesWarning.jsp"/>
+	</definition>
+	<definition name="export-movements-warning" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/exportMovementsWarning.jsp"/>
+	</definition>	
 </tiles-definitions>

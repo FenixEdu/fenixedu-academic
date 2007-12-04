@@ -189,6 +189,7 @@ valueType net.sourceforge.fenixedu.domain.assiduousness.util.YearMonthList 					
 valueType net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType 						 as BonusType;
 valueType net.sourceforge.fenixedu.domain.PartyClassification														 as PartyClassification;
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval									 as AcademicInterval;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType								 as ClosedMonthDocumentType;
 
 /*
 *
@@ -1754,6 +1755,14 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean closedForBalance;
 		Boolean closedForExtraWork;
 		Partial closedYearMonth;
+	}
+
+	class net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthDocument extends net.sourceforge.fenixedu.domain.DomainObject {
+		ClosedMonthDocumentType closedMonthDocumentType;
+		DateTime createdWhen;
+	}
+	
+	class net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthFile extends net.sourceforge.fenixedu.domain.File {
 	}
 
 	class net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5075,6 +5084,18 @@ relation ClosedMonthJustificationAssiduousnessStatus {
 	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification playsRole closedMonthJustifications {
 		multiplicity *;
 	}
+}
+
+relation ClosedMonthClosedMonthDocument {
+	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth playsRole closedMonth;
+	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthDocument playsRole closedMonthDocuments {
+		multiplicity *;
+	}
+}
+
+relation ClosedMonthDocumentClosedMonthFile {
+	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthDocument playsRole closedMonthDocument;
+	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthFile playsRole closedMonthFile;
 }
 
 relation CompetenceCourseDepartment {
@@ -8609,6 +8630,13 @@ relation RootDomainObjectClockUnit {
 relation RootDomainObjectClosedMonth {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth playsRole closedMonths {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectClosedMonthDocument {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthDocument playsRole closedMonthDocuments {
 		multiplicity *;
 	}
 }

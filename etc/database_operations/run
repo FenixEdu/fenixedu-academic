@@ -27,4 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Create table ClosedMonthDocument and some columns and indexes" createTableClosedMonthDocument.sql

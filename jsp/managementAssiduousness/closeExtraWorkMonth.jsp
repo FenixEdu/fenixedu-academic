@@ -21,13 +21,15 @@
 </p>	
 
 <logic:present name="yearMonthToExport">
-	<h3 class="mtop2"><fr:view name="yearMonthToExport" schema="show.date">
-		<fr:layout name="flow">
-			<fr:property name="labelExcluded" value="true" />
-		</fr:layout>
-	</fr:view></h3>
+	<h3 class="mtop2">
+		<fr:view name="yearMonthToExport" schema="show.date">
+			<fr:layout name="flow">
+				<fr:property name="labelExcluded" value="true" />
+			</fr:layout>
+		</fr:view>
+	</h3>
 	<p>
-	<fr:form action="/monthClosure.do?method=exportExtraWorkMonth">
+	<fr:form action="/monthClosure.do?method=verifyExportClosedaMonthMovements">
 		<fr:edit id="yearMonthToExport" name="yearMonthToExport" schema="show.date" visible="false"/>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
 			<bean:message key="button.exportMovementsToGIAF" />
@@ -50,6 +52,12 @@
 		</html:submit>
 	</fr:form>
 	</p>
+
+	<logic:notEmpty name="closedMonthDocuments">
+		<bean:define id="closedMonthDocuments" name="closedMonthDocuments" toScope="request" />
+		<jsp:include page="showClosedMonthDocuments.jsp"/>	
+	</logic:notEmpty>
+
 </logic:present>
 
 <logic:present name="yearMonth">

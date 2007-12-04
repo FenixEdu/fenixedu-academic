@@ -9653,8 +9653,8 @@
 		</filterChains>		
 	</service>
 	<service>
-		<name>ExportToGIAF</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportToGIAF</implementationClass>
+		<name>ExportToGIAFAndSaveFile</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportToGIAFAndSaveFile</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

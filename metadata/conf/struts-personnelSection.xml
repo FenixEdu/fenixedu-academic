@@ -145,9 +145,12 @@
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.MonthClosureDispatchAction"
 				parameter="method"
 				scope="request"
-				validate="true">
+				validate="true"
+				name="parametrizationForm">
 			<forward name="close-month" path="close-month"/>
 			<forward name="close-extra-work-month" path="close-extra-work-month"/>
+			<forward name="export-work-absences-warning" path="export-work-absences-warning"/>
+			<forward name="export-movements-warning" path="export-movements-warning"/>
 		</action>
 		<action path="/manageUnitsExtraWorkAmounts"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ManageExtraWorkUnitAmountDispatchAction" 

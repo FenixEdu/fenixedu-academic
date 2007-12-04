@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObje
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
-public class AssidousnessStatusAsProvider implements DataProvider {
+public class AssiduousnessStatusAsProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	List<AssiduousnessStatus> assiduousnessStatusList = new ArrayList<AssiduousnessStatus>();

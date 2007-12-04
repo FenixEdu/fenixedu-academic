@@ -280,11 +280,9 @@ public class ParkingParty extends ParkingParty_Base {
 			stringBuilder.append("\n").append(scp.getDegreeCurricularPlan().getName());
 			stringBuilder.append("\n (").append(registration.getCurricularYear()).append(
 				"º ano");
-			if (isFirstTimeEnrolledInCurrentYear(registration, registration
-				.getCurricularYear())) {			   
+			if (isFirstTimeEnrolledInCurrentYear(registration)) {
 			    stringBuilder.append(" - 1ª vez)");
-			} 
-			else {
+			} else {
 			    stringBuilder.append(")");
 			}
 			stringBuilder.append("<br/>Média: ").append(registration.getAverage());
@@ -362,8 +360,7 @@ public class ParkingParty extends ParkingParty_Base {
 			stringBuilder.append(scp.getDegreeCurricularPlan().getName());
 			stringBuilder.append(" ").append(registration.getCurricularYear()).append(
 				"º ano");
-			if (isFirstTimeEnrolledInCurrentYear(registration, registration
-				.getCurricularYear())) {
+			if (isFirstTimeEnrolledInCurrentYear(registration)) {
 			    stringBuilder.append(" - 1ª vez");
 			}
 			stringBuilder.append(" - ").append(registration.getAverage());
@@ -589,8 +586,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    Registration registration = getRegistrationByDegreeType(student, degreeType);
 	    if (registration != null && registration.isInFinalDegreeYear()) {
 		return degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) ? Boolean.TRUE
-			: isFirstTimeEnrolledInCurrentYear(registration, registration.getDegreeType()
-				.getYears());
+			: isFirstTimeEnrolledInCurrentYear(registration);
 	    }
 	}
 	return false;
@@ -606,9 +602,10 @@ public class ParkingParty extends ParkingParty_Base {
 
     }
 
-    public boolean isFirstTimeEnrolledInCurrentYear(Registration registration, int curricularYear) {
+    public boolean isFirstTimeEnrolledInCurrentYear(Registration registration) {
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	return registration.getCurricularYear(executionYear.getPreviousExecutionYear()) != curricularYear;
+	return registration.getCurricularYear(executionYear.getPreviousExecutionYear()) != registration
+		.getCurricularYear(executionYear);
     }
 
     private Registration getRegistrationByDegreeType(Student student, DegreeType degreeType) {

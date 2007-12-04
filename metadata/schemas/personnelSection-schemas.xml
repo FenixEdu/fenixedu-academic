@@ -623,7 +623,7 @@
 
 <schema name="edit.severalEmployeeJustificationFactoryCreator" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory$SeveralEmployeeJustificationFactoryCreator">
 	<slot name="assiduousnessStatus" layout="option-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.AssidousnessStatusAsProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.AssiduousnessStatusAsProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" />
 		<property name="eachSchema" value="show.status" />
 		<property name="eachLayout" value="values" />
@@ -1165,5 +1165,3 @@
 	<slot name="subCostCenterCode" key="label.subCostCenter" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="explorationUnit" key="label.explorationUnit" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
-
-
