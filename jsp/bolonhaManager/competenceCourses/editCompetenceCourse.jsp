@@ -35,12 +35,12 @@
 		<h:outputText value="<p><label class='lempty'>.</label>" escape="false"/>
 
 		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt): </label>" escape="false"/>
-		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.name}"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="150" size="80" value="#{CompetenceCourseManagement.name}"/>
 		<h:message styleClass="error0" for="name"/>
 		<h:outputText value="</p>" escape="false"/>
 				
 		<h:outputText value="<p><label>#{bolonhaBundle['nameEn']} (en): </label>" escape="false"/>
-		<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" required="true" maxlength="100" size="40" value="#{CompetenceCourseManagement.nameEn}"/>
+		<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" required="true" maxlength="150" size="80" value="#{CompetenceCourseManagement.nameEn}"/>
 		<h:message styleClass="error0" for="nameEn"/>
 		<h:outputText value="</p>" escape="false"/>	
 		
