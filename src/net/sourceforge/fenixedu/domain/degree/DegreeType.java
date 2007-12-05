@@ -143,6 +143,10 @@ public enum DegreeType {
 
 	@Override
 	public Integer getYears(final CycleType cycleType) {
+	    if (cycleType == null) {
+		return getYears();
+	    }
+		
 	    switch (cycleType) {
 	    case FIRST_CYCLE:
 		return BOLONHA_DEGREE.getYears(cycleType);
