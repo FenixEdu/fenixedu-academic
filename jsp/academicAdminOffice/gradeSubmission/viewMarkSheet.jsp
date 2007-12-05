@@ -54,9 +54,11 @@
 					<bean:write name="enrolmentEvaluation" property="student.person.name"/>
 				</td>
 				<td>
-                    <dt:format pattern="dd-MM-yyyy">
-						<bean:write name="enrolmentEvaluation" property="examDate.time"/>
-                    </dt:format>
+					<logic:notEmpty name="enrolmentEvaluation" property="examDate" >
+	                    <dt:format pattern="dd-MM-yyyy">
+							<bean:write name="enrolmentEvaluation" property="examDate.time"/>
+	                    </dt:format>
+					</logic:notEmpty>
 				</td>
 				<td>
 					<bean:write name="enrolmentEvaluation" property="gradeValue"/>
