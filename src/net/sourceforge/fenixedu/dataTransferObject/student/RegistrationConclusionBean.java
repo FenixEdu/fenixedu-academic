@@ -10,11 +10,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.joda.time.YearMonthDay;
 
-public class RegistrationConclusionBean implements Serializable {
+public class RegistrationConclusionBean implements Serializable, IRegistrationBean {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 5825221957160251388L;
 
     private DomainReference<Registration> registration;
@@ -82,6 +79,10 @@ public class RegistrationConclusionBean implements Serializable {
 
     public ICurriculum getCurriculumForConclusion() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCurriculum() : getRegistration().getCurriculum();
+    }
+
+    public int getCurriculumEntriesSize() {
+	return getCurriculumForConclusion().getCurriculumEntries().size();
     }
 
     public String getDegreeDescription() {
