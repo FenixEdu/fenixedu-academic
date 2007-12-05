@@ -18,4 +18,6 @@
 <bean:define id="showMethod" value="&method=showPublications" toScope="request" />
 <bean:define id="searchMethod" value="&method=prepareSearchPublication" toScope="request" />
 
+<bean:define id="searchPublicationLabelKey" value="label.search.publications.scientificArea" toScope="request" />
+
 <jsp:include page="../../commons/sites/unitSite/showPublications.jsp" />

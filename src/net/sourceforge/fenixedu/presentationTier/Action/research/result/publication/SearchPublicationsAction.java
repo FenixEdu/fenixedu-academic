@@ -11,17 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
-import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpacePublicationBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.File;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.presentationTier.Action.SearchDSpaceGeneralAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean.EducationalResourceType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

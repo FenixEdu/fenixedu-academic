@@ -14,5 +14,7 @@
 <bean:define id="showMethod" value="&method=showPublications" toScope="request" />
 <bean:define id="searchMethod" value="&method=prepareSearchPublication" toScope="request" />
 
+<bean:define id="searchPublicationLabelKey" value="label.search.publications.person" toScope="request" />
+
 <jsp:include page="../../../commons/sites/unitSite/searchPublications.jsp" />
 

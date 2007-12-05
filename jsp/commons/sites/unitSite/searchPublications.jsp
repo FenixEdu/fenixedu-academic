@@ -15,14 +15,15 @@
 <bean:define id="showMethod" name="showMethod" scope="request" type="java.lang.String" />
 <bean:define id="searchMethod" name="searchMethod" scope="request" type="java.lang.String" />
 
+<bean:define id="searchPublicationLabelKey" name="searchPublicationLabelKey" scope="request" type="java.lang.String" />
 
 <p>
 	<bean:message key="link.Search" bundle="RESEARCHER_RESOURCES" />: 
 	<html:link page="<%= showContextPath + showAction + showArguments + showMethod %>">
-		<bean:message key="label.searchByDate" bundle="RESEARCHER_RESOURCES" />
+		<bean:message key="<%=searchPublicationLabelKey%>" bundle="RESEARCHER_RESOURCES" />
 	</html:link> | 
 	<html:link	page="<%= searchContextPath + searchAction + searchArguments + searchMethod %>">
-		<bean:message key="label.searchByKeyword" bundle="RESEARCHER_RESOURCES" />
+		<bean:message key="label.search.publications.ist" bundle="RESEARCHER_RESOURCES" />
 	</html:link>
 </p>
 
