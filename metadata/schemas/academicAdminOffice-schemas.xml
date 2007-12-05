@@ -484,7 +484,7 @@
 	</slot>		
 	<slot name="stateType" key="label.newState" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="TRANSITION" />
-		<property name="excludedValues" value="CONCLUDED" />
+		<property name="excludedValues" value="CONCLUDED" />		
 	</slot>
     <slot name="remarks" layout="longText">
     	<property name="columns" value="50" />
@@ -1353,31 +1353,34 @@
 	<slot name="choice" label="label.personalDataAuthorization" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
-<schema name="RegistrationConclusionBean.edit-cycleCurriculumGroup" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+<schema name="IRegistrationBean.edit-cycleCurriculumGroup" type="net.sourceforge.fenixedu.dataTransferObject.student.IRegistrationBean" bundle="APPLICATION_RESOURCES">
 	<slot name="cycleCurriculumGroup" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.RegistrationConclusionCycleCurriculumGroupsProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.RegistrationInternalCycleCurriculumGroupsProvider" />
 		<property name="format" value="${name}" />
 	</slot>
 </schema>
 
 <schema name="RegistrationConclusionBean.confirmConclusionForCycle" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="cycleCurriculumGroup.name" />
-	<slot name="conclusionDate" />
+	<slot name="curriculumEntriesSize" />
+	<slot name="ectsCredits" />
 	<slot name="average" />
 	<slot name="finalAverage" />
+	<slot name="conclusionDate" />
 </schema>
 
 <schema name="RegistrationConclusionBean.confirmConclusionForRegistration" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
-	<slot name="conclusionDate" />
+	<slot name="curriculumEntriesSize" />
+	<slot name="ectsCredits" />
 	<slot name="average" />
 	<slot name="finalAverage" />
+	<slot name="conclusionDate" />
 </schema>
 
 <schema name="Registration.editConclusionInformation" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="APPLICATION_RESOURCES">
 	<slot name="finalAverage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="conclusionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
-
 
 <schema name="CycleCurriculumGroup.editConclusionInformation" type="net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup" bundle="APPLICATION_RESOURCES">
 	<slot name="name" read-only="true" />
@@ -1388,18 +1391,35 @@
 
 <schema name="RegistrationConclusionBean.viewForCycleWithConclusionProcessedInformation" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="cycleCurriculumGroup.name" />
-	<slot name="conclusionDate" />
+	<slot name="curriculumEntriesSize" />
+	<slot name="ectsCredits" />
 	<slot name="average" />
 	<slot name="finalAverage" />
+	<slot name="conclusionDate" />
 	<slot name="concluded"/>
 	<slot name="conclusionProcessed" />
 </schema>
 
 <schema name="RegistrationConclusionBean.viewForRegistrationWithConclusionProcessedInformation" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
-	<slot name="conclusionDate" />
+	<slot name="curriculumEntriesSize" />
+	<slot name="ectsCredits" />
 	<slot name="average" />
 	<slot name="finalAverage" />
+	<slot name="conclusionDate" />
 	<slot name="concluded" />
 	<slot name="conclusionProcessed" />
+</schema>
+
+<schema name="RegistrationConclusionBean.viewForCycle" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+	<slot name="cycleCurriculumGroup.name" />
+	<slot name="curriculumEntriesSize" />
+	<slot name="ectsCredits" />
+	<slot name="average" />
+</schema>
+
+<schema name="RegistrationConclusionBean.viewForRegistration" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+	<slot name="curriculumEntriesSize" />
+	<slot name="ectsCredits" />
+	<slot name="average" />
 </schema>
 
