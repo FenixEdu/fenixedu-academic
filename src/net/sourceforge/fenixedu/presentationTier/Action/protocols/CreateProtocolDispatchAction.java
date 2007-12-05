@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
@@ -89,7 +90,9 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("prepareCreate-protocol-data");
 	}
 	if (request.getParameter("next") != null) {
-	    if (protocolFactory.getResponsibles() == null) {
+	    if ((protocolFactory.getResponsibles() == null || protocolFactory.getResponsibles().size() == 0)
+		    && (protocolFactory.getResponsibleFunctions() == null || protocolFactory
+			    .getResponsibleFunctions().size() == 0)) {
 		setError(request, "errorMessage", (ActionMessage) new ActionMessage(
 			"error.protocol.empty.istResponsibles"));
 		request.setAttribute("protocolFactory", protocolFactory);
@@ -111,7 +114,8 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("prepareCreate-protocol-responsibles");
 	}
 
-	if (protocolFactory.getPartnerResponsible() == null && protocolFactory.getResponsible() == null) {
+	if (protocolFactory.getPartnerResponsible() == null && protocolFactory.getResponsible() == null
+		&& protocolFactory.getResponsibleFunction() == null) {
 	    if (StringUtils.isEmpty(protocolFactory.getResponsibleName())
 		    || protocolFactory.getIstResponsible()) {
 		setError(request, "errorMessage", (ActionMessage) new ActionMessage(
@@ -121,9 +125,16 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 	    }
 	} else {
 	    if (protocolFactory.getIstResponsible()) {
-		if (!protocolFactory.addISTResponsible()) {
-		    setError(request, "errorMessage", (ActionMessage) new ActionMessage(
-			    "error.protocol.duplicated.responsible"));
+		if (protocolFactory.getIstResponsibleIsPerson()) {
+		    if (!protocolFactory.addISTResponsible()) {
+			setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+				"error.protocol.duplicated.responsible"));
+		    }
+		} else {
+		    if (!protocolFactory.addISTResponsibleFunction()) {
+			setError(request, "errorMessage", (ActionMessage) new ActionMessage(
+				"error.protocol.duplicated.responsibleFunction"));
+		    }
 		}
 	    } else {
 		if (!protocolFactory.addPartnerResponsible()) {
@@ -280,6 +291,16 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 	Person responsible = (Person) RootDomainObject.readDomainObjectByOID(Person.class, getInteger(
 		(DynaActionForm) actionForm, "responsibleID"));
 	protocolFactory.getResponsibles().remove(responsible);
+	request.setAttribute("protocolFactory", protocolFactory);
+	return mapping.findForward("prepareCreate-protocol-responsibles");
+    }
+
+    public ActionForward removeISTResponsibleFunction(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	Function responsibleFunction = (Function) RootDomainObject.readDomainObjectByOID(Function.class,
+		getInteger((DynaActionForm) actionForm, "responsibleID"));
+	protocolFactory.getResponsibleFunctions().remove(responsibleFunction);
 	request.setAttribute("protocolFactory", protocolFactory);
 	return mapping.findForward("prepareCreate-protocol-responsibles");
     }

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
+import net.sourceforge.fenixedu.domain.protocols.ProtocolHistory;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -25,6 +26,8 @@ public class ProtocolSearch implements Serializable {
     }
 
     private String protocolNumber;
+
+    private Integer year;
 
     private YearMonthDay beginProtocolBeginDate;
 
@@ -70,11 +73,28 @@ public class ProtocolSearch implements Serializable {
 		    && satisfiedDates(getBeginSignedDate(), getEndSignedDate(), protocol.getSignedDate())
 		    && satisfiedOtherProtocolActionTypes(protocol)
 		    && satiefiedProtocolActionTypes(protocol) && satisfiedProtocolPartner(protocol)
-		    && satisfiedNationality(protocol) && satisfiedActivity(protocol)) {
+		    && satisfiedNationality(protocol) && satisfiedActivity(protocol)
+		    && satisfiedActiveInYear(protocol)) {
 		protocols.add(protocol);
 	    }
 	}
 	return protocols;
+    }
+
+    private boolean satisfiedActiveInYear(Protocol protocol) {
+	if (getYear() != null) {
+	    for (ProtocolHistory protocolHistory : protocol.getProtocolHistories()) {
+		if (protocolHistory.getEndDate() == null) {
+		    return protocolHistory.getBeginDate() == null
+			    || protocolHistory.getBeginDate().getYear() <= getYear();
+		} else {
+		    return (protocolHistory.getBeginDate() == null || protocolHistory.getBeginDate()
+			    .getYear() <= getYear())
+			    && protocolHistory.getEndDate().getYear() >= getYear();
+		}
+	    }
+	}
+	return true;
     }
 
     public boolean satisfiedActivity(Protocol protocol) {
@@ -292,6 +312,14 @@ public class ProtocolSearch implements Serializable {
 
     public void setSearchNationalityType(SearchNationalityType searchNationalityType) {
 	this.searchNationalityType = searchNationalityType;
+    }
+
+    public Integer getYear() {
+	return year;
+    }
+
+    public void setYear(Integer year) {
+	this.year = year;
     }
 
 }

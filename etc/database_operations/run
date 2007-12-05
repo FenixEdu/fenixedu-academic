@@ -28,3 +28,4 @@ function executeWithTempFile() {
 }
 
 execute "Create table ClosedMonthDocument and some columns and indexes" createTableClosedMonthDocument.sql
+execute "Create Table ProtocolResponsibleFunction " createProtocolResponsibleFunction.sql

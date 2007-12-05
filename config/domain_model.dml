@@ -7889,6 +7889,15 @@ relation ProtocolResponsible {
 	}
 }
 
+relation ProtocolResponsibleFunction {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole responsibleFunctions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.protocols.Protocol playsRole protocols {
+		multiplicity *;
+	}
+}
+
 relation ProtocolResponsiblePartner {
 	net.sourceforge.fenixedu.domain.Person playsRole partnerResponsibles {
 		multiplicity *;

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.PersonName;
@@ -26,11 +27,11 @@ import org.joda.time.YearMonthDay;
 public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public static enum EditProtocolAction {
-        EDIT_PROTOCOL_DATA, ADD_RESPONSIBLE, REMOVE_RESPONSIBLE, ADD_UNIT, REMOVE_UNIT, DELETE_FILE
+	EDIT_PROTOCOL_DATA, ADD_RESPONSIBLE, REMOVE_RESPONSIBLE, ADD_UNIT, REMOVE_UNIT, DELETE_FILE
     }
 
     public static enum FilePermissionType {
-        IST_PEOPLE, RESPONSIBLES_AND_SCIENTIFIC_COUNCIL
+	IST_PEOPLE, RESPONSIBLES_AND_SCIENTIFIC_COUNCIL
     }
 
     private EditProtocolAction editProtocolAction;
@@ -61,11 +62,17 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private Boolean internalUnit;
 
+    private Boolean istResponsibleIsPerson;
+
     private DomainReference<Teacher> responsible;
+
+    private DomainReference<Function> responsibleFunction;
 
     private DomainReference<PersonName> partnerResponsible;
 
     private String responsibleName;
+
+    private String responsibleFunctionName;
 
     private DomainReference<UnitName> unitObject;
 
@@ -75,6 +82,8 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private DomainReference<Person> responsibleToRemove;
 
+    private DomainReference<Function> responsibleFunctionToRemove;
+
     private DomainReference<Unit> unitToAdd;
 
     private DomainReference<Unit> unitToRemove;
@@ -82,6 +91,10 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     private List<ProtocolActionType> actionTypes;
 
     private DomainListReference<Person> responsibles;
+
+    private DomainListReference<Function> responsibleFunctions;
+
+    private DomainReference<Unit> responsibleFunctionUnit;
 
     private DomainListReference<Person> partnerResponsibles;
 
@@ -106,488 +119,553 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     private DomainReference<Country> country;
 
     public ProtocolFactory(Protocol protocol) {
-        setProtocol(protocol);
-        setProtocolNumber(protocol.getProtocolNumber());
-        setSignedDate(protocol.getSignedDate());
-        setObservations(protocol.getObservations());
-        setRenewable(protocol.getRenewable());
-        setActive(protocol.getActive());
-        setProtocolHistories(protocol.getProtocolHistories());
-        setProtocolAction(protocol.getProtocolAction());
-        setOtherActionTypes(protocol.getProtocolAction().getOtherTypes());
-        setActionTypes(protocol.getProtocolAction().getProcotolActionTypes());
-        setScientificAreas(protocol.getScientificAreas());
-        setResponsiblesList(protocol.getResponsibles());
-        setPartnerResponsiblesList(protocol.getPartnerResponsibles());
-        setUnitsList(protocol.getUnits());
-        setPartnersList(protocol.getPartners());
-        setIstResponsible(true);
-        setInternalUnit(true);
-        setFilePermissionType(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL);
+	setProtocol(protocol);
+	setProtocolNumber(protocol.getProtocolNumber());
+	setSignedDate(protocol.getSignedDate());
+	setObservations(protocol.getObservations());
+	setRenewable(protocol.getRenewable());
+	setActive(protocol.getActive());
+	setProtocolHistories(protocol.getProtocolHistories());
+	setProtocolAction(protocol.getProtocolAction());
+	setOtherActionTypes(protocol.getProtocolAction().getOtherTypes());
+	setActionTypes(protocol.getProtocolAction().getProcotolActionTypes());
+	setScientificAreas(protocol.getScientificAreas());
+	setResponsiblesList(protocol.getResponsibles());
+	setResponsibleFunctions(protocol.getResponsibleFunctions());
+	setPartnerResponsiblesList(protocol.getPartnerResponsibles());
+	setUnitsList(protocol.getUnits());
+	setPartnersList(protocol.getPartners());
+	setIstResponsible(true);
+	setInternalUnit(true);
+	setIstResponsibleIsPerson(true);
+	setFilePermissionType(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL);
     }
 
     private void setPartnersList(List<Unit> partners) {
-        if (partners != null) {
-            setPartnerUnits(new DomainListReference<Unit>(partners));
-        }
+	if (partners != null) {
+	    setPartnerUnits(new DomainListReference<Unit>(partners));
+	}
     }
 
     private void setUnitsList(List<Unit> units) {
-        if (units != null) {
-            setUnits(new DomainListReference<Unit>(units));
-        }
+	if (units != null) {
+	    setUnits(new DomainListReference<Unit>(units));
+	}
     }
 
     private void setPartnerResponsiblesList(List<Person> partnerResponsibles) {
-        if (partnerResponsibles != null) {
-            setPartnerResponsibles(new DomainListReference<Person>(partnerResponsibles));
-        }
+	if (partnerResponsibles != null) {
+	    setPartnerResponsibles(new DomainListReference<Person>(partnerResponsibles));
+	}
     }
 
     private void setResponsiblesList(List<Person> responsibles) {
-        if (responsibles != null) {
-            setResponsibles(new DomainListReference<Person>(responsibles));
-        }
+	if (responsibles != null) {
+	    setResponsibles(new DomainListReference<Person>(responsibles));
+	}
     }
 
     private void setActionTypes(EnumSet<ProtocolActionType> procotolActionTypes) {
-        if (procotolActionTypes != null) {
-            ArrayList<ProtocolActionType> actionsTypesList = new ArrayList<ProtocolActionType>();
-            for (ProtocolActionType actionType : procotolActionTypes) {
-                actionsTypesList.add(actionType);
-            }
-            setActionTypes(actionsTypesList);
-        }
+	if (procotolActionTypes != null) {
+	    ArrayList<ProtocolActionType> actionsTypesList = new ArrayList<ProtocolActionType>();
+	    for (ProtocolActionType actionType : procotolActionTypes) {
+		actionsTypesList.add(actionType);
+	    }
+	    setActionTypes(actionsTypesList);
+	}
     }
 
     public ProtocolFactory() {
-        setIstResponsible(true);
-        setInternalUnit(true);
-        setFilePermissionType(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL);
+	setIstResponsible(true);
+	setIstResponsibleIsPerson(true);
+	setInternalUnit(true);
+	setFilePermissionType(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL);
     }
 
     public Object execute() {
-        if (getProtocol() == null) {
-            return new Protocol(this);
-        } else {
-            switch (getEditProtocolAction()) {
-            case EDIT_PROTOCOL_DATA:
-                getProtocol().editData(this);
-                break;
-            case ADD_RESPONSIBLE:
-                getProtocol().addResponsible(this);
-                break;
-            case REMOVE_RESPONSIBLE:
-                getProtocol().removeResponsible(this);
-                break;
-            case ADD_UNIT:
-                getProtocol().addUnit(this);
-                break;
-            case REMOVE_UNIT:
-                getProtocol().removeUnit(this);
-                break;
-            case DELETE_FILE:
-                getProtocol().deleteFile(this);
-                break;
-            default:
-                return null;
-            }
-            return getProtocol();
-        }
+	if (getProtocol() == null) {
+	    return new Protocol(this);
+	} else {
+	    switch (getEditProtocolAction()) {
+	    case EDIT_PROTOCOL_DATA:
+		getProtocol().editData(this);
+		break;
+	    case ADD_RESPONSIBLE:
+		getProtocol().addResponsible(this);
+		break;
+	    case REMOVE_RESPONSIBLE:
+		getProtocol().removeResponsible(this);
+		break;
+	    case ADD_UNIT:
+		getProtocol().addUnit(this);
+		break;
+	    case REMOVE_UNIT:
+		getProtocol().removeUnit(this);
+		break;
+	    case DELETE_FILE:
+		getProtocol().deleteFile(this);
+		break;
+	    default:
+		return null;
+	    }
+	    return getProtocol();
+	}
     }
 
     public Boolean getActive() {
-        return active;
+	return active;
     }
 
     public void setActive(Boolean active) {
-        this.active = active;
+	this.active = active;
     }
 
     public String getObservations() {
-        return observations;
+	return observations;
     }
 
     public void setObservations(String observations) {
-        this.observations = observations;
+	this.observations = observations;
     }
 
     public List<Person> getPartnerResponsibles() {
-        return partnerResponsibles;
+	return partnerResponsibles;
     }
 
     public void setPartnerResponsibles(List<Person> partnerResponsibles) {
-        this.partnerResponsibles = new DomainListReference<Person>(partnerResponsibles);
+	this.partnerResponsibles = new DomainListReference<Person>(partnerResponsibles);
     }
 
     public DomainListReference<Unit> getPartnerUnits() {
-        return partnerUnits;
+	return partnerUnits;
     }
 
     public void setPartnerUnits(DomainListReference<Unit> partnerUnits) {
-        this.partnerUnits = partnerUnits;
+	this.partnerUnits = partnerUnits;
+    }
+
+    public Unit getResponsibleFunctionUnit() {
+	return responsibleFunctionUnit == null ? null : responsibleFunctionUnit.getObject();
+    }
+
+    public void setResponsibleFunctionUnit(Unit responsibleFunctionUnit) {
+	this.responsibleFunctionUnit = new DomainReference<Unit>(responsibleFunctionUnit);
     }
 
     public Protocol getProtocol() {
-        return protocol != null ? protocol.getObject() : null;
+	return protocol != null ? protocol.getObject() : null;
     }
 
     public void setProtocol(Protocol protocol) {
-        if (protocol != null) {
-            this.protocol = new DomainReference<Protocol>(protocol);
-        } else {
-            this.protocol = null;
-        }
+	if (protocol != null) {
+	    this.protocol = new DomainReference<Protocol>(protocol);
+	} else {
+	    this.protocol = null;
+	}
     }
 
     public ProtocolAction getProtocolAction() {
-        return protocolAction;
+	return protocolAction;
     }
 
     public void setProtocolAction(ProtocolAction protocolAction) {
-        this.protocolAction = protocolAction;
+	this.protocolAction = protocolAction;
     }
 
     public String getProtocolNumber() {
-        return protocolNumber;
+	return protocolNumber;
     }
 
     public void setProtocolNumber(String protocolNumber) {
-        this.protocolNumber = protocolNumber;
+	this.protocolNumber = protocolNumber;
     }
 
     public Boolean getRenewable() {
-        return renewable;
+	return renewable;
     }
 
     public void setRenewable(Boolean renewable) {
-        this.renewable = renewable;
+	this.renewable = renewable;
     }
 
     public List<Person> getResponsibles() {
-        return responsibles;
+	return responsibles;
     }
 
     public void setResponsibles(List<Person> responsibles) {
-        this.responsibles = new DomainListReference<Person>(responsibles);
+	this.responsibles = new DomainListReference<Person>(responsibles);
+    }
+
+    public List<Function> getResponsibleFunctions() {
+	return responsibleFunctions;
+    }
+
+    public void setResponsibleFunctions(List<Function> responsibleFunctions) {
+	this.responsibleFunctions = new DomainListReference<Function>(responsibleFunctions);
     }
 
     public String getScientificAreas() {
-        return scientificAreas;
+	return scientificAreas;
     }
 
     public void setScientificAreas(String scientificAreas) {
-        this.scientificAreas = scientificAreas;
+	this.scientificAreas = scientificAreas;
     }
 
     public YearMonthDay getSignedDate() {
-        return signedDate;
+	return signedDate;
     }
 
     public void setSignedDate(YearMonthDay signedDate) {
-        this.signedDate = signedDate;
+	this.signedDate = signedDate;
     }
 
     public DomainListReference<Unit> getUnits() {
-        return units;
+	return units;
     }
 
     public void setUnits(DomainListReference<Unit> units) {
-        this.units = units;
+	this.units = units;
     }
 
     public YearMonthDay getBeginDate() {
-        return beginDate;
+	return beginDate;
     }
 
     public void setBeginDate(YearMonthDay beginDate) {
-        this.beginDate = beginDate;
+	this.beginDate = beginDate;
     }
 
     public YearMonthDay getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     public void setEndDate(YearMonthDay endDate) {
-        this.endDate = endDate;
+	this.endDate = endDate;
     }
 
     public List<ProtocolActionType> getActionTypes() {
-        return actionTypes;
+	return actionTypes;
     }
 
     public void setActionTypes(List<ProtocolActionType> actionTypes) {
-        this.actionTypes = actionTypes;
+	this.actionTypes = actionTypes;
     }
 
     public String getOtherActionTypes() {
-        return otherActionTypes;
+	return otherActionTypes;
     }
 
     public void setOtherActionTypes(String otherActionTypes) {
-        this.otherActionTypes = otherActionTypes;
+	this.otherActionTypes = otherActionTypes;
     }
 
     public DomainListReference<ProtocolFile> getProtocolFiles() {
-        return protocolFiles;
+	return protocolFiles;
     }
 
     public void setProtocolFiles(DomainListReference<ProtocolFile> protocolFiles) {
-        this.protocolFiles = protocolFiles;
+	this.protocolFiles = protocolFiles;
     }
 
     public EditProtocolAction getEditProtocolAction() {
-        return editProtocolAction;
+	return editProtocolAction;
     }
 
     public void setEditProtocolAction(EditProtocolAction editProtocolAction) {
-        this.editProtocolAction = editProtocolAction;
+	this.editProtocolAction = editProtocolAction;
     }
 
     public Boolean getIstResponsible() {
-        return istResponsible;
+	return istResponsible;
     }
 
     public void setIstResponsible(Boolean istResponsible) {
-        this.istResponsible = istResponsible;
+	this.istResponsible = istResponsible;
     }
 
     public PersonName getPartnerResponsible() {
-        return partnerResponsible != null ? partnerResponsible.getObject() : null;
+	return partnerResponsible != null ? partnerResponsible.getObject() : null;
     }
 
     public void setPartnerResponsible(PersonName responsible) {
-        this.partnerResponsible = (responsible != null) ? new DomainReference<PersonName>(responsible)
-                : null;
+	this.partnerResponsible = (responsible != null) ? new DomainReference<PersonName>(responsible)
+		: null;
     }
 
     public Teacher getResponsible() {
-        return responsible != null ? responsible.getObject() : null;
+	return responsible != null ? responsible.getObject() : null;
     }
 
     public void setResponsible(Teacher responsible) {
-        this.responsible = (responsible != null) ? new DomainReference<Teacher>(responsible) : null;
+	this.responsible = (responsible != null) ? new DomainReference<Teacher>(responsible) : null;
+    }
+
+    public Function getResponsibleFunction() {
+	return responsibleFunction != null ? responsibleFunction.getObject() : null;
+    }
+
+    public void setResponsibleFunction(Function responsibleFunction) {
+	this.responsibleFunction = (responsibleFunction != null) ? new DomainReference<Function>(
+		responsibleFunction) : null;
     }
 
     public UnitName getUnitObject() {
-        return unitObject != null ? unitObject.getObject() : null;
+	return unitObject != null ? unitObject.getObject() : null;
     }
 
     public void setUnitObject(UnitName unitObject) {
-        this.unitObject = unitObject != null ? new DomainReference<UnitName>(unitObject) : null;
+	this.unitObject = unitObject != null ? new DomainReference<UnitName>(unitObject) : null;
     }
 
     public Boolean getInternalUnit() {
-        return internalUnit;
+	return internalUnit;
     }
 
     public void setInternalUnit(Boolean internalUnit) {
-        this.internalUnit = internalUnit;
+	this.internalUnit = internalUnit;
     }
 
     public String getResponsibleName() {
-        return responsibleName;
+	return responsibleName;
     }
 
     public void setResponsibleName(String responsibleName) {
-        this.responsibleName = responsibleName;
+	this.responsibleName = responsibleName;
     }
 
     public String getUnitName() {
-        return unitName;
+	return unitName;
     }
 
     public void setUnitName(String unitName) {
-        this.unitName = unitName;
+	this.unitName = unitName;
     }
 
     public boolean addISTResponsible() {
-        if (getResponsibles() == null) {
-            setResponsibles(new DomainListReference<Person>());
-        }
-        if (getResponsibles().contains(getResponsible().getPerson())) {
-            return false;
-        } else {
-            return getResponsibles().add(getResponsible().getPerson());
-        }
+	if (getResponsibles() == null) {
+	    setResponsibles(new DomainListReference<Person>());
+	}
+	if (getResponsibles().contains(getResponsible().getPerson())) {
+	    return false;
+	} else {
+	    return getResponsibles().add(getResponsible().getPerson());
+	}
+    }
+
+    public boolean addISTResponsibleFunction() {
+	if (getResponsibleFunctions() == null) {
+	    setResponsibleFunctions(new DomainListReference<Function>());
+	}
+	if (getResponsibleFunctions().contains(getResponsibleFunction())) {
+	    return false;
+	} else {
+	    return getResponsibleFunctions().add(getResponsibleFunction());
+	}
     }
 
     public boolean addPartnerResponsible() {
-        if (getPartnerResponsibles() == null) {
-            setPartnerResponsibles(new DomainListReference<Person>());
-        }
-        if (getPartnerResponsibles().contains(getPartnerResponsible().getPerson())) {
-            return false;
-        } else {
-            return getPartnerResponsibles().add(getPartnerResponsible().getPerson());
-        }
+	if (getPartnerResponsibles() == null) {
+	    setPartnerResponsibles(new DomainListReference<Person>());
+	}
+	if (getPartnerResponsibles().contains(getPartnerResponsible().getPerson())) {
+	    return false;
+	} else {
+	    return getPartnerResponsibles().add(getPartnerResponsible().getPerson());
+	}
     }
 
     public void addPartnerResponsible(Person responsible) {
-        if (getPartnerResponsibles() == null) {
-            setPartnerResponsibles(new DomainListReference<Person>());
-        }
-        getPartnerResponsibles().add(responsible);
+	if (getPartnerResponsibles() == null) {
+	    setPartnerResponsibles(new DomainListReference<Person>());
+	}
+	getPartnerResponsibles().add(responsible);
     }
 
     public boolean addISTUnit() {
-        if (getUnits() == null) {
-            setUnits(new DomainListReference<Unit>());
-        }
-        if (getUnits().contains(getUnitObject().getUnit())) {
-            return false;
-        } else {
-            return getUnits().add(getUnitObject().getUnit());
-        }
+	if (getUnits() == null) {
+	    setUnits(new DomainListReference<Unit>());
+	}
+	if (getUnits().contains(getUnitObject().getUnit())) {
+	    return false;
+	} else {
+	    return getUnits().add(getUnitObject().getUnit());
+	}
     }
 
     public boolean addPartnerUnit() {
-        if (getPartnerUnits() == null) {
-            setPartnerUnits(new DomainListReference<Unit>());
-        }
-        if (getPartnerUnits().contains(getUnitObject().getUnit())) {
-            return false;
-        } else {
-            return getPartnerUnits().add(getUnitObject().getUnit());
-        }
+	if (getPartnerUnits() == null) {
+	    setPartnerUnits(new DomainListReference<Unit>());
+	}
+	if (getPartnerUnits().contains(getUnitObject().getUnit())) {
+	    return false;
+	} else {
+	    return getPartnerUnits().add(getUnitObject().getUnit());
+	}
     }
 
     public void addISTUnit(Unit unit) {
-        if (getUnits() == null) {
-            setUnits(new DomainListReference<Unit>());
-        }        
-        getUnits().add(unit);
+	if (getUnits() == null) {
+	    setUnits(new DomainListReference<Unit>());
+	}
+	getUnits().add(unit);
     }
 
     public void addPartnerUnit(Unit unit) {
-        if (getPartnerUnits() == null) {
-            setPartnerUnits(new DomainListReference<Unit>());
-        }
-        getPartnerUnits().add(unit);
+	if (getPartnerUnits() == null) {
+	    setPartnerUnits(new DomainListReference<Unit>());
+	}
+	getPartnerUnits().add(unit);
     }
 
     public void addFile() {
-        if (getFileBeans() == null) {
-            setFileBeans(new ArrayList<ProtocolFileBean>());
-        }
-        getFileBeans().add(
-                new ProtocolFileBean(getInputStream(), getFileName(), getFilePermissionType()));
+	if (getFileBeans() == null) {
+	    setFileBeans(new ArrayList<ProtocolFileBean>());
+	}
+	getFileBeans().add(
+		new ProtocolFileBean(getInputStream(), getFileName(), getFilePermissionType()));
     }
 
     public void removeFile(String fileName) {
-        for (ProtocolFileBean protocolFileBean : getFileBeans()) {
-            if (protocolFileBean.getFileName().equals(fileName)) {
-                getFileBeans().remove(protocolFileBean);
-                break;
-            }
-        }
+	for (ProtocolFileBean protocolFileBean : getFileBeans()) {
+	    if (protocolFileBean.getFileName().equals(fileName)) {
+		getFileBeans().remove(protocolFileBean);
+		break;
+	    }
+	}
     }
 
     public void resetSearches() {
-        setPartnerResponsible(null);
-        setResponsible(null);
-        setResponsibleName(null);
-        setUnitObject(null);
-        setUnitName(null);
+	setPartnerResponsible(null);
+	setResponsible(null);
+	setResponsibleName(null);
+	setUnitObject(null);
+	setUnitName(null);
     }
 
     public void resetFile() {
-        setFileName(null);
-        setInputStream(null);
+	setFileName(null);
+	setInputStream(null);
     }
 
     public ProtocolHistory getActualProtocolHistory() {
-        return getProtocol().getActualProtocolHistory();
+	return getProtocol().getActualProtocolHistory();
     }
 
     public Person getResponsibleToAdd() {
-        return responsibleToAdd != null ? responsibleToAdd.getObject() : null;
+	return responsibleToAdd != null ? responsibleToAdd.getObject() : null;
     }
 
     public void setResponsibleToAdd(Person responsibleToAdd) {
-        this.responsibleToAdd = responsibleToAdd != null ? new DomainReference<Person>(responsibleToAdd)
-                : null;
+	this.responsibleToAdd = responsibleToAdd != null ? new DomainReference<Person>(responsibleToAdd)
+		: null;
     }
 
     public Person getResponsibleToRemove() {
-        return responsibleToRemove != null ? responsibleToRemove.getObject() : null;
+	return responsibleToRemove != null ? responsibleToRemove.getObject() : null;
     }
 
     public void setResponsibleToRemove(Person responsibleToRemove) {
-        this.responsibleToRemove = responsibleToRemove != null ? new DomainReference<Person>(
-                responsibleToRemove) : null;
+	this.responsibleToRemove = responsibleToRemove != null ? new DomainReference<Person>(
+		responsibleToRemove) : null;
+    }
+
+    public Function getResponsibleFunctionToRemove() {
+	return responsibleFunctionToRemove != null ? responsibleFunctionToRemove.getObject() : null;
+    }
+
+    public void setResponsibleFunctionToRemove(Function responsibleFunctionToRemove) {
+	this.responsibleFunctionToRemove = responsibleFunctionToRemove != null ? new DomainReference<Function>(
+		responsibleFunctionToRemove)
+		: null;
     }
 
     public Unit getUnitToAdd() {
-        return unitToAdd != null ? unitToAdd.getObject() : null;
+	return unitToAdd != null ? unitToAdd.getObject() : null;
     }
 
     public void setUnitToAdd(Unit unitToAdd) {
-        this.unitToAdd = unitToAdd != null ? new DomainReference<Unit>(unitToAdd) : null;
+	this.unitToAdd = unitToAdd != null ? new DomainReference<Unit>(unitToAdd) : null;
     }
 
     public Unit getUnitToRemove() {
-        return unitToRemove != null ? unitToRemove.getObject() : null;
+	return unitToRemove != null ? unitToRemove.getObject() : null;
     }
 
     public void setUnitToRemove(Unit unitToRemove) {
-        this.unitToRemove = unitToRemove != null ? new DomainReference<Unit>(unitToRemove) : null;
+	this.unitToRemove = unitToRemove != null ? new DomainReference<Unit>(unitToRemove) : null;
     }
 
     public ProtocolFile getFileToDelete() {
-        return fileToDelete != null ? fileToDelete.getObject() : null;
+	return fileToDelete != null ? fileToDelete.getObject() : null;
     }
 
     public void setFileToDelete(ProtocolFile fileToDelete) {
-        this.fileToDelete = fileToDelete != null ? new DomainReference<ProtocolFile>(fileToDelete)
-                : null;
+	this.fileToDelete = fileToDelete != null ? new DomainReference<ProtocolFile>(fileToDelete)
+		: null;
     }
 
     public String getFileName() {
-        return fileName;
+	return fileName;
     }
 
     public void setFileName(String fileName) {
-        this.fileName = fileName;
+	this.fileName = fileName;
     }
 
     public InputStream getInputStream() {
-        return inputStream;
+	return inputStream;
     }
 
     public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
+	this.inputStream = inputStream;
     }
 
     public FilePermissionType getFilePermissionType() {
-        return filePermissionType;
+	return filePermissionType;
     }
 
     public void setFilePermissionType(FilePermissionType filePermissionType) {
-        this.filePermissionType = filePermissionType;
+	this.filePermissionType = filePermissionType;
     }
 
     public List<ProtocolFileBean> getFileBeans() {
-        return fileBeans;
+	return fileBeans;
     }
 
     public void setFileBeans(List<ProtocolFileBean> fileBeans) {
-        this.fileBeans = fileBeans;
+	this.fileBeans = fileBeans;
     }
 
     public Country getCountry() {
-        return country != null ? country.getObject() : null;
+	return country != null ? country.getObject() : null;
     }
 
     public void setCountry(Country country) {
-        this.country = country != null ? new DomainReference<Country>(country) : null;
+	this.country = country != null ? new DomainReference<Country>(country) : null;
     }
 
     public List<ProtocolHistory> getProtocolHistories() {
-        return protocolHistories;
+	return protocolHistories;
     }
 
     public void setProtocolHistories(List<ProtocolHistory> protocolHistories) {
-        this.protocolHistories = new DomainListReference<ProtocolHistory>(protocolHistories);
+	this.protocolHistories = new DomainListReference<ProtocolHistory>(protocolHistories);
+    }
+
+    public Boolean getIstResponsibleIsPerson() {
+	return istResponsibleIsPerson;
+    }
+
+    public void setIstResponsibleIsPerson(Boolean istResponsibleIsPerson) {
+	this.istResponsibleIsPerson = istResponsibleIsPerson;
+    }
+
+    public String getResponsibleFunctionName() {
+	return responsibleFunctionName;
+    }
+
+    public void setResponsibleFunctionName(String responsibleFunctionName) {
+	this.responsibleFunctionName = responsibleFunctionName;
     }
 }

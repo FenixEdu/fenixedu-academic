@@ -56,11 +56,11 @@ public class StyledExcelSpreadsheet {
 	workbook = new HSSFWorkbook();
 	excelStyle = new ExcelStyle(workbook);
 	sheet = workbook.createSheet(sheetName);
-	sheet.setDefaultColumnWidth((short)defaultColumnWith);
+	sheet.setDefaultColumnWidth((short) defaultColumnWith);
 	sheet.setGridsPrinted(false);
 	wrapText = true;
     }
-    
+
     public ExcelStyle getExcelStyle() {
 	return excelStyle;
     }
@@ -155,6 +155,10 @@ public class StyledExcelSpreadsheet {
 
     public void addCell(Object value) {
 	addCell(value, getDefaultExcelStyle(value), (getRow().getLastCellNum() + 1));
+    }
+
+    public void addCell(Object value, boolean wrap) {
+	addCell(value, getDefaultExcelStyle(value), (getRow().getLastCellNum() + 1), wrap);
     }
 
     public void addCell(Object value, HSSFCellStyle newStyle) {

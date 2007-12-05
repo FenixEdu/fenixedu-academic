@@ -18,28 +18,44 @@
 <!-- IST Responsibles -->
 <div class="mtop2 mbottom15">
 <p class="mbottom0"><strong><bean:message key="label.protocol.internalResponsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
-<logic:notEmpty name="protocolFactory" property="responsibles">
 <table class="tstyle1">
 	<tr>
 		<th><bean:message key="label.person.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
 		<th><bean:message key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
 		<th></th>				
 	</tr>
-	<logic:iterate id="responsible" name="protocolFactory" property="responsibles" type="net.sourceforge.fenixedu.domain.Person">
-	<tr>
-		<td><bean:write name="responsible" property="name"/></td>
-		<td><bean:write name="responsible" property="unitText"/></td>
-		<td>
-			<html:submit onclick="<%= "this.form.responsibleID.value=" + responsible.getIdInternal().toString()%>">
-				<bean:message key="button.remove" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
-			</html:submit>
-		</td>				
-	</tr>
-	</logic:iterate>
+	<logic:notEmpty name="protocolFactory" property="responsibles">
+		<logic:iterate id="responsible" name="protocolFactory" property="responsibles" type="net.sourceforge.fenixedu.domain.Person">
+		<tr>
+			<td><bean:write name="responsible" property="name"/></td>
+			<td><bean:write name="responsible" property="unitText"/></td>
+			<td>
+				<html:submit onclick="<%= "this.form.responsibleID.value=" + responsible.getIdInternal().toString()%>">
+					<bean:message key="button.remove" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
+				</html:submit>
+			</td>				
+		</tr>
+		</logic:iterate>
+	</logic:notEmpty>
+	<logic:notEmpty name="protocolFactory" property="responsibleFunctions">
+		<logic:iterate id="responsibleFunction" name="protocolFactory" property="responsibleFunctions" type="net.sourceforge.fenixedu.domain.organizationalStructure.Function">
+		<tr>
+			<td><bean:write name="responsibleFunction" property="name"/></td>
+			<td><bean:write name="responsibleFunction" property="unit.name"/></td>
+			<td>
+				<html:submit onclick="<%= "this.form.responsibleID.value=" + responsibleFunction.getIdInternal().toString()+ ";this.form.method.value='removeISTResponsibleFunction'"%>">
+					<bean:message key="button.remove" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
+				</html:submit>
+			</td>				
+		</tr>
+		</logic:iterate>
+	</logic:notEmpty>
 </table>
-</logic:notEmpty>
+
 <logic:empty name="protocolFactory" property="responsibles">
-	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
+	<logic:empty name="protocolFactory" property="responsibleFunctions">
+		<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
+	</logic:empty>
 </logic:empty>
 </div>
 
@@ -97,13 +113,38 @@
 </logic:present>
 
 <logic:equal name="protocolFactory" property="istResponsible" value="true">
-<fr:edit id="istResponsible" name="protocolFactory" schema="search.istResponsible">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mvert05"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-	</fr:layout>
-	<fr:destination name="changePersonType" path="/editProtocol.do?method=prepareEditResponsibles"/>
-</fr:edit>
+	<logic:equal name="protocolFactory" property="istResponsibleIsPerson" value="true">
+		<fr:edit id="istResponsible" name="protocolFactory" schema="search.istResponsible">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight mvert05"/>
+		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="changePersonType" path="/editProtocol.do?method=prepareEditResponsibles"/>
+			<fr:destination name="changePersonorFunction" path="/editProtocol.do?method=prepareEditResponsibles"/>
+		</fr:edit>
+	</logic:equal>
+	<logic:equal name="protocolFactory" property="istResponsibleIsPerson" value="false">
+		<logic:empty name="protocolFactory" property="responsibleFunctionUnit">
+			<fr:edit id="istResponsible2" name="protocolFactory" schema="search.istResponsibleFunction">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
+			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>
+				<fr:destination name="changePersonType" path="/editProtocol.do?method=prepareEditResponsibles"/>
+				<fr:destination name="changePersonorFunction" path="/editProtocol.do?method=prepareEditResponsibles"/>
+			</fr:edit>
+		</logic:empty>
+		<logic:notEmpty name="protocolFactory" property="responsibleFunctionUnit">
+			<fr:edit id="istResponsible3" name="protocolFactory" schema="search.istResponsibleFunction.unitFunctions">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
+			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			        <fr:destination name="changePersonType" path="/editProtocol.do?method=prepareEditResponsibles"/>
+					<fr:destination name="changePersonorFunction" path="/editProtocol.do?method=prepareEditResponsibles"/>
+				</fr:layout>
+			</fr:edit>
+		</logic:notEmpty>
+	</logic:equal>
 </logic:equal>
 
 <logic:equal name="protocolFactory" property="istResponsible" value="false">

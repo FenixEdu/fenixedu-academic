@@ -36,8 +36,17 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
+<logic:notEmpty name="protocolFactory" property="responsibleFunctions">
+	<fr:view name="protocolFactory" property="responsibleFunctions" schema="show.protocol.responsibleFunction">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle1 thlight"/>
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
 <logic:empty name="protocolFactory" property="responsibles">
-	<p class="mtop05"><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
+	<logic:empty name="protocolFactory" property="responsibleFunctions">
+		<p class="mtop05"><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
+	</logic:empty>
 </logic:empty>
 
 <p class="mbottom0"><strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
