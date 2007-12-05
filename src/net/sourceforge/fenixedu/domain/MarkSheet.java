@@ -759,7 +759,11 @@ public class MarkSheet extends MarkSheet_Base {
     }
     
     public boolean getCanRectify() {
-	return isConfirmed() && MarkSheetPredicates.checkRectification() && MarkSheetPredicates.checkDissertation();
+	return isConfirmed() && MarkSheetPredicates.rectifyPredicate.evaluate(this);
+    }
+    
+    public boolean getCanConfirm() {
+	return isNotConfirmed() && MarkSheetPredicates.confirmPredicate.evaluate(this);
     }
     
     public boolean getCanEdit() {

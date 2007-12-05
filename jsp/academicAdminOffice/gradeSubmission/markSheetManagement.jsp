@@ -109,7 +109,7 @@
 							<fr:property name="key(confirm)" value="label.markSheet.confirm" />
 							<fr:property name="param(confirm)" value="idInternal/msID" />
 							<fr:property name="bundle(confirm)" value="ACADEMIC_OFFICE_RESOURCES" />
-							<fr:property name="visibleIf(confirm)" value="canEdit" />
+							<fr:property name="visibleIf(confirm)" value="canConfirm" />
 							<fr:property name="order(confirm)" value="5" />																																			
 						</fr:layout>
 					</fr:view>

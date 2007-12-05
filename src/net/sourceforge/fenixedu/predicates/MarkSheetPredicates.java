@@ -31,8 +31,7 @@ public class MarkSheetPredicates {
 
 	public boolean evaluate(final MarkSheet markSheet) {
 	    return hasAcademinAdminOfficeRole() &&
-	    	(!markSheet.isRectification() || (markSheet.isRectification() && checkRectification())) &&
-	    		(!markSheet.isDissertation() || (markSheet.isDissertation() && checkDissertation()));
+	    	(!markSheet.isRectification() || (markSheet.isRectification() && checkRectification()));
 	}
 	
     };
@@ -44,6 +43,15 @@ public class MarkSheetPredicates {
 	    	(hasAcademinAdminOfficeRole() &&
 		    	(!markSheet.isRectification() || (markSheet.isRectification() && checkRectification())) &&
 		    		(!markSheet.isDissertation() || (markSheet.isDissertation() && checkDissertation())));
+	}
+	
+    };
+    
+    public static final AccessControlPredicate<MarkSheet> rectifyPredicate = new AccessControlPredicate<MarkSheet>() {
+
+	public boolean evaluate(MarkSheet markSheet) {
+	    return hasAcademinAdminOfficeRole() &&  checkRectification() 
+	    	&& (!markSheet.isDissertation() || (markSheet.isDissertation() && checkDissertation()));
 	}
 	
     };
