@@ -236,12 +236,12 @@
 				parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
 				scope="request">
+			<forward name="chooseCycleForViewRegistrationCurriculum" path="chooseCycleForViewRegistrationCurriculum"/>
 			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
+			<forward name="chooseCycleForRegistrationConclusion" path="chooseCycleForRegistrationConclusion"/>
 			<forward name="registrationConclusion" path="registrationConclusion"/>
 			<forward name="registrationConclusionDocument" path="registrationConclusionDocument"/>
-			<forward name="chooseCycleForRegistrationConclusion" path="chooseCycleForRegistrationConclusion"/>
 			<forward name="viewRegistrationDetails" path="/student.do?method=visualizeRegistration"/>
-			
 		</action>	
 
 		<action path="/viewCurriculum"
@@ -252,7 +252,6 @@
 			validate="true"
 			input="/viewStudentCurriculum.do?method=prepareView&amp;page=0">
 	        	<forward name="ShowStudentCurriculum" path="student.showStudentCurriculum"/>
-	        	
 	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
 	        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
 	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
