@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
+import net.sourceforge.fenixedu.domain.enrolment.DismissalCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
@@ -285,7 +285,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	}
 
 	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>(1);
-	result.add(new EnroledCurriculumModuleWrapper(this.getCurriculumGroup(), executionPeriod));
+	result.add(new DismissalCurriculumModuleWrapper(this, executionPeriod));
 	return result;
     }
     
