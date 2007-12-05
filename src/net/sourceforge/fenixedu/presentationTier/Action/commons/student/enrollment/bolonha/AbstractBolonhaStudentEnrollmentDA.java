@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.Cy
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
-import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResultMessage;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -85,20 +84,6 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean
 		.getStudentCurricularPlan(), bolonhaStudentEnrollmentBean.getExecutionPeriod());
-    }
-
-    private void addRuleResultMessagesToActionMessages(final String propertyName, final HttpServletRequest request,
-	    final RuleResult... ruleResults) {
-
-	for (final RuleResult ruleResult : ruleResults) {
-	    for (final RuleResultMessage message : ruleResult.getMessages()) {
-		if (message.isToTranslate()) {
-		    addActionMessage(propertyName, request, message.getMessage(), message.getArgs());
-		} else {
-		    addActionMessageLiteral(propertyName, request, message.getMessage());
-		}
-	    }
-	}
     }
 
     protected BolonhaStudentEnrollmentBean getBolonhaStudentEnrollmentBeanFromViewState() {

@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResultMessage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -341,41 +343,55 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     protected Object getObjectFromViewState(final String viewStateId) {
 	return RenderUtils.getViewState(viewStateId).getMetaObject().getObject();
     }
+    
+    protected void addRuleResultMessagesToActionMessages(final String propertyName, final HttpServletRequest request,
+	    final RuleResult... ruleResults) {
+
+	for (final RuleResult ruleResult : ruleResults) {
+	    for (final RuleResultMessage message : ruleResult.getMessages()) {
+		if (message.isToTranslate()) {
+		    addActionMessage(propertyName, request, message.getMessage(), message.getArgs());
+		} else {
+		    addActionMessageLiteral(propertyName, request, message.getMessage());
+		}
+	    }
+	}
+    }
 
     protected Integer getIdInternal(HttpServletRequest request, String param) {
-    	String id = request.getParameter(param);
-    	
-        if (id == null) {
-            return null;
-        }
+	String id = request.getParameter(param);
 
-        try {
-            return new Integer(id);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
+	if (id == null) {
+	    return null;
+	}
+
+	try {
+	    return new Integer(id);
+	} catch (NumberFormatException e) {
+	    e.printStackTrace();
+	    return null;
+	}
     }
 
     protected List<Integer> getIdInternals(HttpServletRequest request, String param) {
-    	String[] ids = request.getParameterValues(param);
-    	
-        if (ids == null) {
-            return null;
-        }
+	String[] ids = request.getParameterValues(param);
 
-        try {
-        	List<Integer> idNumbers = new ArrayList<Integer>(ids.length);
-        	
-        	for (int i = 0; i < ids.length; i++) {
-				idNumbers.add(new Integer(ids[i]));
-			}
-        	
-            return idNumbers;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
+	if (ids == null) {
+	    return null;
+	}
+
+	try {
+	    List<Integer> idNumbers = new ArrayList<Integer>(ids.length);
+
+	    for (int i = 0; i < ids.length; i++) {
+		idNumbers.add(new Integer(ids[i]));
+	    }
+
+	    return idNumbers;
+	} catch (NumberFormatException e) {
+	    e.printStackTrace();
+	    return null;
+	}
     }
 
 }
