@@ -767,7 +767,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	final Collection<CurriculumModule> curriculumModules = new HashSet<CurriculumModule>(getCurriculumModulesSet());
 	YearMonthDay result = null;
 	for (final CurriculumModule curriculumModule : curriculumModules) {
-	    if (curriculumModule.isConcluded()) {
+	    if (curriculumModule.isConcluded() && curriculumModule.hasAnyApprovedCurriculumLines()) {
 		final YearMonthDay curriculumModuleConclusionDate = curriculumModule.calculateConclusionDate();
 		if (result == null || curriculumModuleConclusionDate.isAfter(result)) {
 		    result = curriculumModuleConclusionDate;
