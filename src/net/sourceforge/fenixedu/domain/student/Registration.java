@@ -80,7 +80,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
@@ -874,10 +873,6 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return false;
-    }
-
-    final public Substitution getSubstitution(final IEnrolment iEnrolment) {
-	return getLastStudentCurricularPlan().getSubstitution(iEnrolment);
     }
 
     final public Double getDismissalsEctsCredits() {
