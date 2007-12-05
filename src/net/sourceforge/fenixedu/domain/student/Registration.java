@@ -1951,9 +1951,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isQualifiedToRegistrationConclusionProcess() {
-	final DegreeType degreeType = getDegreeType();
-	return degreeType != DegreeType.MASTER_DEGREE && !isRegistrationConclusionProcessed()
-		&& (getActiveState().isActive() || isConcluded());
+	return getDegreeType() != DegreeType.MASTER_DEGREE && (getActiveState().isActive() || isConcluded());
     }
 
     final public boolean isTransition() {
@@ -2675,7 +2673,7 @@ public class Registration extends Registration_Base {
 
     @Checked("RegistrationPredicates.transitToBolonha")
     public void transitToBolonha(final Person person) {
-	
+
 	if (!isActive()) {
 	    throw new DomainException("error.student.Registration.cannot.transit.non.active.registrations");
 	}
