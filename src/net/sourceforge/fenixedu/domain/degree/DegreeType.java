@@ -50,7 +50,7 @@ public enum DegreeType {
 	public Collection<CycleType> getSupportedCyclesToEnrol() {
 	    return Collections.emptyList();
 	}
-
+	
     },
 
     MASTER_DEGREE(GradeScale.TYPE5, CurricularPeriodType.TWO_YEAR, false, // canCreateStudent
@@ -139,6 +139,18 @@ public enum DegreeType {
 	@Override
 	public boolean canRemoveEnrolmentIn(CycleType cycleType) {
 	    return cycleType == CycleType.SECOND_CYCLE;
+	}
+
+	@Override
+	public Integer getYears(final CycleType cycleType) {
+	    switch (cycleType) {
+	    case FIRST_CYCLE:
+		return BOLONHA_DEGREE.getYears(cycleType);
+	    case SECOND_CYCLE:
+		return BOLONHA_MASTER_DEGREE.getYears(cycleType);
+	    }
+	    
+	    return null;
 	}
 
     },
@@ -262,7 +274,15 @@ public enum DegreeType {
     }
 
     public int getYears() {
-	return (int) this.curricularPeriodType.getWeight();
+	return Float.valueOf(this.curricularPeriodType.getWeight()).intValue();
+    }
+    
+    public Integer getYears(final CycleType cycleType) {
+	if (cycleType == null) {
+	    return getYears();
+	}
+	
+	return hasCycleTypes(cycleType) ? Float.valueOf(getCurricularPeriodType().getWeight()).intValue() : null;
     }
 
     final public boolean hasExactlyOneCurricularYear() {
