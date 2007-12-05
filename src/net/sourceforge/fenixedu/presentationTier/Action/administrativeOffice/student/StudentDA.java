@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
-import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationCurriculumBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
@@ -80,15 +82,60 @@ public class StudentDA extends FenixDispatchAction {
 	return mapping.findForward("viewStudentDetails");
     }
 
+    public ActionForward prepareViewRegistrationCurriculum(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	RenderUtils.invalidateViewState();
+
+	final Registration registration = getRegistration(request);
+	final RegistrationCurriculumBean registrationCurriculumBean = new RegistrationCurriculumBean(registration);
+	
+	if (!registrationCurriculumBean.hasCycleCurriculumGroup()) {
+	    final List<CycleCurriculumGroup> internalCycleCurriculumGrops = registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
+	    if (internalCycleCurriculumGrops.size() > 1) {
+		request.setAttribute("registrationCurriculumBean", new RegistrationCurriculumBean(registration));
+		return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
+	    }
+	}
+
+	request.setAttribute("registrationCurriculumBean", new RegistrationCurriculumBean(registration));
+	return mapping.findForward("view-registration-curriculum");
+    }
+
+    public ActionForward prepareViewRegistrationCurriculumInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("registrationCurriculumBean", getRegistrationCurriculumBeanFromViewState());
+
+	return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
+    }
+    
+    private RegistrationCurriculumBean getRegistrationCurriculumBeanFromViewState() {
+	return (RegistrationCurriculumBean) getObjectFromViewState("registrationCurriculumBean");
+    }
+
+    public ActionForward chooseCycleForViewRegistrationCurriculum(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final RegistrationCurriculumBean registrationCurriculumBean = getRegistrationCurriculumBeanFromViewState();
+	request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
+	request.setAttribute("registration", registrationCurriculumBean.getRegistration());
+
+	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
+	if (degreeCurricularPlanID != null) {
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
+
+	return mapping.findForward("view-registration-curriculum");
+    }
+
     public ActionForward viewRegistrationCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	RegistrationSelectExecutionYearBean bean = (RegistrationSelectExecutionYearBean) getRenderedObject();
-	if (bean == null) {
-	    bean = new RegistrationSelectExecutionYearBean(getRegistration(request));
-	    final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	    if (bean.getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
-		bean.setExecutionYear(currentExecutionYear);
-	    }
+	RenderUtils.invalidateViewState();
+	
+	final RegistrationCurriculumBean registrationCurriculumBean = getRegistrationCurriculumBeanFromViewState();
+	
+	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	if (registrationCurriculumBean.getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
+	    registrationCurriculumBean.setExecutionYear(currentExecutionYear);
 	}
 
 	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
@@ -96,7 +143,7 @@ public class StudentDA extends FenixDispatchAction {
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
 
-	request.setAttribute("bean", bean);
+	request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
 	return mapping.findForward("view-registration-curriculum");
     }
 
