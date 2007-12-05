@@ -356,7 +356,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public boolean isTemporary() {
-        return getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ);
+        return getEnrolmentEvaluationState() != null && getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ);
     }
     
     public boolean isFinal() {
@@ -447,6 +447,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
                 EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment,
                         evaluationType);
                 enrolmentEvaluation.edit(responsibleFor, grade, evaluationAvailableDate, examDate);
+                enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ); //temporary hack
                 enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, employee, observation);
             } else {
         	throw new DomainException("error.invalid.grade");
