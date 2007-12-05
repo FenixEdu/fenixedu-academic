@@ -1913,7 +1913,7 @@ public class Registration extends Registration_Base {
     }
 
     final public int getCurricularYear() {
-	return getCurricularYear((ExecutionYear) null);
+	return getCurricularYear(ExecutionYear.readCurrentExecutionYear());
     }
 
     final public int getCurricularYear(ExecutionYear executionYear) {
