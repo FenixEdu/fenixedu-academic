@@ -359,6 +359,7 @@ public class Student extends Student_Base {
 	    ;
 
 	getElectedElections().clear();
+	getDelegateElections().clear();
 
 	removePerson();
 	removeRootDomainObject();
