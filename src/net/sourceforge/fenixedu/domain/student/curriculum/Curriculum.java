@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
@@ -277,9 +278,13 @@ public class Curriculum implements Serializable, ICurriculum {
     }
     
     private Integer calculateCurricularYear() {
-	final int degreeCurricularYears = getStudentCurricularPlan().getDegreeType().getYears();
+	final int curricularYears = getTotalCurricularYears();
 	final BigDecimal ectsCreditsCurricularYear = sumEctsCredits.add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60), SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
-	return Math.min(ectsCreditsCurricularYear.intValue(), degreeCurricularYears);
+	return Math.min(ectsCreditsCurricularYear.intValue(), curricularYears);
+    }
+
+    public Integer getTotalCurricularYears() {
+	return getStudentCurricularPlan().getDegreeType().getYears(curriculumModule.isCycleCurriculumGroup() ? ((CycleCurriculumGroup) curriculumModule).getCycleType() : null);
     }
     
     @Override

@@ -62,11 +62,15 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
     }
 
     final public Integer getCurricularYear() {
-	final int degreeCurricularYears = getStudentCurricularPlan().getDegreeType().getYears();
+	final int degreeCurricularYears = getTotalCurricularYears();
 	final BigDecimal ectsCreditsCurricularYear = getSumEctsCredits().add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60), SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
 	return Math.min(ectsCreditsCurricularYear.intValue(), degreeCurricularYears);
     }
 
+    public Integer getTotalCurricularYears() {
+	return getStudentCurricularPlan().getDegreeType().getYears();
+    }
+    
     private AverageType averageType = AverageType.WEIGHTED;
 
     public void setAverageType(AverageType averageType) {

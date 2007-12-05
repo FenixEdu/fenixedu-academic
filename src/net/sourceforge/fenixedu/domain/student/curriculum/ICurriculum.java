@@ -18,6 +18,8 @@ public interface ICurriculum {
     abstract public BigDecimal getSumEctsCredits();
     
     abstract public Integer getCurricularYear();
+    
+    abstract public Integer getTotalCurricularYears();
 
     abstract public boolean isEmpty();
 
