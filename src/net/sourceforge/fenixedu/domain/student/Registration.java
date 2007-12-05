@@ -2128,7 +2128,7 @@ public class Registration extends Registration_Base {
 
 	cycleCurriculumGroup.conclude();
 
-	if (!isConcluded() && hasConcluded()) {
+	if (!isConcluded() && isRegistrationConclusionProcessed()) {
 	    RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
 	}
     }
