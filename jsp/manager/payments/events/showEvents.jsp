@@ -46,7 +46,7 @@
 				<fr:property name="key(open)" value="label.open" />
 				<fr:property name="bundle(open)" value="APPLICATION_RESOURCES" />
 				<fr:property name="order(open)" value="3" />
-				<fr:property name="visibleIf(open)" value="closed" />
+				<fr:property name="visibleIfNot(open)" value="open" />
 				<fr:property name="confirmationKey(open)" value="label.payments.events.confirmOpen" />
 				<fr:property name="confirmationBundle(open)" value="ACADEMIC_OFFICE_RESOURCES"></fr:property>
 				

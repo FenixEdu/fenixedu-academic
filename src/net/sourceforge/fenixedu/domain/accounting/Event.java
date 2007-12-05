@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransact
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
@@ -456,11 +455,10 @@ public abstract class Event extends Event_Base {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public void open() {
-	if (isCancelled()) {
-	    throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.open.cancelled.events");
-	}
 
 	changeState(EventState.OPEN, new DateTime());
+	super.setEmployeeResponsibleForCancel(null);
+	super.setCancelJustification(null);
 
     }
 
