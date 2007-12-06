@@ -14,8 +14,7 @@ public class AcademicInterval2SqlAcademicIntervalConversion implements FieldConv
     public Object javaToSql(Object source) throws ConversionException {
 	if (source instanceof AcademicInterval) {
 	    AcademicInterval academicInterval = (AcademicInterval) source;	    
-	    return academicInterval.getEntryClassName() + ":" + academicInterval.getEntryIdInternal()
-	    	+ ":" + academicInterval.getAcademicCalendarIdInternal();
+	    return academicInterval.getRepresentationInStringFormat();
 	}
 	return source;
     }
@@ -25,12 +24,7 @@ public class AcademicInterval2SqlAcademicIntervalConversion implements FieldConv
 	    return null;
 	}
 	if (source instanceof String) {	    	    
-	    String src = (String) source;	    
-	    String[] split = src.split(":");	  
-	    String entryClassName = split[0];
-	    Integer entryIdInternal = Integer.valueOf(split[1]);
-	    Integer academicCalendarIdInternal = Integer.valueOf(split[2]);
-	    return new AcademicInterval(entryIdInternal, entryClassName, academicCalendarIdInternal);	    	   
+	    return AcademicInterval.getAcademicIntervalFromString((String) source);	    	   
 	}
 	return source;
     }

@@ -108,4 +108,14 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 	List<AcademicCalendarEntry> childEntries = academicSemesterCE.getChildEntriesWithTemplateEntries(TeacherCreditsFillingForDepartmentAdmOfficeCE.class);	
 	return (TeacherCreditsFillingForDepartmentAdmOfficeCE) (!childEntries.isEmpty() ? childEntries.iterator().next() : null);
     }
+
+    @Override
+    protected boolean associatedWithDomainEntities() {	
+	return true;
+    }
+    
+    @Override
+    public String getPresentationName() {
+        return getParentEntry().getTitle().getContent() + " - " + getTitle().getContent() +" - [" + getType() + "]";
+    }
 }

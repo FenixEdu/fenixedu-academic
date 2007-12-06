@@ -30,7 +30,7 @@ public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
 
     @Override
     protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {	
-	return false;
+	return true;
     }
 
     @Override
@@ -46,5 +46,10 @@ public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
     @Override
     protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
 	return new EnrolmentsPeriodCE(parentEntry, this);
+    }
+
+    @Override
+    protected boolean associatedWithDomainEntities() {	
+	return false;
     }
 }

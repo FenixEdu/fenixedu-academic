@@ -19,7 +19,7 @@ public abstract class ExamsPeriodCE extends ExamsPeriodCE_Base {
 
     @Override
     protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {
-	return false;
+	return true;
     }
 
     @Override
@@ -31,4 +31,9 @@ public abstract class ExamsPeriodCE extends ExamsPeriodCE_Base {
     protected boolean isPossibleToChangeTimeInterval() {      
         return false;
     } 
+    
+    @Override
+    protected boolean associatedWithDomainEntities() {       
+        return false;
+    }
 }

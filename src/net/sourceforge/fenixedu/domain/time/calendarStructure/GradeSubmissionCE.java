@@ -29,6 +29,11 @@ public abstract class GradeSubmissionCE extends GradeSubmissionCE_Base {
 
     @Override
     protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {	
-	return false;
+	return true;
     }   
+    
+    @Override
+    protected boolean associatedWithDomainEntities() {       
+        return false;
+    }
 }

@@ -47,4 +47,9 @@ public class AcademicTrimesterCE extends AcademicTrimesterCE_Base {
     protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
 	return new AcademicTrimesterCE(parentEntry, this);	
     }
+
+    @Override
+    protected boolean associatedWithDomainEntities() {
+	return false;
+    }
 }

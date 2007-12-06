@@ -30,7 +30,7 @@ public class LessonsPeriodCE extends LessonsPeriodCE_Base {
 
     @Override
     protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {
-	return false;
+	return true;
     }
 
     @Override
@@ -46,5 +46,10 @@ public class LessonsPeriodCE extends LessonsPeriodCE_Base {
     @Override
     protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
 	return new LessonsPeriodCE(parentEntry, this);	
+    }
+
+    @Override
+    protected boolean associatedWithDomainEntities() {	
+	return false;
     }
 }

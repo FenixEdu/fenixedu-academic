@@ -59,5 +59,10 @@ public abstract class TeacherCreditsFillingCE extends TeacherCreditsFillingCE_Ba
 
     public boolean containsNow() {
 	return !getBegin().isAfterNow() && !getEnd().isBeforeNow();	
-    }            
+    }         
+    
+    @Override
+    protected boolean associatedWithDomainEntities() {       
+        return false;
+    }
 }

@@ -104,7 +104,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 
     public AcademicCalendarEntry getEntryByIndex(int index, Class<? extends AcademicCalendarEntry> entryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {
 	List<AcademicCalendarEntry> allChildEntries = getChildEntriesWithTemplateEntries(entryClass, parentEntryClass);		
-	Collections.sort(allChildEntries, COMPARATOR_BEGIN_DATE);
+	Collections.sort(allChildEntries, COMPARATOR_BY_BEGIN_DATE);
 	return index > 0 && index <= allChildEntries.size() ? allChildEntries.get(index - 1) : null;	
     }
     
@@ -186,5 +186,10 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     @Override
     public boolean containsInstant(final long instant) {
 	return true;
+    }
+
+    @Override
+    protected boolean associatedWithDomainEntities() {	
+	return false;
     }   
 }
