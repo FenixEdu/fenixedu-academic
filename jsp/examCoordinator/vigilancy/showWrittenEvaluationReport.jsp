@@ -139,7 +139,7 @@
 <logic:notEmpty name="writtenEvaluation" property="othersVigilancies">
 <strong><bean:message key="label.vigilancy.vigilants" bundle="VIGILANCY_RESOURCES"/>:</strong><br/>
 
-<form id="convokeForm2" action="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do"%>">
+<form id="convokeForm2" action="<%= request.getContextPath() + "/examCoordination/vigilancy/convokeManagement.do"%>" method="post">
 	<input type="hidden" name="writtenEvaluationId" value="<%= writtenEvaluationId %>"/>
 	<input type="hidden" name="method" value=""/>
 	<input type="hidden" name="oid" value=""/>
