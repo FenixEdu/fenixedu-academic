@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.presentationTier.renderers.TreeRenderer.LevelDecorator;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -293,7 +294,7 @@ public class FunctionalityInputTreeRenderer extends InputRenderer {
         };
     }
 
-	protected List<Functionality> getFunctionalities(Object object) {
+	protected List<Content> getFunctionalities(Object object) {
 		return Functionality.getOrderedTopLevelFunctionalities();
 	}
 

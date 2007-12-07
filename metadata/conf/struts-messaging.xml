@@ -97,6 +97,16 @@
 		  <forward name="viewAnnouncement" path="view-announcement"/>
      </action>
      
+  	  <action path="/forunsManagement"
+              type="net.sourceforge.fenixedu.presentationTier.Action.messaging.ForunsManagementDA"
+              validate="true"
+              parameter="method"
+              scope="request"
+              >
+		  <forward name="listForuns" path="forunsManagement.listForuns"/>
+      </action>
+     
+     
     <!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<action path="/findPerson"
 		type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonAction"

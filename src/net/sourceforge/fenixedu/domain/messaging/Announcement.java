@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
 import java.util.Comparator;
+import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -71,7 +71,9 @@ public class Announcement extends Announcement_Base {
 
     public void delete() {
 	removeCreator();
-        removeAnnouncementBoard();
+        for (final Node node : getParentsSet()) {
+            node.delete();
+        }
         removeRootDomainObject();
         deleteDomainObject();
     }
@@ -144,4 +146,35 @@ public class Announcement extends Announcement_Base {
     public boolean hasCreationDateFor(int year, int monthOfYear) {
 	return getCreationDate().getYear() == year && getCreationDate().getMonthOfYear() == monthOfYear;
     }
+
+    @Override
+    public boolean isAnAnnouncement() {
+        return true;
+    }
+
+    public AnnouncementNode getAnnouncementNode() {
+        final Set<Node> parents = getParentsSet();
+        return parents.isEmpty() ? null : (AnnouncementNode) parents.iterator().next();
+    }
+
+    public AnnouncementBoard getAnnouncementBoard() {
+        final AnnouncementNode announcementNode = getAnnouncementNode();
+        return announcementNode == null ? null : (AnnouncementBoard) announcementNode.getParent();
+    }
+
+    public void setAnnouncementBoard(final AnnouncementBoard announcementBoard) {
+        if (announcementBoard == null) {
+            for (final Node node : getParentsSet()) {
+                node.delete();
+            }
+        } else {
+            final AnnouncementNode announcementNode = getAnnouncementNode();
+            if (announcementNode == null) {
+                new AnnouncementNode(announcementBoard, this);
+            } else if (announcementNode.getParent() != announcementBoard) {
+                announcementNode.setParent(announcementBoard);
+            }
+        }
+    }
+
 }

@@ -5,9 +5,14 @@ import java.net.MalformedURLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchUnitProcessor;
+import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -16,16 +21,6 @@ import org.apache.struts.util.RequestUtils;
 
 public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ResearchUnitSite site = getSite(request);
-	request.setAttribute("researchUnit", site.getUnit());
-
-	
-	
-	return super.execute(mapping, form, request, response);
-    }
 
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
@@ -56,17 +51,25 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
     }
 
     private ResearchUnitSite getSite(HttpServletRequest request) {
-	String siteID = request.getParameter(getContextParamName(request));
-	return (ResearchUnitSite) rootDomainObject.readSiteByOID(Integer.valueOf(siteID));
+	Container container = AbstractFunctionalityContext.getCurrentContext(request)
+		.getSelectedContainer();
+	if (container == null) {
+	    String siteID = request.getParameter(getContextParamName(request));
+	    return (ResearchUnitSite) rootDomainObject.readContentByOID(Integer.valueOf(siteID));
+	} else {
+	    return (ResearchUnitSite) container;
+	}
     }
 
-    @Override
+   @Override
     protected String getDirectLinkContext(HttpServletRequest request) {
 	ResearchUnitSite site = getSite(request);
 
 	try {
+	    MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(ResearchUnitSite.class);
+	    String path = metaDomainObject.getAssociatedPortal().getName().getContent() + "/" + site.getUnit().getUnitPath("/");
 	    return RequestUtils.absoluteURL(request,
-		    ResearchUnitProcessor.getResearchUnitPath(site.getUnit())).toString();
+		    path).toString();
 	} catch (MalformedURLException e) {
 	    return null;
 	}

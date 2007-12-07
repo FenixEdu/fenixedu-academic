@@ -776,7 +776,7 @@ public class Unit extends Unit_Base {
 	if (!StringUtils.isEmpty(acronym.trim())) {
 	    for (Party party : RootDomainObject.getInstance().getPartys()) {
 		if (party.isUnit() && ((Unit) party).getAcronym() != null
-			&& ((Unit) party).getAcronym().equals(acronym)) {
+			&& ((Unit) party).getAcronym().equalsIgnoreCase(acronym)) {
 		    result.add((Unit) party);
 		}
 	    }
@@ -958,6 +958,27 @@ public class Unit extends Unit_Base {
 	return builder.toString();
     }
 
+    public String getUnitPath(String separator) {
+	StringBuilder builder = new StringBuilder();
+	List<Unit> parentUnits = getParentUnitsPath();
+	int index = 1;
+
+	for (Unit unit : parentUnits) {
+	    if (!unit.isAggregateUnit()) {
+		if (index == 1) {
+		    builder.append(unit.getAcronym());
+		} else {
+		    builder.append(separator + unit.getAcronym());
+		}
+	    }
+	    index++;
+	}
+	
+	builder.append("/");
+	builder.append(this.getAcronym());
+	return builder.toString();
+    }
+    
     public List<Unit> getParentUnitsPath() {
 
 	List<Unit> parentUnits = new ArrayList<Unit>();

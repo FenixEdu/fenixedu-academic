@@ -20,6 +20,7 @@
 </head>
 
 <body>
+<tiles:insert attribute="page-context" ignore="true"/>
 
 <!-- BEGIN BROWSER UPGRADE MESSAGE -->
 <div class="browser_upgrade">

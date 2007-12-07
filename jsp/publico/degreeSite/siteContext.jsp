@@ -1,4 +1,5 @@
 <%@ page language="java" %>
+<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -6,6 +7,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <html:xhtml/>
+<bean:define id="site" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" toScope="request"/>
+<bean:define id="degree" name="site" property="degree" toScope="request"/>
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <bean:define id="degreeId" name="degree" property="idInternal"/>

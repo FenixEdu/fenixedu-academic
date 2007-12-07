@@ -88,7 +88,7 @@ public class ItemCreator implements Serializable {
     public void createItem() {
         Item item = new Item(getSection(), getName());
 
-        item.setInformation(getInformation());
+        item.setBody(getInformation());
         item.setNextItem(getNextItem());
         item.setPermittedGroup(getPermittedGroup());
         item.setVisible(isVisible());

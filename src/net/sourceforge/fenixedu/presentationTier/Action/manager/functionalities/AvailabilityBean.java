@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 
 public class AvailabilityBean implements Serializable {
@@ -23,7 +23,7 @@ public class AvailabilityBean implements Serializable {
         return (ExpressionGroupAvailability) getModule().getAvailabilityPolicy();
     }
 
-    public Functionality getModule() {
+    public Container getModule() {
         return this.module.getObject();
     }
     

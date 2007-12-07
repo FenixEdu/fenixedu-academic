@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -69,7 +70,7 @@ public class CreateUnitAnnouncementBoard extends Service {
 		board.setUnitPermittedReadGroupType(parameters.readersGroupType);
 		board.setUnitPermittedWriteGroupType(parameters.writersGroupType);
 		board.setUnitPermittedManagementGroupType(parameters.managementGroupType);
-		board.setName(parameters.name);
+		board.setName(new MultiLanguageString(parameters.name));
 		board.setMandatory(parameters.mandatory);
 		board.setReaders(this.buildGroup(parameters.readersGroupType, unit));
 		board.setWriters(this.buildGroup(parameters.writersGroupType, unit));

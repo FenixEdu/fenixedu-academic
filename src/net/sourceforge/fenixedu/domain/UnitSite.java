@@ -6,6 +6,10 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
+import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.Checked;
@@ -263,23 +267,23 @@ public class UnitSite extends UnitSite_Base {
     	return new MultiLanguageString(getUnit().getNameWithAcronym());
     }
 
-    public Section getIntroductionSection() {
-    	if (!hasAnyIntroductionSections()) {
-    		return null;
-    	}
-    	else {
-    		return getIntroductionSections().iterator().next();
-    	}
-    }
-    
-    public void setIntroductionSection(Section section) {
-    	if (section == null) {
-    		getIntroductionSections().clear();
-    	}
-    	else {
-    		addIntroductionSections(section);
-    	}
-    }
+//    public Section getIntroductionSection() {
+//    	if (!hasAnyIntroductionSections()) {
+//    		return null;
+//    	}
+//    	else {
+//    		return getIntroductionSections().iterator().next();
+//    	}
+//    }
+//    
+//    public void setIntroductionSection(Section section) {
+//    	if (section == null) {
+//    		getIntroductionSections().clear();
+//    	}
+//    	else {
+//    		addIntroductionSections(section);
+//    	}
+//    }
 
     /**
      * Actually checks that the site template has a module associated to it.
@@ -287,15 +291,15 @@ public class UnitSite extends UnitSite_Base {
      * 
      * @return getTemplate().hasModule() 
      */
-    public boolean isContextModuleAvailable() {
-    	SiteTemplate template = (SiteTemplate) getTemplate();
-    	
-    	if (template == null) {
-    		return false;
-    	}
-    	
-    	return template.hasModule() && template.getModule().hasAnyFunctionalities();
-    }
+//    public boolean isContextModuleAvailable() {
+//	MetaDomainObjectPortal template = (MetaDomainObjectPortal) getTemplate();
+//    	
+//    	if (template == null) {
+//    		return false;
+//    	}
+//    	
+//    	return template.hasContainer() && !template.getContainer().getChildren(Functionality.class).isEmpty();
+//    }
     
     @Override
     public void setGoogleAnalyticsCode(String code) {
@@ -341,4 +345,23 @@ public class UnitSite extends UnitSite_Base {
         
     }
     
+    //TODO: Refactor this part in order to have relations instead of a naming convention.
+    
+    private Container getHardCodedContainers(MultiLanguageString name) {
+	for(Content content : getChildrenAsContent()) {
+	    if(content.getName().equalInAnyLanguage(name)) {
+		return (Container)content;
+	    }
+	}
+	return null;
+    }
+    
+    public Container getSideContainer() {
+	return getHardCodedContainers(this.SIDE_SECTION_NAME);
+    }
+    
+    public Container getTopContainer() {
+	return getHardCodedContainers(this.TOP_SECTION_NAME);
+    }
+
 }

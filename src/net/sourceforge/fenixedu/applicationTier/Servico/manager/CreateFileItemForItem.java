@@ -33,101 +33,99 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  */
 public class CreateFileItemForItem extends FileItemService {
 
-	public void run(Site site, Item item, File file, String originalFilename, String displayName,
-			Group permittedGroup, Person person, EducationalResourceType type)
-			throws FenixServiceException, ExcepcaoPersistencia, DomainException, IOException {
+    public void run(Site site, Item item, File file, String originalFilename, String displayName, Group permittedGroup,
+	    Person person, EducationalResourceType type) throws FenixServiceException, ExcepcaoPersistencia, DomainException,
+	    IOException {
 
-		final VirtualPath filePath = getVirtualPath(item);
+	final VirtualPath filePath = getVirtualPath(item);
 
-		Collection<FileSetMetaData> metaData = createMetaData(person.getName(), displayName, site
-				.getAuthorName(), type);
+	Collection<FileSetMetaData> metaData = createMetaData(person.getName(), displayName, site.getAuthorName(), type);
 
-		final FileDescriptor fileDescriptor = saveFile(filePath, originalFilename,
-				!isPublic(permittedGroup), metaData, file);
+	final FileDescriptor fileDescriptor = saveFile(filePath, originalFilename, !isPublic(permittedGroup), metaData, file);
 
-		checkSiteQuota(site, fileDescriptor.getSize());
-		new FileItem(item, fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils.getFilenameOnly(displayName), fileDescriptor.getMimeType(),
-				fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
-						.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
+	checkSiteQuota(site, fileDescriptor.getSize());
+	
+	FileItem fileItem = new FileItem(fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils.getFilenameOnly(displayName),
+		fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
+			.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
+	
+	item.addFileItem(fileItem);
+    }
+
+    private void checkSiteQuota(Site site, int size) {
+	if (site.hasQuota()) {
+	    if (site.getUsedQuota() + size > site.getQuota()) {
+		throw new SiteFileQuotaExceededException(site, size);
+	    }
+	}
+    }
+
+    protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
+	    Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
+	final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+	InputStream is = null;
+	try {
+	    is = new FileInputStream(file);
+	    return fileManager.saveFile(filePath, originalFilename, permission, metaData, is);
+	} catch (FileNotFoundException e) {
+	    throw new FenixServiceException(e.getMessage());
+	} finally {
+	    if (is != null) {
+		is.close();
+	    }
+	}
+    }
+
+    private List<FileSetMetaData> createMetaData(String author, String title, String siteAuthorName,
+	    EducationalResourceType educationalType) {
+	List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+	metaData.add(FileSetMetaData.createAuthorMeta(author));
+
+	if (siteAuthorName != null) {
+	    metaData.add(FileSetMetaData.createAuthorMeta(siteAuthorName));
 	}
 
-	private void checkSiteQuota(Site site, int size) {
-		if (site.hasQuota()) {
-			if (site.getUsedQuota() + size > site.getQuota()) {
-				throw new SiteFileQuotaExceededException(site, size);
-			}
-		}
+	metaData.add(FileSetMetaData.createTitleMeta(title));
+	if (educationalType != null) {
+	    metaData.add(new FileSetMetaData("type", null, null, educationalType.toString()));
+	}
+	return metaData;
+    }
+
+    private VirtualPath getVirtualPath(Item item) {
+	final VirtualPath filePath = new VirtualPath();
+	filePath.addNode(new VirtualPathNode("I" + item.getIdInternal(), item.getName().getContent()));
+
+	final Section section = item.getSection();
+	filePath.addNode(0, new VirtualPathNode("S" + section.getIdInternal(), section.getName().getContent()));
+
+	if (section.getSuperiorSection() != null) {
+	    Section superiorSection = section.getSuperiorSection();
+	    while (superiorSection != null) {
+		filePath.addNode(0, new VirtualPathNode("S" + superiorSection.getIdInternal(), superiorSection.getName()
+			.getContent()));
+
+		superiorSection = superiorSection.getSuperiorSection();
+	    }
 	}
 
-	protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
-			Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
-		final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-		InputStream is = null;
-		try {
-			is = new FileInputStream(file);
-			return fileManager.saveFile(filePath, originalFilename, permission, metaData, is);
-		} catch (FileNotFoundException e) {
-			throw new FenixServiceException(e.getMessage());
-		} finally {
-			if (is != null) {
-				is.close();
-			}
-		}
+	Site site = section.getSite();
+	String authorName = site.getAuthorName();
+	filePath.addNode(0, new VirtualPathNode("Site" + site.getIdInternal(), authorName == null ? "Site" + site.getIdInternal()
+		: authorName));
+
+	ExecutionPeriod executionPeriod = site.getExecutionPeriod();
+	if (executionPeriod == null) {
+	    filePath.addNode(0, new VirtualPathNode("Intemporal", "Intemporal"));
+	} else {
+	    filePath.addNode(0, new VirtualPathNode("EP" + executionPeriod.getIdInternal(), executionPeriod.getName()));
+
+	    ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	    filePath.addNode(0, new VirtualPathNode("EY" + executionYear.getIdInternal(), executionYear.getYear()));
 	}
 
-	private List<FileSetMetaData> createMetaData(String author, String title, String siteAuthorName,
-			EducationalResourceType educationalType) {
-		List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
-		metaData.add(FileSetMetaData.createAuthorMeta(author));
-
-		if (siteAuthorName != null) {
-			metaData.add(FileSetMetaData.createAuthorMeta(siteAuthorName));
-		}
-
-		metaData.add(FileSetMetaData.createTitleMeta(title));
-		if (educationalType != null) {
-			metaData.add(new FileSetMetaData("type", null, null, educationalType.toString()));
-		}
-		return metaData;
-	}
-
-	private VirtualPath getVirtualPath(Item item) {
-		final VirtualPath filePath = new VirtualPath();
-		filePath.addNode(new VirtualPathNode("I" + item.getIdInternal(), item.getName().getContent()));
-
-		final Section section = item.getSection();
-		filePath.addNode(0, new VirtualPathNode("S" + section.getIdInternal(), section.getName()
-				.getContent()));
-
-		if (section.getSuperiorSection() != null) {
-			Section superiorSection = section.getSuperiorSection();
-			while (superiorSection != null) {
-				filePath.addNode(0, new VirtualPathNode("S" + superiorSection.getIdInternal(),
-						superiorSection.getName().getContent()));
-
-				superiorSection = superiorSection.getSuperiorSection();
-			}
-		}
-
-		Site site = section.getSite();
-		String authorName = site.getAuthorName();
-		filePath.addNode(0, new VirtualPathNode("Site" + site.getIdInternal(),
-				authorName == null ? "Site" + site.getIdInternal() : authorName));
-
-		ExecutionPeriod executionPeriod = site.getExecutionPeriod();
-		if (executionPeriod == null) {
-			filePath.addNode(0, new VirtualPathNode("Intemporal", "Intemporal"));
-		} else {
-			filePath.addNode(0, new VirtualPathNode("EP" + executionPeriod.getIdInternal(),
-					executionPeriod.getName()));
-
-			ExecutionYear executionYear = executionPeriod.getExecutionYear();
-			filePath.addNode(0, new VirtualPathNode("EY" + executionYear.getIdInternal(), executionYear
-					.getYear()));
-		}
-
-		filePath.addNode(0, new VirtualPathNode("Courses", "Courses"));
-		return filePath;
-	}
+	filePath.addNode(0, new VirtualPathNode("Courses", "Courses"));
+	return filePath;
+    }
 
 }

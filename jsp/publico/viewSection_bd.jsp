@@ -17,7 +17,7 @@
 				<font color="red">
 			</logic:equal>
 			<h3><bean:write name="item" property="name"/></h3>
-			<bean:write name="item" property="information" filter="false"/><br/>
+			<bean:write name="item" property="body" filter="false"/><br/>
 			<logic:equal name="item" property="urgent" value="true">
 				</font>
 			</logic:equal>

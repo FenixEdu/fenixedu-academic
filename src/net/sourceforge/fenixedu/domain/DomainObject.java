@@ -192,4 +192,16 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
         int txNumber = Transaction.current().getNumber();
         readSlotsFromResultSet(rs, txNumber);
     }
+    
+    /**
+     * This method allows you to obtains the reification of this object's type.
+     * Note that the corresponding reification may no yet exist and, thus, this
+     * method may return <code>null</code>.
+     * 
+     * @return the {@link MetaDomainObject} that represents this object's type.
+     */
+    public MetaDomainObject getMeta() {
+        return MetaDomainObject.getMeta(getClass());
+    }
+    
 }

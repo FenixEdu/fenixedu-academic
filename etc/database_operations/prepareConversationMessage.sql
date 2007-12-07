@@ -1,0 +1,3 @@
+alter table CONVERSATION_MESSAGE change column BODY BODY longtext;
+update CONVERSATION_MESSAGE SET BODY=CONCAT('pt',LENGTH(BODY),':',BODY);
+

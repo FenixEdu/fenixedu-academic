@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.domain;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class DegreeSite extends DegreeSite_Base {
 
@@ -33,5 +35,13 @@ public class DegreeSite extends DegreeSite_Base {
         
         removeDegree();
     }
- 
+
+    
+    
+    @Override
+    public MultiLanguageString getName() {
+	final Degree degree = getDegree();
+	final String name = degree.getSigla();
+	return MultiLanguageString.i18n().add("pt", name).finish();
+    }
 }

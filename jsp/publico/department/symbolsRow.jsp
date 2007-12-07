@@ -1,24 +1,20 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@ page import="net.sourceforge.fenixedu.domain.UnitSite"%>
-<%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<%@page import="net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
 <bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
 
 <%
-    Integer departmentUnitId;
-    Unit unit = (Unit) request.getAttribute("unit");
-
-    if (unit == null) {
-        departmentUnitId = new Integer(request.getParameter("selectedDepartmentUnitID"));
-        unit = (Unit) RootDomainObject.getInstance().readPartyByOID(departmentUnitId);
-    }
-
-    UnitSite site = unit.getSite();
+	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+	UnitSite site = (UnitSite) context.getSelectedContainer();
+	Unit unit = site.getUnit();
+		
     request.setAttribute("unit", unit);
     request.setAttribute("site", site);
 	

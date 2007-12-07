@@ -1,0 +1,148 @@
+<schema name="contents.portal.tree"
+        type="net.sourceforge.fenixedu.domain.contents.Portal"
+        bundle="CONTENT_RESOURCES">
+        <slot name="name" layout="link">
+        	<property name="destination" value="portal.view"/>
+        	<property name="useParent" value="true"/>
+        </slot>
+</schema>  
+
+<schema name="contents.create.portal"    
+	   type="net.sourceforge.fenixedu.domain.contents.Portal"
+	   bundle="CONTENT_RESOURCES">
+        <slot name="name"/>
+        <slot name="contentId"/>
+        <slot name="prefix"/>
+</schema>
+
+<schema name="view.meta.domain.object"    
+	   type="net.sourceforge.fenixedu.domain.MetaDomainObject"
+	   bundle="CONTENT_RESOURCES"
+	   >
+        <slot name="type"/>
+</schema>
+
+<schema name="create.meta.domain.object"    
+	   type="net.sourceforge.fenixedu.domain.MetaDomainObject"
+ 	   bundle="CONTENT_RESOURCES"
+	   constructor="type">
+        <slot name="type">
+        	<property name="size" value="50"/>
+        </slot>
+</schema>
+
+<schema name="edit.portal.using.bean"    
+	   type="net.sourceforge.fenixedu.presentationTier.Action.person.PortalBean"
+	   bundle="CONTENT_RESOURCES">
+		<slot name="name"/>
+		<slot name="contentId"/>
+		<slot name="prefix"/>
+</schema>
+
+<schema name="select.portal.for.container"    
+	   type="net.sourceforge.fenixedu.presentationTier.Action.person.PortalBean"
+	   bundle="CONTENT_RESOURCES"
+	   >
+		<slot name="portal" layout="menu-select">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.contents.MetaDomainObjectPortalProvider"/>
+			<property name="format" value="${metaDomainObject.type}"/>
+		</slot>
+</schema>
+
+<schema name="container.name" type="net.sourceforge.fenixedu.domain.contents.Container" bundle="CONTENT_RESOURCES"> 
+	<slot name="name"/>
+</schema>
+
+<schema name="create.section.for.container" type="net.sourceforge.fenixedu.presentationTier.Action.person.SectionBean" bundle="CONTENT_RESOURCES">
+	<slot name="name"/>
+	<slot name="nextSection" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.contents.SectionProviderForContents"/>
+		<property name="format" value="${name}"/>
+	</slot>
+	<slot name="visible"/>
+</schema>
+
+<schema name="view.contents.Content" type="net.sourceforge.fenixedu.domain.contents.Content" bundle="CONTENT_RESOURCES">
+	<slot name="contentId"/>
+	<slot name="creationDate"/>
+	<slot name="name"/>
+	<slot name="title"/>
+	<slot name="body"/>
+	<slot name="description"/>
+</schema>
+
+<schema name="view.contents.details.Section" type="net.sourceforge.fenixedu.domain.Section" extends="view.contents.Content" bundle="CONTENT_RESOURCES">
+	<slot name="enabled"/>
+	<slot name="visible"/>
+	<slot name="maximizable"/>
+	<slot name="modificationDate"/>
+</schema>
+
+<schema name="view.contents.details.Portal" type="net.sourceforge.fenixedu.domain.contents.Portal" extends="view.contents.Content" bundle="CONTENT_RESOURCES">
+</schema>
+
+<schema name="view.contents.details.MetaDomainObjectPortal" type="net.sourceforge.fenixedu.domain.contents.Portal" extends="view.contents.Content" bundle="CONTENT_RESOURCES">
+	<slot name="metaDomainObject.type"/>
+</schema>
+
+<schema name="view.contents.details.Functionality" type="net.sourceforge.fenixedu.domain.functionalities.Functionality" extends="view.contents.Content" bundle="CONTENT_RESOURCES">
+	<slot name="executionPath"/>
+	<slot name="path"/>
+	<slot name="parameters">
+		<property name="eachLayout" value="values-comma"/>
+		<property name="eachSchema" value="view.contents.functionalityParemeter.details"/>
+	</slot>
+</schema>
+
+<schema name="view.contents.functionalityParemeter.details" type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter">
+	<slot name="name"/>
+	<slot name="type.type"/>
+</schema>
+
+<schema name="edit.contents.content" type="net.sourceforge.fenixedu.domain.contents.Content" bundle="CONTENT_RESOURCES">
+	<slot name="name"/>
+</schema>
+
+<schema name="edit.contents.Section" type="net.sourceforge.fenixedu.domain.Section" bundle="CONTENT_RESOURCES" extends="edit.contents.content">
+	<slot name="nextSection" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.contents.SectionProviderForContents"/>
+		<property name="format" value="${name}"/>
+	</slot>
+	<slot name="visible"/>
+	<slot name="maximizable"/>
+</schema>
+
+<schema name="edit.contents.Functionality" type="net.sourceforge.fenixedu.domain.functionalities.Functionality" bundle="CONTENT_RESOURCES" extends="edit.contents.content">
+	<slot name="executionPath"/>
+	<slot name="parameters">
+		<property name="eachLayout" value="values-comma"/>
+		<property name="eachSchema" value="view.contents.functionalityParemeter.details"/>
+	</slot>
+</schema>
+
+<schema name="edit.contents.MetaDomainObjectPortal" type="net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal" bundle="CONTENT_RESOURCES" extends="edit.contents.content">
+	<slot name="name"/>
+	<slot name="prefix"/>
+</schema>
+
+<schema name="edit.contents.Section.add.InitialContent" type="net.sourceforge.fenixedu.domain.Section" bundle="CONTENT_RESOURCES">
+	<slot name="initialContent" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.contents.InitialContentForSection"/>
+		<property name="format" value="${name}"/>
+	</slot>
+</schema>
+
+<schema name="content.view.availability" 
+        type="net.sourceforge.fenixedu.domain.contents.Content"
+        bundle="CONTENT_RESOURCES">
+    <!-- NOTE: only works for GroupAvailability -->
+    <slot name="availabilityPolicy" layout="null-as-label">
+        <property name="label" value="--"/>
+        <property name="subLayout" value="values"/>
+        <property name="subSchema" value="functionalities.availability.expression"/>
+    </slot>
+</schema>
+
+<schema name="content.in.tree" type="net.sourceforge.fenixedu.domain.contents.Content" bundle="CONTENT_RESOURCES">
+	<slot name="name"/>
+</schema>

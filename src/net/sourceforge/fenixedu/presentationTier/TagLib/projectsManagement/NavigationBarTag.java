@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoReport;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestChecksumFilter;
 
 import org.apache.struts.Globals;
@@ -116,7 +117,7 @@ public class NavigationBarTag extends TagSupport {
 
         while (paramsIterator.hasNext()) {
             Object param = paramsIterator.next();
-            if (param.equals("span") || param.equals(RequestChecksumFilter.CHECKSUM_ATTRIBUTE_NAME)) {
+            if (param.equals("span") || param.equals(ChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME)) {
                 paramsIterator.remove();
             }
         }

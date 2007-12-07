@@ -22,15 +22,18 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
  */
 public class FenixFacesServlet implements Servlet {
 
+    public static ServletConfig servletConfig = null;
+
     final FacesServlet facesServlet;
 
     public FenixFacesServlet() {
         super();
-        facesServlet = new FacesServlet(); 
+        facesServlet = new FacesServlet();
     }
 
     public void init(ServletConfig config) throws ServletException {
         facesServlet.init(config);
+        this.servletConfig = config;
     }
 
     public ServletConfig getServletConfig() {
@@ -68,6 +71,5 @@ public class FenixFacesServlet implements Servlet {
     public void destroy() {
         facesServlet.destroy();
     }
-
 
 }

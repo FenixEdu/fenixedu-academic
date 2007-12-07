@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters.authentication.cas;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import javax.servlet.Filter;
@@ -28,30 +29,23 @@ public class CASFilter implements Filter {
 
     private boolean enabled;
 
-    public void init(FilterConfig config) throws ServletException {
+    public void init(final FilterConfig config) throws ServletException {
         enabled = Boolean.valueOf(PropertiesManager.getProperty("cas.enabled"));
-
-        if (enabled) {
-            casLoginUrl = PropertiesManager.getProperty("cas.loginUrl");
-        }
-
+        casLoginUrl = enabled ? PropertiesManager.getProperty("cas.loginUrl") : null;
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain fc)
+    public void doFilter(final ServletRequest request, final ServletResponse response, FilterChain fc)
             throws ServletException, IOException {
 
         if (enabled) {
-            if (!(request instanceof HttpServletRequest) || !(response instanceof HttpServletResponse)) {
+            if (!isHttpResource(request, response)) {
                 throw new ServletException("CASFilter only applies to HTTP resources");
             }
 
-            String ticket = request.getParameter("ticket");
-
-            if (ticket == null || ticket.equals("")) {
+            if (notHasTicket(request)) {
                 // send user to CAS to get a ticket
                 redirectToCAS((HttpServletRequest) request, (HttpServletResponse) response);
                 return;
-
             }
         }
 
@@ -59,27 +53,30 @@ public class CASFilter implements Filter {
 
     }
 
+    private boolean isHttpResource(final ServletRequest request, final ServletResponse response) {
+	return request instanceof HttpServletRequest && response instanceof HttpServletResponse;
+    }
+
+    private boolean notHasTicket(final ServletRequest request) {
+	final String ticket = request.getParameter("ticket");
+	return ticket == null || ticket.equals("");
+    }
+
+    protected String encodeUrl(final String url) throws UnsupportedEncodingException {
+	return URLEncoder.encode(CASServiceUrlProvider.getServiceUrl(url), URL_ENCODING);
+    }
+
     /**
      * Redirects the user to CAS, determining the service from the request.
      */
-    private void redirectToCAS(HttpServletRequest request, HttpServletResponse response)
+    private void redirectToCAS(final HttpServletRequest request, final HttpServletResponse response)
             throws IOException, ServletException {
-
-        String serviceString = URLEncoder.encode(CASServiceUrlProvider.getServiceUrl(request
-                .getRequestURL().toString()), URL_ENCODING);
-
-        String casLoginString = casLoginUrl + "?service=" + serviceString;
-
-        ((HttpServletResponse) response).sendRedirect(casLoginString);
-
+	final String serviceString = encodeUrl(request.getRequestURL().toString());
+        final String casLoginString = casLoginUrl + "?service=" + serviceString;
+        response.sendRedirect(casLoginString);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.servlet.Filter#destroy()
-     */
     public void destroy() {
-
     }
+
 }

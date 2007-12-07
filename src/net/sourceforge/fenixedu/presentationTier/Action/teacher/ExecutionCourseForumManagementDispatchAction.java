@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.ForunsManagement;
 
@@ -19,7 +16,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * 
  * @author naat
- * 
+ * @author pcma 
  */
 public class ExecutionCourseForumManagementDispatchAction extends ForunsManagement {
 
@@ -36,17 +33,9 @@ public class ExecutionCourseForumManagementDispatchAction extends ForunsManageme
 
         ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
-        List<ExecutionCourseForum> foruns = executionCourse.getForuns();
-
-        request.setAttribute("foruns", foruns);
+        request.setAttribute("foruns", executionCourse.getForuns());
 
         return mapping.findForward("viewForuns");
-    }
-
-    @Override
-    protected String getContextInformation(HttpServletRequest request) {
-        return "/executionCourseForumManagement.do?executionCourseID="
-                + request.getParameter("executionCourseID");
     }
 
 }

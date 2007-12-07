@@ -329,7 +329,7 @@
 			--%>
 		
             <div class="width550px">
-               	<fr:view name="item" property="information" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html">
+               	<fr:view name="item" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html">
                	</fr:view>
             </div>
     

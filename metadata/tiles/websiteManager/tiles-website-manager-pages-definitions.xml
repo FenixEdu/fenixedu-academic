@@ -94,7 +94,7 @@
     </definition>
     <definition name="basicUnitSite-section" extends="definition.basicUnit.site.management" >
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/section.jsp"/>
+        <put name="body" value="/commons/sites/section.jsp"/>
     </definition>
     <definition name="basicUnitSite-editSection" extends="definition.basicUnit.site.management" >
         <put name="body" value="/commons/sites/editSection.jsp"/>
@@ -139,7 +139,7 @@
     </definition>
     <definition name="basicUnitSite-addInstitutionSection" extends="definition.basicUnit.site.management" >
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/addInstitutionSection.jsp"/>
+        <put name="body" value="/commons/sites/addInstitutionSection.jsp"/>
     </definition>
     <definition name="basicUnitSite-functionalitySection" extends="definition.basicUnit.site.management" >
         <put name="body" value="/webSiteManager/commons/institutionalSection.jsp"/>
@@ -233,7 +233,7 @@
 	
 	<definition name="manage-researchSite-section" extends="definition.researchUnitSite.masterPage">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/section.jsp"/>
+        <put name="body" value="/commons/sites/section.jsp"/>
 	</definition>
 
 	<definition name="manage-researchSite-editSection" extends="definition.researchUnitSite.masterPage">
@@ -363,15 +363,7 @@
     </definition>
 
     <definition name="researchSite-addInstitutionSection" extends="definition.researchUnitSite.masterPage" >
-        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/addInstitutionSection.jsp"/>
-    </definition>
-    <definition name="researchSite-functionalitySection" extends="definition.researchUnitSite.masterPage" >
-        <put name="body" value="/webSiteManager/commons/institutionalSection.jsp"/>
-    </definition>
-    <definition name="researchSite-editFunctionalitySection" extends="definition.researchUnitSite.masterPage" >
-        <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/editInstitutionalSection.jsp"/>
+        <put name="body" value="/commons/sites/addInstitutionSection.jsp"/>
     </definition>
     <definition name="researchSite-manageFunctions" extends="definition.researchUnitSite.masterPage" >
         <put name="body" value="/webSiteManager/commons/manageFunctions.jsp"/>
@@ -456,7 +448,7 @@
     </definition>
     <definition name="departmentSite-section" extends="definition.department.site.management" >
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/section.jsp"/>
+        <put name="body" value="/commons/sites/section.jsp"/>
     </definition>
     <definition name="departmentSite-editSection" extends="definition.department.site.management" >
         <put name="body" value="/commons/sites/editSection.jsp"/>
@@ -501,7 +493,7 @@
     </definition>
     <definition name="departmentSite-addInstitutionSection" extends="definition.department.site.management" >
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/addInstitutionSection.jsp"/>
+        <put name="body" value="/commons/sites/addInstitutionSection.jsp"/>
     </definition>
     <definition name="departmentSite-functionalitySection" extends="definition.department.site.management" >
         <put name="body" value="/webSiteManager/commons/institutionalSection.jsp"/>
@@ -618,7 +610,7 @@
     </definition>
     <definition name="pedagogicalCouncil-section" extends="definition.pedagogicalCouncil.site.management" >
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/section.jsp"/>
+        <put name="body" value="/commons/sites/section.jsp"/>
     </definition>
     <definition name="pedagogicalCouncil-editSection" extends="definition.pedagogicalCouncil.site.management" >
         <put name="body" value="/commons/sites/editSection.jsp"/>
@@ -663,7 +655,7 @@
     </definition>
     <definition name="pedagogicalCouncil-addInstitutionSection" extends="definition.pedagogicalCouncil.site.management" >
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/addInstitutionSection.jsp"/>
+        <put name="body" value="/commons/sites/addInstitutionSection.jsp"/>
     </definition>
     <definition name="pedagogicalCouncil-functionalitySection" extends="definition.pedagogicalCouncil.site.management" >
         <put name="body" value="/webSiteManager/commons/institutionalSection.jsp"/>
@@ -780,7 +772,7 @@
     </definition>
     <definition name="scientificCouncil-section" extends="definition.scientificCouncil.site.management" >
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/section.jsp"/>
+        <put name="body" value="/commons/sites/section.jsp"/>
     </definition>
     <definition name="scientificCouncil-editSection" extends="definition.scientificCouncil.site.management" >
         <put name="body" value="/commons/sites/editSection.jsp"/>
@@ -825,7 +817,7 @@
     </definition>
     <definition name="scientificCouncil-addInstitutionSection" extends="definition.scientificCouncil.site.management" >
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-        <put name="body" value="/webSiteManager/commons/addInstitutionSection.jsp"/>
+        <put name="body" value="/commons/sites/addInstitutionSection.jsp"/>
     </definition>
     <definition name="scientificCouncil-functionalitySection" extends="definition.scientificCouncil.site.management" >
         <put name="body" value="/webSiteManager/commons/institutionalSection.jsp"/>

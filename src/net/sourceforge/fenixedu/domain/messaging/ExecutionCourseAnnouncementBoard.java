@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncementBoard_Base {
 
@@ -42,7 +43,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 
 	checkParameters(name, executionCourse);
 
-	setName(name);
+	setName(new MultiLanguageString(name));
 	setExecutionCourse(executionCourse);
 	setMandatory(Boolean.FALSE);
 

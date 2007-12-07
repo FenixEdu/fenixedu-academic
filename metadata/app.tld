@@ -622,5 +622,53 @@
       <rtexprvalue>true</rtexprvalue>
     </attribute>
   </tag>  
-  
+
+  <tag>
+      <name>defineContentPath</name>
+      <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.content.DefineContentPathTag</tagclass>
+      <bodycontent>empty</bodycontent>
+      <info>
+          Places the application relative url to the specified content in the specified variable in the specified scope.
+      </info>
+      <attribute>
+          <name>id</name>
+          <required>true</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+          <name>name</name>
+          <required>true</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+          <name>property</name>
+          <required>false</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+          <name>toScope</name>
+          <required>false</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+  </tag>
+
+  <tag>
+      <name>contentLink</name>
+      <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.content.ContentLinkTag</tagclass>
+      <bodycontent>JSP</bodycontent>
+      <info>
+          Writes a link to the specified content in the specified variable.
+      </info>
+      <attribute>
+          <name>name</name>
+          <required>true</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+          <name>property</name>
+          <required>false</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+  </tag>
+
 </taglib>

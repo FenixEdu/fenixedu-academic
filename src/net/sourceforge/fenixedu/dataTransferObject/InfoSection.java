@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.util.Date;
-
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Section;
+
+import org.joda.time.YearMonthDay;
 
 /**
  * This is the view class that contains information about the seccao domain
@@ -18,7 +18,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
 
     protected Integer sectionOrder;
 
-    protected Date lastModifiedDate;
+    protected YearMonthDay lastModifiedDate;
 
     protected InfoSite infoSite;
 
@@ -99,7 +99,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
     /**
      * @return Date
      */
-    public Date getLastModifiedDate() {
+    public YearMonthDay getLastModifiedDate() {
         return lastModifiedDate;
     }
 
@@ -109,7 +109,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      * @param lastModifiedDate
      *            The lastModifiedDate to set
      */
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(YearMonthDay lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
         setSectionDepth(calculateDepth());
     }
@@ -251,7 +251,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
         if (section != null) {
             setName(section.getName().getContent(Language.pt));
             setSectionOrder(section.getSectionOrder());
-            setLastModifiedDate(section.getLastModifiedDate());
+            setLastModifiedDate(section.getModificationDate());
             setSectionDepth(calculateDepth());
         }
     }

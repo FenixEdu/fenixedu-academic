@@ -354,6 +354,15 @@ Documentation:
     
     <!--@ The tree layout allows a collection to be presented as a tree, that is, were you specify how an hierarchy is
           formed and a structure made by lists inside lists is created. -->
+
+	<renderer type="net.sourceforge.fenixedu.domain.contents.Content" layout="content-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.ContentHierarchyTreeRenderer">
+		<property name="rootDragDisabled" value="true"/>
+		<property name="imageFor(Portal)" value="/images/functionalities/folder-disabled.gif"/>
+		<property name="imageFor(Section)" value="/images/functionalities/folder.gif"/>
+		<property name="imageFor(Functionality)" value="/images/functionalities/sheet.gif"/>
+		<property name="imageFor(Module)" value="/images/functionalities/folder.gif"/>
+	</renderer>
+	
     <renderer type="java.util.Collection" layout="tree" class="net.sourceforge.fenixedu.presentationTier.renderers.TreeRenderer" />
     <renderer type="java.util.Collection" layout="functionalities-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.FunctionalitiesTreeRenderer">
         <property name="moduleEnabledImage" value="/images/functionalities/folder.gif"/>
@@ -428,7 +437,9 @@ Documentation:
 
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer"/>
     <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
-    <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
+	<renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.ContextBreadCrumRenderer"/>
+
+    <renderer type="net.sourceforge.fenixedu.domain.contents.Content" layout="manage-content-bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
 
     <renderer type="net.sourceforge.fenixedu.domain.Site" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SiteMenuRenderer" />
     <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteSideMenuRenderer" />

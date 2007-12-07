@@ -114,7 +114,7 @@ public class TreeRenderer extends OutputRenderer {
     private String current;
     private String currentClasses;
     private String currentStyle;
-    
+
     public TreeRenderer() {
         super();
         
@@ -635,7 +635,7 @@ public class TreeRenderer extends OutputRenderer {
         this.decorator = decorator;
     }
 
-    private class TreeLayout extends Layout {
+    protected class TreeLayout extends Layout {
 
         @Override
         public HtmlComponent createComponent(Object object, Class type) {
@@ -758,8 +758,7 @@ public class TreeRenderer extends OutputRenderer {
                 item.setClasses(getClassFor(object));
                 item.setStyle(getStyleFor(object));
                 
-                Schema schema = RenderKit.getInstance().findSchema(getSchemaFor(object));
-                HtmlComponent component = renderValue(object, object.getClass(), schema, getLayoutFor(object));
+                HtmlComponent component = generateMainComponent(object);
                 
                 String imageUrl = getImageFor(object);
                 if (imageUrl != null) {
@@ -787,12 +786,14 @@ public class TreeRenderer extends OutputRenderer {
                 String hiddenLinksForItem = getHiddenLinksFor(object);
                 
                 if (linksForItem != null || hiddenLinksForItem != null) {
+                
                     HtmlContainer linksContainer = new HtmlInlineContainer();
                     linksContainer.setClasses(getUsableLinksClasses());
                     linksContainer.setStyle(getLinksStyle());
 
                     if (hiddenLinksForItem != null) {
-                        HtmlContainer hiddenContainer = new HtmlInlineContainer();
+                        
+                	HtmlContainer hiddenContainer = new HtmlInlineContainer();
                         hiddenContainer.addChild(new HtmlText(RenderUtils.getFormattedProperties(hiddenLinksForItem, object), false));
                         linksContainer.addChild(hiddenContainer);
                     }
@@ -831,8 +832,10 @@ public class TreeRenderer extends OutputRenderer {
 	                        		item.setAttribute("expanded", "true");
 	                        	}
 	                        	
-	                            HtmlList subList = createList(itemPath, subCollection);
-	                            
+	                        beforeRecursion(object);
+	                        HtmlList subList = createList(itemPath, subCollection);
+	                        afterRecursion(object);
+	                        
 	                            if (! subList.getChildren().isEmpty()) {
 	                            	item.addChild(subList);
 	                            }
@@ -854,7 +857,7 @@ public class TreeRenderer extends OutputRenderer {
             return list;
         }
 
-        private String getUsableLinksClasses() {
+	private String getUsableLinksClasses() {
             if (getLinksClasses() == null) {
                 if (getTreeId() != null) {
                     return getTreeId() + "-links";
@@ -868,6 +871,17 @@ public class TreeRenderer extends OutputRenderer {
             }
         }
         
+    }
+
+    protected void beforeRecursion(Object object) {
+    }
+
+    protected void afterRecursion(Object object) {
+    }
+
+    protected HtmlComponent generateMainComponent(Object object) {
+	   Schema schema = RenderKit.getInstance().findSchema(getSchemaFor(object));
+           return renderValue(object, object.getClass(), schema, getLayoutFor(object));
     }
     
     protected String getChildrenFor(Object object) {

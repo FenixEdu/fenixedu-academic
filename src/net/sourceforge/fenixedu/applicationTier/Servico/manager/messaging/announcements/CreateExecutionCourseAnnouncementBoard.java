@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -47,7 +48,7 @@ public class CreateExecutionCourseAnnouncementBoard extends Service {
         board.setExecutionCoursePermittedManagementGroupType(parameters.readersGroupType);
         board.setExecutionCoursePermittedWriteGroupType(parameters.writersGroupType);
         board.setExecutionCoursePermittedManagementGroupType(parameters.managementGroupType);
-        board.setName(parameters.name);
+        board.setName(new MultiLanguageString(parameters.name));
         board.setMandatory(parameters.mandatory);
         board.setReaders(this.buildGroup(parameters.readersGroupType, executionCourse));
         board.setWriters(this.buildGroup(parameters.writersGroupType, executionCourse));

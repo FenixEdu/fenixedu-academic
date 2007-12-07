@@ -44,7 +44,7 @@
 
 <logic:present name="canChoose">
 	<fr:form action="<%= actionName + "?method=chooseIntroductionSections&amp;" + context %>">
-		<fr:edit id="chooseIntroductionSections" name="site" schema="unitSite.choose.introductionSections">
+		<fr:edit id="chooseIntroductionSections" name="site" schema="unitSite.choose.introductionContent">
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thlight thright"/>
 			</fr:layout>

@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities;
 
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -8,9 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -44,12 +51,7 @@ public class TestFilterContext implements FunctionalityContext {
     }
 
     public Module getSelectedModule() {
-        if (this.functionality instanceof Module) {
-            return (Module) this.functionality; 
-        }
-        else {
-            return this.functionality.getModule();
-        }
+        return ((IFunctionality)this.functionality).getModule();
     }
 
     public Functionality getSelectedFunctionality() {
@@ -115,5 +117,40 @@ public class TestFilterContext implements FunctionalityContext {
         }
 
         
+    }
+
+    public Container getSelectedContainer() {
+	Portal root = Portal.getRootPortal();
+
+	Section section  = ((List<Section>)functionality.getParents(Section.class)).get(0);
+	List<Content> path = root.getPathTo(section);
+	
+	return path.size() <= 2 ? (Container)root : (Container)path.get(2);
+    }
+
+    public Container getSelectedTopLevelContainer() {
+	Portal root = Portal.getRootPortal();
+
+	Section section  = ((List<Section>)functionality.getParents(Section.class)).get(0);
+	return (Container) root.getPathTo(section).get(2);
+    }
+
+    public Content getLastContentInPath(Class type) {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public String getCurrentContextPath() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public List<Content> getSelectedContents() {
+	return Collections.emptyList();
+    }
+
+    public Content getSelectedContent() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

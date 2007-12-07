@@ -26,6 +26,13 @@
 	<fr:view name="section" property="name" />
 </h2>
 
+<logic:messagesPresent message="true">
+	<html:messages id="messages" message="true" bundle="CONTENT_RESOURCES">
+		<p>
+			<span class="error0"><bean:write name="messages" /></span>
+		</p>
+	</html:messages>
+</logic:messagesPresent>
 
 <div class="mvert1">
     <html:link page="<%= String.format("%s?method=sections&amp;%s", actionName, context) %>">
@@ -154,7 +161,7 @@
 </logic:empty>
 --%>
 
-<logic:notEmpty name="site" property="topLevelSections">
+<logic:notEmpty name="site" property="directChildrenAsContent">
     <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context + "&amp;sectionID=" + sectionId %>">
         <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
@@ -162,15 +169,22 @@
     <% String treeId = "subSectionTree" + site.getIdInternal(); %>
         
     <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
-        <fr:view name="site" property="orderedTopLevelSections">
+        <fr:view name="site" property="directChildrenAsContent">
             <fr:layout name="tree">
                 <fr:property name="treeId" value="<%= treeId %>"/>
                 <fr:property name="fieldId" value="sections-order"/>
                 
-                <fr:property name="eachLayout" value="values"/>
+	             <fr:property name="eachLayout" value="values"/>
+                <fr:property name="childrenFor(Section)" value="childrenAsContent"/>
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
-                <fr:property name="childrenFor(Section)" value="orderedSubSections"/>
+                <fr:property name="imageFor(Section)" value="/images/site/section.gif"/>
 
+				<fr:property name="schemaFor(Functionality)" value="content.in.tree"/>
+				<fr:property name="imageFor(Functionality)" value="/images/site/institutionalSection.gif"/>
+
+				<fr:property name="schemaFor(Item)" value="content.in.tree"/>
+				<fr:property name="imageFor(Item)" value="/images/functionalities/sheet.gif"/>
+				
                 <fr:property name="current" value="<%= sectionId.toString() %>"/>
                 <fr:property name="currentClasses" value="highlight1"/>
                 <fr:property name="movedClass" value="highlight3"/>
@@ -350,7 +364,7 @@
         <div class="mtop1" style="background: #fff; border: 1px dotted #ccc; padding: 1em;">
 		
             <div>
-               	<fr:view name="item" property="information" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html">
+               	<fr:view name="item" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html">
                	</fr:view>
             </div>
     
@@ -379,8 +393,8 @@
         	                        </bean:define>
            	                	</td>
             	                	
-            					<td class="acenter nowrap">
-        							<span>
+            					<td class="nowrap">	
+        							<span class="pleft1">
            		                		(<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>"
            		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
            			                        <bean:message key="link.section.item.deleteItemFile" bundle="SITE_RESOURCES"/>
@@ -392,7 +406,7 @@
 								</td>
 								
 								<td>
-	                                <span style="color: #888;">
+	                                <span class="pleft1" style="color: #888;">
 	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
 	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
 	                                        <fr:layout>
@@ -412,6 +426,59 @@
             </logic:notEmpty>
         </div>
         </div>
+	</logic:iterate>
+</logic:notEmpty>
+
+
+
+<!-- Functionalities -->
+
+<h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
+
+<logic:equal name="site" property="template.contentPoolAvailable" value="true">
+	<ul>
+		<li>
+		<html:link page="<%= String.format("%s?method=prepareAddFromPool&amp;sectionID=%s&amp;%s", actionName, sectionId, context) %>">
+			<bean:message key="link.institutionSubSection.add" bundle="WEBSITEMANAGER_RESOURCES"/>
+		</html:link>
+		</li>
+	</ul>
+</logic:equal>
+		
+<logic:empty name="section" property="associatedFunctionalities">
+	<em><bean:message key="label.noInstitutionalContents" bundle="SITE_RESOURCES"/></em>
+</logic:empty>
+
+<logic:notEmpty name="section" property="associatedFunctionalities">
+	<bean:define id="containerID" name="section" property="idInternal"/>
+	<logic:iterate id="functionality" name="section" property="associatedFunctionalities">
+			<bean:define id="contentID" name="functionality" property="idInternal"/>
+
+			<div class="mtop15 mbottom0" style="background: #fafafa; padding: 0.5em;">
+			<p>
+			<strong><fr:view name="functionality" property="name"/></strong>
+				<span style="color: #888; padding-left: 1em;">
+	                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
+	                <fr:view name="functionality" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                    <fr:layout>
+	                        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                        <fr:property name="key" value="true"/>
+	                        <fr:property name="bundle" value="SITE_RESOURCES"/>
+	                        <fr:property name="subLayout" value="values"/>
+	                        <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                    </fr:layout>
+	                </fr:view>
+	            </span>
+
+				<p>
+		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 				
+			        <html:link action="<%=  actionName + "?method=removeFunctionalityFromContainer&amp;" + context + "&amp;contentID=" + contentID + "&amp;containerID=" + containerID + "&amp;sectionID=" + containerID%>">
+						<bean:message key="messaging.delete.label" bundle="WEBSITEMANAGER_RESOURCES"/>
+					 </html:link>
+				 </p>
+			 </p>
+			 </div>
+			
 	</logic:iterate>
 </logic:notEmpty>
 

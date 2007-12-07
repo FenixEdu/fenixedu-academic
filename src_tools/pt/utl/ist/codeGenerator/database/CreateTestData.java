@@ -46,10 +46,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Language;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginAlias;
@@ -62,8 +60,6 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.SiteTemplate;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -443,7 +439,6 @@ public class CreateTestData {
 
     public static class CreateDegrees extends AtomicAction {
         public void doIt() {
-            final SiteTemplate siteTemplate = findSiteTemplate();
             final Unit unit = findUnitByName("Degrees");
             for (final DegreeType degreeType : DegreeType.values()) {
                 if (degreeType.isBolonhaType()) {
@@ -455,7 +450,6 @@ public class CreateTestData {
                         createExecutionDegrees(degreeCurricularPlan, getCampus());
 
                         final DegreeSite degreeSite = degree.getSite();
-                        degreeSite.setTemplate(siteTemplate);
 
                         DegreeUnit.createNewInternalDegreeUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), degree.getName()),
                         	null, degree.getSigla(), new YearMonthDay(), null, unit,
@@ -464,18 +458,6 @@ public class CreateTestData {
                     }
                 }
             }
-        }
-
-        private SiteTemplate findSiteTemplate() {
-            for (final Site site : RootDomainObject.getInstance().getSitesSet()) {
-                if (site instanceof SiteTemplate) {
-                    final SiteTemplate siteTemplate = (SiteTemplate) site;
-                    if (siteTemplate.getSiteType().equals(DegreeSite.class.getName())) {
-                        return siteTemplate;
-                    }
-                }
-            }
-            return null;
         }
 
         private Unit findUnitByName(final String unitName) {

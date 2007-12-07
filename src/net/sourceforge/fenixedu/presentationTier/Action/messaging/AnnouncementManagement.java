@@ -75,11 +75,11 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     }
 
     protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-	return rootDomainObject.readAnnouncementBoardByOID(this.getAnnouncementBoardId(request));
+	return (AnnouncementBoard) rootDomainObject.readContentByOID(this.getAnnouncementBoardId(request));
     }
 
     protected Announcement getRequestedAnnouncement(HttpServletRequest request) {
-	return rootDomainObject.readAnnouncementByOID(this.getAnnouncementId(request));
+	return (Announcement) rootDomainObject.readContentByOID(this.getAnnouncementId(request));
     }
 
     public ActionForward addBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,

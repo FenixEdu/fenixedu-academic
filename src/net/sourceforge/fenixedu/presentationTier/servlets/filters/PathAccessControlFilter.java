@@ -115,10 +115,9 @@ public class PathAccessControlFilter implements Filter {
 	HttpServletResponse servletResponse = (HttpServletResponse) response;
 	try {
         
-	    if (isAllowed(servletRequest.getRemoteAddr(), servletRequest.getServletPath(), servletRequest.getRequestURI() + servletRequest.getQueryString())) {
+	    if (isAllowed(servletRequest.getRemoteAddr(), servletRequest.getServletPath(), servletRequest.getRequestURI())) {
 		chain.doFilter(servletRequest, response);
-	    }
-	    else {
+	    } else {
 		reportError(servletRequest, servletResponse);
 	    }
 	} catch (StackOverflowError ex) {
@@ -127,19 +126,19 @@ public class PathAccessControlFilter implements Filter {
 	}
     }
 
-    private boolean isAllowed(String address, String servletPath, String requestURI) {
-        List<InetAddress> hostList = this.pathConfiguration.get(servletPath);
+    private boolean isAllowed(final String address, final String servletPath, final String requestURI) {
+	List<InetAddress> hostList = this.pathConfiguration.get(servletPath);
         
         try {
-            InetAddress remoteAddress = InetAddress.getByName(address);
+            final InetAddress remoteAddress = InetAddress.getByName(address);
 
             if (hostList != null) {           
-                for (InetAddress allowedHost : hostList) {
+                for (final InetAddress allowedHost : hostList) {
                     if (remoteAddress.equals(allowedHost)) {
                         if (LogLevel.INFO) {
                             logger.info(servletPath + " allowed[" + remoteAddress + "]: matches group " + hostList);
                         }
-                        
+
                         return true;
                     }
                 }
@@ -151,7 +150,7 @@ public class PathAccessControlFilter implements Filter {
             }
             
             if (isRequestPathUsed()) {
-                for (String path : this.pathConfiguration.keySet()) {
+                for (final String path : this.pathConfiguration.keySet()) {
                     if (requestURI.contains(path)) {
                         hostList = this.pathConfiguration.get(path);
                         

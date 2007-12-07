@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
@@ -32,12 +34,19 @@ import org.apache.struts.action.ActionMapping;
 public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncementDispatchAction {
 
     protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {
-	return Integer.valueOf(request.getParameter("executionCourseID"));
+	String executionCourseId = request.getParameter("executionCourseID");
+	return executionCourseId == null ? null : Integer.valueOf(executionCourseId);
     }
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
-	return RootDomainObject.getInstance().readExecutionCourseByOID(
-		this.getRequestedExecutionCourseId(request));
+	Integer id = this.getRequestedExecutionCourseId(request);
+	if (id == null) {
+	    ExecutionCourseSite site = (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request)
+		    .getSelectedContainer();
+	    return site.getSiteExecutionCourse();
+	} else {
+	    return RootDomainObject.getInstance().readExecutionCourseByOID(id);
+	}
     }
 
     @Override
@@ -52,28 +61,27 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
     }
 
     @Override
-    protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
-        boolean useArchive = request.getParameter("ommitArchive") == null;
-        if (useArchive) {
-            return super.getThisMonthAnnouncements(board, request);
-        }
-        else {
-            List<Announcement> announcements = new ArrayList<Announcement>(board.getAnnouncements());
-            Collections.sort(announcements, Announcement.NEWEST_FIRST);
-            
-            return announcements;
-        }
+    protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board,
+	    HttpServletRequest request) {
+	boolean useArchive = request.getParameter("ommitArchive") == null;
+	if (useArchive) {
+	    return super.getThisMonthAnnouncements(board, request);
+	} else {
+	    List<Announcement> announcements = new ArrayList<Announcement>(board.getAnnouncements());
+	    Collections.sort(announcements, Announcement.NEWEST_FIRST);
+
+	    return announcements;
+	}
     }
 
     @Override
     protected AnnouncementArchive buildArchive(AnnouncementBoard board, HttpServletRequest request) {
-        boolean useArchive = request.getParameter("ommitArchive") == null;
-        if (useArchive) {
-            return super.buildArchive(board, request);
-        }
-        else {
-            return null;
-        }
+	boolean useArchive = request.getParameter("ommitArchive") == null;
+	if (useArchive) {
+	    return super.buildArchive(board, request);
+	} else {
+	    return null;
+	}
     }
 
     @Override

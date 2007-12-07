@@ -5,12 +5,13 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreateConversationThreadAndMessageBean implements Serializable {
 
-    private String subject;
+    private MultiLanguageString subject;
 
-    private String body;
+    private MultiLanguageString body;
 
     private DomainReference<Person> creatorReference;
 
@@ -18,40 +19,42 @@ public class CreateConversationThreadAndMessageBean implements Serializable {
 
     public CreateConversationThreadAndMessageBean() {
         super();
+        creatorReference = new DomainReference<Person>(null);
+        forumReference = new DomainReference<Forum>(null);
     }
 
-    public String getSubject() {
+    public MultiLanguageString getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(MultiLanguageString subject) {
         this.subject = subject;
     }
 
-    public String getBody() {
+    public MultiLanguageString getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    public void setBody(MultiLanguageString body) {
         this.body = body;
     }
 
     public Person getCreator() {
-        return (this.creatorReference != null) ? this.creatorReference.getObject() : null;
+        return this.creatorReference.getObject();
 
     }
 
     public void setCreator(Person creator) {
-        this.creatorReference = (creator != null) ? new DomainReference<Person>(creator) : null;
+        this.creatorReference = new DomainReference<Person>(creator);
     }
 
     public Forum getForum() {
-        return (this.forumReference != null) ? this.forumReference.getObject() : null;
+        return this.forumReference.getObject();
 
     }
 
     public void setForum(Forum forum) {
-        this.forumReference = (forum != null) ? new DomainReference<Forum>(forum) : null;
+        this.forumReference = new DomainReference<Forum>(forum);
     }
 
 }

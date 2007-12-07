@@ -11,10 +11,6 @@
      ======================  -->
 
 <div>
-    <html:link page="/toplevel/view.do">
-        <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
-    </html:link> //
-
     <logic:iterate id="crumb" name="crumbs">
         <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
             <fr:view name="crumb" property="name"/>
@@ -43,7 +39,7 @@
 <fr:create type="net.sourceforge.fenixedu.domain.functionalities.Module" 
            schema="functionalities.module.create"
            action="<%= "/module/view.do?module=" + id %>">
-    <fr:hidden slot="parent" name="parent"/>
+    <fr:hidden slot="module" name="parent"/>
     <fr:destination name="invalid" path="<%= "/module/create.do?parent=" + id %>"/>
 	<fr:layout>
 		<fr:property name="classes" value="tstyle5 thlight thright mvert05"/>

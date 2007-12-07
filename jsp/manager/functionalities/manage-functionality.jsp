@@ -10,11 +10,7 @@
          bread crumbs
      ======================  -->
 
-<div>
-    <html:link page="/toplevel/view.do">
-        <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
-    </html:link> //
-    
+<div> 
     <logic:iterate id="crumb" name="crumbs">
         <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
             <fr:view name="crumb" property="name"/>
@@ -36,26 +32,6 @@
 		<fr:property name="classes" value="tstyle1 thlight thright mvert05"/>
 	</fr:layout>
 </fr:view>
-
-<!-- ======================
-        enable disable
-     ======================  -->
-
-<logic:equal name="functionality" property="enabled" value="true">
-	<p class="mtop025">
-    <html:link page="/functionality/disable.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
-        <bean:message key="link.functionality.disable" bundle="FUNCTIONALITY_RESOURCES"/>
-    </html:link>
-    </p>
-</logic:equal>
-
-<logic:equal name="functionality" property="enabled" value="false">
-	<p class="mtop025">
-    <html:link page="/functionality/enable.do" paramId="functionality" paramName="functionality" paramProperty="idInternal">
-        <bean:message key="link.functionality.enable" bundle="FUNCTIONALITY_RESOURCES"/>
-    </html:link>
-    </p>
-</logic:equal>
 
 <!-- ======================
         availabilities from parents

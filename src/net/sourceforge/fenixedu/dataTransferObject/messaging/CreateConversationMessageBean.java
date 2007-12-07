@@ -5,46 +5,46 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CreateConversationMessageBean implements Serializable {
 
-    private String body;
+    private MultiLanguageString body;
 
     private DomainReference<Person> creatorReference;
 
     private DomainReference<ConversationThread> conversationThreadReference;
 
     public CreateConversationMessageBean() {
-        super();
+	super();
+	creatorReference = new DomainReference<Person>(null);
+	conversationThreadReference = new DomainReference<ConversationThread>(null);
     }
 
-    public String getBody() {
-        return body;
+    public MultiLanguageString getBody() {
+	return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setBody(MultiLanguageString body) {
+	this.body = body;
     }
 
     public Person getCreator() {
-        return (this.creatorReference != null) ? this.creatorReference.getObject() : null;
+	return this.creatorReference.getObject();
 
     }
 
     public void setCreator(Person creator) {
-        this.creatorReference = (creator != null) ? new DomainReference<Person>(creator) : null;
+	this.creatorReference = new DomainReference<Person>(creator);
     }
 
     public ConversationThread getConversationThread() {
-        return (this.conversationThreadReference != null) ? this.conversationThreadReference.getObject()
-                : null;
+	return this.conversationThreadReference.getObject();
 
     }
 
     public void setConversationThread(ConversationThread conversationThread) {
-        this.conversationThreadReference = (conversationThread != null) ? new DomainReference<ConversationThread>(
-                conversationThread)
-                : null;
+	this.conversationThreadReference = new DomainReference<ConversationThread>(conversationThread);
     }
 
 }

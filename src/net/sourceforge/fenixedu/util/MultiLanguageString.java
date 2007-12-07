@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.text.Collator;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
@@ -184,6 +186,38 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
         return Collator.getInstance().compare(getContent(),languageString.getContent());
     }
 
+    public boolean equalInAnyLanguage(Object obj) {
+	if(obj instanceof MultiLanguageString) {
+	    MultiLanguageString multiLanguageString = (MultiLanguageString)obj;
+	    Set<Language> languages = new HashSet<Language>();
+	    languages.addAll(this.getAllLanguages());
+	    languages.addAll(multiLanguageString.getAllLanguages());
+	    for(Language language : languages) {
+		if(this.getContent(language) != null && this.getContent(language).equalsIgnoreCase(multiLanguageString.getContent(language))) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+	if(obj instanceof MultiLanguageString) {
+	    MultiLanguageString multiLanguageString = (MultiLanguageString) obj;
+	    if(this.getAllContents().size() != multiLanguageString.getAllContents().size()) {
+		return false;
+	    }
+	    for(Language language : this.getAllLanguages()) {
+		if(!getContent(language).equalsIgnoreCase(multiLanguageString.getContent(language))) {
+		    return false;
+		}
+	    }
+	    return true;
+	}
+        return false;
+    }
+    
     public class I18N {
         public I18N add(String language, String text) {
             MultiLanguageString.this.setContent(Language.valueOf(language), text);

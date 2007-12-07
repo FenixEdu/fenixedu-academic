@@ -112,11 +112,10 @@ if (month != null && year!=null)
 
 		<p class="mtop05 mbottom025">
 			<em class="smalltxt greytxt2" >
-
 		<%-- Board e RSS --%>
-				<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board" />: 
+				<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board" />:
 				<html:link action="<%=contextPrefix + extraParameters +"&amp;method=viewAnnouncements&amp;announcementBoardId=" + announcement.getAnnouncementBoard().getIdInternal() + "#" + announcement.getIdInternal()%>">
-					<fr:view name="announcement" property="announcementBoard.name" type="java.lang.String"/>
+					<fr:view name="announcement" property="announcementBoard.name"/>
 				</html:link>
 				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
 

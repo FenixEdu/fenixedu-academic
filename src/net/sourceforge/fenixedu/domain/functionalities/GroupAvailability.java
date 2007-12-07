@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
-import net.sourceforge.fenixedu.domain.AccessibleItem;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
+import net.sourceforge.fenixedu.domain.contents.Content;
 
 /**
  * This class represents an availability policy base on groups.
@@ -29,24 +29,11 @@ public class GroupAvailability extends GroupAvailability_Base {
      * @exception GroupExpressionException
      *                when the expression is not correct
      */
-    public GroupAvailability(AccessibleItem item, Group group) {
+    public GroupAvailability(Content content, Group group) {
         super();
 
-        setAccessibleItem(item);
+        setContent(content);
         setTargetGroup(group);
-    }
-
-    @Override
-    public void setAccessibleItem(AccessibleItem item) {
-        // The field is required but since the deletion sets this to null and we
-        // want to delete this objects the verification is not done.
-        //
-        // if (functionality == null) {
-        // throw new FieldIsRequiredException("functionality",
-        // "functionalities.availability.required.functionality");
-        // }
-
-        super.setAccessibleItem(item);
     }
 
     /**
@@ -71,5 +58,10 @@ public class GroupAvailability extends GroupAvailability_Base {
             throw new GroupDynamicExpressionException(e,
                     "accessControl.group.expression.evaluation.error");
         }
+    }
+    
+    
+    public String getExpression() {
+	return getTargetGroup().getExpression();
     }
 }

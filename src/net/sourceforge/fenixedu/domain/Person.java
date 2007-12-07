@@ -48,6 +48,8 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.messaging.Forum;
+import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -2750,5 +2752,22 @@ public class Person extends Person_Base {
 
     public AdministrativeOffice getEmployeeAdministrativeOffice() {
 	return hasEmployee() ? getEmployee().getAdministrativeOffice() : null;
+    }
+    
+    public Collection<Forum> getForuns(final ExecutionPeriod executionPeriod) {
+	Collection<Forum> foruns = new HashSet<Forum>();
+	if(getTeacher() != null) {
+	    foruns.addAll(getTeacher().getForuns(executionPeriod));
+	}
+	
+	if(getStudent() != null) {
+	    foruns.addAll(getStudent().getForuns(executionPeriod));
+	}
+	
+	for(ForumSubscription forumSubscription : getForumSubscriptionsSet()) {
+	    foruns.add(forumSubscription.getForum());
+	}
+	
+	return foruns;
     }
 }

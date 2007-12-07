@@ -35,12 +35,13 @@
         </p>
     </logic:present>
  
+
 	<fr:view name="section" type="net.sourceforge.fenixedu.domain.Section" layout="section-sub-menu">
 		<fr:layout>
 			<fr:property name="sectionUrl" value="<%= String.format("%s?method=section&amp;%s", actionName, context) %>"/>
 		</fr:layout>
 	</fr:view>
-    
+
     <logic:empty name="protectedItems">
 		<p>
 			<em><bean:message key="message.section.empty" bundle="SITE_RESOURCES"/></em>
@@ -65,8 +66,8 @@
             </logic:equal>
 
             <logic:equal name="available" value="true">
-              	  <logic:notEmpty name="item" property="information">
-            			<fr:view name="item" property="information">
+              	  <logic:notEmpty name="item" property="body">
+            			<fr:view name="item" property="body">
             				<fr:layout>
             					<fr:property name="escaped" value="false" />
             					<fr:property name="newlineAware" value="false" />

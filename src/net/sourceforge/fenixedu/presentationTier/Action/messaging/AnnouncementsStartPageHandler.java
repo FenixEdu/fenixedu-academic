@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessLevel;
@@ -78,21 +79,24 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
         final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>();
         
-        final Collection<AnnouncementBoard> orderedAnnouncementBoards = new TreeSet<AnnouncementBoard>(AnnouncementBoard.NEWEST_FIRST);
-        orderedAnnouncementBoards.addAll(rootDomainObject.getAnnouncementBoards());
-        
         final DateTime startDate = getStartDate(request);
         int toShowCount = AnnouncementsStartPageHandler.RECENT_BOARDS_TO_SHOW;
         
-        for (final AnnouncementBoard board : orderedAnnouncementBoards) {
-            if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
-                if (toShowCount == 0 || (startDate != null && board.getCreationDate().isBefore(startDate))) {
-                    break;
+        for (final Content content : rootDomainObject.getContentsSet()) {
+            if (content.isAnAnnouncementBoard()) {
+                final AnnouncementBoard board = (AnnouncementBoard) content;
+                if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
+                    if (toShowCount == 0 || (startDate != null && board.getCreationDate().isBefore(startDate))) {
+                        break;
+                    }
+                    result.add(board);
+                    toShowCount--;
                 }
-                result.add(board);
-                toShowCount--;
             }
         }
+
+        Collections.sort(result, AnnouncementBoard.NEWEST_FIRST);
+
         return result;
     }
 
@@ -214,15 +218,18 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         Collection<UnitAnnouncementBoard> unitAnnouncementBoards = new TreeSet<UnitAnnouncementBoard>(UnitAnnouncementBoard.BY_UNIT_DEPTH_AND_NAME);
         Collection<ExecutionCourseAnnouncementBoard> executionCourseAnnouncementBoards = new TreeSet<ExecutionCourseAnnouncementBoard>(ExecutionCourseAnnouncementBoard.COMPARE_BY_EXECUTION_PERIOD_AND_NAME);
 
-        for (final AnnouncementBoard board : rootDomainObject.getAnnouncementBoards()) {
-            if (board.hasReaderOrWriter(getLoggedPerson(request))) {
-                if (board instanceof UnitAnnouncementBoard) {
-                    unitAnnouncementBoards.add((UnitAnnouncementBoard) board);
+        for (final Content content : rootDomainObject.getContentsSet()) {
+            if (content.isAnAnnouncementBoard()) {
+                final AnnouncementBoard board = (AnnouncementBoard) content;
+                if (board.hasReaderOrWriter(getLoggedPerson(request))) {
+                    if (board instanceof UnitAnnouncementBoard) {
+                        unitAnnouncementBoards.add((UnitAnnouncementBoard) board);
 
-                } else if (board instanceof ExecutionCourseAnnouncementBoard) {
-                    ExecutionCourseAnnouncementBoard executionCourseBoard = (ExecutionCourseAnnouncementBoard) board;
-                    if (executionCourseBoard.hasExecutionCourse() && executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
-                	executionCourseAnnouncementBoards.add(executionCourseBoard);
+                    } else if (board instanceof ExecutionCourseAnnouncementBoard) {
+                        ExecutionCourseAnnouncementBoard executionCourseBoard = (ExecutionCourseAnnouncementBoard) board;
+                        if (executionCourseBoard.hasExecutionCourse() && executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+                            executionCourseAnnouncementBoards.add(executionCourseBoard);
+                        }
                     }
                 }
             }

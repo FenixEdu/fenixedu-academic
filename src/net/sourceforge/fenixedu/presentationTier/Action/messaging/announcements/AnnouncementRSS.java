@@ -181,7 +181,7 @@ public class AnnouncementRSS extends RSSAction {
 
     protected final AnnouncementBoard getSelectedBoard(HttpServletRequest request) {
         final String id = request.getParameter("announcementBoardId");
-        return rootDomainObject.readAnnouncementBoardByOID(Integer.valueOf(id));
+        return (AnnouncementBoard) rootDomainObject.readContentByOID(Integer.valueOf(id));
     }
 
     @Override

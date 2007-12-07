@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -37,10 +38,9 @@ public class AnnouncementBoardsManagement extends FenixDispatchAction {
             saveErrors(request, actionMessages);
             return this.start(mapping, actionForm, request, response);
         }
-        int boardsCount = rootDomainObject.getAnnouncementBoardsCount();
-        int announcementsCount = rootDomainObject.getAnnouncementsCount();
+        int boardsCount = 0;
+        int announcementsCount = 0;
 
-        Collection<Announcement> announcements = rootDomainObject.getAnnouncements();
         int visibleAnnouncementsCount = 0;
         int visibleNotExpiredAnnouncementsCount = 0;
         int visibleExpiredAnnouncementsCount = 0;
@@ -48,22 +48,31 @@ public class AnnouncementBoardsManagement extends FenixDispatchAction {
         int invisibleNotExpiredAnnouncementsCount = 0;
         int invisibleExpiredAnnouncementsCount = 0;
 
-        for (Announcement announcement : announcements) {
-            if (!announcement.getVisible()) {
-                invisibleAnnouncementsCount++;
-                if (announcement.getPublicationEnd() == null
-                        || announcement.getPublicationEnd().isAfterNow()) {
-                    invisibleNotExpiredAnnouncementsCount++;
+        for (final Content content : rootDomainObject.getContents()) {
+            if (content.isAnAnnouncementBoard()) {
+                boardsCount++;
+            }
+
+            if (content.isAnAnnouncement()) {
+                final Announcement announcement = (Announcement) content; 
+                announcementsCount++;
+
+                if (!announcement.getVisible()) {
+                    invisibleAnnouncementsCount++;
+                    if (announcement.getPublicationEnd() == null
+                            || announcement.getPublicationEnd().isAfterNow()) {
+                        invisibleNotExpiredAnnouncementsCount++;
+                    } else {
+                        invisibleExpiredAnnouncementsCount++;
+                    }
                 } else {
-                    invisibleExpiredAnnouncementsCount++;
-                }
-            } else {
-                visibleAnnouncementsCount++;
-                if (announcement.getPublicationEnd() == null
-                        || announcement.getPublicationEnd().isAfterNow()) {
-                    visibleNotExpiredAnnouncementsCount++;
-                } else {
-                    visibleExpiredAnnouncementsCount++;
+                    visibleAnnouncementsCount++;
+                    if (announcement.getPublicationEnd() == null
+                            || announcement.getPublicationEnd().isAfterNow()) {
+                        visibleNotExpiredAnnouncementsCount++;
+                    } else {
+                        visibleExpiredAnnouncementsCount++;
+                    }
                 }
             }
         }

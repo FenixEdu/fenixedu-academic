@@ -3,7 +3,14 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="definition.manager.masterPage" extends="df.layout.two-column">
+	<definition name="definition.manager.masterPage" extends="df.layout.two-column.contents">
+	  <put name="navLocal" value="/manager/commons/commonNavLocalManager.jsp" />
+	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
+      <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
+	</definition>
+
+
+	<definition name="definition.manager.masterPage.old" extends="df.layout.two-column">
 	  <put name="title" value="Portal de Gerência" />
 	  <put name="serviceName" value="Portal de Gerência" />
 	  <put name="navLocal" value="/manager/commons/commonNavLocalManager.jsp" />

@@ -1,16 +1,25 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.MetaDomainObject;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 public class ExecutionCourseProcessor extends PathProcessor {
 
@@ -62,7 +71,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
                 return false;
             }
             else {
-                return doForward(context, new Object[] { "firstPage", executionCourse.getIdInternal() });
+        	return doForward(context, new Object[] { "firstPage", executionCourse.getIdInternal() });
             }
         }
     }

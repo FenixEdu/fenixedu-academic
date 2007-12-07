@@ -950,6 +950,7 @@
             <forward name="editFile" path="manage-execution-course-editFile"/>
             <forward name="createScorm" path="create-scorm"/>
             <forward name="uploadScorm" path="upload-scorm"/>
+            <forward name="addInstitutionSection" path="manage-execution-course-pool"/>
         </action> 
         <action path="/createProgram"
         		parameter="method"
@@ -2245,6 +2246,8 @@
 	<message-resources parameter="resources.VigilancyResources" key="VIGILANCY_RESOURCES" null="false"/>
     <message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
     <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>    
+   	<message-resources parameter="resources.WebsiteManagerResources" key="WEBSITEMANAGER_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.ContentResources" key="CONTENT_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

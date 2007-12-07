@@ -140,7 +140,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
     private List<ProtectedItem> setupItems(HttpServletRequest request, FunctionalityContext context, Collection<Item> items) {
         List<ProtectedItem> protectedItems = new ArrayList<ProtectedItem>();
         for (Item item : items) {
-            if (item.isVisible()) {
+            if (item.getVisible()) {
                 protectedItems.add(new ProtectedItem(context, item));
             }
         }
@@ -204,7 +204,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         }
         
         Integer itemID = Integer.valueOf(parameter);
-        return rootDomainObject.readItemByOID(itemID);
+        return (Item)rootDomainObject.readContentByOID(itemID);
     }
 
     protected Section getSection(final HttpServletRequest request) {
@@ -215,7 +215,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         }
         
         final Integer sectionID = Integer.valueOf(parameter);
-        return rootDomainObject.readSectionByOID(sectionID);
+        return (Section)rootDomainObject.readContentByOID(sectionID);
     }
 
     protected void setSectionBreadCrumbs(HttpServletRequest request) {

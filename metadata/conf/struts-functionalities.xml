@@ -17,9 +17,7 @@
 
         <action path="/error/*"     forward="functionalities.error.{1}"/>
     
-        <action path="/toplevel/view"     forward="/private/module.do?method=viewTopLevel"/>
-        <action path="/toplevel/organize" forward="/private/module.do?method=organize"/>
-        <action path="/toplevel/upload"   forward="/private/module.do?method=uploadStructure"/>
+
         <action path="/module/*"          forward="/private/module.do?method={1}"/>
         <action path="/functionality/*"   forward="/private/functionality.do?method={1}"/>
 
@@ -28,25 +26,20 @@
         <action path="/private/module" 
                 type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ModuleManagementAction" 
                 parameter="method">
-            <forward name="toplevel"        path="functionalities.toplevel.view"/>
             <forward name="view"            path="functionalities.module.view"/>
             <forward name="view.module"     path="functionalities.module.view"/>
             <forward name="edit"            path="functionalities.module.edit"/>
             <forward name="create"          path="functionalities.module.create"/>
-            <forward name="create.toplevel" path="functionalities.module.create.toplevel"/>
             <forward name="upload"          path="functionalities.module.upload"/>
-            <forward name="upload.toplevel" path="functionalities.module.upload.toplevel"/>
-        </action>
+        </action>        
         
         <action path="/private/functionality" 
                 type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.FunctionalityManagementAction" 
                 parameter="method">
-            <forward name="toplevel"        path="functionalities.toplevel.view"/>
             <forward name="view"            path="functionalities.functionality.view"/>
             <forward name="view.module"     path="functionalities.module.view"/>
             <forward name="edit"            path="functionalities.functionality.edit"/>
             <forward name="create"          path="functionalities.functionality.create"/>
-            <forward name="create.toplevel" path="functionalities.functionality.create.toplevel"/>
             <forward name="manage"          path="functionalities.functionality.manage"/>
             <forward name="confirm"         path="functionalities.functionality.delete.confirm"/>
         </action>
@@ -74,6 +67,7 @@
     <message-resources parameter="resources.FunctionalityResources" key="FUNCTIONALITY_RESOURCES" null="false"/>
     <message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ParkingResources" key="PARKING_RESOURCES" null="false"/>
     
     <!-- ========== Plug Ins Configuration =================================== -->
     

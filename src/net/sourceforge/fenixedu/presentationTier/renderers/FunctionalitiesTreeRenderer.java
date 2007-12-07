@@ -120,21 +120,9 @@ public class FunctionalitiesTreeRenderer extends TreeRenderer {
     private String chooseIfEnabled(Object object, String moduleEnabled, String moduleDisabled,
             String functionalityEnabled, String functionalityDisabled) {
         if (object instanceof Module) {
-            Module module = (Module) object;
-
-            if (module.isEnabled()) {
-                return moduleEnabled;
-            } else {
-                return moduleDisabled;
-            }
+            return moduleEnabled;
         } else {
-            Functionality functionality = (Functionality) object;
-
-            if (functionality.isEnabled()) {
-                return functionalityEnabled;
-            } else {
-                return functionalityDisabled;
-            }
+            return functionalityEnabled;
         }
     }
 

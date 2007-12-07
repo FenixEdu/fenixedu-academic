@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestChecksumFilter;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.config.ModuleConfig;
@@ -36,10 +36,10 @@ public class FenixActionForward extends ActionForward {
 		String module = getPathModule();
 
 		String context = request.getContextPath();
-		String checksum = RequestChecksumFilter.calculateChecksum(context + module + current);
+		String checksum = ChecksumRewriter.calculateChecksum(context + module + current);
 		
 		return String
-				.format("%s%s%s%s=%s", current, mark, amp, RequestChecksumFilter.CHECKSUM_ATTRIBUTE_NAME, checksum);
+				.format("%s%s%s%s=%s", current, mark, amp, ChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME, checksum);
 	}
 
 	private String getPathModule() {

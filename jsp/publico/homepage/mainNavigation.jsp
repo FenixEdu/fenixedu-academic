@@ -7,23 +7,17 @@
 <html:xhtml/>
 
 <ul class="treemenu">
-	<logic:present name="homepage">
-	<%--  
-        <li>
-            <bean:define id="homepageID" name="homepage" property="idInternal"/>
-            <html:link page="<%= "/viewHomepage.do?method=show&amp;homepageID=" + homepageID.toString() %>">
-                <bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.home"/>
-            </html:link>
-        </li>
-        --%>
-        <fr:view name="homepage" layout="side-menu">
+	
+<logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
+	<fr:view name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" 
+		layout="side-menu">
             <fr:layout>
                 <fr:property name="sectionUrl" value="/viewHomepage.do?method=section"/>
-                <fr:property name="contextParam" value="homepageID"/>
             </fr:layout>
-        </fr:view>
-    </logic:present>
-	<logic:notPresent name="homepage">
+	</fr:view>
+</logic:present>
+
+<logic:notPresent name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
 		<li>
 			<html:link page="/viewHomepage.do?method=listTeachers">
 				<bean:message bundle="HOMEPAGE_RESOURCES" key="link.homepage.listings.teachers"/>

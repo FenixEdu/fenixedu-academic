@@ -11,8 +11,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -20,102 +18,98 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.stm.Transaction;
 
+import org.joda.time.DateTime;
+
 public class CloseTransactionFilter implements Filter {
 
-	private class PublicRequester implements IUserView {
-		private class InformationNotAvailable extends RuntimeException {
-			private static final long serialVersionUID = -7527899059986512251L;
+    private static class PublicRequester implements IUserView {
+	private class InformationNotAvailable extends RuntimeException {
+	    private static final long serialVersionUID = -7527899059986512251L;
 
-			public InformationNotAvailable(String msg) {
-				super(msg);
-			}
-		}
-
-        private InformationNotAvailable makeException() {
-            throw new InformationNotAvailable("property person not available on a public requester user view");            
-        }
-
-		public Person getPerson() {
-			throw makeException();
-		}
-
-		public String getUtilizador() {
-            throw makeException();
-		}
-
-		public String getFullName() {
-            throw makeException();
-		}
-
-        public Collection<RoleType> getRoleTypes() {
-            throw makeException();
-        }
-
-		public boolean hasRoleType(RoleType roleType) {
-            throw makeException();
-		}
-
-		public boolean isPublicRequester() {
-			return true;
-		}
-
-		public DateTime getExpirationDate() {
-		    throw makeException();
-		}
-        
-        @Override
-        public boolean equals(Object obj) {
-            return obj instanceof PublicRequester;
-        }
-        
-        @Override
-        public int hashCode() {
-            return 0;
-        }
-
-        public String getPrivateConstantForDigestCalculation() {
-    	return null;
-        }
-
+	    public InformationNotAvailable(String msg) {
+		super(msg);
+	    }
 	}
 
-	public void init(FilterConfig config) {
-
+	private InformationNotAvailable makeException() {
+	    throw new InformationNotAvailable("property person not available on a public requester user view");
 	}
 
-	public void destroy() {
-
+	public Person getPerson() {
+	    throw makeException();
 	}
 
-	protected IUserView getUserView(ServletRequest request) {
-		IUserView userView = null;
-		if (request instanceof HttpServletRequest) {
-			HttpServletRequest httpRequest = (HttpServletRequest) request;
-				userView = SessionUtils.getUserView(httpRequest);
-		}
-
-		if (userView == null)
-			userView = new PublicRequester();
-
-		return userView;
+	public String getUtilizador() {
+	    throw makeException();
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-        try {
-            Transaction.begin(true);
-            Transaction.currentFenixTransaction().setReadOnly();
-            setTransactionOwner(request);
-			chain.doFilter(request, response);
-		} finally {
-			Transaction.forceFinish();
-		}
+	public String getFullName() {
+	    throw makeException();
 	}
 
-	/**
-	 * 
-	 */
-	private void setTransactionOwner(ServletRequest request) {
-		AccessControl.setUserView(this.getUserView(request));
+	public Collection<RoleType> getRoleTypes() {
+	    throw makeException();
 	}
+
+	public boolean hasRoleType(RoleType roleType) {
+	    throw makeException();
+	}
+
+	public boolean isPublicRequester() {
+	    return true;
+	}
+
+	public DateTime getExpirationDate() {
+	    throw makeException();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	    return obj instanceof PublicRequester;
+	}
+
+	@Override
+	public int hashCode() {
+	    return 0;
+	}
+
+	public String getPrivateConstantForDigestCalculation() {
+	    return null;
+	}
+
+    }
+
+    private static final PublicRequester PUBLIC_REQUESTER = new PublicRequester();
+
+    public void init(FilterConfig config) {
+    }
+
+    public void destroy() {
+    }
+
+    protected IUserView getUserView(final ServletRequest request) {
+	IUserView userView = null;
+	if (request instanceof HttpServletRequest) {
+	    final HttpServletRequest httpRequest = (HttpServletRequest) request;
+	    userView = SessionUtils.getUserView(httpRequest);
+	}
+	return userView == null ? PUBLIC_REQUESTER : userView;
+    }
+
+    protected void setTransactionOwner(final ServletRequest request) {
+	AccessControl.setUserView(getUserView(request));
+    }
+
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
+    		throws IOException, ServletException {
+	try {
+	    Transaction.begin(true);
+	    Transaction.currentFenixTransaction().setReadOnly();
+	    setTransactionOwner(request);
+	    chain.doFilter(request, response);
+	} finally {
+	    Transaction.forceFinish();
+	}
+    }
+
 }

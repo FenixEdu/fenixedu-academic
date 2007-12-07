@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.R
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FileEntry;
@@ -26,13 +25,16 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
@@ -57,27 +59,6 @@ import pt.utl.ist.fenix.tools.image.TextPngCreator;
 public class ViewHomepageDA extends SiteVisualizationDA {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	String homepageIDString = request.getParameter("homepageID");
-
-	if (homepageIDString != null) {
-	    Integer homepageID = Integer.valueOf(homepageIDString);
-
-	    DomainObject possibleHomepage = readDomainObject(request, Homepage.class, homepageID);
-	    if (possibleHomepage instanceof Homepage) {
-		Homepage homepage = (Homepage) possibleHomepage;
-
-		if (homepage.getActivated() != null && homepage.getActivated()) {
-		    request.setAttribute("homepage", homepage);
-		}
-	    }
-	}
-
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    @Override
     protected String getDirectLinkContext(HttpServletRequest request) {
 	Homepage homepage = (Homepage) request.getAttribute("homepage");
 	if (homepage == null) {
@@ -94,17 +75,8 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 
     public ActionForward show(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final String homepageIDString = request.getParameter("homepageID");
-	final Integer homepageID = Integer.valueOf(homepageIDString);
-
-	final Homepage homepage;
-	DomainObject possibleHomepage = readDomainObject(request, Homepage.class, homepageID);
-	if (possibleHomepage instanceof Homepage) {
-	    homepage = (Homepage) possibleHomepage;
-	} else {
-	    homepage = null;
-	}
-
+	Homepage homepage = getHomepage(request);
+	
 	if (homepage == null || !homepage.getActivated().booleanValue()) {
 	    final ActionMessages actionMessages = new ActionMessages();
 	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("homepage.not.found"));
@@ -137,7 +109,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 
 	for (final Homepage homepage : Homepage.getAllHomepages()) {
 	    if (homepage.getActivated().booleanValue()) {
-		final String key = homepage.getName().substring(0, 1);
+		final String key = homepage.getOwnersName().substring(0, 1);
 		final SortedSet<Homepage> sortedSet;
 		if (homepages.containsKey(key)) {
 		    sortedSet = homepages.get(key);
@@ -321,9 +293,8 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     }
 
     private String getEmailString(final HttpServletRequest request) {
-	final String homepageId = request.getParameter("homepageID");
-	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
-		.valueOf(homepageId));
+	
+	Homepage homepage = getHomepage(request);
 	final Person person = homepage.getPerson();
 	if (person != null && person.getHomepage() != null
 		&& person.getHomepage().getActivated().booleanValue()
@@ -337,9 +308,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward retrievePhoto(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final String homepageIDString = request.getParameter("homepageID");
-	final Integer homepageID = Integer.valueOf(homepageIDString);
-	final Homepage homepage = (Homepage) readDomainObject(request, Homepage.class, homepageID);
+	final Homepage homepage = getHomepage(request);
 	if (homepage != null && homepage.getShowPhoto() != null
 		&& homepage.getShowPhoto().booleanValue()) {
 	    final Person person = homepage.getPerson();
@@ -359,10 +328,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward showPublications(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final String homepageId = request.getParameter("homepageID");
-	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
-		.valueOf(homepageId));
-
+	Homepage homepage = getHomepage(request);
 	IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
 
 	ExecutionYearIntervalBean bean;
@@ -382,9 +348,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward showPatents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final String homepageId = request.getParameter("homepageID");
-	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
-		.valueOf(homepageId));
+	Homepage homepage = getHomepage(request);
 
 	List<ResearchResultPatent> patents = homepage.getPerson().getResearchResultPatents();
 	Collections.sort(patents, new BeanComparator("approvalYear"));
@@ -395,9 +359,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward showInterests(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final String homepageId = request.getParameter("homepageID");
-	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
-		.valueOf(homepageId));
+	Homepage homepage = getHomepage(request);
 
 	request.setAttribute("interests", homepage.getPerson().getResearchInterests());
 	return mapping.findForward("showInterests");
@@ -406,10 +368,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward showParticipations(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final String homepageId = request.getParameter("homepageID");
-	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
-		.valueOf(homepageId));
-
+	Homepage homepage = getHomepage(request);
 	setParticipationsInRequest(request, homepage.getPerson());
 
 	return mapping.findForward("showParticipations");
@@ -419,9 +378,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward showPrizes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final String homepageId = request.getParameter("homepageID");
-	Homepage homepage = (Homepage) RootDomainObject.readDomainObjectByOID(Homepage.class, Integer
-		.valueOf(homepageId));
+	Homepage homepage = getHomepage(request);
 
 	request.setAttribute("prizes", homepage.getPerson().getPrizes());
 
@@ -529,6 +486,22 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	return show(mapping, form, request, response);
+    }
+
+    protected Homepage getHomepage(HttpServletRequest request) {
+	FunctionalityContext context = AbstractFunctionalityContext.getCurrentContext(request);
+	Container container = null;
+	if (context != null) {
+	    container = (Container) context.getLastContentInPath(Homepage.class);
+	}
+	if(container instanceof Homepage) {
+	    return (Homepage) container;    
+	}
+	else {
+	    String homepageID = request.getParameter("homepageID");
+	    return (Homepage) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(homepageID));
+	}
+	
     }
 
 }

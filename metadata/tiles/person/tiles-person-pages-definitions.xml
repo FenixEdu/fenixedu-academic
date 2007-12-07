@@ -100,6 +100,9 @@
     <definition name="homepage-editFile" extends="definition.person.homepage" >
         <put name="body" value="/commons/sites/editFile.jsp"/>
     </definition>   
+    <definition name="homepage-add-institution-section" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/addInstitutionSection.jsp"/>
+    </definition>   
     
 	<!--  ============== Messaging ===================== -->
 	
@@ -152,5 +155,60 @@
    	<definition name="df.page.validate.email" extends="definition.person.masterPage" >
 		<put name="body" value="/person/validateEmail.jsp" />
     </definition>
+
+
+
+  <!--  =====  Portals ==== -->
+  <definition name="view.container" extends="definition.person.masterPage">
+    <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+  	<put name="body" value="/person/portals/manageContainer.jsp"/>
+  </definition>
+
+  <definition name="view.element" extends="definition.person.masterPage">
+    <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+  	<put name="body" value="/person/portals/manageElement.jsp"/>
+  </definition>
+
+  <definition name="add.portal" extends="definition.person.masterPage">
+  	<put name="body" value="/person/portals/addPortal.jsp"/>
+  </definition>  
+
+  <definition name="create.section" extends="definition.person.masterPage">
+  	<put name="body" value="/person/portals/createSection.jsp"/>
+  </definition>
+  
+  <definition name="add.functionality" extends="definition.person.masterPage">
+    <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+  	<put name="body" value="/person/portals/addFunctionality.jsp"/>
+  </definition>
+
+  <definition name="view.meta.objects" extends="definition.person.masterPage">
+  	<put name="body" value="/person/portals/prepareCreatePortal.jsp"/>
+  </definition>
+    
+  <definition name="create.portal.using.bean" extends="definition.person.masterPage">
+  	<put name="body" value="/person/portals/createMetaPortal.jsp"/>
+  </definition>  
+
+  <definition name="edit.portal.using.bean" extends="definition.person.masterPage">
+  	<put name="body" value="/person/portals/editPortal.jsp"/>
+  </definition>  
+
+   <definition name="edit.content" extends="definition.person.masterPage">
+  	<put name="body" value="/person/portals/editContent.jsp"/>
+  </definition>  
+
+   <definition name="add.initial.content" extends="definition.person.masterPage">
+  	<put name="body" value="/person/portals/addInitialContentToSection.jsp"/>
+  </definition>  
+
+   <definition name="edit.availability.policy" extends="definition.person.masterPage">
+  	<put name="body" value="/person/portals/editAvailabilityPolicy.jsp"/>
+  </definition>  
+
+   <definition name="add.to.pool" extends="definition.person.masterPage">
+  	<put name="body" value="/person/portals/addToPool.jsp"/>
+  </definition>  
+  
 
 </tiles-definitions>

@@ -609,19 +609,22 @@
 	</definition>
 	
 	<definition name="view-foruns" extends="execution-course-administration">
-		<put name="body" value="/teacher/viewExecutionCourseForuns.jsp" />
+		<put name="body" value="/teacher/forums/viewExecutionCourseForuns.jsp" />
 	</definition>
 	
 	<definition name="view-forum" extends="execution-course-administration">
-		<put name="body" value="/messaging/viewForum.jsp" />
+		<put name="body-context" value="/teacher/forums/context.jsp"/>
+		<put name="body" value="/commons/forums/viewForum.jsp" />
 	</definition>
 	
 	<definition name="create-thread-and-message" extends="execution-course-administration">
-		<put name="body" value="/messaging/createThreadAndMessage.jsp" />
+		<put name="body-context" value="/teacher/forums/context.jsp"/>
+		<put name="body" value="/commons/forums/createThreadAndMessage.jsp" />
 	</definition>
 	
 	<definition name="view-thread" extends="execution-course-administration">
-		<put name="body" value="/messaging/viewThread.jsp" />
+		<put name="body-context" value="/teacher/forums/context.jsp"/>
+		<put name="body" value="/commons/forums/viewThread.jsp" />
 	</definition>
 
     <definition name="manage-execution-course-site-createSection" extends="execution-course-administration">
@@ -632,6 +635,10 @@
 		<put name="body" value="/commons/sites/createSection.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-pool" extends="manage-execution-course-site-createSection">
+		<put name="body" value="/commons/sites/addInstitutionSection.jsp" />
+	</definition>
+	
 	<definition name="manage-execution-course-sectionsManagement" extends="manage-execution-course-site-createSection">
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
 		<put name="body" value="/teacher/executionCourse/site/sectionsManagement.jsp" />

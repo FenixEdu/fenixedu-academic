@@ -614,7 +614,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSiteSection(InfoSiteSection component, ExecutionCourseSite site, Integer sectionCode)
 			throws FenixServiceException {
 
-        final Section section = RootDomainObject.getInstance().readSectionByOID(sectionCode);
+        final Section section = (Section)RootDomainObject.getInstance().readContentByOID(sectionCode);
 
 		final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getAssociatedItemsCount());
 		for (final Item item : section.getAssociatedItems()) {
@@ -631,7 +631,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	private ISiteComponent getInfoSiteRegularSections(InfoSiteRegularSections component, ExecutionCourseSite site,
 			Integer sectionCode) throws FenixServiceException {
-		Section iSuperiorSection = RootDomainObject.getInstance().readSectionByOID(sectionCode);
+		Section iSuperiorSection = (Section)RootDomainObject.getInstance().readContentByOID(sectionCode);
 		List allSections = site.getAssociatedSections();
 
 		// build the result of this service
@@ -654,7 +654,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	private ISiteComponent getInfoSiteSections(InfoSiteSections component, ExecutionCourseSite site,
 			Integer sectionCode) throws FenixServiceException {
-		Section iSection = RootDomainObject.getInstance().readSectionByOID(sectionCode);
+		Section iSection = (Section)RootDomainObject.getInstance().readContentByOID(sectionCode);;
 
 		InfoSection infoSection = InfoSection.newInfoFromDomain(iSection);
 		List allSections = site.getAssociatedSections(); 
@@ -691,7 +691,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSiteItems(InfoSiteItems component, ExecutionCourseSite site, Integer itemCode)
 			throws FenixServiceException {
 
-		final Item iItem = RootDomainObject.getInstance().readItemByOID(itemCode);
+		final Item iItem = (Item)RootDomainObject.getInstance().readContentByOID(itemCode);
         final Section iSection = iItem.getSection();
 
         final InfoItem infoItem = InfoItem.newInfoFromDomain(iItem);

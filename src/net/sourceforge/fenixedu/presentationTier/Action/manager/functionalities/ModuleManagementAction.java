@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
@@ -26,7 +27,7 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
         Module module = getModule(request);
         
         if (module == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
+            return viewRoot(mapping, actionForm, request, response);
         }
         else {
             return viewModule(module, mapping, actionForm, request, response);
@@ -37,7 +38,7 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
         Module module = getModule(request);
         
         if (module == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
+            return viewRoot(mapping, actionForm, request, response);
         }
         else {
             return forwardTo(mapping.findForward("edit"), request, module, false);
@@ -80,8 +81,8 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
         return viewModule(module, mapping, actionForm, request, response);
     }
     
-    private List<Functionality> getTreeRoots(Module module) {
-        List<Functionality> roots = new ArrayList<Functionality>();
+    private List<Content> getTreeRoots(Module module) {
+        List<Content> roots = new ArrayList<Content>();
         
         roots.add(module); // root of tree
         
@@ -100,10 +101,10 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
      * @throws IndexOutOfBoundsException if some index used in <tt>structure</tt> is not valid according to the given module
      * @throws NullPointerException if some index used in <tt>structure</tt> in not a number
      */
-    private void updateStructure(List<Functionality> roots, String structure) throws Exception {
-        List<Pair<Module, Functionality>> arrangements = new ArrayList<Pair<Module, Functionality>>();
+    private void updateStructure(List<Content> roots, String structure) throws Exception {
+        List<Pair<Module, Content>> arrangements = new ArrayList<Pair<Module, Content>>();
         
-        List<Functionality> functionalities = flatten(roots);
+        List<Content> functionalities = flatten(roots);
         
         String[] nodes = structure.split(",");
         for (int i = 0; i < nodes.length; i++) {
@@ -113,18 +114,18 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
             Integer parentIndex = getId(parts[1]);
 
             Module parent = (Module) functionalities.get(parentIndex);
-            Functionality child = functionalities.get(childIndex);
+            Content child = functionalities.get(childIndex);
          
-            arrangements.add(new Pair<Module, Functionality>(parent, child));
+            arrangements.add(new Pair<Module, Content>(parent, child));
         }
         
         rearrangeFunctionalities(arrangements);
     }
 
-    private List<Functionality> flatten(List<Functionality> roots) {
-        List<Functionality> functionalities = new ArrayList<Functionality>();
+    private List<Content> flatten(List<Content> roots) {
+        List<Content> functionalities = new ArrayList<Content>();
         
-        for (Functionality functionality : roots) {
+        for (Content functionality : roots) {
             if (functionality instanceof Module) {
                 functionalities.addAll(flatten((Module) functionality));
             }
@@ -136,11 +137,11 @@ public class ModuleManagementAction extends FunctionalitiesDispatchAction {
         return functionalities;
     }
 
-    private List<Functionality> flatten(Module root) {
-        List<Functionality> result = new ArrayList<Functionality>();
+    private List<Content> flatten(Module root) {
+        List<Content> result = new ArrayList<Content>();
         
         result.add(root);
-        for (Functionality functionality : root.getOrderedFunctionalities()) {
+        for (Content functionality : root.getOrderedChildren(Content.class)) {
             if (functionality instanceof Module) {
                 result.addAll(flatten((Module) functionality));
             }

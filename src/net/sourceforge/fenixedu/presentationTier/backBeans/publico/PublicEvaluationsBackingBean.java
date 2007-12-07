@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.DegreeSite;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -27,8 +28,10 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
@@ -52,7 +55,16 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     private Degree degree;
 
     public Integer getDegreeID() {
-	return (degreeID == null) ? degreeID = getAndHoldIntegerParameter("degreeID") : degreeID;
+	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(getRequest());
+	final DegreeSite site = (DegreeSite) context.getSelectedContainer();
+	if (site != null) {
+	    final Degree degree = site.getDegree();
+	    setRequestAttribute("degreeID", degree.getIdInternal());
+	    degreeID = degree.getIdInternal();
+	} else if (degreeID == null) {
+	    degreeID = getAndHoldIntegerParameter("degreeID");
+	}
+	return degreeID;
     }
 
     public Integer getDegreeCurricularPlanID() {

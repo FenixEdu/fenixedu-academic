@@ -9,11 +9,7 @@
 <!-- ======================
          bread crumbs
      ======================  -->
-<div>
-    <html:link page="/toplevel/view.do">
-        <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
-    </html:link> //
-    
+<div>   
     <logic:iterate id="crumb" name="crumbs">
         <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
             <fr:view name="crumb" property="name"/>

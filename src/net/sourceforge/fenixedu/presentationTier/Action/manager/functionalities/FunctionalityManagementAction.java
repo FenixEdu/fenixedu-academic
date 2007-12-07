@@ -10,13 +10,17 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality.Movement;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
+import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -38,10 +42,10 @@ import org.jdom.output.XMLOutputter;
 public class FunctionalityManagementAction extends FunctionalitiesDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Functionality functionality = getFunctionality(request);
+        Content functionality = getFunctionality(request);
 
         if (functionality == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
+            return viewRoot(mapping, actionForm, request, response);
         } else {
             if (functionality instanceof Module) {
                 return viewModule((Module) functionality, mapping, actionForm, request, response);
@@ -54,10 +58,10 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Functionality functionality = getFunctionality(request);
+        Content functionality = getFunctionality(request);
 
         if (functionality == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
+            return viewRoot(mapping, actionForm, request, response);
         } else {
             return forwardTo(mapping.findForward("edit"), request, functionality);
         }
@@ -74,72 +78,11 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         }
     }
 
-    public ActionForward up(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return move(MoveFunctionality.Movement.Up, mapping, actionForm, request, response);
-    }
-
-    public ActionForward down(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return move(MoveFunctionality.Movement.Down, mapping, actionForm, request, response);
-    }
-
-    public ActionForward top(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return move(MoveFunctionality.Movement.Top, mapping, actionForm, request, response);
-    }
-
-    public ActionForward bottom(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return move(MoveFunctionality.Movement.Bottom, mapping, actionForm, request, response);
-    }
-
-    public ActionForward indent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return move(MoveFunctionality.Movement.Right, mapping, actionForm, request, response);
-    }
-
-    public ActionForward outdent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return move(MoveFunctionality.Movement.Left, mapping, actionForm, request, response);
-    }
-
-    private ActionForward move(Movement movement, ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Module module = getModule(request);
-        Functionality functionality = getFunctionality(request);
-
-        if (functionality == null) {
-            return viewModule(module, mapping, actionForm, request, response);
-        }
-
-        moveFunctionality(functionality, movement);
-
-        return viewModule(module, mapping, actionForm, request, response);
-    }
-
-    public ActionForward enable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Functionality functionality = getFunctionality(request);
-
-        if (functionality == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
-        }
-
-        enable(functionality);
-
-        return manage(mapping, actionForm, request, response);
-    }
-
-    public ActionForward disable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Functionality functionality = getFunctionality(request);
-
-        if (functionality == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
-        }
-
-        disable(functionality);
-
-        return manage(mapping, actionForm, request, response);
-    }
-
     public ActionForward manage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Functionality functionality = getFunctionality(request);
+        Content functionality = getFunctionality(request);
 
         if (functionality == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
+            return viewRoot(mapping, actionForm, request, response);
         }
 
         ExpressionGroupAvailability availability = (ExpressionGroupAvailability) functionality.getAvailabilityPolicy();
@@ -156,10 +99,11 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         return forwardTo(mapping.findForward("manage"), request, functionality);
     }
 
-    private void setupAvailabilityStack(Functionality functionality, HttpServletRequest request) {
+    private void setupAvailabilityStack(Content content, HttpServletRequest request) {
         List<AvailabilityBean> availabilities = new ArrayList<AvailabilityBean>();
         
-        for (Module module = functionality.getModule(); module != null; module = module.getParent()) {
+        IFunctionality functionality = (IFunctionality) content;
+        for (Module module = functionality.getModule(); module != null; module = module.getModule()) {
             GroupAvailability availability = (GroupAvailability) module.getAvailabilityPolicy();
             
             if (availability != null) {
@@ -173,10 +117,10 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
     }
 
     public ActionForward parse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Functionality functionality = getFunctionality(request);
+        Content functionality = getFunctionality(request);
 
         if (functionality == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
+            return viewRoot(mapping, actionForm, request, response);
         }
 
         IViewState viewState = RenderUtils.getViewState();
@@ -229,18 +173,19 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
     }
     
     public ActionForward exportStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Functionality functionality = getFunctionality(request);
+        Content functionality = getFunctionality(request);
 
         Element toplevel = new Element("structure").setAttribute("version", "1.0");
         if (functionality != null) {
-            if (functionality.getModule() != null) {
-                toplevel.setAttribute("parent", functionality.getModule().getUuid().toString());
+            Module parent = ((IFunctionality) functionality).getModule();
+            if (parent != null) {
+                toplevel.setAttribute("parent", parent.getContentId());
             }
             
             toplevel.addContent(generateElement(functionality));
         }
         else {
-            for (Functionality topLevelFunctionality : Module.getOrderedTopLevelFunctionalities()) {
+            for (Content topLevelFunctionality : Module.getRootModule().getOrderedChildren(Content.class)) {
                 toplevel.addContent(generateElement(topLevelFunctionality));
             }
         }
@@ -285,11 +230,11 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         return docType;
     }
 
-    private Element generateElement(Functionality functionality) {
+    private Element generateElement(Content functionality) {
         Element element = new Element("functionality");
         
         element.setAttribute("type", functionality.getClass().getName());
-        element.setAttribute("uuid", functionality.getUuid().toString());
+        element.setAttribute("uuid", functionality.getContentId().toString());
         
         Element name = new Element("name");
         generateMultiLanguageStringElement(name, functionality.getName());
@@ -304,22 +249,24 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         element.addContent(title);
         element.addContent(description);
         
-        if (functionality.getPath() != null) {
-            element.setAttribute("path", functionality.getPath());
+        if (functionality instanceof Functionality) {
+            Functionality f = (Functionality) functionality;
+        
+            if (f.getPath() != null) {
+                element.setAttribute("path", f.getPath());
+            }
+            
+            if (f.getParameters() != null) {
+                element.setAttribute("parameters", f.getParametersString());
+            }
         }
         
-        if (functionality.getParameters() != null) {
-            element.setAttribute("parameters", functionality.getParameters());
-        }
+        IFunctionality f = (IFunctionality) functionality;
+        Module parent = f.getModule();
+        ExplicitOrderNode node = (ExplicitOrderNode) functionality.getParentNode(parent);
         
-        if (functionality.getOrderInModule() != null) {
-            element.setAttribute("order", String.valueOf(functionality.getOrderInModule()));
-        }
-
-        element.setAttribute("principal", String.valueOf(functionality.isPrincipal()));
-        element.setAttribute("enabled", String.valueOf(functionality.isEnabled()));
-        element.setAttribute("relative", String.valueOf(functionality.isRelative()));
-        element.setAttribute("visible", String.valueOf(functionality.isVisible()));
+        element.setAttribute("order", String.valueOf(node.getNodeOrder()));
+        element.setAttribute("visible", String.valueOf(node.isVisible()));
 
         if (functionality.getAvailabilityPolicy() != null) {
             String expression = ((ExpressionGroupAvailability) functionality.getAvailabilityPolicy()).getExpression();
@@ -330,10 +277,9 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             Module module = (Module) functionality;
             
             element.setAttribute("prefix", module.getPrefix());
-            element.setAttribute("maximized", String.valueOf(module.isMaximized()));
             
             Element children = new Element("children");
-            for (Functionality child : module.getOrderedFunctionalities()) {
+            for (Content child : module.getOrderedFunctionalities()) {
                 children.addContent(generateElement(child));
             }
             
@@ -355,5 +301,26 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             parent.addContent(element);
         }
     }
+    
+    public ActionForward removeParameter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        FunctionalityParameter functionalityParameter = getFunctionalityParameter(request);
+        Content functionality = getFunctionality(request);
+
+        if (functionalityParameter != null) {
+            deleteFunctionalityParameter(functionalityParameter);
+        } 
+        
+        return forwardTo(mapping.findForward("view"), request, functionality);
+    }
+    
+    private void deleteFunctionalityParameter(FunctionalityParameter functionalityParameter) throws FenixFilterException, FenixServiceException {
+	executeService("DeleteFunctionalityParameter", functionalityParameter);
+	
+    }
+
+    protected FunctionalityParameter getFunctionalityParameter(HttpServletRequest request) {
+        return (FunctionalityParameter) getObject(request, FunctionalityParameter.class, "functionalityParameter");
+    }
+
     
 }

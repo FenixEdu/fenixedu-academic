@@ -7,11 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality.Movement;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
+import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -33,7 +33,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
         saveMessages(request, messages);
     }
     
-    public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Functionality functionality) throws Exception {
+    public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Content functionality) throws Exception {
         setBreadCrumbs(request, functionality);
         request.setAttribute("functionality", functionality);
         
@@ -52,16 +52,15 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
         return forward;
     }
     
-    public ActionForward viewTopLevel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<Functionality> functionalities = Functionality.getOrderedTopLevelFunctionalities();
-        request.setAttribute("functionalities", functionalities);
+    public ActionForward viewRoot(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Module module = Module.getRootModule();
         
-        return mapping.findForward("toplevel");
+        return viewModule(module, mapping, actionForm, request, response);
     }
-
+    
     protected ActionForward viewModule(Module module, ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (module == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
+            return viewRoot(mapping, actionForm, request, response);
         }
         else {
             setBreadCrumbs(request, module);
@@ -73,10 +72,11 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
         }
     }
 
-    protected List<Module> getBreadCrumbs(HttpServletRequest request, Functionality functionality) {
+    protected List<Module> getBreadCrumbs(HttpServletRequest request, Content content) {
         List<Module> crumbs = new ArrayList<Module>();
 
-        for (Module parent = functionality.getModule(); parent != null; parent = parent.getParent()) {
+        IFunctionality functionality = (IFunctionality) content;
+        for (Module parent = functionality.getModule(); parent != null; parent = parent.getModule()) {
             if (crumbs.isEmpty()) {
                 crumbs.add(parent);
             }
@@ -88,7 +88,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
         return crumbs;
     }
     
-    protected void setBreadCrumbs(HttpServletRequest request, Functionality functionality) {
+    protected void setBreadCrumbs(HttpServletRequest request, Content functionality) {
         List<Module> crumbs = getBreadCrumbs(request, functionality);
         request.setAttribute("crumbs", crumbs);
     }
@@ -104,24 +104,24 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward confirm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Functionality functionality = getFunctionality(request);
+        Content functionality = getFunctionality(request);
     
         if (functionality == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
+            return viewRoot(mapping, actionForm, request, response);
         }
         
         return forwardTo(mapping.findForward("confirm"), request, functionality);
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Functionality functionality = getFunctionality(request);
+        Content functionality = getFunctionality(request);
     
         if (functionality == null) {
-            return viewTopLevel(mapping, actionForm, request, response);
+            return viewRoot(mapping, actionForm, request, response);
         }
         
         if (request.getParameter("confirm") != null) {
-            Module parent = functionality.getModule();
+            Module parent = ((IFunctionality) functionality).getModule();
             deleteFunctionality(functionality);
             
             return viewModule(parent, mapping, actionForm, request, response);
@@ -140,8 +140,8 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
         return (Module) getObject(request, Module.class, "module");
     }
 
-    protected Functionality getFunctionality(HttpServletRequest request) {
-        return (Functionality) getObject(request, ConcreteFunctionality.class, "functionality");
+    protected Content getFunctionality(HttpServletRequest request) {
+        return (Content) getObject(request, Content.class, "functionality");
     }
 
     protected DomainObject getObject(HttpServletRequest request, Class type, String parameter) {
@@ -184,25 +184,8 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      * @throws Exception
      *             the exception throw by the service
      */
-    public static void deleteFunctionality(Functionality functionality) throws Exception {
+    public static void deleteFunctionality(Content functionality) throws Exception {
         ServiceUtils.executeService(AccessControl.getUserView(), "DeleteFunctionality", functionality);
-    }
-
-    /**
-     * Auxiliary method that invokes the real service that will move the
-     * functionality.
-     * 
-     * @param functionality
-     *            the functionality to be moven
-     * @param movement
-     *            the type of movement
-     * @throws Exception
-     *             the exception thrown by the service
-     */
-    public static void moveFunctionality(Functionality functionality, Movement movement)
-            throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "MoveFunctionality", functionality,
-                movement);
     }
 
     /**
@@ -216,7 +199,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      * @throws Exception
      *             the exception thrown by the service
      */
-    public static void rearrangeFunctionalities(List<Pair<Module, Functionality>> arrangements)
+    public static void rearrangeFunctionalities(List<Pair<Module, Content>> arrangements)
             throws Exception {
         ServiceUtils.executeService(AccessControl.getUserView(), "ArrangeFunctionalities", arrangements);
     }
@@ -259,7 +242,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *            the group expression used to the create the new group
      *            availability
      */
-    public static void setGroupAvailability(Functionality functionality, String expression)
+    public static void setGroupAvailability(Content functionality, String expression)
             throws Exception {
         ServiceUtils.executeService(AccessControl.getUserView(), "CreateGroupAvailability",
                 functionality, expression);

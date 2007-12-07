@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import pt.ist.utl.fenix.utils.Pair;
 
@@ -21,22 +22,9 @@ public class ArrangeFunctionalities extends Service {
      * 
      * @param arrangements list of pairs (parent, child)
      */
-    public void run(List<Pair<Module, Functionality>> arrangements) {
-        for (Pair<Module, Functionality> pair : arrangements) {
-            Module oldModule = pair.getValue().getModule();
-            
-            pair.getValue().setModule(pair.getKey());
-            
-            // HACK: when a functionality is in the toplevel and it's changed
-            //       into other module then the toplevel is sorted before 
-            //       the functionality is removed. This happens because 
-            //       changing the module of a functionality consists in setting
-            //       the value to NULL and then to the final value.
-            //       If the functionality is a toplevel functionality then setting
-            //       the module to NULL does not remove it from the toplevel.
-            if (oldModule == null && pair.getKey() != null) {
-                Module.pack(oldModule);
-            }
+    public void run(List<Pair<Module, Content>> arrangements) {
+        for (Pair<Module, Content> pair : arrangements) {            
+            ((IFunctionality) pair.getValue()).setModule(pair.getKey());            
         }
     }
     

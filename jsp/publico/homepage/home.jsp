@@ -13,7 +13,7 @@
 
 		<h1 id="no">
 			<%-- <bean:message bundle="HOMEPAGE_RESOURCES" key="title.homepage.of"/>: --%>
-			<bean:write name="homepage" property="name"/>
+			<bean:write name="homepage" property="ownersName"/>
 		</h1>
 
 	<table class="invisible thleft">

@@ -13,10 +13,6 @@
      ======================  -->
 
 <div>
-    <html:link page="/toplevel/view.do">
-        <bean:message key="link.toplevel.view" bundle="FUNCTIONALITY_RESOURCES"/>
-    </html:link> //
-    
     <logic:iterate id="crumb" name="crumbs">
         <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
             <fr:view name="crumb" property="name"/>
@@ -106,27 +102,6 @@
 	        <fr:property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
 	        
 	        <fr:property name="movedClass" value="highlight3"/>
-	        
-	        <fr:property name="hiddenLinks">
-	            <html:link page="<%= "/functionality/up.do?module=" + thisModule + "&functionality=${idInternal}" %>">
-	                <bean:message key="link.functionality.up" bundle="FUNCTIONALITY_RESOURCES"/>
-	            </html:link>,
-	            <html:link page="<%= "/functionality/down.do?module=" + thisModule + "&functionality=${idInternal}" %>">
-	                <bean:message key="link.functionality.down" bundle="FUNCTIONALITY_RESOURCES"/>
-	            </html:link>,
-	            <html:link page="<%= "/functionality/top.do?module=" + thisModule + "&functionality=${idInternal}" %>">
-	                <bean:message key="link.functionality.top" bundle="FUNCTIONALITY_RESOURCES"/>
-	            </html:link>,
-	            <html:link page="<%= "/functionality/bottom.do?module=" + thisModule + "&functionality=${idInternal}" %>">
-	                <bean:message key="link.functionality.bottom" bundle="FUNCTIONALITY_RESOURCES"/>
-	            </html:link>,           
-	            <html:link page="<%= "/functionality/indent.do?module=" + thisModule + "&functionality=${idInternal}" %>">
-	                <bean:message key="link.functionality.indent" bundle="FUNCTIONALITY_RESOURCES"/>
-	            </html:link>,
-	           <html:link page="<%= "/functionality/outdent.do?module=" + thisModule + "&functionality=${idInternal}" %>">
-	               <bean:message key="link.functionality.outdent" bundle="FUNCTIONALITY_RESOURCES"/>
-	           </html:link> 
-	       </fr:property>
 	   </fr:layout>
 	
 	   <fr:destination name="module.view" path="/module/view.do?module=${idInternal}"/>

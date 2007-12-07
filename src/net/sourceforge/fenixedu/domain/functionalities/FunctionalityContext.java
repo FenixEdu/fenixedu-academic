@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.Content;
 
 /**
  * The context in wich a functionality is being executed.
@@ -53,5 +57,19 @@ public interface FunctionalityContext {
      * 
      * @return the selected functionality
      */
+    @Deprecated
     public Functionality getSelectedFunctionality();
+    
+    public Content getSelectedContent();
+    
+    public Container getSelectedContainer();
+    
+    public Container getSelectedTopLevelContainer();
+    
+    public Content getLastContentInPath(Class type);
+
+    public String getCurrentContextPath();
+
+    public List<Content> getSelectedContents();
+    
 }

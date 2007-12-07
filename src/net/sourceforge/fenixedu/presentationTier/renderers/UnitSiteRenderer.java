@@ -3,13 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchUnitProcessor;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -31,178 +27,166 @@ import org.apache.commons.collections.Predicate;
  */
 public class UnitSiteRenderer extends OutputRenderer {
 
-	private String classes;
+    private String classes;
 
-	private String unitSchema;
+    private String unitSchema;
 
-	private String unitLayout;
+    private String unitLayout;
 
-	private boolean parenteShown;
+    private boolean parenteShown;
 
-	private boolean targetBlank;
+    private boolean targetBlank;
 
-	private boolean moduleRelative;
+    private boolean moduleRelative;
 
-	private boolean contextRelative;
+    private boolean contextRelative;
 
-	private String separator;
-	
-	private String style;
-	
-	public boolean isContextRelative() {
-		return contextRelative;
-	}
+    private String separator;
 
-	public void setContextRelative(boolean contextRelative) {
-		this.contextRelative = contextRelative;
-	}
+    private String style;
 
-	public boolean isModuleRelative() {
-		return moduleRelative;
-	}
+    public boolean isContextRelative() {
+	return contextRelative;
+    }
 
-	public void setModuleRelative(boolean moduleRelative) {
-		this.moduleRelative = moduleRelative;
-	}
+    public void setContextRelative(boolean contextRelative) {
+	this.contextRelative = contextRelative;
+    }
 
-	public String getClasses() {
-		return classes;
-	}
+    public boolean isModuleRelative() {
+	return moduleRelative;
+    }
 
-	public void setClasses(String classes) {
-		this.classes = classes;
-	}
+    public void setModuleRelative(boolean moduleRelative) {
+	this.moduleRelative = moduleRelative;
+    }
 
-	public boolean isParenteShown() {
-		return parenteShown;
-	}
+    public String getClasses() {
+	return classes;
+    }
 
-	public void setParenteShown(boolean parenteShown) {
-		this.parenteShown = parenteShown;
-	}
+    public void setClasses(String classes) {
+	this.classes = classes;
+    }
 
-	public boolean isTargetBlank() {
-		return targetBlank;
-	}
+    public boolean isParenteShown() {
+	return parenteShown;
+    }
 
-	public void setTargetBlank(boolean targetBlank) {
-		this.targetBlank = targetBlank;
-	}
+    public void setParenteShown(boolean parenteShown) {
+	this.parenteShown = parenteShown;
+    }
 
-	public String getUnitSchema() {
-		return unitSchema;
-	}
+    public boolean isTargetBlank() {
+	return targetBlank;
+    }
 
-	public void setUnitSchema(String unitSchema) {
-		this.unitSchema = unitSchema;
-	}
+    public void setTargetBlank(boolean targetBlank) {
+	this.targetBlank = targetBlank;
+    }
 
-	public String getUnitLayout() {
-		return unitLayout;
-	}
+    public String getUnitSchema() {
+	return unitSchema;
+    }
 
-	public void setUnitLayout(String unitLayout) {
-		this.unitLayout = unitLayout;
+    public void setUnitSchema(String unitSchema) {
+	this.unitSchema = unitSchema;
+    }
+
+    public String getUnitLayout() {
+	return unitLayout;
+    }
+
+    public void setUnitLayout(String unitLayout) {
+	this.unitLayout = unitLayout;
+    }
+
+    @Override
+    protected Layout getLayout(Object object, Class type) {
+	return new UnitSiteLayout();
+    }
+
+    private class UnitSiteLayout extends Layout {
+
+	private Schema findSchema() {
+	    return RenderKit.getInstance().findSchema(getUnitSchema());
 	}
 
 	@Override
-	protected Layout getLayout(Object object, Class type) {
-		return new UnitSiteLayout();
-	}
+	public HtmlComponent createComponent(Object object, Class type) {
+	    Unit unit = (Unit) object;
+	    HtmlBlockContainer unitPresentation = new HtmlBlockContainer();
+	    unitPresentation.addChild(getUnitComponent(unit));
+	    if (isParenteShown()) {
 
-	private class UnitSiteLayout extends Layout {
+		Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(),
+			new Predicate() {
+			    public boolean evaluate(Object arg0) {
+				return !((Unit) arg0).isAggregateUnit();
+			    }
 
-		private Schema findSchema() {
-			return RenderKit.getInstance().findSchema(getUnitSchema());
+			});
+
+		if (!parentUnits.isEmpty()) {
+		    unitPresentation.addChild(new HtmlText(getSeparator(), false));
+		    int i = 0;
+		    int size = parentUnits.size();
+		    for (Unit parentUnit : parentUnits) {
+			unitPresentation.addChild(getUnitComponent(parentUnit));
+			if (i < size - 1) {
+			    unitPresentation.addChild(new HtmlText(","));
+			}
+			i++;
+		    }
 		}
+	    }
+	    return unitPresentation;
+	}
 
-		@Override
-		public HtmlComponent createComponent(Object object, Class type) {
-			Unit unit = (Unit) object;
-			HtmlBlockContainer unitPresentation = new HtmlBlockContainer();
-			unitPresentation.addChild(getUnitComponent(unit));
-			if (isParenteShown()) {
-
-				Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(),
-						new Predicate() {
-							public boolean evaluate(Object arg0) {
-								return !((Unit) arg0).isAggregateUnit();
-							}
-
-						});
-
-				if (!parentUnits.isEmpty()) {
-					unitPresentation.addChild(new HtmlText(getSeparator(),false));
-					int i = 0;
-					int size = parentUnits.size();
-					for (Unit parentUnit : parentUnits) {
-						unitPresentation.addChild(getUnitComponent(parentUnit));
-						if (i < size - 1) {
-							unitPresentation.addChild(new HtmlText(","));
-						}
-						i++;
-					}
-				}
-			}
-			return unitPresentation;
+	private HtmlComponent getUnitComponent(Unit unit) {
+	    HtmlComponent component;
+	    if (unitHasSite(unit)) {
+		HtmlLink link = new HtmlLink();
+		link.setUrl(resolveUnitURL(unit));
+		link.setBody(renderValue(unit, findSchema(), getUnitLayout()));
+		if (isTargetBlank()) {
+		    link.setTarget("_blank");
 		}
-
-		private HtmlComponent getUnitComponent(Unit unit) {
-			HtmlComponent component;
-			if (unitHasSite(unit)) {
-				HtmlLink link = new HtmlLink();
-				link.setUrl(resolveUnitURL(unit));
-				link.setBody(renderValue(unit, findSchema(), getUnitLayout()));
-				if (isTargetBlank()) {
-					link.setTarget("_blank");
-				}
-				link.setModuleRelative(isModuleRelative());
-				link.setContextRelative(isContextRelative());
-				component = link;
-			} else {
-				component = renderValue(unit, findSchema(), getUnitLayout());
-			}
-			return component;
-		}
-
-		private boolean unitHasSite(Unit unit) {
-			return (unit.isDegreeUnit()) ? unit.getDegree().hasSite() : unit.hasSite();
-		}
-
-		private String resolveUnitURL(Unit unit) {
-			if (unit.isDegreeUnit()) {
-				return DegreeProcessor.getDegreePath(unit.getDegree());
-			}
-			if (unit.isDepartmentUnit()) {
-				return DepartmentProcessor.getDepartmentPath(unit.getDepartment());
-			}
-			if(unit instanceof ResearchUnit) {
-				return ResearchUnitProcessor.getResearchUnitPath((ResearchUnit)unit);
-			}
-			// hardcoded link this will disapear when the content refactor gets merged,
-			// that's why a PathProcessor wasn't written.
-			if(unit instanceof ScientificAreaUnit) {
-			    return "/publico/scientificArea/viewSite.do?method=presentation&unitID=" + unit.getIdInternal() ; 
-			}
-			return null;
-		}
-
+		link.setModuleRelative(isModuleRelative());
+		link.setContextRelative(isContextRelative());
+		component = link;
+	    } else {
+		component = renderValue(unit, findSchema(), getUnitLayout());
+	    }
+	    return component;
+	}
+	
+	private boolean unitHasSite(Unit unit) {
+	    return (unit.isDegreeUnit()) ? unit.getDegree().hasSite() : unit.hasSite();
 	}
 
-	public String getSeparator() {
-		return separator;
+	private String resolveUnitURL(Unit unit) {
+	    MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(unit.getSite().getClass());
+	    return metaDomainObject == null ? null : metaDomainObject.getAssociatedPortal().getName()
+		    .getContent()
+		    + "/" + unit.getUnitPath("/");
 	}
+    }
 
-	public void setSeparator(String separator) {
-		this.separator = separator;
-	}
+    public String getSeparator() {
+	return separator;
+    }
 
-	public String getStyle() {
-		return style;
-	}
+    public void setSeparator(String separator) {
+	this.separator = separator;
+    }
 
-	public void setStyle(String style) {
-		this.style = style;
-	}
+    public String getStyle() {
+	return style;
+    }
+
+    public void setStyle(String style) {
+	this.style = style;
+    }
 
 }

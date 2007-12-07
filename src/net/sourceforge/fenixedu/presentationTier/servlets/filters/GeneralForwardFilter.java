@@ -15,25 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeCurricularPlanProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentsProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExamProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCourseProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCoursesProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.HomepageProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PathElementsProvider;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PathProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PedagogicalCouncilProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ProcessingContext;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchUnitProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ScheduleProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SchoolClassProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ScientificCouncilProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SectionProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SemesterProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.YearProcessor;
 
 public class GeneralForwardFilter implements Filter {
@@ -47,18 +39,11 @@ public class GeneralForwardFilter implements Filter {
         
         String siteListURI = config.getInitParameter("siteListURI");
         String executionCouseSiteURI = config.getInitParameter("executionCourseSiteURI");
-        String homepageSiteURI = config.getInitParameter("homepageSiteURI");
         String scheduleListURI = config.getInitParameter("scheduleListURI");
         String classScheduleURI = config.getInitParameter("classScheduleURI");
         String examListURI = config.getInitParameter("examListURI");
         String degreeURI = config.getInitParameter("degreeURI");
         String degreeSiteURI = config.getInitParameter("degreeSiteURI");
-        String departmentSiteURI = config.getInitParameter("departmentSiteURI");
-        String departmentsURI = config.getInitParameter("departmentsURI");
-        String researchURI = config.getInitParameter("researchURI");
-        String pedagocialCouncilURI = config.getInitParameter("pedagogicalCouncilURI");
-        String scientificCouncilURI = config.getInitParameter("scientificCouncilURI");
-        String unitSiteURI = config.getInitParameter("unitSiteURI");
         
         DegreeProcessor degreeProcessor = new DegreeProcessor(degreeURI, degreeSiteURI);
         ExecutionCoursesProcessor executionCourses = new ExecutionCoursesProcessor(siteListURI);
@@ -71,14 +56,6 @@ public class GeneralForwardFilter implements Filter {
         ExamProcessor exams = new ExamProcessor(examListURI);
         SectionProcessor section = new SectionProcessor();
         ItemProcessor item = new ItemProcessor();
-        HomepageProcessor homepage = new HomepageProcessor(homepageSiteURI);
-        DepartmentsProcessor departments = new DepartmentsProcessor(departmentsURI);
-        DepartmentProcessor department = new DepartmentProcessor(departmentSiteURI);
-        ResearchProcessor research = new ResearchProcessor();
-        ResearchUnitProcessor researchUnit = new ResearchUnitProcessor(researchURI);
-        PedagogicalCouncilProcessor pedagogicalCouncil = new PedagogicalCouncilProcessor(pedagocialCouncilURI);
-        ScientificCouncilProcessor scientificCouncil = new ScientificCouncilProcessor(scientificCouncilURI);
-        UnitSiteProcessor unitSite = new UnitSiteProcessor(unitSiteURI);
         
         SectionProcessor sectionAndItem = section.add(item);
         
@@ -104,12 +81,6 @@ public class GeneralForwardFilter implements Filter {
                 .add(sectionAndItem)
         );
         
-        processors.add(homepage.add(sectionAndItem));
-        processors.add(departments.add(department.add(sectionAndItem)));
-        processors.add(research.add(researchUnit.add(sectionAndItem)));
-        processors.add(pedagogicalCouncil.add(sectionAndItem));
-        processors.add(scientificCouncil.add(sectionAndItem));
-        processors.add(unitSite.add(sectionAndItem));
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

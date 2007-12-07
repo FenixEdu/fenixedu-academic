@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -20,12 +20,11 @@ public class UnitsWithAnnouncementsProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         Set<Unit> result = new HashSet<Unit>();
         
-        for (AnnouncementBoard board : RootDomainObject.getInstance().getAnnouncementBoards()) {
-            if (! (board instanceof UnitAnnouncementBoard)) {
+        for (final Content content : RootDomainObject.getInstance().getContentsSet()) {
+            if (! (content instanceof UnitAnnouncementBoard)) {
                 continue;
             }
-            
-            UnitAnnouncementBoard unitBoard = (UnitAnnouncementBoard) board;
+            UnitAnnouncementBoard unitBoard = (UnitAnnouncementBoard) content;
             result.add(unitBoard.getUnit());
         }
         

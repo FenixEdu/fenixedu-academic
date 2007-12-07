@@ -1,9 +1,16 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 /**
@@ -42,7 +49,59 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
         }
     }
 
+    protected String getPath() {
+	final String requestedPath = getRequest().getServletPath();
+	try {
+	    if (requestedPath.matches("/dotIstPortal.do")) {
+		return getRequest().getParameter("prefix") + getRequest().getParameter("page");
+	    }
+	    return requestedPath.length() == 0 ? requestedPath : URLDecoder.decode(requestedPath.substring(1), "ISO-8859-1");
+	} catch (UnsupportedEncodingException e) {
+	    throw new Error(e);
+	}
+    }
+
+    protected String getParentPath() {
+	return getParentPath(getPath());
+    }
+
+    protected String getSubPath() {
+	return getSubPath(getPath());
+    }
+
+    protected static String getSubPath(final String path) {
+	final int indexOfSlash = path.indexOf('/');
+	return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
+    }
+
+    protected static String getParentPath(final String path) {
+	final int indexOfLantSlash = path.lastIndexOf('/');
+	return indexOfLantSlash >= 0 ? path.substring(0, indexOfLantSlash) : null;
+    }
+
+    public Container getSelectedContainer() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+    
     public abstract Module getSelectedModule();
     public abstract Functionality getSelectedFunctionality();
+    public abstract Container getSelectedTopLevelContainer();
+    
+    public static FunctionalityContext getCurrentContext(HttpServletRequest request) {
+	FunctionalityContext context = (FunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
+	return context;
+    }
+    
+    public Content getLastContentInPath(Class type) {
+	return getSelectedContainer();
+    }
 
+    public List<Content> getSelectedContents() {
+	return Collections.emptyList();
+    }
+    
+    public Content getSelectedContent() {
+	return null;
+    }
 }

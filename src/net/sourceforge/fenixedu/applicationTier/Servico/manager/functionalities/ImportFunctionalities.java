@@ -3,19 +3,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.UUID;
 
-import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.exceptions.InvalidStructureException;
 import net.sourceforge.fenixedu.domain.Language;
-import net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
-import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -23,8 +21,6 @@ import org.jdom.input.SAXBuilder;
 
 public class ImportFunctionalities extends Service {
 
-    private static final Logger logger = Logger.getLogger(ImportFunctionalities.class);
-    
     /**
      * Reads the given stream and interprets it as a XML document containing the
      * functionality structure to import. All the functionalities read will be
@@ -84,15 +80,15 @@ public class ImportFunctionalities extends Service {
         for (Object element : children) {
             Element functionalityElement = (Element) element;
 
-            Functionality functionality = null;
-            UUID uuid = null;
+            Content content = null;
+            String uuid = null;
             
             if (considerUUID) {
-                uuid = UUID.fromString(functionalityElement.getAttributeValue("uuid"));
-                functionality  = Functionality.getFunctionality(uuid);
+                uuid = functionalityElement.getAttributeValue("uuid");
+                content  = Functionality.getFunctionality(uuid);
             }
 
-            if (functionality == null) {
+            if (content == null) {
                 String path = functionalityElement.getAttributeValue("path");
                 String prefix = functionalityElement.getAttributeValue("prefix");
                 String parameters = functionalityElement.getAttributeValue("parameters");
@@ -113,15 +109,10 @@ public class ImportFunctionalities extends Service {
                 
                 String type = functionalityElement.getAttributeValue("type");
                 if (type.equals(Module.class.getName())) {
-                    Module createdModule;
-                    
-                    functionality = createdModule = considerUUID ? new Module(uuid, name, prefix) : new Module(name, prefix);
-                    
-                    Boolean maximized = new Boolean(functionalityElement.getAttributeValue("maximized"));
-                    createdModule.setMaximized(maximized);
+                    content = new Module(name, prefix);
                 }
                 else {
-                    functionality = considerUUID ? new ConcreteFunctionality(uuid, name) : new ConcreteFunctionality(name);
+                    content = considerUUID ? new Functionality(uuid, name) : new Functionality(name);
                 }
     
                 String expression = null;
@@ -130,52 +121,42 @@ public class ImportFunctionalities extends Service {
                     expression = availabilityElement.getTextNormalize();
                 }
                 
-                functionality.setPathAndPrincipal(path, principalPreserved ? principal : false);
-                functionality.setParameters(parameters);
-                functionality.setName(name);
-                functionality.setTitle(title);
-                functionality.setDescription(description);
-                functionality.setRelative(relative);
-                functionality.setVisible(visible);
+                content.setName(name);
+                content.setTitle(title);
+                content.setDescription(description);
+                
+                if (content instanceof Functionality) {
+                    Functionality f = (Functionality) content;
+                    f.setExecutionPath(path);
+                    f.setParameters(parameters);
+                    f.setModule(module);
+                }
+                else if (content instanceof Module) {
+                    Module m = (Module) content;
+                    m.setModule(module);
+                }
                 
                 if (expression != null) {
-                    new ExpressionGroupAvailability(functionality, expression);
+                    new ExpressionGroupAvailability(content, expression);
                 }
                 
-                functionality.setModule(module);
-                
+                ExplicitOrderNode node = (ExplicitOrderNode) content.getParentNode(module);
                 if (order != null) {
-                    functionality.setOrderInModule(order);
+                    node.setNodeOrder(order);
                 }
-                
-                logNewFunctionality(functionality);
+
+                if (visible != null) {
+                    node.setVisible(visible);
+                }
             }
             
             Element childrenElement = functionalityElement.getChild("children");
-            if (childrenElement != null && functionality instanceof Module) {
-                importFunctionalities((Module) functionality, childrenElement.getChildren("functionality"), principalPreserved, considerUUID);
+            if (childrenElement != null && content instanceof Module) {
+                importFunctionalities((Module) content, childrenElement.getChildren("functionality"), principalPreserved, considerUUID);
             }
         }
-        
-        Module.pack(module);
     }
 
-    private void logNewFunctionality(Functionality functionality) {
-        if (LogLevel.INFO) {
-            String path = getNamePath(functionality);
-            logger.info(String.format("%s[%s]", path, functionality.getUuid()));
-        }
-    }
-    
-    private String getNamePath(Functionality functionality) {
-       if (functionality == null) {
-           return "";
-       }
-       else {
-           return getNamePath(functionality.getModule()) + "/" + functionality.getName().getContent();
-       }
-    }
-    
     private MultiLanguageString importMultiLanguageString(Element child) {
         MultiLanguageString mlString = new MultiLanguageString();
         

@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.Filter;
@@ -16,7 +18,6 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 /**
@@ -32,69 +33,53 @@ public class RequestWrapperFilter implements Filter {
     public void destroy() {
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
             throws IOException, ServletException {
-        chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) request), response);
-        setSessionTimeout((HttpServletRequest) request);
+	final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        chain.doFilter(new FenixHttpServletRequestWrapper(httpServletRequest), response);
+        setSessionTimeout(httpServletRequest);
     }
 
-    /**
-     * @param request
-     */
-    private void setSessionTimeout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            if (session.getAttribute(SessionConstants.U_VIEW) == null) {
-                session.setMaxInactiveInterval(600);
-            } else {
-                session.setMaxInactiveInterval(7200);
-            }
+    private void setSessionTimeout(final HttpServletRequest request) {
+	final HttpSession session = request.getSession(false);
+	if (session != null) {
+	    final IUserView userView = SessionUtils.getUserView(request);
+	    final int m = userView == null ? 600 : 7200;
+	    session.setMaxInactiveInterval(m);
         }
-
     }
 
-    public class FenixHttpServletRequestWrapper extends HttpServletRequestWrapper {
+    public static class FenixHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
-        /**
-         * @param request
-         */
-        public FenixHttpServletRequestWrapper(HttpServletRequest request) {
+	private static final String PAGE_DEFAULT = "0";
+
+	private static final String[] PAGE_DEFAULT_ARRAY = { PAGE_DEFAULT };
+	
+	public FenixHttpServletRequestWrapper(HttpServletRequest request) {
             super(request);
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see javax.servlet.http.HttpServletRequest#getRemoteUser()
-         */
+	@Override
         public String getRemoteUser() {
-            IUserView userView = SessionUtils.getUserView(this);
+            final IUserView userView = SessionUtils.getUserView(this);
             return userView != null ? userView.getUtilizador() : super.getRemoteUser();
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see javax.servlet.http.HttpServletRequest#isUserInRole(java.lang.String)
-         */
+        @Override
         public boolean isUserInRole(final String role) {
             final IUserView userView = SessionUtils.getUserView(this);
             final RoleType roleType = RoleType.valueOf(role);
             return userView != null && userView.hasRoleType(roleType);
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see javax.servlet.ServletRequest#getParameterNames()
-         */
+        @Override
         public Enumeration getParameterNames() {
-            Vector params = new Vector();
+            final Vector params = new Vector();
 
-            Enumeration paramEnum = super.getParameterNames();
+            final Enumeration paramEnum = super.getParameterNames();
             boolean gotPageParameter = false;
             while (paramEnum.hasMoreElements()) {
-                String parameterName = (String) paramEnum.nextElement();
+                final String parameterName = (String) paramEnum.nextElement();
                 if (paramEnum.equals("page")) {
                     gotPageParameter = true;
                 }
@@ -107,22 +92,33 @@ public class RequestWrapperFilter implements Filter {
             return params.elements();
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see javax.servlet.ServletRequest#getParameterValues(java.lang.String)
-         */
-        public String[] getParameterValues(String parameter) {
-
-            if (parameter != null && parameter.equals("page")) {
-
-                String[] pageDefault = { "0" };
-
-                String[] pageValues = super.getParameterValues("page");
-                return pageValues == null ? pageDefault : pageValues;
-            }
-            return super.getParameterValues(parameter);
+        @Override
+        public String[] getParameterValues(final String parameter) {
+            final String[] parameterValues = super.getParameterValues(parameter);
+            return parameterValues == null && parameter.equals("page") ? PAGE_DEFAULT_ARRAY : parameterValues;
         }
+
+        @Override
+        public String getParameter(final String parameter) {
+            final String parameterValue = super.getParameter(parameter);
+            return parameterValue == null && parameter.equals("page") ? PAGE_DEFAULT : parameterValue;
+        }
+
+//        @Override
+//        public Map getParameterMap() {
+//            final Map map = super.getParameterMap();
+//            if (map.containsKey("page")) {
+//        	System.out.println(" returning map: " + map.getClass().getName());
+//        	System.out.println(" iterator     : " + map.entrySet().iterator().getClass().getName());
+//        	return map;
+//            } else {
+//        	final Map newMap = new HashMap(map);
+//        	newMap.put("page", PAGE_DEFAULT);
+//        	System.out.println(" returning map: " + map.getClass().getName());
+//        	System.out.println(" iterator     : " + map.entrySet().iterator().getClass().getName());
+//        	return newMap;
+//            }
+//        }
 
     }
 }

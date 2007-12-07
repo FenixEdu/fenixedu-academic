@@ -1,13 +1,20 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.functionalities;
 
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
+import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**
  * This renderer renderes bread crumbs based on the current functionalities
@@ -18,61 +25,77 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 public class BreadCrumbsRenderer extends OutputRenderer {
 
     private String separator;
-    
+
+    private Map<String, String> links;
+
     public BreadCrumbsRenderer() {
-        super();
-        
-        setSeparator("&gt;");
+	super();
+
+	setSeparator("&gt;");
+	links = new HashMap<String, String>();
+    }
+
+    public void setLinkFor(String name, String value) {
+	links.put(name, value);
+    }
+
+    public String getLinkFor(String name) {
+	return links.get(name);
     }
 
     public String getSeparator() {
-        return this.separator;
+	return this.separator;
     }
 
     /**
-     * The text separator used when separating the different links. By default
-     * &gt; is used.
-     * 
-     * @param separator
-     */
+         * The text separator used when separating the different links. By
+         * default &gt; is used.
+         * 
+         * @param separator
+         */
     public void setSeparator(String separator) {
-        this.separator = separator;
+	this.separator = separator;
     }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-        return new Layout() {
+	return new Layout() {
 
-            @Override
-            public HtmlComponent createComponent(Object object, Class type) {
-                FunctionalityContext context = (FunctionalityContext) object;
+	    @Override
+	    public HtmlComponent createComponent(Object object, Class type) {
+		HtmlContainer container = new HtmlInlineContainer();
 
-                if (context == null) {
-                    return new HtmlText();
-                }
-                
-                if (context.getSelectedFunctionality() == null) {
-                    return new HtmlText();
-                }
+		Content content = (Content) object;
 
-                HtmlContainer container = new HtmlInlineContainer();
-                addCrumbs(context, container, context.getSelectedFunctionality());
-                
-                return container;
-            }
+		List<Content> contents = RootDomainObject.getInstance().getRootPortal().getPathTo(
+			content);
+		Iterator<Content> contentIterator = contents.iterator();
 
-            private void addCrumbs(FunctionalityContext context, HtmlContainer container, Functionality functionality) {
-                if (functionality.getModule() != null) {
-                    addCrumbs(context, container, functionality.getModule());
-                    container.addChild(new HtmlText(getSeparator(), false));
-                }
-                
-                boolean linkable = !context.getSelectedFunctionality().equals(functionality);
-                HtmlComponent component = MenuRenderer.getFunctionalityNameComponent(context, functionality, linkable);
-                container.addChild(component);
-            }
-            
-        };
+		while (contentIterator.hasNext()) {
+		    container.addChild(createLink(contentIterator.next()));
+		    if(contentIterator.hasNext()) {
+			container.addChild(new HtmlText(getSeparator(),false));
+		    }
+		}
+
+		return container;
+	    }
+
+	    private HtmlComponent createLink(Content content) {
+		String linkToFormat = getLinkFor(content.getClass().getSimpleName());
+		if (linkToFormat != null) {
+		    HtmlLink link = new HtmlLink();
+		    link.setModuleRelative(true);
+		    link.setContextRelative(true);
+		    link.setText(content.getName().getContent());
+		    link.setUrl(RenderUtils.getFormattedProperties(linkToFormat, content));
+
+		    return link;
+		} else {
+		    return new HtmlText(content.getName().getContent());
+		}
+	    }
+
+	};
     }
-
 }

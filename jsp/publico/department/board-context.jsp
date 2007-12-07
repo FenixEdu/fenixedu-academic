@@ -25,12 +25,16 @@
         <bean:message key="academic.units" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
     &nbsp;&gt;&nbsp;
-    <bean:define id="unitId" name="unit" property="idInternal"/>
+    
+    <bean:define id="site" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer"/>
+
+	<bean:define id="unitId" name="site" property="unit.idInternal"/>
+	
     <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
-        <fr:view name="department" property="nameI18n"/>
+        <fr:view name="site" property="unit.nameI18n"/>
     </html:link>
     &nbsp;&gt;&nbsp;
-    <logic:present name="showingAnnouncements"> <%-- hack: set in action --%>
+    <logic:present name="showingAnnouncements"> 
 		<bean:message key="messaging.announcements.title.label" bundle="MESSAGING_RESOURCES"/>
     </logic:present>
     <logic:present name="showingEvents">

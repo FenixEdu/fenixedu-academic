@@ -12,9 +12,11 @@ import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.SearchDSpaceGeneralAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean.EducationalResourceType;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -34,7 +36,15 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String executionCourseId = request.getParameter("executionCourseID");
-		ExecutionCourse course = (ExecutionCourse) RootDomainObject.readDomainObjectByOID(ExecutionCourse.class, Integer.valueOf(executionCourseId));
+		ExecutionCourse course = null;
+		if(executionCourseId != null) {
+		    course = (ExecutionCourse) RootDomainObject.readDomainObjectByOID(ExecutionCourse.class, Integer.valueOf(executionCourseId));
+		}
+		else {
+		    ExecutionCourseSite site = (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
+		    course = site.getSiteExecutionCourse();
+		}
+		
 		request.setAttribute("executionCourse", course);
 		
 		return super.execute(mapping, form, request, response);

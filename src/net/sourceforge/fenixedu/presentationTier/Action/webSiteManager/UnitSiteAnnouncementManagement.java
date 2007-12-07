@@ -46,7 +46,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
             return null;
         }
         
-        return (UnitSite) RootDomainObject.getInstance().readSiteByOID(oid);
+        return (UnitSite) RootDomainObject.getInstance().readContentByOID(oid);
     }
     
     protected Unit getUnit(HttpServletRequest request) {

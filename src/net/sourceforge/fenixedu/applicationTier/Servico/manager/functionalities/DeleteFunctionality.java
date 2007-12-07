@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
 /**
@@ -15,7 +16,7 @@ public class DeleteFunctionality extends Service {
      * 
      * @see Functionality#delete()
      */
-    public void run(Functionality functionality) {
+    public void run(Content functionality) {
         functionality.delete();
     }
     

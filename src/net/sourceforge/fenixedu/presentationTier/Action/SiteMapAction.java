@@ -18,7 +18,6 @@ public class SiteMapAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final TreeSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	degrees.addAll(RootDomainObject.getInstance().getDegreesSet());
-
 	request.setAttribute("degrees", degrees);
 	return mapping.findForward("site-map");
     }

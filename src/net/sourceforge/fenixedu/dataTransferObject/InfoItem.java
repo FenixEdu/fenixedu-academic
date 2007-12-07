@@ -149,7 +149,7 @@ public class InfoItem extends InfoObject implements Comparable {
     public void copyFromDomain(Item item) {
         super.copyFromDomain(item);
         if (item != null) {
-            setInformation(item.getInformation().getContent(Language.pt));
+            setInformation(item.getBody().getContent(Language.pt));
             setItemOrder(item.getItemOrder());
             setName(item.getName().getContent(Language.pt));
 

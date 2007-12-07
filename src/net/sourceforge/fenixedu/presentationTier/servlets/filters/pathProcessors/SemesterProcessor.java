@@ -7,9 +7,16 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
+import net.sourceforge.fenixedu.domain.MetaDomainObject;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 public class SemesterProcessor extends PathProcessor {
 
@@ -51,6 +58,32 @@ public class SemesterProcessor extends PathProcessor {
                 return false;
             }
             else {
+        	
+        	 /*
+        	     * This is an ugly hack so this process still works 
+        	     * until the semester ends where we can easily notify
+        	     * everyone that the link format has changed.
+        	     * 
+        	     * 04-02-2007
+        	     * pcma
+        	     */
+            	HttpServletRequest request = context.getRequest();
+            	ExecutionCourseSite portalInstance = executionCourse.getSite();
+            	MetaDomainObjectPortal portal = (MetaDomainObjectPortal) MetaDomainObject.getMeta(
+            		portalInstance.getClass()).getAssociatedPortal();
+            	
+            	List<Content> contents = new ArrayList<Content>();
+            	contents.add(portal);
+            	contents.add(portalInstance);
+            	
+            	FilterFunctionalityContext filterContext = (FilterFunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
+            	if(filterContext != null) {
+            	    request.removeAttribute(FunctionalityContext.CONTEXT_KEY);
+            	}
+            	filterContext = new FilterFunctionalityContext(request, contents);
+            	filterContext.setHasBeenForwarded();
+            	request.setAttribute(FunctionalityContext.CONTEXT_KEY, filterContext);
+            	
                 String contextURI = ownContext.getSiteBasePath();
                 return doForward(context, contextURI, "firstPage", executionCourse.getIdInternal());
             }

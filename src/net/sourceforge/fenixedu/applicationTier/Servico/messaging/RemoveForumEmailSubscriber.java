@@ -6,9 +6,7 @@ import net.sourceforge.fenixedu.domain.messaging.Forum;
 
 public class RemoveForumEmailSubscriber extends Service {
 
-    public void run(Integer forumId, Integer personId) {
-        Forum forum = rootDomainObject.readForumByOID(forumId);
-        Person person = (Person) rootDomainObject.readPartyByOID(personId);
+    public void run(Forum forum, Person person) {
         forum.removeEmailSubscriber(person);
     }
 

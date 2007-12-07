@@ -181,8 +181,6 @@
         <forward name="editContract" path="researchSite-edit-contract"/>
         <forward name="chooseIntroductionSections" path="researchSite-chooseIntroductionSections"/>
         <forward name="addInstitutionSection" path="researchSite-addInstitutionSection"/>
-        <forward name="functionalitySection" path="researchSite-functionalitySection"/>
-        <forward name="editFunctionalitySection" path="researchSite-editFunctionalitySection"/>
         <forward name="manageFunctions" path="researchSite-manageFunctions"/>
         <forward name="manageExistingFunctions" path="researchSite-manageExistingFunctions"/>
         <forward name="addFunction" path="researchSite-addFunction"/>

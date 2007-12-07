@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -30,18 +31,23 @@ import org.apache.struts.action.ActionMapping;
 
 public class ShowClassesDispatchAction extends FenixContextDispatchAction {
 
+    public Degree getDegree(HttpServletRequest request) throws FenixActionException {
+	final Degree degree = ShowDegreeSiteAction.getDegree(request);
+	if (degree != null) {
+	    request.setAttribute("degreeID", degree.getIdInternal());
+	    request.setAttribute("degree", degree);
+	}
+	return degree;
+    }
+
     public ActionForward listClasses(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final Integer degreeOID = new Integer(request.getParameter("degreeID"));
-        request.setAttribute("degreeID", degreeOID);
-        request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeOID));
-        
-        getInfoDegreeCurricularPlan(request, degreeOID);
+	final Degree degree = getDegree(request);
+
+        getInfoDegreeCurricularPlan(request, degree);
 
         final Integer executionPeriodID = ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD)).getIdInternal();
         final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
-
-        final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
 
         if (executionPeriod != null) {
         	final ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
@@ -107,8 +113,8 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
     	return new ClassView(schoolClass);
 	}
 
-    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID) throws FenixServiceException, FenixFilterException {
-        Object[] args = { degreeOID };
+    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Degree degree) throws FenixServiceException, FenixFilterException {
+        Object[] args = { degree.getIdInternal() };
         InfoDegree infoDegree = (InfoDegree) ServiceManagerServiceFactory.executeService(null, "ReadDegreeByOID", args);
         request.setAttribute("infoDegree", infoDegree);
     }

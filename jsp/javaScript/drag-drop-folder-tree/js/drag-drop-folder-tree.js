@@ -216,7 +216,7 @@
 			for(var no=0;no<menuItems.length;no++){
 				var subItems = menuItems[no].getElementsByTagName('UL');
 				if(subItems.length>0 && subItems[0].style.display!='block'){
-					JSTreeObj.showHideNode(false,menuItems[no].id.replace(/[^0-9]/g,''));
+					JSTreeObj.showHideNode(false,menuItems[no].id.replace(/[^-0-9]/g,''));
 				}			
 			}
 		}	
@@ -227,7 +227,7 @@
 			for(var no=0;no<menuItems.length;no++){
 				var subItems = menuItems[no].getElementsByTagName('UL');
 				if(subItems.length>0 && subItems[0].style.display=='block'){
-					JSTreeObj.showHideNode(false,menuItems[no].id.replace(/[^0-9]/g,''));
+					JSTreeObj.showHideNode(false,menuItems[no].id.replace(/[^-0-9]/g,''));
 				}			
 			}		
 		}	
@@ -288,7 +288,7 @@
 			
 			if(thisNode.style.visibility=='hidden')return;		
 			var parentNode = thisNode.parentNode;
-			inputId = parentNode.id.replace(/[^0-9]/g,'');
+			inputId = parentNode.id.replace(/[^-0-9]+/g,'');
 			if(thisNode.src.indexOf(JSTreeObj.plusImage)>=0){
 				thisNode.src = thisNode.src.replace(JSTreeObj.plusImage,JSTreeObj.minusImage);
 				var ul = parentNode.getElementsByTagName('UL')[0];
@@ -563,9 +563,9 @@
 					if(li.id){
 						if(saveString.length>0)saveString = saveString + ',';
 	
-						saveString = saveString + li.id.replace(/[^0-9]/gi,'');
+						saveString = saveString + li.id.replace(/[^-0-9]/gi,'');
 						saveString = saveString + '-';
-						if(li.parentNode.id!=this.idOfTree)saveString = saveString + li.parentNode.parentNode.id.replace(/[^0-9]/gi,''); else saveString = saveString + '0';
+						if(li.parentNode.id!=this.idOfTree)saveString = saveString + li.parentNode.parentNode.id.replace(/dhtmlgoodies_treeNode([0-9]+)-[0-9]+/g,'$1'); else saveString = saveString + '0';
 						
 						var ul = li.getElementsByTagName('UL');
 						if(ul.length>0){
@@ -710,8 +710,14 @@
 				//aTag.onclick = JSTreeObj.showHideNode;
 				if(!noDrag)aTag.onmousedown = JSTreeObj.initDrag;
 				aTag.onmousemove = JSTreeObj.moveDragableNodes;
-				menuItems[no].id = 'dhtmlgoodies_treeNode' + nodeId;
+				// in order to know who's the parent we'll leave it on the id
+				var parentId = menuItems[no].parentNode.parentNode.id.replace(/dhtmlgoodies_treeNode([0-9]+)-[0-9]+/g,'$1');
+				if(!parentId) {
+					parentId = 0;
+				}
+				menuItems[no].id = 'dhtmlgoodies_treeNode' + nodeId + '-' + parentId;
 
+				
 				var folderImg = false;
 				if (this.includeImage) {
 					folderImg = document.createElement('IMG');

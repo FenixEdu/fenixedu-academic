@@ -172,7 +172,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		sectionIndex.intValue());
 	component.setSection(infoSection);
 
-	final Section section = RootDomainObject.getInstance().readSectionByOID(
+	final Section section = (Section)RootDomainObject.getInstance().readContentByOID(
 		infoSection.getIdInternal());
 
 	final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getAssociatedItemsCount());

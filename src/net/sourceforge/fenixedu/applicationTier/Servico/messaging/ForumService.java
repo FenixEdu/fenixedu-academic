@@ -114,16 +114,16 @@ public abstract class ForumService extends Service {
 
     private String getEmailFormattedSubject(ConversationThread conversationThread) {
 	String emailSubject = MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.subject"),
-		conversationThread.getSubject());
+		conversationThread.getTitle());
 
 	return emailSubject;
     }
 
     private String getEmailFormattedBody(ConversationMessage conversationMessage, boolean isForTeacher) {
-	String emailBodyAsText = HtmlToTextConverterUtil.convertToText(conversationMessage.getBody());
+	String emailBodyAsText = HtmlToTextConverterUtil.convertToText(conversationMessage.getBody().getContent());
 	String emailFormattedBody = MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.body"),
 		conversationMessage.getCreator().getName(), conversationMessage.getConversationThread()
-			.getSubject(), conversationMessage.getConversationThread().getForum().getName(),
+			.getTitle(), conversationMessage.getConversationThread().getForum().getName(),
 		emailBodyAsText, getConversationThreadUrl(conversationMessage, isForTeacher));
 
 	return emailFormattedBody;

@@ -224,19 +224,22 @@
 	</definition>
 	
 	<definition name="view-foruns" extends="definition.student.masterPage">
-		<put name="body" value="/student/viewExecutionCourseForuns.jsp" />
+		<put name="body" value="/student/forums/viewExecutionCourseForuns.jsp" />
 	</definition>
 	
 	<definition name="view-forum" extends="definition.student.masterPage">
-		<put name="body" value="/messaging/viewForum.jsp" />
+		<put name="body-context" value="/student/forums/context.jsp"/>
+		<put name="body" value="/commons/forums/viewForum.jsp" />
 	</definition>
 	
 	<definition name="create-thread-and-message" extends="definition.student.masterPage">
-		<put name="body" value="/messaging/createThreadAndMessage.jsp" />
+		<put name="body-context" value="/student/forums/context.jsp"/>
+		<put name="body" value="/commons/forums/createThreadAndMessage.jsp" />
 	</definition>
 	
 	<definition name="view-thread" extends="definition.student.masterPage">
-		<put name="body" value="/messaging/viewThread.jsp" />
+		<put name="body-context" value="/student/forums/context.jsp"/>
+		<put name="body" value="/commons/forums/viewThread.jsp" />
 	</definition>
 	
 	<definition name="view-projects-with-online-submission" extends="definition.student.masterPage">

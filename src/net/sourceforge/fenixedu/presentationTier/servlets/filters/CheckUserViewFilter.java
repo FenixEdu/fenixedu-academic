@@ -24,7 +24,7 @@ public class CheckUserViewFilter implements Filter {
     public void destroy() {
     }
 
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain)
             throws IOException, ServletException {
 
         final HttpServletRequest request = (HttpServletRequest) servletRequest;

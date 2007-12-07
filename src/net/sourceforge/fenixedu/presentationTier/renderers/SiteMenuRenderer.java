@@ -1,24 +1,28 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.domain.FunctionalitySection;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.MenuEntry;
+import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.SimpleFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
+import net.sourceforge.fenixedu.renderers.components.Face;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlList;
 import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * This renderer is responsible for presenting a
@@ -33,242 +37,215 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 public class SiteMenuRenderer extends OutputRenderer {
 
     private boolean contextRelative;
+
     private boolean moduleRelative;
+
     private String sectionUrl;
+
     private String contextParam;
+
     private String empty;
 
     public SiteMenuRenderer() {
-        super();
-        
-        setModuleRelative(true);
-        setContextRelative(true);
+	super();
+
+	setModuleRelative(true);
+	setContextRelative(true);
     }
-    
+
     public boolean isContextRelative() {
-        return this.contextRelative;
+	return this.contextRelative;
     }
 
     /**
-     * Indicates that the url for the sections ir not relative to the
-     * applications context. This can be usefull to redirect to another
-     * application or the remove dependencies on Struts.
-     * 
-     * @property
-     */
+         * Indicates that the url for the sections ir not relative to the
+         * applications context. This can be usefull to redirect to another
+         * application or the remove dependencies on Struts.
+         * 
+         * @property
+         */
     public void setContextRelative(boolean contextRelative) {
-        this.contextRelative = contextRelative;
+	this.contextRelative = contextRelative;
     }
 
     public boolean isModuleRelative() {
-        return this.moduleRelative;
+	return this.moduleRelative;
     }
 
     /**
-     * Indicates that the link for sections is not relative to the module.
-     * 
-     * @property
-     */
+         * Indicates that the link for sections is not relative to the module.
+         * 
+         * @property
+         */
     public void setModuleRelative(boolean moduleRelative) {
-        this.moduleRelative = moduleRelative;
+	this.moduleRelative = moduleRelative;
     }
 
     public String getSectionUrl() {
-        return this.sectionUrl;
+	return this.sectionUrl;
     }
 
     /**
-     * The url of the action responsible for showing the section content.
-     * 
-     * @property
-     */
+         * The url of the action responsible for showing the section content.
+         * 
+         * @property
+         */
     public void setSectionUrl(String sectionUrl) {
-        this.sectionUrl = sectionUrl;
+	this.sectionUrl = sectionUrl;
     }
-    
+
     public String getContextParam() {
-        return this.contextParam;
+	return this.contextParam;
     }
 
     /**
-     * The name of the parameters that provides a context for this site.
-     * 
-     * @property
-     */
+         * The name of the parameters that provides a context for this site.
+         * 
+         * @property
+         */
     public void setContextParam(String contextParam) {
-        this.contextParam = contextParam;
+	this.contextParam = contextParam;
     }
 
     public String getEmpty() {
-		return empty;
-	}
+	return empty;
+    }
 
     /**
-     * Decides what to show when there are no sections to include in the menu.
-     * 
-     * @property
-     */
-	public void setEmpty(String empty) {
-		this.empty = empty;
-	}
+         * Decides what to show when there are no sections to include in the
+         * menu.
+         * 
+         * @property
+         */
+    public void setEmpty(String empty) {
+	this.empty = empty;
+    }
 
-	@Override
+    protected boolean accessTemplate() {
+	return true;
+    }
+
+    @Override
     protected Layout getLayout(Object object, Class type) {
-        return new Layout() {
+	return new Layout() {
 
-            @Override
-            public HtmlComponent createComponent(Object object, Class type) {
-                if (object == null) {
-                    return new HtmlText();
-                }
+	    public HtmlComponent createComponent(Object object, Class type) {
+		if (object == null) {
+		    return new HtmlText();
+		}
 
-                HtmlList list = new HtmlList();
-                
-                HttpServletRequest request = getContext().getViewState().getRequest();
-                FunctionalityContext context = (FunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
-                if (context == null) {
-                    context = new SimpleFunctionalityContext(request);
-                }
-                  
-                List<Section> sections = getSections(object);
-                
-                if (sections.isEmpty()) {
-                	return generateEmpty();
-                }
-                else {
-                	addSiteSections(context, object, sections, list);
-                    return list;
-                }
-            }
+		HtmlList list = new HtmlList();
+		HttpServletRequest request = getContext().getViewState().getRequest();
+		FilterFunctionalityContext context = (FilterFunctionalityContext) request
+			.getAttribute(FunctionalityContext.CONTEXT_KEY);
 
-            private HtmlComponent generateEmpty() {		
-				return new HtmlText(getEmpty(), false);
+		if (context == null) {
+		    context = new FilterFunctionalityContext(request);
+		}
+
+		Collection<MenuEntry> entries = getEntries(object);
+
+		if (entries.isEmpty()) {
+		    return generateEmpty();
+		}
+
+		createList(list, context, entries);
+		return list;
+	    }
+
+	    public void createList(HtmlList list, FilterFunctionalityContext context,
+		    Collection<MenuEntry> entries) {
+		for (MenuEntry entry : entries) {
+		    if (!entry.isVisible()) {
+			continue;
+		    }
+
+		    Content content = entry.getReferingContent();
+		    if (!(content instanceof Item)) {
+			HtmlListItem item = list.createItem();
+			item.addChild(generateComponent(context, content, true));
+
+			if (isSelectedContent(content, context) && !entry.getChildren().isEmpty()) {
+			    HtmlList subMenu = new HtmlList();
+			    item.addChild(subMenu);
+			    createList(subMenu, context, entry.getChildren());
 			}
+		    }
+		}
+	    }
 
-			private void addSiteSections(FunctionalityContext context,
-                    Object object, List<Section> sections, HtmlList list) {
+	  
 
-                for (Section section : sections) {
-                    if (!section.isVisible(context)) {
-                        continue;
-                    }
+	    private HtmlLink generateLink(String url, HtmlComponent body) {
+		HtmlLink link = new HtmlLink();
 
-                    HtmlListItem item = list.createItem();
-                    HtmlComponent nameComponent = createSectionComponent(context, section);
+		link.setContextRelative(false);
+		link.setUrl(url);
+		link.setBody(body);
 
-                    // TODO: make a better design and add configuration to this renderer
-                    if (! isTopSection(section)) {
-                        nameComponent.setStyle("margin-left: 1em;");
-                    }
+		String contextParamValue = getContextParamValue();
+		if (contextParamValue != null) {
+		    link.setParameter(getContextParam(), contextParamValue);
+		}
 
-                    item.addChild(nameComponent);
+		return link;
 
-                    if (isSelectedSection(section)) {
-                        List<Section> subSections = Site.getOrderedSections(getSubSections(object, section));
+	    }
 
-                        if (subSections != null && !subSections.isEmpty()) {
-                            HtmlList subList = new HtmlList();
+	    public HtmlComponent generateComponent(FilterFunctionalityContext context, Content content,
+		    boolean canMakeLink) {
 
-                            addSiteSections(context, object, subSections, subList);
-                            item.addChild(subList);
-                        }
-                    }
-                }
-            }
-            
-            private boolean isSelectedSection(Section current) {
-                Section selectedSection = getSelectedSection();
-                
-                if (selectedSection == null) {
-                    return false;
-                }
-                
-                for (Section section = selectedSection; section != null; section = section.getSuperiorSection()) {
-                    if (section == current) {
-                        return true;
-                    }
-                }
-                
-                return false;
-            }
-            
-            private Section getSelectedSection() {
-                HttpServletRequest request = getContext().getViewState().getRequest();
-                String idValue = request.getParameter("sectionID");
-                
-                if (idValue == null) {
-                    return null;
-                }
-                else {
-                    Integer sectionId = new Integer(idValue);
-                    return RootDomainObject.getInstance().readSectionByOID(sectionId);
-                }
-            }
-            
-            private HtmlComponent createSectionComponent(FunctionalityContext context, Section section) {
-                if (section instanceof FunctionalitySection) {
-                   Functionality functionality = ((FunctionalitySection) section).getFunctionality();
-                   HtmlComponent component = MenuRenderer.getFunctionalityNameComponent(context, functionality, true);
-                   
-                   if (component instanceof HtmlLink) {
-                	   ((HtmlLink) component).setParameter("sectionID", section.getIdInternal());
-                   }
-                   
-                   return component;
-                }
-                else {
-                    HtmlLink link = new HtmlLink();
-                
-                    link.setModuleRelative(isModuleRelative());
-                    link.setContextRelative(isContextRelative());
-                    link.setUrl(getSectionUrl());
-                    link.setParameter("sectionID", section.getIdInternal());
-                    
-                    String contextParamValue = getContextParamValue();
-                    if (contextParamValue != null) {
-                        link.setParameter(getContextParam(), contextParamValue);
-                    }
-                    
-                    link.setBody(new HtmlText(section.getName().getContent()));
-                    
-                    return link;
-                }
-            }
+		HtmlText text = new HtmlText(content.getName().getContent());
+		text.setFace(Face.STANDARD);
+		HtmlComponent component = text;
 
-            private String getContextParamValue() {
-            	String contextParam = getContextParam();
-            	
-            	if (contextParam == null) {
-            		return null;
-            	}
-            	
-                HttpServletRequest request = getContext().getViewState().getRequest();;
-				return request.getParameter(contextParam);
-            }
+		if (content.isAvailable()) {
+		    component = generateLink(getPath(context,content), component);
+		}
 
-        };
+		MultiLanguageString title = content.getTitle();
+		if (title != null && !title.isEmpty()) {
+		    component.setTitle(title.getContent());
+		}
+
+		return component;
+	    }
+
+	    private HtmlComponent generateEmpty() {
+		return new HtmlText(getEmpty(), false);
+	    }
+
+	    private boolean isSelectedContent(Content current, FunctionalityContext context) {
+		Container selectedContainer = context.getSelectedContainer();
+		Container container = (Container) context.getLastContentInPath(Site.class);
+		return selectedContainer != null
+			&& (selectedContainer == current || (container != selectedContainer && !selectedContainer.getPathTo(current)
+				.isEmpty()));
+	    }
+
+	    private String getContextParamValue() {
+		String contextParam = getContextParam();
+
+		if (contextParam == null) {
+		    return null;
+		}
+
+		HttpServletRequest request = getContext().getViewState().getRequest();
+		return request.getParameter(contextParam);
+	    }
+
+	};
+    }
+    
+    protected Collection<MenuEntry> getEntries(Object object) {
+	return getSite(object).getMenu();
     }
 
-    /**
-     * @return the list of sections to render
-     */
-    protected List<Section> getSections(Object object) {
-        return getSite(object).getAllOrderedTopLevelSections();
+    protected Site getSite(Object object) {
+	return (Site) object;
     }
 
-    /**
-     * @return <code>true</code> if the section is treated as a top section
-     */
-    protected boolean isTopSection(Section section) {
-        return section.getSuperiorSection() == null;
+    protected String getPath(FilterFunctionalityContext context, Content content) {
+	return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context, Collections.EMPTY_LIST);
     }
-
-	protected Site getSite(Object object) {
-		return (Site) object;
-	}
-
-	protected List<Section> getSubSections(Object object, Section section) {
-		return getSite(object).getAssociatedSections(section);
-	}
-
 }

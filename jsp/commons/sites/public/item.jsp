@@ -48,8 +48,8 @@
         </logic:present>
     </h3>
 
-    <logic:notEmpty name="item" property="information">
-        	<fr:view name="item" property="information">
+    <logic:notEmpty name="item" property="body">
+        	<fr:view name="item" property="body">
         		<fr:layout>
         			<fr:property name="escaped" value="false" />
         			<fr:property name="newlineAware" value="false" />

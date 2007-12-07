@@ -25,15 +25,19 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
 import net.sourceforge.fenixedu.domain.UnitSiteLink;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.FunctionalitySectionCreator;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
@@ -84,13 +88,21 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     @Override
     protected UnitSite getSite(HttpServletRequest request) {
+
+	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+	UnitSite site = (UnitSite) context.getSelectedContainer();
+	
+	if(site != null) {
+	    return site;
+	}
+	
 	Integer oid = getId(request.getParameter("oid"));
 
 	if (oid == null) {
 	    return null;
 	}
 
-	return (UnitSite) RootDomainObject.getInstance().readSiteByOID(oid);
+	return (UnitSite) RootDomainObject.getInstance().readContentByOID(oid);
     }
 
     protected Unit getUnit(HttpServletRequest request) {
@@ -449,28 +461,14 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
 	UnitSite site = getSite(request);
 	Section sideSection = site.getSideSection();
-
-	if (sideSection != null && sideSection.hasAnyAssociatedSections()) {
+	
+	if (sideSection != null && sideSection.hasAnyChildren()) {
 	    request.setAttribute("canChoose", true);
 	}
 
 	return mapping.findForward("chooseIntroductionSections");
     }
-
-    public ActionForward prepareAddInstitutionSection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Section section = selectSection(request);
-
-	if (section == null) {
-	    Site site = getSite(request);
-
-	    request.setAttribute("creator", new FunctionalitySectionCreator(site));
-	} else {
-	    request.setAttribute("creator", new FunctionalitySectionCreator(section));
-	}
-
-	return mapping.findForward("addInstitutionSection");
-    }
-
+    
     public ActionForward functionalitySection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	section(mapping, actionForm, request, response);
 

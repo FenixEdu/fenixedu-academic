@@ -22,7 +22,7 @@ public class ReadSectionsBySiteAndSuperiorSection extends Service {
         	}
         
         final Section parentSection = (infoSuperiorSection == null) ? null :
-            rootDomainObject.readSectionByOID(infoSuperiorSection.getIdInternal());
+            (Section)rootDomainObject.readContentByOID(infoSuperiorSection.getIdInternal());
         
         final List<InfoSection> result = new ArrayList<InfoSection>();
         for (final Section section : site.getAssociatedSections(parentSection)) {

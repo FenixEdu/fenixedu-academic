@@ -91,4 +91,8 @@
 	<definition name="view-protocol-details" extends="definition.messaging.masterPage">
         <put name="body" value="/protocols/viewProtocolDetails.jsp"/>
     </definition> 
+
+	<definition name="forunsManagement.listForuns" extends="df.layout.two-column.contents" >
+		<put name="body" value="/commons/blank.jsp" />
+	</definition>
 </tiles-definitions>

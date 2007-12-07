@@ -40,39 +40,20 @@ public class TestFilterAction extends FenixDispatchAction {
         }
         
         List<TestFilterResultBean> results = new ArrayList<TestFilterResultBean>();
-        for (Functionality functionality : RootDomainObject.getInstance().getFunctionalities()) {
+        for (Functionality functionality : Functionality.getFunctionalities()) {
             if (functionality.getMatchPath() == null) {
                 continue;
             }
             
-            Functionality targetFunctionality = null;
-            if (! functionality.isPrincipal()) {
-                for (Functionality testedFunctionality : RootDomainObject.getInstance().getFunctionalities()) {
-                    if (! testedFunctionality.isPrincipal()) {
-                        continue;
-                    }
-
-                    if (testedFunctionality.getMatchPath() == null) {
-                        continue;
-                    }
+            if (functionality.getMatchPath() == null) {
+                continue;
+            }
                     
-                    if (testedFunctionality.getMatchPath().equals(functionality.getMatchPath())) {
-                        targetFunctionality = testedFunctionality;
-                        break;
-                    }
-                }
-            }
-            else {
-                targetFunctionality = functionality;
-            }
-            
-            if (targetFunctionality != null) {
-                FunctionalityContext context = new TestFilterContext(request, bean, targetFunctionality);
-                try {
-                    results.add(new TestFilterResultBean(functionality, functionality.isAvailable(context), bean.getParametersMap()));
-                } catch (GroupDynamicExpressionException e) {
-                    results.add(new TestFilterResultBean(functionality, false, bean.getParametersMap()));
-                }
+            FunctionalityContext context = new TestFilterContext(request, bean, functionality);
+            try {
+                results.add(new TestFilterResultBean(functionality, functionality.isAvailable(context), bean.getParametersMap()));
+            } catch (GroupDynamicExpressionException e) {
+                results.add(new TestFilterResultBean(functionality, false, bean.getParametersMap()));
             }
         }
         

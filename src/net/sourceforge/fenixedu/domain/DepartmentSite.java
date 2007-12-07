@@ -58,5 +58,10 @@ public class DepartmentSite extends DepartmentSite_Base {
     public MultiLanguageString getUnitNameWithAcronym() {
     	return getDepartment().getNameI18n();
     }
+ 
+    @Override
+    public MultiLanguageString getName() {
+	return MultiLanguageString.i18n().add("pt",getUnit().getAcronym()).finish();
+    }
     
 }

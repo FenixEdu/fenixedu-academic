@@ -772,4 +772,9 @@
     </definition>    
         
 
+	<!--=== Contents === -->
+	
+	<definition name="viewSection-Homepage" extends="definition.public.homepage">
+		<put name="body" value="/commons/contents/viewSection.jsp" />
+	</definition>
 </tiles-definitions>

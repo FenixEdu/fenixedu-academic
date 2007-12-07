@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -8,6 +9,9 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.UnitSite;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
@@ -41,25 +45,25 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
     	UnitSite unitSite = (UnitSite) site;
     	
     	TreeSet<Section> treeSet = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
-    	treeSet.addAll(unitSite.getIntroductionSections());
+    	//treeSet.addAll(unitSite.getIntroductionSections());
     	
     	List<Section> sections = new ArrayList<Section>();
 
     	sections.addAll(treeSet);
-        sections.addAll(site.getOrderedTemplateSections());
+//        sections.addAll(site.getOrderedTemplateSections());
         
         return sections;
     }
     
     @Override
     protected SortedSet<Section> getTargetSubSections(Section section) {
-    	UnitSite unitSite = (UnitSite) section.getSite();
+    	//UnitSite unitSite = (UnitSite) section.getSite();
     	TreeSet<Section> treeSet = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
 
     	for (Section subSection : section.getAssociatedSections()) {
-    		if (unitSite.hasIntroductionSections(subSection)) {
-    			continue;
-    		}
+//    		if (unitSite.hasIntroductionSections(subSection)) {
+//    			continue;
+//    		}
     		
     		treeSet.add(subSection);
     	}
@@ -67,4 +71,10 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
     	return treeSet;
     }
     
+    @Override
+    protected String getPath(FilterFunctionalityContext context, Content content) {
+	List<String> subPaths = new ArrayList<String>();
+	subPaths.add(getTargetSectionName().getContent());
+	return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context, isTemplatedContent((Site)context.getSelectedContainer(), content) ? Collections.EMPTY_LIST : subPaths);
+    }
 }

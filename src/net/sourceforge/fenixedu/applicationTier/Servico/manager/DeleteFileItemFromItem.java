@@ -18,7 +18,6 @@ public class DeleteFileItemFromItem extends Service {
     public void run(Site site, FileItem fileItem) throws FenixServiceException,
             ExcepcaoPersistencia, DomainException, FileManagerException {
 
-        fileItem.removeItem();
         fileItem.delete();
 
         new DeleteFileRequest(AccessControl.getPerson(),fileItem.getExternalStorageIdentification());

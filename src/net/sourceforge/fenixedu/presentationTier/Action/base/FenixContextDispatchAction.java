@@ -34,7 +34,7 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
         return actionForward;
     }
     
-    protected Integer getFromRequest(String parameter, HttpServletRequest request) {
+    protected static Integer getFromRequest(String parameter, HttpServletRequest request) {
         if (request.getParameter(parameter) != null) {
             try {
                 return Integer.valueOf(request.getParameter(parameter));    

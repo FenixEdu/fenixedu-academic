@@ -97,10 +97,6 @@
             <param-name>executionCourseSiteURI</param-name>
             <param-value>/publico/executionCourse.do?method=%s&amp;executionCourseID=%s</param-value>
         </init-param>
-        <init-param>
-            <param-name>homepageSiteURI</param-name>
-            <param-value>/publico/viewHomepage.do?method=%s&amp;homepageID=%s</param-value>
-        </init-param>
         <init-param>            
             <param-name>scheduleListURI</param-name>
             <param-value>/publico/showClasses.do?method=listClasses&amp;degreeID=%s</param-value>
@@ -117,33 +113,9 @@
             <param-name>degreeURI</param-name>
             <param-value>/publico/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=%s&amp;degreeID=%s</param-value>
         </init-param>
-        <init-param>
+		<init-param>
             <param-name>degreeSiteURI</param-name>
             <param-value>/publico/showDegreeSiteContent.do?method=%s&amp;degreeID=%s</param-value>
-        </init-param>
-        <init-param>
-            <param-name>departmentSiteURI</param-name>
-            <param-value>/publico/department/departmentSite.do?method=%s&amp;selectedDepartmentUnitID=%s</param-value>
-        </init-param>
-        <init-param>
-            <param-name>departmentsURI</param-name>
-            <param-value>/publico/department/showDepartments.faces</param-value>
-        </init-param>
-        <init-param>
-        	<param-name>researchURI</param-name>
-        	<param-value>/publico/researchSite/viewResearchUnitSite.do?method=%s&amp;siteID=%s</param-value>
-        </init-param>
-        <init-param>
-        	<param-name>pedagogicalCouncilURI</param-name>
-        	<param-value>/publico/pedagogicalCouncil/viewSite.do?method=%s&amp;unitID=%s</param-value>
-        </init-param>
-        <init-param>
-        	<param-name>scientificCouncilURI</param-name>
-        	<param-value>/publico/scientificCouncil/viewSite.do?method=%s&amp;unitID=%s</param-value>
-        </init-param>
-        <init-param>
-        	<param-name>unitSiteURI</param-name>
-        	<param-value>/publico/units/viewSite.do?method=%s&amp;unitID=%s</param-value>
         </init-param>
     </filter>
 	<filter>
@@ -167,13 +139,6 @@
         <filter-name>FunctionalityAccessFilter</filter-name>
         <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter</filter-class>
         <init-param>
-            <!-- the value of this param MUST be the same as the prefix for the url-pattern below 
-                 but without the trailing 
-              -->
-            <param-name>testing.prefix</param-name>
-            <param-value>/manager/functionalities/test</param-value>
-        </init-param>
-        <init-param>
             <param-name>public.prefix</param-name>
             <param-value>/publico</param-value>
         </init-param>
@@ -187,8 +152,24 @@
         </init-param>
     </filter>
    	<filter>
+	    <filter-name>ContextFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ContextFilter</filter-class>
+	</filter>
+   	<filter>
 	    <filter-name>RequestChecksumFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestChecksumFilter</filter-class>
+	</filter>
+   	<filter>
+	    <filter-name>RequestRewriteFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestRewriteFilter</filter-class>
+	</filter>
+   	<filter>
+	    <filter-name>ContentFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentFilter</filter-class>
+	</filter>
+   	<filter>
+	    <filter-name>ServletChooser</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ServletChooser</filter-class>
 	</filter>
 
 	<!-- Filter Mapping -->
@@ -242,10 +223,7 @@
 		<url-pattern>/publico/*</url-pattern>
 	</filter-mapping>
 -->
-    <filter-mapping>
-        <filter-name>GeneralForwardFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+
 	<filter-mapping>
 		<filter-name>CheckUserViewFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
@@ -254,10 +232,12 @@
 		<filter-name>CheckUserViewFilter</filter-name>
 		<url-pattern>*.faces</url-pattern>
 	</filter-mapping>
+<!-- 
 	<filter-mapping>
 		<filter-name>CheckPathByRoleFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+-->	
    	<filter-mapping>
 	    <filter-name>CASFilter</filter-name>
 	    <url-pattern>/loginCAS.do</url-pattern>
@@ -271,15 +251,38 @@
 	    <url-pattern>/login.do</url-pattern>
     </filter-mapping>
     <filter-mapping>
+        <filter-name>ContextFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	<filter-mapping>
+		<filter-name>RequestChecksumFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>RequestRewriteFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+    <filter-mapping>
         <filter-name>FunctionalityAccessFilter</filter-name>
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 	<filter-mapping>
-		<filter-name>RequestChecksumFilter</filter-name>
+		<filter-name>ContentFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+    <filter-mapping>
+        <filter-name>GeneralForwardFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+<!--
+	<filter-mapping>
+		<filter-name>ServletChooser</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+-->
+
     <!-- Listeners -->
 	<listener>
 		<listener-class>
@@ -300,193 +303,9 @@
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.jsf.FenixFacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet>
+     <servlet>
         <servlet-name>action</servlet-name>
-        <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
-        <init-param>
-            <param-name>config</param-name>
-            <param-value>/WEB-INF/conf/struts-default.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>application</param-name>
-            <param-value>resources.ApplicationResources</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/resourceAllocationManager</param-name>
-            <param-value>/WEB-INF/conf/struts-resourceAllocationManager.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/resourceManager</param-name>
-            <param-value>/WEB-INF/conf/struts-resourceManager.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/student</param-name>
-            <param-value>/WEB-INF/conf/struts-student.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/publico</param-name>
-            <param-value>/WEB-INF/conf/struts-publico.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/candidate</param-name>
-            <param-value>/WEB-INF/conf/struts-candidate.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/candidato</param-name>
-            <param-value>/WEB-INF/conf/struts-masterDegreeCandidate.xml</param-value>
-        </init-param>        
-        <init-param>
-            <param-name>config/posGraduacao</param-name>
-            <param-value>/WEB-INF/conf/struts-masterDegreeAdministrativeOffice.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/teacher</param-name>
-            <param-value>/WEB-INF/conf/struts-teacher.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/treasury</param-name>
-            <param-value>/WEB-INF/conf/struts-treasury.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/coordinator</param-name>
-            <param-value>/WEB-INF/conf/struts-coordinator.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/person</param-name>
-            <param-value>/WEB-INF/conf/struts-person.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/employee</param-name>
-            <param-value>/WEB-INF/conf/struts-employee.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/assiduousness</param-name>
-            <param-value>/WEB-INF/conf/struts-assiduousness.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/manager</param-name>
-            <param-value>/WEB-INF/conf/struts-manager.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/manager/functionalities</param-name>
-            <param-value>/WEB-INF/conf/struts-functionalities.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/degreeAdministrativeOffice</param-name>
-            <param-value>/WEB-INF/conf/struts-degreeAdministrativeOffice.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/credits</param-name>
-            <param-value>/WEB-INF/conf/struts-credits.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/scientificCouncil</param-name>
-            <param-value>/WEB-INF/conf/struts-scientificCouncil.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/operator</param-name>
-            <param-value>/WEB-INF/conf/struts-operator.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/webSiteManager</param-name>
-            <param-value>/WEB-INF/conf/struts-webSiteManager.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/facultyAdmOffice</param-name>
-            <param-value>/WEB-INF/conf/struts-facultyAdmOffice.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/departmentAdmOffice</param-name>
-            <param-value>/WEB-INF/conf/struts-departmentAdmOffice.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/gep</param-name>
-            <param-value>/WEB-INF/conf/struts-gep.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/directiveCouncil</param-name>
-            <param-value>/WEB-INF/conf/struts-directiveCouncil.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/delegate</param-name>
-            <param-value>/WEB-INF/conf/struts-delegate.xml</param-value>
-        </init-param>
-	    <init-param>
-            <param-name>config/personnelSection</param-name>
-            <param-value>/WEB-INF/conf/struts-personnelSection.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/projectsManagement</param-name>
-            <param-value>/WEB-INF/conf/struts-projectsManagement.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/institucionalProjectsManagement</param-name>
-            <param-value>/WEB-INF/conf/struts-projectsManagement.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/external</param-name>
-            <param-value>/WEB-INF/conf/struts-external.xml</param-value>
-        </init-param>        
-        <init-param>
-            <param-name>config/departmentMember</param-name>
-            <param-value>/WEB-INF/conf/struts-departmentMember.xml</param-value>
-        </init-param>     
-        <init-param>
-            <param-name>config/bolonhaManager</param-name>
-            <param-value>/WEB-INF/conf/struts-bolonhaManager.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/SpaceManager</param-name>
-            <param-value>/WEB-INF/conf/struts-spaceManager.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/researcher</param-name>
-            <param-value>/WEB-INF/conf/struts-researcher.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/examCoordination</param-name>
-            <param-value>/WEB-INF/conf/struts-examCoordinator.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/pedagogicalCouncil</param-name>
-            <param-value>/WEB-INF/conf/struts-pedagogicalCouncil.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/alumni</param-name>
-            <param-value>/WEB-INF/conf/struts-alumni.xml</param-value>
-        </init-param>
-		<init-param>
-            <param-name>config/messaging</param-name>
-            <param-value>/WEB-INF/conf/struts-messaging.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>config/parkingManager</param-name>
-            <param-value>/WEB-INF/conf/struts-parkingManager.xml</param-value>
-        </init-param>  
-        <init-param>
-            <param-name>config/academicAdminOffice</param-name>
-            <param-value>/WEB-INF/conf/struts-academicAdminOffice.xml</param-value>
-        </init-param>         
-        <init-param>
-            <param-name>config/library</param-name>
-            <param-value>/WEB-INF/conf/struts-library.xml</param-value>
-        </init-param>         
-        <init-param>
-            <param-name>config/internationalRelatOffice</param-name>
-            <param-value>/WEB-INF/conf/struts-internationalRelatOffice.xml</param-value>
-        </init-param>   
-        <init-param>
-            <param-name>debug</param-name>
-            <param-value>3</param-value>
-        </init-param>
-        <init-param>
-            <param-name>detail</param-name>
-            <param-value>3</param-value>
-        </init-param>
-        <init-param>
-            <param-name>validating</param-name>
-            <param-value>true</param-value>
-        </init-param>
+        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ActionServletWrapper</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
@@ -543,7 +362,7 @@
 	<servlet-mapping>
 		<servlet-name>dwr-invoker</servlet-name>
 		<url-pattern>/dwr/*</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
     <servlet-mapping>
         <servlet-name>FacesServlet</servlet-name>
         <url-pattern>*.faces</url-pattern>

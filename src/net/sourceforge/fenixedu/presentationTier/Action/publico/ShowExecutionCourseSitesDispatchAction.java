@@ -28,11 +28,11 @@ import org.apache.struts.action.ActionMapping;
 public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward listSites(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final Degree degree = ShowDegreeSiteAction.getDegree(request);
+
 	// degreeID
 	final Integer degreeOID = getFromRequest("degreeID", request);
-	request.setAttribute("degreeID", degreeOID);
-
-	final Degree degree = getDegreeAndSetInfoDegree(request, degreeOID);
+	getDegreeAndSetInfoDegree(request, degreeOID);
 	final List<ExecutionCourseView> executionCourseViews = getExecutionCourseViews(request, degree);
 	final InfoExecutionPeriod infoExecutionPeriod = getPreviousExecutionPeriod(request);
 

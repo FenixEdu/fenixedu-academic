@@ -19,6 +19,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * 
  * @author naat
+ * @author pcma
  * 
  */
 public class ViewExecutionCourseForunsDispatchAction extends ForunsManagement {
@@ -29,17 +30,12 @@ public class ViewExecutionCourseForunsDispatchAction extends ForunsManagement {
 
         SortedSet<Attends> attendsForCurrentExecutionPeriod = new TreeSet<Attends>(
                 Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
-        attendsForCurrentExecutionPeriod.addAll(getUserView(request).getPerson().getCurrentAttends());
+        attendsForCurrentExecutionPeriod.addAll(getLoggedPerson(request).getCurrentAttends());
 
         request.setAttribute("attendsForExecutionPeriod", attendsForCurrentExecutionPeriod);
 
         return mapping.findForward("viewForuns");
 
-    }
-
-    @Override
-    protected String getContextInformation(HttpServletRequest request) {
-        return "/viewExecutionCourseForuns.do";
     }
 
 }

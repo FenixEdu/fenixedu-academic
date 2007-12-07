@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.domain.InverseOrderedRelationAdapter;
 
@@ -13,59 +14,35 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class FileItem extends FileItem_Base {
 
-    public static Comparator<FileItem> COMPARATOR_BY_ORDER = new Comparator<FileItem>() {
-        
-        private ComparatorChain chain = null;
-        
-        public int compare(FileItem one, FileItem other) {
-            if (this.chain == null) {
-                chain = new ComparatorChain();
-                
-                chain.addComparator(new BeanComparator("orderInItem"));
-                chain.addComparator(new BeanComparator("displayName"));
-                chain.addComparator(DomainObject.COMPARATOR_BY_ID);
-            }
-            
-            return chain.compare(one, other);
-        }
-        
-    };
-
-    public static InverseOrderedRelationAdapter<FileItem, Item> ORDERED_ADAPTER;
-    static {
-        ORDERED_ADAPTER = new InverseOrderedRelationAdapter<FileItem, Item>("orderInItem", "fileItems");
-        ItemFileItem.addListener(ORDERED_ADAPTER);
-    }
-    
-    protected FileItem(Item item) {
+    protected FileItem(Attachment attachment) {
         super();
 
-        setVisible(true);
-        setItem(item);
+        setAttachment(attachment);
     }
 
-    public FileItem(Item item, String filename, String displayName, String mimeType, String checksum,
+    public FileItem(Attachment attachment, String filename, String displayName, String mimeType, String checksum,
             String checksumAlgorithm, Integer size, String externalStorageIdentification,
             Group permittedGroup) {
-        this(item);
+        this(attachment);
+        init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
+                externalStorageIdentification, permittedGroup);
+    }
+    
+    public FileItem(String filename, String displayName, String mimeType, String checksum,
+            String checksumAlgorithm, Integer size, String externalStorageIdentification,
+            Group permittedGroup) {
         init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
                 externalStorageIdentification, permittedGroup);
     }
 
-    @Deprecated
-    public Boolean getVisible() {
-        return super.getVisible();
-    }
-    
-    public Boolean isVisible() {
-        return super.getVisible();
-    }
-    
+
     public void delete() {
-        if (this.hasItem()) {
-            throw new DomainException("fileItem.cannotBeDeleted");
-        }
-        removeRootDomainObject();
+	Attachment attachment = getAttachment();
+	if(attachment != null) {
+	    setAttachment(null);
+	    attachment.delete();
+	}
+	removeRootDomainObject();
         super.deleteDomainObject();
     }
 
@@ -83,5 +60,9 @@ public class FileItem extends FileItem_Base {
         }
         
         return fileItems;
+    }
+    
+    public Item getItem() {
+	return (Item) getAttachment().getParents().get(0).getParent();
     }
 }

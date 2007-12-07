@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
+import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -51,14 +54,14 @@ public class Item extends Item_Base {
             throw new NullPointerException();
         }
 
-        setSection(section);
+        new ExplicitOrderNode(section,this);
         setName(name);
     }
 
     public Item(Section section, MultiLanguageString name, MultiLanguageString information, Integer itemOrder) {
         this(section, name);
         
-        setInformation(information);
+        setBody(information);
     }
 
     public void setName(MultiLanguageString name) {
@@ -77,7 +80,9 @@ public class Item extends Item_Base {
      * @return the item immediately after this item in the section or <code>null</code> if the item is the last 
      */
     public Item getNextItem() {
-        return Section.ITEM_ORDER_ADAPTER.getNext(getSection(), this);
+      List<Item> items = (List<Item>) getParents().get(0).getParent().getChildren(Item.class);
+      Integer order = getItemOrder() + 1;
+      return order < items.size() ? items.get(order) : null;
     }
     
     /**
@@ -90,46 +95,33 @@ public class Item extends Item_Base {
      *            <code>null</code> if this item should be last
      */
     public void setNextItem(Item item) {
-        setItemOrder(item != null ? item.getItemOrder() : null);
-        Section.ITEM_ORDER_ADAPTER.orderChanged(getSection(), this);
-    }
-
-    @Override
-    public void disconnect() {
-        super.disconnect();
-        
-        removeRootDomainObject();
-        removeSection();
-    }
-
-    @Override
-    protected void checkDeletion() {
-        if (! isDeletable()) {
-            throw new DomainException("site.section.item.delete.notAllowed", getName().getContent());
+        if(item != null) {
+            setItemOrder(((ExplicitOrderNode)item.getParents().get(0)).getNodeOrder());
+        }else {
+            List<Item> items = (List<Item>) getParents().get(0).getParent().getChildren(Item.class);
+            setItemOrder(items.size()-1);
         }
     }
-    
-    @Override
-    public boolean isDeletable() {
-        return this.getFileItemsCount() == 0;
-    }
 
-    public SortedSet<FileItem> getSortedVisibleFileItems() {
-        final SortedSet<FileItem> sortedFileItems = new TreeSet<FileItem>(FileItem.COMPARATOR_BY_ORDER);
+    public Collection<FileItem> getSortedVisibleFileItems() {
+        final List<FileItem> sortedFileItems = new ArrayList<FileItem>();
         
-        for (FileItem fileItem : getFileItems()) {
-            if (fileItem.isVisible()) {
-                sortedFileItems.add(fileItem);
+        for (Node node : getOrderedChildrenNodes(Attachment.class)) {
+            if (node.isVisible()) {
+                sortedFileItems.add(((Attachment)node.getChild()).getFileItem());
             }
         }
         
         return sortedFileItems;
     }
     
-    public SortedSet<FileItem> getSortedFileItems() {
-        final SortedSet<FileItem> sortedFileItems = new TreeSet<FileItem>(FileItem.COMPARATOR_BY_ORDER);
-        sortedFileItems.addAll(getFileItems());
-
+    public Collection<FileItem> getSortedFileItems() {
+        final List<FileItem> sortedFileItems = new ArrayList<FileItem>();
+        
+        for (Attachment attachment : getOrderedChildren(Attachment.class)) {
+            sortedFileItems.add(attachment.getFileItem());
+        }
+        
         return sortedFileItems;
     }
     
@@ -143,7 +135,7 @@ public class Item extends Item_Base {
     }
 
     public void setFileItemsOrder(List<FileItem> files) {
-        FileItem.ORDERED_ADAPTER.updateOrder(this, files);
+        
     }
 
     /**
@@ -169,5 +161,51 @@ public class Item extends Item_Base {
     	}
 		
 		return section.getAssociatedItems().size() > 1;
+    }
+    
+    public void removeSection() {
+	getParents().get(0).delete();
+    }
+    
+    public Section getSection() {
+	return (Section)getParents().get(0).getParent();
+    }
+    
+    public Integer getItemOrder() {
+	return ((ExplicitOrderNode) getParents().get(0)).getNodeOrder();
+    }
+    
+    public void setItemOrder(Integer nodeOrder) {
+	((ExplicitOrderNode) getParents().get(0)).setNodeOrder(nodeOrder);
+    }
+    
+    public void setVisible(Boolean visible) {
+	getParents().get(0).setVisible(visible);
+    }
+    
+    public Boolean getVisible() {
+	return getParents().get(0).getVisible();
+    }
+
+    @Override
+    protected Node createChildNode(Content childContent) {
+	return new ExplicitOrderNode(this, childContent, Boolean.TRUE);
+    }
+    
+    public void addFileItem(final FileItem fileItem) {
+	addChild(new Attachment(fileItem));
+    }
+    
+    public Collection<FileItem> getFileItems(){
+	Collection<FileItem> result = new ArrayList<FileItem>();
+	for (Attachment attachment : getChildren(Attachment.class)) {
+	    result.add(attachment.getFileItem());
+	}
+	return result;
+    }
+    
+    @Override
+    public boolean isChildAccepted(Content child) {
+        return child instanceof Attachment;
     }
 }

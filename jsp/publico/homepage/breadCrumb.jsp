@@ -1,10 +1,13 @@
 <%@ page language="java" %>
+<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <html:xhtml/>
+
+<bean:define id="homepage" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" toScope="request"/>
 
 <logic:present name="homepage">
     <logic:present name="homepage" property="person.employee.currentDepartmentWorkingPlace">
@@ -41,7 +44,7 @@
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="department.faculty"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;
-                <bean:write name="homepage" property="name"/>
+                <bean:write name="homepage" property="ownersName"/>
             </div>
         </logic:present>
     </logic:present>

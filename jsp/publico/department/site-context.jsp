@@ -3,10 +3,17 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+
+<bean:define id="announcementActionVariable" value="/researchSite/manageResearchUnitAnnouncements.do" toScope="request"/>
+<bean:define id="eventActionVariable" value="/researchSite/manageResearchUnitAnnouncements.do" toScope="request"/>
+<bean:define id="announcementRSSActionVariable" value="/researchSite/announcementsRSS.do" toScope="request"/>
+<bean:define id="eventRSSActionVariable" value="/researchSite/eventsRSS.do" toScope="request"/>
 
 <bean:define id="siteActionName" value="/department/departmentSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="selectedDepartmentUnitID" toScope="request"/>
 <bean:define id="siteContextParamValue" name="unit" property="idInternal" toScope="request"/>
+<bean:define id="department" name="site" property="unit.department" toScope="request"/>
 
 <div class="breadcumbs mvert0">
     <bean:define id="institutionUrl">
@@ -33,7 +40,6 @@
         <fr:view name="department" property="nameI18n"/>
     </html:link>
     
-    <jsp:include page="/commons/sites/public/section-crumbs.jsp"/>
 </div>
 
 <h1 class="mbottom1">

@@ -6,13 +6,15 @@
 
 <html:xhtml/>
 
-<logic:present name="site">
-   <fr:view name="site" layout="unit-side-menu">
-        <fr:layout>
-            <fr:property name="sectionUrl" value="/pedagogicalCouncil/viewSite.do?method=section"/>
-            <fr:property name="contextParam" value="unitID"/>
-        </fr:layout>
-    </fr:view>
+
+<logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
+	<fr:view name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" 
+		layout="unit-side-menu">
+            <fr:layout>
+	            <fr:property name="sectionUrl" value="/pedagogicalCouncil/viewSite.do?method=section"/>
+
+            </fr:layout>
+	</fr:view>
 </logic:present>
     
 <div class="usitebannerlat">

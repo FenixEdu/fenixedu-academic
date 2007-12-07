@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.renderers.taglib;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;

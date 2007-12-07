@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -38,6 +39,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt"> João Mota </a> 29/Nov/2003
@@ -125,9 +127,7 @@ public class MergeExecutionCourses extends Service {
 	    executionCourseAnnouncementBoardTo.addBookmarkOwner(bookmarkOwner);
 	}
 
-	for (final Iterator<Announcement> iterator = executionCourseAnnouncementBoardFrom.getAnnouncementsSet().iterator();
-		iterator.hasNext(); iterator.remove()) {
-	    final Announcement announcement = iterator.next();
+	for (final Announcement announcement : executionCourseAnnouncementBoardFrom.getAnnouncements()) {
 	    executionCourseAnnouncementBoardTo.addAnnouncements(announcement);
 	}
 
@@ -324,24 +324,30 @@ public class MergeExecutionCourses extends Service {
     }
 
     private void copyForuns(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) {
+            final ExecutionCourse executionCourseTo) throws FenixServiceException {
+	
+	if(!executionCourseTo.hasSite()) {
+	    throw new FenixServiceException("Unable to copy foruns, destination doesn't have site");
+	}
 
         while (!executionCourseFrom.getForuns().isEmpty()) {
             ExecutionCourseForum sourceForum = executionCourseFrom.getForuns().get(0);
-            String forumName = sourceForum.getName();
+            MultiLanguageString forumName = sourceForum.getName();
 
-            if (!executionCourseTo.hasForumWithName(forumName)) {
-                sourceForum.setExecutionCourse(executionCourseTo);
+            ExecutionCourseForum targetForum = executionCourseTo.getForumByName(forumName);
+            if (targetForum == null) {
+        	Node childNode = executionCourseFrom.getSite().getChildNode(sourceForum);
+        	childNode.setParent(executionCourseTo.getSite());
             } else {
-                ExecutionCourseForum targetForum = executionCourseTo.getForumByName(forumName);
                 copyForumSubscriptions(sourceForum, targetForum);
                 copyThreads(sourceForum, targetForum);
-                executionCourseFrom.removeForuns(sourceForum);
+                executionCourseFrom.getSite().removeForum(sourceForum);
                 sourceForum.delete();
             }
 
         }
     }
+    
 
     private void copyForumSubscriptions(ExecutionCourseForum sourceForum,
             ExecutionCourseForum targetForum) {
@@ -374,14 +380,13 @@ public class MergeExecutionCourses extends Service {
         while (!sourceForum.getConversationThreads().isEmpty()) {
             ConversationThread sourceConversationThread = sourceForum.getConversationThreads().get(0);
 
-            if (!targetForum.hasConversationThreadWithSubject(sourceConversationThread.getSubject())) {
+            if (!targetForum.hasConversationThreadWithSubject(sourceConversationThread.getTitle())) {
                 sourceConversationThread.setForum(targetForum);
             } else {
-                ConversationThread targetConversationThread = targetForum
-                        .getConversationThreadBySubject(sourceConversationThread.getSubject());
-                targetConversationThread.getConversationMessages().addAll(
-                        sourceConversationThread.getConversationMessages());
-                sourceConversationThread.getConversationMessages().clear();
+        	ConversationThread targetConversionThread = targetForum.getConversationThreadBySubject(sourceConversationThread.getTitle());
+        	for(Node child : sourceConversationThread.getChildren()) {
+        	    child.setParent(targetConversionThread);
+        	}
                 sourceForum.removeConversationThreads(sourceConversationThread);
                 sourceConversationThread.delete();
             }

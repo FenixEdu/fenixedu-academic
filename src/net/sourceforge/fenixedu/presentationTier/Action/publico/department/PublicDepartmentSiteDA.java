@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.department;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -14,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYear
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -22,14 +20,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DepartmentProcessor;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.util.RequestUtils;
-import org.joda.time.YearMonthDay;
 
 public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
@@ -47,16 +42,6 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
     @Override
     protected String getContextParamName(HttpServletRequest request) {
 	return "selectedDepartmentUnitID";
-    }
-
-    @Override
-    protected String getDirectLinkContext(HttpServletRequest request) {
-	Department department = getDepartment(request);
-	try {
-	    return RequestUtils.absoluteURL(request, DepartmentProcessor.getDepartmentPath(department)).toString();
-	} catch (MalformedURLException e) {
-	    return null;
-	}
     }
 
     private Department getDepartment(HttpServletRequest request) {

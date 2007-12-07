@@ -1,0 +1,1 @@
+update CONTENT C, CONTENT C2, NODE N set C.KEY_PORTAL=C2.ID_INTERNAL WHERE C.OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.functionalities.Functionality' AND C2.OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal' AND N.KEY_PARENT=C2.ID_INTERNAL AND N.KEY_CHILD=C.ID_INTERNAL;

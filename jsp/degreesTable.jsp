@@ -38,6 +38,10 @@
 				<bean:define id="degreeName" name="degree" property="nome"/>
 				<tr>
 					<td>
+						<bean:define id="degreeSitePath" name="degree" property="site.reversePath"/>
+						<html:link href="<%= request.getContextPath() + degreeSitePath.toString() %>" title="<%= degreeName.toString() %>"><bean:write name="degree" property="sigla"/></html:link>
+					</td>
+					<td>
 						<html:link href="<%= degreeCode.toString() %>" title="<%= degreeName.toString() %>"><bean:write name="degree" property="sigla"/></html:link>
 					</td>
 					<td>

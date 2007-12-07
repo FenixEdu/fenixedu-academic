@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
 <serviceDefinitions>
 	<service>
 		<name>ExecuteFactoryMethod</name>
@@ -9899,15 +9898,6 @@
 		<filterChains />
 	</service>
     <service>
-        <name>ChangeEnableInFunctionality</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ChangeEnableInFunctionality</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerAuthorization" />
-        </filterChains>
-    </service>
-    <service>
         <name>DeleteFunctionality</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionality</implementationClass>
         <description />
@@ -9917,14 +9907,15 @@
         </filterChains>
     </service>
     <service>
-        <name>MoveFunctionality</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.MoveFunctionality</implementationClass>
+        <name>DeleteFunctionalityParameter</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionalityParameter</implementationClass>
         <description />
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization" />
         </filterChains>
-    </service>
+    </service>    
+
     <service>
         <name>CreateGroupAvailability</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.CreateGroupAvailability</implementationClass>
@@ -11257,16 +11248,6 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
-    
-    <service>
-        <name>CreateSiteTemplateInstance</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateSiteTemplateInstance</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerAuthorization" />
-        </filterChains>
-    </service>
     <service>
     	<name>ReadStudentSenior</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.senior.ReadStudentSenior</implementationClass>
@@ -12586,5 +12567,71 @@
 		<filterChains>
 			<chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
+	</service>
+	<service>
+		<name>CreatePortal</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.CreatePortal</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
+	<service>
+		<name>EditPortal</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.EditPortal</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
+	<service>
+		<name>AddPortalToContainer</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.AddPortalToContainer</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
 	</service>	
+	<service>
+		<name>AddFunctionalityToContainer</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.AddFunctionalityToContainer</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>	
+	<service>
+		<name>CopyModuleFunctionalityToContainer</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.CopyModuleFunctionalityToContainer</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>	
+	<service>
+		<name>AddSectionToContainer</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.AddSectionToContainer</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>	
+	<service>
+		<name>DeleteNode</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.DeleteNode</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>	
+	<service>
+		<name>ApplyStructureModifications</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ApplyStructureModifications</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>	
+	<service>
+		<name>DeleteTemplatedContent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.DeleteTemplatedContent</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>		
+	<service>
+		<name>AddContentToPool</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.AddContentToPool</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
+	<service>
+		<name>RemoveContentFromContainer</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.RemoveContentFromContainer</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>			
 </serviceDefinitions>

@@ -99,7 +99,7 @@
 <br />
 <br />
     <logic:equal name="item" property="urgent" value="true"><font color="red"></logic:equal> 		
-  	<bean:write name="item" property="information" filter="false" />
+  	<bean:write name="item" property="body" filter="false" />
   	<logic:equal name="item" property="urgent" value="true"></font></logic:equal>
   	<logic:present name="item" property="infoFileItems">
   	<br/>

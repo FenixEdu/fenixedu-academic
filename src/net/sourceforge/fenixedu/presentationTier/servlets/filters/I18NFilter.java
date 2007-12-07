@@ -33,6 +33,14 @@ public class I18NFilter implements Filter {
 
     FilterConfig filterConfig;
 
+    protected static final Locale DEFAULT_LOCALE;
+    static {
+	final String language = PropertiesManager.getProperty("language");
+	final String location = PropertiesManager.getProperty("location");
+	final String variant = PropertiesManager.getProperty("variant");
+	DEFAULT_LOCALE = new Locale(language, location, variant);
+    }
+
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         this.servletContext = filterConfig.getServletContext();
@@ -43,59 +51,43 @@ public class I18NFilter implements Filter {
         this.filterConfig = null;
     }
 
-    public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) throws IOException,
-            ServletException {
-        final HttpServletRequest request = (HttpServletRequest) req;
-        final HttpServletResponse response = (HttpServletResponse) res;
+    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain)
+    		throws IOException, ServletException {
+        final HttpServletRequest request = (HttpServletRequest) servletRequest;
+        final HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         final String localParameter = request.getParameter("locale");
+        final HttpSession httpSession;
+        final Locale locale;
         if (localParameter != null) {
             final String[] localTokens = localParameter.split("_");
-            final Locale locale;
-            if (localTokens.length > 1) {
-                locale = new Locale(localTokens[0], localTokens[1]);
-            } else {
-                locale = new Locale(localParameter);
-            }
-
-            HttpSession httpSession = request.getSession(false);
-            if (httpSession == null) {
-                httpSession = request.getSession(true);
-            }
-            httpSession.removeAttribute(Globals.LOCALE_KEY);
-            httpSession.setAttribute(Globals.LOCALE_KEY, locale);
-            
-            request.removeAttribute(Globals.LOCALE_KEY);
-            request.setAttribute(Globals.LOCALE_KEY, locale);
-            
-            LanguageUtils.setLocale(locale);
+            locale = localTokens.length > 1 ? new Locale(localTokens[0], localTokens[1]) : new Locale(localParameter);
+            httpSession = getOrCreateSession(request);
         } else {
-            HttpSession httpSession = request.getSession(true);
-            if (httpSession.getAttribute(Globals.LOCALE_KEY) == null) {
-                setDefaultLocale(request, httpSession);
-            }
-            
-            Locale locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
-            LanguageUtils.setLocale(locale);
-            
-            request.removeAttribute(Globals.LOCALE_KEY);
-            request.setAttribute(Globals.LOCALE_KEY, locale);
+            httpSession = request.getSession(true);
+            final Locale localeFromSession = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
+            locale = localeFromSession == null ? DEFAULT_LOCALE : localeFromSession;
         }
 
-        chain.doFilter(request, response);
+        setLocale(request, httpSession, locale);
+        filterChain.doFilter(request, response);
     }
 
-    public static void setDefaultLocale(final HttpServletRequest request, HttpSession httpSession) {
-        final String language = PropertiesManager.getProperty("language");
-    	final String location = PropertiesManager.getProperty("location");
-    	final String variant = PropertiesManager.getProperty("variant");
-        final Locale locale = new Locale(language, location, variant);
-        httpSession.setAttribute(Globals.LOCALE_KEY, locale);
+    private HttpSession getOrCreateSession(final HttpServletRequest request) {
+        final HttpSession httpSession = request.getSession(false);
+        return httpSession == null ? request.getSession(true) : httpSession;
+    }
 
-        request.removeAttribute(Globals.LOCALE_KEY);
-        request.setAttribute(Globals.LOCALE_KEY, locale);
-        
-        LanguageUtils.setLocale(locale);
+    public static void setDefaultLocale(final HttpServletRequest httpServletRequest, final HttpSession httpSession) {
+	setLocale(httpServletRequest, httpSession, DEFAULT_LOCALE);
+    }
+
+    public static void setLocale(final HttpServletRequest httpServletRequest, final HttpSession httpSession, final Locale locale) {
+	httpSession.removeAttribute(Globals.LOCALE_KEY);
+        httpSession.setAttribute(Globals.LOCALE_KEY, locale);
+        httpServletRequest.removeAttribute(Globals.LOCALE_KEY);
+        httpServletRequest.setAttribute(Globals.LOCALE_KEY, locale);
+        LanguageUtils.setLocale(DEFAULT_LOCALE);	
     }
 
 }

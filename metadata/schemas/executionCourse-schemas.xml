@@ -198,6 +198,7 @@
     </slot>
     <setter signature="createSection()"/>
 </schema>
+<!--
 <schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionCreator.details"
         type="net.sourceforge.fenixedu.presentationTier.Action.manager.FunctionalitySectionCreator"
         bundle="DEFAULT">
@@ -239,6 +240,7 @@
         <property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
     </slot>
 </schema>
+-->
 <schema name="net.sourceforge.fenixedu.domain.SectionEditor"
 		type="net.sourceforge.fenixedu.domain.Section"
 		bundle="DEFAULT"
@@ -323,7 +325,7 @@
         <property name="bundle" value="SITE_RESOURCES"/>
         <property name="key" value="true"/>
 	</slot>
-	<slot name="information" layout="rich-text">
+	<slot name="body" layout="rich-text">
    		<property name="safe" value="true" />
    		<property name="columns" value="85"/>
    		<property name="rows" value="25"/>

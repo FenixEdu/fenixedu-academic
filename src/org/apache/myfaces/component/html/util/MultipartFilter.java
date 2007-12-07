@@ -24,93 +24,76 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileUpload;
 
-
 /**
- * This filters is mandatory for the use of many components.
- * It handles the Multipart requests (for file upload)
- * It's used by the components that need javascript libraries
- *
+ * This filters is mandatory for the use of many components. It handles the
+ * Multipart requests (for file upload) It's used by the components that need
+ * javascript libraries
+ * 
  * @author Sylvain Vieujot (latest modification by $Author$)
  * @author <a href="mailto:oliver@rossmueller.com">Oliver Rossmueller </a>
  * @version $Revision$ $Date$
  */
-public class MultipartFilter implements Filter
-{
+public class MultipartFilter implements Filter {
 
     private int uploadMaxFileSize = 100 * 1024 * 1024; // 10 MB
 
     private int uploadThresholdSize = 1 * 1024 * 1024; // 1 MB
 
-    private String uploadRepositoryPath = null; //standard temp directory
+    private String uploadRepositoryPath = null; // standard temp directory
 
-
-    public void init(FilterConfig filterConfig)
-    {
-        uploadMaxFileSize = resolveSize(filterConfig.getInitParameter("uploadMaxFileSize"), uploadMaxFileSize);
-        uploadThresholdSize = resolveSize(filterConfig.getInitParameter("uploadThresholdSize"), uploadThresholdSize);
-        uploadRepositoryPath = filterConfig.getInitParameter("uploadRepositoryPath");
+    public void init(FilterConfig filterConfig) {
+	uploadMaxFileSize = resolveSize(filterConfig.getInitParameter("uploadMaxFileSize"), uploadMaxFileSize);
+	uploadThresholdSize = resolveSize(filterConfig.getInitParameter("uploadThresholdSize"), uploadThresholdSize);
+	uploadRepositoryPath = filterConfig.getInitParameter("uploadRepositoryPath");
     }
 
+    private int resolveSize(String param, int defaultValue) {
+	int numberParam = defaultValue;
 
-    private int resolveSize(String param, int defaultValue)
-    {
-        int numberParam = defaultValue;
+	if (param != null) {
+	    param = param.toLowerCase();
+	    int factor = 1;
+	    String number = param;
 
-        if (param != null)
-        {
-            param = param.toLowerCase();
-            int factor = 1;
-            String number = param;
+	    if (param.endsWith("g")) {
+		factor = 1024 * 1024 * 1024;
+		number = param.substring(0, param.length() - 1);
+	    } else if (param.endsWith("m")) {
+		factor = 1024 * 1024;
+		number = param.substring(0, param.length() - 1);
+	    } else if (param.endsWith("k")) {
+		factor = 1024;
+		number = param.substring(0, param.length() - 1);
+	    }
 
-            if (param.endsWith("g"))
-            {
-                factor = 1024 * 1024 * 1024;
-                number = param.substring(0, param.length() - 1);
-            } else if (param.endsWith("m"))
-            {
-                factor = 1024 * 1024;
-                number = param.substring(0, param.length() - 1);
-            } else if (param.endsWith("k"))
-            {
-                factor = 1024;
-                number = param.substring(0, param.length() - 1);
-            }
-
-            numberParam = Integer.parseInt(number) * factor;
-        }
-        return numberParam;
+	    numberParam = Integer.parseInt(number) * factor;
+	}
+	return numberParam;
     }
 
-
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
-    {
-        if (!(response instanceof HttpServletResponse))
-        {
-            chain.doFilter(request, response);
-            return;
-        }
-
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-
-        // For multipart/form-data requests
-        if (FileUpload.isMultipartContent(httpRequest))
-        {
-            MultipartRequestWrapper multipartRequestWrapper = new MultipartRequestWrapper(httpRequest, uploadMaxFileSize, uploadThresholdSize, uploadRepositoryPath);
-            multipartRequestWrapper.setAttribute("multipartRequestWrapper", multipartRequestWrapper);
-            chain.doFilter(multipartRequestWrapper, response);
-        } else
-        {
-            chain.doFilter(request, response);
-        }
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    		throws IOException, ServletException {
+	final ServletRequest requestForDoFilter = isMultipartContent(request) ?
+		getMultipartRequestWrapper(request) : request;
+	chain.doFilter(requestForDoFilter, response);
     }
 
+    private ServletRequest getMultipartRequestWrapper(final ServletRequest request) {
+	final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+	final MultipartRequestWrapper multipartRequestWrapper = new MultipartRequestWrapper(
+		httpServletRequest, uploadMaxFileSize, uploadThresholdSize, uploadRepositoryPath);
+	multipartRequestWrapper.setAttribute("multipartRequestWrapper", multipartRequestWrapper);
+	return multipartRequestWrapper;
+    }
 
-    public void destroy()
-    {
-        // NoOp
+    private boolean isMultipartContent(final ServletRequest request) {
+	return request instanceof HttpServletRequest && FileUpload.isMultipartContent((HttpServletRequest) request);
+    }
+
+    public void destroy() {
+	// NoOp
     }
 }

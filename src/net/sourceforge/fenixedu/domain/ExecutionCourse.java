@@ -72,7 +72,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
 
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator(
-	"executionPeriod"));
+		"executionPeriod"));
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("nome",
 		Collator.getInstance()));
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
@@ -98,7 +98,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setExecutionPeriod(executionPeriod);
 	setComment("");
 
-	createForum(nome, nome);
+	MultiLanguageString forumName = new MultiLanguageString(nome);
 	createExecutionCourseAnnouncementBoard(nome);
 	
 	if(entryPhase == null) {
@@ -930,7 +930,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return visibleMetadata;
     }
 
-    public void createForum(String name, String description) {
+    public void createForum(MultiLanguageString name, MultiLanguageString description) {
 
 	if (hasForumWithName(name)) {
 	    throw new DomainException("executionCourse.already.existing.forum");
@@ -944,27 +944,30 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC, ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
     }
 
-    public boolean hasForumWithName(String name) {
-	return getForumByName(name) != null;
+    public boolean hasForumWithName(MultiLanguageString name) {
+	return hasSite() && getForumByName(name) != null;
     }
 
-    public ExecutionCourseForum getForumByName(String name) {
-	for (final ExecutionCourseForum executionCourseForum : getForunsSet()) {
-	    if (executionCourseForum.getName().equalsIgnoreCase(name)) {
-		return executionCourseForum;
-	    }
+    public ExecutionCourseForum getForumByName(MultiLanguageString name) {
+	if(!hasSite()) {
+	    return null;
+	}
+	
+	return getSite().getForumByName(name);
+    }
+
+    public void addForuns(ExecutionCourseForum forum) {
+	if (!hasSite()) {
+	    throw new DomainException("error.cannot.add.forum.empty.site");
 	}
 
-	return null;
+	getSite().addForum(forum);
     }
-
-    @Override
-    public void addForuns(ExecutionCourseForum forum) {
-	checkIfCanAddForum(forum.getName());
-	super.addForuns(forum);
-    }
-
-    public void checkIfCanAddForum(String name) {
+    
+    public void checkIfCanAddForum(MultiLanguageString name) {
+	if(!hasSite()) {
+	    throw new DomainException("error.cannot.add.forum.empty.site");
+	}
 	if (hasForumWithName(name)) {
 	    throw new DomainException("executionCourse.already.existing.forum");
 	}
@@ -1003,7 +1006,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
 	    if (competenceCourse != null) {
 		final CompetenceCourseInformation competenceCourseInformation = competenceCourse
-		.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
+			.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
 		if (competenceCourseInformation != null) {
 		    competenceCourseInformations.add(competenceCourseInformation);
 		}
@@ -1200,10 +1203,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
 	    if (competenceCourse != null) {
 		final CompetenceCourseInformation competenceCourseInformation = competenceCourse
-		.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
+			.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
 		if (competenceCourseInformation != null) {
 		    final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences bibliographicReferences = competenceCourseInformation
-		    .getBibliographicReferences();
+			    .getBibliographicReferences();
 		    if (bibliographicReferences != null) {
 			for (final net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference bibliographicReference : bibliographicReferences
 				.getBibliographicReferencesList()) {
@@ -1778,6 +1781,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 			    getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
 	} else {
 	    return getCompetenceCourses().iterator().next().getEvaluationMethodEn();
+	}
+    }
+    
+    public List<ExecutionCourseForum> getForuns() {
+	if (hasSite()) {
+	    return new ArrayList<ExecutionCourseForum>(getSite().getForuns());
+	} else {
+	    return Collections.emptyList();
 	}
     }
 }

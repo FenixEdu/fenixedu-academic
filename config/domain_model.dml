@@ -200,48 +200,6 @@ valueType net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocument
 class net.sourceforge.fenixedu.domain.DomainObject {
 }
 
-	class net.sourceforge.fenixedu.domain.AccessibleItem extends net.sourceforge.fenixedu.domain.DomainObject {
-		Boolean enabled;
-		MultiLanguageString name;
-		MultiLanguageString title;
-		Boolean visible;
-	}
-
-		class net.sourceforge.fenixedu.domain.SiteElement extends net.sourceforge.fenixedu.domain.AccessibleItem {
-		}
-
-			class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.SiteElement {
-				MultiLanguageString information;
-				Integer itemOrder;
-				Boolean showName;
-			}
-
-			class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.SiteElement {
-				YearMonthDay lastModifiedDateYearMonthDay;
-				Integer sectionOrder;
-			}
-
-				class net.sourceforge.fenixedu.domain.FunctionalitySection extends net.sourceforge.fenixedu.domain.Section {
-				}
-
-		class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.sourceforge.fenixedu.domain.AccessibleItem {
-			MultiLanguageString description;
-			Integer orderInModule;
-			String parameters;
-			String path;
-			Boolean principal;
-			Boolean relative;
-			UUID uuid;
-		}
-
-			class net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
-			}
-
-			class net.sourceforge.fenixedu.domain.functionalities.Module extends net.sourceforge.fenixedu.domain.functionalities.Functionality {
-				Boolean maximized;
-				String prefix;
-			}
-
 	class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.domain.DomainObject {
 	}
 
@@ -646,8 +604,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	}
 
 		class net.sourceforge.fenixedu.domain.FileItem extends net.sourceforge.fenixedu.domain.File {
-			Integer orderInItem;
-			Boolean visible;
 		}
 
 		class net.sourceforge.fenixedu.domain.ProjectSubmissionFile extends net.sourceforge.fenixedu.domain.File {
@@ -1091,82 +1047,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	class net.sourceforge.fenixedu.domain.ShiftProfessorship extends net.sourceforge.fenixedu.domain.DomainObject {
 		Double percentage;
 	}
-
-	class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.domain.DomainObject {
-		String alternativeSite;
-		String style;
-	}
-
-		class net.sourceforge.fenixedu.domain.DegreeSite extends net.sourceforge.fenixedu.domain.Site {
-		}
-
-		class net.sourceforge.fenixedu.domain.ExecutionCourseSite extends net.sourceforge.fenixedu.domain.Site {
-			Boolean dynamicMailDistribution;
-			String initialStatement;
-			String introduction;
-			Boolean lessonPlanningAvailable;
-			String mail;
-		}
-
-		class net.sourceforge.fenixedu.domain.SiteTemplate extends net.sourceforge.fenixedu.domain.Site {
-			String siteType;
-		}
-
-		class net.sourceforge.fenixedu.domain.UnitSite extends net.sourceforge.fenixedu.domain.Site {
-			MultiLanguageString description;
-			UnitSiteLayoutType layout;
-			Boolean personalizedLogo;
-			Boolean showAnnouncements;
-			Boolean showBanner;
-			Boolean showEvents;
-			Boolean showFlags;
-			Boolean showInstitutionLogo;
-			Boolean showIntroduction;
-			MultiLanguageString sideBanner;
-			String googleAnalyticsCode;
-		}
-
-			class net.sourceforge.fenixedu.domain.DepartmentSite extends net.sourceforge.fenixedu.domain.UnitSite {
-			}
-
-			class net.sourceforge.fenixedu.domain.InstitutionSite extends net.sourceforge.fenixedu.domain.UnitSite {
-			}
-
-			class net.sourceforge.fenixedu.domain.PedagogicalCouncilSite extends net.sourceforge.fenixedu.domain.UnitSite {
-			}
-
-			class net.sourceforge.fenixedu.domain.ResearchUnitSite extends net.sourceforge.fenixedu.domain.UnitSite {
-			}
-
-			class net.sourceforge.fenixedu.domain.ScientificCouncilSite extends net.sourceforge.fenixedu.domain.UnitSite {
-			}
-			
-			class net.sourceforge.fenixedu.domain.ScientificAreaSite extends net.sourceforge.fenixedu.domain.UnitSite {
-			}
-
-		class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.fenixedu.domain.Site {
-			Boolean activated;
-			MultiLanguageString researchUnit;
-			String researchUnitHomepage;
-			Boolean showActiveStudentCurricularPlans;
-			Boolean showAlternativeHomepage;
-			Boolean showAlumniDegrees;
-			Boolean showCategory;
-			Boolean showCurrentAttendingExecutionCourses;
-			Boolean showCurrentExecutionCourses;
-			Boolean showEmail;
-			Boolean showInterests;
-			Boolean showMobileTelephone;
-			Boolean showParticipations;
-			Boolean showPatents;
-			Boolean showPhoto;
-			Boolean showPrizes;
-			Boolean showPublications;
-			Boolean showResearchUnitHomepage;
-			Boolean showTelephone;
-			Boolean showUnit;
-			Boolean showWorkTelephone;
-		}
 
 	class net.sourceforge.fenixedu.domain.SpecialSeasonCode extends net.sourceforge.fenixedu.domain.DomainObject {
 		Integer code;
@@ -2293,6 +2173,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	}
 
 	class net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy extends net.sourceforge.fenixedu.domain.DomainObject {
+		String contentId;
 	}
 
 		class net.sourceforge.fenixedu.domain.functionalities.GroupAvailability extends net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy {
@@ -2643,75 +2524,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		YearMonthDay begin;
 		YearMonthDay end;
 	}
-
-	class net.sourceforge.fenixedu.domain.messaging.Announcement extends net.sourceforge.fenixedu.domain.DomainObject {
-		String author;
-		String authorEmail;
-		MultiLanguageString body;
-		DateTime creationDate;
-		MultiLanguageString excerpt;
-		MultiLanguageString keywords;
-		DateTime lastModification;
-		String place;
-		DateTime publicationBegin;
-		DateTime publicationEnd;
-		DateTime referedSubjectBegin;
-		DateTime referedSubjectEnd;
-		MultiLanguageString subject;
-		Boolean visible;
-	}
-
-	class net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard extends net.sourceforge.fenixedu.domain.DomainObject {
-		DateTime creationDate;
-		Group managers;
-		Boolean mandatory;
-		String name;
-		Group readers;
-		Group writers;
-	}
-
-		class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard {
-			ExecutionCourseBoardPermittedGroupType executionCoursePermittedManagementGroupType;
-			ExecutionCourseBoardPermittedGroupType executionCoursePermittedReadGroupType;
-			ExecutionCourseBoardPermittedGroupType executionCoursePermittedWriteGroupType;
-		}
-
-		class net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard {
-		}
-
-			class net.sourceforge.fenixedu.domain.messaging.PersonAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard {
-			}
-
-			class net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard {
-				UnitBoardPermittedGroupType unitPermittedManagementGroupType;
-				UnitBoardPermittedGroupType unitPermittedReadGroupType;
-				UnitBoardPermittedGroupType unitPermittedWriteGroupType;
-			}
-
-	class net.sourceforge.fenixedu.domain.messaging.ConversationMessage extends net.sourceforge.fenixedu.domain.DomainObject {
-		String body;
-		DateTime creationDateDateTime;
-	}
-
-	class net.sourceforge.fenixedu.domain.messaging.ConversationThread extends net.sourceforge.fenixedu.domain.DomainObject {
-		DateTime creationDateDateTime;
-		String subject;
-	}
-
-	class net.sourceforge.fenixedu.domain.messaging.Forum extends net.sourceforge.fenixedu.domain.DomainObject {
-		DateTime creationDateDateTime;
-		String description;
-		String name;
-	}
-
-	class net.sourceforge.fenixedu.domain.messaging.ForumSubscription extends net.sourceforge.fenixedu.domain.DomainObject {
-		Boolean favorite;
-		Boolean receivePostsByEmail;
-	}
-
-		class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum extends net.sourceforge.fenixedu.domain.messaging.Forum {
-		}
-
+	
 	class net.sourceforge.fenixedu.domain.onlineTests.DistributedTest extends net.sourceforge.fenixedu.domain.DomainObject {
 		YearMonthDay beginDateDateYearMonthDay;
 		HourMinuteSecond beginHourDateHourMinuteSecond;
@@ -4464,6 +4277,218 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionCandidacyPeriod 
 class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod extends net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod {
 }
 
+	class net.sourceforge.fenixedu.domain.MetaDomainObject extends net.sourceforge.fenixedu.domain.DomainObject {
+		String type;
+	}
+
+	class net.sourceforge.fenixedu.domain.contents.Content extends net.sourceforge.fenixedu.domain.DomainObject {
+		String contentId;
+		DateTime creationDate;
+		MultiLanguageString name;
+		MultiLanguageString title;
+		MultiLanguageString body;
+		MultiLanguageString description;
+	}
+	
+		class net.sourceforge.fenixedu.domain.contents.Element extends net.sourceforge.fenixedu.domain.contents.Content {
+		}
+		
+		class net.sourceforge.fenixedu.domain.contents.Attachment extends net.sourceforge.fenixedu.domain.contents.Element {
+		}
+		
+
+            class net.sourceforge.fenixedu.domain.messaging.Announcement extends net.sourceforge.fenixedu.domain.contents.Element {
+                String author;
+                String authorEmail;
+                MultiLanguageString excerpt;
+                MultiLanguageString keywords;
+                DateTime lastModification;
+                String place;
+                DateTime publicationBegin;
+                DateTime publicationEnd;
+                DateTime referedSubjectBegin;
+                DateTime referedSubjectEnd;
+                MultiLanguageString subject;
+                Boolean visible;
+            }
+
+                        class net.sourceforge.fenixedu.domain.functionalities.ExecutionPath extends net.sourceforge.fenixedu.domain.DomainObject {
+                            String executionPath;
+                        }
+
+			class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.sourceforge.fenixedu.domain.contents.Element {
+				//MultiLanguageString description;
+				//Integer orderInModule;
+				//String parameters;
+				//UUID uuid; // TODO: replace uuid by relative content ids
+				String executionPath;
+				//Boolean principal;
+				//Boolean relative;
+				Boolean visible;
+			}
+
+	class net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter extends net.sourceforge.fenixedu.domain.DomainObject {
+		String name;
+	}
+
+		class net.sourceforge.fenixedu.domain.contents.Container extends net.sourceforge.fenixedu.domain.contents.Content {
+			Boolean maximizable;
+			String prefix;
+		}
+
+			class net.sourceforge.fenixedu.domain.contents.Portal extends net.sourceforge.fenixedu.domain.contents.Container {
+			}
+
+			class net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal extends net.sourceforge.fenixedu.domain.contents.Portal {
+			}
+			
+			class net.sourceforge.fenixedu.domain.functionalities.Module extends net.sourceforge.fenixedu.domain.contents.Container {
+				//Boolean maximized;
+				//String prefix;
+				String executionPath;
+				Boolean visible;
+			}
+
+                class net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard extends net.sourceforge.fenixedu.domain.contents.Container {
+                    Group managers;
+                    Boolean mandatory;
+                    Group readers;
+                    Group writers;
+                }
+
+                    class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard {
+                            ExecutionCourseBoardPermittedGroupType executionCoursePermittedManagementGroupType;
+                            ExecutionCourseBoardPermittedGroupType executionCoursePermittedReadGroupType;
+                            ExecutionCourseBoardPermittedGroupType executionCoursePermittedWriteGroupType;
+                    }
+
+                    class net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard {
+                    }
+
+                        class net.sourceforge.fenixedu.domain.messaging.PersonAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard {
+                        }
+
+                        class net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard {
+                                UnitBoardPermittedGroupType unitPermittedManagementGroupType;
+                                UnitBoardPermittedGroupType unitPermittedReadGroupType;
+                                UnitBoardPermittedGroupType unitPermittedWriteGroupType;
+                        }
+
+
+	class net.sourceforge.fenixedu.domain.contents.Node extends net.sourceforge.fenixedu.domain.DomainObject {
+		Boolean ascending;
+		Boolean visible;
+		String contentId;
+	}
+
+		class net.sourceforge.fenixedu.domain.contents.DateOrderedNode extends net.sourceforge.fenixedu.domain.contents.Node {
+		}
+
+		class net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode extends net.sourceforge.fenixedu.domain.contents.Node {
+			Integer nodeOrder;
+		}
+		
+        class net.sourceforge.fenixedu.domain.messaging.AnnouncementNode extends net.sourceforge.fenixedu.domain.contents.Node {
+        }
+	
+		
+	class net.sourceforge.fenixedu.domain.messaging.ConversationMessage extends net.sourceforge.fenixedu.domain.contents.Element {
+	}
+
+	class net.sourceforge.fenixedu.domain.messaging.ConversationThread extends net.sourceforge.fenixedu.domain.contents.Container {
+	}
+
+	class net.sourceforge.fenixedu.domain.messaging.Forum extends net.sourceforge.fenixedu.domain.contents.Container {
+	}
+
+	class net.sourceforge.fenixedu.domain.messaging.ForumSubscription extends net.sourceforge.fenixedu.domain.DomainObject {
+		Boolean favorite;
+		Boolean receivePostsByEmail;
+	}
+
+		class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum extends net.sourceforge.fenixedu.domain.messaging.Forum {
+		}
+
+	class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.contents.Container {
+		Boolean enabled;
+		Boolean showName;
+	}
+
+	class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.contents.Container {
+		Boolean enabled;
+		YearMonthDay modificationDate;
+	}
+
+	class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.domain.contents.Portal {
+		String alternativeSite;
+		String style;
+	}
+
+		class net.sourceforge.fenixedu.domain.DegreeSite extends net.sourceforge.fenixedu.domain.Site {
+		}
+
+		class net.sourceforge.fenixedu.domain.ExecutionCourseSite extends net.sourceforge.fenixedu.domain.Site {
+			Boolean dynamicMailDistribution;
+			String initialStatement;
+			String introduction;
+			Boolean lessonPlanningAvailable;
+			String mail;
+		}
+
+		class net.sourceforge.fenixedu.domain.UnitSite extends net.sourceforge.fenixedu.domain.Site {
+			UnitSiteLayoutType layout;
+			Boolean personalizedLogo;
+			Boolean showAnnouncements;
+			Boolean showBanner;
+			Boolean showEvents;
+			Boolean showFlags;
+			Boolean showInstitutionLogo;
+			Boolean showIntroduction;
+			MultiLanguageString sideBanner;
+			String googleAnalyticsCode;
+		}
+
+			class net.sourceforge.fenixedu.domain.DepartmentSite extends net.sourceforge.fenixedu.domain.UnitSite {
+			}
+
+			class net.sourceforge.fenixedu.domain.InstitutionSite extends net.sourceforge.fenixedu.domain.UnitSite {
+			}
+
+			class net.sourceforge.fenixedu.domain.PedagogicalCouncilSite extends net.sourceforge.fenixedu.domain.UnitSite {
+			}
+
+			class net.sourceforge.fenixedu.domain.ResearchUnitSite extends net.sourceforge.fenixedu.domain.UnitSite {
+			}
+
+			class net.sourceforge.fenixedu.domain.ScientificCouncilSite extends net.sourceforge.fenixedu.domain.UnitSite {
+			}
+
+			class net.sourceforge.fenixedu.domain.ScientificAreaSite extends net.sourceforge.fenixedu.domain.UnitSite {
+			}
+			
+		class net.sourceforge.fenixedu.domain.homepage.Homepage extends net.sourceforge.fenixedu.domain.Site {
+			Boolean activated;
+			MultiLanguageString researchUnit;
+			String researchUnitHomepage;
+			Boolean showActiveStudentCurricularPlans;
+			Boolean showAlternativeHomepage;
+			Boolean showAlumniDegrees;
+			Boolean showCategory;
+			Boolean showCurrentAttendingExecutionCourses;
+			Boolean showCurrentExecutionCourses;
+			Boolean showEmail;
+			Boolean showInterests;
+			Boolean showMobileTelephone;
+			Boolean showParticipations;
+			Boolean showPatents;
+			Boolean showPhoto;
+			Boolean showPrizes;
+			Boolean showPublications;
+			Boolean showResearchUnitHomepage;
+			Boolean showTelephone;
+			Boolean showUnit;
+			Boolean showWorkTelephone;
+		}
 
 /*
  * Relations definitions
@@ -4557,11 +4582,6 @@ relation ExtraExamRequestEnrolment {
 	net.sourceforge.fenixedu.domain.serviceRequests.ExtraExamRequest playsRole extraExamRequests {
 		multiplicity *;
 	}
-}
-
-relation AccessibleItemHasAvailabilityPolicy {
-	net.sourceforge.fenixedu.domain.AccessibleItem playsRole accessibleItem;
-	net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy playsRole availabilityPolicy;
 }
 
 relation AccountEntry {
@@ -4714,25 +4734,11 @@ relation AllowedToUploadInUnit {
 	}
 }
 
-relation AnnouncementBoardAnnouncements {
-	net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard playsRole announcementBoard;
-	net.sourceforge.fenixedu.domain.messaging.Announcement playsRole announcements {
-		multiplicity *;
-	}
-}
-
 relation AnnouncementBoardBookmark {
 	net.sourceforge.fenixedu.domain.Person playsRole bookmarkOwner {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard playsRole bookmarkedBoards {
-		multiplicity *;
-	}
-}
-
-relation AnnouncementCreator {
-	net.sourceforge.fenixedu.domain.Person playsRole creator;
-	net.sourceforge.fenixedu.domain.messaging.Announcement playsRole announcements {
 		multiplicity *;
 	}
 }
@@ -5145,27 +5151,6 @@ relation ConnectionRuleAccountabilityType {
 	net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule playsRole connectionRules {
 		multiplicity *;
 	}
-}
-
-relation ConversationMessagePerson {
-	net.sourceforge.fenixedu.domain.messaging.ConversationMessage playsRole conversationMessages {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Person playsRole creator;
-}
-
-relation ConversationThreadConversationMessage {
-	net.sourceforge.fenixedu.domain.messaging.ConversationMessage playsRole conversationMessages {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThread;
-}
-
-relation ConversationThreadPerson {
-	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThreads {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Person playsRole creator;
 }
 
 relation ConvokeForWrittenEvaluation {
@@ -6072,13 +6057,6 @@ relation ExecutionCourseExecutionCourseProperty {
 	}
 }
 
-relation ExecutionCourseForumExecutionCourse {
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
-	net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum playsRole foruns {
-		multiplicity *;
-	}
-}
-
 relation ExecutionCourseProfessorship {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 	net.sourceforge.fenixedu.domain.Professorship playsRole professorships {
@@ -6093,7 +6071,7 @@ relation ExecutionCourseReport {
 
 relation ExecutionCourseSiteSite {
 	net.sourceforge.fenixedu.domain.ExecutionCourseSite playsRole site;
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole siteExecutionCourse;
 }
 
 relation ExecutionCourseSummary {
@@ -6393,13 +6371,6 @@ relation FileTagging {
 	}
 }
 
-relation ForumConversationThread {
-	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThreads {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.messaging.Forum playsRole forum;
-}
-
 relation ForumSubscriptionForum {
 	net.sourceforge.fenixedu.domain.messaging.ForumSubscription playsRole forumSubscriptions {
 		multiplicity *;
@@ -6419,13 +6390,6 @@ relation FunctionParentInherentFunction {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Function playsRole parentInherentFunction;
-}
-
-relation FunctionalitySectionPointsFunctionality {
-	net.sourceforge.fenixedu.domain.FunctionalitySection playsRole siteSection {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionality;
 }
 
 relation GaugingTestResultStudent {
@@ -6932,11 +6896,9 @@ relation InvitationParty {
 	}
 }
 
-relation ItemFileItem {
-	net.sourceforge.fenixedu.domain.Item playsRole item;
-	net.sourceforge.fenixedu.domain.FileItem playsRole fileItems {
-		multiplicity *;
-	}
+relation AttachmentFileItem {
+	net.sourceforge.fenixedu.domain.contents.Attachment playsRole attachment;
+	net.sourceforge.fenixedu.domain.FileItem playsRole fileItem;
 }
 
 relation JournalIssueArticleAssociation {
@@ -7197,20 +7159,6 @@ relation ModelRestrictionQuestion {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.tests.NewQuestion playsRole question;
-}
-
-relation ModuleAggregatesFunctionalities {
-	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionalities {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.functionalities.Module playsRole module;
-}
-
-relation ModuleHasSubModules {
-	net.sourceforge.fenixedu.domain.functionalities.Module playsRole modules {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.functionalities.Module playsRole parent;
 }
 
 relation NonAffiliatedTeacherExecutionCourse {
@@ -8440,19 +8388,6 @@ relation RootDomainObjectAdvise {
 	}
 }
 
-relation RootDomainObjectAnnouncement {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.messaging.Announcement playsRole announcements {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectAnnouncementBoard {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard playsRole announcementBoards {
-		multiplicity *;
-	}
-}
 
 relation RootDomainObjectArticleAssociation {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
@@ -8695,20 +8630,6 @@ relation RootDomainObjectContext {
 relation RootDomainObjectContributor {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.Contributor playsRole contributors {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectConversationMessage {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.messaging.ConversationMessage playsRole conversatioMessages {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectConversationThread {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.messaging.ConversationThread playsRole conversationThreads {
 		multiplicity *;
 	}
 }
@@ -9227,23 +9148,9 @@ relation RootDomainObjectFileEntry {
 	}
 }
 
-relation RootDomainObjectForum {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.messaging.Forum playsRole foruns {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectForumSubscription {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.messaging.ForumSubscription playsRole forumSubscriptions {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectFunctionality {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionalities {
 		multiplicity *;
 	}
 }
@@ -9508,13 +9415,6 @@ relation RootDomainObjectInstitutionUnit {
 relation RootDomainObjectInsuranceValue {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.InsuranceValue playsRole insuranceValues {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectItem {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.Item playsRole items {
 		multiplicity *;
 	}
 }
@@ -10240,13 +10140,6 @@ relation RootDomainObjectSecretaryEnrolmentStudent {
 	}
 }
 
-relation RootDomainObjectSection {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.Section playsRole sections {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectSeminary {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.Seminaries.Seminary playsRole seminarys {
@@ -10774,20 +10667,6 @@ relation ScientificCommissionRootDomainObject {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 }
 
-relation SectionItem {
-	net.sourceforge.fenixedu.domain.Item playsRole associatedItems {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Section playsRole section;
-}
-
-relation SectionSuperiorSection {
-	net.sourceforge.fenixedu.domain.Section playsRole associatedSections {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Section playsRole superiorSection;
-}
-
 relation SectionTestElement {
 	net.sourceforge.fenixedu.domain.tests.NewTestElement playsRole testElements {
 		multiplicity *;
@@ -10928,25 +10807,12 @@ relation SibsPaymentFileEntrySibsPaymentFile {
 	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
 }
 
+/*
 relation SitePointsTemplate {
 	net.sourceforge.fenixedu.domain.Site playsRole template;
 	net.sourceforge.fenixedu.domain.Site playsRole templatedSites {
 		multiplicity *;
 	}
-}
-
-relation SiteRootDomainObject {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.Site playsRole sites {
-		multiplicity *;
-	}
-}
-
-relation SiteSection {
-	net.sourceforge.fenixedu.domain.Section playsRole associatedSections {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Site playsRole site;
 }
 
 relation SiteTemplatePointsModule {
@@ -10955,6 +10821,14 @@ relation SiteTemplatePointsModule {
 	}
 	net.sourceforge.fenixedu.domain.functionalities.Module playsRole module;
 }
+
+relation SiteTemplatePointsContainer {
+	net.sourceforge.fenixedu.domain.SiteTemplate playsRole siteTemplates {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.contents.Container playsRole container;
+}
+*/
 
 relation SpaceBlueprint {
 	net.sourceforge.fenixedu.domain.space.Space playsRole space;
@@ -11607,13 +11481,6 @@ relation UnitSiteHasBanners {
 	}
 }
 
-relation UnitSiteHasIntroductionSections {
-	net.sourceforge.fenixedu.domain.Section playsRole introductionSections {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.UnitSite playsRole introductionUnitSite;
-}
-
 relation UnitSiteHasLogo {
 	net.sourceforge.fenixedu.domain.UnitSite playsRole unitSite;
 	net.sourceforge.fenixedu.domain.UnitSiteFile playsRole logo;
@@ -12263,3 +12130,114 @@ relation PersonCardGenerationEntry {
         }
 }
 
+relation MetaDomainObjectRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.MetaDomainObject playsRole metaDomainObjects {
+		multiplicity *;
+	}
+}
+
+relation ContentHasCreator {
+	net.sourceforge.fenixedu.domain.Person playsRole creator;
+	net.sourceforge.fenixedu.domain.contents.Content playsRole createdContents {
+		multiplicity *;
+	}
+}
+
+relation ContentHasAvailabilityPolicy {
+	net.sourceforge.fenixedu.domain.contents.Content playsRole content;
+	net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy playsRole availabilityPolicy;
+}
+
+relation ContentRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.contents.Content playsRole contents {
+		multiplicity *;
+	}
+}
+
+relation ContainerNode {
+	net.sourceforge.fenixedu.domain.contents.Container playsRole parent;
+	net.sourceforge.fenixedu.domain.contents.Node playsRole children {
+		multiplicity *;
+	}
+}
+
+relation ContentNode {
+	net.sourceforge.fenixedu.domain.contents.Content playsRole child;
+	net.sourceforge.fenixedu.domain.contents.Node playsRole parents {
+		multiplicity *;
+	}
+}
+
+relation NodeRootDomainObject {
+        net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+        net.sourceforge.fenixedu.domain.contents.Node playsRole nodes {
+                multiplicity *;
+        }
+}
+
+relation FunctionalityExecutionPath {
+	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionality;
+	net.sourceforge.fenixedu.domain.functionalities.ExecutionPath playsRole executionPathValue;
+}
+
+relation FunctionalityHasParameters {
+	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionality;
+	net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter playsRole parameters {
+		multiplicity *;
+	}
+}
+
+relation FunctionalityParameterType {
+	net.sourceforge.fenixedu.domain.MetaDomainObject playsRole type;
+	net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter playsRole functionalityParameters {
+		multiplicity *;
+	}
+}
+
+relation RootModule {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole moduleRootDomainObject;
+	net.sourceforge.fenixedu.domain.functionalities.Module playsRole rootModule;
+}
+
+relation RootPortal {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole portalRootDomainObject;
+	net.sourceforge.fenixedu.domain.contents.Portal playsRole rootPortal;
+}
+
+relation ContainerPointsContent {
+	net.sourceforge.fenixedu.domain.contents.Container playsRole initialContainer {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.contents.Content playsRole initialContent;
+}
+
+
+relation RootDomainObjectFunctionalityParameter {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter playsRole functionalityParameters {
+		multiplicity *;
+	}
+}
+
+relation MetaDomainObjectPortalMetaDomainObject {
+	net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal playsRole portals {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.MetaDomainObject playsRole metaDomainObject;
+}
+
+relation ExecutionPathRootDomainObject {
+        net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+        net.sourceforge.fenixedu.domain.functionalities.ExecutionPath playsRole executionPaths {
+            multiplicity *;
+        }
+}
+
+relation PortalPool {
+	net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal playsRole portal;
+	net.sourceforge.fenixedu.domain.contents.Content playsRole pool {
+		multiplicity *;
+	}
+}

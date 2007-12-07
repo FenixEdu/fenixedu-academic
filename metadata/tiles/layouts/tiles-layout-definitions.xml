@@ -21,6 +21,17 @@
 		<put name="body-inline" value="" />
 		<put name="footer" value="/copyright.jsp" />	
     </definition>
+	<definition name="df.layout.two-column.contents" page="/layout/fenixLayout_2col_contents.jsp" >
+		<put name="title" value="/commons/functionalities/title.jsp"/>
+        <put name="head" value="/commons/blank.jsp"/>
+		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
+		<put name="navGeral" value="/commons/functionalities/top-menu.jsp" />
+		<put name="navLocal" value="/commons/functionalities/side-menu.jsp" />
+		<put name="body-context" value="/commons/functionalities/breadCrumbs.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="body-inline" value="" />
+		<put name="footer" value="/copyright.jsp" />	
+    </definition>    
 	<definition name="df.layout.two-column.extra-menu" page="/layout/fenixLayout_2col_extraMenu.jsp" >
 		<put name="title" value="/commons/blank.jsp" />
 		<put name="serviceName" value="/commons/blank.jsp" />

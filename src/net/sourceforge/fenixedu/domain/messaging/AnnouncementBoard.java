@@ -10,6 +10,8 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -62,7 +64,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     
     public static final Comparator<AnnouncementBoard> BY_NAME = new Comparator<AnnouncementBoard>() {
 	public int compare(AnnouncementBoard o1, AnnouncementBoard o2) {
-	    int result = Collator.getInstance().compare(o1.getName(), o2.getName());
+	    int result = Collator.getInstance().compare(o1.getName().getContent(), o2.getName().getContent());
 	    return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
 	}
     };
@@ -144,7 +146,8 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     public List<Announcement> getActiveAnnouncements() {
         	final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
-        	for (final Announcement announcement : getAnnouncementsSet()) {
+                for (final Node node : getChildrenSet()) {
+                    final Announcement announcement = (Announcement) node.getChild();
         	    if (announcement.isActive() && announcement.getVisible()) {
         	        activeAnnouncements.add(announcement);
         	    }
@@ -155,7 +158,8 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     public Collection<Announcement> getVisibleAnnouncements() {
 	final Collection<Announcement> activeAnnouncements = new ArrayList<Announcement>();
-	for (final Announcement announcement : this.getAnnouncements()) {
+        for (final Node node : getChildrenSet()) {
+            final Announcement announcement = (Announcement) node.getChild();
 	    if (announcement.getVisible()) {
 		activeAnnouncements.add(announcement);
 	    }
@@ -164,7 +168,8 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public void addVisibleAnnouncements(final AnnouncementPresentationBean announcementPresentationBean) {
-        for (final Announcement announcement : this.getAnnouncements()) {
+        for (final Node node : getChildrenSet()) {
+            final Announcement announcement = (Announcement) node.getChild();
             if (announcement.getVisible()) {
                 announcementPresentationBean.add(announcement);
             }
@@ -182,7 +187,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public boolean canBeDeleted() {
-	return !hasAnyAnnouncements();
+        return !hasAnyChildren();
     }
 
     private void removeBookmarkedBoards() {
@@ -241,6 +246,28 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     public boolean isBookmarkOwner() {
 	return AccessControl.getPerson().getBookmarkedBoardsSet().contains(this);
+    }
+
+    @Override
+    public boolean isAnAnnouncementBoard() {
+        return true;
+    }
+
+    public void addAnnouncements(Announcement announcements) {
+        announcements.setAnnouncementBoard(this);
+    }
+
+    public List<Announcement> getAnnouncements() {
+        final List<Announcement> announcements = new ArrayList<Announcement>();
+        for (final Node node : getChildrenSet()) {
+            announcements.add((Announcement) node.getChild());
+        }
+        return announcements;
+    }
+    
+    @Override
+    protected Node createChildNode(Content childContent) {
+        return new AnnouncementNode(this, (Announcement) childContent);
     }
 
 }

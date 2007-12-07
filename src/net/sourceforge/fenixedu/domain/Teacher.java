@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -1304,5 +1305,15 @@ public class Teacher extends Teacher_Base {
     	}
     	
     	return tutorships;
+    }
+
+    public Collection<? extends Forum> getForuns(final ExecutionPeriod executionPeriod) {
+	final Collection<Forum> res = new HashSet<Forum>();
+	for (Professorship professorship : getProfessorshipsSet()) {
+	    if(professorship.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+		res.addAll(professorship.getExecutionCourse().getForuns());
+	    }
+	}
+	return res;
     }
 }

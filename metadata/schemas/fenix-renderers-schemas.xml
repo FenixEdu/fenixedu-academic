@@ -47,6 +47,7 @@
     <!ENTITY directiveCouncil SYSTEM "directiveCouncil-schemas.xml">
     <!ENTITY cardGeneration SYSTEM "cardGeneration-schemas.xml">
     <!ENTITY facultyAdmOffice SYSTEM "facultyAdmOffice-schemas.xml">
+	<!ENTITY contentSchemas SYSTEM "content-schemas.xml">
 ]>
 
 <schemas>
@@ -704,4 +705,5 @@
     &directiveCouncil;
     &facultyAdmOffice;
     &cardGeneration;
+    &contentSchemas;
 </schemas>

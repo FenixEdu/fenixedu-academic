@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs mvert0">
@@ -96,7 +97,15 @@
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
 						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						
+
+						<app:defineContentPath id="path" name="executionCourseView" property="executionCourse.site"/>
+						<bean:write name="path"/>
+						-
+						<app:contentLink name="executionCourseView" property="executionCourse.site">
+							<bean:write name="executionCourseView" property="executionCourseName"/>
+						</app:contentLink>
+						-
+
 						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
 											 + pageContext.findAttribute("executionCourseOID").toString()
 										%>" >

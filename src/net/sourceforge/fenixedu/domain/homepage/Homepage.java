@@ -8,7 +8,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -51,11 +53,11 @@ public class Homepage extends Homepage_Base {
         setPerson(person);
     }
 
-    public String getName() {
+    public String getOwnersName() {
         return getPerson().getNickname();
     }
 
-    public void setName(String name) {
+    public void setOwnersName(String name) {
         getPerson().setNickname(name);
     }
 
@@ -67,9 +69,9 @@ public class Homepage extends Homepage_Base {
     public static List<Homepage> getAllHomepages() {
         List<Homepage> result = new ArrayList<Homepage>();
         
-        for (Site site : RootDomainObject.getInstance().getSites()) {
-            if (site instanceof Homepage) {
-                result.add((Homepage) site);
+        for (Content content : RootDomainObject.getInstance().getContents()) {
+            if (content instanceof Homepage) {
+                result.add((Homepage) content);
             }
         }
         return result;
@@ -102,5 +104,10 @@ public class Homepage extends Homepage_Base {
 
     public boolean isHomepageActivated() {
 	return getActivated() != null && getActivated().booleanValue();
+    }
+    
+    @Override
+    public MultiLanguageString getName() {
+	return MultiLanguageString.i18n().add("pt", String.valueOf(getPerson().getIstUsername())).finish();
     }
 }

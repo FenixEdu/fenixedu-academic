@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
+import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -984,5 +985,17 @@ public class Student extends Student_Base {
 	    result.addAll(registration.getExternalEnrolmentsSet());
 	}
 	return result;
+    }
+    
+     public Collection<? extends Forum> getForuns(ExecutionPeriod executionPeriod) {
+	final Collection<Forum> res = new HashSet<Forum>();
+	for (Registration registration : getRegistrationsSet()) {
+	    for (Attends attends : registration.getAssociatedAttendsSet()) {
+		if(attends.getExecutionPeriod() == executionPeriod) {
+		    res.addAll(attends.getExecutionCourse().getForuns());
+		}
+	    }
+	}
+	return res;
     }
 }

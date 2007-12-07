@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -16,7 +17,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.LoginRequestManagement;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ResearchUnitProcessor;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -33,7 +33,9 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 		ResearchUnit unit = getSite(request).getUnit();
 
         try {
-            return RequestUtils.absoluteURL(request, ResearchUnitProcessor.getResearchUnitPath(unit)).toString();
+            MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(ResearchUnitSite.class);
+	    String path = metaDomainObject.getAssociatedPortal().getName().getContent() + "/" + unit.getUnitPath("/");
+            return RequestUtils.absoluteURL(request, path).toString();
         } catch (MalformedURLException e) {
             return null;
         }

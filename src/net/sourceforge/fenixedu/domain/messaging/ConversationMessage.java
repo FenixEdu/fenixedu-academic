@@ -1,85 +1,82 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
+import net.sourceforge.fenixedu.domain.contents.IDateContent;
+import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
-import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.DateTime;
 
-public class ConversationMessage extends ConversationMessage_Base {
-
-    public static class DateComparatorOldestFirst implements Comparator<java.util.Date> {
-	public int compare(Date o1, Date o2) {
-	    return -o1.compareTo(o2);
-	}
-    }
-
-    public static final Comparator CONVERSATION_MESSAGE_COMPARATOR_BY_CREATION_DATE = new BeanComparator("creationDate",
-	    new DateComparatorOldestFirst());
+public class ConversationMessage extends ConversationMessage_Base implements IDateContent {
 
     public ConversationMessage() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setCreationDate(Calendar.getInstance().getTime());
+        super();
+        setRootDomainObject(RootDomainObject.getInstance());
+        setCreationDate(new DateTime());
     }
 
-    public ConversationMessage(ConversationThread conversationThread, Person creator, String body) {
-	this();
-	init(conversationThread, creator, body);
+    public ConversationMessage(ConversationThread conversationThread, Person creator, MultiLanguageString body) {
+        this();
+        init(conversationThread, creator, body);
     }
 
-    private void init(ConversationThread conversationThread, Person creator, String body) {
-	setConversationThread(conversationThread);
-	setBody(body);
-	setCreator(creator);
+    private void init(ConversationThread conversationThread, Person creator, MultiLanguageString body) {
+        setConversationThread(conversationThread);
+        setBody(body);
+        setCreator(creator);
     }
 
     public void delete() {
-	removeConversationThread();
-	removeRootDomainObject();
-	removeCreator();
-	super.deleteDomainObject();
+        removeConversationThread();
+        removeRootDomainObject();
+        super.deleteDomainObject();
     }
 
-    @Override
+    
     public void removeConversationThread() {
-	super.setConversationThread(null);
-    }
-
-    @Override
-    public void removeCreator() {
-	super.setCreator(null);
+	getParents().get(0).removeParent();
     }
 
     @Override
     public void setCreator(Person creator) {
-	if (creator == null) {
-	    throw new DomainException("conversationMessage.creator.cannot.be.null");
-	}
+        if (creator == null) {
+            throw new DomainException("conversationMessage.creator.cannot.be.null");
+        }
 
-	super.setCreator(creator);
+        super.setCreator(creator);
     }
 
     @Override
-    public void setBody(String body) {
-	if (body == null) {
-	    throw new DomainException("conversationMessage.body.cannot.be.null");
-	}
+    public void setBody(MultiLanguageString body) {
+        if (body == null) {
+            throw new DomainException("conversationMessage.body.cannot.be.null");
+        }
 
-	super.setBody(body);
+        super.setBody(body);
     }
 
-    @Override
     public void setConversationThread(ConversationThread conversationThread) {
-	if (conversationThread == null) {
-	    throw new DomainException("conversationMessage.conversationThread.cannot.be.null");
-	}
+        if (conversationThread == null) {
+            throw new DomainException("conversationMessage.conversationThread.cannot.be.null");
+        }
 
-	super.setConversationThread(conversationThread);
+        if(getParents().isEmpty()) {
+            new DateOrderedNode(conversationThread,this,Boolean.TRUE);
+        }
+        else {
+            getParents().get(0).setParent(conversationThread);
+        }
     }
 
+    public ConversationThread getConversationThread() {
+	return (getParents().isEmpty()) ? null : (ConversationThread) getParents().get(0).getParent();
+    }
+
+    public DateTime getContentDate() {
+	return getCreationDate();
+    }
+    
 }

@@ -1,11 +1,18 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
+import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.DateTime;
 
 public abstract class Forum extends Forum_Base {
 
@@ -14,26 +21,26 @@ public abstract class Forum extends Forum_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Forum(String name, String description) {
+    public Forum(MultiLanguageString name, MultiLanguageString description) {
         this();
         init(name, description);
     }
 
-    public void init(String name, String description) {
-        setCreationDate(Calendar.getInstance().getTime());
+    public void init(MultiLanguageString name, MultiLanguageString description) {
+        setCreationDate(new DateTime());
         setName(name);
         setDescription(description);
     }
 
-    public boolean hasConversationThreadWithSubject(String subject) {
+    public boolean hasConversationThreadWithSubject(MultiLanguageString subject) {
         ConversationThread conversationThread = getConversationThreadBySubject(subject);
 
         return (conversationThread != null) ? true : false;
     }
 
-    public ConversationThread getConversationThreadBySubject(String subject) {
+    public ConversationThread getConversationThreadBySubject(MultiLanguageString subject) {
         for (ConversationThread conversationThread : getConversationThreads()) {
-            if (conversationThread.getSubject().equalsIgnoreCase(subject)) {
+            if (conversationThread.getTitle().equalInAnyLanguage(subject)) {
                 return conversationThread;
             }
         }
@@ -47,7 +54,7 @@ public abstract class Forum extends Forum_Base {
         }
     }
 
-    public void checkIfCanAddConversationThreadWithSubject(String subject) {
+    public void checkIfCanAddConversationThreadWithSubject(MultiLanguageString subject) {
         if (hasConversationThreadWithSubject(subject)) {
             throw new DomainException("forum.already.existing.conversation.thread");
         }
@@ -61,18 +68,6 @@ public abstract class Forum extends Forum_Base {
         }
 
         return total;
-    }
-
-    public void delete() {
-        for (; !getConversationThreads().isEmpty(); getConversationThreads().get(0).delete())
-            ;
-
-        for (; !getForumSubscriptions().isEmpty(); getForumSubscriptions().get(0).delete())
-            ;
-
-        removeRootDomainObject();
-        deleteDomainObject();
-
     }
 
     public void addEmailSubscriber(Person person) {
@@ -119,13 +114,48 @@ public abstract class Forum extends Forum_Base {
         return (subscription != null) ? subscription.getReceivePostsByEmail() : false;
     }
 
-    public ConversationThread createConversationThread(Person creator, String subject) {
+    public ConversationThread createConversationThread(Person creator, MultiLanguageString subject) {
         checkIfPersonCanWrite(creator);
         checkIfCanAddConversationThreadWithSubject(subject);
 
         return new ConversationThread(this, creator, subject);
     }
 
+    public static List<Forum> readAllForuns() {
+	List<Forum> foruns = new ArrayList<Forum>();
+	for(Content content : RootDomainObject.getInstance().getContents()) {
+	    if(content instanceof Forum) {
+		foruns.add((Forum)content);
+	    }
+	}
+	return foruns;
+    }
+    
+    public List<ConversationThread> getConversationThreads() {
+	List <ConversationThread>  conversationThreads  = new ArrayList<ConversationThread>();
+	for(Node node : getChildrenSet()) {
+	    conversationThreads.add((ConversationThread) node.getChild());
+	}
+	return conversationThreads;
+    }
+    
+    public void addConversationThreads(ConversationThread conversationThread) {
+	conversationThread.setForum(this);
+    }
+    
+    public void removeConversationThreads(ConversationThread conversationThread) {
+	getConversationThreads().remove(conversationThread);
+    }
+    
+    public int getConversationThreadsCount() {
+	return getChildrenCount();
+    }
+    
+    @Override
+    protected Node createChildNode(Content childContent) {
+        return new DateOrderedNode(this, childContent, Boolean.FALSE);
+    }
+    
     public abstract Group getReadersGroup();
 
     public abstract Group getWritersGroup();

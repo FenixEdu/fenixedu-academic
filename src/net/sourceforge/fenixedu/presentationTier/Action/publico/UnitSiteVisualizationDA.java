@@ -15,12 +15,15 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.R
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitSite;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -38,27 +41,6 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
     public static final String EVENTS_NAME = "Eventos";
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Unit unit = getUnit(request);
-
-	if (unit != null) {
-	    request.setAttribute("unit", unit);
-	    request.setAttribute("site", unit.getSite());
-	}
-
-	request.setAttribute("announcementActionVariable",
-		getMappingPath(mapping, "announcementsAction"));
-	request.setAttribute("eventActionVariable", getMappingPath(mapping, "eventsAction"));
-	request.setAttribute("announcementRSSActionVariable", getMappingPath(mapping,
-		"announcementsRSSAction"));
-	request.setAttribute("eventRSSActionVariable", getMappingPath(mapping, "eventsRSSAction"));
-	request.setAttribute("siteContextParam", getContextParamName(request));
-	request.setAttribute("siteContextParamValue", getContextParamValue(request));
-
-	return super.execute(mapping, actionForm, request, response);
-    }
 
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
@@ -126,6 +108,12 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	return mapping.findForward("frontPage-" + site.getLayout());
     }
 
+    protected UnitSite getUnitSite(HttpServletRequest request) {
+	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+	Container container = (Container)context.getLastContentInPath(UnitSite.class);
+	return (UnitSite) container;
+    }
+    
     protected Unit getUnit(HttpServletRequest request) {
 	Unit unit = (Unit) request.getAttribute("unit");
 

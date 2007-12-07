@@ -59,7 +59,7 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
     }
 
     protected AnnouncementBoard getRequestedAnnouncementBoard(final HttpServletRequest request) {
-	return rootDomainObject.readAnnouncementBoardByOID(getAnnouncementBoardId(request));
+	return (AnnouncementBoard) rootDomainObject.readContentByOID(getAnnouncementBoardId(request));
     }
 
     protected String getRequestedLanguageString(HttpServletRequest request) {

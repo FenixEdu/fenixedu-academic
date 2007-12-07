@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
-import net.sourceforge.fenixedu.domain.AccessibleItem;
+import java.util.UUID;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import dml.runtime.RelationAdapter;
 
 /**
@@ -13,12 +17,13 @@ import dml.runtime.RelationAdapter;
 public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
 
     static {
-        AccessibleItemHasAvailabilityPolicy.addListener(new DeletePreviousAvailability());
+        ContentHasAvailabilityPolicy.addListener(new DeletePreviousAvailability());
     }
     
     protected AvailabilityPolicy() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+        setContentId(UUID.randomUUID().toString());
     }
 
     /**
@@ -37,19 +42,19 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
     /**
      * Deletes this object from persistent storage.
      */
-    public void delete() {	
-        removeAccessibleItem();
+    public void delete() {
+        removeContent();
         removeRootDomainObject();
         deleteDomainObject();
     }
 
-    public static class DeletePreviousAvailability extends RelationAdapter<AvailabilityPolicy, AccessibleItem> {
-
+    public static class DeletePreviousAvailability extends RelationAdapter<AvailabilityPolicy, Content> {
+        
         @Override
-        public void afterRemove(AvailabilityPolicy availabilityPolicy, AccessibleItem accessibleItem) {
-            super.afterRemove(availabilityPolicy, accessibleItem);
-
-            if (accessibleItem != null) {
+        public void afterRemove(AvailabilityPolicy availabilityPolicy, Content content) {
+            super.afterRemove(availabilityPolicy, content);
+            
+            if (content != null) {
                 if (availabilityPolicy != null) {
                     availabilityPolicy.delete();
                 }
@@ -57,4 +62,6 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
         }
         
     }
+    
+    public abstract Group getTargetGroup();
 }

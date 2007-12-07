@@ -38,7 +38,7 @@ public class ImportStartupFunctionalities extends ImportFunctionalities {
         if (uuidString != null) {
             try {
                 UUID uuid = UUID.fromString(root.getAttributeValue("parent"));
-                parent = (Module) Functionality.getFunctionality(uuid);
+                parent = Module.getRootModule().findModule(uuid);
 
                 if (parent == null) {
                     // the specified parent does not exist, create an artificial one
@@ -46,7 +46,6 @@ public class ImportStartupFunctionalities extends ImportFunctionalities {
                     name.setContent(String.format("[%1$tF %1$tT] %2$s", new Date(), uuid));
 
                     parent = new Module(name, "/");
-                    parent.setEnabled(false);
                 }
             } catch (IllegalArgumentException e) {
                 throw new InvalidStructureException("functionalities.import.structure.invalid.uuid", e);

@@ -27,5 +27,51 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create table ClosedMonthDocument and some columns and indexes" createTableClosedMonthDocument.sql
-execute "Create Table ProtocolResponsibleFunction " createProtocolResponsibleFunction.sql
+execute "Create table for Content and Node" createContentAndNodeTable.sql
+
+execute "Update sql structure for and migrate data." updates.sql
+
+execute "Preparing Forums" prepareForum.sql
+execute "Prepare ConversionThread" prepareConversationThread.sql
+execute "Prepare ConversationMessage" prepareConversationMessage.sql
+
+execute "Prepare Contents" prepareContents.sql
+execute "Prepare Node" prepareNode.sql
+execute "Migrate Foruns" migrateForuns.sql
+
+execute "Migrate functionalities to Content table" mergeFunctionalityInContent.sql
+execute "Create functionality parameter table" createFunctionalityParameter.sql
+execute "Create root module" connectRootModule.sql
+
+execute "Create portal" createPortal.sql
+execute "Create root portal" connectRootPortal.sql
+
+execute "Prepare Contents for items and sections" prepareContentsForItemsAndSections.sql
+execute "Migrate sites" migrateSites.sql 
+execute "Migrate sections and items" migrateSectionsAndItems.sql
+
+execute "Move TempSections to Sections" moveTempSectionsToSections.sql
+execute "Prepare portals" preparePortals.sql
+
+execute "Copy Module Structure" copyModuleStructure.sql
+
+execute "Create table for MetaDomainObject" metaDomainObject.sql
+execute "Adding meta domain objects for all defined types" addMetaDomainObject3.sql
+
+execute "Update missing information in site" updateMissingInformationInSites.sql
+execute "Create MetaDomainObjhect From Site Templates" createMetaDomainObjectsFromSiteTemplates.sql
+
+execute "Update Roles" updateRole.sql
+execute "Migrate Top Sections, esta esqueci-me depois aquando merge pode-se juntar com o migrateSectionsAndItems" migrateTopSections.sql
+
+execute "Create execution path for functionalities" createExecutionPathTable.sql
+execute "Criar chave da Pool, este scripts pode depois ser merged na criação da tabela meta domain object" createKeysForPool.sql
+execute "Associar os conteúdos às pools. Com algum cuidado tb deverá ser merged na criação da tabela meta domain object" createPools.sql
+
+#execute "Initilize portal stuff from modules." initPortals.sql
+execute "Associate Templates to Root Module" connectTemplatesToRoot.sql
+
+execute "Add content ID to EVERYTHING!!!" addContentId.sql
+
+execute "Add Attachment" addAttachment.sql 
+execute "Connect ExecutionCourseForum to ExecutionCourseSite"  connectExecutionCourseForumToExecutionCourseSite.sql

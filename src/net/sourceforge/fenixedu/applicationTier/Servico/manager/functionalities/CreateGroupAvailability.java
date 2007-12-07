@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
 /**
  * Creates a new {@link ExpresssionGroupAvailability} based on the expression given.
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
  */
 public class CreateGroupAvailability extends Service {
 
-    public ExpressionGroupAvailability run(Functionality functionality, String expression) {
+    public ExpressionGroupAvailability run(Content functionality, String expression) {
         if (! isEmpty(expression)) {
             return new ExpressionGroupAvailability(functionality, expression);
         }

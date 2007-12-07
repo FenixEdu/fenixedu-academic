@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
-import net.sourceforge.fenixedu.domain.AccessibleItem;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
+import net.sourceforge.fenixedu.domain.contents.Content;
 
 /**
  * This class represents an availability policy base on groups created from
@@ -36,10 +36,11 @@ public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Bas
      * @exception GroupExpressionException
      *                when the expression is not correct
      */
-    public ExpressionGroupAvailability(AccessibleItem item, String expression) {
+   
+    public ExpressionGroupAvailability(Content content, String expression) {
         super();
 
-        setAccessibleItem(item);
+        setContent(content);
         setExpression(expression);
     }
 

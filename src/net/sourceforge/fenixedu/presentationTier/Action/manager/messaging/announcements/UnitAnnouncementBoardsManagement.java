@@ -155,7 +155,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
         form.setReturnAction(request.getParameter("returnAction"));
         form.setReturnMethod(request.getParameter("returnMethod"));
-        form.setName(board.getName());
+        form.setName(board.getName().getContent());
         form.setMandatory(board.getMandatory());
         form.setKeyUnit(board.getParty().getIdInternal());
         form.setUnitBoardManagementPermittedGroupType(board.getUnitPermittedManagementGroupType() == null ? null

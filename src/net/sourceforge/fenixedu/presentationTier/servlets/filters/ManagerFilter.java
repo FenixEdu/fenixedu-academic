@@ -22,7 +22,7 @@ public class ManagerFilter implements Filter {
     public void destroy() {
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
             throws IOException, ServletException {
 
         final IUserView userView = SessionUtils.getUserView((HttpServletRequest) request);

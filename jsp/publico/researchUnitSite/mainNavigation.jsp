@@ -6,9 +6,10 @@
 
 <html:xhtml/>
 
-	<logic:present name="site">
-	
-        <fr:view name="site" layout="unit-side-menu">
+
+<logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
+	<fr:view name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" 
+		layout="unit-side-menu">
             <fr:layout>
                 <fr:property name="sectionUrl" value="/researchSite/viewResearchUnitSite.do?method=section"/>
                 <fr:property name="contextParam" value="siteID"/>

@@ -603,6 +603,7 @@
 	<slot name="name"/>
 </schema>
 
+<!-- 
 <schema name="siteTemplate.choose.module"
         type="net.sourceforge.fenixedu.domain.SiteTemplate"
         bundle="DEFAULT">
@@ -612,7 +613,8 @@
         <property name="moduleOnly" value="true"/>
     </slot>
 </schema>
-
+ -->
+ 
 <schema name="ViewPersistentGroup" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" bundle="MANAGER_RESOURCES" constructor="name, type"> 	
 	<slot name="name" key="label.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50" />
