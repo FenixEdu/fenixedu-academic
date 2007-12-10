@@ -75,3 +75,5 @@ execute "Add content ID to EVERYTHING!!!" addContentId.sql
 
 execute "Add Attachment" addAttachment.sql 
 execute "Connect ExecutionCourseForum to ExecutionCourseSite"  connectExecutionCourseForumToExecutionCourseSite.sql
+
+execute "Create new Teacher Service Distribution tables definitions" newTSDTableDefinitions.sql
