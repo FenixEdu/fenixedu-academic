@@ -12583,5 +12583,11 @@
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.RemoveContentFromContainer</implementationClass>
 		<isTransactional>true</isTransactional>
 		<filterChains/>
-	</service>			
+	</service>
+	<service>
+		<name>CreateMetaDomainObectTypes</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.content.CreateMetaDomainObectTypes</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
 </serviceDefinitions>

@@ -60,6 +60,15 @@ public class StartupServlet extends HttpServlet {
             } catch (Throwable e) {
                 throw new ServletException("Error reading actual execution period!", e);
             }
+            
+            try {
+        	long start = System.currentTimeMillis();
+        	ServiceUtils.executeService(null, "CreateMetaDomainObectTypes", null);
+                long end = System.currentTimeMillis();
+                System.out.println("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
+            } catch(Throwable throwable) {
+        	throw new ServletException("Error creating MetaDomainObject!", throwable);
+            }
 
             try {
                 final Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(null,

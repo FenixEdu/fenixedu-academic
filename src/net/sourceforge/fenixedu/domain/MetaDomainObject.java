@@ -72,4 +72,16 @@ public class MetaDomainObject extends MetaDomainObject_Base {
 
 	return null;
     }
+    
+    public void delete() {
+	if(!canBeDeleted()) {
+	    throw new DomainException("error.metaDomainObject.cannot.be.deleted");
+	}
+	setRootDomainObject(null);
+	super.deleteDomainObject();
+    }
+
+    public boolean canBeDeleted() {
+	return !hasAnyFunctionalityParameters() && !hasAnyPortals();
+    }
 }
