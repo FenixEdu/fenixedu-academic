@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -51,7 +52,9 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
 			List<CurricularCourse> courseList = course == null ? null : course.getAssociatedCurricularCourses();
 			
 			if(courseList != null && !courseList.isEmpty()){
-				return courseList.get(0).getHoursByShiftType(getType(), course.getExecutionPeriod());
+				BigDecimal shiftHours = courseList.get(0).getTotalHoursByShiftType(getType(), course.getExecutionPeriod());
+				
+				return shiftHours == null ? 0d : shiftHours.doubleValue();
 			}
 		} 
 		

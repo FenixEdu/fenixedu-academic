@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,14 +90,14 @@ public class TSDCurricularCourseGroup extends TSDCurricularCourseGroup_Base {
 	
 	
 	private void buildTSDCourseLoads(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
-		Double shiftHours = null;
+		BigDecimal shiftHours = null;
 		TSDCurricularLoad tsdLoad = null;
 		List<ShiftType> lecturedShiftTypes = new ArrayList<ShiftType>();
 				
 		for(ShiftType shiftType : ShiftType.values()){
-			shiftHours = curricularCourse.getHoursByShiftType(shiftType, executionPeriod);
+			shiftHours = curricularCourse.getTotalHoursByShiftType(shiftType, executionPeriod);
 			
-			if(shiftHours != null && shiftHours > 0d){
+			if(shiftHours != null && shiftHours.doubleValue() > 0d){
 				lecturedShiftTypes.add(shiftType);
 			}
 		}
