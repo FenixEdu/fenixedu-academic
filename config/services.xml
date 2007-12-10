@@ -10036,6 +10036,66 @@
     </service>  	
 	<!-- Teacher Service Distribution -->
 	<service>
+    	<name>CreateTSDProcess</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDProcess</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
+    <service>
+    	<name>DeleteTSDProcess</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProcess</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
+        </filterChains>     
+    </service>
+
+ 	<service>
+    	<name>CreateTSDProcessPhase</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDProcessPhase</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
+ 	<service>
+    	<name>SetCurrentTSDProcessPhase</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetCurrentTSDProcessPhase</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
+        </filterChains>     
+    </service>
+
+ 	<service>
+    	<name>CloseTSDProcessPhase</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CloseTSDProcessPhase</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
+        </filterChains>     
+    </service>
+
+ 	<service>
+    	<name>OpenTSDProcessPhase</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.OpenTSDProcessPhase</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
+        </filterChains>     
+    </service>
+
+	<service>
     	<name>CreateTeacherServiceDistribution</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTeacherServiceDistribution</implementationClass>
         <description></description>
@@ -10045,59 +10105,9 @@
         </filterChains>     
     </service>
 
- 	<service>
-    	<name>CreateValuationPhase</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateValuationPhase</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service>
-    
- 	<service>
-    	<name>SetCurrentValuationPhase</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetCurrentValuationPhase</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service>
-
- 	<service>
-    	<name>CloseValuationPhase</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CloseValuationPhase</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service>
-
- 	<service>
-    	<name>OpenValuationPhase</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.OpenValuationPhase</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service>
-
 	<service>
-    	<name>CreateValuationGrouping</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateValuationGrouping</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service>
-
-	<service>
-    	<name>AssociateValuationTeacherWithValuationGrouping</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AssociateValuationTeacherWithValuationGrouping</implementationClass>
+    	<name>AssociateTSDTeacherWithTeacherServiceDistribution</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AssociateTSDTeacherWithTeacherServiceDistribution</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10106,8 +10116,8 @@
     </service>
  
  	<service>
-    	<name>DissociateValuationTeacherWithValuationGrouping</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DissociateValuationTeacherWithValuationGrouping</implementationClass>
+    	<name>DissociateTSDTeacherWithTeacherServiceDistribution</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DissociateTSDTeacherWithTeacherServiceDistribution</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10116,8 +10126,8 @@
     </service>
 
  	<service>
-    	<name>AssociateValuationCompetenceCourseWithValuationGrouping</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AssociateValuationCompetenceCourseWithValuationGrouping</implementationClass>
+    	<name>AssociateTSDCourseWithTeacherServiceDistribution</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AssociateTSDCourseWithTeacherServiceDistribution</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10126,8 +10136,8 @@
     </service>
 
  	<service>
-    	<name>DissociateValuationCompetenceCourseWithValuationGrouping</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DissociateValuationCompetenceCourseWithValuationGrouping</implementationClass>
+    	<name>DissociateTSDCourseWithTeacherServiceDistribution</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DissociateTSDCourseWithTeacherServiceDistribution</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10136,8 +10146,8 @@
     </service>
 
    	<service>
-    	<name>DeleteValuationGrouping</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteValuationGrouping</implementationClass>
+    	<name>DeleteTeacherServiceDistribution</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTeacherServiceDistribution</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10146,8 +10156,18 @@
     </service>
 
  	<service>
-    	<name>SetCourseValuationType</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetCourseValuationType</implementationClass>
+    	<name>SetTSDCourseType</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDCourseType</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    
+    <service>
+    	<name>SetTSDCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDCourse</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10156,38 +10176,8 @@
     </service>
 
  	<service>
-    	<name>SetCompetenceCourseValuation</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetCompetenceCourseValuation</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service>
-
- 	<service>
-    	<name>SetCurricularCourseValuation</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetCurricularCourseValuation</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service>
-
- 	<service>
-    	<name>CreateCurricularCourseValuationGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateCurricularCourseValuationGroup</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service>
-
- 	<service>
-    	<name>SetCurricularCourseValuationGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetCurricularCourseValuationGroup</implementationClass>
+    	<name>CreateTSDCurricularCourseGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDCurricularCourseGroup</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10196,8 +10186,8 @@
     </service>
 
    	<service>
-    	<name>CreateCurricularCourseValuations</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateCurricularCourseValuations</implementationClass>
+    	<name>CreateTSDCurricularCourses</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDCurricularCourses</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10206,8 +10196,8 @@
     </service>
 
  	<service>
-    	<name>DeleteCurricularCourseValuationGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteCurricularCourseValuationGroup</implementationClass>
+    	<name>DeleteTSDCurricularCourseGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDCurricularCourseGroup</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10216,8 +10206,8 @@
     </service>
 
  	<service>
-    	<name>SetProfessorshipValuation</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetProfessorshipValuation</implementationClass>
+    	<name>SetTSDProfessorship</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDProfessorship</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10226,8 +10216,8 @@
     </service>
 
    	<service>
-    	<name>DeleteProfessorshipValuation</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteProfessorshipValuation</implementationClass>
+    	<name>DeleteTSDProfessorship</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProfessorship</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10236,8 +10226,8 @@
     </service>
 
    	<service>
-    	<name>ReadCourseValuationsFromTeacherServiceDistributions</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadCourseValuationsFromTeacherServiceDistributions</implementationClass>
+    	<name>ReadTSDCoursesFromTSDProcesses</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadTSDCoursesFromTSDProcesses</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10246,8 +10236,8 @@
     </service>
 
    	<service>
-    	<name>ReadValuationTeachersFromTeacherServiceDistributions</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadValuationTeachersFromTeacherServiceDistributions</implementationClass>
+    	<name>ReadTSDTeachersFromTSDProcesses</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadTSDTeachersFromTSDProcesses</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10256,8 +10246,8 @@
     </service>
 
    	<service>
-    	<name>RemoveTeacherFromValuationGroupings</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.RemoveTeacherFromValuationGroupings</implementationClass>
+    	<name>RemoveTeacherFromTeacherServiceDistributions</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.RemoveTeacherFromTeacherServiceDistributions</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10266,8 +10256,8 @@
     </service>
 
    	<service>
-    	<name>AddTeacherToValuationGrouping</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AddTeacherToValuationGrouping</implementationClass>
+    	<name>AddTeacherToTeacherServiceDistribution</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AddTeacherToTeacherServiceDistribution</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10276,8 +10266,8 @@
     </service>
 
  	<service>
-    	<name>CreateValuationTeacher</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateValuationTeacher</implementationClass>
+    	<name>CreateTSDTeacher</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDTeacher</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10286,8 +10276,8 @@
     </service>
 
  	<service>
-    	<name>CopyLastYearRealDataToValuationPhase</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyLastYearRealDataToValuationPhase</implementationClass>
+    	<name>CopyLastYearRealDataToTSDProcessPhase</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyLastYearRealDataToTSDProcessPhase</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10296,8 +10286,8 @@
     </service>
 
    	<service>
-    	<name>CopyValuationPhaseDataToValuationPhase</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyValuationPhaseDataToValuationPhase</implementationClass>
+    	<name>CopyTSDProcessPhaseDataToTSDProcessPhase</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyTSDProcessPhaseDataToTSDProcessPhase</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10306,8 +10296,8 @@
     </service>
 
     <service>
-    	<name>DeleteValuationPhase</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteValuationPhase</implementationClass>
+    	<name>DeleteTSDProcessPhase</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProcessPhase</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10326,8 +10316,8 @@
     </service>
 
     <service>
-    	<name>SetPersonPermissionsOnTeacherServiceDistribution</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetPersonPermissionsOnTeacherServiceDistribution</implementationClass>
+    	<name>SetPersonPermissionsOnTSDProcess</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetPersonPermissionsOnTSDProcess</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10336,8 +10326,8 @@
     </service>
 
     <service>
-    	<name>CopyTeacherServiceDistribution</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyTeacherServiceDistribution</implementationClass>
+    	<name>CopyTSDProcess</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyTSDProcess</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10346,8 +10336,8 @@
     </service> 
         
     <service>
-    	<name>AddCourseToValuationGrouping</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AddCourseToValuationGrouping</implementationClass>
+    	<name>AddCourseToTeacherServiceDistribution</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AddCourseToTeacherServiceDistribution</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10356,8 +10346,8 @@
     </service> 
     
     <service>
-    	<name>RemoveCourseFromValuationGrouping</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.RemoveCourseFromValuationGrouping</implementationClass>
+    	<name>RemoveCourseFromTeacherServiceDistribution</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.RemoveCourseFromTeacherServiceDistribution</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10366,58 +10356,18 @@
     </service> 
     
     <service>
-    	<name>CreateValuationCompetenceCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateValuationCompetenceCourse</implementationClass>
+    	<name>CreateTSDVirtualGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDVirtualGroup</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
         	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
         </filterChains>     
     </service> 
-    
+            
     <service>
-    	<name>CreateValuationCurricularCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateValuationCurricularCourse</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service> 
-
-    <service>
-    	<name>RemoveCurricularCourseValuationFromValuationGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.RemoveCurricularCourseValuationFromValuationGroup</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service> 
-
-    <service>
-    	<name>AddCurricularCourseValuationFromValuationGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AddCurricularCourseValuationFromValuationGroup</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service>    
-    
-    <service>
-    	<name>DeleteValuationCurricularCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteValuationCurricularCourse</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentMemberOrTeacherOrEmployeeAuthorization"></chain>
-        </filterChains>     
-    </service>    
-    
-    <service>
-    	<name>MergeValuationGroupings</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.MergeValuationGroupings</implementationClass>
+    	<name>MergeTeacherServiceDistributions</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.MergeTeacherServiceDistributions</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10426,8 +10376,8 @@
     </service>    
 
     <service>
-    	<name>SetPublishedStateOnValuationPhase</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetPublishedStateOnValuationPhase</implementationClass>
+    	<name>SetPublishedStateOnTSDProcessPhase</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetPublishedStateOnTSDProcessPhase</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -10436,8 +10386,8 @@
     </service> 
 
     <service>
-    	<name>SetExtraCreditsToValuationTeacher</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetExtraCreditsToValuationTeacher</implementationClass>
+    	<name>SetExtraCreditsToTSDTeacher</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetExtraCreditsToTSDTeacher</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

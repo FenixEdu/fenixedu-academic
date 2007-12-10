@@ -5,30 +5,34 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<em>
-	<bean:message key="link.teacherServiceDistribution"/>
-</em>
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="link.teacherServiceDistribution.tsdProcessCreation"/></h2>
 
-<h2><bean:message key="link.teacherServiceDistribution.teacherServiceDistributionCreation"/></h2>
-
-<ul>
-	<li>
-		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-			<bean:message key="link.back"/>
+<p class="breadcumbs">
+	<em>
+		<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
+			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
-	</li>
-</ul>
+		>
+		<bean:message key="link.teacherServiceDistribution.tsdProcessCreation"/>
+	</em>
+</p>
+
 
 <ul>
 	<li>
-	  	<html:link page="/teacherServiceDistribution.do?method=prepareForEmptyTeacherServiceDistributionCreation">
+	  	<html:link page="/tsdProcess.do?method=prepareForEmptyTSDProcessCreation">
 	  		<bean:message key="link.teacherServiceDistribution.teacherEmptyServiceDistributionCreation"/>
 	  	</html:link>
 	</li>
 	<li>
-	  	<html:link page="/teacherServiceDistributionCopy.do?method=prepareForTeacherServiceDistributionCopy">
-	  		<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionCopy"/>
+	  	<html:link page="/tsdProcessCopy.do?method=prepareForTSDProcessCopy">
+	  		<bean:message key="link.teacherServiceDistribution.tsdProcessCopy"/>
 	  	</html:link>
 	</li>
 </ul>
-
+<br/>
+<br/>
+<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
+	<bean:message key="link.back"/>
+</html:link>

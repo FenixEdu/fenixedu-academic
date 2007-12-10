@@ -155,15 +155,14 @@
 			</ul>
 		</logic:notEmpty>
 				
-		<logic:notEmpty name="UserView" property="person.teacherServiceDistributions">		
 		<ul style="margin-top: 1em">
 	  		<li>
-			  	<html:link page="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution">
+			  	<html:link page="/tsdProcess.do?method=prepareTSDProcess">
 			  		<bean:message key="link.teacherServiceDistribution"/>
 			  	</html:link>  
 			</li> 							
 		</ul>
-		</logic:notEmpty>
+		
 
 
 </logic:present>

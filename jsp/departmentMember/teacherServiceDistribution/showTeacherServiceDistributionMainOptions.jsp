@@ -12,20 +12,20 @@
 
 <ul>
 	<li>
-	  	<html:link page="/globalTeacherServiceDistributionValuation.do?method=prepareForGlobalTeacherServiceDistributionValuation">
-	  		<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionVisualization"/>
+	  	<html:link page="/globalTSDProcessValuation.do?method=prepareForGlobalTSDProcessValuation">
+	  		<bean:message key="link.teacherServiceDistribution.tsdProcessVisualization"/>
 	  	</html:link>
 	</li>
 <logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
 	<li>
-	  	<html:link page="/teacherServiceDistribution.do?method=prepareForTeacherServiceDistributionCreation">
-	  		<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionCreation"/>
+	  	<html:link page="/tsdProcess.do?method=prepareForTSDProcessCreation">
+	  		<bean:message key="link.teacherServiceDistribution.tsdProcessCreation"/>
 	  	</html:link>
 	</li>
 </logic:present>
 	<li>
-	  	<html:link page="/teacherServiceDistribution.do?method=prepareForTeacherServiceDistributionEdition">
-	  		<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionEdition"/>
+	  	<html:link page="/tsdProcess.do?method=prepareForTSDProcessEdition">
+	  		<bean:message key="link.teacherServiceDistribution.tsdProcessEdition"/>
 	  	</html:link>
 	</li>	
 </ul>

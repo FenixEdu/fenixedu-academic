@@ -1,6 +1,6 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.CourseValuation" %>
-<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation" %>
+<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse" %>
+<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
@@ -10,139 +10,133 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
 <em><bean:message key="link.teacherServiceDistribution"/></em>
-<h2><bean:message key="link.teacherServiceDistribution.teacherServiceDistributionValuation"/></h2>
+<h2><bean:message key="link.teacherServiceDistribution.tsdProcessValuation"/></h2>
 
 <p class="breadcumbs">
 	<em>
-		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+		<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<bean:define id="teacherServiceDistributionId" name="teacherServiceDistribution" property="idInternal"/>
-		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + teacherServiceDistributionId %>'>
-			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		<bean:define id="tsdProcessId" name="tsdProcess" property="idInternal"/>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + tsdProcessId %>'>
+			<bean:write name="tsdProcess" property="name"/>&nbsp;
+			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
 		>
-		<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionValuation"/>
+		<bean:message key="link.teacherServiceDistribution.tsdProcessValuation"/>
 	</em>
 </p>
 
-<html:form action="/teacherServiceDistributionValuation">
+
+<html:form action="/tsdProcessValuation">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdProcess" property="tsdProcess"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 
-<table class='tstyle5 thlight thright mtop05'>
+<table class='tstyle5'>
 	<tr>
-		<th>
-			<bean:message key="label.teacherServiceDistribution.valuationPhase"/>:
-		</th>
+		<td align="right">
+			<bean:message key="label.teacherServiceDistribution.tsdProcessPhase"/>:
+		</td>
 		<td>
-			<html:select property="valuationPhase" onchange="this.form.method.value='loadValuationPhase'; this.form.submit();">
-				<html:options collection="valuationPhaseList" property="idInternal" labelProperty="name"/>
+			<html:select property="tsdProcessPhase" onchange="this.form.method.value='loadTSDProcessPhase'; this.form.submit();">
+				<html:options collection="tsdProcessPhaseList" property="idInternal" labelProperty="name"/>
 			</html:select>
 		</td>
 	</tr>
 	<tr>
-		<th>
-			<bean:message key="label.teacherServiceDistribution.semester"/>:
-		</th>
+		<td align="right">
+			<bean:message key="label.teacherServiceDistribution.TeacherServiceDistribution"/>:
+		</td>
 		<td>
-			<html:select property="executionPeriod" onchange="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit();">
+			<html:select property="tsd" onchange="this.form.method.value='loadTSDProcess'; this.form.submit();">
+				<html:options collection="tsdOptionEntryList" property="idInternal" labelProperty="name"/>
+			</html:select>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			<bean:message key="label.teacherServiceDistribution.semester"/>:
+		</td>
+		<td>
+			<html:select property="executionPeriod" onchange="this.form.method.value='loadTSDProcess'; this.form.submit();">
 				<html:option value="-1"><bean:message key="label.teacherServiceDistribution.both"/></html:option>
 				<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
 			</html:select>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:
-		</td>
-		<td>
-			<html:select property="valuationGrouping" onchange="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit();">
-				<html:options collection="valuationGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
-			</html:select>
-		</td>
-	</tr>	
 </table>
+<br/>
 
-<ul>
-<logic:present name="nonValuatedCompetenceCourses">
-	<li>
-		<html:link href="#noValuationCourses">
-			<bean:message key="label.teacherServiceDistribution.coursesWithoutValuations"/>
-		</html:link>
-	</li>
-</logic:present>
-<logic:notEmpty name="courseValuationDTOEntryList">
-	<li>
-		<html:link href="javascript:document.forms[0].method.value='exportTeacherServiceDistributionValuationToExcel'; document.forms[0].submit();">
-			<bean:message key="label.teacherService.exportToExcel"/>
-		</html:link>
-	</li>
+<logic:notEmpty name="tsdCourseDTOEntryList">
+	<ul>
+		<li>
+			<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='exportTSDProcessValuationToExcel'; document.forms[0].submit();">
+				<bean:message key="label.teacherService.exportToExcel"/>
+			</html:link>
+		</li>
+	</ul>
 </logic:notEmpty>
-</ul>
 
-<p>
-	<bean:message key="label.teacherService.navigateBy"/>:
-	<html:link href="javascript:document.forms[0].method.value='changeToViewCourses'; document.forms[0].submit();">
+<br/>
+
+<p class="mtop15 mbottom1">
+	<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='changeToViewCourses'; document.forms[0].submit();">
 		<bean:message key="label.teacherService.navigateByCourse"/>
 	</html:link> | 
-	<html:link href="javascript:document.forms[0].method.value='changeToViewTeachers'; document.forms[0].submit();">
+	<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='changeToViewTeachers'; document.forms[0].submit();">
 		<bean:message key="label.teacherService.navigateByTeacher"/>
 	</html:link> | 
-	<html:link href="javascript:document.forms[0].method.value='changeToViewTeacherAndCourses'; document.forms[0].submit();">
+	<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='changeToViewTeacherAndCourses'; document.forms[0].submit();">
 		<bean:message key="label.teacherService.viewByCoursesAndTeachers"/>
 	</html:link> |
 	<b> <bean:message key="label.teacherServiceDistribution.viewByCharts"/> </b>
 </p>
+</html:form>
 
+<%-- 
 <ul class="mvert15">
 	<li>
-		<a href="#hoursByGrouping"><bean:message key="label.teacherServiceDistribution.hoursByGrouping"/></a>
+		<html:link href="javascript:void(0)" anchor="hoursByGrouping"><bean:message key="label.teacherServiceDistribution.hoursByGrouping"/></html:link>
 	</li>
 	<li>
 		<a href="#numberStudentsByGrouping"><bean:message key="label.teacherServiceDistribution.numberStudentsByGrouping"/></a>
 	</li>
 	<li>
-		<a href="#hoursByGroupingPercentage"><bean:message key="label.teacherServiceDistribution.hoursByGrouping"/> %</a>
+		<a href="#hoursByGroupingPercentage">% <bean:message key="label.teacherServiceDistribution.hoursByGrouping"/></a>
 	</li>
 	<li>
-		<a href="#numberStudentsByGroupingPercentage"><bean:message key="label.teacherServiceDistribution.numberStudentsByGrouping"/> %</a>
-	</li>
-	<li>
-		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + teacherServiceDistributionId %>'>
-			<bean:message key="link.back"/>
-		</html:link>
+		<a href="#numberStudentsByGroupingPercentage">% <bean:message key="label.teacherServiceDistribution.numberStudentsByGrouping"/></a>
 	</li>
 </ul>
+--%>
 
-<bean:define id="valuationGroupingId" name="teacherServiceDistributionValuationForm" property="valuationGrouping"/>
-<bean:define id="executionPeriodId" name="teacherServiceDistributionValuationForm" property="executionPeriod"/>
-<a name="hoursByGrouping">
-	<html:img bundle="HTMLALT_RESOURCES" altKey='img.img' page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedHoursPerGrouping&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
-</a>
 <br/>
 <br/>
 
-<a name="numberStudentsByGrouping">
-	<html:img bundle="HTMLALT_RESOURCES" altKey='img.img' page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedNumberStudentsPerGrouping&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
-</a>
+<bean:define id="tsdId" name="tsdProcessValuationForm" property="tsd"/>
+<bean:define id="executionPeriodId" name="tsdProcessValuationForm" property="executionPeriod"/>
+
+<html:img imageName="hoursByGrouping" page="<%= "/tsdProcessValuation.do?method=generateValuatedHoursPerGrouping&amp;tsd=" + tsdId + "&amp;executionPeriod=" + executionPeriodId %>"/>
+
 <br/>
 <br/>
 
-<a name="hoursByGroupingPercentage">
-	<html:img bundle="HTMLALT_RESOURCES" altKey='img.img' page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedHoursPerGroupingPieChart&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
-</a>
+<html:img imageName="numberStudentsByGrouping" page='<%= "/tsdProcessValuation.do?method=generateValuatedNumberStudentsPerGrouping&amp;tsd=" + tsdId + "&amp;executionPeriod=" + executionPeriodId %>'/>
 <br/>
 <br/>
 
-<a name="numberStudentsByGroupingPercentage">
-	<html:img bundle="HTMLALT_RESOURCES" altKey='img.img' page='<%= "/teacherServiceDistributionValuation.do?method=generateValuatedNumberStudentsPerGroupingPieChart&valuationGrouping=" + valuationGroupingId + "&executionPeriod=" + executionPeriodId %>'/>
-</a>
+<html:img imageName="hoursByGroupingPercentage" bundle="HTMLALT_RESOURCES" altKey='img.img' page='<%= "/tsdProcessValuation.do?method=generateValuatedHoursPerGroupingPieChart&amp;tsd=" + tsdId + "&amp;executionPeriod=" + executionPeriodId %>'/>
+
 <br/>
 <br/>
 
+<html:img imageName="numberStudentsByGroupingPercentage" bundle="HTMLALT_RESOURCES" altKey='img.img' page='<%= "/tsdProcessValuation.do?method=generateValuatedNumberStudentsPerGroupingPieChart&amp;tsd=" + tsdId + "&amp;executionPeriod=" + executionPeriodId %>'/>
 
-</html:form>
+<br/>
+<br/>
+
+<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + tsdProcessId %>'>
+	<bean:message key="link.back"/>
+</html:link>

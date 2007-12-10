@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -126,27 +126,27 @@ public class Department extends Department_Base {
     }
 
     @SuppressWarnings("unchecked")
-    public List<TeacherServiceDistribution> getTeacherServiceDistributionsByExecutionPeriods(
+    public List<TSDProcess> getTSDProcessesByExecutionPeriods(
 	    final List<ExecutionPeriod> executionPeriodList) {
-	return (List<TeacherServiceDistribution>) CollectionUtils.select(
-		getTeacherServiceDistributions(), new Predicate() {
+	return (List<TSDProcess>) CollectionUtils.select(
+		getTSDProcesses(), new Predicate() {
 		    public boolean evaluate(Object arg0) {
-			TeacherServiceDistribution teacherServiceDistribution = (TeacherServiceDistribution) arg0;
+			TSDProcess tsdProcess = (TSDProcess) arg0;
 			return !CollectionUtils.intersection(
-				teacherServiceDistribution.getExecutionPeriods(), executionPeriodList)
+				tsdProcess.getExecutionPeriods(), executionPeriodList)
 				.isEmpty();
 		    }
 		});
     }
 
-    public List<TeacherServiceDistribution> getTeacherServiceDistributionsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public List<TSDProcess> getTSDProcessesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
 	executionPeriodList.add(executionPeriod);
-	return getTeacherServiceDistributionsByExecutionPeriods(executionPeriodList);
+	return getTSDProcessesByExecutionPeriods(executionPeriodList);
     }
 
-    public List<TeacherServiceDistribution> getTeacherServiceDistributionsByExecutionYear(final ExecutionYear executionYear) {
-	return getTeacherServiceDistributionsByExecutionPeriods(executionYear.getExecutionPeriods());
+    public List<TSDProcess> getTSDProcessesByExecutionYear(final ExecutionYear executionYear) {
+	return getTSDProcessesByExecutionPeriods(executionYear.getExecutionPeriods());
     }
 
     public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {

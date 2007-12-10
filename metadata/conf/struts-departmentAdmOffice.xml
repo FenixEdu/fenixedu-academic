@@ -237,120 +237,107 @@
 		</form-bean>	
 
 <!-- Teacher Service Distribution -->		
-		<form-bean name="teacherServiceDistributionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-bean name="tsdProcessForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="executionYear" type="java.lang.Integer"/>
 			<form-property name="executionPeriod" type="java.lang.Integer"/>
 			<form-property name="name" type="java.lang.String"/>
 			<form-property name="executionYearForCopy" type="java.lang.Integer"/>
 			<form-property name="executionPeriodForCopy" type="java.lang.Integer"/>
-			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>			
+			<form-property name="tsdProcess" type="java.lang.Integer"/>			
 		</form-bean>
 		
-		<form-bean name="valuationPhasesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-bean name="tsdProcessPhasesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="valuationPhase" type="java.lang.Integer"/>
+			<form-property name="tsdProcessPhase" type="java.lang.Integer"/>
 			<form-property name="name" type="java.lang.String"/>
-			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
+			<form-property name="tsdProcess" type="java.lang.Integer"/>
 			<form-property name="dataManagementOption" type="java.lang.Integer"/>
 			<form-property name="executionYear" type="java.lang.Integer"/>
 			<form-property name="executionPeriod" type="java.lang.Integer"/>
-			<form-property name="selectedTeacherServiceDistribution" type="java.lang.String"/>
+			<form-property name="selectedTSDProcess" type="java.lang.String"/>
 			<form-property name="isPublished" type="java.lang.Boolean"/>
 		</form-bean>
 
-		<form-bean name="valuationGroupingSupportForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-bean name="tsdSupportForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="name" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="valuationCompetenceCourse" type="java.lang.Integer"/>
-			<form-property name="valuationTeacher" type="java.lang.Integer"/>
-			<form-property name="valuationGrouping" type="java.lang.Integer"/>
-			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
+			<form-property name="tsdCourse" type="java.lang.Integer"/>
+			<form-property name="tsdTeacher" type="java.lang.Integer"/>
+			<form-property name="tsd" type="java.lang.Integer"/>
+			<form-property name="tsdProcess" type="java.lang.Integer"/>
 			<form-property name="person" type="java.lang.Integer"/>
 			<form-property name="viewType" type="java.lang.Integer"/>
 			<form-property name="phaseManagementPermission" type="java.lang.Boolean"/> 
 			<form-property name="automaticValuationPermission" type="java.lang.Boolean"/>
 			<form-property name="omissionConfigurationPermission" type="java.lang.Boolean"/>
-			<form-property name="valuationCompetenceCoursesAndTeachersManagementPermission" type="java.lang.Boolean"/>
-			<form-property name="valuationCompetenceCourseDissociation" type="java.lang.Integer"/>
-			<form-property name="valuationTeacherDissociation" type="java.lang.Integer"/>
+			<form-property name="tsdCoursesAndTeachersManagementPermission" type="java.lang.Boolean"/>
+			<form-property name="tsdCourseDissociation" type="java.lang.Integer"/>
+			<form-property name="tsdTeacherDissociation" type="java.lang.Integer"/>
 			<form-property name="coursesAndTeachersValuationPermission" type="java.lang.Boolean"/>
 			<form-property name="coursesAndTeachersManagementPermission" type="java.lang.Boolean"/>
 			<form-property name="otherGrouping" type="java.lang.Integer"/>
 		</form-bean>
 
-		<form-bean name="courseValuationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-bean name="tsdCourseForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="courseValuationType" type="java.lang.String"/>
+			<form-property name="tsdCourseType" type="java.lang.String"/>
+			<form-property name="competenceCourse" type="java.lang.Integer"/>
+			<form-property name="tsdCurricularCourse" type="java.lang.Integer"/>
+			<form-property name="tsdCurricularCourseGroup" type="java.lang.Integer"/>
+			<form-property name="tsd" type="java.lang.Integer"/>				
+			<form-property name="tsdProcess" type="java.lang.Integer"/>
+			<form-property name="tsdCurricularCourseArray" type="java.lang.String[]"/>
+			<form-property name="tsdCourseViewLink" type="java.lang.String"/>
+			<form-property name="executionPeriod" type="java.lang.Integer"/>	
+			<form-property name="tsdCourse" type="java.lang.Integer"/>	
+		</form-bean>
+		
+		<form-bean name="tsdCourseValuationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="tsdCourseType" type="java.lang.String"/>
+			<form-property name="tsd" type="java.lang.Integer"/>				
+			<form-property name="tsdCourse" type="java.lang.Integer"/>
+			
 			<form-property name="firstTimeEnrolledStudentsManual" type="java.lang.String"/>
 			<form-property name="firstTimeEnrolledStudentsType" type="java.lang.String"/>
 			<form-property name="secondTimeEnrolledStudentsManual" type="java.lang.String"/>
 			<form-property name="secondTimeEnrolledStudentsType" type="java.lang.String"/>
-			<form-property name="studentsPerTheoreticalShiftManual" type="java.lang.String"/>
-			<form-property name="studentsPerTheoreticalShiftType" type="java.lang.String"/>
-			<form-property name="studentsPerPraticalShiftManual" type="java.lang.String"/>
-			<form-property name="studentsPerPraticalShiftType" type="java.lang.String"/>
-			<form-property name="studentsPerTheoPratShiftManual" type="java.lang.String"/>
-			<form-property name="studentsPerTheoPratShiftType" type="java.lang.String"/>
-			<form-property name="studentsPerLaboratorialShiftManual" type="java.lang.String"/>
-			<form-property name="studentsPerLaboratorialShiftType" type="java.lang.String"/>
-			<form-property name="weightFirstTimeEnrolledStudentsPerTheoShiftManual" type="java.lang.String"/>
-			<form-property name="weightFirstTimeEnrolledStudentsPerTheoShiftType" type="java.lang.String"/>
-			<form-property name="weightFirstTimeEnrolledStudentsPerPratShiftManual" type="java.lang.String"/>
-			<form-property name="weightFirstTimeEnrolledStudentsPerPratShiftType" type="java.lang.String"/>
-			<form-property name="weightFirstTimeEnrolledStudentsPerTheoPratShiftManual" type="java.lang.String"/>
-			<form-property name="weightFirstTimeEnrolledStudentsPerTheoPratShiftType" type="java.lang.String"/>
-			<form-property name="weightFirstTimeEnrolledStudentsPerLabShiftManual" type="java.lang.String"/>
-			<form-property name="weightFirstTimeEnrolledStudentsPerLabShiftType" type="java.lang.String"/>
-			<form-property name="weightSecondTimeEnrolledStudentsPerTheoShiftManual" type="java.lang.String"/>
-			<form-property name="weightSecondTimeEnrolledStudentsPerTheoShiftType" type="java.lang.String"/>
-			<form-property name="weightSecondTimeEnrolledStudentsPerPratShiftManual" type="java.lang.String"/>
-			<form-property name="weightSecondTimeEnrolledStudentsPerPratShiftType" type="java.lang.String"/>
-			<form-property name="weightSecondTimeEnrolledStudentsPerTheoPratShiftManual" type="java.lang.String"/>
-			<form-property name="weightSecondTimeEnrolledStudentsPerTheoPratShiftType" type="java.lang.String"/>
-			<form-property name="weightSecondTimeEnrolledStudentsPerLabShiftManual" type="java.lang.String"/>
-			<form-property name="weightSecondTimeEnrolledStudentsPerLabShiftType" type="java.lang.String"/>
-			<form-property name="isActive" type="java.lang.Boolean"/>
-			<form-property name="theoreticalHoursManual" type="java.lang.String"/>
-			<form-property name="theoreticalHoursType" type="java.lang.String"/>
-			<form-property name="praticalHoursManual" type="java.lang.String"/>
-			<form-property name="praticalHoursType" type="java.lang.String"/>
-			<form-property name="theoPratHoursManual" type="java.lang.String"/>
-			<form-property name="theoPratHoursType" type="java.lang.String"/>
-			<form-property name="laboratorialHoursManual" type="java.lang.String"/>
-			<form-property name="laboratorialHoursType" type="java.lang.String"/>	
-			<form-property name="valuationCompetenceCourse" type="java.lang.Integer"/>
-			<form-property name="valuationCurricularCourse" type="java.lang.Integer"/>
-			<form-property name="curricularCourseValuation" type="java.lang.Integer"/>
-			<form-property name="curricularCourseValuationGroup" type="java.lang.Integer"/>
-			<form-property name="valuationGrouping" type="java.lang.Integer"/>				
-			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
-			<form-property name="curricularCourseValuationArray" type="java.lang.String[]"/>
-			<form-property name="nonAssociatedCurricularCourseValuationArray" type="java.lang.String[]"/>
-			<form-property name="usingCurricularCourseValuations" type="java.lang.Boolean"/>
-			<form-property name="courseValuationViewLink" type="java.lang.String"/>
-			<form-property name="suppressRedundantHoursTypes" type="java.lang.Boolean"/>
-			<form-property name="executionPeriod" type="java.lang.Integer"/>		
+			
+			<form-property name="studentsPerShiftManual" type="java.lang.String"/>
+			<form-property name="studentsPerShiftType" type="java.lang.String"/>
+			<form-property name="shiftFrequency" type="java.lang.String"/>
+			<form-property name="shiftType" type="java.lang.String"/>
+			
+			<form-property name="weightFirstTimeEnrolledStudentsPerShiftManual" type="java.lang.String"/>
+			<form-property name="weightFirstTimeEnrolledStudentsPerShiftType" type="java.lang.String"/>
+			<form-property name="weightSecondTimeEnrolledStudentsPerShiftManual" type="java.lang.String"/>
+			<form-property name="weightSecondTimeEnrolledStudentsPerShiftType" type="java.lang.String"/>
+			
+			<form-property name="hoursManual" type="java.lang.String"/>
+			<form-property name="hoursType" type="java.lang.String"/>
+			<form-property name="hoursPerShift" type="java.lang.String"/>
+			<form-property name="timeTableSlots" type="java.lang.String"/>
+			
+			<form-property name="forward" type="java.lang.String"/>
 		</form-bean>
+		
 
-		<form-bean name="professorshipValuationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-bean name="tsdProfessorshipForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="theoreticalHoursManual" type="java.lang.String"/>
-			<form-property name="theoreticalHoursType" type="java.lang.String"/>
-			<form-property name="praticalHoursManual" type="java.lang.String"/>
-			<form-property name="praticalHoursType" type="java.lang.String"/>
-			<form-property name="theoPratHoursManual" type="java.lang.String"/>
-			<form-property name="theoPratHoursType" type="java.lang.String"/>
-			<form-property name="laboratorialHoursManual" type="java.lang.String"/>
-			<form-property name="laboratorialHoursType" type="java.lang.String"/>
-			<form-property name="valuationCompetenceCourse" type="java.lang.Integer"/>
-			<form-property name="valuationCurricularCourse" type="java.lang.Integer"/>
-			<form-property name="curricularCourseValuationGroup" type="java.lang.Integer"/>
-			<form-property name="valuationGrouping" type="java.lang.Integer"/>
-			<form-property name="valuationTeacher" type="java.lang.Integer"/>
-			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
+			<form-property name="hoursManual" type="java.lang.String"/>
+			<form-property name="hoursType" type="java.lang.String"/>
+			<form-property name="shiftType" type="java.lang.String"/>
+			
+			<form-property name="competenceCourse" type="java.lang.Integer"/>
+			<form-property name="tsdCurricularCourse" type="java.lang.Integer"/>
+			<form-property name="tsdCurricularCourseGroup" type="java.lang.Integer"/>
+			<form-property name="tsd" type="java.lang.Integer"/>
+			<form-property name="tsdTeacher" type="java.lang.Integer"/>
+			<form-property name="tsdProcess" type="java.lang.Integer"/>
 			<form-property name="viewType" type="java.lang.Integer"/>	
-			<form-property name="professorshipValuation" type="java.lang.Integer"/>
+			<form-property name="tsdProfessorship" type="java.lang.Integer"/>
 			<form-property name="distributionViewAnchor" type="java.lang.Integer"/>
 			<form-property name="executionPeriod" type="java.lang.Integer"/>
 			<form-property name="extraCreditsName" type="java.lang.String"/>
@@ -358,31 +345,33 @@
 			<form-property name="usingExtraCredits" type="java.lang.Boolean"/>									
 		</form-bean>
 
-		<form-bean name="teacherServiceDistributionValuationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
-			<form-property name="valuationPhase" type="java.lang.Integer"/>
-			<form-property name="valuationGrouping" type="java.lang.Integer"/>
+		<form-bean name="tsdProcessValuationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="tsdProcess" type="java.lang.Integer"/>
+			<form-property name="tsdProcessPhase" type="java.lang.Integer"/>
+			<form-property name="tsd" type="java.lang.Integer"/>
 			<form-property name="viewType" type="java.lang.Integer"/>
 			<form-property name="viewCurricularInformation" type="java.lang.Boolean"/>
 			<form-property name="viewStudentsEnrolments" type="java.lang.Boolean"/>
 			<form-property name="viewShiftHours" type="java.lang.Boolean"/>
 			<form-property name="viewStudentsEnrolmentsPerShift" type="java.lang.Boolean"/>
 			<form-property name="executionPeriod" type="java.lang.Integer"/>
+			<form-property name="shiftTypeArray" type="java.lang.String[]"/>
 		</form-bean>
 
-		<form-bean name="valuationTeachersGroupForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-bean name="tsdTeachersGroupForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="name" type="java.lang.String"/>
 			<form-property name="category" type="java.lang.Integer"/>
-			<form-property name="teacherServiceDistribution" type="java.lang.Integer"/>
+			<form-property name="tsdProcess" type="java.lang.Integer"/>
 			<form-property name="department" type="java.lang.Integer"/>
-			<form-property name="valuationGrouping" type="java.lang.Integer"/>
+			<form-property name="tsd" type="java.lang.Integer"/>
 			<form-property name="hours" type="java.lang.String"/>
 			<form-property name="teacher" type="java.lang.Integer"/>
-			<form-property name="valuationTeacher" type="java.lang.Integer"/>
-			<form-property name="valuationCourse" type="java.lang.Integer"/>
-			<form-property name="valuationCurricularCourse" type="java.lang.Integer"/>
-			<form-property name="curricularYearsArray" type="java.lang.String[]"/>
+			<form-property name="tsdTeacher" type="java.lang.Integer"/>
+			<form-property name="tsdCourse" type="java.lang.Integer"/>
+			<form-property name="tsdCurricularCourse" type="java.lang.Integer"/>
+			<form-property name="curricularPlansArray" type="java.lang.String[]"/>
+			<form-property name="shiftTypesArray" type="java.lang.String[]"/>
 			<form-property name="executionPeriod" type="java.lang.Integer"/>
 			<form-property name="theoreticalHours" type="java.lang.String"/>
 			<form-property name="praticalHours" type="java.lang.String"/>
@@ -391,9 +380,21 @@
 			<form-property name="courseName" type="java.lang.String"/>
 			<form-property name="degreeCurricularPlan" type="java.lang.Integer"/>
 		</form-bean>
+				
+		<form-bean name="globalTSDProcessValuationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="tsdProcess" type="java.lang.Integer"/>
+			<form-property name="tsdProcessPhase" type="java.lang.Integer"/>
+			<form-property name="tsd" type="java.lang.Integer"/>
+			<form-property name="viewType" type="java.lang.Integer"/>
+			<form-property name="viewCurricularInformation" type="java.lang.Boolean"/>
+			<form-property name="viewStudentsEnrolments" type="java.lang.Boolean"/>
+			<form-property name="viewShiftHours" type="java.lang.Boolean"/>
+			<form-property name="viewStudentsEnrolmentsPerShift" type="java.lang.Boolean"/>
+			<form-property name="executionPeriod" type="java.lang.Integer"/>
+			<form-property name="executionYear" type="java.lang.Integer"/>
+			<form-property name="shiftTypeArray" type="java.lang.String[]"/>
+		</form-bean>
 						
-		<form-bean name="globalTeacherServiceDistributionValuationForm" type="net.sourceforge.fenixedu.presentationTier.formbeans.teacherServiceDistribution.GlobalTeacherServiceDistributionValuationForm"/>				  		  
-
 		<!-- Summaries Management -->
         <form-bean name="summariesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">            	
             <form-property name="teacher" type="java.lang.String" initial=""/>
@@ -848,144 +849,157 @@
 		</action>
 
 <!-- Teacher Service Distribution -->
-        <action path="/teacherServiceDistribution"
-        	name="teacherServiceDistributionForm"
+        <action path="/tsdProcess"
+        	name="tsdProcessForm"
         	parameter="method"
         	scope="request"
-        	input="/teacherServiceDistribution.do?method=prepareForEmptyTeacherServiceDistributionCreation&amp;page=0"
-        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TeacherServiceDistributionAction">
-        		<forward name="showMain" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionMainOptions"/>
-        		<forward name="showTeacherServiceDistributionCreationOptions" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionCreationOptions"/>
-        		<forward name="showTeacherServiceDistributionCreationForm" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionCreationForm"/>	
-        		<forward name="showTeacherServiceDistributionServices" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionServices"/>
-        		<forward name="showTeacherServiceDistributions" path="df.page.teacherServiceDistribution.showTeacherServiceDistributions"/>
+        	input="/tsdProcess.do?method=prepareForEmptyTSDProcessCreation&amp;page=0"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDProcessAction">
+        		<forward name="showMain" path="df.page.teacherServiceDistribution.showTSDProcessMainOptions"/>
+        		<forward name="showTSDProcessCreationOptions" path="df.page.teacherServiceDistribution.showTSDProcessCreationOptions"/>
+        		<forward name="showTSDProcessCreationForm" path="df.page.teacherServiceDistribution.showTSDProcessCreationForm"/>	
+        		<forward name="showTSDProcessServices" path="df.page.teacherServiceDistribution.showTSDProcessServices"/>
+        		<forward name="showTSDProcesss" path="df.page.teacherServiceDistribution.showTSDProcesss"/>
         </action>
 
-	    <action path="/teacherServiceDistributionCopy"
-        	name="teacherServiceDistributionForm"
+	    <action path="/tsdProcessCopy"
+        	name="tsdProcessForm"
         	parameter="method"
         	scope="request"
-        	input="/teacherServiceDistributionCopy.do?method=prepareForTeacherServiceDistributionCopy&amp;page=0"
-        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TeacherServiceDistributionAction">
-        		<forward name="showTeacherServiceDistributionsForCopy" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionsForCopy"/>
-        		<forward name="showTeacherServiceDistributionServices" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionServices"/>
+        	input="/tsdProcessCopy.do?method=prepareForTSDProcessCopy&amp;page=0"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDProcessAction">
+        		<forward name="showTSDProcesssForCopy" path="df.page.teacherServiceDistribution.showTSDProcesssForCopy"/>
+        		<forward name="showTSDProcessServices" path="df.page.teacherServiceDistribution.showTSDProcessServices"/>
         </action>
 
-        <action path="/valuationPhasesManagement"
-        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ValuationPhasesManagementAction"
+        <action path="/tsdProcessPhasesManagement"
+        	name="tsdProcessPhasesManagementForm"
         	parameter="method"
         	scope="request"
-        	input="/valuationPhasesManagement.do?method=prepareForValuationPhasesManagement&amp;page=0"
-        	name="valuationPhasesManagementForm">
-        	<forward name="showValuationPhasesManagementForm" path="df.page.teacherServiceDistribution.showValuationPhasesManagementForm"/>
-        	<forward name="valuationPhaseDataManagementOptions" path="df.page.teacherServiceDistribution.valuationPhaseDataManagementOptions"/>
-        	<forward name="showOmissionValuesValuationForm" path="df.page.teacherServiceDistribution.showOmissionValuesValuationForm"/>
+        	input="/tsdProcessPhasesManagement.do?method=prepareForTSDProcessPhasesManagement&amp;page=0"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDProcessPhasesManagementAction">
+	        	<forward name="showTSDProcessPhasesManagementForm" path="df.page.teacherServiceDistribution.showTSDProcessPhasesManagementForm"/>
+	        	<forward name="tsdProcessPhaseDataManagementOptions" path="df.page.teacherServiceDistribution.tsdProcessPhaseDataManagementOptions"/>
+	        	<forward name="showOmissionValuesValuationForm" path="df.page.teacherServiceDistribution.showOmissionValuesValuationForm"/>
 		</action>
 	
-        <action path="/valuationGroupingSupport"
-        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ValuationGroupingSupportAction"
+        <action path="/tsdSupport"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TeacherServiceDistributionSupportAction"
         	parameter="method"
         	scope="request"
-        	input="/valuationGroupingSupport.do?method=prepareForValuationGroupingSupportServices&amp;page=0"
-        	name="valuationGroupingSupportForm">
-        	<forward name="showValuationGroupingSupportServices" path="df.page.teacherServiceDistribution.showValuationGroupingSupportServices"/>
-        	<forward name="showValuationGroupingCreationForm" path="df.page.teacherServiceDistribution.showValuationGroupingCreationForm"/>
-        	<forward name="showValuationGroupingEditionForm" path="df.page.teacherServiceDistribution.showValuationGroupingEditionForm"/>        	
-        	<forward name="showValuationGroupingPermissionServicesForm" path="df.page.teacherServiceDistribution.showValuationGroupingPermissionServicesForm"/>
-        	<forward name="showValuationGroupingPermissionServicesFormByPerson" path="df.page.teacherServiceDistribution.showValuationGroupingPermissionServicesFormByPerson"/>
+        	input="/tsdSupport.do?method=prepareForTeacherServiceDistributionSupportServices&amp;page=0"
+        	name="tsdSupportForm">
+        	<forward name="showTeacherServiceDistributionSupportServices" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionSupportServices"/>
+        	<forward name="showTeacherServiceDistributionCreationForm" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionCreationForm"/>
+        	<forward name="showTeacherServiceDistributionEditionForm" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionEditionForm"/>        	
+        	<forward name="showTeacherServiceDistributionPermissionServicesForm" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionPermissionServicesForm"/>
+        	<forward name="showTeacherServiceDistributionPermissionServicesFormByPerson" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionPermissionServicesFormByPerson"/>
         </action>
 
-        <action path="/courseValuation"
-        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.CourseValuationAction"
+        <action path="/tsdCourse"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDCourseAction"
         	parameter="method"
         	scope="request"
         	validate="true"
-        	input="/courseValuation.do?method=loadCourseValuations&amp;page=0&amp;fromValidation=1"
-        	name="courseValuationForm">
-        	<forward name="courseValuationForm" path="df.page.teacherServiceDistribution.courseValuationForm"/>
-        	<forward name="curricularCourseValuationGroupCreationForm" path="df.page.teacherServiceDistribution.curricularCourseValuationGroupCreationForm"/>
+        	input="/tsdCourse.do?method=loadTSDCourses&amp;page=0&amp;fromValidation=1"
+        	name="tsdCourseForm">
+        	<forward name="tsdCourseForm" path="df.page.teacherServiceDistribution.tsdCourseForm"/>
+        	<forward name="tsdCurricularCourseGroupCreationForm" path="df.page.teacherServiceDistribution.tsdCurricularCourseGroupCreationForm"/>
         </action>
-
-        <action path="/curricularCourseValuationGroupCreation"
-        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.CourseValuationAction"
+        
+        <action path="/tsdCourseValuation"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDCourseValuationAction"
         	parameter="method"
         	scope="request"
         	validate="true"
-        	input="/courseValuation.do?method=prepareForCurricularCourseValuationGroupCreation&amp;page=0"
-        	name="courseValuationForm">
-        	<forward name="courseValuationForm" path="df.page.teacherServiceDistribution.courseValuationForm"/>
-        	<forward name="curricularCourseValuationGroupCreationForm" path="df.page.teacherServiceDistribution.curricularCourseValuationGroupCreationForm"/>
+        	input="/tsdCourseValuation.do?method=loadTSDCourses&amp;page=0&amp;fromValidation=1"
+        	name="tsdCourseValuationForm">
+        	<forward name="courseValuationStudents" path="df.page.teacherServiceDistribution.courseValuationStudents"/>
+        	<forward name="courseValuationShifts" path="df.page.teacherServiceDistribution.courseValuationShifts"/>
+        	<forward name="courseValuationWeights" path="df.page.teacherServiceDistribution.courseValuationWeights"/>
+        	<forward name="courseValuationHours" path="df.page.teacherServiceDistribution.courseValuationHours"/>
         </action>
 
-        <action path="/professorshipValuation"
-        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ProfessorshipValuationAction"
+        <action path="/tsdCurricularCourseGroupCreation"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDCourseAction"
         	parameter="method"
         	scope="request"
         	validate="true"
-        	input="/professorshipValuation.do?method=loadProfessorshipValuations&amp;page=0"
-        	name="professorshipValuationForm">
-        	<forward name="professorshipValuationForm" path="df.page.teacherServiceDistribution.professorshipValuationForm"/>
-        	<forward name="professorshipValuationFormByValuationTeacher" path="df.page.teacherServiceDistribution.professorshipValuationFormByValuationTeacher"/>
+        	input="/tsdCourse.do?method=prepareForTSDCurricularCourseGroupCreation&amp;page=0"
+        	name="tsdCourseForm">
+        	<forward name="tsdCourseForm" path="df.page.teacherServiceDistribution.tsdCourseForm"/>
+        	<forward name="tsdCurricularCourseGroupCreationForm" path="df.page.teacherServiceDistribution.tsdCurricularCourseGroupCreationForm"/>
+        </action>
+
+        <action path="/tsdProfessorship"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDProfessorshipAction"
+        	parameter="method"
+        	scope="request"
+        	validate="true"
+        	input="/tsdProfessorship.do?method=loadTSDProfessorships&amp;page=0"
+        	name="tsdProfessorshipForm">
+        	<forward name="tsdProfessorshipForm" path="df.page.teacherServiceDistribution.tsdProfessorshipForm"/>
+        	<forward name="tsdProfessorshipFormByTSDTeacher" path="df.page.teacherServiceDistribution.tsdProfessorshipFormByTSDTeacher"/>
 		</action>        
 
-        <action path="/professorshipValuationByTeachers"
-        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ProfessorshipValuationAction"
+        <action path="/tsdProfessorshipByTeachers"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDProfessorshipAction"
         	parameter="method"
         	scope="request"
         	validate="true"
-        	input="/professorshipValuationByTeachers.do?method=loadProfessorshipValuations&amp;page=0"
-        	name="professorshipValuationForm">
-        	<forward name="professorshipValuationForm" path="df.page.teacherServiceDistribution.professorshipValuationForm"/>
-        	<forward name="professorshipValuationFormByValuationTeacher" path="df.page.teacherServiceDistribution.professorshipValuationFormByValuationTeacher"/>
+        	input="/tsdProfessorshipByTeachers.do?method=loadTSDProfessorships&amp;page=0"
+        	name="tsdProfessorshipForm">
+        	<forward name="tsdProfessorshipForm" path="df.page.teacherServiceDistribution.tsdProfessorshipForm"/>
+        	<forward name="tsdProfessorshipFormByTSDTeacher" path="df.page.teacherServiceDistribution.tsdProfessorshipFormByTSDTeacher"/>
 		</action>        
 
-        <action path="/teacherServiceDistributionValuation"
-        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TeacherServiceDistributionValuationAction"
+        <action path="/tsdProcessValuation"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDProcessValuationAction"
         	parameter="method"
         	scope="request"
         	validate="true"
-        	name="teacherServiceDistributionValuationForm">
-        	<forward name="showTeacherServiceDistributionValuation" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionValuation"/>
-			<forward name="showTeacherServiceDistributionValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionValuationByTeachersAndCourses"/>
-			<forward name="showTeacherServiceDistributionValuationByTeachers" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionValuationByTeachers"/>
-			<forward name="showTeacherServiceDistributionValuationByCharts" path="df.page.teacherServiceDistribution.showTeacherServiceDistributionValuationByCharts"/>
+        	name="tsdProcessValuationForm">
+        	<forward name="showTSDProcessValuation" path="df.page.teacherServiceDistribution.showTSDProcessValuation"/>
+			<forward name="showTSDProcessValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showTSDProcessValuationByTeachersAndCourses"/>
+			<forward name="showTSDProcessValuationByTeachers" path="df.page.teacherServiceDistribution.showTSDProcessValuationByTeachers"/>
+			<forward name="showTSDProcessValuationByCharts" path="df.page.teacherServiceDistribution.showTSDProcessValuationByCharts"/>
 		</action>
 			
-		<action path="/valuationTeachersGroup"
-			type = "net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ValuationTeachersGroupAction"
+		<action path="/tsdTeachersGroup"
+			type = "net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDTeachersGroupAction"
 			parameter="method"
 			scope="request"
-			input="/valuationTeachersGroup.do?method=showFormToCreateTeacher&amp;page=0"
-			name="valuationTeachersGroupForm">
+			input="/tsdTeachersGroup.do?method=showFormToCreateTeacher&amp;page=0"
+			name="tsdTeachersGroupForm">
 			
-			<forward name="listValuationTeachers" path="df.page.teacherServiceDistribution.list-valuation-teachers"/>
+			<forward name="listTSDTeachers" path="df.page.teacherServiceDistribution.list-valuation-teachers"/>
 			<forward name="showTeachersList" path="df.page.teacherServiceDistribution.show-teachers-list"/>
 			<forward name="showCoursesList" path="df.page.teacherServiceDistribution.show-courses-list"/>
 			<forward name="showFormToCreateTeacher" path="df.page.teacherServiceDistribution.show-form-to-create-teacher"/>
 			<forward name="showFormToCreateCourse" path="df.page.teacherServiceDistribution.show-form-to-create-course"/>
 		</action>
 		
-		<action path="/valuationCoursesGroup"
-			type = "net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.ValuationTeachersGroupAction"
+		<action path="/tsdCoursesGroup"
+			type = "net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDTeachersGroupAction"
 			parameter="method"
 			scope="request"
-			input="/valuationTeachersGroup.do?method=showFormToCreateCourse&amp;page=0"
-			name="valuationTeachersGroupForm">
+			input="/tsdTeachersGroup.do?method=showFormToCreateCourse&amp;page=0"
+			name="tsdTeachersGroupForm">
 			
-			<forward name="listValuationTeachers" path="df.page.teacherServiceDistribution.list-valuation-teachers"/>
+			<forward name="listTSDTeachers" path="df.page.teacherServiceDistribution.list-valuation-teachers"/>
 			<forward name="showFormToCreateCourse" path="df.page.teacherServiceDistribution.show-form-to-create-course"/>		
 		</action>
 
-		<action path="/globalTeacherServiceDistributionValuation"
-			type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.GlobalTeacherServiceDistributionValuationAction"
+		<action path="/globalTSDProcessValuation"
+			type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.GlobalTSDProcessValuationAction"
 			parameter="method"
 			scope="request"
 			validate="true"
-			name="globalTeacherServiceDistributionValuationForm">
-			<forward name="showGlobalTeacherServiceDistributions" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributions"/>
-			<forward name="showGlobalTeacherServiceDistributionsValuationByCourses" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByCourses"/>
-			<forward name="showGlobalTeacherServiceDistributionsValuationByTeachers" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachers"/>
-			<forward name="showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses"/>
+			name="globalTSDProcessValuationForm">
+			<forward name="showGlobalTSDProcesss" path="df.page.teacherServiceDistribution.showGlobalTSDProcesss"/>
+			<forward name="showGlobalTSDProcesssValuationByCourses" path="df.page.teacherServiceDistribution.showGlobalTSDProcesssValuationByCourses"/>
+			<forward name="showGlobalTSDProcesssValuationByTeachers" path="df.page.teacherServiceDistribution.showGlobalTSDProcesssValuationByTeachers"/>
+			<forward name="showGlobalTSDProcesssValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showGlobalTSDProcesssValuationByTeachersAndCourses"/>
 		</action>
 
 	<!--  VIGILANCY -->

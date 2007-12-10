@@ -7,7 +7,7 @@ public class PersonPermissionsDTOEntry {
 	Boolean phaseManagementPermission = false;
 	Boolean automaticValuationPermission = false;
 	Boolean omissionConfigurationPermission = false;
-	Boolean valuationCompetenceCoursesAndTeachersManagementPermission = false;
+	Boolean tsdCoursesAndTeachersManagementPermission = false;
 	Boolean coursesAndTeachersValuationPermission = false;
 	Boolean coursesAndTeachersManagementPermission = false;
 	
@@ -59,13 +59,13 @@ public class PersonPermissionsDTOEntry {
 		this.omissionConfigurationPermission = omissionConfiguration;
 	}
 
-	public Boolean getValuationCompetenceCoursesAndTeachersManagementPermission() {
-		return valuationCompetenceCoursesAndTeachersManagementPermission;
+	public Boolean getCompetenceCoursesAndTeachersManagementPermission() {
+		return tsdCoursesAndTeachersManagementPermission;
 	}
 
-	public void setValuationCompetenceCoursesAndTeachersManagementPermission(
-			Boolean valuationCompetenceCoursesAndTeachersManagementPermission) {
-		this.valuationCompetenceCoursesAndTeachersManagementPermission = valuationCompetenceCoursesAndTeachersManagementPermission;
+	public void setCompetenceCoursesAndTeachersManagementPermission(
+			Boolean tsdCoursesAndTeachersManagementPermission) {
+		this.tsdCoursesAndTeachersManagementPermission = tsdCoursesAndTeachersManagementPermission;
 	}
 
 	public void setPerson(Person person) {

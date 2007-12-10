@@ -1,441 +1,546 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupDifference;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.Predicate;
 
 public class TeacherServiceDistribution extends TeacherServiceDistribution_Base {
 
-	protected TeacherServiceDistribution() {
+	private TeacherServiceDistribution() {
 		super();
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
 	public TeacherServiceDistribution(
-			Department department,
-			List<ExecutionPeriod> executionPeriodList,
-			Person creator,
+			TSDProcessPhase tsdProcessPhase,
 			String name,
-			String initialValuationPhaseName) {
+			TeacherServiceDistribution parent,
+			List<TSDTeacher> tsdTeacherList,
+			List<TSDCourse> courseList,
+			Group coursesAndTeachersValuationGroup,
+			Group coursesAndTeachersManagementGroup) {
 		this();
 
-		if (department == null || executionPeriodList.isEmpty() || creator == null) {
-			throw new NullPointerException();
+		if (tsdProcessPhase == null) {
+			throw new DomainException("TSDProcessPhase.required");
 		}
-
-		for (ExecutionPeriod executionPeriod : executionPeriodList) {
-			if (executionPeriod == null) {
-				throw new NullPointerException();
-			} else {
-				this.addExecutionPeriods(executionPeriod);
-			}
-		}
-
-		this.setDepartment(department);
-		this.setCreator(creator);
+				
+		this.setTSDProcessPhase(tsdProcessPhase);
 		this.setName(name);
-		createInitialValuationPhase(initialValuationPhaseName);
+		this.setParent(parent);
+		this.getTSDTeachers().addAll(tsdTeacherList);
+		this.getTSDCourses().addAll(courseList);
+		this.setCoursesAndTeachersValuationManagers(coursesAndTeachersValuationGroup);
+		this.setCoursesAndTeachersManagementGroup(coursesAndTeachersManagementGroup);
 	}
 
-	private void createInitialValuationPhase(String initialValuationPhaseName) {
-		new ValuationPhase(
-				this,
-				initialValuationPhaseName,
-				null,
-				null,
-				ValuationPhaseStatus.CURRENT,
-				getDefaultOmissionValues());
+	public Boolean getIsRoot() {
+		return getParent() == null;
 	}
 
-	private Map<String, Object> getDefaultOmissionValues() {
-		Map<String, Object> defaultOmissionValues = new HashMap<String, Object>();
-
-		defaultOmissionValues.put(
-				"studentsPerTheoreticalShift",
-				Integer.parseInt(PropertiesManager.getProperty("studentsPerTheoreticalShift")));
-		defaultOmissionValues.put("studentsPerPraticalShift", new Integer(
-				PropertiesManager.getProperty("studentsPerPraticalShift")));
-		defaultOmissionValues.put("studentsPerTheoPratShift", new Integer(
-				PropertiesManager.getProperty("studentsPerTheoPratShift")));
-		defaultOmissionValues.put("studentsPerLaboratorialShift", new Integer(
-				PropertiesManager.getProperty("studentsPerLaboratorialShift")));
-		defaultOmissionValues.put("weightFirstTimeEnrolledStudentsPerTheoShift", new Double(
-				PropertiesManager.getProperty("weightFirstTimeEnrolledStudentsPerTheoShift")));
-		defaultOmissionValues.put("weightFirstTimeEnrolledStudentsPerPratShift", new Double(
-				PropertiesManager.getProperty("weightFirstTimeEnrolledStudentsPerPratShift")));
-		defaultOmissionValues.put("weightFirstTimeEnrolledStudentsPerTheoPratShift", new Double(
-				PropertiesManager.getProperty("weightFirstTimeEnrolledStudentsPerTheoPratShift")));
-		defaultOmissionValues.put("weightFirstTimeEnrolledStudentsPerLabShift", new Double(
-				PropertiesManager.getProperty("weightFirstTimeEnrolledStudentsPerLabShift")));
-		defaultOmissionValues.put("weightSecondTimeEnrolledStudentsPerTheoShift", new Double(
-				PropertiesManager.getProperty("weightSecondTimeEnrolledStudentsPerTheoShift")));
-		defaultOmissionValues.put("weightSecondTimeEnrolledStudentsPerPratShift", new Double(
-				PropertiesManager.getProperty("weightSecondTimeEnrolledStudentsPerPratShift")));
-		defaultOmissionValues.put("weightSecondTimeEnrolledStudentsPerTheoPratShift", new Double(
-				PropertiesManager.getProperty("weightSecondTimeEnrolledStudentsPerTheoPratShift")));
-		defaultOmissionValues.put("weightSecondTimeEnrolledStudentsPerLabShift", new Double(
-				PropertiesManager.getProperty("weightSecondTimeEnrolledStudentsPerLabShift")));
-		return defaultOmissionValues;
+	public TeacherServiceDistribution getRootTSD() {
+		if (getIsRoot()) {
+			return this;
+		} else {
+			return getParent().getRootTSD();
+		}
 	}
 
-	public ValuationPhase createValuationPhase(String valuationPhaseName) {
-		return new ValuationPhase(
-				this,
-				valuationPhaseName,
-				getLastValuationPhase(),
-				null,
-				ValuationPhaseStatus.OPEN,
-				getDefaultOmissionValues());
+	public void delete() {
+		for (TSDCourse tsdCourse : getTSDCourses()) {
+			if(tsdCourse.getTeacherServiceDistributionsCount() == 1){
+				tsdCourse.delete();
+			} else {			
+				removeTSDCourses(tsdCourse);
+			}			
+		}
+		
+		for (TSDTeacher teacher : getTSDTeachers()) {			
+			if(teacher.getTeacherServiceDistributionsCount() == 1){
+				teacher.delete();
+			} else {
+				removeTSDTeachers(teacher);
+			}
+		}
 
+		removeParent();
+		removeTSDProcessPhase();
+				
+		for(TeacherServiceDistribution childTSD : getChilds()){
+			removeChilds(childTSD);
+			childTSD.delete();
+		}
+		
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
+		
+	public Set<CompetenceCourse> getCompetenceCourses() {
+		Set<CompetenceCourse> courseList = new HashSet<CompetenceCourse>();
+		CompetenceCourse course = null;
+
+		for (TSDCourse tsdCourse : getTSDCourses()) {
+			if((course = tsdCourse.getCompetenceCourse()) != null){
+				courseList.add(course);
+			}
+		}
+		
+		return courseList;
 	}
 	
-	public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriodsAndDepartment(List<ExecutionPeriod> executionPeriods, Department department) {
-		Set<CompetenceCourse> returnCompetenceCourseSet = new HashSet<CompetenceCourse>();
-		Set<CompetenceCourse> competenceCourseSet = new HashSet<CompetenceCourse>(department.getCompetenceCourses());
+	public List<TSDCourse> getTSDCompetenceAndVirtualCourses() {
+		return getTSDCompetenceAndVirtualCoursesByExecutionPeriod(getTSDProcessPhase().getTSDProcess().getExecutionPeriods());	
+	}
+	
+	public List<TSDCourse> getTSDCompetenceAndVirtualCoursesByExecutionPeriod(ExecutionPeriod period) {
+		List<ExecutionPeriod> periods = new ArrayList<ExecutionPeriod>();
+		periods.add(period);
 		
-		// add Bolonha Courses
-		competenceCourseSet.addAll(department.getDepartmentUnit().getCompetenceCourses(CurricularStage.APPROVED));
-
-		for (ExecutionPeriod executionPeriod : executionPeriods) {
-			for(CompetenceCourse competenceCourse : competenceCourseSet){
-				if(competenceCourse.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionPeriod).size() > 0){
-					returnCompetenceCourseSet.add(competenceCourse);
+		return getTSDCompetenceAndVirtualCoursesByExecutionPeriod(periods);
+	}
+	
+	private List<TSDCourse> getTSDCompetenceAndVirtualCoursesByExecutionPeriod(List<ExecutionPeriod> periods) {
+		List<TSDCourse> courseList = new ArrayList<TSDCourse>();
+		Set<CompetenceCourse> competenceCourseSet = new HashSet<CompetenceCourse>();
+		
+		for(ExecutionPeriod period : periods){	
+			for (TSDCourse tsdCourse : getTSDCoursesByExecutionPeriod(period)) {
+				if(tsdCourse instanceof TSDCompetenceCourse){ 
+					if(!competenceCourseSet.contains(tsdCourse.getCompetenceCourse())){
+						courseList.add(tsdCourse);
+						competenceCourseSet.add(tsdCourse.getCompetenceCourse());
+					}
+				}
+				
+				if(tsdCourse instanceof TSDVirtualCourseGroup){
+					courseList.add(tsdCourse);
 				}
 			}
 		}
 		
-		return returnCompetenceCourseSet;
+		return courseList;
 	}
 	
-	public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriods(List<ExecutionPeriod> executionPeriods) {
-		return getCompetenceCoursesByExecutionPeriodsAndDepartment(executionPeriods, getDepartment()); 
-	}
-	
-	public Set<CompetenceCourse> getCompetenceCoursesByDepartment(Department department) {
-		return getCompetenceCoursesByExecutionPeriodsAndDepartment(getExecutionPeriods(), department);
-	}
-	
-	public Set<CompetenceCourse> getAllCompetenceCourses() {
-		return getCompetenceCoursesByExecutionPeriods(getExecutionPeriods());
-	}
+	public List<TSDCourse> getTSDCoursesByCompetenceCourse(CompetenceCourse course) {
+		List<TSDCourse> courseList = new ArrayList<TSDCourse>();
+
+		for (TSDCourse tsdCourse : getTSDCourses()) {
+			CompetenceCourse competenceCourse = tsdCourse.getCompetenceCourse(); 
+			if(competenceCourse != null && competenceCourse.equals(course)){
+				courseList.add(tsdCourse);
+			}
+		}
 		
-	public ValuationPhase getCurrentValuationPhase() {
-		if (getValuationPhases().size() > 0) {
-			return getValuationPhases().get(0).getCurrentValuationPhase();
-		} else {
-			return null;
-		}
-	}
-
-	public ValuationPhase getFirstValuationPhase() {
-		if (getValuationPhases().size() > 0) {
-			return getValuationPhases().get(0).getFirstValuationPhase();
-		} else {
-			return null;
-		}
-	}
-
-	public ValuationPhase getLastValuationPhase() {
-		if (getValuationPhases().size() > 0) {
-			return getValuationPhases().get(0).getLastValuationPhase();
-		} else {
-			return null;
-		}
-	}
-
-	public List<ValuationPhase> getOrderedValuationPhases() {
-		List<ValuationPhase> orderedValuationPhaseList = new ArrayList<ValuationPhase>();
-
-		for (ValuationPhase firstValuationPhase = getFirstValuationPhase(); firstValuationPhase != null; firstValuationPhase = firstValuationPhase.getNextValuationPhase()) {
-			orderedValuationPhaseList.add(firstValuationPhase);
-		}
-
-		return orderedValuationPhaseList;
-	}
-
-	public List<ValuationPhase> getPreviousValuationPhases(ValuationPhase valuationPhase) {
-		List<ValuationPhase> previousValuationPhaseList = new ArrayList<ValuationPhase>();
-
-		if (valuationPhase.getTeacherServiceDistribution() == this) {
-			for (ValuationPhase firstValuationPhase = getFirstValuationPhase(); (firstValuationPhase != null)
-					&& (firstValuationPhase.getIsPrevious(valuationPhase)); firstValuationPhase = firstValuationPhase.getNextValuationPhase()) {
-				previousValuationPhaseList.add(firstValuationPhase);
-			}
-		}
-
-		return previousValuationPhaseList;
-	}
-
-	public ExecutionYear getPreviousExecutionYear() {
-		return getExecutionPeriods().get(0).getExecutionYear().getPreviousExecutionYear();
-	}
-
-	public static TeacherServiceDistribution copyTeacherServiceDistribution(
-			TeacherServiceDistribution teacherServiceDistributionCopied,
-			List<ExecutionPeriod> executionPeriodList,
-			String name,
-			Person creator) {
-		TeacherServiceDistribution teacherServiceDistribution = new TeacherServiceDistribution();
-
-		teacherServiceDistribution.setDepartment(teacherServiceDistributionCopied.getDepartment());
-		teacherServiceDistribution.setCreator(creator);
-		teacherServiceDistribution.setName(name);
-		teacherServiceDistribution.getExecutionPeriods().addAll(executionPeriodList);
-
-		Map<ExecutionPeriod, ExecutionPeriod> oldAndNewExecutionPeriodMap = getExecutionPeriodTranslationMap(
-				teacherServiceDistributionCopied.getExecutionPeriods(),
-				executionPeriodList);
-
-		for (ValuationPhase oldValuationPhase : teacherServiceDistributionCopied.getOrderedValuationPhases()) {
-			ValuationPhase newValuationPhase = ValuationPhase.createAndCopy(
-					teacherServiceDistribution,
-					oldValuationPhase,
-					oldAndNewExecutionPeriodMap,
-					teacherServiceDistribution.getLastValuationPhase());
-		}
-
-		return teacherServiceDistribution;
-	}
-
-	public static Map<ExecutionPeriod, ExecutionPeriod> getExecutionPeriodTranslationMap(
-			List<ExecutionPeriod> oldExecutionPeriodList,
-			List<ExecutionPeriod> newExecutionPeriodList) {
-		Map<ExecutionPeriod, ExecutionPeriod> translationMap = new HashMap<ExecutionPeriod, ExecutionPeriod>();
-
-		for (ExecutionPeriod oldExecutionPeriod : oldExecutionPeriodList) {
-			for (ExecutionPeriod newExecutionPeriod : newExecutionPeriodList) {
-				if (oldExecutionPeriod.getSemester() == newExecutionPeriod.getSemester()) {
-					translationMap.put(oldExecutionPeriod, newExecutionPeriod);
-				}
-			}
-		}
-
-		return translationMap;
-	}
+		return courseList;
+    }
 	
-	public List<ValuationPhase> getOrderedPublishedValuationPhases() {
-		return (List<ValuationPhase>) CollectionUtils.select(getOrderedValuationPhases(), new Predicate() {
+	public List<TSDCourse> getTSDCoursesByExecutionPeriod(ExecutionPeriod period) {
+		List<TSDCourse> courseList = new ArrayList<TSDCourse>();
+
+		for (TSDCourse tsdCourse : getTSDCourses()) {
+			if(tsdCourse.getExecutionPeriod().equals(period)){
+				courseList.add(tsdCourse);
+			}
+		}
+		
+		return courseList;
+    }
+
+	@SuppressWarnings("unchecked")
+	public List<CompetenceCourse> getCompetenceCoursesByExecutionPeriod(
+			final ExecutionPeriod executionPeriod) {
+		List<CompetenceCourse> competenceCourseList = new ArrayList<CompetenceCourse>();
+
+		competenceCourseList.addAll(CollectionUtils.select(getCompetenceCourses(), new Predicate() {
+			public boolean evaluate(Object arg0) {
+				CompetenceCourse competenceCourse = (CompetenceCourse) arg0;
+
+				return competenceCourse.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionPeriod).size() > 0;
+			}
+		}));
+
+		return competenceCourseList;
+	}
+
+	public TSDTeacher getTSDTeacherByTeacher(final Teacher teacher) {
+		return (TSDTeacher) CollectionUtils.find(getTSDTeachers(), new Predicate() {
 
 			public boolean evaluate(Object arg0) {
-				ValuationPhase valuationPhase = (ValuationPhase) arg0;
-				return valuationPhase.getIsPublished();
+				if(arg0 instanceof TSDRealTeacher){
+					TSDRealTeacher tsdTeacher = (TSDRealTeacher) arg0;
+
+					return tsdTeacher.getTeacher() == teacher;
+				} else {
+					return false;
+				}
 			}
-			
 		});
 	}
-	
-	public List<ExecutionPeriod> getOrderedExecutionPeriods() {
-		List<ExecutionPeriod> orderedExecutionPeriods = new ArrayList<ExecutionPeriod>(getExecutionPeriods());
-		Collections.sort(orderedExecutionPeriods);
 
-		return orderedExecutionPeriods;
+	
+	public void removeTSDTeacherFromAllChilds(TSDTeacher tsdTeacher) {
+		removeTSDTeachers(tsdTeacher);
+		for (TeacherServiceDistribution childGrouping : getChilds()) {
+			childGrouping.removeTSDTeacherFromAllChilds(tsdTeacher);
+		}
+
+	}
+
+	public void removeTSDCourseFromAllChilds(TSDCourse course) {
+		removeTSDCourses(course);
+		for (TeacherServiceDistribution childGrouping : getChilds()) {
+			childGrouping.removeTSDCourseFromAllChilds(course);
+		}
 	}
 	
-	public ExecutionPeriod getFirstExecutionPeriod() {
-		ExecutionPeriod firstExecutionPeriod = getExecutionPeriods().get(0);
+	public void addTSDCourseToTSDTree(TSDCourse course) {
+		getRootTSD().addTSDCourseToChildsTree(course);
+	}
 	
-		for (ExecutionPeriod executionPeriod : getExecutionPeriods()) {
-			if(executionPeriod.isBefore(firstExecutionPeriod)){ 
-				firstExecutionPeriod = executionPeriod;
+	
+	private void addTSDCourseToChildsTree(TSDCourse course) {
+		if(getCompetenceCourses().contains(course.getCompetenceCourse())){
+			addTSDCourses(course);
+				
+			for (TeacherServiceDistribution childTSD : getChilds()) {
+				childTSD.addTSDCourseToChildsTree(course);
 			}
 		}
-		
-		return firstExecutionPeriod;
 	}
 	
-	
-	public ExecutionPeriod getLastExecutionPeriod() {
-		ExecutionPeriod lastExecutionPeriod = getExecutionPeriods().get(0);
+	protected void addTSDCourseToParentTree(TSDCourse course) {
+		addTSDCourses(course);
+				
+		if(getParent() != null){
+			getParent().addTSDCourseToParentTree(course);
+		}
+	}
+		
+	public void mergeWithGrouping(TeacherServiceDistribution peerGrouping) {
 
-		for (ExecutionPeriod executionPeriod : getExecutionPeriods()) {
-			if(executionPeriod.isAfter(lastExecutionPeriod)){
-				lastExecutionPeriod = executionPeriod;
+		if (peerGrouping == this) {
+			return;
+		}
+
+		Set<TSDTeacher> mergedTSDTeachers = new HashSet<TSDTeacher>(this.getTSDTeachers());
+		mergedTSDTeachers.addAll(peerGrouping.getTSDTeachers());
+
+		Set<TSDCourse> mergedCourses = new HashSet<TSDCourse>(
+				this.getTSDCourses());
+		mergedCourses.addAll(peerGrouping.getTSDCourses());
+
+		this.getTSDCoursesSet().addAll(mergedCourses);
+		this.getTSDTeachersSet().addAll(mergedTSDTeachers);
+
+		if(!(getParent().getTSDTeachers().containsAll(this.getTSDTeachers()) && 
+				getParent().getTSDCourses().containsAll(this.getTSDCourses()))){
+			this.setParent(getRootTSD());
+		}
+	}
+
+	public List<Teacher> getDepartmentTeachersNotInGrouping(Department department) {
+		TSDProcess distribution = this.getTSDProcessPhase().getTSDProcess();
+		List<Teacher> departmentTeachers = department.getAllTeachers(
+				distribution.getFirstExecutionPeriod().getBeginDateYearMonthDay(),
+				distribution.getLastExecutionPeriod().getEndDateYearMonthDay());
+
+		List<Teacher> teachersList = new ArrayList<Teacher>();
+		for (Teacher departmentTeacher : departmentTeachers) {
+			if (this.getTSDTeacherByTeacher(departmentTeacher) == null) {
+				teachersList.add(departmentTeacher);
 			}
 		}
-		
-		return lastExecutionPeriod;
-	}
-	
-	public ExecutionYear getExecutionYear(){
-		return getExecutionPeriods().get(0).getExecutionYear();
+
+		return teachersList;
 	}
 
-	public Boolean getIsMemberOfPhasesManagementGroup(Person person) {
-		return (getPhasesManagementGroup() != null ? getPhasesManagementGroup().isMember(person) : false)
-				|| getHasSuperUserPermission(person);
-	}
+	public List<CompetenceCourse> getDepartmentCompetenceCoursesNotInGrouping(Department department) {
+		TSDProcess distribution = this.getTSDProcessPhase().getTSDProcess();
+		Set<CompetenceCourse> departmentCourses = distribution.getCompetenceCoursesByDepartment(department);
+		Set<CompetenceCourse> groupCourses = getCompetenceCourses();
+		List<CompetenceCourse> availableCoursesList = new ArrayList<CompetenceCourse>();
 
-	public Boolean getIsMemberOfAutomaticValuationGroup(Person person) {
-		return (getAutomaticValuationGroup() != null ? getAutomaticValuationGroup().isMember(person) : false)
-				|| getHasSuperUserPermission(person);
-	}
+		for (CompetenceCourse course : departmentCourses){
+			if (!groupCourses.contains(course)){
+				availableCoursesList.add(course);
+			}
+		}
 
-	public Boolean getIsMemberOfOmissionConfigurationGroup(Person person) {
-		return (getOmissionConfigurationGroup() != null ? getOmissionConfigurationGroup().isMember(person) : false)
-				|| getHasSuperUserPermission(person);
-	}
-
-	public Boolean getIsMemberOfValuationCompetenceCoursesAndTeachersManagementGroup(Person person) {
-		Group group = getValuationCompetenceCoursesAndTeachersManagementGroup();
-		return (group != null ? group.isMember(person) : false) || getHasSuperUserPermission(person);
+		return availableCoursesList;
 	}
 	
-	public Boolean getHavePermissionSettings(Person person) {
-		return getHasSuperUserPermission(person);
-	}
-	
-	public Boolean getHasSuperUserPermission(Person person) {
-		return person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) && person.getEmployee().getCurrentDepartmentWorkingPlace() == getDepartment();
-	}
-
-	public void addPhasesManagementPermission(Person person) {
-		Group group = getPhasesManagementGroup();
+	@SuppressWarnings("unchecked")
+	public List<TSDCourse> getCompetenceCoursesWithoutActiveTSDCourses(
+			List<ExecutionPeriod> executionPeriodList) {
+		Set<CompetenceCourse> tsdCoursesList = getCompetenceCourses();
+		Set<CompetenceCourse> activeCoursesSet = new HashSet<CompetenceCourse>();
+		List<TSDCourse> returnList = new ArrayList<TSDCourse>();
 		
-		setPhasesManagementGroup(group != null ? new GroupUnion(group, new PersonGroup(person)) : new PersonGroup(person));
-	}
-	
-	public void removePhasesManagementPermission(Person person) {
-		Group group = getPhasesManagementGroup();
-		
-		if(group != null) {
-			setPhasesManagementGroup(new GroupDifference(group, new PersonGroup(person)));
-		}
-		
-	}
-	
-	public void addAutomaticValuationPermission(Person person) {
-		Group group = getAutomaticValuationGroup();
-		
-		setAutomaticValuationGroup(group != null ? new GroupUnion(group, new PersonGroup(person)) : new PersonGroup(person));
-	}
-	
-	public void removeAutomaticValuationPermission(Person person) {
-		Group group = getAutomaticValuationGroup();
-		
-		if(group != null) {
-			setAutomaticValuationGroup(new GroupDifference(group, new PersonGroup(person)));
-		}
-		
-	}
-	
-	public void addOmissionConfigurationPermission(Person person) {
-		Group group = getOmissionConfigurationGroup();
-		
-		setOmissionConfigurationGroup(group != null ? new GroupUnion(group, new PersonGroup(person)) : new PersonGroup(person));
-	}
-	
-	public void removeOmissionConfigurationPermission(Person person) {
-		Group group = getOmissionConfigurationGroup();
-		
-		if(group != null) {
-			setOmissionConfigurationGroup(new GroupDifference(group, new PersonGroup(person)));
-		}
-	}
-	
-	public void addValuationCompetenceCoursesAndTeachersManagement(Person person) {
-		Group group = getValuationCompetenceCoursesAndTeachersManagementGroup();
-		
-		setValuationCompetenceCoursesAndTeachersManagementGroup(group != null ? new GroupUnion(group, new PersonGroup(person)) : new PersonGroup(person));
-	}
-	
-	public void removeValuationCompetenceCoursesAndTeachersManagement(Person person) {
-		Group group = getValuationCompetenceCoursesAndTeachersManagementGroup();
-		
-		if(group != null) {
-			setValuationCompetenceCoursesAndTeachersManagementGroup(new GroupDifference(group, new PersonGroup(person)));
-		}
-	}	
-	
-	
-	public Boolean hasAnyPermission(Person userViewPerson) {
-	
-		if(getHasSuperUserPermission(userViewPerson)) {
-			return Boolean.TRUE;
-		}
-		
-		if(hasPermissionToCoursesAndTeachersValuation(userViewPerson)) {
-			return Boolean.TRUE;
-		}
-		
-		if(hasPermissionToCoursesAndTeachersManagement(userViewPerson)) {
-			return Boolean.TRUE;
-		}
-		
-		if(getIsMemberOfPhasesManagementGroup(userViewPerson)) {
-			return Boolean.TRUE;
-		}
-		
-		if(getIsMemberOfAutomaticValuationGroup(userViewPerson)) {
-			return Boolean.TRUE;
-		}
-		
-		if(getIsMemberOfOmissionConfigurationGroup(userViewPerson)) {
-			return Boolean.TRUE;
-		}
-		
-		if(getIsMemberOfValuationCompetenceCoursesAndTeachersManagementGroup(userViewPerson)) {
-			return Boolean.TRUE;
-		}
-		
-		return Boolean.FALSE;
-	}
-	
-	public Boolean hasPermissionToCoursesAndTeachersValuation(Person person) {
-		return hasPermissionToCoursesAndTeachersValuation(getCurrentValuationPhase().getRootValuationGrouping(), person);
-	}
-
-	public Boolean hasPermissionToCoursesAndTeachersValuation(ValuationGrouping valuationGrouping, Person person) {
-		if (valuationGrouping.getIsMemberOfCoursesAndTeachersValuationManagers(person)) {
-			return true;
-		} else {
-			for (ValuationGrouping son : valuationGrouping.getChilds()) {
-				if (hasPermissionToCoursesAndTeachersValuation(son, person)) {
-					return true;
+		for (ExecutionPeriod period : executionPeriodList) {
+			for (CompetenceCourse course : tsdCoursesList){
+				for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course)){
+					if (tsdCourse.getExecutionPeriod().equals(period) && tsdCourse.getIsActive()){
+						activeCoursesSet.add(course);
+					}
 				}
 			}
 		}
-
-		return false;
-	}	
-	
-	public Boolean hasPermissionToCoursesAndTeachersManagement(Person person) {
-		return hasPermissionToCoursesAndTeachersManagement(
-				getCurrentValuationPhase().getRootValuationGrouping(), person);
-	}
-
-	public Boolean hasPermissionToCoursesAndTeachersManagement(ValuationGrouping valuationGrouping, Person person) {
-		if (valuationGrouping.getIsMemberOfCoursesAndTeachersManagementGroup(person)) {
-			return true;
-		} else {
-			for (ValuationGrouping son : valuationGrouping.getChilds()) {
-				if (hasPermissionToCoursesAndTeachersManagement(son, person)) {
-					return true;
+		
+		for(ExecutionPeriod period : executionPeriodList){	
+			for (TSDCourse tsdCourse : getTSDCoursesByExecutionPeriod(period)) {
+				if(tsdCourse instanceof TSDCompetenceCourse){ 
+					if(!activeCoursesSet.contains(tsdCourse.getCompetenceCourse())){
+						returnList.add(tsdCourse);
+						activeCoursesSet.add(tsdCourse.getCompetenceCourse());
+					}
 				}
 			}
 		}
-
-		return false;
+		
+		return returnList;		
 	}
-    
+
+	public Boolean getIsMemberOfCoursesAndTeachersValuationManagers(Person person) {
+		Group group = getCoursesAndTeachersValuationManagers();
+
+		return group != null ? group.isMember(person) : false;
+	}
+
+	public Boolean getIsMemberOfCoursesAndTeachersManagementGroup(Person person) {
+		Group group = getCoursesAndTeachersManagementGroup();
+
+		return group != null ? group.isMember(person) : false;
+	}
+
+	public Boolean getHaveCoursesAndTeachersValuationPermission(Person person) {
+		return getTSDProcessPhase().getTSDProcess().getHasSuperUserPermission(person)
+				|| getIsMemberOfCoursesAndTeachersValuationManagers(person)
+				|| ((getParent() != null) ? getParent().getHaveCoursesAndTeachersValuationPermission(person) : false);
+
+	}
+
+	public Boolean getHaveCoursesAndTeachersManagement(Person person) {
+		return getTSDProcessPhase().getTSDProcess().getHasSuperUserPermission(person)
+				|| getIsMemberOfCoursesAndTeachersManagementGroup(person)
+				|| ((getParent() != null) ? getParent().getHaveCoursesAndTeachersManagement(person) : false);
+	}
+
+	public void addCoursesAndTeachersValuationPermission(Person person) {
+		Group group = getCoursesAndTeachersValuationManagers();
+
+		setCoursesAndTeachersValuationManagers((group != null) ? new GroupUnion(group, new PersonGroup(person))
+				: new PersonGroup(person));
+	}
+
+	public void removeCoursesAndTeachersValuationPermission(Person person) {
+		Group group = getCoursesAndTeachersValuationManagers();
+
+		if (group != null) {
+			setCoursesAndTeachersValuationManagers(new GroupDifference(group, new PersonGroup(person)));
+		}
+	}
+
+	public void addCoursesAndTeachersManagement(Person person) {
+		Group group = getCoursesAndTeachersManagementGroup();
+
+		setCoursesAndTeachersManagementGroup((group != null) ? new GroupUnion(group, new PersonGroup(person))
+				: new PersonGroup(person));
+	}
+
+	public void removeCoursesAndTeachersManagement(Person person) {
+		Group group = getCoursesAndTeachersManagementGroup();
+
+		if (group != null) {
+			setCoursesAndTeachersManagementGroup(new GroupDifference(group, new PersonGroup(person)));
+		}
+	}
+
+	public Double getAllActiveTSDCourseTotalHoursByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+		double totalHours = 0d; 
+		
+		for(TSDCourse tsdCourse : getActiveTSDCourseByExecutionPeriods(executionPeriodList)) {
+			totalHours += tsdCourse.getTotalHours();
+		}
+		
+		return totalHours;
+	}
+
+	
+	public List<TSDCourse> getActiveTSDCourses() {
+		List<TSDCourse> tsdCourseList = new ArrayList<TSDCourse>();
+		for(TSDCourse course : getTSDCourses()) {
+			if(course.getIsActive()){
+				tsdCourseList.add(course);
+			}
+		}		
+	
+		return tsdCourseList;
+	}
+
+	
+	public List<TSDCourse> getActiveTSDCourseByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+		List<TSDCourse> tsdCourseList = new ArrayList<TSDCourse>();
+		for(ExecutionPeriod executionPeriod : executionPeriodList) {
+			for(TSDCourse course : getTSDCourses()) {
+				if(course.getExecutionPeriod().equals(executionPeriod) && course.getIsActive()){
+					tsdCourseList.add(course);
+				}
+			}
+		}
+	
+		return tsdCourseList;
+	}
+
+	public Double getAllActiveTSDCourseTotalStudentsByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+		double totalStudents = 0d; 
+		
+		for(TSDCourse tsdCourse : getActiveTSDCourseByExecutionPeriods(executionPeriodList)) {
+			totalStudents += tsdCourse.getFirstTimeEnrolledStudents() + tsdCourse.getSecondTimeEnrolledStudents();
+		}
+		
+		return totalStudents;
+	}
+
+	public Integer getAllActiveTSDCourseFirstTimeEnrolledStudentsByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+		int totalStudents = 0; 
+		
+		for(TSDCourse tsdCourse : getActiveTSDCourseByExecutionPeriods(executionPeriodList)) {
+			totalStudents += tsdCourse.getFirstTimeEnrolledStudents();
+		}
+		
+		return totalStudents;
+	}
+
+	public Integer getAllActiveTSDCourseSecondTimeEnrolledStudentsByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+		int totalStudents = 0; 
+		
+		for(TSDCourse tsdCourse : getActiveTSDCourseByExecutionPeriods(executionPeriodList)) {
+			totalStudents += tsdCourse.getSecondTimeEnrolledStudents();
+		}
+		
+		return totalStudents;
+	}
+	
+	public List<TSDCurricularCourse> getTSDCurricularCoursesWithoutTSDCourseGroup(
+			CompetenceCourse course,
+			ExecutionPeriod executionPeriod) {
+		List<TSDCurricularCourse> tsdCurricularCourseList = new ArrayList<TSDCurricularCourse>();
+
+		for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course)){
+			if (tsdCourse instanceof TSDCurricularCourse 
+					&& ((TSDCurricularCourse) tsdCourse).getTSDCurricularCourseGroup() == null
+					&& tsdCourse.getExecutionPeriod().equals(executionPeriod))
+				tsdCurricularCourseList.add((TSDCurricularCourse) tsdCourse);
+		}
+
+		return tsdCurricularCourseList;
+	}
+	
+	public TSDCourseType getTSDCourseType(
+			TSDCourse course,
+			ExecutionPeriod executionPeriod) {
+		
+		if(course instanceof TSDVirtualCourseGroup){ 
+			return TSDCourseType.COMPETENCE_COURSE_VALUATION;
+		}
+				
+		for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course.getCompetenceCourse())){
+			if (tsdCourse.getIsActive()){
+				if(tsdCourse instanceof TSDCurricularCourse){ 
+					return TSDCourseType.CURRICULAR_COURSE_VALUATION;
+				}
+				if(tsdCourse instanceof TSDCurricularCourseGroup){ 
+					return TSDCourseType.CURRICULAR_COURSE_VALUATION_GROUP;
+				}
+				
+				if(tsdCourse instanceof TSDCompetenceCourse){ 
+					return TSDCourseType.COMPETENCE_COURSE_VALUATION;
+				}
+			}
+		}
+		
+		return TSDCourseType.NOT_DETERMINED;
+	}
+	
+	public void setTSDCourseType(
+			CompetenceCourse course,
+			ExecutionPeriod executionPeriod,
+			TSDCourseType courseType) {
+		
+		List<TSDCourse> tsdCoursesList = getTSDCoursesByCompetenceCourse(course);
+		
+		for(TSDCourse tsdCourse : tsdCoursesList){
+			tsdCourse.setIsActive(Boolean.FALSE);
+			
+			if(courseType == TSDCourseType.CURRICULAR_COURSE_VALUATION && tsdCourse instanceof TSDCurricularCourse){
+				tsdCourse.setIsActive(Boolean.TRUE);
+			}
+			
+			if(courseType == TSDCourseType.CURRICULAR_COURSE_VALUATION_GROUP && tsdCourse instanceof TSDCurricularCourseGroup){
+				tsdCourse.setIsActive(Boolean.TRUE);
+			}
+			
+			if(courseType == TSDCourseType.COMPETENCE_COURSE_VALUATION && tsdCourse instanceof TSDCompetenceCourse){
+				tsdCourse.setIsActive(Boolean.TRUE);
+			}
+		}
+	}
+
+	public TSDCompetenceCourse getTSDCompetenceCourse(
+			CompetenceCourse course,
+			ExecutionPeriod executionPeriod) {
+		for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course)){
+			if (tsdCourse instanceof TSDCompetenceCourse && tsdCourse.getExecutionPeriod().equals(executionPeriod))
+				return (TSDCompetenceCourse) tsdCourse;
+		}
+
+		return null;
+	}
+	
+	public List<TSDCurricularCourse> getTSDCurricularCourses(
+			CompetenceCourse course,
+			ExecutionPeriod executionPeriod) {
+		List<TSDCurricularCourse> tsdCoursesList = new ArrayList<TSDCurricularCourse>();
+		
+		for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course)){
+			if (tsdCourse instanceof TSDCurricularCourse 
+					&& tsdCourse.getExecutionPeriod().equals(executionPeriod))
+				tsdCoursesList.add((TSDCurricularCourse) tsdCourse);
+		}
+
+		return tsdCoursesList;
+	}
+
+	
+	public List<TSDCurricularCourseGroup>  getTSDCurricularCourseGroups(
+			CompetenceCourse course,
+			ExecutionPeriod executionPeriod) {
+		List<TSDCurricularCourseGroup> tsdCoursesList = new ArrayList<TSDCurricularCourseGroup>();
+		
+		for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course)){
+			if (tsdCourse instanceof TSDCurricularCourseGroup 
+					&& tsdCourse.getExecutionPeriod().equals(executionPeriod))
+				tsdCoursesList.add((TSDCurricularCourseGroup) tsdCourse);
+		}
+
+		return tsdCoursesList;
+	}
+	
+   
 }

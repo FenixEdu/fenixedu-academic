@@ -2,27 +2,27 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
 public class SetCoursesAndTeachersValuationPermission extends Service {
 	public void run(
-			Integer valuationGroupingId,
+			Integer tsdId,
 			Integer personId,
 			Boolean coursesAndTeachersValuationPermission,
 			Boolean coursesAndTeachersManagementPermission) {
-		ValuationGrouping valuationGrouping = rootDomainObject.readValuationGroupingByOID(valuationGroupingId);
+		TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
 		Person person = (Person) rootDomainObject.readPartyByOID(personId);
 				
 		if(coursesAndTeachersValuationPermission) {
-			valuationGrouping.addCoursesAndTeachersValuationPermission(person);
+			tsd.addCoursesAndTeachersValuationPermission(person);
 		} else {
-			valuationGrouping.removeCoursesAndTeachersValuationPermission(person);
+			tsd.removeCoursesAndTeachersValuationPermission(person);
 		}
 				
 		if(coursesAndTeachersManagementPermission) {
-			valuationGrouping.addCoursesAndTeachersManagement(person);
+			tsd.addCoursesAndTeachersManagement(person);
 		} else {
-			valuationGrouping.removeCoursesAndTeachersManagement(person);
+			tsd.removeCoursesAndTeachersManagement(person);
 		}
 	}
 }

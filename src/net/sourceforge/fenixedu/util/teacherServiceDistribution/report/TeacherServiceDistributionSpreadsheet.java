@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.CourseValuationDTOEntry;
-import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.ProfessorshipValuationDTOEntry;
-import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.ValuationTeacherDTOEntry;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ProfessorshipValuation;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDCourseDTOEntry;
+import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDProfessorshipDTOEntry;
+import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
+import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -26,9 +26,9 @@ import org.apache.poi.hssf.util.Region;
 import pt.ist.utl.fenix.utils.Pair;
 
 public class TeacherServiceDistributionSpreadsheet {
-	private List<CourseValuationDTOEntry> courseValuationDTOEntryList;
+	private List<TSDCourseDTOEntry> tsdCourseDTOEntryList;
 
-	private List<ValuationTeacherDTOEntry> valuationTeacherDTOEntryList;
+	private List<TSDTeacherDTOEntry> tsdTeacherDTOEntryList;
 
 	private String spreadsheetName = null;
 
@@ -36,49 +36,49 @@ public class TeacherServiceDistributionSpreadsheet {
 	private ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
 
 	public TeacherServiceDistributionSpreadsheet(
-			List<CourseValuationDTOEntry> _courseValuationDTOEntryList,
-			List<ValuationTeacherDTOEntry> _valuationTeacherDTOEntryList,
+			List<TSDCourseDTOEntry> _tsdCourseDTOEntryList,
+			List<TSDTeacherDTOEntry> _tsdTeacherDTOEntryList,
 			String _spreadsheetName) {
-		this.courseValuationDTOEntryList = _courseValuationDTOEntryList;
-		this.valuationTeacherDTOEntryList = _valuationTeacherDTOEntryList;
+		this.tsdCourseDTOEntryList = _tsdCourseDTOEntryList;
+		this.tsdTeacherDTOEntryList = _tsdTeacherDTOEntryList;
 		this.spreadsheetName = _spreadsheetName;
 		
-		if(!courseValuationDTOEntryList.isEmpty()) {
-			Collections.sort(courseValuationDTOEntryList, new BeanComparator("courseValuation.name"));
+		if(!tsdCourseDTOEntryList.isEmpty()) {
+			Collections.sort(tsdCourseDTOEntryList, new BeanComparator("TSDCourse.name"));
 		}
 		
-		if(!valuationTeacherDTOEntryList.isEmpty()) {
-			Collections.sort(valuationTeacherDTOEntryList, new BeanComparator("name"));
+		if(!tsdTeacherDTOEntryList.isEmpty()) {
+			Collections.sort(tsdTeacherDTOEntryList, new BeanComparator("name"));
 		}
 	}
 
-	public List<CourseValuationDTOEntry> getCourseValuationDTOEntryList() {
-		return courseValuationDTOEntryList;
+	public List<TSDCourseDTOEntry> getTSDCourseDTOEntryList() {
+		return tsdCourseDTOEntryList;
 	}
 
-	public void setCourseValuationDTOEntryList(List<CourseValuationDTOEntry> courseValuationDTOEntryList) {
-		this.courseValuationDTOEntryList = courseValuationDTOEntryList;
+	public void setTSDCourseDTOEntryList(List<TSDCourseDTOEntry> tsdCourseDTOEntryList) {
+		this.tsdCourseDTOEntryList = tsdCourseDTOEntryList;
 	}
 
-	public List<ValuationTeacherDTOEntry> getValuationTeacherDTOEntryList() {
-		return valuationTeacherDTOEntryList;
+	public List<TSDTeacherDTOEntry> getTSDTeacherDTOEntryList() {
+		return tsdTeacherDTOEntryList;
 	}
 
-	public void setValuationTeacherDTOEntryList(List<ValuationTeacherDTOEntry> valuationTeacherDTOEntryList) {
-		this.valuationTeacherDTOEntryList = valuationTeacherDTOEntryList;
+	public void setTSDTeacherDTOEntryList(List<TSDTeacherDTOEntry> tsdTeacherDTOEntryList) {
+		this.tsdTeacherDTOEntryList = tsdTeacherDTOEntryList;
 	}
 
 	public void exportToXLSSheet(final OutputStream outputStream) throws IOException {
 		workbook = new HSSFWorkbook();
 
-		buildTeachersResume();
-		buildDsd();
+		//buildTeachersResume();
+		buildTSD();
 
 		workbook.write(outputStream);
 	}
 
-	private void buildDsd() {
-		HSSFSheet dsdSheet = workbook.createSheet(resourceBundle.getString("label.teacherServiceDistribution.DSD"));
+	private void buildTSD() {
+		HSSFSheet dsdSheet = workbook.createSheet(resourceBundle.getString("label.teacherServiceDistribution.TSD"));
 
 		HSSFRow row = dsdSheet.createRow(0);
 		HSSFCellStyle style = createSheetNameStyle();
@@ -88,33 +88,31 @@ public class TeacherServiceDistributionSpreadsheet {
 
 		dsdSheet.addMergedRegion(new Region(0, (short) 0, 4, (short) 6));
 
-		buildCourseInformationIntoDSD(dsdSheet, (short) 0, (short) 8);
+		buildCourseInformationIntoTSD(dsdSheet, (short) 0, (short) 8);
 
-		buildTeacherInformationIntoDSD(dsdSheet, (short) 20, (short) 0);
+		buildTeacherInformationIntoTSD(dsdSheet, (short) 15, (short) 0);
 
-		fillTeacherServiceDistributionIntoDSD(dsdSheet, (short) 21, (short) 10);
+		fillTSDProcessIntoTSD(dsdSheet, (short) 15, (short) 10);
 
-		buildTeachersCreditsIntoDSD(dsdSheet, (short) 0, (short) (15 + valuationTeacherDTOEntryList.size()));
+		buildTeachersCreditsIntoTSD(dsdSheet, (short) 0, (short) (15 + tsdTeacherDTOEntryList.size()));
 	}
 
-private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
+private void fillTSDProcessIntoTSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
 		short i = rowStart;
 		HSSFCellStyle style = createProfessorshipValuesStyle();
-		for (ValuationTeacherDTOEntry valuationTeacherDTOEntry : valuationTeacherDTOEntryList) {
+		for (TSDTeacherDTOEntry tsdTeacherDTOEntry : tsdTeacherDTOEntryList) {
 			short j = columnStart;
 			HSSFRow row = dsdSheet.createRow(i);
 
-			for (CourseValuationDTOEntry courseValuationDTOEntry : courseValuationDTOEntryList) {
+			for (TSDCourseDTOEntry tsdCourseDTOEntry : tsdCourseDTOEntryList) {
 				HSSFCell cell = row.createCell(j);
 				Double hours = 0d;
 				
-				ProfessorshipValuationDTOEntry professorshipValuationDTOEntry = valuationTeacherDTOEntry.getProfeshipValuationDTOEntryByCourseValuationDTOEntry(
-						courseValuationDTOEntry);
+				TSDProfessorshipDTOEntry tsdProfessorshipDTOEntry = tsdTeacherDTOEntry.getTSDProfessorshipDTOEntryByTSDCourseDTOEntry(
+						tsdCourseDTOEntry);
 				
-				ProfessorshipValuation professorshipValuation = professorshipValuationDTOEntry != null ? professorshipValuationDTOEntry.getProfessorshipValuation() : null;
-
-				if (professorshipValuation != null) {
-					hours = professorshipValuation.getTotalHours();
+				if (tsdProfessorshipDTOEntry != null) {
+					hours = tsdProfessorshipDTOEntry.getTotalHours();
 				}
 
 				if (hours > 0d) {
@@ -127,7 +125,7 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 
 			i += 1;
 		}
-	}	private void buildTeacherInformationIntoDSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
+	}	private void buildTeacherInformationIntoTSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
 		HSSFCellStyle style = createTeacherHeaderTitleStyle();
 		HSSFRow row = dsdSheet.createRow(rowStart);
 		HSSFCell cell = row.createCell((short) (columnStart + 1));
@@ -148,11 +146,11 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.availability"));
 		cell.setCellStyle(style);
 
-		fillTeacherInformationIntoDSD(dsdSheet, (short) (rowStart + 1), columnStart);
+		fillTeacherInformationIntoTSD(dsdSheet, (short) (rowStart + 1), columnStart);
 	}
 
-	private void buildTeachersCreditsIntoDSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
-		columnStart = (short) (15 + valuationTeacherDTOEntryList.size());
+	private void buildTeachersCreditsIntoTSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
+		columnStart = (short) (15 + tsdTeacherDTOEntryList.size());
 
 		HSSFCellStyle style = createTeacherHeaderTitleStyle();
 		HSSFRow row = dsdSheet.createRow(rowStart);
@@ -161,7 +159,7 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		cell.setCellStyle(style);
 	}
 
-	private void fillTeacherInformationIntoDSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
+	private void fillTeacherInformationIntoTSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
 		short i = rowStart;
 		double totalRequiredHours = 0d;
 		double totalCredits = 0d;
@@ -170,30 +168,31 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		
 		HSSFCellStyle style = createTeacherValuesStyle();
 
-		for (ValuationTeacherDTOEntry valuationTeacherDTOEntry : valuationTeacherDTOEntryList) {
+		for (TSDTeacherDTOEntry tsdTeacherDTOEntry : tsdTeacherDTOEntryList) {
 			
 			HSSFRow row = dsdSheet.createRow(i);
 			HSSFCell cell = row.createCell((short) (columnStart + 0));
-			ValuationTeacher valuationTeacher = valuationTeacherDTOEntry.getValuationTeachers().get(0);
-			cell.setCellValue(valuationTeacher.getIsRealTeacher() ? valuationTeacher.getTeacherNumber().toString() : "");
+			TSDTeacher tsdTeacher = tsdTeacherDTOEntry.getTSDTeachers().get(0);
+			Integer teacherNumber = tsdTeacher.getTeacherNumber();
+			cell.setCellValue(teacherNumber == null ? "" : teacherNumber.toString());
 			cell.setCellStyle(style);
 
 			cell = row.createCell((short) (columnStart + 1));
-			cell.setCellValue(valuationTeacherDTOEntry.getName());
+			cell.setCellValue(tsdTeacherDTOEntry.getName());
 			cell.setCellStyle(style);
 
 			cell = row.createCell((short) (columnStart + 2));
-			totalRequiredHours += valuationTeacherDTOEntry.getRequiredHours();
-			cell.setCellValue(valuationTeacherDTOEntry.getRequiredHours());
+			totalRequiredHours += tsdTeacherDTOEntry.getRequiredHours();
+			cell.setCellValue(tsdTeacherDTOEntry.getRequiredHours());
 			cell.setCellStyle(style);
 
 			cell = row.createCell((short) (columnStart + 3));
-			if(valuationTeacherDTOEntry.getUsingExtraCredits()) {
-				cell.setCellValue(valuationTeacherDTOEntry.getExtraCreditsValue());
+			if(tsdTeacherDTOEntry.getUsingExtraCredits()) {
+				cell.setCellValue(tsdTeacherDTOEntry.getExtraCreditsValue());
 			}
 			cell.setCellStyle(style);
 
-			Double availability = valuationTeacherDTOEntry.getAvailability();
+			Double availability = tsdTeacherDTOEntry.getAvailability();
 			totalAvailability += availability;
 			cell = row.createCell((short) (columnStart + 4));
 			cell.setCellValue(availability);
@@ -228,7 +227,7 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 
 	}
 
-	private void buildCourseInformationIntoDSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
+	private void buildCourseInformationIntoTSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
 		HSSFRow row = dsdSheet.createRow(rowStart + 1);
 		HSSFCellStyle style = createRotatedCourseBannerStyle();
 		HSSFCell cellTitle = row.createCell(columnStart);
@@ -243,7 +242,7 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 
 		row = dsdSheet.createRow(rowStart + 3);
 		cell = row.createCell(columnStart);
-		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.curricularCourse"));
+		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.course"));
 		cell.setCellStyle(style);
 
 		row = dsdSheet.createRow(rowStart + 4);
@@ -273,7 +272,9 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		cell.setCellStyle(style);
 
 		style = createCourseHoursInformationTitleStyle();
-		row = dsdSheet.createRow(rowStart + 9);
+		
+		
+		/*row = dsdSheet.createRow(rowStart + 9);
 		cell = row.createCell(columnStart);
 		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.theoreticalHours"));
 		cell.setCellStyle(style);
@@ -292,29 +293,30 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		cell = row.createCell(columnStart);
 		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.laboratorialHours"));
 		cell.setCellStyle(style);
-
-		row = dsdSheet.createRow(rowStart + 13);
+*/
+		row = dsdSheet.createRow(rowStart + 9);
 		cell = row.createCell(columnStart);
 		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.hours.total"));
 		cell.setCellStyle(style);
 
 		style = createMissingLecturedHoursTitleStyle();
-		row = dsdSheet.createRow(rowStart + 14);
+		row = dsdSheet.createRow(rowStart + 10);
 		cell = row.createCell(columnStart);
 		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.missing"));
 		cell.setCellStyle(style);
 
-		fillCourseInformationIntoDSD(dsdSheet, rowStart, (short) (columnStart + 1));
+		fillCourseInformationIntoTSD(dsdSheet, rowStart, (short) (columnStart + 1));
 	}
 
-	private void fillCourseInformationIntoDSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
+	private void fillCourseInformationIntoTSD(HSSFSheet dsdSheet, short rowStart, short columnStart) {
 		int totalFirstTimeEnrolledStudents = 0;
 		int totalSecondOrMoreTimeEnrolledStudents = 0;
-		double totalTheoreticalHours = 0d;
+		/*double totalTheoreticalHours = 0d;
 		double totalPraticalHours = 0d;
 		double totalTheoreticalPraticalHours = 0d;
-		double totalLaboratorialHours = 0d;
-		double totalTotalHoursNotLectured = 0d;
+		double totalLaboratorialHours = 0d;*/
+		double sumTotalHours = 0d;
+		double sumTotalHoursNotLectured = 0d;
 
 		short j = (short) (columnStart + 1);
 		
@@ -324,17 +326,17 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		HSSFCellStyle courseHoursStyle = createCourseHoursInformationValuesStyle();
 		HSSFCellStyle missingStyle = createMissingLecturedHoursValuesStyle();
 
-		for (CourseValuationDTOEntry courseValuationDTOEntry : courseValuationDTOEntryList) {
+		for (TSDCourseDTOEntry tsdCourseDTOEntry : tsdCourseDTOEntryList) {
 			HSSFRow row = dsdSheet.createRow(rowStart + 1);
 			
 			HSSFCell cell = row.createCell(j);
-			cell.setCellValue(courseValuationDTOEntry.getCourseValuation().getName());
+			cell.setCellValue(tsdCourseDTOEntry.getTSDCourse().getCompetenceName());
 			cell.setCellStyle(rotatedStyle);
 
 			row = dsdSheet.createRow(rowStart + 2);
 			cell = row.createCell(j);
 			String campusString = "";
-			for (String campus : courseValuationDTOEntry.getCourseValuation().getCampus()) {
+			for (String campus : tsdCourseDTOEntry.getTSDCourse().getCampus()) {
 				campusString += campus + "\n";
 			}
 			cell.setCellValue(campusString);
@@ -343,7 +345,7 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 			row = dsdSheet.createRow(rowStart + 3);
 			cell = row.createCell(j);
 			String degreesString = "";
-			for (Pair<String, List<String>> degree : courseValuationDTOEntry.getCurricularCoursesInformation()) {
+			for (Pair<String, List<String>> degree : tsdCourseDTOEntry.getCurricularCoursesInformation()) {
 				degreesString += degree.getKey() + "\n";
 			}
 			cell.setCellValue(degreesString);
@@ -352,7 +354,7 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 			row = dsdSheet.createRow(rowStart + 4);
 			cell = row.createCell(j);
 			String curricularYears = "";
-			for (Pair<String, List<String>> degree : courseValuationDTOEntry.getCurricularCoursesInformation()) {
+			for (Pair<String, List<String>> degree : tsdCourseDTOEntry.getCurricularCoursesInformation()) {
 				for (String year : degree.getValue()) {
 					curricularYears += year + "\n";
 				}
@@ -362,19 +364,19 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 
 			row = dsdSheet.createRow(rowStart + 5);
 			cell = row.createCell(j);
-			cell.setCellValue(courseValuationDTOEntry.getCourseValuation().getExecutionPeriod().getSemester());
+			cell.setCellValue(tsdCourseDTOEntry.getTSDCourse().getExecutionPeriod().getSemester());
 			cell.setCellStyle(courseInfostyle);
 
 			row = dsdSheet.createRow(rowStart + 6);
 			cell = row.createCell(j);
-			int firstTimeEnrolledStudentsNumber = courseValuationDTOEntry.getCourseValuation().getFirstTimeEnrolledStudents();
+			int firstTimeEnrolledStudentsNumber = tsdCourseDTOEntry.getTSDCourse().getFirstTimeEnrolledStudents();
 			totalFirstTimeEnrolledStudents += firstTimeEnrolledStudentsNumber;
 			cell.setCellValue(firstTimeEnrolledStudentsNumber);
 			cell.setCellStyle(studentInfoStyle);
 
 			row = dsdSheet.createRow(rowStart + 7);
 			cell = row.createCell(j);
-			int secondTimeEnrolledStudentsNumber = courseValuationDTOEntry.getCourseValuation().getSecondTimeEnrolledStudents();
+			int secondTimeEnrolledStudentsNumber = tsdCourseDTOEntry.getTSDCourse().getSecondTimeEnrolledStudents();
 			totalSecondOrMoreTimeEnrolledStudents += secondTimeEnrolledStudentsNumber;
 			cell.setCellValue(secondTimeEnrolledStudentsNumber);
 			cell.setCellStyle(studentInfoStyle);
@@ -384,39 +386,42 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 			cell.setCellValue(firstTimeEnrolledStudentsNumber + secondTimeEnrolledStudentsNumber);
 			cell.setCellStyle(studentInfoStyle);
 
-			row = dsdSheet.createRow(rowStart + 9);
+			/*row = dsdSheet.createRow(rowStart + 9);
 			cell = row.createCell(j);
-			totalTheoreticalHours += courseValuationDTOEntry.getCourseValuation().getTheoreticalHours();
-			cell.setCellValue(courseValuationDTOEntry.getCourseValuation().getTheoreticalHours());
+			totalTheoreticalHours += tsdCourseDTOEntry.getTSDCourse().getHours(ShiftType.TEORICA);
+			cell.setCellValue(tsdCourseDTOEntry.getTSDCourse().getHours(ShiftType.TEORICA));
 			cell.setCellStyle(courseHoursStyle);
 
 			row = dsdSheet.createRow(rowStart + 10);
 			cell = row.createCell(j);
-			totalPraticalHours = courseValuationDTOEntry.getCourseValuation().getPraticalHours();
-			cell.setCellValue(courseValuationDTOEntry.getCourseValuation().getPraticalHours());
+			totalPraticalHours = tsdCourseDTOEntry.getTSDCourse().getHours(ShiftType.PRATICA);
+			cell.setCellValue(tsdCourseDTOEntry.getTSDCourse().getHours(ShiftType.PRATICA));
 			cell.setCellStyle(courseHoursStyle);
 
 			row = dsdSheet.createRow(rowStart + 11);
 			cell = row.createCell(j);
-			totalTheoreticalPraticalHours += courseValuationDTOEntry.getCourseValuation().getTheoPratHours();
-			cell.setCellValue(courseValuationDTOEntry.getCourseValuation().getTheoPratHours());
+			totalTheoreticalPraticalHours += tsdCourseDTOEntry.getTSDCourse().getHours(ShiftType.TEORICO_PRATICA);
+			cell.setCellValue(tsdCourseDTOEntry.getTSDCourse().getHours(ShiftType.TEORICO_PRATICA));
 			cell.setCellStyle(courseHoursStyle);
 
 			row = dsdSheet.createRow(rowStart + 12);
 			cell = row.createCell(j);
-			totalLaboratorialHours += courseValuationDTOEntry.getCourseValuation().getLaboratorialHours();
-			cell.setCellValue(courseValuationDTOEntry.getCourseValuation().getLaboratorialHours());
+			totalLaboratorialHours += tsdCourseDTOEntry.getTSDCourse().getHours(ShiftType.LABORATORIAL);
+			cell.setCellValue(tsdCourseDTOEntry.getTSDCourse().getHours(ShiftType.LABORATORIAL));
+			cell.setCellStyle(courseHoursStyle);
+			*/
+			row = dsdSheet.createRow(rowStart + 9);
+			cell = row.createCell(j);
+			double totalHours = tsdCourseDTOEntry.getTSDCourse().getTotalHours();
+			sumTotalHours += totalHours;
+			cell.setCellValue(totalHours);
 			cell.setCellStyle(courseHoursStyle);
 
-			row = dsdSheet.createRow(rowStart + 13);
+			row = dsdSheet.createRow(rowStart + 10);
 			cell = row.createCell(j);
-			cell.setCellValue(courseValuationDTOEntry.getCourseValuation().getTotalHours());
-			cell.setCellStyle(courseHoursStyle);
-
-			row = dsdSheet.createRow(rowStart + 14);
-			cell = row.createCell(j);
-			totalTotalHoursNotLectured += courseValuationDTOEntry.getCourseValuation().getTotalHoursNotLectured();
-			cell.setCellValue(courseValuationDTOEntry.getCourseValuation().getTotalHoursNotLectured());
+			double totalHoursNotLectured = tsdCourseDTOEntry.getTSDCourse().getTotalHoursNotLectured();
+			sumTotalHoursNotLectured += totalHoursNotLectured;
+			cell.setCellValue(totalHoursNotLectured);
 			cell.setCellStyle(missingStyle);
 
 			j += 1;
@@ -445,7 +450,7 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		cell.setCellStyle(style);
 
 		style = createCourseHoursInformationValuesStyle();
-		row = dsdSheet.createRow(rowStart + 9);
+		/*row = dsdSheet.createRow(rowStart + 9);
 		cell = row.createCell(j);
 		cell.setCellValue(totalTheoreticalHours);
 		cell.setCellStyle(style);
@@ -464,17 +469,16 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		cell = row.createCell(j);
 		cell.setCellValue(totalLaboratorialHours);
 		cell.setCellStyle(style);
-
-		row = dsdSheet.createRow(rowStart + 13);
+*/
+		row = dsdSheet.createRow(rowStart + 9);
 		cell = row.createCell(j);
-		cell.setCellValue(totalTheoreticalHours + totalPraticalHours + totalTheoreticalPraticalHours
-				+ totalLaboratorialHours);
+		cell.setCellValue(sumTotalHours);
 		cell.setCellStyle(style);
 
 		style = createMissingLecturedHoursValuesStyle();
-		row = dsdSheet.createRow(rowStart + 14);
+		row = dsdSheet.createRow(rowStart + 10);
 		cell = row.createCell(j);
-		cell.setCellValue(totalTotalHoursNotLectured);
+		cell.setCellValue(sumTotalHoursNotLectured);
 		cell.setCellStyle(style);
 	}
 
@@ -483,19 +487,19 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		double totalRequiredTeachingHours = 0d;
 		double totalExtraCredits = 0d;
 	
-		HSSFSheet teachersResumeSheet = workbook.createSheet(resourceBundle.getString("label.teacherServiceDistribution.valuationTeacher"));
+		HSSFSheet teachersResumeSheet = workbook.createSheet(resourceBundle.getString("label.teacherServiceDistribution.tsdTeacher"));
 
 		HSSFRow row = teachersResumeSheet.createRow(0);
 		HSSFCellStyle style = createSheetNameStyle();
 
 		HSSFCell cellTitle = row.createCell((short) 0);
-		cellTitle.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.valuationTeacher") + " " + spreadsheetName);
+		cellTitle.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.tsdTeacher") + " " + spreadsheetName);
 		cellTitle.setCellStyle(style);
 
 		row = teachersResumeSheet.createRow(2);
 		style = createHeadingStyle();
 		HSSFCell cell = row.createCell((short) 0);
-		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.valuationTeacher.singular"));
+		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.tsdTeacher.singular"));
 		cell.setCellStyle(style);
 
 		cell = row.createCell((short) 1);
@@ -519,31 +523,31 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		cell.setCellStyle(style);
 
 		short i = 3;
-		for (ValuationTeacherDTOEntry valuationTeacherDTOEntry : valuationTeacherDTOEntryList) {
+		for (TSDTeacherDTOEntry tsdTeacherDTOEntry : tsdTeacherDTOEntryList) {
 			row = teachersResumeSheet.createRow(i);
 			cell = row.createCell((short) 0);
-			cell.setCellValue(valuationTeacherDTOEntry.getName());
+			cell.setCellValue(tsdTeacherDTOEntry.getName());
 
 			cell = row.createCell((short) 1);
-			cell.setCellValue(valuationTeacherDTOEntry.getCategory().getShortName());
+			cell.setCellValue(tsdTeacherDTOEntry.getCategory().getShortName());
 
 			cell = row.createCell((short) 2);
-			cell.setCellValue(valuationTeacherDTOEntry.getRequiredHours());
-			totalHours += valuationTeacherDTOEntry.getRequiredHours();
+			cell.setCellValue(tsdTeacherDTOEntry.getRequiredHours());
+			totalHours += tsdTeacherDTOEntry.getRequiredHours();
 
 			cell = row.createCell((short) 3);
-			cell.setCellValue(valuationTeacherDTOEntry.getRequiredTeachingHours());
-			totalRequiredTeachingHours += valuationTeacherDTOEntry.getRequiredTeachingHours();
+			cell.setCellValue(tsdTeacherDTOEntry.getRequiredTeachingHours());
+			totalRequiredTeachingHours += tsdTeacherDTOEntry.getRequiredTeachingHours();
 
 			cell = row.createCell((short) 4);
-			if(valuationTeacherDTOEntry.getUsingExtraCredits()) {
-				cell.setCellValue(valuationTeacherDTOEntry.getExtraCreditsValue());
-				totalExtraCredits += valuationTeacherDTOEntry.getExtraCreditsValue();
+			if(tsdTeacherDTOEntry.getUsingExtraCredits()) {
+				cell.setCellValue(tsdTeacherDTOEntry.getExtraCreditsValue());
+				totalExtraCredits += tsdTeacherDTOEntry.getExtraCreditsValue();
 			}
 
 			cell = row.createCell((short) 5);
-			if(valuationTeacherDTOEntry.getUsingExtraCredits()) {
-				cell.setCellValue(valuationTeacherDTOEntry.getExtraCreditsName());
+			if(tsdTeacherDTOEntry.getUsingExtraCredits()) {
+				cell.setCellValue(tsdTeacherDTOEntry.getExtraCreditsName());
 			}
 			
 			i += 1;
@@ -570,7 +574,7 @@ private void fillTeacherServiceDistributionIntoDSD(HSSFSheet dsdSheet, short row
 		row = teachersResumeSheet.createRow(i + 2);
 		style = createHeadingStyle();
 		cell = row.createCell((short) 0);
-		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.valuationTeacher.availability.total"));
+		cell.setCellValue(resourceBundle.getString("label.teacherServiceDistribution.tsdTeacher.availability.total"));
 		cell.setCellStyle(style);
 
 		cell = row.createCell((short) 1);

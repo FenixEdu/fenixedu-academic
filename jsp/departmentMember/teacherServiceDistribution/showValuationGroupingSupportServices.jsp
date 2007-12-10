@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
+<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -26,42 +26,47 @@ table = document.getElementById(t);
 }
 </script>
 
+
 <em><bean:message key="link.teacherServiceDistribution"/></em>
 <h2><bean:message key="link.teacherServiceDistribution.groupingAreaSupportService"/></h2>
 
 <p class="breadcumbs">
 	<em>
-		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+		<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+			<bean:write name="tsdProcess" property="name"/>&nbsp;
+			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
 		>
 		<bean:message key="link.teacherServiceDistribution.groupingAreaSupportService"/>
 	</em>
 </p>
 
-<html:form action="/valuationGroupingSupport">
+
+<html:form action="/tsdSupport">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdProcess" property="tsdProcess"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
-<table class="tstyle5 thlight mtop05">
+<br/>
+<br/>
+
+<table class="tstyle5 thlight mtop05 thmiddle">
 	<tr>
 		<td>
-			<bean:message key="label.teacherServiceDistribution.ValuationGrouping"/>:
+			<bean:message key="label.teacherServiceDistribution.TeacherServiceDistribution"/>:
 		</td>
 		<td>
-			<html:select property="valuationGrouping" onchange="this.form.method.value='loadValuationGroupings'; this.form.page.value=0; this.form.submit();">
-				<html:options collection="valuationGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
+			<html:select property="tsd" onchange="this.form.method.value='loadTeacherServiceDistributions'; this.form.page.value=0; this.form.submit();">
+				<html:options collection="tsdOptionEntryList" property="idInternal" labelProperty="name"/>
 			</html:select>			
 		</td>
 		<logic:present name="parentGroupingName">
 			<td>
-				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='deleteValuationGrouping'; this.form.submit();">
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='deleteTeacherServiceDistribution'; this.form.submit();">
 					<bean:message key="label.teacherServiceDistribution.delete"/>
 				</html:button>
 			</td>
@@ -74,66 +79,67 @@ table = document.getElementById(t);
 </table>
 
 <logic:present name="parentGroupingName">
+<br/>
+<br/>
 
-	<bean:message key="label.teacherServiceDistribution.parentGrouping"/>: <b class="highlight1"><bean:write name="parentGroupingName"/></b>
+	<bean:message key="label.teacherServiceDistribution.parentGrouping"/>: <b><bean:write name="parentGroupingName"/></b>
 
-	<table class="tstyle5 thlight">
+	<table class="tstyle5 thlight mtop05 thright thmiddle">
 		<tr>
-			<td>
-				<bean:message key="label.teacherServiceDistribution.valuationTeacher"/>:
-			</td>
-			<logic:empty name="valuationTeacherList">
+			<th>
+				<bean:message key="label.teacherServiceDistribution.tsdTeacher"/>:
+			</th>
+			<logic:empty name="tsdTeacherList">
 			<td align="center">
-				<bean:message key="label.teacherServiceDistribution.groupingTeachersAlreadyIncluded"/>
-			</td>
+				<em><bean:message key="label.teacherServiceDistribution.groupingTeachersAlreadyIncluded"/></em>
 			</logic:empty>
-			<logic:notEmpty name="valuationTeacherList">
+			<logic:notEmpty name="tsdTeacherList">
 			<td>
-				<html:select property="valuationTeacher">
-					<html:options collection="valuationTeacherList" property="idInternal" labelProperty="name"/>
+				<html:select property="tsdTeacher">
+					<html:options collection="tsdTeacherList" property="idInternal" labelProperty="name"/>
 				</html:select>
-			</td>
 			</logic:notEmpty>
+			</td>
 			<td>
-				<logic:notEmpty name="valuationTeacherList">
-					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateValuationTeacher'; this.form.submit()">
+				<logic:notEmpty name="tsdTeacherList">
+					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateTSDTeacher'; this.form.submit()">
 						<bean:message key="label.teacherServiceDistribution.associate"/>
 					</html:button>
 				</logic:notEmpty>
 			</td>
 			<td>
-				<logic:notEmpty name="valuationTeacherList">
-					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateAllValuationTeachers'; this.form.submit()">
+				<logic:notEmpty name="tsdTeacherList">
+					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateAllTSDTeachers'; this.form.submit()">
 						<bean:message key="label.teacherServiceDistribution.associateAll"/>
 					</html:button>
 				</logic:notEmpty>
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<th>
 				<bean:message key="label.teacherServiceDistribution.competenceCourse"/>:
-			</td>
-			<logic:empty name="valuationCompetenceCourseList">
+			</th>
+			<logic:empty name="tsdCourseList">
 			<td align="center">
-				<bean:message key="label.teacherServiceDistribution.groupingCoursesAlreadyIncluded"/>
+				<em><bean:message key="label.teacherServiceDistribution.groupingCoursesAlreadyIncluded"/></em>
 			</logic:empty>
-			<logic:notEmpty name="valuationCompetenceCourseList">
+			<logic:notEmpty name="tsdCourseList">
 			<td>
-				<html:select property="valuationCompetenceCourse">
-					<html:options collection="valuationCompetenceCourseList" property="idInternal" labelProperty="name"/>
+				<html:select property="tsdCourse">
+					<html:options collection="tsdCourseList" property="idInternal" labelProperty="name"/>
 				</html:select>		
 			</logic:notEmpty>							
 			</td>
 			<td>
-				<logic:notEmpty name="valuationCompetenceCourseList">
-					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateValuationCompetenceCourse'; this.form.submit()">
+				<logic:notEmpty name="tsdCourseList">
+					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateCompetenceCourse'; this.form.submit()">
 						<bean:message key="label.teacherServiceDistribution.associate"/>
 					</html:button>
 				</logic:notEmpty>
 			</td>
 			<td>
-				<logic:notEmpty name="valuationCompetenceCourseList">
-					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateAllValuationCompetenceCourses'; this.form.submit()">
+				<logic:notEmpty name="tsdCourseList">
+					<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='associateAllCompetenceCourses'; this.form.submit()">
 						<bean:message key="label.teacherServiceDistribution.associateAllFemale"/>
 					</html:button>
 				</logic:notEmpty>
@@ -143,27 +149,29 @@ table = document.getElementById(t);
 </logic:present>
 
 
+<br>
+<br>
 
 <img src="<%= request.getContextPath() %>/images/toggle_plus10.gif" id="signalImg" onclick="changeSignal('signalImg','optionsTable'); return false;" /> 
 &nbsp;<b><bean:message key="label.teacherServiceDistribution.operations"/></b>
 <br>
 
 
-<table class="tstyle5 thlight" id="optionsTable" style="display: none;">
+<table class="tstyle5 thlight thright thmiddle mtop05" id="optionsTable" style="display: none;">
 	<tr>
-		<td>		
+		<th>		
 			<bean:message key="label.teacherServiceDistribution.changeName"/>:
-		</td>
+		</th>
 
 </html:form>
-<html:form action="/valuationGroupingSupport">
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="loadValuationGroupings"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:form action="/tsdSupport">
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="loadTeacherServiceDistributions"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdProcess" property="tsdProcess"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsd" property="tsd"/>
 
 		<td>
-			<fr:edit id="name-validated" name="selectedValuationGrouping" slot="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" scope="request">
+			<fr:edit id="name-validated" name="selectedTeacherServiceDistribution" slot="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" scope="request">
 				<fr:layout>
 					<fr:property name="size" value="44"/>
 					<fr:property name="maxLength" value="240" />
@@ -175,8 +183,8 @@ table = document.getElementById(t);
 				<bean:message key="link.change"/>
 			</html:button>
 		</td>
-		<td class="tdclear tderror1">
-			<span>
+		<td>
+			<span class="tdclear tderror1">
 				<fr:message for="name-validated"/>
 				<fr:hasMessages for="name-validated">
 					<script language="JavaScript" type="text/javascript">
@@ -187,61 +195,61 @@ table = document.getElementById(t);
 		</td>
 		
 </html:form>
-<html:form action="/valuationGroupingSupport">
+<html:form action="/tsdSupport">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCompetenceCourseDissociation" property="valuationCompetenceCourseDissociation" value=""/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationTeacherDissociation" property="valuationTeacherDissociation" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdProcess" property="tsdProcess"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdCourseDissociation" property="tsdCourseDissociation" value=""/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdTeacherDissociation" property="tsdTeacherDissociation" value=""/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsd" property="tsd"/>
 
 	</tr>
 	<tr>
-		<td>		
+		<th>		
 			<bean:message key="label.teacherServiceDistribution.createNewGrouping"/>:
-		</td>
+		</th>
 		<td>
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" maxlength="240" size="44"/>
 		</td>
 		<td align="center">
-			<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='createValuationGrouping'; this.form.page.value=1; this.form.submit();">
+			<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='createTeacherServiceDistribution'; this.form.page.value=1; this.form.submit();">
 				&nbsp;<bean:message key="label.teacherServiceDistribution.create"/>&nbsp;
 			</html:button>
 		</td>
+		<td></td>
 	</tr>
-	<logic:present name="parentGroupingName">
+	<%--<logic:present name="parentGroupingName">
 		<logic:notEmpty name="mergeGroupingOptionEntryList">
 		<tr>
-			<td>
-				<bean:message key="label.teacherServiceDistribution.mergeValuationGroupings"/>
-			</td>
+			<th>
+				<b><bean:message key="label.teacherServiceDistribution.mergeTeacherServiceDistributions"/>:
+			</th>
 			<td>
 				<html:select property="otherGrouping">
 					<html:options collection="mergeGroupingOptionEntryList" property="idInternal" labelProperty="name"/>
 				</html:select>			
 			</td>
 			<td align="center">
-				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='mergeValuationGroupings'; this.form.page.value=0; this.form.submit();">
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='mergeTeacherServiceDistributions'; this.form.page.value=0; this.form.submit();">
 					<bean:message key="label.teacherServiceDistribution.merge"/>
 				</html:button>
 			</td>
 		</tr>
 		</logic:notEmpty>
-	</logic:present>
+	</logic:present>--%>
 </table>
+<br/>
 
-
-<p>
-	<span class="error0">
-		<html:errors property="name"/>
-		<logic:messagesPresent property="name">
-			<script language="JavaScript" type="text/javascript">
-				changeSignal('signalImg','optionsTable');
-			</script>
-		</logic:messagesPresent>
-	</span>
-</p>
-
+<span class="error0">
+	<html:errors property="name"/>
+	<logic:messagesPresent property="name">
+		<script language="JavaScript" type="text/javascript">
+			changeSignal('signalImg','optionsTable');
+		</script>
+	</logic:messagesPresent>
+</span>
+<br/>
+<br/>
 
 <table style="width: 60em;">
 <tr valign="top">
@@ -250,31 +258,30 @@ table = document.getElementById(t);
 <table class='tstyle4' width="100%">
 	<tr>
 		<th>
-			<bean:message key="label.teacherServiceDistribution.associatedValuationTeacher"/>
+			<b><bean:message key="label.teacherServiceDistribution.associatedTSDTeacher"/></b>
 		</th>
 		<logic:present name="parentGroupingName">
 		<th>
 		</th>
 		</logic:present>
 	</tr>
-<logic:empty name="valuationTeacherListBelongToGrouping">
+<logic:empty name="tsdTeacherListBelongToGrouping">
 	<tr>
-		<td>
-			<em><bean:message key="label.teacherServiceDistribution.notExistsValuationTeachers"/></em>
+		<td colspan="2">
+			<em><bean:message key="label.teacherServiceDistribution.notExistsTSDTeachers"/></em>
 		</td>
-		<td></td>
 	</tr>	
 </logic:empty>		
-<logic:iterate name="valuationTeacherListBelongToGrouping" id="valuationTeacher">
-	<bean:define id="valuationTeacherId" name="valuationTeacher" property="idInternal"/>
+<logic:iterate name="tsdTeacherListBelongToGrouping" id="tsdTeacher">
+	<bean:define id="tsdTeacherId" name="tsdTeacher" property="idInternal"/>
 	<tr>
-		<td class="courses">
-			<bean:write name="valuationTeacher" property="name"/>
+		<td>
+			<bean:write name="tsdTeacher" property="name"/>
 		</td>
 		<logic:present name="parentGroupingName">
 			<td class="acenter">
-				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';"  
-				onclick='<%= "this.form.valuationTeacherDissociation.value=" + valuationTeacherId + ";this.form.method.value='dissociateValuationTeacher'; this.form.submit()" %>'>
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';" styleClass="btn" 
+				onclick='<%= "this.form.tsdTeacherDissociation.value=" + tsdTeacherId + ";this.form.method.value='dissociateTSDTeacher'; this.form.submit()" %>'>
 					<bean:message key="label.teacherServiceDistribution.dissociate"/>
 				</html:button>
 			</td>
@@ -287,34 +294,32 @@ table = document.getElementById(t);
 </td>
 
 <td width="50%">
-
 <table class='tstyle4' width="100%">
 	<tr>
 		<th>
-			<bean:message key="label.teacherServiceDistribution.associatedCompetenceCourse"/>
+			<b><bean:message key="label.teacherServiceDistribution.associatedCompetenceCourse"/></b>
 		</th>
 		<logic:present name="parentGroupingName">
 		<th>
 		</th>
 		</logic:present>
 	</tr>
-<logic:empty name="valuationCompetenceCourseListBelongToGrouping">
+<logic:empty name="tsdCourseListBelongToGrouping">
 	<tr>
-		<td>
+		<td colspan="2">
 			<em><bean:message key="label.teacherServiceDistribution.notExistsCompetenceCourses"/></em>
 		</td>
-		<td></td>
 	</tr>	
 </logic:empty>
-<logic:iterate name="valuationCompetenceCourseListBelongToGrouping" id="valuationCompetenceCourse">
-	<bean:define id="valuationCompetenceCourseId" name="valuationCompetenceCourse" property="idInternal"/>
+<logic:iterate name="tsdCourseListBelongToGrouping" id="tsdCourse">
+	<bean:define id="tsdCourseId" name="tsdCourse" property="idInternal"/>
 	<tr>
-		<td class="courses">
-			<bean:write name="valuationCompetenceCourse" property="name"/>
+		<td>
+			<bean:write name="tsdCourse" property="name"/>
 		</td>
 		<logic:present name="parentGroupingName">
 			<td class="acenter">
-				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick='<%= "this.form.valuationCompetenceCourseDissociation.value=" + valuationCompetenceCourseId + ";this.form.method.value='dissociateValuationCompetenceCourse'; this.form.submit()" %>'>
+				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" styleClass="btn" onclick='<%= "this.form.tsdCourseDissociation.value=" + tsdCourseId + ";this.form.method.value='dissociateCompetenceCourse'; this.form.submit()" %>'>
 					<bean:message key="label.teacherServiceDistribution.dissociate"/>
 				</html:button>
 			</td>
@@ -330,6 +335,6 @@ table = document.getElementById(t);
 </html:form>
 <br/>
 
-<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
+<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
 	<bean:message key="link.back"/>
 </html:link>

@@ -648,7 +648,7 @@ a.color007b4d { color: #007b4d !important; }
 .highlight4 { background-color: #dfb ; } /* verde */
 .highlight5 { background-color: #fdfbdd; } /* amarelo */
 .highlight6 { background-color: #ffc; }
-.highlight7 { background-color: #fffadd !important; } /* amarelo */
+.highlight7 { background-color: #fffaee !important; } /* amarelo */
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fcfae4; }
 .bgcolor3 { background-color: #fafaf6; }
@@ -1008,7 +1008,7 @@ table.vtsbc td.courses {
 background-color: #ffe;
 width: 300px;
 padding: 0.25em 0.25em;
-text-align: center;
+text-align: left;
 }
 table.vtsbc td.error {
 color: red; 

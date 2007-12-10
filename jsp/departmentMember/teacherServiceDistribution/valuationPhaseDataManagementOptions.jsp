@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
+<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -7,187 +7,104 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <em><bean:message key="link.teacherServiceDistribution"/></em>
-<h2><bean:message key="link.teacherServiceDistribution.professorshipValuationService"/></h2>
+<h2><bean:message key="link.teacherServiceDistribution.createAutomaticTSDCourses"/></h2>
 
 <p class="breadcumbs">
 	<em>
-		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+		<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal() %>'>
-			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-		<%--	(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>�<bean:message key="label.common.courseSemester"/>--%>
-			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal() %>'>
+			<bean:write name="tsdProcess" property="name"/>&nbsp;
+			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
 		>
-		<bean:message key="link.teacherServiceDistribution.createAutomaticCourseValuations"/>
+		<bean:message key="link.teacherServiceDistribution.createAutomaticTSDCourses"/>
 	</em>
 </p>
 
-<logic:equal name="valuationPhasesManagementForm" property="dataManagementOption" value="2">
+<logic:equal name="tsdProcessPhasesManagementForm" property="dataManagementOption" value="2">
 	<p>
-		<span class="success0"><bean:message key="label.teacherService.successfulValuation"/></span>
+		<html:img src="<%= request.getContextPath() + "/images/success01.gif" %>" />
+		&nbsp;<bean:message key="label.teacherService.successfulValuation"/>
 	</p>
 	<p>
-		<html:link page='<%= "/teacherServiceDistributionValuation.do?method=prepareForTeacherServiceDistributionValuation&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-			<bean:message key="link.teacherServiceDistribution.goToteacherServiceDistributionVisualization"/>
+		<html:link page='<%= "/tsdProcessValuation.do?method=prepareForTSDProcessValuation&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+			<bean:message key="link.teacherServiceDistribution.goTotsdProcessVisualization"/>
 		</html:link>
 	</p>
 </logic:equal>
 
-<logic:notEqual name="valuationPhasesManagementForm" property="dataManagementOption" value="2">
-	<html:form action="/valuationPhasesManagement">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareToChooseValuationPhase"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<logic:notEqual name="tsdProcessPhasesManagementForm" property="dataManagementOption" value="2">
+	<html:form action="/tsdProcessPhasesManagement">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareToChooseTSDProcessPhase"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdProcess" property="tsdProcess"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
-
+	
 	<p>	
-		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dataManagementOption" property="dataManagementOption" value="0" onclick="this.form.method.value='showValuationPhaseDataManagementOptions'; this.form.submit();"> 
-			<bean:message key="label.teacherServiceDistribution.copyLastYearRealData"/> <%= "(" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getPreviousExecutionYear().getYear() + ")" %>
+		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dataManagementOption" property="dataManagementOption" value="0" onclick="this.form.method.value='showTSDProcessPhaseDataManagementOptions'; this.form.submit();"> 
+			<bean:message key="label.teacherServiceDistribution.copyLastYearRealData"/> <%= "(" + ((TSDProcess) request.getAttribute("tsdProcess")).getPreviousExecutionYear().getYear() + ")" %>
 		</html:radio>
 	</p>
-	<p>
-		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dataManagementOption" property="dataManagementOption" value="1" onclick="this.form.method.value='prepareToChooseValuationPhase'; this.form.submit();"> <bean:message key="label.teacherServiceDistribution.copyPreviousValuationPhaseData"/> </html:radio>
+	<p>	
+		<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.dataManagementOption" property="dataManagementOption" value="1" onclick="this.form.method.value='prepareToChooseTSDProcessPhase'; this.form.submit();"> 
+			<bean:message key="label.teacherServiceDistribution.copyPreviousTSDProcessPhaseData"/>
+		</html:radio>
 	</p>
 	
-	<logic:equal name="valuationPhasesManagementForm" property="dataManagementOption" value="1">
-		<table class='tstyle5 thlight'>
-		<tr>
-			<th colspan="2" align="center">
-				<bean:write name="teacherServiceDistribution" property="department.realName"/>
-			</th>
-		</tr>
-		<tr>
-			<td>
-				<bean:message key="label.teacherServiceDistribution.executionYear"/>:
-				<html:select property="executionYear" onchange="this.form.method.value='resetSelectedTeacherServiceDistribution'; this.form.submit();">
-					<html:option value="-1">&nbsp;</html:option>
-					<html:options collection="executionYearList" property="idInternal" labelProperty="year"/>
-				</html:select>
-			</td>
-			<td>
-				<bean:message key="label.teacherServiceDistribution.semester"/>:
-				<html:select property="executionPeriod" onchange="this.form.method.value='resetSelectedTeacherServiceDistribution'; this.form.submit();">
-					<html:option value="-1">&nbsp;</html:option>
-					<html:options collection="executionPeriodsList" property="idInternal" labelProperty="semester"/>
-				</html:select>
-			</td>
-		</tr>
-		</table>
-		
-		<logic:empty name="teacherServiceDistributionList">
+	<logic:equal name="tsdProcessPhasesManagementForm" property="dataManagementOption" value="1">
+		<br/>
+		<br/>
+		<logic:empty name="tsdProcessPhaseList">
 			<p>
-				<span class="error0">
-					<bean:message key="label.teacherServiceDistribution.nonAvailableTeacherServiceDistributions"/>
-				</span>
+				<em>
+					<bean:message key="label.teacherServiceDistribution.nonAvailableTSDProcessPhases"/>
+				</em>
 			</p>
 		</logic:empty>
-		
-		<logic:notEmpty name="teacherServiceDistributionList">
-
-			<p class="mbottom05">
-				<b><bean:message key="label.teacherServiceDistribution.availableTeacherServiceDistributions"/>:</b>
-			</p>
-					
-			<table class='tstyle4 mtop05'>
+		<logic:notEmpty name="tsdProcessPhaseList">
+			<b><bean:message key="label.teacherServiceDistribution.availabeTSDProcessPhases"/>:</b>
+			<br/>
+			<table class='tstyle4 thlight mtop05'>
 				<tr>
-					<th>
-					</th>
+					<th/>
 					<th>
 						<bean:message key="label.teacherServiceDistribution.name"/>
 					</th>
-					<th>
-						<bean:message key="label.teacherServiceDistribution.executionYear"/>
-					</th>
-					<th>
-						<bean:message key="label.teacherServiceDistribution.semesters"/>
-					</th>
 				</tr>
-			<logic:iterate name="teacherServiceDistributionList" id="teacherServiceDistribution"> 
+			<logic:iterate name="tsdProcessPhaseList" id="tsdProcessPhase"> 
 				<tr>
 					<td>
-						<bean:define id="teacherServiceDistributionId" name="teacherServiceDistribution" property="idInternal" />
-						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.selectedTeacherServiceDistribution" property="selectedTeacherServiceDistribution" value="<%= ((Integer)teacherServiceDistributionId).toString() %>" onchange="this.form.method.value='prepareToChooseValuationPhase'; this.form.submit();" />
+						<bean:define id="tsdProcessPhaseId" name="tsdProcessPhase" property="idInternal" />
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.selectedTSDProcess" property="tsdProcessPhase" value="<%= ((Integer)tsdProcessPhaseId).toString() %>" />
 					</td>
-					<td>
-						<bean:write name="teacherServiceDistribution" property="name"/>
-					</td>
-					<td>
-						<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
-					</td>
-					<td>
-						<logic:iterate id="executionPeriod" name="teacherServiceDistribution" property="orderedExecutionPeriods">
-							<bean:write name="executionPeriod" property="semester"/>�&nbsp;
-						</logic:iterate>
+					<td width="250">
+						<bean:write name="tsdProcessPhase" property="name"/>
 					</td>
 				</tr>
 			</logic:iterate>
 			</table>
-		</logic:notEmpty>
-		
-		<logic:greaterThan name="valuationPhasesManagementForm" property="selectedTeacherServiceDistribution" value="0" >
 			<br/>
-			<br/>
-			<table class='vtsbc'>
-			<tr>
-				<th align="center" colspan="2">
-					<bean:write name="selectedTeacherServiceDistribution" property="name" />
-				</th>
-			</tr>
-			<tr>
-				<td class="courses">
-					<b><bean:message key="label.teacherServiceDistribution.executionYear"/>: </b>
-					<bean:write name="selectedTeacherServiceDistribution" property="executionYear.year"/>
-					&nbsp;&nbsp;&nbsp;
-					<b><bean:message key="label.teacherServiceDistribution.semesters"/>: </b>
-					<logic:iterate id="executionPeriod" name="teacherServiceDistribution" property="orderedExecutionPeriods">
-						<bean:write name="executionPeriod" property="semester"/>�&nbsp;
-					</logic:iterate></b>
-				</th>
-			</tr>
-			<tr>
-				<logic:empty name="valuationPhaseList">
-					<td colspan="2" class="courses">
-						<span class="error">
-							<bean:message key="label.teacherServiceDistribution.emptyPhaseList"/>
-						</span>
-					</td>
-				</logic:empty>
-				<logic:notEmpty name="valuationPhaseList">
-					<td align="left">
-						<b><bean:message key="label.teacherServiceDistribution.availabeValuationPhases"/>: </b>
-						&nbsp;&nbsp;
-						<html:select property="valuationPhase" onchange="this.form.method.value='prepareToChooseValuationPhase'; this.form.submit();">
-							<html:options collection="valuationPhaseList" property="idInternal" labelProperty="name"/>
-						</html:select>
-					</td>
-				</logic:notEmpty>
-			</tr>
-			</table>
-			<logic:notEmpty name="valuationPhaseList">
-				<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='manageCurrentValuationPhaseData'; this.form.submit();">
-					<bean:message key="label.teacherServiceDistribution.valuate"/>
-				</html:button>
-				<br/><br/>
-			</logic:notEmpty>
-		</logic:greaterThan>
-	</logic:equal>
-	
-	<logic:notEqual name="valuationPhasesManagementForm" property="dataManagementOption" value="1">
-		<p>
-			<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='manageCurrentValuationPhaseData'; this.form.page.value=0; this.form.submit();">
+			<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='manageCurrentTSDProcessPhaseData'; this.form.page.value=0; this.form.submit();">
 				<bean:message key="label.teacherServiceDistribution.valuate"/>
 			</html:button>
-		</p>
-	</logic:notEqual>
+		</logic:notEmpty>		
+	</logic:equal>
+	<logic:equal name="tsdProcessPhasesManagementForm" property="dataManagementOption" value="0">
+		<br/>
+		<html:button bundle="HTMLALT_RESOURCES" altKey="button." property="" onclick="this.form.method.value='manageCurrentTSDProcessPhaseData'; this.form.page.value=0; this.form.submit();">
+			<bean:message key="label.teacherServiceDistribution.valuate"/>
+		</html:button>
+	</logic:equal>
+	
 	</html:form>
 </logic:notEqual>
 
-<p>
-	<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-		<bean:message key="link.back"/>
-	</html:link>
-</p>
+<br/>
+<br/>
+<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+	<bean:message key="link.back"/>
+</html:link>
 
 

@@ -1,5 +1,5 @@
 <!-- Teacher Service Distribution -->
-    <schema name="omissionValuesValuation.details" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationPhase">
+    <schema name="omissionValuesValuation.details" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase">
 		<slot name="studentsPerTheoreticalShift" key="label.teacherServiceDistribution.studentsPerTheoreticalShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
@@ -102,9 +102,9 @@
     	</slot>
     </schema>
     
-    <schema name="presentTeacherServiceDistribution" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution">
+    <schema name="presentTSDProcess" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess">
     	<slot name="name" key="label.teacher.person.nome"/>
-    	<slot name="currentValuationPhase.name" key="label.teacherServiceDistribution.currentPhase"/>
+    	<slot name="currentTSDProcessPhase.name" key="label.teacherServiceDistribution.currentPhase"/>
     	<slot name="department.realName" key="label.teacherServiceDistribution.department"/>
     </schema>
     
@@ -119,7 +119,7 @@
 
       <schema name="createTeacherDistributionCopy" type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TeacherServiceBean">
 		<slot name="department.realName" read-only="true" key="label.teacherServiceDistribution.department"/>
-		<slot name="copyFromTeacherServiceDistribution.name" read-only="true" key="1"/>
+		<slot name="copyFromTSDProcess.name" read-only="true" key="1"/>
 		<slot name="executionPeriod" layout="menu-select" key="label.common.courseSemester">
     		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsForExecutionYear"/>
 			<property name="format" value="${name}"/>

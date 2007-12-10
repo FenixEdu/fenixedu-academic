@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
+<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -7,21 +7,20 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <em><bean:message key="link.teacherServiceDistribution"/></em>
-<h2><bean:message key="label.teacherService.createTeacher"/></h2>
+<h2><bean:message key="label.teacherServiceDistribution.addCourse"/></h2>
 
 <p class="breadcumbs">
 	<em>
-		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+		<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-	<%--		(<bean:write name="teacherServiceDistribution" property="executionPeriod.semester"/>�<bean:message key="label.common.courseSemester"/>--%>
-			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+			<bean:write name="tsdProcess" property="name"/>&nbsp;
+			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
 		>
-		<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getIdInternal().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
 		</html:link>
 		>
@@ -29,32 +28,25 @@
 	</em>
 </p>
 
-<ul class="mvert15">
-	<li>
-		<html:link page='<%= "/valuationTeachersGroup.do?method=prepareForValuationTeachersGroupServices&amp;valuationGroupingID=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getCurrentValuationPhase().getRootValuationGrouping().getIdInternal().toString() %>'>
-			<bean:message key="link.back"/>
-		</html:link>
-	</li>
-</ul>
+<br/>
 
-<html:form action="/valuationTeachersGroup">
+<html:form action="/tsdTeachersGroup">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showDepartmentCourses"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationGrouping" property="valuationGrouping"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.valuationCourse" property="valuationCourse"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsd" property="tsd"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdCourse" property="tsdCourse"/>
 
-<p>
 	<b><bean:message key="label.teacherServiceDistribution.department"/>:</b>
 	<html:select property="department" title="Departamento" onchange="this.form.submit();">
 		<html:options collection="departmentList" property="idInternal" labelProperty="realName"/>
 	</html:select>
-</p>
 
+<br/>
+<br/>
+<br/>
 
 <logic:present name="coursesList">
-
-	<p class="mtop15 mbottom05">
-		<b><bean:message key="label.teacherServiceDistribution.availableCourses"/>:</b>
-	</p>
+	<b><bean:message key="label.teacherServiceDistribution.availableCourses"/>:</b>
+	<br/>
 	
 	<table class='tstyle4 mtop05'>
 	<tr>
@@ -70,7 +62,7 @@
     		</td>
     		<td>
     			<bean:define id="courseID" name="course" property="idInternal"/>
-    			<html:link href='<%= "javascript:document.forms[0].method.value='addCourse'; document.forms[0].valuationCourse.value=" + courseID.toString() + "; document.forms[0].submit()" %>'>
+    			<html:link href="javascript:void(0)" onclick='<%= "document.forms[0].method.value='addCourse'; document.forms[0].tsdCourse.value=" + courseID.toString() + "; document.forms[0].submit()" %>'>
     				<bean:message key="button.add"/>
     			</html:link>
     		</td>
@@ -78,7 +70,6 @@
 	</logic:iterate>
 	</table>
 </logic:present>
-
 <logic:notPresent name="coursesList">
 	<p>
 		<em>
@@ -86,7 +77,9 @@
 		</em>
 	</p>
 </logic:notPresent>
-
 </html:form>
 
-
+<br/>
+<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getIdInternal().toString() %>'>
+	<bean:message key="link.back"/>
+</html:link>

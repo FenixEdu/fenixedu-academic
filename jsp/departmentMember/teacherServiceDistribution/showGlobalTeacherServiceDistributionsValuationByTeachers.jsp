@@ -1,71 +1,104 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
+<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDProfessorshipDTOEntry" %>
+<%@ page import="net.sourceforge.fenixedu.domain.ShiftType" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
+<em><bean:message key="link.teacherServiceDistribution"/></em>
+<h2><bean:message key="link.teacherServiceDistribution.tsdProcessVisualization"/></h2>
 
-<h3>
-	<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-		<bean:message key="link.teacherServiceDistribution"/>
-	</html:link>
-	>
-	<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionVisualization"/>
-</h3>
+<p class="breadcumbs">
+	<em>
+		<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
+			<bean:message key="link.teacherServiceDistribution"/>
+		</html:link>
+		>
+		<html:link page="/globalTSDProcessValuation.do?method=prepareForGlobalTSDProcessValuation">
+			<bean:message key="link.teacherServiceDistribution.tsdProcessVisualization"/>
+		</html:link>
+	</em>
+</p>
 
-<html:form action="/globalTeacherServiceDistributionValuation">
+<html:form action="/globalTSDProcessValuation">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.TSDProcess" property="tsdProcess"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewCurricularInformation" property="viewCurricularInformation"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewStudentsEnrolments" property="viewStudentsEnrolments"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewShiftHours" property="viewShiftHours"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewStudentsEnrolmentsPerShift" property="viewStudentsEnrolmentsPerShift"/>
 
-
-
-<logic:iterate name="globalTeacherServiceDistributionValuationForm" property="selectedTeacherServiceDistributions" id="teacherServiceDistribution">
-	<bean:define name="teacherServiceDistribution" id="teacherServiceDistribution" type="String"/>
-	<% 
-		String teacherServiceDistributionProperty = "teacherServiceDistribution(" + (String) teacherServiceDistribution + ")";
-		String valuationPhaseProperty = "valuationPhase(" + (String) teacherServiceDistribution + ")";
-		String valuationGroupingProperty = "valuationGrouping(" + (String) teacherServiceDistribution + ")"; 
-	%>
-	
-	<html:hidden alt="<%= teacherServiceDistributionProperty %>" property="<%= teacherServiceDistributionProperty %>"/>
-	<html:hidden alt="<%= valuationPhaseProperty %>" property="<%= valuationPhaseProperty %>"/>
-	<html:hidden alt="<%= valuationGroupingProperty %>" property="<%= valuationGroupingProperty %>"/>		
-</logic:iterate>
-
-
-<table class='search'>
-	<tr class='left'>
-		<td>
-			<b><bean:message key="label.teacherServiceDistribution.semester"/>:</b>
+<table class='tstyle5'>
+	<tr>
+		<td align="right">
+			<bean:message key="label.teacherServiceDistribution.tsdProcessPhase"/>:
 		</td>
 		<td>
- 			<html:select property="executionPeriod" onchange="this.form.method.value='viewGlobalTeacherServiceDistributionValuation'; this.form.submit();">
+			<html:select property="tsdProcessPhase" onchange="this.form.method.value='viewGlobalTSDProcessValuation'; this.form.submit();">
+				<html:options collection="tsdProcessPhaseList" property="idInternal" labelProperty="name"/>
+			</html:select>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			<bean:message key="label.teacherServiceDistribution.TeacherServiceDistribution"/>:
+		</td>
+		<td>
+			<html:select property="tsd" onchange="this.form.method.value='viewGlobalTSDProcessValuation'; this.form.submit();">
+				<html:options collection="tsdOptionEntryList" property="idInternal" labelProperty="name"/>
+			</html:select>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			<bean:message key="label.teacherServiceDistribution.semester"/>:
+		</td>
+		<td>
+ 			<html:select property="executionPeriod" onchange="this.form.method.value='viewGlobalTSDProcessValuation'; this.form.submit();">
 				<html:option value="-1"><bean:message key="label.teacherServiceDistribution.both"/></html:option>
 				<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
 			</html:select>
 		</td>
 	</tr>
+	<tr>
+		<td align="right">
+			<bean:message key="label.teacherServiceDistribution.viewHoursPerShift"/>:
+		</td>
+		<td>
+		<% int brPos = 6, counter = 0; %>
+			<table cellpadding="0" cellspacing="0" style="margin: 0em; border-collapse: collapse" border="0">
+			<tr>
+			<logic:iterate name="shiftsList" id="shiftType">
+				<td>
+				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.shiftTypeArray" property="shiftTypeArray" onclick="this.form.method.value='viewGlobalTSDProcessValuation'; this.form.submit()">
+					<bean:write name="shiftType" property="name"/>
+				</html:multibox>
+				<bean:write name="shiftType" property="fullNameTipoAula"/>
+				</td>
+				<%= ++counter == brPos ? "</tr><tr>" : ""  %>
+			</logic:iterate>
+			</tr></table>
+		</td>
+	</tr>
 </table>
 <br/>
 
+<p class="mtop15 mbottom1">
+	<b> <bean:message key="label.teacherService.navigateByTeacher"/> </b> | 
+	<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='changeToViewCourses'; document.forms[0].submit();">
+		<bean:message key="label.teacherService.navigateByCourse"/>
+	</html:link> | 
+	<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='changeToViewTeacherAndCourses'; document.forms[0].submit();">
+		<bean:message key="label.teacherService.viewByCoursesAndTeachers"/>
+	</html:link> 
+</p>
 
-<b> <bean:message key="label.teacherService.navigateByTeacher"/> </b> | 
-<html:link href="javascript:document.globalTeacherServiceDistributionValuationForm.method.value='changeToViewCourses'; document.globalTeacherServiceDistributionValuationForm.submit();">
-	<bean:message key="label.teacherService.navigateByCourse"/>
-</html:link> | 
-<html:link href="javascript:document.globalTeacherServiceDistributionValuationForm.method.value='changeToViewTeacherAndCourses'; document.globalTeacherServiceDistributionValuationForm.submit();">
-	<bean:message key="label.teacherService.viewByCoursesAndTeachers"/>
-</html:link> 
-<br/>
-
-<table class='vtsbc'>
+<table class='tstyle4'>
 	<tr>
 		<th>
 			<bean:message key="label.teacherService.teacher.name"/>
@@ -76,18 +109,11 @@
 		<th>
 			<bean:message key="label.teacherService.teacher.category"/>
 		</th>
+<logic:iterate name="selectedShiftTypes" id="type">
 		<th>
-			<bean:message key="label.teacherServiceDistribution.theoreticalHoursLectured"/>
+			H. <bean:write name="type" property="fullNameTipoAula"/>
 		</th>
-		<th>
-			<bean:message key="label.teacherServiceDistribution.praticalHoursLectured"/>
-		</th>
-		<th>
-			<bean:message key="label.teacherServiceDistribution.theoPratHoursLectured"/>
-		</th>
-		<th>
-			<bean:message key="label.teacherServiceDistribution.laboratorialHoursLectured"/>
-		</th>		
+</logic:iterate>
 		<th>
 			<bean:message key="label.teacherService.teacher.totalLecturedHours"/>
 		</th>
@@ -95,84 +121,90 @@
 			<bean:message key="label.teacherService.teacher.hours"/>
 		</th>
 		<th>
-			<bean:message key="label.teacherService.course.availability"/>
+			<bean:message key="label.teacherServiceDistribution.availableHours"/>
 		</th>
 	</tr>
-<logic:iterate name="valuationTeacherDTOEntryList" id="valuationTeacherDTOEntry">
+<logic:iterate name="tsdTeacherDTOEntryList" id="tsdTeacherDTOEntry">
 	<tr class='center'>
-		<td class="courses">
-			<bean:write name="valuationTeacherDTOEntry" property="name"/>
+		<td class="highlight7">
+			<bean:write name="tsdTeacherDTOEntry" property="name"/>
 		</td>
 		<td>
-			<logic:equal name="valuationTeacherDTOEntry" property="isRealTeacher" value="true">
-				<bean:write name="valuationTeacherDTOEntry" property="teacherNumber"/>
+			<logic:equal name="tsdTeacherDTOEntry" property="isRealTeacher" value="true">
+				<bean:write name="tsdTeacherDTOEntry" property="teacherNumber"/>
 			</logic:equal>
 		</td>
 		<td>
-			<bean:write name="valuationTeacherDTOEntry" property="category.code"/>
+			<bean:write name="tsdTeacherDTOEntry" property="category.code"/>
 		</td>
-		<td align='right'>
-			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="totalTheoreticalHoursLectured"/></fmt:formatNumber>
-		</td>	
-		<td align='right'>
-			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="totalPraticalHoursLectured"/></fmt:formatNumber>		
-		</td>		
-		<td align='right'>
-			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="totalTheoPratHoursLectured"/></fmt:formatNumber>
+	<logic:iterate name="selectedShiftTypes" id="type">
+		<td>
+			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
+				<%= ((TSDTeacherDTOEntry)tsdTeacherDTOEntry).getTotalHoursLecturedByShiftType((ShiftType)type) %>
+			</fmt:formatNumber>
 		</td>
-		<td align='right'>
-			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="totalLaboratorialHoursLectured"/></fmt:formatNumber>
+	</logic:iterate>
+		<td class="aright">
+			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
+				<bean:write name="tsdTeacherDTOEntry" property="totalHoursLectured"/>
+			</fmt:formatNumber>
 		</td>
-		<td align='right'>
-			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="totalHoursLectured"/></fmt:formatNumber>
+		<td class="aright">
+			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
+				<bean:write name="tsdTeacherDTOEntry" property="requiredHours"/>
+			</fmt:formatNumber>
 		</td>
-		<td align='right'>	
-			<bean:write name="valuationTeacherDTOEntry" property="requiredHours"/>
-		</td>
-		<logic:greaterThan name="valuationTeacherDTOEntry" property="availability" value="0.0"> 
-		<td align='right' class="yellow">
+		<logic:greaterThan name="tsdTeacherDTOEntry" property="availability" value="0.0"> 
+		<td class="aright" class="yellow">
 		</logic:greaterThan>
-		<logic:lessThan  name="valuationTeacherDTOEntry" property="availability" value="0.0"> 
-		<td align='right' class="red">
+		<logic:lessThan  name="tsdTeacherDTOEntry" property="availability" value="0.0"> 
+		<td class="aright" class="red">
 		</logic:lessThan>
-		<logic:equal name="valuationTeacherDTOEntry" property="availability" value="0.0"> 
-		<td align='right' class="green">
+		<logic:equal name="tsdTeacherDTOEntry" property="availability" value="0.0"> 
+		<td class="aright" class="green">
 		</logic:equal>
-			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="availability"/></fmt:formatNumber>
+			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
+				<bean:write name="tsdTeacherDTOEntry" property="availability"/>
+			</fmt:formatNumber>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="10" class='backwhite' style='background-color: #fff;'>
 	<ul>
-	<logic:iterate name="valuationTeacherDTOEntry" property="professorshipValuationDTOEntries" id="professorshipValuationDTOEntry">
+	<logic:iterate name="tsdTeacherDTOEntry" property="TSDProfessorshipDTOEntries" id="tsdProfessorshipDTOEntry">
 		<li>
-			<bean:define id="valuationTeacherId" name="professorshipValuationDTOEntry" property="professorshipValuation.valuationTeacher.idInternal"/>
-			<bean:define id="courseValuationId" name="professorshipValuationDTOEntry" property="courseValuationDTOEntry.courseValuation.idInternal"/>
-				<bean:write name="professorshipValuationDTOEntry" property="courseValuationDTOEntry.courseValuation.name"/>
-			(<logic:iterate name="professorshipValuationDTOEntry" property="courseValuationDTOEntry.curricularCoursesInformation" id="curricularCourseInformation">
-						<bean:write name="curricularCourseInformation" property="key"/>
-						(<logic:iterate name="curricularCourseInformation" property="value" id="curricularYear">
-							<bean:write name="curricularYear"/>&nbsp;
-						</logic:iterate>�ano)
-			</logic:iterate>)
-			- <fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="professorshipValuationDTOEntry" property="professorshipValuation.totalHours"/></fmt:formatNumber>
+			<bean:define id="tsdCourseId" name="tsdProfessorshipDTOEntry" property="TSDCourseDTOEntry.TSDCourse.idInternal"/>
+			<bean:write name="tsdProfessorshipDTOEntry" property="TSDCourseDTOEntry.TSDCourse.name"/>
+			&nbsp;-&nbsp;
+			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="tsdProfessorshipDTOEntry" property="totalHours"/></fmt:formatNumber>
 			<bean:message key="label.teacherService.hours"/>
+			<logic:notEqual name="tsdProfessorshipDTOEntry" property="totalHours" value="0.0">
+				&nbsp;(
+				<% boolean firstSymbol = true; %>
+				<logic:iterate name="tsdProfessorshipDTOEntry" property="TSDProfessorships" id="professorship">
+					<% if(firstSymbol){ firstSymbol = false; } else { out.print("+");	}%>
+					<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
+						<bean:write name="professorship" property="hours"/>
+					</fmt:formatNumber>
+					h. <bean:write name="professorship" property="type.fullNameTipoAula"/>
+				</logic:iterate>
+				)
+			</logic:notEqual>
 		</li>
 	</logic:iterate>
-	<logic:equal name="valuationTeacherDTOEntry" property="usingExtraCredits" value="true">
+	<logic:equal name="tsdTeacherDTOEntry" property="usingExtraCredits" value="true">
 		<li>
-			<bean:write name="valuationTeacherDTOEntry" property="extraCreditsName"/>(
-			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="valuationTeacherDTOEntry" property="extraCreditsValue"/></fmt:formatNumber>)
+			<bean:write name="tsdTeacherDTOEntry" property="extraCreditsName"/>(
+			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="tsdTeacherDTOEntry" property="extraCreditsValue"/></fmt:formatNumber>)
 		</li>
 	</logic:equal>
 	</ul>
 		</td>
 	</tr>
 </logic:iterate>	
-</table>
-<br/>
+</table><br/>
 
-<html:link page="/globalTeacherServiceDistributionValuation.do?method=prepareForGlobalTeacherServiceDistributionValuation">
+<html:link page="/globalTSDProcessValuation.do?method=prepareForGlobalTSDProcessValuation">
 	<bean:message key="link.back"/>
 </html:link>	
 </html:form>

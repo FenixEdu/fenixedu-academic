@@ -5,52 +5,44 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<em>
-	<bean:message key="link.teacherServiceDistribution"/>
-</em>
-
+<em><bean:message key="link.teacherServiceDistribution"/></em>
 <h2><bean:message key="link.teacherServiceDistribution.teacherEmptyServiceDistributionCreation"/></h2>
 
 <p class="breadcumbs">
 	<em>
-		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
-			<bean:message key="link.teacherServiceDistribution.start"/>
+		<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
+		<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page="/teacherServiceDistribution.do?method=prepareForTeacherServiceDistributionCreation">
-			<bean:message key="link.teacherServiceDistribution.teacherServiceDistributionCreation"/>
+		<html:link page="/tsdProcess.do?method=prepareForTSDProcessCreation">
+			<bean:message key="link.teacherServiceDistribution.tsdProcessCreation"/>
 		</html:link>
 		>
 		<bean:message key="link.teacherServiceDistribution.teacherEmptyServiceDistributionCreation"/>
 	</em>
 </p>
 
-<html:form action="/teacherServiceDistribution">
-<html:hidden property="method" value="createTeacherServiceDistribution"/>
+
+<html:form action="/tsdProcess">
+<html:hidden property="method" value="createTSDProcess"/>
 <html:hidden property="page" value="0"/>
 
-
-<p class="mbottom15">
-	<span class="error"><html:errors property="name"/></span>
-</p>
-
-
 <p><strong><bean:write name="departmentName"/></strong></p>
-<table class='tstyle5 thlight'>
+<table class='tstyle5 thlight thright mtop05 mbottom05'>
 <tr>
-	<td>
+	<th>
 		<bean:message key="label.teacherServiceDistribution.executionYear"/>:
-	</td>
+	</th>
 	<td>
-		<html:select property="executionYear" onchange="this.form.method.value='prepareForEmptyTeacherServiceDistributionCreation'; this.form.submit();">
+		<html:select property="executionYear" onchange="this.form.method.value='prepareForEmptyTSDProcessCreation'; this.form.submit();">
 			<html:options collection="executionYearList" property="idInternal" labelProperty="year"/>
 		</html:select>
 	</td>
 </tr>
 <tr>
-	<td>
-		<bean:message key="label.teacherServiceDistribution.semester"/>:
-	</td>
+	<th>
+		<bean:message key="label.teacherServiceDistribution.semester"/>
+	</th>
 	<td>
 		<html:select property="executionPeriod">
 			<html:option value="-1"><bean:message key="label.teacherServiceDistribution.both"/></html:option>
@@ -59,20 +51,26 @@
 	</td>
 </tr>
 <tr>
-	<td>
+	<th>
 		<bean:message key="label.teacherServiceDistribution.name"/>:
-	</td>
+	</th>
 	<td>
-		<html:text property="name" size="40" maxlength="240" />
+		<html:text property="name" size="30" maxlength="240" />
 	</td>
 </tr>
 </table>
 
-<p>
-<html:button property="" onclick="this.form.method.value='createTeacherServiceDistribution'; this.form.page.value=1; this.form.submit()">
+<html:button property="" onclick="this.form.method.value='createTSDProcess'; this.form.page.value=1; this.form.submit()">
 	<bean:message key="label.teacherServiceDistribution.create"/>
 </html:button>
-</p>
 
+<br/>
+<br/>
+<span class="error"><html:errors property="name"/></span>
 
+<br/>
+
+<html:link page="/tsdProcess.do?method=prepareForTSDProcessCreation">
+	<bean:message key="link.back"/>
+</html:link>
 </html:form>

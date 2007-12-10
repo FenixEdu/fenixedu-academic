@@ -118,13 +118,13 @@
 		
 		<% String deecCode = "21"; %>
 		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">
-			<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deecCode %>">										
+		<%-- 	<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deecCode %>">		--%>
 		  		<li>
-				  	<html:link page="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution">
+				  	<html:link page="/tsdProcess.do?method=prepareTSDProcess">
 				  		<bean:message key="link.teacherServiceDistribution"/>
 				  	</html:link>  
 				</li>
-			</logic:equal>
+		<%--	</logic:equal> --%>
 		</logic:notEmpty>
 
 		<li class="navheader">

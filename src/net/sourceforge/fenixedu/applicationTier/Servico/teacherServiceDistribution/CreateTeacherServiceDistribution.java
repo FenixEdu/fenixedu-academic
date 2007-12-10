@@ -1,43 +1,21 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 
 public class CreateTeacherServiceDistribution extends Service {
-	public TeacherServiceDistribution run(List<Integer> executionPeriodIdList,
-			Integer departmentId, Integer creatorId, String name) {
-		Department department = rootDomainObject
-				.readDepartmentByOID(departmentId);
-
-		List<ExecutionPeriod> executionPeriodList = getExecutionPeriods(executionPeriodIdList);
-
-		ResourceBundle rb = ResourceBundle
-				.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
-
-		Person creator = (Person) rootDomainObject.readPartyByOID(creatorId);
-
-		TeacherServiceDistribution teacherServiceDistribution = new TeacherServiceDistribution(
-				department, executionPeriodList, creator, name,
-				rb.getString("label.teacherServiceDistribution.initialPhase"));
-
-		return teacherServiceDistribution;
-	}
-
-	private List<ExecutionPeriod> getExecutionPeriods(List<Integer> executionPeriodIdList) {
-		List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
-
-		for (Integer executionPeriodId : executionPeriodIdList) {
-			executionPeriodList.add(rootDomainObject
-					.readExecutionPeriodByOID(executionPeriodId));
-		}
-		return executionPeriodList;
+	public TeacherServiceDistribution run(Integer tsdProcessPhaseId, Integer fatherTeacherServiceDistributionId, String name) {
+		TSDProcessPhase tsdProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(tsdProcessPhaseId);
+		TeacherServiceDistribution fatherTeacherServiceDistribution = rootDomainObject.readTeacherServiceDistributionByOID(fatherTeacherServiceDistributionId);
+		
+		TeacherServiceDistribution tsd = new TeacherServiceDistribution(tsdProcessPhase, name, fatherTeacherServiceDistribution, 
+				new ArrayList<TSDTeacher>(), new ArrayList<TSDCourse>(), null, null);
+				
+		return tsd;
 	}
 }

@@ -23,7 +23,7 @@
 	<!ENTITY vigilancy SYSTEM "vigilancy-schemas.xml">
 	<!ENTITY academicAdminOffice SYSTEM "academicAdminOffice-schemas.xml">	
 	<!ENTITY system SYSTEM "system-schemas.xml">
-	<!ENTITY teacherServiceDistribution SYSTEM "teacherServiceDistribution-schemas.xml">
+	<!ENTITY tsdProcess SYSTEM "teacherServiceDistribution-schemas.xml">
 	<!ENTITY tests SYSTEM "tests-schemas.xml">
     <!ENTITY site SYSTEM "site-schemas.xml">
     <!ENTITY student SYSTEM "student-schemas.xml">
@@ -681,7 +681,7 @@
 	&vigilancy;
 	&system;
 	&academicAdminOffice;
-	&teacherServiceDistribution;
+	&tsdProcess;
 	&tests;
     &site;
     &student;
@@ -700,10 +700,5 @@
     &librarySchemas;
     &resourceManager;
     &bolonhaManagerSchemas;
-    &pedagogicalCouncilSchemas;
-    &delegatesSchemas;
-    &directiveCouncil;
-    &facultyAdmOffice;
-    &cardGeneration;
-    &contentSchemas;
+    
 </schemas>

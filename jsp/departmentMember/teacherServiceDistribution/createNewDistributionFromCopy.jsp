@@ -7,9 +7,9 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<fr:edit name="bean" id="createCopy" schema="createTeacherDistributionCopy" action="/teacherServiceDistribution.do?method=copyTeacherServiceDistributionNew">
+<fr:edit name="bean" id="createCopy" schema="createTeacherDistributionCopy" action="/tsdProcess.do?method=copyTSDProcessNew">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1"/>
 	</fr:layout>
-	<fr:destination name="cancel" path="/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution"/>
+	<fr:destination name="cancel" path="/tsdProcess.do?method=prepareTSDProcess"/>
 </fr:edit>

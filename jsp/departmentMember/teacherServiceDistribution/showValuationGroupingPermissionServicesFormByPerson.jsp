@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Person" %>
-<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution" %>
+<%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -12,13 +12,13 @@
 
 <p class="breadcumbs">
 	<em>
-		<html:link page='/teacherServiceDistribution.do?method=prepareTeacherServiceDistribution'>
+		<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/teacherServiceDistribution.do?method=showTeacherServiceDistributionServices&amp;teacherServiceDistribution=" + ((TeacherServiceDistribution) request.getAttribute("teacherServiceDistribution")).getIdInternal().toString() %>'>
-			<bean:write name="teacherServiceDistribution" property="name"/>&nbsp;
-			<bean:write name="teacherServiceDistribution" property="executionYear.year"/>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+			<bean:write name="tsdProcess" property="name"/>&nbsp;
+			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
 		>
 		<bean:message key="link.teacherServiceDistribution.permissionSupportService"/>
@@ -26,34 +26,32 @@
 </p>
 
 
-<html:form action="/valuationGroupingSupport">
+<html:form action="/tsdSupport">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherServiceDistribution" property="teacherServiceDistribution"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdProcess" property="tsdProcess"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
 
 
 <p>
-	<html:link href="javascript:document.forms[0].viewType.value=2; document.forms[0].method.value='loadValuationGroupingsForPermissionServices'; document.forms[0].submit();">
-	<bean:message key="label.teacherService.viewByValuationGrouping"/> 
-	</html:link> | 
-	<b><bean:message key="label.teacherService.viewByPerson"/></b>
+	<b><bean:message key="label.teacherServiceDistribution.permissionsForTSDProcess"/></b> | 
+	<html:link href="javascript:void(0)" onclick="document.forms[0].viewType.value=2; document.forms[0].method.value='loadTeacherServiceDistributionsForPermissionServices'; document.forms[0].submit();">
+	<bean:message key="label.teacherServiceDistribution.permissionsForTSDGroup"/> 
+	</html:link>
 </p>
 
+<br/>
 
-<table class="tstyle5 thlight">
+<table class="tstyle5 thlight thright thmiddle mbottom0">
 	<tr>
 		<th>
 			<bean:message key="label.teacherServiceDistribution.person"/>:
 		</th>
 		<td>
-			<html:select property="person" onchange="this.form.method.value='loadValuationGroupingsForPermissionServices'; this.form.submit()">
+			<html:select property="person" onchange="this.form.method.value='loadTeacherServiceDistributionsForPermissionServices'; this.form.submit()">
 				<html:options collection="departmentPersonList" property="idInternal" labelProperty="name"/>
 			</html:select>
 		</td>
 	</tr>
-</table>
-
-<table class="tstyle5 thlight">
 	<tr>
 		<th>
 			<bean:message key="label.teacherServiceDistribution.permissions"/>:
@@ -62,7 +60,7 @@
 			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.phaseManagementPermission" property="phaseManagementPermission"/> <bean:message key="label.teacherServiceDistribution.phaseManagementPermission"/><br/>
 			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.automaticValuationPermission" property="automaticValuationPermission"/> <bean:message key="label.teacherServiceDistribution.automaticValuationPermission"/><br/>
 			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.omissionConfigurationPermission" property="omissionConfigurationPermission"/> <bean:message key="label.teacherServiceDistribution.omissionConfigurationPermission"/><br/>
-			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.valuationCompetenceCoursesAndTeachersManagementPermission" property="valuationCompetenceCoursesAndTeachersManagementPermission"/> <bean:message key="label.teacherServiceDistribution.valuationCompetenceCoursesAndTeachersManagementPermission"/>
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.tsdCoursesAndTeachersManagementPermission" property="tsdCoursesAndTeachersManagementPermission"/> <bean:message key="label.teacherServiceDistribution.tsdCoursesAndTeachersManagementPermission"/>
 		</td>
 	</tr>
 </table>
@@ -76,18 +74,18 @@
 
 </html:form>
 
-
+<br>
 
 <logic:empty name="personPermissionsDTOEntryList">
-	<p>
-		<span class="error">
+	<p class="mtop15">
+		<em>
 			<bean:message key="label.teacherServiceDistribution.noPersonsWithValidPermissions"/>
-		</span>
+		</em>
 	</p>
 </logic:empty>
 
 <logic:notEmpty name="personPermissionsDTOEntryList">
-	<table class='tstyle4 thlight thmiddle'>
+	<table class='tstyle4'>
 		<tr>
 			<th>
 				<bean:message key="label.teacherServiceDistribution.person"/>
@@ -102,49 +100,56 @@
 				<bean:message key="label.teacherServiceDistribution.omissionConfigurationPermission"/>
 			</th>
 			<th>
-				<bean:message key="label.teacherServiceDistribution.valuationCompetenceCoursesAndTeachersManagementPermission"/>
+				<bean:message key="label.teacherServiceDistribution.tsdCoursesAndTeachersManagementPermission"/>
 			</th>
 		</tr>
 	<logic:iterate name="personPermissionsDTOEntryList" id="personPermissionsDTOEntry">
 		<tr>
 			<td>
 				<bean:write name="personPermissionsDTOEntry" property="person.name"/>
+				(<bean:write name="personPermissionsDTOEntry" property="person.mostImportantAlias"/>)
 			</td>
 			<td class="acenter">
 				<logic:equal name="personPermissionsDTOEntry" property="phaseManagementPermission" value="true">
-					<bean:message key="label.yes"/>
+					<html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/>
 				</logic:equal>
 				<logic:notEqual name="personPermissionsDTOEntry" property="phaseManagementPermission" value="true">
-					<bean:message key="label.empty"/>
+					<html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/>
 				</logic:notEqual>
 			</td>			
 			<td class="acenter">
 				<logic:equal name="personPermissionsDTOEntry" property="automaticValuationPermission" value="true">
-					<bean:message key="label.yes"/>
+					<html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/>
 				</logic:equal>
 				<logic:notEqual name="personPermissionsDTOEntry" property="automaticValuationPermission" value="true">
-					<bean:message key="label.empty"/>
+					<html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/>
 				</logic:notEqual>
 			</td>			
 			<td class="acenter">
 				<logic:equal name="personPermissionsDTOEntry" property="omissionConfigurationPermission" value="true">
-					<bean:message key="label.yes"/>
+					<html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/>
 				</logic:equal>
 				<logic:notEqual name="personPermissionsDTOEntry" property="omissionConfigurationPermission" value="true">
-					<bean:message key="label.empty"/>
+					<html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/>
 				</logic:notEqual>
 			</td>			
 			<td class="acenter">
-				<logic:equal name="personPermissionsDTOEntry" property="valuationCompetenceCoursesAndTeachersManagementPermission" value="true">
-					<bean:message key="label.yes"/>
+				<logic:equal name="personPermissionsDTOEntry" property="competenceCoursesAndTeachersManagementPermission" value="true">
+					<html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/>
 				</logic:equal>
-				<logic:notEqual name="personPermissionsDTOEntry" property="valuationCompetenceCoursesAndTeachersManagementPermission" value="true">
-					<bean:message key="label.empty"/>
+				<logic:notEqual name="personPermissionsDTOEntry" property="competenceCoursesAndTeachersManagementPermission" value="true">
+					<html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/>
 				</logic:notEqual>
 			</td>			
 		</tr>
 	</logic:iterate>
 	</table>
 </logic:notEmpty>
+
+<br>
+
+<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+	<bean:message key="link.back"/>
+</html:link>
 
 

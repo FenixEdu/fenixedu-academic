@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.ValuationGrouping;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.jfree.chart.ChartFactory;
@@ -20,7 +20,7 @@ import org.jfree.data.DefaultCategoryDataset;
 import org.jfree.data.DefaultPieDataset;
 
 public abstract class TeacherServiceDistributionChart {
-	protected ValuationGrouping valuationGrouping = null;
+	protected TeacherServiceDistribution tsd = null;
 
 	protected List<ExecutionPeriod> executionPeriodList = null;
 
@@ -34,40 +34,40 @@ public abstract class TeacherServiceDistributionChart {
 			public void execute(final OutputStream outputStream) throws IOException {
 				DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-				if (this.valuationGrouping.hasAnyChilds()) {
-					for (ValuationGrouping grouping : this.valuationGrouping.getChilds()) {
-						Double allActiveCourseValuationTheoreticalHours = grouping.getAllActiveCourseValuationTheoreticalHoursByExecutionPeriods(executionPeriodList);
-						Double allActiveCourseValuationPraticalHours = grouping.getAllActiveCourseValuationPraticalHoursByExecutionPeriods(executionPeriodList);
-						Double allActiveCourseValuationTheoPratHours = grouping.getAllActiveCourseValuationTheoPratHoursByExecutionPeriods(executionPeriodList);
-						Double allActiveCourseValuationLaboratorialHours = grouping.getAllActiveCourseValuationLaboratorialHoursByExecutionPeriods(executionPeriodList);
+				if (this.tsd.hasAnyChilds()) {
+					for (TeacherServiceDistribution grouping : this.tsd.getChilds()) {
+						Double allActiveTSDCourseHours = grouping.getAllActiveTSDCourseTotalHoursByExecutionPeriods(executionPeriodList);
+						//Double allActiveTSDCourseTheoreticalHours = grouping.getAllActiveTSDCourseTheoreticalHoursByExecutionPeriods(executionPeriodList);
+						//Double allActiveTSDCoursePraticalHours = grouping.getAllActiveTSDCoursePraticalHoursByExecutionPeriods(executionPeriodList);
+						//Double allActiveTSDCourseTheoPratHours = grouping.getAllActiveTSDCourseTheoPratHoursByExecutionPeriods(executionPeriodList);
+						//Double allActiveTSDCourseLaboratorialHours = grouping.getAllActiveTSDCourseLaboratorialHoursByExecutionPeriods(executionPeriodList);
 
 						dataset.setValue(
-								allActiveCourseValuationTheoreticalHours + allActiveCourseValuationPraticalHours
-										+ allActiveCourseValuationTheoPratHours
-										+ allActiveCourseValuationLaboratorialHours,
+								allActiveTSDCourseHours,
 								resourceBundle.getString("label.teacherServiceDistribution.hours.total"),
 								grouping.getName());
-						dataset.setValue(
-								allActiveCourseValuationTheoreticalHours,
+						/*dataset.setValue(
+								allActiveTSDCourseTheoreticalHours,
 								resourceBundle.getString("label.teacherServiceDistribution.theoretical"),
 								grouping.getName());
 						dataset.setValue(
-								allActiveCourseValuationPraticalHours,
+								allActiveTSDCoursePraticalHours,
 								resourceBundle.getString("label.teacherServiceDistribution.pratical"),
 								grouping.getName());
 						dataset.setValue(
-								allActiveCourseValuationTheoPratHours,
+								allActiveTSDCourseTheoPratHours,
 								resourceBundle.getString("label.teacherServiceDistribution.theoPrat"),
 								grouping.getName());
 						dataset.setValue(
-								allActiveCourseValuationLaboratorialHours,
+								allActiveTSDCourseLaboratorialHours,
 								resourceBundle.getString("label.teacherServiceDistribution.laboratorial"),
 								grouping.getName());
+						*/
 					}
 
 					JFreeChart chart = ChartFactory.createBarChart3D(
 							resourceBundle.getString("label.teacherServiceDistribution.hoursByGrouping"),
-							resourceBundle.getString("label.teacherServiceDistribution.ValuationGroupings"),
+							resourceBundle.getString("label.teacherServiceDistribution.TeacherServiceDistributions"),
 							resourceBundle.getString("label.teacherServiceDistribution.hours.total"),
 							dataset,
 							PlotOrientation.VERTICAL,
@@ -78,8 +78,8 @@ public abstract class TeacherServiceDistributionChart {
 					ChartUtilities.writeChartAsPNG(
 							outputStream,
 							chart,
-							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.width")),
-							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.height")));
+							Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.width")),
+							Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.height")));
 				}
 			}
 		};
@@ -90,29 +90,29 @@ public abstract class TeacherServiceDistributionChart {
 			public void execute(final OutputStream outputStream) throws IOException {
 				DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-				if (valuationGrouping.hasAnyChilds()) {
-					for (ValuationGrouping grouping : valuationGrouping.getChilds()) {
-						Integer allActiveCourseValuationFirstTimeEnrolledStudents = grouping.getAllActiveCourseValuationFirstTimeEnrolledStudentsByExecutionPeriods(executionPeriodList);
-						Integer allActiveCourseValuationSecondTimeEnrolledStudents = grouping.getAllActiveCourseValuationSecondTimeEnrolledStudentsByExecutionPeriods(executionPeriodList);
+				if (tsd.hasAnyChilds()) {
+					for (TeacherServiceDistribution grouping : tsd.getChilds()) {
+						Integer allActiveTSDCourseFirstTimeEnrolledStudents = grouping.getAllActiveTSDCourseFirstTimeEnrolledStudentsByExecutionPeriods(executionPeriodList);
+						Integer allActiveTSDCourseSecondTimeEnrolledStudents = grouping.getAllActiveTSDCourseSecondTimeEnrolledStudentsByExecutionPeriods(executionPeriodList);
 
 						dataset.setValue(
-								allActiveCourseValuationFirstTimeEnrolledStudents
-										+ allActiveCourseValuationSecondTimeEnrolledStudents,
+								allActiveTSDCourseFirstTimeEnrolledStudents
+										+ allActiveTSDCourseSecondTimeEnrolledStudents,
 								resourceBundle.getString("label.teacherServiceDistribution.students.total"),
 								grouping.getName());
 						dataset.setValue(
-								allActiveCourseValuationFirstTimeEnrolledStudents,
+								allActiveTSDCourseFirstTimeEnrolledStudents,
 								resourceBundle.getString("label.teacherServiceDistribution..num.firstTimeEnrolledStudents"),
 								grouping.getName());
 						dataset.setValue(
-								allActiveCourseValuationSecondTimeEnrolledStudents,
+								allActiveTSDCourseSecondTimeEnrolledStudents,
 								resourceBundle.getString("label.teacherServiceDistribution..num.secondTimeEnrolledStudents"),
 								grouping.getName());
 					}
 
 					JFreeChart chart = ChartFactory.createBarChart3D(
 							resourceBundle.getString("label.teacherServiceDistribution.numberStudentsByGrouping"),
-							resourceBundle.getString("label.teacherServiceDistribution.ValuationGroupings"),
+							resourceBundle.getString("label.teacherServiceDistribution.TeacherServiceDistributions"),
 							resourceBundle.getString("label.teacherServiceDistribution.students.total"),
 							dataset,
 							PlotOrientation.VERTICAL,
@@ -123,8 +123,8 @@ public abstract class TeacherServiceDistributionChart {
 					ChartUtilities.writeChartAsPNG(
 							outputStream,
 							chart,
-							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.width")),
-							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.height")));
+							Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.width")),
+							Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.height")));
 				}
 			}
 		};
@@ -135,11 +135,11 @@ public abstract class TeacherServiceDistributionChart {
 			public void execute(final OutputStream outputStream) throws IOException {
 				Map<String, Double> valuatedTotalHoursPerGroupingMap = new HashMap<String, Double>();
 
-				if (this.valuationGrouping.hasAnyChilds()) {
-					for (ValuationGrouping grouping : this.valuationGrouping.getChilds()) {
+				if (this.tsd.hasAnyChilds()) {
+					for (TeacherServiceDistribution grouping : this.tsd.getChilds()) {
 						valuatedTotalHoursPerGroupingMap.put(
 								grouping.getName(),
-								grouping.getAllActiveCourseValuationTotalHoursByExecutionPeriods(executionPeriodList));
+								grouping.getAllActiveTSDCourseTotalHoursByExecutionPeriods(executionPeriodList));
 					}
 
 					Double totalHours = 0d;
@@ -165,8 +165,8 @@ public abstract class TeacherServiceDistributionChart {
 					ChartUtilities.writeChartAsPNG(
 							outputStream,
 							chart,
-							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.width")),
-							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.height")));
+							Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.width")),
+							Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.height")));
 				}
 
 			}
@@ -178,11 +178,11 @@ public abstract class TeacherServiceDistributionChart {
 			public void execute(final OutputStream outputStream) throws IOException {
 				Map<String, Double> valuatedTotalNumberStudentsPerGroupingMap = new HashMap<String, Double>();
 
-				if (this.valuationGrouping.hasAnyChilds()) {
-					for (ValuationGrouping grouping : this.valuationGrouping.getChilds()) {
+				if (this.tsd.hasAnyChilds()) {
+					for (TeacherServiceDistribution grouping : this.tsd.getChilds()) {
 						valuatedTotalNumberStudentsPerGroupingMap.put(
 								grouping.getName(),
-								grouping.getAllActiveCourseValuationTotalStudentsByExecutionPeriods(executionPeriodList));
+								grouping.getAllActiveTSDCourseTotalStudentsByExecutionPeriods(executionPeriodList));
 					}
 
 					Double totalNumberOfStudents = 0d;
@@ -208,8 +208,8 @@ public abstract class TeacherServiceDistributionChart {
 					ChartUtilities.writeChartAsPNG(
 							outputStream,
 							chart,
-							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.width")),
-							Integer.parseInt(PropertiesManager.getProperty("teacherServiceDistribution.chart.height")));
+							Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.width")),
+							Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.height")));
 				}
 
 			}
@@ -221,7 +221,7 @@ public abstract class TeacherServiceDistributionChart {
 	}
 
 
-	public void setValuationGrouping(ValuationGrouping valuationGrouping) {
-		this.valuationGrouping = valuationGrouping;
+	public void setTeacherServiceDistribution(TeacherServiceDistribution tsd) {
+		this.tsd = tsd;
 	}
 }
