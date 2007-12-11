@@ -111,7 +111,7 @@ public class TopLevelMenuRenderer extends OutputRenderer {
 		Content content = (child instanceof Section) ? ((Section) child).getInitialContent()
 			: child;
 		if (content == null) {
-		    return null;
+		    return new HtmlText(child.getName().getContent());
 		}
 		String path = content.getPath();
 
