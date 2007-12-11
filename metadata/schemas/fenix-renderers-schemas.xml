@@ -700,5 +700,5 @@
     &librarySchemas;
     &resourceManager;
     &bolonhaManagerSchemas;
-    
+    &contentSchemas;
 </schemas>
