@@ -8,11 +8,15 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.Face;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
+import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
+import net.sourceforge.fenixedu.renderers.components.HtmlLinkWithPreprendedComment;
 import net.sourceforge.fenixedu.renderers.components.HtmlList;
 import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
@@ -228,7 +232,7 @@ public class MenuRenderer extends OutputRenderer {
 
 	String path = entry.getPath();
 	if (path != null && canMakeLink && entry.isAvailable()) {
-	    HtmlLink link = new HtmlLink();
+	    HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
 
 	    link.setContextRelative(false);
 	    link.setUrl(findPathFor(context.getRequest().getContextPath(), entry.getReferingContent(), context, subPath));

@@ -26,7 +26,8 @@ public class HtmlTag {
     
     private boolean visible;
     private boolean indented;
-
+    private String preprendedComment;
+    
     private HtmlTag() {
         this.attributes = new HashMap<String, String>();
         this.children = new ArrayList<HtmlTag>();
@@ -47,6 +48,15 @@ public class HtmlTag {
         this.text = text;
     }
     
+    
+    public String getPreprendedComment() {
+        return preprendedComment;
+    }
+
+    public void setPreprendedComment(String preprendedComment) {
+        this.preprendedComment = preprendedComment;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -154,7 +164,10 @@ public class HtmlTag {
     }
 
     protected void writeOpenTag(Writer writer, String indent) throws IOException {
-        if (isIndented()) {
+        if(getPreprendedComment() != null) {
+            writer.write("<!-- " + getPreprendedComment() + " -->");
+        }
+	if (isIndented()) {
             writer.write(indent);
         }
         

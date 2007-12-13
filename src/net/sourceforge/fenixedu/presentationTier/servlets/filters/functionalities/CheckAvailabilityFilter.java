@@ -129,7 +129,7 @@ public class CheckAvailabilityFilter implements Filter {
 
     private boolean isActionRequest(final HttpServletRequest httpServletRequest) {
 	final String requestURI = httpServletRequest.getRequestURI();
-	return requestURI.endsWith(".do") || requestURI.endsWith(".faces");
+	return requestURI.endsWith(".do") || requestURI.endsWith(".faces") || requestURI.endsWith(".jsp");
     }
 
     private FilterFunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {

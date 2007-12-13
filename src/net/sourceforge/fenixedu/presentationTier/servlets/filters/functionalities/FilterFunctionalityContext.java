@@ -43,7 +43,10 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 
     public FilterFunctionalityContext(final HttpServletRequest request) {
 	super(request);
-	final String path = getPath();
+	/*String path = getCurrentContextPathFromRequest();
+	if(path == null) {*/
+	    String path = getPath();
+	//}
 	final String trailingPath = getTrailingPath(path);
 	Portal.getRootPortal().addPathContentsForTrailingPath(contents, trailingPath);
 	addInitialContent();
@@ -197,21 +200,21 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
     }
 
     public String getCurrentContextPath() {
-	String currentContextPath = getCurrentContextPathFromRequest();
-	if (currentContextPath == null) {
-	    final StringBuilder stringBuilder = new StringBuilder();
-	    for (final Content content : contents) {
-		if (content != RootDomainObject.getInstance().getRootPortal()) {
-		    final String name = content.getName().getContent();
-		    if (stringBuilder.length() > 0
-			    || (stringBuilder.length() == 0 && name.length() > 0 && name.charAt(0) != '/')) {
-			stringBuilder.append('/');
-		    }
-		    stringBuilder.append(name);
+/*	String currentContextPath = getCurrentContextPathFromRequest();
+	if (currentContextPath == null) {*/
+	final StringBuilder stringBuilder = new StringBuilder();
+	for (final Content content : contents) {
+	    if (content != RootDomainObject.getInstance().getRootPortal()) {
+		final String name = content.getName().getContent();
+		if (stringBuilder.length() > 0
+			|| (stringBuilder.length() == 0 && name.length() > 0 && name.charAt(0) != '/')) {
+		    stringBuilder.append('/');
 		}
+		stringBuilder.append(name);
 	    }
-	    currentContextPath = stringBuilder.toString();
 	}
+	String currentContextPath = stringBuilder.toString();
+
 	return currentContextPath.length() > 1 ? currentContextPath : null;
     }
 

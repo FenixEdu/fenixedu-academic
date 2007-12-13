@@ -9,7 +9,9 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 
 public class ContentInjectionRewriter extends RequestRewriter {
 
-    public static final String HAS_CONTEXT_PREFIX = "<!-- HAS_CONTEXT -->";
+    public static final String HAS_CONTEXT_PREFIX_STRING = "HAS_CONTEXT";
+    
+    public static final String HAS_CONTEXT_PREFIX = "<!-- " + HAS_CONTEXT_PREFIX_STRING + " -->";
 
     public static final String CONTEXT_ATTRIBUTE_NAME = FilterFunctionalityContext.CONTEXT_ATTRIBUTE_NAME + "_PATH";
 
