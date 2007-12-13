@@ -53,6 +53,7 @@ execute "Migrate sections and items" migrateSectionsAndItems.sql
 execute "Move TempSections to Sections" moveTempSectionsToSections.sql
 execute "Prepare portals" preparePortals.sql
 
+execute "Create missing Modules" createMissingModules.sql
 execute "Copy Module Structure" copyModuleStructure.sql
 
 execute "Create table for MetaDomainObject" metaDomainObject.sql
