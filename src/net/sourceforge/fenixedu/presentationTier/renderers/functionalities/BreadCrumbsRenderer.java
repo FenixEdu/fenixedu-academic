@@ -7,11 +7,13 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
+import net.sourceforge.fenixedu.renderers.components.HtmlLinkWithPreprendedComment;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -84,7 +86,7 @@ public class BreadCrumbsRenderer extends OutputRenderer {
 	    private HtmlComponent createLink(Content content) {
 		String linkToFormat = getLinkFor(content.getClass().getSimpleName());
 		if (linkToFormat != null) {
-		    HtmlLink link = new HtmlLink();
+		    HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
 		    link.setModuleRelative(true);
 		    link.setContextRelative(true);
 		    link.setText(content.getName().getContent());
