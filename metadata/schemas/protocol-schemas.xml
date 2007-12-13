@@ -175,6 +175,30 @@
         <property name="destination" value="changePersonorFunction"/>
         <property name="classes" value="nobullet liinline"/>
     </slot>
+     <slot name="functionByPerson" key="label.protocol.chooseFunction" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+        <property name="trueLabel" value="label.byPerson" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="falseLabel" value="label.byFunction" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        <property name="destination" value="changeFunctionByPerson"/>
+        <property name="classes" value="nobullet liinline"/>
+    </slot>
+</schema>	
+
+<schema name="search.istResponsibleFunction.byPerson" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
+	<slot name="responsible" layout="autoComplete" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<property name="size" value="80"/>
+		<property name="labelField" value="person.name"/>	
+		<property name="rawSlotName" value="responsibleName"/>
+		<property name="format" value="${person.name}"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=person.name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Teacher"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+</schema>
+<schema name="search.istResponsibleFunction.byUnit" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
  	<slot name="responsibleFunctionUnit" layout="autoComplete" key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="80"/>
 		<property name="labelField" value="name"/>		
@@ -186,10 +210,10 @@
 		<property name="minChars" value="3"/>
 		<property name="errorStyleClass" value="error0"/>
 	</slot>
-</schema>	
+</schema>
 
 <schema name="search.istResponsibleFunction.unitFunctions" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
-<slot name="istResponsible" key="label.protocol.type" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+	<!--  <slot name="istResponsible" key="label.protocol.type" layout="radio-postback" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
         <property name="trueLabel" value="label.protocol.internal.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
         <property name="falseLabel" value="label.protocol.external.masculine" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
         <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
@@ -213,7 +237,7 @@
 		<property name="serviceArgs" value="slot=name"/>		
 		<property name="minChars" value="3"/>
 		<property name="errorStyleClass" value="error0"/>
-	</slot>
+	</slot>-->
 	<slot name="responsibleFunction" layout="menu-select" key="label.function" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.organizationalStructure.Function" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FunctionProvider" />

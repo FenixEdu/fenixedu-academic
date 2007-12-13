@@ -64,6 +64,8 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private Boolean istResponsibleIsPerson;
 
+    private Boolean functionByPerson;
+
     private DomainReference<Teacher> responsible;
 
     private DomainReference<Function> responsibleFunction;
@@ -138,6 +140,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 	setIstResponsible(true);
 	setInternalUnit(true);
 	setIstResponsibleIsPerson(true);
+	setFunctionByPerson(true);
 	setFilePermissionType(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL);
     }
 
@@ -178,6 +181,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     public ProtocolFactory() {
 	setIstResponsible(true);
 	setIstResponsibleIsPerson(true);
+	setFunctionByPerson(true);
 	setInternalUnit(true);
 	setFilePermissionType(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL);
     }
@@ -667,5 +671,13 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public void setResponsibleFunctionName(String responsibleFunctionName) {
 	this.responsibleFunctionName = responsibleFunctionName;
+    }
+
+    public Boolean getFunctionByPerson() {
+	return functionByPerson;
+    }
+
+    public void setFunctionByPerson(Boolean functionByPerson) {
+	this.functionByPerson = functionByPerson;
     }
 }

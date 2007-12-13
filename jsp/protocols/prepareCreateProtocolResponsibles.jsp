@@ -142,26 +142,58 @@
 		</fr:edit>
 	</logic:equal>
 	<logic:equal name="protocolFactory" property="istResponsibleIsPerson" value="false">
-		<logic:empty name="protocolFactory" property="responsibleFunctionUnit">
-			<fr:edit id="istResponsible2" name="protocolFactory" schema="search.istResponsibleFunction">
+		<fr:edit id="istResponsible2" name="protocolFactory" schema="search.istResponsibleFunction">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
+		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
+			<fr:destination name="changePersonorFunction" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
+			<fr:destination name="changeFunctionByPerson" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
+		</fr:edit>
+
+		<logic:equal name="protocolFactory" property="functionByPerson" value="true">
+			<fr:edit id="istResponsible3" name="protocolFactory" schema="search.istResponsibleFunction.byPerson">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
 			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 				</fr:layout>
-				<fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
-				<fr:destination name="changePersonorFunction" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
 			</fr:edit>
-		</logic:empty>
-		<logic:notEmpty name="protocolFactory" property="responsibleFunctionUnit">
-			<fr:edit id="istResponsible3" name="protocolFactory" schema="search.istResponsibleFunction.unitFunctions">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		        <fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
-				<fr:destination name="changePersonorFunction" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
-			</fr:layout>
-		</fr:edit>
-		</logic:notEmpty>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message key="button.researchActivity.choose" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+			</html:submit>
+			<logic:notEmpty name="protocolFactory" property="responsible">
+				<fr:edit id="istResponsible4" name="protocolFactory" schema="search.istResponsibleFunction.unitFunctions">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
+			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			        <fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
+					<fr:destination name="changePersonorFunction" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
+				</fr:layout>
+				</fr:edit>
+			</logic:notEmpty>
+		</logic:equal>
+		<logic:equal name="protocolFactory" property="functionByPerson" value="false">
+			<fr:edit id="istResponsible5" name="protocolFactory" schema="search.istResponsibleFunction.byUnit">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
+			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>
+			</fr:edit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message key="button.researchActivity.choose" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+			</html:submit>
+			<logic:notEmpty name="protocolFactory" property="responsibleFunctionUnit">
+				<fr:edit id="istResponsible6" name="protocolFactory" schema="search.istResponsibleFunction.unitFunctions">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
+			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			        <fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
+					<fr:destination name="changePersonorFunction" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
+				</fr:layout>
+				</fr:edit>
+			</logic:notEmpty>
+		</logic:equal>
 	</logic:equal>
 </logic:equal>
 
