@@ -192,10 +192,7 @@ public class Section extends Section_Base {
 	for (Section section : getAssociatedSections()) {
 	    section.delete();
 	}
-	for (Node node : getParents()) {
-	    node.delete();
-	}
-
+	
 	super.disconnect();
 	removeRootDomainObject();
     }
