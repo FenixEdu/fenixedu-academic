@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import dml.runtime.Relation;
 import dml.runtime.RelationAdapter;
 
 
@@ -18,12 +19,13 @@ public class UnitAcronym extends UnitAcronym_Base {
 		    }
 		}
 	    }
-
+	    
 	});
     }
     
     public  UnitAcronym(final String acronym) {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         setAcronym(acronym);
     }
     
