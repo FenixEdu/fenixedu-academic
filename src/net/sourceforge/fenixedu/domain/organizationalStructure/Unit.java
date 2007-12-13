@@ -185,6 +185,7 @@ public class Unit extends Unit_Base {
 	removeRootDomainObjectForExternalInstitutionUnit();
 	removeRootDomainObjectForInstitutionUnit();
 	removeCampus();
+	removeUnitAcronym();
 
 	super.delete();
     }
