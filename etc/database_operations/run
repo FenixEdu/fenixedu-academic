@@ -81,3 +81,5 @@ execute "Removing invalid availability policy" removeAvailabilityPolicyFromHomep
 execute "Fixing some groups" fixAnnouncementsWRitersGroups.sql
 
 execute "Create new Teacher Service Distribution tables definitions" newTSDTableDefinitions.sql
+
+execute "Create UnitAcronym" createUnitAcronym.sql

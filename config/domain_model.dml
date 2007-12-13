@@ -2732,6 +2732,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	class net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart extends net.sourceforge.fenixedu.domain.DomainObject {
 		String namePart;
 	}
+	
+	class net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym extends net.sourceforge.fenixedu.domain.DomainObject {
+		String acronym;
+	}
 
 	class net.sourceforge.fenixedu.domain.parking.NewParkingDocument extends net.sourceforge.fenixedu.domain.DomainObject {
 		NewParkingDocumentType parkingDocumentType;
@@ -10395,6 +10399,13 @@ relation RootDomainObjectUnitNamePart {
 	}
 }
 
+relation RootDomainObjectUnitAcronym {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym playsRole unitAcronyms {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectUnitSiteBanner {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.UnitSiteBanner playsRole unitSiteBanners {
@@ -11474,6 +11485,13 @@ relation UnitNameUnitNamePart {
 	net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart playsRole unitNamePart {
 		multiplicity *;
 	}
+}
+
+relation UnitUnitAcronym {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole units {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym playsRole unitAcronym;
 }
 
 relation UnitNonAffiliatedTeacher {

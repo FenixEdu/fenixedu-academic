@@ -760,11 +760,13 @@ public class Unit extends Unit_Base {
 			|| partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY)
 			|| partyTypeEnum.equals(PartyTypeEnum.SCHOOL) || partyTypeEnum
 			.equals(PartyTypeEnum.RESEARCH_UNIT))) {
-
-	    for (Unit unit : readAllUnits()) {
-		if (unit.getAcronym() != null && unit.getAcronym().equals(acronym)
-			&& unit.getType() != null && unit.getType().equals(partyTypeEnum)) {
-		    return unit;
+	    
+	    UnitAcronym unitAcronymByAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym);
+	    if(unitAcronymByAcronym != null) {
+		for (Unit unit : unitAcronymByAcronym.getUnitsSet()) {
+		    if(unit.getType() != null && unit.getType().equals(partyTypeEnum)) {
+			return unit;
+		    }
 		}
 	    }
 	}
@@ -774,11 +776,9 @@ public class Unit extends Unit_Base {
     public static List<Unit> readUnitsByAcronym(String acronym) {
 	List<Unit> result = new ArrayList<Unit>();
 	if (!StringUtils.isEmpty(acronym.trim())) {
-	    for (Party party : RootDomainObject.getInstance().getPartys()) {
-		if (party.isUnit() && ((Unit) party).getAcronym() != null
-			&& ((Unit) party).getAcronym().equalsIgnoreCase(acronym)) {
-		    result.add((Unit) party);
-		}
+	    UnitAcronym unitAcronymByAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym);
+	    if(unitAcronymByAcronym != null) {
+		result.addAll(unitAcronymByAcronym.getUnitsSet());
 	    }
 	}
 	return result;
@@ -1605,5 +1605,15 @@ public class Unit extends Unit_Base {
 	    }
 	}
 	return null;
+    }
+    
+    @Override
+    public void setAcronym(String acronym) {
+        super.setAcronym(acronym);
+        UnitAcronym unitAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym);
+        if(unitAcronym == null) {
+            unitAcronym = new UnitAcronym(acronym);
+        }
+        setUnitAcronym(unitAcronym);
     }
 }
