@@ -84,52 +84,25 @@ public class CheckAvailabilityFilter implements Filter {
 
 	final FilterFunctionalityContext functionalityContext = getContextAttibute(httpServletRequest);
 	Content content = functionalityContext.getSelectedContent();
-	try {
-	    if (content == null || functionalityContext.hasBeenForwarded
-		    || isActionRequest(httpServletRequest)) {
-		filterChain.doFilter(httpServletRequest, httpServletResponse);
-		return;
-	    }
-	} catch (StackOverflowError stackOverflowError) {
-	    System.out.println(stackOverflowError.getMessage() + " for url: "
-		    + httpServletRequest.getRequestURI() + " --- " + httpServletRequest.getRequestURL());
+
+	if (content == null || functionalityContext.hasBeenForwarded
+		|| isActionRequest(httpServletRequest)) {
+	    filterChain.doFilter(httpServletRequest, httpServletResponse);
+	    return;
 	}
+
 	if (content != null && !content.isAvailable(functionalityContext)) {
 	    final IUserView userView = AccessControl.getUserView();
 	    showUnavailablePage(userView, httpServletRequest, httpServletResponse);
 	}
-	if (content instanceof Section) {
-	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext,
-		    SECTION_PATH);
-	} else if (content instanceof Item) {
-	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext,
-		    ITEM_PATH);
-	} else if (content instanceof Functionality) {
-	    Functionality functionality = (Functionality) content;
-	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality
-		    .getPath());
-	} else {
-	    final IUserView userView = AccessControl.getUserView();
-	    showUnavailablePage(userView, httpServletRequest, httpServletResponse);
-	}
+
+	filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
-    private void dispatchTo(final HttpServletRequest httpServletRequest,
-	    final HttpServletResponse httpServletResponse,
-	    final FilterFunctionalityContext functionalityContext, String path) throws ServletException,
-	    IOException {
-	final RequestWrapper requestWrapper = new RequestWrapper(httpServletRequest, path,
-		functionalityContext);
-	requestWrapper.setAttribute(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME,
-		functionalityContext.getCurrentContextPath());
-	final RequestDispatcher requestDispatcher = requestWrapper.getRequestDispatcher(path);
-	functionalityContext.setHasBeenForwarded();
-	requestDispatcher.forward(requestWrapper, httpServletResponse);
-    }
 
     private boolean isActionRequest(final HttpServletRequest httpServletRequest) {
 	final String requestURI = httpServletRequest.getRequestURI();
-	return requestURI.endsWith(".do") || requestURI.endsWith(".faces") || requestURI.endsWith(".jsp");
+	return requestURI.endsWith(".do") || requestURI.endsWith(".faces") || requestURI.endsWith(".jsp") || requestURI.endsWith(".gif");
     }
 
     private FilterFunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
