@@ -72,7 +72,6 @@ execute "Associar os conteúdos às pools. Com algum cuidado tb deverá ser merged 
 execute "Initialize portal stuff from modules." initPortals.sql
 execute "Initialize old portals" initiateOldPortals.sql
 execute "Naming Portals" namePortals.sql
-#execute "Associate Templates to Root Module" connectTemplatesToRoot.sql
 
 execute "Add content ID to EVERYTHING!!!" addContentId.sql
 
