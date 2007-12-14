@@ -107,7 +107,7 @@
 			 <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException" 
                 key="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException" 
                 path="/loginExpired.do?method=start" />                
-            <forward name="sucess" path="/home.do"/>
+            <forward name="sucess" path="/home.do" redirect="true"/>
             <forward name="changePass" path="/person/changePasswordForward.do"/>
             <forward name="expirationWarning" path="/expirationWarning.jsp"/>            
         </action>
