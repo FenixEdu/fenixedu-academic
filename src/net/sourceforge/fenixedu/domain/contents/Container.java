@@ -217,9 +217,13 @@ public abstract class Container extends Container_Base {
     }
 
     public void addPathContentsForTrailingPath(final List<Content> contents, final String trailingPath) {
+	int contentsSize = contents.size();
 	for (final Node node : getChildren()) {
 	    final Content content = node.getChild();
 	    content.addPathContents(contents, trailingPath);
+	    if(contentsSize < contents.size()) {
+		return;
+	    }
 	}
     }
 
