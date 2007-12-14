@@ -43,10 +43,15 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 
     public FilterFunctionalityContext(final HttpServletRequest request) {
 	super(request);
-	/*String path = getCurrentContextPathFromRequest();
-	if(path == null) {*/
-	    String path = getPath();
-	//}
+	
+	String path = getCurrentContextPathFromRequest();
+	if(path == null) {
+	    path = getPath();
+	    hasBeenForwarded = false;
+	} else {
+	    hasBeenForwarded = true;
+	}
+	
 	final String trailingPath = getTrailingPath(path);
 	Portal.getRootPortal().addPathContentsForTrailingPath(contents, trailingPath);
 	addInitialContent();
