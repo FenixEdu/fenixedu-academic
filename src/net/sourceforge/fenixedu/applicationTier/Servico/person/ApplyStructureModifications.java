@@ -34,7 +34,7 @@ public class ApplyStructureModifications extends Service {
 	if(node instanceof ExplicitOrderNode) {
 	    ExplicitOrderNode oldNode = (ExplicitOrderNode) node;
 	    ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(parent,oldNode.getChild(),oldNode.isAscending(),oldNode.getNodeOrder());
-	    oldNode.delete();
+	    oldNode.deleteWithoutReOrdering();
 	    return explicitOrderNode;
 	}
 	else if(node instanceof DateOrderedNode) {

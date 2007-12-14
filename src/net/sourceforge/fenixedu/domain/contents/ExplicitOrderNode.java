@@ -74,6 +74,10 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
 	super.setChild(child);
     }
 
+    public void deleteWithoutReOrdering() {
+	super.delete();
+    }
+    
     @Override
     public void delete() {
 	reOrderAfterDeletion(getParent(), getNodeOrder());
