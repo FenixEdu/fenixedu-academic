@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.functionalities.ExecutionPath;
+import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -88,6 +90,7 @@ public class StartupServlet extends HttpServlet {
             loadPersonNames();
             loadUnitNames();
             loadRoles();
+            loadFunctionalityPaths();
         } finally {
             Transaction.forceFinish();
         }
@@ -121,6 +124,12 @@ public class StartupServlet extends HttpServlet {
         System.out.println("Load of all roles took: " + (end - start) + "ms.");
     }
     
+    private void loadFunctionalityPaths() {
+	long start = System.currentTimeMillis();
+	Functionality.findByExecutionPath("...NonExistentPath...");
+	long stop = System.currentTimeMillis();
+	System.out.println("Load of all Functionalities execution path took: " + (stop - start) + "ms.");
+    }
     private void setScheduleForGratuitySituationCreation() {
 
         TimerTask gratuitySituationCreatorTask = new TimerTask() {
