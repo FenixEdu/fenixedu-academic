@@ -2232,6 +2232,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 		<property name="contextRelative" value="true"/>
 		<property name="linkFormat" value="/homepage/${istUsername}"/>	
 		<property name="blankTarget" value="true"/>
+		<property name="hasContext" value="true"/>
 	</slot>
 </schema>
 
@@ -2245,6 +2246,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	<property name="subLayout" value="values"/>
 	<property name="subSchema" value="showName"/>
 	<property name="blankTarget" value="false"/>
+	<property name="hasContext" value="true"/>
 	</slot>
 </schema>
 
@@ -3003,6 +3005,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="contextRelative" value="true"/>
 		<property name="linkFormat" value="/homepage/${istUsername}"/>	
 		<property name="blankTarget" value="true"/>
+		<property name="hasContext" value="true"/>
 	</slot>
 	<slot name="personWorkPhone" layout="null-as-label">
 		<property name="label" value="label.person.telephone"/>

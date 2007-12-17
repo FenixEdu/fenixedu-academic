@@ -347,6 +347,7 @@
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="student.tutorship.tutorInfo.showName"/>
 		<property name="blankTarget" value="true"/>
+		<property name="hasContext" value="true"/>
 	</slot>
 	<slot name="teacher.teacherNumber" key="label.teacherNumber"/>
 	<slot name="teacher.person.personWorkPhone.number" key="label.person.workPhone.short"/>

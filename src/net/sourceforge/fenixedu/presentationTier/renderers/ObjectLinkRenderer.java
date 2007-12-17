@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
+import net.sourceforge.fenixedu.renderers.components.HtmlLinkWithPreprendedComment;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink.Target;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
@@ -55,6 +57,8 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
     private boolean indentation = false;
 
+    private boolean hasContext = false;
+
     public boolean isBlankTarget() {
 	return blankTarget;
     }
@@ -67,6 +71,14 @@ public class ObjectLinkRenderer extends OutputRenderer {
      */
     public void setBlankTarget(boolean blankTarget) {
 	this.blankTarget = blankTarget;
+    }
+
+    public boolean getHasContext() {
+	return hasContext;
+    }
+
+    public void setHasContext(boolean hasContext) {
+	this.hasContext = hasContext;
     }
 
     public String getLinkFormat() {
@@ -246,7 +258,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
      * @property
      */
     public void setIndentation(boolean indentation) {
-	this.indentation  = indentation;
+	this.indentation = indentation;
     }
 
     public boolean isIndentation() {
@@ -281,8 +293,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
 		    }
 
 		    return link;
-		}
-		else {
+		} else {
 		    return getLinkBody(object);
 		}
 	    }
@@ -290,20 +301,18 @@ public class ObjectLinkRenderer extends OutputRenderer {
 	    private boolean isAllowedToLink(Object usedObject) {
 		if (getLinkIf() == null) {
 		    return true;
-		}
-		else {
+		} else {
 		    try {
 			Object object = PropertyUtils.getProperty(usedObject, getLinkIf());
 			if (object == null) {
 			    return true;
-			}
-			else {
+			} else {
 			    return (Boolean) object;
 			}
 		    } catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		    } 
+		    }
 		}
 	    }
 
@@ -325,13 +334,13 @@ public class ObjectLinkRenderer extends OutputRenderer {
 	    }
 
 	    private HtmlLink getLink(Object usedObject) {
-		HtmlLink link = new HtmlLink();
+		HtmlLink link = getHasContext() ? new HtmlLinkWithPreprendedComment(
+			ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING) : new HtmlLink();
 
 		String url;
 
 		if (getDestination() != null) {
-		    ViewDestination destination = getContext().getViewState().getDestination(
-			    getDestination());
+		    ViewDestination destination = getContext().getViewState().getDestination(getDestination());
 
 		    if (destination != null) {
 			link.setModule(destination.getModule());
