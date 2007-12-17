@@ -13,11 +13,13 @@ import net.sourceforge.fenixedu.domain.contents.MenuEntry;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.Face;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
+import net.sourceforge.fenixedu.renderers.components.HtmlLinkWithPreprendedComment;
 import net.sourceforge.fenixedu.renderers.components.HtmlList;
 import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
@@ -177,7 +179,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 	  
 
 	    private HtmlLink generateLink(String url, HtmlComponent body) {
-		HtmlLink link = new HtmlLink();
+		HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
 
 		link.setContextRelative(false);
 		link.setUrl(url);
