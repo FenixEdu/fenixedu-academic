@@ -95,10 +95,7 @@ public class ContentFilter implements Filter {
      */
     private void showUnavailablePage(final IUserView userView, final HttpServletRequest request,
 	    final HttpServletResponse response) throws IOException, ServletException {
-	final String servletPath = request.getServletPath().substring(request.getContextPath().length());
-
-	final String errorPageToDispatch = servletPath.startsWith(publicPrefix) || userView == null
-		|| userView.isPublicRequester() ? errorPage : errorPageLogged;
+	final String errorPageToDispatch =  userView == null || userView.isPublicRequester() ? errorPage : errorPageLogged;
 	dispatch(request, response, errorPageToDispatch);
     }
 
