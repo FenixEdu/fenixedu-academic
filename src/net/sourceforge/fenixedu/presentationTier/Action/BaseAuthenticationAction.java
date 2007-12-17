@@ -102,15 +102,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    HttpServletRequest request, IUserView userView, final HttpSession session) {
 	createNewSession(request, session, userView);
 
-	ActionForward actionForward = null;
-	int numberOfSubApplications = getNumberOfSubApplications(userView.getRoleTypes());
-	if (numberOfSubApplications == 1 || !userView.hasRoleType(RoleType.MESSAGING)) {
-	    final Role firstInfoRole = userView.getRoleTypes().isEmpty() ? null : Role
-		    .getRoleByRoleType(userView.getRoleTypes().iterator().next());
-	    actionForward = buildRoleForward(firstInfoRole);
-	} else {
-	    actionForward = mapping.findForward("sucess");
-	}
+	ActionForward actionForward = mapping.findForward("sucess");
 	
 	return checkExpirationDate(mapping, request, userView, actionForward);
     }

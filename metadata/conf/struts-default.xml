@@ -90,10 +90,7 @@
 	    </action>
 
         <action path="/home"
-				type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
-            	parameter="/messaging/index.do"
-            	forward="/messaging/index.do"
-            	/>
+				type="net.sourceforge.fenixedu.presentationTier.Action.CreateContentsContextAction" />
             	
         <action path="/login"
 				type="net.sourceforge.fenixedu.presentationTier.Action.LocalAuthenticationAction"
