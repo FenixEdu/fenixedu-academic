@@ -9,8 +9,6 @@ alter table EXECUTION_PATH
   add column KEY_ROOT_DOMAIN_OBJECT int(11) NOT NULL default '1',
   type='InnoDB';
 
-
-alter table CONTENT add column KEY_EXECUTION_PATH_VALUE int(11) default null;
-alter table CONTENT add index (KEY_EXECUTION_PATH_VALUE);
+alter table EXECUTION_PATH change column ID_INTERNAL ID_INTERNAL INTEGER auto_increment;
 
 update CONTENT C, EXECUTION_PATH EP SET C.KEY_EXECUTION_PATH_VALUE=EP.ID_INTERNAL WHERE EP.KEY_FUNCTIONALITY=C.ID_INTERNAL;

@@ -51,9 +51,10 @@ execute "Migrate sites" migrateSites.sql
 execute "Migrate sections and items" migrateSectionsAndItems.sql
 
 execute "Move TempSections to Sections" moveTempSectionsToSections.sql
-execute "Prepare portals" preparePortals.sql
 
+execute "Create execution path for functionalities" createExecutionPathTable.sql
 execute "Create missing Modules" createMissingModules.sql
+execute "Create missing functionalities" generateMissingPresentationFunctionalities.sql
 execute "Copy Module Structure" copyModuleStructure.sql
 
 execute "Create table for MetaDomainObject" metaDomainObject.sql
@@ -65,7 +66,6 @@ execute "Create MetaDomainObjhect From Site Templates" createMetaDomainObjectsFr
 execute "Update Roles" updateRole.sql
 execute "Migrate Top Sections, esta esqueci-me depois aquando merge pode-se juntar com o migrateSectionsAndItems" migrateTopSections.sql
 
-execute "Create execution path for functionalities" createExecutionPathTable.sql
 execute "Criar chave da Pool, este scripts pode depois ser merged na criação da tabela meta domain object" createKeysForPool.sql
 execute "Associar os conteúdos às pools. Com algum cuidado tb deverá ser merged na criação da tabela meta domain object" createPools.sql
 
