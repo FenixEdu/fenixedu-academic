@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -134,19 +135,19 @@ public class RequestUtils {
         httpSession.setAttribute("ORIGINAL_MODULE", module);
 
         final Map<String, Object> parameterMap = new HashMap<String, Object>();
-        for (final Entry<String, Object> entry : ((Map<String, Object>) request.getParameterMap()).entrySet()) {
-            parameterMap.put(entry.getKey(), entry.getValue());
-        }
+	for (final Entry<String, Object> entry : ((Map<String, Object>) request.getParameterMap()).entrySet()) {
+	    parameterMap.put(entry.getKey(), entry.getValue());
+	}
         httpSession.setAttribute("ORIGINAL_PARAMETER_MAP", parameterMap);
 
         final Map<String, Object> attributeMap = new HashMap<String, Object>();
         final Enumeration enumeration = request.getAttributeNames();
         while (enumeration.hasMoreElements()) {
-            final String attributeName = (String) enumeration.nextElement();
-            final Object attribute = request.getAttribute(attributeName);
-            if (attribute instanceof Serializable) {
-        	attributeMap.put(attributeName, attribute);
-            }
+	    final String attributeName = (String) enumeration.nextElement();
+	    final Object attribute = request.getAttribute(attributeName);
+	    if (attribute instanceof Serializable) {
+		attributeMap.put(attributeName, attribute);
+	    }
         }
         httpSession.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
 
@@ -179,5 +180,5 @@ public class RequestUtils {
                 && (uri.indexOf("changeLocaleTo.do") == -1)
                 && (uri.indexOf("cms/forwardEmailAction.do") == -1)
                 && (uri.indexOf("isAlive.do") == -1));
-    }
+    }    
 }

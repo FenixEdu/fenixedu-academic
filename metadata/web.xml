@@ -226,12 +226,12 @@
 
 	<filter-mapping>
 		<filter-name>CheckUserViewFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
+	<!-- <filter-mapping>
 		<filter-name>CheckUserViewFilter</filter-name>
 		<url-pattern>*.faces</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 <!-- 
 	<filter-mapping>
 		<filter-name>CheckPathByRoleFilter</filter-name>

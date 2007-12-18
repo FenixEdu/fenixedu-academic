@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestRewriteFilter.RequestRewriter;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -66,6 +67,9 @@ public class ChecksumRewriter extends RequestRewriter {
 
     @Override
     public StringBuilder rewrite(StringBuilder source) {
+	if(isRedirectRequest(httpServletRequest)) {
+	    return source;
+	}
 	final StringBuilder response = new StringBuilder();
 
 	int iOffset = 0;
@@ -224,5 +228,11 @@ public class ChecksumRewriter extends RequestRewriter {
 
 	return response;
     }
+    
+    private boolean isRedirectRequest(final HttpServletRequest httpServletRequest) {
+	final String uri = httpServletRequest.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
+	return uri.indexOf("redirect.do") >= 0;
+    }
+
 
 }
