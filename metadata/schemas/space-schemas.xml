@@ -614,6 +614,7 @@
 		<property name="contextRelative" value="true"/>
 		<property name="linkFormat" value="/homepage/${person.istUsername}"/>	
 		<property name="blankTarget" value="true"/>
+		<property name="hasContext" value="true"/>
 	</slot>		
 </schema>
 
