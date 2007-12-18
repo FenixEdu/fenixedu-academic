@@ -25,7 +25,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             InfoLesson lesson = (InfoLesson) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a href='");
+            strBuffer.append("<a href='").append(context).append("/publico/");
             strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             
@@ -33,7 +33,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla()).append("</abbr>").append("</a>");
             strBuffer.append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
             if(lesson.getInfoRoomOccupation() != null) {
-                strBuffer.append(" <a href='");
+                strBuffer.append(" <a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=")
                             .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
                             .append("&amp;objectCode=").append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal())
@@ -51,7 +51,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a href='");
+            strBuffer.append("<a href='").append(context).append("/publico/");
             strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             
@@ -59,7 +59,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla()).append("</abbr>").append("</a>");
             strBuffer.append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
             if(lesson.getInfoRoomOccupation() != null) {
-                strBuffer.append(" <a href='");
+                strBuffer.append(" <a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=")
                             .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
                             .append("&amp;objectCode=").append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal())

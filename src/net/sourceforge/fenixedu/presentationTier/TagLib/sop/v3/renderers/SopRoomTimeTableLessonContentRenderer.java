@@ -26,8 +26,8 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             
             InfoLesson lesson = (InfoLesson) showOccupation;
             strBuffer.append("<a href='");
-            strBuffer.append(context);
-            strBuffer.append("/manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
+            strBuffer.append(context).append("/resourceAllocationManager/");
+            strBuffer.append("manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
             strBuffer.append(SessionConstants.EXECUTION_PERIOD_OID + "=");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
             strBuffer.append("&amp;execution_course_oid=");
@@ -45,8 +45,8 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
             strBuffer.append("<a href='");
-            strBuffer.append(context);
-            strBuffer.append("/manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
+            strBuffer.append(context).append("/resourceAllocationManager/");
+            strBuffer.append("manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
             strBuffer.append(SessionConstants.EXECUTION_PERIOD_OID + "=");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
             strBuffer.append("&amp;execution_course_oid=");
@@ -91,8 +91,8 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
             if(infoGenericEvent.getGenericEvent().isActive()) {
                 strBuffer.append("<a href=\"");
-                strBuffer.append(context);
-        	strBuffer.append("/roomsPunctualScheduling.do?method=prepareView&genericEventID=").append(infoGenericEvent.getIdInternal()).append("\">");
+                strBuffer.append(context).append("/resourceAllocationManager/");
+        	strBuffer.append("roomsPunctualScheduling.do?method=prepareView&genericEventID=").append(infoGenericEvent.getIdInternal()).append("\">");
         	strBuffer.append(infoGenericEvent.getTitle());
         	strBuffer.append("</a>");            
             } else {

@@ -16,7 +16,8 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
 public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSlotContentRenderer {
 
     public StringBuilder render(String context, LessonSlot lessonSlot) {
-        StringBuilder strBuffer = new StringBuilder();
+       
+	StringBuilder strBuffer = new StringBuilder();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
         if (showOccupation instanceof InfoLesson) {

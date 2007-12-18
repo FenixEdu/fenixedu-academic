@@ -25,7 +25,7 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
             InfoLesson lesson = (InfoLesson) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a href='");
+            strBuffer.append("<a href='").append(context).append("/publico/");
             strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             strBuffer.append("'>").append(infoExecutionCourse.getSigla()).append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")").append("</a>");
@@ -34,7 +34,7 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
             
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a href='");
+            strBuffer.append("<a href='").append(context).append("/publico/");
             strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             strBuffer.append("'>").append(infoExecutionCourse.getSigla()).append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")").append("</a>");                                                    

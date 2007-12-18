@@ -15,9 +15,8 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
 public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
 
     public StringBuilder render(String context, LessonSlot lessonSlot) {
-        StringBuilder strBuffer = new StringBuilder();
-        //InfoLesson lesson =
-        // lessonSlot.getInfoLessonWrapper().getInfoLesson();
+	
+        StringBuilder strBuffer = new StringBuilder();        
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
         if (showOccupation instanceof InfoLesson) {
@@ -28,7 +27,7 @@ public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRen
             strBuffer.append("(");
             strBuffer.append(lesson.getInfoShift().getShiftTypesPrettyPrint()).append(")");
             if(lesson.getInfoRoomOccupation() != null) {
-                strBuffer.append("<a href='");
+                strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("'>");
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
@@ -42,7 +41,7 @@ public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRen
             strBuffer.append("(");
             strBuffer.append(lesson.getShiftTypesPrettyPrint()).append(")");
             if(lesson.getInfoRoomOccupation() != null) {
-                strBuffer.append("<a href='");
+                strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("'>");
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");

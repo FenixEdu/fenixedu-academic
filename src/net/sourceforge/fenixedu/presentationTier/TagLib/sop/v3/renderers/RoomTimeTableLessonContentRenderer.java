@@ -25,7 +25,7 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
             InfoLesson lesson = (InfoLesson) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a href='");
+            strBuffer.append("<a href='").append(context).append("/publico/");
             strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
@@ -40,7 +40,7 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();            
-            strBuffer.append("<a href='");
+            strBuffer.append("<a href='").append(context).append("/publico/");
             strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
@@ -59,6 +59,7 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
             strBuffer.append(" - ");
             strBuffer.append(infoExam.getSeason().getSeason());
             strBuffer.append("ª época");
+            
         } else if (showOccupation instanceof InfoWrittenTest) {
             InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
             for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {

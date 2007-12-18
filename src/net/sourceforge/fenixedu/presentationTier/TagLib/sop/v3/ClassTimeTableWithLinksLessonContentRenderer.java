@@ -33,9 +33,8 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
             
             InfoLesson lesson = (InfoLesson) showOccupation;
             
-            strBuffer.append("<a href=\"");
-            strBuffer.append(getApplication());
-            strBuffer.append("/publico/executionCourse.do?method=firstPage&amp;executionCourseID=");
+            strBuffer.append("<a href=\"").append(context).append("/publico/");
+            strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
             strBuffer.append("&nbsp;");
@@ -51,9 +50,8 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
             
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
             
-            strBuffer.append("<a href=\"");
-            strBuffer.append(getApplication());
-            strBuffer.append("/publico/executionCourse.do?method=firstPage&amp;executionCourseID=");
+            strBuffer.append("<a href=\"").append(context).append("/publico/");
+            strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
             strBuffer.append("&nbsp;");

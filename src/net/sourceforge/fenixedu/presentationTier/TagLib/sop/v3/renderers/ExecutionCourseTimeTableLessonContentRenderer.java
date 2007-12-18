@@ -27,7 +27,7 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
             
             strBuffer.append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append("&nbsp;");            
             if(lesson.getInfoSala() != null) {
-                strBuffer.append("<a href='");
+                strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
                 strBuffer.append(lesson.getInfoSala().getNome()).append("&amp;objectCode=");
                 strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
@@ -46,7 +46,7 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
             
             strBuffer.append(lesson.getShiftTypeCodesPrettyPrint()).append("&nbsp;");           
             if(lesson.getInfoRoomOccupation() != null) {
-                strBuffer.append("<a href='");
+                strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
                 strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("&amp;objectCode=");
                 strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
