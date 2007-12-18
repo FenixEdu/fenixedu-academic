@@ -12,6 +12,10 @@ public class ContentInjectionRewriter extends RequestRewriter {
     public static final String HAS_CONTEXT_PREFIX_STRING = "HAS_CONTEXT";
     
     public static final String HAS_CONTEXT_PREFIX = "<!-- " + HAS_CONTEXT_PREFIX_STRING + " -->";
+    
+    public static final String BLOCK_HAS_CONTEXT_PREFIX = "<!-- BLOCK_HAS_CONTEXT -->";
+    
+    public static final String END_BLOCK_HAS_CONTEXT_PREFIX = "<!-- END_BLOCK_HAS_CONTEXT -->";
 
     public static final String CONTEXT_ATTRIBUTE_NAME = FilterFunctionalityContext.CONTEXT_ATTRIBUTE_NAME + "_PATH";
 
@@ -48,8 +52,9 @@ public class ContentInjectionRewriter extends RequestRewriter {
 	    final int indexOfFormOpen = source.indexOf(FORM_IDENTIFIER, iOffset);
 	    final int indexOfImgOpen = source.indexOf(IMG_IDENTIFIER, iOffset);
 	    final int indexOfAreaOpen = source.indexOf(AREA_IDENTIFIER, iOffset);
-
-	    if (firstIsMinValue(indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfAreaOpen)) {
+	    final int indexOfBlockHasContextopen = source.indexOf(BLOCK_HAS_CONTEXT_PREFIX, iOffset);
+	    
+	    if (firstIsMinValue(indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfAreaOpen, indexOfBlockHasContextopen)) {
 		if (!isPrefixed(source, indexOfAopen)) {
 		    final int indexOfAclose = source.indexOf(">", indexOfAopen);
 		    if (indexOfAclose >= 0) {
@@ -90,7 +95,7 @@ public class ContentInjectionRewriter extends RequestRewriter {
 		}
 		iOffset = continueToNextToken(response, source, iOffset, indexOfAopen);
 		continue;
-	    } else if (firstIsMinValue(indexOfFormOpen, indexOfAopen, indexOfImgOpen, indexOfAreaOpen)) {
+	    } else if (firstIsMinValue(indexOfFormOpen, indexOfAopen, indexOfImgOpen, indexOfAreaOpen, indexOfBlockHasContextopen)) {
 		if (!isPrefixed(source, indexOfFormOpen)) {
 		    final int indexOfFormClose = source.indexOf(">", indexOfFormOpen);
 		    if (indexOfFormClose >= 0) {
@@ -107,7 +112,7 @@ public class ContentInjectionRewriter extends RequestRewriter {
 		}
 		iOffset = continueToNextToken(response, source, iOffset, indexOfFormOpen);
 		continue;
-	    } else if (firstIsMinValue(indexOfImgOpen, indexOfAopen, indexOfFormOpen, indexOfAreaOpen)) {
+	    } else if (firstIsMinValue(indexOfImgOpen, indexOfAopen, indexOfFormOpen, indexOfAreaOpen, indexOfBlockHasContextopen)) {
 		if (!isPrefixed(source, indexOfImgOpen)) {
 		    final int indexOfImgClose = source.indexOf(">", indexOfImgOpen);
 		    if (indexOfImgClose >= 0) {
@@ -133,7 +138,7 @@ public class ContentInjectionRewriter extends RequestRewriter {
 		}
 		iOffset = continueToNextToken(response, source, iOffset, indexOfImgOpen);
 		continue;
-	    } else if (firstIsMinValue(indexOfAreaOpen, indexOfAopen, indexOfFormOpen, indexOfImgOpen)) {
+	    } else if (firstIsMinValue(indexOfAreaOpen, indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfBlockHasContextopen)) {
 		if (!isPrefixed(source, indexOfAreaOpen)) {
 		    final int indexOfAreaClose = source.indexOf(">", indexOfAreaOpen);
 		    if (indexOfAreaClose >= 0) {
@@ -170,6 +175,15 @@ public class ContentInjectionRewriter extends RequestRewriter {
 		    }
 		}
 		iOffset = continueToNextToken(response, source, iOffset, indexOfAreaOpen);
+		continue;
+	    } else if(firstIsMinValue(indexOfBlockHasContextopen, indexOfAopen, indexOfFormOpen, indexOfImgOpen, indexOfAreaOpen)) {
+		final int indexOfEndBlockHasContextOpen = source.indexOf(END_BLOCK_HAS_CONTEXT_PREFIX, indexOfBlockHasContextopen);
+		if(indexOfEndBlockHasContextOpen == -1) {
+		    iOffset = indexOfBlockHasContextopen + BLOCK_HAS_CONTEXT_PREFIX.length();
+		} else {
+		    response.append(source, iOffset, indexOfEndBlockHasContextOpen);
+		    iOffset = indexOfEndBlockHasContextOpen;
+		}
 		continue;
 	    } else {
 		response.append(source, iOffset, source.length());

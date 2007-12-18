@@ -24,11 +24,15 @@
 				<bean:message key="link.personalizationOptions"/>
 			</html:link>
 		</li>
+		<!-- BLOCK_HAS_CONTEXT -->
 		<li>
-			<html:link href="<%= request.getContextPath()+"/publico/executionCourse.do?method=firstPage" %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal" target="_blank">
+			<bean:define id="contextName" value="<%= net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME %>" />
+			<bean:define id="ecID" name="executionCourse" property="site.idInternal"/>
+			<html:link href="<%= request.getContextPath()+"/publico/executionCourse.do?method=firstPage&"+contextName.toString()+"=/Disciplinas/"+ecID.toString() %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal" target="_blank">
 				<bean:message key="link.executionCourseManagement.menu.view.course.page"/>
 			</html:link>
 		</li>
+		<!-- END_BLOCK_HAS_CONTEXT -->
 		<li>
             <html:link page="/generateArchive.do?method=prepare" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
                 <bean:message key="link.executionCourse.archive.generate"/>
@@ -134,5 +138,5 @@
 			</html:link>
 		</li>
 		
-	</ul>
+	</ul>	
 </logic:present>
