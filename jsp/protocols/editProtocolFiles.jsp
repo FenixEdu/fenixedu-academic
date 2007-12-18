@@ -45,16 +45,18 @@
 <fr:form action="/editProtocol.do?method=addProtocolFile" encoding="multipart/form-data">
 	<fr:edit name="protocolFactory" schema="edit.protocolFile">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight"/>
+			<fr:property name="classes" value="tstyle5 thright thlight"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>			
 		</fr:layout>
 	</fr:edit>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-		<bean:message key="button.insert" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
-	</html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="back">
-		<bean:message key="button.cancel" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
-	</html:cancel>
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.insert" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
+		</html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="back">
+			<bean:message key="button.cancel" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
+		</html:cancel>
+	</p>
 
 </fr:form>

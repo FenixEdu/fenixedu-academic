@@ -25,9 +25,9 @@
 <strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
 --%>
 
-<strong><bean:message key="label.protocol.internalResponsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<p class="mtop15 mbottom05"><strong><bean:message key="label.protocol.internalResponsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="responsibles">
-<table class="tstyle1">
+<table class="tstyle1 mvert05">
 	<tr>
 		<th><bean:message key="label.person.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
 		<th><bean:message key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
@@ -50,12 +50,12 @@
 <logic:empty name="protocolFactory" property="responsibles">
 	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>.</em></p>
 </logic:empty>
-<br/>
+
 
 <!-- IST Responsibles Functions-->
-<strong><bean:message key="label.protocol.internalFunctionResponsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<p class="mtop15 mbottom05"><strong><bean:message key="label.protocol.internalFunctionResponsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="responsibleFunctions">
-<table class="tstyle1">
+<table class="tstyle1 mvert05">
 	<tr>
 		<th><bean:message key="label.person.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
 		<th><bean:message key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
@@ -78,15 +78,15 @@
 <logic:empty name="protocolFactory" property="responsibleFunctions">
 	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>.</em></p>
 </logic:empty>
-<br/>
+
 
 <!-- Partner Responsibles -->
 <%--
 <strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
 --%>
-<strong><bean:message key="label.protocol.externalResponsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<p class="mtop15 mbottom05"><strong><bean:message key="label.protocol.externalResponsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="partnerResponsibles">
-<table class="tstyle1">
+<table class="tstyle1 mvert05">
 	<tr>
 		<th><bean:message key="label.person.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
 		<th><bean:message key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
@@ -110,32 +110,36 @@
 	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>.</em></p>
 </logic:empty>
 </fr:form>
-<br/>
+
 
 <!-- Add responsible -->
 <logic:notPresent name="createExternalPerson">
 <logic:notPresent name="createExternalUnit">
 <fr:form action="/createProtocol.do?method=insertResponsible">
-<span class="error0">
-	<html:errors bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-	<html:messages id="message" name="errorMessage" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<bean:write name="message" />
-		<br />
-	</html:messages>
-</span>
+	<div class="mtop15 mbottom1">
+		<span class="error0">
+			<html:errors bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+			<html:messages id="message" name="errorMessage" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+				<bean:write name="message" />
+				<br />
+			</html:messages>
+		</span>
+	</div>
 <logic:present name="needToCreatePerson">
-	<div class="warning0">
+	<p class="warning0 mbottom1" style="padding: 0.25em 0.5em;">
 		<strong><bean:message key="label.attention" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</strong><br/>
 		<bean:message key="message.protocol.createNewPerson" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-	</div>
+	</p>
 </logic:present>
 
+<fieldset class="fieldset1 mtop15">
+<legend><bean:message key="label.protocol.insertResponsible"/></legend>
 <logic:equal name="protocolFactory" property="istResponsible" value="true">
 	<logic:equal name="protocolFactory" property="istResponsibleIsPerson" value="true">
 		<fr:edit id="istResponsible" name="protocolFactory" schema="search.istResponsible">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle9 thlight mvert05 thmiddle thright"/>
+		        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 			</fr:layout>
 			<fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
 			<fr:destination name="changePersonorFunction" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
@@ -144,8 +148,8 @@
 	<logic:equal name="protocolFactory" property="istResponsibleIsPerson" value="false">
 		<fr:edit id="istResponsible2" name="protocolFactory" schema="search.istResponsibleFunction">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle9 thlight mvert05 thmiddle thright"/>
+		        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 			</fr:layout>
 			<fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
 			<fr:destination name="changePersonorFunction" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
@@ -155,18 +159,20 @@
 		<logic:equal name="protocolFactory" property="functionByPerson" value="true">
 			<fr:edit id="istResponsible3" name="protocolFactory" schema="search.istResponsibleFunction.byPerson">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					<fr:property name="classes" value="tstyle9 thlight mvert05 thmiddle thright mbottom025"/>
+			        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 				</fr:layout>
 			</fr:edit>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-				<bean:message key="button.researchActivity.choose" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-			</html:submit>
+			<p class="mtop05 mbottom1">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.researchActivity.choose" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+				</html:submit>
+			</p>
 			<logic:notEmpty name="protocolFactory" property="responsible">
 				<fr:edit id="istResponsible4" name="protocolFactory" schema="search.istResponsibleFunction.unitFunctions">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					<fr:property name="classes" value="tstyle9 thlight mvert05 thmiddle thright"/>
+			        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 			        <fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
 					<fr:destination name="changePersonorFunction" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
 				</fr:layout>
@@ -176,18 +182,20 @@
 		<logic:equal name="protocolFactory" property="functionByPerson" value="false">
 			<fr:edit id="istResponsible5" name="protocolFactory" schema="search.istResponsibleFunction.byUnit">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					<fr:property name="classes" value="tstyle9 thlight mvert05 thmiddle thright mbottom025"/>
+			        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 				</fr:layout>
 			</fr:edit>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-				<bean:message key="button.researchActivity.choose" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-			</html:submit>
+			<p class="mtop05 mbottom1">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.researchActivity.choose" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+				</html:submit>
+			</p>
 			<logic:notEmpty name="protocolFactory" property="responsibleFunctionUnit">
 				<fr:edit id="istResponsible6" name="protocolFactory" schema="search.istResponsibleFunction.unitFunctions">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-			        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					<fr:property name="classes" value="tstyle9 thlight mvert05 thmiddle thright"/>
+			        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 			        <fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
 					<fr:destination name="changePersonorFunction" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
 				</fr:layout>
@@ -200,33 +208,40 @@
 <logic:equal name="protocolFactory" property="istResponsible" value="false">
 <fr:edit id="partnerResponsible" name="protocolFactory" schema="search.partnerResponsible">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:property name="classes" value="tstyle9 thlight mvert05 thmiddle thright"/>
+        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 	</fr:layout>
 	<fr:destination name="changePersonType" path="/createProtocol.do?method=prepareCreateProtocolResponsibles"/>
 </fr:edit>
 </logic:equal>
 
-
-<p>
+<p class="mtop05">
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.insert" />
 	</html:submit>
+	<logic:present name="needToCreatePerson">
+		<html:submit bundle="HTMLALT_RESOURCES" property="createNew">
+			<bean:message key="button.insertNewExternalPerson" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
+		</html:submit>
+	</logic:present>
+</p>
+
+</fieldset>
+
+
+<p class="mtop15">
 	<logic:notPresent name="needToCreatePerson">
-		<html:cancel bundle="HTMLALT_RESOURCES" property="next">
-			<bean:message key="button.next" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
-		</html:cancel>	
 		<html:cancel bundle="HTMLALT_RESOURCES" property="back">
 			<bean:message key="button.back" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
 		</html:cancel>
+		<html:cancel bundle="HTMLALT_RESOURCES" property="next">
+			<bean:message key="button.next" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
+		</html:cancel>	
 	</logic:notPresent>
 	<logic:present name="needToCreatePerson">
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
 			<bean:message key="button.back" bundle="SCIENTIFIC_COUNCIL_RESOURCES" /> <%-- Changed from cancel to back --%>
 		</html:cancel>	
-		<html:submit bundle="HTMLALT_RESOURCES" property="createNew">
-			<bean:message key="button.insertNewExternalPerson" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
-		</html:submit>
 	</logic:present>
 </p>
 </fr:form>
@@ -237,16 +252,18 @@
 <logic:present name="createExternalPerson">
 <fr:form action="/createProtocol.do?method=createExternalResponsible">
 <logic:present name="needToCreateUnit">
-	<div class="warning0">
+	<div class="warning0 mbottom1" style="padding: 0.25em 0.5em;">
 		<strong><bean:message key="label.attention"/>:</strong><br/>
 		<bean:message key="message.protocol.createNewUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	</div>
 </logic:present>
-<strong><bean:message key="label.protocol.insertNewExternalPerson"/></strong><br/>
+
+<fieldset class="fieldset1">
+<legend><bean:message key="label.protocol.insertNewExternalPerson"/></legend>
 <fr:edit id="responsible" name="protocolFactory" schema="partnerResponsible.fullCreation">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:property name="classes" value="tstyle9 thlight mtop05 thmiddle thright"/>
+        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 	</fr:layout>
 </fr:edit>
 <p>
@@ -262,27 +279,30 @@
 		</html:submit>
 	</logic:present>	
 </p>
+</fieldset>
 </fr:form>
 </logic:present>
 
 <!-- Create External Person and Unit -->
 <logic:present name="createExternalUnit">
+<fieldset class="fieldset1">
 <fr:form action="/createProtocol.do?method=createExternalPersonAndUnit">
-<strong><bean:message key="label.protocol.insertNewExternalPersonUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<legend><bean:message key="label.protocol.insertNewExternalPersonUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></legend>
 <fr:view name="protocolFactory" schema="partnerUnit.fullCreation">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:property name="classes" value="tstyle9 thlight mtop05 thmiddle thright"/>
+        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 	</fr:layout>
 </fr:view>
-<br/>
+
 <fr:edit id="country" name="protocolFactory" schema="partnerUnit.country">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop0 dinline"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:property name="classes" value="tstyle9 thlight mtop0 dinline thright"/>
+        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 	</fr:layout>
 </fr:edit>
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
+
 <p>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.insert" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
@@ -292,4 +312,5 @@
 	</html:cancel>
 </p>
 </fr:form>
+</fieldset>
 </logic:present>

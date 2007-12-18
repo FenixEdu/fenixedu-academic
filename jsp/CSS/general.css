@@ -184,7 +184,7 @@ padding: 0.5em 1em 0.1em 1em;
 font-style: italic;
 }
 
-.tstyle1, .tstyle2, .tstyle3, .tstyle4, .tstyle5, .tstyle7, .tstyle8 {
+.tstyle1, .tstyle2, .tstyle3, .tstyle4, .tstyle5, .tstyle7, .tstyle8, .tstyle9 {
 border-collapse: collapse;
 margin: 1em 0;
 }
@@ -206,6 +206,7 @@ table.tdmiddle td { vertical-align: middle !important; }
 table.vamiddle td, table.vamiddle th { vertical-align: middle; }
 
 .thwhite th { background: #fff !important; }
+.thbgfafafa th { background: #fafafa !important; }
 
 /* font */
 table.thlight th { font-weight: normal; }
@@ -298,6 +299,11 @@ tr.bgfafafa td { background-color: #fafafa; }
 .tstyle8 { }
 
 
+.tstyle9 { width: 100%; }
+.tstyle9 th { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; background: #f6f6f6; }
+.tstyle9 td { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; background: #f6f6f6; padding: 5px; }
+
+
 /* table classes - th properties */
 
 .tstyle1 th, .tstyle2 th, .tstyle3 th, .tstyle4 th {
@@ -382,6 +388,7 @@ td.pleft4 { padding-left: 4em; }
 td.pleft5 { padding-left: 5em; }
 td.pleft6 { padding-left: 6em; }
 
+table.tpadding05 tr th, table.tpadding05 tr td  { padding: 0.5em; }
 
 /* ----------------------
 -------- Tree ----------
@@ -520,9 +527,8 @@ padding-right: 0.5em;
 .mtop025 { margin-top: 0.25em;}
 .mtop05 { margin-top: 0.5em;}
 .mtop1 { margin-top: 1em !important;}
-.mtop15 { margin-top: 1.5em;}
-.mtop2 { margin-top: 2em;}
-.mtop2 { margin-top: 2em;}
+.mtop15 { margin-top: 1.5em !important;}
+.mtop2 { margin-top: 2em !important;}
 .mtop25 { margin-top: 2.5em;}
 .mtop3 { margin-top: 3em;}
 .mbottom0 { margin-bottom: 0;}
@@ -1831,7 +1837,22 @@ select.degrees {
 	padding: 0.5em 0.75em;
 	border-bottom: 1px solid #f2e5a6;
 	}
-	
+
+fieldset.fieldset1 {
+background: #fafafa;
+border: 1px solid #ddd;
+margin: 1em 0;
+padding: 1em;
+}
+fieldset.fieldset1 legend {
+margin: 0;
+padding: 0 0.5em;
+color: #000;
+font-weight: bold;
+}
+
+
+
 .infoop-blue {
 	background-color: #9CF;
 	vertical-align: middle;

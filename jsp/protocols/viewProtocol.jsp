@@ -31,18 +31,18 @@
 	<p class="dinline">(<html:link page="<%= "/editProtocol.do?method=prepareEditResponsibles&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>)</p>
 </div>
 
-<p class="mbottom0"><strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
+<p class="mbottom05"><strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="responsibles">
 	<fr:view name="protocolFactory" property="responsibles" schema="show.protocol.responsible">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="classes" value="tstyle1 thlight mtop05"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
 <logic:notEmpty name="protocolFactory" property="responsibleFunctions">
 	<fr:view name="protocolFactory" property="responsibleFunctions" schema="show.protocol.responsibleFunction">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="classes" value="tstyle1 thlight mtop05"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
@@ -52,11 +52,11 @@
 	</logic:empty>
 </logic:empty>
 
-<p class="mbottom0"><strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
+<p class="mbottom05"><strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="partnerResponsibles">
 	<fr:view name="protocolFactory" property="partnerResponsibles" schema="show.protocol.responsible">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="classes" value="tstyle1 thlight mtop05"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
@@ -71,21 +71,21 @@
 	<p class="dinline">(<html:link page="<%= "/editProtocol.do?method=prepareEditUnits&amp;protocolID=" + protocolID %>"><bean:message key="link.protocol.manage.units" bundle="SCIENTIFIC_COUNCIL_RESOURCES" /></html:link>)</p>
 </div>
 
-<p class="mbottom0"><strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
+<p class="mbottom05"><strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <fr:view name="protocolFactory" property="units" schema="show.protocol.unit">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1 thlight mvert0"/>
+		<fr:property name="classes" value="tstyle1 thlight mtop05"/>
 	</fr:layout>
 </fr:view>
 <logic:empty name="protocolFactory" property="units">
 	<p class="mtop05"><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
 </logic:empty>
 
-<p class="mbottom0"><strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
+<p class="mbottom05"><strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="partnerUnits">
 	<fr:view name="protocolFactory" property="partnerUnits" schema="show.protocol.partnerUnit">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="classes" value="tstyle1 thlight mtop05"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

@@ -22,9 +22,9 @@
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="unitID"/>
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
 
-<strong><bean:message key="label.protocol.internalUnits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<p class="mbottom05"><strong><bean:message key="label.protocol.internalUnits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="units">
-<table class="tstyle1">
+<table class="tstyle1 mtop05">
 	<tr>
 		<th><bean:message key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
 		<th></th>				
@@ -45,13 +45,13 @@
 <logic:empty name="protocolFactory" property="units">
 	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
 </logic:empty>
-<br/>
+
 
 
 <!-- Partner Units -->
-<strong><bean:message key="label.protocol.externalUnits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<p class="mbottom05"><strong><bean:message key="label.protocol.externalUnits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="partnerUnits">
-<table class="tstyle1">
+<table class="tstyle1 mtop05">
 	<tr>
 		<th><bean:message key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
 		<th><bean:message key="label.protocol.country" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
@@ -82,31 +82,35 @@
 	<p><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
 </logic:empty>
 </fr:form>
-<br/>
 
 <!-- Add Unit -->
 <logic:notPresent name="createExternalUnit">
 <fr:form action="/createProtocol.do?method=insertUnit">
 
-<span class="error0">
-	<html:errors bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-	<html:messages id="message" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<bean:write name="message" />
-		<br />
-	</html:messages>
-</span>
+<p class="mtop15">
+	<span class="error0">
+		<html:errors bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+		<html:messages id="message" message="true" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+			<bean:write name="message" />
+			<br />
+		</html:messages>
+	</span>
+</p>
+
 <logic:present name="needToCreateUnit">
-	<div class="warning0">
-		<strong><bean:message key="label.attention" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong>:<br/>
+	<div class="warning0 mvert1" style="padding: 0.25em 0.5em;">
+		<strong><bean:message key="label.attention" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</strong><br/>
 		<bean:message key="message.protocol.createNewUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	</div>
 </logic:present>
 
+<fieldset class="fieldset1">
+<legend><bean:message key="label.add.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></legend>
 <logic:equal name="protocolFactory" property="internalUnit" value="true">
 <fr:edit id="unit" name="protocolFactory" schema="search.unit">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:property name="classes" value="tstyle9 thlight mvert05 thright"/>
+        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 	</fr:layout>
 	<fr:destination name="changeUnitType" path="/createProtocol.do?method=prepareCreateProtocolUnits"/>
 </fr:edit>
@@ -115,17 +119,28 @@
 <logic:equal name="protocolFactory" property="internalUnit" value="false">
 <fr:edit id="partnerUnit" name="protocolFactory" schema="search.partnerUnit">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:property name="classes" value="tstyle9 thlight mvert05 thright"/>
+        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 	</fr:layout>
 	<fr:destination name="changeUnitType" path="/createProtocol.do?method=prepareCreateProtocolUnits"/>
 </fr:edit>
 </logic:equal>
-
-<p>
+<p class="mtop05">
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.insert" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
 	</html:submit>
+	<logic:present name="needToCreateUnit">
+		<html:submit bundle="HTMLALT_RESOURCES" property="createNew">
+			<bean:message key="button.insertNewExternalUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
+		</html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
+			<bean:message key="button.cancel" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
+		</html:cancel>	
+	</logic:present>
+</p>
+</fieldset>
+
+<p>
 	<logic:notPresent name="needToCreateUnit">
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="back">
 			<bean:message key="button.back" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
@@ -134,14 +149,6 @@
 			<bean:message key="button.createProtocol" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
 		</html:cancel>		
 	</logic:notPresent>
-	<logic:present name="needToCreateUnit">
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" property="cancel">
-			<bean:message key="button.cancel" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
-		</html:cancel>	
-		<html:submit bundle="HTMLALT_RESOURCES" property="createNew">
-			<bean:message key="button.insertNewExternalUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
-		</html:submit>
-	</logic:present>
 </p>
 </fr:form>
 </logic:notPresent>
@@ -149,18 +156,19 @@
 <!-- Create External Unit -->
 <logic:present name="createExternalUnit">
 <fr:form action="/createProtocol.do?method=createExternalUnit">
-<strong><bean:message key="label.protocol.insertNewExternalUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong><br/>
+<fieldset class="fieldset1">
+<legend><bean:message key="label.protocol.insertNewExternalUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></legend>
 <fr:view name="protocolFactory" schema="partnerUnit.creation">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:property name="classes" value="tstyle9 thlight mvert05 thright"/>
+        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 	</fr:layout>
 </fr:view>
-<br/>
+
 <fr:edit id="country" name="protocolFactory" schema="partnerUnit.country">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight mtop0 dinline"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:property name="classes" value="tstyle9 thlight mvert05 thright"/>
+        <fr:property name="columnClasses" value="width10em,,tderror1"/>
 	</fr:layout>
 </fr:edit>
 <fr:edit id="protocolFactory" name="protocolFactory" visible="false"/>
@@ -172,5 +180,6 @@
 		<bean:message key="button.cancel" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
 	</html:cancel>
 </p>
+</fieldset>
 </fr:form>
 </logic:present>
