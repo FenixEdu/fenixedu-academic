@@ -66,6 +66,10 @@
 
 				<fr:property name="schemaFor(Item)" value="content.in.tree"/>
 				<fr:property name="imageFor(Item)" value="/images/functionalities/sheet.gif"/>
+                <fr:property name="childrenFor(Item)" value="childrenAsContent"/>
+
+				<fr:property name="schemaFor(Attachment)" value="content.in.tree"/>
+				<fr:property name="imageFor(Attachment)" value="/images/functionalities/sheet.gif"/>
 				
                 <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
