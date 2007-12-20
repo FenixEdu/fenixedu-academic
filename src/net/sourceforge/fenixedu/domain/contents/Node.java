@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.contents;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -105,6 +106,10 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
 	return getChild().getTitle();
     }
 
+    public boolean isAvailable(FunctionalityContext context) {
+	return getChild().isAvailable(context);
+    }
+    
     public boolean isAvailable() {
 	return getChild().isAvailable();
     }
