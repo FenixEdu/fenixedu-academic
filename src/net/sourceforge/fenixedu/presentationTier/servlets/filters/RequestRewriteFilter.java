@@ -44,9 +44,18 @@ public class RequestRewriteFilter implements Filter {
 
 	protected int findSrcBodyEnd(final StringBuilder source, final int offset) {
 	    int i = offset;
-	    for (char c = source.charAt(i); c != '"' && c != '\'' && c != ' ' && c != '>'; c = source.charAt(i)) {
-		if (++i == source.length()) {
-		    return -1;
+	    char delimiter = source.charAt(offset - 1);
+	    if(delimiter == '"' || delimiter == '\'') {
+		for (char c = source.charAt(i); c != delimiter; c = source.charAt(i)) {
+		    if (++i == source.length()) {
+			return -1;
+		    }
+		}
+	    } else {
+		for (char c = source.charAt(i); c != ' ' && c != '>'; c = source.charAt(i)) {
+		    if (++i == source.length()) {
+			return -1;
+		    }
 		}
 	    }
 	    return i;
