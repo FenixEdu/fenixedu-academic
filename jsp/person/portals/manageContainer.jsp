@@ -66,13 +66,6 @@
 		</html:link>
 </logic:equal>
 
-<logic:equal name="content" property="class.simpleName" value="MetaDomainObjectPortal">
-		,
-		<html:link page="<%= "/contentManagement.do?method=managePool&amp;contentId=" + cid %>">
-			<bean:message key="label.manage.pool.content" bundle="CONTENT_RESOURCES"/>
-		</html:link>
-</logic:equal>
-
 <html:link page="<%= "/contentManagement.do?method=activateLogging&amp;contentId=" + cid %>">
 	<bean:message key="label.activate.logging" bundle="CONTENT_RESOURCES"/>
 </html:link>
