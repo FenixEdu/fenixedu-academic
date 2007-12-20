@@ -53,9 +53,8 @@ execute "Migrate sections and items" migrateSectionsAndItems.sql
 execute "Move TempSections to Sections" moveTempSectionsToSections.sql
 
 execute "Create execution path for functionalities" createExecutionPathTable.sql
-execute "Create missing Modules" createMissingModules.sql
-execute "Create missing functionalities" generateMissingPresentationFunctionalities.sql
 execute "Copy Module Structure" copyModuleStructure.sql
+execute "Create missing Modules" createMissingModules.sql
 
 execute "Create table for MetaDomainObject" metaDomainObject.sql
 execute "Adding meta domain objects for all defined types" addMetaDomainObject3.sql
@@ -83,3 +82,13 @@ execute "Fixing some groups" fixAnnouncementsWRitersGroups.sql
 execute "Create new Teacher Service Distribution tables definitions" newTSDTableDefinitions.sql
 
 execute "Create UnitAcronym" createUnitAcronym.sql
+execute "Create missing functionalities" generateMissingPresentationFunctionalities.sql
+execute "Migrate Functionalities in Sites" migrateFunctionalitiesInSites.sql
+
+execute "Initializing portal structure" generateTemplatePortalsStructure.sql
+
+execute "Generate Template Portal Structure" generateTemplatePortalsStructure.sql
+execute "Migrate Functionalities in sites" migrateFunctionalitiesInSites.sql
+execute "Initialize Pools" initializePools.sql
+execute "Fix assiduiness Policies" fixAssiduinessPolicies.sql
+execute "Fix &amps; in functionalities" fixAmpsInExecutionPaths.sql
