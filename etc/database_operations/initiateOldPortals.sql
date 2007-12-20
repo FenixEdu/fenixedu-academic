@@ -213,7 +213,7 @@
       -- Generating Functionality for: Gestão de Recursos---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt18:Gestão de Recursos','pt18:Gestão de Recursos', NOW(),'791b7e6a-7fd9-4795-8998-7200eeea4445',1,1,'/paginaPrincipal.jsp','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt18:Gestão de Recursos','pt18:Gestão de Recursos', NOW(),'791b7e6a-7fd9-4795-8998-7200eeea4445',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='6a97cab2-491d-4e9f-a876-3a15d1d1033f'), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='791b7e6a-7fd9-4795-8998-7200eeea4445'),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       

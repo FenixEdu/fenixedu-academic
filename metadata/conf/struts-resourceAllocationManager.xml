@@ -503,8 +503,9 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
+      
+      <action path="/index" forward="/paginaPrincipal.do"/>
       <action path="/paginaPrincipal" forward="/paginaPrincipal.jsp"/>
-      <action path="/index" forward="/autenticacaoSOP.jsp"/>
       <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"/>
       <action path="/criarSala" forward="/criarSala.jsp"/>
       <action path="/gestaoHorarios" forward="/gestaoHorarios.jsp"/>
