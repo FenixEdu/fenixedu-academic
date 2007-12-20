@@ -167,14 +167,19 @@ public class RequestChecksumFilter implements Filter {
     }
 
     private boolean isValidChecksum(final HttpServletRequest httpServletRequest, final String checksum) {
+
 	final String uri = decodeURL(httpServletRequest.getRequestURI());
-	final String queryString = decodeURL(httpServletRequest.getQueryString());
-	final String request = queryString != null ? uri + '?' + queryString : uri;
-	final String calculatedChecksum = ChecksumRewriter.calculateChecksum(request);
-	final boolean result = checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
-	return result || isValidChecksumIgnoringPath(httpServletRequest, checksum);
+	return isValidChecksum(uri, decodeURL(httpServletRequest.getQueryString()),checksum) || 
+		isValidChecksum(uri, httpServletRequest.getQueryString(),checksum) ||
+		isValidChecksumIgnoringPath(httpServletRequest, checksum);
+	
     }
 
+    private boolean isValidChecksum(String uri, String queryString, String checksum) {
+	String request = (queryString != null) ? uri + "?" + queryString : uri;
+	return checksum != null && checksum.length() > 0 && checksum.equals(ChecksumRewriter.calculateChecksum(request));
+    }
+    
     private boolean isValidChecksumIgnoringPath(final HttpServletRequest httpServletRequest, final String checksum) {
         final String uri = decodeURL(httpServletRequest.getRequestURI());
         if (uri.endsWith(".faces")) {
