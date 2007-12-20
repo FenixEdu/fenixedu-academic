@@ -82,6 +82,7 @@ execute "Fixing some groups" fixAnnouncementsWRitersGroups.sql
 execute "Create new Teacher Service Distribution tables definitions" newTSDTableDefinitions.sql
 
 execute "Create UnitAcronym" createUnitAcronym.sql
+
 execute "Create missing functionalities" generateMissingPresentationFunctionalities.sql
 execute "Migrate Functionalities in Sites" migrateFunctionalitiesInSites.sql
 
@@ -92,3 +93,5 @@ execute "Migrate Functionalities in sites" migrateFunctionalitiesInSites.sql
 execute "Initialize Pools" initializePools.sql
 execute "Fix assiduiness Policies" fixAssiduinessPolicies.sql
 execute "Fix &amps; in functionalities" fixAmpsInExecutionPaths.sql
+
+execute "Populate Execution path table" populateExecutionPathTable.sql

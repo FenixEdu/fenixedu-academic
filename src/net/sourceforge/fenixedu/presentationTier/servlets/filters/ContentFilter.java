@@ -74,14 +74,19 @@ public class ContentFilter implements Filter {
 
     private void contentsForward(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
 	    final FilterFunctionalityContext functionalityContext) throws ServletException, IOException {
+
 	Content content = functionalityContext.getSelectedContent();
-	if (content.isAvailable(functionalityContext) && content instanceof Section) {
+	
+	if (content instanceof Section && content.isAvailable(functionalityContext)) {
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, SECTION_PATH);
-	} else if (content.isAvailable(functionalityContext) && content instanceof Item) {
+	
+	} else if (content instanceof Item && content.isAvailable(functionalityContext)) {
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, ITEM_PATH);
-	} else if (content.isAvailable(functionalityContext) && content instanceof Functionality) {
+	
+	} else if (content instanceof Functionality && content.isAvailable(functionalityContext)) {
 	    Functionality functionality = (Functionality) content;
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
+	
 	} else {
 	    final IUserView userView = AccessControl.getUserView();
 	    showUnavailablePage(userView, httpServletRequest, httpServletResponse);
@@ -90,9 +95,9 @@ public class ContentFilter implements Filter {
     }
 
     /**
-         * Redirects the client to the page showing that the functionality is
-         * not available.
-         */
+     * Redirects the client to the page showing that the functionality is not
+     * available.
+     */
     private void showUnavailablePage(final IUserView userView, final HttpServletRequest request,
 	    final HttpServletResponse response) throws IOException, ServletException {
 	final String errorPageToDispatch = userView == null || userView.isPublicRequester() ? errorPage : errorPageLogged;

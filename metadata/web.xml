@@ -224,10 +224,11 @@
 	</filter-mapping>
 -->
 
-	<filter-mapping>
+<!--  <filter-mapping>
 		<filter-name>CheckUserViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+-->
 	<!-- <filter-mapping>
 		<filter-name>CheckUserViewFilter</filter-name>
 		<url-pattern>*.faces</url-pattern>
