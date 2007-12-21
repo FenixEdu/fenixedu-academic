@@ -682,7 +682,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 
     public static Functionality findByExecutionPath(final String executionPathValue) {
 	for (final ExecutionPath executionPath : RootDomainObject.getInstance().getExecutionPathsSet()) {
-	    if (executionPath.getExecutionPath().equals(executionPathValue)) {
+	    if (executionPathValue.startsWith(executionPath.getFunctionality().getPath())) {
 		return executionPath.getFunctionality();
 	    }
 	}
