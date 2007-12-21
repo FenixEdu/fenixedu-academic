@@ -57,7 +57,13 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	addInitialContent();
 	final Container selectedContainer = getSelectedContainer();
 	if (selectedContainer == null) {
-	    final Functionality functionality = Functionality.findByExecutionPath(path);
+	    String queryString = request.getQueryString();
+	    String lookupPath = path + (queryString != null && queryString.length() > 0 ? "?" + queryString : "");
+	    if(lookupPath.charAt(0) != '/') {
+		lookupPath = "/" + lookupPath;
+	    }
+	    
+	    final Functionality functionality = Functionality.findByExecutionPath(lookupPath);
 
 	    final String pathFromRequest = getCurrentContextPathFromRequest();
 	    if (pathFromRequest != null) {
