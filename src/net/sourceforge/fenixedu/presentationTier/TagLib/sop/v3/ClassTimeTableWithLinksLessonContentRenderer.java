@@ -37,7 +37,9 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
 	    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX).append("<a href=\"").append(context)
 		    .append("/publico/");
 	    strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
+	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
+	    strBuffer.append("&amp;").append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME).append("=/disciplinas/");
+	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getExecutionCourse().getSite().getIdInternal()).append("/\">");
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
 	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(
 		    ")&nbsp;");
@@ -55,7 +57,9 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
 	    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX).append("<a href=\"").append(context)
 		    .append("/publico/");
 	    strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
+	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
+	    strBuffer.append("&amp;").append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME).append("=/disciplinas/");
+	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getExecutionCourse().getSite().getIdInternal()).append("/\">");
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
 	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 
@@ -68,7 +72,6 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
 
 	return new StringBuilder("");
     }
-
     /**
      * @return Returns the application.
      */
