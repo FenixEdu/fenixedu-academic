@@ -27,6 +27,18 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
 	container.addPathContentsForTrailingPath(contents, strategy.getTrailingPath(trailingPath));
     }
 
+    @Override
+    public void addPathContents(List<Content> contents, String path) {
+	super.addPathContents(contents, path);
+	String subPath = getSubPathForSearch(path);
+	if(matchesPath(subPath) && !(subPath.length() + 1 < path.length())) {
+	    Content initialContent = getStrategy().getInitialContent();
+	    if(initialContent != null) {
+		contents.add(initialContent);
+	    }
+	}
+    }
+    
     public AbstractPathProcessor getStrategy() {
 	return AbstractPathProcessor.findStrategyFor(this.getMetaDomainObject().getType());
     }

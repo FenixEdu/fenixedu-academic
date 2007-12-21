@@ -12,6 +12,11 @@ public class PedagogicalCouncilPathProcessor extends AbstractPathProcessor {
 
     @Override
     public String getTrailingPath(String path) {
-       return path;
+	return path;
+    }
+
+    @Override
+    public Content getInitialContent() {
+	return PedagogicalCouncilSite.getSite();
     }
 }

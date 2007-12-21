@@ -960,8 +960,12 @@ public class Unit extends Unit_Base {
     }
 
     public String getUnitPath(String separator) {
+	return getUnitPath(separator, true);
+    }
+    
+    public String getUnitPath(String separator, boolean addInstitutionalUnit) {
 	StringBuilder builder = new StringBuilder();
-	List<Unit> parentUnits = getParentUnitsPath();
+	List<Unit> parentUnits = getParentUnitsPath(addInstitutionalUnit);
 	int index = 1;
 
 	for (Unit unit : parentUnits) {
@@ -981,6 +985,10 @@ public class Unit extends Unit_Base {
     }
     
     public List<Unit> getParentUnitsPath() {
+	return getParentUnitsPath(true);
+    }
+    
+    public List<Unit> getParentUnitsPath(boolean addInstitutionalUnit) {
 
 	List<Unit> parentUnits = new ArrayList<Unit>();
 	Unit searchedUnit = this;
@@ -1000,7 +1008,7 @@ public class Unit extends Unit_Base {
 	}
 
 	if (searchedUnit.getParentUnits().size() > 1) {
-	    if (searchedUnit.isInternal()) {
+	    if (searchedUnit.isInternal() && addInstitutionalUnit) {
 		parentUnits.add(0, institutionUnit);
 	    } else if (searchedUnit.isNoOfficialExternal()) {
 		parentUnits.add(0, externalInstitutionUnit);

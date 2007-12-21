@@ -14,4 +14,9 @@ public class ScientificCouncilPathProcessor extends AbstractPathProcessor {
     public String getTrailingPath(String path) {
 	return path;
     }
+
+    @Override
+    public Content getInitialContent() {
+	return ScientificCouncilSite.getSite();
+    }
 }

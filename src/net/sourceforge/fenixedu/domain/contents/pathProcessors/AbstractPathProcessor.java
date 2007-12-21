@@ -36,4 +36,8 @@ public abstract class AbstractPathProcessor {
 	AbstractPathProcessor processor = strategies.get(type);
 	return processor != null ? processor : strategies.get(DEFAULT);
     }
+    
+    public Content getInitialContent() {
+	return null;
+    }
 }

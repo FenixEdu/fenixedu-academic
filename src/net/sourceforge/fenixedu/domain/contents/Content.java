@@ -42,7 +42,7 @@ public abstract class Content extends Content_Base {
 	setCreationDate(new DateTime());
 	setContentId(UUID.randomUUID().toString());
     }
-    
+
     public abstract boolean isParentAccepted(Container parent);
 
     public boolean isAnAnnouncement() {
@@ -271,7 +271,7 @@ public abstract class Content extends Content_Base {
 	    setAvailabilityPolicy(null);
 	} else {
 	    new GroupAvailability(this, group);
-	    
+
 	}
     }
 
@@ -330,6 +330,8 @@ public abstract class Content extends Content_Base {
 	final Container container = findSomeNonModuleParent();
 	if (container != null) {
 	    container.addPathContentsForReversePath(contents);
+	} else {
+	    return;
 	}
 	contents.add(this);
     }
@@ -337,7 +339,7 @@ public abstract class Content extends Content_Base {
     public void appendReversePathPart(final StringBuilder stringBuilder) {
 	final String name = getName().getContent();
 	stringBuilder.append("/");
-	stringBuilder.append(name);	
+	stringBuilder.append(name);
     }
 
     public void appendReversePath(final StringBuilder stringBuilder) {

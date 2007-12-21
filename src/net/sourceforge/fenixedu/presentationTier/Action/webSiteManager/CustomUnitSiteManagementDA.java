@@ -89,12 +89,12 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     @Override
     protected UnitSite getSite(HttpServletRequest request) {
 
-	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-	UnitSite site = (UnitSite) context.getSelectedContainer();
-	
-	if(site != null) {
-	    return site;
-	}
+//	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+//	UnitSite site = (UnitSite) context.getSelectedContainer();
+//	
+//	if(site != null) {
+//	    return site;
+//	}
 	
 	Integer oid = getId(request.getParameter("oid"));
 

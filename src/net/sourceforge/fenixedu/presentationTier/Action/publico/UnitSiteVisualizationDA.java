@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
@@ -40,11 +37,10 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     public static final String ANNOUNCEMENTS_NAME = "Anúncios";
 
     public static final String EVENTS_NAME = "Eventos";
-
-
+  
     @Override
-    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return presentation(mapping, form, request, response);
     }
 
@@ -55,7 +51,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	try {
 	    return RequestUtils.absoluteURL(request, UnitSiteProcessor.getUnitSitePath(unit)).toString();
 	} catch (MalformedURLException e) {
-	    return null;
+	    return "";
 	}
     }
 
@@ -73,8 +69,8 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	return forward == null ? null : forward.getPath();
     }
 
-    public ActionForward presentation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward presentation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Unit unit = getUnit(request);
 	UnitSite site = unit.getSite();
 
@@ -93,15 +89,13 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
 	if (announcementsBoard != null) {
 	    List<Announcement> announcements = announcementsBoard.getActiveAnnouncements();
-	    announcements = announcements.subList(0, Math
-		    .min(announcements.size(), ANNOUNCEMENTS_NUMBER));
+	    announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
 	    request.setAttribute("announcements", announcements);
 	}
 
 	if (eventsBoard != null) {
 	    List<Announcement> announcements = eventsBoard.getActiveAnnouncements();
-	    announcements = announcements.subList(0, Math
-		    .min(announcements.size(), ANNOUNCEMENTS_NUMBER));
+	    announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
 	    request.setAttribute("eventAnnouncements", announcements);
 	}
 
@@ -110,28 +104,29 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
     protected UnitSite getUnitSite(HttpServletRequest request) {
 	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-	Container container = (Container)context.getLastContentInPath(UnitSite.class);
+	Container container = (Container) context.getLastContentInPath(UnitSite.class);
 	return (UnitSite) container;
     }
-    
+
     protected Unit getUnit(HttpServletRequest request) {
 	Unit unit = (Unit) request.getAttribute("unit");
 
 	if (unit == null) {
-	    Integer id = getIntegerFromRequest(request, getContextParamName(request));
-	    unit = (Unit) RootDomainObject.getInstance().readPartyByOID(id);
+	    FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+	    UnitSite site = (UnitSite) context.getSelectedContainer();
+	    unit = site.getUnit();
 	}
 
 	return unit;
     }
 
-    public ActionForward organization(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward organization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return mapping.findForward("unit-organization");
     }
 
-    public ActionForward subunits(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward subunits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Unit unit = getUnit(request);
 
 	SortedSet<Unit> subunits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
@@ -158,8 +153,8 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	return String.format(forward.getPath(), sub.getIdInternal(), sub.getSite().getIdInternal());
     }
 
-    public ActionForward showPublications(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showPublications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Unit unit = getUnit(request);
 
 	IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
@@ -178,13 +173,12 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	return mapping.findForward("showPublications");
     }
 
-    protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit,
-	    ExecutionYearIntervalBean bean) {
+    protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit, ExecutionYearIntervalBean bean) {
 	putPublicationsOnRequest(request, unit, bean, Boolean.FALSE);
     }
 
-    protected void putPublicationsOnRequest(HttpServletRequest request, Unit unit,
-	    ExecutionYearIntervalBean bean, Boolean checkSubunits) {
+    protected void putPublicationsOnRequest(HttpServletRequest request, Unit unit, ExecutionYearIntervalBean bean,
+	    Boolean checkSubunits) {
 
 	ExecutionYear firstExecutionYear = bean.getFirstExecutionYear();
 	ExecutionYear finalExecutionYear = bean.getFinalExecutionYear();
@@ -195,74 +189,74 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	// "technical-reports", "other-publications", "unstructureds"};
 
 	if (resultPublicationType == null) {
-	    request.setAttribute("international-articles", ResearchResultPublication.sort(unit
-		    .getArticles(ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
-	    request.setAttribute("national-articles", ResearchResultPublication.sort(unit.getArticles(
-		    ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
-	    List<ResearchResultPublication> articles = ResearchResultPublication.sort(unit.getArticles(
-		    firstExecutionYear, finalExecutionYear, checkSubunits));
+	    request.setAttribute("international-articles", ResearchResultPublication.sort(unit.getArticles(
+		    ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("national-articles", ResearchResultPublication.sort(unit.getArticles(ScopeType.NATIONAL,
+		    firstExecutionYear, finalExecutionYear)));
+	    List<ResearchResultPublication> articles = ResearchResultPublication.sort(unit.getArticles(firstExecutionYear,
+		    finalExecutionYear, checkSubunits));
 	    request.setAttribute("hasArticles", !articles.isEmpty());
 	    request.setAttribute("articles", articles);
 
-	    request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(
+	    request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(firstExecutionYear, finalExecutionYear,
+		    checkSubunits)));
+	    request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(firstExecutionYear,
+		    finalExecutionYear, checkSubunits)));
+	    request.setAttribute("international-inproceedings", ResearchResultPublication.sort(unit.getInproceedings(
+		    ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("national-inproceedings", ResearchResultPublication.sort(unit.getInproceedings(
+		    ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
+	    request.setAttribute("inproceedings", ResearchResultPublication.sort(unit.getInproceedings(firstExecutionYear,
+		    finalExecutionYear, checkSubunits)));
+	    request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(firstExecutionYear,
+		    finalExecutionYear, checkSubunits)));
+	    request.setAttribute("theses", ResearchResultPublication.sort(unit.getTheses(firstExecutionYear, finalExecutionYear,
+		    checkSubunits)));
+	    request.setAttribute("manuals", ResearchResultPublication.sort(unit.getManuals(firstExecutionYear,
+		    finalExecutionYear, checkSubunits)));
+	    request.setAttribute("technical-reports", ResearchResultPublication.sort(unit.getTechnicalReports(firstExecutionYear,
+		    finalExecutionYear, checkSubunits)));
+	    request.setAttribute("other-publications", ResearchResultPublication.sort(unit.getOtherPublications(
 		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	    request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	    request.setAttribute("international-inproceedings", ResearchResultPublication.sort(unit
-		    .getInproceedings(ScopeType.INTERNATIONAL, firstExecutionYear, finalExecutionYear)));
-	    request.setAttribute("national-inproceedings", ResearchResultPublication.sort(unit
-		    .getInproceedings(ScopeType.NATIONAL, firstExecutionYear, finalExecutionYear)));
-	    request.setAttribute("inproceedings", ResearchResultPublication.sort(unit.getInproceedings(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	    request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	    request.setAttribute("theses", ResearchResultPublication.sort(unit.getTheses(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	    request.setAttribute("manuals", ResearchResultPublication.sort(unit.getManuals(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
-	    request.setAttribute("technical-reports", ResearchResultPublication.sort(unit
-		    .getTechnicalReports(firstExecutionYear, finalExecutionYear, checkSubunits)));
-	    request.setAttribute("other-publications", ResearchResultPublication.sort(unit
-		    .getOtherPublications(firstExecutionYear, finalExecutionYear, checkSubunits)));
-	    request.setAttribute("unstructureds", ResearchResultPublication.sort(unit.getUnstructureds(
-		    firstExecutionYear, finalExecutionYear, checkSubunits)));
+	    request.setAttribute("unstructureds", ResearchResultPublication.sort(unit.getUnstructureds(firstExecutionYear,
+		    finalExecutionYear, checkSubunits)));
 	} else {
 	    switch (resultPublicationType) {
 	    case Article:
-		request.setAttribute("articles", ResearchResultPublication.sort(unit.getArticles(
-			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		request.setAttribute("articles", ResearchResultPublication.sort(unit.getArticles(firstExecutionYear,
+			finalExecutionYear, checkSubunits)));
 		break;
 	    case Book:
-		request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(
-			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		request.setAttribute("books", ResearchResultPublication.sort(unit.getBooks(firstExecutionYear,
+			finalExecutionYear, checkSubunits)));
 		break;
 	    case BookPart:
-		request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(
-			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		request.setAttribute("inbooks", ResearchResultPublication.sort(unit.getInbooks(firstExecutionYear,
+			finalExecutionYear, checkSubunits)));
 		break;
 	    case Inproceedings:
-		request.setAttribute("inproceedings", ResearchResultPublication.sort(unit
-			.getInproceedings(firstExecutionYear, finalExecutionYear, checkSubunits)));
+		request.setAttribute("inproceedings", ResearchResultPublication.sort(unit.getInproceedings(firstExecutionYear,
+			finalExecutionYear, checkSubunits)));
 		break;
 	    case Manual:
-		request.setAttribute("manuals", ResearchResultPublication.sort(unit.getManuals(
-			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		request.setAttribute("manuals", ResearchResultPublication.sort(unit.getManuals(firstExecutionYear,
+			finalExecutionYear, checkSubunits)));
 		break;
 	    case OtherPublication:
-		request.setAttribute("other-publications", ResearchResultPublication.sort(unit
-			.getOtherPublications(firstExecutionYear, finalExecutionYear, checkSubunits)));
+		request.setAttribute("other-publications", ResearchResultPublication.sort(unit.getOtherPublications(
+			firstExecutionYear, finalExecutionYear, checkSubunits)));
 		break;
 	    case Proceedings:
-		request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(
-			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		request.setAttribute("proceedings", ResearchResultPublication.sort(unit.getProceedings(firstExecutionYear,
+			finalExecutionYear, checkSubunits)));
 		break;
 	    case TechnicalReport:
-		request.setAttribute("technical-reports", ResearchResultPublication.sort(unit
-			.getTechnicalReports(firstExecutionYear, finalExecutionYear, checkSubunits)));
+		request.setAttribute("technical-reports", ResearchResultPublication.sort(unit.getTechnicalReports(
+			firstExecutionYear, finalExecutionYear, checkSubunits)));
 		break;
 	    case Thesis:
-		request.setAttribute("theses", ResearchResultPublication.sort(unit.getTheses(
-			firstExecutionYear, finalExecutionYear, checkSubunits)));
+		request.setAttribute("theses", ResearchResultPublication.sort(unit.getTheses(firstExecutionYear,
+			finalExecutionYear, checkSubunits)));
 		break;
 	    }
 	}

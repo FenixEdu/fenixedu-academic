@@ -34,7 +34,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 
         try {
             MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(ResearchUnitSite.class);
-	    String path = metaDomainObject.getAssociatedPortal().getName().getContent() + "/" + unit.getUnitPath("/");
+	    String path = metaDomainObject.getAssociatedPortal().getName().getContent() + "/" + unit.getUnitPath("/",false);
             return RequestUtils.absoluteURL(request, path).toString();
         } catch (MalformedURLException e) {
             return null;
