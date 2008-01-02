@@ -63,11 +63,6 @@ public class PedagogicalCouncilSite extends PedagogicalCouncilSite_Base {
     }
     
     @Override
-    public MultiLanguageString getName() {
-      return MultiLanguageString.i18n().add("pt", "").finish();
-    } 
-
-    @Override
     public void appendReversePathPart(final StringBuilder stringBuilder) {
     }
 

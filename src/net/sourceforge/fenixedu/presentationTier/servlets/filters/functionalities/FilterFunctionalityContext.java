@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
@@ -43,15 +44,15 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 
     public FilterFunctionalityContext(final HttpServletRequest request) {
 	super(request);
-	
+
 	String path = getCurrentContextPathFromRequest();
-	if(path == null) {
+	if (path == null) {
 	    path = getPath();
 	    hasBeenForwarded = false;
 	} else {
 	    hasBeenForwarded = true;
 	}
-	
+
 	final String trailingPath = getTrailingPath(path);
 	Portal.getRootPortal().addPathContentsForTrailingPath(contents, trailingPath);
 	addInitialContent();
@@ -59,20 +60,18 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	if (selectedContainer == null) {
 	    String queryString = request.getQueryString();
 	    String lookupPath = path + (queryString != null && queryString.length() > 0 ? "?" + queryString : "");
-	    if(lookupPath.charAt(0) != '/') {
+	    if (lookupPath.charAt(0) != '/') {
 		lookupPath = "/" + lookupPath;
 	    }
-	    
+
 	    final Functionality functionality = Functionality.findByExecutionPath(lookupPath);
 
 	    final String pathFromRequest = getCurrentContextPathFromRequest();
 	    if (pathFromRequest != null) {
 		hasBeenForwarded = true;
 		contents.clear();
-		Portal.getRootPortal().addPathContentsForTrailingPath(contents,
-			getTrailingPath(pathFromRequest));
-		final Content lastContent = contents.isEmpty() ? null : contents
-			.get(contents.size() - 1);
+		Portal.getRootPortal().addPathContentsForTrailingPath(contents, getTrailingPath(pathFromRequest));
+		final Content lastContent = contents.isEmpty() ? null : contents.get(contents.size() - 1);
 		if (lastContent != null && lastContent instanceof Functionality) {
 		    contents.remove(contents.size() - 1);
 		}
@@ -101,7 +100,9 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 		final Content content = contents.get(i);
 		stringBuilder.append("/");
 		stringBuilder.append(content.getName().getContent());
-		if (content == actualSelectedContainer) {
+		if (content == actualSelectedContainer
+			|| (content instanceof MetaDomainObjectPortal && !((MetaDomainObjectPortal) content).getStrategy()
+				.keepPortalInContentsPath())) {
 		    break;
 		}
 	    }
@@ -135,8 +136,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	final Module root = RootDomainObject.getInstance().getRootModule();
 
 	Content content = getSelectedContent();
-	Module parent = (content instanceof Functionality) ? ((Functionality) content).getModule()
-		: null;
+	Module parent = (content instanceof Functionality) ? ((Functionality) content).getModule() : null;
 	while (parent != null && parent.getModule() != root) {
 	    parent = parent.getModule();
 	}
@@ -190,8 +190,8 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
     public List<Content> getPathBetween(Container container, Content content) {
 	final int indexOfContainer = contents.indexOf(container);
 	final int indexOfContent = contents.indexOf(content);
-	return indexOfContainer <= indexOfContent && indexOfContainer >= 0 ? contents.subList(
-		indexOfContainer, indexOfContent + 1) : getEmptyList();
+	return indexOfContainer <= indexOfContent && indexOfContainer >= 0 ? contents.subList(indexOfContainer,
+		indexOfContent + 1) : getEmptyList();
     }
 
     private static List<Content> getEmptyList() {
@@ -200,25 +200,23 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 
     protected String getCurrentContextPathFromRequest() {
 	final HttpServletRequest httpServletRequest = getRequest();
-	String currentContextPath = httpServletRequest
-		.getParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+	String currentContextPath = httpServletRequest.getParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
 	if (currentContextPath == null || currentContextPath.length() == 0) {
-	    currentContextPath = (String) httpServletRequest
-		    .getAttribute(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+	    currentContextPath = (String) httpServletRequest.getAttribute(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
 	}
-	return currentContextPath == null || currentContextPath.length() == 0 ? null
-		: currentContextPath;
+	return currentContextPath == null || currentContextPath.length() == 0 ? null : currentContextPath;
     }
 
     public String getCurrentContextPath() {
-/*	String currentContextPath = getCurrentContextPathFromRequest();
-	if (currentContextPath == null) {*/
+	/*
+         * String currentContextPath = getCurrentContextPathFromRequest(); if
+         * (currentContextPath == null) {
+         */
 	final StringBuilder stringBuilder = new StringBuilder();
 	for (final Content content : contents) {
 	    if (content != RootDomainObject.getInstance().getRootPortal()) {
 		final String name = content.getName().getContent();
-		if (stringBuilder.length() > 0
-			|| (stringBuilder.length() == 0 && name.length() > 0 && name.charAt(0) != '/')) {
+		if (stringBuilder.length() > 0 || (stringBuilder.length() == 0 && name.length() > 0 && name.charAt(0) != '/')) {
 		    stringBuilder.append('/');
 		}
 		stringBuilder.append(name);

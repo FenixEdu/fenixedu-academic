@@ -19,4 +19,8 @@ public class PedagogicalCouncilPathProcessor extends AbstractPathProcessor {
     public Content getInitialContent() {
 	return PedagogicalCouncilSite.getSite();
     }
+    
+    public boolean keepPortalInContentsPath() {
+	return false;
+    }
 }

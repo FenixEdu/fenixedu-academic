@@ -40,4 +40,8 @@ public abstract class AbstractPathProcessor {
     public Content getInitialContent() {
 	return null;
     }
+    
+    public boolean keepPortalInContentsPath() {
+	return true;
+    }
 }
