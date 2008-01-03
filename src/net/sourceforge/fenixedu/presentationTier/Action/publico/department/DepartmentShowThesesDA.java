@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.UnitSite;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicShowThesesDA;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ThesisFilterBean;
@@ -16,7 +18,8 @@ import org.apache.struts.action.ActionMapping;
 public class DepartmentShowThesesDA extends PublicShowThesesDA {
 
     private Unit getUnit(HttpServletRequest request) {
-        Unit unit = (Unit) request.getAttribute("unit");
+        UnitSite site = (UnitSite) AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
+	Unit unit = site.getUnit();
         
         if (unit == null) {
             Integer id = getIntegerFromRequest(request, "selectedDepartmentUnitID");

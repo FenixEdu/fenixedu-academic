@@ -4,9 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
+
 <ul>
 	<li>
-		<bean:define id="unitId" name="unit" property="idInternal"/>
+		<bean:define id="site" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" toScope="request"/>
+		<bean:define id="unitId" name="site" property="unit.idInternal"/>
 		<html:link page="<%= "/units/viewSite.do?method=presentation&amp;unitID=" + unitId %>">
 			<bean:message key="label.siteUnit.section.start" bundle="MESSAGING_RESOURCES"/>
 		</html:link>
