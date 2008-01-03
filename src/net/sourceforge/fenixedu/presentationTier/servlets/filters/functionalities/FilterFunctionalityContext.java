@@ -98,11 +98,18 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	    final StringBuilder stringBuilder = new StringBuilder();
 	    for (int i = 0; i < contents.size(); i++) {
 		final Content content = contents.get(i);
+		if (content instanceof MetaDomainObjectPortal
+			&& !((MetaDomainObjectPortal) content).getStrategy().keepPortalInContentsPath()) {
+		    i++;
+		    if(actualSelectedContainer == contents.get(i)) {
+			stringBuilder.append("/");
+			stringBuilder.append(content.getName().getContent());
+			break;
+		    }
+		}
 		stringBuilder.append("/");
 		stringBuilder.append(content.getName().getContent());
-		if (content == actualSelectedContainer
-			|| (content instanceof MetaDomainObjectPortal && !((MetaDomainObjectPortal) content).getStrategy()
-				.keepPortalInContentsPath())) {
+		if (content == actualSelectedContainer) {
 		    break;
 		}
 	    }

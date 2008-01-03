@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -155,8 +157,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 		return list;
 	    }
 
-	    public void createList(HtmlList list, FilterFunctionalityContext context,
-		    Collection<MenuEntry> entries) {
+	    public void createList(HtmlList list, FilterFunctionalityContext context, Collection<MenuEntry> entries) {
 		for (MenuEntry entry : entries) {
 		    if (!entry.isVisible()) {
 			continue;
@@ -176,8 +177,6 @@ public class SiteMenuRenderer extends OutputRenderer {
 		}
 	    }
 
-	  
-
 	    private HtmlLink generateLink(String url, HtmlComponent body) {
 		HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
 
@@ -194,15 +193,14 @@ public class SiteMenuRenderer extends OutputRenderer {
 
 	    }
 
-	    public HtmlComponent generateComponent(FilterFunctionalityContext context, Content content,
-		    boolean canMakeLink) {
+	    public HtmlComponent generateComponent(FilterFunctionalityContext context, Content content, boolean canMakeLink) {
 
 		HtmlText text = new HtmlText(content.getName().getContent());
 		text.setFace(Face.STANDARD);
 		HtmlComponent component = text;
 
 		if (content.isAvailable()) {
-		    component = generateLink(getPath(context,content), component);
+		    component = generateLink(getPath(context, content), component);
 		}
 
 		MultiLanguageString title = content.getTitle();
@@ -221,8 +219,8 @@ public class SiteMenuRenderer extends OutputRenderer {
 		Container selectedContainer = context.getSelectedContainer();
 		Container container = (Container) context.getLastContentInPath(Site.class);
 		return selectedContainer != null
-			&& (selectedContainer == current || (container != selectedContainer && !selectedContainer.getPathTo(current)
-				.isEmpty()));
+			&& (selectedContainer == current || (container != selectedContainer && !selectedContainer.getPathTo(
+				current).isEmpty()));
 	    }
 
 	    private String getContextParamValue() {
@@ -238,7 +236,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 
 	};
     }
-    
+
     protected Collection<MenuEntry> getEntries(Object object) {
 	return getSite(object).getMenu();
     }
@@ -248,6 +246,18 @@ public class SiteMenuRenderer extends OutputRenderer {
     }
 
     protected String getPath(FilterFunctionalityContext context, Content content) {
-	return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context, Collections.EMPTY_LIST);
+	return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context, subPath(context
+		.getSelectedContainer(), content));
+    }
+
+    private List<String> subPath(Container start, Content end) {
+	List<Content> contents = start.getPathTo(end);
+	List<String> subPaths = new ArrayList<String>();
+	if (contents.size() > 2) {
+	    for (Content content : contents.subList(1, contents.size() - 1)) {
+		subPaths.add(content.getName().getContent());
+	    }
+	}
+	return subPaths;
     }
 }
