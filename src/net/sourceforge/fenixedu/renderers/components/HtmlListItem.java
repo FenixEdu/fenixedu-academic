@@ -53,7 +53,9 @@ public class HtmlListItem extends HtmlComponent {
         tag.setName("li");
         
         for (HtmlComponent child : this.body) {
-            tag.addChild(child.getOwnTag(context));
+            if (child != null) {
+        	tag.addChild(child.getOwnTag(context));
+            }
         }
         
         return tag;
