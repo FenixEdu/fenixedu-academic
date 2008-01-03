@@ -1,0 +1,87 @@
+package net.sourceforge.fenixedu.presentationTier.TagLib.content;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyTagSupport;
+
+import net.sourceforge.fenixedu.domain.contents.Content;
+
+public class ContentLinkTag extends BodyTagSupport {
+
+    protected String body = null;
+    protected String name = null;
+    protected String property = null;
+
+    public String getName() {
+	return (this.name);
+    }
+
+    public void setName(String name) {
+	this.name = name;
+    }
+
+    public String getProperty() {
+	return (this.property);
+    }
+
+    public void setProperty(String property) {
+	this.property = property;
+    }
+
+    @Override
+    public int doStartTag() throws JspException {
+	return EVAL_BODY_BUFFERED;
+    }
+
+    @Override
+    public int doAfterBody() throws JspException {
+	return SKIP_BODY;
+    }
+
+    @Override
+    public int doEndTag() throws JspException {
+	try {
+	    writeStartTag();
+	    write(getBodyContent().getString().trim());
+	    writeEndTag();
+	} catch (IOException e) {
+	    throw new JspException(e);
+	}
+
+	this.release();
+
+	return EVAL_PAGE;
+    }
+
+    protected void writeStartTag() throws IOException, JspException {
+	write("<a href=\"");
+	final Content content = DefineContentPathTag.getContent(name, pageContext, null, getProperty());
+	write(getContextPath());
+	write(content.getReversePath());
+	write("\">");
+    }
+
+    protected void writeEndTag() throws IOException {
+	write("</a>");
+    }
+
+    protected void write(final String text) throws IOException {
+	pageContext.getOut().write(text);
+    }
+
+    protected String getContextPath() {
+	final HttpServletRequest httpServletRequest = (HttpServletRequest) pageContext.getRequest();
+	return httpServletRequest.getContextPath();
+    }
+
+    @Override
+    public void release() {
+	super.release();
+	body = null;
+	name = null;
+	property = null;
+    }
+
+}
