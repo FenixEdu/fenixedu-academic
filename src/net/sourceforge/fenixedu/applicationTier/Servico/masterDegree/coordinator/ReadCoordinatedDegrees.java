@@ -39,15 +39,15 @@ public class ReadCoordinatedDegrees extends Service {
 	    }
 	}
 
-    for (ScientificCommission commission : person.getScientificCommissions()) {
-        ExecutionDegree executionDegree = commission.getExecutionDegree();
-        DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-        
-        if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
-            activeDegreeCurricularPlans.add(degreeCurricularPlan);
-        }
-    }
-    
+	for (ScientificCommission commission : person.getScientificCommissions()) {
+	    ExecutionDegree executionDegree = commission.getExecutionDegree();
+	    DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+
+	    if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
+		activeDegreeCurricularPlans.add(degreeCurricularPlan);
+	    }
+	}
+
 	final List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : activeDegreeCurricularPlans) {
 	    result.add(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
