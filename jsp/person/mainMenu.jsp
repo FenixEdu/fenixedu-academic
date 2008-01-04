@@ -25,18 +25,19 @@
 		</logic:notPresent>
 
 	</logic:notEmpty>
+
+	<logic:present role="MANAGER">
+		<li>
+			<html:link page="/contentManagement.do?method=viewContainer">
+			Root Portal
+			</html:link>
+			<html:link page="/portalManagement.do?method=prepare">
+			Meta Domain Objects
+			</html:link>
+		</li>
 	
-	<li>
-		<html:link page="/contentManagement.do?method=viewContainer">
-		Root Portal
-		</html:link>
-		<html:link page="/portalManagement.do?method=prepare">
-		Meta Domain Objects
-		</html:link>
-	</li>
-
-<!-- Functionalities -->
-	<li><html:link page="/functionalities/module/viewRoot.do">Funcionalidades</html:link></li>
-
+	<!-- Functionalities -->
+		<li><html:link page="/functionalities/module/viewRoot.do">Funcionalidades</html:link></li>
+	</logic:present>
 	
 </ul>
