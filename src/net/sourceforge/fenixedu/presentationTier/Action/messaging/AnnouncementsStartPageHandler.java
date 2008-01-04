@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
@@ -170,7 +171,8 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
     private void addBoardAnnouncements(HttpServletRequest request, final AnnouncementBoard board,
                 final AnnouncementPresentationBean announcementPresentationBean) {
-	if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
+	final Person person = getLoggedPerson(request);
+	if (board.hasReader(person) || board.hasWriter(person)) {
             board.addVisibleAnnouncements(announcementPresentationBean);
 	}
     }
