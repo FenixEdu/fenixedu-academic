@@ -1,8 +1,8 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<html:xhtml/>
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs mvert0">
@@ -95,22 +95,10 @@
 			<tr>
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTableCurrent1_2" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
-					<logic:notEmpty name="executionCourseView">
-						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-
-						<app:defineContentPath id="path" name="executionCourseView" property="executionCourse.site"/>
-						<bean:write name="path"/>
-						-
+					<logic:notEmpty name="executionCourseView">										
 						<app:contentLink name="executionCourseView" property="executionCourse.site">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
-						-
-
-						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
-											 + pageContext.findAttribute("executionCourseOID").toString()
-										%>" >
-							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</html:link>
+						</app:contentLink>				
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -132,12 +120,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTableCurrent3_4" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
-						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
-											 + pageContext.findAttribute("executionCourseOID").toString()
-										%>" >
+						<app:contentLink name="executionCourseView" property="executionCourse.site">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</html:link>
+						</app:contentLink>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -157,12 +142,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTableCurrent5" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" colspan="2">
 					<logic:notEmpty name="executionCourseView">
-						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
-											 + pageContext.findAttribute("executionCourseOID").toString()
-										%>" >
+						<app:contentLink name="executionCourseView" property="executionCourse.site">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</html:link>
+						</app:contentLink>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -195,12 +177,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTablePrevious1_2" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
-						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
-											 + pageContext.findAttribute("executionCourseOID").toString()
-										%>" >
+						<app:contentLink name="executionCourseView" property="executionCourse.site">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</html:link>
+						</app:contentLink>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -221,12 +200,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTablePrevious3_4" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
-						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
-											 + pageContext.findAttribute("executionCourseOID").toString()
-										%>" >
+						<app:contentLink name="executionCourseView" property="executionCourse.site">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</html:link>
+						</app:contentLink>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -246,12 +222,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTablePrevious5" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" colspan="2">
 					<logic:notEmpty name="executionCourseView">
-						<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
-						<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID="
-											 + pageContext.findAttribute("executionCourseOID").toString()
-										%>" >
+						<app:contentLink name="executionCourseView" property="executionCourse.site">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</html:link>
+						</app:contentLink>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>

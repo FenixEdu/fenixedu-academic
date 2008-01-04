@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -270,7 +271,8 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse) {
 	final Map<String, String> linkParameters = new HashMap<String, String>();
 	linkParameters.put("method", "evaluations");
-	linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
+	linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());	
+	linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "/disciplinas/" + executionCourse.getSite().getIdInternal() + "/"); 	
 	return linkParameters;
     }
 

@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class UIFenixCalendar extends UIInput {
@@ -190,7 +191,8 @@ public class UIFenixCalendar extends UIInput {
                         for (CalendarLink calendarLink : toDisplay) {
                             writer.startElement("br", this);
                             writer.endElement("br");
-                            if (calendarLink.isAsLink()) { 
+                            if (calendarLink.isAsLink()) {
+                        	writer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
                                 writer.startElement("a", this);
                                 writer.writeAttribute("style", "text-decoration:none", null);
                                 writer.writeAttribute("href", calendarLink.giveLink(editLinkPage), null);
@@ -243,6 +245,7 @@ public class UIFenixCalendar extends UIInput {
         if (createLink == null || iter.before(now)) {
             writer.write(new Integer(iter.get(Calendar.DAY_OF_MONTH)).toString());
         } else {
+            writer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
             writer.startElement("a", this);
             writer.writeAttribute("style", "text-decoration:none", null);
             writer.writeAttribute("href", createLink + dateLink(iter), null);

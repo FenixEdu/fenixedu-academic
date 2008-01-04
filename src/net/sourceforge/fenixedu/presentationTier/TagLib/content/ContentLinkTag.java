@@ -7,6 +7,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 public class ContentLinkTag extends BodyTagSupport {
 
@@ -56,6 +57,7 @@ public class ContentLinkTag extends BodyTagSupport {
     }
 
     protected void writeStartTag() throws IOException, JspException {
+	write(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
 	write("<a href=\"");
 	final Content content = DefineContentPathTag.getContent(name, pageContext, null, getProperty());
 	write(getContextPath());

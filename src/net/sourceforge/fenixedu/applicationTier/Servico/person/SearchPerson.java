@@ -63,7 +63,7 @@ public class SearchPerson extends Service {
 	    this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
 	    this.email = (email != null && !email.equals("")) ? StringNormalizer.normalize(email.trim()) : null;
 	    this.username = (username != null && !username.equals("")) ? StringNormalizer.normalize(username.trim()) : null;
-	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? documentIdNumber.trim().toLowerCase() : null;
+	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? documentIdNumber.trim() : null;
 	    this.idDocumentType = StringUtils.isEmpty(idDocumentType) ? null : IDDocumentType.valueOf(idDocumentType);
 	    this.studentNumber = studentNumber;
 	    this.externalPersons = externalPersons;
