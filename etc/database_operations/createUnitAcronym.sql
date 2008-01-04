@@ -6,8 +6,7 @@ create table UNIT_ACRONYM (
   index (KEY_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB ;
 
-alter table PARTY add column KEY_UNIT_ACRONYM int(11);
-alter table PARTY add index (KEY_UNIT_ACRONYM);
+alter table PARTY add column KEY_UNIT_ACRONYM int(11), add index (KEY_UNIT_ACRONYM), add index (ACRONYM);
 
 INSERT INTO UNIT_ACRONYM (ACRONYM)
 SELECT DISTINCT(LOWER(PARTY.ACRONYM)) FROM PARTY WHERE PARTY.ACRONYM IS NOT NULL;
