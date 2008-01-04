@@ -34,19 +34,21 @@ import org.apache.struts.action.ActionMapping;
 public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncementDispatchAction {
 
     protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {
-	String executionCourseId = request.getParameter("executionCourseID");
-	return executionCourseId == null ? null : Integer.valueOf(executionCourseId);
+
+	final String executionCourseIDString = request.getParameter("executionCourseID");
+
+	if (executionCourseIDString == null) {
+	    ExecutionCourseSite site = (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request)
+		    .getSelectedContainer();
+	    return site.getSiteExecutionCourse().getIdInternal();
+	}
+
+	return Integer.valueOf(executionCourseIDString);
     }
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
 	Integer id = this.getRequestedExecutionCourseId(request);
-	if (id == null) {
-	    ExecutionCourseSite site = (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request)
-		    .getSelectedContainer();
-	    return site.getSiteExecutionCourse();
-	} else {
-	    return RootDomainObject.getInstance().readExecutionCourseByOID(id);
-	}
+	return RootDomainObject.getInstance().readExecutionCourseByOID(id);	
     }
 
     @Override
@@ -61,8 +63,7 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
     }
 
     @Override
-    protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board,
-	    HttpServletRequest request) {
+    protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
 	boolean useArchive = request.getParameter("ommitArchive") == null;
 	if (useArchive) {
 	    return super.getThisMonthAnnouncements(board, request);
@@ -85,8 +86,8 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
     }
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	ExecutionCourse course = getRequestedExecutionCourse(request);
 	request.setAttribute("executionCourse", course);
 	return super.execute(mapping, actionForm, request, response);
@@ -107,20 +108,19 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
 	Collection<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>(1);
 	AnnouncementBoard board = this.getRequestedExecutionCourse(request).getBoard();
-	if (board.getReaders() == null
-		|| (getUserView(request) != null && board.getReaders().allows(getUserView(request)))) {
+	if (board.getReaders() == null || (getUserView(request) != null && board.getReaders().allows(getUserView(request)))) {
 	    boards.add(this.getRequestedExecutionCourse(request).getBoard());
 	}
 	return boards;
     }
 
-    public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	throw new NotAuthorizedActionException("cannot edit announcement");
     }
 
-    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	throw new NotAuthorizedActionException("cannot delete announcement");
     }
 }

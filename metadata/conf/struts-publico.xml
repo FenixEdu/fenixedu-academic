@@ -369,7 +369,7 @@
         <forward name="site-item" path="execution-course-item"/>
         <forward name="site-item-deny" path="execution-course-item-deny"/>
         <forward name="site-item-adviseLogin" path="execution-course-item-adviseLogin"/>
-    		<forward name="execution-course-rss" path="execution-course-rss"/>
+    	<forward name="execution-course-rss" path="execution-course-rss"/>
 		<forward name="execution-course-lesson-plannings" path="execution-course-lesson-plannings"/>
 		<forward name="execution-course-not-found" path="execution-course-not-found"/>
    	</action>

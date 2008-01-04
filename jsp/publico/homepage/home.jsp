@@ -5,7 +5,8 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="string" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <logic:present name="homepage">
@@ -81,26 +82,20 @@
 									<logic:match name="homepage" property="researchUnitHomepage" value="http://">
 										<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 										<td>
-											<html:link href="<%= url %>">
-												<bean:write name="homepage" property="researchUnit.content"/> 
-											</html:link>
+											<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 										</td>
 									</logic:match>
 									<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://">
 										<logic:match name="homepage" property="researchUnitHomepage" value="https://">
 											<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 											<td>
-												<html:link href="<%= url %>">
-													<bean:write name="homepage" property="researchUnit.content"/> 
-												</html:link>
+												<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 											</td>
 										</logic:match>
 										<logic:notMatch name="homepage" property="researchUnitHomepage" value="https://">
 											<td>
 												<bean:define id="url" type="java.lang.String">http://<bean:write name="homepage" property="researchUnitHomepage"/></bean:define>
-												<html:link href="<%= url %>">
-													<bean:write name="homepage" property="researchUnit.content"/> 
-												</html:link>
+												<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 											</td>
 										</logic:notMatch>
 									</logic:notMatch>
@@ -342,37 +337,32 @@
                 		<tr>
                 			<th><bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:</th>
                 			<td>
-        						<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" length="1">
-        							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
-        							<html:link href="<%= url %>">
-        								<bean:write name="executionCourse" property="nome"/>
-        							</html:link>
+
+        						<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" length="1">        						
+	        						<app:contentLink name="executionCourse" property="site">
+										<bean:write name="executionCourse" property="nome"/>
+									</app:contentLink>		        							        						
         						</logic:iterate>
+
         						<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" offset="1">
-        							,
-        							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
-        							<html:link href="<%= url %>">
-        								<bean:write name="executionCourse" property="nome"/>
-        							</html:link>
-        						</logic:iterate>
+        							,        							
+        							<app:contentLink name="executionCourse" property="site">
+										<bean:write name="executionCourse" property="nome"/>
+									</app:contentLink>	        						        						
+        						</logic:iterate>        						
                 			</td>
                 		</tr>
                 </logic:present>
             </logic:present>
 		</logic:equal>
-		
 						
 		</table>
-		
-
-
 
 <!--
 		<logic:equal name="homepage" property="showResearchUnitHomepage" value="true">
 			<br/>
 		</logic:equal>
 -->
-
 		
 	</logic:equal>
 </logic:present>

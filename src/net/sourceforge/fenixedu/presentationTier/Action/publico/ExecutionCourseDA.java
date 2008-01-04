@@ -42,20 +42,22 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     public final static int ANNOUNCEMENTS_TO_SHOW = 5;
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
 	final String executionCourseIDString = request.getParameter("executionCourseID");
+
 	ExecutionCourse executionCourse = null;
 	if (executionCourseIDString != null) {
-	    final Integer executionCourseID = Integer.valueOf(executionCourseIDString);
-	    executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	    executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseIDString));
 	} else {
-	    ExecutionCourseSite site = (ExecutionCourseSite) AbstractFunctionalityContext
-		    .getCurrentContext(request).getSelectedContainer();
+	    ExecutionCourseSite site = (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request)
+		    .getSelectedContainer();
 	    executionCourse = site.getSiteExecutionCourse();
 	}
 
 	request.setAttribute("executionCourse", executionCourse);
+	request.setAttribute("executionCourseID", executionCourse.getIdInternal());
 
 	return super.execute(mapping, actionForm, request, response);
     }
@@ -84,15 +86,13 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	    HttpServletResponse response) {
 	final ExecutionCourse course = (ExecutionCourse) request.getAttribute("executionCourse");
 
-	final Iterator<Announcement> announcementsIterator = course.getBoard().getActiveAnnouncements()
-		.iterator();
+	final Iterator<Announcement> announcementsIterator = course.getBoard().getActiveAnnouncements().iterator();
 	if (announcementsIterator.hasNext()) {
 	    request.setAttribute("lastAnnouncement", announcementsIterator.next());
 	}
 
 	int i = 0;
-	final Collection<Announcement> lastFiveAnnouncements = new ArrayList<Announcement>(
-		ANNOUNCEMENTS_TO_SHOW);
+	final Collection<Announcement> lastFiveAnnouncements = new ArrayList<Announcement>(ANNOUNCEMENTS_TO_SHOW);
 	while (announcementsIterator.hasNext() && i < ANNOUNCEMENTS_TO_SHOW) {
 	    lastFiveAnnouncements.add(announcementsIterator.next());
 	    i++;
@@ -121,8 +121,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	    if (professorshipID != null && professorshipID.equals("-1")) {
 		summariesSearchBean.setShowOtherProfessors(Boolean.TRUE);
 	    } else if (professorshipID != null && !professorshipID.equals("0")) {
-		summariesSearchBean.setProfessorship(rootDomainObject.readProfessorshipByOID(Integer
-			.valueOf(professorshipID)));
+		summariesSearchBean.setProfessorship(rootDomainObject.readProfessorshipByOID(Integer.valueOf(professorshipID)));
 	    }
 	}
 	return mapping.findForward("execution-course-summaries");
@@ -133,29 +132,27 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	return mapping.findForward("execution-course-objectives");
     }
 
-    public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	return mapping.findForward("execution-course-program");
     }
 
-    public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return mapping.findForward("execution-course-evaluation-method");
     }
 
-    public ActionForward bibliographicReference(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward bibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return mapping.findForward("execution-course-bibliographic-reference");
     }
 
-    public ActionForward lessonPlannings(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward lessonPlannings(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final ExecutionCourse executionCourse = getExecutionCourse(request);
 	Map<ShiftType, List<LessonPlanning>> lessonPlanningsMap = new TreeMap<ShiftType, List<LessonPlanning>>();
 	if (executionCourse.getSite().getLessonPlanningAvailable()) {
 	    for (ShiftType shiftType : executionCourse.getShiftTypes()) {
-		List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse
-			.getLessonPlanningsOrderedByOrder(shiftType);
+		List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
 		if (!lessonPlanningsOrderedByOrder.isEmpty()) {
 		    lessonPlanningsMap.put(shiftType, lessonPlanningsOrderedByOrder);
 		}
@@ -165,8 +162,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	return mapping.findForward("execution-course-lesson-plannings");
     }
 
-    public ActionForward schedule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward schedule(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final ExecutionCourse executionCourse = getExecutionCourse(request);
 	final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>();
 	for (final Lesson lesson : executionCourse.getLessons()) {
@@ -176,8 +172,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	return mapping.findForward("execution-course-schedule");
     }
 
-    public ActionForward shifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward shifts(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	return mapping.findForward("execution-course-shifts");
     }
 
@@ -186,14 +181,12 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	return mapping.findForward("execution-course-evaluations");
     }
 
-    public ActionForward marks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward marks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final ExecutionCourse executionCourse = getExecutionCourse(request);
 	final Map<Attends, Map<Evaluation, Mark>> attendsMap = new TreeMap<Attends, Map<Evaluation, Mark>>(
 		Attends.COMPARATOR_BY_STUDENT_NUMBER);
 	for (final Attends attends : executionCourse.getAttendsSet()) {
-	    final Map<Evaluation, Mark> evaluationsMap = new TreeMap<Evaluation, Mark>(
-		    ExecutionCourse.EVALUATION_COMPARATOR);
+	    final Map<Evaluation, Mark> evaluationsMap = new TreeMap<Evaluation, Mark>(ExecutionCourse.EVALUATION_COMPARATOR);
 	    attendsMap.put(attends, evaluationsMap);
 	    for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
 		if (evaluation.getPublishmentMessage() != null) {
@@ -216,37 +209,35 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	return mapping.findForward("execution-course-groupings");
     }
 
-    public ActionForward grouping(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward grouping(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final Grouping grouping = getGrouping(request);
 	request.setAttribute("grouping", grouping);
 	return mapping.findForward("execution-course-grouping");
     }
 
-    public ActionForward studentGroup(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward studentGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final StudentGroup studentGroup = getStudentGroup(request);
 	request.setAttribute("studentGroup", studentGroup);
 	return mapping.findForward("execution-course-student-group");
     }
 
-    public ActionForward studentGroupsByShift(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward studentGroupsByShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final Grouping grouping = getGrouping(request);
 	request.setAttribute("grouping", grouping);
 	final Shift shift = getShift(request);
 	if (shift != null) {
 	    request.setAttribute("shift", shift);
 	}
-	final List<StudentGroup> studentGroups = shift == null ? grouping.getStudentGroupsWithoutShift()
-		: grouping.readAllStudentGroupsBy(shift);
+	final List<StudentGroup> studentGroups = shift == null ? grouping.getStudentGroupsWithoutShift() : grouping
+		.readAllStudentGroupsBy(shift);
 	Collections.sort(studentGroups, StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
 	request.setAttribute("studentGroups", studentGroups);
 	return mapping.findForward("execution-course-student-groups-by-shift");
     }
 
-    public ActionForward rss(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward rss(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	return mapping.findForward("execution-course-rss");
     }
 
@@ -276,13 +267,12 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	return null;
     }
 
-    public ActionForward notFound(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward notFound(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	return mapping.findForward("execution-course-not-found");
     }
 
-    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return mapping.findForward("execution-course-first-page");
     }
 

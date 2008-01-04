@@ -16,11 +16,9 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjecti
  * 18:52:01,20/Out/2004
  */
 public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotContentRenderer {
+
     private String application;
 
-    /**
-     * @param application
-     */
     public ClassTimeTableWithLinksLessonContentRenderer(String application) {
 	setApplication(application);
     }
@@ -34,15 +32,12 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
 
 	    InfoLesson lesson = (InfoLesson) showOccupation;
 
-	    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX).append("<a href=\"").append(context)
-		    .append("/publico/");
-	    strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
-	    strBuffer.append("&amp;").append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME).append("=/disciplinas/");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getExecutionCourse().getSite().getIdInternal()).append("/\">");
+	    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    strBuffer.append("<a href=\"").append(context);
+	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getExecutionCourse().getSite().getReversePath());	    
+	    strBuffer.append("\">");	    
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
-	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(
-		    ")&nbsp;");
+	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
 	    if (lesson.getInfoRoomOccupation() != null) {
 		strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
@@ -54,13 +49,10 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
 
 	    InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
 
-	    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX).append("<a href=\"").append(context)
-		    .append("/publico/");
-	    strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
-	    strBuffer.append("&amp;").append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME).append("=/disciplinas/");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getExecutionCourse().getSite().getIdInternal()).append("/\">");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
+	    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    strBuffer.append("<a href=\"").append(context);
+	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getExecutionCourse().getSite().getReversePath());	    
+	    strBuffer.append("\">");	    
 	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 
 	    if (lesson.getInfoRoomOccupation() != null) {
@@ -72,17 +64,11 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
 
 	return new StringBuilder("");
     }
-    /**
-     * @return Returns the application.
-     */
+
     public String getApplication() {
 	return application;
     }
 
-    /**
-     * @param application
-     *                The application to set.
-     */
     public void setApplication(String application) {
 	this.application = application;
     }

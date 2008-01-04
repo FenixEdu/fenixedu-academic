@@ -247,6 +247,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
 			    } else if (evaluation instanceof Project) {
 				final Project project = (Project) evaluation;
+				
 				CalendarLink calendarLinkBegin = new CalendarLink();
 				calendarLinks.add(calendarLinkBegin);
 				calendarLinkBegin.setObjectOccurrence(project.getBegin());
@@ -272,7 +273,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 	final Map<String, String> linkParameters = new HashMap<String, String>();
 	linkParameters.put("method", "evaluations");
 	linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());	
-	linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "/disciplinas/" + executionCourse.getSite().getIdInternal() + "/"); 	
+	linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, executionCourse.getSite().getReversePath()); 	
 	return linkParameters;
     }
 

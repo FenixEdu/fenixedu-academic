@@ -1,10 +1,10 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<html:xhtml/>
 
 <bean:define id="site" name="executionCourse" property="site"/>
 
@@ -59,7 +59,7 @@
 					<bean:define id="announcementId" name ="announcement" property="idInternal" />
 					<li class="more-announc"><span class="more-announc-date">
 						<fr:view name="announcement" property="lastModification"/> - </span>
-						<html:link page="<%="/announcementManagement.do?method=viewAnnouncement&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;announcementId=" + announcementId %>">
+						<html:link page="<%="/announcementManagement.do?method=viewAnnouncement&amp;executionCourseID=" + request.getAttribute("executionCourseID") + "&amp;announcementId=" + announcementId %>">
 							<fr:view name="announcement" property="subject"/>
 						</html:link></li>
 				</logic:iterate>

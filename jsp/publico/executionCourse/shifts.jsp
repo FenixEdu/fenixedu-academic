@@ -1,9 +1,10 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
+<html:xhtml/>
 
 <h2>
 	<bean:message key="label.shifts" />
@@ -57,16 +58,14 @@
 				</td>
 				<td>
 				    <logic:notEmpty name="lesson" property="sala">
-						<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="lesson" property="sala.name"/>&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/>&amp;executionPeriodOID=<bean:write name="executionCourse" property="executionPeriod.idInternal"/>'>
-							<bean:write name="lesson" property="sala.name"/>
-						</a>
+						<bean:define id="url"><%= request.getContextPath() %>/publico/siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="lesson" property="sala.name"/>&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/>&amp;executionPeriodOID=<bean:write name="executionCourse" property="executionPeriod.idInternal"/></bean:define>
+						<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= url %>"><bean:write name="lesson" property="sala.name"/></a>
 					</logic:notEmpty>
 				</td>
 				<td rowspan=<%= shift.getAssociatedLessons().size() %>>
 					<logic:iterate id="schoolClass" name="shift" property="associatedClasses">
-						<a href="viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?classId=<bean:write name="schoolClass" property="idInternal"/>&amp;className=<bean:write name="schoolClass" property="nome"/>">
-							<bean:write name="schoolClass" property="nome" /><br/>
-						</a>
+						<bean:define id="url"><%= request.getContextPath() %>/publico/viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?classId=<bean:write name="schoolClass" property="idInternal"/>&amp;className=<bean:write name="schoolClass" property="nome"/></bean:define>						
+						<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= url %>"><bean:write name="schoolClass" property="nome" /><br/></a>
 					</logic:iterate>
 				</td>
 			</tr>
@@ -88,9 +87,8 @@
 				</td>
 				<td>
 				    <logic:notEmpty name="lesson" property="roomOccupation">
-						<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="lesson" property="roomOccupation.room.name"/>&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/>&amp;executionPeriodOID=<bean:write name="executionCourse" property="executionPeriod.idInternal"/>'>
-							<bean:write name="lesson" property="roomOccupation.room.name"/>
-						</a>
+				    	<bean:define id="url"><%= request.getContextPath() %>/publico/siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="lesson" property="roomOccupation.room.name"/>&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/>&amp;executionPeriodOID=<bean:write name="executionCourse" property="executionPeriod.idInternal"/></bean:define>
+						<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= url %>"><bean:write name="lesson" property="roomOccupation.room.name"/></a>
 					</logic:notEmpty>
 				</td>
 			</tr>
