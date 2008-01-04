@@ -95,14 +95,15 @@ public class Functionality extends Functionality_Base implements IFunctionality 
     }
 
     @Override
-    public void setExecutionPath(final String path) {
-	super.setExecutionPath(path);
+    public void setExecutionPath(final String executionPathString) {
+	invalidatePath();
+	super.setExecutionPath(executionPathString);
 	final ExecutionPath executionPath = getExecutionPathValue();
 	if (executionPath != null) {
 	    executionPath.delete();
 	}
-	if (path != null) {
-	    new ExecutionPath(this, path);
+	if (executionPathString != null) {
+	    new ExecutionPath(this, executionPathString);
 	}
     }
 
@@ -124,6 +125,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
     }
 
     public void setModule(Module module) {
+	invalidatePath();
 	Module oldModule = getModule();
 	module.addChild(this);
 	if(oldModule != null) {
@@ -654,16 +656,25 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 	return functionalities;
     }
 
+    private transient String path = null;
+
+    public void invalidatePath() {
+	path = null;
+    }
+
     @Override
     public String getPath() {
-	final StringBuilder stringBuilder = new StringBuilder();
-	getModule().appendPath(stringBuilder);
-	final String executionPath = getExecutionPath();
-	if (stringBuilder.charAt(stringBuilder.length() - 1) != '/' && executionPath.charAt(0) != '/') {
-	    stringBuilder.append('/');
+	if (path == null) {
+	    final StringBuilder stringBuilder = new StringBuilder();
+	    getModule().appendPath(stringBuilder);
+	    final String executionPath = getExecutionPath();
+	    if (stringBuilder.charAt(stringBuilder.length() - 1) != '/' && executionPath.charAt(0) != '/') {
+		stringBuilder.append('/');
+	    }
+	    stringBuilder.append(executionPath);
+	    path = stringBuilder.toString();
 	}
-	stringBuilder.append(executionPath);
-	return stringBuilder.toString();
+	return path;
     }
 
     //

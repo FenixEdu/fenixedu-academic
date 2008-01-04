@@ -121,16 +121,6 @@ public abstract class Forum extends Forum_Base {
         return new ConversationThread(this, creator, subject);
     }
 
-    public static List<Forum> readAllForuns() {
-	List<Forum> foruns = new ArrayList<Forum>();
-	for(Content content : RootDomainObject.getInstance().getContents()) {
-	    if(content instanceof Forum) {
-		foruns.add((Forum)content);
-	    }
-	}
-	return foruns;
-    }
-    
     public List<ConversationThread> getConversationThreads() {
 	List <ConversationThread>  conversationThreads  = new ArrayList<ConversationThread>();
 	for(Node node : getChildrenSet()) {

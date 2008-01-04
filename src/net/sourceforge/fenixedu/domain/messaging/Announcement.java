@@ -13,13 +13,14 @@ public class Announcement extends Announcement_Base {
 
     public static final Comparator<Announcement> NEWEST_FIRST = new Comparator<Announcement>() {
 	public int compare(Announcement o1, Announcement o2) {
-	    int result = o1.getBeginComparationDate().compareTo(o2.getBeginComparationDate());
-	    return (result != 0) ? -(result) : o1.getIdInternal().compareTo(o2.getIdInternal());
+	    int result = o2.getBeginComparationDate().compareTo(o1.getBeginComparationDate());
+	    return result != 0 ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
 	}
     };
-    
+
     private DateTime getBeginComparationDate() {
-	return getPublicationBegin() != null ? getPublicationBegin() : getCreationDate();
+	final DateTime publicationBegin = getPublicationBegin();
+	return publicationBegin != null ? publicationBegin : getCreationDate();
     }
     
     public Announcement() {

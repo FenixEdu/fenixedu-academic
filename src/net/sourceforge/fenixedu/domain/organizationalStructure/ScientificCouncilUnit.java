@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.ScientificCouncilSite;
-import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
@@ -84,4 +84,10 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     protected ScientificCouncilSite createSite() {
     	return new ScientificCouncilSite(this);
     }
+
+    public static ScientificCouncilUnit getScientificCouncilUnit() {
+	final Set<Party> parties = PartyType.getPartiesSet(PartyTypeEnum.SCIENTIFIC_COUNCIL);
+	return parties.isEmpty() ? null : (ScientificCouncilUnit) parties.iterator().next();
+    }
+
 }

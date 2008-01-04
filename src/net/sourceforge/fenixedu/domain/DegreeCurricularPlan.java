@@ -96,21 +96,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    if (finalCompare == 0) {
 		finalCompare = degreeCurricularPlan2.getName().compareTo(degreeCurricularPlan1.getName());
 	    }
-
-	    ExecutionDegree mostRecentExecutionDegree1 = degreeCurricularPlan1.getMostRecentExecutionDegree();
-	    ExecutionDegree mostRecentExecutionDegree2 = degreeCurricularPlan2.getMostRecentExecutionDegree();
-
-	    if (mostRecentExecutionDegree1 == null && mostRecentExecutionDegree2 == null) {
-		return finalCompare;
-	    } else if (mostRecentExecutionDegree1 == null) {
-		return 1;
-	    } else if (mostRecentExecutionDegree2 == null) {
-		return -1;
-	    } else {
-		final int executionDegreeCompare = mostRecentExecutionDegree2.compareTo(mostRecentExecutionDegree1);
-
-		return executionDegreeCompare == 0 ? finalCompare : executionDegreeCompare;
+	    if (finalCompare == 0) {
+		finalCompare = degreeCurricularPlan1.getIdInternal().compareTo(degreeCurricularPlan2.getIdInternal());
 	    }
+	    return finalCompare;
 	}
 
     };

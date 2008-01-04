@@ -60,6 +60,20 @@ public class Module extends Module_Base implements IFunctionality {
 	if(oldModule != null) {
 	    oldModule.removeChild(this);
 	}
+	invalidatePath();
+    }
+
+    public void invalidatePath() {
+	for (final Node node : getChildrenSet()) {
+	    final Content content = node.getChild();
+	    if (content instanceof Module) {
+		final Module childModule = (Module) content;
+		childModule.invalidatePath();
+	    } else if (content instanceof Functionality) {
+		final Functionality childFunctionality = (Functionality) content;
+		childFunctionality.invalidatePath();
+	    }
+	}
     }
 
     @Override

@@ -2287,25 +2287,27 @@ public class Person extends Person_Base {
 			.getExecutionYear());
     }
 
+    private final static List<DegreeType> degreeTypesForIsMasterDegreeOrBolonhaMasterDegreeCoordinator
+    		= Arrays.asList(new DegreeType[] { DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE });
     public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
-	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] {
-		DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE }));
+	return isCoordinatorFor(executionYear, degreeTypesForIsMasterDegreeOrBolonhaMasterDegreeCoordinator);
 
     }
 
+    private final static List<DegreeType> degreeTypesForisDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor
+    		= Arrays.asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
 	    ExecutionYear executionYear) {
-	return isCoordinatorFor(executionYear, Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
-		DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE }));
+	return isCoordinatorFor(executionYear, degreeTypesForisDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor);
 
     }
 
     public boolean isCoordinatorFor(ExecutionYear executionYear, List<DegreeType> degreeTypes) {
 	for (final Coordinator coordinator : getCoordinatorsSet()) {
-	    if (coordinator.hasExecutionDegree()
-		    && coordinator.getExecutionDegree().getExecutionYear() == executionYear
-		    && degreeTypes
-			    .contains(coordinator.getExecutionDegree().getDegree().getDegreeType())) {
+	    final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+	    if (executionDegree != null
+		    && executionDegree.getExecutionYear() == executionYear
+		    && degreeTypes.contains(executionDegree.getDegree().getDegreeType())) {
 		return true;
 	    }
 	}
