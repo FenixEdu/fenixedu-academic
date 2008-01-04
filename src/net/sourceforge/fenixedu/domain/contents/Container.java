@@ -3,13 +3,11 @@ package net.sourceforge.fenixedu.domain.contents;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Language;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
 
 import org.apache.commons.lang.StringUtils;
@@ -73,7 +71,7 @@ public abstract class Container extends Container_Base {
     }
 
     public <T extends Content> Collection<T> getOrderedChildren(Class<T> type) {
-	Set<T> contents = new HashSet<T>();
+	List<T> contents = new ArrayList<T>();
 
 	for (Node node : getOrderedChildrenNodes()) {
 	    T parent = (T) node.getChild();
@@ -88,22 +86,25 @@ public abstract class Container extends Container_Base {
 	return contents;
     }
 
-    public Collection<Content> getOrderedChildren(Class... types) {
-
-	List<Class> classes = new ArrayList<Class>();
-	for (int i = 0; i < types.length; i++) {
-	    classes.add(types[i]);
-	}
-
-	Set<Content> contents = new HashSet<Content>();
-	for (Node node : getOrderedChildrenNodes()) {
-	    Content child = node.getChild();
-	    if (classes.contains(child.getClass())) {
+    public Collection<Content> getOrderedChildren(final Class... types) {
+	final List<Content> contents = new ArrayList<Content>();
+	for (final Node node : getOrderedChildrenNodes()) {
+	    final Content child = node.getChild();
+	    if (isContentAssinableTo(child, types)) {
 		contents.add(child);
 	    }
 	}
-
 	return contents;
+    }
+
+    private boolean isContentAssinableTo(Content content, Class... types) {
+	final Class clazz = content.getClass();
+	for (final Class typeClass : types) {
+	    if (typeClass.isAssignableFrom(clazz)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public Collection<Node> getOrderedChildrenNodes() {
