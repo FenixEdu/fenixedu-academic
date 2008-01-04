@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
+import net.sourceforge.fenixedu.domain.functionalities.ExecutionPath;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
@@ -47,7 +48,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 
     private static PrintWriter logFile = null;
 
-    private static Class[] loggingClasses = { Node.class, Content.class, AvailabilityPolicy.class };
+    private static Class[] loggingClasses = { Node.class, Content.class, AvailabilityPolicy.class};
 
     private static OjbHelper objHelper = new OjbHelper();
     
@@ -98,7 +99,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
     public ResultSetInternalMethods preProcess(String sql, Statement statment, Connection conn)
 	    throws SQLException {
 	if (logFile != null && !sql.startsWith("SELECT")) {
-	    process(sql);
+	    process(sql.replaceAll("_binary",""));
 	}
 	return null;
     }
