@@ -69,8 +69,8 @@ public class Article extends Article_Base {
     @Override
     public String getResume() {
 	String resume = getParticipationsAndTitleString();
-	if ((getJournal() != null) && (getJournal().length() > 0))
-	    resume = resume + getJournal() + ", ";
+	if ((getScientificJournal() != null) && (getScientificJournal().getName().length() > 0))
+	    resume = resume + getScientificJournal().getName() + ", ";
 	if ((getNumber() != null) && (getNumber().length() > 0))
 	    resume = resume + "No. " + getNumber() + ", ";
 	if ((getVolume() != null) && (getVolume().length() > 0))
