@@ -288,7 +288,7 @@
 		<put name="body" value="/publico/executionCourse/studentGroupsByShift.jsp"/>
 	</definition>
     <definition name="definition.public.executionCourse.site" extends="definition.public.executionCourse">
-        <put name="body-context" value="/publico/executionCourse/siteContext.jsp"/>
+        <put name="page-context" value="/publico/executionCourse/siteContext.jsp"/>
     </definition>
 	<definition name="execution-course-section" extends="definition.public.executionCourse.site">
 		<put name="body" value="/commons/sites/public/section.jsp"/>

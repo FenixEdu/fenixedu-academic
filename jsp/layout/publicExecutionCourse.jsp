@@ -26,7 +26,7 @@
 		<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 		<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 
-
+		<tiles:insert attribute="page-context" ignore="true"/>
 		<tiles:insert attribute="rss" ignore="true" />
 		<tiles:insert attribute="keywords" ignore="true" />
 
@@ -64,9 +64,12 @@
 					</tr>
 				</table>
 			</logic:present>
+			
+			
 			<logic:notPresent name="executionCourse">
 				<bean:message bundle="GLOBAL_RESOURCES" key="error.message.resource.not.found"/>
 			</logic:notPresent>
+			
 		</div>
 
 		<div id="footer">
