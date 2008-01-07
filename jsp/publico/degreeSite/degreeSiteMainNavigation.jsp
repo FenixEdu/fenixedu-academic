@@ -9,22 +9,21 @@
 <html:xhtml/>
 
 <%
-Integer degreeID = (Integer) request.getAttribute("degreeID");
-if (degreeID == null) {
-	degreeID = Integer.valueOf(request.getParameter("degreeID"));
-}
+	net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext currentContext = (net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext) net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext.getCurrentContext(request);
+	net.sourceforge.fenixedu.domain.DegreeSite selectedContainer = (net.sourceforge.fenixedu.domain.DegreeSite) currentContext.getSelectedContainer();	
+	net.sourceforge.fenixedu.domain.Degree degree = selectedContainer.getDegree();
 
-String aditionalParameter = "";
-if (request.getAttribute("executionDegreeID") != null) {
-    Object executionDegreeID = request.getAttribute("executionDegreeID");
-	aditionalParameter = (executionDegreeID != null) ? "&amp;executionDegreeID=" + executionDegreeID.toString() : "";
-}
+	Integer degreeID = degree.getIdInternal();
 
-Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeID);
-if (degree != null) {
-    request.setAttribute("site", degree.getSite());
-}
+	String aditionalParameter = "";
+	if (request.getAttribute("executionDegreeID") != null) {
+    	Object executionDegreeID = request.getAttribute("executionDegreeID");
+		aditionalParameter = (executionDegreeID != null) ? "&amp;executionDegreeID=" + executionDegreeID.toString() : "";
+	}
 
+	if (degree != null) {
+	    request.setAttribute("site", degree.getSite());
+	}
 %>
 
 <fr:view name="site" type="net.sourceforge.fenixedu.domain.Site" layout="side-menu">
