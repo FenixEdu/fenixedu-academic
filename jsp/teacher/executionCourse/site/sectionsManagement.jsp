@@ -72,6 +72,7 @@
 				<fr:property name="schemaFor(Item)" value="site.item.name"/>
                 <fr:property name="childrenFor(Item)" value="directChildrenAsContent"/>
 				<fr:property name="schemaFor(Attachment)" value="content.in.tree"/>
+				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>
       		    <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
             <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${idInternal}&amp;" + context %>"/>

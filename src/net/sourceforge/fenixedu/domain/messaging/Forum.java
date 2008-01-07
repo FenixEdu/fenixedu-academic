@@ -5,7 +5,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
@@ -30,6 +32,11 @@ public abstract class Forum extends Forum_Base {
         setCreationDate(new DateTime());
         setName(name);
         setDescription(description);
+    }
+    
+    @Override
+    public boolean isParentAccepted(Container parent) {
+        return parent instanceof Site;
     }
 
     public boolean hasConversationThreadWithSubject(MultiLanguageString subject) {
