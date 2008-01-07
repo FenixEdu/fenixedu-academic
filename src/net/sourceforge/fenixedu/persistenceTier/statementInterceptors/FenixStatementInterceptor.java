@@ -48,20 +48,18 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 
     private static PrintWriter logFile = null;
 
-    private static Class[] loggingClasses = { Node.class, Content.class, AvailabilityPolicy.class};
+    private static Class[] loggingClasses = { Node.class, Content.class, AvailabilityPolicy.class };
 
     private static OjbHelper objHelper = new OjbHelper();
-    
-    private static Pattern findPattern = Pattern.compile("(UPDATE|INSERT|DELETE).*?("
-	    + objHelper.getTableNamesForClasses("|") + ")(\\s|\\().*");
+
+    private static Pattern findPattern = Pattern.compile("(UPDATE|INSERT|DELETE).*?(" + objHelper.getTableNamesForClasses("|")
+	    + ")(\\s|\\().*");
 
     private static Pattern getContentID = Pattern.compile(".*CONTENT_ID='(.*?)'.*");
 
-    private static Pattern deletePattern = Pattern
-	    .compile("DELETE FROM (.*) WHERE ID_INTERNAL = ([0-9]+)");
+    private static Pattern deletePattern = Pattern.compile("DELETE FROM (.*) WHERE ID_INTERNAL = ([0-9]+)");
 
-    private static Pattern insertPatternFindContents = Pattern
-	    .compile(".*\\((.*?)\\) VALUES \\((.*)\\)");
+    private static Pattern insertPatternFindContents = Pattern.compile(".*\\((.*?)\\) VALUES \\((.*)\\)");
 
     private static Pattern tokenPattern = Pattern.compile("TOKEN\\(([A-Z]+,[0-9]+)\\)");
 
@@ -91,15 +89,14 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 
     }
 
-    public ResultSetInternalMethods postProcess(String sql, Statement statment,
-	    ResultSetInternalMethods resultSet, Connection connection) throws SQLException {
+    public ResultSetInternalMethods postProcess(String sql, Statement statment, ResultSetInternalMethods resultSet,
+	    Connection connection) throws SQLException {
 	return resultSet;
     }
 
-    public ResultSetInternalMethods preProcess(String sql, Statement statment, Connection conn)
-	    throws SQLException {
+    public ResultSetInternalMethods preProcess(String sql, Statement statment, Connection conn) throws SQLException {
 	if (logFile != null && !sql.startsWith("SELECT")) {
-	    process(sql.replaceAll("_binary",""));
+	    process(sql.replaceAll("_binary", ""));
 	}
 	return null;
     }
@@ -121,13 +118,17 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 		logFile.write(resolve(sqlCommand) + " ;\n");
 	    }
 
+	    logFile.write("ALTER TABLE UUID_TEMP_TABLE ADD INDEX (COUNTER), ADD INDEX (UUID), ADD INDEX (FROM_UUID)");
+	    
 	    if (!uuidTableCommands.isEmpty()) {
 		for (Class clazz : loggingClasses) {
 		    Set<String> columns = objHelper.getInterestingColumnsForClass(clazz);
+		    
 		    for (String column : columns) {
-			logFile.write("\nUPDATE " + objHelper.getTableNameForClass(clazz)
-				+ " T, UUID_TEMP_TABLE UIT set T." + column + "=UIT.UUID WHERE T."
-				+ column + "=UIT.COUNTER AND T.CONTENT_ID = UIT.FROM_UUID;");
+
+			logFile.write("\nUPDATE " + objHelper.getTableNameForClass(clazz) + " T, UUID_TEMP_TABLE UIT, "
+				+ objHelper.getTableFromKey(clazz, column) + " CT set T." + column + "=CT.ID_INTERNAL WHERE T." + column
+				+ "=UIT.COUNTER AND T.CONTENT_ID = UIT.FROM_UUID AND CT.CONTENT_ID=UIT.UUID;");
 		    }
 		}
 	    }
@@ -162,18 +163,17 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 
     private String generateSQLUpdate(String sql) {
 	String tableName = sql.replaceAll("UPDATE (.*?) SET .*", "$1");
-	String ojbConcreteClass = sql.replaceAll("UPDATE .*OJB_CONCRETE_CLASS='(.*?)'.*","$1");
-	if(ojbConcreteClass.length() == sql.length()) {
+	String ojbConcreteClass = sql.replaceAll("UPDATE .*OJB_CONCRETE_CLASS='(.*?)'.*", "$1");
+	if (ojbConcreteClass.length() == sql.length()) {
 	    ojbConcreteClass = objHelper.getClassFromTableName(tableName).getName();
 	}
-	
+
 	Matcher contentMatcher = getContentID.matcher(sql);
 	if (contentMatcher.find()) {
 	    String mainContentId = contentMatcher.group(1);
-	    String modified = sql.replaceFirst("ID_INTERNAL = [0-9]+", "CONTENT_ID = '" + mainContentId
-		    + "'");
+	    String modified = sql.replaceFirst("ID_INTERNAL = [0-9]+", "CONTENT_ID = '" + mainContentId + "'");
 	    Pattern updatePattern = Pattern
-		    .compile(".*?((" + objHelper.getInterestingColumnsForClass(objHelper.getClassFromTableName(tableName),"|")
+		    .compile(".*?((" + objHelper.getInterestingColumnsForClass(objHelper.getClassFromTableName(tableName), "|")
 			    + ")=)([0-9]+).*?");
 
 	    Matcher replaceIdsMatcher = updatePattern.matcher(modified);
@@ -181,9 +181,8 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 		String idInternal = replaceIdsMatcher.group(3);
 		String parameter = replaceIdsMatcher.group(2);
 
-		modified = modified.replaceFirst(replaceIdsMatcher.group(1) + idInternal,
-			replaceIdsMatcher.group(1)
-				+ registerKey(objHelper.getTableFromKey(ojbConcreteClass, parameter), idInternal, mainContentId));
+		modified = modified.replaceFirst(replaceIdsMatcher.group(1) + idInternal, replaceIdsMatcher.group(1)
+			+ registerKey(objHelper.getTableFromKey(ojbConcreteClass, parameter), idInternal, mainContentId));
 	    }
 	    return modified;
 	}
@@ -192,8 +191,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 
     private String generateSQLInsert(String sql) {
 	String tableName = sql.replaceAll("INSERT INTO (.*?) \\(.*", "$1");
-	String sqlModified = sql.replace("ID_INTERNAL,", "").replaceFirst("VALUES \\([0-9]+,",
-		"VALUES (");
+	String sqlModified = sql.replace("ID_INTERNAL,", "").replaceFirst("VALUES \\([0-9]+,", "VALUES (");
 	Matcher findValues = insertPatternFindContents.matcher(sqlModified);
 	findValues.find();
 	String[] arguments = findValues.group(1).split(",");
@@ -207,16 +205,16 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 		ojbConcreteClass = values[i].substring(1, values[i].length() - 1);
 	    }
 	}
-	if(ojbConcreteClass == null) {
+	if (ojbConcreteClass == null) {
 	    ojbConcreteClass = objHelper.getClassFromTableName(tableName).getName();
 	}
 
 	for (int i = 0; i < arguments.length; i++) {
-	    if (arguments[i].matches(objHelper.getInterestingColumnsForClass(objHelper.getClassFromTableName(tableName),"|"))
+	    if (arguments[i].matches(objHelper.getInterestingColumnsForClass(objHelper.getClassFromTableName(tableName), "|"))
 		    && StringUtils.isNumeric(values[i])) {
 
-		sqlModified = sqlModified.replaceFirst(values[i], String.valueOf(registerKey(
-			objHelper.getTableFromKey(ojbConcreteClass, arguments[i]), values[i], mainUUID)));
+		sqlModified = sqlModified.replaceFirst(values[i], String.valueOf(registerKey(objHelper.getTableFromKey(
+			ojbConcreteClass, arguments[i]), values[i], mainUUID)));
 
 	    }
 	}
@@ -229,8 +227,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	if (idInternalMatcher.find()) {
 	    String idInternal = idInternalMatcher.group(2);
 	    String table = idInternalMatcher.group(1);
-	    return "DELETE FROM " + table + " WHERE CONTENT_ID = '"
-		    + getContentFromTable(table, idInternal) + "'";
+	    return "DELETE FROM " + table + " WHERE CONTENT_ID = '" + getContentFromTable(table, idInternal) + "'";
 	}
 	return null;
     }
@@ -238,8 +235,8 @@ public class FenixStatementInterceptor implements StatementInterceptor {
     private int registerKey(String table, String idInternal, String fromUUID) {
 	String contentId = findContentId(table, idInternal);
 	counter++;
-	uuidTableCommands.add("INSERT INTO UUID_TEMP_TABLE(COUNTER,UUID,FROM_UUID) VALUES(" + counter
-		+ ",'" + contentId + "','" + fromUUID + "')");
+	uuidTableCommands.add("INSERT INTO UUID_TEMP_TABLE(COUNTER,UUID,FROM_UUID) VALUES(" + counter + ",'" + contentId + "','"
+		+ fromUUID + "')");
 	return counter;
     }
 
@@ -251,12 +248,11 @@ public class FenixStatementInterceptor implements StatementInterceptor {
     private String getContentFromTable(String table, String idInternalAsString) {
 	try {
 	    if (connection == null) {
-		connection = PersistenceBrokerFactory.defaultPersistenceBroker()
-			.serviceConnectionManager().getConnection();
+		connection = PersistenceBrokerFactory.defaultPersistenceBroker().serviceConnectionManager().getConnection();
 		connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 	    }
-	    java.sql.PreparedStatement stmt = connection.prepareStatement("SELECT CONTENT_ID FROM "
-		    + table + " WHERE ID_INTERNAL= ?");
+	    java.sql.PreparedStatement stmt = connection.prepareStatement("SELECT CONTENT_ID FROM " + table
+		    + " WHERE ID_INTERNAL= ?");
 	    stmt.setString(1, idInternalAsString);
 	    java.sql.ResultSet set = stmt.executeQuery();
 	    if (set.next()) {
@@ -312,103 +308,120 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 
     public static class OjbHelper {
 
-	  private DescriptorRepository globalRepository = MetadataManager.getOjbMetadataManager().getGlobalRepository();
-	  
-	  public String getTableFromKey(String concreteClassName, String key) {
-		ObjectReferenceDescriptor descriptor = getOjbDescriptor(concreteClassName).getObjectReferenceDescriptorByName(extractNameFromKey(key));
-		return getTableNameForClass(descriptor.getItemClass());
-	    }
-	    
-	    private String extractNameFromKey(String key) {
-		String name = key.replace("KEY_", "");
-		name = name.toLowerCase();
-		StringBuffer buffer = new StringBuffer("");
-		for (String part : name.split("_")) {
-		    if (buffer.length() == 0) {
-			buffer.append(part);
-		    } else {
-			buffer.append(part.substring(0, 1).toUpperCase());
-			buffer.append(part.substring(1));
-		    }
-		}
-		return buffer.toString();
-	    }
+	private DescriptorRepository globalRepository = MetadataManager.getOjbMetadataManager().getGlobalRepository();
 
-	    public  String getTableNameForClass(Class clazz) {
-		return getOjbDescriptorFor(clazz).getFullTableName();
-	    }
-
-	    public String getTableNamesForClasses(String separator) {
-		StringBuffer tableNames = new StringBuffer("");
-		int i = 1;
-		for (Class clazz : loggingClasses) {
-		    tableNames.append(getTableNameForClass(clazz));
-		    if (i < loggingClasses.length) {
-			tableNames.append(separator);
-		    }
-		    i++;
-		}
-		return tableNames.toString();
-	    }
-
-	    public Class getClassFromTableName(String tableName) {
-		for (Class clazz : loggingClasses) {
-		    if (getOjbDescriptorFor(clazz).getFullTableName().equals(tableName)) {
-			return clazz;
-		    }
-		}
-		return null;
-	    }
-
-	    public String getInterestingColumnsForClass(Class clazz, String separator) {
-		Set<String> interestingKeys = getInterestingColumnsForClass(clazz);
-		StringBuffer buffer = new StringBuffer("");
-		for (String interestingKey : interestingKeys) {
-		    if (buffer.length() > 0) {
-			buffer.append(separator);
-		    }
-		    buffer.append(interestingKey);
-		}
-
-		return buffer.toString();
-	    }
-	    
-	    public Set<String> getInterestingColumnsForClass(Class clazz) {
+	public String getTableFromKey(Class clazz, String key) {
+	    String keyName =extractNameFromKey(key); 
+	    ObjectReferenceDescriptor descriptor = getOjbDescriptorFor(clazz).getObjectReferenceDescriptorByName(keyName);
+	    if (descriptor == null) {
 		Vector<Class> classes = getMappedExtendedClasses(clazz);
-		Set<String> interestingKeys = new HashSet<String>();
 		for (Class concreteClass : classes) {
-		    Vector<ObjectReferenceDescriptor> referenceDescriptors = getOjbDescriptorFor(concreteClass)
-			    .getObjectReferenceDescriptors();
-		    for (ObjectReferenceDescriptor referenceDescriptor : referenceDescriptors) {
-			if (shouldBeLogged(referenceDescriptor.getItemClass())) {
-			    interestingKeys.add(referenceDescriptor.getForeignKeyFields().get(0).toString().replaceAll("([a-z]*)([A-Z])(.*?)", "$1_$2$3").toUpperCase());
-			}
+		    descriptor = getOjbDescriptorFor(concreteClass).getObjectReferenceDescriptorByName(keyName);
+		    if(descriptor != null) {
+			break;
 		    }
 		}
+	    }
+	    return getTableNameForClass(descriptor.getItemClass());
+	}
 
-		return interestingKeys;
+	public String getTableFromKey(String concreteClassName, String key) {
+	    ObjectReferenceDescriptor descriptor = getOjbDescriptor(concreteClassName).getObjectReferenceDescriptorByName(
+		    extractNameFromKey(key));
+	    return getTableNameForClass(descriptor.getItemClass());
+	}
+
+	private String extractNameFromKey(String key) {
+	    String name = key.replace("KEY_", "");
+	    name = name.toLowerCase();
+	    StringBuffer buffer = new StringBuffer("");
+	    for (String part : name.split("_")) {
+		if (buffer.length() == 0) {
+		    buffer.append(part);
+		} else {
+		    buffer.append(part.substring(0, 1).toUpperCase());
+		    buffer.append(part.substring(1));
+		}
+	    }
+	    return buffer.toString();
+	}
+
+	public String getTableNameForClass(Class clazz) {
+	    return getOjbDescriptorFor(clazz).getFullTableName();
+	}
+
+	public String getTableNamesForClasses(String separator) {
+	    StringBuffer tableNames = new StringBuffer("");
+	    int i = 1;
+	    for (Class clazz : loggingClasses) {
+		tableNames.append(getTableNameForClass(clazz));
+		if (i < loggingClasses.length) {
+		    tableNames.append(separator);
+		}
+		i++;
+	    }
+	    return tableNames.toString();
+	}
+
+	public Class getClassFromTableName(String tableName) {
+	    for (Class clazz : loggingClasses) {
+		if (getOjbDescriptorFor(clazz).getFullTableName().equals(tableName)) {
+		    return clazz;
+		}
+	    }
+	    return null;
+	}
+
+	public String getInterestingColumnsForClass(Class clazz, String separator) {
+	    Set<String> interestingKeys = getInterestingColumnsForClass(clazz);
+	    StringBuffer buffer = new StringBuffer("");
+	    for (String interestingKey : interestingKeys) {
+		if (buffer.length() > 0) {
+		    buffer.append(separator);
+		}
+		buffer.append(interestingKey);
 	    }
 
-	    private boolean shouldBeLogged(Class itemClass) {
-		for (Class clazz : loggingClasses) {
-		    if (clazz.isAssignableFrom(itemClass)) {
-			return true;
+	    return buffer.toString();
+	}
+
+	public Set<String> getInterestingColumnsForClass(Class clazz) {
+	    Vector<Class> classes = getMappedExtendedClasses(clazz);
+	    Set<String> interestingKeys = new HashSet<String>();
+	    for (Class concreteClass : classes) {
+		Vector<ObjectReferenceDescriptor> referenceDescriptors = getOjbDescriptorFor(concreteClass)
+			.getObjectReferenceDescriptors();
+		for (ObjectReferenceDescriptor referenceDescriptor : referenceDescriptors) {
+		    if (shouldBeLogged(referenceDescriptor.getItemClass())) {
+			interestingKeys.add(referenceDescriptor.getForeignKeyFields().get(0).toString().replaceAll(
+				"([a-z]*)([A-Z])(.*?)", "$1_$2$3").toUpperCase());
 		    }
 		}
-		return false;
 	    }
 
-	    public Vector<Class> getMappedExtendedClasses(Class clazz) {
-		return getOjbDescriptorFor(clazz).getExtentClasses();
-	    }
+	    return interestingKeys;
+	}
 
-	    public ClassDescriptor getOjbDescriptor(String className) {
-		
-		return globalRepository.getDescriptorFor(className);
+	private boolean shouldBeLogged(Class itemClass) {
+	    for (Class clazz : loggingClasses) {
+		if (clazz.isAssignableFrom(itemClass)) {
+		    return true;
+		}
 	    }
-	    
-	    public ClassDescriptor getOjbDescriptorFor(Class clazz) {
-		return globalRepository.getDescriptorFor(clazz);
-	    }
+	    return false;
+	}
+
+	public Vector<Class> getMappedExtendedClasses(Class clazz) {
+	    return getOjbDescriptorFor(clazz).getExtentClasses();
+	}
+
+	public ClassDescriptor getOjbDescriptor(String className) {
+
+	    return globalRepository.getDescriptorFor(className);
+	}
+
+	public ClassDescriptor getOjbDescriptorFor(Class clazz) {
+	    return globalRepository.getDescriptorFor(clazz);
+	}
     }
 }
