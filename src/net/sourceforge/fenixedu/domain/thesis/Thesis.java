@@ -629,14 +629,8 @@ public class Thesis extends Thesis_Base {
      * @return <code>true</code> if the student can have a second thesis
      */
     public boolean isFinalThesis() {
-	Enrolment enrolment = getEnrolment();
-
-	if (enrolment.getTheses().size() == 1) {
-	    return !getEvaluationMark().equals(GradeScale.RE);
-	}
-	else {
-	    return true;
-	}
+	final Enrolment enrolment = getEnrolment();
+	return enrolment.getTheses().size() != 1 || !getEvaluationMark().getValue().equals(GradeScale.RE);
     }
 
     /**
@@ -645,7 +639,7 @@ public class Thesis extends Thesis_Base {
      * @return <code>true</code> if the student had a positive grade
      */
     public boolean isFinalAndApprovedThesis() {
-	return isFinalThesis() && !getEvaluationMark().equals(GradeScale.RE);
+	return !getEvaluationMark().getValue().equals(GradeScale.RE);
     }
 
     /**
