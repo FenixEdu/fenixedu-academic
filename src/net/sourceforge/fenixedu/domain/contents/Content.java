@@ -175,6 +175,10 @@ public abstract class Content extends Content_Base {
 	for (Node node : new ArrayList<Node>(getParents())) {
 	    node.delete();
 	}
+	
+	for(Container container : getInitialContainer()) {
+	    container.setInitialContent(null);
+	}
     }
 
     /**
