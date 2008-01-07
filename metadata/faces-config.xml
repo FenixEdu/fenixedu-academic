@@ -2291,6 +2291,14 @@
 			net.sourceforge.fenixedu.presentationTier.jsf.components.UIExtendedOutputText
 		</component-class>
 	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIContentLink
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIContentLink
+		</component-class>
+	</component>
 	
 	<validator>
 		<validator-id>regexValidator</validator-id>

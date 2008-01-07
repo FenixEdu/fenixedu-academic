@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 import org.apache.commons.beanutils.BeanComparator;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
+   
     protected final ResourceBundle bolonhaBundle = getResourceBundle("resources/BolonhaManagerResources");
     protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
     protected final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");

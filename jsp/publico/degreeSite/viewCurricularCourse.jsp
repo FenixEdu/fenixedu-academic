@@ -60,15 +60,13 @@
 		<h:outputText value="<strong>#{bolonhaBundle['competenceCourse']}</strong></td></tr>" escape="false"/>
 		<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
 			
-			<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="<a href='../department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.idInternal}'>#{CurricularCourseManagement.curricularCourse.name}</a>" escape="false"/> 
-
-			<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="<a href='../department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.idInternal}'>#{CurricularCourseManagement.curricularCourse.nameEn}</a>" escape="false"/> 			
-						
+			<fc:contentLink rendered="#{!CurricularCourseManagement.renderInEnglish}" contentIdInternal="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site.idInternal}" label="#{CurricularCourseManagement.curricularCourse.name}"></fc:contentLink>
+			<fc:contentLink rendered="#{CurricularCourseManagement.renderInEnglish}" contentIdInternal="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site.idInternal}" label="#{CurricularCourseManagement.curricularCourse.nameEn}"></fc:contentLink>
+									
 			<h:outputText value=" #{publicDegreeInfoBundle['public.degree.information.label.from.masculine']} "/>
-			<h:outputLink value="../department/showDepartmentCompetenceCourses.faces">
-				<h:outputText value="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}"/>
-				<f:param name="selectedDepartmentUnitID" value="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.idInternal}"/>
-			</h:outputLink>
+						
+			<fc:contentLink contentIdInternal="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site.idInternal}" label="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}"></fc:contentLink>
+														
 		<h:outputText value="</td></tr>" escape="false"/>
 	</h:panelGroup>
 	<!-- EXECUTION COURSES -->
@@ -78,7 +76,8 @@
 		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.associatedExecutionCourses}" var="executionCourse">
 			<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
 
-			<h:outputText value="<a href='../executionCourse.do?method=firstPage&amp;executionCourseID=#{executionCourse.idInternal}'>#{executionCourse.nome} (#{executionCourse.executionPeriod.executionYear.year} - #{executionCourse.executionPeriod.name})</a>" escape="false"/>
+			<fc:contentLink contentIdInternal="#{executionCourse.site.idInternal}" label="#{executionCourse.nome} (#{executionCourse.executionPeriod.executionYear.year} - #{executionCourse.executionPeriod.name})"></fc:contentLink>
+			
 			<h:outputText value="</td></tr>" escape="false"/>
 		</fc:dataRepeater>
 	</h:panelGroup>

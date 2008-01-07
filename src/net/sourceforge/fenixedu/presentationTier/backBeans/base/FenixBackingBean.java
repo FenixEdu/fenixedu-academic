@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;
@@ -226,4 +227,7 @@ public class FenixBackingBean {
         return FacesContext.getCurrentInstance().getMessages().hasNext();
     }
 
+    public String getHasContextCommentString() {
+	return ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+    }
 }

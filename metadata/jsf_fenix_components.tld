@@ -1792,4 +1792,27 @@
     </attribute>
   </tag>
     
+    
+   <tag>
+		<name>contentLink</name>
+		<tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.ContentLinkTag</tag-class>
+		<description>Content Link Tag</description>
+  
+		<attribute>
+			<name>contentIdInternal</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>		
+	</tag> 
+    
 </taglib>
