@@ -255,6 +255,10 @@
         <filter-name>ContextFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>GeneralForwardFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 	<filter-mapping>
 		<filter-name>RequestChecksumFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -273,10 +277,6 @@
 		<filter-name>ContentFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-    <filter-mapping>
-        <filter-name>GeneralForwardFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
 <!--
 	<filter-mapping>
 		<filter-name>ServletChooser</filter-name>
