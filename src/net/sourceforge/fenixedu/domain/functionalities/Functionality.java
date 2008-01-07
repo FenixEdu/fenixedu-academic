@@ -69,7 +69,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
     protected Functionality() {
 	super();
 
-	//setModule(Module.getRootModule());
+	// setModule(Module.getRootModule());
     }
 
     public Functionality(MultiLanguageString name) {
@@ -128,11 +128,11 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 	invalidatePath();
 	Module oldModule = getModule();
 	module.addChild(this);
-	if(oldModule != null) {
+	if (oldModule != null) {
 	    oldModule.removeChild(this);
 	}
 
-	//Functionality.checkMatchPath();
+	// Functionality.checkMatchPath();
     }
 
     /**
@@ -539,8 +539,13 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 
     @Override
     protected void disconnect() {
-	super.disconnect();
+	if (hasExecutionPathValue()) {
+	    getExecutionPathValue().delete();
+	}
+	for (; !getParameters().isEmpty(); getParameters().get(0).delete())
+	    ;
 
+	super.disconnect();
 	removeRootDomainObject();
     }
 
@@ -614,8 +619,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 
 	    if (result == null) {
 		for (Functionality functionality : Functionality.getFunctionalities()) {
-		    UUID_TABLE.put(functionality.getContentId(), new WeakReference<Functionality>(
-			    functionality));
+		    UUID_TABLE.put(functionality.getContentId(), new WeakReference<Functionality>(functionality));
 
 		    if (result == null && functionality.getContentId().equals(uuid)) {
 			result = functionality;
