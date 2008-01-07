@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -21,8 +19,6 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -40,11 +36,14 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     private transient AcademicChronology academicChronology;
 
-    public static final Comparator<AcademicCalendarEntry> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("begin"));
-	((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+    public static final Comparator<AcademicCalendarEntry> COMPARATOR_BY_BEGIN_DATE = new Comparator<AcademicCalendarEntry>() {
+
+	public int compare(final AcademicCalendarEntry o1, final AcademicCalendarEntry o2) {
+	    int c1 = o1.getBegin().compareTo(o2.getBegin());
+	    return c1 == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c1;
+	}
+	
+    };
 
     @Checked("AcademicCalendarPredicates.checkPermissionsToManageAcademicCalendarEntry")
     protected AcademicCalendarEntry() {
@@ -225,34 +224,22 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     @Override
     public DateTime getBegin() {
-	if(isVirtual()) {
-	    return getTemplateEntry().getBegin();
-	}
-	return super.getBegin();
+	return isVirtual() ? getTemplateEntry().getBegin() : super.getBegin();
     }
 
     @Override
     public DateTime getEnd() {
-	if(isVirtual()) {
-	    return getTemplateEntry().getEnd();
-	}
-	return super.getEnd();
+	return isVirtual() ? getTemplateEntry().getEnd() : super.getEnd();
     }
 
     @Override
     public MultiLanguageString getTitle() {
-	if(isVirtual() && !isRoot()) {
-	    return getTemplateEntry().getTitle();
-	}
-	return super.getTitle();
+	return isVirtual() && !isRoot() ? getTemplateEntry().getTitle() : super.getTitle();
     }
 
     @Override
     public MultiLanguageString getDescription() {
-	if(isVirtual() && !isRoot()) {
-	    return getTemplateEntry().getDescription();
-	}
-	return super.getDescription();
+	return isVirtual() && !isRoot() ? getTemplateEntry().getDescription() : super.getDescription();
     }
 
     protected void setTimeInterval(DateTime begin, DateTime end) {
@@ -360,15 +347,17 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
     
     public boolean isRedefined() {
-	return hasTemplateEntry() && super.getBegin() != null;
+	return isVirtual();
+//	return hasTemplateEntry() && super.getBegin() != null;
     }
 
     public boolean isVirtual() {
-	return hasTemplateEntry() && super.getBegin() == null;
+	return super.getBegin() == null && hasTemplateEntry();
     }
 
     public EntryState getEntryState() {
-	return isVirtual() ? EntryState.VIRTUAL : isRedefined() ? EntryState.REDEFINED : EntryState.ORIGINAL;
+	return isVirtual() ? EntryState.VIRTUAL : EntryState.ORIGINAL;
+//	return isVirtual() ? EntryState.VIRTUAL : isRedefined() ? EntryState.REDEFINED : EntryState.ORIGINAL;
     }
 
     public static enum EntryState {

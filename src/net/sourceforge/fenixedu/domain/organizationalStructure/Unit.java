@@ -1625,4 +1625,20 @@ public class Unit extends Unit_Base {
         }
         setUnitAcronym(unitAcronym);
     }
+
+    public boolean hasCurrentActiveWorkingEmployee(final Employee employee) {
+	final YearMonthDay currentDate = new YearMonthDay();
+	for (final Contract contract : getWorkingContracts()) {
+	    final Employee employeeFromContract = contract.getEmployee();
+	    if (employee == employeeFromContract && employeeFromContract.getActive().booleanValue() && contract.isActive(currentDate)) {
+		return true;
+	    }
+	}
+	for (final Unit subUnit : getSubUnits()) {
+	    if (subUnit.hasCurrentActiveWorkingEmployee(employee)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

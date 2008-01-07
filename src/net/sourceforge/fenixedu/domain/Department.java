@@ -310,4 +310,9 @@ public class Department extends Department_Base {
 	return isUserMemberOfCompetenceCourseMembersGroup(AccessControl.getPerson());
     }
 
+    public boolean hasCurrentActiveWorkingEmployee(final Employee employee) {
+	final Unit unit = getDepartmentUnit();
+	return unit != null && unit.hasCurrentActiveWorkingEmployee(employee);
+    }
+
 }

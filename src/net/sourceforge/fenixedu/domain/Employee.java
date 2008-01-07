@@ -243,7 +243,7 @@ public class Employee extends Employee_Base {
 
     private boolean unitDepartment(Unit unit, boolean onlyActiveEmployees) {
 	return (unit.isDepartmentUnit() && ((DepartmentUnit) unit).getDepartment() != null && (!onlyActiveEmployees || ((DepartmentUnit) unit)
-		.getDepartment().getAllCurrentActiveWorkingEmployees().contains(this)));
+		.getDepartment().hasCurrentActiveWorkingEmployee(this)));
     }
 
     public static Employee readByNumber(final Integer employeeNumber) {
