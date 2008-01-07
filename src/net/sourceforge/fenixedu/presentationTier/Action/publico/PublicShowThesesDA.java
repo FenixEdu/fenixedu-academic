@@ -1,11 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.SortedSet;
@@ -14,15 +12,11 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -122,42 +116,25 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
     protected void collectTheses(HttpServletRequest request, SortedSet<ExecutionYear> years, Map<String, Collection<Thesis>> theses, ExecutionYear year, ThesisState state, Collection<Degree> degrees) throws Exception {
         for (Degree degree : degrees) {
-            for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
-                for (CurricularCourse curricularCourse : dcp.getDissertationCurricularCourses(null)) {
-                    List<IEnrolment> enrolments = new ArrayList<IEnrolment>();
-    
-                    for (CurriculumModule module : curricularCourse.getCurriculumModules()) {
-                        if (module.isEnrolment()) {
-                            enrolments.add((IEnrolment) module);
-                        } else if (module.isDismissal()) {
-                            Dismissal dismissal = (Dismissal) module;
-    
-                            enrolments.addAll(dismissal.getSourceIEnrolments());
-                        }
-                    }
-    
-                    for (IEnrolment enrolment : enrolments) {
-                        if (year != null && enrolment.getExecutionYear() != year) {
-                            continue;
-                        }
-                        
-                        Thesis thesis = enrolment.getThesis();
-    
-                        if (thesis == null) {
-                            continue;
-                        }
-    
-                        if (state != null && thesis.getState() != state) {
-                            continue;
-                        }
-
-                        if (thesis.isFinalThesis() && !thesis.isFinalAndApprovedThesis()) {
-                            continue;
-                        }
-                        
-                        prepareMap(thesis, years, theses).add(thesis);
-                    }
+            for (final Thesis thesis : degree.getThesisSet()) {
+                if (state != null && thesis.getState() != state) {
+                    continue;
                 }
+
+        	final Enrolment enrolment = thesis.getEnrolment();
+        	if (enrolment != null) {
+        	    final ExecutionYear executionYear = enrolment.getExecutionYear();
+
+        	    if (year != null && executionYear != year) {
+                        continue;
+                    }
+
+                    if (thesis.isFinalThesis() && !thesis.isFinalAndApprovedThesis()) {
+                        continue;
+                    }
+                    
+                    prepareMap(thesis, years, theses).add(thesis);
+        	}
             }
         }
     }
