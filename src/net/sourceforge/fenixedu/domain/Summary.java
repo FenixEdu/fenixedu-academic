@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -29,12 +27,17 @@ import org.joda.time.YearMonthDay;
  */
 public class Summary extends Summary_Base {
 
-    public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("summaryDateYearMonthDay"), true);
-	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("summaryHourHourMinuteSecond"), true);
-	((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+    public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR = new Comparator<Summary>() {
+	public int compare(final Summary o1, final Summary o2) {
+	    final int c1 = o2.getSummaryDateYearMonthDay().compareTo(o1.getSummaryDateYearMonthDay());
+	    if (c1 == 0) {
+		final int c2 = o2.getSummaryHourHourMinuteSecond().compareTo(o1.getSummaryHourHourMinuteSecond());
+		return c2 == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c2;
+	    } else {
+		return c1;
+	    }
+	}	
+    };
 
     public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
 	    Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher,

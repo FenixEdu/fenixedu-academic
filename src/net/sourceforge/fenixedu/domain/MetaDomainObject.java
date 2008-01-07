@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -63,10 +66,21 @@ public class MetaDomainObject extends MetaDomainObject_Base {
          * @return a MetaDomainObject that is the reification of the given type
          *         of <code>null</code> if none is available
          */
+    private static final Map<Class, MetaDomainObject> metaDomainObjectMap = new HashMap<Class, MetaDomainObject>();
     public static MetaDomainObject getMeta(Class type) {
-	for (MetaDomainObject meta : RootDomainObject.getInstance().getMetaDomainObjects()) {
-	    if (type.equals(meta.getConcreteType())) {
-		return meta;
+	final MetaDomainObject result = metaDomainObjectMap.get(type);
+	if (result != null && result.getRootDomainObject() == RootDomainObject.getInstance() && type == result.getConcreteType()) {
+	    return result;
+	}
+
+	for (final MetaDomainObject metaDomainObject : RootDomainObject.getInstance().getMetaDomainObjects()) {
+	    final Class concreteType = metaDomainObject.getConcreteType();
+	    if (type == concreteType) {
+		metaDomainObjectMap.put(concreteType, metaDomainObject);
+		return metaDomainObject;
+	    }
+	    if (!metaDomainObjectMap.containsKey(concreteType)) {
+		metaDomainObjectMap.put(concreteType, metaDomainObject);
 	    }
 	}
 

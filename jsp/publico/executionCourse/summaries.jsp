@@ -3,7 +3,6 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <h2><bean:message key="label.summaries"/></h2>
@@ -39,18 +38,18 @@
 					<logic:iterate id="shift" name="executionCourse" property="shiftsOrderedByLessons">
 						<bean:define id="shiftID" name="shift" property="idInternal"/>
 						<html:option value="<%= shiftID.toString() %>">
-							<logic:iterate id="lesson" name="shift" property="lessonsOrderedByWeekDayAndStartTime" length="1">
+							<logic:iterate id="lesson" type="net.sourceforge.fenixedu.domain.Lesson" name="shift" property="lessonsOrderedByWeekDayAndStartTime" length="1">
 								<bean:write name="lesson" property="diaSemana"/>
-								(<dt:format pattern="HH:mm"><bean:write name="lesson" property="inicio.time.time"/></dt:format>
-								-<dt:format pattern="HH:mm"><bean:write name="lesson" property="fim.time.time"/></dt:format>)
+								(<%= lesson.getBeginHourMinuteSecond().toString("HH:mm") %>
+								-<%= lesson.getEndHourMinuteSecond().toString("HH:mm") %>)
 								<logic:notEmpty name="lesson" property="roomOccupation">
 									<bean:write name="lesson" property="roomOccupation.room.nome"/>
 								</logic:notEmpty>
 							</logic:iterate>
-							<logic:iterate id="lesson" name="shift" property="lessonsOrderedByWeekDayAndStartTime" offset="1">
+							<logic:iterate id="lesson" type="net.sourceforge.fenixedu.domain.Lesson" name="shift" property="lessonsOrderedByWeekDayAndStartTime" offset="1">
 								,
-								(<dt:format pattern="HH:mm"><bean:write name="lesson" property="inicio.time.time"/></dt:format>
-								-<dt:format pattern="HH:mm"><bean:write name="lesson" property="fim.time.time"/></dt:format>)
+								(<%= lesson.getBeginHourMinuteSecond().toString("HH:mm") %>
+								-<%= lesson.getEndHourMinuteSecond().toString("HH:mm") %>)
 								<logic:notEmpty name="lesson" property="roomOccupation">
 									<bean:write name="lesson" property="roomOccupation.room.nome"/>
 								</logic:notEmpty>
@@ -93,17 +92,13 @@
 </logic:empty>
 
 <logic:notEmpty name="summaries">
-	<logic:iterate id="summary" name="summaries" >	
-		<bean:define id="summaryId" type="java.lang.Integer" name ="summary" property="idInternal" />
-		<div id="<%= "s" + summaryId %>">
+	<logic:iterate id="summary" name="summaries" type="net.sourceforge.fenixedu.domain.Summary">	
+		<bean:define id="summaryIdDiv" type="java.lang.String">s<bean:write name ="summary" property="idInternal" /></bean:define>
+		<div id="<%= summaryIdDiv %>">
 			<logic:present name="summary" property="shift">
 				<p class="mtop2 mbottom0">
-					<dt:format pattern="dd/MM/yyyy">
-						<bean:write name="summary" property="summaryDate.time"/>
-					</dt:format>
-					<dt:format pattern="HH:mm">
-						<bean:write name="summary" property="summaryHour.time"/>
-					</dt:format>
+					<%= summary.getSummaryDateYearMonthDay().toString("dd/MM/yyyy") %>
+					<%= summary.getSummaryHourHourMinuteSecond().toString("HH:mm") %>
 				   	
 					<logic:present name="summary" property="room">
 						<logic:notEmpty name="summary" property="room">
@@ -129,20 +124,6 @@
 				</p>
 			</logic:present>
 
-			<%--		
-			<logic:notPresent name="summary" property="infoShift">
-				<bean:message key="label.summary.lesson" />
-				&nbsp;
-				<dt:format pattern="dd/MM/yyyy">
-					<bean:write name="summary" property="summaryDate.time"/>
-				</dt:format>
-				&nbsp;
-				<dt:format pattern="HH:mm">
-					<bean:write name="summary" property="summaryHour.time"/>
-				</dt:format>
-			</logic:notPresent>
-			--%>
-					
 			<logic:present name="summary" property="title">	
 				<logic:notEmpty name="summary" property="title">		
 					<h3 class="mvert05"><bean:write name="summary" property="title"/></h3>
@@ -156,9 +137,7 @@
 			<div class="details mtop025">
 				<span class="updated-date">
 					<bean:message key="message.modifiedOn" />
-					<dt:format pattern="dd/MM/yyyy HH:mm">
-						<bean:write name="summary" property="lastModifiedDate.time"/>
-					</dt:format>
+					<%= summary.getLastModifiedDateDateTime().toString("dd/MM/yyyy HH:mm") %>
 				</span>
 		
 				<logic:notEmpty name="summary" property="professorship">
