@@ -99,3 +99,4 @@ execute "Create Treasury Initial Page" createTreasuryInitialPage.sql
 
 execute "Populate Execution path table" populateExecutionPathTable.sql
 
+execute "Removing Slashs from content Names" removeSlashFromContentNames.sql
