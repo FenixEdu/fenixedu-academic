@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.requestWrappers.RequestWrapper;
 
@@ -28,7 +27,6 @@ public class ContentFilter implements Filter {
 
     private String errorPageLogged;
 
-    private String publicPrefix;
 
     private static final String SECTION_PATH = "/publico/viewGenericContent.do?method=viewSection";
 
@@ -37,7 +35,6 @@ public class ContentFilter implements Filter {
     public static String FUNCTIONALITY_PARAMETER = "_f";
 
     public void init(FilterConfig config) throws ServletException {
-	// nothing
     }
 
     public void destroy() {
@@ -74,32 +71,17 @@ public class ContentFilter implements Filter {
 	    final FilterFunctionalityContext functionalityContext) throws ServletException, IOException {
 
 	Content content = functionalityContext.getSelectedContent();
-	
-	if (content instanceof Section && content.isAvailable(functionalityContext)) {
+
+	if (content instanceof Section) {
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, SECTION_PATH);
-	
-	} else if (content instanceof Item && content.isAvailable(functionalityContext)) {
+
+	} else if (content instanceof Item) {
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, ITEM_PATH);
-	
-	} else if (content instanceof Functionality && content.isAvailable(functionalityContext)) {
+
+	} else if (content instanceof Functionality) {
 	    Functionality functionality = (Functionality) content;
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
-	
-	} else {
-	    final IUserView userView = AccessControl.getUserView();
-	    showUnavailablePage(userView, httpServletRequest, httpServletResponse);
-	}
-
-    }
-
-    /**
-     * Redirects the client to the page showing that the functionality is not
-     * available.
-     */
-    private void showUnavailablePage(final IUserView userView, final HttpServletRequest request,
-	    final HttpServletResponse response) throws IOException, ServletException {
-	final String errorPageToDispatch = userView == null || userView.isPublicRequester() ? errorPage : errorPageLogged;
-	dispatch(request, response, errorPageToDispatch);
+	} 
     }
 
     protected void dispatch(final HttpServletRequest request, final HttpServletResponse response, final String path)

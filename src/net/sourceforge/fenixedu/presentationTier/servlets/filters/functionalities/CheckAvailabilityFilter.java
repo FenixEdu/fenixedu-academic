@@ -13,15 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.requestWrappers.RequestWrapper;
 
 /**
  * This filter restricts the access to certain functionalities based on the
@@ -48,11 +43,6 @@ public class CheckAvailabilityFilter implements Filter {
 
     private String errorPageLogged;
 
-    private String publicPrefix;
-
-    private static final String SECTION_PATH = "/publico/viewGenericContent.do?method=viewSection";
-    
-    private static final String ITEM_PATH = "/publico/viewGenericContent.do?method=viewItem";
     /**
          * Initializes the filter. There are two init parameters that are used
          * by this filter.
@@ -68,7 +58,6 @@ public class CheckAvailabilityFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
 	this.errorPage = config.getInitParameter("error.page");
 	this.errorPageLogged = config.getInitParameter("error.page.logged");
-	this.publicPrefix = config.getInitParameter("public.prefix");
     }
 
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse,
@@ -94,6 +83,7 @@ public class CheckAvailabilityFilter implements Filter {
 	if (content != null && !content.isAvailable(functionalityContext)) {
 	    final IUserView userView = AccessControl.getUserView();
 	    showUnavailablePage(userView, httpServletRequest, httpServletResponse);
+	    return;
 	}
 
 	filterChain.doFilter(httpServletRequest, httpServletResponse);
@@ -116,10 +106,7 @@ public class CheckAvailabilityFilter implements Filter {
          */
     private void showUnavailablePage(final IUserView userView, final HttpServletRequest request,
 	    final HttpServletResponse response) throws IOException, ServletException {
-	final String servletPath = request.getServletPath().substring(request.getContextPath().length());
-
-	final String errorPageToDispatch = servletPath.startsWith(publicPrefix) || userView == null
-		|| userView.isPublicRequester() ? errorPage : errorPageLogged;
+	final String errorPageToDispatch = userView == null || userView.isPublicRequester() ? errorPage : errorPageLogged;
 	dispatch(request, response, errorPageToDispatch);
     }
 
