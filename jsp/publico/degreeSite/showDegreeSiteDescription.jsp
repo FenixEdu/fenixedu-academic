@@ -2,7 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 
@@ -57,11 +58,13 @@
 				<%
 					if (homepageWebAddres.startsWith("http")) {
 				%>
-					<a target="_blank" href="<%= homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
+					<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING %><a target="_blank" href="<%= homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
 				<%
 					} else {
 				%>
-					<a target="_blank" href="<%= ".." + homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
+					<app:contentLink name="responsibleCoordinatorTeacher" property="person.homepage" target="_blank">
+						<bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/>
+					</app:contentLink>					
 				<%
 					}
 				%>

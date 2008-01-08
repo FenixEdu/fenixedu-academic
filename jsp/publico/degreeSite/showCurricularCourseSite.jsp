@@ -1,8 +1,9 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
+<html:xhtml/>
 
 <logic:present name="infoCurriculum" >
 
@@ -80,11 +81,10 @@
 				<logic:iterate id="infoExecutionCourse" name="infoCurricularCourse" property="infoAssociatedExecutionCourses">
 					<logic:notEqual name="infoExecutionCourse" property="infoExecutionPeriod.state.stateCode" value="NO">
 						<tr>
-							<td class="box_cell">
-								<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal" />
-								<html:link page="<%= "/executionCourse.do?method=firstPage&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID").toString() %>">
-									<bean:write name="infoExecutionCourse" property="nome" />&nbsp;(<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>&nbsp;-&nbsp;<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>)
-								</html:link>
+							<td class="box_cell">								
+								<app:contentLink name="infoExecutionCourse" property="executionCourse.site">
+									<bean:write name="infoExecutionCourse" property="nome" />&nbsp;(<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>&nbsp;-&nbsp;<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>)							
+								</app:contentLink>								
 							</td>
 						</tr>
 					</logic:notEqual>

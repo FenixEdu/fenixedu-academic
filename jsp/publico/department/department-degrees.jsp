@@ -1,10 +1,9 @@
 <%@ page language="java" %>
-
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 <html:xhtml/>
 
 <div class="breadcumbs mvert0">
@@ -50,11 +49,10 @@
     
         <ul>
             <logic:iterate id="degree" name="<%= typeName %>">
-                <li>
-                    <bean:define id="degreeId" name="degree" property="idInternal"/>
-                    <html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + degreeId %>">
-                        <fr:view name="degree" property="nameI18N"/>
-                    </html:link>
+                <li>                
+                	<app:contentLink name="degree" property="site">
+                		<fr:view name="degree" property="nameI18N"/>
+                	</app:contentLink>                    
                 </li>
             </logic:iterate>
         </ul>
