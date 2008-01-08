@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -22,11 +22,10 @@
 		</td>
 		<td class="personInfo_info">
 			<p class="mtop05 mbottom05" style="font-size: 1.1em;">
-				<logic:equal name="teacher" property="person.homePageAvailable" value="true">
-					<bean:define id="istUsername" name="teacher" property="person.istUsername"/>
-					<a href="<%= request.getContextPath() %>/homepage/<%= istUsername %>">
-						<fr:view name="teacher" property="person.nickname" layout="person-name"/>
-					</a>
+				<logic:equal name="teacher" property="person.homePageAvailable" value="true">					
+					<app:contentLink name="teacher" property="person.homepage" scope="request">
+						<fr:view name="teacher" property="person.nickname" layout="person-name"/>				
+					</app:contentLink>							
 				</logic:equal>
 				<logic:notEqual name="teacher" property="person.homePageAvailable" value="true">
 					<fr:view name="teacher" property="person.nickname" layout="person-name"/>
