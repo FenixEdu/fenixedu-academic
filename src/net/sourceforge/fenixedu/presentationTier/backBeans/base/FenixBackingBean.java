@@ -230,4 +230,8 @@ public class FenixBackingBean {
     public String getHasContextCommentString() {
 	return ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
     }
+    
+    public String getContentContextPathAttributeName() {
+	return ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME;
+    }
 }

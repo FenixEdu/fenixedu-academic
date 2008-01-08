@@ -35,11 +35,13 @@ public class UIContentLink extends UIOutput {
 	Content content = (Content) this.getAttributes().get("content");
 	String label = (String) this.getAttributes().get("label");
 
-	writer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
-	writer.append("<a href=\"");
-	writer.append(getContextPath(context));
-	writer.append(content.getReversePath());
-	writer.append("\">").append(label).append("</a>");
+	if (content != null) {
+	    writer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    writer.append("<a href=\"");
+	    writer.append(getContextPath(context));
+	    writer.append(content.getReversePath());
+	    writer.append("\">").append(label).append("</a>");
+	}
     }
 
     private static String getContextPath(FacesContext facesContext) {

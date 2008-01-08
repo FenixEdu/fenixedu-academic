@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.faces.component.UISelectItems;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -20,11 +21,14 @@ import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -32,6 +36,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -41,6 +46,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.springframework.web.jsf.FacesContextUtils;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -378,8 +384,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getSelectedDepartmentUnitID() {
-        if (selectedDepartmentUnitID == null) {
-            if (getAndHoldIntegerParameter("selectedDepartmentUnitID") != null) {
+        if (selectedDepartmentUnitID == null) {            
+            Container site = AbstractFunctionalityContext.getCurrentContext(getRequest()).getSelectedContainer();
+            if(site != null && site instanceof DepartmentSite) {
+        	selectedDepartmentUnitID = ((DepartmentSite)site).getDepartment().getDepartmentUnit().getIdInternal();
+            } else if (getAndHoldIntegerParameter("selectedDepartmentUnitID") != null) {
                 selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
             } else if (getPersonDepartment() != null) {
                 selectedDepartmentUnitID = getPersonDepartment().getDepartmentUnit().getIdInternal();

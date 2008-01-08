@@ -60,9 +60,9 @@
 		<h:outputText value="<strong>#{bolonhaBundle['competenceCourse']}</strong></td></tr>" escape="false"/>
 		<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
 			
-			<fc:contentLink rendered="#{!CurricularCourseManagement.renderInEnglish}" content="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site}" label="#{CurricularCourseManagement.curricularCourse.name}"></fc:contentLink>
-			<fc:contentLink rendered="#{CurricularCourseManagement.renderInEnglish}" content="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site}" label="#{CurricularCourseManagement.curricularCourse.nameEn}"></fc:contentLink>
-									
+			<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.hasContextCommentString}<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.idInternal}&amp;#{CurricularCourseManagement.contentContextPathAttributeName}=#{CurricularCourseManagement.departmentUnit.site.reversePath}'>#{CurricularCourseManagement.curricularCourse.name}</a>" escape="false"/> 
+			<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.hasContextCommentString}<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.idInternal}&amp;#{CurricularCourseManagement.contentContextPathAttributeName}=#{CurricularCourseManagement.departmentUnit.site.reversePath}'>#{CurricularCourseManagement.curricularCourse.nameEn}</a>" escape="false"/> 			
+										
 			<h:outputText value=" #{publicDegreeInfoBundle['public.degree.information.label.from.masculine']} "/>
 						
 			<fc:contentLink content="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site}" label="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}"></fc:contentLink>

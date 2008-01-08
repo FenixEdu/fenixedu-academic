@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.department" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	
+	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
@@ -17,23 +17,26 @@
 	<h:outputLink value="#{globalBundle['institution.url']}" >
 		<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
 	</h:outputLink>
+	
 	&nbsp;&gt;&nbsp;
 	<h:outputLink target="_blank" value="#{globalBundle['institution.url']}#{globalBundle['link.institution.structure']}">
 		<h:outputText value="#{publicDepartmentBundle['structure']}"/>
 	</h:outputLink>
+	
 	&nbsp;&gt;&nbsp;
 	<h:outputLink value="showDepartments.faces">
 		<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
 	</h:outputLink>
+	
 	&nbsp;&gt;&nbsp;
-	<h:outputLink value="departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=#{CompetenceCourseManagement.selectedDepartmentUnit.idInternal}">
-		<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}"/>
-	</h:outputLink>
-	&nbsp;&gt;&nbsp;
-	<h:outputLink value="../department/showDepartmentCompetenceCourses.faces">
+	<fc:contentLink label="#{CompetenceCourseManagement.selectedDepartmentUnit.department.realName}" content="#{CompetenceCourseManagement.selectedDepartmentUnit.site}" />
+		
+	&nbsp;&gt;&nbsp;	
+	<h:outputLink value="#{CompetenceCourseManagement.contextPath}/publico/department/showDepartmentCompetenceCourses.faces">
 		<h:outputText value="#{publicDepartmentBundle['department.courses']}"/>
 		<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.idInternal}"/>
 	</h:outputLink>
+	
 	&nbsp;&gt;&nbsp;
 	<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.name}"/>
 	<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{CompetenceCourseManagement.competenceCourse.nameEn}"/>
@@ -57,19 +60,21 @@
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">
 			<h:outputText value="<p style='margin-left: 0px;'><i>" escape="false"/>
-			<h:outputLink value="../showDegreeSite.do" >
-				<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}"/>
-				<f:param name="method" value="showCurricularPlan"/>
-				<f:param name="degreeID" value="#{curricularCourse.parentDegreeCurricularPlan.degree.idInternal}"/>
-				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
-			</h:outputLink>
+						
+			<fc:contentLink label="#{curricularCourse.parentDegreeCurricularPlan.name}" content="#{curricularCourse.parentDegreeCurricularPlan.degree.site}" />
+			
 			<h:outputText value=" > "/>
-			<h:outputLink value="../degreeSite/viewCurricularCourse.faces">
+								
+			<h:outputText value="<!-- BLOCK_HAS_CONTEXT -->" escape="false"/>
+			<h:outputLink value="#{CompetenceCourseManagement.contextPath}/publico/degreeSite/viewCurricularCourse.faces">
 				<h:outputText value="#{curricularCourse.oneFullName}" escape="false"/>
 				<f:param name="degreeID" value="#{curricularCourse.parentDegreeCurricularPlan.degree.idInternal}"/>
 				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
 				<f:param name="curricularCourseID" value="#{curricularCourse.idInternal}"/>
+				<f:param name="#{CompetenceCourseManagement.contentContextPathAttributeName}" value="#{curricularCourse.parentDegreeCurricularPlan.degree.site.reversePath}"/>
 			</h:outputLink>
+			<h:outputText value="<!-- END_BLOCK_HAS_CONTEXT -->" escape="false"/>			
+			
 			<h:outputText value="</i></p>" escape="false"/>
 		</fc:dataRepeater>
 	</h:panelGroup>	
