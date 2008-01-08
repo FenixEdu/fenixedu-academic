@@ -1,10 +1,11 @@
 <%@ page language="java" %>
-
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <bean:define id="announcementActionVariable" value="/researchSite/manageResearchUnitAnnouncements.do" toScope="request"/>
 <bean:define id="eventActionVariable" value="/researchSite/manageResearchUnitAnnouncements.do" toScope="request"/>
 <bean:define id="announcementRSSActionVariable" value="/researchSite/announcementsRSS.do" toScope="request"/>
@@ -26,20 +27,24 @@
     <html:link href="<%= institutionUrl %>">
         <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/> 
     </html:link>
+    
     &nbsp;&gt;&nbsp;
     <html:link href="<%= institutionUrl + structureUrl %>">
         <bean:message key="structure" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
+    
     &nbsp;&gt;&nbsp;
-    <html:link page="/department/showDepartments.faces">
+    <%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link page="/department/showDepartments.faces">
         <bean:message key="academic.units" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
-    &nbsp;&gt;&nbsp;
-    <bean:define id="unitId" name="unit" property="idInternal"/>
-    <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
-        <fr:view name="department" property="nameI18n"/>
-    </html:link>
-    
+        
+    <logic:notEmpty name="department" property="departmentUnit">
+		&nbsp;&gt;&nbsp;
+	    <app:contentLink name="department" property="departmentUnit.site" scope="request">
+	        <fr:view name="department" property="nameI18n"/>    
+	    </app:contentLink>
+    </logic:notEmpty>
+            
 </div>
 
 <h1 class="mbottom1">

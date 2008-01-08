@@ -10,23 +10,27 @@
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 
 	<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
+	
 		<h:outputLink value="#{globalBundle['institution.url']}" >
 			<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
 		</h:outputLink>
+		
 		&nbsp;&gt;&nbsp;
 		<h:outputLink target="_blank" value="#{globalBundle['institution.url']}#{globalBundle['link.institution.structure']}">
 			<h:outputText value="#{publicDepartmentBundle['structure']}"/>
 		</h:outputLink>
+		
 		&nbsp;&gt;&nbsp;
-		<h:outputLink value="showDepartments.faces">
+		<h:outputLink value="#{CompetenceCourseManagement.contextPath}/publico/department/showDepartments.faces">
 			<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
 		</h:outputLink>
-		&nbsp;&gt;&nbsp;
-		<h:outputLink value="departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=#{CompetenceCourseManagement.selectedDepartmentUnit.idInternal}">
-			<h:outputText value="#{CompetenceCourseManagement.selectedDepartmentUnit.department.nameI18n.content}"/>
-		</h:outputLink>
+		
+		&nbsp;&gt;&nbsp;		
+		<fc:contentLink label="#{CompetenceCourseManagement.selectedDepartmentUnit.department.nameI18n.content}" content="#{CompetenceCourseManagement.selectedDepartmentUnit.site}" />
+		
 		&nbsp;&gt;&nbsp;
 		<h:outputText value="#{publicDepartmentBundle['department.courses']}"/>
+
 	<h:outputText value="</div>" escape="false"/>
 	
 	<h:messages rendered="#{!empty error0 || !empty success0}" infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
@@ -54,7 +58,7 @@
 										<h:panelGroup rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}">
 										<h:outputText value="<tr class='color2'><td>" escape="false"/>	
 
-										<h:outputLink value="showCompetenceCourse.faces" style="text-decoration:none">
+										<h:outputLink value="#{CompetenceCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces" style="text-decoration:none">
 											<h:outputText rendered="#{!CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.name} (#{competenceCourse.acronym})"/>
 											<h:outputText rendered="#{CompetenceCourseManagement.renderInEnglish}" value="#{competenceCourse.nameEn} (#{competenceCourse.acronym})"/>
 											<f:param name="action" value="ccm"/>
