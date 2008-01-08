@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.rendere
 import java.util.Calendar;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts.Globals;
@@ -116,11 +118,14 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                     }
 
                 } else if (typeUser.equals("public")) {
-                    strBuffer.append("<a href='executionCourse.do?method=firstPage&amp;executionCourseID="
-                            + infoExecutionCourse.getIdInternal()
-                            + "'>");
+                                                         
+                    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+                    strBuffer.append("<a href=\"").append(((HttpServletRequest)pageContext.getRequest()).getContextPath());
+                    strBuffer.append(infoExecutionCourse.getExecutionCourse().getSite().getReversePath());
+                    strBuffer.append("\">");
                     strBuffer.append(courseInitials);
                 }
+                
                 strBuffer.append("</a>");
                 if (infoExam.getBeginning() != null) {
                     boolean isAtValidHour = atValidHour(infoExam);
