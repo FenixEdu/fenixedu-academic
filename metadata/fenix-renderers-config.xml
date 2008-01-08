@@ -117,6 +117,7 @@ Documentation:
 		<property name="linkFormat" value="/homepage/${istUsername}"/>
 		<property name="showRoles" value="false"/>
 		<property name="showRoleMessage" value="false"/>
+		<property name="contextAvailable" value="true"/>
 	</renderer>
 
 	<renderer type="java.lang.Object" layout="view-as-image" class="net.sourceforge.fenixedu.presentationTier.renderers.ImageObjectRenderer"/>
@@ -441,9 +442,13 @@ Documentation:
 
     <renderer type="net.sourceforge.fenixedu.domain.contents.Content" layout="manage-content-bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
 
-    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SiteMenuRenderer" />
-    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteSideMenuRenderer" />
-    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteTopMenuRenderer" />
+    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SiteMenuRenderer">
+    	<property name="depthStyle" value="margin-left: 1em;"/>
+    </renderer>
+    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteSideMenuRenderer" >
+       	<property name="depthStyle" value="margin-left: 1em;"/>
+    </renderer>
+    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteTopMenuRenderer"/>
     <renderer type="net.sourceforge.fenixedu.domain.Section" layout="section-sub-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SectionMenuRenderer" />
     
 	<!--@ File displayed as an html picture -->

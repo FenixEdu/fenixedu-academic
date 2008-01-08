@@ -132,14 +132,13 @@ public class Section extends Section_Base {
 	if (section != null) {
 	    setSectionOrder(((ExplicitOrderNode) section.getParents().get(0)).getNodeOrder());
 	} else {
-	    Collection<Section> sections = (Collection<Section>) ((ExplicitOrderNode) getParents().get(0))
-		    .getParent().getOrderedChildren(Section.class);
+	    Collection<Section> sections = (Collection<Section>) ((ExplicitOrderNode) getParents().get(0)).getParent()
+		    .getOrderedChildren(Section.class);
 	    setSectionOrder(sections.size() - 1);
 	}
     }
 
-    public void insertItem(MultiLanguageString itemName, MultiLanguageString itemInformation,
-	    Integer insertItemOrder) {
+    public void insertItem(MultiLanguageString itemName, MultiLanguageString itemInformation, Integer insertItemOrder) {
 	new Item(this, itemName, itemInformation, insertItemOrder);
     }
 
@@ -192,7 +191,7 @@ public class Section extends Section_Base {
 	for (Section section : getAssociatedSections()) {
 	    section.delete();
 	}
-	
+
 	super.disconnect();
 	removeRootDomainObject();
     }
@@ -277,8 +276,8 @@ public class Section extends Section_Base {
     }
 
     public Section getSuperiorSection() {
-	return getParents().isEmpty() || !(getParents().get(0).getParent() instanceof Section) ? null
-		: (Section) getParents().get(0).getParent();
+	return getParents().isEmpty() || !(getParents().get(0).getParent() instanceof Section) ? null : (Section) getParents()
+		.get(0).getParent();
     }
 
     public void removeSuperiorSection() {
@@ -363,8 +362,7 @@ public class Section extends Section_Base {
 
     @Override
     public String getPath() {
-	return (isContainerMaximizable() && getInitialContent() != null) ? getInitialContent().getPath()
-		: null;
+	return (isContainerMaximizable() && getInitialContent() != null) ? getInitialContent().getPath() : null;
     }
 
     @Override
@@ -384,11 +382,11 @@ public class Section extends Section_Base {
     }
 
     public Collection<Functionality> getAssociatedFunctionalities() {
-	 return getChildren(Functionality.class);
+	return getChildren(Functionality.class);
     }
-    
+
     @Override
     protected Node createChildNode(Content childContent) {
-        return new ExplicitOrderNode(this, childContent);
+	return new ExplicitOrderNode(this, childContent);
     }
 }

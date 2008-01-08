@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
@@ -124,7 +125,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
     private void addInitialContent() {
 	if (!contents.isEmpty()) {
 	    final Content content = contents.get(contents.size() - 1);
-	    if (content.isContainer()) {
+	    if (content.isContainer() && !(content instanceof Section && getSelectedContainer() instanceof Site)) {
 		final Container container = (Container) content;
 		final Content initialContent = container.getInitialContent();
 		if (initialContent != null) {

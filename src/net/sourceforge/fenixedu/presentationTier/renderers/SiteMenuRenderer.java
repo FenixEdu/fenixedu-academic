@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
-import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
@@ -50,11 +48,21 @@ public class SiteMenuRenderer extends OutputRenderer {
 
     private String empty;
 
+    private String depthStyle;
+    
     public SiteMenuRenderer() {
 	super();
 
 	setModuleRelative(true);
 	setContextRelative(true);
+    }
+
+    public String getDepthStyle() {
+        return depthStyle;
+    }
+
+    public void setDepthStyle(String depthStyle) {
+        this.depthStyle = depthStyle;
     }
 
     public boolean isContextRelative() {
@@ -153,11 +161,11 @@ public class SiteMenuRenderer extends OutputRenderer {
 		    return generateEmpty();
 		}
 
-		createList(list, context, entries);
+		createList(list, context, entries, 0);
 		return list;
 	    }
 
-	    public void createList(HtmlList list, FilterFunctionalityContext context, Collection<MenuEntry> entries) {
+	    public void createList(HtmlList list, FilterFunctionalityContext context, Collection<MenuEntry> entries, Integer depth) {
 		for (MenuEntry entry : entries) {
 		    if (!entry.isVisible()) {
 			continue;
@@ -167,11 +175,14 @@ public class SiteMenuRenderer extends OutputRenderer {
 		    if (!(content instanceof Item)) {
 			HtmlListItem item = list.createItem();
 			item.addChild(generateComponent(context, content, true));
-
+			if(depth>0) {
+			    item.setStyle(getDepthStyle());
+			}
+			
 			if (isSelectedContent(content, context) && !entry.getChildren().isEmpty()) {
 			    HtmlList subMenu = new HtmlList();
 			    item.addChild(subMenu);
-			    createList(subMenu, context, entry.getChildren());
+			    createList(subMenu, context, entry.getChildren(),depth+1);
 			}
 		    }
 		}
@@ -216,11 +227,9 @@ public class SiteMenuRenderer extends OutputRenderer {
 	    }
 
 	    private boolean isSelectedContent(Content current, FunctionalityContext context) {
-		Container selectedContainer = context.getSelectedContainer();
-		Container container = (Container) context.getLastContentInPath(Site.class);
-		return selectedContainer != null
-			&& (selectedContainer == current || (container != selectedContainer && !selectedContainer.getPathTo(
-				current).isEmpty()));
+		FilterFunctionalityContext filterContext = (FilterFunctionalityContext) context;
+		Container selectedContainer = filterContext.getSelectedContainer();
+		return !filterContext.getPathBetween(selectedContainer, current).isEmpty();
 	    }
 
 	    private String getContextParamValue() {

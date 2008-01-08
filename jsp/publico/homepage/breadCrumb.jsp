@@ -4,7 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <bean:define id="homepage" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" toScope="request"/>
@@ -22,7 +24,9 @@
                 <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.idInternal"/>
             </bean:define>
         
+        	
             <div class="breadcumbs mvert0">
+                <%= ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
                 <html:link href="<%= institutionUrl %>">
                     <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
                 </html:link>
@@ -34,15 +38,11 @@
                 <html:link page="/publico/department/showDepartments.faces" module="">
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="academic.units"/>
                 </html:link>
+                <%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
                 &nbsp;&gt;&nbsp;            
-                <bean:define id="unitId" name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.idInternal"/>
-                <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>" module="/publico">
+				<app:contentLink name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.site" scope="request">
                     <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.realName"/>
-                </html:link>
-                &nbsp;&gt;&nbsp;
-                <html:link page="<%= "/publico/department/teachers.do?selectedDepartmentUnitID=" + departmentUnitID %>" module="">
-                    <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="department.faculty"/>
-                </html:link>
+				</app:contentLink>				
                 &nbsp;&gt;&nbsp;
                 <bean:write name="homepage" property="ownersName"/>
             </div>

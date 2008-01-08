@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
@@ -166,6 +167,11 @@ public class UnitSiteRenderer extends OutputRenderer {
 	}
 
 	private String resolveUnitURL(Unit unit) {
+	    Site site = unit.getSite();
+	    if(site == null) {
+		return "";
+	    }
+	    
 	    MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(unit.getSite().getClass());
 	    return metaDomainObject == null ? null : metaDomainObject.getAssociatedPortal().getName()
 		    .getContent()

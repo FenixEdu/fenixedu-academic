@@ -250,16 +250,6 @@ public abstract class Container extends Container_Base {
 	return nodes.isEmpty() ? null : nodes.iterator().next().getChild().getAvailabilityPolicy();
     }
 
-    @Override
-    public Content getInitialContent() {
-	final Content content = super.getInitialContent();
-	if (content != null) {
-	    return content;
-	}
-	final Collection<Element> elements = (Collection<Element>) getOrderedChildren(Element.class);
-	return elements.isEmpty() ? null : elements.iterator().next();
-    }
-    
     public void addChild(final Content content) {
 	createChildNode(content);
     }
@@ -291,6 +281,16 @@ public abstract class Container extends Container_Base {
 	    }
 	}
 	return null;
+    }
+
+    @Override
+    public Content getInitialContent() {
+	Content content = super.getInitialContent();
+	if(content != null)  {
+	    return content;
+	}
+	final Collection<Element> elements = (Collection<Element>) getOrderedChildren(Element.class);
+	return elements.isEmpty() ? null : elements.iterator().next();
     }
 
 }
