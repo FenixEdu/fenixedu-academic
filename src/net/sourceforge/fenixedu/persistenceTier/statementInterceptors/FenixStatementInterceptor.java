@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
-import net.sourceforge.fenixedu.domain.functionalities.ExecutionPath;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
@@ -118,7 +117,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 		logFile.write(resolve(sqlCommand) + " ;\n");
 	    }
 
-	    logFile.write("ALTER TABLE UUID_TEMP_TABLE ADD INDEX (COUNTER), ADD INDEX (UUID), ADD INDEX (FROM_UUID)");
+	    logFile.write("ALTER TABLE UUID_TEMP_TABLE ADD INDEX (COUNTER), ADD INDEX (UUID), ADD INDEX (FROM_UUID); \n\n");
 	    
 	    if (!uuidTableCommands.isEmpty()) {
 		for (Class clazz : loggingClasses) {
@@ -280,6 +279,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	    }
 	    try {
 		logFile = new PrintWriter(new File(filename));
+		logFile.write("SET AUTOCOMMIT = 0;\n\nSTART TRANSACTION;\n\n");
 	    } catch (FileNotFoundException e) {
 		e.printStackTrace();
 	    }
@@ -288,6 +288,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 
     public static void stopLogging() {
 	if (isLogging()) {
+	    logFile.write("\n\nCOMMIT;\n");
 	    logFile.flush();
 	    logFile.close();
 	    logFile = null;
