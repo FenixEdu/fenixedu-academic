@@ -14,6 +14,7 @@ public class ContentLinkTag extends BodyTagSupport {
     protected String body = null;
     protected String name = null;
     protected String property = null;
+    protected String scope = null;
 
     public String getName() {
 	return (this.name);
@@ -59,7 +60,7 @@ public class ContentLinkTag extends BodyTagSupport {
     protected void writeStartTag() throws IOException, JspException {
 	write(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
 	write("<a href=\"");
-	final Content content = DefineContentPathTag.getContent(name, pageContext, null, getProperty());
+	final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
 	write(getContextPath());
 	write(content.getReversePath());
 	write("\">");
@@ -84,6 +85,14 @@ public class ContentLinkTag extends BodyTagSupport {
 	body = null;
 	name = null;
 	property = null;
+	scope = null;
     }
 
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
 }

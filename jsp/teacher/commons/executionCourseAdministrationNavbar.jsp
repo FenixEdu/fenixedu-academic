@@ -2,13 +2,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <html:xhtml/>
 
 <logic:notPresent name="executionCourse">
 	<logic:present name="siteView">
 		<bean:define id="component" name="siteView" property="commonComponent"/>
-		<bean:define id="executionCourse" toScope="request" name="component" property="executionCourse.executionCourse"/>
+		<bean:define id="executionCourse" toScope="request" name="component" property="executionCourse.executionCourse"/>		
 	</logic:present>
 </logic:notPresent>
 
@@ -24,11 +25,13 @@
 				<bean:message key="link.personalizationOptions"/>
 			</html:link>
 		</li>
-		<li>
-			<html:link href="<%= request.getContextPath()+"/publico/executionCourse.do?method=firstPage" %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal" target="_blank">
-				<bean:message key="link.executionCourseManagement.menu.view.course.page"/>
-			</html:link>
-		</li>
+		<logic:notEmpty name="executionCourse" property="site">
+			<li>							
+				<app:contentLink name="executionCourse" property="site" scope="request">
+					<bean:message key="link.executionCourseManagement.menu.view.course.page"/>	
+				</app:contentLink>					
+			</li>
+		</logic:notEmpty>
 		<li>
             <html:link page="/generateArchive.do?method=prepare" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
                 <bean:message key="link.executionCourse.archive.generate"/>

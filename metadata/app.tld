@@ -669,6 +669,11 @@
           <required>false</required>
           <rtexprvalue>true</rtexprvalue>
       </attribute>
+       <attribute>
+          <name>scope</name>
+          <required>false</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
   </tag>
 
 </taglib>
