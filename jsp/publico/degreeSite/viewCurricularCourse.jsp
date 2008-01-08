@@ -60,12 +60,12 @@
 		<h:outputText value="<strong>#{bolonhaBundle['competenceCourse']}</strong></td></tr>" escape="false"/>
 		<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
 			
-			<fc:contentLink rendered="#{!CurricularCourseManagement.renderInEnglish}" contentIdInternal="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site.idInternal}" label="#{CurricularCourseManagement.curricularCourse.name}"></fc:contentLink>
-			<fc:contentLink rendered="#{CurricularCourseManagement.renderInEnglish}" contentIdInternal="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site.idInternal}" label="#{CurricularCourseManagement.curricularCourse.nameEn}"></fc:contentLink>
+			<fc:contentLink rendered="#{!CurricularCourseManagement.renderInEnglish}" content="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site}" label="#{CurricularCourseManagement.curricularCourse.name}"></fc:contentLink>
+			<fc:contentLink rendered="#{CurricularCourseManagement.renderInEnglish}" content="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site}" label="#{CurricularCourseManagement.curricularCourse.nameEn}"></fc:contentLink>
 									
 			<h:outputText value=" #{publicDegreeInfoBundle['public.degree.information.label.from.masculine']} "/>
 						
-			<fc:contentLink contentIdInternal="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site.idInternal}" label="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}"></fc:contentLink>
+			<fc:contentLink content="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site}" label="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}"></fc:contentLink>
 														
 		<h:outputText value="</td></tr>" escape="false"/>
 	</h:panelGroup>
@@ -76,7 +76,7 @@
 		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.associatedExecutionCourses}" var="executionCourse">
 			<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
 
-			<fc:contentLink contentIdInternal="#{executionCourse.site.idInternal}" label="#{executionCourse.nome} (#{executionCourse.executionPeriod.executionYear.year} - #{executionCourse.executionPeriod.name})"></fc:contentLink>
+			<fc:contentLink content="#{executionCourse.site}" label="#{executionCourse.nome} (#{executionCourse.executionPeriod.executionYear.year} - #{executionCourse.executionPeriod.name})"></fc:contentLink>
 			
 			<h:outputText value="</td></tr>" escape="false"/>
 		</fc:dataRepeater>

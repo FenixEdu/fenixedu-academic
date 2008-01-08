@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.presentationTier.jsf.components.util.JsfTagUtils
 
 public class ContentLinkTag extends UIComponentTag {
 
-    private String contentIdInternal;
+    private String content;
     private String label;
         
     @Override
@@ -20,23 +20,23 @@ public class ContentLinkTag extends UIComponentTag {
 	return null;
     }
 
-    public String getContentIdInternal() {
-        return contentIdInternal;
+    public String getContent() {
+        return content;
     }
 
-    public void setContentIdInternal(String contentIdInternal) {
-        this.contentIdInternal = contentIdInternal;
+    public void setContent(String content) {
+        this.content = content;
     }
         
     protected void setProperties(UIComponent component) {
         super.setProperties(component);        
-        JsfTagUtils.setInteger(component, "contentIdInternal", this.contentIdInternal.toString());       
+        JsfTagUtils.setString(component, "content", this.content);       
         JsfTagUtils.setString(component, "label", this.label); 
     }
 
     public void release() {
         super.release();
-        contentIdInternal = null;
+        content = null;
         label = null;
     }
 

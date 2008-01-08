@@ -26,10 +26,8 @@
 	<h:outputText value="<h2>#{publicDepartmentBundle['academic.units']}</h2>" escape="false"/>
 	
 	<h:dataTable value="#{DepartmentManagement.departmentUnits}" var="departmentUnit" style="padding-left: 3em; width: 70em;" columnClasses=",aright">
-		<h:column>
-            <h:outputLink value="#{DepartmentManagement.contextPath}/publico/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=#{departmentUnit.idInternal}">
-        			<h:outputText value="#{departmentUnit.department.nameI18n.content}"/>
-            </h:outputLink>
+		<h:column>					
+			<fc:contentLink content="#{departmentUnit.site}" label="#{departmentUnit.department.nameI18n.content}" />								
 		</h:column>
 	</h:dataTable>
 	
