@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <script type="text/javascript" language="JavaScript">
@@ -194,7 +195,7 @@
 	</table>
 
 <ul>
-	<li>Para mais esclarecimentos consultar <em>"II.7. Normas a observar na Inscrição"</em> no documento <a href="http://www.ist.utl.pt/html/destaques/regulamento0506.pdf">Licenciaturas: Regulamentos e Calendário Escolar 2005/2006 (.pdf)</a></li>
+	<li>Para mais esclarecimentos consultar <em>"II.7. Normas a observar na Inscrição"</em> no documento <%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/html/destaques/regulamento0506.pdf">Licenciaturas: Regulamentos e Calendário Escolar 2005/2006 (.pdf)</a></li>
 </ul>
 
 
