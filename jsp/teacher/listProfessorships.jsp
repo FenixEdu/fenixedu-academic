@@ -4,8 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <%@page import="java.util.Collections"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
@@ -74,7 +76,7 @@
 		            <bean:define id="executionCourseURL"><%= hostURL2 + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %></bean:define>	            
 		            <p class="mtop05 mbottom0">
 			            <span class="smalltxt breakword color888" style="word-wrap: break-word !important;">
-							<html:link href="<%= executionCourseURL %>" styleClass="color888">
+							<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= executionCourseURL %>" styleClass="color888" target="_blank">
 			                    <bean:write name="executionCourseURL"/>
 			                </html:link>
 		                </span>
@@ -85,9 +87,9 @@
 						<logic:iterate id="degree" name="executionCourse" property="degreesSortedByDegreeName">
 							<bean:define id="degreeCode" type="java.lang.String" name="degree" property="sigla"/>
 							<bean:define id="degreeLabel" type="java.lang.String"><bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/> <bean:message key="label.in"/> <bean:write name="degree" property="name"/></bean:define>
-							<html:link href="<%= hostURL + degreeCode %>" title="<%= degreeLabel %>">
-								<bean:write name="degreeCode"/>
-							</html:link>
+							<app:contentLink name="degree" property="site" target="_blank" title="<%= degreeLabel %>">
+								<bean:write name="degreeCode"/>	
+							</app:contentLink>					
 						</logic:iterate>
 					</span>				
 				</td>

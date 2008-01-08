@@ -15,6 +15,8 @@ public class ContentLinkTag extends BodyTagSupport {
     protected String name = null;
     protected String property = null;
     protected String scope = null;
+    protected String target = null;
+    protected String title = null;
 
     public String getName() {
 	return (this.name);
@@ -30,6 +32,23 @@ public class ContentLinkTag extends BodyTagSupport {
 
     public void setProperty(String property) {
 	this.property = property;
+    }
+    
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
@@ -63,7 +82,14 @@ public class ContentLinkTag extends BodyTagSupport {
 	final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
 	write(getContextPath());
 	write(content.getReversePath());
-	write("\">");
+	write("\"");
+	if(getTarget() != null) {
+	    write(" target=\"" + getTarget() + "\"");
+	}
+	if(getTitle() != null) {
+	    write(" title=\"" + getTitle() + "\"");
+	}
+	write(">");
     }
 
     protected void writeEndTag() throws IOException {
@@ -86,6 +112,7 @@ public class ContentLinkTag extends BodyTagSupport {
 	name = null;
 	property = null;
 	scope = null;
+	target = null;
     }
 
     public String getScope() {
