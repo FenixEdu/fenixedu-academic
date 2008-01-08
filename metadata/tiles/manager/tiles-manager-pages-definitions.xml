@@ -1100,5 +1100,9 @@
 		
 	<!-- End: Posting Rules Management -->
 	
+	<!-- Registration State Management -->
+	<definition name="student.showRegistrationStates" extends="definition.manager.masterPage">
+        <put name="body" value="/manager/registration/manageRegistrationState.jsp"></put>
+    </definition>
 	
 </tiles-definitions>

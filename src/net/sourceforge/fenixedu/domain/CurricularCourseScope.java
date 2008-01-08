@@ -16,7 +16,8 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 
     public static Comparator<CurricularCourseScope> CURRICULAR_COURSE_NAME_COMPARATOR = new ComparatorChain();
     static {
-	((ComparatorChain) CURRICULAR_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
+	((ComparatorChain) CURRICULAR_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("curricularCourse.name", Collator
+		.getInstance()));
 	((ComparatorChain) CURRICULAR_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("curricularCourse.idInternal"));
     }
 
@@ -25,9 +26,8 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public CurricularCourseScope(Branch branch, CurricularCourse curricularCourse,
-	    CurricularSemester curricularSemester, Calendar beginDate, Calendar endDate,
-	    String Annotation) {
+    public CurricularCourseScope(Branch branch, CurricularCourse curricularCourse, CurricularSemester curricularSemester,
+	    Calendar beginDate, Calendar endDate, String Annotation) {
 	this();
 	// check that there isn't another scope active with the same curricular
 	// course, branch and semester
@@ -91,8 +91,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	return !hasAnyAssociatedWrittenEvaluations();
     }
 
-    public void edit(Branch branch, CurricularSemester curricularSemester, Calendar beginDate,
-	    Calendar endDate, String Annotation) {
+    public void edit(Branch branch, CurricularSemester curricularSemester, Calendar beginDate, Calendar endDate, String Annotation) {
 
 	setBranch(branch);
 	setCurricularSemester(curricularSemester);
@@ -134,14 +133,23 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     public boolean intersects(final Date begin, final Date end) {
 	return intersects(YearMonthDay.fromDateFields(begin), YearMonthDay.fromDateFields(end));
     }
-    
+
     public boolean intersects(final YearMonthDay begin, final YearMonthDay end) {
-	return !getBeginYearMonthDay().isAfter(end) && (getEndYearMonthDay() == null || !getEndYearMonthDay().isBefore(begin));	
+	return !getBeginYearMonthDay().isAfter(end) && (getEndYearMonthDay() == null || !getEndYearMonthDay().isBefore(begin));
     }
 
     public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	return intersects(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay())
 		&& executionPeriod.getSemester().equals(getCurricularSemester().getSemester());
+    }
+
+    public boolean isActiveForExecutionYear(final ExecutionYear executionYear) {
+	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+	    if (isActiveForExecutionPeriod(executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private DegreeModuleScopeCurricularCourseScope degreeModuleScopeCurricularCourseScope = null;
@@ -157,6 +165,10 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	    initDegreeModuleScopeCurricularCourseScope();
 	}
 	return degreeModuleScopeCurricularCourseScope;
+    }
+    
+    public boolean hasEndYearMonthDay() {
+	return getEndYearMonthDay() != null;
     }
 
     public class DegreeModuleScopeCurricularCourseScope extends DegreeModuleScope {
@@ -210,18 +222,19 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	public String getClassName() {
 	    return curricularCourseScope.getClass().getName();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-	    if(!(obj instanceof DegreeModuleScopeCurricularCourseScope)) {
+	    if (!(obj instanceof DegreeModuleScopeCurricularCourseScope)) {
 		return false;
 	    }
-	    return curricularCourseScope.equals(((DegreeModuleScopeCurricularCourseScope)obj).getCurricularCourseScope());
+	    return curricularCourseScope.equals(((DegreeModuleScopeCurricularCourseScope) obj).getCurricularCourseScope());
 	}
-	
+
 	@Override
 	public int hashCode() {
-	    return curricularCourseScope.hashCode();	    
+	    return curricularCourseScope.hashCode();
 	}
     }
+    
 }

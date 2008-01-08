@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
    
@@ -326,7 +327,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
     
     public String getNameEn() {
-        if (getViewState().getAttribute("nameEn") == null && getCurricularCourse() != null) {
+        if (getViewState().getAttribute("nameEn") == null && getCurricularCourse() != null && !StringUtils.isEmpty(getCurricularCourse().getNameEn())) {
             setNameEn(getCurricularCourse().getNameEn());            
         }
         return (String) getViewState().getAttribute("nameEn");

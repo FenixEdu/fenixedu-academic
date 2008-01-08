@@ -11309,6 +11309,15 @@
         </filterChains>     
     </service>
     <service>
+    	<name>DeleteExternalUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.DeleteExternalUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
     	<name>CreateExternalUnitByName</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnitByName</implementationClass>
         <description></description>
@@ -11337,7 +11346,16 @@
         <filterChains>
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
-    </service>    
+    </service>
+    <service>
+    	<name>DeleteExternalCurricularCourse</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.DeleteExternalCurricularCourse</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
     <service>
     	<name>CreateExternalEnrolment</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalEnrolment</implementationClass>

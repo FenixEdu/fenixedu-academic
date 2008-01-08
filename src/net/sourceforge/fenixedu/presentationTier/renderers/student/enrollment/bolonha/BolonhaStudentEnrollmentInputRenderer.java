@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -463,7 +461,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	private String getPresentationNameFor(final Enrolment enrolment) {
-	    if (enrolment.isOptional()) {
+	    if (enrolment instanceof OptionalEnrolment) {
 		final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
 
 		return optionalEnrolment.getOptionalCurricularCourse().getName() + " ("

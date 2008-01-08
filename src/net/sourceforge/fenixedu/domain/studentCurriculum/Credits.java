@@ -58,7 +58,7 @@ public class Credits extends Credits_Base {
 	    throw new DomainException("error.credits.wrong.arguments");
 	}
 
-	checkGivenCredits(studentCurricularPlan, courseGroup, credits);
+	checkGivenCredits(studentCurricularPlan, courseGroup, credits, executionPeriod);
 	initExecutionPeriod(executionPeriod);
 
 	setStudentCurricularPlan(studentCurricularPlan);
@@ -85,16 +85,15 @@ public class Credits extends Credits_Base {
 
 
     private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan,
-	    final CourseGroup courseGroup, final Double credits) {
-	if (!allowsEctsCredits(studentCurricularPlan, courseGroup, ExecutionPeriod
-		.readActualExecutionPeriod(), credits.doubleValue())) {
+	    final CourseGroup courseGroup, final Double credits, final ExecutionPeriod executionPeriod) {
+	if (!allowsEctsCredits(studentCurricularPlan, courseGroup, executionPeriod, credits.doubleValue())) {
 	    throw new DomainException("error.credits.invalid.credits", credits.toString());
 	}
     }
 
     private boolean allowsEctsCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
 	    final ExecutionPeriod executionPeriod, final double ectsCredits) {
-	final double ectsCreditsForCourseGroup = studentCurricularPlan.getEctsCreditsForCourseGroup(courseGroup).doubleValue();
+	final double ectsCreditsForCourseGroup = studentCurricularPlan.getCreditsConcludedForCourseGroup(courseGroup).doubleValue();
 	if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionPeriod).doubleValue()) {
 	    return false;
 	}

@@ -208,6 +208,7 @@ public class GiafInterface {
 
     public void exportToGIAF(String file) throws SQLException, ExcepcaoPersistencia {
 	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
+	persistentSuportOracle.startTransaction();
 	String[] lineTokens = file.split("\n");
 	for (int line = 0; line < lineTokens.length; line++) {
 	    String[] fieldTokens = lineTokens[line].split("\t");

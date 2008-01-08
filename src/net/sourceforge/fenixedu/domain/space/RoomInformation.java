@@ -66,7 +66,8 @@ public class RoomInformation extends RoomInformation_Base {
 	setAgeQuality(ageQuality);
 	setObservations(observations);
 	setDoorNumber(doorNumber);		
-	getRoom().editCapacities(normalCapacity, examCapacity);	
+	setNormalCapacity(normalCapacity);
+	setExamCapacity(examCapacity);
     }
     
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
@@ -85,9 +86,18 @@ public class RoomInformation extends RoomInformation_Base {
 	setRoomClassification(roomClassification);	
 	setObservations(observations);
 	setDoorNumber(doorNumber);	
-	getRoom().editCapacities(normalCapacity, examCapacity);	
+	setNormalCapacity(normalCapacity);
+	setExamCapacity(examCapacity);	
     }
 
+    private void setNormalCapacity(Integer normalCapacity) {
+	getRoom().setNormalCapacity(normalCapacity);
+    }
+    
+    private void setExamCapacity(Integer examCapacity) {
+	getRoom().setExamCapacity(examCapacity);
+    }
+    
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room information", parameters = {})
     public void delete() {	

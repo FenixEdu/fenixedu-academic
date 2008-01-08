@@ -1,9 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@page import="org.joda.time.YearMonthDay"%>
+
+<html:xhtml/>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - Error Page</title>
@@ -20,7 +23,13 @@
 		<tr>
 			<td>
 				<center>
-					<img src="<%= request.getContextPath() %>/images/logo-fenix.gif" alt="<bean:message key="logo-fenix" bundle="IMAGE_RESOURCES" />"/>
+					<%  
+						String logo = "/images/logo-fenix.gif"; 	
+						if (new YearMonthDay().getMonthOfYear() == 12) {
+							logo = "/images/logo-fenix-xmas.gif";    
+						}
+					%>
+					<img src="<%= request.getContextPath() + logo%>" alt="<bean:message key="logo-fenix" bundle="IMAGE_RESOURCES" />"/>
 				</center>
 			</td>
 			<td>

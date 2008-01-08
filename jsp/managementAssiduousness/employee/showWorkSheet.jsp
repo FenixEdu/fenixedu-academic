@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
-<h2><bean:message key="link.workSheet" /></h2>
+<h2 class="mtop0"><bean:message key="link.workSheet" /></h2>
 
 
 <logic:present name="employeeWorkSheet">
@@ -81,27 +81,26 @@
 			</fr:layout>
 		</fr:view>
 
+<div class="print_smaller">
 		<logic:notEmpty name="displayCurrentDayNote">
 			<em><bean:message key="message.employee.currentDayIgnored" /></em>
 		</logic:notEmpty>
-
-		<logic:present name="employeeWorkSheet" property="totalBalance">
-			<p class="mvert05"><bean:message key="label.totalBalance" />: <b><bean:write
-				name="employeeWorkSheet" property="totalBalanceString" /></b></p>
-		</logic:present>
-		<logic:present name="employeeWorkSheet" property="unjustifiedBalance">
-			<p class="mvert05"><bean:message key="label.totalUnjustified" />: <b><bean:write
-				name="employeeWorkSheet" property="unjustifiedBalanceString" /></b></p>
-		</logic:present>
-		<logic:present name="employeeWorkSheet" property="complementaryWeeklyRest">
-			<p class="mvert05"><bean:message key="label.totalSaturday" />: <b><bean:write name="employeeWorkSheet" property="complementaryWeeklyRestString"/></b></p>
-		</logic:present>
-		<logic:present name="employeeWorkSheet" property="weeklyRest">
-			<p class="mvert05"><bean:message key="label.totalSunday" />: <b><bean:write name="employeeWorkSheet" property="weeklyRestString"/></b></p>
-		</logic:present>
-		<logic:present name="employeeWorkSheet" property="holidayRest">
-			<p class="mvert05"><bean:message key="label.totalHoliday" />: <b><bean:write name="employeeWorkSheet" property="holidayRestString"/></b></p>
-		</logic:present>
+		<table class="mtop1">
+			<tr>
+				<td><bean:message key="label.totalBalance" />: <b><bean:write name="employeeWorkSheet" property="totalBalanceString" /></b></td>
+				<td><bean:message key="label.totalSaturday" />: <b><bean:write name="employeeWorkSheet" property="complementaryWeeklyRestString"/></b></td>
+			</tr>
+			<tr>
+				<td style="padding-right: 2em;"><bean:message key="label.totalUnjustified" />: <b><bean:write name="employeeWorkSheet" property="unjustifiedBalanceString" /></b></td>
+				<td><bean:message key="label.totalSunday" />: <b><bean:write name="employeeWorkSheet" property="weeklyRestString"/></b></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><bean:message key="label.totalHoliday" />: <b><bean:write name="employeeWorkSheet" property="holidayRestString"/></b></td>
+			</tr>
+		</table>
+	</div>
+	
 	</logic:notEmpty>
 	</logic:present>
 </logic:present>

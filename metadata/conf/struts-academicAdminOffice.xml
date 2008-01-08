@@ -164,6 +164,9 @@
          <form-property name="registrationId" type="java.lang.String" />
       </form-bean>
       
+      <form-bean name="externalUnitsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	     <form-property name="method" type="java.lang.String" />
+      </form-bean>
 
     </form-beans>
 
@@ -765,6 +768,7 @@
       <action path="/externalUnits"
 			  scope="request"
 		      parameter="method"
+		      name="externalUnitsForm"
 		      type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.externalUnits.ExternalUnitsDispatchAction">
       
       		<forward name="searchExternalUnits" path="externalUnits.searchExternalUnits"/>
@@ -777,6 +781,8 @@
       		
       		<forward name="prepareCreateUnit" path="externalUnits.prepareCreateUnit"/>
       		<forward name="prepareEditUnit" path="externalUnits.prepareEditUnit"/>
+      		<forward name="prepareDeleteUnit" path="externalUnits.prepareDeleteUnit"/>
+      		<forward name="prepareDeleteExternalCurricularCourse" path="externalUnits.prepareDeleteExternalCurricularCourse"/>
       		
       		<forward name="prepareCreateExternalCurricularCourse" path="externalUnits.prepareCreateExternalCurricularCourse"/>
       		<forward name="prepareEditExternalCurricularCourse" path="externalUnits.prepareEditExternalCurricularCourse"/>

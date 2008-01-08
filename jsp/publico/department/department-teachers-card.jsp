@@ -79,10 +79,12 @@
 			</logic:notEmpty>
 			
 			<logic:notEmpty name="teacher" property="person.personWorkPhone">
-				<p class="mtop025 mbottom05">
-					<bean:message key="label.teacher.workPhone" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>: 
-					<fr:view name="teacher" property="person.personWorkPhone.number"/>
-				</p>
+				<logic:notEmpty name="teacher" property="person.personWorkPhone.number">
+					<p class="mtop025 mbottom05">
+						<bean:message key="label.teacher.workPhone" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>: 
+						<fr:view name="teacher" property="person.personWorkPhone.number"/>
+					</p>
+				</logic:notEmpty>
 			</logic:notEmpty>
 		</td>
 	</tr>

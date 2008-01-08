@@ -693,7 +693,7 @@
          	<form-property name="externalEnrolmentsToDelete" type="java.lang.String[]" />
       </form-bean>
       
- 		<form-bean name="markSheetManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+ 	  <form-bean name="markSheetManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="epID" type="java.lang.Integer" />
 			<form-property name="dID" type="java.lang.Integer" />
 			<form-property name="dcpID" type="java.lang.Integer" />
@@ -704,8 +704,12 @@
 			<form-property name="mss" type="java.lang.String" />
 			<form-property name="mst" type="java.lang.String" />
 			<form-property name="evaluationsToRemove" type="java.lang.Integer[]" />
- 		</form-bean>
+	  </form-bean>
       
+      <form-bean name="deleteregistrationActualInfoForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	     <form-property name="method" type="java.lang.String" />
+         <form-property name="registrationId" type="java.lang.String" />
+      </form-bean>
     	
     </form-beans>
     
@@ -2493,7 +2497,6 @@
 			
 			<forward name="chooseNotNeedToEnrol" path="studentCredit.chooseNotNeedToEnrol"/>
 		  </action>
-	  
 	  	<!-- End: Student Dismissals Management -->
 		
 		<!-- Begin: Payments Management -->
@@ -2513,7 +2516,6 @@
 			<forward name="showReceipts" path="payments.receipts.showReceipts" />
 			<forward name="showReceipt" path="payments.receipts.showReceipt" />
 		</action>
-		<!-- End: Payments Management -->
 		
 		<!-- Begin: Posting Rules Management -->
        	<action path="/postingRules"
@@ -2527,36 +2529,43 @@
 			<forward name="viewDFAPostingRuleDetails" path="payments.postingRules.management.viewDFAPostingRuleDetails" />
 			<forward name="createDFAGratuityPR" path="payments.postingRules.management.createDFAGratuityPR" />
 			<forward name="editDFADegreeCurricularPlanPostingRule" path="payments.postingRules.management.editDFADegreeCurricularPlanPostingRule" />
-			    
 		</action>
-		<!-- End: Posting Rules Management -->
 		
-	<action path="/markSheetManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchDispatchAction"
-			input="show.markSheetManagement.search.page"
-			parameter="method"
-			name="markSheetManagementForm"
-			scope="request">
-	     		<forward name="searchMarkSheet" path="show.markSheetManagement.search.page"/>
-	     		<forward name="listMarkSheet" path="show.markSheetManagement.list.markSheet"/>
-	</action>
+		<!-- Marksheet Management -->
+		<action path="/markSheetManagement"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchDispatchAction"
+				input="show.markSheetManagement.search.page"
+				parameter="method"
+				name="markSheetManagementForm"
+				scope="request">
+		     		<forward name="searchMarkSheet" path="show.markSheetManagement.search.page"/>
+		     		<forward name="listMarkSheet" path="show.markSheetManagement.list.markSheet"/>
+		</action>
 	
-	
-	<action path="/registrationConclusion"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.registration.conclusion.RegistrationConclusionDA"
-			input="show.markSheetManagement.search.page"
-			parameter="method"
-			scope="request">
-	     <forward name="showByCycles" path="registration.conclusion.showByCycles"/>
-	     <forward name="showForRegistration" path="registration.conclusion.showForRegistration"/>
-	     <forward name="editForCycle" path="registration.conclusion.editForCycle" />
-	     <forward name="editForRegistration" path="registration.conclusion.editForRegistration" />
-	</action>
-	
+		<!-- Registration Conclusion -->
+		<action path="/registrationConclusion"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.registration.conclusion.RegistrationConclusionDA"
+				input="show.markSheetManagement.search.page"
+				parameter="method"
+				scope="request">
+		     <forward name="showByCycles" path="registration.conclusion.showByCycles"/>
+		     <forward name="showForRegistration" path="registration.conclusion.showForRegistration"/>
+		     <forward name="editForCycle" path="registration.conclusion.editForCycle" />
+		     <forward name="editForRegistration" path="registration.conclusion.editForRegistration" />
+		</action>
 		
+		<!-- Manage Registration states -->
+		<action path="/manageRegistrationState"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.manager.registration.ManageRegistrationStateDA"
+	        parameter="method"
+			scope="request"
+			validate="true"
+			name="deleteregistrationActualInfoForm"
+			input="/manageRegistrationState.do?method=prepare">
+	        	<forward name="showRegistrationStates" path="student.showRegistrationStates"/>
+	    </action>
 
 	</action-mappings>
- 
     
 	<!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>

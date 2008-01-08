@@ -37,7 +37,8 @@
 	<parameter name="finalAverageDescription" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="conclusionStatus" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>	
+	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="degreeFilteredName" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -107,7 +108,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
 						<font fontName="Quadraat-BoldItalic" pdfFontName="QUAD____.ttf" size="22" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getDegree().getFilteredName()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{degreeFilteredName}]]></textFieldExpression>
 				</textField>
 				<elementGroup><!--  Start: 1 !-->
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >

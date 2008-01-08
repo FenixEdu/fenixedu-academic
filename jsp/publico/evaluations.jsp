@@ -25,7 +25,7 @@
 		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
 			<tr>
 				<td>
-					<bean:message key="label.online.test"/>: <bean:write name="evaluation" property="distributedTest.title"/>
+					<bean:message key="label.online.test"/>: <bean:write name="evaluation" property="distributedTest.evaluationTitle"/>
 				</td>
 				<td>
 					<html:link page="<%= "/viewSite.do?method=viewMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;evaluationOID=" + evaluationOID %>">

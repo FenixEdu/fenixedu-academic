@@ -17,11 +17,10 @@ import org.joda.time.YearMonthDay;
 
 public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 
-    public AssiduousnessClosedMonth(Assiduousness assiduousness, ClosedMonth closedMonth,
-	    Duration balance, Duration totalComplementaryWeeklyRestBalance,
-	    Duration totalWeeklyRestBalance, Duration holidayRest, Duration balanceToDiscount,
-	    double vacations, double tolerance, double article17, double article66,
-	    Integer maximumWorkingDays, Integer workedDays) {
+    public AssiduousnessClosedMonth(Assiduousness assiduousness, ClosedMonth closedMonth, Duration balance,
+	    Duration totalComplementaryWeeklyRestBalance, Duration totalWeeklyRestBalance, Duration holidayRest,
+	    Duration balanceToDiscount, double vacations, double tolerance, double article17, double article66,
+	    Integer maximumWorkingDays, Integer workedDays, Duration finalBalance, Duration finalBalanceToCompensate) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBalance(balance);
 	setBalanceToDiscount(balanceToDiscount);
@@ -39,24 +38,21 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setUnjustifiedDays(0);
 	setMaximumWorkingDays(maximumWorkingDays);
 	setWorkedDays(workedDays);
+	setFinalBalance(finalBalance);
+	setFinalBalanceToCompensate(finalBalanceToCompensate);
     }
 
     public HashMap<Integer, Duration> getPastJustificationsDurations() {
 	HashMap<Integer, Duration> pastJustificationsDurations = new HashMap<Integer, Duration>();
-	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousness()
-		.getAssiduousnessClosedMonths()) {
-	    if (assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(
-		    DateTimeFieldType.year()) == getClosedMonth().getClosedYearMonth().get(
-		    DateTimeFieldType.year())
-		    && assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(
-			    DateTimeFieldType.monthOfYear()) < getClosedMonth().getClosedYearMonth()
-			    .get(DateTimeFieldType.monthOfYear())) {
-		for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth
-			.getClosedMonthJustifications()) {
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousness().getAssiduousnessClosedMonths()) {
+	    if (assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()) == getClosedMonth()
+		    .getClosedYearMonth().get(DateTimeFieldType.year())
+		    && assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) < getClosedMonth()
+			    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear())) {
+		for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth.getClosedMonthJustifications()) {
 		    if (closedMonthJustification.getJustificationMotive().getActive()) {
 			Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
-				assiduousnessClosedMonth.getAssiduousness(),
-				closedMonthJustification.getAssiduousnessStatus());
+				assiduousnessClosedMonth.getAssiduousness(), closedMonthJustification.getAssiduousnessStatus());
 			Duration duration = pastJustificationsDurations.get(code);
 			if (duration == null) {
 			    duration = Duration.ZERO;
@@ -73,8 +69,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
     public HashMap<Integer, Duration> getClosedMonthJustificationsMap() {
 	HashMap<Integer, Duration> closedMonthJustificationscodesMap = new HashMap<Integer, Duration>();
 	for (ClosedMonthJustification closedMonthJustification : getClosedMonthJustifications()) {
-	    Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
-		    getAssiduousness(), closedMonthJustification.getAssiduousnessStatus());
+	    Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(getAssiduousness(),
+		    closedMonthJustification.getAssiduousnessStatus());
 	    Duration duration = closedMonthJustificationscodesMap.get(code);
 	    if (duration == null) {
 		duration = Duration.ZERO;
@@ -95,15 +91,12 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    for (AssiduousnessExtraWork extraWork : getAssiduousnessExtraWorks()) {
 		unjustifiedTotalDuration = unjustifiedTotalDuration.plus(extraWork.getUnjustified());
 	    }
-	    Duration averageWorkTimeDuration = getAssiduousness().getAverageWorkTimeDuration(beginDate,
-		    endDate);
-	    long balanceToProcess = Math.abs(balanceWithoutDiscount.getMillis()) > unjustifiedTotalDuration
-		    .getMillis() ? Math.abs(balanceWithoutDiscount.getMillis())
-		    : unjustifiedTotalDuration.getMillis();
+	    Duration averageWorkTimeDuration = getAssiduousness().getAverageWorkTimeDuration(beginDate, endDate);
+	    long balanceToProcess = Math.abs(balanceWithoutDiscount.getMillis()) > unjustifiedTotalDuration.getMillis() ? Math
+		    .abs(balanceWithoutDiscount.getMillis()) : unjustifiedTotalDuration.getMillis();
 	    long balanceAfterTolerance = balanceToProcess - Assiduousness.IST_TOLERANCE_TIME.getMillis();
 	    if (balanceAfterTolerance > 0) {
-		unjustified = (double) balanceAfterTolerance
-			/ (double) averageWorkTimeDuration.getMillis();
+		unjustified = (double) balanceAfterTolerance / (double) averageWorkTimeDuration.getMillis();
 	    }
 	}
 	return unjustified;
@@ -114,12 +107,10 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	long tempIstTorelanceTime = Assiduousness.IST_TOLERANCE_TIME.getMillis();
 	for (AssiduousnessExtraWork extraWork : assiduousnessExtraWorks) {
 	    if (extraWork.getUnjustified().isLongerThan(Duration.ZERO)) {
-		long unjustifiedAfterTolerance = extraWork.getUnjustified().getMillis()
-			- tempIstTorelanceTime;
+		long unjustifiedAfterTolerance = extraWork.getUnjustified().getMillis() - tempIstTorelanceTime;
 		if (unjustifiedAfterTolerance > 0) {
-		    unjustified += ((double) unjustifiedAfterTolerance / (double) extraWork
-			    .getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration()
-			    .getMillis());
+		    unjustified += ((double) unjustifiedAfterTolerance / (double) extraWork.getWorkScheduleType()
+			    .getNormalWorkPeriod().getWorkPeriodDuration().getMillis());
 		}
 		tempIstTorelanceTime = unjustifiedAfterTolerance > 0 ? 0 : tempIstTorelanceTime
 			- extraWork.getUnjustified().getMillis();
@@ -131,8 +122,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
     public void delete() {
 	removeRootDomainObject();
 	removeAssiduousness();
-	List<AssiduousnessExtraWork> assiduousnessExtraWorks = new ArrayList<AssiduousnessExtraWork>(
-		getAssiduousnessExtraWorks());
+	List<AssiduousnessExtraWork> assiduousnessExtraWorks = new ArrayList<AssiduousnessExtraWork>(getAssiduousnessExtraWorks());
 	for (AssiduousnessExtraWork assiduousnessExtraWork : assiduousnessExtraWorks) {
 	    getAssiduousnessExtraWorks().remove(assiduousnessExtraWork);
 	    assiduousnessExtraWork.delete();
@@ -157,12 +147,11 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    previousAccumulatedA66 = lastAssiduousnessClosedMonth.getAccumulatedArticle66();
 	    previousUnjustified = lastAssiduousnessClosedMonth.getAccumulatedUnjustified();
 	}
-	YearMonthDay beginDate = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(
-		DateTimeFieldType.year()), getClosedMonth().getClosedYearMonth().get(
-		DateTimeFieldType.monthOfYear()), 01);
-	YearMonthDay endDate = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(
-		DateTimeFieldType.year()), getClosedMonth().getClosedYearMonth().get(
-		DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
+	YearMonthDay beginDate = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()),
+		getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), 01);
+	YearMonthDay endDate = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()),
+		getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth()
+			.getMaximumValue());
 	unjustified = getTotalUnjustifiedPercentage(beginDate, endDate);
 	unjustified = NumberUtils.formatDoubleWithoutRound(unjustified, 1);
 
@@ -186,8 +175,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	int countUnjustifiedWorkingDays = 0;
 	for (Leave leave : getAssiduousness().getLeaves(beginDate, endDate)) {
 	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase("FINJUST")) {
-		countUnjustifiedWorkingDays += leave.getWorkDaysBetween(new Interval(beginDate
-			.toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight()));
+		countUnjustifiedWorkingDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(), endDate
+			.toDateTimeAtMidnight()));
 	    }
 	}
 	setUnjustifiedDays(countUnjustifiedWorkingDays);
@@ -199,8 +188,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	if (previousMonth <= 0) {
 	    return null;
 	}
-	ClosedMonth previousClosedMonth = ClosedMonth.getClosedMonth(new YearMonth(partial
-		.get(DateTimeFieldType.year()), previousMonth));
+	ClosedMonth previousClosedMonth = ClosedMonth.getClosedMonth(new YearMonth(partial.get(DateTimeFieldType.year()),
+		previousMonth));
 	if (previousClosedMonth != null) {
 	    AssiduousnessClosedMonth assiduousnessClosedMonth = previousClosedMonth
 		    .getAssiduousnessClosedMonth(getAssiduousness());
@@ -230,8 +219,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
     public Map<WorkScheduleType, Duration> getNightWorkByWorkScheduleType() {
 	Map<WorkScheduleType, Duration> nightWorkByWorkScheduleType = new HashMap<WorkScheduleType, Duration>();
 	for (AssiduousnessExtraWork assiduousnessExtraWork : getAssiduousnessExtraWorks()) {
-	    Duration duration = nightWorkByWorkScheduleType.get(assiduousnessExtraWork
-		    .getWorkScheduleType());
+	    Duration duration = nightWorkByWorkScheduleType.get(assiduousnessExtraWork.getWorkScheduleType());
 	    if (duration == null) {
 		duration = Duration.ZERO;
 	    }

@@ -234,6 +234,7 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
+    @Override
     protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
 	    final Context ignoreContext) {
 
@@ -244,11 +245,14 @@ public class CourseGroup extends CourseGroup_Base {
 	}
     }
 
+    @Override
     protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
 	result.addAll(getParticipatingContextCurricularRules());
     }
 
-    protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
+    @Override
+    protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
+	    final ExecutionPeriod executionPeriod) {
 	parentCourseGroup.checkDuplicateChildNames(getName(), getNameEn());
     }
 

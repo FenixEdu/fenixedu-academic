@@ -605,7 +605,7 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("error.Registration.for.cannot.calculate.final.average.in.registration.for.bolonha");
 	}
 
-	return ((Curriculum) getCurriculum()).getRoundedAverage().intValue();
+	return getCurriculum().getRoundedAverage();
     }
 
     @Override
@@ -769,11 +769,47 @@ public class Registration extends Registration_Base {
     }
 
     final public Collection<Enrolment> getExtraCurricularEnrolments() {
-	return getLastStudentCurricularPlan().getExtraCurricularEnrolments();
+	final Collection<Enrolment> result = new HashSet<Enrolment>();
+	
+	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan()) : getStudentCurricularPlansSet());
+	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
+	    result.addAll(studentCurricularPlan.getExtraCurricularEnrolments());
+	}
+	
+	return result;
+    }
+
+    final public Collection<CurriculumLine> getExtraCurricularCurriculumLines() {
+	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
+	
+	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan()) : getStudentCurricularPlansSet());
+	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
+	    result.addAll(studentCurricularPlan.getExtraCurricularCurriculumLines());
+	}
+	
+	return result;
     }
 
     final public Collection<Enrolment> getPropaedeuticEnrolments() {
-	return getLastStudentCurricularPlan().getPropaedeuticEnrolments();
+	final Collection<Enrolment> result = new HashSet<Enrolment>();
+	
+	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan()) : getStudentCurricularPlansSet());
+	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
+	    result.addAll(studentCurricularPlan.getPropaedeuticEnrolments());
+	}
+	
+	return result;
+    }
+
+    final public Collection<CurriculumLine> getPropaedeuticCurriculumLines() {
+	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
+	
+	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan()) : getStudentCurricularPlansSet());
+	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
+	    result.addAll(studentCurricularPlan.getPropaedeuticCurriculumLines());
+	}
+	
+	return result;
     }
 
     public YearMonthDay getLastExternalApprovedEnrolmentEvaluationDate() {
@@ -1957,6 +1993,10 @@ public class Registration extends Registration_Base {
 	return hasStateType(executionYear, RegistrationStateType.TRANSITION);
     }
 
+    final public boolean getWasTransition() {
+	return hasState(RegistrationStateType.TRANSITION);
+    }
+
     final public boolean isTransited() {
 	return getActiveStateType() == RegistrationStateType.TRANSITED;
     }
@@ -1995,6 +2035,15 @@ public class Registration extends Registration_Base {
 	super.setConclusionDate(conclusionDate);
     }
 
+    @Override
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void setConclusionProcessResponsible(Person responsibleForConclusionProcess) {
+	if (isBolonha()) {
+	    throw new DomainException("error.Registration.cannot.modify.responsibleForConclusionProcess");
+	}
+        super.setConclusionProcessResponsible(responsibleForConclusionProcess);
+    }
+    
     public YearMonthDay calculateConclusionDate() {
 	return getLastStudentCurricularPlan().getLastApprovementDate();
     }
@@ -2107,7 +2156,8 @@ public class Registration extends Registration_Base {
 
 	super.setFinalAverage(calculateFinalAverage());
 	super.setConclusionDate(calculateConclusionDate());
-
+	super.setConclusionProcessResponsible(AccessControl.getPerson());
+	
 	RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
     }
 
@@ -2673,16 +2723,14 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("error.student.Registration.cannot.transit.non.active.registrations");
 	}
 
-	final RegistrationState actualState = getActiveState();
-
 	RegistrationState.createState(this, person, new DateTime(), RegistrationStateType.TRANSITED);
 
 	for (final Registration registration : getTargetTransitionRegistrations()) {
 	    if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
 		RegistrationState.createState(registration, person, new DateTime(),
-			registration.hasConcluded() ? RegistrationStateType.CONCLUDED : actualState.getStateType());
+			registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
 	    } else {
-		RegistrationState.createState(registration, person, new DateTime(), actualState.getStateType());
+		RegistrationState.createState(registration, person, new DateTime(), RegistrationStateType.REGISTERED);
 	    }
 
 	    registration.setRegistrationAgreement(getRegistrationAgreement());
@@ -2792,6 +2840,7 @@ public class Registration extends Registration_Base {
 	
 	super.setFinalAverage(null);
 	super.setConclusionDate(null);
+	super.setConclusionProcessResponsible(null);
     }
 
 }

@@ -165,6 +165,8 @@
 	<slot name="extraWorkDays" key="label.extraWorkVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="lastYearExtraWorkDays" key="label.lastYearExtraWorkVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="totalDays" key="label.total" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="usedVacations" key="label.totalUsedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="unusedVacations" key="label.totalUnusedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="choose.date" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth">
@@ -1161,7 +1163,9 @@
 	<slot name="employee.person.name" key="label.employee.name" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="bonusType" key="label.bonusType" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="value" key="label.value" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="costCenterCode" key="label.workingUnit" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="costCenterCode" key="label.workingUnit" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="format" value="0000"/>
+	</slot>
 	<slot name="subCostCenterCode" key="label.subCostCenter" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="explorationUnit" key="label.explorationUnit" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>

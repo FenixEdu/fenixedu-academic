@@ -1054,15 +1054,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String situation;
 	}
 
-	class net.sourceforge.fenixedu.domain.StatusAssiduidade extends net.sourceforge.fenixedu.domain.DomainObject {
-		String assiduidade;
-		String designacao;
-		String estado;
-		DateTime quandoDateTime;
-		Integer quem;
-		String sigla;
-	}
-
 	class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
 		Double classification;
 		Integer completedCourses;
@@ -1560,6 +1551,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Double vacations;
 		Integer maximumWorkingDays;
 		Integer workedDays;
+		Duration finalBalance;
+		Duration finalBalanceToCompensate;
 	}
 
 	class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2536,6 +2529,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String testInformation;
 		TestType testType;
 		String title;
+		String evaluationTitle;
 	}
 
 	class net.sourceforge.fenixedu.domain.onlineTests.Metadata extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -8042,6 +8036,20 @@ relation RegistrationDegree {
 	net.sourceforge.fenixedu.domain.student.Registration playsRole registrations {
 		multiplicity *;
 	}
+}
+
+relation ResponsibleForRegistrationConclusionProcess {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole conclusionProcessedRegistrations {
+		multiplicity *;	
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole conclusionProcessResponsible;
+}
+
+relation ResponsibleForCycleCurriculumGroupConclusionProcess {
+	net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup playsRole conclusionProcessedCycleCurriculumGroups {
+		multiplicity *;	
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole conclusionProcessResponsible;
 }
 
 relation RegistrationRegistrationNumber {

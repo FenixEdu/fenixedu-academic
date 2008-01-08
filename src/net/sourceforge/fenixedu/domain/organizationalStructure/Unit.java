@@ -835,11 +835,6 @@ public class Unit extends Unit_Base {
     public static Party createContributor(final String contributorName, final String contributorNumber,
 	    final PhysicalAddressData data) {
 
-	if (Party.readByContributorNumber(contributorNumber) != null) {
-	    throw new DomainException(
-		    "EXTERNAL_INSTITUTION_UNIT.createContributor.existing.contributor.number");
-	}
-
 	final Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
 	contributor.setSocialSecurityNumber(contributorNumber);
 	contributor.createDefaultPhysicalAddress(data);
@@ -1608,9 +1603,10 @@ public class Unit extends Unit_Base {
 	if (super.getCountry() != null) {
 	    return super.getCountry();
 	}
-	for (Unit unit : getParentUnits()) {
-	    if (unit.getCountry() != null) {
-		return unit.getCountry();
+	for (final Unit unit : getParentUnits()) {
+	    final Country country = unit.getCountry();
+	    if (country != null) {
+		return country;
 	    }
 	}
 	return null;

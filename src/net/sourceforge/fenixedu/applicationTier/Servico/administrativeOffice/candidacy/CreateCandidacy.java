@@ -13,15 +13,14 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import org.joda.time.YearMonthDay;
 
 public class CreateCandidacy extends Service {
-    
+
     public Candidacy run(ExecutionDegree executionDegree, DegreeType degreeType, String name,
-	    String identificationDocumentNumber, IDDocumentType identificationDocumentType,
-	    String contributorNumber, YearMonthDay startDate) {
-	Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber,
-		identificationDocumentType);
+	    String identificationDocumentNumber, IDDocumentType identificationDocumentType, String contributorNumber,
+	    YearMonthDay startDate) {
+
+	Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
 	if (person == null) {
-	    person = new Person(name, identificationDocumentNumber, identificationDocumentType,
-		    Gender.MALE);
+	    person = new Person(name, identificationDocumentNumber, identificationDocumentType, Gender.MALE);
 	}
 
 	person.setSocialSecurityNumber(contributorNumber);
@@ -29,11 +28,9 @@ public class CreateCandidacy extends Service {
 	person.addPersonRoleByRoleType(RoleType.PERSON);
 
 	Candidacy candidacy = CandidacyFactory.newCandidacy(degreeType, person, executionDegree, startDate);
-	
-	new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan()
-		.getServiceAgreementTemplate());
-	
-	
+
+	new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate());
+
 	return candidacy;
 
     }

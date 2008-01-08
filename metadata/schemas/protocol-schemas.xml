@@ -147,7 +147,7 @@
         <property name="classes" value="nobullet liinline"/>
     </slot>
  	<slot name="responsible" layout="autoComplete" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="size" value="80"/>
+		<property name="size" value="60"/>
 		<property name="labelField" value="person.name"/>	
 		<property name="rawSlotName" value="responsibleName"/>
 		<property name="format" value="${person.name}"/>
@@ -200,7 +200,7 @@
 </schema>
 <schema name="search.istResponsibleFunction.byUnit" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
  	<slot name="responsibleFunctionUnit" layout="autoComplete" key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="size" value="80"/>
+		<property name="size" value="60"/>
 		<property name="labelField" value="name"/>		
 		<property name="rawSlotName" value="unitName"/>
 		<property name="format" value="${unit.presentationName}"/>
@@ -228,7 +228,7 @@
         <property name="classes" value="nobullet liinline"/>
     </slot>
  	<slot name="responsibleFunctionUnit" layout="autoComplete" key="label.unit" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="size" value="80"/>
+		<property name="size" value="60"/>
 		<property name="labelField" value="name"/>		
 		<property name="rawSlotName" value="unitName"/>
 		<property name="format" value="${unit.presentationName}"/>
@@ -254,7 +254,7 @@
         <property name="classes" value="nobullet liinline"/>
     </slot>
  	<slot name="partnerResponsible" layout="autoComplete" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="size" value="80"/>
+		<property name="size" value="60"/>
 		<property name="labelField" value="text"/>		
 		<property name="rawSlotName" value="responsibleName"/>		
 		<property name="format" value="${text}"/>
@@ -281,7 +281,7 @@
         <property name="classes" value="nobullet liinline"/>
     </slot>
  	<slot name="unitObject" layout="autoComplete" key="label.unitName" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="size" value="80"/>
+		<property name="size" value="60"/>
 		<property name="labelField" value="unit.name"/>		
 		<property name="rawSlotName" value="unitName"/>		
 		<property name="format" value="${unit.presentationNameWithParents}"/>
@@ -335,7 +335,7 @@
         <property name="classes" value="nobullet liinline"/>
     </slot>
  	<slot name="unitObject" layout="autoComplete" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="size" value="80"/>
+		<property name="size" value="60"/>
 		<property name="labelField" value="unit.name"/>		
 		<property name="rawSlotName" value="unitName"/>
 		<property name="format" value="${unit.presentationName}"/>
@@ -356,7 +356,7 @@
         <property name="classes" value="nobullet liinline"/>
     </slot>
  	<slot name="unitObject" layout="autoComplete" key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="size" value="80"/>
+		<property name="size" value="60"/>
 		<property name="labelField" value="unit.name"/>		
 		<property name="rawSlotName" value="unitName"/>		
 		<property name="format" value="${unit.presentationNameWithParents}"/>
@@ -557,7 +557,7 @@
 	</slot>
 	<slot name="otherProtocolActionTypes" key="label.protocol.otherActionTypes" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="partnerName" key="label.protocol.partner" layout="autoComplete" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="size" value="80"/>
+		<property name="size" value="60"/>
 		<property name="labelField" value="unit.name"/>		
 		<property name="rawSlotName" value="partnerNameString"/>		
 		<property name="format" value="${unit.presentationNameWithParents}"/>

@@ -180,6 +180,10 @@
 					<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="false">
 						<td><bean:write name="weightedAverage"/></td>
 						<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType" value="WEIGHTED">
+							<%
+								curriculum.setAverageType(AverageType.SIMPLE);
+								request.setAttribute("simpleAverage", curriculum.getAverage());
+							%>
 							<td><bean:write name="simpleAverage"/></td>
 						</logic:notEqual>
 					<td><bean:write name="curricularYear"/></td>

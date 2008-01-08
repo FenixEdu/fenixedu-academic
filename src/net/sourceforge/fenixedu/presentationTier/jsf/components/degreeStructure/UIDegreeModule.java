@@ -189,6 +189,7 @@ public class UIDegreeModule extends UIInput {
         writer.writeAttribute("class", "aright", null);
         if (this.executionYear != null) {
             encodeLink(module + "/curricularRules/editCurricularRule.faces", "&curricularRuleID=" + curricularRule.getIdInternal(), false, "edit");
+            writer.append(", ");
         } 
         encodeLink(module + "/curricularRules/deleteCurricularRule.faces", "&curricularRuleID=" + curricularRule.getIdInternal(), false, "delete");
         

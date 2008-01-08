@@ -32,6 +32,8 @@ import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
+import com.healthmarketscience.jackcess.Column;
+import com.healthmarketscience.jackcess.DataType;
 import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Table;
 
@@ -85,7 +87,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	}
 	return null;
     }
-    
+
     private void addRow(final Spreadsheet parkingBDSpreadsheet, ParkingParty parkingParty,
 	    Map<String, Object> accessTableRow) throws FenixServiceException {
 	long thisInstant = Calendar.getInstance().getTimeInMillis();
@@ -269,32 +271,66 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 
 	    File dbFile = FileUtils.copyToTemporaryFile(openFileBean.getInputStream());
 	    Database database = Database.open(dbFile, Boolean.FALSE, Boolean.TRUE);
-	    Table table = database.getTable("XML");
+	    Table xmlTable = database.getTable("XML");
+	    Table errors = database.getTable("Paste Errors");
 
+	    File temp = FileUtils.createTemporaryFile();
+	    Database db = Database.create(temp, Boolean.TRUE);
+	    List<Column> columns = new ArrayList<Column>();
+	    for (Column column : xmlTable.getColumns()) {
+		Column newColumn = new Column();
+		newColumn.setName(column.getName());
+		newColumn.setType(column.getType());
+		if (column.getType().equals(DataType.BOOLEAN)) {
+		    newColumn.setLength((short) 0);
+		} else {
+		    newColumn.setLength(column.getLength());
+		}
+		columns.add(newColumn);
+	    }
+	    db.createTable("XML", columns);
+	    columns.clear();
+	    for (Column column : errors.getColumns()) {
+		Column newColumn = new Column();
+		newColumn.setName(column.getName());
+		newColumn.setType(column.getType());
+		newColumn.setLength(column.getLength());
+		columns.add(newColumn);
+	    }
+	    db.createTable("Paste Errors", columns);
+	    
+	    Table xml = db.getTable("XML");
 	    List<ParkingParty> parkingParties = getValidParkingParties();
 	    List<Object[]> rows = new ArrayList<Object[]>();
-	    for (Map<String, Object> row = table.getNextRow(); row != null; row = table.getNextRow()) {
+	    for (Map<String, Object> row = xmlTable.getNextRow(); row != null; row = xmlTable
+		    .getNextRow()) {
 		Long cardNumber = new Long((String) row.get("Card"));
 		ParkingParty parkingParty = getParkingPartyCardNumber(cardNumber, parkingParties);
 		if (parkingParty != null) {
-		    table.deleteCurrentRow();
 		    rows.add(updateRow(parkingParty, row));
 		}
 	    }
-	    table.addRows(rows);
-
+	    xml.addRows(rows);
+	    
 	    for (ParkingParty parkingParty : parkingParties) {
 		Object[] newRow = new Object[28];
 		fillInRow(parkingParty, newRow);
-		table.addRow(newRow);
+		xml.addRow(newRow);
 	    }
-	    database.flush();
+
+	    Table newErrors = db.getTable("Paste Errors");
+	    rows = new ArrayList<Object[]>();
+	    for (Map<String, Object> row = errors.getNextRow(); row != null; row = errors.getNextRow()) {
+		rows.add(new Object[] { row.get("Field0") });
+	    }
+	    newErrors.addRows(rows);
+
 	    database.close();
 
 	    response.setContentType("application/vnd.ms-access");
 	    response.setHeader("Content-disposition", "attachment; filename=Cartões_XML.mdb");
 	    final ServletOutputStream writer = response.getOutputStream();
-	    writer.write(pt.utl.ist.fenix.tools.file.utils.FileUtils.readByteArray(dbFile));
+	    writer.write(pt.utl.ist.fenix.tools.file.utils.FileUtils.readByteArray(temp));
 	    writer.flush();
 	    writer.close();
 
@@ -453,7 +489,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	}
 	throw new FenixServiceException();
     }
-    
+
     private List<ParkingParty> getValidParkingParties() {
 	List<ParkingParty> parkingParties = new ArrayList<ParkingParty>();
 	for (ParkingParty parkingParty : ParkingParty.getAll()) {
@@ -482,7 +518,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    return "FALSE";
 	}
     }
-    
+
     private String getString(String string, int maxSize) {
 	if (string.length() > maxSize) {
 	    return string.substring(0, maxSize - 1);

@@ -163,10 +163,11 @@
 		</h:panelGroup>
 	</h:panelGroup>	
 				
-	<fc:dataRepeater value="#{writtenEvaluationsByRoom.writtenEvaluationCalendarLinksEntryList}" var="calendarLinks">
+	<fc:dataRepeater value="#{writtenEvaluationsByRoom.writtenEvaluationCalendarLinksEntryList}" var="calendarLinks" rowIndexVar="index">
 		<h:panelGroup>
 
-			<h:outputText value="<table class='tstyle4 tdcenter'>" escape="false"/>
+			<h:outputText rendered="#{index == 0}" value="<table class='tstyle4 tdcenter'>" escape="false"/>
+			<h:outputText rendered="#{index > 0}" value="<table class='tstyle4 tdcenter break-before'>" escape="false"/>			
 			<h:outputText value="<tr>" escape="false"/>
 				<h:outputText value="<th>#{bundle['property.room.name']}</th>" escape="false"/>
 				<h:outputText value="<th>#{bundle['property.room.building']}</th>" escape="false"/>
@@ -185,7 +186,7 @@
 				<h:outputText value="<td>#{calendarLinks.key.capacidadeExame}</td>" escape="false"/>
 			<h:outputText value="</tr>" escape="false"/>
 			<h:outputText value="</table>" escape="false"/>
-
+			
 		 	<fc:fenixCalendar 
 			 		begin="#{writtenEvaluationsByRoom.calendarBegin}" 
 		 			end="#{writtenEvaluationsByRoom.calendarEnd}"

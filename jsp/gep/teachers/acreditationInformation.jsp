@@ -27,7 +27,9 @@
 			</tr>
 			<tr>
 				<td><bean:message key="message.teacherInformation.category" bundle="GEP_RESOURCES"/>
-					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName" /></td>
+					&nbsp;<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeacher.infoCategory"><bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName" /></logic:notEmpty>
+						  <logic:empty name="infoSiteTeacherInformation" property="infoTeacher.infoCategory">-</logic:empty>
+				</td>
 			</tr>
 		</table>
 		<br />

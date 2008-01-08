@@ -15,7 +15,7 @@
 
 <ul class="mtop2">
 	<li>
-		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+		<html:link page="/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans" paramId="studentId" paramName="registration" paramProperty="student.idInternal">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</li>
@@ -58,12 +58,14 @@
 </fr:view>
 </logic:notPresent>
 
+<bean:define id="studentId" name="registration" property="student.idInternal" />
 <h3 class="mbottom025"><bean:message key="label.registration.manageState" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:edit name="registrationStateBean" schema="student.manageRegistrationState" action="/manageRegistrationState.do?method=createNewState">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop025"/>
 		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 	</fr:layout>
+	<fr:destination name="cancel" path="<%= "/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans&studentId=" + studentId.toString() %>" />
 </fr:edit>
 
 <bean:define id="deleteLink">
@@ -85,14 +87,7 @@
 		        	<bean:message key="link.student.deleteRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</html:link>
 			</fr:property>			
-			
 			<fr:property name="sortBy" value="stateDate=desc"/>
-			
-		 	<%--<fr:property name="link(deleteActualInfo)" value="/manageRegistrationState.do?method=deleteActualInfoConfirm" />
-			<fr:property name="param(deleteActualInfo)" value="registration.idInternal/registrationId" />
-			<fr:property name="key(deleteActualInfo)" value="link.view.deleteActualInfo" />
-			<fr:property name="bundle(deleteActualInfo)" value="ACADEMIC_OFFICE_RESOURCES" />
-			<fr:property name="visibleIf(deleteActualInfo)" value="canDeleteActualInfo"/>--%>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

@@ -259,7 +259,7 @@
 </schema>
 
 <schema name="library.card.create.person" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="LIBRARY_RESOURCES">
-	 <slot name="personName" layout="autoComplete" key="label.card.name">
+	 <slot name="personName" layout="autoComplete" key="label.card.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="80"/>
 		<property name="labelField" value="name"/>		
 		<property name="rawSlotName" value="name"/>		
@@ -280,7 +280,7 @@
 	</slot>
 	<slot name="email" key="label.card.person.email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
 		<property name="size" value="60"/>
-	</slot>
+	</slot>	
 </schema>
 
 <schema name="library.card.create.unitPerson" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="LIBRARY_RESOURCES">
@@ -288,6 +288,8 @@
 	<slot name="phone" key="label.card.person.phone" read-only="true"/>
 	<slot name="mobile" key="label.card.person.mobile" read-only="true"/>
 	<slot name="email" key="label.card.person.email" read-only="true"/>
+	<slot name="idDocumentType" key="label.idDocumentType" bundle="MANAGER_RESOURCES"/>
+	<slot name="documentIdNumber" key="label.identificationNumber" bundle="MANAGER_RESOURCES"/>
 	<slot name="unitNameDomainReference" layout="autoComplete" key="label.card.unitName">
 		<property name="size" value="80"/>
 		<property name="labelField" value="unit.name"/>		
@@ -298,5 +300,5 @@
 		<property name="serviceArgs" value="slot=name"/>	
 		<property name="minChars" value="3"/>
 		<property name="errorStyleClass" value="error0"/>
-	</slot>	
+	</slot>
 </schema>

@@ -76,6 +76,14 @@ public class RegistrationCurriculumBean extends RegistrationSelectExecutionYearB
 		.getCurriculum(executionYear);
     }
 
+    public ICurriculum getCurriculum() {
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCurriculum() : getRegistration().getCurriculum();
+    }
+
+    public boolean isConcluded() {
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
+    }
+    
     public boolean isConclusionProcessed() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConclusionProcessed() : getRegistration()
 		.isRegistrationConclusionProcessed();

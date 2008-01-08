@@ -308,7 +308,9 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
         if (this.showRules) {
-            encodeLink(module + "/curricularRules/createCurricularRule.faces", "&degreeModuleID=" + this.courseGroup.getIdInternal(), false, "setCurricularRule");
+            if (!this.courseGroup.isRoot()) {
+        	encodeLink(module + "/curricularRules/createCurricularRule.faces", "&degreeModuleID=" + this.courseGroup.getIdInternal(), false, "setCurricularRule");
+            }
         } else {
             encodeLink("createCurricularCourse.faces", "&courseGroupID=" + this.courseGroup.getIdInternal(), false, "create.curricular.course");
             writer.append(" , ");

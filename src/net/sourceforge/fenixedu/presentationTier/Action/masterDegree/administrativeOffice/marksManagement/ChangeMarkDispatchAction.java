@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -357,31 +358,26 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         infoEnrolmentEvaluation.setObservation(observation);
         infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment()));
 
-        List evaluationsWithError = null;
-
         try {
-            IUserView userView = SessionUtils.getUserView(request);
-            Object args[] = { Integer.valueOf(curricularCourseId), enrolmentEvaluationCode,
-                    infoEnrolmentEvaluation, infoTeacher.getTeacherNumber(), userView };
-            evaluationsWithError = (List) ServiceManagerServiceFactory.executeService(userView,
-                    "AlterStudentEnrolmentEvaluation", args);
-        } catch (NonExistingServiceException e) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("TeacharNumberRequired", new ActionError("message.non.existing.teacher"));
-            saveErrors(request, actionErrors);
-            return chooseStudentMarks(mapping, form, request, response);
-        }
-        
-        ActionErrors actionErrors = null;
-        actionErrors = checkForErrors(evaluationsWithError);
-        if (actionErrors != null) {
-            saveErrors(request, actionErrors);
-            return chooseStudentMarks(mapping, form, request, response);
-        }
+	    IUserView userView = SessionUtils.getUserView(request);
+	    Object args[] = { Integer.valueOf(curricularCourseId), enrolmentEvaluationCode, infoEnrolmentEvaluation,
+		    infoTeacher.getTeacherNumber(), userView };
+	    ServiceManagerServiceFactory.executeService(userView, "AlterStudentEnrolmentEvaluation", args);
+	} catch (DomainException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add(e.getKey(), new ActionError(e.getKey(), e.getArgs()));
+	    saveErrors(request, actionErrors);
+	    return chooseStudentMarks(mapping, form, request, response);
+	} catch (NonExistingServiceException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("TeacharNumberRequired", new ActionError("message.non.existing.teacher"));
+	    saveErrors(request, actionErrors);
+	    return chooseStudentMarks(mapping, form, request, response);
+	}
 
-        request.setAttribute("Label.MarkChange", "Registo  Alterado");
+	request.setAttribute("Label.MarkChange", "Registo  Alterado");
 
-        return mapping.findForward("changeStudentMark");
+	return mapping.findForward("changeStudentMark");
     }
 
     private ActionErrors checkForErrors(List evaluationsWithError) {

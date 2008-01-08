@@ -22,7 +22,7 @@
 			<h:dataTable value="#{evaluationManagementBackingBean.onlineTestList}" var="onlineTest">
 				<h:column>
 					<h:outputText value="<b>#{bundle['lable.test']}:</b> " escape="false"/>
-					<h:outputText value="#{onlineTest.distributedTest.title}, "/>
+					<h:outputText value="#{onlineTest.distributedTest.evaluationTitle}, "/>
 					<h:outputText value="#{bundle['label.day']}" />
 					<h:outputFormat value="{0, date, dd/MM/yyyy}">
 						<f:param value="#{onlineTest.distributedTest.beginDateDate}"/>

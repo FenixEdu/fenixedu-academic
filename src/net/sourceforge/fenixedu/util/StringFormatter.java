@@ -76,6 +76,7 @@ public class StringFormatter {
 	allLowerSet.add("nos");
 	allLowerSet.add("na");
 	allLowerSet.add("nas");
+	allLowerSet.add("num");
 
 	// conjunções
 	allLowerSet.add("e");

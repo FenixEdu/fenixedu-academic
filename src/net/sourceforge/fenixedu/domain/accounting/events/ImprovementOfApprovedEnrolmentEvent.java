@@ -15,19 +15,19 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEnrolmentEvent_Base {
-    
+
     protected ImprovementOfApprovedEnrolmentEvent() {
 	super();
     }
 
-    public ImprovementOfApprovedEnrolmentEvent(final AdministrativeOffice administrativeOffice,
-	    final Person person, final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
+    public ImprovementOfApprovedEnrolmentEvent(final AdministrativeOffice administrativeOffice, final Person person,
+	    final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
 	this();
 	init(administrativeOffice, EventType.IMPROVEMENT_OF_APPROVED_ENROLMENT, person, enrolmentEvaluations);
     }
 
-    protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType,
-	    final Person person, final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
+    protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person,
+	    final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
 	checkParameters(enrolmentEvaluations);
 	getImprovementEnrolmentEvaluations().addAll(enrolmentEvaluations);
 	super.init(administrativeOffice, eventType, person);
@@ -43,18 +43,27 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
     @Override
     public LabelFormatter getDescription() {
 	final LabelFormatter labelFormatter = super.getDescription();
-	
+
 	getDetailedDescription(labelFormatter);
-	
+
 	return labelFormatter;
     }
 
     private void getDetailedDescription(final LabelFormatter labelFormatter) {
-	labelFormatter.appendLabel(" (");
-	labelFormatter.appendLabel(String.valueOf(getImprovementEnrolmentEvaluationsCount()));
-	labelFormatter.appendLabel(" ");
-	labelFormatter.appendLabel("label.markSheet.curricularCourse", LabelFormatter.APPLICATION_RESOURCES);
-	labelFormatter.appendLabel(")");
+	labelFormatter.appendLabel(" (").appendLabel(getImprovementEnrolmentsDescription()).appendLabel(")");
+    }
+
+    private String getImprovementEnrolmentsDescription() {
+	final StringBuilder result = new StringBuilder();
+	for (final EnrolmentEvaluation enrolmentEvaluation : getImprovementEnrolmentEvaluations()) {
+	    result.append(enrolmentEvaluation.getEnrolment().getName().getContent()).append(", ");
+	}
+
+	if (result.toString().endsWith(", ")) {
+	    result.delete(result.length() - 2, result.length());
+	}
+
+	return result.toString();
     }
 
     @Override
@@ -63,7 +72,7 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
 
 	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
 	getDetailedDescription(labelFormatter);
-	
+
 	return labelFormatter;
     }
 
@@ -74,14 +83,15 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
 
     @Override
     public Account getToAccount() {
-	return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);    
+	return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
     }
 
     @Override
     public PostingRule getPostingRule() {
-	return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
+	return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
+		getWhenOccured());
     }
-    
+
     public boolean hasImprovementOfApprovedEnrolmentPenaltyExemption() {
 	return getImprovementOfApprovedEnrolmentPenaltyExemption() != null;
     }
@@ -103,11 +113,11 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
 
     @Override
     public void removeImprovementEnrolmentEvaluations(EnrolmentEvaluation improvementEnrolmentEvaluations) {
-        super.removeImprovementEnrolmentEvaluations(improvementEnrolmentEvaluations);
-        
-        if (!hasAnyImprovementEnrolmentEvaluations()) {
-            this.delete();
-        }
+	super.removeImprovementEnrolmentEvaluations(improvementEnrolmentEvaluations);
+
+	if (!hasAnyImprovementEnrolmentEvaluations()) {
+	    this.delete();
+	}
     }
-    
+
 }

@@ -604,10 +604,10 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
                 && (getRequestedNightHours() == null || getRequestedNightHours().equals(0))
                 && (getRequestedExtraNightHours() == null || getRequestedExtraNightHours().equals(0))
                 && (getExtraNightDays() == null || getExtraNightDays().equals(0))
-                && (getHolidayHours() == null || getRequestedHolidayHours().equals(0))
+                && (getRequestedHolidayHours() == null || getRequestedHolidayHours().equals(0))
                 && (getRequestedSaturdayHours() == null || getRequestedSaturdayHours().equals(0))
-                && (getRequestedSundayHours() == null || getRequestedSundayHours().equals(0)) && (getRequestedWorkdayHours() == null || getRequestedWorkdayHours()
-                .equals(0))) ? true : false;
+                && (getRequestedSundayHours() == null || getRequestedSundayHours().equals(0)) 
+                && (getRequestedWorkdayHours() == null || getRequestedWorkdayHours().equals(0))) ? true : false;
     }
 
     protected boolean validateRemunerationOptionFields() {

@@ -86,8 +86,11 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     
     public ActionForward viewUnit(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-
 	final Unit unit = getUnit(request);
+	return viewUnit(mapping, request, unit);
+    }
+
+    private ActionForward viewUnit(ActionMapping mapping, HttpServletRequest request, final Unit unit) {
 	request.setAttribute("unitResultBean", new ExternalUnitResultBean(unit));
 	buildUnitBean(request, unit);
 	return mapping.findForward(findForwardNameFor(unit));
@@ -162,6 +165,13 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("prepareEditUnit");
     }
     
+    public ActionForward prepareDeleteUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	
+	request.setAttribute("unit", getUnit(request));
+	return mapping.findForward("prepareDeleteUnit");
+    }
+    
     public ActionForward createExternalUnit(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
@@ -204,6 +214,27 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("prepareCreateUnit");
     }
     
+    public ActionForward deleteExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final Unit unit = getUnit(request);
+	final Unit parent = getAnyParentUnit(unit);
+	
+	try {
+	    executeService("DeleteExternalUnit", unit);
+	} catch (final DomainException e) {
+	    addActionMessage("error", request, e.getMessage());
+	    request.setAttribute("unit", unit);
+	    return mapping.findForward("prepareDeleteUnit");
+	}
+	
+	return viewUnit(mapping, request, parent);
+    }
+    
+    private Unit getAnyParentUnit(final Unit unit) {
+	return unit.getParentUnits().iterator().next();
+    }
+
     public ActionForward prepareCreateExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -216,6 +247,13 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute("editExternalCurricularCourseBean", new EditExternalCurricularCourseBean(getExternalCurricularCourse(request)));
 	return mapping.findForward("prepareEditExternalCurricularCourse");
+    }
+    
+    public ActionForward prepareDeleteExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	
+	request.setAttribute("externalCurricularCourse", getExternalCurricularCourse(request));
+	return mapping.findForward("prepareDeleteExternalCurricularCourse");
     }
     
     public ActionForward createExternalCurricularCoursePostback(ActionMapping mapping, ActionForm actionForm,
@@ -260,6 +298,23 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	request.setAttribute("editExternalCurricularCourseBean", getRenderedObject());
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("prepareEditExternalCurricularCourse");
+    }
+    
+    public ActionForward deleteExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	
+	final ExternalCurricularCourse externalCurricularCourse = getExternalCurricularCourse(request);
+	final Unit parent = externalCurricularCourse.getUnit();
+	
+	try {
+	    executeService("DeleteExternalCurricularCourse", externalCurricularCourse);
+	} catch (final DomainException e) {
+	    addActionMessage("error", request, e.getMessage());
+	    request.setAttribute("externalCurricularCourse", getExternalCurricularCourse(request));
+	    return mapping.findForward("prepareDeleteExternalCurricularCourse");
+	}
+	
+	return viewUnit(mapping, request, parent);
     }
     
     public ActionForward editExternalCurricularCourseInvalid(ActionMapping mapping, ActionForm actionForm,

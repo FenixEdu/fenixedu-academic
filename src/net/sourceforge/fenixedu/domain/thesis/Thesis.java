@@ -147,9 +147,10 @@ public class Thesis extends Thesis_Base {
 
 	if (dissertation == null) {
 	    return getTitle();
-	}
-	else {
-	    return new MultiLanguageString(dissertation.getLanguage(), dissertation.getTitle());
+	} else {
+	    final Language dlanguage = dissertation.getLanguage();
+	    final Language language = dlanguage == null ? Language.getApplicationLanguage() : dlanguage;
+	    return new MultiLanguageString(language, dissertation.getTitle());
 	}
     }
 
@@ -169,6 +170,45 @@ public class Thesis extends Thesis_Base {
 
 	    return new MultiLanguageString(dissertation.getLanguage(), subTitle);
 	}
+    }
+
+    public void setFinalTitle(final MultiLanguageString finalTitle) {
+	setTitle(finalTitle);
+	final ThesisFile dissertation = getDissertation();
+	if (dissertation != null) {
+	    final Language language = dissertation.getLanguage();
+	    if (language == null) {
+		dissertation.setLanguage(finalTitle.getContentLanguage());
+		dissertation.setTitle(finalTitle.getContent());
+	    } else {
+		final String content = finalTitle.getContent(language);
+		if (content == null) {
+		    dissertation.setLanguage(finalTitle.getContentLanguage());
+		    dissertation.setTitle(finalTitle.getContent());		    
+		} else {
+		    dissertation.setTitle(content);
+		}
+	    }
+	}
+    }
+
+    public void setFinalSubtitle(final MultiLanguageString finalSubtitle) {
+	final ThesisFile dissertation = getDissertation();
+	if (dissertation != null) {
+	    final Language language = dissertation.getLanguage();
+	    if (language == null) {
+		dissertation.setLanguage(finalSubtitle.getContentLanguage());
+		dissertation.setSubTitle(finalSubtitle.getContent());
+	    } else {
+		final String content = finalSubtitle.getContent(language);
+		if (content == null) {
+		    dissertation.setLanguage(finalSubtitle.getContentLanguage());
+		    dissertation.setSubTitle(finalSubtitle.getContent());		    
+		} else {
+		    dissertation.setSubTitle(content);
+		}
+	    }
+	}	
     }
 
     public Language getLanguage() {
@@ -419,6 +459,12 @@ public class Thesis extends Thesis_Base {
 
     @Override
     public void setEnrolment(Enrolment enrolment) {
+	final ExecutionYear firstAllowedExecutionYear = ExecutionYear.readExecutionYearByName("2007/2008");
+	final ExecutionYear executionYear = enrolment.getExecutionYear();
+	if (executionYear.isBefore(firstAllowedExecutionYear)) {
+	    throw new DomainException("thesis.creation.not.allowed.because.out.of.period");
+	}
+
 	if (enrolment != null) {
 	    CurricularCourse curricularCourse = enrolment.getCurricularCourse();
 	    if (! curricularCourse.isDissertation()) {

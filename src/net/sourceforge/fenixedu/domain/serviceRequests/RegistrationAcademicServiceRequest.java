@@ -33,6 +33,8 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     private void checkParameters(final Registration registration) {
 	if (registration == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.registration.cannot.be.null");
+	} else if (registration.isTransited()) {
+	    throw new DomainException("RegistrationAcademicServiceRequest.registration.cannot.be.transited");
 	}
     }
     

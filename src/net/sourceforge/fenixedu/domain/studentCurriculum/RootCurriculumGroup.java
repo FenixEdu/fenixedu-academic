@@ -30,6 +30,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     public RootCurriculumGroup() {
 	super();
 	createExtraCurriculumGroup();
+	createPropaedeuticsCurriculumGroup();
     }
 
     public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup,
@@ -146,6 +147,10 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     private void createExtraCurriculumGroup() {
 	NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR,
 		this);
+    }
+
+    private void createPropaedeuticsCurriculumGroup() {
+	NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.PROPAEDEUTICS, this);
     }
 
     public CycleCurriculumGroup getCycleCurriculumGroup(CycleType cycleType) {

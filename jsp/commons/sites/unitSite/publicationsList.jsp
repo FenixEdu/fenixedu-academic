@@ -125,7 +125,7 @@
 		<bean:define id="currentSchema"
 			value="result.publication.presentation.TechnicalReport"
 			toScope="request" />
-		<bean:define id="results" name="technical-reports" toScope="request" />
+		<bean:define id="results" name="technicalReports" toScope="request" />
 		<jsp:include page="publicationsResume.jsp" />
 	</logic:notEmpty>
 

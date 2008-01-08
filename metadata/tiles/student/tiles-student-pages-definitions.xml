@@ -66,6 +66,9 @@
 	<definition name="df.page.curriculum.chooseRegistration" extends="definition.student.masterPage">
 		<put name="body" value="/student/curriculum/chooseRegistration.jsp" />
 	</definition>
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="definition.student.masterPage">
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
     <definition name="view-registration-curriculum" extends="definition.student.masterPage">
         <put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp"></put>
     </definition>

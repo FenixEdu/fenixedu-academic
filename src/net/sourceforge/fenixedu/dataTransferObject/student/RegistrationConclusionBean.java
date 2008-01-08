@@ -2,11 +2,16 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.YearMonthDay;
 
@@ -93,14 +98,28 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     public boolean isConcluded() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
     }
+    
+    public Collection<CurriculumGroup> getCurriculumGroupsNotVerifyingStructure() {
+	if (hasCycleCurriculumGroup()) {
+	    final Collection<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+	    getCycleCurriculumGroup().assertCorrectStructure(result);
+	    return result;
+	} else {
+	    return Collections.EMPTY_LIST;
+	}
+    }
 
     public boolean isConclusionProcessed() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConclusionProcessed() : getRegistration()
 		.isRegistrationConclusionProcessed();
     }
 
+    public boolean getCanBeConclusionProcessed() {
+	return !isConclusionProcessed() && isConcluded() && (getCurriculumGroupsNotVerifyingStructure().isEmpty() || getRegistration().getWasTransition());
+    }
+
     public boolean isByCycle() {
 	return hasCycleCurriculumGroup();
     }
-
+    
 }

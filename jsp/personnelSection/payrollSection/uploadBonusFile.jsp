@@ -38,6 +38,9 @@
 			</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
+	<div class="infoop2">
+		<p><bean:message key="message.uploadBonusFileInstructions"/></p>
+	</div>
 	<p>
 		<html:submit>
 			<bean:message key="button.import" />

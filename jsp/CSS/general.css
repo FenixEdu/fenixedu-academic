@@ -389,6 +389,7 @@ td.pleft5 { padding-left: 5em; }
 td.pleft6 { padding-left: 6em; }
 
 table.tpadding05 tr th, table.tpadding05 tr td  { padding: 0.5em; }
+table.tdpadding02505 tr td { padding: 0.25em 0.5em !important; }
 
 /* ----------------------
 -------- Tree ----------
@@ -439,6 +440,7 @@ ul.padding1 li { padding: 0.25em 0; }
 .warning0 { /*margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em;*/ background-color: #fbf8cc; color: #805500; }
 .warning0 table { color: #805500; }
 
+p.warning0 {padding: 0.5em;}
 
 /* ----------------------
 -------- Forms ---------
@@ -2256,5 +2258,20 @@ table.pgrid tr td span span { display: inline; padding: 0px 4px; }
 .performanceGridLegend { padding: 1px 3px; }
 
 
+
+
+
+.fieldset1 {
+margin: 1em 0;
+padding: 1em;
+border: 1px solid #eee;
+background: #fafafa;
+}
+.fieldset1 legend {
+margin: 0;
+padding: 0 0.5em;
+color: #000;
+font-weight: bold;
+}
 
 

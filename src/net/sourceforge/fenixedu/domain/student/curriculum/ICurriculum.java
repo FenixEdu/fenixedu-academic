@@ -14,6 +14,8 @@ public interface ICurriculum {
     abstract public BigDecimal getSumPi();
 
     abstract public BigDecimal getAverage();
+    
+    abstract public Integer getRoundedAverage();
 
     abstract public BigDecimal getSumEctsCredits();
     

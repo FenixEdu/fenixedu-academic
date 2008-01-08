@@ -28,6 +28,11 @@ function selectInquiry() {
 	var availableCorrection = document.forms[0].availableCorrection;
 	var imsFeedback = document.forms[0].imsFeedback;
 	var disable=false;
+	if(testType[0].checked==true){
+		document.forms[0].evaluationTitle.disabled=false;
+	}else{
+		document.forms[0].evaluationTitle.disabled=true;
+	}
 	if(testType[2].checked==true){
 		availableCorrection[0].checked=true;
 		imsFeedback[1].checked=true;
@@ -141,6 +146,14 @@ function getIndex(input){
 	</table>
 	<br />
 	<br />
+	<table>
+		<tr>
+			<td><b><bean:message key="label.test.evaluationTitle"/></b></td>
+		</tr>
+		<tr>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.evaluationTitle" size="50" property="evaluationTitle"/></td>
+		</tr>
+	</table>	
 	<table>
 		<tr>
 			<td><b><bean:message key="label.test.information" /></b></td>

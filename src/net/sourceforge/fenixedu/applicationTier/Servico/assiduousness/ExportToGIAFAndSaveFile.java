@@ -32,6 +32,8 @@ public class ExportToGIAFAndSaveFile extends Service {
 	    closedMonthDocument.delete();
 	    e.printStackTrace();
 	    return new ActionMessage("error.connectionError");
+	} catch (Exception e) {
+	    closedMonthDocument.delete();
 	}
 	return null;
     }

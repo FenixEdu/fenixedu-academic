@@ -373,7 +373,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
     
     final public boolean getLoggedPersonCanCancel() {
-        return isNewRequest() && (createdByStudent() || getAdministrativeOffice() == AccessControl.getPerson().getEmployee().getAdministrativeOffice());
+        return (isNewRequest() || isProcessing()) && (createdByStudent() || getAdministrativeOffice() == AccessControl.getPerson().getEmployee().getAdministrativeOffice());
     }
     
     final public DateTime getCreationDate() {

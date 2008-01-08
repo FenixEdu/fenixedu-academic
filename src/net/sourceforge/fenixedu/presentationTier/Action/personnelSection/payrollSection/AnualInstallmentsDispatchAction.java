@@ -14,8 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.AnualBonusInstallmentFactory;
 import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallment;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment;
@@ -26,7 +29,6 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -40,9 +42,8 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
     private final String endLine = ";\r\n";
 
-    public ActionForward showAnualInstallment(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException {
+    public ActionForward showAnualInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	AnualBonusInstallmentFactory anualBonusInstallmentFactory = (AnualBonusInstallmentFactory) getRenderedObject("anualBonusInstallmentFactory");
 	if (anualBonusInstallmentFactory == null) {
 	    anualBonusInstallmentFactory = new AnualBonusInstallmentFactory();
@@ -60,9 +61,8 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("show-anual-installment");
     }
 
-    public ActionForward editAnualInstallment(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException {
+    public ActionForward editAnualInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	if (isCancelled(request)) {
 	    return showAnualInstallment(mapping, form, request, response);
@@ -74,23 +74,21 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	    Integer year = new Integer(request.getParameter("year"));
 	    anualBonusInstallmentFactory = new AnualBonusInstallmentFactory();
 	    anualBonusInstallmentFactory.setYear(year);
-	    List<AnualBonusInstallment> anualBonusInstallmentList = AnualBonusInstallment
-		    .readByYear(year);
+	    List<AnualBonusInstallment> anualBonusInstallmentList = AnualBonusInstallment.readByYear(year);
 	    if (anualBonusInstallmentList != null) {
 		anualBonusInstallmentFactory.setInstallmentsNumber(anualBonusInstallmentList.size());
 	    }
 
 	}
 	if (anualBonusInstallmentFactory.getAnualBonusInstallmentBeanList() != null) {
-	    List<ActionMessage> actionMessageList = (List<ActionMessage>) executeService(request,
-		    "ExecuteFactoryMethod", new Object[] { anualBonusInstallmentFactory });
+	    List<ActionMessage> actionMessageList = (List<ActionMessage>) executeService(request, "ExecuteFactoryMethod",
+		    new Object[] { anualBonusInstallmentFactory });
 	    if (!actionMessageList.isEmpty()) {
 		for (ActionMessage actionMessage : actionMessageList) {
 		    actionMessages.add("message", actionMessage);
 		}
 	    } else {
-		actionMessages.add("successMessage", new ActionMessage(
-			"message.successUpdatingInstallmentsNumber"));
+		actionMessages.add("successMessage", new ActionMessage("message.successUpdatingInstallmentsNumber"));
 	    }
 	} else {
 	    ActionMessage error = anualBonusInstallmentFactory.updateAnualBonusInstallment();
@@ -106,8 +104,8 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
     }
 
     public List<AnualBonusInstallmentFactory> getOrderedAnualBonusInstallmentsList() {
-	List<AnualBonusInstallment> anualBonusInstallmentList = new ArrayList<AnualBonusInstallment>(
-		rootDomainObject.getAnualBonusInstallments());
+	List<AnualBonusInstallment> anualBonusInstallmentList = new ArrayList<AnualBonusInstallment>(rootDomainObject
+		.getAnualBonusInstallments());
 	HashMap<Integer, Integer> anualBonusInstallments = new HashMap<Integer, Integer>();
 
 	for (AnualBonusInstallment anualBonusInstallment : anualBonusInstallmentList) {
@@ -131,16 +129,14 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	return result;
     }
 
-    public ActionForward showEmptyBonusInstallment(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException {
+    public ActionForward showEmptyBonusInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	request.setAttribute("bonusInstallment", new BonusInstallment());
 	return mapping.findForward("show-bonus-installment");
     }
 
-    public ActionForward showBonusInstallment(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException {
+    public ActionForward showBonusInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	if (isCancelled(request)) {
 	    RenderUtils.invalidateViewState();
 	    request.setAttribute("bonusInstallment", new BonusInstallment());
@@ -155,30 +151,31 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("show-bonus-installment");
     }
 
-    public ActionForward exportBonusInstallment(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException, IOException {
+    public ActionForward exportBonusInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
 	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
 	if (bonusInstallment == null) {
 	    bonusInstallment = new BonusInstallment();
 	}
 	bonusInstallment.updateList();
 
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		LanguageUtils.getLocale());
-	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources",
-		LanguageUtils.getLocale());
-	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle.getString("label.bonus"),
-		false);
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle.getString("label.bonus"), false);
 
 	bonusInstallment.getExcelHeader(spreadsheet, bundle, enumBundle);
 	bonusInstallment.getRows(spreadsheet, enumBundle);
 
-	spreadsheet.setRegionBorder(0, spreadsheet.getSheet().getLastRowNum() + 1, 0, spreadsheet
-		.getMaxiumColumnNumber() + 1);
+	spreadsheet.setRegionBorder(0, spreadsheet.getSheet().getLastRowNum() + 1, 0, spreadsheet.getMaxiumColumnNumber() + 1);
 
 	response.setContentType("text/plain");
-	response.addHeader("Content-Disposition", "attachment; filename=bonus.xls");
+	StringBuilder filename = new StringBuilder();
+	filename.append("premios");
+	filename.append(bonusInstallment.getYear());
+	filename.append("-");
+	filename.append(bonusInstallment.getInstallment());
+	filename.append(".xls");
+	response.addHeader("Content-Disposition", "attachment; filename=" + filename.toString());
 	final ServletOutputStream writer = response.getOutputStream();
 	spreadsheet.getWorkbook().write(writer);
 	writer.flush();
@@ -186,116 +183,15 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
-    public ActionForward exportBonusInstallmentToGIAF(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException, IOException {
+    public ActionForward exportBonusInstallmentToGIAF(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
 	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
 	if (bonusInstallment == null) {
 	    bonusInstallment = new BonusInstallment();
 	}
 	bonusInstallment.updateList();
-	List<EmployeeBonusInstallment> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallment>(
-		bonusInstallment.getBonusInstallmentList());
-
-	Collections.sort(employeeBonusInstallmentList, new BeanComparator("employee.employeeNumber"));
-	StringBuilder stringBuilder = new StringBuilder();
-	for (EmployeeBonusInstallment employeeBonusInstallment : employeeBonusInstallmentList) {
-	    stringBuilder.append(getLine(employeeBonusInstallment));
-	    String aditionalLines = getAditionalLines(employeeBonusInstallment);
-	    if (!StringUtils.isEmpty(aditionalLines)) {
-		stringBuilder.append(aditionalLines);
-	    }
-	}
-	response.setContentType("text/plain");
-	response.addHeader("Content-Disposition", "attachment; filename=bonus_giaf.txt");
-	final ServletOutputStream writer = response.getOutputStream();
-	byte[] data = stringBuilder.toString().getBytes();
-	response.setContentLength(data.length);
-	writer.write(data);
-	writer.flush();
-	writer.close();
-	response.flushBuffer();
-	return null;
-    }
-
-    public ActionForward exportBonusInstallmentToGIAFP1(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException, IOException {
-	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
-	if (bonusInstallment == null) {
-	    bonusInstallment = new BonusInstallment();
-	}
-	bonusInstallment.updateList();
-	List<EmployeeBonusInstallment> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallment>(
-		bonusInstallment.getBonusInstallmentList());
-
-	Collections.sort(employeeBonusInstallmentList, new BeanComparator("employee.employeeNumber"));
-	StringBuilder stringBuilder = new StringBuilder();
-	for (EmployeeBonusInstallment employeeBonusInstallment : employeeBonusInstallmentList) {
-	    if (employeeBonusInstallment.getBonusType() == BonusType.DEDICATION_BONUS) {
-		stringBuilder.append(getLine(employeeBonusInstallment));
-		String aditionalLines = getAditionalLines(employeeBonusInstallment);
-		if (!StringUtils.isEmpty(aditionalLines)) {
-		    stringBuilder.append(aditionalLines);
-		}
-	    }
-	}
-	response.setContentType("text/plain");
-	response.addHeader("Content-Disposition", "attachment; filename=bonus_giaf_p1.txt");
-	final ServletOutputStream writer = response.getOutputStream();
-	byte[] data = stringBuilder.toString().getBytes();
-	response.setContentLength(data.length);
-	writer.write(data);
-	writer.flush();
-	writer.close();
-	response.flushBuffer();
-	return null;
-    }
-
-    public ActionForward exportBonusInstallmentToGIAFP2(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException, IOException {
-	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
-	if (bonusInstallment == null) {
-	    bonusInstallment = new BonusInstallment();
-	}
-	bonusInstallment.updateList();
-	List<EmployeeBonusInstallment> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallment>(
-		bonusInstallment.getBonusInstallmentList());
-
-	Collections.sort(employeeBonusInstallmentList, new BeanComparator("employee.employeeNumber"));
-	StringBuilder stringBuilder = new StringBuilder();
-	for (EmployeeBonusInstallment employeeBonusInstallment : employeeBonusInstallmentList) {
-	    if (employeeBonusInstallment.getBonusType() == BonusType.EXCEPTIONAL_BONUS) {
-		stringBuilder.append(getLine(employeeBonusInstallment));
-		String aditionalLines = getAditionalLines(employeeBonusInstallment);
-		if (!StringUtils.isEmpty(aditionalLines)) {
-		    stringBuilder.append(aditionalLines);
-		}
-	    }
-	}
-	response.setContentType("text/plain");
-	response.addHeader("Content-Disposition", "attachment; filename=bonus_giaf_p2.txt");
-	final ServletOutputStream writer = response.getOutputStream();
-	byte[] data = stringBuilder.toString().getBytes();
-	response.setContentLength(data.length);
-	writer.write(data);
-	writer.flush();
-	writer.close();
-	response.flushBuffer();
-	return null;
-    }
-
-    public ActionForward exportBonusInstallmentToGIAFP3(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-	    FenixFilterException, IOException {
-	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
-	if (bonusInstallment == null) {
-	    bonusInstallment = new BonusInstallment();
-	}
-	bonusInstallment.updateList();
-	List<EmployeeBonusInstallment> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallment>(
-		bonusInstallment.getBonusInstallmentList());
+	List<EmployeeBonusInstallment> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallment>(bonusInstallment
+		.getBonusInstallmentList());
 
 	Collections.sort(employeeBonusInstallmentList, new BeanComparator("employee.employeeNumber"));
 	StringBuilder stringBuilder = new StringBuilder();
@@ -314,34 +210,6 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
-    private String getAditionalLines(EmployeeBonusInstallment employeeBonusInstallment) {
-	StringBuilder stringBuilder = new StringBuilder();
-	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
-		.getEmployeeMonthlyBonusInstallments()) {
-	    if (employeeMonthlyBonusInstallment.getValue() < 0) {
-		stringBuilder.append(
-			new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee()
-				.getEmployeeNumber())).append(separator);
-		stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(
-			separator);
-		stringBuilder.append(
-			new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode()))
-			.append(separator);
-		stringBuilder.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
-		stringBuilder.append("3").append(separator);
-		stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
-		stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
-		stringBuilder.append(
-			employeeMonthlyBonusInstallment.getPartialYearMonth().get(
-				DateTimeFieldType.year())).append(separator);
-		stringBuilder.append(
-			getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(
-				DateTimeFieldType.monthOfYear()))).append(endLine);
-	    }
-	}
-	return stringBuilder.toString();
-    }
-
     private String getMonthString(int month) {
 	if (month < 10) {
 	    return "0" + month;
@@ -351,91 +219,179 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
     private String getLine(EmployeeBonusInstallment employeeBonusInstallment) {
 	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(
-		new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee()
-			.getEmployeeNumber())).append(separator);
+	stringBuilder.append(new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee().getEmployeeNumber()))
+		.append(separator);
 	stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(separator);
-	stringBuilder.append(
-		new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(
-		separator);
+	stringBuilder.append(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(separator);
 	stringBuilder.append(employeeBonusInstallment.getValue()).append(separator);
 	stringBuilder.append("3").append(separator);
 	stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
 	stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
 	stringBuilder.append(
-		employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
-			DateTimeFieldType.year())).append(separator);
+		employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(DateTimeFieldType.year()))
+		.append(separator);
 	stringBuilder.append(
-		getMonthString(employeeBonusInstallment.getAnualBonusInstallment()
-			.getPaymentPartialDate().get(DateTimeFieldType.monthOfYear()))).append(endLine);
+		getMonthString(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
+			DateTimeFieldType.monthOfYear()))).append(endLine);
 	return stringBuilder.toString();
     }
 
     private String getMovementCode(BonusType bonusType) {
+	return getMovementCode(bonusType, false, false);
+    }
+
+    private String getMovementCode(BonusType bonusType, boolean negativeMonths, boolean absences) {
 	if (bonusType.equals(BonusType.DEDICATION_BONUS)) {
+	    if (negativeMonths) {
+		return "6031";
+	    } else if (absences) {
+		return "6041";
+	    }
 	    return "6001";
+
 	} else {
+	    if (negativeMonths) {
+		return "6032";
+	    } else if (absences) {
+		return "6042";
+	    }
 	    return "6002";
 	}
     }
 
     private String getAllLines(EmployeeBonusInstallment employeeBonusInstallment) {
 	StringBuilder stringBuilder = new StringBuilder();
-	StringBuilder positiveLines = new StringBuilder();
-	int cutNumber = 0;
-	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
-		.getEmployeeMonthlyBonusInstallments()) {
-	    positiveLines.append(
-		    new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee()
-			    .getEmployeeNumber())).append(separator);
-	    positiveLines.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(
-		    separator);
-	    positiveLines.append(
-		    new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode()))
-		    .append(separator);
-
-	    if (employeeMonthlyBonusInstallment.getValue() < 0) {
-		cutNumber++;
-		positiveLines.append((employeeMonthlyBonusInstallment.getValue() * -1))
-			.append(separator);
-		stringBuilder.append(
-			new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee()
-				.getEmployeeNumber())).append(separator);
-		stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(
-			separator);
-		stringBuilder.append(
-			new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode()))
-			.append(separator);
-		stringBuilder.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
-		stringBuilder.append("3").append(separator);
-		stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
-		stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
-		stringBuilder.append(
-			employeeMonthlyBonusInstallment.getPartialYearMonth().get(
-				DateTimeFieldType.year())).append(separator);
-		stringBuilder.append(
-			getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(
-				DateTimeFieldType.monthOfYear()))).append(endLine);
-	    } else {
-		positiveLines.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
-	    }
-
-	    positiveLines.append("3").append(separator);
-	    positiveLines.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
-	    positiveLines.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
-	    positiveLines.append(
-		    employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year()))
-		    .append(separator);
-	    positiveLines.append(
-		    getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(
-			    DateTimeFieldType.monthOfYear()))).append(endLine);
-	}
-	if (cutNumber == 0) {
+	if (!employeeBonusInstallment.getValue().equals(new Double(0.0))) {
 	    stringBuilder.append(getLine(employeeBonusInstallment));
-	} else {
-	    stringBuilder.append(positiveLines);
+	    for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
+		    .getEmployeeMonthlyBonusInstallments()) {
+
+		if (employeeMonthlyBonusInstallment.getValue() < 0) {
+		    stringBuilder.append(
+			    new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee().getEmployeeNumber()))
+			    .append(separator);
+		    stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType(), true, false)).append(separator);
+		    stringBuilder.append(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(
+			    separator);
+		    stringBuilder.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
+		    stringBuilder.append("3").append(separator);
+		    stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
+		    stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
+		    stringBuilder.append(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year()))
+			    .append(separator);
+		    stringBuilder.append(
+			    getMonthString(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
+				    DateTimeFieldType.monthOfYear()))).append(endLine);
+
+		    stringBuilder.append(
+			    new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee().getEmployeeNumber()))
+			    .append(separator);
+		    stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType(), false, true)).append(separator);
+		    stringBuilder.append(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(
+			    separator);
+		    Integer absences = 0;
+		    ClosedMonth closedMonth = ClosedMonth.getClosedMonth(new YearMonth(employeeMonthlyBonusInstallment
+			    .getPartialYearMonth()));
+		    if (closedMonth != null) {
+			AssiduousnessClosedMonth assiduousnessClosedMonth = closedMonth
+				.getAssiduousnessClosedMonth(employeeMonthlyBonusInstallment.getEmployeeBonusInstallment()
+					.getEmployee().getAssiduousness());
+			if (assiduousnessClosedMonth != null) {
+			    absences = new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
+				    - assiduousnessClosedMonth.getWorkedDays());
+			}
+		    }
+		    stringBuilder.append(absences).append(separator);
+		    stringBuilder.append("3").append(separator);
+		    stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
+		    stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
+		    stringBuilder.append(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year()))
+			    .append(separator);
+		    stringBuilder.append(
+			    getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(
+				    DateTimeFieldType.monthOfYear()))).append(endLine);
+		}
+	    }
 	}
 	return stringBuilder.toString();
     }
+
+    //    private String getAllLines2(EmployeeBonusInstallment employeeBonusInstallment) {
+    //	StringBuilder stringBuilder = new StringBuilder();
+    //	StringBuilder positiveLines = new StringBuilder();
+    //	int cutNumber = 0;
+    //	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
+    //		.getEmployeeMonthlyBonusInstallments()) {
+    //	    positiveLines.append(new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee().getEmployeeNumber()))
+    //		    .append(separator);
+    //	    positiveLines.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(separator);
+    //	    positiveLines.append(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode()))
+    //		    .append(separator);
+    //
+    //	    if (employeeMonthlyBonusInstallment.getValue() < 0) {
+    //		cutNumber++;
+    //		positiveLines.append((employeeMonthlyBonusInstallment.getValue() * -1)).append(separator);
+    //		stringBuilder.append(
+    //			new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee().getEmployeeNumber())).append(
+    //			separator);
+    //		stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(separator);
+    //		stringBuilder.append(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(
+    //			separator);
+    //		stringBuilder.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
+    //		stringBuilder.append("3").append(separator);
+    //		stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
+    //		stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
+    //		stringBuilder.append(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year())).append(
+    //			separator);
+    //		stringBuilder
+    //			.append(
+    //				getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(
+    //					DateTimeFieldType.monthOfYear()))).append(endLine);
+    //	    } else {
+    //		positiveLines.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
+    //	    }
+    //
+    //	    positiveLines.append("3").append(separator);
+    //	    positiveLines.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
+    //	    positiveLines.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
+    //	    positiveLines.append(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year())).append(
+    //		    separator);
+    //	    positiveLines.append(
+    //		    getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.monthOfYear())))
+    //		    .append(endLine);
+    //	}
+    //	if (cutNumber == 0) {
+    //	    stringBuilder.append(getLine(employeeBonusInstallment));
+    //	} else {
+    //	    stringBuilder.append(positiveLines);
+    //	}
+    //	return stringBuilder.toString();
+    //    }
+
+    //    private String getAditionalLines(EmployeeBonusInstallment employeeBonusInstallment) {
+    //	StringBuilder stringBuilder = new StringBuilder();
+    //	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
+    //		.getEmployeeMonthlyBonusInstallments()) {
+    //	    if (employeeMonthlyBonusInstallment.getValue() < 0) {
+    //		stringBuilder.append(
+    //			new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee().getEmployeeNumber())).append(
+    //			separator);
+    //		stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(separator);
+    //		stringBuilder.append(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(
+    //			separator);
+    //		stringBuilder.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
+    //		stringBuilder.append("3").append(separator);
+    //		stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
+    //		stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
+    //		stringBuilder.append(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year())).append(
+    //			separator);
+    //		stringBuilder
+    //			.append(
+    //				getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(
+    //					DateTimeFieldType.monthOfYear()))).append(endLine);
+    //	    }
+    //	}
+    //	return stringBuilder.toString();
+    //    }
 
 }

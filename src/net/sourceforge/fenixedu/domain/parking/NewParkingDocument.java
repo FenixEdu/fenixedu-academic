@@ -28,10 +28,10 @@ public class NewParkingDocument extends NewParkingDocument_Base {
     }
 
     public void delete() {
-        setRootDomainObject(null);
-        setParkingParty(null);
-        setParkingRequest(null);
-        setVehicle(null);
+	removeRootDomainObject();
+	removeParkingParty();
+        removeParkingRequest();
+        removeVehicle();
         getParkingFile().delete();
         deleteDomainObject();
     }

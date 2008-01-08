@@ -245,8 +245,15 @@ public class Lesson extends Lesson_Base {
 
     public void refreshPeriodAndInstancesInSummaryCreation(YearMonthDay newBeginDate) {
 	if(!wasFinished() && newBeginDate != null && newBeginDate.isAfter(getPeriod().getStartYearMonthDay())) {						
-	    SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), true);	    
-	    refreshPeriod(newBeginDate, getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay());	    			
+	    SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), true);	    	    
+	    YearMonthDay newEndDate = getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay();	    
+	    if(!newBeginDate.isAfter(newEndDate)) {
+		refreshPeriod(newBeginDate, getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay());	    					
+	    } else {
+		OccupationPeriod period = getPeriod();
+		removeLessonSpaceOccupationAndPeriod();
+		period.delete();
+	    }
 	    createAllLessonInstances(instanceDates);
 	}
     }

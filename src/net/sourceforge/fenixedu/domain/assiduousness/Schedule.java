@@ -79,7 +79,7 @@ public class Schedule extends Schedule_Base {
         setBeginDate(employeeScheduleFactory.getBeginDate());
         setEndDate(employeeScheduleFactory.getEndDate());
         ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
-        if (isCloseMonthInsideScheduleInterval(closedMonth) && closedMonth.getClosedForBalance()) {
+        if (isCloseMonthInsideScheduleInterval(closedMonth)) {
             Month month = Month.values()[closedMonth.getClosedYearMonth().get(
                     DateTimeFieldType.monthOfYear()) - 1];
             throw new DomainException("error.schedule.monthClose",
@@ -189,7 +189,7 @@ public class Schedule extends Schedule_Base {
 
     public Schedule deleteDays(EmployeeScheduleFactory employeeScheduleFactory) {
         ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
-        if (isCloseMonthInsideScheduleInterval(closedMonth) && closedMonth.getClosedForBalance()) {
+        if (isCloseMonthInsideScheduleInterval(closedMonth)) {
             YearMonthDay endDate = new YearMonthDay(closedMonth.getClosedYearMonth().get(
                     DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
                     DateTimeFieldType.monthOfYear()), 1);
@@ -197,8 +197,7 @@ public class Schedule extends Schedule_Base {
             return closeScheduleAndMakeNew(employeeScheduleFactory, endDate, true);
         } else {
             if (isCloseMonthInsideInterval(closedMonth, employeeScheduleFactory.getBeginDate(),
-                    employeeScheduleFactory.getEndDate())
-                    && closedMonth.getClosedForBalance()) {
+                    employeeScheduleFactory.getEndDate())) {
                 Month month = Month.values()[closedMonth.getClosedYearMonth().get(
                         DateTimeFieldType.monthOfYear()) - 1];
                 throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle(
@@ -251,7 +250,7 @@ public class Schedule extends Schedule_Base {
 
     public Schedule edit(EmployeeScheduleFactory employeeScheduleFactory) {
         ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
-        if (isCloseMonthInsideScheduleInterval(closedMonth) && closedMonth.getClosedForBalance()) {
+        if (isCloseMonthInsideScheduleInterval(closedMonth)) {
             YearMonthDay endDate = new YearMonthDay(closedMonth.getClosedYearMonth().get(
                     DateTimeFieldType.year()), closedMonth.getClosedYearMonth().get(
                     DateTimeFieldType.monthOfYear()), 1);
@@ -259,8 +258,7 @@ public class Schedule extends Schedule_Base {
             return closeScheduleAndMakeNew(employeeScheduleFactory, endDate, false);
         } else {
             if (isCloseMonthInsideInterval(closedMonth, employeeScheduleFactory.getBeginDate(),
-                    employeeScheduleFactory.getEndDate())
-                    && closedMonth.getClosedForBalance()) {
+                    employeeScheduleFactory.getEndDate())) {
                 Month month = Month.values()[closedMonth.getClosedYearMonth().get(
                         DateTimeFieldType.monthOfYear()) - 1];
                 throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle(

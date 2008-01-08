@@ -20,7 +20,7 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private String otherPurpose;
 
     private Boolean urgentRequest;
-    
+
     private Boolean freeProcessed;
 
     private Boolean average;
@@ -28,17 +28,17 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private Boolean detailed;
 
     private Boolean toBeCreated;
-    
+
     private String schema;
 
     private Collection<String> warningsToReport;
 
     private Integer year;
-    
+
     private CycleType requestedCycle;
-    
+
     private MobilityProgram mobilityProgram;
-    
+
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
     }
@@ -76,11 +76,11 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     }
 
     public Boolean getFreeProcessed() {
-        return freeProcessed;
+	return freeProcessed;
     }
 
     public void setFreeProcessed(Boolean freeProcessed) {
-        this.freeProcessed = freeProcessed;
+	this.freeProcessed = freeProcessed;
     }
 
     public Boolean getAverage() {
@@ -116,13 +116,13 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     }
 
     /**
-         * This method is only needed to report warnings to the user. While we
-         * don't have enough info in our database to decide on what cases the
-         * document request should abort (acording to the Administrative Office
-         * rules shown in the use cases), warnings must be shown to the user.
-         * 
-         * @return
-         */
+     * This method is only needed to report warnings to the user. While we don't
+     * have enough info in our database to decide on what cases the document
+     * request should abort (acording to the Administrative Office rules shown
+     * in the use cases), warnings must be shown to the user.
+     * 
+     * @return
+     */
     public Collection<String> getWarningsToReport() {
 	if (warningsToReport == null) {
 	    warningsToReport = new HashSet<String>();
@@ -152,8 +152,7 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     public void setPurpose(DocumentPurposeType chosenDocumentPurposeType, String otherPurpose) {
 
-	if (chosenDocumentPurposeType != null
-		&& chosenDocumentPurposeType.equals(DocumentPurposeType.OTHER)
+	if (chosenDocumentPurposeType != null && chosenDocumentPurposeType.equals(DocumentPurposeType.OTHER)
 		&& (otherPurpose == null || otherPurpose.length() == 0)) {
 	    throw new DomainException("DocumentRequestCreateBean.error.other.purpose.required");
 	}
@@ -163,19 +162,19 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     }
 
     public String getSchema() {
-        return schema;
+	return schema;
     }
 
     public void setSchema(String schema) {
-        this.schema = schema;
+	this.schema = schema;
     }
 
     public CycleType getRequestedCycle() {
-        return requestedCycle;
+	return requestedCycle;
     }
 
     public void setRequestedCycle(final CycleType cycleType) {
-        this.requestedCycle = cycleType;
+	this.requestedCycle = cycleType;
     }
 
     final public boolean getHasAdditionalInformation() {
@@ -187,15 +186,16 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     }
 
     final public boolean getHasMobilityProgramDependency() {
-	return getRegistration().getCurriculum().hasAnyExternalApprovedEnrolment();
+	return getRegistration().getCurriculum().hasAnyExternalApprovedEnrolment()
+		&& (chosenDocumentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE || chosenDocumentRequestType == DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE);
     }
 
     final public MobilityProgram getMobilityProgram() {
-        return mobilityProgram;
+	return mobilityProgram;
     }
 
     final public void setMobilityProgram(final MobilityProgram mobilityProgram) {
-        this.mobilityProgram = mobilityProgram;
+	this.mobilityProgram = mobilityProgram;
     }
 
 }

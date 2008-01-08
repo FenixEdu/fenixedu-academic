@@ -289,17 +289,15 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return information != null && information.getExecutionPeriod().equals(executionPeriod);
     }
 
-    public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(
-	    final ExecutionPeriod executionPeriod) {
-
-	if(!isBolonha()) {
+    public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+	if (!isBolonha()) {
 	    return null;
 	}
-	
-	if(executionPeriod == null) {
+
+	if (executionPeriod == null) {
 	    return getRecentCompetenceCourseInformation();
 	}
-	
+
 	if (executionPeriod.isBefore(getOldestCompetenceCourseInformation().getExecutionPeriod())) {
 	    return null;
 	}
@@ -310,6 +308,31 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 		return minCompetenceCourseInformation;
 	    } else {
 		minCompetenceCourseInformation = competenceCourseInformation;
+	    }
+	}
+
+	return minCompetenceCourseInformation;
+    }
+    
+    public CompetenceCourseInformation findCompetenceCourseInformationForExecutionYear(final ExecutionYear executionYear) {
+	if (!isBolonha()) {
+	    return null;
+	}
+	
+	if (executionYear == null) {
+	    return getRecentCompetenceCourseInformation();
+	}
+	
+	if (executionYear.isBefore(getOldestCompetenceCourseInformation().getExecutionYear())) {
+	    return null;
+	}
+	
+	CompetenceCourseInformation minCompetenceCourseInformation = null;
+	for (final CompetenceCourseInformation competenceCourseInformation : getOrderedCompetenceCourseInformations()) {
+	    if (competenceCourseInformation.getExecutionYear().isBeforeOrEquals(executionYear)) {
+		minCompetenceCourseInformation = competenceCourseInformation;
+	    } else {
+		return minCompetenceCourseInformation;
 	    }
 	}
 
@@ -364,9 +387,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
 	return information != null ? information.getRegime() : null;
     }
+    
+    public RegimeType getRegime(final ExecutionYear executionYear) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionYear(executionYear);
+	return information != null ? information.getRegime() : null;
+    }
 
     public RegimeType getRegime() {
-	return getRegime(null);
+	return getRegime((ExecutionPeriod) null);
     }
 
     public void setRegime(RegimeType regimeType) {
@@ -862,7 +890,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public boolean isAnual() {
-	return this.getRegime() == RegimeType.ANUAL;
+	return getRegime() == RegimeType.ANUAL;
+    }
+    
+    public boolean isAnual(final ExecutionYear executionYear) {
+	return getRegime(executionYear) == RegimeType.ANUAL;
     }
 
     public boolean isApproved() {

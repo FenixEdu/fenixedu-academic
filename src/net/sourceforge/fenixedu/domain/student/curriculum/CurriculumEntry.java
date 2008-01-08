@@ -73,6 +73,10 @@ abstract public class CurriculumEntry implements Serializable, ICurriculumEntry 
 	return null;
     }
 
+    final public boolean hasExecutionPeriod() {
+	return getExecutionPeriod() != null;
+    }
+
     final public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod() == null ? null : getExecutionPeriod().getExecutionYear();
     }

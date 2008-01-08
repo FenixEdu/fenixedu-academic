@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,9 +75,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 	getAndTransportRegistration(request);
 	request.setAttribute("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
 	return mapping.findForward("deleteActualInfoConfirm");
-	
     }
-
     
     public ActionForward deleteActualInfo(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
@@ -98,12 +93,10 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 	return prepare(mapping, actionForm, request, response);
     }
 
-
     private Registration getAndTransportRegistration(final HttpServletRequest request) {
 	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(
 		request, "registrationId"));
 	request.setAttribute("registration", registration);
 	return registration;
     }
-
 }

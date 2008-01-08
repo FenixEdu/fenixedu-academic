@@ -114,6 +114,8 @@ public interface ICurriculumEntry {
 
     ExecutionPeriod getExecutionPeriod();
 
+    boolean hasExecutionPeriod();
+
     ExecutionYear getExecutionYear();
 
 }

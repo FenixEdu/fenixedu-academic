@@ -16,7 +16,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	    Boolean urgentRequest, ExecutionYear executionYear) {
 
 	this();
-	super.init(registration, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	super.init(registration, executionYear, Boolean.FALSE, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 	checkRulesToCreate(registration, executionYear);
     }
 

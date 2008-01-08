@@ -34,7 +34,12 @@ public class YearMonth implements Serializable {
     public YearMonth(Partial date) {
 	super();
 	setYear(date.get(DateTimeFieldType.year()));
-	setMonth(Month.values()[date.get(DateTimeFieldType.monthOfYear()) - 1]);
+	int month = 1;
+	try {
+	    month = date.get(DateTimeFieldType.monthOfYear());
+	} catch (IllegalArgumentException e) {
+	}
+	setMonth(Month.values()[(month - 1)]);
     }
 
     public YearMonth(Integer year, Month month) {
@@ -63,23 +68,20 @@ public class YearMonth implements Serializable {
     }
 
     public boolean getIsThisYearMonthClosed() {
-	Partial yearMonth = new Partial()
-		.with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
-			DateTimeFieldType.year(), getYear());
+	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
+		DateTimeFieldType.year(), getYear());
 	return ClosedMonth.isMonthClosed(yearMonth);
     }
 
     public boolean getIsThisYearMonthClosedForExtraWork() {
-	Partial yearMonth = new Partial()
-		.with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
-			DateTimeFieldType.year(), getYear());
+	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
+		DateTimeFieldType.year(), getYear());
 	return ClosedMonth.isMonthClosedForExtraWork(yearMonth);
     }
 
     public boolean getCanCloseMonth() {
-	Partial yearMonth = new Partial()
-		.with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
-			DateTimeFieldType.year(), getYear());
+	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
+		DateTimeFieldType.year(), getYear());
 	return ClosedMonth.getCanCloseMonth(yearMonth);
     }
 
@@ -92,15 +94,22 @@ public class YearMonth implements Serializable {
 	}
     }
 
+    public void subtractMonth() {
+	if (getNumberOfMonth() == 1) {
+	    setMonth(Month.values()[11]);
+	    setYear(getYear() - 1);
+	} else {
+	    setMonth(Month.values()[getNumberOfMonth() - 2]);
+	}
+    }
+
     public Partial getPartial() {
-	return new Partial().with(DateTimeFieldType.monthOfYear(), getNumberOfMonth()).with(
-		DateTimeFieldType.year(), getYear());
+	return new Partial().with(DateTimeFieldType.monthOfYear(), getNumberOfMonth()).with(DateTimeFieldType.year(), getYear());
     }
 
     @Override
     public boolean equals(Object obj) {
-	return ((YearMonth) obj).getYear().equals(getYear())
-		&& ((YearMonth) obj).getMonth().equals(getMonth());
+	return ((YearMonth) obj).getYear().equals(getYear()) && ((YearMonth) obj).getMonth().equals(getMonth());
     }
 
 }

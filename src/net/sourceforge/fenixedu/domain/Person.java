@@ -53,6 +53,7 @@ import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
@@ -1405,17 +1406,6 @@ public class Person extends Person_Base {
 	return result.toString();
     }
 
-    @Override
-    public void setSocialSecurityNumber(String socialSecurityNumber) {
-	if (!StringUtils.isEmpty(socialSecurityNumber)) {
-	    final Party existingContributor = Party.readByContributorNumber(socialSecurityNumber);
-	    if (existingContributor != null && existingContributor != this) {
-		throw new DomainException("PERSON.createContributor.existing.contributor.number");
-	    }
-	}
-	super.setSocialSecurityNumber(socialSecurityNumber);
-    }
-
     public Collection<Invitation> getInvitationsOrderByDate() {
 	Set<Invitation> invitations = new TreeSet<Invitation>(
 		Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
@@ -1912,12 +1902,9 @@ public class Person extends Person_Base {
     static public Party createContributor(final String contributorName, final String contributorNumber,
 	    final PhysicalAddressData data) {
 
-	if (Party.readByContributorNumber(contributorNumber) != null) {
-	    throw new DomainException("EXTERNAL_PERSON.createContributor.existing.contributor.number");
-	}
-
 	Person externalPerson = createExternalPerson(contributorName, Gender.MALE, data, null, null,
 		null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+
 	externalPerson.setSocialSecurityNumber(contributorNumber);
 
 	new ExternalContract(externalPerson,
@@ -2624,9 +2611,22 @@ public class Person extends Person_Base {
     }
 
     public boolean isExternalPerson() {
-	return hasExternalContract() || hasExternalResearchContract();
+	return !hasActiveInternalContract() && (hasExternalContract() || hasExternalResearchContract());
     }
 
+    private boolean hasActiveInternalContract() {
+	Collection<EmployeeContract> contracts = (Collection<EmployeeContract>) getParentAccountabilities(
+		AccountabilityTypeEnum.WORKING_CONTRACT, EmployeeContract.class);
+	
+	YearMonthDay currentDate = new YearMonthDay();	
+	for (EmployeeContract employeeContract : contracts) {
+	    if(employeeContract.isActive(currentDate)) {
+		return true;
+	    }	
+	}	
+	return false;
+    }
+    
     public boolean isPhotoPubliclyAvailable() {
 	Boolean availablePhoto = getAvailablePhoto();
 	if (availablePhoto == null || !availablePhoto) {

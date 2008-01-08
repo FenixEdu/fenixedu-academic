@@ -76,6 +76,7 @@
     <message-resources parameter="resources.LibraryResources" null="false"/> 
     <message-resources parameter="resources.LibraryResources" key="LIBRARY_RESOURCES" null="false"/> 
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ImageResources" key="IMAGE_RESOURCES" null="false"/>
 	<message-resources parameter="resources.HtmlAltResources" key="HTMLALT_RESOURCES" null="false"/>

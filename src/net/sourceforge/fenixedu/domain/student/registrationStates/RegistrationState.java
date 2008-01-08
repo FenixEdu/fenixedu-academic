@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -75,11 +76,17 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     protected void init(Registration registration, Person responsiblePerson, DateTime stateDate) {
 	setRegistration(registration != null ? registration : null);
-
-	final Person person = responsiblePerson != null ? responsiblePerson
-		: (AccessControl.getUserView() != null ? AccessControl.getPerson() : null);
-	setResponsiblePerson(person);
+	setResponsiblePerson(selectPerson(responsiblePerson));
 	setStateDate(stateDate != null ? stateDate : new DateTime());
+    }
+
+    private Person selectPerson(final Person responsiblePerson) {
+	if (responsiblePerson != null) {
+	    return responsiblePerson.hasRole(RoleType.MANAGER) ? null : responsiblePerson;
+	} else {
+	    final Person loggedPerson = AccessControl.getPerson();
+	    return (loggedPerson == null) ?  null : (loggedPerson.hasRole(RoleType.MANAGER) ? null : loggedPerson);
+	}
     }
 
     protected void init(Registration registration) {

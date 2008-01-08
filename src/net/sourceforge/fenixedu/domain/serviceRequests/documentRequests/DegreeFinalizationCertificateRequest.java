@@ -1,12 +1,23 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+
+import org.joda.time.YearMonthDay;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
 
@@ -14,21 +25,20 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super();
     }
 
-    public DegreeFinalizationCertificateRequest(final Registration registration,
-	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
-	    final Boolean urgentRequest, final Boolean average, final Boolean detailed, MobilityProgram mobilityProgram, 
-	    final CycleType requestedCyle) {
+    public DegreeFinalizationCertificateRequest(final Registration registration, final DocumentPurposeType documentPurposeType,
+	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest, final Boolean average,
+	    final Boolean detailed, MobilityProgram mobilityProgram, final CycleType requestedCyle, final Boolean freeProcessed) {
 	this();
 
-	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
-		average, detailed, mobilityProgram, requestedCyle);
+	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, average, detailed,
+		mobilityProgram, requestedCyle, freeProcessed);
     }
 
     final protected void init(final Registration registration, final DocumentPurposeType documentPurposeType,
 	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest, final Boolean average,
-	    final Boolean detailed, final MobilityProgram mobilityProgram, final CycleType requestedCycle) {
-	
-	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	    final Boolean detailed, final MobilityProgram mobilityProgram, final CycleType requestedCycle, final Boolean freeProcessed) {
+
+	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, freeProcessed);
 
 	this.checkParameters(average, detailed, mobilityProgram, requestedCycle);
 	super.setAverage(average);
@@ -36,21 +46,25 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super.setMobilityProgram(mobilityProgram);
     }
 
-    final private void checkParameters(final Boolean average, final Boolean detailed, final MobilityProgram mobilityProgram, final CycleType requestedCycle) {
+    final private void checkParameters(final Boolean average, final Boolean detailed, final MobilityProgram mobilityProgram,
+	    final CycleType requestedCycle) {
 	if (average == null) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.average.cannot.be.null");
 	}
 	if (detailed == null) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
 	}
-	if (mobilityProgram == null && getRegistration().hasAnyExternalApprovedEnrolment()) {
-	    throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null.for.registration.with.external.enrolments");
+
+	if (mobilityProgram == null && hasAnyExternalEntriesToReport()) {
+	    throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null");
 	}
+
 	if (getDegreeType().isComposite()) {
 	    if (requestedCycle == null) {
 		throw new DomainException("DegreeFinalizationCertificateRequest.requested.cycle.must.be.given");
 	    } else if (!getDegreeType().getCycleTypes().contains(requestedCycle)) {
-		throw new DomainException("DegreeFinalizationCertificateRequest.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
+		throw new DomainException(
+			"DegreeFinalizationCertificateRequest.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
 	    }
 
 	    super.setRequestedCycle(requestedCycle);
@@ -64,16 +78,20 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutDiplomaRequest");
 	}
     }
-    
+
     @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 	super.internalChangeState(academicServiceRequestBean);
 
 	if (academicServiceRequestBean.isToProcess()) {
 	    checkForDiplomaRequest(getRequestedCycle());
-	    
+
 	    if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
 		throw new DomainException("DegreeFinalizationCertificateRequest.registration.not.submited.to.conclusion.process");
+	    }
+
+	    if (getMobilityProgram() == null && hasAnyExternalEntriesToReport()) {
+		throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null");
 	    }
 	}
     }
@@ -82,8 +100,9 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     final public String getDescription() {
 	final DegreeType degreeType = getDegreeType();
 	final CycleType requestedCycle = getRequestedCycle();
-	
-	return getDescription(AcademicServiceRequestType.DOCUMENT, getDocumentRequestType().getQualifiedName() + "." + degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+
+	return getDescription(AcademicServiceRequestType.DOCUMENT, getDocumentRequestType().getQualifiedName() + "."
+		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
@@ -111,6 +130,31 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	throw new DomainException("DegreeFinalizationCertificateRequest.cannot.modify.requestedCycle");
     }
 
+    /* TODO refactor, always set requested cycle type in document creation */
+
+    public CycleType getWhatShouldBeRequestedCycle() {
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCycleType() : null;
+    }
+
+    public CycleCurriculumGroup getCycleCurriculumGroup() {
+	final CycleType requestedCycle = getRequestedCycle();
+	final Registration registration = getRegistration();
+
+	if (requestedCycle == null) {
+	    if (registration.getDegreeType().hasExactlyOneCycleType()) {
+		return registration.getLastStudentCurricularPlan().getLastCycleCurriculumGroup();
+	    } else {
+		return null;
+	    }
+	} else {
+	    return registration.getLastStudentCurricularPlan().getCycle(requestedCycle);
+	}
+    }
+
+    public boolean hasCycleCurriculumGroup() {
+	return getCycleCurriculumGroup() != null;
+    }
+
     @Override
     final public EventType getEventType() {
 	return EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST;
@@ -118,7 +162,55 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Override
     final public Integer getNumberOfUnits() {
-	return getDetailed() ? getRegistration().getCurriculum().getCurriculumEntries().size() : 0;
+	return getDetailed() ? getEntriesToReport().size() : 0;
+    }
+
+    final private RegistrationConclusionBean getBean() {
+	return new RegistrationConclusionBean(getRegistration(), getCycleCurriculumGroup());
+    }
+
+    final public YearMonthDay getConclusionDate() {
+	return getBean().getConclusionDate();
+    }
+
+    final public Integer getFinalAverage() {
+	return getBean().getFinalAverage();
+    }
+
+    final public double getEctsCredits() {
+	return getBean().getEctsCredits();
+    }
+
+    final public ICurriculum getCurriculum() {
+	return getBean().getCurriculumForConclusion();
+    }
+
+    final public Collection<ICurriculumEntry> getEntriesToReport() {
+	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
+
+	for (final ICurriculumEntry entry : getCurriculum().getCurriculumEntries()) {
+	    if (entry instanceof Dismissal) {
+		final Dismissal dismissal = (Dismissal) entry;
+		if (dismissal.getCredits().isEquivalence()
+			|| (dismissal.isCreditsDismissal() && !dismissal.getCredits().isSubstitution())) {
+		    continue;
+		}
+	    }
+
+	    result.add(entry);
+	}
+
+	return result;
+    }
+
+    final public boolean hasAnyExternalEntriesToReport() {
+	for (final ICurriculumEntry entry : getEntriesToReport()) {
+	    if (entry instanceof ExternalEnrolment) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
 }

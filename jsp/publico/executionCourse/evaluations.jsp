@@ -31,7 +31,7 @@
 		<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
 			<tr>
 				<td>
-					<bean:message key="label.online.test"/>: <bean:write name="evaluation" property="distributedTest.title"/>
+					<bean:message key="label.online.test"/>: <bean:write name="evaluation" property="distributedTest.evaluationTitle"/>
 				</td>
 			</tr>
 		</logic:equal>

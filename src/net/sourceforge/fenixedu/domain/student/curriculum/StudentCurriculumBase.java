@@ -113,6 +113,10 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
 	averageCalculator.add(getCurriculumEntries());
 	return averageCalculator.result().setScale(SCALE, ROUNDING_MODE);
     }
+    
+    public Integer getRoundedAverage() {
+	return getAverage().setScale(0, RoundingMode.HALF_UP).intValue();
+    }
 
     final public BigDecimal getSumPiCi() {
 	final AverageCalculator averageCalculator = new AverageCalculator();

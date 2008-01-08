@@ -28,7 +28,8 @@ public class CreateDocumentRequests extends Service {
                             documentRequestCreateBean.getDetailed(),
                             documentRequestCreateBean.getExecutionYear(),
                             documentRequestCreateBean.getMobilityProgram(),
-                            documentRequestCreateBean.getRequestedCycle());
+                            documentRequestCreateBean.getRequestedCycle(),
+                            documentRequestCreateBean.getFreeProcessed());
         	} else if (documentRequestType.isDeclaration()) {
 //                    DeclarationRequest.create(documentRequestCreateBean.getRegistration(),
 //                            documentRequestCreateBean.getChosenDocumentRequestType(), 

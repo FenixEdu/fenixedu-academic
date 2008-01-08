@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
@@ -42,13 +43,13 @@ public class ClosedMonth extends ClosedMonth_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setClosedForBalance(true);
 	setClosedForExtraWork(false);
-	setClosedYearMonth(new Partial().with(DateTimeFieldType.monthOfYear(), day.getMonthOfYear())
-		.with(DateTimeFieldType.year(), day.getYear()));
+	setClosedYearMonth(new Partial().with(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()).with(
+		DateTimeFieldType.year(), day.getYear()));
     }
 
     public static boolean isMonthClosed(Partial yearMonth) {
 	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
-	    if (closedMonth.getClosedYearMonth().equals(yearMonth)) {
+	    if (closedMonth.getClosedYearMonth().equals(yearMonth) && closedMonth.getClosedForBalance()) {
 		return true;
 	    }
 	}
@@ -57,8 +58,7 @@ public class ClosedMonth extends ClosedMonth_Base {
 
     public static boolean isMonthClosedForExtraWork(Partial yearMonth) {
 	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
-	    if (closedMonth.getClosedYearMonth().equals(yearMonth)
-		    && closedMonth.getClosedForExtraWork()) {
+	    if (closedMonth.getClosedYearMonth().equals(yearMonth) && closedMonth.getClosedForExtraWork()) {
 		return true;
 	    }
 	}
@@ -66,8 +66,8 @@ public class ClosedMonth extends ClosedMonth_Base {
     }
 
     public static boolean isMonthClosed(YearMonthDay day) {
-	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), day.getMonthOfYear())
-		.with(DateTimeFieldType.year(), day.getYear());
+	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()).with(
+		DateTimeFieldType.year(), day.getYear());
 	return isMonthClosed(yearMonth);
     }
 
@@ -77,18 +77,17 @@ public class ClosedMonth extends ClosedMonth_Base {
 
     public static YearMonthDay getLastClosedYearMonthDay() {
 	Partial lastClosedYearMonth = getLastMonthClosed(false).getClosedYearMonth();
-	YearMonthDay firstDay = new YearMonthDay(lastClosedYearMonth.get(DateTimeFieldType.year()),
-		lastClosedYearMonth.get(DateTimeFieldType.monthOfYear()), 1);
-	return new YearMonthDay(lastClosedYearMonth.get(DateTimeFieldType.year()), lastClosedYearMonth
-		.get(DateTimeFieldType.monthOfYear()), firstDay.dayOfMonth().getMaximumValue());
+	YearMonthDay firstDay = new YearMonthDay(lastClosedYearMonth.get(DateTimeFieldType.year()), lastClosedYearMonth
+		.get(DateTimeFieldType.monthOfYear()), 1);
+	return new YearMonthDay(lastClosedYearMonth.get(DateTimeFieldType.year()), lastClosedYearMonth.get(DateTimeFieldType
+		.monthOfYear()), firstDay.dayOfMonth().getMaximumValue());
     }
 
     public static ClosedMonth getLastMonthClosed(boolean extraWork) {
 	ClosedMonth resultClosedMonth = null;
 	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
-	    if ((resultClosedMonth == null || closedMonth.getClosedYearMonth().isAfter(
-		    resultClosedMonth.getClosedYearMonth()))
-		    && ((!extraWork) || closedMonth.getClosedForExtraWork())) {
+	    if ((resultClosedMonth == null || closedMonth.getClosedYearMonth().isAfter(resultClosedMonth.getClosedYearMonth()))
+		    && ((!extraWork) || closedMonth.getClosedForExtraWork()) && closedMonth.getClosedForBalance()) {
 		resultClosedMonth = closedMonth;
 	    }
 	}
@@ -100,12 +99,11 @@ public class ClosedMonth extends ClosedMonth_Base {
     }
 
     public static boolean getCanCloseMonth(Partial yearMonth) {
-	YearMonthDay yearMonthBefore = new YearMonthDay(yearMonth.get(DateTimeFieldType.year()),
-		yearMonth.get(DateTimeFieldType.monthOfYear()), 1).minusMonths(1);
+	YearMonthDay yearMonthBefore = new YearMonthDay(yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType
+		.monthOfYear()), 1).minusMonths(1);
 	if (isMonthClosed(yearMonthBefore) || RootDomainObject.getInstance().getClosedMonths().isEmpty()) {
-	    YearMonthDay yearMonthAfter = new YearMonthDay(yearMonth.get(DateTimeFieldType.year()),
-		    yearMonth.get(DateTimeFieldType.monthOfYear()), dayOfMonthToCloseLastMonth)
-		    .plusMonths(1);
+	    YearMonthDay yearMonthAfter = new YearMonthDay(yearMonth.get(DateTimeFieldType.year()), yearMonth
+		    .get(DateTimeFieldType.monthOfYear()), dayOfMonthToCloseLastMonth).plusMonths(1);
 	    YearMonthDay now = new YearMonthDay();
 	    if (!now.isBefore(yearMonthAfter)) {
 		return true;
@@ -117,8 +115,19 @@ public class ClosedMonth extends ClosedMonth_Base {
     public static ClosedMonth getClosedMonth(YearMonth yearMonth) {
 	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
 	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == yearMonth.getYear()
-		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == yearMonth
-			    .getNumberOfMonth()) {
+		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == yearMonth.getNumberOfMonth()
+		    && closedMonth.getClosedForBalance()) {
+		return closedMonth;
+	    }
+	}
+	return null;
+    }
+
+    public static ClosedMonth getOpenClosedMonth(YearMonth yearMonth) {
+	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
+	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == yearMonth.getYear()
+		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == yearMonth.getNumberOfMonth()
+		    && !closedMonth.getClosedForBalance()) {
 		return closedMonth;
 	    }
 	}
@@ -127,10 +136,9 @@ public class ClosedMonth extends ClosedMonth_Base {
 
     public static ClosedMonth getClosedMonth(Partial partial) {
 	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
-	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == partial
-		    .get(DateTimeFieldType.year())
-		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == partial
-			    .get(DateTimeFieldType.monthOfYear())) {
+	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == partial.get(DateTimeFieldType.year())
+		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == partial.get(DateTimeFieldType
+			    .monthOfYear()) && closedMonth.getClosedForBalance()) {
 		return closedMonth;
 	    }
 	}
@@ -138,14 +146,22 @@ public class ClosedMonth extends ClosedMonth_Base {
     }
 
     public void delete() {
-	removeRootDomainObject();
-	List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(
-		getAssiduousnessClosedMonths());
-	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
-	    getAssiduousnessClosedMonths().remove(assiduousnessClosedMonth);
-	    assiduousnessClosedMonth.delete();
+	if (canBeDelete()) {
+	    removeRootDomainObject();
+	    List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(
+		    getAssiduousnessClosedMonths());
+	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
+		getAssiduousnessClosedMonths().remove(assiduousnessClosedMonth);
+		assiduousnessClosedMonth.delete();
+	    }
+	    deleteDomainObject();
+	} else {
+	    throw new DomainException("error.cannot.delete.ClosedMonth");
 	}
-	deleteDomainObject();
+    }
+
+    private boolean canBeDelete() {
+	return !hasAnyClosedMonthDocuments();
     }
 
     public AssiduousnessClosedMonth getAssiduousnessClosedMonth(Assiduousness assiduousness) {
@@ -157,20 +173,18 @@ public class ClosedMonth extends ClosedMonth_Base {
 	return null;
     }
 
-    public ClosedMonthDocument addFile(InputStream file, String fileName,
-	    ClosedMonthDocumentType closedMonthDocumentType) throws FileNotFoundException {
+    public ClosedMonthDocument addFile(InputStream file, String fileName, ClosedMonthDocumentType closedMonthDocumentType)
+	    throws FileNotFoundException {
 	ClosedMonthFile closedMonthFile = writeFile(getFilePath(), file, fileName);
 	return new ClosedMonthDocument(closedMonthFile, this, closedMonthDocumentType);
     }
 
-    private ClosedMonthFile writeFile(VirtualPath filePath, InputStream file, String fileName)
-	    throws FileNotFoundException {
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager()
-		.saveFile(filePath, fileName, false, null, fileName, file);
+    private ClosedMonthFile writeFile(VirtualPath filePath, InputStream file, String fileName) throws FileNotFoundException {
+	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(filePath,
+		fileName, false, null, fileName, file);
 
-	return new ClosedMonthFile(fileName, fileName, fileDescriptor.getMimeType(), fileDescriptor
-		.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
-		fileDescriptor.getUniqueId(), getGroup());
+	return new ClosedMonthFile(fileName, fileName, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
+		.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(), getGroup());
     }
 
     private Group getGroup() {
@@ -181,14 +195,12 @@ public class ClosedMonth extends ClosedMonth_Base {
     protected VirtualPath getFilePath() {
 	final VirtualPath filePath = new VirtualPath();
 	filePath.addNode(new VirtualPathNode("ClosedMonthFiles", "ClosedMonth Files"));
-	filePath.addNode(new VirtualPathNode("ClosedMonth" + getIdInternal(), getClosedYearMonth().get(
-		DateTimeFieldType.year())
+	filePath.addNode(new VirtualPathNode("ClosedMonth" + getIdInternal(), getClosedYearMonth().get(DateTimeFieldType.year())
 		+ "-" + getClosedYearMonth().get(DateTimeFieldType.monthOfYear())));
 	return filePath;
     }
 
-    public List<ClosedMonthDocument> getClosedMonthDocumentsByType(
-	    ClosedMonthDocumentType closedMonthDocumentType) {
+    public List<ClosedMonthDocument> getClosedMonthDocumentsByType(ClosedMonthDocumentType closedMonthDocumentType) {
 	List<ClosedMonthDocument> closedMonthDocuments = new ArrayList<ClosedMonthDocument>();
 	for (ClosedMonthDocument closedMonthDocument : getClosedMonthDocuments()) {
 	    if (closedMonthDocument.getClosedMonthDocumentType().equals(closedMonthDocumentType)) {
@@ -196,5 +208,16 @@ public class ClosedMonth extends ClosedMonth_Base {
 	    }
 	}
 	return closedMonthDocuments;
+    }
+
+    public void openMonth() {
+	List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(
+		getAssiduousnessClosedMonths());
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
+	    getAssiduousnessClosedMonths().remove(assiduousnessClosedMonth);
+	    assiduousnessClosedMonth.delete();
+	}
+	setClosedForBalance(Boolean.FALSE);
+	setClosedForExtraWork(Boolean.FALSE);
     }
 }

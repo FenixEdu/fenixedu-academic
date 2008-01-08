@@ -1100,6 +1100,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return result;
     }
 
+    static final BigDecimal LEIC_WEIGHT_BEFORE_0607_EXCEPT_TFC = BigDecimal.valueOf(4.0d);
+    
     static final BigDecimal LMAC_AND_LCI_WEIGHT_FACTOR = BigDecimal.valueOf(0.25d);
 
     @Override
@@ -1115,7 +1117,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		    return getEctsCreditsForCurriculum();
 		}
 
-		if (isFromLMAC() || isFromLCI()) {
+		if (isStudentFromLEIC() && !getCurricularCourse().isTFC()) {
+		    return LEIC_WEIGHT_BEFORE_0607_EXCEPT_TFC;
+		}
+		
+		if (isDegreeModuleFromLMAC() || isDegreeModuleFromLCI()) {
 		    return getBaseWeigth().multiply(LMAC_AND_LCI_WEIGHT_FACTOR);
 		}
 	    }
@@ -1135,11 +1141,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return executionYear.isAfterOrEquals(executionYear0607);
     }
 
-    private boolean isFromLCI() {
+    private boolean isStudentFromLEIC() {
+	return Degree.readBySigla("LEIC-pB").hasDegreeCurricularPlans(getDegreeCurricularPlanOfStudent());
+    }
+
+    private boolean isDegreeModuleFromLCI() {
 	return Degree.readBySigla("LCI-pB").hasDegreeCurricularPlans(getDegreeCurricularPlanOfDegreeModule());
     }
 
-    private boolean isFromLMAC() {
+    private boolean isDegreeModuleFromLMAC() {
 	return Degree.readBySigla("LMAC-pB").hasDegreeCurricularPlans(getDegreeCurricularPlanOfDegreeModule());
     }
 

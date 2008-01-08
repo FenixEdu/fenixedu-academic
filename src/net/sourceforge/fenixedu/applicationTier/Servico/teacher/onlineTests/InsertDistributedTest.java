@@ -38,122 +38,138 @@ import com.sun.faces.el.impl.parser.ParseException;
 
 public class InsertDistributedTest extends Service {
 
-    public void run(Integer executionCourseId, Integer testId, String testInformation, Calendar beginDate, Calendar beginHour, Calendar endDate,
-            Calendar endHour, TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
-            List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-        if (executionCourse == null)
-            throw new InvalidArgumentsServiceException();
+    public void run(Integer executionCourseId, Integer testId, String testInformation, String evaluationTitle,
+	    Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
+	    CorrectionAvailability correctionAvaiability, Boolean imsFeedback, List<InfoStudent> infoStudentList,
+	    String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	if (executionCourse == null)
+	    throw new InvalidArgumentsServiceException();
 
-        Test test = rootDomainObject.readTestByOID(testId);
-        if (test == null)
-            throw new InvalidArgumentsServiceException();
+	Test test = rootDomainObject.readTestByOID(testId);
+	if (test == null)
+	    throw new InvalidArgumentsServiceException();
 
-        try {
-            final DistributedTestCreator distributedTestCreator = new DistributedTestCreator(
-                    executionCourse, test, testInformation, beginDate, beginHour,endDate,
-                    endHour, testType, correctionAvaiability, imsFeedback);
-            distributedTestCreator.start();
-            distributedTestCreator.join();
+	try {
+	    final DistributedTestCreator distributedTestCreator = new DistributedTestCreator(executionCourse, test,
+		    testInformation, evaluationTitle, beginDate, beginHour, endDate, endHour, testType, correctionAvaiability,
+		    imsFeedback);
+	    distributedTestCreator.start();
+	    distributedTestCreator.join();
 
-            final String replacedContextPath = contextPath.replace('\\', '/');
+	    final String replacedContextPath = contextPath.replace('\\', '/');
 
-            final Integer distributedTestId = distributedTestCreator.distributedTestId;
-            if (distributedTestId == null) {
-                throw new Error("Creator thread was unable to create a distributed test!");
-            }
-            Distributor.runThread(infoStudentList, distributedTestId, test.getIdInternal(), replacedContextPath);
+	    final Integer distributedTestId = distributedTestCreator.distributedTestId;
+	    if (distributedTestId == null) {
+		throw new Error("Creator thread was unable to create a distributed test!");
+	    }
+	    Distributor.runThread(infoStudentList, distributedTestId, test.getIdInternal(), replacedContextPath);
 
-        } catch (InterruptedException e) {
-            throw new Error(e);
-        }
+	} catch (InterruptedException e) {
+	    throw new Error(e);
+	}
 
-        return ;
+	return;
     }
 
     public static class DistributedTestCreator extends Thread implements TransactionalCommand {
 
-        private final Integer executionCourseId;
-        private final Integer testId;
-        private final String testInformation;
-        private final Calendar beginDate;
-        private final Calendar beginHour;
-        private final Calendar endDate;
-        private final Calendar endHour;
-        private final TestType testType;
-        private final CorrectionAvailability correctionAvaiability;
-        private final Boolean imsFeedback;
+	private final Integer executionCourseId;
 
-        private Integer tempDistributedTestId = null;
-        public Integer distributedTestId = null;
+	private final Integer testId;
 
-        public DistributedTestCreator(final ExecutionCourse executionCourse, final Test test,
-                final String testInformation, final Calendar beginDate, final Calendar beginHour,
-                final Calendar endDate, final Calendar endHour, final TestType testType,
-                final CorrectionAvailability correctionAvaiability, final Boolean imsFeedback) {
-            this.executionCourseId = executionCourse.getIdInternal();
-            this.testId = test.getIdInternal();
-            this.testInformation = testInformation;
-            this.beginDate = beginDate;
-            this.beginHour = beginHour;
-            this.endDate = endDate;
-            this.endHour = endHour;
-            this.testType = testType;
-            this.correctionAvaiability = correctionAvaiability;
-            this.imsFeedback = imsFeedback;
-        }
+	private final String testInformation;
 
-        public void run() {
-            Transaction.withTransaction(this);
-            distributedTestId = tempDistributedTestId;
-        }
+	private final String evaluationTitle;
 
-        public void doIt() {
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-            final Test test = rootDomainObject.readTestByOID(testId);
+	private final Calendar beginDate;
 
-            DistributedTest distributedTest = new DistributedTest();
-            distributedTest.setTitle(test.getTitle());
-            distributedTest.setTestInformation(testInformation);
-            distributedTest.setBeginDate(beginDate);
-            distributedTest.setBeginHour(beginHour);
-            distributedTest.setEndDate(endDate);
-            distributedTest.setEndHour(endHour);
-            distributedTest.setTestType(testType);
-            distributedTest.setCorrectionAvailability(correctionAvaiability);
-            distributedTest.setImsFeedback(imsFeedback);
-            distributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
+	private final Calendar beginHour;
 
-            TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
+	private final Calendar endDate;
 
-            if (testScope == null) {
-                testScope = new TestScope(executionCourse);
-            }
-            distributedTest.setTestScope(testScope);
+	private final Calendar endHour;
 
-            // Create Evaluation - OnlineTest and Marks
-            if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
-                OnlineTest onlineTest = new OnlineTest();
-                onlineTest.addAssociatedExecutionCourses(executionCourse);
-                onlineTest.setDistributedTest(distributedTest);
-            }
+	private final TestType testType;
 
-            tempDistributedTestId = distributedTest.getIdInternal();
-        }
+	private final CorrectionAvailability correctionAvaiability;
 
-        protected static void runThread(final ExecutionCourse executionCourse, final Test test,
-                final String testInformation, final Calendar beginDate, final Calendar beginHour,
-                final Calendar endDate, final Calendar endHour, final TestType testType,
-                final CorrectionAvailability correctionAvaiability, final Boolean imsFeedback) {
-            final DistributedTestCreator distributedTestCreator = new DistributedTestCreator(
-                    executionCourse, test, testInformation, beginDate, beginHour,endDate,
-                    endHour, testType, correctionAvaiability, imsFeedback);
-            distributedTestCreator.start();
-        }
+	private final Boolean imsFeedback;
+
+	private Integer tempDistributedTestId = null;
+
+	public Integer distributedTestId = null;
+
+	public DistributedTestCreator(final ExecutionCourse executionCourse, final Test test, final String testInformation,
+		final String evaluationTitle, final Calendar beginDate, final Calendar beginHour, final Calendar endDate,
+		final Calendar endHour, final TestType testType, final CorrectionAvailability correctionAvaiability,
+		final Boolean imsFeedback) {
+	    this.executionCourseId = executionCourse.getIdInternal();
+	    this.testId = test.getIdInternal();
+	    this.testInformation = testInformation;
+	    this.evaluationTitle = evaluationTitle;
+	    this.beginDate = beginDate;
+	    this.beginHour = beginHour;
+	    this.endDate = endDate;
+	    this.endHour = endHour;
+	    this.testType = testType;
+	    this.correctionAvaiability = correctionAvaiability;
+	    this.imsFeedback = imsFeedback;
+	}
+
+	public void run() {
+	    Transaction.withTransaction(this);
+	    distributedTestId = tempDistributedTestId;
+	}
+
+	public void doIt() {
+	    final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	    final Test test = rootDomainObject.readTestByOID(testId);
+
+	    DistributedTest distributedTest = new DistributedTest();
+	    distributedTest.setTitle(test.getTitle());
+	    distributedTest.setTestInformation(testInformation);
+	    distributedTest.setEvaluationTitle(evaluationTitle);
+	    distributedTest.setBeginDate(beginDate);
+	    distributedTest.setBeginHour(beginHour);
+	    distributedTest.setEndDate(endDate);
+	    distributedTest.setEndHour(endHour);
+	    distributedTest.setTestType(testType);
+	    distributedTest.setCorrectionAvailability(correctionAvaiability);
+	    distributedTest.setImsFeedback(imsFeedback);
+	    distributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
+
+	    TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
+
+	    if (testScope == null) {
+		testScope = new TestScope(executionCourse);
+	    }
+	    distributedTest.setTestScope(testScope);
+
+	    // Create Evaluation - OnlineTest and Marks
+	    if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
+		OnlineTest onlineTest = new OnlineTest();
+		onlineTest.addAssociatedExecutionCourses(executionCourse);
+		onlineTest.setDistributedTest(distributedTest);
+	    }
+
+	    tempDistributedTestId = distributedTest.getIdInternal();
+	}
+
+	protected static void runThread(final ExecutionCourse executionCourse, final Test test, final String testInformation,
+		final String evaluationTitle, final Calendar beginDate, final Calendar beginHour, final Calendar endDate,
+		final Calendar endHour, final TestType testType, final CorrectionAvailability correctionAvaiability,
+		final Boolean imsFeedback) {
+	    final DistributedTestCreator distributedTestCreator = new DistributedTestCreator(executionCourse, test,
+		    testInformation, evaluationTitle, beginDate, beginHour, endDate, endHour, testType, correctionAvaiability,
+		    imsFeedback);
+	    distributedTestCreator.start();
+	}
     }
 
     private static class QuestionPair {
 	private final Integer testQuestionId;
+
 	private final Integer questionId;
 
 	public QuestionPair(final TestQuestion testQuestion, final Question question) {
@@ -179,23 +195,23 @@ public class InsertDistributedTest extends Service {
 
 	    final Random r = new Random();
 
-            for (final TestQuestion testQuestion : testQuestionList) {
-        	final List<Question> questions = getQuestions(testQuestion, numberOfStudents);
-        	if (questions.size() >= numberOfStudents) {
-        	    for (final InfoStudent infoStudent : infoStudentList) {
-        		Collection<QuestionPair> questionsForStudent = questionMap.get(infoStudent);
-        		if (questionsForStudent == null) {
-        		    questionsForStudent = new ArrayList<QuestionPair>();
-        		    questionMap.put(infoStudent, questionsForStudent);
-        		}
-                    
-        		int questionIndex = r.nextInt(questions.size());
-        		final Question question = questions.get(questionIndex);
-        		questionsForStudent.add(new QuestionPair(testQuestion, question));
-        		questions.remove(questionIndex);
-        	    }
-        	}
-            }
+	    for (final TestQuestion testQuestion : testQuestionList) {
+		final List<Question> questions = getQuestions(testQuestion, numberOfStudents);
+		if (questions.size() >= numberOfStudents) {
+		    for (final InfoStudent infoStudent : infoStudentList) {
+			Collection<QuestionPair> questionsForStudent = questionMap.get(infoStudent);
+			if (questionsForStudent == null) {
+			    questionsForStudent = new ArrayList<QuestionPair>();
+			    questionMap.put(infoStudent, questionsForStudent);
+			}
+
+			int questionIndex = r.nextInt(questions.size());
+			final Question question = questions.get(questionIndex);
+			questionsForStudent.add(new QuestionPair(testQuestion, question));
+			questions.remove(questionIndex);
+		    }
+		}
+	    }
 	}
 
 	private List<Question> getQuestions(final TestQuestion testQuestion, final int numberOfStudents) {
@@ -212,124 +228,129 @@ public class InsertDistributedTest extends Service {
 	}
     }
 
-
     public static class Distributor extends Thread implements TransactionalCommand {
 
-        private final List<InfoStudent> infoStudentList;
-        private final Integer distributedTestId;
-        private final Integer testId;
-        private final String replacedContextPath;
+	private final List<InfoStudent> infoStudentList;
 
-        public Distributor(final List<InfoStudent> infoStudentList, final Integer distributedTestId,
-                final Integer testId, final String replacedContextPath) {
-            this.infoStudentList = infoStudentList;
-            this.distributedTestId = distributedTestId;
-            this.testId = testId;
-            this.replacedContextPath = replacedContextPath;
-        }
+	private final Integer distributedTestId;
 
-        public void run() {
-            Transaction.withTransaction(this);
-        }
+	private final Integer testId;
 
-        public void doIt() {
-            Test test = rootDomainObject.readTestByOID(testId);
+	private final String replacedContextPath;
 
-            List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
-            Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
+	public Distributor(final List<InfoStudent> infoStudentList, final Integer distributedTestId, final Integer testId,
+		final String replacedContextPath) {
+	    this.infoStudentList = infoStudentList;
+	    this.distributedTestId = distributedTestId;
+	    this.testId = testId;
+	    this.replacedContextPath = replacedContextPath;
+	}
 
-            final Distribution distribution = new Distribution(testQuestionList, infoStudentList);
-            for (final Entry<InfoStudent, Collection<QuestionPair>> entry : distribution.questionMap.entrySet()) {
-        	final InfoStudent infoStudent = entry.getKey();
-        	final Collection<QuestionPair> questions = entry.getValue();
-        	try {
-        	    DistributeForStudentThread.runThread(distributedTestId, replacedContextPath, infoStudent, questions);
-        	} catch (InterruptedException e) {
-        	}
-            }
-        }
+	public void run() {
+	    Transaction.withTransaction(this);
+	}
 
-        protected static void runThread(final List<InfoStudent> infoStudentList, final Integer distributedTestId,
-                final Integer testId, final String replacedContextPath) throws InterruptedException {
-            final Distributor distributor = new Distributor(infoStudentList, distributedTestId, testId, replacedContextPath);
-            distributor.start();
-            distributor.join();
-        }
+	public void doIt() {
+	    Test test = rootDomainObject.readTestByOID(testId);
+
+	    List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+	    Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
+
+	    final Distribution distribution = new Distribution(testQuestionList, infoStudentList);
+	    for (final Entry<InfoStudent, Collection<QuestionPair>> entry : distribution.questionMap.entrySet()) {
+		final InfoStudent infoStudent = entry.getKey();
+		final Collection<QuestionPair> questions = entry.getValue();
+		try {
+		    DistributeForStudentThread.runThread(distributedTestId, replacedContextPath, infoStudent, questions);
+		} catch (InterruptedException e) {
+		}
+	    }
+	}
+
+	protected static void runThread(final List<InfoStudent> infoStudentList, final Integer distributedTestId,
+		final Integer testId, final String replacedContextPath) throws InterruptedException {
+	    final Distributor distributor = new Distributor(infoStudentList, distributedTestId, testId, replacedContextPath);
+	    distributor.start();
+	    distributor.join();
+	}
     }
 
     private static void addAllQuestions(final List<Integer> questionList, final List<Question> visibleQuestions) {
-        for (final Question question : visibleQuestions) {
-            questionList.add(question.getIdInternal());
-        }
+	for (final Question question : visibleQuestions) {
+	    questionList.add(question.getIdInternal());
+	}
     }
 
     public static class DistributeForStudentThread extends Thread implements TransactionalCommand {
 
-        private final Integer distributedTestId;
-        private final String replacedContextPath;
-        private final InfoStudent infoStudent;
-        private final Collection<QuestionPair> questionList;
+	private final Integer distributedTestId;
 
-        public DistributeForStudentThread(final Integer distributedTestId, final String replacedContextPath,
-                final InfoStudent infoStudent, final Collection<QuestionPair> questionList) {
-            this.distributedTestId = distributedTestId;
-            this.replacedContextPath = replacedContextPath;
-            this.infoStudent = infoStudent;
-            this.questionList = questionList;
-        }
+	private final String replacedContextPath;
 
-        public void run() {
-            Transaction.withTransaction(this);
-        }
+	private final InfoStudent infoStudent;
 
-        public void doIt() {
-            final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-            final Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
+	private final Collection<QuestionPair> questionList;
 
-            for (final QuestionPair questionPair : questionList) {
-        	final TestQuestion testQuestion = questionPair.getTestQuestion();
+	public DistributeForStudentThread(final Integer distributedTestId, final String replacedContextPath,
+		final InfoStudent infoStudent, final Collection<QuestionPair> questionList) {
+	    this.distributedTestId = distributedTestId;
+	    this.replacedContextPath = replacedContextPath;
+	    this.infoStudent = infoStudent;
+	    this.questionList = questionList;
+	}
 
-        	final StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
-        	studentTestQuestion.setStudent(registration);
-        	studentTestQuestion.setDistributedTest(distributedTest);
-        	studentTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
-        	studentTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
-        	studentTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
-        	studentTestQuestion.setTestQuestionMark(Double.valueOf(0));
-        	studentTestQuestion.setResponse(null);
+	public void run() {
+	    Transaction.withTransaction(this);
+	}
 
-        	Question question = null;
-        	try {
-        	    question = getStudentQuestion(questionPair.getQuestion(), replacedContextPath);
-        	} catch (ParseException e) {
-        	    throw new Error(e);
-        	} catch (ParseQuestionException e) {
-        	    throw new Error(e);
-        	}
-        	if (question == null) {
-        	    throw new Error();
-        	}
-        	if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().get(0).getItemId() != null) {
-        	    studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
-        	}
-        	studentTestQuestion.setQuestion(question);
-        	questionList.remove(question);
-            }
-        }
+	public void doIt() {
+	    final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+	    final Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
 
-        private Question getStudentQuestion(final Question question, String path) throws ParseException, ParseQuestionException {
-            return question.getSubQuestions() == null || question.getSubQuestions().size() == 0 ?
-        	    new ParseSubQuestion().parseSubQuestion(question, path) : question;
-        }
+	    for (final QuestionPair questionPair : questionList) {
+		final TestQuestion testQuestion = questionPair.getTestQuestion();
 
-        protected static void runThread(final Integer distributedTestId, final String replacedContextPath, 
-                final InfoStudent infoStudent, final Collection<QuestionPair> questionList) throws InterruptedException {
-            final DistributeForStudentThread distributeForStudentThread = new DistributeForStudentThread(distributedTestId,
-                    replacedContextPath, infoStudent, questionList);
-            distributeForStudentThread.start();
-            //TODO
-            distributeForStudentThread.join();
-        }
+		final StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
+		studentTestQuestion.setStudent(registration);
+		studentTestQuestion.setDistributedTest(distributedTest);
+		studentTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
+		studentTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
+		studentTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
+		studentTestQuestion.setTestQuestionMark(Double.valueOf(0));
+		studentTestQuestion.setResponse(null);
+
+		Question question = null;
+		try {
+		    question = getStudentQuestion(questionPair.getQuestion(), replacedContextPath);
+		} catch (ParseException e) {
+		    throw new Error(e);
+		} catch (ParseQuestionException e) {
+		    throw new Error(e);
+		}
+		if (question == null) {
+		    throw new Error();
+		}
+		if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().get(0).getItemId() != null) {
+		    studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
+		}
+		studentTestQuestion.setQuestion(question);
+		questionList.remove(question);
+	    }
+	}
+
+	private Question getStudentQuestion(final Question question, String path) throws ParseException, ParseQuestionException {
+	    return question.getSubQuestions() == null || question.getSubQuestions().size() == 0 ? new ParseSubQuestion()
+		    .parseSubQuestion(question, path) : question;
+	}
+
+	protected static void runThread(final Integer distributedTestId, final String replacedContextPath,
+		final InfoStudent infoStudent, final Collection<QuestionPair> questionList) throws InterruptedException {
+	    final DistributeForStudentThread distributeForStudentThread = new DistributeForStudentThread(distributedTestId,
+		    replacedContextPath, infoStudent, questionList);
+	    distributeForStudentThread.start();
+	    //TODO
+	    distributeForStudentThread.join();
+	}
     }
 
 }

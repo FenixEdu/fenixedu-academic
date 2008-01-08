@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -314,17 +313,13 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public List<CurricularCourseScope> getActiveScopesInExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	final List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
-	for (final CurricularCourseScope scope : getScopes()) {
-	    final CurricularSemester curricularSemester = scope.getCurricularSemester();
-	    if (curricularSemester.getSemester().equals(executionPeriod.getSemester())
-		    && (scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate().getTime())
-		    && ((scope.getEndDate() == null) || (scope.getEndDate().getTime().getTime() >= executionPeriod.getEndDate()
-			    .getTime()))) {
-		activeScopesInExecutionPeriod.add(scope);
+	final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
+	for (final CurricularCourseScope curricularCourseScope : getScopes()) {
+	    if (curricularCourseScope.isActiveForExecutionPeriod(executionPeriod)) {
+		result.add(curricularCourseScope);
 	    }
 	}
-	return activeScopesInExecutionPeriod;
+	return result;
     }
 
     public List<DegreeModuleScope> getActiveDegreeModuleScopesInExecutionPeriod(final ExecutionPeriod executionPeriod) {
@@ -342,46 +337,24 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public Set<CurricularCourseScope> getActiveScopesInExecutionYear(final ExecutionYear executionYear) {
-	final Set<CurricularCourseScope> activeScopes = new HashSet<CurricularCourseScope>();
+	final Set<CurricularCourseScope> result = new HashSet<CurricularCourseScope>();
 	for (final CurricularCourseScope scope : getScopes()) {
-	    final CurricularSemester curricularSemester = scope.getCurricularSemester();
-	    for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
-		if (curricularSemester.getSemester().equals(executionPeriod.getSemester())
-			&& (scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate().getTime())
-			&& ((scope.getEndDate() == null) || (scope.getEndDate().getTime().getTime() >= executionPeriod
-				.getEndDate().getTime()))) {
-		    activeScopes.add(scope);
-		}
+	    if (scope.isActiveForExecutionYear(executionYear)) {
+		result.add(scope);
 	    }
 	}
-	return activeScopes;
-    }
-
-    public List<CurricularCourseScope> getActiveScopesInExecutionPeriodAndSemester(final ExecutionPeriod executionPeriod) {
-	List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
-	for (Iterator<CurricularCourseScope> iter = getScopes().iterator(); iter.hasNext();) {
-	    CurricularCourseScope scope = iter.next();
-	    if ((scope.getCurricularSemester().getSemester().equals(executionPeriod.getSemester()))
-		    && (scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate().getTime())
-		    && ((scope.getEndDate() == null) || (scope.getEndDate().getTime().getTime() >= executionPeriod.getEndDate()
-			    .getTime()))) {
-		activeScopesInExecutionPeriod.add(scope);
-	    }
-	}
-	return activeScopesInExecutionPeriod;
+	return result;
     }
 
     public List<CurricularCourseScope> getActiveScopesIntersectedByExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
+	final List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
 	for (final CurricularCourseScope scope : getScopes()) {
-	    if (scope.getBeginDate().getTime().getTime() < executionPeriod.getBeginDate().getTime()) {
-		if ((scope.getEnd() == null) || (scope.getEnd().getTime() >= executionPeriod.getBeginDate().getTime())) {
+	    if (scope.getBeginYearMonthDay().isBefore(executionPeriod.getBeginDateYearMonthDay())) {
+		if (!scope.hasEndYearMonthDay() || !scope.getEndYearMonthDay().isBefore(executionPeriod.getBeginDateYearMonthDay())) {
 		    activeScopesInExecutionPeriod.add(scope);
 		}
-	    } else {
-		if (scope.getBeginDate().getTime().getTime() <= executionPeriod.getEndDate().getTime()) {
-		    activeScopesInExecutionPeriod.add(scope);
-		}
+	    } else if (!scope.getBeginYearMonthDay().isAfter(executionPeriod.getEndDateYearMonthDay())) {
+		activeScopesInExecutionPeriod.add(scope);
 	    }
 	}
 	return activeScopesInExecutionPeriod;
@@ -1329,8 +1302,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
-	if (getCompetenceCourse() != null && getCompetenceCourse().getRegime() == RegimeType.ANUAL
+    protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
+	    final ExecutionPeriod executionPeriod) {
+	if (hasCompetenceCourse() && getRegime(executionPeriod) == RegimeType.ANUAL
 		&& (curricularPeriod.getChildOrder() == null || curricularPeriod.getChildOrder() != 1)) {
 	    throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
 	}
@@ -1452,8 +1426,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return null;
     }
 
-    public RegimeType getRegime(ExecutionPeriod period) {
+    public RegimeType getRegime(final ExecutionPeriod period) {
 	return this.getCompetenceCourse().getRegime(period);
+    }
+    
+    public RegimeType getRegime(final ExecutionYear executionYear) {
+	return this.getCompetenceCourse().getRegime(executionYear);
     }
 
     public RegimeType getRegime() {
@@ -1482,13 +1460,22 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return getType().equals(CurricularCourseType.P_TYPE_COURSE);
     }
 
+    public boolean isOptionalCurricularCourse() {
+	return false;
+    }
+
     @Override
     final public boolean isOptional() {
 	return getType() == CurricularCourseType.OPTIONAL_COURSE;
     }
 
-    public boolean isOptionalCurricularCourse() {
-	return false;
+    final public boolean isTFC() {
+	return getType() == CurricularCourseType.TFC_COURSE;
+    }
+
+    public boolean isDissertation() {
+	CompetenceCourse competenceCourse = getCompetenceCourse();
+	return competenceCourse == null ? false : competenceCourse.isDissertation();
     }
 
     public boolean isAnual() {
@@ -1496,6 +1483,13 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    return getRegimeType() == RegimeType.ANUAL;
 	}
 	return hasCompetenceCourse() && getCompetenceCourse().isAnual();
+    }
+
+    public boolean isAnual(final ExecutionYear executionYear) {
+	if (!isBolonhaDegree()) {
+	    return getRegimeType() == RegimeType.ANUAL;
+	}
+	return hasCompetenceCourse() && getCompetenceCourse().isAnual(executionYear);
     }
 
     public boolean isEquivalent(CurricularCourse oldCurricularCourse) {
@@ -1825,11 +1819,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    }
 	}
 	return false;
-    }
-
-    public boolean isDissertation() {
-	CompetenceCourse competenceCourse = getCompetenceCourse();
-	return competenceCourse == null ? false : competenceCourse.isDissertation();
     }
 
     @Override

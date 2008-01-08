@@ -659,6 +659,16 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    return checkAllModules(executionYear);
 	}
     }
+    
+    public void assertCorrectStructure(final Collection<CurriculumGroup> result) {
+	for (final CurriculumGroup curriculumGroup : getCurriculumGroups()) {
+	    if (curriculumGroup.getCurriculumGroups().isEmpty() && curriculumGroup.getCreditsConcluded().doubleValue() != curriculumGroup.getAprovedEctsCredits().doubleValue()) {
+		result.add(curriculumGroup);
+	    } else {
+		curriculumGroup.assertCorrectStructure(result);
+	    }
+	}
+    }
 
     private boolean isToCheckDegreeModulesSelectionLimit(ExecutionYear executionYear) {
 	return getMostRecentActiveCurricularRule(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionYear) != null;

@@ -221,7 +221,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	for (final ICurriculumEntry entry : this.curricularYearEntries) {
 	    if (entry instanceof Dismissal) {
 		final Dismissal dismissal = (Dismissal) entry;
-		if (dismissal instanceof CreditsDismissal || dismissal.getCredits() instanceof Equivalence) {
+		if (dismissal.getCredits().isEquivalence() || (dismissal.isCreditsDismissal() && !dismissal.getCredits().isSubstitution())) {
 		    result = result.add(entry.getEctsCreditsForCurriculum());
 		}
 	    }

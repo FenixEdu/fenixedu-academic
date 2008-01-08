@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@page import="org.joda.time.YearMonthDay"%>
 
 <html:xhtml/>
 
@@ -23,8 +24,14 @@
 
 		<table>
 			<tr>
+				<%  
+					String logo = "/images/logo-fenix.gif"; 	
+					if (new YearMonthDay().getMonthOfYear() == 12) {
+						logo = "/images/logo-fenix-xmas.gif";    
+					}
+				%>
 				<td>
-					<img src="<%= request.getContextPath() %>/images/logo-fenix.gif" alt="<bean:message key="logo-fenix" bundle="IMAGE_RESOURCES" />" />
+					<img src="<%= request.getContextPath() + logo %>" alt="<bean:message key="logo-fenix" bundle="IMAGE_RESOURCES" />" />
 				</td>
 
 				<td>

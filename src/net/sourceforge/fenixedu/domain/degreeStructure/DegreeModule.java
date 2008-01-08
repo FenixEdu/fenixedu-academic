@@ -130,7 +130,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	}
 
 	checkContextsFor(parentCourseGroup, curricularPeriod, null);
-	checkOwnRestrictions(parentCourseGroup, curricularPeriod);
+	checkOwnRestrictions(parentCourseGroup, curricularPeriod, endExecutionPeriod);
 
 	return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
@@ -139,7 +139,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
 
 	checkContextsFor(parentCourseGroup, curricularPeriod, context);
-	checkOwnRestrictions(parentCourseGroup, curricularPeriod);
+	checkOwnRestrictions(parentCourseGroup, curricularPeriod, endExecutionPeriod);
 	context.edit(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
@@ -461,7 +461,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
 
-    abstract protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
+    abstract protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod, final ExecutionPeriod executionPeriod);
 
     abstract public void getAllDegreeModules(final Collection<DegreeModule> degreeModules);
     

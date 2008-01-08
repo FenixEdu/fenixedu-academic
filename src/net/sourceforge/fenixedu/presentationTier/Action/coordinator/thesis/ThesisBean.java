@@ -154,6 +154,14 @@ public class ThesisBean implements Serializable {
         this.title = title;
     }
 
+    public MultiLanguageString getFinalTitle() {
+        return getTitle();
+    }
+
+    public void setFinalTitle(MultiLanguageString title) {
+        setTitle(title);
+    }
+
     public String getComment() {
         return this.comment;
     }

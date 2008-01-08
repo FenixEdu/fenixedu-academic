@@ -476,6 +476,12 @@
 	<definition name="externalUnits.prepareEditUnit" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/externalUnits/editExternalUnit.jsp"/>
 	</definition>
+	<definition name="externalUnits.prepareDeleteUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/deleteExternalUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareDeleteExternalCurricularCourse" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/deleteExternalCurricularCourse.jsp"/>
+	</definition>
 	<definition name="externalUnits.prepareCreateExternalCurricularCourse" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/externalUnits/createExternalCurricularCourse.jsp"/>
 	</definition>

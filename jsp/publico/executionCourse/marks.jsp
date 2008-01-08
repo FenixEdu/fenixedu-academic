@@ -22,7 +22,7 @@
 			<logic:present name="evaluation" property="publishmentMessage">
 				<th nowrap>
 					<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest">
-						<bean:write name="evaluation" property="distributedTest.title"/>
+						<bean:write name="evaluation" property="distributedTest.evaluationTitle"/>
 					</logic:equal>
 					<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.Project">
 						<bean:write name="evaluation" property="name"/>

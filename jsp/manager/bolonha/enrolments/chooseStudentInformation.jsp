@@ -39,6 +39,8 @@
 				</logic:empty>
 				<logic:notEmpty name="registration" property="lastStudentCurricularPlan" >
 					<strong><bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.degree.sigla"/> - <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.degree.name"/></strong> (<bean:message name="registration" property="activeStateType.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
+					<html:link page="/manageRegistrationState.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal"><bean:message key="link.student.manageRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+					,
 					<html:link action="/registrationConclusion.do?method=show" paramId="registrationId" paramName="registration" paramProperty="idInternal" ><bean:message  key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 				</logic:notEmpty>
 				<logic:notEmpty name="registration" property="studentCurricularPlans">

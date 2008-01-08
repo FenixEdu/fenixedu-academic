@@ -68,50 +68,19 @@
 
 <logic:notPresent role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
-	<logic:equal name="registration" property="concluded" value="true">
-		<h3 class="separator2"><bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-		<logic:equal name="registration" property="registrationConclusionProcessed" value="true">
-			<p class="mvert05">
-				<bean:message key="final.degree.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</p>
-			<p>
-				<span class="highlight1">
-					<bean:message key="final.degree.average" bundle="ACADEMIC_OFFICE_RESOURCES"/>:
-					<b><bean:write name="registration" property="finalAverage"/></b>
-				</span>
-			</p>
-		</logic:equal>				
-		<logic:equal name="registration" property="registrationConclusionProcessed" value="false">
-			<p class="mvert05">
-				<span class="error0">
-					<bean:message key="missing.final.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</span>
-			</p>
-		</logic:equal>				
-	</logic:equal>
-
-	<logic:equal name="registration" property="concluded" value="false">
-		<%
-			final DegreeType degreeType = registration.getDegreeType();
-			request.setAttribute("toShow", degreeType != DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-		%>
-		<logic:equal name="toShow" value="true">
-			<p class="mtop1 mbottom1">
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<bean:define id="url">
-					<%="/registration.do?method=viewRegistrationCurriculum&amp;registrationID=" + registration.getIdInternal()%>
-					<logic:present name="degreeCurricularPlanID">
-						<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
-						<%="&amp;degreeCurricularPlanID=" + degreeCurricularPlanID%>
-					</logic:present>
-				</bean:define>
-				<html:link target="_blank" page="<%=url%>">
-					<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</html:link>
-			</p>
-		</logic:equal>
-
-	</logic:equal>
+	<p class="mtop1 mbottom1">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<bean:define id="url">
+			<%="/registration.do?method=prepareViewRegistrationCurriculum&amp;registrationID=" + registration.getIdInternal()%>
+			<logic:present name="degreeCurricularPlanID">
+				<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
+				<%="&amp;degreeCurricularPlanID=" + degreeCurricularPlanID%>
+			</logic:present>
+		</bean:define>
+		<html:link target="_blank" page="<%=url%>">
+			<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</p>
 
 </logic:notPresent>
 

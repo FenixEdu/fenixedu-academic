@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -161,6 +163,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
 	super.setFinalAverage(getCurriculum().getRoundedAverage());
 	super.setConclusionDate(calculateConclusionDate());
+	super.setConclusionProcessResponsible(AccessControl.getPerson());
     }
 
     @Override
@@ -186,12 +189,18 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.conclusion.date");
     }
 
+    @Override
+    public void setConclusionProcessResponsible(Person responsibleForConclusionProcess) {
+	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.responsibleForConclusionProcess");
+    }
+    
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void removeConcludedInformation() {
 	// checkRulesToRemoveConcludedInformation();
 
 	super.setFinalAverage(null);
 	super.setConclusionDate(null);
+	super.setConclusionProcessResponsible(null);
     }
 
     private void checkRulesToRemoveConcludedInformation() {

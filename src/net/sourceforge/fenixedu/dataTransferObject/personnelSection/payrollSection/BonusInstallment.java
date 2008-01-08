@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -52,20 +53,18 @@ public class BonusInstallment implements Serializable {
     }
 
     public void setBonusInstallmentList(List<EmployeeBonusInstallment> bonusInstallmentList) {
-	this.bonusInstallmentList = new DomainListReference<EmployeeBonusInstallment>(
-		bonusInstallmentList);
+	this.bonusInstallmentList = new DomainListReference<EmployeeBonusInstallment>(bonusInstallmentList);
     }
 
     public void updateList() {
 	if (getYear() != null && getInstallment() != null) {
-	    AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment
-		    .readByYearAndInstallment(getYear(), getInstallment());
+	    AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment.readByYearAndInstallment(getYear(),
+		    getInstallment());
 	    setBonusInstallmentList(anualBonusInstallment.getEmployeeBonusInstallments());
 	}
     }
 
-    public void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle,
-	    ResourceBundle enumBundle) {
+    public void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle, ResourceBundle enumBundle) {
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(bundle.getString("label.number"), 1250);
 	spreadsheet.addHeader(bundle.getString("label.employee.name"), 7500);
@@ -76,11 +75,9 @@ public class BonusInstallment implements Serializable {
 	spreadsheet.addHeader(bundle.getString("label.subCostCenter"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.explorationUnit"), 2000);
 	int nextFirstRow = spreadsheet.getRow().getLastCellNum() + 1;
-	AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment.readByYearAndInstallment(
-		getYear(), getInstallment());
+	AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment.readByYearAndInstallment(getYear(), getInstallment());
 
-	List<YearMonth> sortedYearMonths = anualBonusInstallment.getAssiduousnessYearMonths()
-		.getSortedYearsMonths();
+	List<YearMonth> sortedYearMonths = anualBonusInstallment.getAssiduousnessYearMonths().getSortedYearsMonths();
 
 	for (YearMonth yearMonth : sortedYearMonths) {
 	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
@@ -91,8 +88,7 @@ public class BonusInstallment implements Serializable {
 	}
 
 	for (int columnIndex = 0; columnIndex < nextFirstRow; columnIndex++) {
-	    spreadsheet.getSheet().addMergedRegion(
-		    new Region(0, (short) columnIndex, 1, (short) columnIndex));
+	    spreadsheet.getSheet().addMergedRegion(new Region(0, (short) columnIndex, 1, (short) columnIndex));
 	}
 	spreadsheet.newHeaderRow();
 	int rowNumber = spreadsheet.getSheet().getLastRowNum() - 1;
@@ -102,28 +98,30 @@ public class BonusInstallment implements Serializable {
 	    spreadsheet.addHeader(bundle.getString("label.absences"), 2000, index + 2);
 	    spreadsheet.addHeader(bundle.getString("label.bonusType"), 2000, index + 3);
 	    spreadsheet.addHeader(bundle.getString("label.value"), 2000, index + 4);
-	    spreadsheet.getSheet().addMergedRegion(
-		    new Region(rowNumber, (short) index, rowNumber, (short) (index + 4)));
+	    spreadsheet.getSheet().addMergedRegion(new Region(rowNumber, (short) index, rowNumber, (short) (index + 4)));
 	}
     }
 
-    private AssiduousnessStatusHistory getLastAssiduousnessStatusHistoryBefore(
-	    EmployeeBonusInstallment employeeBonusInstallment) {
-	YearMonthDay day = new YearMonthDay(employeeBonusInstallment.getAnualBonusInstallment()
-		.getPaymentPartialDate().get(DateTimeFieldType.year()),
-		employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
-			DateTimeFieldType.monthOfYear()), 1);
-	AssiduousnessStatusHistory lastAssiduousnessStatusHistory = employeeBonusInstallment
-		.getEmployee().getAssiduousness().getStatusBetween(day, day).get(0);
+    private AssiduousnessStatusHistory getLastAssiduousnessStatusHistoryBefore(EmployeeBonusInstallment employeeBonusInstallment) {
+	YearMonthDay day = new YearMonthDay(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
+		DateTimeFieldType.year()), employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
+		DateTimeFieldType.monthOfYear()), 1);
+	if (!employeeBonusInstallment.getEmployee().hasAssiduousness()) {
+	    System.out.println("Employee " + employeeBonusInstallment.getEmployee().getEmployeeNumber()
+		    + " does not have assidousness");
+	    return null;
+	}
+
+	AssiduousnessStatusHistory lastAssiduousnessStatusHistory = employeeBonusInstallment.getEmployee().getAssiduousness()
+		.getStatusBetween(day, day).get(0);
 	if (lastAssiduousnessStatusHistory == null) {
-	    for (AssiduousnessStatusHistory assiduousnessStatusHistory : employeeBonusInstallment
-		    .getEmployee().getAssiduousness().getAssiduousnessStatusHistories()) {
+	    for (AssiduousnessStatusHistory assiduousnessStatusHistory : employeeBonusInstallment.getEmployee()
+		    .getAssiduousness().getAssiduousnessStatusHistories()) {
 		if (assiduousnessStatusHistory.getEndDate() == null) {
 		    return assiduousnessStatusHistory;
 		}
 		if (lastAssiduousnessStatusHistory == null
-			|| assiduousnessStatusHistory.getEndDate().isAfter(
-				lastAssiduousnessStatusHistory.getEndDate())) {
+			|| assiduousnessStatusHistory.getEndDate().isAfter(lastAssiduousnessStatusHistory.getEndDate())) {
 		    lastAssiduousnessStatusHistory = assiduousnessStatusHistory;
 		}
 	    }
@@ -138,30 +136,28 @@ public class BonusInstallment implements Serializable {
 	    spreadsheet.addCell(employeeBonusInstallment.getEmployee().getPerson().getName());
 
 	    AssiduousnessStatusHistory assiduousnessStatusHistory = getLastAssiduousnessStatusHistoryBefore(employeeBonusInstallment);
-	    spreadsheet.addCell(assiduousnessStatusHistory != null ? assiduousnessStatusHistory
-		    .getAssiduousnessStatus().getDescription() : "");
+	    spreadsheet.addCell(assiduousnessStatusHistory != null ? assiduousnessStatusHistory.getAssiduousnessStatus()
+		    .getDescription() : "");
 
 	    spreadsheet.addCell(enumBundle.getString(employeeBonusInstallment.getBonusType().name()));
 	    spreadsheet.addCell(employeeBonusInstallment.getValue());
-	    spreadsheet.addCell(employeeBonusInstallment.getCostCenterCode(), spreadsheet
+	    spreadsheet.addCell(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode()), spreadsheet
 		    .getExcelStyle().getIntegerStyle());
 	    spreadsheet.addCell(employeeBonusInstallment.getSubCostCenterCode());
-	    spreadsheet.addCell(employeeBonusInstallment.getExplorationUnit(), spreadsheet
-		    .getExcelStyle().getIntegerStyle());
+	    spreadsheet.addCell(employeeBonusInstallment.getExplorationUnit(), spreadsheet.getExcelStyle().getIntegerStyle());
 	    for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
 		    .getEmployeeMonthlyBonusInstallmentsOrdered()) {
-		ClosedMonth closedMonth = ClosedMonth.getClosedMonth(new YearMonth(
-			employeeMonthlyBonusInstallment.getPartialYearMonth()));
+		ClosedMonth closedMonth = ClosedMonth.getClosedMonth(new YearMonth(employeeMonthlyBonusInstallment
+			.getPartialYearMonth()));
 		Integer maximumWorkingDays = 0;
 		Integer workedDays = 0;
 		Integer absences = 0;
 		if (closedMonth != null) {
 		    AssiduousnessClosedMonth assiduousnessClosedMonth = closedMonth
-			    .getAssiduousnessClosedMonth(employeeMonthlyBonusInstallment
-				    .getEmployeeBonusInstallment().getEmployee().getAssiduousness());
+			    .getAssiduousnessClosedMonth(employeeMonthlyBonusInstallment.getEmployeeBonusInstallment()
+				    .getEmployee().getAssiduousness());
 		    if (assiduousnessClosedMonth != null) {
-			maximumWorkingDays = new Integer(assiduousnessClosedMonth
-				.getMaximumWorkingDays());
+			maximumWorkingDays = new Integer(assiduousnessClosedMonth.getMaximumWorkingDays());
 			workedDays = new Integer(assiduousnessClosedMonth.getWorkedDays());
 			absences = new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
 				- assiduousnessClosedMonth.getWorkedDays());
@@ -170,8 +166,7 @@ public class BonusInstallment implements Serializable {
 		spreadsheet.addCell(maximumWorkingDays);
 		spreadsheet.addCell(workedDays);
 		spreadsheet.addCell(absences);
-		spreadsheet
-			.addCell(enumBundle.getString(employeeBonusInstallment.getBonusType().name()));
+		spreadsheet.addCell(enumBundle.getString(employeeBonusInstallment.getBonusType().name()));
 		spreadsheet.addCell(employeeMonthlyBonusInstallment.getValue());
 	    }
 	}

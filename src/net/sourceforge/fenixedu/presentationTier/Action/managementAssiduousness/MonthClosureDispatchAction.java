@@ -289,12 +289,16 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	spreadsheet.addCell(unjustifiedString + "  " + totalUnjustifiedString);
 	spreadsheet.addCell(a66String + "  " + totalA66String);
 	spreadsheet.addCell(a66NextYearDays == 0 ? "" : decimalFormat.format(a66NextYearDays));
-	spreadsheet.addCell(((Integer) vacationDays).toString());
-	spreadsheet.addCell(((Integer) medicalIssuesDays).toString());
-	spreadsheet.addCell(((Integer) familyDeathDays).toString());
-	spreadsheet.addCell(((Integer) weddingDays).toString());
-	spreadsheet.addCell(((Integer) paternityDays).toString());
-	spreadsheet.addCell(((Integer) leaveWithoutPayDays).toString());
+	spreadsheet.addCell(getNumberToCell(vacationDays));
+	spreadsheet.addCell(getNumberToCell(medicalIssuesDays));
+	spreadsheet.addCell(getNumberToCell(familyDeathDays));
+	spreadsheet.addCell(getNumberToCell(weddingDays));
+	spreadsheet.addCell(getNumberToCell(paternityDays));
+	spreadsheet.addCell(getNumberToCell(leaveWithoutPayDays));
+    }
+
+    private String getNumberToCell(int value) {
+	return value==0 ? "-" :((Integer) value).toString();
     }
 
     public ActionForward prepareToCloseExtraWorkMonth(ActionMapping mapping, ActionForm actionForm,

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 public class DiplomaRequest extends DiplomaRequest_Base {
     
@@ -145,4 +146,29 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	return getDegreeType() == DegreeType.MASTER_DEGREE;
     }
 
+    /* TODO refactor, always set requested cycle type in document creation*/
+    
+    public CycleType getWhatShouldBeRequestedCycle() {
+        return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCycleType() : null;
+    }
+    
+    public CycleCurriculumGroup getCycleCurriculumGroup() {
+	final CycleType requestedCycle = getRequestedCycle();
+	final Registration registration = getRegistration();
+
+	if (requestedCycle == null) {
+	    if (registration.getDegreeType().hasExactlyOneCycleType()) {
+		return registration.getLastStudentCurricularPlan().getLastCycleCurriculumGroup();
+	    } else {
+		return null;
+	    }
+	} else {
+	    return registration.getLastStudentCurricularPlan().getCycle(requestedCycle);
+	}
+    }
+    
+    public boolean hasCycleCurriculumGroup() {
+	return getCycleCurriculumGroup() != null;
+    }
+    
 }

@@ -17,14 +17,14 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
     
     final protected void init(Registration registration, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
-	init(registration, null, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean freeProcessed) {
+	init(registration, null, freeProcessed, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
     }
 
-    final protected void init(Registration registration, final ExecutionYear executionYear, DocumentPurposeType documentPurposeType,
+    final protected void init(Registration registration, final ExecutionYear executionYear, Boolean freeProcessed, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
-	super.init(registration, executionYear, urgentRequest, Boolean.FALSE);
+	super.init(registration, executionYear, urgentRequest, freeProcessed);
 
 	super.checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
 	super.setDocumentPurposeType(documentPurposeType);
@@ -35,7 +35,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	    DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose,
 	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear, 
-	    MobilityProgram mobilityProgram, CycleType requestedCycle) {
+	    MobilityProgram mobilityProgram, CycleType requestedCycle, Boolean freeProcessed) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
@@ -49,7 +49,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 		    otherPurpose, urgentRequest, mobilityProgram);
 	case DEGREE_FINALIZATION_CERTIFICATE:
 	    return new DegreeFinalizationCertificateRequest(registration, chosenDocumentPurposeType,
-		    otherPurpose, urgentRequest, average, detailed, mobilityProgram, requestedCycle);
+		    otherPurpose, urgentRequest, average, detailed, mobilityProgram, requestedCycle, freeProcessed);
 	}
 
 	return null;

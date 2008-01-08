@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -206,6 +207,14 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
      */
     public Thesis getThesis() {
         return null;
+    }
+
+    public boolean isResultOfMobility() {
+	if (!hasExecutionPeriod()) {
+	    return false;
+	}
+	
+	return getRegistration().getRegistrationStatesTypes(getExecutionPeriod()).contains(RegistrationStateType.MOBILITY);
     }
 
 }

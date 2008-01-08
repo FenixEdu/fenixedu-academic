@@ -22,7 +22,7 @@
 
 		<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.onlineTests.OnlineTest'}">
 			<h:outputText value="#{bundle['lable.test']}: " escape="false"/>
-			<h:outputText value="<b>#{evaluationManagementBackingBean.evaluation.distributedTest.title}</b>, " escape="false"/>
+			<h:outputText value="<b>#{evaluationManagementBackingBean.evaluation.distributedTest.evaluationTitle}</b>, " escape="false"/>
 			<h:outputFormat value="{0, date, dd/MM/yyyy}">
 				<f:param value="#{evaluationManagementBackingBean.evaluation.distributedTest.beginDateDate}"/>
 			</h:outputFormat>

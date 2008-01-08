@@ -80,6 +80,9 @@
 			<%-- editar --%>
 			<logic:equal name="canEdit" value="true">
 				<p>
+					<div class="infoop2"><bean:message key="message.pendingParkingRequestState" bundle="PARKING_RESOURCES" /></div>
+				</p>
+				<p>
 					<html:link page="/parking.do?method=prepareEditParking">
 						<bean:message key="label.editParkingDocuments"
 							bundle="PARKING_RESOURCES" />
@@ -89,6 +92,32 @@
 
 		
 		<logic:equal name="canEdit" value="false">
+			<logic:empty name="parkingParty" property="lastRequest" >
+				<div class="infoop2">
+					<logic:equal name="parkingParty" property="firstRequest.parkingRequestState" value="<%=net.sourceforge.fenixedu.domain.parking.ParkingRequestState.ACCEPTED.toString()%>">
+						<bean:message key="message.acceptedParkingRequestState" bundle="PARKING_RESOURCES" />
+					</logic:equal>
+					<logic:equal name="parkingParty" property="firstRequest.parkingRequestState" value="<%=net.sourceforge.fenixedu.domain.parking.ParkingRequestState.REJECTED.toString()%>">
+						<bean:message key="message.rejectedParkingRequestState" bundle="PARKING_RESOURCES" />
+					</logic:equal>
+					<logic:notEmpty name="parkingParty" property="firstRequest.note" >
+						<br/><bean:message key="label.note" bundle="PARKING_RESOURCES"/>:<bean:write name="parkingParty" property="firstRequest.note"/>	
+					</logic:notEmpty>
+				</div>
+				
+			</logic:empty>
+			
+			<logic:notEmpty name="parkingParty" property="lastRequest" >
+				<logic:equal name="parkingParty" property="lastRequest.parkingRequestState" value="<%=net.sourceforge.fenixedu.domain.parking.ParkingRequestState.ACCEPTED.toString()%>">
+					<div class="infoop2">
+						<bean:message key="message.acceptedParkingRequestState" bundle="PARKING_RESOURCES" />
+						<logic:notEmpty name="parkingParty" property="lastRequest.note" >
+							<br/><bean:message key="label.note" bundle="PARKING_RESOURCES"/>:<bean:write name="parkingParty" property="lastRequest.note"/>	
+						</logic:notEmpty>
+					</div>
+				</logic:equal>
+			</logic:notEmpty>
+
 			<div class="mvert15">
 				<logic:equal name="parkingParty" property="canRequestUnlimitedCardAndIsInAnyRequestPeriod" value="true">
 					<logic:empty name="parkingParty" property="lastRequest" >
@@ -111,8 +140,8 @@
 						</span>
 					</p>
 				</logic:notEmpty>
-			</div>
-		</logic:equal>
+			</logic:equal>
+		</div>
 
 		<logic:notEmpty name="parkingParty" property="firstRequest.requestedAs">
 			<p>
@@ -121,7 +150,7 @@
 				</span>
 			</p>
 		</logic:notEmpty>
-		
+		<%-- 
 		<logic:notEmpty name="parkingParty" property="firstRequest.note">
 			<p>
 				<span class="infoop2"><bean:message key="label.note" bundle="PARKING_RESOURCES"/>:
@@ -129,7 +158,7 @@
 				</span>
 			</p>
 		</logic:notEmpty>
-
+--%>
 		<logic:equal name="parkingParty" property="firstRequest.limitlessAccessCard" value="true">
 			<p>
 				<span class="infoop2">

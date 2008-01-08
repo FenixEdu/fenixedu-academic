@@ -149,7 +149,10 @@
     <slot name="student" layout="format" read-only="true">
         <property name="format" value="${person.name} (${number})"/>
     </slot>
-    <slot name="title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+    <slot name="finalTitle" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="finalSubtitle">
         <property name="size" value="60"/>
     </slot>
     <slot name="comment" layout="longText">

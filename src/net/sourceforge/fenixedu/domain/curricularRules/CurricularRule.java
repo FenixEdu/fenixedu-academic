@@ -57,6 +57,9 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	if (degreeModuleToApplyRule == null || begin == null) {
 	    throw new DomainException("curricular.rule.invalid.parameters");
 	}
+	if (degreeModuleToApplyRule.isRoot()) {
+	    throw new DomainException("curricular.rule.invalid.parameters");
+	}
     }
 
     protected void edit(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {

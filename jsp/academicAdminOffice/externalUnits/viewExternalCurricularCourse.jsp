@@ -20,6 +20,7 @@
 
 <ul class="mtop15">
 	<li><html:link page="<%="/externalUnits.do?method=prepareEditExternalCurricularCourse" + externalCurricularCourseId %>"><bean:message key="label.externalUnits.editInformation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
+	<li><html:link page="<%="/externalUnits.do?method=prepareDeleteExternalCurricularCourse" + externalCurricularCourseId %>"><bean:message key="label.externalUnits.deleteInformation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 </ul>
 
 <table class="tstyle2">

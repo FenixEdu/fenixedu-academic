@@ -265,7 +265,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="304"  isSplitAllowed="true" >
+			<band height="337"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
@@ -354,7 +354,7 @@
 						x="65"
 						y="148"
 						width="469"
-						height="124"
+						height="157"
 						key="textField-24"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -366,7 +366,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="277"
+						y="310"
 						width="469"
 						height="22"
 						key="textField-18"

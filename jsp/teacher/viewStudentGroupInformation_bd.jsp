@@ -232,14 +232,10 @@
 		
 	<bean:define id="nrOfElements" name="component" property="nrOfElements"/>
 				 			 		
-
-	 <% Map sendMailParameters = new TreeMap(request.getParameterMap());
-        sendMailParameters.put("method","start");
-		request.setAttribute("sendMailParameters",sendMailParameters);%>
-	<bean:define id="sendMailLinkParameters" type="java.util.Map" name="sendMailParameters"/>
+	<bean:define id="sendMailLink" type="java.lang.String">/sendMailToWorkGroupStudents.do?method=start&amp;objectCode=<%= pageContext.findAttribute("objectCode").toString() %>&amp;groupPropertiesCode=<%= groupPropertiesCode.toString() %>&amp;studentGroupCode=<%= studentGroupCode.toString() %></bean:define>
 	<ul class="mtop05">
 		<li>
-		   <html:link page="/sendMailToWorkGroupStudents.do" name="sendMailLinkParameters">
+		   <html:link page="<%= sendMailLink %>">
 				<bean:message key="link.sendEmailToAllStudents"/>
 		   </html:link>
 	   </li>

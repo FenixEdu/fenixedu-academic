@@ -291,12 +291,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public boolean isConclusionProcessed() {
+	if (!isBolonhaDegree()) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.use.this.method.to.pre.bolonha");
+	}
+	
 	for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGrops()) {
 	    if (!cycleCurriculumGroup.isConclusionProcessed()) {
 		return false;
 	    }
 	}
-	
 	return true;
     }
     
@@ -658,30 +661,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	for (final Enrolment enrolment : getEnrolmentsByExecutionPeriod(executionPeriod)) {
 	    if (enrolment.isApproved()) {
-		result.add(enrolment);
-	    }
-	}
-
-	return result;
-    }
-
-    final public Collection<Enrolment> getPropaedeuticEnrolments() {
-	final Collection<Enrolment> result = new ArrayList<Enrolment>();
-
-	for (final Enrolment enrolment : getEnrolmentsSet()) {
-	    if (enrolment.isPropaedeutic()) {
-		result.add(enrolment);
-	    }
-	}
-
-	return result;
-    }
-
-    final public Collection<Enrolment> getExtraCurricularEnrolments() {
-	final Collection<Enrolment> result = new ArrayList<Enrolment>();
-
-	for (final Enrolment enrolment : getEnrolmentsSet()) {
-	    if (enrolment.isExtraCurricular()) {
 		result.add(enrolment);
 	    }
 	}
@@ -2360,12 +2339,66 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getExtraCurriculumGroup() != null;
     }
 
+    final public Collection<CurriculumLine> getExtraCurricularCurriculumLines() {
+	final Collection<CurriculumLine> result = new ArrayList<CurriculumLine>();
+
+	if (hasExtraCurriculumGroup()) {
+	    for (final CurriculumLine curriculumLine : getExtraCurriculumGroup().getCurriculumLines()) {
+		result.add(curriculumLine);
+	    }
+	}
+
+	return result;
+    }
+
+    /**
+     * Note that this method must not use the ExtraCurriculumGroup due to the pre-Bolonha SCPs 
+     */
+    final public Collection<Enrolment> getExtraCurricularEnrolments() {
+	final Collection<Enrolment> result = new ArrayList<Enrolment>();
+
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.isExtraCurricular()) {
+		result.add(enrolment);
+	    }
+	}
+
+	return result;
+    }
+
     public PropaedeuticsCurriculumGroup getPropaedeuticCurriculumGroup() {
 	return (PropaedeuticsCurriculumGroup) getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.PROPAEDEUTICS);
     }
 
     public boolean hasPropaedeuticsCurriculumGroup() {
 	return getPropaedeuticCurriculumGroup() != null;
+    }
+
+    final public Collection<CurriculumLine> getPropaedeuticCurriculumLines() {
+	final Collection<CurriculumLine> result = new ArrayList<CurriculumLine>();
+
+	if (hasPropaedeuticsCurriculumGroup()) {
+	    for (final CurriculumLine curriculumLine : getPropaedeuticCurriculumGroup().getCurriculumLines()) {
+		result.add(curriculumLine);
+	    }
+	}
+
+	return result;
+    }
+
+    /**
+     * Note that this method must not use the ExtraCurriculumGroup due to the pre-Bolonha SCPs 
+     */
+    final public Collection<Enrolment> getPropaedeuticEnrolments() {
+	final Collection<Enrolment> result = new ArrayList<Enrolment>();
+
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.isPropaedeutic()) {
+		result.add(enrolment);
+	    }
+	}
+
+	return result;
     }
 
     public Collection<CurricularCourse> getAllCurricularCoursesToDismissal(final ExecutionPeriod executionPeriod) {
@@ -2540,9 +2573,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
 
-    final public Double getEctsCreditsForCourseGroup(final CourseGroup courseGroup) {
+    final public Double getCreditsConcludedForCourseGroup(final CourseGroup courseGroup) {
 	final CurriculumGroup curriculumGroup = findCurriculumGroupFor(courseGroup);
-	return (curriculumGroup == null) ? Double.valueOf(0d) : curriculumGroup.getAprovedEctsCredits();
+	return (curriculumGroup == null) ? Double.valueOf(0d) : curriculumGroup.getCreditsConcluded();
     }
 
     final public void resetIsFirstTimeEnrolmentForCurricularCourse(final CurricularCourse curricularCourse) {
@@ -2646,18 +2679,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		    throw new DomainException("error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group",
 			    curriculumLine.getFullPath(), curriculumGroup.getFullPath());
 		}
-
 		runRules = true;
 	    }
-
 	    curriculumLine.setCurriculumGroup(curriculumGroup);
 	}
+	
+	runRules &= isBolonhaDegree();
 
 	if (runRules && !responsiblePerson.hasRole(RoleType.MANAGER)) {
 	    final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 	    checkEnrolmentRules(responsiblePerson, moveCurriculumLinesBean.getIDegreeModulesToEvaluate(executionPeriod), executionPeriod);
 	}
-
     }
 
     @SuppressWarnings("unchecked")
@@ -2692,12 +2724,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.SECOND_CYCLE) : null;
     }
     
+    public CycleCurriculumGroup getThirdCycle() {
+	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.THIRD_CYCLE) : null;
+    }
+    
     public CycleCurriculumGroup getLastCycleCurriculumGroup() {
 	return isBoxStructure() ? getRoot().getLastCycleCurriculumGroup() : null;
     }
     
     public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {
-	return getRoot().getCycleCurriculumGroups();
+	return hasRoot() ? getRoot().getCycleCurriculumGroups() : Collections.EMPTY_SET;
+    }
+    
+    public List<CycleCurriculumGroup> getInternalCycleCurriculumGrops() {
+	return hasRoot() ? getRoot().getInternalCycleCurriculumGroups() : Collections.EMPTY_LIST;
     }
     
     public List<CycleType> getSupportedCycleTypesToEnrol() {
@@ -2755,10 +2795,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	}
 	
-    }
-    
-    public List<CycleCurriculumGroup> getInternalCycleCurriculumGrops() {
-	return getRoot().getInternalCycleCurriculumGroups();
     }
     
 }

@@ -29,7 +29,7 @@
 			<bean:define id="iS"><%= i + 1 %></bean:define>
 			<bean:define id="lS"><%= length %></bean:define>
 			<logic:equal name="iS" value="<%= lS %>">
-				<table border='1' cellspacing='0' cellpadding='3' width='95%' class="td01">
+				<table border='1' cellspacing='0' cellpadding='3' width='95%' class="td01 break-after">
 			</logic:equal>
 			<logic:notEqual name="iS" value="<%= lS %>">
 				<table border='1' cellspacing='0' cellpadding='3' width='95%' class="td01 break-after">

@@ -17,13 +17,13 @@
 			<td>
 				<fr:edit id="filter" name="filter" schema="<%= listThesesSchema %>">
 					<fr:layout>
-				        <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+				        <fr:property name="classes" value="tdtop thlight thleft"/>
 				        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 					<fr:destination name="listThesis" path="<%= String.format("%s?method=showTheses&amp;%s", listThesesActionPath, listThesesContext) %>"/>
 				</fr:edit>
 			</td>
-			<td style="vertical-align: bottom; padding-bottom: 1.5em;">
+			<td style="vertical-align: bottom; padding-bottom: 0.75em;">
 				<a href="#" onclick="switchDisplay('state-help');">
 					<html:img page="/images/icon_help.gif" module=""/>
 				</a>

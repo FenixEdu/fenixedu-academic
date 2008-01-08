@@ -25,7 +25,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed) {
 
 	checkParameters(registration, detailed, executionYear);
-	super.init(registration, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	super.init(registration, executionYear, Boolean.FALSE, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 	super.setDetailed(detailed);
     }
 
