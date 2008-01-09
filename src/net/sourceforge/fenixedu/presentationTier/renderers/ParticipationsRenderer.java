@@ -70,10 +70,10 @@ public class ParticipationsRenderer extends OutputRenderer {
     }
 
     /**
-         * If roles will or not be displayed
-         * 
-         * @property
-         */
+     * If roles will or not be displayed
+     * 
+     * @property
+     */
     public void setShowRoles(boolean showRoles) {
 	this.showRoles = showRoles;
     }
@@ -83,10 +83,10 @@ public class ParticipationsRenderer extends OutputRenderer {
     }
 
     /**
-         * Defines a sublayout for each participator
-         * 
-         * @property
-         */
+     * Defines a sublayout for each participator
+     * 
+     * @property
+     */
     public void setSubLayout(String layout) {
 	this.subLayout = layout;
     }
@@ -96,10 +96,10 @@ public class ParticipationsRenderer extends OutputRenderer {
     }
 
     /**
-         * Difines a subSchema for each participator
-         * 
-         * @property
-         */
+     * Difines a subSchema for each participator
+     * 
+     * @property
+     */
     public void setSubSchema(String schema) {
 	this.subSchema = schema;
     }
@@ -109,11 +109,11 @@ public class ParticipationsRenderer extends OutputRenderer {
     }
 
     /**
-         * Defines a link format, see layout link for more information about
-         * this property.
-         * 
-         * @property
-         */
+     * Defines a link format, see layout link for more information about this
+     * property.
+     * 
+     * @property
+     */
     public void setLinkFormat(String linkFormat) {
 	this.linkFormat = linkFormat;
     }
@@ -162,13 +162,19 @@ public class ParticipationsRenderer extends OutputRenderer {
 			if (participation instanceof ScientificJournalParticipation) {
 			    ScientificJournalParticipation journalParticipation = (ScientificJournalParticipation) participation;
 
-			    container.addChild(new HtmlText(" - "));
-			    container.addChild(new HtmlText(" "
-				    + RenderUtils.getResourceString("RESEARCHER_RESOURCES", "label.date.from") + " "));
-			    container.addChild(new HtmlText(journalParticipation.getBeginDate().toString("dd-MM-yyyy")));
-			    container.addChild(new HtmlText(" "
-				    + RenderUtils.getResourceString("RESEARCHER_RESOURCES", "label.date.to") + " "));
-			    container.addChild(new HtmlText(journalParticipation.getEndDate().toString("dd-MM-yyyy")));
+			    if (journalParticipation.getBeginDate() != null || journalParticipation.getEndDate() != null) {
+				container.addChild(new HtmlText(" - "));
+			    }
+			    if (journalParticipation.getBeginDate() != null) {
+				container.addChild(new HtmlText(" "
+					+ RenderUtils.getResourceString("RESEARCHER_RESOURCES", "label.date.from") + " "));
+				container.addChild(new HtmlText(journalParticipation.getBeginDate().toString("dd-MM-yyyy")));
+			    }
+			    if (journalParticipation.getEndDate() != null) {
+				container.addChild(new HtmlText(" "
+					+ RenderUtils.getResourceString("RESEARCHER_RESOURCES", "label.date.to") + " "));
+				container.addChild(new HtmlText(journalParticipation.getEndDate().toString("dd-MM-yyyy")));
+			    }
 			}
 
 			if (size > 1) {
