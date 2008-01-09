@@ -92,8 +92,6 @@ execute "Migrate Functionalities in Sites" migrateFunctionalitiesInSites.sql
 
 execute "Initializing portal structure" generateTemplatePortalsStructure.sql
 
-execute "Generate Template Portal Structure" generateTemplatePortalsStructure.sql
-execute "Migrate Functionalities in sites" migrateFunctionalitiesInSites.sql
 execute "Initialize Pools" initializePools.sql
 execute "Fix assiduiness Policies" fixAssiduinessPolicies.sql
 execute "Fix &amps; in functionalities" fixAmpsInExecutionPaths.sql
