@@ -15,7 +15,7 @@ read -s password
 
 function execute() {
 	echo ---------------------------------------- $1
-	mysql -u$USER -f  --default-character-set=latin1 $DB < $2
+	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2
 	echo
 }
 
