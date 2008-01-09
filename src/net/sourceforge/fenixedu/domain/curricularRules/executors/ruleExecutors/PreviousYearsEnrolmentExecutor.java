@@ -23,10 +23,8 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -541,7 +539,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
     private double calculateTotalEctsInGroup(final EnrolmentContext enrolmentContext, final CurriculumGroup curriculumGroup,
 	    final boolean withTemporaryEnrolments) {
-	double result = curriculumGroup.getAprovedEctsCredits();
+	double result = curriculumGroup.getCreditsConcluded(enrolmentContext.getExecutionPeriod().getExecutionYear());
 	result += curriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod());
 
 	if (withTemporaryEnrolments) {
