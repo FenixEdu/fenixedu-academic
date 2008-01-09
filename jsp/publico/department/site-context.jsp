@@ -6,10 +6,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-<bean:define id="announcementActionVariable" value="/researchSite/manageResearchUnitAnnouncements.do" toScope="request"/>
-<bean:define id="eventActionVariable" value="/researchSite/manageResearchUnitAnnouncements.do" toScope="request"/>
-<bean:define id="announcementRSSActionVariable" value="/researchSite/announcementsRSS.do" toScope="request"/>
-<bean:define id="eventRSSActionVariable" value="/researchSite/eventsRSS.do" toScope="request"/>
+<bean:define id="announcementActionVariable" value="/department/announcements.do" toScope="request"/>
+<bean:define id="eventActionVariable" value="/department/events.do" toScope="request"/>
+<bean:define id="announcementRSSActionVariable" value="/department/announcementsRSS.do" toScope="request"/>
+<bean:define id="eventRSSActionVariable" value="/department/eventsRSS.do" toScope="request"/>
 
 <bean:define id="siteActionName" value="/department/departmentSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="selectedDepartmentUnitID" toScope="request"/>

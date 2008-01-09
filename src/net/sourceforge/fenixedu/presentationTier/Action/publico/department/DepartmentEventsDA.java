@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteBoardsDA;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -12,7 +13,7 @@ import org.apache.struts.action.ActionMapping;
 public class DepartmentEventsDA extends DepartmentBoardsDA {
 
     @Override
-    protected String getBoardName(HttpServletRequest request) {
+    protected MultiLanguageString getBoardName(HttpServletRequest request) {
         return UnitSiteBoardsDA.EVENTS;
     }
 

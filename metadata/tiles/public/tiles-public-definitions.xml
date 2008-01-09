@@ -145,7 +145,7 @@
     <definition name="definition.public.department.frontPage" extends="definition.public.noPaddingLayout">
         <put name="symbols_row" value="/publico/department/symbolsRow.jsp" />
         <put name="profile_navigation" value="/publico/department/topNavigation.jsp" />
-		<put name="body-context" value="/publico/department/site-context.jsp"/>
+		<put name="body-context" value="/publico/department/site-context-without-breadcrumb.jsp"/>
         <put name="main_navigation" value="/publico/department/mainNavigation.jsp" />
     </definition>
     <definition name="definition.public.department" extends="definition.public.paddingLayout">

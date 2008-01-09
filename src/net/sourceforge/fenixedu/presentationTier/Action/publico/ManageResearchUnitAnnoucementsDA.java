@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityCont
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -56,7 +57,7 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
     }
 
     @Override
-    protected String getBoardName(HttpServletRequest request) {
+    protected MultiLanguageString getBoardName(HttpServletRequest request) {
 	return request.getMethod().equals("viewAnnouncements") ? UnitSiteBoardsDA.ANNOUNCEMENTS
 		: UnitSiteBoardsDA.EVENTS;
     }

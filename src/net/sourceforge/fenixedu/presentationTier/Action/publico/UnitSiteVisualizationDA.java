@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,9 +35,9 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
     public static final int ANNOUNCEMENTS_NUMBER = 3;
 
-    public static final String ANNOUNCEMENTS_NAME = "Anúncios";
+    public static final MultiLanguageString ANNOUNCEMENTS_NAME = MultiLanguageString.i18n().add("pt", "Anúncios").finish();
 
-    public static final String EVENTS_NAME = "Eventos";
+    public static final MultiLanguageString EVENTS_NAME = MultiLanguageString.i18n().add("pt", "Eventos").finish();
   
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -78,11 +79,11 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	AnnouncementBoard eventsBoard = null;
 
 	for (AnnouncementBoard unitBoard : unit.getBoards()) {
-	    if (unitBoard.isPublicToRead() && unitBoard.getName().equals(ANNOUNCEMENTS_NAME)) {
+	    if (unitBoard.isPublicToRead() && unitBoard.getName().equalInAnyLanguage(ANNOUNCEMENTS_NAME)) {
 		announcementsBoard = unitBoard;
 	    }
 
-	    if (unitBoard.isPublicToRead() && unitBoard.getName().equals(EVENTS_NAME)) {
+	    if (unitBoard.isPublicToRead() && unitBoard.getName().equalInAnyLanguage(EVENTS_NAME)) {
 		eventsBoard = unitBoard;
 	    }
 	}
