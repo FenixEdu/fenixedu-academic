@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
@@ -22,11 +23,9 @@
 	<ul>
 		<logic:iterate id="subunit" name="subunits">
 			<li>
-				<bean:define id="subunitId" name="subunit" property="idInternal"/>
-				<bean:define id="url" name="<%= "viewSite" + subunitId %>"/>
-				<html:link page="<%= url.toString() %>">
+				<app:contentLink name="subunit" property="site">
 					<fr:view name="subunit" property="nameI18n"/>
-				</html:link>
+				</app:contentLink>
 			</li>
 		</logic:iterate>
 	</ul>

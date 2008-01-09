@@ -28,6 +28,8 @@ function executeWithTempFile() {
 }
 
 
+execute "Fix Scientific Area Site Concrete Class" fixScientificAreaSiteConcreteClass.sql
+
 execute "Create table for Content and Node" createContentAndNodeTable.sql
 
 execute "Update sql structure for and migrate data." updates.sql

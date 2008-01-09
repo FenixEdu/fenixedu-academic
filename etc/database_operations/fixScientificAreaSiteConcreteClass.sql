@@ -1,0 +1,1 @@
+ UPDATE SITE SET SITE.OJB_CONCRETE_CLASS = "net.sourceforge.fenixedu.domain.ScientificAreaSite" WHERE PARTY.OJB_CONCRETE_CLASS = "net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit" AND SITE.OJB_CONCRETE_CLASS <> "net.sourceforge.fenixedu.domain.ScientificAreaSite";
