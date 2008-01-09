@@ -329,14 +329,15 @@
                 		<tr>
                 			<th><bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:</th>
                 			<td>
+                				<bean:define id="executionCourses" name="homepage" property="person.teacher.currentExecutionCourses"/>
 
-        						<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" length="1">        						
+        						<logic:iterate id="executionCourse" name="executionCourses" length="1">        						
 	        						<app:contentLink name="executionCourse" property="site">
 										<bean:write name="executionCourse" property="nome"/>
 									</app:contentLink>		        							        						
         						</logic:iterate>
 
-        						<logic:iterate id="executionCourse" name="homepage" property="person.teacher.currentExecutionCourses" offset="1">
+        						<logic:iterate id="executionCourse" name="executionCourses" offset="1">
         							,        							
         							<app:contentLink name="executionCourse" property="site">
 										<bean:write name="executionCourse" property="nome"/>

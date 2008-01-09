@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.requestWrappers.ResponseWrapper;
 
 public class RequestRewriteFilter implements Filter {
@@ -112,6 +113,21 @@ public class RequestRewriteFilter implements Filter {
 
 	final ResponseWrapper responseWrapper = new ResponseWrapper(httpServletResponse);
 
+	if (LogLevel.DEBUG) {
+	    continueChainAndWriteResponseWithTimeLog(filterChain, httpServletRequest, responseWrapper);
+	} else {	    
+	    continueChainAndWriteResponse(filterChain, httpServletRequest, responseWrapper);
+	}
+    }
+
+    private void continueChainAndWriteResponse(final FilterChain filterChain, final HttpServletRequest httpServletRequest,
+	    final ResponseWrapper responseWrapper) throws IOException, ServletException {
+	filterChain.doFilter(httpServletRequest, responseWrapper);
+	responseWrapper.writeRealResponse(new ContentInjectionRewriter(httpServletRequest), new ChecksumRewriter(httpServletRequest));
+    }
+
+    private void continueChainAndWriteResponseWithTimeLog(final FilterChain filterChain, final HttpServletRequest httpServletRequest,
+	    final ResponseWrapper responseWrapper) throws IOException, ServletException {
 	final long start1 = System.currentTimeMillis();
 	filterChain.doFilter(httpServletRequest, responseWrapper);
 	final long end1 = System.currentTimeMillis();

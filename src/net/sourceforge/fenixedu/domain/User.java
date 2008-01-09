@@ -32,12 +32,8 @@ public class User extends User_Base {
     }
    
     public static User readUserByUserUId(final String userUId) {
-	for (final User user : RootDomainObject.getInstance().getUsers()) {
-	    if (user.getUserUId() != null && user.getUserUId().equalsIgnoreCase(userUId)) {
-		return user;
-	    }
-	}
-	return null;
+	final Login login = Login.readLoginByUsername(userUId);
+	return login == null ? null : login.getUser();
     }
 
     public Login readUserLoginIdentification() {

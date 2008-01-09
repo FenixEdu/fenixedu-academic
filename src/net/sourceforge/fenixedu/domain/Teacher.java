@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -44,7 +43,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 import net.sourceforge.fenixedu.util.OrientationType;
-import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.PublicationType;
 import net.sourceforge.fenixedu.util.State;
@@ -321,14 +319,14 @@ public class Teacher extends Teacher_Base {
 	return result;
     }
 
-    public List<TeacherProfessionalSituation> getAllLegalRegimensWithoutSpecialSituations() {
+    public Collection<TeacherProfessionalSituation> getAllLegalRegimensWithoutSpecialSituations() {
 	Set<TeacherProfessionalSituation> legalRegimens = new HashSet<TeacherProfessionalSituation>();
 	for (TeacherProfessionalSituation legalRegimen : getLegalRegimens()) {
 	    if (!legalRegimen.isEndSituation() && !legalRegimen.isFunctionAccumulation()) {
 		legalRegimens.add(legalRegimen);
 	    }
 	}
-	return new ArrayList<TeacherProfessionalSituation>(legalRegimens);
+	return legalRegimens;
     }
 
     private TeacherProfessionalSituation getLastFunctionAccumulationLegalRegimen(YearMonthDay begin, YearMonthDay end) {
@@ -1108,13 +1106,12 @@ public class Teacher extends Teacher_Base {
     public SortedSet<ExecutionCourse> getCurrentExecutionCourses() {
 	final SortedSet<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(
 		ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	final ExecutionPeriod previousExecutionPeriod = currentExecutionPeriod == null ? null : currentExecutionPeriod.getPreviousExecutionPeriod();
 	for (final Professorship professorship : getProfessorshipsSet()) {
 	    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
 	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-	    final ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
-	    if (executionPeriod.getState().equals(PeriodState.CURRENT)
-		    || (nextExecutionPeriod != null && nextExecutionPeriod.getState().equals(
-			    PeriodState.CURRENT))) {
+	    if (executionPeriod == currentExecutionPeriod || executionPeriod == previousExecutionPeriod) {
 		executionCourses.add(executionCourse);
 	    }
 	}
