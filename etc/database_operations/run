@@ -32,6 +32,8 @@ execute "Fix Scientific Area Site Concrete Class" fixScientificAreaSiteConcreteC
 
 execute "Create table for Content and Node" createContentAndNodeTable.sql
 
+execute "Prepare Contents for items and sections" prepareContentsForItemsAndSections.sql
+
 execute "Update sql structure for and migrate data." updates.sql
 
 execute "Preparing Forums" prepareForum.sql
@@ -49,7 +51,6 @@ execute "Create root module" connectRootModule.sql
 execute "Create portal" createPortal.sql
 execute "Create root portal" connectRootPortal.sql
 
-execute "Prepare Contents for items and sections" prepareContentsForItemsAndSections.sql
 execute "Migrate sites" migrateSites.sql 
 execute "Migrate sections and items" migrateSectionsAndItems.sql
 
