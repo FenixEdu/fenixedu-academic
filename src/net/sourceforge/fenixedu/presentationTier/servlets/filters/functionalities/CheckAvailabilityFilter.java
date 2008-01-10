@@ -72,14 +72,14 @@ public class CheckAvailabilityFilter implements Filter {
 	    throws IOException, ServletException {
 
 	final FilterFunctionalityContext functionalityContext = getContextAttibute(httpServletRequest);
-	Content content = functionalityContext.getSelectedContent();
-
-	if (content == null || functionalityContext.hasBeenForwarded
+	
+	if (functionalityContext == null || functionalityContext.getSelectedContent() == null || functionalityContext.hasBeenForwarded
 		|| isActionRequest(httpServletRequest)) {
 	    filterChain.doFilter(httpServletRequest, httpServletResponse);
 	    return;
 	}
 
+	Content content = functionalityContext.getSelectedContent(); 
 	if (content != null && !content.isAvailable(functionalityContext)) {
 	    final IUserView userView = AccessControl.getUserView();
 	    showUnavailablePage(userView, httpServletRequest, httpServletResponse);

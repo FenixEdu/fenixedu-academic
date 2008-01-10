@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.domain.contents.pathProcessors;
 
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
 
 public class DepartmentSitePathProcessor extends AbstractPathProcessor {
 
@@ -17,17 +18,26 @@ public class DepartmentSitePathProcessor extends AbstractPathProcessor {
 	String unitAcronym = getDepartmentName(path);
 	Unit departmentUnit = null;
 
-	for(Department department : RootDomainObject.getInstance().getDepartments()) {
-	    if(department.getDepartmentUnit().getAcronym().equalsIgnoreCase(unitAcronym)) {
-		departmentUnit = department.getDepartmentUnit();
+	for(UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
+	    if(acronym.getAcronym().equalsIgnoreCase(unitAcronym)) {
+		departmentUnit = getDepartmentFromAcronym(acronym);
+		break;
 	    }
 	}
-	
 	
 	if(departmentUnit == null) {
 	    return null;
 	}
 	Site site = departmentUnit.getSite();
 	return site != null && site.isAvailable() ? site : null;
+    }
+    
+    private DepartmentUnit getDepartmentFromAcronym(UnitAcronym acronym) {
+	for(Unit unit : acronym.getUnits()) {
+	    if(unit instanceof DepartmentUnit) {
+		return (DepartmentUnit) unit;
+	    }
+	}
+	return null;
     }
 }

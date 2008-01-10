@@ -115,12 +115,12 @@ public class Functionality extends Functionality_Base implements IFunctionality 
          *         if this is a top level functionality
          */
     public Module getModule() {
-	for (Node node : getParents()) {
-	    if (node.getParent() instanceof Module) {
-		return (Module) node.getParent();
+	for(Node node : getParents()) {
+	    Content content = node.getParent();
+	    if(content instanceof Module) {
+		return (Module)content;
 	    }
 	}
-
 	return null;
     }
 
@@ -697,7 +697,8 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 
     public static Functionality findByExecutionPath(final String executionPathValue) {
 	for (final ExecutionPath executionPath : RootDomainObject.getInstance().getExecutionPathsSet()) {
-	    if (executionPathValue.startsWith(executionPath.getFunctionality().getPath())) {
+	    Functionality functionality = executionPath.getFunctionality();
+	    if (executionPathValue.startsWith(functionality.getPath())) {
 		return executionPath.getFunctionality();
 	    }
 	}

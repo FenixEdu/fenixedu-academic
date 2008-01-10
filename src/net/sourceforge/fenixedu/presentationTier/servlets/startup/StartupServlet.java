@@ -90,7 +90,6 @@ public class StartupServlet extends HttpServlet {
             loadPersonNames();
             loadUnitNames();
             loadRoles();
-            loadFunctionalityPaths();
         } finally {
             Transaction.forceFinish();
         }
@@ -124,12 +123,6 @@ public class StartupServlet extends HttpServlet {
         System.out.println("Load of all roles took: " + (end - start) + "ms.");
     }
     
-    private void loadFunctionalityPaths() {
-	long start = System.currentTimeMillis();
-	Functionality.findByExecutionPath("...NonExistentPath...");
-	long stop = System.currentTimeMillis();
-	System.out.println("Load of all Functionalities execution path took: " + (stop - start) + "ms.");
-    }
     private void setScheduleForGratuitySituationCreation() {
 
         TimerTask gratuitySituationCreatorTask = new TimerTask() {

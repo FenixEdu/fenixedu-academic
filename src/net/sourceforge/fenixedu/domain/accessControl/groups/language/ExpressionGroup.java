@@ -52,7 +52,7 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
         super();
 
         this.expression = expression;
-        this.group = parseExpression(this.expression);
+        //this.group = parseExpression(this.expression);
     }
 
     /**

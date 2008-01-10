@@ -1,10 +1,27 @@
 package net.sourceforge.fenixedu.domain.contents;
 
 import java.util.Collections;
+import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ExplicitOrderNode extends ExplicitOrderNode_Base {
+
+    public static final Comparator<ExplicitOrderNode> nodeComparator = new Comparator<ExplicitOrderNode>() {
+
+	public int compare(ExplicitOrderNode o1, ExplicitOrderNode o2) {
+	    int order = o1.getNodeOrder().compareTo(o2.getNodeOrder());
+	    if (order == 0) {
+		order = o1.getName().compareTo(o2.getName());
+		if (order == 0) {
+		    order = DomainObject.COMPARATOR_BY_ID.compare(o1, o2);
+		}
+	    }
+	    return order;
+	}
+
+    };
 
     public ExplicitOrderNode(Container parent, Content child, Integer order) {
 	this(parent, child, true, order);
@@ -14,8 +31,7 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
 	super();
 	setNodeOrderFor(parent, order);
 	if (parent.getChildrenAsContent().contains(child)) {
-	    throw new DomainException(
-		    "label.error.unable.to.add.element.to.the.same.container.more.than.once");
+	    throw new DomainException("label.error.unable.to.add.element.to.the.same.container.more.than.once");
 	}
 	init(parent, child, isAscending);
 	super.setVisible(true);
@@ -40,10 +56,7 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
 
     public int compareTo(Node node) {
 	ExplicitOrderNode explicitNode = (ExplicitOrderNode) node;
-	Integer order1 = this.getNodeOrder();
-	Integer order2 = explicitNode.getNodeOrder();
-
-	return (getAscending() ? 1 : -1) * order1.compareTo(order2);
+	return (getAscending() ? 1 : -1) * nodeComparator.compare(this, explicitNode);
     }
 
     public boolean isAscending() {
@@ -57,8 +70,7 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
     @Override
     public void setParent(Container parent) {
 	if (getChild() != null && parent != null && parent.getChildrenAsContent().contains(getChild())) {
-	    throw new DomainException(
-		    "label.error.unable.to.add.element.to.the.same.container.more.than.once");
+	    throw new DomainException("label.error.unable.to.add.element.to.the.same.container.more.than.once");
 	}
 	if (getParent() != null && parent != null) {
 	    throw new DomainException("label.error.cannot.change.nodes.parent");
@@ -77,7 +89,7 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
     public void deleteWithoutReOrdering() {
 	super.delete();
     }
-    
+
     @Override
     public void delete() {
 	reOrderAfterDeletion(getParent(), getNodeOrder());

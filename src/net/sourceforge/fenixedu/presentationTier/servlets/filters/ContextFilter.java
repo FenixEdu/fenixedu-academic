@@ -29,15 +29,22 @@ public class ContextFilter implements Filter {
 	doFilter(httpServletRequest, httpServletResponse, filterChain);
     }
 
-    public void doFilter(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse, final FilterChain filterChain)
-    		throws IOException, ServletException {
+    public void doFilter(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
+	    final FilterChain filterChain) throws IOException, ServletException {
 	final FunctionalityContext functionalityContext = getContextAttibute(httpServletRequest);
-	if (hasNoSelectedFunctionality(functionalityContext)) {
-	    final FunctionalityContext context = createContext(httpServletRequest);
-	    setContextAttibute(httpServletRequest, context);
-	}
 
-	filterChain.doFilter(httpServletRequest, httpServletResponse);	
+	if (!shouldBeSkipped(httpServletRequest.getServletPath())) {
+	    if (hasNoSelectedFunctionality(functionalityContext)) {
+		final FunctionalityContext context = createContext(httpServletRequest);
+		setContextAttibute(httpServletRequest, context);
+	    }
+	}
+	filterChain.doFilter(httpServletRequest, httpServletResponse);
+
+    }
+
+    private boolean shouldBeSkipped(String path) {
+	return path.contains(".css") || path.contains(".gif") || path.contains(".jpg");
     }
 
     private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
@@ -46,7 +53,7 @@ public class ContextFilter implements Filter {
 
     private boolean hasNoSelectedFunctionality(FunctionalityContext functionalityContext) {
 	return functionalityContext == null || functionalityContext.getSelectedContents() == null
-			|| functionalityContext.getSelectedContents().isEmpty();
+		|| functionalityContext.getSelectedContents().isEmpty();
     }
 
     private FunctionalityContext createContext(final HttpServletRequest httpServletRequest) {

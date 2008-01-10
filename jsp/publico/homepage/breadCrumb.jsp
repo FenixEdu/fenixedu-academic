@@ -40,8 +40,9 @@
                 </html:link>
                 <%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
                 &nbsp;&gt;&nbsp;            
-				<app:contentLink name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.site" scope="request">
-                    <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.realName"/>
+                <bean:define id="currentDepartment" name="homepage" property="person.employee.currentDepartmentWorkingPlace"/>
+				<app:contentLink name="currentDepartment" property="departmentUnit.site">
+                    <bean:write name="currentDepartment" property="realName"/>
 				</app:contentLink>				
                 &nbsp;&gt;&nbsp;
                 <bean:write name="homepage" property="ownersName"/>

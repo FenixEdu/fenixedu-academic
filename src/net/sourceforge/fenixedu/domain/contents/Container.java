@@ -128,12 +128,12 @@ public abstract class Container extends Container_Base {
 	    return contents;
 	}
 
-	for (Node node : getChildren()) {
-	    Content content = node.getChild();
+	for (Node node : getParents()) {
+	    Content content = node.getParent();
 
 	    List<Content> result = content.getPathTo(target);
 	    if (!result.isEmpty()) {
-		result.add(0, this);
+		result.add(this);
 
 		return result;
 	    }
