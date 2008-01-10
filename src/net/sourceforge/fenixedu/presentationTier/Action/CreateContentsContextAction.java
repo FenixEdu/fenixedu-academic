@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
@@ -41,10 +45,24 @@ public class CreateContentsContextAction extends FenixAction {
     private ActionForward menuActionForward(Content content, HttpServletRequest request) {
 	ActionForward actionForward = new ActionForward();
 	actionForward.setRedirect(true);
-	final String path = content.getPath();
-	final String seperator = path.indexOf('?') >= 0 ? "&" : "?";
-	actionForward.setPath(path + seperator + ChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME + "="
-		+ ChecksumRewriter.calculateChecksum(request.getContextPath() + path));
+	Portal rootPortal = RootDomainObject.getInstance().getRootPortal();
+	List<Content> contents = rootPortal.getPathTo(content);
+
+	List<String> paths = new ArrayList<String>();
+	for(Content contentForPath : contents.subList(1,contents.size())) {
+	    paths.add(contentForPath.getName().getContent());
+	}
+	
+	StringBuffer buffer = new StringBuffer(""); 
+	for(String pathPart : paths) {
+	    buffer.append("/");
+	    buffer.append(pathPart);
+	}
+	
+	String realPath = buffer.toString();
+	final String seperator = realPath.indexOf('?') >= 0 ? "&" : "?";
+	actionForward.setPath(realPath + seperator + ChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME + "="
+		+ ChecksumRewriter.calculateChecksum(request.getContextPath() + realPath));
 	return actionForward;
     }
 
