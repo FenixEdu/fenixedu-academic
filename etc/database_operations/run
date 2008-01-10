@@ -15,14 +15,14 @@ read -s password
 
 function execute() {
 	echo ---------------------------------------- $1
-	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2
+	mysql -u$USER -f  -p$password --default-character-set=latin1 $DB < $2
 	echo
 }
 
 function executeWithTempFile() {
 	echo ---------------------------------------- $1
-	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < $2 > tmp.sql
-	mysql -u$USER -f -p$password --default-character-set=latin1 $DB < tmp.sql	
+	mysql -u$USER -f  -p$password --default-character-set=latin1 $DB < $2 > tmp.sql
+	mysql -u$USER -f  -p$password --default-character-set=latin1 $DB < tmp.sql	
 	rm tmp.sql
 	echo
 }
@@ -80,6 +80,8 @@ execute "Naming Portals" namePortals.sql
 execute "Add content ID to EVERYTHING!!!" addContentId.sql
 
 execute "Add Attachment" addAttachment.sql 
+executeWithTempFile "Add Attachment2" addAttachment2.sql
+execute "Add Attachment3" addAttachment3.sql
 execute "Connect ExecutionCourseForum to ExecutionCourseSite"  connectExecutionCourseForumToExecutionCourseSite.sql
 execute "Removing invalid availability policy" removeAvailabilityPolicyFromHomepagePortal.sql
 execute "Fixing some groups" fixAnnouncementsWRitersGroups.sql
