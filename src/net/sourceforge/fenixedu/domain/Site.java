@@ -329,28 +329,6 @@ public abstract class Site extends Site_Base {
     }
 
     @Override
-    public List<Content> getPathTo(Content target) {
-	if (target == this) {
-	    List<Content> contents = new ArrayList<Content>();
-	    contents.add((Content) this);
-	    return contents;
-	}
-
-	for (Node node : super.getChildren()) {
-	    Content content = node.getChild();
-
-	    List<Content> result = content.getPathTo(target);
-	    if (!result.isEmpty()) {
-		result.add(0, this);
-
-		return result;
-	    }
-	}
-
-	return Collections.emptyList();
-    }
-    
-    @Override
     public MultiLanguageString getName() {
 	return MultiLanguageString.i18n().add("pt", String.valueOf(getIdInternal())).finish();
     }
