@@ -44,7 +44,7 @@ public class ContextFilter implements Filter {
     }
 
     private boolean shouldBeSkipped(String path) {
-	return path.contains(".css") || path.contains(".gif") || path.contains(".jpg");
+	return path.contains(".css") || path.contains(".gif") || path.contains(".jpg") || path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do") || path.contains("/home.do") || path.contains("/logoff.do");
     }
 
     private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
