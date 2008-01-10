@@ -121,25 +121,29 @@ public abstract class Container extends Container_Base {
 	return nodes;
     }
 
-    public List<Content> getPathTo(Content target) {
-	if (target == this) {
+    private List<Content> getPathTo(Content topContent, Content bottomContent) {
+	if(topContent == bottomContent) {
 	    List<Content> contents = new ArrayList<Content>();
-	    contents.add((Content) this);
+	    contents.add((Content) bottomContent);
 	    return contents;
 	}
-
-	for (Node node : getParents()) {
-	    Content content = node.getParent();
-
-	    List<Content> result = content.getPathTo(target);
+	for(Node node : bottomContent.getParents()) {
+	    Container content = node.getParent();
+	    
+	    List<Content> result = content.getPathTo(topContent,content);
 	    if (!result.isEmpty()) {
-		result.add(this);
+		result.add(bottomContent);
 
 		return result;
 	    }
-	}
 
+	}
+	
 	return Collections.emptyList();
+    }
+    
+    public List<Content> getPathTo(Content target) {
+	return getPathTo(this, target);
     }
 
     @Override
@@ -239,7 +243,7 @@ public abstract class Container extends Container_Base {
 	    }
 	}
     }
-
+    
     @Override
     public AvailabilityPolicy getAvailabilityPolicy() {
 	AvailabilityPolicy policy = super.getAvailabilityPolicy();

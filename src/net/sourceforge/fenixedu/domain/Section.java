@@ -365,22 +365,6 @@ public class Section extends Section_Base {
 	return (isContainerMaximizable() && getInitialContent() != null) ? getInitialContent().getPath() : null;
     }
 
-    @Override
-    public void addPathContents(final List<Content> contents, final String path) {
-	final String subPath = getSubPathForSearch(path);
-	if (matchesPath(subPath)) {
-	    contents.add(this);
-	    if (subPath.length() + 1 < path.length()) {
-		final String trailingPath = path.substring(subPath.length() + 1);
-		addPathContentsForTrailingPath(contents, trailingPath);
-	    } else {
-		if (hasInitialContent()) {
-		    contents.add(getInitialContent());
-		}
-	    }
-	}
-    }
-
     public Collection<Functionality> getAssociatedFunctionalities() {
 	return getChildren(Functionality.class);
     }
