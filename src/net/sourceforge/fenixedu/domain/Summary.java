@@ -19,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
+import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -279,5 +280,10 @@ public class Summary extends Summary_Base {
     
     public boolean isExtraSummary() {
 	return getIsExtraLesson().booleanValue();
+    }
+    
+    public DateTime getSummaryDateTime() {
+	HourMinuteSecond time = getSummaryHourHourMinuteSecond();
+	return getSummaryDateYearMonthDay().toDateTime(new TimeOfDay(time.getHour(), time.getMinuteOfHour(), time.getSecondOfMinute(), 0));
     }
 }
