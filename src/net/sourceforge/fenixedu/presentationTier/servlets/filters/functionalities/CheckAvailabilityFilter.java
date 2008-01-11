@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -44,74 +46,78 @@ public class CheckAvailabilityFilter implements Filter {
     private String errorPageLogged;
 
     /**
-         * Initializes the filter. There are two init parameters that are used
-         * by this filter.
-         * 
-         * <ul>
-         * <li><strong>error.page</strong>: the page were the user will be
-         * redirected when a functionality is not available</li>
-         * <li><strong>testing.prefix</strong>: the prefix that is being used
-         * for testing and that will be removed when redirecting (does not
-         * affect the <code>error.page</code> address)</li>
-         * </ul>
-         */
+     * Initializes the filter. There are two init parameters that are used by
+     * this filter.
+     * 
+     * <ul>
+     * <li><strong>error.page</strong>: the page were the user will be
+     * redirected when a functionality is not available</li>
+     * <li><strong>testing.prefix</strong>: the prefix that is being used for
+     * testing and that will be removed when redirecting (does not affect the
+     * <code>error.page</code> address)</li>
+     * </ul>
+     */
     public void init(FilterConfig config) throws ServletException {
 	this.errorPage = config.getInitParameter("error.page");
 	this.errorPageLogged = config.getInitParameter("error.page.logged");
     }
 
-    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse,
-	    final FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain)
+	    throws IOException, ServletException {
 	final HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 	final HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 	doFilter(httpServletRequest, httpServletResponse, filterChain);
     }
 
-    public void doFilter(final HttpServletRequest httpServletRequest,
-	    final HttpServletResponse httpServletResponse, final FilterChain filterChain)
-	    throws IOException, ServletException {
+    public void doFilter(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
+	    final FilterChain filterChain) throws IOException, ServletException {
 
 	final FilterFunctionalityContext functionalityContext = getContextAttibute(httpServletRequest);
-	
-	if (functionalityContext == null || functionalityContext.getSelectedContent() == null || functionalityContext.hasBeenForwarded
-		|| isActionRequest(httpServletRequest)) {
+
+	if (functionalityContext == null || functionalityContext.getSelectedContent() == null
+		|| functionalityContext.hasBeenForwarded || isActionRequest(httpServletRequest)) {
 	    filterChain.doFilter(httpServletRequest, httpServletResponse);
 	    return;
 	}
 
-	Content content = functionalityContext.getSelectedContent(); 
+	Content content = functionalityContext.getSelectedContent();
+
 	if (content != null && !content.isAvailable(functionalityContext)) {
 	    final IUserView userView = AccessControl.getUserView();
-	    showUnavailablePage(userView, httpServletRequest, httpServletResponse);
-	    return;
+	    if ((userView != null && !userView.isPublicRequester())
+		    || functionalityContext.getLastContentInPath(Site.class) == null 
+		    || !(content instanceof Section)) {
+
+		showUnavailablePage(userView, httpServletRequest, httpServletResponse);
+		return;
+	    }
 	}
 
 	filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
-
     private boolean isActionRequest(final HttpServletRequest httpServletRequest) {
 	final String requestURI = httpServletRequest.getRequestURI();
-	return requestURI.endsWith(".do") || requestURI.endsWith(".faces") || requestURI.endsWith(".jsp") || requestURI.endsWith(".gif");
+	return requestURI.endsWith(".do") || requestURI.endsWith(".faces") || requestURI.endsWith(".jsp")
+		|| requestURI.endsWith(".gif");
     }
 
     private FilterFunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
-	return (FilterFunctionalityContext) httpServletRequest
-		.getAttribute(FunctionalityContext.CONTEXT_KEY);
+	return (FilterFunctionalityContext) httpServletRequest.getAttribute(FunctionalityContext.CONTEXT_KEY);
     }
 
     /**
-         * Redirects the client to the page showing that the functionality is
-         * not available.
-         */
+     * Redirects the client to the page showing that the functionality is not
+     * available.
+     */
     private void showUnavailablePage(final IUserView userView, final HttpServletRequest request,
 	    final HttpServletResponse response) throws IOException, ServletException {
 	final String errorPageToDispatch = userView == null || userView.isPublicRequester() ? errorPage : errorPageLogged;
 	dispatch(request, response, errorPageToDispatch);
     }
 
-    protected void dispatch(final HttpServletRequest request, final HttpServletResponse response,
-	    final String path) throws IOException, ServletException {
+    protected void dispatch(final HttpServletRequest request, final HttpServletResponse response, final String path)
+	    throws IOException, ServletException {
 	final RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 
 	if (dispatcher == null) {

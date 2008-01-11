@@ -252,4 +252,15 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	this.contents.addAll(contents);
 	findSelectedContainerPath();
     }
+    
+    @Override
+    public Content getLastContentInPath(Class type) {        
+	for (int i = contents.size() - 1; i >= 0; i--) {
+	    Content content = contents.get(i);
+	    if(type.isAssignableFrom(content.getClass())) {
+		return content;
+	    }
+	}	
+        return null;
+    }
 }
