@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class CreateContentsContextAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final FunctionalityContext functionalityContext = new FilterFunctionalityContext(request);
+	final FunctionalityContext functionalityContext = new FilterFunctionalityContext(request, (List<Content>)Collections.EMPTY_LIST);
 	request.setAttribute(FunctionalityContext.CONTEXT_KEY, functionalityContext);
 
 	final MenuEntry initialMenuEntry = getInitialMenuEntry(functionalityContext);
