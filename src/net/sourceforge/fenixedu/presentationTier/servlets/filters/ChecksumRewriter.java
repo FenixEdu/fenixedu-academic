@@ -125,7 +125,14 @@ public class ChecksumRewriter extends RequestRewriter {
 				iOffset = nextChar;
 				continue;
 			    }
+			    
+			    else {
+				response.append(source,iOffset,indexOfJavaScript);
+				iOffset = indexOfJavaScript ;
+				continue;
+			    }
 			}
+			
 		    }
 		}
 	    } else if (indexOfFormOpen >= 0 && (indexOfImgOpen < 0 || indexOfFormOpen < indexOfImgOpen)
