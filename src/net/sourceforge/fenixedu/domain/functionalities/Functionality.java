@@ -115,10 +115,10 @@ public class Functionality extends Functionality_Base implements IFunctionality 
          *         if this is a top level functionality
          */
     public Module getModule() {
-	for(Node node : getParents()) {
+	for (Node node : getParents()) {
 	    Content content = node.getParent();
-	    if(content instanceof Module) {
-		return (Module)content;
+	    if (content instanceof Module) {
+		return (Module) content;
 	    }
 	}
 	return null;
@@ -696,10 +696,15 @@ public class Functionality extends Functionality_Base implements IFunctionality 
     }
 
     public static Functionality findByExecutionPath(final String executionPathValue) {
+	int endIndex = executionPathValue.indexOf('?');
+	int firstIndex = executionPathValue.lastIndexOf("/");
+	
+	String firstLookupPath = executionPathValue.substring(firstIndex > 0 ? firstIndex : 0, endIndex > 0 ? endIndex : executionPathValue.length());
 	for (final ExecutionPath executionPath : RootDomainObject.getInstance().getExecutionPathsSet()) {
-	    Functionality functionality = executionPath.getFunctionality();
-	    if (executionPathValue.startsWith(functionality.getPath())) {
-		return executionPath.getFunctionality();
+	    if (executionPath.getExecutionPath().contains(firstLookupPath)) {
+		if (executionPathValue.startsWith(executionPath.getFunctionality().getPath())) {
+		    return executionPath.getFunctionality();
+		}
 	    }
 	}
 	return null;
