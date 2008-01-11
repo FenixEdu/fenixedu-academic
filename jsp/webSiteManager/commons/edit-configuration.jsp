@@ -38,7 +38,7 @@
     </p>
 </logic:present>
 
-<fr:form action="<%= String.format("%s?method=updateI18n&amp;%s", actionName, context) %>">
+<fr:form action="<%= actionName + "?method=updateI18n&amp;" + context %>">
 	<fr:edit id="i18n" name="site" schema="custom.unitSite.i18n">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
@@ -62,7 +62,7 @@
     </p>
 </logic:present>
 
-<fr:form action="<%= String.format("%s?method=updateConfiguration&amp;%s", actionName, context) %>">
+<fr:form action="<%= actionName + "?method=updateConfiguration&amp;" + context %>">
     <fr:edit id="visualization" name="site" schema="custom.unitSite.visualization">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle5 thlight thright mtop05"/>

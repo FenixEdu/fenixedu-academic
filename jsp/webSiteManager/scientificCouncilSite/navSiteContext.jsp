@@ -8,6 +8,5 @@
 <bean:define id="siteContextParamValue" name="site" property="idInternal" toScope="request"/>
 
 <bean:define id="unitId" name="site" property="unit.idInternal"/>
-<bean:define id="publicSiteUrl" value="<%= "/scientificCouncil/viewSite.do?method=presentation&amp;unitID=" + unitId %>" toScope="request"/>
 <bean:define id="announcementsActionName" value="/manageScientificCouncilAnnouncements.do" toScope="request"/>
 

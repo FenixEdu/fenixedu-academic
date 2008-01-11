@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
 <bean:define id="actionName" name="siteActionName"/>
@@ -11,13 +12,12 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <bean:define id="announcementsActionName" name="announcementsActionName"/>
-<bean:define id="publicSiteUrl" name="publicSiteUrl"/>
 
 <ul>
     <li>
-        <html:link page="<%= "" + publicSiteUrl %>" module="/publico" target="_blank">
+ 	<app:contentLink name="site">
             <bean:message key="link.site.view" bundle="WEBSITEMANAGER_RESOURCES"/>
-        </html:link>
+	</app:contentLink>				
     </li>
     <li class="navheader">
         <bean:message key="title.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/>
