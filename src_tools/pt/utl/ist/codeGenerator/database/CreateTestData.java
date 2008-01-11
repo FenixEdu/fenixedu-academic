@@ -228,7 +228,6 @@ public class CreateTestData {
 
         private void createExecutionPeriods(final ExecutionYear executionYear, final int semester, AcademicYearCE academicYear) {
             
-            final ExecutionPeriod lastExecutionPeriod = ExecutionPeriod.readLastExecutionPeriod();
             final YearMonthDay start = getStartYearMonthDay(executionYear, semester);
             final YearMonthDay end = getEndYearMonthDay(executionYear, semester);
                        
@@ -922,8 +921,8 @@ public class CreateTestData {
             final Calendar cEnd = toCalendar(end);
             final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
             final Room room = lessonRoomManager.getNextOldRoom();
-            final ExecutionPeriod executionPeriod = shift.getDisciplinaExecucao().getExecutionPeriod();            
-            GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getDisciplinaExecucao().getMaxLessonsPeriod();            
+            final ExecutionPeriod executionPeriod = shift.getExecutionCourse().getExecutionPeriod();            
+            GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();            
             new Lesson(diaSemana, cStart, cEnd, shift, FrequencyType.WEEKLY, executionPeriod, maxLessonsPeriod.getLeft(), maxLessonsPeriod.getRight(), room);            
         }
     }
