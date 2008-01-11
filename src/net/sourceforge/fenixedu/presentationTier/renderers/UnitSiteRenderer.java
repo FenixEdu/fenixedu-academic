@@ -7,10 +7,12 @@ import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
+import net.sourceforge.fenixedu.renderers.components.HtmlLinkWithPreprendedComment;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
@@ -147,7 +149,7 @@ public class UnitSiteRenderer extends OutputRenderer {
 	private HtmlComponent getUnitComponent(Unit unit) {
 	    HtmlComponent component;
 	    if (unitHasSite(unit)) {
-		HtmlLink link = new HtmlLink();
+		HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
 		link.setUrl(resolveUnitURL(unit));
 		link.setBody(renderValue(unit, findSchema(), getUnitLayout()));
 		if (isTargetBlank()) {
