@@ -25,11 +25,7 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
 import net.sourceforge.fenixedu.domain.UnitSiteLink;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -37,8 +33,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -68,14 +62,10 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     @Override
     protected String getDirectLinkContext(HttpServletRequest request) {
-	Unit unit = getUnit(request);
 
-	if (unit == null) {
-	    return null;
-	}
-
+	Site site = getSite(request);
 	try {
-	    return RequestUtils.absoluteURL(request, UnitSiteProcessor.getUnitSitePath(unit)).toString();
+	    return site == null ? null : RequestUtils.absoluteURL(request, site.getReversePath()).toString();
 	} catch (MalformedURLException e) {
 	    return null;
 	}
@@ -88,13 +78,6 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     @Override
     protected UnitSite getSite(HttpServletRequest request) {
-
-//	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-//	UnitSite site = (UnitSite) context.getSelectedContainer();
-//	
-//	if(site != null) {
-//	    return site;
-//	}
 	
 	Integer oid = getId(request.getParameter("oid"));
 

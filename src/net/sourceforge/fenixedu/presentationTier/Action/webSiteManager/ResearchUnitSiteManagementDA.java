@@ -28,19 +28,6 @@ import org.apache.struts.util.RequestUtils;
 
 public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 
-	@Override
-	protected String getDirectLinkContext(HttpServletRequest request) {
-		ResearchUnit unit = getSite(request).getUnit();
-
-        try {
-            MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(ResearchUnitSite.class);
-	    String path = "/" + metaDomainObject.getAssociatedPortal().getName().getContent() + unit.getUnitPath("/",false);
-            return RequestUtils.absoluteURL(request, path).toString();
-        } catch (MalformedURLException e) {
-            return null;
-        }
-	}
-	
 	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return mapping.findForward("editResearchSite");
@@ -165,14 +152,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 
 	@Override
 	protected ResearchUnitSite getSite(HttpServletRequest request) {
-		String siteID = request.getParameter("oid");
-		if (siteID != null) {
-			ResearchUnitSite site = (ResearchUnitSite) RootDomainObject.readDomainObjectByOID(
-					ResearchUnitSite.class, Integer.valueOf(siteID));
-			return site;
-		} else {
-			return null;
-		}
+	    return (ResearchUnitSite) super.getSite(request);
 	}
 
 	@Override
