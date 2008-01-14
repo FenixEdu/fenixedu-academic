@@ -6,6 +6,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 
 <html:xhtml/>
 
@@ -18,13 +21,12 @@
 <logic:present name="item">
     <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
     <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
-<%-- 
+
     <h2>
         <fr:view name="section" property="name" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
-        <logic:present name="directLinkContext">
-            <bean:define id="directLinkContext" name="directLinkContext"/>
-            <span class="permalink1">(<a href="<%= directLinkContext + SectionProcessor.getSectionPath(section) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
-        </logic:present>  
+   		<app:defineContentPath id="sectionURL" name="section" toScope="request"/>
+		<bean:define id="url" name="sectionURL" type="java.lang.String"/>
+  		<span class="permalink1">(<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX%><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h2>
 
  	<logic:notEmpty name="section" property="orderedSubSections">
@@ -36,7 +38,7 @@
 		    <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${idInternal}&amp;" + context %>"/>
 		</fr:view>
     </logic:notEmpty>
-    --%>
+   
     <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
             
 	<h3 class="mtop2 mbottom05">

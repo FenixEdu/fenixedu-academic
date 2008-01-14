@@ -56,6 +56,9 @@ public class ViewGenericContents extends FenixDispatchAction {
     public ActionForward viewItem(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
+	Section section = (Section) getLastContentInPathWithClass(request,Section.class);
+	request.setAttribute("section", section);
+	
 	Item item = getItem(request);
 	request.setAttribute("item", item);
 
@@ -76,6 +79,11 @@ public class ViewGenericContents extends FenixDispatchAction {
 	return (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
     }
 
+    private Content getLastContentInPathWithClass(HttpServletRequest request, Class clazz) {
+	FilterFunctionalityContext context = getContext(request);
+	return context.getLastContentInPath(clazz);
+    }
+    
     private Content getLastContentInPath(HttpServletRequest request) {
 	FilterFunctionalityContext context = getContext(request);
 	List<Content> contents = context.getSelectedContents();

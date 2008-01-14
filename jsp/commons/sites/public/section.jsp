@@ -1,5 +1,4 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SectionProcessor" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -7,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
@@ -14,16 +14,16 @@
 <bean:define id="contextParam" name="siteContextParam"/>
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <logic:present name="section">
     <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 
     <h2>
         <fr:view name="section" property="name" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
-        <logic:present name="directLinkContext">
-            <bean:define id="directLinkContext" name="directLinkContext"/>
-            <span class="permalink1">(<a href="<%= directLinkContext + SectionProcessor.getSectionPath(section) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
-        </logic:present>    
+		<app:defineContentPath id="sectionURL" name="section" toScope="request"/>
+		<bean:define id="url" name="sectionURL" type="java.lang.String"/>
+  		<span class="permalink1">(<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX%><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h2>
 
     <logic:present name="hasRestrictedItems">
@@ -58,10 +58,9 @@
             <logic:equal name="item" property="nameVisible" value="true">
 	       		<h3 class="mtop2 mbottom05" id="<%= "item" + item.getIdInternal() %>">
 	                <fr:view name="item" property="name"/>
-	                <logic:present name="directLinkContext">
-	                    <bean:define id="directLinkContext" name="directLinkContext"/>
-	                    <span class="permalink1">(<a href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
-	                </logic:present>
+ 				    <app:defineContentPath id="itemURL" name="item" toScope="request"/>
+					<bean:define id="url" name="itemURL" type="java.lang.String"/>
+	                    <span class="permalink1">(<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX%><a href="<%= request.getContextPath() + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
 	            </h3>
             </logic:equal>
 
