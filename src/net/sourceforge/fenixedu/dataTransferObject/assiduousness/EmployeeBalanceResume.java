@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 
-import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.MutablePeriod;
 import org.joda.time.Partial;
@@ -34,13 +33,6 @@ public class EmployeeBalanceResume implements Serializable {
 
     public EmployeeBalanceResume(Employee employee) {
 	setEmployee(employee);
-    }
-
-    public EmployeeBalanceResume(Employee employee, int year) {
-	setEmployee(employee);
-	Partial partial = new Partial();
-	partial = partial.with(DateTimeFieldType.year(), (year + 1));
-	setEmployeeBalanceResume(Duration.ZERO, Duration.ZERO, partial);
     }
 
     public void setEmployeeBalanceResume(Duration thisBalance, Duration thisBalanceToCompensate, Partial thisMonth) {

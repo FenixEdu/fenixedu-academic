@@ -21,33 +21,36 @@ public class DegreeCurricularPlansForDegree implements DataProvider {
 
 	final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
 	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-	if (markSheetManagementBean.getDegree() != null
-		&& markSheetManagementBean.getExecutionPeriod() != null) {
+	if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getExecutionPeriod() != null) {
 	    Campus employeeCampus = getEmployeeCampus();
 	    if (employeeCampus != null) {
 		ExecutionPeriod executionPeriod = ExecutionPeriod.readBySemesterAndExecutionYear(1, "2006/2007");
-		
-		if(markSheetManagementBean.getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-		    
-		    if(!employeeCampus.getName().equalsIgnoreCase("Taguspark")) {
+
+		if (markSheetManagementBean.getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
+
+		    if (!employeeCampus.getName().equalsIgnoreCase("Taguspark")) {
 			for (DegreeCurricularPlan degreeCurricularPlan : markSheetManagementBean.getDegree()
 				.getDegreeCurricularPlansSet()) {
-			    if (degreeCurricularPlan.getExecutionDegreeByYear(markSheetManagementBean
-				    .getExecutionPeriod().getExecutionYear()) != null) {
+			    if (degreeCurricularPlan.getExecutionDegreeByYear(markSheetManagementBean.getExecutionPeriod()
+				    .getExecutionYear()) != null
+				    || degreeCurricularPlan.canSubmitImprovementMarkSheets(markSheetManagementBean
+					    .getExecutionPeriod().getExecutionYear())) {
 				result.add(degreeCurricularPlan);
 			    }
 			}
 		    }
-		    
+
 		} else {
 		    for (DegreeCurricularPlan degreeCurricularPlan : markSheetManagementBean.getDegree()
 			    .getDegreeCurricularPlansSet()) {
-			if (degreeCurricularPlan.getExecutionDegreeByYearAndCampus(markSheetManagementBean
-				.getExecutionPeriod().getExecutionYear(), employeeCampus) != null) {
+			if (degreeCurricularPlan.getExecutionDegreeByYearAndCampus(markSheetManagementBean.getExecutionPeriod()
+				.getExecutionYear(), employeeCampus) != null
+				|| degreeCurricularPlan.canSubmitImprovementMarkSheets(markSheetManagementBean
+					.getExecutionPeriod().getExecutionYear())) {
 			    result.add(degreeCurricularPlan);
 			}
-		    }		    
-		}		
+		    }
+		}
 	    }
 	}
 	Collections.sort(result, new BeanComparator("name"));

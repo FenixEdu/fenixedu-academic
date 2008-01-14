@@ -49,6 +49,7 @@
 				parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
 				scope="request">
+			<forward name="chooseCycleForViewRegistrationCurriculum" path="chooseCycleForViewRegistrationCurriculum"/>	
 			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
 		</action>	
 

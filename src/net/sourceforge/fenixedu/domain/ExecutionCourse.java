@@ -24,6 +24,8 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
@@ -1018,9 +1020,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List<CurricularCourse> getCurricularCoursesWithDegreeType() {
 	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
-	    Degree degree = curricularCourse.getDegree();
-	    if (degree.getDegreeType() == DegreeType.DEGREE || degree.getDegreeType() == DegreeType.BOLONHA_DEGREE
-		    || degree.getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+	    if (curricularCourse.getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) {
 		result.add(curricularCourse);
 	    }
 	}

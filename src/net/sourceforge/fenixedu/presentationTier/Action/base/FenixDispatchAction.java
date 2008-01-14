@@ -57,8 +57,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	final ActionMessages actionMessages = new ActionMessages();
 	request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
@@ -73,23 +73,22 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     protected static ResourceBundle getResourceBundleByName(String bundleName) {
 	return ResourceBundle.getBundle(bundleName, LanguageUtils.getLocale());
     }
-    
+
     protected static IUserView getUserView(HttpServletRequest request) {
 	return SessionUtils.getUserView(request);
     }
 
-    protected Object executeService(final HttpServletRequest request, final String serviceName,
-	    final Object[] serviceArgs) throws FenixFilterException, FenixServiceException {
+    protected Object executeService(final HttpServletRequest request, final String serviceName, final Object[] serviceArgs)
+	    throws FenixFilterException, FenixServiceException {
 	return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
     }
 
-    protected Object executeService(final String serviceName, final Object... serviceArgs)
-	    throws FenixFilterException, FenixServiceException {
+    protected Object executeService(final String serviceName, final Object... serviceArgs) throws FenixFilterException,
+	    FenixServiceException {
 	return ServiceUtils.executeService(AccessControl.getUserView(), serviceName, serviceArgs);
     }
 
-    protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz,
-	    final Integer idInternal) {
+    protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {
 	return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
     }
 
@@ -111,11 +110,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-         * Sets an error to display later in the Browser and sets the mapping
-         * forward.
-         */
-    protected ActionForward setError(HttpServletRequest request, ActionMapping mapping,
-	    String errorMessage, String forwardPage, Object actionArg) {
+     * Sets an error to display later in the Browser and sets the mapping
+     * forward.
+     */
+    protected ActionForward setError(HttpServletRequest request, ActionMapping mapping, String errorMessage, String forwardPage,
+	    Object actionArg) {
 	ActionErrors errors = new ActionErrors();
 	String notMessageKey = errorMessage;
 	ActionError error = new ActionError(notMessageKey, actionArg);
@@ -131,9 +130,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-         * Verifies if a property of type String in a FormBean is not empty.
-         * Returns true if the field is present and not empty. False otherwhise.
-         */
+     * Verifies if a property of type String in a FormBean is not empty. Returns
+     * true if the field is present and not empty. False otherwhise.
+     */
     protected boolean verifyStringParameterInForm(DynaValidatorForm dynaForm, String field) {
 	if (dynaForm.get(field) != null && !dynaForm.get(field).equals("")) {
 	    return true;
@@ -142,9 +141,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-         * Verifies if a parameter in a Http Request is not empty. Return true
-         * if the field is not empty. False otherwise.
-         */
+     * Verifies if a parameter in a Http Request is not empty. Return true if
+     * the field is not empty. False otherwise.
+     */
     protected boolean verifyParameterInRequest(HttpServletRequest request, String field) {
 	if (request.getParameter(field) != null && !request.getParameter(field).equals("")) {
 	    return true;
@@ -156,7 +155,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	final String value = dynaActionForm.getString(string);
 	return value == null || value.length() == 0 ? null : Integer.valueOf(value);
     }
-    
+
     protected Integer getRequestParameterAsInteger(HttpServletRequest request, String parameterName) {
 	final String requestParameter = request.getParameter(parameterName);
 
@@ -167,27 +166,25 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	}
     }
 
-    protected Integer getIntegerFromRequestOrForm(final HttpServletRequest request,
-	    final DynaActionForm form, final String name) {
+    protected Integer getIntegerFromRequestOrForm(final HttpServletRequest request, final DynaActionForm form, final String name) {
 	final Integer value = getIntegerFromRequest(request, name);
 
 	return (value != null) ? value : getInteger(form, name);
     }
 
-    protected Object getFromRequestOrForm(final HttpServletRequest request, final DynaActionForm form,
-	    final String name) {
+    protected Object getFromRequestOrForm(final HttpServletRequest request, final DynaActionForm form, final String name) {
 	final Object value = getFromRequest(request, name);
 
 	return (value != null) ? value : form.get(name);
     }
-    
+
     /**
-         * Searches in request parameters first and next in request attributed
-         * 
-         * @param request
-         * @param name
-         * @return
-         */
+     * Searches in request parameters first and next in request attributed
+     * 
+     * @param request
+     * @param name
+     * @return
+     */
     protected Object getFromRequest(HttpServletRequest request, String name) {
 	final String requestParameter = request.getParameter(name);
 	return (requestParameter != null) ? requestParameter : request.getAttribute(name);
@@ -195,12 +192,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected Integer getIntegerFromRequest(HttpServletRequest request, String name) {
 	final String requestParameter = request.getParameter(name);
-	return (requestParameter != null ? Integer.valueOf(requestParameter) : (Integer) request
-		.getAttribute(name));
+	return (requestParameter != null ? Integer.valueOf(requestParameter) : (Integer) request.getAttribute(name));
     }
 
-    public ActionForward processException(HttpServletRequest request, ActionMapping mapping,
-	    ActionForward input, Exception e) {
+    public ActionForward processException(HttpServletRequest request, ActionMapping mapping, ActionForward input, Exception e) {
 	if (!(e instanceof DomainException)) {
 	    return null;
 	}
@@ -212,8 +207,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	    messages = new ActionMessages();
 	}
 
-	messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(domainException.getKey(),
-		domainException.getArgs()));
+	messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(domainException.getKey(), domainException.getArgs()));
 	saveMessages(request, messages);
 
 	IViewState viewState = RenderUtils.getViewState();
@@ -232,8 +226,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return input;
     }
 
-    protected Object executeFactoryMethod(final HttpServletRequest request) throws FenixFilterException,
-	    FenixServiceException {
+    protected Object executeFactoryMethod(final HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 	final Object[] args = { getFactoryObject() };
 	return executeService(request, "ExecuteFactoryMethod", args);
     }
@@ -243,8 +236,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return executeService("ExecuteFactoryMethod", args);
     }
 
-    protected Object executeFactoryMethod(FactoryExecutor executor) throws FenixFilterException,
-	    FenixServiceException {
+    protected Object executeFactoryMethod(FactoryExecutor executor) throws FenixFilterException, FenixServiceException {
 	final Object[] args = { executor };
 	return executeService("ExecuteFactoryMethod", args);
     }
@@ -289,10 +281,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected void addActionMessageLiteral(HttpServletRequest request, String message) {
-	this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE,
-		new ActionMessage(message, false));
+	this.getActionMessages(request).add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(message, false));
     }
-    
+
     protected void addActionMessageLiteral(String propertyName, HttpServletRequest request, String message) {
 	this.getActionMessages(request).add(propertyName, new ActionMessage(message, false));
     }
@@ -305,13 +296,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	this.getActionMessages(request).add(propertyName, new ActionMessage(key));
     }
 
-    protected void addActionMessage(String propertyName, HttpServletRequest request, String key,
-	    String... args) {
+    protected void addActionMessage(String propertyName, HttpServletRequest request, String key, String... args) {
 	this.getActionMessages(request).add(propertyName, new ActionMessage(key, args));
     }
 
-    protected String[] solveLabelFormatterArgs(HttpServletRequest request,
-	    LabelFormatter[] labelFormatterArgs) {
+    protected String[] solveLabelFormatterArgs(HttpServletRequest request, LabelFormatter[] labelFormatterArgs) {
 	final String[] args = new String[labelFormatterArgs.length];
 	int i = 0;
 	final StrutsMessageResourceProvider messageResourceProvider = getMessageResourceProvider(request);
@@ -323,8 +312,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected StrutsMessageResourceProvider getMessageResourceProvider(HttpServletRequest request) {
-	final StrutsMessageResourceProvider strutsMessageResourceProvider = new StrutsMessageResourceProvider(
-		getLocale(request), getServlet().getServletContext(), request);
+	final StrutsMessageResourceProvider strutsMessageResourceProvider = new StrutsMessageResourceProvider(getLocale(request),
+		getServlet().getServletContext(), request);
 	for (final Entry<String, String> entry : getMessageResourceProviderBundleMappings().entrySet()) {
 	    strutsMessageResourceProvider.addMapping(entry.getKey(), entry.getValue());
 	}
@@ -341,9 +330,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected Object getObjectFromViewState(final String viewStateId) {
-	return RenderUtils.getViewState(viewStateId).getMetaObject().getObject();
+	IViewState viewState = RenderUtils.getViewState(viewStateId);
+	return viewState == null ? null : viewState.getMetaObject().getObject();
     }
-    
+
     protected void addRuleResultMessagesToActionMessages(final String propertyName, final HttpServletRequest request,
 	    final RuleResult... ruleResults) {
 

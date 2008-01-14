@@ -12,7 +12,7 @@ public class CurriculumModuleMoveWrapper extends EnroledCurriculumModuleWrapper 
 
     public CurriculumModuleMoveWrapper(final CurriculumModule curriculumModule, final ExecutionPeriod executionPeriod) {
 	super(curriculumModule, executionPeriod);
-	collectRules = curriculumModule.isRoot() ? true : !curriculumModule.getCurriculumGroup().isNoCourseGroupCurriculumGroup();
+	collectRules = curriculumModule.isRoot() ? true : !curriculumModule.isNoCourseGroupCurriculumGroup();
     }
 
     @Override
@@ -23,7 +23,7 @@ public class CurriculumModuleMoveWrapper extends EnroledCurriculumModuleWrapper 
     static public CurriculumModuleMoveWrapper create(final CurriculumGroup parent, final CurriculumModule curriculumLineMoved,
 	    final ExecutionPeriod executionPeriod) {
 	
-	if (curriculumLineMoved.isCreditsDismissal() || curriculumLineMoved.isNoCourseGroupCurriculumGroup()) {
+	if (curriculumLineMoved.isCreditsDismissal() || curriculumLineMoved.isNoCourseGroupCurriculumGroup() || parent.isNoCourseGroupCurriculumGroup()) {
 	    return new CurriculumModuleMoveWrapper(parent, executionPeriod);
 	} else {
 	    return new CurriculumModuleMoveWrapper(curriculumLineMoved, executionPeriod);

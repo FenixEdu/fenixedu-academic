@@ -646,10 +646,21 @@ public abstract class Event extends Event_Base {
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public final void depositAmount(User responsibleUser, Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
+    public final void depositAmount(final User responsibleUser, final Money amount,
+	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 
 	getPostingRule().depositAmount(responsibleUser, this, getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(),
 		amount, transactionDetailDTO);
+
+	recalculateState(transactionDetailDTO.getWhenRegistered());
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public final void depositAmount(final User responsibleUser, final Money amount, final EntryType entryType,
+	    final AccountingTransactionDetailDTO transactionDetailDTO) {
+
+	getPostingRule().depositAmount(responsibleUser, this, getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(),
+		amount, entryType, transactionDetailDTO);
 
 	recalculateState(transactionDetailDTO.getWhenRegistered());
     }
@@ -875,7 +886,7 @@ public abstract class Event extends Event_Base {
     public boolean isNotCancelled() {
 	return !isCancelled();
     }
-    
+
     public boolean isAnnual() {
 	return false;
     }

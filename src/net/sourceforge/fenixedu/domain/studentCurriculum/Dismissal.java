@@ -78,7 +78,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	if (curriculumGroup != null) {
 	    return curriculumGroup;
 	}
-	return new CurriculumGroup(getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan), courseGroup);
+	return getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan);
     }
 
     static private NoCourseGroupCurriculumGroup getOrCreateExtraCurricularCurriculumGroup(

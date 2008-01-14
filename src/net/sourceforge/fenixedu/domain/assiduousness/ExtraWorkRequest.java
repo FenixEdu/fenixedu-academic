@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 import java.math.BigDecimal;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -15,17 +16,14 @@ import org.joda.time.Partial;
 
 public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 
-    public ExtraWorkRequest(Partial partialPayingDate, Unit unit, Employee employee, Integer nightHours,
-	    Integer extraNightHours, Integer extraNightDays, Integer holidayHours,
-	    Integer saturdayHours, Integer sundayHours, Integer workdayHours, Boolean addToVacations,
-	    Boolean addToWeekRestTime, Employee modifiedBy, boolean approved, Partial hoursDoneIn,
-	    Integer normalVacationsDays, Double normalVacationsAmount,
-	    Double accumulatedNormalVacationsAmount, Integer nightVacationsDays,
-	    Double nightVacationsAmount, Double accumulatedNightVacationsAmount,
-	    Integer requestedNightHours, Integer requestedExtraNightHours,
-	    Integer requestedHolidayHours, Integer requestedSaturdayHours, Integer requestedSundayHours,
-	    Integer requestedWorkdayHours, Double holidayAmount, Double saturdayAmount,
-	    Double sundayAmount) {
+    public ExtraWorkRequest(Partial partialPayingDate, Unit unit, Employee employee, Integer nightHours, Integer extraNightHours,
+	    Integer extraNightDays, Integer holidayHours, Integer saturdayHours, Integer sundayHours, Integer workdayHours,
+	    Boolean addToVacations, Boolean addToWeekRestTime, Employee modifiedBy, boolean approved, Partial hoursDoneIn,
+	    Integer normalVacationsDays, Double normalVacationsAmount, Double accumulatedNormalVacationsAmount,
+	    Integer nightVacationsDays, Double nightVacationsAmount, Double accumulatedNightVacationsAmount,
+	    Integer requestedNightHours, Integer requestedExtraNightHours, Integer requestedHolidayHours,
+	    Integer requestedSaturdayHours, Integer requestedSundayHours, Integer requestedWorkdayHours, Double holidayAmount,
+	    Double saturdayAmount, Double sundayAmount) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setPartialPayingDate(partialPayingDate);
@@ -63,16 +61,13 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 
     }
 
-    public void edit(Integer nightHours, Integer extraNightHours, Integer extraNightDays,
-	    Integer holidayHours, Integer saturdayHours, Integer sundayHours, Integer workdayHours,
-	    Boolean addToVacations, Boolean addToWeekRestTime, Employee modifiedBy,
-	    Partial hoursDoneInPartialDate, Integer normalVacationsDays, Double normalVacationsAmount,
-	    Double accumulatedNormalVacationsAmount, Integer nightVacationsDays,
-	    Double nightVacationsAmount, Double accumulatedNightVacationsAmount,
-	    Integer requestedNightHours, Integer requestedExtraNightHours,
+    public void edit(Integer nightHours, Integer extraNightHours, Integer extraNightDays, Integer holidayHours,
+	    Integer saturdayHours, Integer sundayHours, Integer workdayHours, Boolean addToVacations, Boolean addToWeekRestTime,
+	    Employee modifiedBy, Partial hoursDoneInPartialDate, Integer normalVacationsDays, Double normalVacationsAmount,
+	    Double accumulatedNormalVacationsAmount, Integer nightVacationsDays, Double nightVacationsAmount,
+	    Double accumulatedNightVacationsAmount, Integer requestedNightHours, Integer requestedExtraNightHours,
 	    Integer requestedHolidayHours, Integer requestedSaturdayHours, Integer requestedSundayHours,
-	    Integer requestedWorkdayHours, Double holidayAmount, Double saturdayAmount,
-	    Double sundayAmount) {
+	    Integer requestedWorkdayHours, Double holidayAmount, Double saturdayAmount, Double sundayAmount) {
 	setNightHours(nightHours);
 	setExtraNightHours(extraNightHours);
 	setExtraNightDays(extraNightDays);
@@ -127,12 +122,10 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
     }
 
     public String getHoursDoneYearMonthString() {
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
-		LanguageUtils.getLocale());
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 	String month = bundleEnumeration.getString((Month.values()[getHoursDoneInPartialDate().get(
 		DateTimeFieldType.monthOfYear()) - 1]).toString());
-	return new StringBuilder(month).append(" ").append(
-		getHoursDoneInPartialDate().get(DateTimeFieldType.year())).toString();
+	return new StringBuilder(month).append(" ").append(getHoursDoneInPartialDate().get(DateTimeFieldType.year())).toString();
     }
 
     public void delete() {
@@ -155,5 +148,11 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	BigDecimal saturdayAmount = new BigDecimal(getSaturdayAmount().toString());
 	BigDecimal sundayAmount = new BigDecimal(getSundayAmount().toString());
 	setAmount(holidayAmount.add(saturdayAmount).add(sundayAmount).doubleValue());
+    }
+
+    public Integer getPaymentYear() {
+	YearMonth yearMonth = new YearMonth(getPartialPayingDate());
+	yearMonth.addMonth();
+	return yearMonth.getYear();
     }
 }

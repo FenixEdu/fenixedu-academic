@@ -34,12 +34,7 @@ public class YearMonth implements Serializable {
     public YearMonth(Partial date) {
 	super();
 	setYear(date.get(DateTimeFieldType.year()));
-	int month = 1;
-	try {
-	    month = date.get(DateTimeFieldType.monthOfYear());
-	} catch (IllegalArgumentException e) {
-	}
-	setMonth(Month.values()[(month - 1)]);
+	setMonth(Month.values()[(date.get(DateTimeFieldType.monthOfYear()) - 1)]);
     }
 
     public YearMonth(Integer year, Month month) {

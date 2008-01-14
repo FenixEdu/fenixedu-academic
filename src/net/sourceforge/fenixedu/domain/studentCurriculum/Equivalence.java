@@ -68,6 +68,11 @@ public class Equivalence extends Equivalence_Base {
     }
     
     @Override
+    public boolean isCredits() {
+	return false;
+    }
+
+    @Override
     public boolean isEquivalence() {
         return true;
     }

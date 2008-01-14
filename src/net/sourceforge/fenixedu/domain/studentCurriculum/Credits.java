@@ -86,7 +86,7 @@ public class Credits extends Credits_Base {
 
     private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan,
 	    final CourseGroup courseGroup, final Double credits, final ExecutionPeriod executionPeriod) {
-	if (!allowsEctsCredits(studentCurricularPlan, courseGroup, executionPeriod, credits.doubleValue())) {
+	if (courseGroup.isBolonhaDegree() && !allowsEctsCredits(studentCurricularPlan, courseGroup, executionPeriod, credits.doubleValue())) {
 	    throw new DomainException("error.credits.invalid.credits", credits.toString());
 	}
     }
@@ -221,6 +221,10 @@ public class Credits extends Credits_Base {
 	return false;
     }
 
+    public boolean isCredits() {
+	return true;
+    }
+
     public boolean isSubstitution() {
 	return false;
     }
@@ -229,9 +233,8 @@ public class Credits extends Credits_Base {
 	return false;
     }
 
-    @SuppressWarnings("unchecked")
     public Collection<ICurriculumEntry> getAverageEntries() {
-	return Collections.EMPTY_SET;
+	return Collections.emptyList();
     }
 
 }

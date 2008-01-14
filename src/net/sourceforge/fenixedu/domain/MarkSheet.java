@@ -81,7 +81,7 @@ public class MarkSheet extends MarkSheet_Base {
             throw new DomainException("error.markSheet.create.with.invalid.enrolmentEvaluations.number");
         }
         checkIfTeacherIsResponsibleOrCoordinator(curricularCourse, executionPeriod, responsibleTeacher, markSheetType);
-        checkIfEvaluationDateIsInExamsPeriod(getExecutionDegree(curricularCourse, executionPeriod),
+        checkIfEvaluationDateIsInExamsPeriod(curricularCourse, getExecutionDegree(curricularCourse, executionPeriod),
                 executionPeriod, evaluationDate, markSheetType);
     }
 
@@ -123,25 +123,27 @@ public class MarkSheet extends MarkSheet_Base {
 	
     }
     
-    private void checkIfEvaluationDateIsInExamsPeriod(ExecutionDegree executionDegree,
-            ExecutionPeriod executionPeriod, Date evaluationDate, MarkSheetType markSheetType)
-            throws DomainException {
-        
-        if (executionDegree == null) {
-            throw new DomainException("error.evaluationDateNotInExamsPeriod");
-            
-        } else if (! executionDegree.isEvaluationDateInExamPeriod(evaluationDate, executionPeriod, markSheetType)) {
-            
-            OccupationPeriod occupationPeriod = executionDegree.getOccupationPeriodFor(executionPeriod, markSheetType);
-            if (occupationPeriod == null) {
-                throw new DomainException("error.evaluationDateNotInExamsPeriod");
-            } else {
-                throw new DomainException("error.evaluationDateNotInExamsPeriod.withEvaluationDateAndPeriodDates",
-                        DateFormatUtil.format("dd/MM/yyyy", evaluationDate),
-                        occupationPeriod.getStartYearMonthDay().toString("dd/MM/yyyy"),
-                        occupationPeriod.getEndYearMonthDay().toString("dd/MM/yyyy"));
-            }
-        }
+    private void checkIfEvaluationDateIsInExamsPeriod(CurricularCourse curricularCourse, ExecutionDegree executionDegree,
+	    ExecutionPeriod executionPeriod, Date evaluationDate, MarkSheetType markSheetType) throws DomainException {
+
+	if (executionDegree == null) {
+	    if (!markSheetType.equals(MarkSheetType.IMPROVEMENT)
+		    || !curricularCourse.getDegreeCurricularPlan().canSubmitImprovementMarkSheets(
+			    executionPeriod.getExecutionYear())) {
+		throw new DomainException("error.evaluationDateNotInExamsPeriod");
+	    }
+
+	} else if (!executionDegree.isEvaluationDateInExamPeriod(evaluationDate, executionPeriod, markSheetType)) {
+
+	    OccupationPeriod occupationPeriod = executionDegree.getOccupationPeriodFor(executionPeriod, markSheetType);
+	    if (occupationPeriod == null) {
+		throw new DomainException("error.evaluationDateNotInExamsPeriod");
+	    } else {
+		throw new DomainException("error.evaluationDateNotInExamsPeriod.withEvaluationDateAndPeriodDates", DateFormatUtil
+			.format("dd/MM/yyyy", evaluationDate), occupationPeriod.getStartYearMonthDay().toString("dd/MM/yyyy"),
+			occupationPeriod.getEndYearMonthDay().toString("dd/MM/yyyy"));
+	    }
+	}
     }
     
     private ExecutionDegree getExecutionDegree(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
@@ -171,7 +173,7 @@ public class MarkSheet extends MarkSheet_Base {
         
         for (final MarkSheetEnrolmentEvaluationBean evaluationBean : evaluationBeans) {
             
-            checkIfEvaluationDateIsInExamsPeriod(executionDegree, getExecutionPeriod(), evaluationBean
+            checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), executionDegree, getExecutionPeriod(), evaluationBean
                     .getEvaluationDate(), getMarkSheetType());
             
             final EnrolmentEvaluation enrolmentEvaluation = evaluationBean.getEnrolment()
@@ -209,7 +211,7 @@ public class MarkSheet extends MarkSheet_Base {
             EnrolmentEvaluationState enrolmentEvaluationState,
             final MarkSheetEnrolmentEvaluationBean evaluationBean, ExecutionDegree executionDegree) {
         
-        checkIfEvaluationDateIsInExamsPeriod(executionDegree, getExecutionPeriod(),
+        checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), executionDegree, getExecutionPeriod(),
                 evaluationBean.getEvaluationDate(), getMarkSheetType());
 
         EnrolmentEvaluation enrolmentEvaluation = evaluationBean.getEnrolment()
@@ -257,7 +259,7 @@ public class MarkSheet extends MarkSheet_Base {
             
         } else {
             checkIfTeacherIsResponsibleOrCoordinator(getCurricularCourse(), getExecutionPeriod(), responsibleTeacher, getMarkSheetType());
-            checkIfEvaluationDateIsInExamsPeriod(getExecutionDegree(getCurricularCourse(),
+            checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), getExecutionDegree(getCurricularCourse(),
                     getExecutionPeriod()), getExecutionPeriod(), newEvaluationDate, getMarkSheetType());
             
             Date oldEvaluationDate = getEvaluationDateDateTime().toDate();
@@ -298,7 +300,7 @@ public class MarkSheet extends MarkSheet_Base {
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
         for (EnrolmentEvaluation enrolmentEvaluation : enrolmentEvaluationsToEdit) {
             if (DateFormatUtil.compareDates(dateFormat, enrolmentEvaluation.getExamDate(), oldEvaluationDate) == 0) {
-                checkIfEvaluationDateIsInExamsPeriod(executionDegree, getExecutionPeriod(), newEvaluationDate, getMarkSheetType());
+                checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), executionDegree, getExecutionPeriod(), newEvaluationDate, getMarkSheetType());
                 enrolmentEvaluation.edit(responsibleTeacher.getPerson(), newEvaluationDate);
             }
         }
@@ -346,7 +348,7 @@ public class MarkSheet extends MarkSheet_Base {
 
             if (this.getEnrolmentEvaluationsSet().contains(enrolmentEvaluationBean.getEnrolmentEvaluation())) {
                 
-                checkIfEvaluationDateIsInExamsPeriod(executionDegree, getExecutionPeriod(),
+                checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), executionDegree, getExecutionPeriod(),
                         enrolmentEvaluationBean.getEvaluationDate(), getMarkSheetType());
                 
                 final EnrolmentEvaluation enrolmentEvaluation = enrolmentEvaluationBean.getEnrolmentEvaluation();

@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissa
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedExternalEnrolment;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -48,6 +49,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	
 	final DismissalBean dismissalBean = new DismissalBean();
 	dismissalBean.setStudentCurricularPlan(getSCP(request));
+	
 	request.setAttribute("dismissalBean", dismissalBean);
 	dismissalBean.setEnrolments(buildStudentEnrolmentsInformation(dismissalBean));
 	dismissalBean.setExternalEnrolments(buildStudentExternalEnrolmentsInformation(dismissalBean));
@@ -81,7 +83,11 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	DismissalBean dismissalBean = (DismissalBean) getRenderedObject("dismissalBean");
 	dismissalBean.setDismissalType(DismissalType.CURRICULAR_COURSE_CREDITS);
-	dismissalBean.setExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
+	
+	final DegreeCurricularPlan dcp = dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan();
+	final ExecutionPeriod actualEP = ExecutionPeriod.readActualExecutionPeriod();
+	dismissalBean.setExecutionPeriod(dcp.hasExecutionDegreeFor(actualEP.getExecutionYear()) ? actualEP : dcp.getMostRecentExecutionYear().getFirstExecutionPeriod());
+	
 	request.setAttribute("dismissalBean", dismissalBean);
 	return mapping.findForward("chooseEquivalents");
     }

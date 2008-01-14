@@ -18,6 +18,9 @@
      <definition name="student.viewRegistrationDetails" extends="internRelationOffice.masterPage">
         <put name="body" value="/internationalRelatOffice/viewRegistrationDetails.jsp"></put>
     </definition>
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="internRelationOffice.masterPage">
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
     <definition name="view-registration-curriculum" extends="internRelationOffice.masterPage">
         <put name="body" value="/internationalRelatOffice/viewRegistrationCurriculum.jsp"></put>
     </definition>

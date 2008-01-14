@@ -84,6 +84,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
     private double getTotalUnjustifiedPercentage(YearMonthDay beginDate, YearMonthDay endDate) {
 	double unjustified = 0;
 	Duration balanceWithoutDiscount = getBalance().plus(getBalanceToDiscount());
+	Duration averageWorkTimeDuration = getAssiduousness().getAverageWorkTimeDuration(beginDate, endDate);
 	if (!balanceWithoutDiscount.isShorterThan(Duration.ZERO)) {
 	    unjustified = getUnjustifiedPercentage(getAssiduousnessExtraWorks());
 	} else {
@@ -91,13 +92,17 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    for (AssiduousnessExtraWork extraWork : getAssiduousnessExtraWorks()) {
 		unjustifiedTotalDuration = unjustifiedTotalDuration.plus(extraWork.getUnjustified());
 	    }
-	    Duration averageWorkTimeDuration = getAssiduousness().getAverageWorkTimeDuration(beginDate, endDate);
 	    long balanceToProcess = Math.abs(balanceWithoutDiscount.getMillis()) > unjustifiedTotalDuration.getMillis() ? Math
 		    .abs(balanceWithoutDiscount.getMillis()) : unjustifiedTotalDuration.getMillis();
 	    long balanceAfterTolerance = balanceToProcess - Assiduousness.IST_TOLERANCE_TIME.getMillis();
 	    if (balanceAfterTolerance > 0) {
 		unjustified = (double) balanceAfterTolerance / (double) averageWorkTimeDuration.getMillis();
 	    }
+	}
+
+	if (beginDate.getMonthOfYear() == 12 && getFinalBalanceToCompensate().isLongerThan(Duration.ZERO)) {
+	    unjustified = unjustified
+		    + (getFinalBalanceToCompensate().getMillis() / (double) averageWorkTimeDuration.getMillis());
 	}
 	return unjustified;
     }
@@ -153,6 +158,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 		getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth()
 			.getMaximumValue());
 	unjustified = getTotalUnjustifiedPercentage(beginDate, endDate);
+
 	unjustified = NumberUtils.formatDoubleWithoutRound(unjustified, 1);
 
 	double anualRemaining = (double) Assiduousness.MAX_A66_PER_YEAR - previousAccumulatedA66;
@@ -227,6 +233,32 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    nightWorkByWorkScheduleType.put(assiduousnessExtraWork.getWorkScheduleType(), duration);
 	}
 	return nightWorkByWorkScheduleType;
+    }
+
+    public int getThisMonthUnjustifiedDays() {
+	int unjustifiedDays = 0;
+	double unjustified = getAccumulatedUnjustified();
+	AssiduousnessClosedMonth previousAssiduousnessClosedMonth = getPreviousAssiduousnessClosedMonth();
+	if (previousAssiduousnessClosedMonth != null) {
+	    unjustifiedDays = (int) Math.floor(unjustified
+		    - Math.floor(previousAssiduousnessClosedMonth.getAccumulatedUnjustified()));
+	} else {
+	    unjustifiedDays = (int) Math.floor(unjustified);
+	}
+
+	return unjustifiedDays;
+    }
+
+    public int getThisMonthArticle66() {
+	int article66Days = 0;
+	double article66 = getAccumulatedArticle66();
+	AssiduousnessClosedMonth previousAssiduousnessClosedMonth = getPreviousAssiduousnessClosedMonth();
+	if (previousAssiduousnessClosedMonth != null) {
+	    article66Days = (int) Math.floor(article66 - Math.floor(previousAssiduousnessClosedMonth.getAccumulatedArticle66()));
+	} else {
+	    article66Days = (int) Math.floor(article66);
+	}
+	return article66Days;
     }
 
 }

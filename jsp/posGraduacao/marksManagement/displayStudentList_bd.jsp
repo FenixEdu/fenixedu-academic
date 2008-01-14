@@ -43,6 +43,7 @@
     			<th class="listClasses-header"><bean:message key="label.observation"  /></th>
     		</tr>
      		<logic:iterate id="enrolment" name="studentList" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
+     			<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation" >
 	        		<tr>
 			        	<td class="listClasses">
 				      		<html:link page="<%="/changeMarkDispatchAction.do?method=chooseStudentMarks&amp;page=0&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + pageContext.findAttribute("courseId") + "&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;showMarks=" + pageContext.findAttribute("showMarks") + "&amp;studentNumber="+ enrolment.getInfoStudentCurricularPlan().getInfoStudent().getNumber() + "&amp;enrolmentId=" + enrolment.getIdInternal()%>">	
@@ -118,6 +119,7 @@
 							</td>	
 						</logic:notEmpty>
 		    		</tr>
+		    	</logic:notEmpty>
 	        </logic:iterate>
 		</table>    	
 	</logic:notEqual>

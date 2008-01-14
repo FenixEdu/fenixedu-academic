@@ -251,7 +251,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
 	for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
-	    if (!libraryCard.getIsCardEmited()) {
+	    if (libraryCard.getCardEmitionDate() == null) {
 		cardList.add(new LibraryCardDTO(libraryCard));
 	    }
 	}
@@ -331,7 +331,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	String result = request.getParameter("students");
 	List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
 	for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
-	    if (!libraryCard.getIsLetterGenerated()) {
+	    if (libraryCard.getLetterGenerationDate() == null) {
 		if (result.equalsIgnoreCase("no")
 			&& (libraryCard.getPartyClassification().equals(PartyClassification.EMPLOYEE) || libraryCard
 				.getPartyClassification().equals(PartyClassification.TEACHER))) {
@@ -427,18 +427,16 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("create-person");
 	}
 
-	if (externalPersonBean.getDocumentIdNumber() == null || externalPersonBean.getDocumentIdNumber().length() == 0
-		|| externalPersonBean.getIdDocumentType() == null) {
-	    ActionMessages actionMessages = getMessages(request);
-	    actionMessages.add("error", new ActionMessage("error.createExternalePerson.noId"));
-	    saveMessages(request, actionMessages);
-	    return mapping.findForward("create-unit-person");
-	} else if (Person.readByDocumentIdNumberAndIdDocumentType(externalPersonBean.getDocumentIdNumber(), externalPersonBean
-		.getIdDocumentType()) != null) {
-	    ActionMessages actionMessages = getMessages(request);
-	    actionMessages.add("error", new ActionMessage("error.createExternalePerson.existingId"));
-	    saveMessages(request, actionMessages);
-	    return mapping.findForward("create-unit-person");
+	if (externalPersonBean.getDocumentIdNumber() != null && externalPersonBean.getDocumentIdNumber().length() != 0
+		&& externalPersonBean.getIdDocumentType() != null) {
+	    Person person = Person.readByDocumentIdNumberAndIdDocumentType(externalPersonBean.getDocumentIdNumber(),
+		    externalPersonBean.getIdDocumentType());
+	    if (person != null) {
+		ActionMessages actionMessages = getMessages(request);
+		actionMessages.add("error", new ActionMessage("error.createExternalePerson.existingId", person.getName()));
+		saveMessages(request, actionMessages);
+		return mapping.findForward("create-unit-person");
+	    }
 	}
 
 	if (externalPersonBean.getUnit() != null

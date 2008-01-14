@@ -69,12 +69,20 @@
 	</logic:notPresent>
 	
 	<p class="mtop15 mbottom025"><strong>Visualizar Currículo:</strong></p>
-	<fr:edit id="form-select-execution-year" name="registrationCurriculumBean" schema="registration-select-execution-year" >
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thright thlight mtop025 thmiddle"/>
-			<fr:property name="columnClasses" value=",,tdclear"/>
-		</fr:layout>
-	</fr:edit>
+	<fr:form action="/registration.do?method=viewRegistrationCurriculum">
+		<fr:edit id="registrationCurriculumBean" 
+			name="registrationCurriculumBean"
+			visible="false"/>
+		<fr:edit id="registrationCurriculumBean-executionYear" name="registrationCurriculumBean" schema="registration-select-execution-year" >
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thright thlight mtop025 thmiddle"/>
+				<fr:property name="columnClasses" value=",,tdclear"/>
+			</fr:layout>
+		</fr:edit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message bundle="APPLICATION_RESOURCES" key="label.submit"/>
+		</html:submit>
+	</fr:form>
 	
 	<%
 		final ICurriculum curriculum = registrationCurriculumBean.getCurriculum(executionYear);

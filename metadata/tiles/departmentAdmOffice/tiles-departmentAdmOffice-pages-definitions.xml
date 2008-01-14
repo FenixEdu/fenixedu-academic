@@ -190,6 +190,9 @@
 	<definition name="detailed-proposal-list" extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/departmentAdmOffice/finalDegreeWork/detailedProposalList_bd.jsp" />
 	</definition>
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
     <definition name="view-registration-curriculum" extends="departmentAdmOffice.masterPage">
         <put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp"></put>
     </definition>

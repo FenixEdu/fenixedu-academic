@@ -202,6 +202,9 @@
 		extends="definition.teacher.two-column.extra-menu.tutor" >
 		<put name="body" value="/student/notAuthorized_bd.jsp" />
 	</definition>
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="definition.teacher.two-column.extra-menu.tutor">
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
     <definition name="view-registration-curriculum" extends="definition.teacher.two-column.extra-menu.tutor">
         <put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp"></put>
     </definition>

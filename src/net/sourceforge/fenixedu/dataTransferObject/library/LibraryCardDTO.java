@@ -88,16 +88,15 @@ public class LibraryCardDTO implements Serializable {
 	    return getPerson().getTeacher().getCurrentWorkingUnit();
 	} else if (getPartyClassification().equals(PartyClassification.RESEARCHER)) {
 	    YearMonthDay today = new YearMonthDay();
-	    for (Accountability accountability : getPerson().getParentAccountabilities(
-		    AccountabilityTypeEnum.RESEARCH_CONTRACT, ResearcherContract.class)) {
+	    for (Accountability accountability : getPerson().getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT,
+		    ResearcherContract.class)) {
 		ResearcherContract researcherContract = (ResearcherContract) accountability;
 		if (researcherContract.isActive(today)) {
 		    return researcherContract.getUnit();
 		}
 	    }
 	} else if (isStudent()) {
-	    return getPerson().getStudentByType(DegreeType.valueOf(getPartyClassification().toString()))
-		    .getDegree().getUnit();
+	    return getPerson().getStudentByType(DegreeType.valueOf(getPartyClassification().toString())).getDegree().getUnit();
 	}
 	return null;
     }
@@ -113,7 +112,7 @@ public class LibraryCardDTO implements Serializable {
     }
 
     public String getMailCostCenterCode() {
-	if (getPerson().getEmployee().getCurrentMailingPlace() != null) {
+	if (getPerson().getEmployee() != null && getPerson().getEmployee().getCurrentMailingPlace() != null) {
 	    return getPerson().getEmployee().getCurrentMailingPlace().getCostCenterCode().toString();
 	}
 	return "";
@@ -176,8 +175,8 @@ public class LibraryCardDTO implements Serializable {
 	if (getPartyClassification().equals(PartyClassification.PERSON)) {
 	    return "Externa";
 	}
-	final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
-		"resources.EnumerationResources", LanguageUtils.getLocale());
+	final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
+		.getLocale());
 	return enumerationBundle.getString(getPartyClassification().name());
     }
 
@@ -292,8 +291,8 @@ public class LibraryCardDTO implements Serializable {
 
     public void setChosenUnitName(String chosenUnitName) {
 	if (chosenUnitName != null
-		&& (getPartyClassification().equals(PartyClassification.TEACHER) && !getPerson()
-			.getPartyClassification().equals(PartyClassification.PERSON))) {
+		&& (getPartyClassification().equals(PartyClassification.TEACHER) && !getPerson().getPartyClassification().equals(
+			PartyClassification.PERSON))) {
 	    int position = chosenUnitName.indexOf("-");
 	    this.chosenUnitName = chosenUnitName.substring(position + 2);
 	} else {

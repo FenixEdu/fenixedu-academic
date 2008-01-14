@@ -31,7 +31,12 @@ public class RolePredicates {
 	};
     };
 
-
+    public static final AccessControlPredicate<DomainObject> TEACHER_PREDICATE = new AccessControlPredicate<DomainObject>() {
+	public boolean evaluate(DomainObject domainObject) {
+	    return hasRole(RoleType.TEACHER);
+	};
+    };
+    
     
     private static boolean hasRole(final RoleType roleType) {
 	return AccessControl.getPerson().hasRole(roleType);

@@ -88,22 +88,31 @@ public class StudentDA extends FenixDispatchAction {
 
 	final Registration registration = getRegistration(request);
 	final RegistrationCurriculumBean registrationCurriculumBean = new RegistrationCurriculumBean(registration);
+	request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
 	
+	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
+	if (degreeCurricularPlanID != null) {
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
+
 	if (!registrationCurriculumBean.hasCycleCurriculumGroup()) {
 	    final List<CycleCurriculumGroup> internalCycleCurriculumGrops = registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
 	    if (internalCycleCurriculumGrops.size() > 1) {
-		request.setAttribute("registrationCurriculumBean", new RegistrationCurriculumBean(registration));
 		return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
 	    }
 	}
 
-	request.setAttribute("registrationCurriculumBean", new RegistrationCurriculumBean(registration));
 	return mapping.findForward("view-registration-curriculum");
     }
 
     public ActionForward prepareViewRegistrationCurriculumInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("registrationCurriculumBean", getRegistrationCurriculumBeanFromViewState());
+
+	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
+	if (degreeCurricularPlanID != null) {
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
 
 	return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
     }
@@ -119,22 +128,17 @@ public class StudentDA extends FenixDispatchAction {
 	request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
 	request.setAttribute("registration", registrationCurriculumBean.getRegistration());
 
-	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
-	if (degreeCurricularPlanID != null) {
-	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-	}
+	request.setAttribute("degreeCurricularPlanID", registrationCurriculumBean.getCycleCurriculumGroup().getStudentCurricularPlan().getDegreeCurricularPlan().getIdInternal());
 
 	return mapping.findForward("view-registration-curriculum");
     }
 
     public ActionForward viewRegistrationCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	RenderUtils.invalidateViewState();
-	
 	final RegistrationCurriculumBean registrationCurriculumBean = getRegistrationCurriculumBeanFromViewState();
 	
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	if (registrationCurriculumBean.getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
+	if (registrationCurriculumBean.getExecutionYear() == null && registrationCurriculumBean.getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
 	    registrationCurriculumBean.setExecutionYear(currentExecutionYear);
 	}
 

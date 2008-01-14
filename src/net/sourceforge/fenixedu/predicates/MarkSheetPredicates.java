@@ -39,7 +39,7 @@ public class MarkSheetPredicates {
     public static final AccessControlPredicate<MarkSheet> editPredicate = new AccessControlPredicate<MarkSheet>() {
 
 	public boolean evaluate(final MarkSheet markSheet) {
-	    return hasScientificCouncilRole() || 
+	    return hasScientificCouncilRole() ||  hasTeacherRole() ||
 	    	(hasAcademinAdminOfficeRole() &&
 		    	(!markSheet.isRectification() || (markSheet.isRectification() && checkRectification())) &&
 		    		(!markSheet.isDissertation() || (markSheet.isDissertation() && checkDissertation())));
@@ -64,6 +64,9 @@ public class MarkSheetPredicates {
 	return RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE.evaluate(null);
     }
 
+    private static boolean hasTeacherRole() {
+	return RolePredicates.TEACHER_PREDICATE.evaluate(null);
+    }
     
     public static boolean checkRectification() {
 	Employee employee = AccessControl.getPerson().getEmployee();

@@ -28,25 +28,28 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 public class CloseAssiduousnessMonth extends Service {
 
-    public ClosedMonth run(YearMonthDay beginDate, YearMonthDay endDate) {
+    public List<AssiduousnessClosedMonth> run(YearMonthDay beginDate, YearMonthDay endDate) {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(beginDate, endDate
 		.plusDays(1));
 	ClosedMonth closedMonth = getClosedMonth(beginDate);
 	System.out.println("Vou fechar o mes: " + new DateTime());
+	List<AssiduousnessClosedMonth> negativeAssiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>();
 	for (Assiduousness assiduousness : rootDomainObject.getAssiduousnesss()) {
 	    if (assiduousness.isStatusActive(beginDate, endDate)) {
-		getMonthAssiduousnessBalance(assiduousness, assiduousnessRecords.get(assiduousness), closedMonth, beginDate,
-			endDate);
+		AssiduousnessClosedMonth assiduousnessClosedMonth = getMonthAssiduousnessBalance(assiduousness,
+			assiduousnessRecords.get(assiduousness), closedMonth, beginDate, endDate);
+		if (assiduousnessClosedMonth != null) {
+		    negativeAssiduousnessClosedMonths.add(assiduousnessClosedMonth);
+		}
 	    }
 	}
-	return closedMonth;
+	return negativeAssiduousnessClosedMonths;
     }
 
     private ClosedMonth getClosedMonth(YearMonthDay beginDate) {
@@ -59,8 +62,8 @@ public class CloseAssiduousnessMonth extends Service {
 	}
     }
 
-    private void getMonthAssiduousnessBalance(Assiduousness assiduousness, List<AssiduousnessRecord> assiduousnessRecords,
-	    ClosedMonth closedMonth, YearMonthDay beginDate, YearMonthDay endDate) {
+    private AssiduousnessClosedMonth getMonthAssiduousnessBalance(Assiduousness assiduousness,
+	    List<AssiduousnessRecord> assiduousnessRecords, ClosedMonth closedMonth, YearMonthDay beginDate, YearMonthDay endDate) {
 	YearMonthDay lowerBeginDate = beginDate.minusDays(8);
 	HashMap<YearMonthDay, WorkSchedule> workScheduleMap = assiduousness.getWorkSchedulesBetweenDates(lowerBeginDate, endDate);
 	DateTime init = getInit(lowerBeginDate, workScheduleMap);
@@ -189,8 +192,8 @@ public class CloseAssiduousnessMonth extends Service {
 	    workedDays += thisDayWorked;
 	}
 
-	EmployeeBalanceResume employeeBalanceResume = new EmployeeBalanceResume(assiduousness.getEmployee(), closedMonth
-		.getClosedYearMonth().get(DateTimeFieldType.year()));
+	EmployeeBalanceResume employeeBalanceResume = new EmployeeBalanceResume(assiduousness.getEmployee());
+	employeeBalanceResume.setEmployeeBalanceResume(totalBalance, totalBalanceToDiscount, closedMonth.getClosedYearMonth());
 	AssiduousnessClosedMonth assiduousnessClosedMonth = new AssiduousnessClosedMonth(assiduousness, closedMonth,
 		totalBalance, totalComplementaryWeeklyRestBalance, totalWeeklyRestBalance, holidayRest, totalBalanceToDiscount,
 		vacations, tolerance, article17, article66, maximumWorkingDays, workedDays, employeeBalanceResume
@@ -222,15 +225,26 @@ public class CloseAssiduousnessMonth extends Service {
 	assiduousnessClosedMonth.setAllUnjustifiedAndAccumulatedArticle66();
 
 	int unjustifiedDays = 0;
+	int article66Days = 0;
 	double unjustified = assiduousnessClosedMonth.getAccumulatedUnjustified();
+	double accumulatedArticle66 = assiduousnessClosedMonth.getAccumulatedArticle66();
 	AssiduousnessClosedMonth previousAssiduousnessClosedMonth = assiduousnessClosedMonth
 		.getPreviousAssiduousnessClosedMonth();
 	if (previousAssiduousnessClosedMonth != null) {
-	    unjustifiedDays = (int) Math.floor(unjustified - previousAssiduousnessClosedMonth.getAccumulatedUnjustified());
+	    unjustifiedDays = (int) Math.floor(unjustified
+		    - Math.floor(previousAssiduousnessClosedMonth.getAccumulatedUnjustified()));
+	    article66Days = (int) Math.floor(accumulatedArticle66
+		    - Math.floor(previousAssiduousnessClosedMonth.getAccumulatedArticle66()));
 	} else {
 	    unjustifiedDays = (int) Math.floor(unjustified);
+	    article66Days = (int) Math.floor(accumulatedArticle66);
 	}
 	assiduousnessClosedMonth.setWorkedDays(workedDays - unjustifiedDays >= 0 ? workedDays - unjustifiedDays : 0);
+
+	if (unjustifiedDays > 0 || article66Days > 0 || assiduousnessClosedMonth.getArticle66().doubleValue() > 0) {
+	    return assiduousnessClosedMonth;
+	}
+	return null;
     }
 
     private HashMap<YearMonthDay, List<Leave>> getLeavesMap(List<AssiduousnessRecord> assiduousnessRecords,

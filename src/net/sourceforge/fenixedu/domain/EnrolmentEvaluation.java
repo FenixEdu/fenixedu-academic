@@ -286,8 +286,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         if (examDate != null) {
             final RegistrationState stateInExamDate = getRegistration().getStateInDate(YearMonthDay.fromDateFields(examDate).toDateTimeAtMidnight());
 	    if (stateInExamDate == null || !(stateInExamDate.isActive()
-		    || (stateInExamDate.getStateType() == RegistrationStateType.TRANSITED
-			    && getEnrolment().getCurricularCourse().isDissertation()))) {
+		    || stateInExamDate.getStateType() == RegistrationStateType.TRANSITED)) {
 		final Enrolment enrolment = getEnrolment();
 		final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
 		final Registration registration = studentCurricularPlan.getRegistration();

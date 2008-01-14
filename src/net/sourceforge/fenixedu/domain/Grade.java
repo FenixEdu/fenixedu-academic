@@ -9,8 +9,6 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.apache.commons.lang.StringUtils;
-
 public class Grade implements Serializable, Comparable<Grade> {
     
     private static Grade emptyGrade = new EmptyGrade();
@@ -127,7 +125,12 @@ public class Grade implements Serializable, Comparable<Grade> {
     }
     
     public boolean isNumeric() {
-	return StringUtils.isNumeric(getValue()); 
+	try {
+	    Double.parseDouble(getValue());
+	    return true;
+	} catch (NumberFormatException e) {
+	    return false;
+	}
     }
     
     public boolean isApproved() {

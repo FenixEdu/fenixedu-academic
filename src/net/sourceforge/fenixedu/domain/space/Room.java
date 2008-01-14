@@ -25,8 +25,9 @@ public class Room extends Room_Base {
 
 	super();		
 	
-	setSuroundingSpace(suroundingSpace);	
-	editCapacities(normalCapacity, examCapacity);
+	setSuroundingSpace(suroundingSpace);		
+	setNormalCapacity(normalCapacity);
+	setExamCapacity(examCapacity);
 	
 	new RoomInformation(this, blueprintNumber, identification, description, roomClassification,
 		area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality,
@@ -336,7 +337,9 @@ public class Room extends Room_Base {
 
 	public RoomInformation execute() {
 	    
-	    getSpace().editCapacities(getNormalCapacity(), getExamCapacity());
+	    Room space = getSpace();
+	    space.setNormalCapacity(getNormalCapacity());
+	    space.setExamCapacity(getExamCapacity());
 	    
 	    RoomInformation roomInformation = new RoomInformation(getSpace(), getBlueprintNumber(), getIdentification(),
 		    getDescription(), getRoomClassification(), getArea(), getHeightQuality(),

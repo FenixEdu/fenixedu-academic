@@ -225,9 +225,9 @@ public class Registration extends Registration_Base {
 
 	checkRulesToDelete();
 
-	for (; hasAnyStudentCurricularPlans(); getStudentCurricularPlans().get(0).delete())
-	    ;
 	for (; hasAnyRegistrationStates(); getRegistrationStates().get(0).delete())
+	    ;
+	for (; hasAnyStudentCurricularPlans(); getStudentCurricularPlans().get(0).delete())
 	    ;
 	for (; hasAnyAssociatedAttends(); getAssociatedAttends().get(0).delete())
 	    ;
@@ -1821,15 +1821,43 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean getInterruptedStudies() {
+	return isInterrupted();
+    }
+
+    public boolean isInterrupted() {
 	return getActiveStateType() == RegistrationStateType.INTERRUPTED;
     }
 
     final public boolean getFlunked() {
+	return isFlunked();
+    }
+
+    public boolean isFlunked() {
 	return getActiveStateType() == RegistrationStateType.FLUNKED;
     }
 
     final public boolean isInMobilityState() {
 	return getActiveStateType() == RegistrationStateType.MOBILITY;
+    }
+
+    public boolean isConcluded() {
+	return getActiveStateType() == RegistrationStateType.CONCLUDED;
+    }
+
+    final public boolean isTransited() {
+	return getActiveStateType() == RegistrationStateType.TRANSITED;
+    }
+
+    final public boolean isTransition() {
+	return getActiveStateType() == RegistrationStateType.TRANSITION;
+    }
+
+    final public boolean isTransition(final ExecutionYear executionYear) {
+	return hasStateType(executionYear, RegistrationStateType.TRANSITION);
+    }
+
+    final public boolean getWasTransition() {
+	return hasState(RegistrationStateType.TRANSITION);
     }
 
     final public RegistrationState getStateInDate(DateTime dateTime) {
@@ -1951,18 +1979,6 @@ public class Registration extends Registration_Base {
 	return getCurriculum(executionYear).getCurricularYear();
     }
 
-    public boolean isConcluded() {
-	return getActiveStateType() == RegistrationStateType.CONCLUDED;
-    }
-
-    public boolean isInterrupted() {
-	return getActiveStateType() == RegistrationStateType.INTERRUPTED;
-    }
-
-    public boolean isFlunked() {
-	return getActiveStateType() == RegistrationStateType.FLUNKED;
-    }
-
     public boolean isRegistrationConclusionProcessed() {
 	if (getDegreeType().isBolonhaType()) {
 	    return getLastStudentCurricularPlan().isConclusionProcessed();
@@ -1982,23 +1998,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isQualifiedToRegistrationConclusionProcess() {
-	return getDegreeType() != DegreeType.MASTER_DEGREE && (getActiveState().isActive() || isConcluded());
-    }
-
-    final public boolean isTransition() {
-	return getActiveStateType() == RegistrationStateType.TRANSITION;
-    }
-
-    final public boolean isTransition(final ExecutionYear executionYear) {
-	return hasStateType(executionYear, RegistrationStateType.TRANSITION);
-    }
-
-    final public boolean getWasTransition() {
-	return hasState(RegistrationStateType.TRANSITION);
-    }
-
-    final public boolean isTransited() {
-	return getActiveStateType() == RegistrationStateType.TRANSITED;
+	return getDegreeType() != DegreeType.MASTER_DEGREE && (isActive() || isConcluded());
     }
 
     @Override
@@ -2139,6 +2139,25 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    final public CycleType getCurrentCycleType() {
+	final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles());
+
+	if (concludedCycles.isEmpty()) {
+	    List<CycleCurriculumGroup> internalCycleCurriculumGrops = getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
+	    return internalCycleCurriculumGrops.isEmpty() ? getDegreeType().getFirstCycleType() : internalCycleCurriculumGrops.get(0).getCycleType();
+	} else {
+	    final CycleType lastConcludedCycle = concludedCycles.last();
+
+	    if (getDegreeType().getLastCycleType() == lastConcludedCycle) {
+		return lastConcludedCycle;
+	    } else if (lastConcludedCycle.hasNext()) {
+		return lastConcludedCycle.getNext();
+	    } else {
+		return lastConcludedCycle;
+	    }
+	}
+    }
+
     final public CycleType getLastConcludedCycleType() {
 	final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles());
 	return concludedCycles.isEmpty() ? null : concludedCycles.last();
@@ -2175,24 +2194,6 @@ public class Registration extends Registration_Base {
 
 	if (!isConcluded() && isRegistrationConclusionProcessed()) {
 	    RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
-	}
-    }
-
-    final public CycleType getCurrentCycleType() {
-	final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles());
-
-	if (concludedCycles.isEmpty()) {
-	    return getDegreeType().getFirstCycleType();
-	} else {
-	    final CycleType lastConcludedCycle = concludedCycles.last();
-
-	    if (getDegreeType().getLastCycleType() == lastConcludedCycle) {
-		return lastConcludedCycle;
-	    } else if (lastConcludedCycle.hasNext()) {
-		return lastConcludedCycle.getNext();
-	    } else {
-		return lastConcludedCycle;
-	    }
 	}
     }
 

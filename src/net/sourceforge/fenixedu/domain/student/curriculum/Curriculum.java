@@ -11,44 +11,42 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class Curriculum implements Serializable, ICurriculum {
-    
+
     private CurriculumModule curriculumModule;
-    
+
     private ExecutionYear executionYear;
 
     private Set<ICurriculumEntry> enrolmentRelatedEntries = new HashSet<ICurriculumEntry>();
-    
+
     private Set<ICurriculumEntry> dismissalRelatedEntries = new HashSet<ICurriculumEntry>();
-    
+
     private Set<ICurriculumEntry> curricularYearEntries = new HashSet<ICurriculumEntry>();
-    
+
     private BigDecimal sumPiCi;
-    
+
     private BigDecimal sumPi;
-    
+
     static final protected int SCALE = 2;
 
     static final protected RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
-    
+
     private AverageType averageType = AverageType.WEIGHTED;
 
     private BigDecimal average;
-    
+
     private BigDecimal sumEctsCredits;
-    
+
     private Integer curricularYear;
-    
+
     private boolean forceCalculus;
 
-    
     static public Curriculum createEmpty(final ExecutionYear executionYear) {
 	return Curriculum.createEmpty(null, executionYear);
     }
@@ -62,9 +60,11 @@ public class Curriculum implements Serializable, ICurriculum {
 	this.executionYear = executionYear;
     }
 
-    public Curriculum(final CurriculumModule curriculumModule, final ExecutionYear executionYear, final Collection<ICurriculumEntry> entries, final Collection<ICurriculumEntry> dismissalRelatedEntries, final Collection<ICurriculumEntry> curricularYearEntries) {
+    public Curriculum(final CurriculumModule curriculumModule, final ExecutionYear executionYear,
+	    final Collection<ICurriculumEntry> entries, final Collection<ICurriculumEntry> dismissalRelatedEntries,
+	    final Collection<ICurriculumEntry> curricularYearEntries) {
 	this(curriculumModule, executionYear);
-	
+
 	addEntries(this.enrolmentRelatedEntries, entries);
 	addEntries(this.dismissalRelatedEntries, dismissalRelatedEntries);
 	addEntries(this.curricularYearEntries, curricularYearEntries);
@@ -80,21 +80,21 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private void addEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries) {
 	final boolean bolonhaDegree = curriculumModule.getStudentCurricularPlan().isBolonhaDegree();
-	
+
 	for (final ICurriculumEntry newEntry : newEntries) {
 	    if (bolonhaDegree || shouldAdd(newEntry)) {
 		entries.add(newEntry);
 	    }
 	}
     }
-    
+
     /**
-     * Just for pre-Bbolonha verification 
+     * Just for pre-Bbolonha verification
      */
     final private boolean shouldAdd(final ICurriculumEntry newEntry) {
 	if (newEntry instanceof IEnrolment) {
 	    final IEnrolment newIEnrolment = (IEnrolment) newEntry;
-	    
+
 	    for (final ICurriculumEntry entry : curricularYearEntries) {
 		if (entry instanceof Dismissal && ((Dismissal) entry).hasSourceIEnrolments(newIEnrolment)) {
 		    return false;
@@ -104,7 +104,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	    }
 	} else if (newEntry instanceof Dismissal) {
 	    final Dismissal newDismissal = (Dismissal) newEntry;
-	    
+
 	    for (final ICurriculumEntry entry : curricularYearEntries) {
 		if (entry instanceof Dismissal && newDismissal.isSimilar((Dismissal) entry)) {
 		    return false;
@@ -118,54 +118,54 @@ public class Curriculum implements Serializable, ICurriculum {
     public CurriculumModule getCurriculumModule() {
 	return curriculumModule;
     }
-    
+
     public ExecutionYear getExecutionYear() {
 	return executionYear;
     }
-    
+
     public StudentCurricularPlan getStudentCurricularPlan() {
 	return curriculumModule == null ? null : curriculumModule.getStudentCurricularPlan();
     }
-    
+
     public boolean hasAverageEntry() {
 	return curriculumModule != null && !getCurriculumEntries().isEmpty();
     }
-    
+
     public boolean isEmpty() {
 	return curriculumModule == null || (getCurriculumEntries().isEmpty() && this.curricularYearEntries.isEmpty());
     }
-    
+
     public Collection<ICurriculumEntry> getCurriculumEntries() {
 	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
-	
+
 	result.addAll(enrolmentRelatedEntries);
 	result.addAll(dismissalRelatedEntries);
-	
+
 	return result;
     }
-    
+
     public boolean hasAnyExternalApprovedEnrolment() {
 	for (final ICurriculumEntry entry : dismissalRelatedEntries) {
 	    if (entry instanceof ExternalEnrolment) {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }
-    
+
     public Set<ICurriculumEntry> getEnrolmentRelatedEntries() {
 	return enrolmentRelatedEntries;
     }
-    
+
     public Set<ICurriculumEntry> getDismissalRelatedEntries() {
 	return dismissalRelatedEntries;
     }
-    
+
     public Set<ICurriculumEntry> getCurricularYearEntries() {
 	return curricularYearEntries;
     }
-    
+
     public BigDecimal getSumPiCi() {
 	if (sumPiCi == null || forceCalculus) {
 	    doCalculus();
@@ -183,13 +183,13 @@ public class Curriculum implements Serializable, ICurriculum {
 
 	return sumPi;
     }
-    
+
     public BigDecimal getAverage() {
 	if (average == null || forceCalculus) {
 	    doCalculus();
 	    forceCalculus = false;
 	}
-	
+
 	return average.setScale(SCALE, ROUNDING_MODE);
     }
 
@@ -202,16 +202,16 @@ public class Curriculum implements Serializable, ICurriculum {
 	    doCalculus();
 	    forceCalculus = false;
 	}
-	
+
 	return sumEctsCredits;
     }
-    
+
     public Integer getCurricularYear() {
 	if (curricularYear == null || forceCalculus) {
 	    doCalculus();
 	    forceCalculus = false;
 	}
-	
+
 	return curricularYear;
     }
 
@@ -221,39 +221,40 @@ public class Curriculum implements Serializable, ICurriculum {
 	for (final ICurriculumEntry entry : this.curricularYearEntries) {
 	    if (entry instanceof Dismissal) {
 		final Dismissal dismissal = (Dismissal) entry;
-		if (dismissal.getCredits().isEquivalence() || (dismissal.isCreditsDismissal() && !dismissal.getCredits().isSubstitution())) {
+		if (dismissal.getCredits().isCredits() || dismissal.getCredits().isEquivalence()
+			|| (dismissal.isCreditsDismissal() && !dismissal.getCredits().isSubstitution())) {
 		    result = result.add(entry.getEctsCreditsForCurriculum());
 		}
 	    }
 	}
-	
+
 	return result;
     }
-    
+
     private void doCalculus() {
 	sumPiCi = BigDecimal.ZERO;
 	sumPi = BigDecimal.ZERO;
 	countAverage(enrolmentRelatedEntries);
 	countAverage(dismissalRelatedEntries);
 	average = calculateAverage();
-	
+
 	sumEctsCredits = BigDecimal.ZERO;
 	countCurricularYear(curricularYearEntries);
 	curricularYear = calculateCurricularYear();
-	
-	//System.out.println(toString());
+
+	// System.out.println(toString());
     }
-    
+
     public void setAverageType(AverageType averageType) {
 	this.averageType = averageType;
 	forceCalculus = true;
     }
-	
+
     private void countAverage(final Set<ICurriculumEntry> entries) {
 	for (final ICurriculumEntry entry : entries) {
 	    if (entry.getGrade().isNumeric()) {
 		final BigDecimal weigth = entry.getWeigthForCurriculum();
-		
+
 		if (averageType == AverageType.WEIGHTED) {
 		    sumPi = sumPi.add(weigth);
 		    sumPiCi = sumPiCi.add(entry.getWeigthTimesGrade());
@@ -266,55 +267,63 @@ public class Curriculum implements Serializable, ICurriculum {
 	    }
 	}
     }
-    
+
     private BigDecimal calculateAverage() {
 	return sumPi.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : sumPiCi.divide(sumPi, SCALE * SCALE + 1, ROUNDING_MODE);
     }
-    
+
     private void countCurricularYear(final Set<ICurriculumEntry> entries) {
 	for (final ICurriculumEntry entry : entries) {
 	    sumEctsCredits = sumEctsCredits.add(entry.getEctsCreditsForCurriculum());
 	}
     }
-    
+
     private Integer calculateCurricularYear() {
 	final int curricularYears = getTotalCurricularYears();
-	final BigDecimal ectsCreditsCurricularYear = sumEctsCredits.add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60), SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
+	final BigDecimal ectsCreditsCurricularYear = sumEctsCredits.add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60),
+		SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
 	return Math.min(ectsCreditsCurricularYear.intValue(), curricularYears);
     }
 
     public Integer getTotalCurricularYears() {
-	return getStudentCurricularPlan().getDegreeType().getYears(curriculumModule.isCycleCurriculumGroup() ? ((CycleCurriculumGroup) curriculumModule).getCycleType() : null);
+	return getStudentCurricularPlan().getDegreeType().getYears(
+		curriculumModule.isCycleCurriculumGroup() ? ((CycleCurriculumGroup) curriculumModule).getCycleType() : null);
     }
-    
+
     @Override
     public String toString() {
 	final StringBuilder result = new StringBuilder();
-	
+
 	result.append("\n[CURRICULUM]");
-	result.append("\n[CURRICULUM_MODULE][ID] " + curriculumModule.getIdInternal() + "\t[NAME]" + curriculumModule.getName().getContent());
+	result.append("\n[CURRICULUM_MODULE][ID] " + curriculumModule.getIdInternal() + "\t[NAME]"
+		+ curriculumModule.getName().getContent());
 	result.append("\n[SUM ENTRIES] " + (enrolmentRelatedEntries.size() + dismissalRelatedEntries.size()));
 	result.append("\n[SUM PiCi] " + sumPiCi.toString());
 	result.append("\n[SUM Pi] " + sumPi.toString());
 	result.append("\n[AVERAGE] " + average);
 	result.append("\n[SUM ECTS CREDITS] " + sumEctsCredits.toString());
 	result.append("\n[CURRICULAR YEAR] " + curricularYear);
-	
+
 	result.append("\n[ENTRIES]");
 	for (final ICurriculumEntry entry : enrolmentRelatedEntries) {
-	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[GRADE] " + entry.getGrade().getNumericValue() + "\t[WEIGHT] " + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] " + entry.getClass().getSimpleName());
+	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[GRADE] " + entry.getGrade().getNumericValue()
+		    + "\t[WEIGHT] " + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum()
+		    + "\t[CLASS_NAME] " + entry.getClass().getSimpleName());
 	}
-	
+
 	result.append("\n[DISMISSAL RELATED ENTRIES]");
 	for (final ICurriculumEntry entry : dismissalRelatedEntries) {
-	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[GRADE] " + entry.getGrade().getNumericValue() + "\t[WEIGHT] " + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] " + entry.getClass().getSimpleName());
+	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[GRADE] " + entry.getGrade().getNumericValue()
+		    + "\t[WEIGHT] " + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum()
+		    + "\t[CLASS_NAME] " + entry.getClass().getSimpleName());
 	}
-	
+
 	result.append("\n[CURRICULAR YEAR ENTRIES]");
 	for (final ICurriculumEntry entry : curricularYearEntries) {
-	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] " + entry.getClass().getSimpleName());
+	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum()
+		    + "\t[CLASS_NAME] " + entry.getClass().getSimpleName());
 	}
-	
+
 	return result.toString();
     }
 

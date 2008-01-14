@@ -60,6 +60,17 @@
 		<bean:define id="closedMonthDocuments" name="closedMonthDocuments" toScope="request" />
 		<jsp:include page="showClosedMonthDocuments.jsp"/>	
 	</logic:notEmpty>
+	<logic:present name="negativeAssiduousnessClosedMonths">
+		<logic:notEmpty name="negativeAssiduousnessClosedMonths">
+			<fr:view name="negativeAssiduousnessClosedMonths" schema="show.negativeAssiduousnessClosedMonths">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 printborder" />
+				<fr:property name="columnClasses" value="acenter" />
+				<fr:property name="headerClasses" value="acenter" />
+			</fr:layout>
+		</fr:view>
+		</logic:notEmpty>
+	</logic:present>
 	
 </logic:present>
 

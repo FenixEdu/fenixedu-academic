@@ -4225,8 +4225,8 @@ class net.sourceforge.fenixedu.domain.library.LibraryCard extends net.sourceforg
 	PartyClassification partyClassification;
 	Integer pin;
 	YearMonthDay validUntil;
-	Boolean isCardEmited;
-	Boolean isLetterGenerated;
+	DateTime cardEmitionDate;
+	DateTime letterGenerationDate;
 }
 
 class net.sourceforge.fenixedu.domain.elections.DelegateElection extends net.sourceforge.fenixedu.domain.DomainObject {

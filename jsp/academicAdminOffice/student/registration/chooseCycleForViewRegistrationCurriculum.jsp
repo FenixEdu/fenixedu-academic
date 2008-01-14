@@ -58,7 +58,10 @@
 	
 	<bean:define id="registrationId" name="registrationCurriculumBean" property="registration.idInternal" />
 	<fr:form action="/registration.do?method=chooseCycleForViewRegistrationCurriculum">
-		<fr:edit id="registrationCurriculumBean"
+		<fr:edit id="registrationCurriculumBean" 
+			name="registrationCurriculumBean"
+			visible="false"/>
+		<fr:edit id="registrationCurriculumBean-cycle"
 			name="registrationCurriculumBean"
 			schema="IRegistrationBean.edit-cycleCurriculumGroup">
 		

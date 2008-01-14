@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -85,7 +86,8 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
                 .getMaximumValueForAcumulatedEnrollments().toString());
         dynaForm.set("minIncrementNac", oldInfoCurricularCourse
                 .getMinimumValueForAcumulatedEnrollments().toString());
-        dynaForm.set("weight", oldInfoCurricularCourse.getWeigth().toString());
+        dynaForm.set("weight", oldInfoCurricularCourse.getWeigth() != null ? oldInfoCurricularCourse.getWeigth().toString()
+		: StringUtils.EMPTY);
 
         dynaForm.set("mandatoryEnrollment", oldInfoCurricularCourse.getMandatoryEnrollment().toString());
         dynaForm.set("enrollmentAllowed", oldInfoCurricularCourse.getEnrollmentAllowed().toString());

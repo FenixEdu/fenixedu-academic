@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -346,12 +347,15 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private StudentCurricularPlan studentCurricularPlan;
 
+	private ExecutionYear lastCurriculumLineExecutionYear;
+
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
 	    getInputContext().getForm().getSubmitButton().setVisible(false);
 	    getInputContext().getForm().getCancelButton().setVisible(false);
 
 	    this.studentCurricularPlan = (StudentCurricularPlan) object;
+	    this.lastCurriculumLineExecutionYear = studentCurricularPlan.getRoot().getLastCurriculumLineExecutionYear();
 
 	    final HtmlContainer container = new HtmlBlockContainer();
 
@@ -434,9 +438,15 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	    final HtmlTableCell cell = groupRow.createCell();
 	    cell.setClasses(getLabelCellClass());
-	    cell.setBody(curriculumGroup != null && curriculumGroup.isRoot() ? createDegreeCurricularPlanNameLink(curriculumGroup
-		    .getDegreeCurricularPlanOfDegreeModule(), curriculumGroup.getStudentCurricularPlan()
-		    .getStartExecutionPeriod()) : new HtmlText(text));
+
+	    final HtmlComponent body;
+	    if (curriculumGroup != null && curriculumGroup.isRoot()) {
+		body = createDegreeCurricularPlanNameLink(curriculumGroup.getDegreeCurricularPlanOfDegreeModule(),
+			curriculumGroup.getStudentCurricularPlan().getStartExecutionPeriod());
+	    } else {
+		body = new HtmlText(createGroupName(text, curriculumGroup).toString());
+	    }
+	    cell.setBody(body);
 
 	    if (!addHeaders) {
 		cell.setColspan(MAX_LINE_SIZE - level);// - 2);
@@ -451,6 +461,34 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 		// generateRulesInfo(groupRow, curriculumGroup);
 	    }
+	}
+
+	private StringBuilder createGroupName(final String text, final CurriculumGroup curriculumGroup) {
+	    final StringBuilder groupName = new StringBuilder(text);
+	    if (curriculumGroup != null && curriculumGroup.hasDegreeModule()) {
+		final CourseGroup courseGroup = curriculumGroup.getDegreeModule();
+		final ExecutionPeriod lastExecutionPeriod = lastCurriculumLineExecutionYear.getLastExecutionPeriod();
+
+		final CreditsLimit creditsLimit = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
+			CurricularRuleType.CREDITS_LIMIT, lastCurriculumLineExecutionYear);
+
+		if (creditsLimit != null) {
+		    groupName.append(" m(");
+		    groupName.append(courseGroup.getMinEctsCredits(lastExecutionPeriod));
+		    groupName.append("),");
+		}
+
+		groupName.append(" c(");
+		groupName.append(curriculumGroup.getCreditsConcluded(lastCurriculumLineExecutionYear));
+		groupName.append(")");
+
+		if (creditsLimit != null) {
+		    groupName.append(", M(");
+		    groupName.append(courseGroup.getMaxEctsCredits(lastExecutionPeriod));
+		    groupName.append(")");
+		}
+	    }
+	    return groupName;
 	}
 
 	private void generateRulesInfo(final HtmlTableRow groupRow, final CurriculumGroup curriculumGroup) {
@@ -909,8 +947,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    result.setParameter("degreeID", degreeCurricularPlan.getDegree().getIdInternal());
 	    result.setParameter("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
 
-	    result.setParameter("executionPeriodOID", executionPeriod != null ? executionPeriod.getIdInternal() : ExecutionPeriod
-		    .readActualExecutionPeriod().getIdInternal());
+	    result.setParameter("executionPeriodOID", executionPeriod != null ? executionPeriod.getIdInternal()
+		    : lastCurriculumLineExecutionYear.getFirstExecutionPeriod());
 
 	    return result;
 	}

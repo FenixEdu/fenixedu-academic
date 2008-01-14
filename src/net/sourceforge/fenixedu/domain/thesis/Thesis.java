@@ -213,13 +213,7 @@ public class Thesis extends Thesis_Base {
 
     public Language getLanguage() {
 	ThesisFile dissertation = getDissertation();
-
-	if (dissertation == null) {
-	    return null;
-	}
-	else {
-	    return dissertation.getLanguage();
-	}
+	return dissertation == null ? null : dissertation.getLanguage();
     }
 
     final public MultiLanguageString getFinalFullTitle() {
@@ -231,7 +225,6 @@ public class Thesis extends Thesis_Base {
 	    final StringBuilder result = new StringBuilder();
 	    result.append(dissertation.getTitle());
 	    result.append(StringUtils.isEmpty(dissertation.getSubTitle()) ? "" : ": " + dissertation.getSubTitle());
-
 	    return new MultiLanguageString(dissertation.getLanguage(), result.toString());
 	}
     }

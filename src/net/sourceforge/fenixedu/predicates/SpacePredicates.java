@@ -53,7 +53,7 @@ public class SpacePredicates {
     public static final AccessControlPredicate<Space> checkPermissionsToManageRoomCapacities = new AccessControlPredicate<Space>() {
 	public boolean evaluate(Space space) {	   
 	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSpacesAllocation(AccessControl.getPerson());
-	    return checkPermissionsToManageSpace.evaluate(space);	    
+	    return true;
 	}
     };
 

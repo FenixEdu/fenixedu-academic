@@ -381,6 +381,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return result;
     }
 
+    public ExecutionYear getMostRecentExecutionYear() {
+	return getMostRecentExecutionDegree().getExecutionYear();
+    }
+    
     public ExecutionDegree getExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Campus campus) {
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    if (executionDegree.getExecutionYear() == executionYear && executionDegree.getCampus() == campus) {
@@ -1773,5 +1777,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    }
 	}
 	return false;
+    }
+
+    public boolean canSubmitImprovementMarkSheets(final ExecutionYear executionYear) {
+	SortedSet<ExecutionDegree> sortedExecutionDegrees = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+	sortedExecutionDegrees.addAll(getExecutionDegreesSet());
+	return sortedExecutionDegrees.last().getExecutionYear().equals(executionYear.getPreviousExecutionYear());
     }    
 }

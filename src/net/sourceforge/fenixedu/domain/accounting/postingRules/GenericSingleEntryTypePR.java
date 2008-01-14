@@ -28,31 +28,26 @@ public abstract class GenericSingleEntryTypePR extends GenericSingleEntryTypePR_
 
     private void checkParameters(EntryType entryType) {
 	if (entryType == null) {
-	    throw new DomainException(
-		    "error.accounting.postingRules.GenericSingleEntryTypePR.entryType.cannot.be.null");
+	    throw new DomainException("error.accounting.postingRules.GenericSingleEntryTypePR.entryType.cannot.be.null");
 	}
     }
 
     @Override
     public void setEntryType(EntryType entryType) {
-	throw new DomainException(
-		"error.accounting.postingRules.GenericSingleEntryTypePR.cannot.modify.entryType");
+	throw new DomainException("error.accounting.postingRules.GenericSingleEntryTypePR.cannot.modify.entryType");
     }
 
     @Override
-    public void internalAddOtherPartyAmount(User responsibleUser, Event event, Account fromAcount,
-	    Account toAccount, Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
-	makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount,
-		transactionDetailDTO);
-    }
-
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Override
-    public void depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
+    public void internalAddOtherPartyAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
 	    Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
-	makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount,
-		transactionDetailDTO);
+	makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount, transactionDetailDTO);
+    }
 
+    @Override
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount, Money amount,
+	    AccountingTransactionDetailDTO transactionDetailDTO) {
+	makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount, transactionDetailDTO);
     }
 
 }
