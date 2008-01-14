@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
@@ -172,7 +173,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 		    }
 
 		    Content content = entry.getReferingContent();
-		    if (!(content instanceof Item)) {
+		    if (!(content instanceof Item || content instanceof Forum)) {
 			HtmlListItem item = list.createItem();
 			item.addChild(generateComponent(context, content, true));
 			if(depth>0) {
