@@ -193,7 +193,6 @@ public class Section extends Section_Base {
 	}
 
 	super.disconnect();
-	removeRootDomainObject();
     }
 
     public SortedSet<Section> getOrderedSubSections() {

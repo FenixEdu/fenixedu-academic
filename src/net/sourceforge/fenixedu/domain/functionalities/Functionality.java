@@ -546,7 +546,6 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 	    ;
 
 	super.disconnect();
-	removeRootDomainObject();
     }
 
     @Override

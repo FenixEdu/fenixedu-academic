@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.Element;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Node;
@@ -37,8 +38,7 @@ public abstract class Site extends Site_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Section createSection(MultiLanguageString sectionName, Section parentSection,
-	    Integer sectionOrder) {
+    public Section createSection(MultiLanguageString sectionName, Section parentSection, Integer sectionOrder) {
 	return new Section(parentSection, sectionName, sectionOrder);
     }
 
@@ -116,8 +116,7 @@ public abstract class Site extends Site_Base {
     public void copySectionsAndItemsFrom(Site siteFrom) {
 	for (Section sectionFrom : siteFrom.getAssociatedSections()) {
 	    if (sectionFrom.getSuperiorSection() == null) {
-		Section sectionTo = this.createSection(sectionFrom.getName(), null, sectionFrom
-			.getSectionOrder());
+		Section sectionTo = this.createSection(sectionFrom.getName(), null, sectionFrom.getSectionOrder());
 		sectionTo.copyItemsFrom(sectionFrom);
 		sectionTo.copySubSectionsAndItemsFrom(sectionFrom);
 	    }
@@ -125,11 +124,10 @@ public abstract class Site extends Site_Base {
     }
 
     /**
-         * Obtains a list of all the groups available in the context of this
-         * site.
-         * 
-         * @return
-         */
+     * Obtains a list of all the groups available in the context of this site.
+     * 
+     * @return
+     */
     public List<IGroup> getContextualPermissionGroups() {
 	List<IGroup> groups = new ArrayList<IGroup>();
 
@@ -194,31 +192,30 @@ public abstract class Site extends Site_Base {
     }
 
     /**
-         * If this site has quota policy or not.
-         * 
-         * @return <code>true</code> if we should not exceed the size in
-         *         {@link #getQuota()}
-         */
+     * If this site has quota policy or not.
+     * 
+     * @return <code>true</code> if we should not exceed the size in
+     *         {@link #getQuota()}
+     */
     public boolean hasQuota() {
 	return false;
     }
 
     /**
-         * The maximum size that can be occupied by files in this site.
-         * 
-         * @return the maximum combined sizes (in bytes) of all files in this
-         *         site.
-         */
+     * The maximum size that can be occupied by files in this site.
+     * 
+     * @return the maximum combined sizes (in bytes) of all files in this site.
+     */
     public long getQuota() {
 	return 0;
     }
 
     /**
-         * Computes the current size (in bytes) occupied by all the files in
-         * this site.
-         * 
-         * @return
-         */
+     * Computes the current size (in bytes) occupied by all the files in this
+     * site.
+     * 
+     * @return
+     */
     public long getUsedQuota() {
 	long size = 0;
 
@@ -317,7 +314,7 @@ public abstract class Site extends Site_Base {
     @Override
     public Collection<Content> getDirectChildrenAsContent() {
 	List<Content> contents = new ArrayList<Content>();
-	for(Node node : getOrderedDirectChildren()) {
+	for (Node node : getOrderedDirectChildren()) {
 	    contents.add(node.getChild());
 	}
 	return contents;
@@ -337,12 +334,12 @@ public abstract class Site extends Site_Base {
     protected Container findSomeNonModuleParent() {
 	return getTemplate();
     }
-    
+
     public Collection<Functionality> getAssociatedFunctionalities() {
-	List<Functionality> functionalities = new ArrayList<Functionality> ();
-	for(Content content : getDirectChildrenAsContent()) {
-	    if(content instanceof Functionality) {
-		functionalities.add((Functionality)content);
+	List<Functionality> functionalities = new ArrayList<Functionality>();
+	for (Content content : getDirectChildrenAsContent()) {
+	    if (content instanceof Functionality) {
+		functionalities.add((Functionality) content);
 	    }
 	}
 	return functionalities;
@@ -351,8 +348,27 @@ public abstract class Site extends Site_Base {
     @Override
     public Content getInitialContent() {
 	final MetaDomainObjectPortal template = getTemplate();
-	return template == null ? null : getTemplate().getInitialContent();
+	Content initialContent = null;
+	if (template != null) {
+	    
+	    initialContent = getTemplate().getInitialContent();
+	    if (initialContent != null) {
+		return initialContent;
+	    }
+	    
+	    Collection<Element> children = getOrderedChildren(Element.class);
+	    if (!children.isEmpty()) {
+		return children.iterator().next();
+	    }
+	
+	    for (Container container : getOrderedChildren(Container.class)) {
+		initialContent = container.getInitialContent();
+		if (initialContent != null) {
+		    break;
+		}
+	    }
+	}
+	return initialContent;
     }
 
 }
- 

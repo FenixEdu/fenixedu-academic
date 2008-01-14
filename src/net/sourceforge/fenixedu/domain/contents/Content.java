@@ -179,6 +179,8 @@ public abstract class Content extends Content_Base {
 	for(Container container : getInitialContainer()) {
 	    container.setInitialContent(null);
 	}
+	
+	removeRootDomainObject();
     }
 
     /**
@@ -360,4 +362,12 @@ public abstract class Content extends Content_Base {
 	return stringBuilder.toString();
     }
 
+    @Override
+    public void setAvailabilityPolicy(AvailabilityPolicy availabilityPolicy) {       
+        AvailabilityPolicy currentAvailabilityPolicy = getAvailabilityPolicy();
+        if(currentAvailabilityPolicy != null && availabilityPolicy != null) {
+            currentAvailabilityPolicy.delete();
+        }
+        super.setAvailabilityPolicy(availabilityPolicy);
+    }
 }

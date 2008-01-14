@@ -208,4 +208,12 @@ public class Item extends Item_Base {
     public boolean isChildAccepted(Content child) {
         return child instanceof Attachment;
     }
+    
+    @Override
+    protected void disconnect() {
+        super.disconnect();
+        removeCreator();
+        removePortal();
+        removeInitialContent();
+    }
 }
