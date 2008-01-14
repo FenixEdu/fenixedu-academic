@@ -44,13 +44,10 @@ public class ResearchUnitPathProcessor extends AbstractPathProcessor {
 	StringBuffer buffer = new StringBuffer("");
 	Iterator<Unit> unitIterator = unitsList.iterator();
 	while (unitIterator.hasNext()) {
-	    if(buffer.length() > 0) {
-		buffer.append("/");
-	    }
 	    buffer.append(unitIterator.next().getAcronym());
+	    buffer.append("/");
 	}
 	return path.substring(buffer.toString().length());
 
     }
 }
- 
