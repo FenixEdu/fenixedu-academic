@@ -41,14 +41,16 @@ public class ResearchUnitPathProcessor extends AbstractPathProcessor {
     public String getTrailingPath(String path) {
 	String[] possibleUnits = path.split("/");
 	List<Unit> unitsList = findUnitsInPath(possibleUnits);
-	StringBuffer buffer = new StringBuffer();
+	StringBuffer buffer = new StringBuffer("");
 	Iterator<Unit> unitIterator = unitsList.iterator();
 	while (unitIterator.hasNext()) {
+	    if(buffer.length() > 0) {
+		buffer.append("/");
+	    }
 	    buffer.append(unitIterator.next().getAcronym());
-	    buffer.append("/");
-
 	}
 	return path.substring(buffer.toString().length());
 
     }
 }
+ 

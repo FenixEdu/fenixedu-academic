@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 
@@ -134,8 +135,11 @@ public class SectionProcessor extends SiteElementPathProcessor {
                 if (site == null) {
                     return Collections.emptyList();
                 }
-                
-                return null; //site.getAllOrderedTopLevelSections();
+                List<Section> sections = new ArrayList<Section>();
+                for(Content content : site.getAllAssociatedSections()) {
+                    sections.add((Section)content);
+                }
+                return sections;
             }
             else {
                 return section.getAssociatedSections();
