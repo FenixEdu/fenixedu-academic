@@ -18,7 +18,7 @@ CONTENT C WHERE CONTENT_ID='421011e0-fadc-102a-b5ba-0013d3b09da0';
 
 -- Coordenação de Exames AKA Avaliação
 insert into CONTENT(OJB_CONCRETE_CLASS,CONTENT_ID,NAME,CREATION_DATE,PREFIX,KEY_AVAILABILITY_POLICY,VISIBLE,EXECUTION_PATH)
-values('net.sourceforge.fenixedu.domain.functionalities.Module','e0181ae0-fb8b-102a-b5ba-0013d3b09da0','pt9:Avaliação',NOW(),'/examCoordinatination',NULL,'1','/examCoordination/index.do');
+values('net.sourceforge.fenixedu.domain.functionalities.Module','e0181ae0-fb8b-102a-b5ba-0013d3b09da0','pt9:Avaliação',NOW(),'/examCoordination',NULL,'1','/examCoordination/index.do');
 
 insert into AVAILABILITY_POLICY(OJB_CONCRETE_CLASS, EXPRESSION, TARGET_GROUP, KEY_CONTENT)
 select 'net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability', 'role(EXAM_COORDINATOR)','role(EXAM_COORDINATOR)', C.ID_INTERNAL FROM
