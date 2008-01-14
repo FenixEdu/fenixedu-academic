@@ -190,15 +190,15 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     private String getExtraWorkMovement(Assiduousness assiduousness, YearMonthDay beginDate, YearMonthDay endDate,
 	    String movementCode, Integer daysNumber) {
-	return getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate.getMonthOfYear(), beginDate, endDate,
-		movementCode, daysNumber);
+	return getExtraWorkMovement(assiduousness, beginDate.plusMonths(1).getYear(), beginDate.plusMonths(1).getMonthOfYear(),
+		beginDate, endDate, movementCode, daysNumber);
     }
 
     private String getExtraWorkMovement(Assiduousness assiduousness, int year, int month, YearMonthDay beginDate,
 	    YearMonthDay endDate, String movementCode, Integer daysNumber) {
 	StringBuilder result = new StringBuilder();
 	result.append(year).append(fieldSeparator);
-	result.append(monthFormat.format(month + 1)).append(fieldSeparator);
+	result.append(monthFormat.format(month)).append(fieldSeparator);
 	result.append(employeeNumberFormat.format(assiduousness.getEmployee().getEmployeeNumber())).append(fieldSeparator);
 	result.append("M").append(fieldSeparator).append(movementCode).append(fieldSeparator);
 	result.append(dateFormat.print(beginDate)).append(fieldSeparator);
@@ -231,8 +231,8 @@ public class ExportClosedExtraWorkMonth extends Service {
 				.getMaximumValue());
 
 		if (extraWorkRequest.getSundayHours() != null && extraWorkRequest.getSundayHours() != 0.0) {
-		    result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate.getMonthOfYear(), begin,
-			    end, extraWorkSundayMovementCode, extraWorkRequest.getSundayHours()));
+		    result.append(getExtraWorkMovement(assiduousness, beginDate.plusMonths(1).getYear(), beginDate.plusMonths(1)
+			    .getMonthOfYear(), begin, end, extraWorkSundayMovementCode, extraWorkRequest.getSundayHours()));
 		}
 		Integer totalVacationDays = 0;
 		if (extraWorkRequest.getNightVacationsDays() != null) {
@@ -243,17 +243,18 @@ public class ExportClosedExtraWorkMonth extends Service {
 		}
 
 		if (totalVacationDays != 0) {
-		    result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate.getMonthOfYear(), begin,
-			    end, extraWorkVacationDaysMovementCode, extraWorkRequest.getNightVacationsDays()
-				    + extraWorkRequest.getNormalVacationsDays()));
+		    result.append(getExtraWorkMovement(assiduousness, beginDate.plusMonths(1).getYear(), beginDate.plusMonths(1)
+			    .getMonthOfYear(), begin, end, extraWorkVacationDaysMovementCode, extraWorkRequest
+			    .getNightVacationsDays()
+			    + extraWorkRequest.getNormalVacationsDays()));
 		}
 		if (extraWorkRequest.getSaturdayHours() != null && extraWorkRequest.getSaturdayHours() != 0.0) {
-		    result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate.getMonthOfYear(), begin,
-			    end, extraWorkSaturdayMovementCode, extraWorkRequest.getSaturdayHours()));
+		    result.append(getExtraWorkMovement(assiduousness, beginDate.plusMonths(1).getYear(), beginDate.plusMonths(1)
+			    .getMonthOfYear(), begin, end, extraWorkSaturdayMovementCode, extraWorkRequest.getSaturdayHours()));
 		}
 		if (extraWorkRequest.getHolidayHours() != null && extraWorkRequest.getHolidayHours() != 0.0) {
-		    result.append(getExtraWorkMovement(assiduousness, beginDate.getYear(), beginDate.getMonthOfYear(), begin,
-			    end, extraWorkHolidayMovementCode, extraWorkRequest.getHolidayHours()));
+		    result.append(getExtraWorkMovement(assiduousness, beginDate.plusMonths(1).getYear(), beginDate.plusMonths(1)
+			    .getMonthOfYear(), begin, end, extraWorkHolidayMovementCode, extraWorkRequest.getHolidayHours()));
 		}
 	    }
 	}
@@ -339,11 +340,12 @@ public class ExportClosedExtraWorkMonth extends Service {
 		justificationDays, leavesBeans);
 	StringBuilder line = new StringBuilder();
 	for (YearMonthDay day : daysToUnjustify) {
+	    YearMonthDay nextMontDate = day.plusMonths(1);
 	    AssiduousnessStatus assiduousnessStatus = assiduousness.getActiveAssiduousnessStatusInDate(day);
 	    Integer code = justificationMotive.getGiafCode(assiduousness, assiduousnessStatus);
 	    if (code != 0) {
-		line.append(day.getYear()).append(fieldSeparator);
-		line.append(monthFormat.format(day.getMonthOfYear() + 1)).append(fieldSeparator);
+		line.append(nextMontDate.getYear()).append(fieldSeparator);
+		line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
 		line.append(employeeNumberFormat.format(assiduousness.getEmployee().getEmployeeNumber())).append(fieldSeparator);
 		line.append("F").append(fieldSeparator);
 		line.append(justificationCodeFormat.format(code)).append(fieldSeparator);
@@ -415,8 +417,9 @@ public class ExportClosedExtraWorkMonth extends Service {
 		    maternityJustificationList.add(leaveBean.getLeave().getAssiduousness());
 		}
 	    }
-	    line.append(start.getYear()).append(fieldSeparator);
-	    line.append(monthFormat.format(start.getMonthOfYear() + 1)).append(fieldSeparator);
+	    YearMonthDay nextMontDate = start.plusMonths(1);
+	    line.append(nextMontDate.getYear()).append(fieldSeparator);
+	    line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
 	    line.append(employeeNumberFormat.format(leaveBean.getLeave().getAssiduousness().getEmployee().getEmployeeNumber()))
 		    .append(fieldSeparator);
 	    line.append("F").append(fieldSeparator);
@@ -466,8 +469,9 @@ public class ExportClosedExtraWorkMonth extends Service {
 	Integer code = leave.getJustificationMotive().getGiafCode(leave.getAssiduousness(), assiduousnessStatus);
 	StringBuilder line = new StringBuilder();
 	if (code != 0) {
-	    line.append(beginDate.getYear()).append(fieldSeparator);
-	    line.append(monthFormat.format(beginDate.getMonthOfYear() + 1)).append(fieldSeparator);
+	    YearMonthDay nextMontDate = beginDate.plusMonths(1);
+	    line.append(nextMontDate.getYear()).append(fieldSeparator);
+	    line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
 	    line.append(employeeNumberFormat.format(leave.getAssiduousness().getEmployee().getEmployeeNumber())).append(
 		    fieldSeparator);
 	    line.append("F").append(fieldSeparator);
