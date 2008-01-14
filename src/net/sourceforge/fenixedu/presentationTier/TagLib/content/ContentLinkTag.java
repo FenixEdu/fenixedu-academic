@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
+import org.apache.struts.util.RequestUtils;
+
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
@@ -17,6 +19,7 @@ public class ContentLinkTag extends BodyTagSupport {
     protected String scope = null;
     protected String target = null;
     protected String title = null;
+    protected Boolean hrefInBody = null;
 
     public String getName() {
 	return (this.name);
@@ -47,6 +50,14 @@ public class ContentLinkTag extends BodyTagSupport {
         return title;
     }
 
+    public Boolean getHrefInBody() {
+        return hrefInBody;
+    }
+
+    public void setHrefInBody(Boolean hrefInBody) {
+        this.hrefInBody = hrefInBody;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -65,7 +76,13 @@ public class ContentLinkTag extends BodyTagSupport {
     public int doEndTag() throws JspException {
 	try {
 	    writeStartTag();
-	    write(getBodyContent().getString().trim());
+	    if(getHrefInBody() != null && getHrefInBody()) {
+		final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
+		final String path = getContextPath() + content.getReversePath();
+		write(RequestUtils.absoluteURL((HttpServletRequest) pageContext.getRequest(), path).toString());
+	    } else {
+		write(getBodyContent().getString().trim());
+	    }
 	    writeEndTag();
 	} catch (IOException e) {
 	    throw new JspException(e);
@@ -113,6 +130,7 @@ public class ContentLinkTag extends BodyTagSupport {
 	property = null;
 	scope = null;
 	target = null;
+	hrefInBody = null;
     }
 
     public String getScope() {

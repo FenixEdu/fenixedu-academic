@@ -65,12 +65,13 @@
 				<fr:property name="imageFor(Functionality)" value="/images/site/institutionalSection.gif"/>
 
 				<fr:property name="schemaFor(Item)" value="content.in.tree"/>
-				<fr:property name="imageFor(Item)" value="/images/functionalities/sheet.gif"/>
+				<fr:property name="imageFor(Item)" value="/images/site/section.gif"/>
                 <fr:property name="childrenFor(Item)" value="childrenAsContent"/>
 
 				<fr:property name="schemaFor(Attachment)" value="content.in.tree"/>
 				<fr:property name="imageFor(Attachment)" value="/images/functionalities/sheet.gif"/>
 				
+				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>
                 <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
             <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${idInternal}&amp;" + context %>"/>

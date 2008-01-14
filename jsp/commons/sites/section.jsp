@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 
 <html:xhtml/>
 
@@ -63,18 +64,13 @@
             </fr:view>    
         </span>
     </p>
-    <logic:present name="directLinkContext">
-        <p>
-            <span style="color: #888;" class="anchorcaaa">
-                <bean:message key="label.section.directLink" bundle="SITE_RESOURCES"/>:
-                
-                <bean:define id="directLinkContext" name="directLinkContext"/>
-                <html:link href="<%= directLinkContext + SectionProcessor.getSectionPath(section) %>">
-                    <%= directLinkContext + SectionProcessor.getSectionPath(section) %>
-                </html:link>
-            </span>
-        </p>
-    </logic:present>
+     <p>
+         <span style="color: #888;" class="anchorcaaa">
+             <bean:message key="label.section.directLink" bundle="SITE_RESOURCES"/>:
+             
+			<app:contentLink name="section" target="_blank" hrefInBody="true"/>
+         </span>
+     </p>
 </div>
 
 <p>
@@ -183,8 +179,13 @@
 				<fr:property name="imageFor(Functionality)" value="/images/site/institutionalSection.gif"/>
 
 				<fr:property name="schemaFor(Item)" value="content.in.tree"/>
-				<fr:property name="imageFor(Item)" value="/images/functionalities/sheet.gif"/>
+				<fr:property name="imageFor(Item)" value="/images/site/section.gif"/>
+                <fr:property name="childrenFor(Item)" value="childrenAsContent"/>
+
+				<fr:property name="schemaFor(Attachment)" value="content.in.tree"/>
+				<fr:property name="imageFor(Attachment)" value="/images/functionalities/sheet.gif"/>				
 				
+				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>
                 <fr:property name="current" value="<%= sectionId.toString() %>"/>
                 <fr:property name="currentClasses" value="highlight1"/>
                 <fr:property name="movedClass" value="highlight3"/>
