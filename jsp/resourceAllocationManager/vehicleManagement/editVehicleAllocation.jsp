@@ -24,15 +24,40 @@
 	
 	<logic:empty name="vehicleAllocation">
 		<logic:notEmpty name="allocationBean">			
+			
 			<h2><bean:message key="label.create.vehicle.allocation" bundle="SOP_RESOURCES"/></h2>				
-			<fr:edit id="createVehicleAllocationBeanID" name="allocationBean" action="/vehicleManagement.do?method=createAllocation" schema="CreateVehicleAllocation">
-				<fr:layout name="tabular" >
-					<fr:property name="classes" value="tstyle5 thlight thright"/>
-					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-				</fr:layout>
-				<fr:destination name="invalid" path="/vehicleManagement.do?method=prepareCreate"/>	
-				<fr:destination name="cancel" path="/vehicleManagement.do?method=prepare"/>						
-			</fr:edit>					
+
+			<logic:empty name="allocationBean" property="amountCharged">
+				<fr:edit id="viewVehicleAllocationBeanID" name="allocationBean" action="/vehicleManagement.do?method=prepareConfirmCreation" schema="PrepareCreateVehicleAllocation">
+					<fr:layout name="tabular" >
+						<fr:property name="classes" value="tstyle5 thlight thright"/>
+						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					</fr:layout>
+					<fr:destination name="invalid" path="/vehicleManagement.do?method=prepareCreate"/>	
+					<fr:destination name="cancel" path="/vehicleManagement.do?method=prepare"/>						
+				</fr:edit>
+			</logic:empty>
+			
+			<logic:notEmpty name="allocationBean" property="amountCharged">
+				
+				<fr:view name="allocationBean" schema="ViewVehicleAllocation">
+					<fr:layout name="tabular" >
+						<fr:property name="classes" value="tstyle5 thlight thright"/>
+						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						<fr:property name="rowClasses" value="bold,,,,," />	
+					</fr:layout>
+				</fr:view>
+			
+				<fr:edit id="createVehicleAllocationBeanID" name="allocationBean" action="/vehicleManagement.do?method=createAllocation" schema="CreateVehicleAllocation">
+					<fr:layout name="tabular" >
+						<fr:property name="classes" value="tstyle5 thlight thright"/>
+						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					</fr:layout>
+					<fr:destination name="invalid" path="/vehicleManagement.do?method=prepareCreate"/>	
+					<fr:destination name="cancel" path="/vehicleManagement.do?method=prepare"/>						
+				</fr:edit>			
+			</logic:notEmpty>			
+								
 		</logic:notEmpty>
 	</logic:empty>
 		

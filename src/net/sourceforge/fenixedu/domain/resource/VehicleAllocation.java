@@ -21,157 +21,163 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
 public class VehicleAllocation extends VehicleAllocation_Base {
-        
-    public final static Comparator<VehicleAllocation> COMPARATOR_BY_VEHICLE_NUMBER_PLATE = new ComparatorChain();    
-    static {	
+
+    public final static Comparator<VehicleAllocation> COMPARATOR_BY_VEHICLE_NUMBER_PLATE = new ComparatorChain();
+    static {
 	((ComparatorChain) COMPARATOR_BY_VEHICLE_NUMBER_PLATE).addComparator(new BeanComparator("vehicle.numberPlate"));
 	((ComparatorChain) COMPARATOR_BY_VEHICLE_NUMBER_PLATE).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
-    
-    @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")    
-    public VehicleAllocation(DateTime beginDateTime, DateTime endDateTime, Vehicle vehicle, Party requestor, String reason, 
-	    BigDecimal distance, BigDecimal amountCharged) {
-	
-        super();
-        setResource(vehicle);
-        setRequestor(requestor);
-        setReason(reason);  
-        setDistance(distance);        
-        setAllocationInterval(beginDateTime, endDateTime);
-        setAmountCharged(amountCharged);
-    }
-    
+
     @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")
-    public void edit(DateTime beginDateTime, DateTime endDateTime, Vehicle vehicle, Party requestor, String reason, BigDecimal distance,
-	    BigDecimal amountCharged) {
-	
+    public VehicleAllocation(DateTime beginDateTime, DateTime endDateTime, Vehicle vehicle, Party requestor, String reason,
+	    BigDecimal distance, BigDecimal amountCharged) {
+
+	super();
 	setResource(vehicle);
 	setRequestor(requestor);
-	setReason(reason);  
-	setDistance(distance);	
+	setReason(reason);
+	setDistance(distance);
 	setAllocationInterval(beginDateTime, endDateTime);
 	setAmountCharged(amountCharged);
     }
-    
+
+    @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")
+    public void edit(DateTime beginDateTime, DateTime endDateTime, Vehicle vehicle, Party requestor, String reason,
+	    BigDecimal distance, BigDecimal amountCharged) {
+
+	setResource(vehicle);
+	setRequestor(requestor);
+	setReason(reason);
+	setDistance(distance);
+	setAllocationInterval(beginDateTime, endDateTime);
+	setAmountCharged(amountCharged);
+    }
+
     @Override
-    @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")    
+    @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")
     public void delete() {
 	DateTime currentDateTime = new DateTime();
-	if(occursInThePast(currentDateTime)) {
+	if (occursInThePast(currentDateTime)) {
 	    throw new DomainException("error.cannot.delete.allocation.already.occured");
 	}
-        super.setRequestor(null);
+	super.setRequestor(null);
 	super.delete();
     }
-    
+
     @Override
     public void setAmountCharged(BigDecimal amountCharged) {
-	if(amountCharged != null && amountCharged.compareTo(BigDecimal.ZERO) != 1) {
-            throw new DomainException("error.Vehicle.allocation.invalid.amountCharged");
-        }
-        super.setAmountCharged(amountCharged);
+	if (amountCharged != null && amountCharged.compareTo(BigDecimal.ZERO) != 1) {
+	    throw new DomainException("error.Vehicle.allocation.invalid.amountCharged");
+	}
+	super.setAmountCharged(amountCharged);
     }
-    
+
     @Override
     public void setDistance(BigDecimal distance) {
-        if(distance != null && distance.compareTo(BigDecimal.ZERO) != 1) {
-            throw new DomainException("error.Vehicle.allocation.invalid.distance");
-        }
-        super.setDistance(distance);
+	if (distance != null && distance.compareTo(BigDecimal.ZERO) != 1) {
+	    throw new DomainException("error.Vehicle.allocation.invalid.distance");
+	}
+	super.setDistance(distance);
     }
-    
+
     public BigDecimal getAllocationCost() {
-	
-	BigDecimal distance = getDistance();
-		
-	if(distance == null) {
+	return getAllocationCost(getVehicle(), getDistance(), getBeginDateTime(), getEndDateTime());
+    }
+
+    public static BigDecimal getAllocationCost(Vehicle vehicle, BigDecimal distance, DateTime begin, DateTime end) {
+
+	if (distance == null || vehicle == null || begin == null || end == null) {
 	    return null;
 	}
-		
-	BigDecimal distanceValue = getDistanceValue();
+
+	BigDecimal distanceValue = getDistanceValue(vehicle, distance);
 	BigDecimal hourValue = getHourValue();
-	BigDecimal hoursNumber = getNumberOfAllocationHours();
-	
-	return distance.multiply(distanceValue).add((hoursNumber.multiply(hourValue))).setScale(2, RoundingMode.HALF_UP);	
-    }     
+	BigDecimal hoursNumber = getNumberOfAllocationHours(begin, end);
+
+	return distance.multiply(distanceValue).add((hoursNumber.multiply(hourValue))).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getNumberOfAllocationHours() {
+	return getNumberOfAllocationHours(getBeginDateTime(), getEndDateTime());
+    }
     
-    public BigDecimal getNumberOfAllocationHours() {	
-	int minutes = Minutes.minutesBetween(getBeginDateTime(), getEndDateTime()).getMinutes();
-	BigDecimal hours = BigDecimal.valueOf(minutes).divide(BigDecimal.valueOf(Lesson.NUMBER_OF_MINUTES_IN_HOUR), 2, RoundingMode.HALF_UP);
+    public static BigDecimal getNumberOfAllocationHours(DateTime begin, DateTime end) {
+	int minutes = Minutes.minutesBetween(begin, end).getMinutes();
+	BigDecimal hours = BigDecimal.valueOf(minutes).divide(BigDecimal.valueOf(Lesson.NUMBER_OF_MINUTES_IN_HOUR), 2,
+		RoundingMode.HALF_UP);
 	return hours;
     }
 
-    private BigDecimal getHourValue() {	
+    private static BigDecimal getHourValue() {
 	return BigDecimal.TEN;
     }
 
-    private BigDecimal getDistanceValue() {	
-	
-	BigDecimal distance = getDistance();	
-	BigDecimal allocationCostMultiplier = getVehicle().getAllocationCostMultiplier();
-	
+    private static BigDecimal getDistanceValue(Vehicle vehicle, BigDecimal distance) {
+
+	BigDecimal allocationCostMultiplier = vehicle.getAllocationCostMultiplier();
+
 	BigDecimal firstConstant = BigDecimal.valueOf(0.6);
 	BigDecimal secondConstant = BigDecimal.valueOf(-1);
 	BigDecimal thirdConstant = BigDecimal.valueOf(780);
-	BigDecimal fourConstant = BigDecimal.valueOf(1000);		
-		
-	return (allocationCostMultiplier.multiply((firstConstant.multiply(secondConstant).multiply(distance).
-		add(thirdConstant))).divide(fourConstant)); 
+	BigDecimal fourConstant = BigDecimal.valueOf(1000);
+
+	return (allocationCostMultiplier.multiply((firstConstant.multiply(secondConstant).multiply(distance).add(thirdConstant)))
+		.divide(fourConstant));
     }
 
     @Override
     public void setBeginDateTime(DateTime beginDateTime) {
 	throw new DomainException("error.invalid.operation");
     }
-        
+
     @Override
     public void setEndDateTime(DateTime endDateTime) {
 	throw new DomainException("error.invalid.operation");
     }
-    
+
     public void setAllocationInterval(DateTime begin, DateTime end) {
 	checkAllocationIntersection(begin, end);
 	super.setBeginDateTime(begin);
 	super.setEndDateTime(end);
     }
-    
+
     @Override
     public void setRequestor(Party requestor) {
-        if(requestor == null) {
-            throw new DomainException("error.VehicleAllocation.empty.requestor");
-        }
+	if (requestor == null) {
+	    throw new DomainException("error.VehicleAllocation.empty.requestor");
+	}
 	super.setRequestor(requestor);
-    }   
-    
+    }
+
     @Override
     public boolean isVehicleAllocation() {
-        return true;
-    }   
-    
+	return true;
+    }
+
     @Override
-    public void setResource(Resource resource) {		
+    public void setResource(Resource resource) {
 	if (resource == null || !resource.isVehicle()) {
 	    throw new DomainException("error.allocation.invalid.resource");
 	}
 	super.setResource(resource);
     }
-        
+
     public Vehicle getVehicle() {
 	return (Vehicle) getResource();
     }
-    
+
     public void setVehicle(Vehicle vehicle) {
 	setResource(vehicle);
     }
-    
+
     public Boolean getReasonAvailable() {
 	return !StringUtils.isEmpty(getReason());
     }
-    
-    public boolean intersectPeriod(DateTime firstDayOfMonth, DateTime lastDayOfMonth) {			
+
+    public boolean intersectPeriod(DateTime firstDayOfMonth, DateTime lastDayOfMonth) {
 	return !getBeginDateTime().isAfter(lastDayOfMonth) && !getEndDateTime().isBefore(firstDayOfMonth);
     }
-    
+
     public boolean isActive(DateTime currentDate) {
 	return intersectPeriod(currentDate, currentDate);
     }
@@ -179,18 +185,18 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     private boolean occursInTheFuture(DateTime currentDateTime) {
 	return getBeginDateTime().isAfter(currentDateTime);
     }
-    
+
     private boolean occursInThePast(DateTime currentDateTime) {
 	return !occursInTheFuture(currentDateTime) && !isActive(currentDateTime);
     }
-    
-    public void checkAllocationIntersection(DateTime begin, DateTime end) {		
-	if(getBeginDateTime() != null && getEndDateTime() != null && occursInThePast(new DateTime())) {
+
+    public void checkAllocationIntersection(DateTime begin, DateTime end) {
+	if (getBeginDateTime() != null && getEndDateTime() != null && occursInThePast(new DateTime())) {
 	    throw new DomainException("error.cannot.delete.allocation.already.occured");
 	}
-	checkBeginDateAndEndDate(begin, end);	
+	checkBeginDateAndEndDate(begin, end);
 	for (ResourceAllocation resourceAllocation : getVehicle().getResourceAllocations()) {
-	    if (!resourceAllocation.equals(this) && ((VehicleAllocation)resourceAllocation).allocationsIntersection(begin, end)) {
+	    if (!resourceAllocation.equals(this) && ((VehicleAllocation) resourceAllocation).allocationsIntersection(begin, end)) {
 		throw new DomainException("error.VehicleAllocation.allocation.intersection");
 	    }
 	}
@@ -211,40 +217,41 @@ public class VehicleAllocation extends VehicleAllocation_Base {
 	    throw new DomainException("error.VehicleAllocation.begin.after.end");
 	}
     }
-    
-    public static Set<VehicleAllocation> getActiveVehicleAllocations(){
+
+    public static Set<VehicleAllocation> getActiveVehicleAllocations() {
 	List<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
 	Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
 	DateTime currentDateTime = new DateTime();
 	for (ResourceAllocation resourceAllocation : resourceAllocations) {
-	    if(resourceAllocation.isVehicleAllocation() && ((VehicleAllocation)resourceAllocation).isActive(currentDateTime)) {
+	    if (resourceAllocation.isVehicleAllocation() && ((VehicleAllocation) resourceAllocation).isActive(currentDateTime)) {
 		result.add((VehicleAllocation) resourceAllocation);
 	    }
 	}
 	return result;
     }
-    
-    public static Set<VehicleAllocation> getFutureVehicleAllocations(){
+
+    public static Set<VehicleAllocation> getFutureVehicleAllocations() {
 	List<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
 	Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
 	DateTime currentDateTime = new DateTime();
 	for (ResourceAllocation resourceAllocation : resourceAllocations) {
-	    if(resourceAllocation.isVehicleAllocation() && ((VehicleAllocation)resourceAllocation).occursInTheFuture(currentDateTime)) {
+	    if (resourceAllocation.isVehicleAllocation()
+		    && ((VehicleAllocation) resourceAllocation).occursInTheFuture(currentDateTime)) {
 		result.add((VehicleAllocation) resourceAllocation);
 	    }
 	}
 	return result;
     }
-    
-    public static Set<VehicleAllocation> getPastVehicleAllocations(DateTime begin, DateTime end, Vehicle vehicle){
+
+    public static Set<VehicleAllocation> getPastVehicleAllocations(DateTime begin, DateTime end, Vehicle vehicle) {
 	List<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
 	Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
 	DateTime currentDateTime = new DateTime();
 	for (ResourceAllocation resourceAllocation : resourceAllocations) {
-	    if(resourceAllocation.isVehicleAllocation() &&
-		    (vehicle == null || ((VehicleAllocation)resourceAllocation).getVehicle().equals(vehicle)) && 
-		    ((VehicleAllocation)resourceAllocation).occursInThePast(currentDateTime) && 
-		    ((VehicleAllocation)resourceAllocation).intersectPeriod(begin, end)) {
+	    if (resourceAllocation.isVehicleAllocation()
+		    && (vehicle == null || ((VehicleAllocation) resourceAllocation).getVehicle().equals(vehicle))
+		    && ((VehicleAllocation) resourceAllocation).occursInThePast(currentDateTime)
+		    && ((VehicleAllocation) resourceAllocation).intersectPeriod(begin, end)) {
 		result.add((VehicleAllocation) resourceAllocation);
 	    }
 	}
