@@ -179,8 +179,8 @@ public class RequestChecksumFilter implements Filter {
 		isValidChecksum(uri, httpServletRequest.getQueryString(),checksum) ||
 		isValidChecksum(uriUTF8, httpServletRequest.getQueryString(),checksum) ||
 
-		isValidChecksumIgnoringPath(httpServletRequest, checksum) ||
-		isValidChecksumIgnoringPath(httpServletRequest, checksum);
+		isValidChecksumIgnoringPath(httpServletRequest, checksum, "ISO-8859-1") ||
+		isValidChecksumIgnoringPath(httpServletRequest, checksum, "UTF-8");
 	
     }
 
