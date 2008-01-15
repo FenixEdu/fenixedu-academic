@@ -52,7 +52,7 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
     }
 
     protected String getPath(final String encoding) {
-	final String requestedPath = getRequest().getServletPath();
+	final String requestedPath = getRequest().getRequestURI().substring(getRequest().getContextPath().length());
 	try {
 	    if (requestedPath.matches("/dotIstPortal.do")) {
 		return getRequest().getParameter("prefix") + getRequest().getParameter("page");

@@ -63,7 +63,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	if (selectedContainer == null) {
 	    String queryString = request.getQueryString();
 	    String lookupPath = path + (queryString != null && queryString.length() > 0 ? "?" + queryString : "");
-	    if (lookupPath.charAt(0) != '/') {
+	    if (lookupPath.length() > 0 && lookupPath.charAt(0) != '/') {
 		lookupPath = "/" + lookupPath;
 	    }
 
