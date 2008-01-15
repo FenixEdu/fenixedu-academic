@@ -175,7 +175,7 @@ public class UnitSiteRenderer extends OutputRenderer {
 	    }
 	    
 	    MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(unit.getSite().getClass());
-	    return metaDomainObject == null ? null : metaDomainObject.getAssociatedPortal().getName()
+	    return metaDomainObject == null ? null : metaDomainObject.getAssociatedPortal().getNormalizedName()
 		    .getContent()
 		    + "/" + unit.getUnitPath("/");
 	}

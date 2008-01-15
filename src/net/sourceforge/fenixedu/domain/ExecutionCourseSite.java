@@ -113,7 +113,7 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     }
     
     public void addForum(ExecutionCourseForum executionCourseForum) {
-	checkIfCanAddForum(executionCourseForum.getName());
+	checkIfCanAddForum(executionCourseForum.getNormalizedName());
 	addChild(executionCourseForum);	
     }
     
@@ -133,7 +133,7 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
 
     public ExecutionCourseForum getForumByName(MultiLanguageString name) {
 	for (final ExecutionCourseForum executionCourseForum : getForuns()) {
-	    if (executionCourseForum.getName().equalInAnyLanguage(name)) {
+	    if (executionCourseForum.getNormalizedName().equalInAnyLanguage(name)) {
 		return executionCourseForum;
 	    }
 	}

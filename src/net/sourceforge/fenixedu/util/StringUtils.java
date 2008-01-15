@@ -48,7 +48,7 @@ public class StringUtils {
 
     private static void normalizeStringArray(String[] string) {
         for (int i = 0; i < string.length; i++) {
-            string[i] = StringNormalizer.normalize(string[i]).toLowerCase();
+            string[i] = StringNormalizer.normalize(string[i]);
         }
     }
 

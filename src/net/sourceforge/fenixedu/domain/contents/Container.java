@@ -166,7 +166,7 @@ public abstract class Container extends Container_Base {
 	String prefix = getPrefix();
 
 	if (prefix == null) {
-	    prefix = getName().getContent(Language.getApplicationLanguage());
+	    prefix = getNormalizedName().getContent(Language.getApplicationLanguage());
 	}
 
 	if(!StringUtils.isEmpty(prefix) && path.startsWith(prefix)) {

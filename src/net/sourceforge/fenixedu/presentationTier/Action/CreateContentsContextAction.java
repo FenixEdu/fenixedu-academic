@@ -51,7 +51,7 @@ public class CreateContentsContextAction extends FenixAction {
 
 	List<String> paths = new ArrayList<String>();
 	for(Content contentForPath : contents.subList(1,contents.size())) {
-	    paths.add(contentForPath.getName().getContent());
+	    paths.add(contentForPath.getNormalizedName().getContent());
 	}
 	
 	StringBuffer buffer = new StringBuffer(""); 

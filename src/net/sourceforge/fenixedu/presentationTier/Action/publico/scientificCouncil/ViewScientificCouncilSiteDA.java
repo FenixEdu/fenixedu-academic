@@ -22,7 +22,7 @@ public class ViewScientificCouncilSiteDA extends UnitSiteVisualizationDA {
 	MetaDomainObjectPortal portal = (MetaDomainObjectPortal) MetaDomainObject.getMeta(ScientificCouncilSite.class)
 		.getAssociatedPortal();
 	try {
-	    return RequestUtils.absoluteURL(request, portal.getName().getContent()).toString();
+	    return RequestUtils.absoluteURL(request, portal.getNormalizedName().getContent()).toString();
 	} catch (MalformedURLException e) {
 	    return "";
 	}

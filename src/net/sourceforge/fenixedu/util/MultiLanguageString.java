@@ -197,6 +197,12 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
 		    return true;
 		}
 	    }
+	} else if (obj instanceof String) {
+	    for (final String string : getAllContents()) {
+		if (string.equals(obj)) {
+		    return true;
+		}
+	    }
 	}
 	return false;
     }

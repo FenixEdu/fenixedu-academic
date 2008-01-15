@@ -216,7 +216,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 
 	private AnnouncementBoard getBoard(String name, Unit unit) {
 		for (AnnouncementBoard board : unit.getBoards()) {
-			if (board.getName().equals(name)) {
+			if (board.getName().equalInAnyLanguage(name)) {
 				return board;
 			}
 		}

@@ -79,7 +79,7 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
 	List<String> subPaths = new ArrayList<String>();
 	if (!contents.isEmpty()) {
 	    for (Content contentPath : contents.subList(0, contents.size() - 1)) {
-		subPaths.add(contentPath.getName().getContent());
+		subPaths.add(contentPath.getNormalizedName().getContent());
 	    }
 	}
 	return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context, isTemplatedContent(

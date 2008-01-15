@@ -67,7 +67,7 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
 
 	try {
 	    MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(ResearchUnitSite.class);
-	    String path = metaDomainObject.getAssociatedPortal().getName().getContent() + "/" + site.getUnit().getUnitPath("/");
+	    String path = metaDomainObject.getAssociatedPortal().getNormalizedName().getContent() + "/" + site.getUnit().getUnitPath("/");
 	    return RequestUtils.absoluteURL(request,
 		    path).toString();
 	} catch (MalformedURLException e) {

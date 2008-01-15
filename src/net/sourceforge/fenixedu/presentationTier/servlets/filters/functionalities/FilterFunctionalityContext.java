@@ -106,12 +106,12 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 		    i++;
 		    if(actualSelectedContainer == contents.get(i)) {
 			stringBuilder.append("/");
-			stringBuilder.append(content.getName().getContent());
+			stringBuilder.append(content.getNormalizedName().getContent());
 			break;
 		    }
 		}
 		stringBuilder.append("/");
-		stringBuilder.append(content.getName().getContent());
+		stringBuilder.append(content.getNormalizedName().getContent());
 		if (content == actualSelectedContainer) {
 		    break;
 		}
@@ -225,7 +225,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	final StringBuilder stringBuilder = new StringBuilder();
 	for (final Content content : contents) {
 	    if (content != RootDomainObject.getInstance().getRootPortal()) {
-		final String name = content.getName().getContent();
+		final String name = content.getNormalizedName().getContent();
 		if (stringBuilder.length() > 0 || (stringBuilder.length() == 0 && name.length() > 0 && name.charAt(0) != '/')) {
 		    stringBuilder.append('/');
 		}

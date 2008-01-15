@@ -62,7 +62,7 @@ public class ContextBreadCrumRenderer extends OutputRenderer {
 		StringBuffer buffer = new StringBuffer(context.getRequest().getContextPath());
 		for(Content content : contents) {
 		    buffer.append("/");
-		    buffer.append(content.getName().getContent());
+		    buffer.append(content.getNormalizedName().getContent());
 		}
 		
 		if (targetContent.isAvailable()) { 

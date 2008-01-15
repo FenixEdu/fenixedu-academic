@@ -24,6 +24,8 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
 
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 /**
  * A <code>Content</code> is a piece of information, normally created directly
  * by a user, that can be composed and presented in a page or menu.
@@ -207,10 +209,10 @@ public abstract class Content extends Content_Base {
     }
 
     protected String getPathName() {
-	String name = getName().getContent(Language.getApplicationLanguage());
+	String name = getNormalizedName().getContent(Language.getApplicationLanguage());
 
 	if (name == null) {
-	    name = getName().getContent();
+	    name = getNormalizedName().getContent();
 	}
 
 	return StringUtils.normalize(name.toLowerCase().replace(' ', '-').replace('/', '-'));
@@ -229,7 +231,7 @@ public abstract class Content extends Content_Base {
 		continue;
 	    }
 
-	    MultiLanguageString siblingName = sibling.getName();
+	    MultiLanguageString siblingName = sibling.getNormalizedName();
 	    for (Language language : siblingName.getAllLanguages()) {
 		Set<String> languageNames = names.get(language);
 
@@ -308,7 +310,7 @@ public abstract class Content extends Content_Base {
     public abstract boolean isElement();
 
     public boolean matchesPath(final String path) {
-	for (final String name : getName().getAllContents()) {
+	for (final String name : getNormalizedName().getAllContents()) {
 	    if (name.equalsIgnoreCase(path)) {
 		return true;
 	    }
@@ -343,7 +345,7 @@ public abstract class Content extends Content_Base {
     }
 
     public void appendReversePathPart(final StringBuilder stringBuilder) {
-	final String name = getName().getContent();
+	final String name = getNormalizedName().getContent();
 	stringBuilder.append("/");
 	stringBuilder.append(name);
     }
@@ -370,4 +372,22 @@ public abstract class Content extends Content_Base {
         }
         super.setAvailabilityPolicy(availabilityPolicy);
     }
+
+    @Override
+    public void setName(final MultiLanguageString name) {
+	super.setName(name);
+    }
+
+    public MultiLanguageString getNormalizedName() {
+	final MultiLanguageString multiLanguageString = new MultiLanguageString();
+	for (final Language language : getName().getAllLanguages()) {
+	    multiLanguageString.setContent(language, normalize(getName().getContent(language)));
+	}
+	return multiLanguageString;
+    }
+
+    public static String normalize(final String string) {
+	return StringNormalizer.normalize(string).replace(' ', '-');
+    }
+    
 }

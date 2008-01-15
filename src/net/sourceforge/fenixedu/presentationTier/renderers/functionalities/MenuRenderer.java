@@ -185,7 +185,7 @@ public class MenuRenderer extends OutputRenderer {
 			HtmlList subMenu = new HtmlList();
 			item.addChild(subMenu);
 
-			final String name = entry.getReferingContent().getName().getContent();
+			final String name = entry.getReferingContent().getNormalizedName().getContent();
 			subPath.add(name);
 			addMenuEntries(context, subMenu, entry.getChildren(), subPath);
 			subPath.remove(name);
@@ -258,7 +258,7 @@ public class MenuRenderer extends OutputRenderer {
 	    buffer.append(name);
 	}
 	buffer.append('/');
-	buffer.append(targetContent.getName().getContent());
+	buffer.append(targetContent.getNormalizedName().getContent());
 	return buffer.toString();
     }
 

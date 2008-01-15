@@ -125,7 +125,7 @@ public class TopLevelMenuRenderer extends OutputRenderer {
 		    HtmlInlineContainer container = new HtmlInlineContainer();
 		    container.addChild(component);
 		    link.setContextRelative(false);
-		    link.setUrl(context.getRequest().getContextPath() + "/" + node.getReferingContent().getName().getContent());
+		    link.setUrl(context.getRequest().getContextPath() + "/" + node.getReferingContent().getNormalizedName().getContent());
 		    link.setBody(container);
 
 		    component = link;

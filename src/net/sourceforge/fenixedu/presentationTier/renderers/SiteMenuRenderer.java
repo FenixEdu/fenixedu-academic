@@ -265,7 +265,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 	List<String> subPaths = new ArrayList<String>();
 	if (contents.size() > 2) {
 	    for (Content content : contents.subList(1, contents.size() - 1)) {
-		subPaths.add(content.getName().getContent());
+		subPaths.add(content.getNormalizedName().getContent());
 	    }
 	}
 	return subPaths;

@@ -57,10 +57,7 @@ public class ContextFilter implements Filter {
     }
 
     private FunctionalityContext createContext(final HttpServletRequest httpServletRequest) {
-	final FilterFunctionalityContext filterFunctionalityContextIso88591 = new FilterFunctionalityContext(httpServletRequest, "ISO-8859-1");
-	final FilterFunctionalityContext filterFunctionalityContextUTF8 = new FilterFunctionalityContext(httpServletRequest, "UTF-8");
-	return filterFunctionalityContextUTF8.getSelectedContents().size() > filterFunctionalityContextIso88591.getSelectedContents().size() ?
-		filterFunctionalityContextUTF8 : filterFunctionalityContextIso88591;
+	return new FilterFunctionalityContext(httpServletRequest, "ISO-8859-1");
     }
 
     private void setContextAttibute(final HttpServletRequest servletRequest, final FunctionalityContext context) {
