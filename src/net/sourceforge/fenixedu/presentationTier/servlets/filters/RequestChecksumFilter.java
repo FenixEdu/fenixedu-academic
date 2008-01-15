@@ -171,14 +171,15 @@ public class RequestChecksumFilter implements Filter {
 	final String uri = decodeURL(httpServletRequest.getRequestURI(), "ISO-8859-1");
 	final String uriUTF8 = decodeURL(httpServletRequest.getRequestURI(), "UTF-8");
 
-	return isValidChecksum(uri, decodeURL(httpServletRequest.getQueryString()),checksum) || 
-		isValidChecksum(uri, httpServletRequest.getQueryString(),checksum) ||
+	return isValidChecksum(uri, decodeURL(httpServletRequest.getQueryString(), "ISO-8859-1"),checksum) ||
+		isValidChecksum(uriUTF8, decodeURL(httpServletRequest.getQueryString(), "UTF-8"),checksum) ||
 
-		isValidChecksum(uriUTF8, decodeURL(httpServletRequest.getQueryString()), checksum) ||
+		isValidChecksum(uri, httpServletRequest.getQueryString(),checksum) ||
 		isValidChecksum(uriUTF8, httpServletRequest.getQueryString(),checksum) ||
 
-		isValidChecksumIgnoringPath(httpServletRequest, checksum, "ISO-8859-1") ||
-		isValidChecksumIgnoringPath(httpServletRequest, checksum, "UTF-8");
+		isValidChecksumIgnoringPath(httpServletRequest, checksum) ||
+		isValidChecksumIgnoringPath(httpServletRequest, checksum);
+	
     }
 
     private boolean isValidChecksum(String uri, String queryString, String checksum) {
