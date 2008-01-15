@@ -108,3 +108,5 @@ execute "Removing Slashs from content Names" removeSlashFromContentNames.sql
 execute "Fix Manager Menu" fixManagerMenu.sql
 
 execute "Fix Departments Initial Structure" fixDeparments.sql
+
+execute "Add missing keys." addMissingIndexes.sql
