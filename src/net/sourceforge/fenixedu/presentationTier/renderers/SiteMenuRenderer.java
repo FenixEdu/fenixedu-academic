@@ -153,7 +153,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 			.getAttribute(FunctionalityContext.CONTEXT_KEY);
 
 		if (context == null) {
-		    context = new FilterFunctionalityContext(request);
+		    context = new FilterFunctionalityContext(request, "ISO-8859-1");
 		}
 
 		Collection<MenuEntry> entries = getEntries(object);
