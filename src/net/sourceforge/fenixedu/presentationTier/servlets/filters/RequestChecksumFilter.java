@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.servlet.Filter;
@@ -23,6 +25,7 @@ import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
+import net.sourceforge.fenixedu.presentationTier.servlets.ActionServletWrapper;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
@@ -168,9 +171,28 @@ public class RequestChecksumFilter implements Filter {
         }
     }
 
-    private boolean isValidChecksum(final HttpServletRequest httpServletRequest, final String checksum) {
+    private static final Set<String> subApplications = new HashSet<String>();
 
-	final String uri = decodeURL(httpServletRequest.getRequestURI(), "ISO-8859-1");
+    public void initSubApplications() {
+	if (subApplications.isEmpty()) {
+	    for (final String key : ActionServletWrapper.parameterMap.keySet()) {
+		if (key.startsWith("config/")) {
+		    subApplications.add(key.substring(6) + "/");
+		}
+	    }
+	}
+    }
+
+    private boolean isValidChecksum(final HttpServletRequest httpServletRequest, final String checksum) {
+	initSubApplications();
+
+	final String uri;
+	if (subApplications.contains(httpServletRequest.getServletPath())) {
+	    final String tmp = decodeURL(httpServletRequest.getRequestURI(), "ISO-8859-1");
+	    uri = tmp.substring(0, tmp.length() - 1);
+	} else {
+	    uri = decodeURL(httpServletRequest.getRequestURI(), "ISO-8859-1");	    
+	}
 
 	return isValidChecksum(uri, decodeURL(httpServletRequest.getQueryString(), "ISO-8859-1"), checksum) ||
 

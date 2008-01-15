@@ -13,11 +13,11 @@ import org.apache.struts.action.ActionServlet;
 
 public class ActionServletWrapper extends ActionServlet {
 
+    public static final Map<String, String> parameterMap = new HashMap<String, String>();
     private static class ServletConfigWrapper implements ServletConfig {
 
 	private final ServletConfig servletConfig;
 
-	private static final Map<String, String> parameterMap = new HashMap<String, String>();
 	static {
 	    parameterMap.put("config", "/WEB-INF/conf/struts-default.xml");
 	    parameterMap.put("application", "resources.ApplicationResources");
