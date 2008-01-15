@@ -43,12 +43,14 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	findSelectedContainerPath();
     }
 
-    public FilterFunctionalityContext(final HttpServletRequest request) {
+    public FilterFunctionalityContext(final HttpServletRequest request, final String encodingParam) {
 	super(request);
+
+	this.encoding = encodingParam;
 
 	String path = getCurrentContextPathFromRequest();
 	if (path == null) {
-	    path = getPath();
+	    path = getPath(encoding);
 	    hasBeenForwarded = false;
 	} else {
 	    hasBeenForwarded = true;

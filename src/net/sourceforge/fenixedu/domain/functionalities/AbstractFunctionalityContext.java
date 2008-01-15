@@ -22,7 +22,9 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
 
     private HttpServletRequest request;
     private IUserView userView;
-    
+
+    protected String encoding = "ISO-8859-1";
+
     public AbstractFunctionalityContext(HttpServletRequest request) {
         super();
         
@@ -49,24 +51,24 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
         }
     }
 
-    protected String getPath() {
+    protected String getPath(final String encoding) {
 	final String requestedPath = getRequest().getServletPath();
 	try {
 	    if (requestedPath.matches("/dotIstPortal.do")) {
 		return getRequest().getParameter("prefix") + getRequest().getParameter("page");
 	    }
-	    return requestedPath.length() == 0 ? requestedPath : URLDecoder.decode(requestedPath.substring(1), "ISO-8859-1");
+	    return requestedPath.length() == 0 ? requestedPath : URLDecoder.decode(requestedPath.substring(1), encoding);
 	} catch (UnsupportedEncodingException e) {
 	    throw new Error(e);
 	}
     }
 
     protected String getParentPath() {
-	return getParentPath(getPath());
+	return getParentPath(getPath(encoding));
     }
 
     protected String getSubPath() {
-	return getSubPath(getPath());
+	return getSubPath(getPath(encoding));
     }
 
     protected static String getSubPath(final String path) {
