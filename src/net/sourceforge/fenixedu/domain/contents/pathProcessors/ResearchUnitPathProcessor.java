@@ -47,7 +47,7 @@ public class ResearchUnitPathProcessor extends AbstractPathProcessor {
 	    buffer.append(unitIterator.next().getAcronym());
 	    buffer.append("/");
 	}
-	return path.substring(buffer.toString().length());
-
+	
+	return path.length() < buffer.length() ? "" : path.substring(buffer.length()); 
     }
 }
