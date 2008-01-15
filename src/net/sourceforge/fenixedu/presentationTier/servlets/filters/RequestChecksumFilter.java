@@ -134,8 +134,10 @@ public class RequestChecksumFilter implements Filter {
 		stringBuilder.append(userString);
 		stringBuilder.append("\n           url: ");
 		stringBuilder.append(url);
-		stringBuilder.append("\n   decoded url: ");
-		stringBuilder.append(decodeURL(url));
+		stringBuilder.append("\n   decoded url iso-8859-1: ");
+		stringBuilder.append(decodeURL(url, "ISO-8859-1"));
+		stringBuilder.append("\n   decoded url utf-8: ");
+		stringBuilder.append(decodeURL(url, "UTF-8"));
 		stringBuilder.append("\n          from: ");
 		stringBuilder.append(httpServletRequest.getRemoteHost());
 		stringBuilder.append(" (");
