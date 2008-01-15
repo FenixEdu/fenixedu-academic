@@ -275,6 +275,8 @@ public class ExportClosedExtraWorkMonth extends Service {
 		} else if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 			JustificationType.HALF_OCCURRENCE_TIME)
 			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
+				JustificationType.HALF_OCCURRENCE)
+			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 				JustificationType.HALF_MULTIPLE_MONTH_BALANCE)
 			|| (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(JustificationType.TIME) && !leaveBean
 				.getLeave().getJustificationMotive().getAccumulate())) {
