@@ -187,7 +187,7 @@ public class RequestChecksumFilter implements Filter {
 	initSubApplications();
 
 	final String uri;
-	if (subApplications.contains(httpServletRequest.getServletPath())) {
+	if (subApplications.contains(httpServletRequest.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH))) {
 	    final String tmp = decodeURL(httpServletRequest.getRequestURI(), "ISO-8859-1");
 	    uri = tmp.substring(0, tmp.length() - 1);
 	} else {
