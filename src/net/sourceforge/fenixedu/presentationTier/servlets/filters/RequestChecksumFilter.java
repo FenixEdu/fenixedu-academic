@@ -155,12 +155,12 @@ public class RequestChecksumFilter implements Filter {
 	}
     }
 
-    private String decodeURL(final String url) {
+    private String decodeURL(final String url, final String encoding) {
         if (url == null) {
             return null;
         }
         try {
-            return URLDecoder.decode(url, "ISO-8859-1");
+            return URLDecoder.decode(url, encoding);
         } catch (UnsupportedEncodingException e) {
             return url;
         }
@@ -168,11 +168,17 @@ public class RequestChecksumFilter implements Filter {
 
     private boolean isValidChecksum(final HttpServletRequest httpServletRequest, final String checksum) {
 
-	final String uri = decodeURL(httpServletRequest.getRequestURI());
+	final String uri = decodeURL(httpServletRequest.getRequestURI(), "ISO-8859-1");
+	final String uriUTF8 = decodeURL(httpServletRequest.getRequestURI(), "UTF-8");
+
 	return isValidChecksum(uri, decodeURL(httpServletRequest.getQueryString()),checksum) || 
 		isValidChecksum(uri, httpServletRequest.getQueryString(),checksum) ||
-		isValidChecksumIgnoringPath(httpServletRequest, checksum);
-	
+
+		isValidChecksum(uriUTF8, decodeURL(httpServletRequest.getQueryString()), checksum) ||
+		isValidChecksum(uriUTF8, httpServletRequest.getQueryString(),checksum) ||
+
+		isValidChecksumIgnoringPath(httpServletRequest, checksum, "ISO-8859-1") ||
+		isValidChecksumIgnoringPath(httpServletRequest, checksum, "UTF-8");
     }
 
     private boolean isValidChecksum(String uri, String queryString, String checksum) {
@@ -180,13 +186,13 @@ public class RequestChecksumFilter implements Filter {
 	return checksum != null && checksum.length() > 0 && checksum.equals(ChecksumRewriter.calculateChecksum(request));
     }
     
-    private boolean isValidChecksumIgnoringPath(final HttpServletRequest httpServletRequest, final String checksum) {
-        final String uri = decodeURL(httpServletRequest.getRequestURI());
+    private boolean isValidChecksumIgnoringPath(final HttpServletRequest httpServletRequest, final String checksum, final String encoding) {
+        final String uri = decodeURL(httpServletRequest.getRequestURI(), encoding);
         if (uri.endsWith(".faces")) {
             final int lastSlash = uri.lastIndexOf('/');
             if (lastSlash >= 0) {
                 final String chopedUri = uri.substring(lastSlash + 1);
-                final String queryString = decodeURL(httpServletRequest.getQueryString());
+                final String queryString = decodeURL(httpServletRequest.getQueryString(), encoding);
                 final String request = queryString != null ? chopedUri + '?' + queryString : chopedUri;
                 final String calculatedChecksum = ChecksumRewriter.calculateChecksum(request);
                 return checksum != null && checksum.length() > 0 && checksum.equals(calculatedChecksum);
