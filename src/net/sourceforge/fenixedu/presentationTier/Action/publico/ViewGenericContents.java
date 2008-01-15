@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
@@ -101,8 +102,7 @@ public class ViewGenericContents extends FenixDispatchAction {
     private MetaDomainObjectPortal getPortal(HttpServletRequest request) {
 	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext
 		.getCurrentContext(request);
-	Container selectedContainer = context.getSelectedContainer();
-	return (MetaDomainObjectPortal) MetaDomainObject.getMeta(selectedContainer.getClass())
+	return (MetaDomainObjectPortal) MetaDomainObject.getMeta(context.getLastContentInPath(Site.class).getClass())
 		.getAssociatedPortal();
     }
 

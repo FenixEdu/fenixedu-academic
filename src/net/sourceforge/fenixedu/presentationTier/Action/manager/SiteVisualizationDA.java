@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.R
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
@@ -214,8 +215,8 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
             return null;
         }
         
-        final Integer sectionID = Integer.valueOf(parameter);
-        return (Section)rootDomainObject.readContentByOID(sectionID);
+        final Content content = rootDomainObject.readContentByOID(Integer.valueOf(parameter));
+	return content instanceof Section ? (Section) content : null;
     }
 
     protected void setSectionBreadCrumbs(HttpServletRequest request) {
