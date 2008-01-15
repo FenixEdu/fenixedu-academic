@@ -59,6 +59,6 @@ public class ExecutionCourseForum extends ExecutionCourseForum_Base {
     }
     
     public ExecutionCourse getForumExecutionCourse() {
-	return ((ExecutionCourseSite) getParents().get(0).getParent()).getSiteExecutionCourse();
+	return getParents().isEmpty() ? null : ((ExecutionCourseSite) getParents().get(0).getParent()).getSiteExecutionCourse(); 
     }
 }

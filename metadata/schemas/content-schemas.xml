@@ -114,8 +114,9 @@
 
 <schema name="edit.contents.Functionality" type="net.sourceforge.fenixedu.domain.functionalities.Functionality" bundle="CONTENT_RESOURCES" extends="edit.contents.content">
 	<slot name="executionPath"/>
+	<slot name="visible"/>	
 	<slot name="parameters">
-		<property name="eachLayout" value="values-comma"/>
+		<property name="eachLayout" value=""/>
 		<property name="eachSchema" value="view.contents.functionalityParemeter.details"/>
 	</slot>
 </schema>
