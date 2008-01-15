@@ -68,7 +68,7 @@
          <span style="color: #888;" class="anchorcaaa">
              <bean:message key="label.section.directLink" bundle="SITE_RESOURCES"/>:
              
-			<app:contentLink name="section" scope="request" target="_blank"/>
+			<app:contentLink name="section" scope="request" target="_blank" hrefInBody="true"/>
          </span>
      </p>
 </div>
