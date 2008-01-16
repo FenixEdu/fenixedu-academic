@@ -24,7 +24,7 @@ public class SemesterProcessor extends PathProcessor {
         super(forwardURI);
     }
 
-    public SemesterProcessor add(SectionProcessor processor) {
+    public SemesterProcessor add(PathProcessor processor) {
         addChild(processor);
         return this;
     }

@@ -23,7 +23,7 @@ public class YearProcessor extends PathProcessor {
         return this;
     }
     
-    public YearProcessor add(SectionProcessor processor) {
+    public YearProcessor add(ContentProcessor processor) {
         addChild(processor);
         return this;
     }

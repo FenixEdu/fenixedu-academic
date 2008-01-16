@@ -13,6 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ContentProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeCurricularPlanProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExamProcessor;
@@ -54,20 +55,18 @@ public class GeneralForwardFilter implements Filter {
         ScheduleProcessor schedule = new ScheduleProcessor(scheduleListURI);
         SchoolClassProcessor schoolClass = new SchoolClassProcessor(classScheduleURI);
         ExamProcessor exams = new ExamProcessor(examListURI);
-        SectionProcessor section = new SectionProcessor();
-        ItemProcessor item = new ItemProcessor();
         
-        SectionProcessor sectionAndItem = section.add(item);
+        ContentProcessor contentProcessor = new ContentProcessor();
         
         ExecutionCourseProcessor executionCourseProcessor = 
             executionCourse
                 .add(year
                     .add(semester
-                        .add(sectionAndItem))
-                    .add(sectionAndItem))
+                        .add(contentProcessor))
+                    .add(contentProcessor))
                 .add(semester
-                    .add(sectionAndItem))
-                .add(sectionAndItem);
+                    .add(contentProcessor))
+                .add(contentProcessor);
         
         processors.add(
             degreeProcessor
@@ -78,7 +77,7 @@ public class GeneralForwardFilter implements Filter {
                 .add(schedule
                     .add(schoolClass))
                 .add(exams)
-                .add(sectionAndItem)
+                .add(contentProcessor)
         );
         
     }

@@ -27,7 +27,7 @@ public class DegreeProcessor extends PathProcessor {
 	this.degreeSiteURI = degreeSiteURI;
     }
 
-    public DegreeProcessor add(SectionProcessor processor) {
+    public DegreeProcessor add(ContentProcessor processor) {
 	addChild(processor);
 	return this;
     }

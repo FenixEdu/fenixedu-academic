@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessor
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -103,15 +104,15 @@ public class SectionProcessor extends SiteElementPathProcessor {
         }
 
         public boolean addSection(String name) {
-            for (Section section : getCurrentPossibilities()) {
-                String pathName = getElementPathName(section);
+            for (Content content : getCurrentPossibilities()) {
+                String pathName = getElementPathName(content);
                 
                 if (pathName == null) {
                     continue;
                 }
                 
                 if (pathName.equalsIgnoreCase(name)) {
-                    addSection(section);
+                    //addSection(section);
                     return true;
                 }
             }
@@ -127,7 +128,7 @@ public class SectionProcessor extends SiteElementPathProcessor {
             return ((SiteContext) getParent()).getSiteBasePath() + "&sectionID=%s";
         }
         
-        private List<Section> getCurrentPossibilities() {
+        private Collection<Content> getCurrentPossibilities() {
             Section section = getLastSection();
             
             if (section == null) {
@@ -135,14 +136,14 @@ public class SectionProcessor extends SiteElementPathProcessor {
                 if (site == null) {
                     return Collections.emptyList();
                 }
-                List<Section> sections = new ArrayList<Section>();
-                for(Content content : site.getAllAssociatedSections()) {
-                    sections.add((Section)content);
+                List<Content> contents = new ArrayList<Content>();
+                for(Content content : site.getChildrenAsContent()) {
+                    contents.add((Section)content);
                 }
-                return sections;
+                return contents;
             }
             else {
-                return section.getAssociatedSections();
+                return section.getChildrenAsContent();
             }
         }
 
