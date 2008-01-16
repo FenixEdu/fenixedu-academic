@@ -11,7 +11,7 @@
 	
 	<bean:define id="method" value="editEmployeeJustification" />
 	<div class="mbottom15">
-	<fr:form action="<%="/employeeAssiduousness.do?method="+method.toString()%>" encoding="multipart/form-data">
+	<fr:form action="<%="/employeeAssiduousness.do?method="+method.toString()%>" >
 		<fr:edit id="editEmployeeCorrectionType" name="employeeJustificationFactory"
 			type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory" schema="edit.employeeCorrectionType">
 			<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />

@@ -23,7 +23,7 @@
 	<bean:define id="method" value="editSchedule"/>
 </logic:notEmpty>		
 
-	<fr:form action="/assiduousnessParametrization.do" encoding="multipart/form-data">
+	<fr:form action="/assiduousnessParametrization.do">
 	<html:hidden property="method" value="<%= method.toString() %>"/>
 	<table class="tstyle3 thright thlight mbottom05">
 		<tr>

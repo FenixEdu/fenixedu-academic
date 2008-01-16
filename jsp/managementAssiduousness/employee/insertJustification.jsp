@@ -17,7 +17,7 @@
 <logic:present name="employeeJustificationFactory">
 	<div class="mbottom15">
 	
-	<fr:form action="/employeeAssiduousness.do?method=insertJustification" encoding="multipart/form-data">
+	<fr:form action="/employeeAssiduousness.do?method=insertJustification">
 		<fr:edit id="editEmployeeDayJustificationType" name="employeeJustificationFactory"
 			type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 			schema="edit.employeeDayJustificationType">

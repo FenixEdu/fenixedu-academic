@@ -22,7 +22,7 @@
 		</html:messages>
 	</span>
 	<logic:equal name="employeeExtraWorkRequestFactory" property="extraWorkRequestFactory.isMonthClosedForExtraWork" value="false">
-		<fr:form action="/extraWorkPaymentRequest.do?method=insertPaymentRequest" encoding="multipart/form-data">
+		<fr:form action="/extraWorkPaymentRequest.do?method=insertPaymentRequest">
 		
 		<table class="tstyle1">
 		<tr align="left">
