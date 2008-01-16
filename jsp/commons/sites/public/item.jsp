@@ -42,12 +42,10 @@
     <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
             
 	<h3 class="mtop2 mbottom05">
-        <a name="<%= "item" + item.getIdInternal() %>" ></a>
         <fr:view name="item" property="name"/>
-        <logic:present name="directLinkContext">
-            <bean:define id="directLinkContext" name="directLinkContext"/>
-            <span class="permalink1">(<a href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
-        </logic:present>
+		<app:defineContentPath id="itemURL" name="item" toScope="request"/>
+		<bean:define id="url" name="itemURL" type="java.lang.String"/>
+  		<span class="permalink1">(<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX%><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h3>
 
     <logic:notEmpty name="item" property="body">
