@@ -69,7 +69,7 @@
 <bean:define id="cpURL" value="<%= "/" + module +  URL + sortUrlParameter%>"/>	
 
 <bean:message key="label.numberPages" bundle="RESEARCHER_RESOURCES"/>: 
-<cp:collectionPages url="<%= cpURL %>" pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
+<cp:collectionPages url="<%= cpURL %>" pageNumberAttributeName="filePage" numberOfPagesAttributeName="numberOfPages"/>
 
 		<fr:view name="files" schema="show.unit.files">
 			<fr:layout name="tabular-sortable">
@@ -91,12 +91,12 @@
 				<fr:property name="sortIgnored" value="true"/>
 				<fr:property name="sortBy" value="<%= request.getParameter("sort") == null ? "displayName" : request.getParameter("sort")%>"/>
 				<fr:property name="sortableSlots" value="displayName,uploadTime"/>
-				<fr:property name="sortUrl" value="<%= URL + (request.getParameter("page") == null ? "" : "&page=" + request.getParameter("page"))%>"/>
+				<fr:property name="sortUrl" value="<%= URL + (request.getParameter("filePage") == null ? "" : "&filePage=" + request.getParameter("filePage"))%>"/>
 			</fr:layout>
 		</fr:view> 
 
 <bean:message key="label.numberPages" bundle="RESEARCHER_RESOURCES"/>: <cp:collectionPages url="<%= cpURL %>"
-pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
+pageNumberAttributeName="filePage" numberOfPagesAttributeName="numberOfPages"/>
 
 <p>
 	<bean:message key="label.unitFileTags" bundle="RESEARCHER_RESOURCES"/>: 

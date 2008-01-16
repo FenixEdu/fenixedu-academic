@@ -164,12 +164,12 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 		int numberOfPages = files.size() / getPageSize();
 		numberOfPages += (files.size() % getPageSize() != 0) ? 1 : 0;
 		request.setAttribute("numberOfPages", numberOfPages);
-		String page = request.getParameter("page");
+		String page = request.getParameter("filePage");
 		int pageNumber = 1;
 		if (page != null) {
 			pageNumber = Integer.valueOf(page);
 		}
-		request.setAttribute("page", pageNumber);
+		request.setAttribute("filePage", pageNumber);
 		int start = (pageNumber - 1) * getPageSize();
 		request.setAttribute("files", files
 				.subList(start, Math.min(start + getPageSize(), files.size())));
