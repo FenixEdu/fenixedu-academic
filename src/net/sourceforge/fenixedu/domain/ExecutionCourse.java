@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -44,6 +43,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -66,6 +66,8 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
 
+    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR = new BeanComparator(
+	    "executionPeriod");
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new ComparatorChain();
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new ComparatorChain();
     public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;
@@ -73,8 +75,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     static {
 	CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
 
-	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator(
-		"executionPeriod"));
+	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("nome",
 		Collator.getInstance()));
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
@@ -1791,4 +1792,43 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    return Collections.emptyList();
 	}
     }
+    
+    public AcademicInterval getExecutionInterval(){
+	return getExecutionPeriod().getExecutionInterval();
+    }
+    
+    public static ExecutionCourse readBySiglaAndExecutionPeriod(final String sigla, ExecutionPeriod executionPeriod) {
+	for (ExecutionCourse executionCourse : RootDomainObject.getInstance().getExecutionCourses()) {
+	    if (executionCourse.getExecutionPeriod() == executionPeriod && sigla.equalsIgnoreCase(executionCourse.getSigla())) {
+		return executionCourse;
+	    }
+	}
+	return null;
+    }
+    
+    public static ExecutionCourse readLastByExecutionYearAndSigla(final String sigla, ExecutionYear executionYear) {
+	SortedSet<ExecutionCourse> result = new TreeSet<ExecutionCourse>(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);  
+	for (ExecutionCourse executionCourse : RootDomainObject.getInstance().getExecutionCourses()) {
+	    if (executionCourse.getExecutionYear() == executionYear && sigla.equalsIgnoreCase(executionCourse.getSigla())) {
+		result.add(executionCourse);
+	    }
+	}
+	return result.isEmpty() ? null : result.last();
+    }
+    
+    public static ExecutionCourse readLastBySigla(final String sigla) {
+	SortedSet<ExecutionCourse> result = new TreeSet<ExecutionCourse>(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);  
+	for (ExecutionCourse executionCourse : RootDomainObject.getInstance().getExecutionCourses()) {
+	    if (sigla.equalsIgnoreCase(executionCourse.getSigla())) {
+		result.add(executionCourse);
+	    }
+	}
+	return result.isEmpty() ? null : result.last();
+    }    
+    
+    public static ExecutionCourse readLastByAcademicPeriodAndSigla(final String sigla, AcademicPeriod academicPeriod) {
+	return academicPeriod instanceof ExecutionPeriod ? readBySiglaAndExecutionPeriod(sigla, (ExecutionPeriod) academicPeriod)
+		: readLastByExecutionYearAndSigla(sigla, (ExecutionYear) academicPeriod);
+    }
+    
 }
