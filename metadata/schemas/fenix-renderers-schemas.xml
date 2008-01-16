@@ -679,8 +679,8 @@
     &executionCourse;
     &parking;
 	&vigilancy;
-	&system;
 	&academicAdminOffice;
+	&system;
 	&tsdProcess;
 	&tests;
     &site;
@@ -688,6 +688,7 @@
     &departmentMember;
     &manager;
     &resourceAllocationManager;
+    &resourceManager;
     &teacher;
     &departmentAdmOffice;
     &coordinator;
@@ -698,7 +699,11 @@
     &boardSchemas;
     &inquirySchemas;
     &librarySchemas;
-    &resourceManager;
     &bolonhaManagerSchemas;
-    &contentSchemas;
+    &pedagogicalCouncilSchemas;
+    &delegatesSchemas;
+    &directiveCouncil;
+    &cardGeneration;
+    &facultyAdmOffice;
+    &contentSchemas;    
 </schemas>
