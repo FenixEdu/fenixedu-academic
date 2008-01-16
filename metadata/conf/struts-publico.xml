@@ -1251,7 +1251,7 @@
 				<forward name="viewSection-UnitSite" path="basicUnit-section"/>
 				<forward name="viewSection-PedagogicalCouncilSite" path="pedagogicalCouncil-section"/>
 				<forward name="viewSection-ScientificCouncilSite" path="scientificCouncil-section"/>
-				<forward name="viewSection-ScientificAreaUnit" path="basicUnit-section"/>
+				<forward name="viewSection-ScientificAreaSite" path="basicUnit-section"/>
 				
 				<forward name="viewItem-Homepage" path="view-homepage-item"/>
 				<forward name="viewItem-DegreeSite" path="degree-item"/>
@@ -1262,6 +1262,7 @@
 				<forward name="viewItem-PedagogicalCouncilSite" path="pedagogicalCouncil-item"/>
 				<forward name="viewItem-ScientificCouncilSite" path="scientificCouncil-item"/>
 				<forward name="viewItem-ScientificAreaUnit" path="basicUnit-item"/>
+				<forward name="viewItem-ScientificAreaSite" path="basicUnit-item"/>
 								
 				<forward name="site-section-deny-Homepage" path="homepage-section-deny"/>
 				<forward name="site-section-deny-DegreeSite" path="degree-section-deny"/>
@@ -1271,7 +1272,7 @@
 				<forward name="site-section-deny-UnitSite" path="basicUnit-section-deny"/>
 				<forward name="site-section-deny-PedagogicalCouncilSite" path="pedagogicalCouncil-section-deny"/>
 				<forward name="site-section-deny-ScientificCouncilSite" path="scientificCouncil-section-deny"/>
-				<forward name="site-section-deny-ScientificAreaUnit" path="basicUnit-section-deny"/>
+				<forward name="site-section-deny-ScientificAreaSite" path="basicUnit-section-deny"/>
 
 				<forward name="site-section-adviseLogin-Homepage" path="homepage-section-adviseLogin"/>
 				<forward name="site-section-adviseLogin-DegreeSite" path="degree-section-adviseLogin"/>
@@ -1281,7 +1282,7 @@
 				<forward name="site-section-adviseLogin-UnitSite" path="basicUnit-section-adviseLogin"/>
 				<forward name="site-section-adviseLogin-PedagogicalCouncilSite" path="pedagogicalCouncil-section-adviseLogin"/>
 				<forward name="site-section-adviseLogin-ScientificCouncilSite" path="scientificCouncil-section-adviseLogin"/>
-				<forward name="site-section-adviseLogin-ScientificAreaUnit" path="basicUnit-section-adviseLogin"/>
+				<forward name="site-section-adviseLogin-ScientificAreaSite" path="basicUnit-section-adviseLogin"/>
 		</action>
 
 	 <!-- =================== Find Spaces Interface  =================== -->
