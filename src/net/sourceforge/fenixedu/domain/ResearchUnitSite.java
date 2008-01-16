@@ -53,6 +53,12 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
     }
 
     @Override
+    public void setNormalizedName(final MultiLanguageString normalizedName) {
+	// unable to optimize because we cannot track changes to name correctly.
+	// don't call super.setNormalizedName() !
+    }
+
+    @Override
     public void appendReversePathPart(final StringBuilder stringBuilder) {
 	final ResearchUnit researchUnit = getUnit();
 	appendReversePathPart(stringBuilder, researchUnit);

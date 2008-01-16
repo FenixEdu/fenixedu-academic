@@ -71,6 +71,12 @@ public class ContentFilter implements Filter {
 
 	Content content = functionalityContext.getSelectedContent();
 
+	if (content == null) {
+	    System.out.println(httpServletRequest.getRequestURI() + " ---> null");
+	} else {
+	    System.out.println(httpServletRequest.getRequestURI() + " ---> " + content.getClass().getName());
+	}
+
 	if (content instanceof Section) {
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, SECTION_PATH);
 

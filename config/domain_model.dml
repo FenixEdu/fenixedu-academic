@@ -4263,6 +4263,7 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 		MultiLanguageString title;
 		MultiLanguageString body;
 		MultiLanguageString description;
+		MultiLanguageString normalizedName;
 	}
 	
 		class net.sourceforge.fenixedu.domain.contents.Element extends net.sourceforge.fenixedu.domain.contents.Content {

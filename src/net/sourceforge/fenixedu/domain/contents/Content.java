@@ -376,18 +376,27 @@ public abstract class Content extends Content_Base {
     @Override
     public void setName(final MultiLanguageString name) {
 	super.setName(name);
+	setNormalizedName(normalize(name));
     }
 
     public MultiLanguageString getNormalizedName() {
-	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	for (final Language language : getName().getAllLanguages()) {
-	    multiLanguageString.setContent(language, normalize(getName().getContent(language)));
+	final MultiLanguageString normalizedName = super.getNormalizedName();
+	return normalizedName == null ? normalize(getName()) : normalizedName;
+    }
+
+    public static MultiLanguageString normalize(final MultiLanguageString multiLanguageString) {
+	if (multiLanguageString == null) {
+	    return null;
 	}
-	return multiLanguageString;
+	final MultiLanguageString result = new MultiLanguageString();
+	for (final Language language : multiLanguageString.getAllLanguages()) {
+	    result.setContent(language, normalize(multiLanguageString.getContent(language)));
+	}
+	return result;
     }
 
     public static String normalize(final String string) {
-	return StringNormalizer.normalize(string).replace(' ', '-');
+	return string == null ? null : StringNormalizer.normalize(string).replace(' ', '-');
     }
     
 }

@@ -110,4 +110,11 @@ public class Homepage extends Homepage_Base {
     public MultiLanguageString getName() {
 	return MultiLanguageString.i18n().add("pt", String.valueOf(getPerson().getIstUsername())).finish();
     }
+
+    @Override
+    public void setNormalizedName(final MultiLanguageString normalizedName) {
+	// unable to optimize because we cannot track changes to name correctly.
+	// don't call super.setNormalizedName() !
+    }
+
 }

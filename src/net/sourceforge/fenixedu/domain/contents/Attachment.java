@@ -27,7 +27,13 @@ public class Attachment extends Attachment_Base {
     public MultiLanguageString getName() {
 	return new MultiLanguageString(getFileItem().getDisplayName()); 
     }
-    
+
+    @Override
+    public void setNormalizedName(final MultiLanguageString normalizedName) {
+	// unable to optimize because we cannot track changes to name correctly.
+	// don't call super.setNormalizedName() !
+    }
+
     @Override
     public boolean isParentAccepted(Container parent) {
         return parent instanceof Item;

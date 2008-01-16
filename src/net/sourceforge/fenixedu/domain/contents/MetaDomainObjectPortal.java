@@ -19,6 +19,12 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
     }
 
     @Override
+    public void setNormalizedName(final MultiLanguageString normalizedName) {
+	// unable to optimize because we cannot track changes to name correctly.
+	// don't call super.setNormalizedName() !
+    }
+
+    @Override
     public void addPathContentsForTrailingPath(final List<Content> contents, final String trailingPath) {
 	// super.addPathContentsForTrailingPath(contents, trailingPath);
 	AbstractPathProcessor strategy = getStrategy();
