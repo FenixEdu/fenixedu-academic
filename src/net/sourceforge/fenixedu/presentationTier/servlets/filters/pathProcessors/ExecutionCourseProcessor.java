@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DegreeSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -67,6 +66,8 @@ public class ExecutionCourseProcessor extends PathProcessor {
             ExecutionCourseContext ownContext = (ExecutionCourseContext) context;
             ExecutionCourse executionCourse = ownContext.getExecutionCourse();
             
+            setFunctionalityContext(context, executionCourse);
+            
             if (executionCourse == null) {
                 return false;
             }
@@ -74,6 +75,21 @@ public class ExecutionCourseProcessor extends PathProcessor {
         	return doForward(context, new Object[] { "firstPage", executionCourse.getIdInternal() });
             }
         }
+    }
+
+    private void setFunctionalityContext(ProcessingContext context, ExecutionCourse executionCourse) {
+	ExecutionCourseSite site = executionCourse.getSite();
+	MetaDomainObjectPortal portal = (MetaDomainObjectPortal) MetaDomainObject.getMeta(
+		site.getClass()).getAssociatedPortal();
+	
+	List<Content> contents = new ArrayList<Content>();
+	contents.add(portal);
+	contents.add(site);
+
+	HttpServletRequest request = context.getRequest();
+	FilterFunctionalityContext filterContext = new FilterFunctionalityContext(request, contents);
+	filterContext.setHasBeenForwarded();
+	request.setAttribute(FunctionalityContext.CONTEXT_KEY, filterContext);	
     }
 
     public static class Context extends AbstractExecutionCourseContext {
