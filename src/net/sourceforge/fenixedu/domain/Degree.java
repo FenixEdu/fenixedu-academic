@@ -444,6 +444,22 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
+    public List<ExecutionCourse> getExecutionCourses(String curricularCourseAcronym, ExecutionPeriod executionPeriod) {
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
+		if (course.getAcronym() != null && course.getAcronym().equalsIgnoreCase(curricularCourseAcronym)) {
+		    for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+			if(executionPeriod == executionCourse.getExecutionPeriod()){
+			    result.add(executionCourse);
+			}
+		    }
+		}
+	    }
+	}
+	return result;
+    }
+    
     final public String getName() {
 	return this.getNome();
     }
