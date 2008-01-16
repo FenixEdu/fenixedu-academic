@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
