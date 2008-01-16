@@ -50,7 +50,7 @@ public class UnitSiteTopMenuRenderer extends UnitSiteMenuRenderer {
     @Override
     protected String getPath(FilterFunctionalityContext context, Content content) {
 	List<String> subPaths = new ArrayList<String>();
-	subPaths.add(getTargetSectionName().getContent());
+	subPaths.add(Content.normalize(getTargetSectionName().getContent()));
 	return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context, subPaths);
     }
 }
