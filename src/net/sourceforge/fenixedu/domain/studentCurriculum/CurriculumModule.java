@@ -164,12 +164,16 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
     
     public boolean isConcluded() {
-	return isConcluded(getLastCurriculumLineExecutionYear());
+	return isConcluded(getLastApprovementExecutionYear());
     }
     
-    public ExecutionYear getLastCurriculumLineExecutionYear() {
+    public ExecutionYear getLastApprovementExecutionYear() {
 	final SortedSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
-	for (final CurriculumLine curriculumLine : getAllCurriculumLines()) {
+	
+	final Collection<CurriculumLine> approvedCurriculumLines = new HashSet<CurriculumLine>();
+	addApprovedCurriculumLines(approvedCurriculumLines);
+	
+	for (final CurriculumLine curriculumLine : approvedCurriculumLines) {
 	    if (curriculumLine.hasExecutionPeriod()) {
 		executionYears.add(curriculumLine.getExecutionPeriod().getExecutionYear());
 	    }
@@ -191,7 +195,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
     
     public Double getCreditsConcluded() {
-	return getCreditsConcluded(getLastCurriculumLineExecutionYear());
+	return getCreditsConcluded(getLastApprovementExecutionYear());
     }
 
     abstract public Double getEctsCredits();

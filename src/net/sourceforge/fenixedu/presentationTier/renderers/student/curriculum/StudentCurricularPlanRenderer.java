@@ -355,7 +355,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    getInputContext().getForm().getCancelButton().setVisible(false);
 
 	    this.studentCurricularPlan = (StudentCurricularPlan) object;
-	    this.lastCurriculumLineExecutionYear = studentCurricularPlan.getRoot().getLastCurriculumLineExecutionYear();
+	    this.lastCurriculumLineExecutionYear = studentCurricularPlan.getLastApprovementExecutionYear();
 
 	    final HtmlContainer container = new HtmlBlockContainer();
 
@@ -498,8 +498,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		creditsLimitRule = null;
 		degreeModulesLimitRule = null;
 	    } else {
-		ExecutionYear lastCurriculumLineExecutionYear = studentCurricularPlan.getRoot()
-			.getLastCurriculumLineExecutionYear();
+		ExecutionYear lastCurriculumLineExecutionYear = studentCurricularPlan.getLastApprovementExecutionYear();
 		creditsLimitRule = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
 			CurricularRuleType.CREDITS_LIMIT, lastCurriculumLineExecutionYear);
 		degreeModulesLimitRule = (DegreeModulesSelectionLimit) curriculumGroup.getMostRecentActiveCurricularRule(
@@ -568,7 +567,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    .getGivenGrade() : null;
 	    final String gradeString;
 	    if (gradeValue != null && NumberUtils.isNumber(gradeValue)) {
-		final DecimalFormat decimalFormat = new DecimalFormat("##");
+		final DecimalFormat decimalFormat = new DecimalFormat("##.##");
 		gradeString = decimalFormat.format(Double.valueOf(gradeValue));
 	    } else {
 		gradeString = gradeValue != null ? gradeValue : EMPTY_INFO;

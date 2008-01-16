@@ -624,7 +624,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    final public YearMonthDay getLastApprovementDate() {
+    final public CurriculumLine getLastApprovement() {
     	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE_AND_ID);
 	curriculumLines.addAll(getApprovedCurriculumLines());
 
@@ -632,7 +632,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    throw new DomainException("Registration.has.no.approved.curriculum.lines");
 	}
 
-	return curriculumLines.last().getApprovementDate();
+	return curriculumLines.last();
+    }
+
+    final public YearMonthDay getLastApprovementDate() {
+	return getLastApprovement().getApprovementDate();
+    }
+
+    final public ExecutionYear getLastApprovementExecutionYear() {
+	return getLastApprovement().getExecutionYear();
     }
 
     final public boolean hasAnyApprovedCurriculumLines() {
