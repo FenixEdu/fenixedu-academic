@@ -27,5 +27,5 @@ function executeWithTempFile() {
 	echo
 }
 
-
 execute "Fix Amp in Personnel Section" fixAmpInPersonnelSection.sql
+execute "add conclusion process notes to registration and cycle curriculum groups" addConclusionProcessNotes.sql

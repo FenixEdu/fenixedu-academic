@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.YearMonthDay;
 
@@ -120,6 +119,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     public boolean isByCycle() {
 	return hasCycleCurriculumGroup();
+    }
+    
+    public String getConclusionProcessNotes() {
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getConclusionProcessNotes() : getRegistration().getConclusionProcessNotes();
     }
     
 }
