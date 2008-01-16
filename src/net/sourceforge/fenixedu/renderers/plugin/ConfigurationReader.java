@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.plugin;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -490,7 +491,7 @@ public class ConfigurationReader {
     private Element readConfigRootElement(final ServletContext context, String name, final String configFile) throws ServletException {
         
         if (configFile != null) {
-            final String realPath = "file://" + context.getRealPath(configFile);
+            final String realPath = context.getRealPath(configFile);
 
             if (realPath == null) {
                 throw new ServletException("Could not load " + name + ": " + configFile);
@@ -513,7 +514,8 @@ public class ConfigurationReader {
                     
                 });
 
-                final URL url = new URL(realPath);
+                final File file = new File(realPath);
+                final URL url = file.toURI().toURL();
                 final Document document = build.build(url);
 
                 return document.getRootElement();
