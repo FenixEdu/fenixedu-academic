@@ -84,9 +84,9 @@ processar.
 			<th class="listClasses-header">Ano Lectivo</th>
 			<th class="listClasses-header">Estado</th>
 			<th class="listClasses-header"></th>			
+			<th class="listClasses-header"></th>			
 		</tr>
-		<logic:iterate id="infoExecutionPeriod"
-			name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
+		<logic:iterate id="infoExecutionPeriod"	name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 			<bean:define id="year" name="infoExecutionPeriod"
 				property="infoExecutionYear.year" />
 			<bean:define id="semester" name="infoExecutionPeriod"
@@ -154,7 +154,15 @@ processar.
 						<bean:message bundle="MANAGER_RESOURCES"
 							key="link.open.execution.period" />
 					</html:link>
-				</logic:equal></td>				
+				</logic:equal></td>
+				
+				<td class="listClasses"> 
+					<bean:define id="editURL">/manageExecutionPeriods.do?method=edit&amp;executionPeriodID=<bean:write name="infoExecutionPeriod" property="idInternal"/></bean:define>
+					<html:link page="<%= editURL %>">								
+						<bean:message bundle="MANAGER_RESOURCES" key="link.edit.execution.period" />
+					</html:link>
+				</td>	
+							
 			</tr>
 		</logic:iterate>
 	</table>

@@ -662,3 +662,10 @@
 	<slot name="degreeCurricularPlan.degree.tipoCurso.localizedName" key="label.degreeType" />
 	<slot name="degreeCurricularPlan.name" key="label.curricularPlan" />
 </schema>
+
+<schema name="EditExecutionPeriodSchema" type="net.sourceforge.fenixedu.domain.ExecutionPeriod" bundle="MANAGER_RESOURCES">
+	<slot name="beginDateYearMonthDay" key="label.executionPeriod.beginDate" />
+	<slot name="endDateYearMonthDay" key="label.executionPeriod.endDate" />
+	<setter signature="editPeriod(beginDateYearMonthDay, endDateYearMonthDay)" />	
+</schema>
+

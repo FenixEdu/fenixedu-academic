@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ExecutionPeriodComparator;
+import net.sourceforge.fenixedu.domain.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -34,49 +35,59 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
     /**
      * Prepare information to show existing execution periods and working areas.
      */
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = SessionUtils.getUserView(request);
 
-        try {
-            List infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
+	try {
+	    List infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
 
-            if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 
-                Collections.sort(infoExecutionPeriods, new ExecutionPeriodComparator());
+		Collections.sort(infoExecutionPeriods, new ExecutionPeriodComparator());
 
-                if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-                    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
-                }
+		if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+		    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
+		}
 
-            }
-        } catch (FenixServiceException ex) {
-            throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
-        }
+	    }
+	} catch (FenixServiceException ex) {
+	    throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
+	}
 
-        return mapping.findForward("Manage");
+	return mapping.findForward("Manage");
     }
 
     /**
      * Prepare information to show existing execution periods and working areas.
      */
-    public ActionForward alterExecutionPeriodState(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward alterExecutionPeriodState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        final String year = request.getParameter("year");
-        final Integer semester = new Integer(request.getParameter("semester"));
-        final String periodStateToSet = request.getParameter("periodState");
-        final IUserView userView = SessionUtils.getUserView(request);
-        final PeriodState periodState = new PeriodState(periodStateToSet);
+	final String year = request.getParameter("year");
+	final Integer semester = new Integer(request.getParameter("semester"));
+	final String periodStateToSet = request.getParameter("periodState");
+	final IUserView userView = SessionUtils.getUserView(request);
+	final PeriodState periodState = new PeriodState(periodStateToSet);
 
-        final Object[] args = { year, semester, periodState };
-        try {
-            ServiceUtils.executeService(userView, "AlterExecutionPeriodState", args);
-        } catch (InvalidArgumentsServiceException ex) {
-            throw new FenixActionException("errors.nonExisting.executionPeriod", ex);
-        } 
+	final Object[] args = { year, semester, periodState };
+	try {
+	    ServiceUtils.executeService(userView, "AlterExecutionPeriodState", args);
+	} catch (InvalidArgumentsServiceException ex) {
+	    throw new FenixActionException("errors.nonExisting.executionPeriod", ex);
+	}
 
-        return prepare(mapping, form, request, response);
+	return prepare(mapping, form, request, response);
     }
+
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+
+	final String idInternal = request.getParameter("executionPeriodID");
+	ExecutionPeriod executionPeriod = (ExecutionPeriod) rootDomainObject.readAcademicPeriodByOID(Integer.valueOf(idInternal));
+	request.setAttribute("executionPeriod", executionPeriod);
+	return mapping.findForward("EditExecutionPeriod");
+    }
+
 }

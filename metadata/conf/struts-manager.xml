@@ -1371,6 +1371,8 @@
               scope="request"
               >
           <forward name="Manage" path="df.page.manage-execution-periods"/>
+          <forward name="EditExecutionPeriod" path="edit-execution-period"/>
+          
       </action>
 
       <action input="/manageExecutionPeriods.do?method=prepare&amp;page=1"

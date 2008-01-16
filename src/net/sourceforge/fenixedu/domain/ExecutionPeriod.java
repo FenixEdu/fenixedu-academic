@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -67,6 +68,15 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	setBeginDateYearMonthDay(academicInterval.getBeginYearMonthDayWithoutChronology());
 	setEndDateYearMonthDay(academicInterval.getEndYearMonthDayWithoutChronology());
 	setName(name);
+    }
+    
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void editPeriod(YearMonthDay begin, YearMonthDay end) {
+	if(begin == null || end == null || end.isBefore(begin)) {
+	    throw new DomainException("error.ExecutionPeriod.invalid.dates");
+	}
+	setBeginDateYearMonthDay(begin);
+	setEndDateYearMonthDay(end);
     }
 
     @Override

@@ -155,6 +155,10 @@
 	<definition name="df.page.manage-execution-periods" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageExecutionPeriods_bd.jsp" />
 	</definition>
+	<definition name="edit-execution-period" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/editExecutionPeriodDates.jsp" />
+	</definition>
+		
 	<!-- ========== CACHE MANIPULATION ========== -->
 	<definition name="df.page.manage-cache" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageCache_bd.jsp" />
