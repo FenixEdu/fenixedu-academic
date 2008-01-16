@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -169,6 +170,15 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     @Override
     protected boolean isConcluded(final ExecutionYear executionYear) {
 	return hasFinalAverage() || super.isConcluded(executionYear);
+    }
+
+    final public BigDecimal getAverage() {
+	return getAverage((ExecutionYear) null);
+    }
+
+    final public BigDecimal getAverage(final ExecutionYear executionYear) {
+	return executionYear == null && isConcluded() && isConclusionProcessed() ? BigDecimal
+		.valueOf(getFinalAverage()) : getCurriculum(executionYear).getAverage();
     }
 
     public boolean hasFinalAverage() {
