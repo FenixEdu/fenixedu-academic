@@ -19,18 +19,14 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
 	super();
     }
 
-    public CertificateRequestPR(EntryType entryType, EventType eventType, DateTime startDate,
-	    DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount,
-	    Money amountPerUnit, Money amountPerPage) {
-	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount,
-		amountPerUnit, amountPerPage);
+    public CertificateRequestPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage) {
+	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage);
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount,
-	    Money amountPerUnit, Money amountPerPage) {
-	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount,
-		amountPerUnit);
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage) {
+	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount, amountPerUnit);
 	checkParameters(amountPerPage);
 	super.setAmountPerPage(amountPerPage);
     }
@@ -40,7 +36,6 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
 	    throw new DomainException(
 		    "error.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage.cannot.be.null");
 	}
-
     }
 
     @Override
@@ -61,10 +56,8 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final CertificateRequestEvent certificateRequestEvent = (CertificateRequestEvent) event;
-	final Money totalAmountToPay = isUrgent(certificateRequestEvent) ? getBaseAmount().multiply(
-		BigDecimal.valueOf(2)).add(getAmountForUnits(event)) : super.calculateTotalAmountToPay(
-		event, when, applyDiscount);
-
+	final Money totalAmountToPay = isUrgent(certificateRequestEvent) ? getBaseAmount().multiply(BigDecimal.valueOf(2)).add(
+		getAmountForUnits(event)) : super.calculateTotalAmountToPay(event, when, applyDiscount);
 	return totalAmountToPay.add(calculateAmountToPayForPages(certificateRequestEvent));
     }
 
@@ -73,13 +66,10 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public CertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit,
-	    final Money amountPerPage) {
-
+    public CertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage) {
 	deactivate();
-	return new CertificateRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000),
-		null, getServiceAgreementTemplate(), baseAmount, amountPerUnit, amountPerPage);
-
+	return new CertificateRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,
+		getServiceAgreementTemplate(), baseAmount, amountPerUnit, amountPerPage);
     }
 
 }

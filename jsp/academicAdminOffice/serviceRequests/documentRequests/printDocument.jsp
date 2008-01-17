@@ -55,6 +55,8 @@
 </html:messages>
 
 <bean:define id="documentRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
+
+<logic:equal name="documentRequest" property="toPrint" value="true">
 <p>
 	<span class="gen-button">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -63,6 +65,7 @@
 	</html:link>
 	</span>
 </p>
+</logic:equal>
 
 <bean:define id="registrationID" name="academicServiceRequest" property="registration.idInternal" />
 

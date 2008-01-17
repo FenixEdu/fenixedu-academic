@@ -170,5 +170,15 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     public boolean hasCycleCurriculumGroup() {
 	return getCycleCurriculumGroup() != null;
     }
+
+    @Override
+    public boolean isPagedDocument() {
+	return false;
+    }
+
+    @Override
+    public boolean isToPrint() {
+	return true;
+    }
     
 }

@@ -18,6 +18,7 @@ public class AcademicRequestTypeForServicesRequestCreation implements DataProvid
         result.add(AcademicServiceRequestType.COURSE_GROUP_CHANGE_REQUEST);
         result.add(AcademicServiceRequestType.FREE_SOLICITATION_ACADEMIC_REQUEST);
         result.add(AcademicServiceRequestType.EXTRA_EXAM_REQUEST);
+        result.add(AcademicServiceRequestType.PHOTOCOPY_REQUEST);
         return result;
     }
 

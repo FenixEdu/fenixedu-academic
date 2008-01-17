@@ -44,7 +44,7 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
 
     @Override
     public EventType getEventType() {
-	return EventType.REVISION_EQUIVALENCE_PLAN_REQUEST;
+	return null;
     }
     
     @Override

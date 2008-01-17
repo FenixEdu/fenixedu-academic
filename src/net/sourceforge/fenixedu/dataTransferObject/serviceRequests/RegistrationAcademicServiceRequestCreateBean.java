@@ -16,6 +16,7 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
     private DomainReference<CourseGroup> courseGroup;
     private DomainReference<Enrolment> enrolment;
     private DomainReference<EquivalencePlanRequest> equivalencePlanRequest;
+    private String subject;
     private String purpose;
     
     public RegistrationAcademicServiceRequestCreateBean(final Registration registration) {
@@ -60,6 +61,14 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
 
     public void setEquivalencePlanRequest(EquivalencePlanRequest equivalencePlanRequest) {
 	this.equivalencePlanRequest = (equivalencePlanRequest != null) ? new DomainReference<EquivalencePlanRequest>(equivalencePlanRequest) : null;
+    }
+    
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getPurpose() {

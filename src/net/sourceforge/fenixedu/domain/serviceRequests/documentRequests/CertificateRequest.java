@@ -86,7 +86,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
 	if (academicServiceRequestBean.isToConclude()) {
 
-	    if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
+	    if (!hasNumberOfPages()) {
 		throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
 	    }
 
@@ -119,4 +119,13 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 		getDocumentRequestType(), false).isEmpty();
     }
 
+    @Override
+    public boolean isPagedDocument() {
+        return true;
+    }
+    
+    @Override
+    public boolean isToPrint() {
+        return true;
+    }
 }

@@ -934,7 +934,24 @@ public class Registration extends Registration_Base {
     final public SortedSet<ExecutionYear> getSortedEnrolmentsExecutionYears() {
 	final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
 	result.addAll(getEnrolmentsExecutionYears());
-
+	return result;
+    }
+    
+    public Collection<ExecutionYear> getCurriculumLinesExecutionYears() {
+	final Collection<ExecutionYear> result = new ArrayList<ExecutionYear>();
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final CurriculumLine curriculumLine : studentCurricularPlan.getAllCurriculumLines()) {
+		if (curriculumLine.hasExecutionPeriod()) {
+		    result.add(curriculumLine.getExecutionYear());
+		}
+	    }
+	}
+	return result;
+    }
+    
+    public SortedSet<ExecutionYear> getSortedCurriculumLinesExecutionYears() {
+	final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
+	result.addAll(getCurriculumLinesExecutionYears());
 	return result;
     }
 

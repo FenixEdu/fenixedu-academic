@@ -8,11 +8,13 @@ import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRe
 import net.sourceforge.fenixedu.domain.serviceRequests.ExtraExamRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.FreeSolicitationAcademicRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
-public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements FactoryExecutor {
+public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements
+	FactoryExecutor {
 
     public RegistrationAcademicServiceRequestCreator(final Registration registration) {
 	super(registration);
@@ -35,7 +37,8 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	    break;
 
 	case COURSE_GROUP_CHANGE_REQUEST:
-	    result = new CourseGroupChangeRequest(getRegistration(), getCurriculumGroup(), getCourseGroup(), ExecutionYear.readCurrentExecutionYear());
+	    result = new CourseGroupChangeRequest(getRegistration(), getCurriculumGroup(), getCourseGroup(), ExecutionYear
+		    .readCurrentExecutionYear());
 	    break;
 
 	case EXTRA_EXAM_REQUEST:
@@ -43,12 +46,18 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	    break;
 
 	case FREE_SOLICITATION_ACADEMIC_REQUEST:
-	    result = new FreeSolicitationAcademicRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear(), getPurpose());
+	    result = new FreeSolicitationAcademicRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear(),
+		    getSubject(), getPurpose());
 	    break;
 	    
+	case PHOTOCOPY_REQUEST:
+	    result = new PhotocopyRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear());
+	    break;
+
 	default:
 	    result = null;
 	}
+	
 	return result;
     }
 

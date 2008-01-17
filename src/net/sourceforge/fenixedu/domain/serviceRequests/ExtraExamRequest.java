@@ -69,7 +69,7 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 
     @Override
     public EventType getEventType() {
-	return EventType.EXTRA_EXAM_REQUEST;
+	return null;
     }
     
     @Override

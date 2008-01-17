@@ -66,7 +66,7 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
 
     @Override
     public EventType getEventType() {
-	return EventType.COURSE_GROUP_CHANGE_REQUEST;
+	return null;
     }
     
     @Override

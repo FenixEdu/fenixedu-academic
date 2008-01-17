@@ -392,7 +392,7 @@
 				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
 				<forward name="prepareCreateDocumentRequest" path="documentRequests.management.prepareCreateDocumentRequest"/>
 				<forward name="chooseStudentToCreateDocumentRequest" path="documentRequests.management.chooseStudentToCreateDocumentRequest"/>
-				<forward name="createDocumentRequests" path="documentRequests.management.createDocumentRequests"/>				
+				<forward name="createDocumentRequests" path="documentRequests.management.createDocumentRequests"/>
 				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>
 				<forward name="printDocument" path="documentRequests.management.printDocument"/>
 				<forward name="prepareCreateDocumentRequest" path="documentRequests.management.prepareCreateDocumentRequest"/>

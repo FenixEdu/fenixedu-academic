@@ -116,4 +116,13 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 		|| ((schoolRegistrationDeclarations.size() + enrolmentDeclarations.size()) < MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR);
     }
 
+    @Override
+    public boolean isPagedDocument() {
+        return true;
+    }
+    
+    @Override
+    public boolean isToPrint() {
+        return true;
+    }
 }
