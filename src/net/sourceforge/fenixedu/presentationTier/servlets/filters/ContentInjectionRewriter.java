@@ -64,7 +64,9 @@ public class ContentInjectionRewriter extends RequestRewriter {
 			    final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
 			    if (indexOfHrefBodyEnd >= 0) {
 				final int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
-				if (indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) {
+				final int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
+				if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) &&
+					(indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd)) {
 				    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
 				    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
 					    && indexOfCardinal < indexOfHrefBodyEnd;

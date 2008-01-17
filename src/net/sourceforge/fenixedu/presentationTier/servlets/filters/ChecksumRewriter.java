@@ -92,7 +92,9 @@ public class ChecksumRewriter extends RequestRewriter {
 			if (indexOfHrefBodyEnd >= 0) {
 
 			    final int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
-			    if (indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) {
+			    final int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
+			    if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) &&
+				    (indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd)) {
 
 				final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
 				boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
@@ -124,15 +126,24 @@ public class ChecksumRewriter extends RequestRewriter {
 				// return;
 				iOffset = nextChar;
 				continue;
-			    }
-			    
-			    else {
-				response.append(source,iOffset,indexOfJavaScript);
-				iOffset = indexOfJavaScript ;
+			    } else {
+				final int nextIndex;
+				if (indexOfJavaScript > 0 && indexOfMailto < 0) {
+				    nextIndex = indexOfJavaScript;
+				} else if (indexOfMailto > 0 && indexOfJavaScript < 0) {
+				    nextIndex = indexOfMailto;
+				} else if (indexOfJavaScript < indexOfMailto) {
+				    nextIndex = indexOfJavaScript;
+				} else if (indexOfMailto < indexOfJavaScript) {
+				    nextIndex = indexOfMailto;
+				} else {
+				    throw new Error("Unreachable code.");
+				}
+				response.append(source, iOffset, nextIndex);
+				iOffset = nextIndex ;
 				continue;
 			    }
 			}
-			
 		    }
 		}
 	    } else if (indexOfFormOpen >= 0 && (indexOfImgOpen < 0 || indexOfFormOpen < indexOfImgOpen)
