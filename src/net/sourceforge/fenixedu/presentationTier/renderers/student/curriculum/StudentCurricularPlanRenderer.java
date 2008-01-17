@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
@@ -990,7 +991,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private HtmlLink createCurricularCourseLink(final String text, final CurricularCourse curricularCourse) {
-	    	   
+
 	    final HtmlLink result = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
 	    result.setBody(new HtmlText(text));
 	    result.setModuleRelative(false);
@@ -999,6 +1000,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    result.setParameter("degreeID", curricularCourse.getDegreeCurricularPlan().getDegree().getIdInternal());
 	    result.setParameter("curricularCourseID", curricularCourse.getIdInternal());
 	    result.setParameter("degreeCurricularPlanID", curricularCourse.getDegreeCurricularPlan().getIdInternal());
+	    result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "cursos/"
+		    + curricularCourse.getDegree().getSigla() + "/plano-curricular");
 
 	    if (curricularCourse.isBolonhaDegree()) {
 		result.setParameter("organizeBy", "groups");
