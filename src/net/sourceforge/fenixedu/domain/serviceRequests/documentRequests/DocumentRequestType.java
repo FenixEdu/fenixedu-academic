@@ -26,7 +26,9 @@ public enum DocumentRequestType {
 
     PHOTOCOPY(false, false),
 
-    COURSE_LOAD(false, false, AdministrativeOfficeType.DEGREE);
+    COURSE_LOAD(false, false/* , AdministrativeOfficeType.DEGREE */),
+
+    EXAM_DATE_CERTIFICATE(true, false /* ,AdministrativeOfficeType.DEGREE */);
 
     private boolean hasAdditionalInformation;
 
@@ -59,7 +61,7 @@ public enum DocumentRequestType {
 
     public boolean isCertificate() {
 	return this == SCHOOL_REGISTRATION_CERTIFICATE || this == ENROLMENT_CERTIFICATE || this == APPROVEMENT_CERTIFICATE
-		|| this == DEGREE_FINALIZATION_CERTIFICATE;
+		|| this == DEGREE_FINALIZATION_CERTIFICATE || this == EXAM_DATE_CERTIFICATE;
     }
 
     public boolean isDeclaration() {

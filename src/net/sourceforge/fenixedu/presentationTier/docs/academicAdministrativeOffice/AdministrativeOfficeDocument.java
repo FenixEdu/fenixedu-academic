@@ -63,6 +63,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return new IRSDeclaration(documentRequest);
 	    case DIPLOMA_REQUEST:
 		return new Diploma(documentRequest);
+	    case EXAM_DATE_CERTIFICATE:
+		return new ExamDateCertificate(documentRequest);
 	    default:
 		return new AdministrativeOfficeDocument(documentRequest);
 	    }
@@ -108,7 +110,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	parameters.put("documentRequest", getDocumentRequest());
 	parameters.put("registration", getDocumentRequest().getRegistration());
 
-	if (getDocumentRequest().isCertificate()) {
+	if (hasPayment()) {
 	    setPriceFields();
 	}
 
@@ -123,6 +125,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	parameters.put("employeeLocation", employee.getCurrentCampus().getLocation());
 	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+    }
+
+    protected boolean hasPayment() {
+	return getDocumentRequest().isCertificate();
     }
 
     final private void setPriceFields() {

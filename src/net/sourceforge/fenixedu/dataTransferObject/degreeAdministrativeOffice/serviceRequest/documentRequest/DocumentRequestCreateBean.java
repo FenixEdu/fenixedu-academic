@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
@@ -39,8 +43,11 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     private MobilityProgram mobilityProgram;
 
+    private List<DomainReference<Enrolment>> enrolments;
+
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
+	this.enrolments = new ArrayList<DomainReference<Enrolment>>();
     }
 
     public DocumentRequestType getChosenDocumentRequestType() {
@@ -196,6 +203,24 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     final public void setMobilityProgram(final MobilityProgram mobilityProgram) {
 	this.mobilityProgram = mobilityProgram;
+    }
+
+    public List<Enrolment> getEnrolments() {
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+	for (final DomainReference<Enrolment> each : this.enrolments) {
+	    result.add(each.getObject());
+	}
+
+	return result;
+    }
+
+    public void setEnrolments(List<Enrolment> enrolments) {
+	final List<DomainReference<Enrolment>> enrolmentsToSet = new ArrayList<DomainReference<Enrolment>>();
+	for (final Enrolment enrolment : enrolments) {
+	    enrolmentsToSet.add(new DomainReference<Enrolment>(enrolment));
+	}
+
+	this.enrolments = enrolmentsToSet;
     }
 
 }

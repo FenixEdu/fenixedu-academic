@@ -69,11 +69,11 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	return mapping.findForward("");
     }
 
-    public ActionForward prepareConcludeDocumentRequest(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareConcludeDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	if (request.getAttribute("academicServiceRequest") == null) {
-	    request.setAttribute("academicServiceRequest", getAndSetAcademicServiceRequest(request));	    
+	    request.setAttribute("academicServiceRequest", getAndSetAcademicServiceRequest(request));
 	}
 	return mapping.findForward("printDocument");
     }
@@ -111,21 +111,20 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	if (registrationID == null) {
 	    registrationID = (String) request.getAttribute("registrationId");
 	}
-	final Registration registration = rootDomainObject.readRegistrationByOID(Integer
-		.valueOf(registrationID));
+	final Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
 	request.setAttribute("registration", registration);
 	return registration;
     }
 
-    public ActionForward viewRegistrationDocumentRequestsHistoric(ActionMapping mapping,
-	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewRegistrationDocumentRequestsHistoric(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
 
 	request.setAttribute("registration", getRegistration(request));
 	return mapping.findForward("viewRegistrationDocumentRequestsHistoric");
     }
 
-    public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	request.setAttribute("documentRequest", getDocumentRequest(request));
 	request.setAttribute("url", buildUrl(form, request).toString());
@@ -133,20 +132,32 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	return mapping.findForward("viewDocumentRequest");
     }
 
-    public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return prepareCreateDocumentRequest(mapping, form, request, response,
 		"DocumentRequestCreateBean.chooseDocumentRequestType");
     }
-    
+
+    public ActionForward prepareCreateDocumentRequestInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) getRenderedObject();
+
+	setAdditionalInformationSchemaName(request, requestCreateBean);
+	request.setAttribute("documentRequestCreateBean", requestCreateBean);
+	
+	return mapping.findForward("createDocumentRequests");
+
+    }
+
     public ActionForward prepareCreateDocumentRequestQuick(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareCreateDocumentRequest(mapping, form, request, response,
 		"DocumentRequestCreateBean.chooseDocumentRequestQuickType");
     }
-    
-    private ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response, String schema) {
+
+    private ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, String schema) {
 
 	final DocumentRequestCreator creator = new DocumentRequestCreator(getRegistration(request));
 	creator.setSchema(schema);
@@ -154,11 +165,11 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	return mapping.findForward("createDocumentRequests");
     }
 
-    public ActionForward documentRequestTypeChoosedPostBack(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward documentRequestTypeChoosedPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) RenderUtils
-		.getViewState().getMetaObject().getObject();
+	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) RenderUtils.getViewState()
+		.getMetaObject().getObject();
 	RenderUtils.invalidateViewState();
 
 	setAdditionalInformationSchemaName(request, requestCreateBean);
@@ -173,6 +184,11 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	}
     }
 
+    public ActionForward executionYearToCreateDocumentChangedPostBack(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return documentRequestTypeChoosedPostBack(mapping, form, request, response);
+    }
+
     public ActionForward viewDocumentRequestToCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -184,14 +200,13 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	return mapping.findForward("viewDocumentRequestsToCreate");
     }
 
-    public ActionForward create(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) getRenderedObject();
 	final Registration registration = documentRequestCreateBean.getRegistration();
 	request.setAttribute("registration", registration);
-	
+
 	DocumentRequest documentRequest = null;
 	try {
 	    documentRequest = (DocumentRequest) executeFactoryMethod(request);
@@ -202,7 +217,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	if (documentRequestCreateBean.getChosenDocumentRequestType().isAllowedToQuickDeliver()) {
 	    request.setAttribute("academicServiceRequestId", documentRequest.getIdInternal());
-	    return mapping.findForward("processNewAcademicServiceRequest"); 
+	    return mapping.findForward("processNewAcademicServiceRequest");
 	} else {
 	    addActionMessage(request, "document.request.created.with.success");
 	    return buildActionForward(mapping.findForward("viewRegistrationDetails"), registration);

@@ -31,17 +31,17 @@ import org.joda.time.DateTime;
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
     static final Comparator<AcademicServiceRequest> COMPARATOR_BY_NUMBER = new Comparator<AcademicServiceRequest>() {
-        public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
-            return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
-        }
+	public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
+	    return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
+	}
     };
-    
+
     protected AcademicServiceRequest() {
 	super();
 	super.setServiceRequestNumber(generateServiceRequestNumber());
 	super.setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     private Integer generateServiceRequestNumber() {
 	final SortedSet<AcademicServiceRequest> requests = new TreeSet<AcademicServiceRequest>(COMPARATOR_BY_NUMBER);
 	requests.addAll(RootDomainObject.getInstance().getAcademicServiceRequestsSet());
@@ -51,21 +51,21 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected void init(final Boolean urgentRequest, final Boolean freeProcessed) {
 	init(null, urgentRequest, freeProcessed);
     }
-    
+
     protected void init(final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
 
 	final AdministrativeOffice administrativeOffice = findAdministrativeOffice();
 	checkParameters(administrativeOffice, urgentRequest, freeProcessed);
-	
+
 	super.setAdministrativeOffice(administrativeOffice);
 	super.setUrgentRequest(urgentRequest);
 	super.setFreeProcessed(freeProcessed);
 	super.setExecutionYear(executionYear);
-	
+
 	createAcademicServiceRequestSituations(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
 		AccessControl.getPerson().getEmployee()));
     }
-    
+
     protected AdministrativeOffice findAdministrativeOffice() {
 	final Person person = AccessControl.getPerson();
 	return person != null ? person.getEmployeeAdministrativeOffice() : null;
@@ -87,19 +87,17 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     @Override
     final public void setUrgentRequest(Boolean urgentRequest) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequest.cannot.modify.urgentRequest");
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.urgentRequest");
     }
 
     @Override
     final public void setFreeProcessed(Boolean freeProcessed) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequest.cannot.modify.freeProcessed");
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.freeProcessed");
     }
-    
+
     @Override
     final public void setExecutionYear(ExecutionYear executionYear) {
-        throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.executionYear");
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.executionYear");
     }
 
     final public boolean isUrgentRequest() {
@@ -109,7 +107,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     final public boolean isFreeProcessed() {
 	return getFreeProcessed();
     }
-    
+
     public boolean isFree() {
 	return !isPayable() || isFreeProcessed();
     }
@@ -127,7 +125,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
-	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
+		.getLocale());
 	final StringBuilder result = new StringBuilder();
 	result.append(enumerationResources.getString(academicServiceRequestType.getQualifiedName()));
 	if (specificServiceType != null) {
@@ -136,7 +135,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
 	return result.toString();
     }
-    
+
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType) {
 	return getDescription(academicServiceRequestType, null);
     }
@@ -168,17 +167,18 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     public void delete() {
 	checkRulesToDelete();
-	
-	for (;!getAcademicServiceRequestSituations().isEmpty(); getAcademicServiceRequestSituations().iterator().next().delete());
+
+	for (; !getAcademicServiceRequestSituations().isEmpty(); getAcademicServiceRequestSituations().iterator().next().delete())
+	    ;
 	super.setAdministrativeOffice(null);
-        if (hasEvent()) {
-            getEvent().delete();
-        }
-        super.setExecutionYear(null);
-        super.setRootDomainObject(null);
+	if (hasEvent()) {
+	    getEvent().delete();
+	}
+	super.setExecutionYear(null);
+	super.setRootDomainObject(null);
 	super.deleteDomainObject();
     }
-    
+
     protected void checkRulesToDelete() {
     }
 
@@ -186,24 +186,20 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	throw new DomainException("error.serviceRequests.RegistrationAcademicServiceRequest.cannot.modify.administrativeOffice");
     }
-    
+
     @Override
     final public void setServiceRequestNumber(Integer serviceRequestNumber) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequest.cannot.modify.serviceRequestNumber");
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.serviceRequestNumber");
     }
 
     @Override
-    final public void addAcademicServiceRequestSituations(
-	    AcademicServiceRequestSituation academicServiceRequestSituation) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequest.cannot.add.academicServiceRequestSituation");
+    final public void addAcademicServiceRequestSituations(AcademicServiceRequestSituation academicServiceRequestSituation) {
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.add.academicServiceRequestSituation");
     }
 
     @Override
     final public void setEvent(AcademicServiceRequestEvent event) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequest.cannot.modify.event");
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.event");
     }
 
     @Override
@@ -222,18 +218,16 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     @Override
-    final public void removeAcademicServiceRequestSituations(
-	    AcademicServiceRequestSituation academicServiceRequestSituation) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequest.cannot.remove.academicServiceRequestSituation");
+    final public void removeAcademicServiceRequestSituations(AcademicServiceRequestSituation academicServiceRequestSituation) {
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.remove.academicServiceRequestSituation");
     }
 
     final public AcademicServiceRequestSituation getActiveSituation() {
 	return (!getAcademicServiceRequestSituations().isEmpty()) ? (AcademicServiceRequestSituation) Collections.min(
-		getAcademicServiceRequestSituations(), AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID)
-		: null;
+		getAcademicServiceRequestSituations(),
+		AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID) : null;
     }
-    
+
     final public AcademicServiceRequestSituation getCreationSituation() {
 	return getSituationByType(AcademicServiceRequestSituationType.NEW);
     }
@@ -261,7 +255,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    checkRulesToChangeState(academicServiceRequestBean.getAcademicServiceRequestSituationType());
 	    internalChangeState(academicServiceRequestBean);
 	    createAcademicServiceRequestSituations(academicServiceRequestBean);
-	    
+
 	} else {
 	    getActiveSituation().edit(academicServiceRequestBean);
 	}
@@ -270,8 +264,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     private void checkRulesToChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
 
-	final List<AcademicServiceRequestSituationType> acceptedTypes =
-	    getAcceptAcademicServiceRequestSituationTypeFor(getAcademicServiceRequestSituationType());
+	final List<AcademicServiceRequestSituationType> acceptedTypes = getAcceptAcademicServiceRequestSituationTypeFor(getAcademicServiceRequestSituationType());
 
 	if (!acceptedTypes.contains(academicServiceRequestSituationType)) {
 	    final LabelFormatter sourceLabelFormatter = new LabelFormatter().appendLabel(getActiveSituation()
@@ -291,15 +284,13 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	switch (situationType) {
 
 	case NEW:
- 		return Collections.unmodifiableList(Arrays.asList(new AcademicServiceRequestSituationType[] {
-		    AcademicServiceRequestSituationType.CANCELLED,
-		    AcademicServiceRequestSituationType.REJECTED,
+	    return Collections.unmodifiableList(Arrays.asList(new AcademicServiceRequestSituationType[] {
+		    AcademicServiceRequestSituationType.CANCELLED, AcademicServiceRequestSituationType.REJECTED,
 		    AcademicServiceRequestSituationType.PROCESSING }));
 
 	case PROCESSING:
 	    return Collections.unmodifiableList(Arrays.asList(new AcademicServiceRequestSituationType[] {
-		    AcademicServiceRequestSituationType.CANCELLED,
-		    AcademicServiceRequestSituationType.REJECTED,
+		    AcademicServiceRequestSituationType.CANCELLED, AcademicServiceRequestSituationType.REJECTED,
 		    AcademicServiceRequestSituationType.CONCLUDED }));
 
 	case CONCLUDED:
@@ -323,7 +314,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    }
 	}
     }
-    
+
     protected void createAcademicServiceRequestSituations(final AcademicServiceRequestBean academicServiceRequestBean) {
 	AcademicServiceRequestSituation.create(this, academicServiceRequestBean);
     }
@@ -367,19 +358,21 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     final public boolean isDocumentRequest() {
 	return this instanceof DocumentRequest;
     }
-    
-    final public boolean createdByStudent(){
-        return !getCreationSituation().hasEmployee();
+
+    final public boolean createdByStudent() {
+	return !getCreationSituation().hasEmployee();
     }
-    
+
     final public boolean getLoggedPersonCanCancel() {
-        return (isNewRequest() || isProcessing()) && (createdByStudent() || getAdministrativeOffice() == AccessControl.getPerson().getEmployee().getAdministrativeOffice());
+	return (isNewRequest() || isProcessing())
+		&& (createdByStudent() || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == AccessControl
+			.getPerson().getEmployee().getAdministrativeOffice()));
     }
-    
+
     final public DateTime getCreationDate() {
 	return getCreationSituation().getCreationDate();
     }
-    
+
     public boolean isAvailableForEmployeeToActUpon() {
 	final Person loggedPerson = AccessControl.getPerson();
 	if (loggedPerson.hasEmployee()) {
@@ -388,16 +381,18 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    throw new DomainException("AcademicServiceRequest.non.employee.person.attempt.to.change.request");
 	}
     }
-    
+
     public boolean isRequestForPerson() {
 	return false;
     }
-    
+
     public boolean isRequestForRegistration() {
 	return false;
     }
-    
+
     abstract public EventType getEventType();
+
     abstract public String getDescription();
+
     abstract public Person getPerson();
 }

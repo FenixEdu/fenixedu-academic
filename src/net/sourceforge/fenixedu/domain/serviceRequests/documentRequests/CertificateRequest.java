@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Collection;
+import java.util.List;
+
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestBean;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -34,7 +38,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     static final public CertificateRequest create(Registration registration, DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, Boolean urgentRequest, Boolean average,
 	    Boolean detailed, ExecutionYear executionYear, MobilityProgram mobilityProgram, CycleType requestedCycle,
-	    Boolean freeProcessed) {
+	    Boolean freeProcessed, Collection<Enrolment> enrolments) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
@@ -49,6 +53,9 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	case DEGREE_FINALIZATION_CERTIFICATE:
 	    return new DegreeFinalizationCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
 		    average, detailed, mobilityProgram, requestedCycle, freeProcessed);
+	case EXAM_DATE_CERTIFICATE:
+	    return new ExamDateCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
+		    executionYear, enrolments);
 	}
 
 	return null;

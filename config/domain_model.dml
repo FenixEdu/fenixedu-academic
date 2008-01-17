@@ -3352,6 +3352,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					
 					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 					}
+					
+					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+					}
+					
 	
 				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
 					DocumentPurposeType documentPurposeType;
@@ -4544,6 +4548,15 @@ relation AcademicServiceRequestSituationEmployee {
 relation EquivalencePlanRevisionRequestEquivalencePlanRequest {
 	net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest playsRole equivalencePlanRequest;
 	net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest playsRole equivalencePlanRevisionRequests {
+		multiplicity *;
+	}
+}
+
+relation ExamDateCertificateRequestEnrolment {
+	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest playsRole examDateCertificateRequest {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
 		multiplicity *;
 	}
 }

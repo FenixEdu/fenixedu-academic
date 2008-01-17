@@ -62,11 +62,12 @@
 	<!-- Choose Document Request Type -->
 	<bean:define id="schema" name="documentRequestCreateBean" property="schema" type="java.lang.String"/>
 	<fr:edit name="documentRequestCreateBean" schema="<%=schema%>" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
-		<fr:destination name="documentRequestTypeChoosedPostBack" path="/documentRequestsManagement.do?method=documentRequestTypeChoosedPostBack"/>	
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thright thlight mtop025 mbottom0 thmiddle"/>
 			<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
-		</fr:layout>	
+		</fr:layout>
+		<fr:destination name="documentRequestTypeChoosedPostBack" path="/documentRequestsManagement.do?method=documentRequestTypeChoosedPostBack"/>
+
 	</fr:edit>
 	
 	<!-- Insert additional Information (if any) -->
@@ -77,6 +78,8 @@
 				<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
 			</fr:layout>	
+			<fr:destination name="executionYearChangedPostBack" path="/documentRequestsManagement.do?method=executionYearToCreateDocumentChangedPostBack"/>
+
 		</fr:edit>			
 	</logic:present>
 	
