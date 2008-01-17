@@ -72,7 +72,9 @@ public class ExecutionCourseProcessor extends PathProcessor {
 	    if (executionCourse == null) {
 		return false;
 	    } else {
-		return doForward(context, new Object[] { "firstPage", executionCourse.getIdInternal() });
+		String url = executionCourse.getSite().getReversePath();
+		context.getResponse().sendRedirect(context.getRequest().getContextPath() + url);
+		return true;
 	    }
 	}
     }

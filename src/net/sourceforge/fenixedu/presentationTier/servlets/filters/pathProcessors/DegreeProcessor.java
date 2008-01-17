@@ -92,8 +92,9 @@ public class DegreeProcessor extends PathProcessor {
 	    throws IOException, ServletException {
 	if (!provider.hasNext()) {
 	    DegreeContext ownContext = (DegreeContext) context;
-	    return doForward(context, ExecutionPeriod.readActualExecutionPeriod().getIdInternal(),
-		    ownContext.getDegree().getIdInternal());
+            String url = ownContext.getDegree().getSite().getReversePath();
+	    context.getResponse().sendRedirect(ownContext.getRequest().getContextPath() + url);
+	    return true;	    
 	} else {
 	    return false;
 	}

@@ -10,6 +10,8 @@ public class ScheduleProcessor extends PathProcessor {
 
     public static final String PREFIX = "horarios";
     
+    public static final String CONTENT_SUFIX = "/horarios-por-turma";
+    
     public ScheduleProcessor(String forwardURI) {
         super(forwardURI);
     }
@@ -38,7 +40,9 @@ public class ScheduleProcessor extends PathProcessor {
         }
         else {
             ScheduleContext ownContext = (ScheduleContext) context;
-            doForward(context, ownContext.getParent().getDegree().getIdInternal());
+            String url = ownContext.getParent().getDegree().getSite().getReversePath() + CONTENT_SUFIX;
+	    context.getResponse().sendRedirect(ownContext.getRequest().getContextPath() + url);
+
             return true;
         }
     }

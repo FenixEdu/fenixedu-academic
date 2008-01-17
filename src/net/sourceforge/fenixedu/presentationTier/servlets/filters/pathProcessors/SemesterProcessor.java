@@ -84,8 +84,9 @@ public class SemesterProcessor extends PathProcessor {
             	filterContext.setHasBeenForwarded();
             	request.setAttribute(FunctionalityContext.CONTEXT_KEY, filterContext);
             	
-                String contextURI = ownContext.getSiteBasePath();
-                return doForward(context, contextURI, "firstPage", executionCourse.getIdInternal());
+		String url = portalInstance.getReversePath();
+		context.getResponse().sendRedirect(context.getRequest().getContextPath() + url);
+		return true;
             }
         }
     }

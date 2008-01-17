@@ -12,6 +12,8 @@ public class ExecutionCoursesProcessor extends PathProcessor {
 
     public static final String PREFIX = "disciplinas";
     
+    public static final String CONTENT_SUFIX = "/paginas-de-disciplinas";
+    
     private final String forwardURI;
     
     public ExecutionCoursesProcessor(String forwardURI) {
@@ -49,7 +51,9 @@ public class ExecutionCoursesProcessor extends PathProcessor {
         }
         else {
             ExecutionCoursesContext ownContext = (ExecutionCoursesContext) context;
-            return doForward(ownContext, this.forwardURI, ownContext.getDegree().getIdInternal());
+            String url = ownContext.getDegree().getSite().getReversePath() + CONTENT_SUFIX;
+	    context.getResponse().sendRedirect(ownContext.getRequest().getContextPath() + url);
+	    return true;
         }
     }
 
