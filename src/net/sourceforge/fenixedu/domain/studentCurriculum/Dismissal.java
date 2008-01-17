@@ -150,6 +150,10 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	return (executionPeriod == null || !hasExecutionPeriod() || getExecutionPeriod().isBeforeOrEquals(executionPeriod));
     }
 
+    protected boolean isValid(final ExecutionYear executionYear) {
+	return (executionYear == null || !hasExecutionPeriod() || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear));
+    }
+
     @Override
     public Double getEctsCredits() {
 	// FIXME must migrate Dismissal with optional curricular courses to OptionalDismissal
@@ -234,8 +238,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     @Override
     @SuppressWarnings("unchecked")
     public Curriculum getCurriculum(final ExecutionYear executionYear) {
-	final ExecutionPeriod executionPeriod = executionYear == null ? null : executionYear.getFirstExecutionPeriod();
-	return isValid(executionPeriod) ? 
+	return isValid(executionYear) ? 
 		new Curriculum(
 			this, 
 			executionYear, 
