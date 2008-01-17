@@ -936,7 +936,7 @@ public class Registration extends Registration_Base {
 	result.addAll(getEnrolmentsExecutionYears());
 	return result;
     }
-    
+
     public Collection<ExecutionYear> getCurriculumLinesExecutionYears() {
 	final Collection<ExecutionYear> result = new ArrayList<ExecutionYear>();
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
@@ -1996,6 +1996,10 @@ public class Registration extends Registration_Base {
 	return getCurriculum(executionYear).getCurricularYear();
     }
 
+    public String getConclusionProcessResponsibleIstUsername() {
+	return hasConclusionProcessResponsible() ? getConclusionProcessResponsible().getIstUsername() : null;
+    }
+    
     public boolean isRegistrationConclusionProcessed() {
 	if (getDegreeType().isBolonhaType()) {
 	    return getLastStudentCurricularPlan().isConclusionProcessed();
