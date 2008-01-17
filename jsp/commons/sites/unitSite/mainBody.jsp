@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <bean:define id="announcementAction" name="announcementActionVariable" toScope="request"/>
@@ -97,12 +98,14 @@
 				<div class="usitebody mvert025">
 					<logic:equal name="announcement" property="excerptEmpty" value="true">
 	                    <bean:define id="length" name="textLength"/>
+						<%= ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
 						<fr:view name="announcement" property="body">
 							<fr:layout name="html">
 	<%-- 							<fr:property name="length" value="<%= String.valueOf(length) %>"/> --%>
 	<%-- 							<fr:property name="tooltipShown" value="false"/> --%>
 							</fr:layout>
 						</fr:view>
+						<%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
 					</logic:equal>
 					<logic:notEqual name="announcement" property="excerptEmpty" value="true">
 						<fr:view name="announcement" property="excerpt" layout="html"/>
@@ -170,12 +173,14 @@
 				<div class="usitebody mvert025">
 					<logic:equal name="announcement" property="excerptEmpty" value="true">
 	                    <bean:define id="length" name="textLength"/>
+						<%= ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
 						<fr:view name="announcement" property="body">
 		   					<fr:layout name="html">
 	<%--   		      					<fr:property name="length" value="<%= String.valueOf(length) %>"/> --%>
 	<%--								<fr:property name="tooltipShown" value="false"/> --%>
 							</fr:layout>
 						</fr:view>
+  					<%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX%>
 					</logic:equal>
 					<logic:notEqual name="announcement" property="excerptEmpty" value="true">
 						<fr:view name="announcement" property="excerpt" layout="html"/>
