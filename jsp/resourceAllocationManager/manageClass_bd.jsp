@@ -8,7 +8,7 @@
 <%@ page import="java.util.List"%>
 
 <em><bean:message key="title.resourceAllocationManager.management"/></em>
-<h2><bean:message key="link.manage.turnos"/></h2>
+<h2><bean:message key="link.manage.turmas"/></h2>
 
 
 <p class="mbottom05">O curso seleccionado &eacute;:</p>
