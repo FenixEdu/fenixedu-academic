@@ -56,9 +56,11 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	    hasBeenForwarded = true;
 	}
 
-	final String trailingPath = getTrailingPath(path);
-	Portal.getRootPortal().addPathContentsForTrailingPath(contents, trailingPath);
-	addInitialContent();
+	if (!path.contains(".do") && !path.contains(".faces")) {
+	    final String trailingPath = getTrailingPath(path);
+	    Portal.getRootPortal().addPathContentsForTrailingPath(contents, trailingPath);
+	    addInitialContent();
+	}
 	final Container selectedContainer = getSelectedContainer();
 	if (selectedContainer == null) {
 	    String queryString = request.getQueryString();
@@ -104,7 +106,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 		if (content instanceof MetaDomainObjectPortal
 			&& !((MetaDomainObjectPortal) content).getStrategy().keepPortalInContentsPath()) {
 		    i++;
-		    if(actualSelectedContainer == contents.get(i)) {
+		    if (actualSelectedContainer == contents.get(i)) {
 			stringBuilder.append("/");
 			stringBuilder.append(content.getNormalizedName().getContent());
 			break;
@@ -254,15 +256,15 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	this.contents.addAll(contents);
 	findSelectedContainerPath();
     }
-    
+
     @Override
-    public Content getLastContentInPath(Class type) {        
+    public Content getLastContentInPath(Class type) {
 	for (int i = contents.size() - 1; i >= 0; i--) {
 	    Content content = contents.get(i);
-	    if(type.isAssignableFrom(content.getClass())) {
+	    if (type.isAssignableFrom(content.getClass())) {
 		return content;
 	    }
-	}	
-        return null;
+	}
+	return null;
     }
 }
