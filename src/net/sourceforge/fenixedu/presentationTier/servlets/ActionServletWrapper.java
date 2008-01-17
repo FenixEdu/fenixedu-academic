@@ -61,7 +61,8 @@ public class ActionServletWrapper extends ActionServlet {
 	    parameterMap.put("config/messaging", "/WEB-INF/conf/struts-messaging.xml");
 	    parameterMap.put("config/parkingManager", "/WEB-INF/conf/struts-parkingManager.xml");  
 	    parameterMap.put("config/academicAdminOffice", "/WEB-INF/conf/struts-academicAdminOffice.xml");         
-	    parameterMap.put("config/library", "/WEB-INF/conf/struts-library.xml");         
+	    parameterMap.put("config/library", "/WEB-INF/conf/struts-library.xml");   
+	    parameterMap.put("config/internationalRelatOffice","/WEB-INF/conf/struts-internationalRelatOffice.xml");
 	    parameterMap.put("debug", "3");
 	    parameterMap.put("detail", "3");
 	    parameterMap.put("validating", "true");
