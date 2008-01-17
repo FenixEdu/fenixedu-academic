@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
@@ -927,12 +926,14 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		return new HtmlText(degreeCurricularPlan.getName());
 	    }
 
-	    final HtmlLink result = new HtmlLink();
+	    final HtmlLink result = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
 
 	    result.setText(degreeCurricularPlan.getName());
 	    result.setModuleRelative(false);
 	    result.setTarget("_blank");
-
+	    result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "cursos/"
+		    + degreeCurricularPlan.getDegree().getSigla() + "/plano-curricular");
+	    
 	    if (degreeCurricularPlan.isBoxStructure()) {
 		result.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
 
