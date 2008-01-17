@@ -28,4 +28,5 @@ function executeWithTempFile() {
 }
 
 
-execute "Alter table content" alterTableContent.sql
+execute "Add conclusion process notes." addConclusionProcessNotes.sql
+execute "Fix Personnel Section." fixAmpInPersonnelSection.sql
