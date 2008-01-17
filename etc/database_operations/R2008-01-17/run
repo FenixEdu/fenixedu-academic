@@ -26,4 +26,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
- 
+
+execute "Alter table content" alterTableContent.sql
+execute "Creating International Relation Office" createInternationalRelatOffice.sql 
