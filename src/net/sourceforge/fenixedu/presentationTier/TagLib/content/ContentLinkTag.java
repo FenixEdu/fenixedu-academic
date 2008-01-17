@@ -20,6 +20,7 @@ public class ContentLinkTag extends BodyTagSupport {
     protected String target = null;
     protected String title = null;
     protected Boolean hrefInBody = null;
+    protected String styleClass = null;    
 
     public String getName() {
 	return (this.name);
@@ -62,6 +63,14 @@ public class ContentLinkTag extends BodyTagSupport {
         this.title = title;
     }
 
+    public String getStyleClass() {
+        return styleClass;
+    }
+
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
+    }
+
     @Override
     public int doStartTag() throws JspException {
 	return EVAL_BODY_BUFFERED;
@@ -78,7 +87,7 @@ public class ContentLinkTag extends BodyTagSupport {
 	    writeStartTag();
 	    if(getHrefInBody() != null && getHrefInBody()) {
 		final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
-		final String path = getContextPath() + content.getReversePath();
+		final String path = content.getReversePath();
 		write(RequestUtils.absoluteURL((HttpServletRequest) pageContext.getRequest(), path).toString());
 	    } else {
 		write(getBodyContent().getString().trim());
@@ -105,6 +114,9 @@ public class ContentLinkTag extends BodyTagSupport {
 	}
 	if(getTitle() != null) {
 	    write(" title=\"" + getTitle() + "\"");
+	}
+	if(getStyleClass() != null) {
+	    write(" class=\"" + getStyleClass() + "\"");
 	}
 	write(">");
     }

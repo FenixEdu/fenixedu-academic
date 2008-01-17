@@ -1831,4 +1831,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		: readLastByExecutionYearAndSigla(sigla, (ExecutionYear) academicPeriod);
     }
     
+    @Override
+    public void setSigla(String sigla) {
+        super.setSigla(sigla.replace(' ', '_'));
+    }
+    
 }

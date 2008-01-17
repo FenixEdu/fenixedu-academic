@@ -76,9 +76,7 @@
 		            <bean:define id="executionCourseURL"><%= hostURL2 + ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse) %></bean:define>	            
 		            <p class="mtop05 mbottom0">
 			            <span class="smalltxt breakword color888" style="word-wrap: break-word !important;">
-							<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= executionCourseURL %>" styleClass="color888" target="_blank">
-			                    <bean:write name="executionCourseURL"/>
-			                </html:link>
+			            	<app:contentLink name="executionCourse" property="site" target="blank" hrefInBody="true" styleClass="color888"/>
 		                </span>
 	                </p>
 				</td>
