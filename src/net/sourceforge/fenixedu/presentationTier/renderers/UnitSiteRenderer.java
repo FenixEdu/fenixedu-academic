@@ -5,6 +5,7 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
@@ -149,7 +150,7 @@ public class UnitSiteRenderer extends OutputRenderer {
 	private HtmlComponent getUnitComponent(Unit unit) {
 	    HtmlComponent component;
 	    if (unitHasSite(unit)) {
-		HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+		HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
 		link.setUrl(resolveUnitURL(unit));
 		link.setBody(renderValue(unit, findSchema(), getUnitLayout()));
 		if (isTargetBlank()) {
@@ -174,10 +175,7 @@ public class UnitSiteRenderer extends OutputRenderer {
 		return "";
 	    }
 	    
-	    MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(unit.getSite().getClass());
-	    return metaDomainObject == null ? null : metaDomainObject.getAssociatedPortal().getNormalizedName()
-		    .getContent()
-		    + "/" + unit.getUnitPath("/");
+	    return site.getReversePath();
 	}
     }
 
