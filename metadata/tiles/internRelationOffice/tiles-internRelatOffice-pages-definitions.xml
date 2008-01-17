@@ -3,7 +3,7 @@
 
 <tiles-definitions>
 
-    <definition name="index" extends="internRelationOffice.masterPage">
+    <definition name="indexPage" extends="internRelationOffice.masterPage">
         <put name="body" value="/internationalRelatOffice/index.jsp"/>
     </definition>	    
    <definition name="students.search" extends="internRelationOffice.masterPage">

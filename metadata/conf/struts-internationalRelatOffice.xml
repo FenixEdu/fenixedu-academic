@@ -41,18 +41,13 @@
 
     <!-- ========== Global Forward Definitions =============================== -->
        
-    <global-forwards type="org.apache.struts.action.ActionForward">
-    	
-    	<forward name="index" path="index.do" redirect="true"/>
-    	
-    </global-forwards>
-    
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       
        	<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-            <forward name="Success" path="index"/>
+            <forward name="Success" path="indexPage"/>
         </action>  
+
         <action path="/students"
 				scope="request"		
 		        parameter="method"
