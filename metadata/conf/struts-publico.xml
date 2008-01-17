@@ -1192,7 +1192,7 @@
 	        <forward name="showResearchers" path="show-research-unit-researchers"/>
 	        <forward name="showPublications" path="show-research-unit-publications"/>
             <forward name="unit-organization" path="show-research-unit-organization"/>
-	        
+			<forward name="unit-subunits" path="show-research-unit-subunits"/>	        
             <forward name="announcementsAction" path="/researchSite/manageResearchUnitAnnouncements.do"/>
             <forward name="eventsAction" path="/researchSite/manageResearchUnitAnnouncements.do"/>
             <forward name="announcementsRSSAction" path="/researchSite/announcementsRSS.do"/>

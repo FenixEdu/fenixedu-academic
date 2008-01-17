@@ -12,7 +12,7 @@
 <bean:define id="siteID" name="site" property="idInternal"/>
 
 <p>
-	<html:link href="<%= "viewResearchUnitSite.do?siteID=" + siteID + "&method=organization"%>" ><bean:message key="label.organization" bundle="SITE_RESOURCES"/></html:link> | <bean:message key="label.members" bundle="SITE_RESOURCES"/>
+	<html:link href="<%= request.getContextPath() + "/publico/researchSite/viewResearchUnitSite.do?siteID=" + siteID + "&method=organization"%>" ><bean:message key="label.organization" bundle="SITE_RESOURCES"/></html:link> | <bean:message key="label.members" bundle="SITE_RESOURCES"/>
 </p>
 
 <h2><bean:message key="label.members" bundle="SITE_RESOURCES"/></h2>
