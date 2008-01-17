@@ -159,5 +159,11 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
 				executionPeriod.getExecutionYear().getYear().replace('/', '-'), executionPeriod.getSemester())
 				.toString()).finish();
     }
-    
+
+    @Override
+    public void setNormalizedName(final MultiLanguageString normalizedName) {
+	// unable to optimize because we cannot track changes to name correctly.
+	// don't call super.setNormalizedName() !
+    }
+
 }
