@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
+import java.util.Formatter;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
-import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
@@ -149,5 +149,15 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
 	addForum(new ExecutionCourseForum(name, description));
     }
 
+    @Override
+    public MultiLanguageString getName() {
+	final ExecutionPeriod executionPeriod = getSiteExecutionCourse().getExecutionPeriod();
+	return MultiLanguageString.i18n()
+		.add(
+			"pt",
+			new Formatter().format("%s/%s/%d-semestre", getSiteExecutionCourse().getSigla(),
+				executionPeriod.getExecutionYear().getYear().replace('/', '-'), executionPeriod.getSemester())
+				.toString()).finish();
+    }
     
 }
