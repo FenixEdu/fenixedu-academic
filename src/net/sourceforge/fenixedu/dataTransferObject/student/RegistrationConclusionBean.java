@@ -97,7 +97,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     public boolean isConcluded() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
     }
-    
+
     public Collection<CurriculumGroup> getCurriculumGroupsNotVerifyingStructure() {
 	if (hasCycleCurriculumGroup()) {
 	    final Collection<CurriculumGroup> result = new HashSet<CurriculumGroup>();
@@ -114,15 +114,22 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public boolean getCanBeConclusionProcessed() {
-	return !isConclusionProcessed() && isConcluded() && (getCurriculumGroupsNotVerifyingStructure().isEmpty() || getRegistration().getWasTransition());
+	return !isConclusionProcessed() && isConcluded()
+		&& (getCurriculumGroupsNotVerifyingStructure().isEmpty() || getRegistration().getWasTransition());
     }
 
     public boolean isByCycle() {
 	return hasCycleCurriculumGroup();
     }
-    
+
     public String getConclusionProcessNotes() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getConclusionProcessNotes() : getRegistration().getConclusionProcessNotes();
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getConclusionProcessNotes() : getRegistration()
+		.getConclusionProcessNotes();
     }
-    
+
+    public String getConclusionProcessResponsibleIstUsername() {
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getConclusionProcessResponsibleIstUsername()
+		: getRegistration().getConclusionProcessResponsibleIstUsername();
+    }
+
 }
