@@ -13,9 +13,11 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	super();
     }
 
-    final protected void checkParameters(final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription) {
+    final protected void checkParameters(final DocumentPurposeType documentPurposeType,
+	    final String otherDocumentPurposeTypeDescription) {
 	if (documentPurposeType == DocumentPurposeType.OTHER && otherDocumentPurposeTypeDescription == null) {
-	    throw new DomainException("error.serviceRequests.documentRequests.DocumentRequest.otherDocumentPurposeTypeDescription.cannot.be.null.for.other.purpose.type");
+	    throw new DomainException(
+		    "error.serviceRequests.documentRequests.DocumentRequest.otherDocumentPurposeTypeDescription.cannot.be.null.for.other.purpose.type");
 	}
     }
 
@@ -27,9 +29,9 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     abstract public DocumentRequestType getDocumentRequestType();
 
     abstract public String getDocumentTemplateKey();
-    
+
     abstract public boolean isPagedDocument();
-    
+
     abstract public boolean isToPrint();
 
     final public boolean isCertificate() {
@@ -86,7 +88,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
     final public boolean isToShowCredits() {
 	return getDegreeType() != DegreeType.DEGREE;
     }
-    
+
     public boolean hasNumberOfPages() {
 	return getNumberOfPages() != null && getNumberOfPages().intValue() != 0;
     }

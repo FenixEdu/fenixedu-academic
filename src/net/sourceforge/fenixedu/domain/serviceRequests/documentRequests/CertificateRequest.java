@@ -15,14 +15,14 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super();
 	super.setNumberOfPages(0);
     }
-    
+
     final protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean freeProcessed) {
 	init(registration, null, freeProcessed, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
     }
 
-    final protected void init(Registration registration, final ExecutionYear executionYear, Boolean freeProcessed, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
+    final protected void init(Registration registration, final ExecutionYear executionYear, Boolean freeProcessed,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
 	super.init(registration, executionYear, urgentRequest, freeProcessed);
 
@@ -31,25 +31,24 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
     }
 
-    static final public CertificateRequest create(Registration registration,
-	    DocumentRequestType chosenDocumentRequestType,
-	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose,
-	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear, 
-	    MobilityProgram mobilityProgram, CycleType requestedCycle, Boolean freeProcessed) {
+    static final public CertificateRequest create(Registration registration, DocumentRequestType chosenDocumentRequestType,
+	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, Boolean urgentRequest, Boolean average,
+	    Boolean detailed, ExecutionYear executionYear, MobilityProgram mobilityProgram, CycleType requestedCycle,
+	    Boolean freeProcessed) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
-	    return new SchoolRegistrationCertificateRequest(registration, chosenDocumentPurposeType,
-		    otherPurpose, urgentRequest, executionYear);
+	    return new SchoolRegistrationCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
+		    executionYear);
 	case ENROLMENT_CERTIFICATE:
-	    return new EnrolmentCertificateRequest(registration, chosenDocumentPurposeType,
-		    otherPurpose, urgentRequest, detailed, executionYear);
+	    return new EnrolmentCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
+		    detailed, executionYear);
 	case APPROVEMENT_CERTIFICATE:
-	    return new ApprovementCertificateRequest(registration, chosenDocumentPurposeType,
-		    otherPurpose, urgentRequest, mobilityProgram);
+	    return new ApprovementCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
+		    mobilityProgram);
 	case DEGREE_FINALIZATION_CERTIFICATE:
-	    return new DegreeFinalizationCertificateRequest(registration, chosenDocumentPurposeType,
-		    otherPurpose, urgentRequest, average, detailed, mobilityProgram, requestedCycle, freeProcessed);
+	    return new DegreeFinalizationCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
+		    average, detailed, mobilityProgram, requestedCycle, freeProcessed);
 	}
 
 	return null;
@@ -57,8 +56,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
     @Override
     final public void setDocumentPurposeType(DocumentPurposeType documentPurposeType) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.documentPurposeType");
+	throw new DomainException("error.serviceRequests.documentRequests.CertificateRequest.cannot.modify.documentPurposeType");
     }
 
     @Override
@@ -72,14 +70,13 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     final public void edit(final DocumentRequestBean certificateRequestBean) {
 
 	if (isPayable() && isPayed() && !getNumberOfPages().equals(certificateRequestBean.getNumberOfPages())) {
-	    throw new DomainException(
-		    "error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
+	    throw new DomainException("error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
 	}
 
 	super.edit(certificateRequestBean);
 	super.setNumberOfPages(certificateRequestBean.getNumberOfPages());
     }
-    
+
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 	super.internalChangeState(academicServiceRequestBean);
@@ -109,7 +106,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
 	return super.isFree();
     }
-    
+
     private boolean isRequestForPreviousExecutionYear() {
 	return getExecutionYear() != ExecutionYear.readCurrentExecutionYear();
     }
@@ -121,11 +118,11 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
     @Override
     public boolean isPagedDocument() {
-        return true;
+	return true;
     }
-    
+
     @Override
     public boolean isToPrint() {
-        return true;
+	return true;
     }
 }
