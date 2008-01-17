@@ -1380,6 +1380,7 @@
 </schema>
 
 <schema name="Registration.editConclusionInformation" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="APPLICATION_RESOURCES">
+	<slot name="conclusionProcessResponsible" read-only="true"/>
 	<slot name="finalAverage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="conclusionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="conclusionProcessNotes" layout="longText">
@@ -1389,17 +1390,19 @@
 </schema>
 
 <schema name="CycleCurriculumGroup.editConclusionInformation" type="net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup" bundle="APPLICATION_RESOURCES">
+	<slot name="conclusionProcessResponsibleIstUsername" read-only="true"/>
 	<slot name="name" read-only="true" />
 	<slot name="finalAverage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="conclusionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="conclusionProcessNotes" layout="longText">
     	<property name="columns" value="50" />
     	<property name="rows" value="10" />
-    </slot>	
+    </slot>
 	<setter signature="editConclusionInformation(finalAverage,conclusionDate)"/>
 </schema>
 
 <schema name="RegistrationConclusionBean.viewForCycleWithConclusionProcessedInformation" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+	<slot name="conclusionProcessResponsibleIstUsername"/>
 	<slot name="cycleCurriculumGroup.name" />
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
@@ -1412,6 +1415,7 @@
 </schema>
 
 <schema name="RegistrationConclusionBean.viewForRegistrationWithConclusionProcessedInformation" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+	<slot name="conclusionProcessResponsibleIstUsername"/>
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
 	<slot name="average" />
