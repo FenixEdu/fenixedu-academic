@@ -204,6 +204,10 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.responsibleForConclusionProcess");
     }
     
+    public String getConclusionProcessResponsibleIstUsername() {
+	return hasConclusionProcessResponsible() ? getConclusionProcessResponsible().getIstUsername() : null;
+    }
+    
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void removeConcludedInformation() {
 	// checkRulesToRemoveConcludedInformation();
