@@ -18,14 +18,8 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.requestWrappers.RequestWrapper;
 
 public class ContentFilter implements Filter {
-
-    private String errorPage;
-
-    private String errorPageLogged;
-
 
     private static final String SECTION_PATH = "/publico/viewGenericContent.do?method=viewSection";
 
@@ -58,12 +52,10 @@ public class ContentFilter implements Filter {
 
     private void dispatchTo(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
 	    final FilterFunctionalityContext functionalityContext, String path) throws ServletException, IOException {
-	final RequestWrapper requestWrapper = new RequestWrapper(httpServletRequest, path, functionalityContext);
-	requestWrapper
-		.setAttribute(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, functionalityContext.getCurrentContextPath());
-	final RequestDispatcher requestDispatcher = requestWrapper.getRequestDispatcher(path);
+	httpServletRequest.setAttribute(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, functionalityContext.getCurrentContextPath());
+	final RequestDispatcher requestDispatcher = httpServletRequest.getRequestDispatcher(path);
 	functionalityContext.setHasBeenForwarded();
-	requestDispatcher.forward(requestWrapper, httpServletResponse);
+	requestDispatcher.forward(httpServletRequest, httpServletResponse);
     }
 
     private void contentsForward(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
