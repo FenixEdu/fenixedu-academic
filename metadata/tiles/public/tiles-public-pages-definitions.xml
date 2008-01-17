@@ -340,7 +340,7 @@
 
 	<!-- ========== BASIC UNIT SITE -->
 	
-    <definition name="basicUnit-subunits" extends="definition.public.basicUnit.frontPage">
+    <definition name="basicUnit-subunits" extends="definition.public.basicUnit">
            <put name="body" value="/commons/sites/unitSite/subunits.jsp"/>
     </definition>
     
