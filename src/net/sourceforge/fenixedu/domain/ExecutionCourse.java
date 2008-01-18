@@ -1833,7 +1833,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     
     @Override
     public void setSigla(String sigla) {
-        super.setSigla(sigla.replace(' ', '_'));
+        super.setSigla(sigla.replace(' ', '_').replace('/', '-'));
     }
     
 }
