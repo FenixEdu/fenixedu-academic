@@ -17,14 +17,13 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <logic:present name="section">
-	<%= ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
     <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 
     <h2>
         <fr:view name="section" property="name" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
 		<app:defineContentPath id="sectionURL" name="section" toScope="request"/>
 		<bean:define id="url" name="sectionURL" type="java.lang.String"/>
-  		<span class="permalink1">(<a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+  		<span class="permalink1">(<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h2>
 
     <logic:present name="hasRestrictedItems">
@@ -59,9 +58,12 @@
             <logic:equal name="item" property="nameVisible" value="true">
 	       		<h3 class="mtop2 mbottom05" id="<%= "item" + item.getIdInternal() %>">
 	                <fr:view name="item" property="name"/>
- 				    <app:defineContentPath id="itemURL" name="item" toScope="request"/>
-					<bean:define id="url" name="itemURL" type="java.lang.String"/>
-	                    <span class="permalink1">(<a href="<%= request.getContextPath() + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+
+		            <logic:equal name="item" property="publicAvailable" value="true">
+	 				    <app:defineContentPath id="itemURL" name="item" toScope="request"/>
+						<bean:define id="url" name="itemURL" type="java.lang.String"/>
+		                  <span class="permalink1">(<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+	    			</logic:equal>
 	            </h3>
             </logic:equal>
 
@@ -105,5 +107,4 @@
        	</logic:iterate>
        	
     </logic:notEmpty>
-   	<%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
 </logic:present>
