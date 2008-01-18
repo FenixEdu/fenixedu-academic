@@ -798,7 +798,7 @@
 		</action>
 		
 		<action path="/searchPublications"
-    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.HomepageSearchPublicationsDA"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA"
     			parameter="method">
         	<forward name="SearchPublication"  path="search-homepage-publications"/>	
 		</action>
@@ -1008,7 +1008,7 @@
 
        <action path="/department/searchPublication"
         parameter="method"
-        type="net.sourceforge.fenixedu.presentationTier.Action.publico.PublicDepartmentSiteSearchPublicationsDA">
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA">
         	<forward name="SearchPublication"  path="search-research-unit-publications"/>
         </action>
 
@@ -1207,13 +1207,13 @@
        
        <action path="/department/searchPublication"
         parameter="method"
-        type="net.sourceforge.fenixedu.presentationTier.Action.publico.department.PublicDepartmentSiteSearchPublicationsDA">
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA">
         	<forward name="SearchPublication"  path="department-search-publications"/>
         </action>
        
        <action path="/scientificArea/searchPublication"
         parameter="method"
-        type="net.sourceforge.fenixedu.presentationTier.Action.publico.scientificalArea.PublicScientificAreaSiteSearchPublicationsDA">
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.SearchPublicationsDA">
         	<forward name="SearchPublication"  path="scientific-area-search-publications"/>
         </action>
        

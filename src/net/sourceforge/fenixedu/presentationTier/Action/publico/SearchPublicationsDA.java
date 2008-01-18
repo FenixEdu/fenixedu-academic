@@ -10,10 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.SearchDSpacePublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.SearchPublicationsAction;
 
 import org.apache.struts.action.ActionForm;
@@ -51,11 +49,10 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
 
     protected void setRequestDomainObject(HttpServletRequest request) {
 	
-	
 	FunctionalityContext context = AbstractFunctionalityContext.getCurrentContext(request);
 	Site site = null;
 	if (context != null) {
-	    site = (Site) context.getLastContentInPath(Homepage.class);
+	    site = (Site) context.getLastContentInPath(Site.class);
 	}
 	else {
 	    String siteID = request.getParameter("siteID");
@@ -71,4 +68,5 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
 	return searchDSpacePublicationBean;
     }
 
+    
 }

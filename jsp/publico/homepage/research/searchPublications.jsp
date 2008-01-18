@@ -9,10 +9,6 @@
 <bean:define id="searchContextPath" value="/" toScope="request" />
 <bean:define id="showAction" value="showPublications.do?" toScope="request" />
 <bean:define id="searchAction" value="searchPublications.do?" toScope="request" />
-<bean:define id="showArguments" value="<%= "sectionID=" + request.getParameter("sectionID") + "&homepageID=" + request.getParameter("homepageID") %>" toScope="request" />
-<bean:define id="searchArguments" value="<%= "sectionID=" + request.getParameter("sectionID") + "&homepageID=" + request.getParameter("homepageID") %>" toScope="request" />
-<bean:define id="showMethod" value="&method=showPublications" toScope="request" />
-<bean:define id="searchMethod" value="&method=prepareSearchPublication" toScope="request" />
 
 <bean:define id="searchPublicationLabelKey" value="label.search.publications.person" toScope="request" />
 

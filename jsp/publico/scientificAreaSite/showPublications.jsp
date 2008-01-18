@@ -13,10 +13,6 @@
 <bean:define id="searchContextPath" value="/scientificArea/" toScope="request" />
 <bean:define id="showAction" value="viewSite.do?" toScope="request" />
 <bean:define id="searchAction" value="searchPublication.do?" toScope="request" />
-<bean:define id="showArguments" value="<%= "sectionID=" + request.getParameter("sectionID") + "&unitID=" + request.getParameter("unitID") %>" toScope="request" />
-<bean:define id="searchArguments" value="<%= "sectionID=" + request.getParameter("sectionID") + "&unitID=" + request.getParameter("unitID") + "&selectedDepartmentUnitID=" + request.getParameter("unitID") %>" toScope="request" />
-<bean:define id="showMethod" value="&method=showPublications" toScope="request" />
-<bean:define id="searchMethod" value="&method=prepareSearchPublication" toScope="request" />
 
 <bean:define id="searchPublicationLabelKey" value="label.search.publications.scientificArea" toScope="request" />
 

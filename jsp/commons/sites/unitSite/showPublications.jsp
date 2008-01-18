@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
 <html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -10,10 +11,12 @@
 <bean:define id="searchAction" name="searchAction" scope="request" type="java.lang.String" />
 <bean:define id="showContextPath" name="showContextPath" scope="request" type="java.lang.String" />
 <bean:define id="searchContextPath" name="searchContextPath" scope="request" type="java.lang.String" />
-<bean:define id="showArguments" name="showArguments" scope="request" type="java.lang.String" />
-<bean:define id="searchArguments" name="searchArguments" scope="request" type="java.lang.String" />
-<bean:define id="showMethod" name="showMethod" scope="request" type="java.lang.String" />
-<bean:define id="searchMethod" name="searchMethod" scope="request" type="java.lang.String" />
+
+<bean:define id="showMethod" value="&method=showPublications" toScope="request" />
+<bean:define id="searchMethod" value="&method=prepareSearchPublication" toScope="request" />
+<bean:define id="siteID" name="<%= FilterFunctionalityContext.CONTEXT_KEY%>" property="selectedContainer.idInternal"/>
+<bean:define id="showArguments" value="<%= "siteID=" + siteID %>" toScope="request" />
+<bean:define id="searchArguments" value="<%=  "siteID=" + siteID %>" toScope="request" />
 
 <bean:define id="searchPublicationLabelKey" name="searchPublicationLabelKey" scope="request" type="java.lang.String" />
 
