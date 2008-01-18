@@ -243,7 +243,7 @@
 			</band>
 		</columnFooter>
 		<pageFooter>
-			<band height="39"  isSplitAllowed="true" >
+			<band height="34"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="452"
@@ -303,11 +303,11 @@
 			</band>
 		</pageFooter>
 		<lastPageFooter>
-			<band height="208"  isSplitAllowed="true" >
+			<band height="218"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="205"
-						y="105"
+						y="101"
 						width="160"
 						height="21"
 						key="staticText-20"/>
@@ -320,7 +320,7 @@
 				<line direction="TopDown">
 					<reportElement
 						x="205"
-						y="150"
+						y="146"
 						width="160"
 						height="0"
 						key="line-3"/>
@@ -329,7 +329,7 @@
 				<staticText>
 					<reportElement
 						x="452"
-						y="175"
+						y="171"
 						width="25"
 						height="19"
 						key="staticText-22"
@@ -343,7 +343,7 @@
 				<staticText>
 					<reportElement
 						x="490"
-						y="175"
+						y="171"
 						width="14"
 						height="19"
 						key="staticText-23"
@@ -357,7 +357,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="477"
-						y="175"
+						y="171"
 						width="13"
 						height="19"
 						key="textField-25"
@@ -371,7 +371,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="504"
-						y="175"
+						y="171"
 						width="13"
 						height="19"
 						key="textField-26"
@@ -412,7 +412,7 @@ $P{day}]]></textFieldExpression>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="176"
-						y="155"
+						y="151"
 						width="239"
 						height="21"
 						key="textField-29"/>
