@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -181,7 +182,8 @@ public class AnnouncementRSS extends RSSAction {
 
     protected final AnnouncementBoard getSelectedBoard(HttpServletRequest request) {
         final String id = request.getParameter("announcementBoardId");
-        return (AnnouncementBoard) rootDomainObject.readContentByOID(Integer.valueOf(id));
+        Content content = rootDomainObject.readContentByOID(Integer.valueOf(id));
+        return (content instanceof AnnouncementBoard) ? (AnnouncementBoard)content : null; 
     }
 
     @Override
