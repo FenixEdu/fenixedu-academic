@@ -67,7 +67,7 @@
 			</band>
 		</background>
 		<title>
-			<band height="392"  isSplitAllowed="true" >
+			<band height="273"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="219"
@@ -84,9 +84,9 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="196"
+						y="161"
 						width="469"
-						height="179"
+						height="112"
 						key="textField-16"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
@@ -97,7 +97,7 @@
 			</band>
 		</title>
 		<pageHeader>
-			<band height="18"  isSplitAllowed="true" >
+			<band height="39"  isSplitAllowed="true" >
 			</band>
 		</pageHeader>
 		<columnHeader>
@@ -109,7 +109,7 @@
 						width="176"
 						height="22"
 						key="staticText-16"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
 					</textElement>
@@ -117,36 +117,25 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="242"
+						x="240"
 						y="4"
 						width="76"
 						height="22"
 						key="staticText-17"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
 					</textElement>
 				<text><![CDATA[1º Época]]></text>
 				</staticText>
-				<line direction="TopDown">
-					<reportElement
-						x="66"
-						y="26"
-						width="469"
-						height="0"
-						forecolor="#808080"
-						key="line-2"
-						positionType="FixRelativeToBottom"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
-				</line>
 				<staticText>
 					<reportElement
-						x="318"
+						x="316"
 						y="4"
 						width="76"
 						height="22"
 						key="staticText-26"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
 					</textElement>
@@ -154,12 +143,12 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="394"
+						x="392"
 						y="4"
 						width="76"
 						height="22"
 						key="staticText-27"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
 					</textElement>
@@ -167,12 +156,12 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="470"
+						x="468"
 						y="4"
 						width="76"
 						height="22"
 						key="staticText-28"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
 					</textElement>
@@ -181,15 +170,15 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="24"  isSplitAllowed="true" >
+			<band height="20"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="1"
+						y="-1"
 						width="176"
-						height="22"
+						height="21"
 						key="textField-21"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
@@ -197,36 +186,25 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="242"
-						y="1"
+						x="240"
+						y="-1"
 						width="76"
-						height="22"
+						height="21"
 						key="textField-22"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{firstSeasonDate}]]></textFieldExpression>
 				</textField>
-				<line direction="TopDown">
-					<reportElement
-						x="64"
-						y="23"
-						width="469"
-						height="0"
-						forecolor="#808080"
-						key="line-1"
-						positionType="FixRelativeToBottom"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
-				</line>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="318"
-						y="1"
+						x="316"
+						y="-1"
 						width="76"
-						height="22"
+						height="21"
 						key="textField-30"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
@@ -234,12 +212,12 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="394"
-						y="1"
+						x="392"
+						y="-1"
 						width="76"
-						height="22"
+						height="21"
 						key="textField-31"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
@@ -247,12 +225,12 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="470"
-						y="1"
+						x="468"
+						y="-1"
 						width="76"
-						height="22"
+						height="21"
 						key="textField-32"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
@@ -325,11 +303,11 @@
 			</band>
 		</pageFooter>
 		<lastPageFooter>
-			<band height="239"  isSplitAllowed="true" >
+			<band height="208"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="205"
-						y="127"
+						y="105"
 						width="160"
 						height="21"
 						key="staticText-20"/>
@@ -342,7 +320,7 @@
 				<line direction="TopDown">
 					<reportElement
 						x="205"
-						y="172"
+						y="150"
 						width="160"
 						height="0"
 						key="line-3"/>
@@ -351,7 +329,7 @@
 				<staticText>
 					<reportElement
 						x="452"
-						y="197"
+						y="175"
 						width="25"
 						height="19"
 						key="staticText-22"
@@ -365,7 +343,7 @@
 				<staticText>
 					<reportElement
 						x="490"
-						y="197"
+						y="175"
 						width="14"
 						height="19"
 						key="staticText-23"
@@ -379,7 +357,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="477"
-						y="197"
+						y="175"
 						width="13"
 						height="19"
 						key="textField-25"
@@ -393,7 +371,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="504"
-						y="197"
+						y="175"
 						width="13"
 						height="19"
 						key="textField-26"
@@ -420,33 +398,21 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="61"
-						width="323"
-						height="23"
+						y="41"
+						width="381"
+						height="43"
 						key="textField-28"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="10" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Secretaria dos Serviços Académicos do Instituto Superior Técnico,\n" +
+$P{day}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement
-						x="64"
-						y="41"
-						width="469"
-						height="20"
-						key="staticText-25"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Justified">
-						<font pdfFontName="Times-Roman" size="10"/>
-					</textElement>
-				<text><![CDATA[Secretaria dos Serviços Académicos do Instituto Superior Técnico,]]></text>
-				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="176"
-						y="177"
+						y="155"
 						width="239"
 						height="21"
 						key="textField-29"/>
