@@ -27,7 +27,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add column subject to table AcademicServiceRequest" alterTableAcademicServiceRequest.sql
-execute "Create table CourseLoadEnrolments" createCourseLoadEnrolments.sql
-execute "Adding ExamCertificateRequestEnrolment table" AddExamCertificateRequestEnrolmentTable.sql
-execute "Update ExecutionCourses Siglas" updateExecutionCoursesSiglas.sql

@@ -29,3 +29,8 @@ function executeWithTempFile() {
 
 execute "Alter table content" alterTableContent.sql
 execute "Creating International Relation Office" createInternationalRelatOffice.sql 
+
+execute "Add column subject to table AcademicServiceRequest" alterTableAcademicServiceRequest.sql
+execute "Create table CourseLoadEnrolments" createCourseLoadEnrolments.sql
+execute "Adding ExamCertificateRequestEnrolment table" AddExamCertificateRequestEnrolmentTable.sql
+execute "Update ExecutionCourses Siglas" updateExecutionCoursesSiglas.sql
