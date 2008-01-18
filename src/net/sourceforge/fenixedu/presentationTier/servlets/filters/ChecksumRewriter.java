@@ -102,10 +102,14 @@ public class ChecksumRewriter extends RequestRewriter {
 			    final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
 			    if (indexOfHrefBodyEnd >= 0) {
 
-				final int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
-				final int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
+				int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
+				int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
+				int indexOfHttp = source.indexOf("http://", indexOfHrefBodyStart);
+				int indexOfHttps = source.indexOf("https://", indexOfHrefBodyStart);
 				if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) &&
-					(indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd)) {
+					(indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd) &&
+					(indexOfHttp < 0 || indexOfHttp > indexOfHrefBodyEnd)&&
+					(indexOfHttps < 0 || indexOfHttps > indexOfHrefBodyEnd)) {
 
 				    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
 				    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
@@ -139,17 +143,22 @@ public class ChecksumRewriter extends RequestRewriter {
 				    continue;
 				} else {
 				    final int nextIndex;
-				    if (indexOfJavaScript > 0 && indexOfMailto < 0) {
-					nextIndex = indexOfJavaScript;
-				    } else if (indexOfMailto > 0 && indexOfJavaScript < 0) {
-					nextIndex = indexOfMailto;
-				    } else if (indexOfJavaScript < indexOfMailto) {
-					nextIndex = indexOfJavaScript;
-				    } else if (indexOfMailto < indexOfJavaScript) {
-					nextIndex = indexOfMailto;
-				    } else {
-					throw new Error("Unreachable code.");
+
+				    if (indexOfJavaScript < 0) {
+					indexOfJavaScript = Integer.MAX_VALUE;
 				    }
+				    if (indexOfMailto < 0) {
+					indexOfMailto = Integer.MAX_VALUE;
+				    }
+				    if (indexOfHttp < 0) {
+					indexOfHttp = Integer.MAX_VALUE;
+				    }
+				    if (indexOfHttps < 0) {
+					indexOfHttps = Integer.MAX_VALUE;
+				    }
+
+				    nextIndex = min(indexOfJavaScript, indexOfMailto, indexOfHttp, indexOfHttps);
+
 				    response.append(source, iOffset, nextIndex);
 				    iOffset = nextIndex ;
 				    continue;
@@ -275,6 +284,14 @@ public class ChecksumRewriter extends RequestRewriter {
 	}
 
 	return response;
+    }
+
+    private int min(final int ...indexs) {
+	int result = Integer.MAX_VALUE;
+	for (int i : indexs) {
+	    result = Math.min(result, i);
+	}
+	return result;
     }
 
     private boolean isRedirectRequest(final HttpServletRequest httpServletRequest) {

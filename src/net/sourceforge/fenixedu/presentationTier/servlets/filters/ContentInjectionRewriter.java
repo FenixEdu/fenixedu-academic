@@ -63,10 +63,14 @@ public class ContentInjectionRewriter extends RequestRewriter {
 			    final char hrefBodyStartChar = source.charAt(indexOfHrefBodyStart - 1);
 			    final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
 			    if (indexOfHrefBodyEnd >= 0) {
-				final int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
-				final int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
+				int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
+				int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
+				int indexOfHttp = source.indexOf("http:", indexOfHrefBodyStart);
+				int indexOfHttps = source.indexOf("https:", indexOfHrefBodyStart);
 				if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) &&
-					(indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd)) {
+					(indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd) &&
+					(indexOfHttp < 0 || indexOfHttp > indexOfHrefBodyEnd) &&
+					(indexOfHttps < 0 || indexOfHttps > indexOfHrefBodyEnd)) {
 				    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
 				    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
 					    && indexOfCardinal < indexOfHrefBodyEnd;

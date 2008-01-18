@@ -239,7 +239,12 @@ public abstract class Container extends Container_Base {
 	    contents.add(this);
 	    if (subPath.length() + 1 < path.length()) {
 		final String trailingPath = path.substring(subPath.length() + 1);
+		final int size = contents.size();
 		addPathContentsForTrailingPath(contents, trailingPath);
+		if (contents.size() == size && (trailingPath.length() == 0 || 
+			(trailingPath.length() == 1 && trailingPath.charAt(0) == '/'))) {
+		    throw new InvalidContentPathException();
+		}
 	    }
 	}
     }

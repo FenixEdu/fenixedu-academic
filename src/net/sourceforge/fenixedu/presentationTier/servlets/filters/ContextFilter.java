@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
@@ -35,8 +36,12 @@ public class ContextFilter implements Filter {
 
 	if (!shouldBeSkipped(httpServletRequest.getServletPath())) {
 	    if (hasNoSelectedFunctionality(functionalityContext)) {
-		final FunctionalityContext context = createContext(httpServletRequest);
-		setContextAttibute(httpServletRequest, context);
+		try {
+		    final FunctionalityContext context = createContext(httpServletRequest);
+		    setContextAttibute(httpServletRequest, context);
+		} catch (InvalidContentPathException ex) {
+		    // TODO
+		}
 	    }
 	}
 	filterChain.doFilter(httpServletRequest, httpServletResponse);
