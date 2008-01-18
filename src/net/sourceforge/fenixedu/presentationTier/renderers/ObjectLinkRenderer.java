@@ -335,7 +335,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
 	    private HtmlLink getLink(Object usedObject) {
 		HtmlLink link = getHasContext() ? new HtmlLinkWithPreprendedComment(
-			ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING) : new HtmlLink();
+			ContentInjectionRewriter.HAS_CONTEXT_PREFIX) : new HtmlLink();
 
 		String url;
 

@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.contents.MenuEntry;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
@@ -189,8 +190,10 @@ public class SiteMenuRenderer extends OutputRenderer {
 		}
 	    }
 
-	    private HtmlLink generateLink(String url, HtmlComponent body) {
-		HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
+	    private HtmlLink generateLink(final String url, final HtmlComponent body, final boolean isPublic) {
+		final String preapendedComment = isPublic ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX :
+		    	ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+		HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
 
 		link.setContextRelative(false);
 		link.setUrl(url);
@@ -212,7 +215,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 		HtmlComponent component = text;
 
 		if (content.isAvailable()) {
-		    component = generateLink(getPath(context, content), component);
+		    component = generateLink(getPath(context, content), component, content.isPublic());
 		}
 
 		MultiLanguageString title = content.getTitle();

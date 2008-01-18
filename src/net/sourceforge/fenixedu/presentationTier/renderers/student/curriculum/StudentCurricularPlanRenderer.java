@@ -926,7 +926,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		return new HtmlText(degreeCurricularPlan.getName());
 	    }
 
-	    final HtmlLink result = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
+	    final HtmlLink result = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
 
 	    result.setText(degreeCurricularPlan.getName());
 	    result.setModuleRelative(false);
@@ -993,7 +993,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private HtmlLink createCurricularCourseLink(final String text, final CurricularCourse curricularCourse) {
 
-	    final HtmlLink result = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
+	    final HtmlLink result = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
 	    result.setBody(new HtmlText(text));
 	    result.setModuleRelative(false);
 	    result.setTarget(HtmlLink.Target.BLANK);

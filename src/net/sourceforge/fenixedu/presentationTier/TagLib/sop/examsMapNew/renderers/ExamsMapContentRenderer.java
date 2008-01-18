@@ -13,9 +13,11 @@ import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -118,10 +120,15 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                     }
 
                 } else if (typeUser.equals("public")) {
-                                                         
-                    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+
+                    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+                    if (site.isPublic()) {
+                	strBuffer.append(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+                    } else {
+                	strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+                    }
                     strBuffer.append("<a href=\"").append(((HttpServletRequest)pageContext.getRequest()).getContextPath());
-                    strBuffer.append(infoExecutionCourse.getExecutionCourse().getSite().getReversePath());
+                    strBuffer.append(site.getReversePath());
                     strBuffer.append("\">");
                     strBuffer.append(courseInitials);
                 }

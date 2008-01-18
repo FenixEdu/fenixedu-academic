@@ -6,10 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import org.apache.struts.util.RequestUtils;
-
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+
+import org.apache.struts.util.RequestUtils;
 
 public class ContentLinkTag extends BodyTagSupport {
 
@@ -103,9 +104,13 @@ public class ContentLinkTag extends BodyTagSupport {
     }
 
     protected void writeStartTag() throws IOException, JspException {
-	write(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
-	write("<a href=\"");
 	final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
+	if (content.isPublic()) {
+	    write(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+	} else {
+	    write(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	}
+	write("<a href=\"");
 	write(getContextPath());
 	write(content.getReversePath());
 	write("\"");

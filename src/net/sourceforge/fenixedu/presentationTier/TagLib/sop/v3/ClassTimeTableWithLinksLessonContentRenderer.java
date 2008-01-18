@@ -5,9 +5,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 /**
@@ -31,12 +34,18 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
 	if (showOccupation instanceof InfoLesson) {
 
 	    InfoLesson lesson = (InfoLesson) showOccupation;
+	    final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-	    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    if (site.isPublic()) {
+		strBuffer.append(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+	    } else {
+		strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    }
 	    strBuffer.append("<a href=\"").append(context);
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getExecutionCourse().getSite().getReversePath());	    
+	    strBuffer.append(site.getReversePath());	    
 	    strBuffer.append("\">");	    
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
+	    strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
 	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
 	    if (lesson.getInfoRoomOccupation() != null) {
@@ -48,10 +57,16 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
 	} else if (showOccupation instanceof InfoLessonInstance) {
 
 	    InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+	    final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-	    strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    if (site.isPublic()) {
+		strBuffer.append(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+	    } else {
+		strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    }
 	    strBuffer.append("<a href=\"").append(context);
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getExecutionCourse().getSite().getReversePath());	    
+	    strBuffer.append(infoExecutionCourse.getExecutionCourse().getSite().getReversePath());	    
 	    strBuffer.append("\">");	    
 	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 

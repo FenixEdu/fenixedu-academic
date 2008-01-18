@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
@@ -65,8 +66,9 @@ public class ContextBreadCrumRenderer extends OutputRenderer {
 		    buffer.append(content.getNormalizedName().getContent());
 		}
 		
-		if (targetContent.isAvailable()) { 
-		    HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
+		if (targetContent.isAvailable()) {
+		    final String prefix = targetContent.isPublic() ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+		    HtmlLink link = new HtmlLinkWithPreprendedComment(prefix);
 
 		    HtmlInlineContainer container = new HtmlInlineContainer();
 		    container.addChild(component);

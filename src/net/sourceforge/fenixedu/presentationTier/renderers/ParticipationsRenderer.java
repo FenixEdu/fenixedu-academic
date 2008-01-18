@@ -9,6 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -203,8 +204,9 @@ public class ParticipationsRenderer extends OutputRenderer {
 	    if (!person.isHomePageAvailable()) {
 		component = personComponent;
 	    } else {
-		HtmlLink link = iscontextAvailable() ? new HtmlLinkWithPreprendedComment(
-			ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING) : new HtmlLink();
+		HtmlLink link = iscontextAvailable() ? 
+			new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX) : 
+			new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX);
 
 		link.setTarget(Target.BLANK);
 		link.setModuleRelative(isModuleRelative());

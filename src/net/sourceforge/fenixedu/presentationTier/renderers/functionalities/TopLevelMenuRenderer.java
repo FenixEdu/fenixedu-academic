@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -120,7 +121,10 @@ public class TopLevelMenuRenderer extends OutputRenderer {
 		HtmlComponent component = new HtmlText(child.getName().getContent());
 
 		if (path != null && content.isAvailable()) {
-		    HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
+		    final String linkPrefix = child.isPublic() ? 
+			    ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : 
+				ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+		    HtmlLink link = new HtmlLinkWithPreprendedComment(linkPrefix);
 
 		    HtmlInlineContainer container = new HtmlInlineContainer();
 		    container.addChild(component);

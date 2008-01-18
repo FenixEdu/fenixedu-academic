@@ -8,6 +8,7 @@ import javax.faces.context.ResponseWriter;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 public class UIContentLink extends UIOutput {
@@ -36,7 +37,8 @@ public class UIContentLink extends UIOutput {
 	String label = (String) this.getAttributes().get("label");
 
 	if (content != null) {
-	    writer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    final String prefix = content.isPublic() ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+	    writer.append(prefix);
 	    writer.append("<a href=\"");
 	    writer.append(getContextPath(context));
 	    writer.append(content.getReversePath());

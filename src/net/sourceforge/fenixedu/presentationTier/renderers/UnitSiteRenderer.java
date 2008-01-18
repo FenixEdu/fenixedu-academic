@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
@@ -120,7 +121,8 @@ public class UnitSiteRenderer extends OutputRenderer {
 	public HtmlComponent createComponent(Object object, Class type) {
 	    Unit unit = (Unit) object;
 	    HtmlBlockContainer unitPresentation = new HtmlBlockContainer();
-	    unitPresentation.addChild(getUnitComponent(unit));
+	    final boolean isPublic = unit.hasSite() ? unit.getSite().isPublic() : false;
+	    unitPresentation.addChild(getUnitComponent(unit, isPublic));
 	    if (isParenteShown()) {
 
 		Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(),
@@ -136,7 +138,7 @@ public class UnitSiteRenderer extends OutputRenderer {
 		    int i = 0;
 		    int size = parentUnits.size();
 		    for (Unit parentUnit : parentUnits) {
-			unitPresentation.addChild(getUnitComponent(parentUnit));
+			unitPresentation.addChild(getUnitComponent(parentUnit, isPublic));
 			if (i < size - 1) {
 			    unitPresentation.addChild(new HtmlText(","));
 			}
@@ -147,10 +149,13 @@ public class UnitSiteRenderer extends OutputRenderer {
 	    return unitPresentation;
 	}
 
-	private HtmlComponent getUnitComponent(Unit unit) {
+	private HtmlComponent getUnitComponent(Unit unit, final boolean isPublic) {
 	    HtmlComponent component;
 	    if (unitHasSite(unit)) {
-		HtmlLink link = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING);
+		final String preapendedComment = isPublic ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX :
+		    	ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+		HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
+
 		link.setUrl(resolveUnitURL(unit));
 		link.setBody(renderValue(unit, findSchema(), getUnitLayout()));
 		if (isTargetBlank()) {

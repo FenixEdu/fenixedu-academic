@@ -198,6 +198,10 @@ public abstract class Content extends Content_Base {
 	return isAvailable(Functionality.getCurrentContext());
     }
 
+    public boolean isPublic() {
+	return getAvailabilityPolicy() == null;
+    }
+
     public abstract Collection<MenuEntry> getMenu();
 
     public String getPath() {

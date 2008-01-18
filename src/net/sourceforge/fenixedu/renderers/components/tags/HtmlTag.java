@@ -165,7 +165,7 @@ public class HtmlTag {
 
     protected void writeOpenTag(Writer writer, String indent) throws IOException {
         if(getPreprendedComment() != null) {
-            writer.write("<!-- " + getPreprendedComment() + " -->");
+            writer.write(getPreprendedComment());
         }
 	if (isIndented()) {
             writer.write(indent);

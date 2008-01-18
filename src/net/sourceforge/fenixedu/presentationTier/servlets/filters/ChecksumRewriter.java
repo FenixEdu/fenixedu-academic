@@ -15,6 +15,16 @@ public class ChecksumRewriter extends RequestRewriter {
 
     public static final String CHECKSUM_ATTRIBUTE_NAME = "_request_checksum_";
 
+    public static final String NO_CHECKSUM_PREFIX = "<!-- NO_CHECKSUM -->";
+
+    private static final int LENGTH_OF_NO_CHECKSUM_PREFIX = NO_CHECKSUM_PREFIX.length();
+
+    public final static String NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX =
+		NO_CHECKSUM_PREFIX + ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+
+    private static final int LENGTH_OF_NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX = 
+		NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX.length();
+
     private static String calculateChecksum(final StringBuilder source, final int start, final int end) {
 	return calculateChecksum(source.substring(start, end));
     }
@@ -83,22 +93,148 @@ public class ChecksumRewriter extends RequestRewriter {
 	    if (indexOfAopen >= 0 && (indexOfFormOpen < 0 || indexOfAopen < indexOfFormOpen)
 		    && (indexOfImgOpen < 0 || indexOfAopen < indexOfImgOpen)
 		    && (indexOfAreaOpen < 0 || indexOfAopen < indexOfAreaOpen)) {
-		final int indexOfAclose = source.indexOf(">", indexOfAopen);
-		if (indexOfAclose >= 0) {
-		    final int indexOfHrefBodyStart = findHrefBodyStart(source, indexOfAopen, indexOfAclose);
-		    if (indexOfHrefBodyStart >= 0) {
-			final char hrefBodyStartChar = source.charAt(indexOfHrefBodyStart - 1);
-			final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
-			if (indexOfHrefBodyEnd >= 0) {
+		if (!isPrefixed(source, indexOfAopen)) {
+		    final int indexOfAclose = source.indexOf(">", indexOfAopen);
+		    if (indexOfAclose >= 0) {
+			final int indexOfHrefBodyStart = findHrefBodyStart(source, indexOfAopen, indexOfAclose);
+			if (indexOfHrefBodyStart >= 0) {
+			    final char hrefBodyStartChar = source.charAt(indexOfHrefBodyStart - 1);
+			    final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
+			    if (indexOfHrefBodyEnd >= 0) {
 
-			    final int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
-			    final int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
-			    if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) &&
-				    (indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd)) {
+				final int indexOfJavaScript = source.indexOf("javascript:", indexOfHrefBodyStart);
+				final int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
+				if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) &&
+					(indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd)) {
 
+				    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
+				    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
+				    		&& indexOfCardinal < indexOfHrefBodyEnd;
+				    if (hasCardinal) {
+					response.append(source, iOffset, indexOfCardinal);
+				    } else {
+					response.append(source, iOffset, indexOfHrefBodyEnd);
+				    }
+
+				    final String checksum = calculateChecksum(source, indexOfHrefBodyStart, indexOfHrefBodyEnd);
+				    final int indexOfQmark = source.indexOf("?", indexOfHrefBodyStart);
+				    if (indexOfQmark == -1 || indexOfQmark > indexOfHrefBodyEnd) {
+					response.append('?');
+				    } else {
+					response.append("&amp;");
+				    }
+				    response.append(CHECKSUM_ATTRIBUTE_NAME);
+				    response.append("=");
+				    response.append(checksum);
+
+				    if (hasCardinal) {
+					response.append(source, indexOfCardinal, indexOfHrefBodyEnd);
+				    }
+
+				    final int nextChar = indexOfAclose + 1;
+				    response.append(source, indexOfHrefBodyEnd, nextChar);
+				    // rewrite(response, source, nextChar);
+				    // return;
+				    iOffset = nextChar;
+				    continue;
+				} else {
+				    final int nextIndex;
+				    if (indexOfJavaScript > 0 && indexOfMailto < 0) {
+					nextIndex = indexOfJavaScript;
+				    } else if (indexOfMailto > 0 && indexOfJavaScript < 0) {
+					nextIndex = indexOfMailto;
+				    } else if (indexOfJavaScript < indexOfMailto) {
+					nextIndex = indexOfJavaScript;
+				    } else if (indexOfMailto < indexOfJavaScript) {
+					nextIndex = indexOfMailto;
+				    } else {
+					throw new Error("Unreachable code.");
+				    }
+				    response.append(source, iOffset, nextIndex);
+				    iOffset = nextIndex ;
+				    continue;
+				}
+			    }
+			}
+		    }
+		} else {
+		    iOffset = continueToNextToken(response, source, iOffset, indexOfAopen);
+		    continue;
+		}
+	    } else if (indexOfFormOpen >= 0 && (indexOfImgOpen < 0 || indexOfFormOpen < indexOfImgOpen)
+		    && (indexOfAreaOpen < 0 || indexOfFormOpen < indexOfAreaOpen)) {
+		if (!isPrefixed(source, indexOfFormOpen)) {
+		    final int indexOfFormClose = source.indexOf(">", indexOfFormOpen);
+		    if (indexOfFormClose >= 0) {
+			final int indexOfFormActionBodyStart = findFormActionBodyStart(source, indexOfFormOpen, indexOfFormClose);
+			if (indexOfFormActionBodyStart >= 0) {
+			    final int indexOfFormActionBodyEnd = findFormActionBodyEnd(source, indexOfFormActionBodyStart);
+			    if (indexOfFormActionBodyEnd >= 0) {
+				final int nextChar = indexOfFormClose + 1;
+				response.append(source, iOffset, nextChar);
+				final String checksum = calculateChecksum(source, indexOfFormActionBodyStart,
+					indexOfFormActionBodyEnd);
+				response.append("<input type=\"hidden\" name=\"");
+				response.append(CHECKSUM_ATTRIBUTE_NAME);
+				response.append("\" value=\"");
+				response.append(checksum);
+				response.append("\"/>");
+				// rewrite(response, source, nextChar);
+				// return;
+				iOffset = nextChar;
+				continue;
+			    }
+			}
+		    }
+		} else {
+		    iOffset = continueToNextToken(response, source, iOffset, indexOfFormOpen);
+		    continue;
+		}
+	    } else if (indexOfImgOpen >= 0 && (indexOfAreaOpen < 0 || indexOfImgOpen < indexOfAreaOpen)) {
+		if (!isPrefixed(source, indexOfImgOpen)) {
+		    final int indexOfImgClose = source.indexOf(">", indexOfImgOpen);
+		    if (indexOfImgClose >= 0) {
+			final int indexOfSrcBodyStart = findSrcBodyStart(source, indexOfImgOpen, indexOfImgClose);
+			if (indexOfSrcBodyStart >= 0) {
+			    final int indexOfSrcBodyEnd = findSrcBodyEnd(source, indexOfSrcBodyStart);
+			    if (indexOfSrcBodyEnd >= 0) {
+				response.append(source, iOffset, indexOfSrcBodyEnd);
+
+				final String checksum = calculateChecksum(source, indexOfSrcBodyStart, indexOfSrcBodyEnd);
+				final int indexOfQmark = source.indexOf("?", indexOfSrcBodyStart);
+				if (indexOfQmark == -1 || indexOfQmark > indexOfSrcBodyEnd) {
+				    response.append('?');
+				} else {
+				    response.append("&amp;");
+				}
+				response.append(CHECKSUM_ATTRIBUTE_NAME);
+				response.append("=");
+				response.append(checksum);
+
+				final int nextChar = indexOfImgClose + 1;
+				response.append(source, indexOfSrcBodyEnd, nextChar);
+				// rewrite(response, source, nextChar);
+				// return;
+				iOffset = nextChar;
+				continue;
+			    }
+			}
+		    }
+		} else {
+		    iOffset = continueToNextToken(response, source, iOffset, indexOfImgOpen);
+		    continue;
+		}
+	    } else if (indexOfAreaOpen >= 0) {
+		if (!isPrefixed(source, indexOfAreaOpen)) {
+		    final int indexOfAreaClose = source.indexOf(">", indexOfAreaOpen);
+		    if (indexOfAreaClose >= 0) {
+			final int indexOfHrefBodyStart = findHrefBodyStart(source, indexOfAreaOpen, indexOfAreaClose);
+			if (indexOfHrefBodyStart >= 0) {
+			    final char hrefBodyStartChar = source.charAt(indexOfHrefBodyStart - 1);
+			    final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
+			    if (indexOfHrefBodyEnd >= 0) {
 				final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
-				boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
-					&& indexOfCardinal < indexOfHrefBodyEnd;
+				boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart && indexOfCardinal < indexOfHrefBodyEnd;
 				if (hasCardinal) {
 				    response.append(source, iOffset, indexOfCardinal);
 				} else {
@@ -120,124 +256,18 @@ public class ChecksumRewriter extends RequestRewriter {
 				    response.append(source, indexOfCardinal, indexOfHrefBodyEnd);
 				}
 
-				final int nextChar = indexOfAclose + 1;
+				final int nextChar = indexOfAreaClose + 1;
 				response.append(source, indexOfHrefBodyEnd, nextChar);
 				// rewrite(response, source, nextChar);
 				// return;
 				iOffset = nextChar;
 				continue;
-			    } else {
-				final int nextIndex;
-				if (indexOfJavaScript > 0 && indexOfMailto < 0) {
-				    nextIndex = indexOfJavaScript;
-				} else if (indexOfMailto > 0 && indexOfJavaScript < 0) {
-				    nextIndex = indexOfMailto;
-				} else if (indexOfJavaScript < indexOfMailto) {
-				    nextIndex = indexOfJavaScript;
-				} else if (indexOfMailto < indexOfJavaScript) {
-				    nextIndex = indexOfMailto;
-				} else {
-				    throw new Error("Unreachable code.");
-				}
-				response.append(source, iOffset, nextIndex);
-				iOffset = nextIndex ;
-				continue;
 			    }
 			}
 		    }
-		}
-	    } else if (indexOfFormOpen >= 0 && (indexOfImgOpen < 0 || indexOfFormOpen < indexOfImgOpen)
-		    && (indexOfAreaOpen < 0 || indexOfFormOpen < indexOfAreaOpen)) {
-		final int indexOfFormClose = source.indexOf(">", indexOfFormOpen);
-		if (indexOfFormClose >= 0) {
-		    final int indexOfFormActionBodyStart = findFormActionBodyStart(source, indexOfFormOpen, indexOfFormClose);
-		    if (indexOfFormActionBodyStart >= 0) {
-			final int indexOfFormActionBodyEnd = findFormActionBodyEnd(source, indexOfFormActionBodyStart);
-			if (indexOfFormActionBodyEnd >= 0) {
-			    final int nextChar = indexOfFormClose + 1;
-			    response.append(source, iOffset, nextChar);
-			    final String checksum = calculateChecksum(source, indexOfFormActionBodyStart,
-				    indexOfFormActionBodyEnd);
-			    response.append("<input type=\"hidden\" name=\"");
-			    response.append(CHECKSUM_ATTRIBUTE_NAME);
-			    response.append("\" value=\"");
-			    response.append(checksum);
-			    response.append("\"/>");
-			    // rewrite(response, source, nextChar);
-			    // return;
-			    iOffset = nextChar;
-			    continue;
-			}
-		    }
-		}
-	    } else if (indexOfImgOpen >= 0 && (indexOfAreaOpen < 0 || indexOfImgOpen < indexOfAreaOpen)) {
-		final int indexOfImgClose = source.indexOf(">", indexOfImgOpen);
-		if (indexOfImgClose >= 0) {
-		    final int indexOfSrcBodyStart = findSrcBodyStart(source, indexOfImgOpen, indexOfImgClose);
-		    if (indexOfSrcBodyStart >= 0) {
-			final int indexOfSrcBodyEnd = findSrcBodyEnd(source, indexOfSrcBodyStart);
-			if (indexOfSrcBodyEnd >= 0) {
-			    response.append(source, iOffset, indexOfSrcBodyEnd);
-
-			    final String checksum = calculateChecksum(source, indexOfSrcBodyStart, indexOfSrcBodyEnd);
-			    final int indexOfQmark = source.indexOf("?", indexOfSrcBodyStart);
-			    if (indexOfQmark == -1 || indexOfQmark > indexOfSrcBodyEnd) {
-				response.append('?');
-			    } else {
-				response.append("&amp;");
-			    }
-			    response.append(CHECKSUM_ATTRIBUTE_NAME);
-			    response.append("=");
-			    response.append(checksum);
-
-			    final int nextChar = indexOfImgClose + 1;
-			    response.append(source, indexOfSrcBodyEnd, nextChar);
-			    // rewrite(response, source, nextChar);
-			    // return;
-			    iOffset = nextChar;
-			    continue;
-			}
-		    }
-		}
-	    } else if (indexOfAreaOpen >= 0) {
-		final int indexOfAreaClose = source.indexOf(">", indexOfAreaOpen);
-		if (indexOfAreaClose >= 0) {
-		    final int indexOfHrefBodyStart = findHrefBodyStart(source, indexOfAreaOpen, indexOfAreaClose);
-		    if (indexOfHrefBodyStart >= 0) {
-			final char hrefBodyStartChar = source.charAt(indexOfHrefBodyStart - 1);
-			final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
-			if (indexOfHrefBodyEnd >= 0) {
-			    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
-			    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart && indexOfCardinal < indexOfHrefBodyEnd;
-			    if (hasCardinal) {
-				response.append(source, iOffset, indexOfCardinal);
-			    } else {
-				response.append(source, iOffset, indexOfHrefBodyEnd);
-			    }
-
-			    final String checksum = calculateChecksum(source, indexOfHrefBodyStart, indexOfHrefBodyEnd);
-			    final int indexOfQmark = source.indexOf("?", indexOfHrefBodyStart);
-			    if (indexOfQmark == -1 || indexOfQmark > indexOfHrefBodyEnd) {
-				response.append('?');
-			    } else {
-				response.append("&amp;");
-			    }
-			    response.append(CHECKSUM_ATTRIBUTE_NAME);
-			    response.append("=");
-			    response.append(checksum);
-
-			    if (hasCardinal) {
-				response.append(source, indexOfCardinal, indexOfHrefBodyEnd);
-			    }
-
-			    final int nextChar = indexOfAreaClose + 1;
-			    response.append(source, indexOfHrefBodyEnd, nextChar);
-			    // rewrite(response, source, nextChar);
-			    // return;
-			    iOffset = nextChar;
-			    continue;
-			}
-		    }
+		} else {
+		    iOffset = continueToNextToken(response, source, iOffset, indexOfAreaOpen);
+		    continue;
 		}
 	    }
 	    response.append(source, iOffset, source.length());
@@ -246,11 +276,35 @@ public class ChecksumRewriter extends RequestRewriter {
 
 	return response;
     }
-    
+
     private boolean isRedirectRequest(final HttpServletRequest httpServletRequest) {
 	final String uri = httpServletRequest.getRequestURI().substring(RequestUtils.APP_CONTEXT_LENGTH);
 	return uri.indexOf("redirect.do") >= 0;
     }
 
+    protected boolean isPrefixed(final StringBuilder source, final int indexOfTagOpen) {
+	return (indexOfTagOpen >= LENGTH_OF_NO_CHECKSUM_PREFIX && 
+			match(source, indexOfTagOpen - LENGTH_OF_NO_CHECKSUM_PREFIX, indexOfTagOpen, NO_CHECKSUM_PREFIX)) ||
+		(indexOfTagOpen >= LENGTH_OF_NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX && 
+			match(source, indexOfTagOpen - LENGTH_OF_NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX, indexOfTagOpen, NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX));
+    }
+
+    protected boolean match(final StringBuilder source, final int iStart, int iEnd, final String string) {
+	if (iEnd - iStart != string.length()) {
+	    return false;
+	}
+	for (int i = 0; i < string.length(); i++) {
+	    if (source.charAt(iStart + i) != string.charAt(i)) {
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    protected int continueToNextToken(final StringBuilder response, final StringBuilder source, final int iOffset, final int indexOfTag) {
+	final int nextOffset = indexOfTag + 1;
+	response.append(source, iOffset, nextOffset);
+	return nextOffset;
+    }
 
 }
