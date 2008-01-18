@@ -91,13 +91,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	if (!getPerson().hasInsuranceEventFor(getExecutionYear())) {
 	    return false;
 	}
-
-	return getInsurancePayedAmount().greaterOrEqualThan(getInsuranceAmount());
-
+	return getInsurancePayedAmount().lessThan(getInsuranceAmount());
     }
 
     public boolean hasToPayAdministrativeOfficeFee() {
-	return getAdministrativeOfficeFeePayedAmount().greaterOrEqualThan(getAdministrativeOfficeFeeAmount());
+	return getAdministrativeOfficeFeePayedAmount().lessThan(getAdministrativeOfficeFeeAmount());
     }
 
     private AdministrativeOfficeFeeAndInsurancePR getAdministrativeOfficeFeeAndInsurancePR() {
