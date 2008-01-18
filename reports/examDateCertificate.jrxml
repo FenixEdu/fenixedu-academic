@@ -45,7 +45,10 @@
 	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
 
 	<field name="curricularCourseName" class="java.lang.String"/>
-	<field name="examDate" class="java.lang.String"/>
+	<field name="firstSeasonDate" class="java.lang.String"/>
+	<field name="firstSeasonHour" class="java.lang.String"/>
+	<field name="secondSeasonDate" class="java.lang.String"/>
+	<field name="secondSeasonHour" class="java.lang.String"/>
 
 
 		<group  name="endLine" >
@@ -74,78 +77,22 @@
 						key="staticText-15"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
-						<font pdfFontName="Courier" size="16" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="16" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Certificado]]></text>
+				<text><![CDATA[CERTIFICADO]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
 						y="196"
 						width="469"
-						height="47"
+						height="179"
 						key="textField-16"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-BoldOblique" size="12" isBold="false" isItalic="false"/>
+					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
+						<font pdfFontName="Times-Roman" size="10" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do Instituto Superior Técnico da Universidade Técnica de Lisboa, certifica que "]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="65"
-						y="243"
-						width="523"
-						height="22"
-						key="textField-1"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="64"
-						y="293"
-						width="469"
-						height="22"
-						key="textField-3"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["xpto"]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="64"
-						y="315"
-						width="469"
-						height="26"
-						key="textField-19"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[", consta o seguintes registos de testes nas disciplinas abaixo discriminadas:"]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="64"
-						y="265"
-						width="469"
-						height="28"
-						key="textField-20"
-						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Justified" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[", aluno o número" + "" + ", do Curso"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do Instituto Superior Técnico da Universidade Técnica de Lisboa, certifica que <style pdfFontName=\"Times-Bold\"> " + $P{name} + ",</style> aluno com o número <style pdfFontName=\"Times-Bold\"> " + "XXXXXX" + "</style>, do Curso de <style pdfFontName=\"Times-Bold\"> " + "XXXXXX CURSO XXXX" + "</style>, consta o(s) seguinte(s) registo(s) de teste(s) na(s) disciplina(s) abaixo discriminada(s):"]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>
@@ -159,31 +106,31 @@
 					<reportElement
 						x="64"
 						y="4"
-						width="312"
+						width="176"
 						height="22"
 						key="staticText-16"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Disciplina]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="376"
+						x="242"
 						y="4"
-						width="157"
+						width="76"
 						height="22"
 						key="staticText-17"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Datas]]></text>
+				<text><![CDATA[1º Época]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
-						x="64"
+						x="66"
 						y="26"
 						width="469"
 						height="0"
@@ -192,6 +139,45 @@
 						positionType="FixRelativeToBottom"/>
 					<graphicElement stretchType="NoStretch" pen="Thin"/>
 				</line>
+				<staticText>
+					<reportElement
+						x="318"
+						y="4"
+						width="76"
+						height="22"
+						key="staticText-26"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Hora]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="394"
+						y="4"
+						width="76"
+						height="22"
+						key="staticText-27"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[2º Época]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="470"
+						y="4"
+						width="76"
+						height="22"
+						key="staticText-28"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Hora]]></text>
+				</staticText>
 			</band>
 		</columnHeader>
 		<detail>
@@ -200,27 +186,27 @@
 					<reportElement
 						x="64"
 						y="1"
-						width="312"
+						width="176"
 						height="22"
 						key="textField-21"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font/>
+						<font pdfFontName="Times-Roman"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{curricularCourseName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="376"
+						x="242"
 						y="1"
-						width="157"
+						width="76"
 						height="22"
 						key="textField-22"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font/>
+						<font pdfFontName="Times-Roman"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{examDate}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{firstSeasonDate}]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
@@ -233,6 +219,45 @@
 						positionType="FixRelativeToBottom"/>
 					<graphicElement stretchType="NoStretch" pen="Thin"/>
 				</line>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="318"
+						y="1"
+						width="76"
+						height="22"
+						key="textField-30"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{firstSeasonHour}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="394"
+						y="1"
+						width="76"
+						height="22"
+						key="textField-31"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{secondSeasonDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="470"
+						y="1"
+						width="76"
+						height="22"
+						key="textField-32"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{secondSeasonHour}]]></textFieldExpression>
+				</textField>
 			</band>
 		</detail>
 		<columnFooter>
@@ -240,11 +265,11 @@
 			</band>
 		</columnFooter>
 		<pageFooter>
-			<band height="162"  isSplitAllowed="true" >
+			<band height="39"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="452"
-						y="126"
+						y="12"
 						width="25"
 						height="19"
 						key="staticText-18"
@@ -258,7 +283,7 @@
 				<staticText>
 					<reportElement
 						x="490"
-						y="126"
+						y="12"
 						width="14"
 						height="19"
 						key="staticText-19"
@@ -272,7 +297,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="477"
-						y="126"
+						y="12"
 						width="13"
 						height="19"
 						key="textField-23"
@@ -286,7 +311,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="504"
-						y="126"
+						y="12"
 						width="13"
 						height="19"
 						key="textField-24"
@@ -300,24 +325,24 @@
 			</band>
 		</pageFooter>
 		<lastPageFooter>
-			<band height="162"  isSplitAllowed="true" >
+			<band height="239"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="220"
-						y="8"
-						width="127"
+						x="205"
+						y="127"
+						width="160"
 						height="21"
 						key="staticText-20"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement>
-						<font/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Times-Roman"/>
 					</textElement>
 				<text><![CDATA[A Técnica Superior]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
-						x="219"
-						y="53"
+						x="205"
+						y="172"
 						width="160"
 						height="0"
 						key="line-3"/>
@@ -325,21 +350,8 @@
 				</line>
 				<staticText>
 					<reportElement
-						x="199"
-						y="58"
-						width="239"
-						height="21"
-						key="staticText-21"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement>
-						<font/>
-					</textElement>
-				<text><![CDATA[${administrativeOfficeCoordinator.getName()}]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
 						x="452"
-						y="104"
+						y="197"
 						width="25"
 						height="19"
 						key="staticText-22"
@@ -353,7 +365,7 @@
 				<staticText>
 					<reportElement
 						x="490"
-						y="104"
+						y="197"
 						width="14"
 						height="19"
 						key="staticText-23"
@@ -367,7 +379,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="477"
-						y="104"
+						y="197"
 						width="13"
 						height="19"
 						key="textField-25"
@@ -381,7 +393,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="504"
-						y="104"
+						y="197"
 						width="13"
 						height="19"
 						key="textField-26"
@@ -391,6 +403,58 @@
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="64"
+						y="4"
+						width="469"
+						height="37"
+						key="staticText-24"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified">
+						<font pdfFontName="Times-Roman" size="10"/>
+					</textElement>
+				<text><![CDATA[Por ser verdade e me haver sido pedido mandei passar o presente certificado que vou assinar e autenticar com o selo branco em uso neste Secretaria.]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="64"
+						y="61"
+						width="323"
+						height="23"
+						key="textField-28"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
+						<font pdfFontName="Times-Roman" size="10" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="64"
+						y="41"
+						width="469"
+						height="20"
+						key="staticText-25"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified">
+						<font pdfFontName="Times-Roman" size="10"/>
+					</textElement>
+				<text><![CDATA[Secretaria dos Serviços Académicos do Instituto Superior Técnico,]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="176"
+						y="177"
+						width="239"
+						height="21"
+						key="textField-29"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator}.getName()]]></textFieldExpression>
 				</textField>
 			</band>
 		</lastPageFooter>
