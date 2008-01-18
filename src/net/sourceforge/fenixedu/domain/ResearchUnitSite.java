@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
@@ -68,15 +69,13 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 	if (stringBuilder.length() > 0) {
 	    stringBuilder.append('/');
 	}
-	stringBuilder.append(unit.getAcronym());
 	for (final Unit parentUnit : unit.getParentUnitsPath()) {
 	    if (parentUnit.isResearchUnit()) {
-		if (stringBuilder.length() > 0) {
-		    stringBuilder.append('/');
-		}
-		stringBuilder.append(parentUnit.getAcronym());
+		stringBuilder.append(Content.normalize(parentUnit.getAcronym()));
+		stringBuilder.append('/');
 	    }
 	}
+	stringBuilder.append(unit.getAcronym());
     }
 
 }
