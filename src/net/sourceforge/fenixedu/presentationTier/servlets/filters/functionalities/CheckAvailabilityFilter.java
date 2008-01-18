@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
@@ -41,9 +42,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public class CheckAvailabilityFilter implements Filter {
 
-    private String errorPage;
+    private static final String errorPage = "/publico/notFound.do";
 
-    private String errorPageLogged;
+    private static final String errorPageLogged = "/manager/functionalities/error/notAvailable.do";
 
     /**
      * Initializes the filter. There are two init parameters that are used by
@@ -58,8 +59,6 @@ public class CheckAvailabilityFilter implements Filter {
      * </ul>
      */
     public void init(FilterConfig config) throws ServletException {
-	this.errorPage = config.getInitParameter("error.page");
-	this.errorPageLogged = config.getInitParameter("error.page.logged");
     }
 
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain)
@@ -84,11 +83,10 @@ public class CheckAvailabilityFilter implements Filter {
 
 	if (content != null && !content.isAvailable(functionalityContext)) {
 	    final IUserView userView = AccessControl.getUserView();
-	    if ((userView != null && !userView.isPublicRequester())
-		    || functionalityContext.getLastContentInPath(Site.class) == null 
-		    || !(content instanceof Section)) {
+	    if (functionalityContext.getLastContentInPath(Site.class) == null 
+		    || !(content instanceof Section) || !(content instanceof Item)) {
 
-		showUnavailablePage(userView, httpServletRequest, httpServletResponse);
+		showUnavailablePage(content, httpServletRequest, httpServletResponse);
 		return;
 	    }
 	}
@@ -110,13 +108,13 @@ public class CheckAvailabilityFilter implements Filter {
      * Redirects the client to the page showing that the functionality is not
      * available.
      */
-    private void showUnavailablePage(final IUserView userView, final HttpServletRequest request,
+    public static void showUnavailablePage(final Content content, final HttpServletRequest request,
 	    final HttpServletResponse response) throws IOException, ServletException {
-	final String errorPageToDispatch = userView == null || userView.isPublicRequester() ? errorPage : errorPageLogged;
+	final String errorPageToDispatch = content.isPublic() ? errorPage : errorPageLogged;
 	dispatch(request, response, errorPageToDispatch);
     }
 
-    protected void dispatch(final HttpServletRequest request, final HttpServletResponse response, final String path)
+    protected static void dispatch(final HttpServletRequest request, final HttpServletResponse response, final String path)
 	    throws IOException, ServletException {
 	final RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 

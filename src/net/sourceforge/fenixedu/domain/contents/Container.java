@@ -241,14 +241,14 @@ public abstract class Container extends Container_Base {
 		final String trailingPath = path.substring(subPath.length() + 1);
 		final int size = contents.size();
 		addPathContentsForTrailingPath(contents, trailingPath);
-		if (contents.size() == size && (trailingPath.length() == 0 || 
+		if (contents.size() == size && !(trailingPath.length() == 0 || 
 			(trailingPath.length() == 1 && trailingPath.charAt(0) == '/'))) {
-		    throw new InvalidContentPathException();
+		    throw new InvalidContentPathException(this,trailingPath);
 		}
 	    }
 	}
     }
-    
+   
     @Override
     public AvailabilityPolicy getAvailabilityPolicy() {
 	AvailabilityPolicy policy = super.getAvailabilityPolicy();

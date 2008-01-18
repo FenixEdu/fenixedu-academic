@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 public class ContextFilter implements Filter {
@@ -40,7 +41,7 @@ public class ContextFilter implements Filter {
 		    final FunctionalityContext context = createContext(httpServletRequest);
 		    setContextAttibute(httpServletRequest, context);
 		} catch (InvalidContentPathException ex) {
-		    // TODO
+		    CheckAvailabilityFilter.showUnavailablePage(ex.getContent(), httpServletRequest, httpServletResponse);
 		}
 	    }
 	}

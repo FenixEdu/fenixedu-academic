@@ -26,11 +26,21 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
 
     @Override
     public void addPathContentsForTrailingPath(final List<Content> contents, final String trailingPath) {
-	// super.addPathContentsForTrailingPath(contents, trailingPath);
 	AbstractPathProcessor strategy = getStrategy();
 	final Container container = (Container) strategy.processPath(trailingPath);
+	if(container == null) {
+	    throw new InvalidContentPathException(this,trailingPath);
+	}
+
 	contents.add(container);
-	container.addPathContentsForTrailingPath(contents, strategy.getTrailingPath(trailingPath));
+	final int size = contents.size();
+	String newTrailingPath = strategy.getTrailingPath(trailingPath);
+	container.addPathContentsForTrailingPath(contents, newTrailingPath);
+	
+	if (contents.size() == size && !(newTrailingPath.length() == 0 || 
+		(newTrailingPath.length() == 1 && newTrailingPath.charAt(0) == '/'))) {
+	    throw new InvalidContentPathException(this,newTrailingPath);
+	}
     }
 
     @Override

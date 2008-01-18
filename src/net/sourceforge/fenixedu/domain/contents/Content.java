@@ -199,9 +199,13 @@ public abstract class Content extends Content_Base {
     }
 
     public boolean isPublic() {
-	return getAvailabilityPolicy() == null;
+	return getAvailabilityPolicy() == null || getAvailabilityPolicy().getTargetGroup() instanceof EveryoneGroup;
     }
 
+    public Boolean getPublicAvailable() {
+	return isPublic();
+    }
+    
     public abstract Collection<MenuEntry> getMenu();
 
     public String getPath() {
