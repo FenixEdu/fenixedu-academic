@@ -42,6 +42,7 @@ public class ContextFilter implements Filter {
 		    setContextAttibute(httpServletRequest, context);
 		} catch (InvalidContentPathException ex) {
 		    CheckAvailabilityFilter.showUnavailablePage(ex.getContent(), httpServletRequest, httpServletResponse);
+		    return;
 		}
 	    }
 	}
