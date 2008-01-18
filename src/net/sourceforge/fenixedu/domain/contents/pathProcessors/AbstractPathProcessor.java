@@ -18,6 +18,7 @@ public abstract class AbstractPathProcessor {
 	strategies.put("net.sourceforge.fenixedu.domain.DepartmentSite", new DepartmentSitePathProcessor());
 	strategies.put("net.sourceforge.fenixedu.domain.DegreeSite", new DegreePathProcessor());
 	strategies.put("net.sourceforge.fenixedu.domain.ExecutionCourseSite", new ExecutionCoursePathProcessor());
+	strategies.put("net.sourceforge.fenixedu.domain.ScientificAreaSite", new ScientificAreaPathProcessor());
 	strategies.put(DEFAULT,new DefaultPathProcessor());
     }
     
@@ -28,7 +29,7 @@ public abstract class AbstractPathProcessor {
     
     public String getTrailingPath(final String path) {
 	final int indexOfSlash = path.indexOf('/');
-	return indexOfSlash >= 0 ? path.substring(indexOfSlash+1, path.length()) : path;
+	return indexOfSlash >= 0 ? path.substring(indexOfSlash+1, path.length()) : "";
     }
     
     public abstract Content processPath(String path);
