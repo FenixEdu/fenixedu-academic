@@ -33,8 +33,7 @@ import org.joda.time.YearMonthDay;
 
 import dml.runtime.RelationAdapter;
 
-public class AdministrativeOfficeFeeAndInsuranceEvent extends
-	AdministrativeOfficeFeeAndInsuranceEvent_Base {
+public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOfficeFeeAndInsuranceEvent_Base {
 
     static {
 	PersonAccountingEvent.addListener(new RelationAdapter<Event, Person>() {
@@ -42,9 +41,8 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	    public void beforeAdd(Event event, Person person) {
 		if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent && person != null) {
 		    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
-		    if (person
-			    .hasAdministrativeOfficeFeeInsuranceEventFor(administrativeOfficeFeeAndInsuranceEvent
-				    .getExecutionYear())) {
+		    if (person.hasAdministrativeOfficeFeeInsuranceEventFor(administrativeOfficeFeeAndInsuranceEvent
+			    .getExecutionYear())) {
 			throw new DomainException(
 				"error.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent.event.is.already.defined.for.execution.year");
 
@@ -59,8 +57,8 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	super();
     }
 
-    public AdministrativeOfficeFeeAndInsuranceEvent(AdministrativeOffice administrativeOffice,
-	    Person person, ExecutionYear executionYear) {
+    public AdministrativeOfficeFeeAndInsuranceEvent(AdministrativeOffice administrativeOffice, Person person,
+	    ExecutionYear executionYear) {
 	this();
 	init(administrativeOffice, EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, person, executionYear);
     }
@@ -68,8 +66,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" - ").appendLabel(
-		getExecutionYear().getYear());
+	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" - ").appendLabel(getExecutionYear().getYear());
 
 	return labelFormatter;
     }
@@ -91,23 +88,16 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     public boolean hasToPayInsurance() {
-	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
-	    if (accountingTransaction.getToAccountEntry().getEntryType() == EntryType.INSURANCE_FEE) {
-		return false;
-	    }
+	if (!getPerson().hasInsuranceEventFor(getExecutionYear())) {
+	    return false;
 	}
 
-	return !getPerson().hasInsuranceEventFor(getExecutionYear());
+	return getInsurancePayedAmount().greaterOrEqualThan(getInsuranceAmount());
+
     }
 
     public boolean hasToPayAdministrativeOfficeFee() {
-	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
-	    if (accountingTransaction.getToAccountEntry().getEntryType() == EntryType.ADMINISTRATIVE_OFFICE_FEE) {
-		return false;
-	    }
-	}
-
-	return true;
+	return getAdministrativeOfficeFeePayedAmount().greaterOrEqualThan(getAdministrativeOfficeFeeAmount());
     }
 
     private AdministrativeOfficeFeeAndInsurancePR getAdministrativeOfficeFeeAndInsurancePR() {
@@ -115,48 +105,40 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     public Money getAdministrativeOfficeFeeAmount() {
-	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeeAmount(
-		getStartDate(), getEndDate());
+	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeeAmount(getStartDate(), getEndDate());
     }
 
     public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate() {
-	return getPaymentEndDate() != null ? getPaymentEndDate()
-		: getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePaymentLimitDate(
-			getStartDate(), getEndDate());
+	return getPaymentEndDate() != null ? getPaymentEndDate() : getAdministrativeOfficeFeeAndInsurancePR()
+		.getAdministrativeOfficeFeePaymentLimitDate(getStartDate(), getEndDate());
     }
 
     public Money getAdministrativeOfficeFeePenaltyAmount() {
-	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePenaltyAmount(
-		getStartDate(), getEndDate());
+	return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePenaltyAmount(getStartDate(), getEndDate());
     }
 
     public Money getInsuranceAmount() {
-	return getAdministrativeOfficeFeeAndInsurancePR().getInsuranceAmount(getStartDate(),
-		getEndDate());
+	return getAdministrativeOfficeFeeAndInsurancePR().getInsuranceAmount(getStartDate(), getEndDate());
     }
 
     @Override
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
 	final Money totalAmount = calculateTotalAmount();
-	return Collections
-		.singletonList(AccountingEventPaymentCode.create(
-			PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE, new YearMonthDay(),
-			calculatePaymentCodeEndDate(), this, totalAmount, totalAmount, getPerson()
-				.getStudent()));
+	return Collections.singletonList(AccountingEventPaymentCode.create(
+		PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE, new YearMonthDay(), calculatePaymentCodeEndDate(), this,
+		totalAmount, totalAmount, getPerson().getStudent()));
     }
 
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
 	final Money totalAmount = calculateTotalAmount();
-	getNonProcessedPaymentCode().update(new YearMonthDay(), calculatePaymentCodeEndDate(),
-		totalAmount, totalAmount);
+	getNonProcessedPaymentCode().update(new YearMonthDay(), calculatePaymentCodeEndDate(), totalAmount, totalAmount);
 
 	return getNonProcessedPaymentCodes();
     }
 
     private AccountingEventPaymentCode getNonProcessedPaymentCode() {
-	return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes()
-		.iterator().next());
+	return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes().iterator().next());
     }
 
     private YearMonthDay calculatePaymentCodeEndDate() {
@@ -179,8 +161,8 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
-	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+	    SibsTransactionDetailDTO transactionDetail) {
 	return internalProcess(responsibleUser, buildEntryDTOsFrom(amountToPay), transactionDetail);
     }
 
@@ -201,8 +183,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
     }
 
     private EntryDTO buildAdministrativeOfficeFeeEntryDTO(Money administrativeOfficeFeeAmountToDiscount) {
-	return new EntryDTO(EntryType.ADMINISTRATIVE_OFFICE_FEE, this,
-		administrativeOfficeFeeAmountToDiscount);
+	return new EntryDTO(EntryType.ADMINISTRATIVE_OFFICE_FEE, this, administrativeOfficeFeeAmountToDiscount);
     }
 
     private EntryDTO buildInsuranceEntryDTO(Money insuranceAmountToDiscount) {
@@ -272,8 +253,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends
 	Money result = Money.ZERO;
 
 	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
-	    if (transaction.getToAccountEntry().getEntryType() == EntryType.INSURANCE_FEE
-		    && transaction.isPayed(civilYear)) {
+	    if (transaction.getToAccountEntry().getEntryType() == EntryType.INSURANCE_FEE && transaction.isPayed(civilYear)) {
 		result = result.add(transaction.getToAccountEntry().getAmountWithAdjustment());
 	    }
 	}
