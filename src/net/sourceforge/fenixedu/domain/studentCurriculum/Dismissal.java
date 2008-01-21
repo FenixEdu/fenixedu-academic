@@ -144,7 +144,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	    }
 	}
 	
-	return result == null ? getExecutionYear() : result;
+	return result;
     }
 
     public Collection<IEnrolment> getSourceIEnrolments() {
