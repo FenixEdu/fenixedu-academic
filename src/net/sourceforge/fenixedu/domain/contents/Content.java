@@ -198,8 +198,25 @@ public abstract class Content extends Content_Base {
 	return isAvailable(Functionality.getCurrentContext());
     }
 
+    // This method is to determine if the content is publicly available in the contents' structure,
+    // i.e., whether it should be subjected to checksum verification.
     public boolean isPublic() {
-	return getAvailabilityPolicy() == null || getAvailabilityPolicy().getTargetGroup() instanceof EveryoneGroup;
+	if (this instanceof Module) {
+	    return false;
+	}
+
+	final AvailabilityPolicy availabilityPolicy = getAvailabilityPolicy();
+	if (availabilityPolicy == null) {
+	    for (final Node node : getParentsSet()) {
+		final Content content = node.getParent();
+		if (content.isPublic()) {
+		    return true;
+		}
+	    }
+	    return false;
+	} else {
+	    return availabilityPolicy.getTargetGroup() instanceof EveryoneGroup;
+	}
     }
 
     public Boolean getPublicAvailable() {
