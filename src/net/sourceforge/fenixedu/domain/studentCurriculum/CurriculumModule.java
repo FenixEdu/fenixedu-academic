@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -164,16 +165,13 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
     
     public boolean isConcluded() {
-	return isConcluded(getLastApprovementExecutionYear());
+	return isConcluded(getApprovedCurriculumLinesLastExecutionYear());
     }
     
-    public ExecutionYear getLastApprovementExecutionYear() {
+    public ExecutionYear getApprovedCurriculumLinesLastExecutionYear() {
 	final SortedSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
 	
-	final Collection<CurriculumLine> approvedCurriculumLines = new HashSet<CurriculumLine>();
-	addApprovedCurriculumLines(approvedCurriculumLines);
-	
-	for (final CurriculumLine curriculumLine : approvedCurriculumLines) {
+	for (final CurriculumLine curriculumLine : getApprovedCurriculumLines()) {
 	    if (curriculumLine.hasExecutionPeriod()) {
 		executionYears.add(curriculumLine.getExecutionPeriod().getExecutionYear());
 	    }
@@ -182,6 +180,31 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	return executionYears.isEmpty() ? ExecutionYear.readCurrentExecutionYear() : executionYears.last();
     }
     
+    final public Collection<CurriculumLine> getApprovedCurriculumLines() {
+	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
+	addApprovedCurriculumLines(result);
+	return result;
+    }
+
+    final public CurriculumLine getLastApprovement() {
+    	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE_AND_ID);
+	curriculumLines.addAll(getApprovedCurriculumLines());
+
+	if (curriculumLines.isEmpty()) {
+	    throw new DomainException("Registration.has.no.approved.curriculum.lines");
+	}
+
+	return curriculumLines.last();
+    }
+
+    final public YearMonthDay getLastApprovementDate() {
+	return getLastApprovement().getApprovementDate();
+    }
+
+    final public ExecutionYear getLastApprovementExecutionYear() {
+	return getLastApprovement().getExecutionYear();
+    }
+
     public Curriculum getCurriculum() {
 	return getCurriculum(null);
     }
