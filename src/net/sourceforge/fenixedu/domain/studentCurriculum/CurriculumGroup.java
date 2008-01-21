@@ -321,6 +321,20 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
+    final public ExecutionYear getIEnrolmentsLastExecutionYear() {
+	ExecutionYear result = null;
+	
+	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
+	    final ExecutionYear lastExecutionYear = curriculumModule.getIEnrolmentsLastExecutionYear();
+	    if (result == null || result.isBefore(lastExecutionYear)) {
+		result = lastExecutionYear;
+	    }
+	}
+	
+	return result;
+    }
+
+    @Override
     public boolean hasDegreeModule(DegreeModule degreeModule) {
 	if (super.hasDegreeModule(degreeModule)) {
 	    return true;

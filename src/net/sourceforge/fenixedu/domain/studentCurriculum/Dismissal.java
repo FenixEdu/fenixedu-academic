@@ -133,6 +133,20 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	return true;
     }
 
+    @Override
+    final public ExecutionYear getIEnrolmentsLastExecutionYear() {
+	ExecutionYear result = null;
+	
+	for (final IEnrolment iEnrolment : this.getSourceIEnrolments()) {
+	    final ExecutionYear executionYear = iEnrolment.getExecutionYear();
+	    if (result == null || result.isBefore(executionYear)) {
+		result = executionYear;
+	    }
+	}
+	
+	return result == null ? getExecutionYear() : result;
+    }
+
     public Collection<IEnrolment> getSourceIEnrolments() {
 	return getCredits().getIEnrolments();
     }

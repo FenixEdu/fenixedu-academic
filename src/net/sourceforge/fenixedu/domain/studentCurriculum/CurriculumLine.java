@@ -118,6 +118,11 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	    final ExecutionPeriod executionPeriod) {
 	return false;
     }
+    
+    @Override
+    public ExecutionYear getIEnrolmentsLastExecutionYear() {
+	return getExecutionYear();
+    }
 
     final public CurricularCourse getCurricularCourse() {
 	return (CurricularCourse) getDegreeModule();
