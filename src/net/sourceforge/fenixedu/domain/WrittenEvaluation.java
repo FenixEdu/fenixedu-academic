@@ -35,7 +35,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-public class WrittenEvaluation extends WrittenEvaluation_Base {
+abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public static final Comparator<WrittenEvaluation> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
     static {
@@ -56,16 +56,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	return result;
     }
 
-    public WrittenEvaluation() {
+    protected WrittenEvaluation() {
 	super();
-    }
-
-    public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
-	    List<ExecutionCourse> executionCoursesToAssociate, List<DegreeModuleScope> curricularCourseScopesToAssociate, 
-	    List<AllocatableSpace> rooms) {
-	this();
-	setAttributesAndAssociateRooms(evaluationDay, evaluationBeginningTime, evaluationEndTime,
-		executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);
     }
 
     public String getName() {
@@ -110,16 +102,16 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     public DateTime getBeginningDateTime() {
 	HourMinuteSecond begin = this.getBeginningDateHourMinuteSecond();
 	YearMonthDay yearMonthDay = this.getDayDateYearMonthDay();
-	return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay
-		.getDayOfMonth(), begin.getHour(), begin.getMinuteOfHour(), begin.getSecondOfMinute(), 0);
+	return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(), begin.getHour(),
+		begin.getMinuteOfHour(), begin.getSecondOfMinute(), 0);
 
     }
 
     public DateTime getEndDateTime() {
 	HourMinuteSecond end = this.getEndDateHourMinuteSecond();
 	YearMonthDay yearMonthDay = this.getDayDateYearMonthDay();
-	return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay
-		.getDayOfMonth(), end.getHour(), end.getMinuteOfHour(), end.getSecondOfMinute(), 0);
+	return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(), end.getHour(),
+		end.getMinuteOfHour(), end.getSecondOfMinute(), 0);
 
     }
 
@@ -182,7 +174,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		for (final Evaluation evaluation : executionCourse.getAssociatedEvaluationsSet()) {
 		    if (evaluation != this && evaluation instanceof WrittenEvaluation) {
 			final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-			if (isIntervalBetweenEvaluationsIsLessThan48Hours(this, writtenEvaluation) && hasMatchingCurricularCourseScopeOrContext(writtenEvaluation)) {
+			if (isIntervalBetweenEvaluationsIsLessThan48Hours(this, writtenEvaluation)
+				&& hasMatchingCurricularCourseScopeOrContext(writtenEvaluation)) {
 			    throw new DomainException("two.evaluations.cannot.occur.withing.48.hours");
 			}
 		    }
@@ -203,9 +196,10 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	    }
 	}
 	return false;
-    } 
+    }
 
-    private boolean isIntervalBetweenEvaluationsIsLessThan48Hours(final WrittenEvaluation writtenEvaluation1, final WrittenEvaluation writtenEvaluation2) {
+    private boolean isIntervalBetweenEvaluationsIsLessThan48Hours(final WrittenEvaluation writtenEvaluation1,
+	    final WrittenEvaluation writtenEvaluation2) {
 	if (writtenEvaluation1.getBeginningDateTime().isBefore(writtenEvaluation2.getBeginningDateTime())) {
 	    return !writtenEvaluation1.getBeginningDateTime().plusHours(48).isBefore(writtenEvaluation2.getBeginningDateTime());
 	} else {
@@ -298,8 +292,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
     }
 
-    protected void setAttributesAndAssociateRooms(Date day, Date beginning, Date end, List<ExecutionCourse> executionCoursesToAssociate,
-	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms) {
+    protected void setAttributesAndAssociateRooms(Date day, Date beginning, Date end,
+	    List<ExecutionCourse> executionCoursesToAssociate, List<DegreeModuleScope> curricularCourseScopesToAssociate,
+	    List<AllocatableSpace> rooms) {
 
 	if (rooms == null) {
 	    rooms = new ArrayList<AllocatableSpace>(0);
@@ -310,12 +305,13 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	// Associate ExecutionCourses and Context/Scopes
 	getAssociatedExecutionCourses().addAll(executionCoursesToAssociate);
 	for (DegreeModuleScope degreeModuleScope : curricularCourseScopesToAssociate) {
-	    if(degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
-		addAssociatedCurricularCourseScope(((DegreeModuleScopeCurricularCourseScope)degreeModuleScope).getCurricularCourseScope());
-	    } else if(degreeModuleScope instanceof DegreeModuleScopeContext) {                
-		addAssociatedContexts(((DegreeModuleScopeContext)degreeModuleScope).getContext());
+	    if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
+		addAssociatedCurricularCourseScope(((DegreeModuleScopeCurricularCourseScope) degreeModuleScope)
+			.getCurricularCourseScope());
+	    } else if (degreeModuleScope instanceof DegreeModuleScopeContext) {
+		addAssociatedContexts(((DegreeModuleScopeContext) degreeModuleScope).getContext());
 	    }
-	}        
+	}
 
 	setDayDate(day);
 	setBeginningDate(beginning);
@@ -327,25 +323,24 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	// Edit Existent Rooms
 	final Set<WrittenEvaluationSpaceOccupation> roomOccupationsToDelete = new HashSet<WrittenEvaluationSpaceOccupation>();
 	for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
-	    if(!newOccupations.contains(roomOccupation)) {
+	    if (!newOccupations.contains(roomOccupation)) {
 		final AllocatableSpace room = roomOccupation.getRoom();
 		if (!rooms.contains(room)) {
-		    roomOccupationsToDelete.add(roomOccupation);		    		    
-		} else {                        	    
-		    roomOccupation.edit(this);        	    
+		    roomOccupationsToDelete.add(roomOccupation);
+		} else {
+		    roomOccupation.edit(this);
 		}
 	    }
-	}                
+	}
 
 	// Delete Rooms
 	for (Iterator<WrittenEvaluationSpaceOccupation> iter = roomOccupationsToDelete.iterator(); iter.hasNext();) {
 	    WrittenEvaluationSpaceOccupation occupation = iter.next();
 	    occupation.removeWrittenEvaluations(this);
 	    iter.remove();
-	    occupation.delete();	    
-	}        
+	    occupation.delete();
+	}
     }
-
 
     private boolean checkValidHours(Date beginning, Date end) {
 	if (beginning.after(end)) {
@@ -354,22 +349,22 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	return true;
     }
 
-    private void deleteAllRoomOccupations() {		
-	while(hasAnyWrittenEvaluationSpaceOccupations()) {
+    private void deleteAllRoomOccupations() {
+	while (hasAnyWrittenEvaluationSpaceOccupations()) {
 	    WrittenEvaluationSpaceOccupation occupation = getWrittenEvaluationSpaceOccupations().get(0);
-	    occupation.removeWrittenEvaluations(this);	    
+	    occupation.removeWrittenEvaluations(this);
 	    occupation.delete();
-	}		
+	}
     }
 
     private List<WrittenEvaluationSpaceOccupation> associateNewRooms(final List<AllocatableSpace> rooms) {
 
-	List<WrittenEvaluationSpaceOccupation> newInsertedOccupations = new ArrayList<WrittenEvaluationSpaceOccupation>();	
+	List<WrittenEvaluationSpaceOccupation> newInsertedOccupations = new ArrayList<WrittenEvaluationSpaceOccupation>();
 	for (final AllocatableSpace room : rooms) {
-	    if (!hasOccupationForRoom(room)) {                
+	    if (!hasOccupationForRoom(room)) {
 
-		WrittenEvaluationSpaceOccupation occupation =
-		    (WrittenEvaluationSpaceOccupation) room.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
+		WrittenEvaluationSpaceOccupation occupation = (WrittenEvaluationSpaceOccupation) room
+			.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
 
 		occupation = occupation == null ? new WrittenEvaluationSpaceOccupation(room) : occupation;
 		occupation.edit(this);
@@ -408,11 +403,12 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     private void deleteAllVigilanciesAssociated() {
-	for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete());
+	for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete())
+	    ;
     }
 
-    public void editEnrolmentPeriod(Date enrolmentBeginDay, Date enrolmentEndDay, Date enrolmentBeginTime,
-	    Date enrolmentEndTime) throws DomainException {
+    public void editEnrolmentPeriod(Date enrolmentBeginDay, Date enrolmentEndDay, Date enrolmentBeginTime, Date enrolmentEndTime)
+	    throws DomainException {
 
 	checkEnrolmentDates(enrolmentBeginDay, enrolmentEndDay, enrolmentBeginTime, enrolmentEndTime);
 
@@ -422,8 +418,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	this.setEnrollmentEndTimeDate(enrolmentEndTime);
     }
 
-    private void checkEnrolmentDates(final Date enrolmentBeginDay, final Date enrolmentEndDay,
-	    final Date enrolmentBeginTime, final Date enrolmentEndTime) throws DomainException {
+    private void checkEnrolmentDates(final Date enrolmentBeginDay, final Date enrolmentEndDay, final Date enrolmentBeginTime,
+	    final Date enrolmentEndTime) throws DomainException {
 
 	final Date enrolmentBeginDate = createDate(enrolmentBeginDay, enrolmentBeginTime);
 	final Date enrolmentEndDate = createDate(enrolmentEndDay, enrolmentEndTime);
@@ -459,8 +455,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public void enrolStudent(Registration registration) {
-	for (WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration
-		.getWrittenEvaluationEnrolments()) {
+	for (WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration.getWrittenEvaluationEnrolments()) {
 	    if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
 		throw new DomainException("error.alreadyEnrolledError");
 	    }
@@ -473,8 +468,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	    throw new DomainException("error.notAuthorizedUnEnrollment");
 	}
 
-	WrittenEvaluationEnrolment writtenEvaluationEnrolmentToDelete = this
-	.getWrittenEvaluationEnrolmentFor(registration);
+	WrittenEvaluationEnrolment writtenEvaluationEnrolmentToDelete = this.getWrittenEvaluationEnrolmentFor(registration);
 	if (writtenEvaluationEnrolmentToDelete == null) {
 	    throw new DomainException("error.studentNotEnroled");
 	}
@@ -501,10 +495,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
 	for (final AllocatableSpace room : selectedRooms) {
 	    for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < room.getCapacidadeExame()
-	    && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
+		    && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
 		final Registration registration = getRandomStudentFromList(studentsToDistribute);
-		final WrittenEvaluationEnrolment writtenEvaluationEnrolment = this
-		.getWrittenEvaluationEnrolmentFor(registration);
+		final WrittenEvaluationEnrolment writtenEvaluationEnrolment = this.getWrittenEvaluationEnrolmentFor(registration);
 		if (writtenEvaluationEnrolment == null) {
 		    new WrittenEvaluationEnrolment(this, registration, room);
 		} else {
@@ -525,8 +518,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 	final Date todayDate = Calendar.getInstance().getTime();
 	final Date evaluationDateAndTime;
 	try {
-	    evaluationDateAndTime = DateFormatUtil.parse("yyyy/MM/dd HH:mm", DateFormatUtil.format(
-		    "yyyy/MM/dd ", this.getDayDate())
+	    evaluationDateAndTime = DateFormatUtil.parse("yyyy/MM/dd HH:mm", DateFormatUtil.format("yyyy/MM/dd ", this
+		    .getDayDate())
 		    + DateFormatUtil.format("HH:mm", this.getBeginningDate()));
 	} catch (ParseException e) {
 	    // This should never happen, the string where obtained from other
@@ -563,8 +556,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Registration registration) {
-	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration
-		.getWrittenEvaluationEnrolments()) {
+	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration.getWrittenEvaluationEnrolments()) {
 	    if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
 		return writtenEvaluationEnrolment;
 	    }
@@ -578,10 +570,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 		|| this.getEnrollmentEndDayDate() == null || this.getEnrollmentEndTimeDate() == null) {
 	    throw new DomainException("error.enrolmentPeriodNotDefined");
 	}
-	final Date enrolmentBeginDate = createDate(this.getEnrollmentBeginDayDate(), this
-		.getEnrollmentBeginTimeDate());
-	final Date enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this
-		.getEnrollmentEndTimeDate());
+	final Date enrolmentBeginDate = createDate(this.getEnrollmentBeginDayDate(), this.getEnrollmentBeginTimeDate());
+	final Date enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this.getEnrollmentEndTimeDate());
 	return enrolmentBeginDate.before(now) && enrolmentEndDate.after(now);
     }
 
@@ -608,7 +598,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     public Integer getCountNumberReservedSeats() {
 	int i = 0;
 	for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
-	    i += ((AllocatableSpace)roomOccupation.getRoom()).getCapacidadeExame().intValue();
+	    i += ((AllocatableSpace) roomOccupation.getRoom()).getCapacidadeExame().intValue();
 	}
 	return i;
     }
@@ -672,7 +662,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     public List<Vigilancy> getAllActiveVigilancies() {
 	List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
 	for (Vigilancy vigilancy : this.getVigilancies()) {
-	    if(vigilancy.isActive()) {
+	    if (vigilancy.isActive()) {
 		vigilancies.add(vigilancy);
 	    }
 	}
@@ -699,8 +689,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public List<Vigilancy> getActiveVigilancies() {
 	List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
-	for(Vigilancy vigilancy : this.getVigilancies()) {
-	    if(vigilancy.isActive()) {
+	for (Vigilancy vigilancy : this.getVigilancies()) {
+	    if (vigilancy.isActive()) {
 		vigilancies.add(vigilancy);
 	    }
 	}
@@ -709,8 +699,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public boolean hasScopeFor(final Integer year, final Integer semester, DegreeCurricularPlan degreeCurricularPlan) {
 	for (final DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
-	    if (degreeModuleScope.getCurricularYear().equals(year) 
-		    && degreeModuleScope.getCurricularSemester().equals(semester)
+	    if (degreeModuleScope.getCurricularYear().equals(year) && degreeModuleScope.getCurricularSemester().equals(semester)
 		    && degreeModuleScope.getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
 		return true;
 	    }
@@ -719,9 +708,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public boolean hasScopeOrContextFor(List<Integer> curricularYears, DegreeCurricularPlan degreeCurricularPlan) {
-	if(curricularYears != null && degreeCurricularPlan != null) {
+	if (curricularYears != null && degreeCurricularPlan != null) {
 	    for (final DegreeModuleScope scope : getDegreeModuleScopes()) {
-		if (curricularYears.contains(scope.getCurricularYear()) 
+		if (curricularYears.contains(scope.getCurricularYear())
 			&& degreeCurricularPlan.equals(scope.getCurricularCourse().getDegreeCurricularPlan())) {
 		    return true;
 		}
@@ -737,7 +726,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
 	HourMinuteSecond beginTime = getBeginningDateHourMinuteSecond();
-	HourMinuteSecond endTime = getEndDateHourMinuteSecond();	
-	return getDayDateYearMonthDay() != null && beginTime != null && endTime != null && endTime.isAfter(beginTime); 	
+	HourMinuteSecond endTime = getEndDateHourMinuteSecond();
+	return getDayDateYearMonthDay() != null && beginTime != null && endTime != null && endTime.isAfter(beginTime);
     }
 }
