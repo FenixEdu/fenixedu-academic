@@ -5,7 +5,9 @@ import java.util.HashSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -81,8 +83,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-	super.internalChangeState(academicServiceRequestBean);
-
 	if (academicServiceRequestBean.isToProcess()) {
 	    checkForDiplomaRequest(getRequestedCycle());
 
@@ -92,6 +92,28 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	    if (getMobilityProgram() == null && hasAnyExternalEntriesToReport()) {
 		throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null");
+	    }
+
+	    if (!getFreeProcessed()) {
+		if (hasCycleCurriculumGroup()) {
+		    final ExecutionYear executionYear = getCycleCurriculumGroup().getIEnrolmentsLastExecutionYear();
+		    if (executionYear != null && getRegistration().hasGratuityDebts(executionYear)) {
+			throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+		    }
+		} else if (getRegistration().hasGratuityDebtsCurrently()) {
+			throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+		}
+	    }
+	}
+	
+	if (academicServiceRequestBean.isToConclude()) {
+
+	    if (!hasNumberOfPages()) {
+		throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
+	    }
+
+	    if (!isFree()) {
+		new CertificateRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
 	    }
 	}
     }

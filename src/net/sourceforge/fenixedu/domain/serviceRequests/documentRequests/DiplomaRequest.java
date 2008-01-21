@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -106,8 +107,15 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequestBean.isToProcess()) {
-	    if (getRegistration().hasGratuityDebtsCurrently() && !getFreeProcessed()) {
-		throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+	    if (!getFreeProcessed()) {
+		if (hasCycleCurriculumGroup()) {
+		    final ExecutionYear executionYear = getCycleCurriculumGroup().getIEnrolmentsLastExecutionYear();
+		    if (executionYear != null && getRegistration().hasGratuityDebts(executionYear)) {
+			throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+		    }
+		} else if (getRegistration().hasGratuityDebtsCurrently()) {
+			throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+		}
 	    }
 	    
 	    if (isPayable() && !isPayed()) {
