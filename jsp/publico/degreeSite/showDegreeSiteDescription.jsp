@@ -58,7 +58,7 @@
 				<%
 					if (homepageWebAddres.startsWith("http")) {
 				%>
-					<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX_STRING %><a target="_blank" href="<%= homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
+					<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a target="_blank" href="<%= homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
 				<%
 					} else {
 				%>
