@@ -20,6 +20,9 @@ public class CreateMarkSheetAuthorizationFilter extends MarkSheetAuthorizationFi
         authorizedEmployees.add("3068");
         authorizedEmployees.add("2973");
         
+        authorizedEmployees.add("3890");
+        
+        
         //TAGUS
         authorizedEmployees.add("3821");
         authorizedEmployees.add("3303");
