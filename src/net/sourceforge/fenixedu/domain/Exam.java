@@ -149,4 +149,9 @@ public class Exam extends Exam_Base {
 	return result;
     }
 
+    @Override
+    public boolean isExam() {
+	return true;
+    }
+
 }

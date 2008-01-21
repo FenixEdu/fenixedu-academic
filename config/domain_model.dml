@@ -4553,12 +4553,20 @@ relation EquivalencePlanRevisionRequestEquivalencePlanRequest {
 }
 
 relation ExamDateCertificateRequestEnrolment {
-	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest playsRole examDateCertificateRequest {
+	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest playsRole examDateCertificateRequests {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
 		multiplicity *;
 	}
+}
+
+relation ExamDateCertificateRequestExecutionPeriod {
+	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest playsRole examDateCertificateRequests {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation CourseGroupChangeRequestOldCourseGroup {

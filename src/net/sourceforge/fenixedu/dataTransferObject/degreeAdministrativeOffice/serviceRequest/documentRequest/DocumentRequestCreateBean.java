@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
@@ -44,6 +45,8 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private MobilityProgram mobilityProgram;
 
     private List<DomainReference<Enrolment>> enrolments;
+
+    private DomainReference<ExecutionPeriod> executionPeriod;
 
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
@@ -223,4 +226,11 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 	this.enrolments = enrolmentsToSet;
     }
 
+    public ExecutionPeriod getExecutionPeriod() {
+	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    }
+
+    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
+	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    }
 }

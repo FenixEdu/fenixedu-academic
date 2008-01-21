@@ -79,7 +79,7 @@
 				<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
 			</fr:layout>	
 			<fr:destination name="executionYearChangedPostBack" path="/documentRequestsManagement.do?method=executionYearToCreateDocumentChangedPostBack"/>
-
+			<fr:destination name="executionPeriodChangedPostBack" path="/documentRequestsManagement.do?method=executionPeriodToCreateDocumentChangedPostBack"/>
 		</fr:edit>			
 	</logic:present>
 	

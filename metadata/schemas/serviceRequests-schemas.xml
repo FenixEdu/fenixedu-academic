@@ -180,9 +180,14 @@
 		<property name="destination" value="executionYearChangedPostBack"/>
 	</slot>
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+	<slot name="executionPeriod" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.documentRequests.ExecutionPeriodsToCreateDocumentRequestProvider" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="executionPeriodChangedPostBack"/>
+	</slot>
 	<slot name="enrolments" layout="option-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
 			key="label.student.enrolments">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.EnrolmentsToCreateDocumentRequestProvider" />
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.documentRequests.EnrolmentsByExecutionPeriodToCreateDocumentRequestProvider" />
         <property name="eachLayout" value="values" />
         <property name="eachSchema" value="Enrolment.view-curricular-course-name-only" />
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />

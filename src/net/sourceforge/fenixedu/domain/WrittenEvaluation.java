@@ -729,4 +729,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	HourMinuteSecond endTime = getEndDateHourMinuteSecond();
 	return getDayDateYearMonthDay() != null && beginTime != null && endTime != null && endTime.isAfter(beginTime);
     }
+
+    public boolean isExam() {
+	return false;
+    }
 }

@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -38,7 +38,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     static final public CertificateRequest create(Registration registration, DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, Boolean urgentRequest, Boolean average,
 	    Boolean detailed, ExecutionYear executionYear, MobilityProgram mobilityProgram, CycleType requestedCycle,
-	    Boolean freeProcessed, Collection<Enrolment> enrolments) {
+	    Boolean freeProcessed, Collection<Enrolment> enrolments, ExecutionPeriod executionPeriod) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
@@ -55,7 +55,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 		    average, detailed, mobilityProgram, requestedCycle, freeProcessed);
 	case EXAM_DATE_CERTIFICATE:
 	    return new ExamDateCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
-		    executionYear, enrolments);
+		    executionYear, enrolments, executionPeriod);
 	}
 
 	return null;
@@ -101,9 +101,9 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
 
     /**
-         * Important: Notice that this method's return value may not be the same
-         * before and after conclusion of the academic service request.
-         */
+     * Important: Notice that this method's return value may not be the same
+     * before and after conclusion of the academic service request.
+     */
     @Override
     final public boolean isFree() {
 	if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE

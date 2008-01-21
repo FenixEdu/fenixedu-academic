@@ -145,7 +145,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	setAdditionalInformationSchemaName(request, requestCreateBean);
 	request.setAttribute("documentRequestCreateBean", requestCreateBean);
-	
+
 	return mapping.findForward("createDocumentRequests");
 
     }
@@ -167,7 +167,10 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
     public ActionForward documentRequestTypeChoosedPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	return createDocumentRequestPostback(mapping, request);
+    }
 
+    private ActionForward createDocumentRequestPostback(ActionMapping mapping, HttpServletRequest request) {
 	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) RenderUtils.getViewState()
 		.getMetaObject().getObject();
 	RenderUtils.invalidateViewState();
@@ -186,7 +189,12 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
     public ActionForward executionYearToCreateDocumentChangedPostBack(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	return documentRequestTypeChoosedPostBack(mapping, form, request, response);
+	return createDocumentRequestPostback(mapping, request);
+    }
+
+    public ActionForward executionPeriodToCreateDocumentChangedPostBack(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return createDocumentRequestPostback(mapping, request);
     }
 
     public ActionForward viewDocumentRequestToCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
