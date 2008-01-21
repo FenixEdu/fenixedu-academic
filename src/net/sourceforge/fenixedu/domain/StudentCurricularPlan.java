@@ -90,7 +90,7 @@ import org.joda.time.YearMonthDay;
 
 public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
-    static final public Comparator STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME = new ComparatorChain();
+    static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME).addComparator(new BeanComparator(
 		"degreeCurricularPlan.degree.tipoCurso"));
@@ -98,7 +98,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		"degreeCurricularPlan.degree.name"));
     }
 
-    static final public Comparator STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME = new ComparatorChain();
+    static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_DEGREE_NAME_AND_STUDENT_NUMBER_AND_NAME)
 		.addComparator(new BeanComparator("degreeCurricularPlan.degree.name"));
@@ -1834,6 +1834,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public boolean hasAnyNotPayedGratuityEvents() {
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
 	    if (gratuityEvent.isInDebt()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    final public boolean hasAnyNotPayedGratuityEventsUntil(final ExecutionYear executionYear) {
+	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+	    if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
 		return true;
 	    }
 	}
