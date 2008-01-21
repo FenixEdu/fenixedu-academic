@@ -68,14 +68,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR = new BeanComparator(
 	    "executionPeriod");
+
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_NAME_COMPARATOR = new ComparatorChain();
+
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new ComparatorChain();
+
     public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;
 
     static {
 	CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
 
-	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);
+	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME)
+		.addComparator(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(new BeanComparator("nome",
 		Collator.getInstance()));
 	((ComparatorChain) EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME).addComparator(DomainObject.COMPARATOR_BY_ID);
@@ -103,12 +107,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	MultiLanguageString forumName = new MultiLanguageString(nome);
 	createExecutionCourseAnnouncementBoard(nome);
-	
-	if(entryPhase == null) {
+
+	if (entryPhase == null) {
 	    entryPhase = EntryPhase.FIRST_PHASE_OBJ;
 	}
 	setEntryPhase(entryPhase);
-	
+
     }
 
     public void editInformation(String nome, String sigla, String comment, Boolean availableGradeSubmission, EntryPhase entryPhase) {
@@ -116,7 +120,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setSigla(sigla);
 	setComment(comment);
 	setAvailableGradeSubmission(availableGradeSubmission);
-	if(entryPhase != null) {
+	if (entryPhase != null) {
 	    setEntryPhase(entryPhase);
 	}
     }
@@ -176,8 +180,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean isMasterDegreeDFAOrDEAOnly() {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
-	    if (!degreeType.equals(DegreeType.MASTER_DEGREE) 
-		    && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+	    if (!degreeType.equals(DegreeType.MASTER_DEGREE) && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
 		    && !degreeType.equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)
 		    && !degreeType.equals(DegreeType.BOLONHA_PHD_PROGRAM)) {
 		return false;
@@ -237,7 +240,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    if (canAddBibliographicReference(bibliographicReference)) {
 		this.createBibliographicReference(bibliographicReference.getTitle(), bibliographicReference.getAuthors(),
 			bibliographicReference.getReference(), bibliographicReference.getYear(), bibliographicReference
-			.getOptional());
+				.getOptional());
 	    } else {
 		notCopiedBibliographicReferences.add(bibliographicReference);
 	    }
@@ -553,7 +556,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 
 	    return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd", evaluationComparisonDate)
-	    + evaluation.getIdInternal();
+		    + evaluation.getIdInternal();
 	}
     };
 
@@ -572,7 +575,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     private static class CurricularCourseExecutionCourseListener extends
-    dml.runtime.RelationAdapter<ExecutionCourse, CurricularCourse> {
+	    dml.runtime.RelationAdapter<ExecutionCourse, CurricularCourse> {
 
 	@Override
 	public void afterAdd(ExecutionCourse execution, CurricularCourse curricular) {
@@ -952,10 +955,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public ExecutionCourseForum getForumByName(MultiLanguageString name) {
-	if(!hasSite()) {
+	if (!hasSite()) {
 	    return null;
 	}
-	
+
 	return getSite().getForumByName(name);
     }
 
@@ -966,9 +969,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	getSite().addForum(forum);
     }
-    
+
     public void checkIfCanAddForum(MultiLanguageString name) {
-	if(!hasSite()) {
+	if (!hasSite()) {
 	    throw new DomainException("error.cannot.add.forum.empty.site");
 	}
 	if (hasForumWithName(name)) {
@@ -1765,9 +1768,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	if (hasEvaluationMethod()) {
 	    final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
-	    return evaluationElements != null && evaluationElements.hasContent(Language.pt) ? 
-		    evaluationElements.getContent(Language.pt) : !getCompetenceCourses().isEmpty() ?
-			    getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
+	    return evaluationElements != null && evaluationElements.hasContent(Language.pt) ? evaluationElements
+		    .getContent(Language.pt) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
+		    .getEvaluationMethod() : "";
 	} else {
 	    return getCompetenceCourses().iterator().next().getEvaluationMethod();
 	}
@@ -1778,13 +1781,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
 	    return evaluationElements != null && evaluationElements.hasContent(Language.en) ? evaluationElements
-		    .getContent(Language.en) : !getCompetenceCourses().isEmpty() ?
-			    getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
+		    .getContent(Language.en) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
+		    .getEvaluationMethod() : "";
 	} else {
 	    return getCompetenceCourses().iterator().next().getEvaluationMethodEn();
 	}
     }
-    
+
     public List<ExecutionCourseForum> getForuns() {
 	if (hasSite()) {
 	    return new ArrayList<ExecutionCourseForum>(getSite().getForuns());
@@ -1792,11 +1795,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    return Collections.emptyList();
 	}
     }
-    
-    public AcademicInterval getExecutionInterval(){
+
+    public AcademicInterval getExecutionInterval() {
 	return getExecutionPeriod().getExecutionInterval();
     }
-    
+
     public static ExecutionCourse readBySiglaAndExecutionPeriod(final String sigla, ExecutionPeriod executionPeriod) {
 	for (ExecutionCourse executionCourse : RootDomainObject.getInstance().getExecutionCourses()) {
 	    if (executionCourse.getExecutionPeriod() == executionPeriod && sigla.equalsIgnoreCase(executionCourse.getSigla())) {
@@ -1805,9 +1808,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return null;
     }
-    
+
     public static ExecutionCourse readLastByExecutionYearAndSigla(final String sigla, ExecutionYear executionYear) {
-	SortedSet<ExecutionCourse> result = new TreeSet<ExecutionCourse>(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);  
+	SortedSet<ExecutionCourse> result = new TreeSet<ExecutionCourse>(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);
 	for (ExecutionCourse executionCourse : RootDomainObject.getInstance().getExecutionCourses()) {
 	    if (executionCourse.getExecutionYear() == executionYear && sigla.equalsIgnoreCase(executionCourse.getSigla())) {
 		result.add(executionCourse);
@@ -1815,25 +1818,25 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return result.isEmpty() ? null : result.last();
     }
-    
+
     public static ExecutionCourse readLastBySigla(final String sigla) {
-	SortedSet<ExecutionCourse> result = new TreeSet<ExecutionCourse>(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);  
+	SortedSet<ExecutionCourse> result = new TreeSet<ExecutionCourse>(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);
 	for (ExecutionCourse executionCourse : RootDomainObject.getInstance().getExecutionCourses()) {
 	    if (sigla.equalsIgnoreCase(executionCourse.getSigla())) {
 		result.add(executionCourse);
 	    }
 	}
 	return result.isEmpty() ? null : result.last();
-    }    
-    
+    }
+
     public static ExecutionCourse readLastByAcademicPeriodAndSigla(final String sigla, AcademicPeriod academicPeriod) {
 	return academicPeriod instanceof ExecutionPeriod ? readBySiglaAndExecutionPeriod(sigla, (ExecutionPeriod) academicPeriod)
 		: readLastByExecutionYearAndSigla(sigla, (ExecutionYear) academicPeriod);
     }
-    
+
     @Override
     public void setSigla(String sigla) {
-        super.setSigla(sigla.replace(' ', '_').replace('/', '-'));
+	super.setSigla(sigla.replace(' ', '_').replace('/', '-'));
     }
-    
+
 }
