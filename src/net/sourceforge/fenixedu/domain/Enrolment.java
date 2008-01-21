@@ -710,7 +710,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     public YearMonthDay calculateConclusionDate() {
-	return getLatestEnrolmentEvaluation().getExamDateYearMonthDay();
+	return getLatestEnrolmentEvaluationExceptImprovements().getExamDateYearMonthDay();
     }
 
 
@@ -950,6 +950,18 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
 	return (getStudentCurricularPlan().getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) ? getLatestEnrolmentEvalution(getAllFinalEnrolmentEvaluations())
 		: getLatestEnrolmentEvalution(getEvaluationsSet());
+    }
+
+    final public EnrolmentEvaluation getLatestEnrolmentEvaluationExceptImprovements() {
+	final Collection<EnrolmentEvaluation> toInspect = new HashSet<EnrolmentEvaluation>();
+	
+	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
+	    if (!enrolmentEvaluation.isImprovment()) {
+		toInspect.add(enrolmentEvaluation);
+	    }
+	}
+	
+	return getLatestEnrolmentEvalution(toInspect);
     }
 
     @SuppressWarnings("unchecked")
