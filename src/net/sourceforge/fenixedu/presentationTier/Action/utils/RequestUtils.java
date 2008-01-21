@@ -174,6 +174,7 @@ public class RequestUtils {
                 && (uri.indexOf("logoff.do") == -1)
                 && (uri.indexOf("publico/") == -1)
                 && (uri.indexOf("showErrorPage.do") == -1)
+                && (uri.indexOf("exceptionHandlingAction.do") == -1)
                 && (uri.indexOf("manager/manageCache.do") == -1)
                 && (uri.indexOf("checkPasswordKerberos.do") == -1)
                 && (uri.indexOf("siteMap.do") == -1)
