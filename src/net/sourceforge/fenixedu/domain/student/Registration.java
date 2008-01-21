@@ -2382,6 +2382,15 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    private boolean hasAnyNotPayedGratuityEventUntil(final ExecutionYear executionYear) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasAnyNotPayedGratuityEventsUntil(executionYear)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     private boolean hasAnyNotPayedGratuityEventsForPreviousYears() {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.hasAnyNotPayedGratuityEventsForPreviousYears()) {
@@ -2571,6 +2580,10 @@ public class Registration extends Registration_Base {
 
     final public boolean hasGratuityDebtsCurrently() {
 	return !super.getPayedTuition() || hasAnyNotPayedGratuityEvents();
+    }
+
+    final public boolean hasGratuityDebts(final ExecutionYear executionYear) {
+	return !super.getPayedTuition() || hasAnyNotPayedGratuityEventUntil(executionYear);
     }
 
     final public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
