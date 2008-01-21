@@ -17,8 +17,9 @@ public class ResultPredicates {
 	public static final AccessControlPredicate<ResearchResult> createPredicate = new AccessControlPredicate<ResearchResult>() {
 		public boolean evaluate(ResearchResult result) {
 			final IUserView userView = AccessControl.getUserView();
-			if (userView != null && userView.hasRoleType(RoleType.RESEARCHER)
-					&& !result.hasAnyResultParticipations()) {
+			if (userView != null && (userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
+				|| (userView.hasRoleType(RoleType.RESEARCHER)
+					&& !result.hasAnyResultParticipations()))) {
 				return true;
 			}
 			return false;
