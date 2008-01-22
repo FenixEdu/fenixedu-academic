@@ -264,9 +264,7 @@ public abstract class Event extends Event_Base {
 		result.add(transaction);
 	    }
 	}
-
 	return result;
-
     }
 
     public List<AccountingTransaction> getSortedNonAdjustingTransactions() {
