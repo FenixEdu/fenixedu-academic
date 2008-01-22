@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -19,14 +19,14 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
     public CourseLoadRequest(final Registration registration, final ExecutionYear executionYear,
 	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
-	    final List<Enrolment> enrolments, final Boolean urgentRequest, final Boolean freeProcessed) {
+	    final Collection<Enrolment> enrolments, final Boolean urgentRequest) {
 	this();
-	super.init(registration, executionYear, freeProcessed, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	super.init(registration, executionYear, Boolean.FALSE, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
 	checkParameters(enrolments);
 	super.getEnrolments().addAll(enrolments);
     }
 
-    private void checkParameters(final List<Enrolment> enrolments) {
+    private void checkParameters(final Collection<Enrolment> enrolments) {
 	for (final Enrolment enrolment : enrolments) {
 	    if (!enrolment.isApproved()) {
 		throw new DomainException("error.CourseLoadRequest.cannot.add.not.approved.enrolments");

@@ -56,6 +56,9 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	case EXAM_DATE_CERTIFICATE:
 	    return new ExamDateCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
 		    executionYear, enrolments, executionPeriod);
+	case COURSE_LOAD:
+	    return new CourseLoadRequest(registration, ExecutionYear.readCurrentExecutionYear(), chosenDocumentPurposeType,
+		    otherPurpose, enrolments, urgentRequest);
 	}
 
 	return null;

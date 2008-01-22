@@ -38,7 +38,6 @@
 	<slot name="documentPurposeType" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.document.purpose" />
 	<slot name="otherDocumentPurposeTypeDescription" read-only="true" key="label.documentRequestsManagement.searchDocumentRequests.otherPurpose" />
 	<slot name="numberOfPages" key="label.documentRequests.DocumentRequest.numberOfPages" />
-	
 </schema>
 
 <schema name="DocumentRequest.view-without-numberOfPages" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="DocumentRequest.view">
@@ -60,9 +59,7 @@
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType" />
 </schema>
 
-<schema name="DocumentRequest.summary-view-by-student" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="DocumentRequest.view">
-	<remove name="numberOfPages" />
-	<remove name="otherDocumentPurposeTypeDescription" />
+<schema name="DocumentRequest.summary-view-by-student" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES" extends="AcademicServiceRequest.view">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 </schema>
 
@@ -94,13 +91,19 @@
 <schema name="SchoolRegistrationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
 
-<schema name="ExamDateCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="CourseLoadRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest" extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
 		<property name="htmlSeparator" value=", "/>
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
 	</slot>	
 </schema>
 
+<schema name="ExamDateCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
+		<property name="htmlSeparator" value=", "/>
+		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
+	</slot>	
+</schema>
 
 <schema name="DeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest"  extends="DocumentRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
@@ -170,6 +173,18 @@
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed"></slot>
 	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average"></slot>
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.COURSE_LOAD.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+	<slot name="enrolments" layout="option-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+			key="label.student.enrolments">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ApprovedEnrolmentsToCreateDocumentRequestProvider" />
+        <property name="eachLayout" value="values" />
+        <property name="eachSchema" value="Enrolment.view-curricular-course-name-only" />
+		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
+    </slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.EXAM_DATE_CERTIFICATE.AdditionalInformation" 

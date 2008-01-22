@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -26,7 +27,7 @@ public enum DocumentRequestType {
 
     PHOTOCOPY(false, false),
 
-    COURSE_LOAD(false, false/* , AdministrativeOfficeType.DEGREE */),
+    COURSE_LOAD(true, false/* , AdministrativeOfficeType.DEGREE*/),
 
     EXAM_DATE_CERTIFICATE(true, false /* ,AdministrativeOfficeType.DEGREE */);
 
@@ -60,12 +61,11 @@ public enum DocumentRequestType {
     }
 
     public boolean isCertificate() {
-	return this == SCHOOL_REGISTRATION_CERTIFICATE || this == ENROLMENT_CERTIFICATE || this == APPROVEMENT_CERTIFICATE
-		|| this == DEGREE_FINALIZATION_CERTIFICATE || this == EXAM_DATE_CERTIFICATE;
+	return CERTIFICATES.contains(this);
     }
 
     public boolean isDeclaration() {
-	return this == SCHOOL_REGISTRATION_DECLARATION || this == ENROLMENT_DECLARATION || this == IRS_DECLARATION;
+	return DECLARATIONS.contains(this);
     }
 
     public boolean isDiploma() {
@@ -92,4 +92,9 @@ public enum DocumentRequestType {
 	return isDeclaration() || this == DEGREE_FINALIZATION_CERTIFICATE;
     }
 
+    static private List<DocumentRequestType> CERTIFICATES = Arrays.asList(SCHOOL_REGISTRATION_CERTIFICATE, ENROLMENT_CERTIFICATE,
+	    APPROVEMENT_CERTIFICATE, DEGREE_FINALIZATION_CERTIFICATE, EXAM_DATE_CERTIFICATE, COURSE_LOAD);
+
+    static private List<DocumentRequestType> DECLARATIONS = Arrays.asList(SCHOOL_REGISTRATION_DECLARATION, ENROLMENT_DECLARATION,
+	    IRS_DECLARATION);
 }
