@@ -26,3 +26,7 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Update ExecutionCourses Siglas" updateExecutionCoursesSiglas.sql
+execute "Adding column keyExecutionPeriod to academicServiceRequest" AddKeyExecutionPeriodToAcademicServiceRequest.sql
+execute "Resolve Problem With Content Names" resolveProblemWithContentNames.sql
