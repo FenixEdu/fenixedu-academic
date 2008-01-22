@@ -19,22 +19,18 @@ public class ChecksumRewriter extends RequestRewriter {
 
     private static final int LENGTH_OF_NO_CHECKSUM_PREFIX = NO_CHECKSUM_PREFIX.length();
 
-    public final static String NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX =
-		NO_CHECKSUM_PREFIX + ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+    public final static String NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX = NO_CHECKSUM_PREFIX
+	    + ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
 
-    private static final int LENGTH_OF_NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX = 
-		NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX.length();
+    private static final int LENGTH_OF_NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX = NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX.length();
 
     private static String calculateChecksum(final StringBuilder source, final int start, final int end) {
 	return calculateChecksum(source.substring(start, end));
     }
 
     private static boolean isRelevantPart(final String part) {
-	return part.length() > 0
-		&& !part.startsWith(CHECKSUM_ATTRIBUTE_NAME)
-		&& !part.startsWith("page=")
-		&& !part.startsWith("org.apache.struts.action.LOCALE")
-		&& !part.startsWith("javax.servlet.request.")
+	return part.length() > 0 && !part.startsWith(CHECKSUM_ATTRIBUTE_NAME) && !part.startsWith("page=")
+		&& !part.startsWith("org.apache.struts.action.LOCALE") && !part.startsWith("javax.servlet.request.")
 		&& !part.startsWith("ok");
     }
 
@@ -46,7 +42,8 @@ public class ChecksumRewriter extends RequestRewriter {
 	final IUserView userView = AccessControl.getUserView();
 	stringBuilder.append(userView.getPrivateConstantForDigestCalculation());
 	final String checksum = new String(DigestUtils.shaHex(stringBuilder.toString()));
-//	System.out.println("Generating checksum for: " + stringBuilder.toString() + " --> " + checksum);
+	// System.out.println("Generating checksum for: " +
+	// stringBuilder.toString() + " --> " + checksum);
 	return checksum;
     }
 
@@ -77,7 +74,7 @@ public class ChecksumRewriter extends RequestRewriter {
 
     @Override
     public StringBuilder rewrite(StringBuilder source) {
-	if(isRedirectRequest(httpServletRequest)) {
+	if (isRedirectRequest(httpServletRequest)) {
 	    return source;
 	}
 	final StringBuilder response = new StringBuilder();
@@ -106,14 +103,14 @@ public class ChecksumRewriter extends RequestRewriter {
 				int indexOfMailto = source.indexOf("mailto:", indexOfHrefBodyStart);
 				int indexOfHttp = source.indexOf("http://", indexOfHrefBodyStart);
 				int indexOfHttps = source.indexOf("https://", indexOfHrefBodyStart);
-				if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd) &&
-					(indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd) &&
-					(indexOfHttp < 0 || indexOfHttp > indexOfHrefBodyEnd)&&
-					(indexOfHttps < 0 || indexOfHttps > indexOfHrefBodyEnd)) {
+				if ((indexOfJavaScript < 0 || indexOfJavaScript > indexOfHrefBodyEnd)
+					&& (indexOfMailto < 0 || indexOfMailto > indexOfHrefBodyEnd)
+					&& (indexOfHttp < 0 || indexOfHttp > indexOfHrefBodyEnd)
+					&& (indexOfHttps < 0 || indexOfHttps > indexOfHrefBodyEnd)) {
 
 				    final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
 				    boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
-				    		&& indexOfCardinal < indexOfHrefBodyEnd;
+					    && indexOfCardinal < indexOfHrefBodyEnd;
 				    if (hasCardinal) {
 					response.append(source, iOffset, indexOfCardinal);
 				    } else {
@@ -160,10 +157,13 @@ public class ChecksumRewriter extends RequestRewriter {
 				    nextIndex = min(indexOfJavaScript, indexOfMailto, indexOfHttp, indexOfHttps);
 
 				    response.append(source, iOffset, nextIndex);
-				    iOffset = nextIndex ;
+				    iOffset = nextIndex;
 				    continue;
 				}
 			    }
+			} else {
+			    iOffset = continueToNextToken(response, source, iOffset, indexOfAopen);
+			    continue;
 			}
 		    }
 		} else {
@@ -243,7 +243,8 @@ public class ChecksumRewriter extends RequestRewriter {
 			    final int indexOfHrefBodyEnd = findHrefBodyEnd(source, indexOfHrefBodyStart, hrefBodyStartChar);
 			    if (indexOfHrefBodyEnd >= 0) {
 				final int indexOfCardinal = source.indexOf("#", indexOfHrefBodyStart);
-				boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart && indexOfCardinal < indexOfHrefBodyEnd;
+				boolean hasCardinal = indexOfCardinal > indexOfHrefBodyStart
+					&& indexOfCardinal < indexOfHrefBodyEnd;
 				if (hasCardinal) {
 				    response.append(source, iOffset, indexOfCardinal);
 				} else {
@@ -286,7 +287,7 @@ public class ChecksumRewriter extends RequestRewriter {
 	return response;
     }
 
-    private int min(final int ...indexs) {
+    private int min(final int... indexs) {
 	int result = Integer.MAX_VALUE;
 	for (int i : indexs) {
 	    result = Math.min(result, i);
@@ -300,10 +301,10 @@ public class ChecksumRewriter extends RequestRewriter {
     }
 
     protected boolean isPrefixed(final StringBuilder source, final int indexOfTagOpen) {
-	return (indexOfTagOpen >= LENGTH_OF_NO_CHECKSUM_PREFIX && 
-			match(source, indexOfTagOpen - LENGTH_OF_NO_CHECKSUM_PREFIX, indexOfTagOpen, NO_CHECKSUM_PREFIX)) ||
-		(indexOfTagOpen >= LENGTH_OF_NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX && 
-			match(source, indexOfTagOpen - LENGTH_OF_NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX, indexOfTagOpen, NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX));
+	return (indexOfTagOpen >= LENGTH_OF_NO_CHECKSUM_PREFIX && match(source, indexOfTagOpen - LENGTH_OF_NO_CHECKSUM_PREFIX,
+		indexOfTagOpen, NO_CHECKSUM_PREFIX))
+		|| (indexOfTagOpen >= LENGTH_OF_NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX && match(source, indexOfTagOpen
+			- LENGTH_OF_NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX, indexOfTagOpen, NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX));
     }
 
     protected boolean match(final StringBuilder source, final int iStart, int iEnd, final String string) {
@@ -318,7 +319,8 @@ public class ChecksumRewriter extends RequestRewriter {
 	return true;
     }
 
-    protected int continueToNextToken(final StringBuilder response, final StringBuilder source, final int iOffset, final int indexOfTag) {
+    protected int continueToNextToken(final StringBuilder response, final StringBuilder source, final int iOffset,
+	    final int indexOfTag) {
 	final int nextOffset = indexOfTag + 1;
 	response.append(source, iOffset, nextOffset);
 	return nextOffset;
