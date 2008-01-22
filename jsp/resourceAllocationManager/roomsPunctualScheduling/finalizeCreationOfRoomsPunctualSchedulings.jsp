@@ -83,20 +83,19 @@
 				</table>	
 			</logic:empty>		
 
-
 			<p class="mbottom05"><b><bean:message key="label.choose.rooms" bundle="SOP_RESOURCES"/></b></p>
 			<fr:form action="/roomsPunctualScheduling.do">				
 				<html:hidden property="method" value="associateNewRoom"/>							
 				<fr:edit id="roomsPunctualSchedulingWithNewRoom" name="roomsPunctualSchedulingBean" schema="AddNewRoomsToPunctualScheduling">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 vamiddle thlight thright mtop025 mbottom0" />
-						<fr:property name="columnClasses" value="width5em,width20em,tdclear tderror1" />
+						<fr:property name="columnClasses" value="width5em,width40em,tdclear tderror1" />
 					</fr:layout>				
 				</fr:edit>
 				<table class="tstyle5 thlight thright mtop0">
 					<tr>
 						<td class="width5em"></td>
-						<td class="width20em">
+						<td class="width40em">
 							<html:submit><bean:message key="label.add.new.room" bundle="SOP_RESOURCES"/></html:submit>
 							<logic:empty name="roomsPunctualSchedulingBean" property="rooms">								
 								<logic:empty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">									
@@ -145,7 +144,7 @@
 				<logic:notEmpty name="roomsPunctualSchedulingBean" property="roomsReserveRequest">						
 					<bean:define id="CreateNewRoomsPunctualSchedulingURL" value="/roomsReserveManagement.do?method=createRoomsPunctualScheduling"/>
 				</logic:notEmpty>
-				
+
 				<fr:edit id="roomsPunctualSchedulingWithDescriptions" name="roomsPunctualSchedulingBean" schema="FinalizeCreationOfRoomsPunctualScheduling"
 					action="<%= CreateNewRoomsPunctualSchedulingURL %>">
 					<fr:layout name="tabular">

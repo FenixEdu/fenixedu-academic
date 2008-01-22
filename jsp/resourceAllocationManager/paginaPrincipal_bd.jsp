@@ -55,7 +55,7 @@ e alterar aulas).</p>
 <p>Na &aacute;rea da Gest&atilde;o de Disciplinas pode efectuar algumas opera&ccedil;&otilde;es sobre <strong>disciplinas de execu&ccedil;&atilde;o</strong> 
 	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horárias).</p>
 
-<br />
+<br/>
 
 <table width="98%" border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -64,7 +64,10 @@ e alterar aulas).</p>
     <td class="infoop"><strong><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/></html:link></strong></td>
   </tr>
 </table>
+
 <p><bean:message key="message.info.sop" bundle="CURRICULUM_HISTORIC_RESOURCES"/></p>
+
+<br/>
 
 <%
 	}
