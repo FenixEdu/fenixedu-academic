@@ -218,7 +218,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
     
     public Double getCreditsConcluded() {
-	return getCreditsConcluded(getLastApprovementExecutionYear());
+	return getCreditsConcluded(getApprovedCurriculumLinesLastExecutionYear());
     }
 
     abstract public Double getEctsCredits();
