@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Content;
@@ -52,7 +53,8 @@ public class ContentFilter implements Filter {
 
     private void dispatchTo(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
 	    final FilterFunctionalityContext functionalityContext, String path) throws ServletException, IOException {
-	httpServletRequest.setAttribute(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, functionalityContext.getCurrentContextPath());
+	httpServletRequest.setAttribute(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, functionalityContext
+		.getCurrentContextPath());
 	final RequestDispatcher requestDispatcher = httpServletRequest.getRequestDispatcher(path);
 	functionalityContext.setHasBeenForwarded();
 	requestDispatcher.forward(httpServletRequest, httpServletResponse);
@@ -63,12 +65,14 @@ public class ContentFilter implements Filter {
 
 	Content content = functionalityContext.getSelectedContent();
 
-	if (content == null) {
-	    System.out.println(httpServletRequest.getRequestURI() + " ---> null");
-	} else {
-	    System.out.println(httpServletRequest.getRequestURI() + " ---> " + content.getClass().getName());
+	if (LogLevel.INFO) {
+	    if (content == null) {
+		System.out.println(httpServletRequest.getRequestURI() + " ---> null");
+	    } else {
+		System.out.println(httpServletRequest.getRequestURI() + " ---> " + content.getClass().getName());
+	    }
 	}
-
+	
 	if (content instanceof Section) {
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, SECTION_PATH);
 
@@ -78,7 +82,7 @@ public class ContentFilter implements Filter {
 	} else if (content instanceof Functionality) {
 	    Functionality functionality = (Functionality) content;
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
-	} 
+	}
     }
 
     protected void dispatch(final HttpServletRequest request, final HttpServletResponse response, final String path)
