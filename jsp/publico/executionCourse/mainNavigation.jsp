@@ -10,12 +10,7 @@
 
 <bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
 
-<fr:view name="executionCourse" property="site" type="net.sourceforge.fenixedu.domain.Site" layout="side-menu">
-    <fr:layout>
-        <fr:property name="sectionUrl" value="/executionCourse.do?method=section"/>
-        <fr:property name="contextParam" value="executionCourseID"/>
-    </fr:layout>
-</fr:view>
+<fr:view name="executionCourse" property="site" type="net.sourceforge.fenixedu.domain.Site" layout="side-menu"/>
 
 <ul>
     <li>
