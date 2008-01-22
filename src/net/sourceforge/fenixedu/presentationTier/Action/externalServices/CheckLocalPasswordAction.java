@@ -32,7 +32,7 @@ public class CheckLocalPasswordAction extends FenixAction {
 	    throw new NotAuthorizedActionException("error.NotAuthorized");
 	}
 
-	if (request.getMethod().equalsIgnoreCase("post") || request.getMethod().equalsIgnoreCase("get")) {
+	if (request.getMethod().equalsIgnoreCase("post")) {
 
 	    final String username = request.getParameter("username");
 	    final String password = request.getParameter("password");
