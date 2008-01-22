@@ -452,7 +452,7 @@ public class Thesis extends Thesis_Base {
 
     @Override
     public void setEnrolment(Enrolment enrolment) {
-	final ExecutionYear firstAllowedExecutionYear = ExecutionYear.readExecutionYearByName("2007/2008");
+	final ExecutionYear firstAllowedExecutionYear = ExecutionYear.readExecutionYearByName("2006/2007");
 	final ExecutionYear executionYear = enrolment.getExecutionYear();
 	if (executionYear.isBefore(firstAllowedExecutionYear)) {
 	    throw new DomainException("thesis.creation.not.allowed.because.out.of.period");
