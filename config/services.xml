@@ -30,6 +30,13 @@
 		<filterChains />
 	</service>
 	<service>
+		<name>LocalAuthenticate</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.Authenticate</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>	
+	<service>
 		<name>AddSchoolClassesToShift</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.AddSchoolClassesToShift</implementationClass>
 		<description />
