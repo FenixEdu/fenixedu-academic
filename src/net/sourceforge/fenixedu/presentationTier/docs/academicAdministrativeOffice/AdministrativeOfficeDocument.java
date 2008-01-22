@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -74,7 +75,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	}
 
     }
-    
+
     protected AdministrativeOfficeDocument() {
 	super();
     }
@@ -83,6 +84,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	super(new ArrayList());
 	this.resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
 	this.documentRequestDomainReference = new DomainReference<DocumentRequest>(documentRequest);
+
 	fillReport();
     }
 
@@ -119,7 +121,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	setIntroFields(AccessControl.getPerson().getEmployee());
 	setPersonFields();
-	
+
 	if (getDocumentRequest().hasExecutionYear()) {
 	    addParameter("situation", getDocumentRequest().getExecutionYear().containsDate(new DateTime()) ? "ESTÁ" : "ESTEVE");
 	}
@@ -161,6 +163,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     final protected void setIntroFields(final Employee employee) {
+//	final AdministrativeOfficeUnit administrativeOfficeUnit = (AdministrativeOfficeUnit) employee.getCurrentCampus().getAdministrativeOfficeUnit(employee.getAdministrativeOffice());
+//	addParameter("administrativeOfficeCoordinator", administrativeOfficeUnit.getActiveUnitCoordinator());
 	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 
@@ -256,7 +260,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	    academicUnit.append(academicUnitIdentifier.getValue());
 	    academicUnit.append(" ").append(resourceBundle.getString("documents.external.curricular.courses.program"));
-	    academicUnit.append(" ").append(enumerationBundle.getString(mobilityProgram.getQualifiedName()).toUpperCase());
+	    academicUnit.append(" ").append(mobilityProgram.getDescription().toUpperCase());
 	    academicUnit.append(" ").append(resourceBundle.getString("in.feminine"));
 	    academicUnit.append(" ").append(academicUnitIdentifier.getKey().getName().toUpperCase());
 
@@ -265,5 +269,5 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	return result.toString();
     }
-    
+
 }
