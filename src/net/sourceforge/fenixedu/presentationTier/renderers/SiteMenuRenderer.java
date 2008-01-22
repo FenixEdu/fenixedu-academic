@@ -181,7 +181,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 			    item.setStyle(getDepthStyle());
 			}
 			
-			if (isSelectedContent(content, context) && !entry.getChildren().isEmpty()) {
+			if (allowsSubMenus() && isSelectedContent(content, context) && !entry.getChildren().isEmpty()) {
 			    HtmlList subMenu = new HtmlList();
 			    item.addChild(subMenu);
 			    createList(subMenu, context, entry.getChildren(),depth+1);
@@ -263,6 +263,10 @@ public class SiteMenuRenderer extends OutputRenderer {
 		.getSelectedContainer(), content));
     }
 
+    protected boolean allowsSubMenus() {
+	return true;
+    }
+    
     private List<String> subPath(Container start, Content end) {
 	List<Content> contents = start.getPathTo(end);
 	List<String> subPaths = new ArrayList<String>();

@@ -53,4 +53,9 @@ public class UnitSiteTopMenuRenderer extends UnitSiteMenuRenderer {
 	subPaths.add(Content.normalize(getTargetSectionName().getContent()));
 	return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context, subPaths);
     }
+    
+    @Override
+    protected boolean allowsSubMenus() {
+	return false;
+    }
 }
