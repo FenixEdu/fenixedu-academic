@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -277,10 +278,16 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	    if (StringUtils.isEmpty(filename)) {
 		filename = "/tmp/intercepted.sql";
 	    }
+	    String enconding = properties != null ? properties.getProperty("sql.interceptor.encoding") : null;
+	    if (StringUtils.isEmpty(enconding)) {
+		enconding = "iso-8859-1";
+	    }
 	    try {
-		logFile = new PrintWriter(new File(filename));
+		logFile = new PrintWriter(new File(filename),enconding);
 		logFile.write("SET AUTOCOMMIT = 0;\n\nSTART TRANSACTION;\n\n");
 	    } catch (FileNotFoundException e) {
+		e.printStackTrace();
+	    } catch (UnsupportedEncodingException e) {
 		e.printStackTrace();
 	    }
 	}
