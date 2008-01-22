@@ -10,7 +10,7 @@ DB=$1
 USER=$2
 DB_HOST=$3
 
-echo Using host=DB_HOST
+echo Using host=$DB_HOST
 echo Using database: $DB
 echo Enter password for $USER:
 read -s password
@@ -29,6 +29,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Fix availability Policies UUID" fixAvailabilityPoliciesUUID.sql
-execute "Update Content KEY_PERSON key" updateContentKEY_PERSON.sql
-execute "hardcoreFixOnAcademicServiceRequestData" hardcoreFixOnAcademicServiceRequestData.sql

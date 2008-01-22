@@ -30,3 +30,7 @@ function executeWithTempFile() {
 execute "Update ExecutionCourses Siglas" updateExecutionCoursesSiglas.sql
 execute "Adding column keyExecutionPeriod to academicServiceRequest" AddKeyExecutionPeriodToAcademicServiceRequest.sql
 execute "Resolve Problem With Content Names" resolveProblemWithContentNames.sql
+
+execute "Fix availability Policies UUID" fixAvailabilityPoliciesUUID.sql
+execute "Update Content KEY_PERSON key" updateContentKEY_PERSON.sql
+execute "hardcoreFixOnAcademicServiceRequestData" hardcoreFixOnAcademicServiceRequestData.sql
