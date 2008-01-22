@@ -15,42 +15,30 @@ import java.util.List;
  * @author pcma
  */
 public abstract class Element extends Element_Base {
-    
+
     public Element() {
-        super();
+	super();
     }
-    
+
     @Override
     public boolean isParentAccepted(Container parent) {
-        return true;
+	return true;
     }
 
     @Override
     public List<Content> getPathTo(Content target) {
 	if (this.equals(target)) {
-	    List<Content> contents = new ArrayList<Content> ();
-	    contents.add((Content)target);
+	    List<Content> contents = new ArrayList<Content>();
+	    contents.add((Content) target);
 	    return contents;
-	}
-	else {
+	} else {
 	    return Collections.emptyList();
 	}
     }
-    
+
     @Override
     public final Collection<MenuEntry> getMenu() {
-        return Collections.emptyList();
-    }
-    
-    @Override
-    public Content getChildByPath(String path) {
-        String pathName = getPathName();
-        
-        if (("/" + pathName).equals(path)) {
-            return this;
-        }
-
-        return super.getChildByPath(path);
+	return Collections.emptyList();
     }
 
     @Override

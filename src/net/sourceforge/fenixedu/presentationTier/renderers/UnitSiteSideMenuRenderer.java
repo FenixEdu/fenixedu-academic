@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -73,8 +74,8 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
 
     @Override
     protected String getPath(FilterFunctionalityContext context, Content content) {
-	Section sideSection = (Section) context.getLastContentInPath(Site.class).getChildByPath(
-		Content.normalize(getTargetSectionName().getContent()));
+	Site site = (Site) context.getLastContentInPath(Site.class);
+	Section sideSection = getSideSection(site);
 	List<Content> contents = sideSection.getPathTo(content);
 	List<String> subPaths = new ArrayList<String>();
 	if (!contents.isEmpty()) {
@@ -84,5 +85,15 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
 	}
 	return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context, isTemplatedContent(
 		(Site) context.getSelectedContainer(), content) ? Collections.EMPTY_LIST : subPaths);
+    }
+
+    private Section getSideSection(Site site) {
+	for(Node node: site.getChildren()) {
+	    Content child = node.getChild(); 
+	    if(child instanceof Section && child.getName().equals(getTargetSectionName())) {
+		return (Section)child;
+	    }
+	}
+	return null;
     }
 }

@@ -161,38 +161,6 @@ public abstract class Container extends Container_Base {
 		getOrderedChildrenNodes());
     }
 
-    @Override
-    public Content getChildByPath(String path) {
-	String prefix = getPrefix();
-
-	if (prefix == null) {
-	    prefix = getNormalizedName().getContent(Language.getApplicationLanguage());
-	}
-
-	if(!StringUtils.isEmpty(prefix) && path.startsWith(prefix)) {
-	    String pathName = getPathName();
-	    return pathName.equalsIgnoreCase(path) ? this : getChildByPath(path.substring(prefix.length()));
-	} else {
-	    boolean ignorePrefix = prefix == null || prefix.equals("/");
-	    String newPath = path.substring(ignorePrefix ? prefix.length() : 0);
-
-	    if (newPath.length() == 0) {
-		return this;
-	    }
-
-	    for (Node node : getChildren()) {
-		Content child = node.getChild();
-
-		Content match = child.getChildByPath(newPath);
-		if (match != null) {
-		    return match;
-		}
-	    }
-
-	    return null;
-	}
-    }
-
     public Content getChildByContentId(String id) {
 	for (Content child : getChildrenAsContent()) {
 	    if (id.equals(child.getContentId())) {

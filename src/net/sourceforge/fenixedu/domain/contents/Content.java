@@ -229,20 +229,6 @@ public abstract class Content extends Content_Base {
 	return null;
     }
 
-    public Content getChildByPath(String path) {
-	return null;
-    }
-
-    protected String getPathName() {
-	String name = getNormalizedName().getContent(Language.getApplicationLanguage());
-
-	if (name == null) {
-	    name = getNormalizedName().getContent();
-	}
-
-	return StringUtils.normalize(name.toLowerCase().replace(' ', '-').replace('/', '-'));
-    }
-
     /*
          * Code that came from SiteElement
          * 
