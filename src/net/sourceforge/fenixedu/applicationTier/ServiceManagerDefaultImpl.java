@@ -120,16 +120,25 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
                             System.out.println("Restarting TX because of CommitException");
                         }
                         // repeat service
+                        if (tries > 3) {
+                            System.out.println("Service " + service + " has been restarted " + tries + " times because of CommitException.");
+                        }
                     } catch (DomainObject.UnableToDetermineIdException ce) {
                         //                    ce.printStackTrace();
                         if (LogLevel.INFO) {
                             System.out.println("Restarting TX because of UnableToDetermineIdException");
                         }
                         // repeat service
+                        if (tries > 3) {
+                            System.out.println("Service " + service + " has been restarted " + tries + " times because of UnableToDetermineIdException.");
+                        }
                     } catch (IllegalWriteException iwe) {
                         KNOWN_WRITE_SERVICES.put(service, service);
                         Transaction.setDefaultReadOnly(false);
                         // repeat service
+                        if (tries > 3) {
+                            System.out.println("Service " + service + " has been restarted " + tries + " times because of IllegalWriteException.");
+                        }
                     }
                 }
             } finally {
