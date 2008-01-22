@@ -9,9 +9,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 
 public class ExamDateCertificate extends AdministrativeOfficeDocument {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     protected ExamDateCertificate(final DocumentRequest documentRequest) {
@@ -22,10 +19,8 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
 	super.fillReport();
-
-	this.dataSource.addAll(getExamDateEntries());
-
-	parameters.put("name", getDocumentRequest().getRegistration().getPerson().getName());
+	addDataSourceElements(getExamDateEntries());
+	addParameter("name", getDocumentRequest().getRegistration().getPerson().getName());
     }
 
     private List<ExamDateEntry> getExamDateEntries() {
@@ -60,7 +55,7 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected boolean hasPayment() {
+    protected boolean showPriceFields() {
 	return false;
     }
 

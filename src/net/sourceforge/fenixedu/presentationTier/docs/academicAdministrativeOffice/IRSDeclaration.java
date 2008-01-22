@@ -23,42 +23,42 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
-	parameters.put("documentRequest", getDocumentRequest());
+	addParameter("documentRequest", getDocumentRequest());
 
-	parameters.put("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-	parameters.put("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
+	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
 	
 	final Registration registration = getDocumentRequest().getRegistration();
-	parameters.put("registration", registration);
+	addParameter("registration", registration);
 	
 	final Person person = registration.getPerson();
 	setPersonFields(registration, person);
 	
 	final Integer civilYear = ((IRSDeclarationRequest) getDocumentRequest()).getYear();
-	parameters.put("civilYear", civilYear.toString());
+	addParameter("civilYear", civilYear.toString());
 
 	setAmounts(person, civilYear);
         setEmployeeFields();
 
-        parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+        addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
     }
 
     final private void setPersonFields(final Registration registration, final Person person) {
 	final String name = person.getName().toUpperCase();
-	parameters.put("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, '-'));
+	addParameter("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, '-'));
 
 	final String registrationNumber = registration.getNumber().toString();
-	parameters.put("registrationNumber", StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH - "aluno deste Instituto com o Número ".length(), '-'));
+	addParameter("registrationNumber", StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH - "aluno deste Instituto com o Número ".length(), '-'));
 	
 	final StringBuilder documentIdType = new StringBuilder();
 	documentIdType.append("portador" + (person.isMale() ? "" : "a"));
 	documentIdType.append(" do ");
 	documentIdType.append(person.getIdDocumentType().getLocalizedName());
 	documentIdType.append(" Nº ");
-	parameters.put("documentIdType", documentIdType.toString());
+	addParameter("documentIdType", documentIdType.toString());
 
 	final String documentIdNumber = person.getDocumentIdNumber();
-	parameters.put("documentIdNumber", StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH - documentIdType.toString().length(), '-'));
+	addParameter("documentIdNumber", StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH - documentIdType.toString().length(), '-'));
     }
 
     final private void setAmounts(final Person person, final Integer civilYear) {
@@ -86,19 +86,19 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	    payedAmounts.append("*").append(othersPayedAmount.toPlainString()).append("Eur").append("\n");
 	}
 	
-	parameters.put("eventTypes", eventTypes.toString());
-	parameters.put("payedAmounts", payedAmounts.toString());
+	addParameter("eventTypes", eventTypes.toString());
+	addParameter("payedAmounts", payedAmounts.toString());
 
 	Money totalPayedAmount = othersPayedAmount.add(gratuityPayedAmount).add(officeFeeAndInsurancePayedAmount);
-	parameters.put("totalPayedAmount", "*" + totalPayedAmount.toString() + "Eur");
+	addParameter("totalPayedAmount", "*" + totalPayedAmount.toString() + "Eur");
     }
     
     final private void setEmployeeFields() {
 	final Employee employee = AccessControl.getPerson().getEmployee();
 	
-	parameters.put("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
-	parameters.put("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
-	parameters.put("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
+	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
+	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
+	addParameter("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
     }
 
 }

@@ -22,8 +22,8 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     protected void fillReport() {
 	super.fillReport();
 	
-	parameters.put("curricularYear", getCurricularYear());
-	parameters.put("enrolmentsInfo", getEnrolmentsInfo());
+	addParameter("curricularYear", getCurricularYear());
+	addParameter("enrolmentsInfo", getEnrolmentsInfo());
     }
 
     final private String getCurricularYear() {

@@ -27,46 +27,46 @@ public class Diploma extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
 	final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
-	parameters.put("universityName", institutionsUniversityUnit.getName());
-	parameters.put("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
+	addParameter("universityName", institutionsUniversityUnit.getName());
+	addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
 		.getValidatedName());
 
 	final DiplomaRequest diplomaRequest = (DiplomaRequest) getDocumentRequest();
-	parameters.put("documentRequest", diplomaRequest);
+	addParameter("documentRequest", diplomaRequest);
 
 	final Registration registration = diplomaRequest.getRegistration();
-	parameters.put("registration", registration);
+	addParameter("registration", registration);
 
 	final Person person = registration.getPerson();
-	parameters.put("name", StringFormatter.prettyPrint(person.getName()));
-	parameters.put("nameOfFather", StringFormatter.prettyPrint(person.getNameOfFather()));
-	parameters.put("nameOfMother", StringFormatter.prettyPrint(person.getNameOfMother()));
-	parameters.put("birthLocale", StringFormatter.prettyPrint(person.getDistrictOfBirth()));
+	addParameter("name", StringFormatter.prettyPrint(person.getName()));
+	addParameter("nameOfFather", StringFormatter.prettyPrint(person.getNameOfFather()));
+	addParameter("nameOfMother", StringFormatter.prettyPrint(person.getNameOfMother()));
+	addParameter("birthLocale", StringFormatter.prettyPrint(person.getDistrictOfBirth()));
 
 	final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, diplomaRequest
 		.getCycleCurriculumGroup());
 
-	parameters.put("conclusionDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy",
+	addParameter("conclusionDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy",
 		LanguageUtils.getLocale()));
-	parameters.put("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 
 	if (diplomaRequest.hasFinalAverageDescription()) {
-	    parameters.put("finalAverageDescription", StringUtils.capitalize(ResourceBundle.getBundle(
+	    addParameter("finalAverageDescription", StringUtils.capitalize(ResourceBundle.getBundle(
 		    "resources.EnumerationResources").getString(registrationConclusionBean.getFinalAverage().toString())));
-	    parameters.put("finalAverageQualified", registration.getDegreeType().getGradeScale().getQualifiedName(
+	    addParameter("finalAverageQualified", registration.getDegreeType().getGradeScale().getQualifiedName(
 		    registrationConclusionBean.getFinalAverage().toString()));
 	} else if (diplomaRequest.hasDissertationTitle()) {
-	    parameters.put("dissertationTitle", registration.getDissertationEnrolment().getThesis().getFinalFullTitle()
+	    addParameter("dissertationTitle", registration.getDissertationEnrolment().getThesis().getFinalFullTitle()
 		    .getContent());
 	}
 
-	parameters.put("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, registration));
-	parameters.put("degreeFilteredName", registration.getDegree().getFilteredName());
+	addParameter("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, registration));
+	addParameter("degreeFilteredName", registration.getDegree().getFilteredName());
 
 	final CycleType cycleToInspect = diplomaRequest.getWhatShouldBeRequestedCycle();
-	parameters.put("graduateTitle", registration.getGraduateTitle(cycleToInspect));
-	parameters.put("degreeDescription", registration.getDegreeDescription(cycleToInspect));
+	addParameter("graduateTitle", registration.getGraduateTitle(cycleToInspect));
+	addParameter("degreeDescription", registration.getDegreeDescription(cycleToInspect));
     }
 
     private Registration getRegistration() {

@@ -21,13 +21,12 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
     protected void fillReport() {
 	super.fillReport();
 	
-	parameters.put("curricularYear", getCurricularYear());
+	addParameter("curricularYear", getCurricularYear());
 	
 	final List<Enrolment> enrolments = (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(getDocumentRequest().getExecutionYear());
-	parameters.put("numberEnrolments", Integer.valueOf(enrolments.size()));
-
-	parameters.put("approvementInfo", getApprovementInfo());
-	parameters.put("documentPurpose", getDocumentPurpose());
+	addParameter("numberEnrolments", Integer.valueOf(enrolments.size()));
+	addParameter("approvementInfo", getApprovementInfo());
+	addParameter("documentPurpose", getDocumentPurpose());
     }
 
     final private String getCurricularYear() {

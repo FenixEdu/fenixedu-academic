@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -65,21 +66,23 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return new Diploma(documentRequest);
 	    case EXAM_DATE_CERTIFICATE:
 		return new ExamDateCertificate(documentRequest);
+	    case COURSE_LOAD:
+		return new CourseLoadRequestDocument((CourseLoadRequest) documentRequest);
 	    default:
 		return new AdministrativeOfficeDocument(documentRequest);
 	    }
 	}
 
     }
-
+    
     protected AdministrativeOfficeDocument() {
+	super();
     }
 
     protected AdministrativeOfficeDocument(final DocumentRequest documentRequest) {
-	this.dataSource = new ArrayList();
+	super(new ArrayList());
 	this.resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
 	this.documentRequestDomainReference = new DomainReference<DocumentRequest>(documentRequest);
-
 	fillReport();
     }
 
@@ -107,27 +110,26 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-	parameters.put("documentRequest", getDocumentRequest());
-	parameters.put("registration", getDocumentRequest().getRegistration());
+	addParameter("documentRequest", getDocumentRequest());
+	addParameter("registration", getDocumentRequest().getRegistration());
 
-	if (hasPayment()) {
+	if (showPriceFields()) {
 	    setPriceFields();
 	}
 
-	final Employee employee = AccessControl.getPerson().getEmployee();
-	setIntroFields(employee);
-
+	setIntroFields(AccessControl.getPerson().getEmployee());
 	setPersonFields();
+	
 	if (getDocumentRequest().hasExecutionYear()) {
-	    parameters.put("situation", getDocumentRequest().getExecutionYear().containsDate(new DateTime()) ? "ESTÁ" : "ESTEVE");
+	    addParameter("situation", getDocumentRequest().getExecutionYear().containsDate(new DateTime()) ? "ESTÁ" : "ESTEVE");
 	}
-	parameters.put("degreeDescription", getDegreeDescription());
+	addParameter("degreeDescription", getDegreeDescription());
 
-	parameters.put("employeeLocation", employee.getCurrentCampus().getLocation());
-	parameters.put("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	addParameter("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
+	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
     }
 
-    protected boolean hasPayment() {
+    protected boolean showPriceFields() {
 	return getDocumentRequest().isCertificate();
     }
 
@@ -140,10 +142,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		certificateRequestPR.getAmountPerUnit().multiply(new BigDecimal(certificateRequest.getNumberOfUnits())));
 	final Money urgencyAmount = certificateRequest.getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
 
-	parameters.put("amountPerPage", amountPerPage);
-	parameters.put("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
-	parameters.put("urgencyAmount", urgencyAmount);
-	parameters.put("printPriceFields", printPriceFields(certificateRequest));
+	addParameter("amountPerPage", amountPerPage);
+	addParameter("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
+	addParameter("urgencyAmount", urgencyAmount);
+	addParameter("printPriceFields", printPriceFields(certificateRequest));
     }
 
     final private boolean printPriceFields(final CertificateRequest certificateRequest) {
@@ -158,28 +160,28 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return serviceAgreementTemplate.findPostingRuleByEventType(getDocumentRequest().getEventType());
     }
 
-    final private void setIntroFields(final Employee employee) {
-	parameters.put("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
-	parameters.put("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
+    final protected void setIntroFields(final Employee employee) {
+	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
+	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 
-	parameters.put("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-	parameters.put("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
+	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
     }
 
-    final private void setPersonFields() {
+    protected void setPersonFields() {
 	final Person person = getDocumentRequest().getRegistration().getPerson();
 	final String name = person.getName().toUpperCase();
-	parameters.put("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, '-'));
+	addParameter("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, '-'));
 
 	final String documentIdNumber = person.getDocumentIdNumber();
-	parameters.put("documentIdNumber", StringUtils.multipleLineRightPad("portador" + (person.isMale() ? "" : "a") + " do "
+	addParameter("documentIdNumber", StringUtils.multipleLineRightPad("portador" + (person.isMale() ? "" : "a") + " do "
 		+ person.getIdDocumentType().getLocalizedName() + " Nº " + documentIdNumber, LINE_LENGTH, '-'));
 
 	final String birthLocale = person.getParishOfBirth().toUpperCase() + ", " + person.getDistrictOfBirth().toUpperCase();
-	parameters.put("birthLocale", StringUtils.multipleLineRightPad("natural de " + birthLocale, LINE_LENGTH, '-'));
+	addParameter("birthLocale", StringUtils.multipleLineRightPad("natural de " + birthLocale, LINE_LENGTH, '-'));
 
 	final String nationality = person.getCountry().getFilteredNationality().toUpperCase();
-	parameters.put("nationality", StringUtils.multipleLineRightPad("de nacionalidade " + nationality, LINE_LENGTH, '-'));
+	addParameter("nationality", StringUtils.multipleLineRightPad("de nacionalidade " + nationality, LINE_LENGTH, '-'));
     }
 
     protected String getDegreeDescription() {
@@ -263,5 +265,5 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	return result.toString();
     }
-
+    
 }

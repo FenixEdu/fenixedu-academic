@@ -30,20 +30,19 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	final DegreeFinalizationCertificateRequest degreeFinalizationCertificateRequest = (DegreeFinalizationCertificateRequest) getDocumentRequest();
 
-	parameters.put("degreeFinalizationDate", degreeFinalizationCertificateRequest.getConclusionDate().toString(
+	addParameter("degreeFinalizationDate", degreeFinalizationCertificateRequest.getConclusionDate().toString(
 		"dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
-	parameters
-		.put(
-			"degreeFinalizationGrade",
-			degreeFinalizationCertificateRequest.getAverage() ? getDegreeFinalizationGrade(degreeFinalizationCertificateRequest
-				.getFinalAverage())
-				: "");
-	parameters.put("degreeFinalizationEcts", getDegreeFinalizationEcts(degreeFinalizationCertificateRequest));
-	parameters.put("creditsDescription", getCreditsDescription());
-	parameters.put("graduateTitle", getGraduateTitle(degreeFinalizationCertificateRequest.getRegistration(),
+	addParameter(
+		"degreeFinalizationGrade",
+		degreeFinalizationCertificateRequest.getAverage() ? getDegreeFinalizationGrade(degreeFinalizationCertificateRequest
+			.getFinalAverage())
+			: "");
+	addParameter("degreeFinalizationEcts", getDegreeFinalizationEcts(degreeFinalizationCertificateRequest));
+	addParameter("creditsDescription", getCreditsDescription());
+	addParameter("graduateTitle", getGraduateTitle(degreeFinalizationCertificateRequest.getRegistration(),
 		degreeFinalizationCertificateRequest.getRequestedCycle()));
-	parameters.put("diplomaDescription", getDiplomaDescription());
-	parameters.put("degreeFinalizationInfo", getDegreeFinalizationInfo(degreeFinalizationCertificateRequest));
+	addParameter("diplomaDescription", getDiplomaDescription());
+	addParameter("degreeFinalizationInfo", getDegreeFinalizationInfo(degreeFinalizationCertificateRequest));
     }
 
     static final public String getDegreeFinalizationGrade(final Integer finalAverage) {

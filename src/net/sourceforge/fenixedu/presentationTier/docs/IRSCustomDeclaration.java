@@ -48,12 +48,12 @@ public class IRSCustomDeclaration extends FenixReport {
     }
 
     private void fillDateParameter() {
-	parameters.put("date", new YearMonthDay().toString("yyyy/MM/dd", LanguageUtils
+	addParameter("date", new YearMonthDay().toString("yyyy/MM/dd", LanguageUtils
 		.getLocale()));
     }
 
     private void fillLocationParameter() {
-	parameters.put("employeeLocation", getEmployee().getCurrentCampus().getLocation());
+	addParameter("employeeLocation", getEmployee().getCurrentCampus().getLocation());
     }
 
     private Employee getEmployee() {
@@ -61,16 +61,16 @@ public class IRSCustomDeclaration extends FenixReport {
     }
 
     private void fillCivilYearParameter() {
-	parameters.put("civilYear", String.valueOf(getCivilYear()));
+	addParameter("civilYear", String.valueOf(getCivilYear()));
     }
 
     private void fillStudentParameters() {
-	parameters.put("person", getPerson());
-	parameters.put("name", StringUtils.multipleLineRightPad(person.getName().toUpperCase(),
+	addParameter("person", getPerson());
+	addParameter("name", StringUtils.multipleLineRightPad(person.getName().toUpperCase(),
 		LINE_LENGTH, '-'));
-	parameters.put("studentNumber", StringUtils.multipleLineRightPad(person.getStudent().getNumber()
+	addParameter("studentNumber", StringUtils.multipleLineRightPad(person.getStudent().getNumber()
 		.toString(), LINE_LENGTH - "aluno deste Instituto com o Número ".length(), '-'));
-	parameters.put("documentIdNumber", StringUtils.multipleLineRightPad(person.getDocumentIdNumber()
+	addParameter("documentIdNumber", StringUtils.multipleLineRightPad(person.getDocumentIdNumber()
 		.toString(), LINE_LENGTH - "portador do Bilhete de Identidade ".length(), '-'));
     }
 
@@ -84,9 +84,9 @@ public class IRSCustomDeclaration extends FenixReport {
 	    payedAmounts.append("*").append(entry.getValue().toPlainString()).append("Eur").append("\n");
 	}
 
-	parameters.put("eventTypes", eventTypes.toString());
-	parameters.put("payedAmounts", payedAmounts.toString());
-	parameters.put("totalPayedAmount", "*" + calculateTotal(totalByEvent).toPlainString() + "Eur");
+	addParameter("eventTypes", eventTypes.toString());
+	addParameter("payedAmounts", payedAmounts.toString());
+	addParameter("totalPayedAmount", "*" + calculateTotal(totalByEvent).toPlainString() + "Eur");
     }
 
     private Money calculateTotal(final Map<EventType, Money> totalByEventType) {

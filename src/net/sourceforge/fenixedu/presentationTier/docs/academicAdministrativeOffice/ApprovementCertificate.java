@@ -22,7 +22,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
 	super.fillReport();
-	parameters.put("approvementsInfo", getApprovementsInfo());
+	addParameter("approvementsInfo", getApprovementsInfo());
     }
 
     final private String getApprovementsInfo() {

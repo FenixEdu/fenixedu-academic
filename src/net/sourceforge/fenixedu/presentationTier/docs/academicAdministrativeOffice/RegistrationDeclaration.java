@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -32,6 +31,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
     }
 
     public RegistrationDeclaration(final Registration registration, final ExecutionYear executionYear, final Person loggedPerson) {
+	super();
 	init(registration, executionYear, loggedPerson);
     }
 
@@ -40,10 +40,9 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	this.employeeDomainReference = new DomainReference<Person>(loggedPerson);
 	this.executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
 
-	parameters.put("RegistrationDeclaration", this);
+	addParameter("RegistrationDeclaration", this);
 	resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
-	dataSource = new ArrayList();
-	dataSource.add(this);
+	addDataSourceElement(this);
     }
 
     @Override
