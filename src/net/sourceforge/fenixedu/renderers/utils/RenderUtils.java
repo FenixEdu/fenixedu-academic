@@ -113,8 +113,12 @@ public class RenderUtils {
         
         String fullPrefix = enumClass.getName();
         
-        description = RenderUtils.getResourceString(bundle, fullPrefix + "." + e.name());
+        description = getEnumStringFromFields(e);
         
+        if (description == null) {
+            description = RenderUtils.getResourceString(bundle, fullPrefix + "." + e.name());
+        }
+
         if (description == null) {
             String simplePrefix = enumClass.getSimpleName();
             description = RenderUtils.getResourceString(bundle, simplePrefix + "." + e.name());
@@ -134,6 +138,26 @@ public class RenderUtils {
         
         return description;
     }
+
+    static final private String[] fields = { "description" };
+    
+    static private String getEnumStringFromFields(final Enum oneEnum) {
+	for (final String field : fields) {
+	    final String toInspect;
+	    try {
+		toInspect = BeanUtils.getProperty(oneEnum, field);
+	    } catch (Exception e) {
+		continue;
+	    }
+
+	    if (toInspect != null) {
+		return toInspect;
+	    }
+	}
+
+	return null;
+    }
+
     
     public static String getResourceString(String bundle, String key) {
         return getResourceString(bundle, key, null);
