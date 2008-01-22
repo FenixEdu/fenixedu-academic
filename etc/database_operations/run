@@ -8,21 +8,23 @@
 
 DB=$1
 USER=$2
+DB_HOST=$3
 
+echo Using host=DB_HOST
 echo Using database: $DB
 echo Enter password for $USER:
 read -s password
 
 function execute() {
 	echo ---------------------------------------- $1
-	mysql -u$USER -f  -p$password --default-character-set=latin1 $DB < $2
+	mysql -u$USER -f -h$DB_HOST -p$password --default-character-set=latin1 $DB < $2
 	echo
 }
 
 function executeWithTempFile() {
 	echo ---------------------------------------- $1
-	mysql -u$USER -f  -p$password --default-character-set=latin1 $DB < $2 > tmp.sql
-	mysql -u$USER -f  -p$password --default-character-set=latin1 $DB < tmp.sql	
+	mysql -u$USER -f -h$DB_HOST -p$password --default-character-set=latin1 $DB < $2 > tmp.sql
+	mysql -u$USER -f -h$DB_HOST -p$password --default-character-set=latin1 $DB < tmp.sql	
 	rm tmp.sql
 	echo
 }
