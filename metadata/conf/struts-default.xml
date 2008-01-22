@@ -152,13 +152,6 @@
 				key="error.NotAuthorized"
 				path="/publicNotAuthorized.do"/>	
         </action>
-        <action path="/checkLocalPassword"
-				type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.CheckLocalPasswordAction"
-				scope="request">
-			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException"
-				key="error.NotAuthorized"
-				path="/publicNotAuthorized.do"/>	
-        </action>        
 
         <action path="/respondToInquiriesQuestion"
         		parameter="method"
