@@ -28,3 +28,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Fix availability Policies UUID" fixAvailabilityPoliciesUUID.sql
