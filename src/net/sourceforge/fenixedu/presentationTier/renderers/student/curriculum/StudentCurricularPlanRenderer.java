@@ -349,7 +349,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private StudentCurricularPlan studentCurricularPlan;
 
-	private ExecutionYear lastCurriculumLineExecutionYear;
+	private ExecutionYear lastExecutionYear;
 
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
@@ -357,7 +357,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    getInputContext().getForm().getCancelButton().setVisible(false);
 
 	    this.studentCurricularPlan = (StudentCurricularPlan) object;
-	    this.lastCurriculumLineExecutionYear = studentCurricularPlan.getLastApprovementExecutionYear();
+	    
+	    final ExecutionYear lastApprovementExecutionYear = studentCurricularPlan.getLastApprovementExecutionYear();
+	    this.lastExecutionYear = lastApprovementExecutionYear == null ? studentCurricularPlan.getLastExecutionYear() : lastApprovementExecutionYear;
 
 	    final HtmlContainer container = new HtmlBlockContainer();
 
@@ -469,10 +471,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    final StringBuilder groupName = new StringBuilder(text);
 	    if (curriculumGroup != null && curriculumGroup.hasDegreeModule()) {
 		final CourseGroup courseGroup = curriculumGroup.getDegreeModule();
-		final ExecutionPeriod lastExecutionPeriod = lastCurriculumLineExecutionYear.getLastExecutionPeriod();
+		final ExecutionPeriod lastExecutionPeriod = lastExecutionYear.getLastExecutionPeriod();
 
 		final CreditsLimit creditsLimit = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
-			CurricularRuleType.CREDITS_LIMIT, lastCurriculumLineExecutionYear);
+			CurricularRuleType.CREDITS_LIMIT, lastExecutionYear);
 
 		if (creditsLimit != null) {
 		    groupName.append(" m(");
@@ -481,7 +483,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		}
 
 		groupName.append(" c(");
-		groupName.append(curriculumGroup.getCreditsConcluded(lastCurriculumLineExecutionYear));
+		groupName.append(curriculumGroup.getCreditsConcluded(lastExecutionYear));
 		groupName.append(")");
 
 		if (creditsLimit != null) {
@@ -951,7 +953,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    result.setParameter("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
 
 	    result.setParameter("executionPeriodOID", executionPeriod != null ? executionPeriod.getIdInternal()
-		    : lastCurriculumLineExecutionYear.getFirstExecutionPeriod());
+		    : lastExecutionYear.getFirstExecutionPeriod());
 
 	    return result;
 	}
