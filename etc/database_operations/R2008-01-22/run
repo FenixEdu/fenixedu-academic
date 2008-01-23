@@ -32,5 +32,4 @@ execute "Adding column keyExecutionPeriod to academicServiceRequest" AddKeyExecu
 execute "Resolve Problem With Content Names" resolveProblemWithContentNames.sql
 
 execute "Fix availability Policies UUID" fixAvailabilityPoliciesUUID.sql
-execute "Update Content KEY_PERSON key" updateContentKEY_PERSON.sql
 execute "hardcoreFixOnAcademicServiceRequestData" hardcoreFixOnAcademicServiceRequestData.sql
