@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -344,6 +345,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getIdInternal()
 		.toString());
 	linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
+	linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, executionCourse.getSite().getReversePath());
 	return linkParameters;
     }
 
