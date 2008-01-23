@@ -84,7 +84,7 @@ public class CheckAvailabilityFilter implements Filter {
 	if (content != null && !content.isAvailable(functionalityContext)) {
 	    final IUserView userView = AccessControl.getUserView();
 	    if (functionalityContext.getLastContentInPath(Site.class) == null 
-		    || !(content instanceof Section) || !(content instanceof Item)) {
+		    || !((content instanceof Section) || (content instanceof Item))) {
 
 		showUnavailablePage(content, httpServletRequest, httpServletResponse);
 		return;
