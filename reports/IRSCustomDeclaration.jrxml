@@ -23,17 +23,17 @@
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
-	<parameter name="imageUrl" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="person" isForPrompting="false" class="net.sourceforge.fenixedu.domain.Person"/>
-	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentAddress" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="civilYear" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="gratuityAmount" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="otherAmount" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="totalAmount" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentAddressArea" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentAddressPostalCode" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="studentNumber" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="eventTypes" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="payedAmounts" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="totalPayedAmount" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentDocumentIdNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -53,7 +53,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font fontName="SansSerif" pdfFontName="Times-Bold" size="10" isBold="true" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{person}.getName().toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -67,7 +67,7 @@
 					<textElement lineSpacing="Single">
 						<font fontName="SansSerif" pdfFontName="Times-Bold" size="10" isBold="true" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{person}.getAddress().toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentAddress}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -81,7 +81,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font fontName="SansSerif" pdfFontName="Times-Bold" size="10" isBold="true" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{person}.getPostalCode().toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentAddressPostalCode}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -95,7 +95,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font fontName="SansSerif" pdfFontName="Times-Bold" size="10" isBold="true" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{person}.getArea().toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentAddressArea}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -125,8 +125,8 @@
 				<staticText>
 					<reportElement
 						x="108"
-						y="175"
-						width="474"
+						y="196"
+						width="336"
 						height="22"
 						key="staticText-17"
 						positionType="Float"/>
@@ -134,13 +134,13 @@
 					<textElement lineSpacing="1_1_2">
 						<font fontName="Courier" pdfFontName="Courier-Bold" size="12" isBold="true" isItalic="false"/>
 					</textElement>
-				<text><![CDATA[- TOTAL ............................]]></text>
+				<text><![CDATA[- TOTAL .....................................]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="108"
 						y="152"
-						width="300"
+						width="336"
 						height="22"
 						key="textField-31"
 						positionType="Float"/>
@@ -148,13 +148,13 @@
 					<textElement textAlignment="Left" lineSpacing="1_1_2">
 						<font fontName="Courier" pdfFontName="Courier" size="12" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{eventTypes}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["- Propinas"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="334"
+						x="444"
 						y="152"
-						width="145"
+						width="115"
 						height="22"
 						key="textField-32"
 						positionType="Float"/>
@@ -162,13 +162,13 @@
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
 						<font fontName="Courier" pdfFontName="Courier" size="12" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{payedAmounts}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["*" + $P{gratuityAmount} + "Eur"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="334"
-						y="175"
-						width="145"
+						x="444"
+						y="196"
+						width="115"
 						height="22"
 						key="textField-34"
 						positionType="Float"/>
@@ -176,7 +176,7 @@
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Bold" size="12" isBold="true" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{totalPayedAmount}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["*" + $P{totalAmount} + "Eur"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -189,7 +189,35 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Times-Italic" size="13" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["O Instituto Superior Técnico, Contribuinte Nº 501507930, declara que recebeu de " + $P{person}.getName().toUpperCase() + " aluno Nº " + $P{person}.getStudent().getNumber().toString() + " deste Instituto, portador do BI " + $P{person}.getDocumentIdNumber() + ", no ano de " + $P{civilYear} + " as quantias abaixo indicadas."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["O Instituto Superior Técnico, Contribuinte Nº 501507930, declara que recebeu de " + $P{studentName} + " aluno Nº " + $P{studentNumber} + " deste Instituto, portador do BI " + $P{studentDocumentIdNumber}+ ", no ano de " + $P{civilYear} + " as quantias abaixo indicadas."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="108"
+						y="174"
+						width="336"
+						height="22"
+						key="textField-36"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" lineSpacing="1_1_2">
+						<font fontName="Courier" pdfFontName="Courier" size="12" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["- Outras despesas de educação"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="444"
+						y="174"
+						width="115"
+						height="22"
+						key="textField-37"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" lineSpacing="1_1_2">
+						<font fontName="Courier" pdfFontName="Courier" size="12" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["*" + $P{otherAmount}+ "Eur"]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

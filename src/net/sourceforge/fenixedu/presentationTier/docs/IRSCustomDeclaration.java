@@ -1,121 +1,168 @@
 package net.sourceforge.fenixedu.presentationTier.docs;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class IRSCustomDeclaration extends FenixReport {
 
-    private static final int LINE_LENGTH = 64;
+    public static class IRSDeclarationDTO {
 
-    private Person person;
+	private int civilYear;
 
-    private List<Event> eventsForPerson;
+	private Money gratuityAmount;
 
-    private int civilYear;
+	private Money otherAmount;
 
-    private Employee employee;
+	private String studentName;
 
-    public IRSCustomDeclaration(final Person person, final List<Event> eventsForPerson,
-	    final int civilYear, final Employee employee) {
-	this.person = person;
-	this.eventsForPerson = eventsForPerson;
-	this.civilYear = civilYear;
-	this.employee = employee;
+	private String studentAddress;
 
+	private String studentAddressArea;
+
+	private String studentAddressPostalCode;
+
+	private Integer studentNumber;
+
+	private String studentDocumentIdNumber;
+
+	public IRSDeclarationDTO(final Integer studentNumber, final int civilYear) {
+	    this.studentNumber = studentNumber;
+	    this.civilYear = civilYear;
+	    this.gratuityAmount = Money.ZERO;
+	    this.otherAmount = Money.ZERO;
+	}
+
+	public void addGratuityAmount(final Money amount) {
+	    this.gratuityAmount = this.gratuityAmount.add(amount);
+	}
+
+	public void addOtherAmount(final Money amount) {
+	    this.otherAmount = this.otherAmount.add(amount);
+	}
+
+	public int getCivilYear() {
+	    return civilYear;
+	}
+
+	public IRSDeclarationDTO setCivilYear(int civilYear) {
+	    this.civilYear = civilYear;
+	    return this;
+	}
+
+	public Money getGratuityAmount() {
+	    return gratuityAmount;
+	}
+
+	public IRSDeclarationDTO setGratuityAmount(Money gratuityAmount) {
+	    this.gratuityAmount = gratuityAmount;
+	    return this;
+	}
+
+	public Money getOtherAmount() {
+	    return otherAmount;
+	}
+
+	public IRSDeclarationDTO setOtherAmount(Money otherAmount) {
+	    this.otherAmount = otherAmount;
+	    return this;
+	}
+
+	public String getStudentName() {
+	    return studentName;
+	}
+
+	public IRSDeclarationDTO setStudentName(String studentName) {
+	    this.studentName = studentName;
+	    return this;
+	}
+
+	public String getStudentAddress() {
+	    return studentAddress;
+	}
+
+	public IRSDeclarationDTO setStudentAddress(String studentAddress) {
+	    this.studentAddress = studentAddress;
+	    return this;
+	}
+
+	public String getStudentAddressArea() {
+	    return studentAddressArea;
+	}
+
+	public IRSDeclarationDTO setStudentAddressArea(String studentAddressArea) {
+	    this.studentAddressArea = studentAddressArea;
+	    return this;
+	}
+
+	public String getStudentAddressPostalCode() {
+	    return studentAddressPostalCode;
+	}
+
+	public IRSDeclarationDTO setStudentAddressPostalCode(String studentAddressPostalCode) {
+	    this.studentAddressPostalCode = studentAddressPostalCode;
+	    return this;
+	}
+
+	public Integer getStudentNumber() {
+	    return studentNumber;
+	}
+
+	public IRSDeclarationDTO setStudentNumber(Integer studentNumber) {
+	    this.studentNumber = studentNumber;
+	    return this;
+	}
+
+	public String getStudentDocumentIdNumber() {
+	    return studentDocumentIdNumber;
+	}
+
+	public IRSDeclarationDTO setStudentDocumentIdNumber(String studentDocumentIdNumber) {
+	    this.studentDocumentIdNumber = studentDocumentIdNumber;
+	    return this;
+	}
+
+	public Money getTotalAmount() {
+	    return this.gratuityAmount.add(this.otherAmount);
+	}
+    }
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+    private IRSDeclarationDTO declaration;
+
+    public IRSCustomDeclaration(final IRSDeclarationDTO declarationDTO) {
+	this.declaration = declarationDTO;
 	fillReport();
     }
 
     @Override
     protected void fillReport() {
-	fillStudentParameters();
-	fillCivilYearParameter();
-	fillEntriesAndTotalParameters();
-	fillLocationParameter();
-	fillDateParameter();
+	fillParameters();
     }
 
-    private void fillDateParameter() {
-	addParameter("date", new YearMonthDay().toString("yyyy/MM/dd", LanguageUtils
-		.getLocale()));
-    }
+    private void fillParameters() {
 
-    private void fillLocationParameter() {
-	addParameter("employeeLocation", getEmployee().getCurrentCampus().getLocation());
-    }
+	addParameter("studentName", this.declaration.getStudentName());
+	addParameter("studentAddress", this.declaration.getStudentAddress());
+	addParameter("studentAddressArea", this.declaration.getStudentAddressArea());
+	addParameter("studentAddressPostalCode", this.declaration.getStudentAddressPostalCode());
+	addParameter("studentNumber", this.declaration.getStudentNumber().toString());
+	addParameter("studentDocumentIdNumber", this.declaration.getStudentDocumentIdNumber());
 
-    private Employee getEmployee() {
-	return this.employee;
-    }
+	addParameter("civilYear", String.valueOf(this.declaration.getCivilYear()));
 
-    private void fillCivilYearParameter() {
-	addParameter("civilYear", String.valueOf(getCivilYear()));
-    }
-
-    private void fillStudentParameters() {
-	addParameter("person", getPerson());
-	addParameter("name", StringUtils.multipleLineRightPad(person.getName().toUpperCase(),
-		LINE_LENGTH, '-'));
-	addParameter("studentNumber", StringUtils.multipleLineRightPad(person.getStudent().getNumber()
-		.toString(), LINE_LENGTH - "aluno deste Instituto com o Número ".length(), '-'));
-	addParameter("documentIdNumber", StringUtils.multipleLineRightPad(person.getDocumentIdNumber()
-		.toString(), LINE_LENGTH - "portador do Bilhete de Identidade ".length(), '-'));
-    }
-
-    private void fillEntriesAndTotalParameters() {
-	final Map<EventType, Money> totalByEvent = calculateTotalsByEventType();
-	final StringBuilder eventTypes = new StringBuilder();
-	final StringBuilder payedAmounts = new StringBuilder();
-	for (final Map.Entry<EventType, Money> entry : totalByEvent.entrySet()) {
-	    eventTypes.append("- ").append(
-		    enumerationBundle.getString(entry.getKey().getQualifiedName())).append("\n");
-	    payedAmounts.append("*").append(entry.getValue().toPlainString()).append("Eur").append("\n");
-	}
-
-	addParameter("eventTypes", eventTypes.toString());
-	addParameter("payedAmounts", payedAmounts.toString());
-	addParameter("totalPayedAmount", "*" + calculateTotal(totalByEvent).toPlainString() + "Eur");
-    }
-
-    private Money calculateTotal(final Map<EventType, Money> totalByEventType) {
-	Money result = Money.ZERO;
-
-	for (final Money money : totalByEventType.values()) {
-	    result = result.add(money);
-	}
-
-	return result;
-
-    }
-
-    private Map<EventType, Money> calculateTotalsByEventType() {
-	final Map<EventType, Money> result = new HashMap<EventType, Money>();
-	for (final Event event : getEvents()) {
-	    final Money totalForEventType = getTotalForEventType(result, event.getEventType());
-	    result.put(event.getEventType(), totalForEventType.add(event.getMaxDeductableAmountForLegalTaxes(civilYear)));
-
-	}
-
-	return result;
-    }
-
-    private Money getTotalForEventType(final Map<EventType, Money> totalByEventType,
-	    final EventType eventType) {
-	final Money result = totalByEventType.get(eventType);
-
-	return result != null ? result : Money.ZERO;
+	addParameter("date", new YearMonthDay().toString("yyyy/MM/dd", LanguageUtils.getLocale()));
+	addParameter("gratuityAmount", this.declaration.getGratuityAmount().toPlainString());
+	addParameter("otherAmount", this.declaration.getOtherAmount().toPlainString());
+	addParameter("totalAmount", this.declaration.getTotalAmount().toPlainString());
 
     }
 
@@ -126,21 +173,9 @@ public class IRSCustomDeclaration extends FenixReport {
 
     @Override
     public String getReportFileName() {
-	return MessageFormat.format("DECLARATION-{0}-{1}", getPerson().getIstUsername(), new DateTime()
+	return MessageFormat.format("DECLARATION-{0}-{1}", this.declaration.getStudentNumber().toString(), new DateTime()
 		.toString("yyyyMMdd"));
 
-    }
-
-    private Person getPerson() {
-	return this.person;
-    }
-
-    private List<Event> getEvents() {
-	return this.eventsForPerson;
-    }
-
-    private int getCivilYear() {
-	return this.civilYear;
     }
 
 }
