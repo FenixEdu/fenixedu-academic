@@ -38,8 +38,8 @@ public abstract class Site extends Site_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Section createSection(MultiLanguageString sectionName, Section parentSection, Integer sectionOrder) {
-	return new Section(parentSection, sectionName, sectionOrder);
+    public Section createSection(MultiLanguageString sectionName, Container parentContainer, Integer sectionOrder) {
+	return new Section(parentContainer, sectionName, sectionOrder);
     }
 
     public abstract IGroup getOwner();
@@ -115,11 +115,9 @@ public abstract class Site extends Site_Base {
 
     public void copySectionsAndItemsFrom(Site siteFrom) {
 	for (Section sectionFrom : siteFrom.getAssociatedSections()) {
-	    if (sectionFrom.getSuperiorSection() == null) {
-		Section sectionTo = this.createSection(sectionFrom.getName(), null, sectionFrom.getSectionOrder());
-		sectionTo.copyItemsFrom(sectionFrom);
-		sectionTo.copySubSectionsAndItemsFrom(sectionFrom);
-	    }
+	    Section sectionTo = this.createSection(sectionFrom.getName(), this, sectionFrom.getSectionOrder());
+	    sectionTo.copyItemsFrom(sectionFrom);
+	    sectionTo.copySubSectionsAndItemsFrom(sectionFrom);
 	}
     }
 

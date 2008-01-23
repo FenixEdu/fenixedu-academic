@@ -102,8 +102,8 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
     }
 
     private void setNodeOrderFor(Container parent, Integer order) {
-	reOrder(parent, order);
 	super.setNodeOrder(order);
+	reOrder(parent, order);
     }
 
     private void reOrderAfterDeletion(Container parent, Integer nodeOrder) {
