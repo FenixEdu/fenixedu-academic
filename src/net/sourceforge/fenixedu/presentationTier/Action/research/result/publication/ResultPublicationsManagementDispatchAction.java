@@ -541,6 +541,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		}
 
 		request.setAttribute("publicationBean", publicationBean);
+		ResultEventAssociationBean eventBean = new ResultEventAssociationBean();
+		request.setAttribute("eventEditionBean", eventBean);
 		return mapping.findForward("editEvent");
 	}
 

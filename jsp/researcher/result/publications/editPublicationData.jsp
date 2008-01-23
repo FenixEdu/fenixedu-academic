@@ -30,10 +30,14 @@
 		<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
 			<bean:define id="action" value="/resultPublications/prepareEditJournal.do" type="java.lang.String"/>
 		</logic:equal>
+		<logic:equal name="publicationBean" property="class.simpleName" value="InproceedingsBean">
+			<bean:define id="action" value="/resultPublications/prepareEditEvent.do" type="java.lang.String"/>
+		</logic:equal>
 	</logic:equal>
 
 	<fr:form action="<%= action + "?" + parameters %>">
 	
+
 		<logic:equal name="publicationBean" property="createEvent" value="false">
 			<!-- Present publication fields -->
 			<p class="mtop2 mbottom05"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.data"/> (<bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type."+publicationBean.getPublicationTypeString()%>"/>)</b></p>
@@ -73,9 +77,12 @@
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 		<bean:define id="submitLabel" value="button.submit"/>
 		<logic:equal name="typeChanged" value="true">
-		<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
-				<bean:define id="submitLabel" value="button.next"/>
-		</logic:equal>
+			<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
+					<bean:define id="submitLabel" value="button.next"/>
+			</logic:equal>
+			<logic:equal name="publicationBean" property="class.simpleName" value="InproceedingsBean">
+					<bean:define id="submitLabel" value="button.next"/>
+			</logic:equal>
 		</logic:equal>
 
 			<bean:message bundle="RESEARCHER_RESOURCES" key="<%= submitLabel %>"/>
