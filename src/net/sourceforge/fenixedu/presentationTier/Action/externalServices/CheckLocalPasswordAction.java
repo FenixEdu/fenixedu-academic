@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionMapping;
 
 public class CheckLocalPasswordAction extends FenixAction {
 
-    private static final String SUCCESS_MESSAGE = "SUCCESS";
+    private static final String SUCCESS_MESSAGE = "CHECK_PASSWORD_OK";
 
     private static final String UNEXPECTED_ERROR_MESSAGE = "UNEXPECTED_ERROR";
 
@@ -46,8 +46,7 @@ public class CheckLocalPasswordAction extends FenixAction {
 		final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
 			"LocalAuthenticate", authenticationArgs);
 
-		result = SUCCESS_MESSAGE + "\n"
-			+ (userView.getPerson().hasIstUsername() ? userView.getPerson().getIstUsername() : username);
+		result = SUCCESS_MESSAGE;
 
 	    } catch (PasswordExpiredServiceException e) {
 		result = e.getMessage();
