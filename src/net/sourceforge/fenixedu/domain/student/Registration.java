@@ -611,7 +611,12 @@ public class Registration extends Registration_Base {
     @Override
     public Integer getFinalAverage() {
 	if (isBolonha()) {
-	    throw new DomainException("error.Registration.for.cannot.get.final.average.in.registration.for.bolonha");
+	    final List<CycleCurriculumGroup> internalCycleCurriculumGrops = getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
+	    if (internalCycleCurriculumGrops.size() == 1) {
+		return internalCycleCurriculumGrops.iterator().next().getFinalAverage();
+	    } else {
+		throw new DomainException("error.bolonha.Registration.must.get.final.average.from.cycle.curriculum.groups");
+	    }
 	}
 
 	return super.getFinalAverage();
