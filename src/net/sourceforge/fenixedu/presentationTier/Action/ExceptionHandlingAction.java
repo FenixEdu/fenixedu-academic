@@ -71,8 +71,12 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         if (userView != null) {
             mailBody += "UserLogedIn: " + userView.getUtilizador() + "\n";
         } else {
-            mailBody += "No user logged in, or session was lost";
+            mailBody += "No user logged in, or session was lost.\n";
         }
+
+        mailBody += "\nRequestURI: " + request.getRequestURI() + "\n";
+        mailBody += "\nRequestURL: " + request.getRequestURL() + "\n";
+        mailBody += "\nQueryString: " + request.getQueryString() + "\n";
 
         mailBody += stackTrace2String(stackTrace);
         System.out.println(stackTrace2String(stackTrace));
