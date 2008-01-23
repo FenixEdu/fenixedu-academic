@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CourseLoad;
@@ -148,19 +149,20 @@ public class SeperateExecutionCourse extends Service {
 
     private String getUniqueExecutionCourseCode(final String executionCourseName,
             final ExecutionPeriod executionPeriod, final String originalExecutionCourseCode) {
-        Set<String> executionCourseCodes = getExecutionCourseCodes(executionPeriod);
-
-        StringBuilder executionCourseCode = new StringBuilder(originalExecutionCourseCode);
-        executionCourseCode.append("-1");
-        int startVariablePartIndex = executionCourseCode.length() - 1;
-        String destinationExecutionCourseCode = executionCourseCode.toString();
-        for (int i = 1; executionCourseCodes.contains(destinationExecutionCourseCode); ++i) {
-            executionCourseCode.replace(startVariablePartIndex, executionCourseCode.length(), "");
-            executionCourseCode.append(i);
-            destinationExecutionCourseCode = executionCourseCode.toString();
-        }
-
-        return destinationExecutionCourseCode;
+	Set<String> executionCourseCodes = getExecutionCourseCodes(executionPeriod);
+	return CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.getUniqueSigla(executionCourseCodes, originalExecutionCourseCode);
+//
+//        StringBuilder executionCourseCode = new StringBuilder(originalExecutionCourseCode);
+//        executionCourseCode.append("-1");
+//        int startVariablePartIndex = executionCourseCode.length() - 1;
+//        String destinationExecutionCourseCode = executionCourseCode.toString();
+//        for (int i = 1; executionCourseCodes.contains(destinationExecutionCourseCode); ++i) {
+//            executionCourseCode.replace(startVariablePartIndex, executionCourseCode.length(), "");
+//            executionCourseCode.append(i);
+//            destinationExecutionCourseCode = executionCourseCode.toString();
+//        }
+//
+//        return destinationExecutionCourseCode;
     }
 
     private Set<String> getExecutionCourseCodes(ExecutionPeriod executionPeriod) {

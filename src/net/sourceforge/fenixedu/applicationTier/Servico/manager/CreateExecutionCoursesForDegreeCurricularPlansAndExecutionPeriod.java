@@ -58,7 +58,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
         return null;
     }
 
-    private String getUniqueSigla(Set<String> existentsExecutionCoursesSiglas, String sigla) {
+    public static String getUniqueSigla(Set<String> existentsExecutionCoursesSiglas, String sigla) {
         if (existentsExecutionCoursesSiglas.contains(sigla.toUpperCase())) {
             int suffix = 1;
             while (existentsExecutionCoursesSiglas.contains((sigla + "-" + ++suffix).toUpperCase()));
