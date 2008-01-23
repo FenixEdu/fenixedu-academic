@@ -304,7 +304,9 @@ public class Context extends Context_Base implements Comparable<Context> {
 
 	@Override
 	public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	    return getContext().isValid(executionPeriod);
+	    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	    return getCurricularCourse().isAnual(executionYear) ? 
+		    	getContext().isValid(executionYear) : getContext().isValid(executionPeriod);
 	}
 
 	@Override
