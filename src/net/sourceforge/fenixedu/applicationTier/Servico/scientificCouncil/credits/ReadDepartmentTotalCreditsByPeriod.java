@@ -61,7 +61,7 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
         reportDTO.setCredits(round(reportDTO.getCredits() + teacherPeriodTotalCredits));
         
         Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
-        boolean careerTeacher = (category != null && category.isCareerCategory());
+        boolean careerTeacher = (category != null && category.isTeacherCareerCategory());
         if(careerTeacher) {
             reportDTO.setCareerCategoryTeacherCredits(round(reportDTO.getCareerCategoryTeacherCredits() + teacherPeriodTotalCredits));
         } else {

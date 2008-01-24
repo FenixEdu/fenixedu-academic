@@ -864,7 +864,7 @@ public class Teacher extends Teacher_Base {
     public boolean isMonitor(ExecutionPeriod executionPeriod) {
 	if (executionPeriod != null) {
 	    Category category = getCategoryForCreditsByPeriod(executionPeriod);
-	    return (category != null && category.isMonitorCategory());
+	    return (category != null && category.isTeacherMonitorCategory());
 	}
 	return false;
     }
@@ -961,7 +961,7 @@ public class Teacher extends Teacher_Base {
 	if (lastLegalRegimen != null) {
 
 	    Category category = lastLegalRegimen.getCategory();
-	    if (category != null && category.isMonitorCategory()) {
+	    if (category != null && category.isTeacherMonitorCategory()) {
 		return 0;
 	    }
 

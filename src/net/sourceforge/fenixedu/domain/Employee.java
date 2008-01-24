@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -89,7 +91,23 @@ public class Employee extends Employee_Base {
 	}	
 	return result;
     }
-
+    
+    public EmployeeProfessionalSituation getLastEmployeeProfessionalSituation() {
+	YearMonthDay date = null, current = new YearMonthDay();
+	EmployeeProfessionalSituation regimenToReturn = null;
+	for (EmployeeProfessionalSituation regimen : getEmployeeProfessionalSituations()) {
+	    if (!regimen.getBeginDateYearMonthDay().isAfter(current)) {
+		if (regimen.isActive(current)) {
+		    return regimen;
+		} else if (date == null || regimen.getBeginDateYearMonthDay().isAfter(date)) {
+		    date = regimen.getBeginDateYearMonthDay();
+		    regimenToReturn = regimen;
+		}
+	    }
+	}
+	return regimenToReturn;
+    }
+    
     public Collection<Contract> getContractsByContractType(AccountabilityTypeEnum contractType) {
 	return (Collection<Contract>) getPerson().getParentAccountabilities(contractType, EmployeeContract.class);
     }
@@ -317,5 +335,10 @@ public class Employee extends Employee_Base {
 	}
 
 	return null;
+    }       
+    
+    public Category getCategory() {
+	EmployeeProfessionalSituation regimen = getLastEmployeeProfessionalSituation();
+	return (regimen != null) ? regimen.getCategory() : null;
     }
 }

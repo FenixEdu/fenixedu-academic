@@ -190,6 +190,7 @@ valueType net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.
 valueType net.sourceforge.fenixedu.domain.PartyClassification														 as PartyClassification;
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval									 as AcademicInterval;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType								 as ClosedMonthDocumentType;
+valueType net.sourceforge.fenixedu.domain.teacher.CategoryType														 as CategoryType;
 
 /*
 *
@@ -898,8 +899,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 		class net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation extends net.sourceforge.fenixedu.domain.ProfessionalSituation {
 			Integer percentage;
-			Integer weeklyLessonHours;
-			Double weeklyWorkingHours;
+			Integer weeklyLessonHours;			
 		}
 
 		class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends net.sourceforge.fenixedu.domain.ProfessionalSituation {
@@ -3717,9 +3717,11 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean canBeExecutionCourseResponsible;
 		String code;
 		String longName;
-		MultiLanguageString name;
 		String shortName;
-		Integer weight;
+		MultiLanguageString name;
+		Integer weight;		
+		CategoryType categoryType;		
+		Integer weeklyLessonHours;
 	}
 
 	class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -11129,8 +11131,8 @@ relation TeacherPersonalExpectationTeacher {
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
-relation TeacherProfessionalSituationCategory {
-	net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation playsRole teacherProfessionalSituations {
+relation ProfessionalSituationCategory {
+	net.sourceforge.fenixedu.domain.ProfessionalSituation playsRole professionalSituations {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;

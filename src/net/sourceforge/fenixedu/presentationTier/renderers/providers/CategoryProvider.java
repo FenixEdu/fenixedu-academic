@@ -14,38 +14,36 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class CategoryProvider implements DataProvider {
 
-    private static String[] USED_CATEGORIES = {
-            "ASC", "ESP", "PCA", "PCC", "PAS", "PSC", "PAX", "PXC"
-    };
-    
-    public Object provide(Object source, Object currentValue) {
-        List<String> result = new ArrayList<String>();
-        
-        List<String> allowed = Arrays.asList(USED_CATEGORIES);
-        for (Category category : new TreeSet<Category>(RootDomainObject.getInstance().getCategorys())) {
-            if (allowed.contains(category.getCode().toUpperCase())) {
-                result.add(category.getName().getContent());
-            }
-        }
+    private static String[] USED_CATEGORIES = { "ASC", "ESP", "PCA", "PCC", "PAS", "PSC", "PAX", "PXC" };
 
-        result.add(hardcoded("Investigador Principal", "Main Researcher"));
-        result.add(hardcoded("Investigador Auxiliar", "Auxiliar Researcher"));
-        result.add(hardcoded("Investigador Coordenador", "Coordinator Researcher"));
-        
-        return result;
+    public Object provide(Object source, Object currentValue) {
+	List<String> result = new ArrayList<String>();
+
+	List<String> allowed = Arrays.asList(USED_CATEGORIES);
+	for (Category category : new TreeSet<Category>(Category.readTeacherCategories())) {
+	    if (allowed.contains(category.getCode().toUpperCase())) {
+		result.add(category.getName().getContent());
+	    }
+	}
+
+	result.add(hardcoded("Investigador Principal", "Main Researcher"));
+	result.add(hardcoded("Investigador Auxiliar", "Auxiliar Researcher"));
+	result.add(hardcoded("Investigador Coordenador", "Coordinator Researcher"));
+
+	return result;
     }
 
     private String hardcoded(String pt, String en) {
-        MultiLanguageString mlString = new MultiLanguageString();
-        
-        mlString.setContent(Language.pt, pt);
-        mlString.setContent(Language.en, en);
-        
-        return mlString.getContent();
+	MultiLanguageString mlString = new MultiLanguageString();
+
+	mlString.setContent(Language.pt, pt);
+	mlString.setContent(Language.en, en);
+
+	return mlString.getContent();
     }
 
     public Converter getConverter() {
-        return null;
+	return null;
     }
 
 }

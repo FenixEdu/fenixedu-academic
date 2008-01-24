@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadCategories extends Service {
 
-	public List run() throws FenixServiceException, ExcepcaoPersistencia {		
-	    List<InfoCategory> result = new ArrayList<InfoCategory>();
-        
-	    for (Category category : rootDomainObject.getCategorys()) {
-            result.add(InfoCategory.newInfoFromDomain(category));
-        }
-        
-        return result;
+    public List run() throws FenixServiceException, ExcepcaoPersistencia {
+	List<InfoCategory> result = new ArrayList<InfoCategory>();
+
+	for (Category category : Category.readTeacherCategories()) {
+	    result.add(InfoCategory.newInfoFromDomain(category));
 	}
-    
+
+	return result;
+    }
+
 }

@@ -20,7 +20,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 	    ProfessionalSituationType type, String institution) {
 	
 	super();	
-	super.init(beginDate, endDate, type, null, teacher.getPerson().getEmployee());	
+	super.init(beginDate, endDate, type, null, teacher.getPerson().getEmployee(), null);	
 	setInstitution(institution);
     }
              
@@ -61,7 +61,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionPeriod);
 		Category pax_category = Category.readCategoryByCodeAndNameInPT("PAX", "Professor Auxiliar");
 		return (teacherCategory != null && pax_category != null	&& !teacherCategory.equals(pax_category) 
-			&& !teacherCategory.isMostImportantThan(pax_category));		    
+			&& !teacherCategory.isTeacherCategoryMostImportantThan(pax_category));		    
 	    }
 	}
 

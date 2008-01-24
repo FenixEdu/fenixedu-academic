@@ -289,16 +289,16 @@ function check(e,v){
 						</tr>			
 					</logic:notEmpty>
 					
-					<logic:present name="personalInfo" property="teacher" >
-						<logic:present  name="personalInfo" property="teacher.category" >
+					<logic:notEmpty name="personalInfo" property="teacher" >
+						<logic:notEmpty  name="personalInfo" property="teacher.category" >
 							<tr>
 								<td class="ppleft2"><bean:message key="label.teacher.category" />:</td>
 								<bean:define id="categoryCode" name="personalInfo" property="teacher.category.code"/>
 								<bean:define id="categoryName" name="personalInfo" property="teacher.category.longName"/>
 								<td class="ppright"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
 							</tr>
-						</logic:present>
-					</logic:present>
+						</logic:notEmpty>
+					</logic:notEmpty>										<logic:notEmpty name="personalInfo" property="employee" >						<logic:notEmpty  name="personalInfo" property="employee.category" >							<tr>								<td class="ppleft2"><bean:message key="label.employee.category" />:</td>																<bean:define id="categoryName" name="personalInfo" property="employee.category.longName"/>								<td class="ppright"><bean:write name="categoryName"/></td>							</tr>						</logic:notEmpty>					</logic:notEmpty>
 					
 					<logic:equal name="personalInfo" property="availableWebSite" value="true">        
 						<logic:notEmpty name="personalInfo" property="availableWebSite">

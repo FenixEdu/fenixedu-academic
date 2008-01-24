@@ -15,12 +15,14 @@ import org.apache.struts.action.ActionMapping;
 
 public class TeacherCategoriesManagement extends FenixDispatchAction {
 
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        Set<Category> sortedCategories = new TreeSet<Category>(rootDomainObject.getCategorys());
-        
-        request.setAttribute("categories", sortedCategories);
-        
-        return mapping.findForward("editCategories");
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	
+	Set<Category> sortedCategories = new TreeSet<Category>(Category.readTeacherCategories());
+
+	request.setAttribute("categories", sortedCategories);
+
+	return mapping.findForward("editCategories");
     }
-    
+
 }
