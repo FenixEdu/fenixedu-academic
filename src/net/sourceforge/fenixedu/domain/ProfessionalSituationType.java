@@ -65,8 +65,12 @@ public enum ProfessionalSituationType {
     INCAPACITY_FOR_TOGETHER_DOCTOR_OF_THE_CGA(true),
     PUBLIC_MANAGER(true),
     DETACHED_TO(true),
-    GOVERNMENT_MEMBER(true);   
-    
+    GOVERNMENT_MEMBER(true),  
+
+    SERVICE_PROVISION(false),
+    DETACHED_FROM(false),
+    REQUESTED_FROM(false);
+
     private boolean isServiceExemption;
         
     private ProfessionalSituationType(boolean isServiceExemption) {
