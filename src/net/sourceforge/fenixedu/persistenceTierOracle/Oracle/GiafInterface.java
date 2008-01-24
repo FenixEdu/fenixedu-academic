@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportClosedExtraWorkMonth;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,8 +25,7 @@ public class GiafInterface {
     public Double getEmployeeHourValue(Employee employee, YearMonthDay day) throws ExcepcaoPersistencia {
 	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
 	try {
-	    CallableStatement callableStatement = persistentSuportOracle
-		    .prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?); END;");
+	    CallableStatement callableStatement = persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?); END;");
 	    callableStatement.registerOutParameter(1, Types.DOUBLE);
 	    DecimalFormat f = new DecimalFormat("000000");
 	    callableStatement.setString(2, f.format(employee.getEmployeeNumber()));
@@ -48,8 +48,7 @@ public class GiafInterface {
 	Double salary = 0.0;
 	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
 	try {
-	    PreparedStatement stmt = persistentSuportOracle
-		    .prepareStatement("SELECT ano, mes FROM sltinfdivs");
+	    PreparedStatement stmt = persistentSuportOracle.prepareStatement("SELECT ano, mes FROM sltinfdivs");
 	    ResultSet rs = stmt.executeQuery();
 	    Integer year = 0;
 	    Integer month = 0;
@@ -88,8 +87,7 @@ public class GiafInterface {
     public void updateExtraWorkRequest(ExtraWorkRequest extraWorkRequest) throws ExcepcaoPersistencia {
 	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
 	try {
-	    PreparedStatement stmt = persistentSuportOracle
-		    .prepareStatement("SELECT ano, mes FROM sltinfdivs");
+	    PreparedStatement stmt = persistentSuportOracle.prepareStatement("SELECT ano, mes FROM sltinfdivs");
 	    ResultSet rs = stmt.executeQuery();
 	    Integer year = 0;
 	    Integer month = 0;
@@ -99,8 +97,10 @@ public class GiafInterface {
 	    }
 	    rs.close();
 	    StringBuilder query = new StringBuilder();
-	    if (extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year()) == year
-		    && extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) + 1 == month) {
+	    YearMonth yearMonthPayingDate = new YearMonth(extraWorkRequest.getPartialPayingDate());
+	    yearMonthPayingDate.addMonth();
+
+	    if (yearMonthPayingDate.getYear().equals(year) && yearMonthPayingDate.getNumberOfMonth() == month) {
 		query.append("SELECT a.mov_cod, a.sal_val_brt FROM sldsalario a where a.emp_num=");
 		query.append(extraWorkRequest.getAssiduousness().getEmployee().getEmployeeNumber());
 		query.append(" and a.mov_cod in (");
@@ -110,19 +110,16 @@ public class GiafInterface {
 		query.append(") and extract(year from data_mov)=");
 		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()));
 		query.append(" and extract(month from data_mov)=");
-		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(
-			DateTimeFieldType.monthOfYear()));
+		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()));
 	    } else {
 		query.append("SELECT a.mov_cod,a.sal_val_brt FROM slhsalario a where a.ano=");
-		query.append(extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year()));
+		query.append(yearMonthPayingDate.getYear());
 		query.append(" and a.mes=");
-		query.append(extraWorkRequest.getPartialPayingDate()
-			.get(DateTimeFieldType.monthOfYear()) + 1);
+		query.append(yearMonthPayingDate.getNumberOfMonth());
 		query.append(" and extract(year from data_mov)=");
 		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()));
 		query.append(" and extract(month from data_mov)=");
-		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(
-			DateTimeFieldType.monthOfYear()));
+		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()));
 		query.append(" and a.mov_cod in (");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
@@ -133,14 +130,11 @@ public class GiafInterface {
 	    stmt = persistentSuportOracle.prepareStatement(query.toString());
 	    rs = stmt.executeQuery();
 	    while (rs.next()) {
-		if (rs.getInt("mov_cod") == new Integer(
-			ExportClosedExtraWorkMonth.extraWorkSundayMovementCode)) {
+		if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode)) {
 		    extraWorkRequest.setSundayAmount(rs.getDouble("sal_val_brt"));
-		} else if (rs.getInt("mov_cod") == new Integer(
-			ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode)) {
+		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode)) {
 		    extraWorkRequest.setSaturdayAmount(rs.getDouble("sal_val_brt"));
-		} else if (rs.getInt("mov_cod") == new Integer(
-			ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode)) {
+		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode)) {
 		    extraWorkRequest.setHolidayAmount(rs.getDouble("sal_val_brt"));
 		}
 
@@ -158,8 +152,7 @@ public class GiafInterface {
     public double getTotalMonthAmount(Partial closedYearMonth) throws ExcepcaoPersistencia {
 	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
 	try {
-	    PreparedStatement stmt = persistentSuportOracle
-		    .prepareStatement("SELECT ano, mes FROM sltinfdivs");
+	    PreparedStatement stmt = persistentSuportOracle.prepareStatement("SELECT ano, mes FROM sltinfdivs");
 	    ResultSet rs = stmt.executeQuery();
 	    Integer year = 0;
 	    Integer month = 0;
@@ -168,23 +161,23 @@ public class GiafInterface {
 		month = rs.getInt("mes");
 	    }
 	    rs.close();
+	    YearMonth yearMonth = new YearMonth(closedYearMonth);
+	    yearMonth.addMonth();
 	    StringBuilder query = new StringBuilder();
-	    if (closedYearMonth.get(DateTimeFieldType.year()) == year
-		    && closedYearMonth.get(DateTimeFieldType.monthOfYear()) + 1 == month) {
-		query
-			.append("SELECT sum(a.sal_val_brt) as value FROM sldsalario a where a.mov_cod in (");
+	    if (yearMonth.getYear().equals(year) && yearMonth.getNumberOfMonth() == month) {
+		query.append("SELECT sum(a.sal_val_brt) as value FROM sldsalario a where a.mov_cod in (");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode);
 		query.append(") and a.ano_pag=");
-		query.append(closedYearMonth.get(DateTimeFieldType.year()));
+		query.append(yearMonth.getYear());
 		query.append(" and a.mes_pag=");
-		query.append(closedYearMonth.get(DateTimeFieldType.monthOfYear()) + 1);
+		query.append(yearMonth.getNumberOfMonth());
 	    } else {
 		query.append("SELECT sum(a.sal_val_brt) as value FROM slhsalario a where a.ano=");
-		query.append(closedYearMonth.get(DateTimeFieldType.year()));
+		query.append(yearMonth.getYear());
 		query.append(" and a.mes=");
-		query.append(closedYearMonth.get(DateTimeFieldType.monthOfYear()) + 1);
+		query.append(yearMonth.getNumberOfMonth());
 		query.append(" and a.mov_cod in (");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
@@ -225,8 +218,7 @@ public class GiafInterface {
 
 	    String beginDateString = new Integer(fieldTokens[5].trim()).toString();
 	    Calendar beginDate = Calendar.getInstance();
-	    beginDate
-		    .set(Calendar.DAY_OF_MONTH, new Integer(beginDateString.substring(6, 8)).intValue());
+	    beginDate.set(Calendar.DAY_OF_MONTH, new Integer(beginDateString.substring(6, 8)).intValue());
 	    beginDate.set(Calendar.MONTH, new Integer(beginDateString.substring(4, 6)).intValue() - 1);
 	    beginDate.set(Calendar.YEAR, new Integer(beginDateString.substring(0, 4)).intValue());
 	    cs.setDate(6, new Date(beginDate.getTimeInMillis()));
@@ -263,8 +255,8 @@ public class GiafInterface {
 	    cs.registerOutParameter(12, OracleTypes.VARCHAR);
 	    cs.execute();
 	    if (cs.getString(12) != null) {
-		System.out.println("ERRO exportToGIAF na linha - " + (line + 1) + " : "
-			+ cs.getString(12) + " DADOS: " + lineTokens[line].trim());
+		System.out.println("ERRO exportToGIAF na linha - " + (line + 1) + " : " + cs.getString(12) + " DADOS: "
+			+ lineTokens[line].trim());
 		cs.close();
 		persistentSuportOracle.cancelTransaction();
 		throw new SQLException();
