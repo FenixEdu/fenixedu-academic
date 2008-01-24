@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
+
 <h2><bean:message key="title.protocols" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
 <bean:define id="protocolID"><bean:write name="protocolFactory" property="protocol.idInternal"/></bean:define>
@@ -28,18 +29,21 @@
 	<h3 class="dinline"><bean:message key="label.protocol.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
 </div>
 
+
 <p class="mbottom0"><strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <logic:notEmpty name="protocolFactory" property="responsibles">
 	<fr:view name="protocolFactory" property="responsibles" schema="show.protocol.responsible">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="classes" value="tstyle1 thlight mvert025 thhide1"/>
+			<fr:property name="rowClasses" value="thhide2"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
 <logic:notEmpty name="protocolFactory" property="responsibleFunctions">
 	<fr:view name="protocolFactory" property="responsibleFunctions" schema="show.protocol.responsibleFunction">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="classes" value="tstyle1 thlight mvert025 thhide1"/>
+			<fr:property name="rowClasses" value="thhide2"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
@@ -53,7 +57,8 @@
 <logic:notEmpty name="protocolFactory" property="partnerResponsibles">
 	<fr:view name="protocolFactory" property="partnerResponsibles" schema="show.protocol.responsible">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="classes" value="tstyle1 thlight mvert025 thhide1"/>
+			<fr:property name="rowClasses" value="thhide2"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
@@ -70,7 +75,8 @@
 <p class="mbottom0"><strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 <fr:view name="protocolFactory" property="units" schema="show.protocol.unit">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1 thlight mvert0"/>
+			<fr:property name="classes" value="tstyle1 thlight mvert025 thhide1"/>
+			<fr:property name="rowClasses" value="thhide2"/>
 	</fr:layout>
 </fr:view>
 <logic:empty name="protocolFactory" property="units">
@@ -81,7 +87,8 @@
 <logic:notEmpty name="protocolFactory" property="partnerUnits">
 	<fr:view name="protocolFactory" property="partnerUnits" schema="show.protocol.partnerUnit">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight"/>
+			<fr:property name="classes" value="tstyle1 thlight mvert025 thhide1"/>
+			<fr:property name="rowClasses" value="thhide2"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

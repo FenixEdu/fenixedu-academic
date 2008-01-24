@@ -190,8 +190,8 @@ margin: 1em 0;
 }
 
 table.tstylenone { margin: 0; padding: 0; }
-table.tstylenone th { border: none; background: none; margin: 0; padding: 0.1em; }
-table.tstylenone td { border: none; background: none; margin: 0; padding: 0.1em; }
+table.tstylenone th { border: none; background: none; margin: 0; padding: 0.1em 0.1em 0.1em 0; }
+table.tstylenone td { border: none; background: none; margin: 0; padding: 0.1em 0.1em 0.1em 0; }
 
 .tstylebordernone table tr td { border: none; }
 
@@ -367,9 +367,6 @@ border-bottom: none;
 border-top: none;
 background: none;
 }
-thdnone {
-display: none:
-}
 td.tdwarning span {
 background-color: #fff8bb; color: #664400;
 }
@@ -390,6 +387,9 @@ td.pleft6 { padding-left: 6em; }
 
 table.tpadding05 tr th, table.tpadding05 tr td  { padding: 0.5em; }
 table.tdpadding02505 tr td { padding: 0.25em 0.5em !important; }
+
+.thhide1 tr { display: none; }
+.thhide1 .thhide2 { display: block !important; }
 
 /* ----------------------
 -------- Tree ----------
