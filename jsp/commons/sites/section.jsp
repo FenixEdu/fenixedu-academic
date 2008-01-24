@@ -434,9 +434,9 @@
 
 <!-- Functionalities -->
 
-<h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
-
+<logic:equal name="site" property="templateAvailable" value="true">
 <logic:equal name="site" property="template.contentPoolAvailable" value="true">
+<h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
 	<ul>
 		<li>
 		<html:link page="<%= String.format("%s?method=prepareAddFromPool&amp;sectionID=%s&amp;%s", actionName, sectionId, context) %>">
@@ -444,8 +444,7 @@
 		</html:link>
 		</li>
 	</ul>
-</logic:equal>
-		
+
 <logic:empty name="section" property="associatedFunctionalities">
 	<em><bean:message key="label.noInstitutionalContents" bundle="SITE_RESOURCES"/></em>
 </logic:empty>
@@ -482,7 +481,8 @@
 			
 	</logic:iterate>
 </logic:notEmpty>
-
+</logic:equal>
+</logic:equal>
 <!-- Change item delete operation if possible -->
 <script type="text/javascript">
     switchGlobal();

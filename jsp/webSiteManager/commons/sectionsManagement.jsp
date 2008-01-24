@@ -104,18 +104,19 @@
 
 <!-- Functionalities -->
 
+<logic:equal name="site" property="templateAvailable" value="true">
+	<logic:equal name="site" property="template.contentPoolAvailable" value="true">
 <h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
 
-<logic:equal name="site" property="template.contentPoolAvailable" value="true">
-	<ul>
-		<li>
-			<html:link page="<%= actionName + "?method=prepareAddFromPool&amp;" + context %>">
-				<bean:message key="link.institutionSection.add" bundle="WEBSITEMANAGER_RESOURCES"/>
-			</html:link>
-		</li>
-	</ul>
-</logic:equal>
-		
+		<ul>
+			<li>
+				<html:link page="<%= actionName + "?method=prepareAddFromPool&amp;" + context %>">
+					<bean:message key="link.institutionSection.add" bundle="WEBSITEMANAGER_RESOURCES"/>
+				</html:link>
+			</li>
+		</ul>
+
+
 <logic:empty name="site" property="associatedFunctionalities">
 	<em><bean:message key="label.noInstitutionalContents" bundle="SITE_RESOURCES"/></em>
 </logic:empty>
@@ -153,5 +154,7 @@
 	</logic:iterate>
 </logic:notEmpty>
 
+	</logic:equal>
+</logic:equal>
 
 </logic:notEmpty>

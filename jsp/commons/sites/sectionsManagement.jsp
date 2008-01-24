@@ -97,6 +97,7 @@
 
 <h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
 
+<logic:equal name="site" property="templateAvailable" value="true">
 <logic:equal name="site" property="template.contentPoolAvailable" value="true">
 	<ul>
 		<li>
@@ -106,7 +107,8 @@
 		</li>
 	</ul>
 </logic:equal>
-		
+</logic:equal>
+	
 <logic:empty name="site" property="associatedFunctionalities">
 	<em><bean:message key="label.noInstitutionalContents" bundle="SITE_RESOURCES"/></em>
 </logic:empty>
