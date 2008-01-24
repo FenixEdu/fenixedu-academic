@@ -50,9 +50,8 @@ function check(e,v){
 }
 </script>
 
-<h2><bean:message key="label.manager.findPerson"/></h2>
-
-<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
+<em><bean:message key="label.executionCourseManagement.menu.communication"/></em>
+<h2><bean:message key="label.person.findPerson"/></h2>
 
 <table class="search mbottom0">
 	<tr>
@@ -91,7 +90,9 @@ function check(e,v){
 			</td>
 		</tr>
 	</logic:present>
-</table>
+</table>
+
+
 <html:form action="/findPerson" >
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="findPerson" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.startIndex" property="startIndex" value="1" />
@@ -164,6 +165,11 @@ function check(e,v){
 		</tr>
 	</table>
 </html:form>
+
+
+
+<p><em><!-- Error messages go here --><html:errors /></em></p>
+
 
 
 <logic:present name="personListFinded" >
@@ -298,7 +304,8 @@ function check(e,v){
 								<td class="ppright"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
 							</tr>
 						</logic:notEmpty>
-					</logic:notEmpty>										<logic:notEmpty name="personalInfo" property="employee" >						<logic:notEmpty  name="personalInfo" property="employee.category" >							<tr>								<td class="ppleft2"><bean:message key="label.employee.category" />:</td>																<bean:define id="categoryName" name="personalInfo" property="employee.category.longName"/>								<td class="ppright"><bean:write name="categoryName"/></td>							</tr>						</logic:notEmpty>					</logic:notEmpty>
+					</logic:notEmpty>										<logic:notEmpty name="personalInfo" property="employee" >						<logic:notEmpty  name="personalInfo" property="employee.category" >							<tr>								<td class="ppleft2"><bean:message key="label.employee.category" />:</td>																<bean:define id="categoryName" name="personalInfo" property="employee.category.longName"/>								<td class="ppright"><bean:write name="categoryName"/></td>							</tr>
+						</logic:notEmpty>					</logic:notEmpty>
 					
 					<logic:equal name="personalInfo" property="availableWebSite" value="true">        
 						<logic:notEmpty name="personalInfo" property="availableWebSite">

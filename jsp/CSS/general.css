@@ -401,7 +401,12 @@ ul li.tree_label span { border-bottom: 1px dotted #aaa; }
 ul.unit1 li {
 background-color: #fff;
 list-style: none;
-color: #5a7086;
+color: #567ea6;
+}
+ul.unit1 li a {
+color: #567ea6 !important;
+text-decoration: none !important;
+border-bottom: 1px solid #567ea6 !important;
 }
 ul.unit2 li {
 background-color: #fff;
@@ -411,6 +416,11 @@ ul.unit3 li {
 background-color: #fff;
 list-style: none;
 color: #86705a;
+}
+ul.unit3 li a {
+color: #86705a !important;
+text-decoration: none !important;
+border-bottom: 1px solid #86705a !important;
 }
 
 ul.padding1 li { padding: 0.25em 0; }

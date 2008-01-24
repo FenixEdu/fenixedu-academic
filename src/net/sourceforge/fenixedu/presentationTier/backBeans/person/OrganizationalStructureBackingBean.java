@@ -278,7 +278,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	Unit chooseUnit = this.getUnit();
 	ExecutionYear iExecutionYear = getExecutionYear(getChoosenExecutionYearID());
 
-	buffer.append("<ul class='mtop3 nobullet'><li>");
+	buffer.append("<ul class='mtop3 nobullet noindent'><li>");
 	// buffer.append("<image
 	// src='").append(getContextPath()).append("/images/unit-icon.gif'/>")
 	// .append(" ");

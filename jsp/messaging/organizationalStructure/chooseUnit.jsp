@@ -17,22 +17,29 @@
 
 	
 	<h:outputText value="<table class='tstyle2 thlight thright thbgnone'>" escape="false"/>
-		<h:outputText value="<tr>" escape="false"/>
-			<h:outputText value="<th>" escape="false"/>
-				<h:outputText value="#{messagingResources['label.unit.webAddress']}:" escape="false" rendered="#{!empty organizationalStructure.unit.webAddress}"/>
-			<h:outputText value="</th>" escape="false"/>
-			<h:outputText value="<td>" escape="false"/>
-				<h:outputText value="<a href='#{organizationalStructure.unit.webAddress}' target='_blank'>#{organizationalStructure.unit.webAddress}</a>" escape="false" rendered="#{!empty organizationalStructure.unit.webAddress}"/>
-			<h:outputText value="</td>" escape="false"/>
-		<h:outputText value="<tr>" escape="false"/>
-		<h:outputText value="</tr>" escape="false"/>
-			<h:outputText value="<th>" escape="false"/>
-				<h:outputText value="#{messagingResources['label.unit.costCenterCode']}:" escape="false" rendered="#{!empty organizationalStructure.unit.costCenterCode}"/>
-			<h:outputText value="</th>" escape="false"/>
-			<h:outputText value="<td>" escape="false"/>
-				<h:outputText value="#{organizationalStructure.unit.costCenterCode}" escape="false" rendered="#{!empty organizationalStructure.unit.costCenterCode}"/>		
-			<h:outputText value="</td>" escape="false"/>
-		<h:outputText value="</tr>" escape="false"/>
+
+		<h:panelGroup rendered="#{!empty organizationalStructure.unit.webAddress}">
+			<h:outputText value="<tr>" escape="false"/>
+				<h:outputText value="<th>" escape="false"/>
+					<h:outputText value="#{messagingResources['label.unit.webAddress']}:" escape="false"/>
+				<h:outputText value="</th>" escape="false"/>
+				<h:outputText value="<td>" escape="false"/>
+					<h:outputText value="<a href='#{organizationalStructure.unit.webAddress}' target='_blank'>#{organizationalStructure.unit.webAddress}</a>" escape="false" rendered="#{!empty organizationalStructure.unit.webAddress}"/>
+				<h:outputText value="</td>" escape="false"/>
+			<h:outputText value="</tr>" escape="false"/>
+		</h:panelGroup>
+
+		<h:panelGroup rendered="#{!empty organizationalStructure.unit.costCenterCode}">
+			<h:outputText value="<tr>" escape="false"/>
+				<h:outputText value="<th>" escape="false"/>
+					<h:outputText value="#{messagingResources['label.unit.costCenterCode']}:" escape="false"/>
+				<h:outputText value="</th>" escape="false"/>
+				<h:outputText value="<td>" escape="false"/>
+					<h:outputText value="#{organizationalStructure.unit.costCenterCode}" escape="false"/>		
+				<h:outputText value="</td>" escape="false"/>
+			<h:outputText value="</tr>" escape="false"/>
+		</h:panelGroup>
+		
 		<h:outputText value="<tr>" escape="false"/>
 			<h:outputText value="<th>" escape="false"/>
 				<h:outputText value="#{messagingResources['label.choose.year']}:" escape="false"/>

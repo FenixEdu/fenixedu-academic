@@ -73,7 +73,7 @@
 
 		<fr:view name="files" schema="show.unit.files">
 			<fr:layout name="tabular-sortable">
-				<fr:property name="classes" value="tstyle2 thlight"/>
+				<fr:property name="classes" value="tstyle2 thlight thnowrap"/>
 				<fr:property name="columnClasses" value="bold nowrap,smalltxt,smalltxt width100px acenter nowrap,,smalltxt,smalltxt color888 nowrap,nowrap"/>				
 				<fr:property name="visibleIf(delete)" value="editableByCurrentUser"/>
 				<fr:property name="order(delete)" value="2"/>
