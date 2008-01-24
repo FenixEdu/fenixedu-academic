@@ -59,7 +59,7 @@
                     <bean:message key="label.grant.contract.state.open"/>
                 </logic:equal>
                 <logic:equal name="infoGrantContract" property="contractActive" value="false">
-                     <bean:message key="label.grant.contract.state.close"/>
+                     <bean:message key="label.grant.contract.state.inactive"/>
                 </logic:equal>
             </td>
             <td class="listClasses">
