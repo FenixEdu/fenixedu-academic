@@ -64,7 +64,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     public Collection<AcademicServiceRequest> searchRegistrationAcademicServiceRequests(
-	    Employee employee,
+	    Integer serviceRequestYear, Employee employee,
 	    AcademicServiceRequestSituationType requestSituationType,
 	    Registration registration,
 	    Boolean isUrgent,
@@ -81,7 +81,11 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    
 	    final RegistrationAcademicServiceRequest academicServiceRequest = (RegistrationAcademicServiceRequest) request;
 	    
-	    if (employee != null && !academicServiceRequest.isNewRequest() && !academicServiceRequest.getActiveSituation().getEmployee().equals(employee)) {
+	    if (serviceRequestYear != null && academicServiceRequest.getServiceRequestYear().intValue() != serviceRequestYear.intValue()) {
+		continue;
+	    }
+	    
+	    if (employee != null && !academicServiceRequest.createdByStudent() && !academicServiceRequest.isNewRequest() && !academicServiceRequest.getActiveSituation().getEmployee().equals(employee)) {
 		continue;
 	    }
 	    

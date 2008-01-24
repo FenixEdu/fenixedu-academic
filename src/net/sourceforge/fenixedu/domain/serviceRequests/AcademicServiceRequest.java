@@ -39,13 +39,20 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     protected AcademicServiceRequest() {
 	super();
+	super.setServiceRequestYear(new YearMonthDay().year().get());
 	super.setServiceRequestNumber(generateServiceRequestNumber());
 	super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
     private Integer generateServiceRequestNumber() {
 	final SortedSet<AcademicServiceRequest> requests = new TreeSet<AcademicServiceRequest>(COMPARATOR_BY_NUMBER);
-	requests.addAll(RootDomainObject.getInstance().getAcademicServiceRequestsSet());
+	
+	for (final AcademicServiceRequest academicServiceRequest : RootDomainObject.getInstance().getAcademicServiceRequestsSet()) {
+	    if (academicServiceRequest.getServiceRequestYear().intValue() == this.getServiceRequestYear().intValue()) {
+		requests.add(academicServiceRequest);
+	    }
+	}
+	
 	return requests.isEmpty() ? 1 : requests.last().getServiceRequestNumber() + 1;
     }
 
@@ -84,7 +91,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	if (requestDate == null || requestDate.isAfterNow()) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.invalid.requestDate");
 	}
-
 	if (urgentRequest == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.urgentRequest.cannot.be.null");
 	}
@@ -213,10 +219,19 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     @Override
+    final public void setServiceRequestYear(Integer serviceRequestYear) {
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.serviceRequestYear");
+    }
+
+    @Override
     final public void setServiceRequestNumber(Integer serviceRequestNumber) {
 	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.serviceRequestNumber");
     }
 
+    final public String getServiceRequestNumberYear() {
+	return getServiceRequestNumber() + "/" + getServiceRequestYear();
+    }
+    
     @Override
     final public void addAcademicServiceRequestSituations(AcademicServiceRequestSituation academicServiceRequestSituation) {
 	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.add.academicServiceRequestSituation");

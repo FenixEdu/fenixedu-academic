@@ -29,27 +29,31 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     public DegreeFinalizationCertificateRequest(final Registration registration, final DocumentPurposeType documentPurposeType,
 	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest, final Boolean average,
-	    final Boolean detailed, MobilityProgram mobilityProgram, final CycleType requestedCyle, final Boolean freeProcessed) {
+	    final Boolean detailed, MobilityProgram mobilityProgram, final CycleType requestedCyle, final Boolean freeProcessed,
+	    final Boolean internship, Boolean studyPlan) {
 	this();
 
 	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, average, detailed,
-		mobilityProgram, requestedCyle, freeProcessed);
+		mobilityProgram, requestedCyle, freeProcessed, internship, studyPlan);
     }
 
     final protected void init(final Registration registration, final DocumentPurposeType documentPurposeType,
 	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest, final Boolean average,
-	    final Boolean detailed, final MobilityProgram mobilityProgram, final CycleType requestedCycle, final Boolean freeProcessed) {
+	    final Boolean detailed, final MobilityProgram mobilityProgram, final CycleType requestedCycle,
+	    final Boolean freeProcessed, final Boolean internship, Boolean studyPlan) {
 
 	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, freeProcessed);
 
-	this.checkParameters(average, detailed, mobilityProgram, requestedCycle);
+	this.checkParameters(average, detailed, mobilityProgram, requestedCycle, internship, studyPlan);
 	super.setAverage(average);
 	super.setDetailed(detailed);
 	super.setMobilityProgram(mobilityProgram);
+	super.setInternship(internship);
+	super.setStudyPlan(studyPlan);
     }
 
     final private void checkParameters(final Boolean average, final Boolean detailed, final MobilityProgram mobilityProgram,
-	    final CycleType requestedCycle) {
+	    final CycleType requestedCycle, final Boolean internship, final Boolean studyPlan) {
 	if (average == null) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.average.cannot.be.null");
 	}
@@ -59,6 +63,10 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	if (mobilityProgram == null && hasAnyExternalEntriesToReport()) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null");
+	}
+	
+	if (internship != null && studyPlan != null && internship && studyPlan) {
+	    throw new DomainException("DegreeFinalizationCertificateRequest.must.indicate.only.one.reason.for.not.printing");
 	}
 
 	if (getDegreeType().isComposite()) {
@@ -101,11 +109,11 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 			throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
 		    }
 		} else if (getRegistration().hasGratuityDebtsCurrently()) {
-			throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+		    throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
 		}
 	    }
 	}
-	
+
 	if (academicServiceRequestBean.isToConclude()) {
 
 	    if (!hasNumberOfPages()) {
@@ -235,4 +243,9 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	return false;
     }
 
+    @Override
+    final public boolean isToPrint() {
+        return super.isToPrint() && !getInternship() && (!getStudyPlan() || getRegistration().isBolonha());
+    }
+    
 }

@@ -40,7 +40,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     static final public CertificateRequest create(Registration registration, DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, Boolean urgentRequest, Boolean average,
 	    Boolean detailed, ExecutionYear executionYear, MobilityProgram mobilityProgram, CycleType requestedCycle,
-	    Boolean freeProcessed, Collection<Enrolment> enrolments, ExecutionPeriod executionPeriod) {
+	    Boolean freeProcessed, Collection<Enrolment> enrolments, ExecutionPeriod executionPeriod, Boolean internship, Boolean studyPlan) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
@@ -54,7 +54,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 		    mobilityProgram);
 	case DEGREE_FINALIZATION_CERTIFICATE:
 	    return new DegreeFinalizationCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
-		    average, detailed, mobilityProgram, requestedCycle, freeProcessed);
+		    average, detailed, mobilityProgram, requestedCycle, freeProcessed, internship, studyPlan);
 	case EXAM_DATE_CERTIFICATE:
 	    return new ExamDateCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
 		    executionYear, enrolments, executionPeriod);

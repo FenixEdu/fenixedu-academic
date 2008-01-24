@@ -1,9 +1,18 @@
 package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -13,11 +22,13 @@ public class AcademicServiceRequestBean implements Serializable {
 
     private AcademicServiceRequestSituationType academicServiceRequestSituationType;
 
-    private Employee employee;
+    private DomainReference<Employee> employeeDomainReference;
 
     private String justification;
 
     private YearMonthDay situationDate;
+
+    private Integer serviceRequestYear;
 
     public AcademicServiceRequestBean() {
 	super();
@@ -25,18 +36,20 @@ public class AcademicServiceRequestBean implements Serializable {
 
     public AcademicServiceRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,
 	    final Employee employee) {
-	this(academicServiceRequestSituationType, employee, null);
+	this();
+	setAcademicServiceRequestSituationType(academicServiceRequestSituationType);
+	setEmployee(employee);
     }
 
-    public AcademicServiceRequestBean(final Employee employee, final String justification) {
-	this(null, employee, justification);
+    public AcademicServiceRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,
+	    final Employee employee, final Integer serviceRequestYear) {
+	this(academicServiceRequestSituationType, employee);
+	setServiceRequestYear(serviceRequestYear);
     }
 
     public AcademicServiceRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,
 	    final Employee employee, final String justification) {
-	this();
-	setAcademicServiceRequestSituationType(academicServiceRequestSituationType);
-	setEmployee(employee);
+	this(academicServiceRequestSituationType, employee);
 	setJustification(justification);
     }
 
@@ -44,6 +57,10 @@ public class AcademicServiceRequestBean implements Serializable {
 	    final Employee employee, final YearMonthDay situationDate, final String justification) {
 	this(academicServiceRequestSituationType, employee, justification);
 	setSituationDate(situationDate);
+    }
+
+    public AcademicServiceRequestBean(final Employee employee, final String justification) {
+	this((AcademicServiceRequestSituationType) null, employee, justification);
     }
 
     public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
@@ -67,11 +84,11 @@ public class AcademicServiceRequestBean implements Serializable {
     }
 
     public Employee getEmployee() {
-	return employee;
+	return employeeDomainReference == null ? null : employeeDomainReference.getObject();
     }
 
     public void setEmployee(Employee employee) {
-	this.employee = employee;
+	this.employeeDomainReference = new DomainReference<Employee>(employee);
     }
 
     public String getJustification() {
@@ -84,6 +101,14 @@ public class AcademicServiceRequestBean implements Serializable {
 
     public boolean hasJustification() {
 	return !StringUtils.isEmpty(this.justification);
+    }
+
+    public Integer getServiceRequestYear() {
+        return serviceRequestYear;
+    }
+
+    public void setServiceRequestYear(Integer serviceRequestYear) {
+        this.serviceRequestYear = serviceRequestYear;
     }
 
     public boolean isNew() {
@@ -125,4 +150,40 @@ public class AcademicServiceRequestBean implements Serializable {
     public DateTime getFinalSituationDate() {
 	return getSituationDate().toDateTimeAtCurrentTime();
     }
+
+    private AdministrativeOffice getAdministrativeOffice() {
+	return getEmployee() == null ? null : getEmployee().getAdministrativeOffice();
+    }
+
+    private Campus getCampus() {
+	return getEmployee() == null ? null : getEmployee().getCurrentCampus();
+    }
+
+    public Collection<AcademicServiceRequest> searchServiceRequests() {
+	return getAdministrativeOffice().searchRegistrationAcademicServiceRequests(serviceRequestYear, getEmployee(), academicServiceRequestSituationType,
+		(Registration) null, (Boolean) null, (DocumentRequestType) null,
+		getCampus());
+    }
+
+    public Collection<AcademicServiceRequest> searchEmployeeNotNewServiceRequests(final Collection<AcademicServiceRequest> init) {
+	return init.isEmpty() ? searchServiceRequests() : collectEmployeeNotNewRequests(init);
+    }
+
+    private Collection<AcademicServiceRequest> collectEmployeeNotNewRequests(
+	    final Collection<AcademicServiceRequest> academicServiceRequests) {
+	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	if (academicServiceRequestSituationType != AcademicServiceRequestSituationType.NEW) {
+	    for (Iterator<AcademicServiceRequest> iter = academicServiceRequests.iterator(); iter.hasNext();) {
+		AcademicServiceRequest academicServiceRequest = (AcademicServiceRequest) iter.next();
+		if (academicServiceRequest.getActiveSituation().getEmployee() == getEmployee()) {
+		    iter.remove();
+		    result.add(academicServiceRequest);
+		}
+	    }
+	}
+
+	return result;
+    }
+
 }

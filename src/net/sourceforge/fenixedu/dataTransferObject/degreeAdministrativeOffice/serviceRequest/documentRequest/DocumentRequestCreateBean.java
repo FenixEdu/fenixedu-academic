@@ -31,6 +31,10 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private Boolean average;
 
     private Boolean detailed;
+    
+    private Boolean internship;
+    
+    private Boolean studyPlan;
 
     private Boolean toBeCreated;
 
@@ -107,6 +111,22 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     public void setDetailed(Boolean detailed) {
 	this.detailed = detailed;
+    }
+
+    public Boolean getInternship() {
+	return internship;
+    }
+
+    public void setInternship(Boolean internship) {
+	this.internship = internship;
+    }
+
+    public Boolean getStudyPlan() {
+	return studyPlan;
+    }
+
+    public void setStudyPlan(Boolean studyPlan) {
+	this.studyPlan = studyPlan;
     }
 
     public Integer getYear() {
@@ -233,4 +253,6 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
 	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
     }
+    
+    
 }

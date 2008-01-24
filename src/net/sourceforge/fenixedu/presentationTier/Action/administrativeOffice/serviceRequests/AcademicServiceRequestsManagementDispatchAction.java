@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +17,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -32,6 +29,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.joda.time.YearMonthDay;
 
 public class AcademicServiceRequestsManagementDispatchAction extends FenixDispatchAction {
 
@@ -123,8 +121,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
 	try {
 	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
-		    "SendAcademicServiceRequestToExternalEntity", new Object[] { serviceRequest,
-			    requestBean.getSituationDate(), requestBean.getJustification() });
+		    "SendAcademicServiceRequestToExternalEntity", new Object[] { serviceRequest, requestBean.getSituationDate(),
+			    requestBean.getJustification() });
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -288,28 +286,18 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final AcademicServiceRequestSituationType academicServiceRequestSituationType = AcademicServiceRequestSituationType
-		.valueOf(request.getParameter("academicSituationType"));
-	request.setAttribute("academicSituationType", academicServiceRequestSituationType);
-
-	final Collection<AcademicServiceRequest> academicServiceRequests = getAdministrativeOffice()
-		.searchRegistrationAcademicServiceRequests((Employee) null, academicServiceRequestSituationType,
-			(Registration) null, (Boolean) null, (DocumentRequestType) null, getEmployee().getCurrentCampus());
-
-	final Collection<AcademicServiceRequest> employeeRequests = new ArrayList<AcademicServiceRequest>();
-	if (academicServiceRequestSituationType != AcademicServiceRequestSituationType.NEW) {
-	    for (Iterator iter = academicServiceRequests.iterator(); iter.hasNext();) {
-		AcademicServiceRequest academicServiceRequest = (AcademicServiceRequest) iter.next();
-		if (academicServiceRequest.getActiveSituation().getEmployee() == getEmployee()) {
-		    iter.remove();
-		    employeeRequests.add(academicServiceRequest);
-		}
-	    }
+	AcademicServiceRequestBean bean = (AcademicServiceRequestBean) getObjectFromViewState("bean");
+	if (bean == null) {
+	    Integer year = getIntegerFromRequest(request, "year");
+	    bean = new AcademicServiceRequestBean(AcademicServiceRequestSituationType.valueOf(request
+		    .getParameter("academicSituationType")), getEmployee(), year == null ? new YearMonthDay().getYear() : year);
 	}
+	request.setAttribute("bean", bean);
 
-	request.setAttribute("academicServiceRequests", academicServiceRequests);
-	request.setAttribute("employeeRequests", employeeRequests);
-	request.setAttribute("employee", getEmployee());
+	final Collection<AcademicServiceRequest> searchServiceRequests = bean.searchServiceRequests();
+	request.setAttribute("academicServiceRequests", searchServiceRequests);
+	request.setAttribute("employeeRequests", bean.searchEmployeeNotNewServiceRequests(searchServiceRequests));
+
 	return mapping.findForward("searchResults");
     }
 

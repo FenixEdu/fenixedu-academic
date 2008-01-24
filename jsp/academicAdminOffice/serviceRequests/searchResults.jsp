@@ -3,53 +3,75 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+
 <html:xhtml/>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2>
-	<logic:equal name="academicSituationType" value="NEW">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" />
-	</logic:equal>
-	<logic:equal name="academicSituationType" value="PROCESSING">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests" />
-	</logic:equal>
-	<logic:equal name="academicSituationType" value="CONCLUDED">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests" />
-	</logic:equal>
-</h2>
+<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
-<logic:messagesPresent message="true">
-	<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
-		<p><span class="warning0"><bean:write name="messages" /></p>
-	</html:messages>
-</logic:messagesPresent>
+	<bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean"/>
 
-<bean:define id="newRequestUrl">
-	/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&academicSituationType=<bean:write name="academicSituationType" property="name"/>
-</bean:define>
-<bean:define id="processRequestUrl">
-	/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest
-</bean:define>
-<bean:define id="deliveredRequestUrl">
-	/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest
-</bean:define>
-<bean:define id="paymentsUrl">
-	/payments.do?method=showOperations
-</bean:define>
+	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+	<h2>
+		<bean:define id="academicSituationType" name="bean" property="academicServiceRequestSituationType" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType"/>
+		<logic:equal name="academicSituationType" value="NEW">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" />
+		</logic:equal>
+		<logic:equal name="academicSituationType" value="PROCESSING">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests" />
+		</logic:equal>
+		<logic:equal name="academicSituationType" value="CONCLUDED">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests" />
+		</logic:equal>
+	</h2>
+	
+	<logic:messagesPresent message="true">
+		<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<p><span class="warning0"><bean:write name="messages" /></span></p>
+		</html:messages>
+	</logic:messagesPresent>
+	
+	<bean:define id="newRequestUrl">
+		/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&academicSituationType=<bean:write name="academicSituationType" property="name"/>
+	</bean:define>
+	<bean:define id="processRequestUrl">
+		/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest
+	</bean:define>
+	<bean:define id="deliveredRequestUrl">
+		/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest
+	</bean:define>
+	<bean:define id="paymentsUrl">
+		/payments.do?method=showOperations
+	</bean:define>
+	
+	<%
+		String sortCriteria = request.getParameter("sortBy");
+	    if (sortCriteria == null) {
+	    	sortCriteria = "urgentRequest=desc";
+	    }
+	%>
+	
+	<fr:form action="/academicServiceRequestsManagement.do">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="academicSituationType" value="<%=academicSituationType.getName()%>"/>
 
-<%
-	String sortCriteria = request.getParameter("sortBy");
-    if (sortCriteria == null) {
-    	sortCriteria = "urgentRequest=desc";
-    }
-%>
-
-<fr:form action="/academicServiceRequestsManagement.do">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
-
+		<fr:edit id="bean" 
+			name="bean"
+			visible="false"/>
+		<fr:edit id="bean-service.request.year" name="bean" schema="AcademicServiceRequestBean.service.request.year.edit" >
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thright thlight mtop025 thmiddle"/>
+				<fr:property name="columnClasses" value=",,tdclear"/>
+			</fr:layout>
+		</fr:edit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message bundle="APPLICATION_RESOURCES" key="label.submit"/>
+		</html:submit>
+	</fr:form>
+	
+	<p class="mtop5">
 	<logic:notEqual name="academicSituationType" value="NEW">
 		<p class="mtop2 mbottom05">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="academic.service.requests.treated.by.employee"/> <bean:write name="employee" property="roleLoginAlias"/>:
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="academic.service.requests.treated.by.employee"/> <bean:write name="bean" property="employee.roleLoginAlias"/>:
 		</p>
 
 		<logic:empty name="employeeRequests">
@@ -85,7 +107,7 @@
 					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 					
 					<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
-					<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + request.getParameter("academicSituationType") %>"/>
+					<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + academicSituationType.getName() + "&year=" + bean.getServiceRequestYear() %>"/>
 					<fr:property name="sortParameter" value="sortBy"/>
 				</fr:layout>
 			</fr:view>
@@ -128,10 +150,12 @@
 				<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 				
 				<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
-				<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + request.getParameter("academicSituationType") %>"/>
+				<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + academicSituationType.getName() + "&year=" + bean.getServiceRequestYear() %>"/>
 				<fr:property name="sortParameter" value="sortBy"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
-
-</fr:form>
+	
+	</p>
+	
+</logic:present>

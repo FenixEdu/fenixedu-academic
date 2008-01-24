@@ -899,7 +899,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 		class net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation extends net.sourceforge.fenixedu.domain.ProfessionalSituation {
 			Integer percentage;
-			Integer weeklyLessonHours;			
+			Integer weeklyLessonHours;
 		}
 
 		class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends net.sourceforge.fenixedu.domain.ProfessionalSituation {
@@ -3304,16 +3304,17 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	}
 	
 		class net.sourceforge.fenixedu.domain.serviceRequests.SentToExternalEntityAcademicServiceRequestSituation extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation {
-			DateTime sentDate;
-		}
+				DateTime sentDate;			
+			}
 		
 		class net.sourceforge.fenixedu.domain.serviceRequests.ReceivedFromExternalEntityAcademicServiceRequestSituation extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation {
-			DateTime receivedDate;
-		}
+				DateTime receivedDate;
+			}
 	
 	class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest extends net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean freeProcessed;
 		Integer serviceRequestNumber;
+		Integer serviceRequestYear;
 		Boolean urgentRequest;
 		DateTime requestDate;
 	}
@@ -3337,6 +3338,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 						Boolean average;
 						Boolean detailed;
+						Boolean internship;
+						Boolean studyPlan;
 						MobilityProgram mobilityProgram;
 						CycleType requestedCycle;
 					}
@@ -3719,7 +3722,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String longName;
 		String shortName;
 		MultiLanguageString name;
-		Integer weight;		
+		Integer weight;
 		CategoryType categoryType;		
 		Integer weeklyLessonHours;
 	}

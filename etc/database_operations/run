@@ -29,3 +29,5 @@ function executeWithTempFile() {
 }
 
 execute "Alter Category Table" alterCategoryTable.sql
+execute "addServiceRequestYearToAcademicServiceRequest" addServiceRequestYearToAcademicServiceRequest.sql 
+execute "addTinyintsToAcademicServiceRequest" addTinyintsToAcademicServiceRequest.sql
