@@ -29,128 +29,95 @@ import org.apache.struts.util.RequestUtils;
 public class ExceptionHandlingAction extends FenixDispatchAction {
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession();
+	    HttpServletResponse response) throws Exception {
 
-        ActionMapping originalMapping = (ActionMapping) session
-                .getAttribute(SessionConstants.ORIGINAL_MAPPING_KEY);
+	DynaActionForm emailForm = (DynaActionForm) form;
+	String formEmail = (String) emailForm.get("email");
+	String formSubject = (String) emailForm.get("subject");
+	String formBody = (String) emailForm.get("body");
+	String exceptionInfo = (String) emailForm.get("exceptionInfo");
 
-        DynaActionForm emailForm = (DynaActionForm) form;
-        String formEmail = (String) emailForm.get("email");
-        String formSubject = (String) emailForm.get("subject");
-        String formBody = (String) emailForm.get("body");
+	String sender = "Sender: " + formEmail;
+	String subject = " - " + formSubject;
 
-        StackTraceElement[] stackTrace = (StackTraceElement[]) session
-                .getAttribute(SessionConstants.EXCEPTION_STACK_TRACE);
+	String mailBody = "Error Report\n\n";
+	mailBody += sender + "\n\n";
+	mailBody += "User Comment: \n" + formBody + "\n\n";
+	mailBody += exceptionInfo;
 
-        String requestContext = (String) session.getAttribute(SessionConstants.REQUEST_CONTEXT);
+	final ActionForward actionForward;
+	actionForward = new ActionForward();
+	actionForward.setContextRelative(false);
+	actionForward.setRedirect(true);
+	actionForward.setPath("/showErrorPageRegistered.do");
 
-        String sender = "Sender: " + formEmail;
-        String subject = " - " + formSubject;
+	EMail email = null;
+	try {
+	    if (!request.getServerName().equals("localhost")) {
+		email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
+		email.send("suporte@dot.ist.utl.pt", "Fenix Error Report" + subject, mailBody);
+	    } else {
+		email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
+		email.send("suporte@dot.ist.utl.pt", "Localhost Error Report", mailBody);
+	    }
+	} catch (Throwable t) {
+	    t.printStackTrace();
+	    throw new Error(t);
+	}
 
-        String mailBody = "Error Report\n\n";
-        mailBody += sender + "\n\n";
-        mailBody += "User Comment: \n" + formBody + "\n\n";
-        mailBody += "Error Origin: \n";
-        mailBody += "Exception: \n" + session.getAttribute(Globals.EXCEPTION_KEY) + "\n\n";
-        mailBody += "RequestContext: \n" + requestContext + "\n\n\n";
-        mailBody += "SessionContext: \n" + sessionContextGetter(request) + "\n\n\n";
+	sessionRemover(request);
 
-        final ActionForward actionForward; 
-        if (originalMapping != null) {
-            mailBody += "Path: " + originalMapping.getPath() + "\n";
-            mailBody += "Name: " + originalMapping.getName() + "\n";
-        }
-
-        actionForward = new ActionForward();
-        actionForward.setContextRelative(false);
-        actionForward.setRedirect(true);
-        actionForward.setPath("/showErrorPageRegistered.do");
-
-        IUserView userView = (IUserView) session.getAttribute("UserView");
-        if (userView != null) {
-            mailBody += "UserLogedIn: " + userView.getUtilizador() + "\n";
-        } else {
-            mailBody += "No user logged in, or session was lost.\n";
-        }
-
-        mailBody += "\nRequestURI: " + request.getRequestURI() + "\n";
-        mailBody += "\nRequestURL: " + request.getRequestURL() + "\n";
-        mailBody += "\nQueryString: " + request.getQueryString() + "\n";
-
-        mailBody += stackTrace2String(stackTrace);
-        System.out.println(stackTrace2String(stackTrace));
-
-        EMail email = null;
-
-        try {
-        if (!request.getServerName().equals("localhost")) {
-            email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
-            email.send("suporte@dot.ist.utl.pt", "Fenix Error Report" + subject, mailBody);
-        } else {
-            email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
-            email.send("suporte@dot.ist.utl.pt", "Localhost Error Report", mailBody);
-        }
-        } catch (Throwable t) {
-            t.printStackTrace();
-            throw new Error(t);
-        }
-
-        sessionRemover(request);
-
-        return actionForward;
+	return actionForward;
     }
 
-    public ActionForward goBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession();
+    public ActionForward goBack(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	HttpSession session = request.getSession();
 
-        ActionMapping originalMapping = (ActionMapping) session
-                .getAttribute(SessionConstants.ORIGINAL_MAPPING_KEY);
-        sessionRemover(request);
+	ActionMapping originalMapping = (ActionMapping) session.getAttribute(SessionConstants.ORIGINAL_MAPPING_KEY);
+	sessionRemover(request);
 
-        ActionForward actionForward = originalMapping.getInputForward();
+	ActionForward actionForward = originalMapping.getInputForward();
 
-        RequestUtils.selectModule(originalMapping.getModuleConfig().getPrefix(), request, this.servlet
-                .getServletContext());
-        if (actionForward.getPath() == null) {
-            actionForward.setPath("/");
-        }
+	RequestUtils.selectModule(originalMapping.getModuleConfig().getPrefix(), request, this.servlet.getServletContext());
+	if (actionForward.getPath() == null) {
+	    actionForward.setPath("/");
+	}
 
-        return actionForward;
+	return actionForward;
     }
 
     private String stackTrace2String(StackTraceElement[] stackTrace) {
-        String result = "StackTrace: \n ";
-        int i = 0;
-        if (stackTrace != null) {
-            while (i < stackTrace.length) {
-                result += stackTrace[i] + "\n";
-                i++;
-            }
-        }
-        return result;
+	String result = "StackTrace: \n ";
+	int i = 0;
+	if (stackTrace != null) {
+	    while (i < stackTrace.length) {
+		result += stackTrace[i] + "\n";
+		i++;
+	    }
+	}
+	return result;
     }
 
     private void sessionRemover(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
+	HttpSession session = request.getSession(false);
 
-        session.removeAttribute(Globals.ERROR_KEY);
-        session.removeAttribute(SessionConstants.REQUEST_CONTEXT);
+	session.removeAttribute(Globals.ERROR_KEY);
+	session.removeAttribute(SessionConstants.REQUEST_CONTEXT);
 
     }
 
     private String sessionContextGetter(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        Enumeration sessionContents = session.getAttributeNames();
-        String context = "";
-        while (sessionContents.hasMoreElements()) {
-            String sessionElement = sessionContents.nextElement().toString();
-            context += "Element:" + sessionElement + "\n";
-            context += "Element Value:" + session.getAttribute(sessionElement) + "\n";
-        }
+	HttpSession session = request.getSession(false);
+	Enumeration sessionContents = session.getAttributeNames();
+	String context = "";
+	while (sessionContents.hasMoreElements()) {
+	    String sessionElement = sessionContents.nextElement().toString();
+	    context += "Element:" + sessionElement + "\n";
+	    context += "Element Value:" + session.getAttribute(sessionElement) + "\n";
+	}
 
-        return context;
+	return context;
     }
 
 }

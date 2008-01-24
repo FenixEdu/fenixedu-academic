@@ -31,6 +31,7 @@
             <form-property name="email" type="java.lang.String" />
             <form-property name="subject" type="java.lang.String" />
             <form-property name="body" type="java.lang.String" />
+            <form-property name="exceptionInfo" type="java.lang.String" />
         </form-bean>
 		<form-bean name="changeLocaleForm"
 				type="org.apache.struts.validator.DynaValidatorForm"

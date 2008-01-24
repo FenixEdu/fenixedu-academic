@@ -56,13 +56,11 @@ public class FenixPublicExceptionHandler extends ExceptionHandler {
         ActionForward forward = null;
         ActionError error = null;
 
-        HttpSession session = request.getSession(true);
+        request.setAttribute(SessionConstants.ORIGINAL_MAPPING_KEY, mapping);
 
-        session.setAttribute(SessionConstants.ORIGINAL_MAPPING_KEY, mapping);
+        request.setAttribute(SessionConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
 
-        session.setAttribute(SessionConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
-
-        session.setAttribute(SessionConstants.REQUEST_CONTEXT, requestContextGetter(request));
+        request.setAttribute(SessionConstants.REQUEST_CONTEXT, requestContextGetter(request));
 
         if (ae.getScope() != "request") {
             ae.setScope("request");
