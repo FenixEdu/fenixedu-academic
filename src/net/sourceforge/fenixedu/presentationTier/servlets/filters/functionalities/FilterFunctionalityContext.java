@@ -134,7 +134,12 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 		final Content initialContent = container.getInitialContent();
 		if (initialContent != null) {
 		    List<Content> contents = container.getPathTo(initialContent);
-		    this.contents.addAll(contents.subList(1,contents.size()));
+		    if(contents.size()>1) {
+			this.contents.addAll(contents.subList(1,contents.size()));
+		    }
+		    else {
+			this.contents.add(initialContent);
+		    }
 		}
 	    }
 	}
