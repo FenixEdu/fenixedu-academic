@@ -374,6 +374,8 @@
 				<forward name="viewRegistrationAcademicServiceRequestsHistoric" path="academicServiceRequests.management.viewRegistrationAcademicServiceRequestsHistoric"/>
 				<forward name="viewAcademicServiceRequest" path="academicServiceRequests.management.viewAcademicServiceRequest"/>
 				<forward name="prepareRejectAcademicServiceRequest" path="academicServiceRequests.management.prepareRejectAcademicServiceRequest"/>
+				<forward name="prepareSendAcademicServiceRequest" path="academicServiceRequests.management.prepareSendAcademicServiceRequest"/>
+				<forward name="prepareReceiveAcademicServiceRequest" path="academicServiceRequests.management.prepareReceiveAcademicServiceRequest"/>
 				<forward name="prepareCancelAcademicServiceRequest" path="academicServiceRequests.management.prepareCancelAcademicServiceRequest"/>
 				<forward name="prepareConcludeDocumentRequest" path="/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"/>
 				<forward name="searchResults" path="academicServiceRequests.management.searchResults"/>

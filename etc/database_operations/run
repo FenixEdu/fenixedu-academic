@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add column RequestDate" AlterTableAcademicServiceRequest.sql

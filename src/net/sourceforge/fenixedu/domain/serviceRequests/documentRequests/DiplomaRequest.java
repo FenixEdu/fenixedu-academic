@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
+import org.joda.time.DateTime;
+
 public class DiplomaRequest extends DiplomaRequest_Base {
     
     private DiplomaRequest() {
@@ -26,7 +28,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     }
 
     final private void init(final Registration registration, final CycleType requestedCycle) {
-	super.init(registration, Boolean.FALSE, Boolean.FALSE);
+	super.init(registration, new DateTime(), Boolean.FALSE, Boolean.FALSE);
 	
 	this.checkParameters(requestedCycle);
 	
@@ -189,4 +191,8 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	return true;
     }
     
+    @Override
+    public boolean isPossibleToSendToOtherEntity() {
+        return false;
+    }
 }

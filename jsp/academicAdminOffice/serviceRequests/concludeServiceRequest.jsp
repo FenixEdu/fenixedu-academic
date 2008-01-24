@@ -25,7 +25,8 @@
 
 <logic:present name="academicServiceRequest" property="activeSituation">
 	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="request.situation"/></strong></p>
-	<fr:view name="academicServiceRequest" property="activeSituation" schema="AcademicServiceRequestSituation.view">
+	<bean:define id="schema" name="academicServiceRequest" property="activeSituation.class.simpleName" />
+	<fr:view name="academicServiceRequest" property="activeSituation" schema="<%= schema.toString() + ".view" %>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
 		<fr:property name="rowClasses" value=",,tdhl1,"/>

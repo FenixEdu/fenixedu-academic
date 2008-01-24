@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.DateTime;
+
 public abstract class CertificateRequest extends CertificateRequest_Base {
 
     protected CertificateRequest() {
@@ -28,7 +30,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     final protected void init(Registration registration, final ExecutionYear executionYear, Boolean freeProcessed,
 	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
 
-	super.init(registration, executionYear, urgentRequest, freeProcessed);
+	super.init(registration, executionYear, new DateTime(), urgentRequest, freeProcessed);
 
 	super.checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
 	super.setDocumentPurposeType(documentPurposeType);
@@ -134,5 +136,10 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     @Override
     public boolean isToPrint() {
 	return true;
+    }
+    
+    @Override
+    public boolean isPossibleToSendToOtherEntity() {
+        return false;
     }
 }

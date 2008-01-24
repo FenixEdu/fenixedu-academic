@@ -9,19 +9,21 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
+import org.joda.time.DateTime;
+
 public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     
     protected CourseGroupChangeRequest() {
         super();
     }
     
-    public CourseGroupChangeRequest(final Registration registration, final CurriculumGroup curriculumGroup, final CourseGroup newCourseGroup, final ExecutionYear executionYear) {
-	this(registration, curriculumGroup, newCourseGroup, executionYear, false, false);
+    public CourseGroupChangeRequest(final Registration registration, final CurriculumGroup curriculumGroup, final CourseGroup newCourseGroup, final ExecutionYear executionYear, final DateTime requestDate) {
+	this(registration, curriculumGroup, newCourseGroup, executionYear, requestDate, false, false);
     }
     
-    public CourseGroupChangeRequest(final Registration registration, final CurriculumGroup curriculumGroup, final CourseGroup newCourseGroup, final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
+    public CourseGroupChangeRequest(final Registration registration, final CurriculumGroup curriculumGroup, final CourseGroup newCourseGroup, final ExecutionYear executionYear, final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
 	this();
-	super.init(registration, executionYear, urgentRequest, freeProcessed);
+	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
 	checkParameters(registration, curriculumGroup, newCourseGroup, executionYear);
 	super.setOldCourseGroup(curriculumGroup.getDegreeModule());
 	super.setNewCourseGroup(newCourseGroup);
@@ -84,5 +86,10 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
             AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
         }
+    }
+    
+    @Override
+    public boolean isPossibleToSendToOtherEntity() {
+        return true;
     }
 }

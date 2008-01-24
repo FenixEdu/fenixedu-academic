@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -18,6 +20,7 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
     private DomainReference<EquivalencePlanRequest> equivalencePlanRequest;
     private String subject;
     private String purpose;
+    private YearMonthDay requestDate;
     
     public RegistrationAcademicServiceRequestCreateBean(final Registration registration) {
 	super(registration);
@@ -77,6 +80,14 @@ public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSe
 
     public void setPurpose(String purpose) {
         this.purpose = purpose;
+    }
+
+    public YearMonthDay getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(YearMonthDay requestDate) {
+        this.requestDate = requestDate;
     }
     
 }

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest;
@@ -25,40 +27,45 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	final Object result;
 	switch (getAcademicServiceRequestType()) {
 	case REINGRESSION:
-	    result = new StudentReingressionRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear());
+	    result = new StudentReingressionRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear(),
+		    getFinalRequestDate());
 	    break;
 
 	case EQUIVALENCE_PLAN:
-	    result = new EquivalencePlanRequest(getRegistration(), getExecutionYear());
+	    result = new EquivalencePlanRequest(getRegistration(), getExecutionYear(), getFinalRequestDate());
 	    break;
 
 	case REVISION_EQUIVALENCE_PLAN:
-	    result = new EquivalencePlanRevisionRequest(getEquivalencePlanRequest(), getExecutionYear());
+	    result = new EquivalencePlanRevisionRequest(getEquivalencePlanRequest(), getExecutionYear(), getFinalRequestDate());
 	    break;
 
 	case COURSE_GROUP_CHANGE_REQUEST:
 	    result = new CourseGroupChangeRequest(getRegistration(), getCurriculumGroup(), getCourseGroup(), ExecutionYear
-		    .readCurrentExecutionYear());
+		    .readCurrentExecutionYear(), getFinalRequestDate());
 	    break;
 
 	case EXTRA_EXAM_REQUEST:
-	    result = new ExtraExamRequest(getRegistration(), getEnrolment(), ExecutionYear.readCurrentExecutionYear());
+	    result = new ExtraExamRequest(getRegistration(), getEnrolment(), ExecutionYear.readCurrentExecutionYear(),
+		    getFinalRequestDate());
 	    break;
 
 	case FREE_SOLICITATION_ACADEMIC_REQUEST:
 	    result = new FreeSolicitationAcademicRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear(),
-		    getSubject(), getPurpose());
+		    getFinalRequestDate(), getSubject(), getPurpose());
 	    break;
-	    
+
 	case PHOTOCOPY_REQUEST:
-	    result = new PhotocopyRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear());
+	    result = new PhotocopyRequest(getRegistration(), ExecutionYear.readCurrentExecutionYear(), getFinalRequestDate());
 	    break;
 
 	default:
 	    result = null;
 	}
-	
+
 	return result;
     }
 
+    private DateTime getFinalRequestDate() {
+	return getRequestDate().toDateTimeAtCurrentTime();
+    }
 }

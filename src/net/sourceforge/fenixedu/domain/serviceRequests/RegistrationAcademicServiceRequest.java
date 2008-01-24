@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -18,16 +20,16 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
         super();
     }
     
-    protected void init(final Registration registration, final Boolean urgentRequest, final Boolean freeProcessed) {
-	init(registration, null, urgentRequest, freeProcessed);
+    protected void init(final Registration registration, final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
+	init(registration, null, requestDate, urgentRequest, freeProcessed);
     }
     
-    protected void init(final Registration registration, final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
+    protected void init(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
 	// first set own parameters because of findAdministrativeOffice
 	checkParameters(registration);
 	super.setRegistration(registration);
 	// then set super parameters
-	super.init(executionYear, urgentRequest, freeProcessed);
+	super.init(executionYear, requestDate, urgentRequest, freeProcessed);
     }
 
     private void checkParameters(final Registration registration) {

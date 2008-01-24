@@ -125,6 +125,14 @@
 		<put name="body" value="/academicAdminOffice/serviceRequests/viewAcademicServiceRequest.jsp"/>
 	</definition>
 	
+	<definition name="academicServiceRequests.management.prepareSendAcademicServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/prepareSendAcademicServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="academicServiceRequests.management.prepareReceiveAcademicServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/prepareReceiveAcademicServiceRequest.jsp"/>
+	</definition>
+	
 	<definition name="academicServiceRequests.management.prepareRejectAcademicServiceRequest" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/prepareRejectAcademicServiceRequest.jsp"/>
 	</definition>

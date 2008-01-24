@@ -5,21 +5,23 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 
+import org.joda.time.DateTime;
+
 public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionRequest_Base {
     
     protected EquivalencePlanRevisionRequest() {
         super();
     }
     
-    public EquivalencePlanRevisionRequest(final EquivalencePlanRequest equivalencePlanRequest, final ExecutionYear executionYear) {
-	this(equivalencePlanRequest, executionYear, false, false);
+    public EquivalencePlanRevisionRequest(final EquivalencePlanRequest equivalencePlanRequest, final ExecutionYear executionYear, final DateTime requestDate) {
+	this(equivalencePlanRequest, executionYear, requestDate, false, false);
     }
     
-    public EquivalencePlanRevisionRequest(final EquivalencePlanRequest equivalencePlanRequest, final ExecutionYear executionYear,
+    public EquivalencePlanRevisionRequest(final EquivalencePlanRequest equivalencePlanRequest, final ExecutionYear executionYear, final DateTime requestDate,
 	    final Boolean urgentRequest, final Boolean freeProcessed) {
 	this();
 	checkParameters(equivalencePlanRequest, executionYear);
-	super.init(equivalencePlanRequest.getRegistration(), executionYear, urgentRequest, freeProcessed);
+	super.init(equivalencePlanRequest.getRegistration(), executionYear, requestDate, urgentRequest, freeProcessed);
 	super.setEquivalencePlanRequest(equivalencePlanRequest);
     }
     
@@ -51,5 +53,10 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
     public void delete() {
         super.setEquivalencePlanRequest(null);
         super.delete();
+    }
+    
+    @Override
+    public boolean isPossibleToSendToOtherEntity() {
+        return true;
     }
 }

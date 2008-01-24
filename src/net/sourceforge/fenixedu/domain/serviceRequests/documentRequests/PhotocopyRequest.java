@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.Photoco
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.DateTime;
+
 public class PhotocopyRequest extends PhotocopyRequest_Base {
 
     protected PhotocopyRequest() {
@@ -14,14 +16,14 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
 	setNumberOfPages(0);
     }
 
-    public PhotocopyRequest(final Registration registration, final ExecutionYear executionYear) {
-	this(registration, executionYear, false, false);
+    public PhotocopyRequest(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
+	this(registration, executionYear, requestDate, false, false);
     }
 
-    public PhotocopyRequest(final Registration registration, final ExecutionYear executionYear, final Boolean urgentRequest,
-	    final Boolean freeProcessed) {
+    public PhotocopyRequest(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate,
+	    final Boolean urgentRequest, final Boolean freeProcessed) {
 	this();
-	super.init(registration, executionYear, urgentRequest, freeProcessed);
+	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
     }
 
     @Override
@@ -36,7 +38,8 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
 
     @Override
     public String getDocumentTemplateKey() {
-	// this request does not need a document template key, because no document will be printed
+	// this request does not need a document template key, because no
+        // document will be printed
 	return null;
     }
 
@@ -63,11 +66,16 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
 
     @Override
     public boolean isPagedDocument() {
-        return true;
+	return true;
+    }
+
+    @Override
+    public boolean isToPrint() {
+	return false;
     }
     
     @Override
-    public boolean isToPrint() {
+    public boolean isPossibleToSendToOtherEntity() {
         return false;
     }
 }

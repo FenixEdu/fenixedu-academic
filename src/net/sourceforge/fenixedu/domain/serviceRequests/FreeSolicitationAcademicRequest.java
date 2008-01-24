@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicRequest_Base {
 
@@ -15,14 +16,15 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
     }
 
     public FreeSolicitationAcademicRequest(final Registration registration, final ExecutionYear executionYear,
-	    final String subject, final String purpose) {
-	this(registration, executionYear, subject, purpose, false, false);
+	    final DateTime requestDate, final String subject, final String purpose) {
+	this(registration, executionYear, subject, purpose, requestDate, false, false);
     }
 
     public FreeSolicitationAcademicRequest(final Registration registration, final ExecutionYear executionYear,
-	    final String subject, final String purpose, final Boolean urgentRequest, final Boolean freeProcessed) {
+	    final String subject, final String purpose, final DateTime requestDate, final Boolean urgentRequest,
+	    final Boolean freeProcessed) {
 	this();
-	super.init(registration, executionYear, urgentRequest, freeProcessed);
+	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
 	checkParameters(subject);
 	super.setSubject(subject);
 	super.setPurpose(purpose);
@@ -52,5 +54,10 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
     @Override
     public EventType getEventType() {
 	return null;
+    }
+    
+    @Override
+    public boolean isPossibleToSendToOtherEntity() {
+        return true;
     }
 }

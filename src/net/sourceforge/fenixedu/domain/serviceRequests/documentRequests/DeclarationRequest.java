@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.Declara
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.DateTime;
+
 public abstract class DeclarationRequest extends DeclarationRequest_Base {
 
     private static final int MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR = 4;
@@ -26,7 +28,7 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     protected void init(Registration registration, ExecutionYear executionYear, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 
-	super.init(registration, executionYear, Boolean.FALSE, freeProcessed);
+	super.init(registration, executionYear, new DateTime(), Boolean.FALSE, freeProcessed);
 
 	super.checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
 	super.setDocumentPurposeType(documentPurposeType);
@@ -124,5 +126,10 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     @Override
     public boolean isToPrint() {
         return true;
+    }
+    
+    @Override
+    public boolean isPossibleToSendToOtherEntity() {
+        return false;
     }
 }

@@ -9845,6 +9845,24 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>SendAcademicServiceRequestToExternalEntity</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.SendAcademicServiceRequestToExternalEntity</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>ReceivedAcademicServiceRequestFromExternalEntity</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ReceivedAcademicServiceRequestFromExternalEntity</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>RejectAcademicServiceRequest</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.RejectAcademicServiceRequest</implementationClass>
 		<description />

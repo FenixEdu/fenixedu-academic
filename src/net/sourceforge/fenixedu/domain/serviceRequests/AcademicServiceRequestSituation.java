@@ -41,7 +41,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	super.setJustification(academicServiceRequestBean.hasJustification() ? academicServiceRequestBean.getJustification() : null);
     }
     
-    private void checkParameters(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
+    protected void checkParameters(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequest == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequest.cannot.be.null");
 	}
@@ -118,10 +118,10 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	    final AcademicServiceRequestBean academicServiceRequestBean) {
 	
 	switch (academicServiceRequestBean.getAcademicServiceRequestSituationType()) {
-	case SENT_TO_UNIT:
-	    return new SentToUnitAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
-	case RECEIVED_FROM_UNIT:
-	    return new ReceivedFromUnitAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
+	case SENT_TO_EXTERNAL_ENTITY:
+	    return new SentToExternalEntityAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
+	case RECEIVED_FROM_EXTERNAL_ENTITY:
+	    return new ReceivedFromExternalEntityAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
 	default:
 	    return new AcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
 	}

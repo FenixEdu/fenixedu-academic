@@ -199,7 +199,7 @@ public class Unit extends Unit_Base {
 		&& !hasAnyProtocols() && !hasAnyPartnerProtocols() && !hasAnyPrecedentDegreeInformations()
 		&& !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators() && !hasAnyExtraWorkRequests()
 		&& !hasAnyExternalRegistrationDatas() && !hasAnyUnitExtraWorkAmounts() && !hasAnyCooperation() && !hasAnyFiles()
-		&& !hasAnyPersistentGroups() && !hasAnyUnitRelatedAcademicServiceRequestSituations();
+		&& !hasAnyPersistentGroups();
     }
 
     @Override

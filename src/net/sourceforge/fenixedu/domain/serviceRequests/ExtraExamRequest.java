@@ -14,34 +14,38 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 
+import org.joda.time.DateTime;
+
 public class ExtraExamRequest extends ExtraExamRequest_Base {
-    
+
     private static List<StudentStatuteType> acceptedStatutes = Arrays.asList(StudentStatuteType.ASSOCIATIVE_LEADER);
-    
+
     protected ExtraExamRequest() {
-        super();
+	super();
     }
-    
-    public ExtraExamRequest(final Registration registration, final Enrolment enrolment, final ExecutionYear executionYear) {
-	this(registration, enrolment, executionYear, false, false);
+
+    public ExtraExamRequest(final Registration registration, final Enrolment enrolment, final ExecutionYear executionYear,
+	    final DateTime requestDate) {
+	this(registration, enrolment, executionYear, requestDate, false, false);
     }
-    
-    public ExtraExamRequest(final Registration registration, final Enrolment enrolment, final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
+
+    public ExtraExamRequest(final Registration registration, final Enrolment enrolment, final ExecutionYear executionYear,
+	    final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
 	this();
-	super.init(registration, executionYear, urgentRequest, freeProcessed);
+	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
 	checkParameters(registration, enrolment, executionYear);
 	super.setEnrolment(enrolment);
     }
-    
+
     private void checkParameters(final Registration registration, final Enrolment enrolment, final ExecutionYear executionYear) {
 	if (executionYear == null) {
 	    throw new DomainException("error.ExtraExamRequest.executionYear.cannot.be.null");
 	}
-	
+
 	if (!registration.hasEnrolments(enrolment)) {
 	    throw new DomainException("error.ExtraExamRequest.registration.doesnot.have.enrolment");
 	}
-	
+
 	if (!studentHasValidStatutes(registration, enrolment)) {
 	    throw new DomainException("error.ExtraExamRequest.registration.doesnot.have.valid.statutes");
 	}
@@ -59,7 +63,7 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 
     @Override
     public void setEnrolment(Enrolment enrolment) {
-        throw new DomainException("error.ExtraExamRequest.cannot.modify.enrolment");
+	throw new DomainException("error.ExtraExamRequest.cannot.modify.enrolment");
     }
 
     @Override
@@ -71,20 +75,25 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     public EventType getEventType() {
 	return null;
     }
-    
+
     @Override
     public void delete() {
-        super.setEnrolment(null);
-        super.delete();
+	super.setEnrolment(null);
+	super.delete();
+    }
+
+    @Override
+    protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.createAcademicServiceRequestSituations(academicServiceRequestBean);
+
+	if (academicServiceRequestBean.isToConclude()) {
+	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
+		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
+	}
     }
     
     @Override
-    protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
-        super.createAcademicServiceRequestSituations(academicServiceRequestBean);
-        
-        if (academicServiceRequestBean.isToConclude()) {
-            AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
-		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
-        }
+    public boolean isPossibleToSendToOtherEntity() {
+        return true;
     }
 }

@@ -32,9 +32,11 @@ public class ConcludeAcademicServiceRequest extends Service {
 	email.setSubject(academicServiceRequest.getDescription());
 	
 	String body = appBundle.getString("message.academicServiceRequest.concluded.mail1");
-	body += " " + academicServiceRequest.getDescription();
+	body += " " + academicServiceRequest.getServiceRequestNumber().toString();
 	body += " " + appBundle.getString("message.academicServiceRequest.concluded.mail2");
-	body += "\n" + appBundle.getString("message.academicServiceRequest.concluded.mail3");
+	body += " " + academicServiceRequest.getDescription();
+	body += " " + appBundle.getString("message.academicServiceRequest.concluded.mail3");
+	body += "\n" + appBundle.getString("message.academicServiceRequest.concluded.mail4");
 	
 	email.setBody(body);
     }

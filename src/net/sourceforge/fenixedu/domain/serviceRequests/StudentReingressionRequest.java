@@ -24,15 +24,15 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
         super();
     }
     
-    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear) {
-	this(registration, executionYear, false, false);
+    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
+	this(registration, executionYear, requestDate, false, false);
     }
     
-    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
+    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
 	this();
 	checkParameters(executionYear);
 	checkRulesToCreate(registration);
-	super.init(registration, executionYear, urgentRequest, freeProcessed);
+	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
 	new StudentReingressionRequestEvent(getAdministrativeOffice(), getPerson(), this);
     }
 
@@ -103,5 +103,10 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
             AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
         }
+    }
+    
+    @Override
+    public boolean isPossibleToSendToOtherEntity() {
+        return true;
     }
 }

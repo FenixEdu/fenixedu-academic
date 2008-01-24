@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
@@ -48,19 +49,21 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return requests.isEmpty() ? 1 : requests.last().getServiceRequestNumber() + 1;
     }
 
-    protected void init(final Boolean urgentRequest, final Boolean freeProcessed) {
-	init(null, urgentRequest, freeProcessed);
+    protected void init(final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
+	init(null, requestDate, urgentRequest, freeProcessed);
     }
 
-    protected void init(final ExecutionYear executionYear, final Boolean urgentRequest, final Boolean freeProcessed) {
+    protected void init(final ExecutionYear executionYear, final DateTime requestDate, final Boolean urgentRequest,
+	    final Boolean freeProcessed) {
 
 	final AdministrativeOffice administrativeOffice = findAdministrativeOffice();
-	checkParameters(administrativeOffice, urgentRequest, freeProcessed);
+	checkParameters(administrativeOffice, requestDate, urgentRequest, freeProcessed);
 
 	super.setAdministrativeOffice(administrativeOffice);
 	super.setUrgentRequest(urgentRequest);
 	super.setFreeProcessed(freeProcessed);
 	super.setExecutionYear(executionYear);
+	super.setRequestDate(requestDate);
 
 	createAcademicServiceRequestSituations(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
 		AccessControl.getPerson().getEmployee()));
@@ -71,12 +74,17 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return person != null ? person.getEmployeeAdministrativeOffice() : null;
     }
 
-    private void checkParameters(final AdministrativeOffice administrativeOffice, final Boolean urgentRequest,
-	    final Boolean freeProcessed) {
+    private void checkParameters(final AdministrativeOffice administrativeOffice, final DateTime requestDate,
+	    final Boolean urgentRequest, final Boolean freeProcessed) {
 
 	if (administrativeOffice == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.administrativeOffice.cannot.be.null");
 	}
+
+	if (requestDate == null || requestDate.isAfterNow()) {
+	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.invalid.requestDate");
+	}
+
 	if (urgentRequest == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.urgentRequest.cannot.be.null");
 	}
@@ -98,6 +106,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     @Override
     final public void setExecutionYear(ExecutionYear executionYear) {
 	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.executionYear");
+    }
+
+    @Override
+    final public void setRequestDate(DateTime requestDate) {
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.requestDate");
     }
 
     final public boolean isUrgentRequest() {
@@ -143,6 +156,18 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     final public void process() throws DomainException {
 	final Employee employee = AccessControl.getPerson().getEmployee();
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.PROCESSING, employee));
+    }
+
+    final public void sendToExternalEntity(final YearMonthDay sendDate, final String description) {
+	final Employee employee = AccessControl.getPerson().getEmployee();
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY, employee, sendDate,
+		description));
+    }
+
+    final public void receivedFromExternalEntity(final YearMonthDay receivedDate, final String description) {
+	final Employee employee = AccessControl.getPerson().getEmployee();
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY, employee,
+		receivedDate, description));
     }
 
     final public void reject(final String justification) {
@@ -284,14 +309,21 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	switch (situationType) {
 
 	case NEW:
-	    return Collections.unmodifiableList(Arrays.asList(new AcademicServiceRequestSituationType[] {
-		    AcademicServiceRequestSituationType.CANCELLED, AcademicServiceRequestSituationType.REJECTED,
-		    AcademicServiceRequestSituationType.PROCESSING }));
+	    return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
+		    AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.PROCESSING));
 
 	case PROCESSING:
-	    return Collections.unmodifiableList(Arrays.asList(new AcademicServiceRequestSituationType[] {
-		    AcademicServiceRequestSituationType.CANCELLED, AcademicServiceRequestSituationType.REJECTED,
-		    AcademicServiceRequestSituationType.CONCLUDED }));
+	    return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
+		    AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY,
+		    AcademicServiceRequestSituationType.CONCLUDED));
+
+	case SENT_TO_EXTERNAL_ENTITY:
+	    return Collections.unmodifiableList(Collections
+		    .singletonList(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY));
+
+	case RECEIVED_FROM_EXTERNAL_ENTITY:
+	    return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CONCLUDED,
+		    AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.CANCELLED));
 
 	case CONCLUDED:
 	    return Collections.singletonList(AcademicServiceRequestSituationType.DELIVERED);
@@ -327,6 +359,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING);
     }
 
+    final public boolean isSentToExternalEntity() {
+	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
+    }
+
     final public boolean isConcluded() {
 	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CONCLUDED);
     }
@@ -348,7 +384,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public boolean isEditable() {
-	return (isNewRequest() || isProcessing() || isConcluded());
+	return !(isRejected() || isCancelled() || isDelivered());
     }
 
     final public boolean finishedSuccessfully() {
@@ -357,6 +393,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public boolean isDocumentRequest() {
 	return this instanceof DocumentRequest;
+    }
+
+    public boolean isRequestAvailableToSendToExternalEntity() {
+	return isPossibleToSendToOtherEntity() && isProcessing();
     }
 
     final public boolean createdByStudent() {
@@ -390,9 +430,16 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return false;
     }
 
+    abstract public Person getPerson();
+
     abstract public EventType getEventType();
 
     abstract public String getDescription();
 
-    abstract public Person getPerson();
+    /**
+         * Indicates if is possible to AdministrativeOffice send this request to
+         * another entity
+         */
+    abstract public boolean isPossibleToSendToOtherEntity();
+
 }

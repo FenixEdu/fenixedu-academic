@@ -246,8 +246,8 @@
 
 
 <p class="mtop15">
-	<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests"/></b>
-	<bean:define id="processingAcademicServiceRequests" name="registration" property="processingAcademicServiceRequests"/>
+	<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="notConcluded.requests"/></b>
+	<bean:define id="processingAcademicServiceRequests" name="registration" property="toConcludeAcademicServiceRequests"/>
 	<logic:notEmpty name="processingAcademicServiceRequests">
 		<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.view">
 			<fr:layout name="tabular">
@@ -264,15 +264,24 @@
 				<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 				<fr:property name="key(cancel)" value="cancel"/>
 				<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>				
+				
+				<fr:property name="linkFormat(send)" value="/academicServiceRequestsManagement.do?method=prepareSendAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
+				<fr:property name="key(send)" value="label.send"/>
+				<fr:property name="visibleIf(send)" value="requestAvailableToSendToExternalEntity"/>
+				
+				<fr:property name="linkFormat(receiveFrom)" value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
+				<fr:property name="key(receiveFrom)" value="label.receiveFrom"/>
+				<fr:property name="visibleIf(receiveFrom)" value="sentToExternalEntity"/>
  				
 				<fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 				<fr:property name="key(conclude)" value="conclude"/>
-				<%--<fr:property name="visibleIf(conclude)" value="availableForEmployeeToActUpon"/>--%>				
 
-				<fr:property name="order(view)" value="1" />
-				<fr:property name="order(reject)" value="2" />
-				<fr:property name="order(cancel)" value="3" />
-				<fr:property name="order(conclude)" value="4" />
+				<fr:property name="order(view)" 		value="1" />
+				<fr:property name="order(reject)" 		value="2" />
+				<fr:property name="order(cancel)"		value="3" />
+				<fr:property name="order(send)"			value="4" />
+				<fr:property name="order(receiveFrom)"	value="5" />
+				<fr:property name="order(conclude)"		value="6" />
 				
 				<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
 			</fr:layout>
