@@ -82,7 +82,7 @@
 		<fr:view name="files" schema="show.unit.files.noPermission">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle2 thlight"/>
-				<fr:property name="columnClasses" value="bold nowrap,smalltxt,smalltxt width100px acenter nowrap,,smalltxt,smalltxt color888 nowrap,width100px"/>
+				<fr:property name="columnClasses" value="bold nowrap,smalltxt,smalltxt width100px acenter nowrap,,smalltxt,smalltxt color888 nowrap,nowrap"/>
 				<fr:property name="sortParameter" value="sort"/>
 				<fr:property name="sortIgnored" value="true"/>
 				<fr:property name="sortBy" value="<%= request.getParameter("sort") == null ? "displayName" : request.getParameter("sort")%>"/>

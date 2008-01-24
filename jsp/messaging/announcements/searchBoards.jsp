@@ -73,7 +73,7 @@
 
 	<logic:present name="boards">
 		<logic:notEmpty name="boards">
-			<div class="mtop2">
+			<div class="mtop1">
 				<jsp:include page="/messaging/announcements/listUnitBoards.jsp"/>
 			</div>
 		</logic:notEmpty>

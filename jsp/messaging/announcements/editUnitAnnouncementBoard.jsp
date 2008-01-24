@@ -9,9 +9,10 @@
 <em><bean:message key="label.communicationPortal.header" bundle="MESSAGING_RESOURCES"/></em>
 <h2><bean:message key="label.manageChannel" bundle="MESSAGING_RESOURCES"/></h2>
 
+
 <jsp:include flush="true" page="/messaging/context.jsp"/>
 
-<p class="mbottom0"><b>Unidade</b>: <span class="emphasis1"><bean:write name="unit" property="name"/></span></p>
+<h3 class="mbottom0 fwnormal">Unidade: <span class="emphasis1"><bean:write name="unit" property="name"/></span></h3>
 
 <logic:present name="announcementBoard">
 <bean:define id="contextPrefix" name="contextPrefix" />
@@ -25,18 +26,18 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnAction" property="returnAction"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.returnMethod" property="returnMethod"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tabularVersion" property="tabularVersion"/>
-		<table class="tstyle5 thlight thright">
+		<table class="tstyle5 thlight thright thmiddle">
 			<tr>
 				<th>
 					Nome:
 				</th>
 				<td>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="40"/>
 				</td>				
 			</tr>
 			<tr>
 				<th>
-					<bean:message key="label.mandatory" bundle="MESSAGING_RESOURCES"/>
+					<bean:message key="label.mandatory" bundle="MESSAGING_RESOURCES"/>:
 				</th>
 				<td>
 					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.mandatory" property="mandatory" value="true"/>
@@ -75,11 +76,13 @@
 			</tr>										
 		</table>
 		<html:submit>
-			Editar
+			Guardar Alterações
 		</html:submit>
 	</html:form>
 
-<p>Apagar este canal? 
+
+<p class="mvert1">
+	Apagar este canal? 
 	<html:link action="<%= contextPrefix + "method=deleteAnnouncementBoard&amp;announcementBoardId="+announcementBoardId+ "&amp;"+extraParameters +"&amp;returnAction="+request.getParameter("returnAction") + "&amp;returnMethod="+request.getParameter("returnMethod")%>">
 		Apagar
 	</html:link>

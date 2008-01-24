@@ -29,13 +29,13 @@
 
 <%--Title --%>
 	<tr>
-		<th>
+		<th style="width: 125px;">
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
 		</th>
 		<td>
 			<fr:create id="announcement-subject-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="subject" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 				<fr:layout>
-					<fr:property name="size" value="40"/>
+					<fr:property name="size" value="50"/>
 				</fr:layout>
 			</fr:create>
 		</td>
@@ -82,7 +82,7 @@
 <table class="tstyle5 thlight thtop thright mtop025">
 <%-- Excerto --%>
 	<tr>
-		<th>
+		<th style="width: 125px;">
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.excerpt.label"/>:
 		</th>
 		<td>

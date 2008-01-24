@@ -51,7 +51,8 @@ function check(e,v){
 </script>
 
 <h2><bean:message key="label.manager.findPerson"/></h2>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <table class="search mbottom0">
 	<tr>
@@ -154,9 +155,11 @@ function check(e,v){
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message key="button.search"/>
 				</html:submit>
+				<%--
 				<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
 					<bean:message key="label.clear"/>
 				</html:reset>
+				--%>
 			</td>
 		</tr>
 	</table>

@@ -220,7 +220,7 @@ if (month != null && year!=null)
 			<fr:view name="announcements" schema="announcement.view-with-creationDate-subject-online">
 				<fr:layout name="tabular-sortable">
 					<fr:property name="classes" value="tstyle2"/>
-			     		<fr:property name="columnClasses" value=""/>
+			     		<fr:property name="columnClasses" value=",nowrap,acenter,acenter,nowrap"/>
 						<fr:property name="link(edit)" value="<%= contextPrefix + "method=editAnnouncement" + "&amp;"+extraParameters + "&amp;tabularVersion=true"%>"/>
 						<fr:property name="param(edit)" value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId"/>
 						<fr:property name="key(edit)" value="messaging.edit.link"/>

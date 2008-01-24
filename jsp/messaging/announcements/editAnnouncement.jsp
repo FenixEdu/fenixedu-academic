@@ -30,15 +30,15 @@
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
-<%-- Tï¿½tulo --%>
+<%-- Título --%>
 	<tr>
-		<th>
+		<th style="width: 125px;">
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
 		</th>
 		<td>
 			<fr:edit id="announcement-subject-validated" name="announcement" slot="subject" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 				<fr:layout>
-					<fr:property name="size" value="30"/>
+					<fr:property name="size" value="50"/>
 				</fr:layout>
 			</fr:edit>
 			<fr:message for="announcement-subject-validated"/>
@@ -70,7 +70,7 @@
 <table class="tstyle5 thlight thtop thright mtop025">
 <%-- Excerto --%>
 	<tr>
-		<th>
+		<th style="width: 125px;">
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.excerpt.label"/>:
 		</th>
 		<td>
@@ -141,7 +141,7 @@
 		</td>
 	</tr>
 
-<%-- Inï¿½cio do evento --%>
+<%-- Início do evento --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
@@ -161,7 +161,7 @@
 		</td>
 	</tr>
 
-<%-- Inï¿½cio de publicaï¿½ï¿½o --%>
+<%-- Início de publicação --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
@@ -171,7 +171,7 @@
 		</td>
 	</tr>
 
-<%-- Fim de publicaï¿½ï¿½o --%>
+<%-- Fim de publicação --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:
@@ -181,7 +181,7 @@
 		</td>
 	</tr>
 
-<%-- Visï¿½vel --%>
+<%-- Visível --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:

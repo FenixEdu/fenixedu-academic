@@ -10,7 +10,7 @@
 	<bean:define id="announcement" name="announcement" type="net.sourceforge.fenixedu.domain.messaging.Announcement"/>
 		
 	<%-- <em><bean:message key="label.communicationPortal.header" bundle="MESSAGING_RESOURCES"/></em> --%>
-	<h2><bean:write name="announcement" property="announcementBoard.name"/></h2>
+	<h2><bean:message key="messaging.viewAnnouncement.title" bundle="MESSAGING_RESOURCES"/></h2>
 
 	<%
 	String contextPrefix = (String) request.getAttribute("contextPrefix");
@@ -20,6 +20,7 @@
 	
 
 <div class="mvert2 announcement">
+
 
 	<%-- Publication Date --%>
 	<p class="mvert025 smalltxt greytxt1">
@@ -32,7 +33,7 @@
 				if (announcement.getAnnouncementBoard().hasWriter(person)) {
 				%>
 					<logic:notEmpty name="announcement" property="publicationEnd">
-					 	atï¿½ 
+					 	até
 						<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
 					</logic:notEmpty>
 				<%
@@ -46,8 +47,8 @@
 			</logic:empty>
 		</span>
 	</p>
-				
-<%-- Tï¿½tulo --%>
+			
+<%-- Título --%>
 	<h3 class="mvert025">
 		<b><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></b>
 	</h3>
@@ -61,8 +62,12 @@
 <p class="mvert025">
 	<em class="smalltxt" style="color: #888;">
 
+<%-- Canal --%>
 
-<%-- Autor --%>		 		
+Canal: <bean:write name="announcement" property="announcementBoard.name"/> -
+
+<%-- Autor --%>
+	
 	<logic:notEmpty name="announcement" property="author">
 		<logic:notEmpty name="announcement" property="authorEmail">
 			Autor: 
@@ -121,9 +126,9 @@
 	}
 	%>
 
-<%-- Data de Criaï¿½ï¿½o --%>
+<%-- Data de Criação --%>
 	<html:link linkName="<%= "ID_" + announcement.getIdInternal().toString()%>"/>
-		<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES"/>
+		<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES"/>: 
 		<fr:view name="announcement" property="creationDate" type="org.joda.time.DateTime" layout="no-time"/>
 	</em>
 </p>
