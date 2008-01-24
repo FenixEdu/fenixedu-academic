@@ -1,15 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.tests.NewQuestionGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.GroupElementBean;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 public class DisassociableParentsForQuestion implements DataProvider {
 

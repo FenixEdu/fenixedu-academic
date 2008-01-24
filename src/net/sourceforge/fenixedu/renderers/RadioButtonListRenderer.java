@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.renderers;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLabel;
 import net.sourceforge.fenixedu.renderers.components.HtmlRadioButton;

@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
-import java.util.Collections;
 import java.util.List;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.domain.tests.NewQuestionGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.GroupElementBean;

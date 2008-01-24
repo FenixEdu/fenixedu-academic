@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;

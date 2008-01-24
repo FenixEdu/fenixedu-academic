@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
+
 import org.joda.time.Chronology;
 import org.joda.time.TimeOfDay;
 import org.joda.time.chrono.GregorianChronology;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
-import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 
 public class WorkScheduleDaySheet implements Serializable {
 

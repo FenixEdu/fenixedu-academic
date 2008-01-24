@@ -3,9 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.resea
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventPageContainerBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
-import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 
 public class MergeEvents extends Service {
     

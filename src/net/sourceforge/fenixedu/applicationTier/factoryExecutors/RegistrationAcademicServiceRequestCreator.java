@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest;
@@ -14,6 +12,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Photocop
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+
+import org.joda.time.DateTime;
 
 public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements
 	FactoryExecutor {

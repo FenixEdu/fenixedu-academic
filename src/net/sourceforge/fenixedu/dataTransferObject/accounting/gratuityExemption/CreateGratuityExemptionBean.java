@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType;
 import net.sourceforge.fenixedu.util.Money;
+
+import org.joda.time.YearMonthDay;
 
 public class CreateGratuityExemptionBean implements Serializable {
 

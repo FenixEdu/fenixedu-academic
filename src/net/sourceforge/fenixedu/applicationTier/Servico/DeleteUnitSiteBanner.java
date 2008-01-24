@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.IFileManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.IFileManager;
 
 public class DeleteUnitSiteBanner extends Service {
 

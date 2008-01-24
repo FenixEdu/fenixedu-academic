@@ -1,13 +1,10 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import org.apache.velocity.runtime.parser.node.GetExecutor;
-
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.IFileManager;
 
 public class BlueprintFile extends BlueprintFile_Base {
 

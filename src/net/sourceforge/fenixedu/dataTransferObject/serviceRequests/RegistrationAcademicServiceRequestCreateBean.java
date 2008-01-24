@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -10,6 +8,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+
+import org.joda.time.YearMonthDay;
 
 public class RegistrationAcademicServiceRequestCreateBean extends RegistrationSelectExecutionYearBean {
     

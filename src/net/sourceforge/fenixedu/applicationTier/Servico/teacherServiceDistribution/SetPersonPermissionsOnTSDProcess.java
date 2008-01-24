@@ -2,10 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupDifference;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 
 public class SetPersonPermissionsOnTSDProcess extends Service {

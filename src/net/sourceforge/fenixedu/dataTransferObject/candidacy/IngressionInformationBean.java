@@ -5,11 +5,11 @@ package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 
 import java.io.Serializable;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.util.EntryPhase;
+
+import org.joda.time.YearMonthDay;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

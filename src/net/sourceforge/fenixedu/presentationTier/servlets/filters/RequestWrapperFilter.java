@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.Filter;

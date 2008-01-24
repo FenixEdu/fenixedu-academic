@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 
-import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
 
 public class SearchFieldsForResultPublicationsProvider implements DataProvider {
 

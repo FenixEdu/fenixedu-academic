@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.dataTransferObject.student.ExternalRegistrationDataBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * 

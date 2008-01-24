@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
 public class CreateTeacherServiceDistribution extends Service {
 	public TeacherServiceDistribution run(Integer tsdProcessPhaseId, Integer fatherTeacherServiceDistributionId, String name) {

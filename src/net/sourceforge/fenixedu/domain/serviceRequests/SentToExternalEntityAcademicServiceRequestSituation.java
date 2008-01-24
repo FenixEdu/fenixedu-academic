@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
 
 public class SentToExternalEntityAcademicServiceRequestSituation extends SentToExternalEntityAcademicServiceRequestSituation_Base {
 

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.renderers.components;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.jsp.PageContext;

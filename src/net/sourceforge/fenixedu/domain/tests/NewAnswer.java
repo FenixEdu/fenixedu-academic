@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain.tests;
 
 import java.util.List;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer;
 import net.sourceforge.fenixedu.domain.tests.answers.NullAnswer;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
+
+import org.joda.time.DateTime;
 
 public class NewAnswer extends NewAnswer_Base {
 

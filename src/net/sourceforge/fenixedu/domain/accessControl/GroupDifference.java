@@ -6,7 +6,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public final class GroupDifference extends NodeGroup {

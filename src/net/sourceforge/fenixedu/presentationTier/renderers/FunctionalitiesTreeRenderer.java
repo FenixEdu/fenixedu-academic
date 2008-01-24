@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 
 /**

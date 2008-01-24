@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.stm;
 
-import org.apache.ojb.broker.PersistenceBroker;
-
 import net.sourceforge.fenixedu.domain.DomainObject;
+
+import org.apache.ojb.broker.PersistenceBroker;
 
 public interface FenixTransaction {
     public void setReadOnly();

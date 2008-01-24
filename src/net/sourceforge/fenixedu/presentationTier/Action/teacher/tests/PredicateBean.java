@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewChoice;
 import net.sourceforge.fenixedu.domain.tests.NewCorrector;
-import net.sourceforge.fenixedu.domain.tests.NewModelRestriction;
 import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.domain.tests.predicates.CompositePredicateType;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;

@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ResourceBundle;
 
-import org.apache.commons.lang.StringUtils;
-
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 public enum GradeScale {
 

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.taglib.tiles.GetAttributeTag;
 import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 

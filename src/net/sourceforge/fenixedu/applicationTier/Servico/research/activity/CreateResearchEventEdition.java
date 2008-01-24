@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultEventAssociationBean;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
+
+import org.joda.time.YearMonthDay;
 
 public class CreateResearchEventEdition extends Service {
 

@@ -2,9 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -13,6 +10,8 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 public class InfoDegree extends InfoObject implements Comparable {
 

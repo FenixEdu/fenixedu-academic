@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;

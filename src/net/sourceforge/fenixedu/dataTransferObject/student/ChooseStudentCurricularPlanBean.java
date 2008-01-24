@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;

@@ -5,8 +5,6 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.stm.Transaction;
-import net.sourceforge.fenixedu.stm.TransactionChangeLogs;
-import net.sourceforge.fenixedu.stm.VBox;
 
 import org.apache.ojb.broker.PersistenceBrokerException;
 import org.apache.ojb.broker.accesslayer.RowReaderDefaultImpl;

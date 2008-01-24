@@ -1,11 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -15,6 +10,10 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+
+import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class DeleteWrittenEvaluation extends Service {
 

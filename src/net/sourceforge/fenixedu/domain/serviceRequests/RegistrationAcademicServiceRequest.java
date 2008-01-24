@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -13,6 +11,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.joda.time.DateTime;
 
 abstract public class RegistrationAcademicServiceRequest extends RegistrationAcademicServiceRequest_Base {
     

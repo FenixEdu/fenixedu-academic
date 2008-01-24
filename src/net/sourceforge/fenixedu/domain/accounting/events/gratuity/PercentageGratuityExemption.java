@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
 import java.math.BigDecimal;
 
-import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.EventState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
+
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class PercentageGratuityExemption extends PercentageGratuityExemption_Base {
 

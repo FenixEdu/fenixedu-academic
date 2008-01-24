@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Login;
@@ -18,6 +16,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+
+import org.joda.time.YearMonthDay;
 
 public class CreateResearchContract extends Service {
 

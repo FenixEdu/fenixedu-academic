@@ -1,11 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
-import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
-import net.sourceforge.fenixedu.util.Month;
+
+import org.joda.time.YearMonthDay;
 
 public class MergeEventEditionPageContainerBean extends MergeResearchActivityPageContainerBean {
     private String edition;

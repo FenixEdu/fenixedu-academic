@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.sql.Blob;
 import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class ResultSetReader {
 

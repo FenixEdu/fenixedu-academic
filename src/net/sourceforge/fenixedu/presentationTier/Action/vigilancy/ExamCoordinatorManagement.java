@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

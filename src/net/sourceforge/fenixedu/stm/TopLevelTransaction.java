@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.stm;
 
 import java.sql.SQLException;
 import java.util.Iterator;
-import java.util.Set;
 
 import jvstm.ActiveTransactionsRecord;
 import jvstm.CommitException;
@@ -11,12 +10,11 @@ import jvstm.cps.ConsistencyCheckTransaction;
 import jvstm.cps.ConsistentTopLevelTransaction;
 import jvstm.cps.DependenceRecord;
 import jvstm.util.Cons;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
-
-import net.sourceforge.fenixedu.domain.DomainObject;
 
 public class TopLevelTransaction extends ConsistentTopLevelTransaction implements FenixTransaction {
 

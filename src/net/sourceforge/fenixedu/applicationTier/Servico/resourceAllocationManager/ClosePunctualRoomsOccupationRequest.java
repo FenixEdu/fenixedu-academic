@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
+
+import org.joda.time.DateTime;
 
 public class ClosePunctualRoomsOccupationRequest extends Service {
 

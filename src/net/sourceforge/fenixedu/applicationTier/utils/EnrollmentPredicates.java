@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.utils;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
 import org.apache.commons.collections.Predicate;
 

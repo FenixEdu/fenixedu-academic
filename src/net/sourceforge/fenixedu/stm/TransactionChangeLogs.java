@@ -4,20 +4,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedList;
-
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
 import jvstm.ActiveTransactionsRecord;
 import jvstm.VBoxBody;
 import jvstm.util.Cons;
-
 import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.ojb.broker.PersistenceBroker;

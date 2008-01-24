@@ -88,9 +88,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.utl.ist.fenix.tools.file.FileManagerException;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-
 /**
  * @author Fernanda Quit�rio
  * @deprecated

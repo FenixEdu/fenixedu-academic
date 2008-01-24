@@ -1,23 +1,22 @@
 package net.sourceforge.fenixedu.stm;
 
-import dml.DomainModel;
-import dml.DomainClass;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.SQLException;
-
-import java.util.Map;
-import java.util.IdentityHashMap;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.Map;
+
+import net.sourceforge.fenixedu._development.LogLevel;
+import net.sourceforge.fenixedu._development.MetadataManager;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 
-import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu._development.MetadataManager;
+import dml.DomainClass;
+import dml.DomainModel;
 
 public class DomainClassInfo {
 

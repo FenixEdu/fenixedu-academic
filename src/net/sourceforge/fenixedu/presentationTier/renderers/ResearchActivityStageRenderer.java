@@ -4,7 +4,6 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage;
-import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;

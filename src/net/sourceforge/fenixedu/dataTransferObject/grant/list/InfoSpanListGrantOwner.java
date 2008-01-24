@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.list;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 
 /**
  * @author Pica

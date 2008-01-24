@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 public class ManagerAnnouncementForwardAction extends FenixAction {
 

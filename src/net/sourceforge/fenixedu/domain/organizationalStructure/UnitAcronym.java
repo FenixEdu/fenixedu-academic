@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import dml.runtime.Relation;
 import dml.runtime.RelationAdapter;
 
 

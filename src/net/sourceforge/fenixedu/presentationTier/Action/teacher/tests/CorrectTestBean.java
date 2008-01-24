@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.tests;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.tests.TestsGrade;
 import net.sourceforge.fenixedu.domain.tests.NewTest;
+import net.sourceforge.fenixedu.domain.tests.TestsGrade;
 
 public class CorrectTestBean implements Serializable {
 

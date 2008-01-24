@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.domain.research.activity;
 
 import java.util.List;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.YearMonthDay;
 
 public class ScientificJournalParticipation extends ScientificJournalParticipation_Base {
     

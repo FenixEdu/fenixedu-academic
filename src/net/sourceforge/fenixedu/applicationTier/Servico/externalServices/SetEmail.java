@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
+
+import org.apache.commons.lang.StringUtils;
 
 public class SetEmail extends Service {
 

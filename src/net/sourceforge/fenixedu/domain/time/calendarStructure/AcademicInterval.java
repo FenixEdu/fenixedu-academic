@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;

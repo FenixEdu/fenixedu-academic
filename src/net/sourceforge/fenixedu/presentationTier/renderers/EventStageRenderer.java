@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 
 public class EventStageRenderer extends ResearchActivityStageRenderer{
 

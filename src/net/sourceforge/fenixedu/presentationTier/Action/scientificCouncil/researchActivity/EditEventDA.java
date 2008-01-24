@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventEditionPageContainerBean;
-import net.sourceforge.fenixedu.dataTransferObject.MergeJournalIssuePageContainerBean;
 import net.sourceforge.fenixedu.dataTransferObject.PageContainerBean;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
-import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.BeanComparator;

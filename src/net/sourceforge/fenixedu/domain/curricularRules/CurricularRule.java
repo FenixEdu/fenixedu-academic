@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.curricularRules;
 
 import java.util.List;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -18,6 +16,8 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperator;
+
+import org.joda.time.YearMonthDay;
 
 public abstract class CurricularRule extends CurricularRule_Base implements ICurricularRule {
 

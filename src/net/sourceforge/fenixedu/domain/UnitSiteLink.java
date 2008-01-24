@@ -2,16 +2,16 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
-import dml.runtime.RelationAdapter;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.domain.InverseOrderedRelationAdapter;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
+import dml.runtime.RelationAdapter;
 
 public class UnitSiteLink extends UnitSiteLink_Base {
     

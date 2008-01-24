@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import com.sun.faces.el.impl.parser.ParseException;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -21,6 +19,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
+
+import com.sun.faces.el.impl.parser.ParseException;
 
 /**
  * @author Susana Fernandes

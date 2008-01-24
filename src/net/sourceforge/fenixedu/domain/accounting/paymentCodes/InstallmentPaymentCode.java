@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentCodes;
 
-import java.util.Comparator;
-
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;

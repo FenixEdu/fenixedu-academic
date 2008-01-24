@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * A <code>Container</code> is a composed content, that is, a grouping of

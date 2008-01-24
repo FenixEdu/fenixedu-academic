@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions;
 
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**

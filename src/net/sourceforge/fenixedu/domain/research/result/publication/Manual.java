@@ -1,17 +1,16 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
-import bibtex.dom.BibtexEntry;
-import bibtex.dom.BibtexFile;
-import bibtex.dom.BibtexPersonList;
-import bibtex.dom.BibtexString;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+import bibtex.dom.BibtexEntry;
+import bibtex.dom.BibtexFile;
+import bibtex.dom.BibtexPersonList;
+import bibtex.dom.BibtexString;
 
 /**
  * Technical documentation. Required fields: title. Optional fields: author,

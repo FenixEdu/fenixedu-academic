@@ -14,8 +14,8 @@ import java.util.Vector;
 
 import javassist.CannotCompileException;
 import javassist.NotFoundException;
-import net.sourceforge.fenixedu.injectionCode.injector.CodeGenerator;
 import net.sourceforge.fenixedu.injectionCode.injector.ChecksInjector;
+import net.sourceforge.fenixedu.injectionCode.injector.CodeGenerator;
 import net.sourceforge.fenixedu.injectionCode.injector.ChecksInjector.InvalidReturnTypeForGetter;
 import net.sourceforge.fenixedu.injectionCode.injector.ChecksInjector.NoGetterAvaliableForSpecifiedSlot;
 

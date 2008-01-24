@@ -11,8 +11,6 @@ import javax.servlet.ServletException;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 
 public class SectionProcessor extends SiteElementPathProcessor {
 

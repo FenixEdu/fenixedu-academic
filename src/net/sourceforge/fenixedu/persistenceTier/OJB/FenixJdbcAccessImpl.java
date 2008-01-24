@@ -4,19 +4,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import net.sourceforge.fenixedu._development.LogLevel;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.stm.Transaction;
+
 import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PBFactoryException;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerException;
 import org.apache.ojb.broker.PersistenceBrokerSQLException;
+import org.apache.ojb.broker.accesslayer.JdbcAccessImpl;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
-import org.apache.ojb.broker.accesslayer.JdbcAccessImpl;
 import org.apache.ojb.broker.util.ClassHelper;
-
-import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.stm.Transaction;
 
 
 public class FenixJdbcAccessImpl extends JdbcAccessImpl {

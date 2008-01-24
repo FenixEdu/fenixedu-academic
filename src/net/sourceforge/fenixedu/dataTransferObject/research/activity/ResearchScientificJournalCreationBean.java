@@ -2,14 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 
 import java.io.Serializable;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
-
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.YearMonthDay;
 
 public class ResearchScientificJournalCreationBean implements Serializable {
 	private DomainReference<ScientificJournal> scientificJournal;

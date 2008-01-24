@@ -19,13 +19,11 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExamProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCourseProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCoursesProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PathElementsProvider;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.PathProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ProcessingContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ScheduleProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SchoolClassProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SectionProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SemesterProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.YearProcessor;
 

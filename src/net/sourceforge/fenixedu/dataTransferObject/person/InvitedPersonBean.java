@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.person;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+
+import org.joda.time.YearMonthDay;
 
 public class InvitedPersonBean extends ExternalPersonBean {
    

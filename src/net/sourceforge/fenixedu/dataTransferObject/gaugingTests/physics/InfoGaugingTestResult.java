@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 
 /**

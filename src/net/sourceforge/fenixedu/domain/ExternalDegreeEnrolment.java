@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.apache.commons.lang.StringUtils;
 
 public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
     

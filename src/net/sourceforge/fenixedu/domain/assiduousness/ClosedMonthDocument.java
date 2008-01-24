@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 public class ClosedMonthDocument extends ClosedMonthDocument_Base {
 

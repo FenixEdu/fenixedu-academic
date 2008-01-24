@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
@@ -15,6 +13,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupB
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class VigilantsForGivenVigilantGroup implements DataProvider {
 

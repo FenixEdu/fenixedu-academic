@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.injectionCode;
 
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.injectionCode.injector.CodeGenerator;
+
+import org.apache.commons.lang.StringUtils;
 
 public class FenixDomainObjectLogCallsGenerator implements CodeGenerator {
 

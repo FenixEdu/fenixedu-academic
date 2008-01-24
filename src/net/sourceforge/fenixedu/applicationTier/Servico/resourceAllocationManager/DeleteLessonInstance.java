@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Lesson;
+
+import org.joda.time.YearMonthDay;
 
 public class DeleteLessonInstance extends Service {
 

@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu._development;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 

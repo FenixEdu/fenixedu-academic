@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+
+import org.apache.commons.lang.StringUtils;
 
 public class PersistentGroupMembers extends PersistentGroupMembers_Base {
         

@@ -4,9 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.joda.time.DateTime;
 
 /**
  * @author Nuno Correia

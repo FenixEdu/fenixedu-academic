@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer;
 import net.sourceforge.fenixedu.domain.tests.predicates.PredicateType;
 

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.tutor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;

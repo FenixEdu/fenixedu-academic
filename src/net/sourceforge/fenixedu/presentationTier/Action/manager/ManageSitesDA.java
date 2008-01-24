@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.PedagogicalCouncilSite;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
-import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.ScientificAreaSite;
 import net.sourceforge.fenixedu.domain.ScientificCouncilSite;
 import net.sourceforge.fenixedu.domain.Section;

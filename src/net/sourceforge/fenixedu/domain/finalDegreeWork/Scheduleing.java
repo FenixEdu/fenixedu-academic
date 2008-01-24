@@ -11,11 +11,11 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
+
+import org.joda.time.DateTime;
 
 public class Scheduleing extends Scheduleing_Base {
 

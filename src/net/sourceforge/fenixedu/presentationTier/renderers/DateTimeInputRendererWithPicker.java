@@ -5,13 +5,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlImage;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.converters.DateConverter;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
+
+import org.joda.time.DateTime;
 
 /**
  * This renderer provides a more user friendly way of inserting a DateTime.

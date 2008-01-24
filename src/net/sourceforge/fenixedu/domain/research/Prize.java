@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.research;
 import java.util.ArrayList;
 import java.util.List;
 
-import dml.runtime.RelationAdapter;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,6 +14,7 @@ import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPate
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+import dml.runtime.RelationAdapter;
 
 public class Prize extends Prize_Base {
 

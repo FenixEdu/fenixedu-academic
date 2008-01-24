@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities
 import java.io.InputStream;
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.functionalities.Functionality;
+
 /**
  * This bean is used to receive a file from the user with the
  * structure to import.

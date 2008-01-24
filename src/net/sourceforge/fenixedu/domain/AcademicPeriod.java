@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.PeriodState;
+
+import org.joda.time.YearMonthDay;
 
 public class AcademicPeriod extends AcademicPeriod_Base {
     

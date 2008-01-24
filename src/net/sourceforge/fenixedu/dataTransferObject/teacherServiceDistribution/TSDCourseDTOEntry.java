@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import pt.ist.utl.fenix.utils.Pair;
 
 public class TSDCourseDTOEntry extends DataTranferObject {

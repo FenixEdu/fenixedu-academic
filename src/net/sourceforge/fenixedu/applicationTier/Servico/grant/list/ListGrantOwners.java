@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwner
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanListGrantOwner;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.NameUtils;
 
 /**

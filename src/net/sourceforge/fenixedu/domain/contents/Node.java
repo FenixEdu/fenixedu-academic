@@ -1,21 +1,12 @@
 package net.sourceforge.fenixedu.domain.contents;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.UUID;
-
-import dml.runtime.Relation;
-import dml.runtime.RelationAdapter;
-import dml.runtime.RelationListener;
-
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+import dml.runtime.RelationAdapter;
 
 /**
  * A <code>Node</code> makes the link between a {@link Container} and other

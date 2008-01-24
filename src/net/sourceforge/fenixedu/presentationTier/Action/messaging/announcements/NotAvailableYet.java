@@ -7,11 +7,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br><br>

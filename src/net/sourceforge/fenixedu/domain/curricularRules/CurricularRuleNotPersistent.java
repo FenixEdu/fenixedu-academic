@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.curricularRules;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -12,6 +10,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+
+import org.joda.time.YearMonthDay;
 
 abstract public class CurricularRuleNotPersistent implements ICurricularRule {
 

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.io.Serializable;
 
-
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 

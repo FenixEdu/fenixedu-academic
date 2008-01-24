@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;

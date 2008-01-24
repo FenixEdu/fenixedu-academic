@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.PersonName;
+
+import org.joda.time.YearMonthDay;
 
 public class SearchAllActivePartiesByName extends SearchParties {
 

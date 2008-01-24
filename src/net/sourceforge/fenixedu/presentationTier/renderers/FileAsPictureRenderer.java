@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.renderers.StringRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlImage;
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 public class FileAsPictureRenderer extends StringRenderer {
 

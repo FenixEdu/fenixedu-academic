@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.YearMonthDay;
+
 import dml.runtime.RelationAdapter;
 
 public class AdministrativeOfficeFeeAndInsurancePenaltyExemption extends

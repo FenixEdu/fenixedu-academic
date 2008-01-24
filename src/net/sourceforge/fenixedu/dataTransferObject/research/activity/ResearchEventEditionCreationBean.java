@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 
 import java.io.Serializable;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
+
+import org.joda.time.YearMonthDay;
 
 public class ResearchEventEditionCreationBean extends ResearchEventCreationBean implements Serializable {
 

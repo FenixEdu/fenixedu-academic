@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.contents;
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;

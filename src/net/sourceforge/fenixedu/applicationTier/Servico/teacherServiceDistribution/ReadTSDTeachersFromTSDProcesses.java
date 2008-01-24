@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.utl.fenix.utils.Pair;
 
 public class ReadTSDTeachersFromTSDProcesses extends Service {

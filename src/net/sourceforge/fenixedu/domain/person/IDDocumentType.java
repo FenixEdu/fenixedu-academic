@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.domain.person;
 
 import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public enum IDDocumentType {

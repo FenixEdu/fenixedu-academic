@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-import org.apache.commons.lang.StringUtils;
-
-import pt.utl.ist.fenix.tools.util.FileUtils;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -12,6 +9,10 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PaymentsFileBean;
 import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFile;
 import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
+
+import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class UploadSibsPaymentsFile extends Service {
 

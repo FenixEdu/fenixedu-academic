@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStudentDTO;
-import net.sourceforge.fenixedu.domain.elections.DelegateElectionVote;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;

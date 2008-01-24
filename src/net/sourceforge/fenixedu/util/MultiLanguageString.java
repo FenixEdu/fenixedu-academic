@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.Language;
+
+import org.apache.commons.lang.StringUtils;
 
 public class MultiLanguageString implements Serializable, Comparable<MultiLanguageString> {
 

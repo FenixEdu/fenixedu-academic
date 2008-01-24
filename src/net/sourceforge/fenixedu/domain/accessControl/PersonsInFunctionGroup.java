@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Set;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
@@ -11,6 +9,8 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+
+import org.joda.time.YearMonthDay;
 
 /**
  * This group is an abstraction of all person currently performing a

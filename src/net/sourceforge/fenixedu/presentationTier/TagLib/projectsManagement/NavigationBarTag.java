@@ -19,7 +19,6 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoReport;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestChecksumFilter;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionMapping;

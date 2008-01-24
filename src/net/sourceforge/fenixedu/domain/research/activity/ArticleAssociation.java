@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
-import dml.runtime.RelationAdapter;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
+import dml.runtime.RelationAdapter;
 
 public class ArticleAssociation extends ArticleAssociation_Base {
     

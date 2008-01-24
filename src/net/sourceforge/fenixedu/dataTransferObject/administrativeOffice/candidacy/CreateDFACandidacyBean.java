@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candida
 
 import java.io.Serializable;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+
+import org.joda.time.YearMonthDay;
 
 public class CreateDFACandidacyBean extends DFACandidacyBean implements Serializable {
 

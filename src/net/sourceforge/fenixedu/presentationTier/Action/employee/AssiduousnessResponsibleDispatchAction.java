@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.employee;
 
 import java.io.DataOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;

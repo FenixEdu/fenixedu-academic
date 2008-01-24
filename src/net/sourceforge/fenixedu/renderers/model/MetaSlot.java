@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;

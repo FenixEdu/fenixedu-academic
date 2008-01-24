@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.functionalities.exceptions;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
 /**
  * This exception is thrown when some path changes in the functionaties module

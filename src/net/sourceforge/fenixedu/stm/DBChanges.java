@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import jvstm.CommitException;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;

@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 
 public class ExecutionYearIntervalBean extends ExecutionYearBean implements Serializable {
 

@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.resource;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+
+import org.joda.time.YearMonthDay;
 
 public abstract class ResourceResponsibility extends ResourceResponsibility_Base {
     

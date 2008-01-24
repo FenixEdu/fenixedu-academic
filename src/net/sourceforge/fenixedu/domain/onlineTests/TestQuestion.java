@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * @author Susana Fernandes

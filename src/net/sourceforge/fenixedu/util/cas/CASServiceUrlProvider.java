@@ -11,8 +11,6 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 
-import org.apache.commons.lang.StringUtils;
-
 public class CASServiceUrlProvider {
     private static final Map<String, String> serviceUrlsByHostnameMap = new HashMap<String, String>();
 

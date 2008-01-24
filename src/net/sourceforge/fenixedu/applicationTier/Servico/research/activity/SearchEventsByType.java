@@ -7,8 +7,8 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchObjectsByMultiLanguageString;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 
 public class SearchEventsByType extends SearchObjectsByMultiLanguageString{
 

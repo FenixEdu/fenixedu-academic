@@ -1,19 +1,16 @@
 package net.sourceforge.fenixedu.stm;
 
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
-
-import jvstm.Transaction;
 import jvstm.ReadTransaction;
-
+import jvstm.Transaction;
 import jvstm.cps.ConsistencyCheckTransaction;
 import jvstm.cps.Depended;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.ojb.broker.PersistenceBroker;
-
-import net.sourceforge.fenixedu.domain.DomainObject;
 
 public class FenixConsistencyCheckTransaction extends ReadTransaction 
     implements ConsistencyCheckTransaction,FenixTransaction {

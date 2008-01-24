@@ -8,14 +8,9 @@ import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.components.HtmlLink.Target;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-
-import org.apache.commons.beanutils.PropertyUtils;
 
 public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 

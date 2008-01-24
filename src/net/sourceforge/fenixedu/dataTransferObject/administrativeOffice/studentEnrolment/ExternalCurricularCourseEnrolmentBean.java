@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.student
 
 import java.io.Serializable;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.ExternalCurricularCourseResultBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.Grade;
+
+import org.joda.time.YearMonthDay;
 
 public class ExternalCurricularCourseEnrolmentBean implements Serializable {
     

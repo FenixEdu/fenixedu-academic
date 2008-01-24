@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.dataTransferObject.LinkObject;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
@@ -12,6 +10,8 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
+
+import org.apache.commons.lang.StringUtils;
 
 public class ListLinkRenderer extends OutputRenderer {
     

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.functionalities;
 
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;

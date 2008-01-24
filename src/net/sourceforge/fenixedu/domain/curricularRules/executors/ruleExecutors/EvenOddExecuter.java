@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.curricularRules.EvenOddRule;
-import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
-import net.sourceforge.fenixedu.domain.student.Student;
 
 public class EvenOddExecuter extends CurricularRuleExecutor {
 

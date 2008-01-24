@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.tests;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial;
 import net.sourceforge.fenixedu.domain.tests.NewPresentationMaterialType;
 import net.sourceforge.fenixedu.domain.tests.NewTestElement;

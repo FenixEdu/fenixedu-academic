@@ -5,12 +5,12 @@ package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
 import java.text.ParseException;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.validators.DateValidator;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
+
+import org.joda.time.DateTime;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

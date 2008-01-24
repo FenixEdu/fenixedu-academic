@@ -8,7 +8,6 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
-import net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

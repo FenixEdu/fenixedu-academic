@@ -51,10 +51,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-
-import net.sourceforge.fenixedu.stm.Transaction;
 import net.sourceforge.fenixedu.stm.MissingObjectException;
-
+import net.sourceforge.fenixedu.stm.Transaction;
 import dml.DomainClass;
 import dml.DomainEntity;
 import dml.DomainModel;

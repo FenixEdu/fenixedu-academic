@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.contexts.InputContext;
-import net.sourceforge.fenixedu.renderers.contexts.OutputContext;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;

@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.transactions;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
@@ -12,6 +10,8 @@ import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.joda.time.DateTime;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>

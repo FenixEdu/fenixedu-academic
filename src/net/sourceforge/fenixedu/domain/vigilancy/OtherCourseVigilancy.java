@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
 
 public class OtherCourseVigilancy extends OtherCourseVigilancy_Base {
 

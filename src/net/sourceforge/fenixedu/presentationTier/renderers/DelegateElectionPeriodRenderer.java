@@ -1,11 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
@@ -17,8 +11,6 @@ import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-
-import org.apache.struts.util.RequestUtils;
 
 public class DelegateElectionPeriodRenderer extends OutputRenderer {
 

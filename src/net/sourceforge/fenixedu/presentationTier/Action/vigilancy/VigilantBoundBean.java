@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 

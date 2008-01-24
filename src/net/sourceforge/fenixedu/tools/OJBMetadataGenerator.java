@@ -3,8 +3,8 @@
  */
 package net.sourceforge.fenixedu.tools;
 
-import java.lang.reflect.Modifier;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -13,11 +13,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.framework.FenixPersistentField;
+import net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator;
 import net.sourceforge.fenixedu.stm.OJBFunctionalSetWrapper;
 import net.sourceforge.fenixedu.util.StringFormatter;
-
-import net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator;
-
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.metadata.ClassDescriptor;

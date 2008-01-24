@@ -6,10 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -19,6 +15,10 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public abstract class Vigilancy extends Vigilancy_Base {
 

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.collections.Predicate;
-
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBoxList;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -23,6 +21,8 @@ import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderMode;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+
+import org.apache.commons.collections.Predicate;
 
 /**
  * This renderer can be used as the input for a list of objects. The list of

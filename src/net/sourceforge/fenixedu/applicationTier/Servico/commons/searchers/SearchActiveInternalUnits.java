@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+
+import org.joda.time.YearMonthDay;
 
 public class SearchActiveInternalUnits extends SearchInternalUnits {
 

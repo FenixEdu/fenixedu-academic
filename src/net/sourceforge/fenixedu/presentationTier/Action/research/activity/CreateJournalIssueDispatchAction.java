@@ -3,9 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchJournalIssueCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean;
 import net.sourceforge.fenixedu.domain.Person;

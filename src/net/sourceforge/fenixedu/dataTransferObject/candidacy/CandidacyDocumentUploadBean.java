@@ -8,12 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import pt.utl.ist.fenix.tools.util.FileUtils;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

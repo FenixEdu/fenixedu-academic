@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
 

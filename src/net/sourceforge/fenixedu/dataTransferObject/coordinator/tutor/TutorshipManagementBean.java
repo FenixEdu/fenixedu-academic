@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.util.Month;
 
-import org.joda.time.Partial;
-
 public class TutorshipManagementBean implements Serializable {
 	private Integer teacherNumber;
 	

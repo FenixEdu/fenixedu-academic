@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 import java.util.List;
 
-import org.joda.time.Interval;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -12,6 +10,8 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
+
+import org.joda.time.Interval;
 
 public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagramEvent {
        
