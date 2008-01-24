@@ -183,15 +183,15 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 		spreadsheet.addCell(decimalFormat.format(getBalance()));
 		spreadsheet.newHeaderRow();
 		spreadsheet.newHeaderRow();
-		int rowNum = spreadsheet.getRow().getRowNum();
-		spreadsheet.addCell(bundle.getString("message.extraWorkFirstYearMonthNote"));
+	//	int rowNum = spreadsheet.getRow().getRowNum();
+		//spreadsheet.addCell(bundle.getString("message.extraWorkFirstYearMonthNote"));
 		spreadsheet.newHeaderRow();
 		EmployeeExtraWorkAuthorization.getExcelHeader(spreadsheet, bundle, enumBundle);
 		spreadsheet.getSheet().addMergedRegion(
 			new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));
-		spreadsheet.getSheet().addMergedRegion(
-			new Region(rowNum, (short) 0, rowNum, (short) spreadsheet
-				.getMaxiumColumnNumber()));
+//		spreadsheet.getSheet().addMergedRegion(
+//			new Region(rowNum, (short) 0, rowNum, (short) spreadsheet
+//				.getMaxiumColumnNumber()));
 	    } else {
 		spreadsheet.getSheet(getUnit().getCostCenterCode().toString());
 	    }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkAuthorizationBean;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Month;
@@ -38,10 +39,8 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	setExecutiveAuxiliarPersonel(employeeExtraWorkAuthorizationBean.getExecutiveAuxiliarPersonel());
 	setNightExtraWork(employeeExtraWorkAuthorizationBean.getNightExtraWork());
 	setNormalExtraWork(employeeExtraWorkAuthorizationBean.getNormalExtraWork());
-	setNormalExtraWorkPlusOneHundredHours(employeeExtraWorkAuthorizationBean
-		.getNormalExtraWorkPlusOneHundredHours());
-	setNormalExtraWorkPlusTwoHours(employeeExtraWorkAuthorizationBean
-		.getNormalExtraWorkPlusTwoHours());
+	setNormalExtraWorkPlusOneHundredHours(employeeExtraWorkAuthorizationBean.getNormalExtraWorkPlusOneHundredHours());
+	setNormalExtraWorkPlusTwoHours(employeeExtraWorkAuthorizationBean.getNormalExtraWorkPlusTwoHours());
 	setWeeklyRestExtraWork(employeeExtraWorkAuthorizationBean.getWeeklyRestExtraWork());
 	setLastModifiedDate(new DateTime());
     }
@@ -61,10 +60,8 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	setExecutiveAuxiliarPersonel(employeeExtraWorkAuthorizationBean.getExecutiveAuxiliarPersonel());
 	setNightExtraWork(employeeExtraWorkAuthorizationBean.getNightExtraWork());
 	setNormalExtraWork(employeeExtraWorkAuthorizationBean.getNormalExtraWork());
-	setNormalExtraWorkPlusOneHundredHours(employeeExtraWorkAuthorizationBean
-		.getNormalExtraWorkPlusOneHundredHours());
-	setNormalExtraWorkPlusTwoHours(employeeExtraWorkAuthorizationBean
-		.getNormalExtraWorkPlusTwoHours());
+	setNormalExtraWorkPlusOneHundredHours(employeeExtraWorkAuthorizationBean.getNormalExtraWorkPlusOneHundredHours());
+	setNormalExtraWorkPlusTwoHours(employeeExtraWorkAuthorizationBean.getNormalExtraWorkPlusTwoHours());
 	setWeeklyRestExtraWork(employeeExtraWorkAuthorizationBean.getWeeklyRestExtraWork());
 	setLastModifiedDate(new DateTime());
     }
@@ -77,16 +74,14 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	deleteDomainObject();
     }
 
-    public static void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle,
-	    ResourceBundle enumBundle) {
+    public static void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle, ResourceBundle enumBundle) {
 	spreadsheet.newHeaderRow();
 	int firstHeaderRow = spreadsheet.getSheet().getLastRowNum();
 	spreadsheet.addHeader(bundle.getString("label.number"), 1500);
 	spreadsheet.addHeader(bundle.getString("label.employee.name"), 5000);
 	int cellNum = 0;
 	for (Month month : Month.values()) {
-	    spreadsheet.addHeader(enumBundle.getString(month.getName()), spreadsheet.getExcelStyle()
-		    .getVerticalHeaderStyle());
+	    spreadsheet.addHeader(enumBundle.getString(month.getName()), spreadsheet.getExcelStyle().getVerticalHeaderStyle());
 	    spreadsheet.addHeader("");
 	    cellNum = (short) spreadsheet.getSheet().getRow(firstHeaderRow).getLastCellNum();
 	    spreadsheet.getSheet().addMergedRegion(
@@ -95,21 +90,16 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	spreadsheet.getRow().setHeight((short) 1000);
 	spreadsheet.addHeader(bundle.getString("label.total"), 2000);
 	spreadsheet.newHeaderRow();
-	spreadsheet.getSheet().addMergedRegion(
-		new Region(firstHeaderRow, (short) 0, firstHeaderRow + 1, (short) 0));
-	spreadsheet.getSheet().addMergedRegion(
-		new Region(firstHeaderRow, (short) 1, firstHeaderRow + 1, (short) 1));
+	spreadsheet.getSheet().addMergedRegion(new Region(firstHeaderRow, (short) 0, firstHeaderRow + 1, (short) 0));
+	spreadsheet.getSheet().addMergedRegion(new Region(firstHeaderRow, (short) 1, firstHeaderRow + 1, (short) 1));
 
 	spreadsheet.getSheet().addMergedRegion(
-		new Region(firstHeaderRow, (short) (cellNum + 1), firstHeaderRow + 1,
-			(short) (cellNum + 1)));
+		new Region(firstHeaderRow, (short) (cellNum + 1), firstHeaderRow + 1, (short) (cellNum + 1)));
 	spreadsheet.addHeader("");
 	spreadsheet.addHeader("");
 	for (Month month : Month.values()) {
-	    spreadsheet.addHeader(bundle.getString("label.hoursNum"), spreadsheet.getExcelStyle()
-		    .getVerticalHeaderStyle(), 600);
-	    spreadsheet.addHeader(bundle.getString("label.value"), spreadsheet.getExcelStyle()
-		    .getVerticalHeaderStyle(), 1600);
+	    spreadsheet.addHeader(bundle.getString("label.hoursNum"), spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 600);
+	    spreadsheet.addHeader(bundle.getString("label.value"), spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 1600);
 	}
 	spreadsheet.addHeader("");
     }
@@ -124,8 +114,7 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	spreadsheet.addCell(bundle.getString("label.total").toUpperCase());
 
 	for (int col = firstColumn; col <= lastColumn; col += 2) {
-	    spreadsheet.sumColumn(firstRow, lastRow, col, col, spreadsheet.getExcelStyle()
-		    .getDoubleStyle());
+	    spreadsheet.sumColumn(firstRow, lastRow, col, col, spreadsheet.getExcelStyle().getDoubleStyle());
 	}
 	spreadsheet.newRow();
 	spreadsheet.newRow();
@@ -133,10 +122,9 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
 	decimalFormatSymbols.setDecimalSeparator('.');
 	decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
-	spreadsheet.sumRows(firstRow, lastRow, firstColumn, lastColumn, 2, spreadsheet.getExcelStyle()
-		.getDoubleStyle());
-	spreadsheet.setRegionBorder(firstRow, spreadsheet.getSheet().getLastRowNum() - 1, 0, spreadsheet
-		.getMaxiumColumnNumber() + 1);
+	spreadsheet.sumRows(firstRow, lastRow, firstColumn, lastColumn, 2, spreadsheet.getExcelStyle().getDoubleStyle());
+	spreadsheet.setRegionBorder(firstRow, spreadsheet.getSheet().getLastRowNum() - 1, 0,
+		spreadsheet.getMaxiumColumnNumber() + 1);
     }
 
     public void getExcelRow(StyledExcelSpreadsheet spreadsheet, int year) {
@@ -150,19 +138,14 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	List<ExtraWorkRequest> extraWorkRequests = getAssiduousness().getExtraWorkRequestsByUnit(
 		getExtraWorkAuthorization().getPayingUnit(), year);
 	for (ExtraWorkRequest extraWorkRequest : extraWorkRequests) {
-	    Integer oldValue = getOldValue(spreadsheet,
-		    extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) * 2 + 2)
-		    .intValue();
-	    Double oldDouble = getOldValue(spreadsheet, extraWorkRequest.getPartialPayingDate().get(
-		    DateTimeFieldType.monthOfYear()) * 2 + 3);
+	    YearMonth yearMonth = new YearMonth(extraWorkRequest.getPartialPayingDate());
+	    yearMonth.addMonth();
+	    Integer oldValue = getOldValue(spreadsheet, yearMonth.getNumberOfMonth() * 2).intValue();
+	    Double oldDouble = getOldValue(spreadsheet, yearMonth.getNumberOfMonth() * 2 + 1);
 
-	    spreadsheet
-		    .addCell(new Integer(extraWorkRequest.getTotalHours() + oldValue), (extraWorkRequest
-			    .getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) * 2 + 2));
-	    spreadsheet.addCell(new Double(decimalFormat
-		    .format(extraWorkRequest.getAmount() + oldDouble)), spreadsheet.getExcelStyle()
-		    .getDoubleStyle(), (extraWorkRequest.getPartialPayingDate().get(
-		    DateTimeFieldType.monthOfYear()) * 2) + 3);
+	    spreadsheet.addCell(new Integer(extraWorkRequest.getTotalHours() + oldValue), yearMonth.getNumberOfMonth() * 2);
+	    spreadsheet.addCell(new Double(decimalFormat.format(extraWorkRequest.getAmount() + oldDouble)), spreadsheet
+		    .getExcelStyle().getDoubleStyle(), yearMonth.getNumberOfMonth() * 2 + 1);
 	}
     }
 
