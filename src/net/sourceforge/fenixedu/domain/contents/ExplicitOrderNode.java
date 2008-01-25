@@ -117,7 +117,7 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
     private void notifySiblingsForOrderChange(Container parent, int nodeOrder, int operationOffset) {
 	for (Node node : parent.getOrderedChildrenNodes()) {
 	    ExplicitOrderNode orderedNode = (ExplicitOrderNode) node;
-	    if (orderedNode.getNodeOrder() >= nodeOrder) {
+	    if (orderedNode.getNodeOrder() >= nodeOrder && node != this) {
 		orderedNode.addOrderOffset(operationOffset);
 	    }
 	}
