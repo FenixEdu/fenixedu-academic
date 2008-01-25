@@ -349,7 +349,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private StudentCurricularPlan studentCurricularPlan;
 
-	private ExecutionYear lastExecutionYear;
+	private ExecutionYear executionYearContext;
+
+	private ExecutionPeriod executionPeriodContext;
 
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
@@ -357,17 +359,16 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    getInputContext().getForm().getCancelButton().setVisible(false);
 
 	    this.studentCurricularPlan = (StudentCurricularPlan) object;
-	    
-	    final ExecutionYear lastApprovementExecutionYear = studentCurricularPlan.getLastApprovementExecutionYear();
-	    this.lastExecutionYear = lastApprovementExecutionYear == null ? studentCurricularPlan.getLastExecutionYear() : lastApprovementExecutionYear;
 
 	    final HtmlContainer container = new HtmlBlockContainer();
-
 	    if (this.studentCurricularPlan == null) {
 		container.addChild(createHtmlTextItalic(studentResources.getString("message.no.curricularplan")));
 
 		return container;
 	    }
+
+	    this.executionYearContext = initializeExecutionYear();
+	    this.executionPeriodContext = executionYearContext.getLastExecutionPeriod();
 
 	    if (isOrganizedByGroups() && !this.studentCurricularPlan.isBoxStructure()) {
 		container.addChild(createHtmlTextItalic(studentResources.getString("not.applicable")));
@@ -388,6 +389,20 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    }
 
 	    return container;
+	}
+
+	private ExecutionYear initializeExecutionYear() {
+	    final ExecutionYear lastApprovementExecutionYear = studentCurricularPlan.getLastApprovementExecutionYear();
+	    if (lastApprovementExecutionYear != null) {
+		return lastApprovementExecutionYear;
+	    }
+
+	    final ExecutionYear lastSCPExecutionYear = studentCurricularPlan.getLastExecutionYear();
+	    if (lastSCPExecutionYear != null) {
+		return lastSCPExecutionYear;
+	    }
+
+	    return ExecutionYear.readCurrentExecutionYear();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -446,7 +461,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    final HtmlComponent body;
 	    if (curriculumGroup != null && curriculumGroup.isRoot()) {
 		body = createDegreeCurricularPlanNameLink(curriculumGroup.getDegreeCurricularPlanOfDegreeModule(),
-			curriculumGroup.getStudentCurricularPlan().getStartExecutionPeriod());
+			executionPeriodContext);
 	    } else {
 		body = new HtmlText(createGroupName(text, curriculumGroup).toString());
 	    }
@@ -471,24 +486,23 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    final StringBuilder groupName = new StringBuilder(text);
 	    if (curriculumGroup != null && curriculumGroup.hasDegreeModule()) {
 		final CourseGroup courseGroup = curriculumGroup.getDegreeModule();
-		final ExecutionPeriod lastExecutionPeriod = lastExecutionYear.getLastExecutionPeriod();
 
 		final CreditsLimit creditsLimit = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
-			CurricularRuleType.CREDITS_LIMIT, lastExecutionYear);
+			CurricularRuleType.CREDITS_LIMIT, executionYearContext);
 
 		if (creditsLimit != null) {
 		    groupName.append(" m(");
-		    groupName.append(courseGroup.getMinEctsCredits(lastExecutionPeriod));
+		    groupName.append(courseGroup.getMinEctsCredits(executionPeriodContext));
 		    groupName.append("),");
 		}
 
 		groupName.append(" c(");
-		groupName.append(curriculumGroup.getCreditsConcluded(lastExecutionYear));
+		groupName.append(curriculumGroup.getCreditsConcluded(executionYearContext));
 		groupName.append(")");
 
 		if (creditsLimit != null) {
 		    groupName.append(", M(");
-		    groupName.append(courseGroup.getMaxEctsCredits(lastExecutionPeriod));
+		    groupName.append(courseGroup.getMaxEctsCredits(executionPeriodContext));
 		    groupName.append(")");
 		}
 	    }
@@ -502,11 +516,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		creditsLimitRule = null;
 		degreeModulesLimitRule = null;
 	    } else {
-		ExecutionYear lastCurriculumLineExecutionYear = studentCurricularPlan.getLastApprovementExecutionYear();
 		creditsLimitRule = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
-			CurricularRuleType.CREDITS_LIMIT, lastCurriculumLineExecutionYear);
+			CurricularRuleType.CREDITS_LIMIT, executionYearContext);
 		degreeModulesLimitRule = (DegreeModulesSelectionLimit) curriculumGroup.getMostRecentActiveCurricularRule(
-			CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, lastCurriculumLineExecutionYear);
+			CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionYearContext);
 	    }
 
 	    final String creditsLimitText = creditsLimitRule == null ? "" : "Créditos: Min. "
@@ -935,7 +948,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    result.setTarget("_blank");
 	    result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "cursos/"
 		    + degreeCurricularPlan.getDegree().getSigla() + "/plano-curricular");
-	    
+
 	    if (degreeCurricularPlan.isBoxStructure()) {
 		result.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
 
@@ -952,8 +965,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    result.setParameter("degreeID", degreeCurricularPlan.getDegree().getIdInternal());
 	    result.setParameter("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
 
-	    result.setParameter("executionPeriodOID", executionPeriod != null ? executionPeriod.getIdInternal()
-		    : lastExecutionYear.getFirstExecutionPeriod());
+	    result.setParameter("executionPeriodOID", executionPeriod.getIdInternal());
 
 	    return result;
 	}
