@@ -190,4 +190,8 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
 	super.delete();
     }
+    
+    public boolean isGratuityEventWithPaymentPlan() {
+	return false;
+    }
 }

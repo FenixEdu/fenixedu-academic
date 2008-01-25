@@ -339,4 +339,8 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	super.delete();
     }
 
+    @Override
+    public boolean isGratuityEventWithPaymentPlan() {
+	return true;
+    }
 }
