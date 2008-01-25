@@ -51,27 +51,9 @@ public class TeacherProfessionalSituation extends TeacherProfessionalSituation_B
     }
 
     public static boolean isEndProfessionalSituationType(ProfessionalSituationType situationType) {
-	return (situationType.equals(ProfessionalSituationType.DEATH)
-		|| situationType.equals(ProfessionalSituationType.TERM_WORK_CONTRACT_END)
-		|| situationType.equals(ProfessionalSituationType.EMERITUS)
-		|| situationType.equals(ProfessionalSituationType.RETIREMENT)
-		|| situationType.equals(ProfessionalSituationType.RETIREMENT_IN_PROGRESS)
-		|| situationType.equals(ProfessionalSituationType.CERTAIN_FORWARD_CONTRACT_END)
-		|| situationType.equals(ProfessionalSituationType.CERTAIN_FORWARD_CONTRACT_END_PROPER_PRESCRIPTIONS)
-		|| situationType.equals(ProfessionalSituationType.CERTAIN_FORWARD_CONTRACT_RESCISSION)
-		|| situationType.equals(ProfessionalSituationType.CERTAIN_FORWARD_CONTRACT_RESCISSION_PROPER_PRESCRIPTIONS)
-		|| situationType.equals(ProfessionalSituationType.CONTRACT_END)
-		|| situationType.equals(ProfessionalSituationType.DENUNCIATION)
-		|| situationType.equals(ProfessionalSituationType.RESIGNATION)
-		|| situationType.equals(ProfessionalSituationType.IST_OUT_NOMINATION)
-		|| situationType.equals(ProfessionalSituationType.SERVICE_TURN_OFF)
-		|| situationType.equals(ProfessionalSituationType.TEMPORARY_SUBSTITUTION_CONTRACT_END)
-		|| situationType.equals(ProfessionalSituationType.EXONERATION)
-		|| situationType.equals(ProfessionalSituationType.RESCISSION)
-		|| situationType.equals(ProfessionalSituationType.TRANSFERENCE) || situationType
-		.equals(ProfessionalSituationType.REFUSED_DEFINITIVE_NOMINATION));
+	return situationType.isEndSituation();
     }
-
+    
     @Override
     public boolean isTeacherProfessionalSituation() {
 	return true;

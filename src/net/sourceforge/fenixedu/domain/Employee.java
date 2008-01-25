@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -40,10 +39,10 @@ public class Employee extends Employee_Base {
 	setAssiduousness(null);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     public void delete() {
 	checkRulesToDelete();
-	
+
 	super.setPerson(null);
 	removeRootDomainObject();
 	deleteDomainObject();
@@ -85,13 +84,23 @@ public class Employee extends Employee_Base {
     public List<EmployeeProfessionalSituation> getEmployeeProfessionalSituations() {
 	List<EmployeeProfessionalSituation> result = new ArrayList<EmployeeProfessionalSituation>();
 	for (ProfessionalSituation professionalSituation : getProfessionalSituations()) {
-	    if(professionalSituation.isEmployeeProfessionalSituation()) {
+	    if (professionalSituation.isEmployeeProfessionalSituation()) {
 		result.add((EmployeeProfessionalSituation) professionalSituation);
 	    }
-	}	
+	}
 	return result;
     }
-    
+
+    public EmployeeProfessionalSituation getCurrentEmployeeProfessionalSituation() {
+	YearMonthDay currentDate = new YearMonthDay();
+	for (ProfessionalSituation professionalSituation : getProfessionalSituations()) {
+	    if (professionalSituation.isEmployeeProfessionalSituation() && professionalSituation.isActive(currentDate)) {
+		return (EmployeeProfessionalSituation) professionalSituation;
+	    }
+	}
+	return null;
+    }
+
     public EmployeeProfessionalSituation getLastEmployeeProfessionalSituation() {
 	YearMonthDay date = null, current = new YearMonthDay();
 	EmployeeProfessionalSituation regimenToReturn = null;
@@ -107,13 +116,12 @@ public class Employee extends Employee_Base {
 	}
 	return regimenToReturn;
     }
-    
+
     public Collection<Contract> getContractsByContractType(AccountabilityTypeEnum contractType) {
 	return (Collection<Contract>) getPerson().getParentAccountabilities(contractType, EmployeeContract.class);
     }
 
-    public List<Contract> getContractsByContractType(AccountabilityTypeEnum contractType,
-	    YearMonthDay begin, YearMonthDay end) {
+    public List<Contract> getContractsByContractType(AccountabilityTypeEnum contractType, YearMonthDay begin, YearMonthDay end) {
 	final List<Contract> contracts = new ArrayList<Contract>();
 	for (final Contract accountability : getContractsByContractType(contractType)) {
 	    if (accountability.belongsToPeriod(begin, end)) {
@@ -150,8 +158,7 @@ public class Employee extends Employee_Base {
 
     }
 
-    public Contract getLastContractByContractType(AccountabilityTypeEnum contractType,
-	    YearMonthDay begin, YearMonthDay end) {
+    public Contract getLastContractByContractType(AccountabilityTypeEnum contractType, YearMonthDay begin, YearMonthDay end) {
 	YearMonthDay date = null, current = new YearMonthDay();
 	Contract contractToReturn = null;
 	for (Contract contract : getContractsByContractType(contractType, begin, end)) {
@@ -171,6 +178,12 @@ public class Employee extends Employee_Base {
 	List<Contract> workingContracts = new ArrayList<Contract>();
 	workingContracts.addAll(getContractsByContractType(AccountabilityTypeEnum.WORKING_CONTRACT));
 	return workingContracts;
+    }
+
+    public List<Contract> getMailingContracts() {
+	List<Contract> mailingContracts = new ArrayList<Contract>();
+	mailingContracts.addAll(getContractsByContractType(AccountabilityTypeEnum.MAILING_CONTRACT));
+	return mailingContracts;
     }
 
     public List<Contract> getWorkingContracts(YearMonthDay begin, YearMonthDay end) {
@@ -207,8 +220,7 @@ public class Employee extends Employee_Base {
     }
 
     public Unit getLastWorkingPlace(YearMonthDay beginDate, YearMonthDay endDate) {
-	Contract lastContract = getLastContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT,
-		beginDate, endDate);
+	Contract lastContract = getLastContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT, beginDate, endDate);
 	return lastContract != null ? lastContract.getWorkingUnit() : null;
     }
 
@@ -224,14 +236,14 @@ public class Employee extends Employee_Base {
 
     public Department getCurrentDepartmentWorkingPlace() {
 	Contract contract = getCurrentWorkingContract();
-	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(
-		contract.getWorkingUnit(), true) : null;
+	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(contract.getWorkingUnit(),
+		true) : null;
     }
 
     public Department getLastDepartmentWorkingPlace() {
 	Contract contract = getLastContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT);
-	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(
-		contract.getWorkingUnit(), false) : null;
+	return (contract != null && contract.getWorkingUnit() != null) ? getEmployeeDepartmentUnit(contract.getWorkingUnit(),
+		false) : null;
     }
 
     public Department getLastDepartmentWorkingPlace(YearMonthDay begin, YearMonthDay end) {
@@ -273,18 +285,19 @@ public class Employee extends Employee_Base {
 	return null;
     }
 
-    public Campus getCurrentCampus() {		
+    public Campus getCurrentCampus() {
 	Unit currentWorkingPlace = getCurrentWorkingPlace();
 
-	if(currentWorkingPlace != null) {
+	if (currentWorkingPlace != null) {
 	    return currentWorkingPlace.getCampus();
-	}	
+	}
 
 	return null;
     }
-   
+
     public AdministrativeOffice getAdministrativeOffice() {
-	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null : getCurrentWorkingPlace().getAdministrativeOffice();
+	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null : getCurrentWorkingPlace()
+		.getAdministrativeOffice();
 	if (administrativeOffice == null) {
 	    for (PersonFunction personFunction : getPerson().getPersonFunctions(AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE)) {
 		if (personFunction.getFunction().getFunctionType().equals(FunctionType.ASSIDUOUSNESS_RESPONSIBLE)
@@ -335,8 +348,8 @@ public class Employee extends Employee_Base {
 	}
 
 	return null;
-    }       
-    
+    }
+
     public Category getCategory() {
 	EmployeeProfessionalSituation regimen = getLastEmployeeProfessionalSituation();
 	return (regimen != null) ? regimen.getCategory() : null;

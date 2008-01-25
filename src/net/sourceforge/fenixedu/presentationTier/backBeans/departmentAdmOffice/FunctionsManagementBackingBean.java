@@ -61,7 +61,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public List<PersonFunction> activeFunctions, inactiveFunctions;
 
-    public Integer page, personID, unitID, functionID, numberOfFunctions, personFunctionID;
+    public Integer pageIndex, personID, unitID, functionID, numberOfFunctions, personFunctionID;
 
     public Integer executionPeriod, duration, disabledVar, personNumber;
 
@@ -90,9 +90,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	if (!StringUtils.isEmpty(getRequestParameter("personID"))) {
 	    this.personID = Integer.valueOf(getRequestParameter("personID"));
 	}
-	if (!StringUtils.isEmpty(getRequestParameter("page"))) {
-	    this.page = Integer.valueOf(getRequestParameter("page").toString());
-	}
+	if (!StringUtils.isEmpty(getRequestParameter("pageIndex"))) {
+	    this.pageIndex = Integer.valueOf(getRequestParameter("pageIndex").toString());
+	} 
 	if (!StringUtils.isEmpty(getRequestParameter("name"))) {
 	    this.personName = getRequestParameter("name").toString();
 	}
@@ -285,7 +285,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     private void setIntervalPersons() throws FenixFilterException, FenixServiceException {
 	final Collection<Person> result = getPersonsList();
-	final int begin = (this.getPage() - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
+	final int begin = (this.getPageIndex() - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
 	final int end = begin + SessionConstants.LIMIT_FINDED_PERSONS;
 	int i = 0;
 	for (final Person person : allPersonsList) {
@@ -547,7 +547,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public Collection<Person> getAllPersonsList() throws FenixFilterException, FenixServiceException {
 	if (allPersonsList == null) {
-	    if (this.page != null) {
+	    if (this.pageIndex != null) {
 		if (this.personName != null) {
 		    searchPersonByName();
 		} else if (this.personNumber != null) {
@@ -572,11 +572,11 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	return personID;
     }
 
-    public Integer getPage() {
-	if (page == null) {
-	    page = new Integer(1);
+    public Integer getPageIndex() {
+	if (pageIndex == null) {
+	    pageIndex = Integer.valueOf(1);
 	}
-	return page;
+	return pageIndex;
     }
 
     public Unit getUnit() throws FenixFilterException, FenixServiceException {
@@ -754,8 +754,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	this.personID = personID;
     }
 
-    public void setPage(Integer page) {
-	this.page = page;
+    public void setPageIndex(Integer page) {
+	this.pageIndex = page;
     }
 
     public void setPersonsList(List<Person> personsList) {

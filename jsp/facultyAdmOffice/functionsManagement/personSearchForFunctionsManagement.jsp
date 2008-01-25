@@ -48,11 +48,11 @@
 	<c:if test="${managerFunctionsManagementBackingBean.numberOfPages != 1}">
 	<c:out value="${bundle['label.page']}"/>
 	<c:forEach begin="1" end="${managerFunctionsManagementBackingBean.numberOfPages}" var="pageIndex">
-	<c:url var="url" value="/facultyAdmOffice/functionsManagement/personSearchForFunctionsManagement.faces?name=${managerFunctionsManagementBackingBean.personName}&page=${pageIndex}" />
+	<c:url var="url" value="/facultyAdmOffice/functionsManagement/personSearchForFunctionsManagement.faces?name=${managerFunctionsManagementBackingBean.personName}&pageIndex=${pageIndex}" />
 	<c:choose>
 		<c:when test="${pageIndex == managerFunctionsManagementBackingBean.numberOfPages}">						
 			<c:choose>
-				<c:when test="${managerFunctionsManagementBackingBean.page == pageIndex}">
+				<c:when test="${managerFunctionsManagementBackingBean.pageIndex == pageIndex}">
 					<c:out value="${pageIndex}"/>		
 				</c:when>
 				<c:otherwise>
@@ -64,7 +64,7 @@
 	    </c:when>
 	    <c:otherwise>					    
 			<c:choose>
-				<c:when test="${managerFunctionsManagementBackingBean.page == pageIndex}">
+				<c:when test="${managerFunctionsManagementBackingBean.pageIndex == pageIndex}">
 					<c:out value="${pageIndex},"/>		
 				</c:when>
 				<c:otherwise>

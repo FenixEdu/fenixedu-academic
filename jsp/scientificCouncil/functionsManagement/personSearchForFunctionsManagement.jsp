@@ -70,19 +70,17 @@
 			value="#{bundle[scientificCouncilFunctionsManagementBackingBean.errorMessage]}"/>
 			
 	<h:outputText value="<p><em><b>#{scientificCouncilFunctionsManagementBackingBean.personsNumber}</b> #{bundle['label.number.of.persons.finded']}</em></p>" 
-		escape="false"/>			
-			
-			
+		escape="false"/>							
 	
 	<c:if test="${scientificCouncilFunctionsManagementBackingBean.personsNumber > 0}">
 		<c:if test="${scientificCouncilFunctionsManagementBackingBean.numberOfPages != 1}">
 			<c:out value="${bundle['label.page']}: "/>
 			<c:forEach begin="1" end="${scientificCouncilFunctionsManagementBackingBean.numberOfPages}" var="pageIndex">
-				<c:url var="url" value="/scientificCouncil/functionsManagement/personSearchForFunctionsManagement.faces?name=${scientificCouncilFunctionsManagementBackingBean.personName}&page=${pageIndex}" />
+				<c:url var="url" value="/scientificCouncil/functionsManagement/personSearchForFunctionsManagement.faces?name=${scientificCouncilFunctionsManagementBackingBean.personName}&pageIndex=${pageIndex}" />
 				<c:choose>
 					<c:when test="${pageIndex == scientificCouncilFunctionsManagementBackingBean.numberOfPages}">						
 						<c:choose>
-							<c:when test="${scientificCouncilFunctionsManagementBackingBean.page == pageIndex}">
+							<c:when test="${scientificCouncilFunctionsManagementBackingBean.pageIndex == pageIndex}">
 								<c:out value="${pageIndex}"/>	
 							</c:when>
 							<c:otherwise>
@@ -94,7 +92,7 @@
 				    </c:when>
 				    <c:otherwise>					    
 						<c:choose>
-							<c:when test="${scientificCouncilFunctionsManagementBackingBean.page == pageIndex}">
+							<c:when test="${scientificCouncilFunctionsManagementBackingBean.pageIndex == pageIndex}">
 								<c:out value="${pageIndex},"/>		
 							</c:when>
 							<c:otherwise>

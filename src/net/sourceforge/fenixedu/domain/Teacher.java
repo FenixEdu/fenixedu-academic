@@ -612,7 +612,7 @@ public class Teacher extends Teacher_Base {
 		serviceExemptions, lessonsPeriod);
 
 	if (dominantExemption != null) {
-	    if (dominantExemption.isForNotCountInCredits()) {
+	    if (!dominantExemption.isForCountInCredits()) {
 		return result;
 
 	    } else if (dominantExemption.isForCountInCreditsBecauseIsSabbaticalOrEquivalent()) {
@@ -648,6 +648,7 @@ public class Teacher extends Teacher_Base {
 		Interval lessonsInterval = new Interval(
 			lessonsPeriod.getStartYearMonthDay().toDateMidnight(), lessonsPeriod
 				.getEndYearMonthDay().toDateMidnight());
+		
 		int lessonsDays = lessonsInterval.toPeriod(PeriodType.days()).getDays();
 		List<Interval> notYetOverlapedIntervals = new ArrayList<Interval>();
 		List<Interval> newIntervals = new ArrayList<Interval>();
@@ -970,7 +971,7 @@ public class Teacher extends Teacher_Base {
 	    TeacherServiceExemption teacherServiceExemption = chooseDominantServiceExemptionInLessonsPeriod(
 		    serviceExemptions, lessonsPeriod);
 
-	    if (teacherServiceExemption != null && teacherServiceExemption.isForNotCountInCredits()) {
+	    if (teacherServiceExemption != null && !teacherServiceExemption.isForCountInCredits()) {
 		TeacherProfessionalSituation regimen = getLastFunctionAccumulationLegalRegimen(teacherServiceExemption
 			.getBeginDateYearMonthDay(), teacherServiceExemption.getEndDateYearMonthDay());
 		return regimen != null ? (regimen.getWeeklyLessonHours() != null ? regimen.getWeeklyLessonHours().intValue() : 0) : 0;
