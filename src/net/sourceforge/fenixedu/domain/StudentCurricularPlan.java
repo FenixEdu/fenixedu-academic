@@ -786,9 +786,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public ExecutionPeriod getFirstExecutionPeriod() {
 	ExecutionPeriod result = null;
 
-	for (final Enrolment enrolment : this.getEnrolmentsSet()) {
-	    if (result == null || result.isAfter(enrolment.getExecutionPeriod())) {
-		result = enrolment.getExecutionPeriod();
+	for (final CurriculumLine curriculumLine : this.getAllCurriculumLines()) {
+	    final ExecutionPeriod executionPeriod = curriculumLine.getExecutionPeriod();
+	    if (result == null || (executionPeriod != null && result.isAfter(executionPeriod))) {
+		result = executionPeriod;
 	    }
 	}
 
