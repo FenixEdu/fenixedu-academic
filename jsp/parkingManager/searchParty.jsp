@@ -75,7 +75,7 @@
 			<fr:view name="parkingParty" schema="view.parkingParty.personalInfo">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thright thlight mtop025 mbottom05" />
-					<fr:property name="rowClasses" value="trhighlight2,,,,,,," />
+					<fr:property name="rowClasses" value="trhighlight2,,,,,,,," />
 				</fr:layout>
 			</fr:view>
 			

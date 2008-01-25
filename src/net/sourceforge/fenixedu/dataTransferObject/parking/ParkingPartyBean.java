@@ -31,120 +31,131 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
 
     private Boolean cardAlwaysValid;
 
+    private String notes;
+
     private List<VehicleBean> vehicles = new ArrayList();
 
     public ParkingPartyBean(ParkingParty parkingParty) {
-        setParkingParty(parkingParty);
-        setCardNumber(parkingParty.getCardNumber());
-        setPhdNumber(parkingParty.getPhdNumber());
-        setCardStartDate(parkingParty.getCardStartDate());
-        setCardEndDate(parkingParty.getCardEndDate());
-        setParkingGroup(parkingParty.getParkingGroup());
-        if (parkingParty.getParty().isPerson()) {
-            setEmail(((Person) parkingParty.getParty()).getEmail());
-        }
-        setCardAlwaysValid(parkingParty.getCardStartDate() == null);
-        setVehicles(parkingParty.getVehicles());        
+	setParkingParty(parkingParty);
+	setCardNumber(parkingParty.getCardNumber());
+	setPhdNumber(parkingParty.getPhdNumber());
+	setCardStartDate(parkingParty.getCardStartDate());
+	setCardEndDate(parkingParty.getCardEndDate());
+	setParkingGroup(parkingParty.getParkingGroup());
+	if (parkingParty.getParty().isPerson()) {
+	    setEmail(((Person) parkingParty.getParty()).getEmail());
+	}
+	setCardAlwaysValid(parkingParty.getCardStartDate() == null);
+	setVehicles(parkingParty.getVehicles());
+	setNotes(parkingParty.getNotes());
     }
 
     public Object execute() {
-        ParkingParty parkingParty = getParkingParty();
-        parkingParty.edit(this);
-        return parkingParty;
+	ParkingParty parkingParty = getParkingParty();
+	parkingParty.edit(this);
+	return parkingParty;
     }
 
     public ParkingParty getParkingParty() {
-        return parkingParty == null ? null : parkingParty.getObject();
+	return parkingParty == null ? null : parkingParty.getObject();
     }
 
     public void setParkingParty(ParkingParty parkingParty) {
-        if (parkingParty != null) {
-            this.parkingParty = new DomainReference<ParkingParty>(parkingParty);
-        } else {
-            this.parkingParty = null;
-        }
+	if (parkingParty != null) {
+	    this.parkingParty = new DomainReference<ParkingParty>(parkingParty);
+	} else {
+	    this.parkingParty = null;
+	}
     }
 
     public DateTime getCardEndDate() {
-        return cardEndDate;
+	return cardEndDate;
     }
 
     public void setCardEndDate(DateTime cardEndDate) {
-        this.cardEndDate = cardEndDate;
+	this.cardEndDate = cardEndDate;
     }
 
     public Long getCardNumber() {
-        return cardNumber;
+	return cardNumber;
     }
 
     public void setCardNumber(Long cardNumber) {
-        this.cardNumber = cardNumber;
+	this.cardNumber = cardNumber;
     }
 
     public DateTime getCardStartDate() {
-        return cardStartDate;
+	return cardStartDate;
     }
 
     public void setCardStartDate(DateTime cardStartDate) {
-        this.cardStartDate = cardStartDate;
+	this.cardStartDate = cardStartDate;
     }
 
     public ParkingGroup getParkingGroup() {
-        return parkingGroup == null ? null : parkingGroup.getObject();
+	return parkingGroup == null ? null : parkingGroup.getObject();
     }
 
     public void setParkingGroup(ParkingGroup parkingGroup) {
-        if (parkingGroup != null) {
-            this.parkingGroup = new DomainReference<ParkingGroup>(parkingGroup);
-        } else {
-            this.parkingGroup = null;
-        }
+	if (parkingGroup != null) {
+	    this.parkingGroup = new DomainReference<ParkingGroup>(parkingGroup);
+	} else {
+	    this.parkingGroup = null;
+	}
     }
 
     public Integer getPhdNumber() {
-        return phdNumber;
+	return phdNumber;
     }
 
     public void setPhdNumber(Integer phdNumber) {
-        this.phdNumber = phdNumber;
+	this.phdNumber = phdNumber;
     }
 
     public Boolean getCardAlwaysValid() {
-        return cardAlwaysValid;
+	return cardAlwaysValid;
     }
 
     public void setCardAlwaysValid(Boolean cardAlwaysValid) {
-        this.cardAlwaysValid = cardAlwaysValid;
+	this.cardAlwaysValid = cardAlwaysValid;
     }
 
     public String getEmail() {
-        return email;
+	return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
 
     public List<VehicleBean> getVehicles() {
-        return vehicles;
+	return vehicles;
     }
 
     public void setVehicles(List<Vehicle> vehicles) {
-        if (vehicles != null) {
-            List<VehicleBean> vehicleBeanList = new ArrayList<VehicleBean>();
-            for (Vehicle vehicle : vehicles) {
-                vehicleBeanList.add(new VehicleBean(vehicle,vehicle.getParkingParty()));
-            }
-            this.vehicles = vehicleBeanList;
-        }
+	if (vehicles != null) {
+	    List<VehicleBean> vehicleBeanList = new ArrayList<VehicleBean>();
+	    for (Vehicle vehicle : vehicles) {
+		vehicleBeanList.add(new VehicleBean(vehicle, vehicle.getParkingParty()));
+	    }
+	    this.vehicles = vehicleBeanList;
+	}
     }
-    
-    public void updateVehicles(List<VehicleBean> vehicles){
-        this.vehicles = vehicles;
+
+    public void updateVehicles(List<VehicleBean> vehicles) {
+	this.vehicles = vehicles;
     }
 
     public void addVehicle() {
-        getVehicles().add(new VehicleBean(getParkingParty()));
+	getVehicles().add(new VehicleBean(getParkingParty()));
+    }
+
+    public String getNotes() {
+	return notes;
+    }
+
+    public void setNotes(String notes) {
+	this.notes = notes;
     }
 
 }

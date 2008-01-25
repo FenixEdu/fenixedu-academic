@@ -2761,6 +2761,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		ParkingDocumentState secondCarInsuranceDocumentState;
 		ParkingDocumentState secondCarOwnerIdDocumentState;
 		ParkingDocumentState secondCarPropertyRegistryDocumentState;
+		String notes;
 	}
 
 	class net.sourceforge.fenixedu.domain.parking.ParkingRequest extends net.sourceforge.fenixedu.domain.DomainObject {

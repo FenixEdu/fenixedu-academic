@@ -6,7 +6,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.parking.ParkingDocumentType"%>
 
 <h3><bean:message key="label.actualState" /></h3>
-<p><fr:view name="parkingParty" property="party" schema="viewPersonInfo">
+<p><fr:view name="parkingParty" schema="view.PersonalInfoAndParkingPartyNotes">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thright thlight mtop025" />
 	</fr:layout>

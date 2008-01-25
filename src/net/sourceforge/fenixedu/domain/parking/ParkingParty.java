@@ -59,8 +59,8 @@ public class ParkingParty extends ParkingParty_Base {
 
     public boolean getHasAllNecessaryPersonalInfo() {
 	Person person = (Person) getParty();
-	return ((person.getPersonWorkPhone() != null && !StringUtils.isEmpty(person.getPersonWorkPhone()
-		.getNumber())) || !StringUtils.isEmpty(person.getMobile()))
+	return ((person.getPersonWorkPhone() != null && !StringUtils.isEmpty(person.getPersonWorkPhone().getNumber())) || !StringUtils
+		.isEmpty(person.getMobile()))
 		&& (isEmployee() || !StringUtils.isEmpty(person.getEmail()));
     }
 
@@ -112,8 +112,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public String getParkingAcceptedRegulationMessage() {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-		.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils.getLocale());
 	String name = getParty().getName();
 	String number = "";
 	if (getParty().isPerson()) {
@@ -135,8 +134,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    }
 	}
 
-	return MessageFormat.format(bundle.getString("message.acceptedRegulation"), new Object[] { name,
-		number });
+	return MessageFormat.format(bundle.getString("message.acceptedRegulation"), new Object[] { name, number });
     }
 
     public boolean isStudent() {
@@ -161,8 +159,7 @@ public class ParkingParty extends ParkingParty_Base {
 	if (driverLicenseDocument != null) {
 	    return driverLicenseDocument.getParkingFile().getFilename();
 	} else if (getDriverLicenseDeliveryType() != null) {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
-		    .getLocale());
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils.getLocale());
 	    return bundle.getString(getDriverLicenseDeliveryType().name());
 	}
 	return "";
@@ -170,8 +167,7 @@ public class ParkingParty extends ParkingParty_Base {
 
     public String getDeclarationDocumentLink() {
 	NewParkingDocument parkingDocument = getDriverLicenseDocument();
-	if (parkingDocument != null
-		&& parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DRIVER_LICENSE) {
+	if (parkingDocument != null && parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DRIVER_LICENSE) {
 	    ParkingFile parkingFile = parkingDocument.getParkingFile();
 	    return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
 		    parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
@@ -203,18 +199,15 @@ public class ParkingParty extends ParkingParty_Base {
 		roles.add(RoleType.TEACHER);
 	    }
 	    Employee employee = person.getEmployee();
-	    if (employee != null
-		    && person.getPersonRole(RoleType.TEACHER) == null
+	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
 		    && person.getPersonRole(RoleType.EMPLOYEE) != null
-		    && employee
-			    .getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
+		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
 		roles.add(RoleType.EMPLOYEE);
 	    }
 	    Student student = person.getStudent();
 	    if (student != null && person.getPersonRole(RoleType.STUDENT) != null) {
 		DegreeType degreeType = student.getMostSignificantDegreeType();
-		Collection<Registration> registrations = student
-			.getRegistrationsByDegreeType(degreeType);
+		Collection<Registration> registrations = student.getRegistrationsByDegreeType(degreeType);
 		for (Registration registration : registrations) {
 		    StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
 		    if (scp != null) {
@@ -224,8 +217,7 @@ public class ParkingParty extends ParkingParty_Base {
 		}
 	    }
 	    GrantOwner grantOwner = person.getGrantOwner();
-	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null
-		    && grantOwner.hasCurrentContract()) {
+	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
 		roles.add(RoleType.GRANT_OWNER);
 	    }
 	}
@@ -243,27 +235,23 @@ public class ParkingParty extends ParkingParty_Base {
 		    currentDepartment = teacher.getCurrentWorkingDepartment().getName();
 		}
 		if (teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
-		    occupations.add("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber()
-			    + "<br/>" + currentDepartment);
+		    occupations.add("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber() + "<br/>"
+			    + currentDepartment);
 		} else {
-		    occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber()
-			    + "<br/>" + currentDepartment);
+		    occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber() + "<br/>"
+			    + currentDepartment);
 		}
 	    }
 	    Employee employee = person.getEmployee();
-	    if (employee != null
-		    && person.getPersonRole(RoleType.TEACHER) == null
+	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
 		    && person.getPersonRole(RoleType.EMPLOYEE) != null
-		    && employee
-			    .getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
+		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
 		Unit currentUnit = employee.getCurrentWorkingPlace();
 		if (currentUnit != null) {
-		    occupations.add("<strong>Funcionário</strong><br/> Nº "
-			    + employee.getEmployeeNumber() + "<br/>" + currentUnit.getName() + " - "
-			    + currentUnit.getCostCenterCode());
+		    occupations.add("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber() + "<br/>"
+			    + currentUnit.getName() + " - " + currentUnit.getCostCenterCode());
 		} else {
-		    occupations.add("<strong>Funcionário</strong><br/> Nº "
-			    + employee.getEmployeeNumber());
+		    occupations.add("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber());
 		}
 	    }
 	    Student student = person.getStudent();
@@ -278,8 +266,7 @@ public class ParkingParty extends ParkingParty_Base {
 			    stringBuilder.append(student.getNumber()).append("<br/>");
 			}
 			stringBuilder.append("\n").append(scp.getDegreeCurricularPlan().getName());
-			stringBuilder.append("\n (").append(registration.getCurricularYear()).append(
-				"º ano");
+			stringBuilder.append("\n (").append(registration.getCurricularYear()).append("º ano");
 			if (isFirstTimeEnrolledInCurrentYear(registration)) {
 			    stringBuilder.append(" - 1ª vez)");
 			} else {
@@ -297,23 +284,20 @@ public class ParkingParty extends ParkingParty_Base {
 		String researchUnitNames = person.getWorkingResearchUnitNames();
 		if (!StringUtils.isEmpty(researchUnitNames)
 			|| !person.getPartyClassification().equals(PartyClassification.TEACHER)) {
-		    occupations.add("<strong>Investigador</strong><br/> Nº "
-			    + person.getMostSignificantNumber());
+		    occupations.add("<strong>Investigador</strong><br/> Nº " + person.getMostSignificantNumber());
 		    if (!StringUtils.isEmpty(researchUnitNames)) {
 			occupations.add("<br/>" + researchUnitNames);
 		    }
 		}
 	    }
 	    GrantOwner grantOwner = person.getGrantOwner();
-	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null
-		    && grantOwner.hasCurrentContract()) {
+	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
 		List<GrantContractRegime> contractRegimeList = new ArrayList<GrantContractRegime>();
 		occupations.add("<strong>Bolseiro</strong><br/> Nº " + grantOwner.getNumber());
 		for (GrantContract contract : grantOwner.getGrantContracts()) {
 		    contractRegimeList.addAll(contract.getContractRegimes());
 		}
-		Collections
-			.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
+		Collections.sort(contractRegimeList, new BeanComparator("dateBeginContractYearMonthDay"));
 		for (GrantContractRegime contractRegime : contractRegimeList) {
 		    StringBuilder stringBuilder = new StringBuilder();
 		    stringBuilder.append("<strong>Início:</strong> "
@@ -334,10 +318,8 @@ public class ParkingParty extends ParkingParty_Base {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<strong>Convidado</strong><br/>");
 		for (Invitation invitation : invitations) {
-		    stringBuilder.append("<strong>Por:</strong> ")
-			    .append(invitation.getUnit().getName()).append("<br/>");
-		    stringBuilder.append("<strong>Início:</strong> "
-			    + invitation.getBeginDate().toString("dd/MM/yyyy"));
+		    stringBuilder.append("<strong>Por:</strong> ").append(invitation.getUnit().getName()).append("<br/>");
+		    stringBuilder.append("<strong>Início:</strong> " + invitation.getBeginDate().toString("dd/MM/yyyy"));
 		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
 			    + invitation.getEndDate().toString("dd/MM/yyyy"));
 		    occupations.add(stringBuilder.toString());
@@ -358,8 +340,7 @@ public class ParkingParty extends ParkingParty_Base {
 		    StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
 		    if (scp != null) {
 			stringBuilder.append(scp.getDegreeCurricularPlan().getName());
-			stringBuilder.append(" ").append(registration.getCurricularYear()).append(
-				"º ano");
+			stringBuilder.append(" ").append(registration.getCurricularYear()).append("º ano");
 			if (isFirstTimeEnrolledInCurrentYear(registration)) {
 			    stringBuilder.append(" - 1ª vez");
 			}
@@ -430,14 +411,12 @@ public class ParkingParty extends ParkingParty_Base {
 		    && person.getPersonRole(RoleType.TEACHER) == null) {
 		return person.getEmployee().getEmployeeNumber();
 	    }
-	    if (getPartyClassification().equals(PartyClassification.RESEARCHER)
-		    && person.getEmployee() != null) {
+	    if (getPartyClassification().equals(PartyClassification.RESEARCHER) && person.getEmployee() != null) {
 		return person.getEmployee().getEmployeeNumber();
 	    }
 	    if (person.getStudent() != null) {
 		DegreeType degreeType = person.getStudent().getMostSignificantDegreeType();
-		Collection<Registration> registrations = person.getStudent()
-			.getRegistrationsByDegreeType(degreeType);
+		Collection<Registration> registrations = person.getStudent().getRegistrationsByDegreeType(degreeType);
 		for (Registration registration : registrations) {
 		    StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
 		    if (scp != null) {
@@ -486,6 +465,7 @@ public class ParkingParty extends ParkingParty_Base {
 	if (getParty().isPerson() && !StringUtils.isEmpty(parkingPartyBean.getEmail())) {
 	    ((Person) getParty()).setEmail(parkingPartyBean.getEmail());
 	}
+	setNotes(parkingPartyBean.getNotes());
     }
 
     public void edit(ParkingRequest parkingRequest) {
@@ -520,12 +500,10 @@ public class ParkingParty extends ParkingParty_Base {
 	if (getParty().isPerson()) {
 	    Person person = (Person) getParty();
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Docentes")) {
-		return person.getTeacher() != null
-			&& person.getTeacher().getCurrentWorkingDepartment() != null;
+		return person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null;
 	    }
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Não Docentes")) {
-		return person.getEmployee() != null
-			&& person.getEmployee().getCurrentWorkingPlace() != null;
+		return person.getEmployee() != null && person.getEmployee().getCurrentWorkingPlace() != null;
 	    }
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Especiais")) {
 		return person.getPartyClassification() != PartyClassification.PERSON;
@@ -542,8 +520,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    }
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("3º ciclo")) {
 		if (person.hasStudent()) {
-		    Registration registration = getRegistrationByDegreeType(person.getStudent(),
-			    DegreeType.BOLONHA_PHD_PROGRAM);
+		    Registration registration = getRegistrationByDegreeType(person.getStudent(), DegreeType.BOLONHA_PHD_PROGRAM);
 		    return registration != null && registration.isActive();
 		} else {
 		    return Boolean.FALSE;
@@ -558,8 +535,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public boolean getCanRequestUnlimitedCardAndIsInAnyRequestPeriod() {
-	return canRequestUnlimitedCard()
-		&& ParkingRequestPeriod.isDateInAnyRequestPeriod(new DateTime());
+	return canRequestUnlimitedCard() && ParkingRequestPeriod.isDateInAnyRequestPeriod(new DateTime());
     }
 
     public boolean canRequestUnlimitedCard() {
@@ -567,8 +543,7 @@ public class ParkingParty extends ParkingParty_Base {
 	if (getLastRequest() == null) {
 	    if (roles.contains(RoleType.GRANT_OWNER)) {
 		return Boolean.TRUE;
-	    } else if (roles.contains(RoleType.STUDENT)
-		    && canRequestUnlimitedCard(((Person) getParty()).getStudent())) {
+	    } else if (roles.contains(RoleType.STUDENT) && canRequestUnlimitedCard(((Person) getParty()).getStudent())) {
 		return Boolean.TRUE;
 	    }
 	}
@@ -590,15 +565,17 @@ public class ParkingParty extends ParkingParty_Base {
 	    }
 	}
 	return false;
-	//	DEGREE=Licenciatura (5 anos) - 5º ano
-	//	MASTER_DEGREE=Mestrado = 2ciclo - não tem 
-	//	BOLONHA_DEGREE=Licenciatura Bolonha - não podem
-	//	BOLONHA_MASTER_DEGREE=Mestrado Bolonha  - só no 5+ ano 1º vez
-	//	BOLONHA_INTEGRATED_MASTER_DEGREE=Mestrado Integrado
-	//	BOLONHA_ADVANCED_FORMATION_DIPLOMA =Diploma Formação Avançada = cota pos grad
+	// DEGREE=Licenciatura (5 anos) - 5º ano
+	// MASTER_DEGREE=Mestrado = 2ciclo - não tem
+	// BOLONHA_DEGREE=Licenciatura Bolonha - não podem
+	// BOLONHA_MASTER_DEGREE=Mestrado Bolonha - só no 5+ ano 1º vez
+	// BOLONHA_INTEGRATED_MASTER_DEGREE=Mestrado Integrado
+	// BOLONHA_ADVANCED_FORMATION_DIPLOMA =Diploma Formação Avançada = cota
+	// pos grad
 
-	//	BOLONHA_PHD_PROGRAM=Programa Doutoral - não estão no fénix
-	//	BOLONHA_SPECIALIZATION_DEGREE=Curso de Especialização  - não estão no fénix
+	// BOLONHA_PHD_PROGRAM=Programa Doutoral - não estão no fénix
+	// BOLONHA_SPECIALIZATION_DEGREE=Curso de Especialização - não estão no
+	// fénix
 
     }
 
