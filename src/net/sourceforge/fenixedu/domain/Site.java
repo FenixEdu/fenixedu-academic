@@ -149,9 +149,13 @@ public abstract class Site extends Site_Base {
 
     public MetaDomainObjectPortal getTemplate() {
 	MetaDomainObject metaDomainObject = MetaDomainObject.getMeta(this.getClass());
-	return (MetaDomainObjectPortal) metaDomainObject.getAssociatedPortal();
+	return metaDomainObject == null ? null : (MetaDomainObjectPortal) metaDomainObject.getAssociatedPortal();
     }
 
+    public boolean isTemplateAvailable() {
+	return getTemplate() != null;
+    }
+    
     public List<Content> getOrderedTemplateSections() {
 	List<Content> sections = new ArrayList<Content>();
 
