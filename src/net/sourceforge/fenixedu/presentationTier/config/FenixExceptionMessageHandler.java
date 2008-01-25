@@ -11,7 +11,6 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
 /**
@@ -19,11 +18,13 @@ import org.apache.struts.config.ExceptionConfig;
  * 
  */
 
-public class FenixExceptionMessageHandler extends ExceptionHandler {
+public class FenixExceptionMessageHandler extends FenixExceptionHandler {
 
     public ActionForward execute(Exception ex, ExceptionConfig exceptionConfig, ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
+
+	super.execute(ex, exceptionConfig, mapping, actionForm, request, response);
 
         ActionForward forward = mapping.getInputForward();
         ActionError error = new ActionError(ex.getMessage());

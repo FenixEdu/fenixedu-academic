@@ -10,7 +10,6 @@ import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -20,13 +19,12 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
 /**
  * @author João Mota
  */
-public class FenixPublicExceptionHandler extends ExceptionHandler {
+public class FenixPublicExceptionHandler extends FenixExceptionHandler {
 
     /**
      * Handle the exception. Return the <code>ActionForward</code> instance
@@ -53,6 +51,9 @@ public class FenixPublicExceptionHandler extends ExceptionHandler {
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping,
             ActionForm formInstance, HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
+
+	super.execute(ex, ae, mapping, formInstance, request, response);
+
         ActionForward forward = null;
         ActionError error = null;
 

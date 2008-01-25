@@ -21,8 +21,10 @@
 	<div id="container" style="width: 650px;">
 
 		<html:form action="/exceptionHandlingAction.do?method=sendEmail">
-			<bean:define id="exceptionInfo" name="exceptionInfo" type="java.lang.String"/>
-			<html:hidden property="exceptionInfo" value="<%= exceptionInfo %>"/>
+			<logic:present name="exceptionInfo">
+				<bean:define id="exceptionInfo" name="exceptionInfo" type="java.lang.String"/>
+				<html:hidden property="exceptionInfo" value="<%= exceptionInfo %>"/>
+			</logic:present>
 
 		<table>
 			<tr>
