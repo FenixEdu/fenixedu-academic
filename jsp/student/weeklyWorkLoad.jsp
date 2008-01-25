@@ -38,13 +38,13 @@
 	<html:select bundle="HTMLALT_RESOURCES" property="executionPeriodID" onchange="this.form.submit();">
 		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
 	</html:select>
-<!--
+<%--
 	<logic:equal name="selectedExecutionPeriod" property="state.stateCode" value="C">
 		<html:select bundle="HTMLALT_RESOURCES" property="weekOffset" onchange="this.form.submit();">
 			<html:options collection="weeks" property="weekOffset" labelProperty="presentationName"/>
 		</html:select>
 	</logic:equal>
--->
+--%>
 	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.submit"/>
 	</html:submit>
