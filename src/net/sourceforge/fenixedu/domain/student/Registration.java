@@ -409,8 +409,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
 
@@ -459,24 +459,24 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     private void setApprovationRatio(Double approvationRatio) {
 	this.approvationRatio = approvationRatio;
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     private void setArithmeticMean(Double arithmeticMean) {
 	this.arithmeticMean = arithmeticMean;
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public Integer getApprovedEnrollmentsNumber() {
 	if (this.approvedEnrollmentsNumber == null) {
@@ -486,16 +486,16 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     private void setApprovedEnrollmentsNumber(Integer approvedEnrollmentsNumber) {
 	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public Double getApprovationRatio() {
 	if (this.approvationRatio == null) {
@@ -505,8 +505,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public Double getArithmeticMean() {
 	if (this.arithmeticMean == null) {
@@ -775,49 +775,49 @@ public class Registration extends Registration_Base {
 
     final public Collection<Enrolment> getExtraCurricularEnrolments() {
 	final Collection<Enrolment> result = new HashSet<Enrolment>();
-
+	
 	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan())
 		: getStudentCurricularPlansSet());
 	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
 	    result.addAll(studentCurricularPlan.getExtraCurricularEnrolments());
 	}
-
+	
 	return result;
     }
 
     final public Collection<CurriculumLine> getExtraCurricularCurriculumLines() {
 	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
-
+	
 	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan())
 		: getStudentCurricularPlansSet());
 	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
 	    result.addAll(studentCurricularPlan.getExtraCurricularCurriculumLines());
 	}
-
+	
 	return result;
     }
 
     final public Collection<Enrolment> getPropaedeuticEnrolments() {
 	final Collection<Enrolment> result = new HashSet<Enrolment>();
-
+	
 	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan())
 		: getStudentCurricularPlansSet());
 	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
 	    result.addAll(studentCurricularPlan.getPropaedeuticEnrolments());
 	}
-
+	
 	return result;
     }
 
     final public Collection<CurriculumLine> getPropaedeuticCurriculumLines() {
 	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
-
+	
 	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan())
 		: getStudentCurricularPlansSet());
 	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
 	    result.addAll(studentCurricularPlan.getPropaedeuticCurriculumLines());
 	}
-
+	
 	return result;
     }
 
@@ -957,7 +957,7 @@ public class Registration extends Registration_Base {
 	}
 	return result;
     }
-
+    
     public SortedSet<ExecutionYear> getSortedCurriculumLinesExecutionYears() {
 	final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
 	result.addAll(getCurriculumLinesExecutionYears());
@@ -2008,7 +2008,7 @@ public class Registration extends Registration_Base {
     public String getConclusionProcessResponsibleIstUsername() {
 	return hasConclusionProcessResponsible() ? getConclusionProcessResponsible().getIstUsername() : null;
     }
-
+    
     public boolean isRegistrationConclusionProcessed() {
 	if (getDegreeType().isBolonhaType()) {
 	    return getLastStudentCurricularPlan().isConclusionProcessed();
@@ -2071,9 +2071,9 @@ public class Registration extends Registration_Base {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.cannot.modify.responsibleForConclusionProcess");
 	}
-	super.setConclusionProcessResponsible(responsibleForConclusionProcess);
+        super.setConclusionProcessResponsible(responsibleForConclusionProcess);
     }
-
+    
     public YearMonthDay calculateConclusionDate() {
 	return getLastStudentCurricularPlan().getLastApprovementDate();
     }
@@ -2130,7 +2130,7 @@ public class Registration extends Registration_Base {
     public boolean hasConcluded() {
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 
-	if (!lastStudentCurricularPlan.isBolonhaDegree()) {
+	if (lastStudentCurricularPlan == null || !lastStudentCurricularPlan.isBolonhaDegree()) {
 	    return true;
 	}
 	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getCycleCurriculumGroups()) {
@@ -2154,8 +2154,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * Retrieve concluded cycles before or equal to the given cycle
-         */
+     * Retrieve concluded cycles before or equal to the given cycle
+     */
     final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
 	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 
@@ -2208,7 +2208,7 @@ public class Registration extends Registration_Base {
 	super.setFinalAverage(calculateFinalAverage());
 	super.setConclusionDate(calculateConclusionDate());
 	super.setConclusionProcessResponsible(AccessControl.getPerson());
-
+	
 	RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
     }
 
@@ -2895,7 +2895,7 @@ public class Registration extends Registration_Base {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.cannot.remove.concluded.information.in.registration.for.bolonha");
 	}
-
+	
 	super.setFinalAverage(null);
 	super.setConclusionDate(null);
 	super.setConclusionProcessResponsible(null);
