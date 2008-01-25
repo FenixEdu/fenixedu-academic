@@ -28,3 +28,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table ParkingParty" alterTableParkingParty.sql
+execute "Migrate Tutor Unit" migrateTutorUnit.sql
