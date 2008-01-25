@@ -14,9 +14,6 @@
 	</p>
 </html:messages>
 
-<bean:define id="attendsId" name="attends" property="idInternal" />
-<bean:define id="projectId" name="project" property="idInternal" />
-		
 <fr:view name="project"
 	schema="evaluation.project.view-with-name-description-and-grouping">
 	<fr:layout name="tabular">
@@ -28,6 +25,9 @@
 
 
 <logic:notPresent name="noStudentGroupForGrouping">
+
+	<bean:define id="attendsId" name="attends" property="idInternal" />
+	<bean:define id="projectId" name="project" property="idInternal" />
 
 	<logic:notEqual name="project" property="submissionPeriodOpen" value="true">
 		<p>
