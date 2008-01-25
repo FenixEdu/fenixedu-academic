@@ -199,6 +199,11 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, true);
     }
 
+    public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
+	    DateTime reimburseDate, String comments) {
+	return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, true, reimburseDate);
+    }
+
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse) {
 	return reimburseWithoutRules(responsibleUser, paymentMode, amountToReimburse, null);
@@ -233,6 +238,12 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
     private AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
 	    String comments, boolean checkRules) {
+	return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, checkRules, new DateTime());
+
+    }
+
+    private AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
+	    String comments, boolean checkRules, DateTime reimburseDate) {
 
 	if (checkRules && !canApplyReimbursement(amountToReimburse)) {
 	    throw new DomainException("error.accounting.AccountingTransaction.cannot.reimburse.events.that.may.open");
@@ -247,7 +258,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	final AccountingTransaction transaction = new AccountingTransaction(responsibleUser, new Entry(EntryType.ADJUSTMENT,
 		amountToReimburse.negate(), getToAccount()),
 		new Entry(EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()), new AccountingTransactionDetail(
-			new DateTime(), paymentMode, comments), this);
+			reimburseDate, paymentMode, comments), this);
 
 	getEvent().recalculateState(getWhenRegistered());
 
