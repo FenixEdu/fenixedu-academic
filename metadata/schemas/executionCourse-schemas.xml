@@ -181,7 +181,9 @@
 <schema name="net.sourceforge.fenixedu.domain.SectionCreator"
 		type="net.sourceforge.fenixedu.presentationTier.Action.manager.SectionCreator"
 		bundle="DEFAULT">
-	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+		<property name="size" value="40"/>
+	</slot>
     <slot name="nextSection" key="label.sectionOrder.before" layout="menu-select">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionOrderProvider" />
         <property name="format" value="${name}" />

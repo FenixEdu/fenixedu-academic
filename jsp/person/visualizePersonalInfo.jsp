@@ -53,11 +53,11 @@
 				</logic:equal>
 			</td>
 			<td class="tdclear">
-				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
-					<bean:message key="label.edit" />
-				</html:link>,
 				<html:link action="/partyContacts.do?method=prepareCreatePhone" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.add" />
+				</html:link>,
+				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+					<bean:message key="label.edit" />
 				</html:link>,
 				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.clear" />
@@ -94,11 +94,11 @@
 				</logic:equal>
 			</td>
 			<td class="tdclear">
-				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
-					<bean:message key="label.edit" />
-				</html:link>,
 				<html:link action="/partyContacts.do?method=prepareCreateMobilePhone">
 					<bean:message key="label.add" />
+				</html:link>,
+				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+					<bean:message key="label.edit" />
 				</html:link>,
 				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.clear" />
@@ -136,11 +136,11 @@
 			</td>
 			<td class="tdclear">
 				<logic:notEqual name="contact" property="type.name" value="INSTITUTIONAL">
-					<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
-						<bean:message key="label.edit" />
-					</html:link>,
 					<html:link action="/partyContacts.do?method=prepareCreateEmailAddress">
 						<bean:message key="label.add" />
+					</html:link>,
+					<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+						<bean:message key="label.edit" />
 					</html:link>,
 					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 						<bean:message key="label.clear" />
@@ -183,11 +183,11 @@
 				</logic:equal>
 			</td>
 			<td class="tdclear">
+				<html:link action="/partyContacts.do?method=prepareCreateEmailAddress">
+					<bean:message key="label.add" />
+				</html:link>,
 				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.edit" />
-				</html:link>,
-				<html:link action="/partyContacts.do?method=prepareCreateWebAddress">
-					<bean:message key="label.add" />
 				</html:link>,
 				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 					<bean:message key="label.clear" />

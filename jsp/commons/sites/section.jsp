@@ -446,7 +446,7 @@
 	</ul>
 
 <logic:empty name="section" property="associatedFunctionalities">
-	<em><bean:message key="label.noInstitutionalContents" bundle="SITE_RESOURCES"/></em>
+	<p><em><bean:message key="label.noInstitutionalContents" bundle="SITE_RESOURCES"/>.</em></p>
 </logic:empty>
 
 <logic:notEmpty name="section" property="associatedFunctionalities">

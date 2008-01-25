@@ -112,11 +112,14 @@ div.separator1 {
 padding-top: 0.5em;
 background: url(../images/ann_sep.gif) top left repeat-x;
 }
-
 .separator2 {
-background: #f4f4e4;
-border-bottom: 2px solid #eed;
+background: #f6f3e9;
+border-bottom: 2px solid #eee9dd;
 padding: 0.25em;
+}
+div.separator3 {
+padding-top: 0.5em;
+background: url(../images/ann_sep.gif) bottom left repeat-x;
 }
 
 /* ----------------------

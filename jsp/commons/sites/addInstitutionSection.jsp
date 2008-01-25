@@ -30,6 +30,8 @@
     </div>
 </logic:messagesPresent>
 
+<p class="mtop15 mbottom05"><bean:message key="label.unitSite.institutionSection.choose" bundle="SITE_RESOURCES"/>:</p>
+
 <fr:view name="template" property="pool">
 	<fr:layout>
 		<fr:property name="eachLayout" value="values"/>

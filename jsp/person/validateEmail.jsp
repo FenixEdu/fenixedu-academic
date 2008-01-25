@@ -17,7 +17,7 @@
 	</div>
 			
 
-	<p class="mtop2"><strong><bean:message key="message.validate.email.prefix"/></strong></p>
+	<p class="mtop15 mbottom05"><strong><bean:message key="message.validate.email.prefix"/></strong></p>
 	
 	
 	<fr:form action="/validateEmail.do?method=redirect">

@@ -13,7 +13,7 @@
 
 <!-- Protocol Data -->
 <div class="mtop2 mbottom05 separator2">
-	<h3 class="dinline"><bean:message key="label.protocol.data" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+	<p class="dinline"><strong><bean:message key="label.protocol.data" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 </div>
 
 <fr:view name="protocolFactory" schema="show.protocol.data">
@@ -26,11 +26,11 @@
 
 <!-- Responsibles -->
 <div class="mtop2 mbottom05 separator2">
-	<h3 class="dinline"><bean:message key="label.protocol.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+	<p class="dinline"><strong><bean:message key="label.protocol.responsibles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 </div>
 
 
-<p class="mbottom0"><strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
+<p class="mbottom0"><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></p>
 <logic:notEmpty name="protocolFactory" property="responsibles">
 	<fr:view name="protocolFactory" property="responsibles" schema="show.protocol.responsible">
 		<fr:layout name="tabular">
@@ -53,7 +53,7 @@
 	</logic:empty>
 </logic:empty>
 
-<p class="mbottom0"><strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
+<p class="mbottom0"><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></p>
 <logic:notEmpty name="protocolFactory" property="partnerResponsibles">
 	<fr:view name="protocolFactory" property="partnerResponsibles" schema="show.protocol.responsible">
 		<fr:layout name="tabular">
@@ -69,10 +69,10 @@
 
 <!-- Units -->
 <div class="mtop2 mbottom05 separator2">
-	<h3 class="dinline"><bean:message key="label.protocol.units" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+	<p class="dinline"><strong><bean:message key="label.protocol.units" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 </div>
 
-<p class="mbottom0"><strong><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
+<p class="mbottom0"><bean:message key="label.protocol.ist" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></p>
 <fr:view name="protocolFactory" property="units" schema="show.protocol.unit">
 	<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight mvert025 thhide1"/>
@@ -83,7 +83,7 @@
 	<p class="mtop05"><em><bean:message key="label.protocol.hasNone" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>.</p>
 </logic:empty>
 
-<p class="mbottom0"><strong><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
+<p class="mbottom0"><bean:message key="label.protocol.partner" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></p>
 <logic:notEmpty name="protocolFactory" property="partnerUnits">
 	<fr:view name="protocolFactory" property="partnerUnits" schema="show.protocol.partnerUnit">
 		<fr:layout name="tabular">
@@ -99,22 +99,24 @@
 
 <!-- Files -->
 <div class="mtop2 mbottom05 separator2">
-	<h3 class="dinline"><bean:message key="label.protocol.files" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+	<p class="dinline"><strong><bean:message key="label.protocol.files" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 </div>
 
 
 <logic:notEmpty name="protocolFactory" property="protocol.protocolFiles">
 <table class="tstyle1 thlight">
+<%--
 <tr>
 	<th><bean:message key="label.filename" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
 </tr>
+--%>
 <logic:iterate id="file" name="protocolFactory" property="protocol.protocolFiles">
 	<bean:define id="url"><bean:write name="file" property="downloadUrl"/></bean:define>
 	<tr>
 		<td><html:link href="<%= url %>" target="_blank"><bean:write name="file" property="filename"/></html:link></td>
 	</tr>
 </logic:iterate>
-</table>	
+</table>
 </logic:notEmpty>
 
 <logic:empty name="protocolFactory" property="protocol.protocolFiles">

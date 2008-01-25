@@ -110,7 +110,7 @@
 </logic:equal>
 	
 <logic:empty name="site" property="associatedFunctionalities">
-	<em><bean:message key="label.noInstitutionalContents" bundle="SITE_RESOURCES"/></em>
+	<p><em><bean:message key="label.noInstitutionalContents" bundle="SITE_RESOURCES"/>.</em></p>
 </logic:empty>
 
 <logic:notEmpty name="site" property="associatedFunctionalities">
@@ -119,8 +119,7 @@
 			<bean:define id="contentID" name="functionality" property="idInternal"/>
 
 			<div class="mtop15 mbottom0" style="background: #fafafa; padding: 0.5em;">
-			<p>
-			<strong><fr:view name="functionality" property="name"/></strong>
+				<strong><fr:view name="functionality" property="name"/></strong>
 				<span style="color: #888; padding-left: 1em;">
 	                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
 	                <fr:view name="functionality" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
@@ -134,13 +133,12 @@
 	                </fr:view>
 	            </span>
 
-				<p>
+				<p class="mtop05 mbottom0">
 		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 				
 			        <html:link action="<%=  actionName + "?method=removeFunctionalityFromContainer&amp;" + context + "&amp;contentID=" + contentID + "&amp;containerID=" + containerID %>">
 						<bean:message key="messaging.delete.label" bundle="WEBSITEMANAGER_RESOURCES"/>
 					 </html:link>
 				 </p>
-			 </p>
 			 </div>
 			
 	</logic:iterate>
