@@ -48,6 +48,10 @@
         <forward name="Success" path="/announcementsManagement.do?method=start"/>
       </action>
 
+      <action path="/manageTutorSite" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+        <forward name="Success" path="/manageUnitSite.do?method=prepare"/>
+      </action>
+
 	  <action path="/manageUnitSite" 
 			  type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.CustomUnitSiteManagementDA"
 			  parameter="method">
@@ -90,7 +94,7 @@
         <forward name="editPersonFunction" path="basicUnitSite-editPersonFunction"/>
         <forward name="chooseManagers" path="basicUnitSite-chooseManagers"/>
         <forward name="analytics" path="basicUnitSite-analytics"/>
-	  </action>
+	  </action>	  
 	  
 	  <action path="/manageScientificAreaSite"
 		  type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.CustomUnitSiteManagementDA"

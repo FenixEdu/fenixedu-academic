@@ -212,7 +212,7 @@ public abstract class Content extends Content_Base {
 		    return true;
 		}
 	    }
-	    return false;
+	    return getParentsSet().isEmpty();
 	} else {
 	    return availabilityPolicy.getTargetGroup() instanceof EveryoneGroup;
 	}

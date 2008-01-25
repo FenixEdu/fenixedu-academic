@@ -19,6 +19,7 @@ public abstract class AbstractPathProcessor {
 	strategies.put("net.sourceforge.fenixedu.domain.DegreeSite", new DegreePathProcessor());
 	strategies.put("net.sourceforge.fenixedu.domain.ExecutionCourseSite", new ExecutionCoursePathProcessor());
 	strategies.put("net.sourceforge.fenixedu.domain.ScientificAreaSite", new ScientificAreaPathProcessor());
+	strategies.put("net.sourceforge.fenixedu.domain.TutorSite", new TutorUnitProcessor());
 	strategies.put(DEFAULT,new DefaultPathProcessor());
     }
     

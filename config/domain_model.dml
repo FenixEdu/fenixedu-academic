@@ -2681,6 +2681,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			YearMonthDay endDateYearMonthDay;						
 		}
 
+			class net.sourceforge.fenixedu.domain.organizationalStructure.TutorUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {
+			}
+
 			class net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit extends net.sourceforge.fenixedu.domain.organizationalStructure.Unit {
 			}
 
@@ -4420,6 +4423,7 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 		class net.sourceforge.fenixedu.domain.DegreeSite extends net.sourceforge.fenixedu.domain.Site {
 		}
 
+		
 		class net.sourceforge.fenixedu.domain.ExecutionCourseSite extends net.sourceforge.fenixedu.domain.Site {
 			Boolean dynamicMailDistribution;
 			String initialStatement;
@@ -4444,6 +4448,9 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 			class net.sourceforge.fenixedu.domain.DepartmentSite extends net.sourceforge.fenixedu.domain.UnitSite {
 			}
 
+			class net.sourceforge.fenixedu.domain.TutorSite extends net.sourceforge.fenixedu.domain.UnitSite {
+			}
+			
 			class net.sourceforge.fenixedu.domain.InstitutionSite extends net.sourceforge.fenixedu.domain.UnitSite {
 			}
 

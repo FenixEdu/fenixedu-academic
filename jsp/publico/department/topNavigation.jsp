@@ -4,10 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<fr:view name="unit" property="site" type="net.sourceforge.fenixedu.domain.UnitSite" layout="unit-top-menu">
-    <fr:layout>
-        <fr:property name="sectionUrl" value="<%= request.getContextPath() + "/publico/department/departmentSite.do?method=section" %>"/>
-        <fr:property name="contextParam" value="selectedDepartmentUnitID"/>
-        <fr:property name="contextRelative" value="false"/>
-    </fr:layout>
-</fr:view>
+<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
+
+<bean:define id="site" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" toScope="request"/>
+
+<fr:view name="site" layout="unit-top-menu"/>

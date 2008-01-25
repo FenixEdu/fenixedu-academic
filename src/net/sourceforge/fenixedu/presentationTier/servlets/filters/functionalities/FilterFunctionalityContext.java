@@ -234,7 +234,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	for (final Content content : contents) {
 	    if (content != RootDomainObject.getInstance().getRootPortal()) {
 		final String name = content.getNormalizedName().getContent();
-		if (stringBuilder.length() > 0 || (stringBuilder.length() == 0 && name.length() > 0 && name.charAt(0) != '/')) {
+		if (name.length() > 0 && (stringBuilder.length() > 0 || (stringBuilder.length() == 0 && name.charAt(0) != '/'))) {
 		    stringBuilder.append('/');
 		}
 		stringBuilder.append(name);

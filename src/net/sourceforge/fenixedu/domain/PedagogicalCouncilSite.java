@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
  * Specific site instance that is associated with the unit that represents the
@@ -59,4 +60,8 @@ public class PedagogicalCouncilSite extends PedagogicalCouncilSite_Base {
     public void appendReversePathPart(final StringBuilder stringBuilder) {
     }
 
+    @Override
+    public MultiLanguageString getName() {
+	return new MultiLanguageString("");
+    }
 }

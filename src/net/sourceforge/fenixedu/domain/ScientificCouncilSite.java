@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class ScientificCouncilSite extends ScientificCouncilSite_Base {
 
@@ -35,4 +36,8 @@ public class ScientificCouncilSite extends ScientificCouncilSite_Base {
     public void appendReversePathPart(final StringBuilder stringBuilder) {
     }
 
+    @Override
+    public MultiLanguageString getName() {
+	return new MultiLanguageString("");
+    }
 }
