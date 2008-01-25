@@ -12,6 +12,9 @@ public enum ProfessionalSituationType {
     DEFINITIVE_NOMINATION(false),
     REFUSED_DEFINITIVE_NOMINATION(false),
     COMMISSION_OVERTIME_NOMINATION(false),    
+    SERVICE_PROVISION(false),
+    DETACHED_FROM(false),
+    REQUESTED_FROM(false),
     
     //Functions Accumulation    
     FUNCTIONS_ACCUMULATION_WITH_LEADING_POSITIONS(false),
@@ -65,12 +68,8 @@ public enum ProfessionalSituationType {
     INCAPACITY_FOR_TOGETHER_DOCTOR_OF_THE_CGA(true),
     PUBLIC_MANAGER(true),
     DETACHED_TO(true),
-    GOVERNMENT_MEMBER(true),  
-
-    SERVICE_PROVISION(false),
-    DETACHED_FROM(false),
-    REQUESTED_FROM(false);
-
+    GOVERNMENT_MEMBER(true);   
+    
     private boolean isServiceExemption;
         
     private ProfessionalSituationType(boolean isServiceExemption) {
