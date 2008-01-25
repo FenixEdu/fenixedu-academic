@@ -182,7 +182,7 @@
 		type="net.sourceforge.fenixedu.presentationTier.Action.manager.SectionCreator"
 		bundle="DEFAULT">
 	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
-		<property name="size" value="40"/>
+		<property name="size" value="35"/>
 	</slot>
     <slot name="nextSection" key="label.sectionOrder.before" layout="menu-select">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionOrderProvider" />
@@ -247,7 +247,9 @@
 		type="net.sourceforge.fenixedu.domain.Section"
 		bundle="DEFAULT"
 		>
-	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+		<property name="size" value="35"/>
+	</slot>
 	<slot name="nextSection" key="label.sectionOrder.before" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionOrderProvider" />
         <property name="format" value="${name}" />
@@ -279,7 +281,9 @@
 		type="net.sourceforge.fenixedu.presentationTier.Action.manager.ItemCreator"
 		bundle="DEFAULT"
 		>
-	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+		<property name="size" value="35"/>
+	</slot>
 	<slot name="nextItem" key="label.itemOrder.before" layout="menu-select">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemOrderProvider" />
         <property name="format" value="${name}" />
@@ -319,7 +323,9 @@
 		type="net.sourceforge.fenixedu.domain.Item"
 		bundle="DEFAULT"
 		>
-	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
+	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+		<property name="size" value="35"/>
+	</slot>
 	<slot name="nextItem" key="label.itemOrder.before" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.ItemOrderProvider" />
 		<property name="format" value="${name}" />
