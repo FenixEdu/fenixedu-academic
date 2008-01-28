@@ -47,13 +47,13 @@
         	<bean:message key="label.item.edit.add.file.instructions" bundle="SITE_RESOURCES"/>
         </div>
     
-        <fr:edit id="edit-files" name="item" property="sortedFileItems" schema="site.item.files.visible">
+        <fr:edit id="edit-files" name="item" property="sortedAttachmentNodes" schema="site.item.files.visible">
             <fr:layout name="tabular-editable">
 	            <fr:property name="classes" value="tstyle5 thlight mvert0"/>
 	            <fr:property name="columnClasses" value="acenter"/>
                 <fr:property name="customLink(add)">
                     <span class="switchInline">
-                        (<a href="#" onclick="insertLink('${downloadUrl}', '${displayName}');"><bean:message key="link.item.edit.add.file" bundle="SITE_RESOURCES"/></a>)
+                        (<a href="#" onclick="insertLink('${child.fileItem.downloadUrl}', '${child.fileItem.displayName}');"><bean:message key="link.item.edit.add.file" bundle="SITE_RESOURCES"/></a>)
                     </span>
                 </fr:property>
             </fr:layout>

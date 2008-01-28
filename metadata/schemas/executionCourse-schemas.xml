@@ -566,12 +566,12 @@
         <property name="linkFormat" value="${downloadUrl}"/>
     </slot>
 </schema>
-<schema name="site.item.files.visible" type="net.sourceforge.fenixedu.domain.FileItem" bundle="SITE_RESOURCES">
+<schema name="site.item.files.visible" type="net.sourceforge.fenixedu.domain.contents.Node" bundle="SITE_RESOURCES">
     <slot name="visible"/>
-    <slot name="displayName" layout="link" read-only="true">
+    <slot name="child.fileItem.displayName" layout="link" read-only="true" key="label.displayName">
         <property name="useParent" value="true"/>
         <property name="contextRelative" value="false"/>
-        <property name="linkFormat" value="${downloadUrl}"/>
+        <property name="linkFormat" value="${child.fileItem.downloadUrl}"/>
     </slot>
 </schema>
 

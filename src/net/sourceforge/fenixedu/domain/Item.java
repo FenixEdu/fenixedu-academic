@@ -125,6 +125,11 @@ public class Item extends Item_Base {
         return sortedFileItems;
     }
     
+    public Collection<Node> getSortedAttachmentNodes() {
+        return getOrderedChildrenNodes(Attachment.class);
+    }
+
+    
     @Override
     public boolean isAvailable(FunctionalityContext context) {
         if (getSection() != null && !getSection().isAvailable(context)) {
