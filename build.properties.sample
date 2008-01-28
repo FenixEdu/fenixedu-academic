@@ -17,15 +17,15 @@ app.context=ciapl
 manager.filter.pattern=nothing
 
 index.html.link.localhost=siteMap.do
-index.html.link.localhost.localdomain=siteMap.do
-index.html.link.salad21=loginPage.jsp
-index.html.link.salad21.ist.utl.pt=loginPage.jsp
-login.html.link.localhost=https://localhost:8080/ciapl/privado
-login.html.link.salad21=https://salad21:8080/ciapl/privado
-login.page=https://localhost:8080/ciapl/privado
+index.html.link.<cidhcp000>=siteMap.do
+
+login.html.link.localhost=http://localhost:8080/ciapl/privado
+login.html.link.<cidhcp000>=http://<cidhcp000>:8080/ciapl/privado
+
+login.page=http://localhost:8080/ciapl/privado
 institution.url=http://www.ist.utl.pt
 
-#institution.project=/home/gedl/workspace/fenix-head
+#institution.project=/home/<user>/workspace/fenix-ist
 
 language=pt
 location=PT
@@ -139,7 +139,7 @@ db.slide.driver=com.mysql.jdbc.Driver
 db.slide.alias=mysql://localhost:3306/slide
 db.slide.user=root
 db.slide.pass=
-slide.config=/home/gedl/workspace/fenix-head/build/WEB-INF/classes/Domain.xml
+slide.config=/home/<user>/workspace/fenix-head/build/WEB-INF/classes/Domain.xml
 
 script.isAlive.check.db=false
 script.isAlive.check.slide=false
@@ -161,7 +161,7 @@ script.isAlive.check.slide=false
 #                              checked against the provided checksum.  
 #
 #
-filter.hostnames=localhost,localhost.localdomain,salad21,salad21.ist.utl.pt
+filter.hostnames=localhost,<cidhcp000>
 filter.hostname.localhost=PERSON,STUDENT,TEACHER,RESOURCE_ALLOCATION_MANAGER,RESOURCE_MANAGER,MASTER_DEGREE_CANDIDATE, \
         MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,PERSONNEL_SECTION, \
         MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
@@ -169,31 +169,15 @@ filter.hostname.localhost=PERSON,STUDENT,TEACHER,RESOURCE_ALLOCATION_MANAGER,RES
     SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
     GEP, DIRECTIVE_COUNCIL, DELEGATE, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER, BOLONHA_MANAGER,CMS_MANAGER, \
     SPACE_MANAGER, RESEARCHER, PEDAGOGICAL_COUNCIL, ALUMNI, CANDIDATE, EXAM_COORDINATOR, ACADEMIC_ADMINISTRATIVE_OFFICE, PARKING_MANAGER, MESSAGING, \
-    LIBRARY
-filter.hostname.localhost.localdomain=PERSON,STUDENT,TEACHER,RESOURCE_ALLOCATION_MANAGER,RESOURCE_MANAGER,MASTER_DEGREE_CANDIDATE, \
-        MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,PERSONNEL_SECTION, \
-        MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
-    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
-    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
-    GEP, DIRECTIVE_COUNCIL, DELEGATE, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER,BOLONHA_MANAGER,CMS_MANAGER,\
-    SPACE_MANAGER, RESEARCHER, PEDAGOGICAL_COUNCIL, ALUMNI, CANDIDATE, EXAM_COORDINATOR, ACADEMIC_ADMINISTRATIVE_OFFICE, PARKING_MANAGER, MESSAGING, \
-    LIBRARY
-filter.hostname.salad21=PERSON,STUDENT,TEACHER,RESOURCE_ALLOCATION_MANAGER,RESOURCE_MANAGER,MASTER_DEGREE_CANDIDATE, \
+    LIBRARY, INTERNATIONAL_RELATION_OFFICE
+filter.hostname.<cidhcp000>=PERSON,STUDENT,TEACHER,RESOURCE_ALLOCATION_MANAGER,RESOURCE_MANAGER,MASTER_DEGREE_CANDIDATE, \
         MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,PERSONNEL_SECTION, \
         MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
     DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
     SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
     GEP, DIRECTIVE_COUNCIL, DELEGATE, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER,BOLONHA_MANAGER,CMS_MANAGER, \
     SPACE_MANAGER, RESEARCHER, PEDAGOGICAL_COUNCIL, ALUMNI, CANDIDATE, EXAM_COORDINATOR, ACADEMIC_ADMINISTRATIVE_OFFICE, PARKING_MANAGER, MESSAGING, \
-    LIBRARY
-filter.hostname.salad21.ist.utl.pt=PERSON,STUDENT,TEACHER,RESOURCE_ALLOCATION_MANAGER,RESOURCE_MANAGER,MASTER_DEGREE_CANDIDATE, \
-        MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,PERSONNEL_SECTION, \
-        MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
-    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
-    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
-    GEP, DIRECTIVE_COUNCIL, DELEGATE, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER,BOLONHA_MANAGER,CMS_MANAGER, \
-    SPACE_MANAGER, RESEARCHER, PEDAGOGICAL_COUNCIL, ALUMNI, CANDIDATE, EXAM_COORDINATOR, ACADEMIC_ADMINISTRATIVE_OFFICE, PARKING_MANAGER, MESSAGING, \
-    LIBRARY
+    LIBRARY, INTERNATIONAL_RELATION_OFFICE
 
 filter.request.with.digest=true
 #
@@ -322,7 +306,7 @@ enrollment.faq.url=http://fenix-ashes.ist.utl.pt:8080/confluence/display/FAQ/FAQ
 #
 log.profile.dir=/tmp
 log.profile.filename=profileing.log
-log.image.directory=/home/gedl/workspace/fenix-head/build/standalone/ciapl/images/logs
+log.image.directory=/home/<user>/workspace/fenix-head/build/standalone/ciapl/images/logs
 log4j.email.smtp.host=
 log4j.email.smtp.from=Me
 log4j.email.smtp.to=You
@@ -374,7 +358,7 @@ roleback.filename=/tmp/roleback.sql
 #   verify_serializable: flag that enables/disables serialization checking of
 #                        service results
 #
-struts.validation.doctype.url=file:///home/gedl/workspace/fenix-head/metadata/dtds/validator_1_0.dtd
+struts.validation.doctype.url=file:///home/<user>/workspace/fenix-head/metadata/dtds/validator_1_0.dtd
 #
 #
 
@@ -436,7 +420,7 @@ cas.loginUrl=https://localhost:8443/cas/login
 cas.validateUrl=https://localhost:8443/cas/serviceValidate
 cas.logoutUrl=https://localhost:8443/cas/logout
 cas.serviceUrl.localhost=https://localhost:8443/ciapl/loginCAS.do
-cas.serviceUrl.salad21=https://salad21.ist.utl.pt:8443/ciapl/loginCAS.do
+cas.serviceUrl.<cidhcp000>=https://<cidhcp000>.ist.utl.pt:8443/ciapl/loginCAS.do
 
 validateExpirationDate=false
 
