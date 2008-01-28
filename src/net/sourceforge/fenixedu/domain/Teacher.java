@@ -849,6 +849,10 @@ public class Teacher extends Teacher_Base {
 	return false;
     }
 
+    public boolean isActive() {
+	return getCurrentLegalRegimenWithoutSpecialSitutions() != null;
+    }
+    
     public boolean isInactive(ExecutionPeriod executionPeriod) {
 	if (executionPeriod != null) {
 	    OccupationPeriod occupationPeriod = executionPeriod.getLessonsPeriod();

@@ -21,7 +21,7 @@ public class TeacherProfessionalSituation extends TeacherProfessionalSituation_B
     @Override
     public void setCategory(Category category) {
 	if (category == null && !isEndSituation() && !isFunctionAccumulation()) {
-	    throw new DomainException("error.ProfessionalSituation.no.category");
+	    throw new DomainException("error.TeacherProfessionalSituation.no.category");
 	}
 	super.setCategory(category);
     }

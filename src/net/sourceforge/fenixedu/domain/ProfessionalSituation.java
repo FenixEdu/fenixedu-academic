@@ -35,18 +35,10 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
 
     @Override
     public void setCategory(Category category) {
-	if ((isEmployeeProfessionalSituation() || isTeacherProfessionalSituation()) && category == null) {
+	if (!isTeacherServiceExemption() && category == null) {
 	    throw new DomainException("error.ProfessionalSituation.no.category");
 	}
 	super.setCategory(category);
-    }
-
-    @Override
-    public void setSituationType(ProfessionalSituationType situationType) {
-	if (situationType == null) {
-	    throw new DomainException("error.ProfessionalSituation.empty.situationType");
-	}
-	super.setSituationType(situationType);
     }
 
     @Override
@@ -55,6 +47,14 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
 	    throw new DomainException("error.ProfessionalSituation.no.regimeType");
 	}
 	super.setRegimeType(regimeType);
+    }
+    
+    @Override
+    public void setSituationType(ProfessionalSituationType situationType) {
+	if (situationType == null) {
+	    throw new DomainException("error.ProfessionalSituation.empty.situationType");
+	}
+	super.setSituationType(situationType);
     }
     
     @Override

@@ -20,6 +20,7 @@ public enum ProfessionalSituationType {
     FUNCTIONS_ACCUMULATION_WITH_LEADING_POSITIONS(false, false),
     
     //End Situations
+    DEFINITIVE_NOMINATION_DECLINED(false, true),
     TERM_WORK_CONTRACT_END(false, true),
     CERTAIN_FORWARD_CONTRACT_END(false, true), 
     CERTAIN_FORWARD_CONTRACT_END_PROPER_PRESCRIPTIONS(false, true),
@@ -38,6 +39,7 @@ public enum ProfessionalSituationType {
     EXONERATION(false, true),
     TRANSFERENCE(false, true),
     EMERITUS(false, true),
+    LICENSE_WITHOUT_SALARY_LONG(false, true),      
     
     // Service Exemptions
     GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY(true, false),
@@ -46,7 +48,6 @@ public enum ProfessionalSituationType {
     MEDICAL_SITUATION(true, false),    
     SPECIAL_LICENSE(true, false),    
     LICENSE_WITHOUT_SALARY_YEAR(true, false),
-    LICENSE_WITHOUT_SALARY_LONG(true, false),      
     MATERNAL_LICENSE(true, false),
     MATERNAL_LICENSE_WITH_SALARY_80PERCENT(true, false),
     CONTRACT_SUSPEND(true, false),
