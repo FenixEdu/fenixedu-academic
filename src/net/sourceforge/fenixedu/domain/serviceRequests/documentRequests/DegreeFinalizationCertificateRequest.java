@@ -64,7 +64,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	if (mobilityProgram == null && hasAnyExternalEntriesToReport()) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null");
 	}
-	
+
 	if (internship != null && studyPlan != null && internship && studyPlan) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.must.indicate.only.one.reason.for.not.printing");
 	}
@@ -245,7 +245,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Override
     final public boolean isToPrint() {
-        return super.isToPrint() && !getInternship() && (!getStudyPlan() || getRegistration().isBolonha());
+	return super.isToPrint() && (getInternship() == null || !getInternship())
+		&& (getStudyPlan() == null || !getStudyPlan() || getRegistration().isBolonha());
     }
-    
+
 }
