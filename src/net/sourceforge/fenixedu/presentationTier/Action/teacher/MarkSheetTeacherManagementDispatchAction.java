@@ -48,6 +48,13 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         return mapping.findForward("evaluationIndex");
     }
     
+    public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("submissionBean", getObjectFromViewState("submissionBean-invisible"));
+        RenderUtils.invalidateViewState();
+        return mapping.findForward("gradeSubmission.step.two");
+    }
+
+    
     public ActionForward prepareSubmitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 	if(!executionCourse.getAvailableGradeSubmission()) {

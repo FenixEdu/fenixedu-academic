@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.EnrolmentNotPayedException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -284,14 +285,16 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         }
         
         if (examDate != null) {
-            final RegistrationState stateInExamDate = getRegistration().getStateInDate(YearMonthDay.fromDateFields(examDate).toDateTimeAtMidnight());
-	    if (stateInExamDate == null || !(stateInExamDate.isActive()
-		    || stateInExamDate.getStateType() == RegistrationStateType.TRANSITED)) {
-		final Enrolment enrolment = getEnrolment();
-		final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
-		final Registration registration = studentCurricularPlan.getRegistration();
-        	throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState", registration.getNumber().toString());
-	    }
+            if(!grade.isNotEvaluated()) {
+        	final RegistrationState stateInExamDate = getRegistration().getStateInDate(YearMonthDay.fromDateFields(examDate).toDateTimeAtMidnight());
+        	if (stateInExamDate == null || !(stateInExamDate.isActive()
+        		|| stateInExamDate.getStateType() == RegistrationStateType.TRANSITED)) {
+        	    final Enrolment enrolment = getEnrolment();
+        	    final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+        	    final Registration registration = studentCurricularPlan.getRegistration();
+        	    throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState", registration.getNumber().toString());
+        	}
+            }
             setExamDateYearMonthDay(YearMonthDay.fromDateFields(examDate));
         } else if (grade.isEmpty()) {
             setExamDateYearMonthDay(null);
@@ -311,7 +314,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
     
     public void confirmSubmission(EnrolmentEvaluationState enrolmentEvaluationState, Employee employee, String observation) {
-        
+	
 	if (!isTemporary()) {
 	    throw new DomainException("EnrolmentEvaluation.cannot.submit.not.temporary");
 	}
@@ -323,6 +326,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	if (!hasExamDateYearMonthDay()) {
 	    throw new DomainException("EnrolmentEvaluation.cannot.submit.without.exam.date");
 	}
+	
+	if (isPayable() && !isPayed()) {
+            throw new EnrolmentNotPayedException("EnrolmentEvaluation.cannot.set.grade.on.not.payed.enrolment.evaluation", getEnrolment());
+        }	
 	
         if(enrolmentEvaluationState == EnrolmentEvaluationState.RECTIFICATION_OBJ && hasRectified()) {
             getRectified().setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
@@ -483,9 +490,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     
     @Override
     public void setGrade(final Grade grade) {
-	if (isPayable() && !isPayed()) {
-            throw new DomainException("EnrolmentEvaluation.cannot.set.grade.on.not.payed.enrolment.evaluation", getRegistration().getNumber().toString());
-        }
+	
+	if(isFinal()) {
+	    throw new DomainException("EnrolmentEvaluation.cannot.set.grade.final");
+	}
 	
         super.setGrade(grade);
         

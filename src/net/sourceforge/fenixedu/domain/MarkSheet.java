@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
@@ -11,6 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gr
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.EnrolmentNotPayedException;
+import net.sourceforge.fenixedu.domain.exceptions.InDebtEnrolmentsException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.Checked;
@@ -194,11 +197,16 @@ public class MarkSheet extends MarkSheet_Base {
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(),getExecutionPeriod());
         final Set<Enrolment> enrolmentsNotInAnyMarkSheet = getCurricularCourse().getEnrolmentsNotInAnyMarkSheet(getMarkSheetType(), getExecutionPeriod());
 
+        Set<Enrolment> notPayedEnrolments = new HashSet<Enrolment>();
         for (final MarkSheetEnrolmentEvaluationBean evaluationBean : evaluationBeans) {
             
             if (enrolmentsNotInAnyMarkSheet.contains(evaluationBean.getEnrolment())) {
-                addEnrolmentEvaluationToMarkSheet(responsibleTeacher, enrolmentEvaluationState,
+        	try {
+        	    addEnrolmentEvaluationToMarkSheet(responsibleTeacher, enrolmentEvaluationState,
                         evaluationBean, executionDegree);
+        	}catch(EnrolmentNotPayedException e) {
+        	    notPayedEnrolments.add(e.getEnrolment());
+        	}
             } else {
                 // TODO:
                 throw new DomainException("error.markSheet");
@@ -382,9 +390,20 @@ public class MarkSheet extends MarkSheet_Base {
     	}
         if (isNotConfirmed()) {
             setConfirmationEmployee(employee);
+            
+            Set<Enrolment> inDebtEnrolments = new HashSet<Enrolment>();
             for (final EnrolmentEvaluation enrolmentEvaluation : this.getEnrolmentEvaluationsSet()) {
-                enrolmentEvaluation.confirmSubmission(getEnrolmentEvaluationStateToConfirm(), employee, "");
+        	try {
+        	    enrolmentEvaluation.confirmSubmission(getEnrolmentEvaluationStateToConfirm(), employee, "");
+        	}catch (EnrolmentNotPayedException e) {
+		    inDebtEnrolments.add(e.getEnrolment());
+		}
             }
+            
+            if(!inDebtEnrolments.isEmpty()) {
+        	throw new InDebtEnrolmentsException("EnrolmentEvaluation.cannot.set.grade.on.not.payed.enrolment.evaluation", inDebtEnrolments);
+            }
+            
             setConfirmationDateDateTime(new DateTime());
             setMarkSheetState(getMarkSheetStateToConfirm());
             

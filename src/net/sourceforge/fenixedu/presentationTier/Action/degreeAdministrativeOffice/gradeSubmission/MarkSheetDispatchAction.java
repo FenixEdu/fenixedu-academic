@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.MarkSheet;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.InDebtEnrolmentsException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -140,6 +142,11 @@ public class MarkSheetDispatchAction extends FenixDispatchAction {
 		    userView.getPerson().getEmployee() });
 	} catch (NotAuthorizedFilterException e) {
 	    addMessage(request, actionMessages, "error.notAuthorized");
+	} catch (InDebtEnrolmentsException e) {
+	    for (Enrolment enrolment : e.getEnrolments()) {
+		addMessage(request, actionMessages, e.getMessage(), enrolment.getRegistration().getStudent().getNumber().toString());
+	    }
+	    return prepareConfirmMarkSheet(mapping, actionForm, request, response);
 	} catch (DomainException e) {
 	    addMessage(request, actionMessages, e.getMessage(), e.getArgs());
 	}

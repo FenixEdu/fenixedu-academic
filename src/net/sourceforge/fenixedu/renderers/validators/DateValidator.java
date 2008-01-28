@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.validators;
 
+import net.sourceforge.fenixedu.renderers.components.HtmlInputComponent;
 import net.sourceforge.fenixedu.renderers.components.Validatable;
 
 public class DateValidator extends RequiredValidator {
@@ -44,23 +45,13 @@ public class DateValidator extends RequiredValidator {
     @Override
     public void performValidation() {
 	super.performValidation();
-
+	
 	if (isValid()) {
 	    String text = getComponent().getValue();
 
 	    setValid(org.apache.commons.validator.DateValidator.getInstance().isValid(text, getDateFormat(),
 		    true));
 
-	    final String[] nodes = text.split("/");
-	    for (int i = 0; i < nodes.length; i++) {
-		try {
-		    Integer.parseInt(nodes[i]);
-		} catch (Exception e) {
-		    setMessage("renderers.validator.date");
-		    setValid(false);
-		    return;
-		}
-	    }
 	    if (!isValid()) {
 		setMessage("renderers.validator.date");
 	    }

@@ -67,6 +67,7 @@
 				<fr:property name="classes" value="tstyle4"/>
 				<fr:property name="columnClasses" value="acenter,,,acenter,,,"/>
 			</fr:layout>
+			<fr:destination name="invalid" path="/markSheetManagement.do?method=invalid"/>
 		</fr:edit>
 
 		<p><a href="javascript:setCheckBoxValue(true)"><bean:message key="button.selectAll"/></a> | <a href="javascript:setCheckBoxValue(false)"><bean:message key="button.selectNone"/></a></p>

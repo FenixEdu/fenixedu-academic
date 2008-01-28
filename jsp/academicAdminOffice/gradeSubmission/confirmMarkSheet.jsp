@@ -16,6 +16,14 @@
 	</fr:layout>
 </fr:view>
 
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages bundle="ACADEMIC_OFFICE_RESOURCES" id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
+
 
 <p class="mtop1 mbottom05"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:</p>
 <fr:view name="markSheet" property="enrolmentEvaluations" schema="markSheet.view.evaluation">
