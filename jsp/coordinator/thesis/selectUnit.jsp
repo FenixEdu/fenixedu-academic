@@ -62,5 +62,5 @@
             <bean:message key="button.cancel"/>
         </html:submit>
     </fr:form>
-<div>
+</div>
 
