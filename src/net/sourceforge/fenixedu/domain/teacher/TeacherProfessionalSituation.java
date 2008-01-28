@@ -19,6 +19,22 @@ public class TeacherProfessionalSituation extends TeacherProfessionalSituation_B
     }
 
     @Override
+    public void setPercentage(Integer percentage) {
+	if (percentage == null && !isEndSituation()) {
+	    throw new DomainException("error.TeacherProfessionalSituation.no.percentage");
+	}
+        super.setPercentage(percentage);
+    }
+    
+    @Override
+    public void setWeeklyLessonHours(Integer weeklyLessonHours) {
+	if (weeklyLessonHours == null && !isEndSituation()) {
+	    throw new DomainException("error.TeacherProfessionalSituation.no.weeklyLessonHours");
+	}
+        super.setWeeklyLessonHours(weeklyLessonHours);
+    }
+    
+    @Override
     public void setCategory(Category category) {
 	if (category == null && !isEndSituation() && !isFunctionAccumulation()) {
 	    throw new DomainException("error.TeacherProfessionalSituation.no.category");
