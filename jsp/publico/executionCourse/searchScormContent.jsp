@@ -5,8 +5,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 
-<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
-<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
+<bean:define id="executionCourse" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer"/>
+<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean"/>
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/checkall.js"></script>
@@ -20,7 +21,7 @@
 		<bean:message key="label.information.about.search.line2"/>
 	</div>
 
- 	<fr:form id="searchForm" action="<%= "/searchScormContent.do?method=searchScormContents&amp;executionCourseID=" + request.getParameter("executionCourseID") %>">
+ 	<fr:form id="searchForm" action="<%= "/searchScormContent.do?method=searchScormContents&amp;executionCourseID=" + executionCourseID %>">
 		<fr:hasMessages for="search" type="validation">
 			<p>
 			<span class="error0"><bean:message key="label.requiredFieldsNotPresent"/></span>
@@ -43,7 +44,7 @@
 					<fr:property name="defaultText" value="label.masterDegree.administrativeOffice.allExecutionYears"/>
 					<fr:property name="key" value="true"/>
 				</fr:layout>
-				<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeTimeStamp&amp;executionCourseID=" + request.getParameter("executionCourseID") %>"/>
+				<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeTimeStamp&amp;executionCourseID=" + executionCourseID %>"/>
 				</fr:edit>	
 	
 				<bean:message key="label.executionPeriod" bundle="APPLICATION_RESOURCES"/>:
@@ -55,7 +56,7 @@
 					<fr:property name="defaultText" value="label.masterDegree.administrativeOffice.allExecutionYears"/>
 					<fr:property name="key" value="true"/>
 				</fr:layout>
-				<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeTimeStamp&amp;executionCourseID=" + request.getParameter("executionCourseID") %>"/>
+				<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeTimeStamp&amp;executionCourseID=" + executionCourseID %>"/>
 				</fr:edit>
 			</td>
 		</tr>
@@ -127,29 +128,29 @@
  
 				<logic:equal name="index" value="0">
 					<div class="switchNone">
-					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + request.getParameter("executionCourseID") + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
+					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
 					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
 					 , 
-					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + request.getParameter("executionCourseID") + bean.getSearchElementsAsParameters() %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></html:link>								
+					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></html:link>								
 					</logic:greaterThan>
 					</div>
 					<div class="switchInline">
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + request.getParameter("executionCourseID") + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a>
 					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
 					 , 
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + request.getParameter("executionCourseID") + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></a>
 					</logic:greaterThan>
 					</div>
 				</logic:equal>
 				
 				<logic:notEqual name="index" value="0">
 					<div class="switchNone">
-					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + request.getParameter("executionCourseID") + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link> , 			
-					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + request.getParameter("executionCourseID") + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
+					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link> , 			
+					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
 					</div>
 					<div class="switchInline">
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + request.getParameter("executionCourseID") + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + request.getParameter("executionCourseID") + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></a>
 					</div>
 				</logic:notEqual>
 			</td>

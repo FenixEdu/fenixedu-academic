@@ -81,7 +81,7 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
 		
 		request.setAttribute("bean", bean);
 		request.setAttribute("numberOfPages",bean.getNumberOfPages());
-		request.setAttribute("page",bean.getPage());
+		request.setAttribute("pageNumber",bean.getPage());
 		
 		return mapping.findForward("search");
 	}

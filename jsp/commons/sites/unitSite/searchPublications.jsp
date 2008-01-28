@@ -118,7 +118,7 @@
 <p>
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages module="publico" url="<%= searchContextPath + searchAction + searchArguments + "&amp;method=moveIndex&amp;" + bean.getSearchElementsAsParameters() %>" 
-	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="11"/>
+	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="11"/>
 </p>
 </logic:notEqual>
 
@@ -170,7 +170,7 @@
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 
 <cp:collectionPages module="publico" url="<%= searchContextPath + searchAction + searchArguments + "&amp;method=moveIndex&amp;" + bean.getSearchElementsAsParameters() %>" 
-	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="11"/>
+	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="11"/>
 </p>
 </logic:notEqual>
 

@@ -53,7 +53,7 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 	    bean.addSearchElement(Integer.valueOf(addIndex));
 	}
 	request.setAttribute("bean", bean);
-	request.setAttribute("page", bean.getPage());
+	request.setAttribute("pageNumber", bean.getPage());
 	request.setAttribute("numberOfPages", bean.getNumberOfPages());
 	return mapping.findForward(forwardTo);
     }
@@ -67,7 +67,7 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 	bean.removeSearchElement(Integer.valueOf(removeIndex));
 
 	request.setAttribute("bean", bean);
-	request.setAttribute("page", bean.getPage());
+	request.setAttribute("pageNumber", bean.getPage());
 	request.setAttribute("numberOfPages", bean.getNumberOfPages());
 	return mapping.findForward(forwardTo);
     }
@@ -115,12 +115,12 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 
     protected FileSearchResult getSearchResults(HttpServletRequest request, SearchDSpaceBean bean,
 	    VirtualPath restrictTo) {
-	String index = request.getParameter("page");
+	String index = request.getParameter("pageNumber");
 	Integer start = (index == null) ? 1 : Integer.valueOf(index);
 	Integer searchOffset = (start - 1) * bean.getPageSize();
 	FileSearchResult searchResults = FileManagerFactory.getFactoryInstance().getFileManager()
 		.searchFiles(bean.getSearchCriteria(searchOffset), restrictTo);
-	request.setAttribute("page", start);
+	request.setAttribute("pageNumber", start);
 	bean.setPage(start);
 	bean.setTotalItems(searchResults.getTotalElements());
 	int numberOfPages = searchResults.getTotalElements() / searchResults.getPageSize();
