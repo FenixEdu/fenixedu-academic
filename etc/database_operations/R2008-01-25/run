@@ -30,3 +30,5 @@ function executeWithTempFile() {
 
 execute "Alter Table ParkingParty" alterTableParkingParty.sql
 execute "Migrate Tutor Unit" migrateTutorUnit.sql
+
+execute "Alter table Professional Situation" alterTableProfessionalSituation.sql

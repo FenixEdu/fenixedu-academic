@@ -28,4 +28,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Alter table Professional Situation" alterTableProfessionalSituation.sql
