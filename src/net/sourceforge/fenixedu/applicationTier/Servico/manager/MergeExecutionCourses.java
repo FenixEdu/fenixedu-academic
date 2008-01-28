@@ -27,6 +27,8 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
@@ -275,10 +277,16 @@ public class MergeExecutionCourses extends Service {
         final Site siteFrom = executionCourseFrom.getSite();
         final Site siteTo = executionCourseTo.getSite();
 
-        if (siteFrom != null) {            
-            for (; !siteFrom.getAssociatedSections().isEmpty(); siteTo.addAssociatedSections(siteFrom
-                    .getAssociatedSections().get(0)))
-                ;
+        if (siteFrom != null) {
+            for (final Node node : siteFrom.getChildrenSet()) {
+        	final Content content = node.getChild();
+        	final ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(siteTo, content);
+        	if (node instanceof ExplicitOrderNode) {
+        	    explicitOrderNode.setNodeOrder(((ExplicitOrderNode) node).getNodeOrder());
+        	}
+        	explicitOrderNode.setVisible(node.getVisible());
+        	node.delete();
+            }
             siteFrom.delete();
         }
     }
