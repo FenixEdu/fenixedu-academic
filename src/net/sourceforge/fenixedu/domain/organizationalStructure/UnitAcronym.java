@@ -30,7 +30,7 @@ public class UnitAcronym extends UnitAcronym_Base {
     
     @Override
     public void setAcronym(String acronym) {
-        super.setAcronym(acronym.toLowerCase());
+        super.setAcronym(acronym == null ? null : acronym.toLowerCase());
     }
     
     public void delete() {
@@ -46,6 +46,9 @@ public class UnitAcronym extends UnitAcronym_Base {
     }
 
     public static UnitAcronym readUnitAcronymByAcronym(final String acronym) {
+	if (acronym == null) {
+	    return null;
+	}
 	final String acronymLowerCase = acronym.toLowerCase();
 	for (UnitAcronym unitAcronym : RootDomainObject.getInstance().getUnitAcronymsSet()) {
 	    if(unitAcronym.getAcronym().equals(acronymLowerCase)) {
