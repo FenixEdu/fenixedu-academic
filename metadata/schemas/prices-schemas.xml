@@ -102,6 +102,12 @@
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
 </schema>
 
+<schema name="PhotocopyRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
+	extends="BaseAmountPlusAmountPerUnitPR.view" bundle="APPLICATION_RESOURCES">
+	<remove name="amountPerUnit" />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
+</schema>
+
 <schema name="ImprovementOfApprovedEnrolmentPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR"
 	bundle="APPLICATION_RESOURCES">
