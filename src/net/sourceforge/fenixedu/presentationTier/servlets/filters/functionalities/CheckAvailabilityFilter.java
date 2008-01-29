@@ -82,7 +82,6 @@ public class CheckAvailabilityFilter implements Filter {
 	Content content = functionalityContext.getSelectedContent();
 
 	if (content != null && !content.isAvailable(functionalityContext)) {
-	    final IUserView userView = AccessControl.getUserView();
 	    if (functionalityContext.getLastContentInPath(Site.class) == null 
 		    || !((content instanceof Section) || (content instanceof Item))) {
 
