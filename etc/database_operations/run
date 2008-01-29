@@ -28,5 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Apagar dps de correr" availabilityPolicyTargetGroupFix.sql
 
