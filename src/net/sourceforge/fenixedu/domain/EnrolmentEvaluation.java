@@ -491,7 +491,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     @Override
     public void setGrade(final Grade grade) {
 	
-	if(isFinal()) {
+	if(hasEnrolmentEvaluationState() && isFinal()) {
 	    throw new DomainException("EnrolmentEvaluation.cannot.set.grade.final");
 	}
 	
@@ -499,6 +499,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         
         // TODO remove this once we're sure migration to Grade went OK
         super.setGradeValue(grade.getValue());
+    }
+    
+    public boolean hasEnrolmentEvaluationState() {
+	return getEnrolmentEvaluationState() != null;
     }
     
     @Deprecated
