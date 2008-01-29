@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
@@ -90,6 +91,10 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 		contents.clear();
 		functionality.addPathContentsForReversePath(contents);
 	    }
+	}
+
+	if ((path.contains(".do") || path.contains(".faces")) && selectedContainer == null) {
+	    throw new InvalidContentPathException(null, null);
 	}
 
 	findSelectedContainerPath();
