@@ -27,7 +27,7 @@ public class CreateResultParticipation extends Service {
 				final String participatorName = bean.getParticipatorName();
 
 				if (organization != null) {
-				    enroledParticipator = (newPerson.run(participatorName, organization)).getPerson();
+				    enroledParticipator = (newPerson.run(new InsertExternalPerson.ServiceArguments(bean.getParticipatorName(),bean.getOrganization()))).getPerson();
 				} else {
 					if(bean.isUnitExternal()) {
 						final String orgName = bean.getOrganizationName();

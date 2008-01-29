@@ -146,7 +146,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
                 InsertExternalPerson newPerson = new InsertExternalPerson();
                 if (participator.getOrganization() != null)
                     person = (newPerson
-                            .run(participator.getPersonName(), participator.getOrganization()))
+                            .run(new InsertExternalPerson.ServiceArguments(participator.getPersonName(), participator.getOrganization())))
                             .getPerson();
                 else
                     person = (newPerson.run(participator.getPersonName(), participator

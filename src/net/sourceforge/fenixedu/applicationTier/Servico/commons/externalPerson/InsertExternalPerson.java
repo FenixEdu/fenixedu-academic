@@ -15,6 +15,26 @@ import org.joda.time.YearMonthDay;
 
 public class InsertExternalPerson extends Service {
 
+    public static class ServiceArguments {
+	private Unit unit;
+	private String personName;
+	
+	public ServiceArguments(String personName, Unit unit) {
+	    this.unit = unit;
+	    this.personName = personName;
+	}
+
+	public String getPersonName() {
+	    return personName;
+	}
+
+	public Unit getUnit() {
+	    return unit;
+	}
+	
+	
+    }
+    
     public ExternalContract run(String name, String sex, String address, Integer institutionID,
             String phone, String mobile, String homepage, String email) throws FenixServiceException {
 
@@ -48,21 +68,20 @@ public class InsertExternalPerson extends Service {
         return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    public ExternalContract run(String personName, Unit organization) throws FenixServiceException {
-        return run(personName, null, organization);
-    }
-
-    public ExternalContract run(String personName, String email, Unit organization)
+    public ExternalContract run(ServiceArguments arguments)
             throws FenixServiceException {
-        ExternalContract storedExternalContract = null;
-        storedExternalContract = ExternalContract.readByPersonNameAddressAndInstitutionID(personName,
+        
+	ExternalContract storedExternalContract = null;
+        String personName = arguments.getPersonName();
+	Unit organization = arguments.getUnit();
+	storedExternalContract = ExternalContract.readByPersonNameAddressAndInstitutionID(personName,
                 null, organization.getIdInternal());
         if (storedExternalContract != null)
             throw new ExistingServiceException(
                     "error.exception.commons.ExternalContract.existingExternalContract");
 
         Person externalPerson = Person.createExternalPerson(personName, Gender.MALE, null, null, null,
-                null, email, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+                null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
         return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 

@@ -86,7 +86,9 @@ public class Unit extends Unit_Base {
 	    Campus campus) {
 
 	setPartyName(name);
-	setAcronym(acronym);
+	if (acronym != null) {
+	    setAcronym(acronym);
+	}
 	if (getCostCenterCode() == null || !getCostCenterCode().equals(costCenterCode)) {
 	    setCostCenterCode(costCenterCode);
 	}

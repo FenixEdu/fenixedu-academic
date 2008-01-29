@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
@@ -237,7 +238,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 		"beanForExternalPerson").getMetaObject().getObject();
 
 	if (bean.getOrganization() != null) {
-	    Object[] args = { bean.getParticipatorName(), bean.getEmail(), bean.getOrganization() };
+	    Object[] args = { new InsertExternalPerson.ServiceArguments(bean.getParticipatorName(), bean.getOrganization()) };
 	    ExternalContract contract = (ExternalContract) executeService("InsertExternalPerson", args);
 	    bean.setParticipator(contract.getPerson().getPersonName());
 	    createParticipation(bean);
@@ -255,7 +256,10 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
     public ActionForward unitWrapper(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	
-	if(getFromRequest(request, "createNewUnit")!=null) {
+	ResultParticipationCreationBean bean = (ResultParticipationCreationBean) RenderUtils.getViewState(
+	"beanForExternalPerson").getMetaObject().getObject();
+	
+	if(bean.getOrganization()==null) {
 	    return createUnit(mapping, form, request, response);
 	}
 	else {

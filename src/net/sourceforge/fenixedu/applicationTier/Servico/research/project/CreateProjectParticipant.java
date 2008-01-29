@@ -60,7 +60,7 @@ public class CreateProjectParticipant extends Service  {
             externalPerson = insertExternalPerson.run(bean.getPersonName(), bean.getOrganizationName());
         }
         else {
-            externalPerson = insertExternalPerson.run(bean.getPersonName(), bean.getOrganization());
+            externalPerson = insertExternalPerson.run(new InsertExternalPerson.ServiceArguments(bean.getPersonName(), bean.getOrganization()));
 
         }
         //Insert this line when inner enums are supported by the domain factory

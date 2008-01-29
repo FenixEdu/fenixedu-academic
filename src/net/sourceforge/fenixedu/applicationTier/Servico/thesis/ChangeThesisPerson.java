@@ -92,7 +92,7 @@ public class ChangeThesisPerson extends Service {
             }
             else {
                 if (change.unit != null) {
-                    return new InsertExternalPerson().run(change.personName, change.unit).getPerson();
+                    return new InsertExternalPerson().run(new InsertExternalPerson.ServiceArguments(change.personName, change.unit)).getPerson();
                 }
                 else {
                     return new InsertExternalPerson().run(change.personName, change.unitName).getPerson();
