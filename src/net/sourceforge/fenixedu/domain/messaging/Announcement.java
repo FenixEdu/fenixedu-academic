@@ -177,5 +177,10 @@ public class Announcement extends Announcement_Base {
             }
         }
     }
+    
+    @Override
+    public MultiLanguageString getName() {
+        return getSubject();
+    }
 
 }
