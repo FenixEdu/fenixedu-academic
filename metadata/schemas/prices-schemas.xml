@@ -96,16 +96,21 @@
 	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
 </schema>
 
+<schema name="BaseAmountPlusAmountPerPagePR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
 <schema name="CertificateRequestPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.view">
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
 </schema>
 
-<schema name="PhotocopyRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
-	extends="BaseAmountPlusAmountPerUnitPR.view" bundle="APPLICATION_RESOURCES">
-	<remove name="amountPerUnit" />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
+<schema name="PhotocopyRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="ImprovementOfApprovedEnrolmentPR.edit"
@@ -166,11 +171,22 @@
 	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit"/>
 </schema>
 
+<schema name="BaseAmountPlusAmountPerPagePR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
 <schema name="CertificateRequestPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.edit">
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage" />
 	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+</schema>
+
+<schema name="PhotocopyRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.edit" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <!-- Student Prices View -->
@@ -221,13 +237,19 @@
 	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
 </schema>
 
+<schema name="BaseAmountPlusAmountPerPagePR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
+	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
 <schema name="CertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR" extends="BaseAmountPlusAmountPerUnitPR.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
 </schema>
 
-<schema name="PhotocopyRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR" extends="BaseAmountPlusAmountPerUnitPR.view-student" bundle="APPLICATION_RESOURCES">
-	<remove name="amountPerUnit" />
-	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
+<schema name="PhotocopyRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="CreateDFAGratuityPostingRuleBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" bundle="APPLICATION_RESOURCES">
@@ -244,6 +266,3 @@
 		<property name="maxLength" value="10"/>
 	</slot>
 </schema>
-
-
-

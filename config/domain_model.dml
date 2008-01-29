@@ -1390,12 +1390,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			EntryType entryType;
 		}
 		
-			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.BaseAmountPlusAmountPerPage extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR{
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR{
 				Money baseAmount;
 				Money amountPerPage;
 			}
 			
-				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.BaseAmountPlusAmountPerPage {
+				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR {
 				}
 				
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {

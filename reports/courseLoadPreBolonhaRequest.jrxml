@@ -23,6 +23,22 @@
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
+	<style 
+		name="InvalidCourseLoad"
+		isDefault="false"
+	>
+
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{courseLoadCorrect}.booleanValue()]]></conditionExpression>
+			<style 
+				name="InvalidCourseLoad"
+				isDefault="false"
+				forecolor="#E53F3F"
+				isStrikeThrough="true"
+			/>
+		</conditionalStyle>
+	</style>
+
 	<parameter name="administrativeOfficeName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
@@ -38,6 +54,7 @@
 	<field name="labHours" class="java.lang.Double"/>
 	<field name="theoPratHours" class="java.lang.Double"/>
 	<field name="total" class="java.lang.Double"/>
+	<field name="courseLoadCorrect" class="java.lang.Boolean"/>
 
 
 		<group  name="endLine" >
@@ -188,6 +205,7 @@
 			<band height="25"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
+						style="InvalidCourseLoad"
 						x="64"
 						y="-1"
 						width="178"
@@ -201,6 +219,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
+						style="InvalidCourseLoad"
 						x="242"
 						y="-1"
 						width="77"
@@ -214,6 +233,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
+						style="InvalidCourseLoad"
 						x="319"
 						y="-1"
 						width="36"
@@ -227,6 +247,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
+						style="InvalidCourseLoad"
 						x="427"
 						y="-1"
 						width="36"
@@ -240,6 +261,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
+						style="InvalidCourseLoad"
 						x="463"
 						y="-1"
 						width="63"
@@ -253,6 +275,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
+						style="InvalidCourseLoad"
 						x="355"
 						y="-1"
 						width="36"
@@ -266,6 +289,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
+						style="InvalidCourseLoad"
 						x="391"
 						y="-1"
 						width="36"

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests;
+package net.sourceforge.fenixedu.domain.accounting.postingRules;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-abstract public class BaseAmountPlusAmountPerPage extends BaseAmountPlusAmountPerPage_Base {
+abstract public class BaseAmountPlusAmountPerPagePR extends BaseAmountPlusAmountPerPagePR_Base {
 
-    protected BaseAmountPlusAmountPerPage() {
+    protected BaseAmountPlusAmountPerPagePR() {
 	super();
     }
 

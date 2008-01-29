@@ -32,7 +32,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
     private void addParametersInformation() {
 	addParameter("studentNumber", getDocumentRequest().getRegistration().getStudent().getNumber());
-	addParameter("degreeDescription", getDocumentRequest().getDegree().getName());
+	addParameter("degreeDescription", getDegreeDescription());
 	
 	addParameter("administrativeOfficeName", AccessControl.getPerson().getEmployee().getCurrentWorkingPlace().getName());
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
@@ -98,6 +98,10 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
 	public void setTotal(Double total) {
 	    this.total = total;
+	}
+	
+	public Boolean getCourseLoadCorrect() {
+	    return Boolean.valueOf(total.doubleValue() != 0d);
 	}
 	
 	static CourseLoadEntry create(final Enrolment enrolment) {
