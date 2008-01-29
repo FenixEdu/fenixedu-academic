@@ -16,27 +16,6 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public abstract class UnitSiteMenuRenderer extends SiteMenuRenderer {
 
-    // @Override
-    // protected boolean isTopSection(Section section) {
-    // Section target = getTargetSection(section.getSite());
-    // return target == null ? super.isTopSection(section) :
-        // target.hasAssociatedSections(section);
-    // }
-    //    
-    // @Override
-    // protected List<Section> getSections(Object object) {
-    // Site site = getSite(object);
-    //    	
-    // List<Section> sections = getBaseSections(site);
-    //        
-    // Section section = getTargetSection(site);
-    // if (section != null) {
-    // sections.addAll(getTargetSubSections(section));
-    // }
-    //        
-    // return sections;
-    // }
-
     @Override
     protected Collection<MenuEntry> getEntries(Object object) {
 	UnitSite site = (UnitSite) getSite(object);
