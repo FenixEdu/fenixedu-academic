@@ -44,8 +44,6 @@ public class CheckAvailabilityFilter implements Filter {
 
     private static final String errorPage = "/publico/notFound.do";
 
-    private static final String errorPageLogged = "/manager/functionalities/error/notAvailable.do";
-
     /**
      * Initializes the filter. There are two init parameters that are used by
      * this filter.
@@ -109,7 +107,7 @@ public class CheckAvailabilityFilter implements Filter {
      */
     public static void showUnavailablePage(final Content content, final HttpServletRequest request,
 	    final HttpServletResponse response) throws IOException, ServletException {
-	final String errorPageToDispatch = content.isPublic() ? errorPage : errorPageLogged;
+	final String errorPageToDispatch = errorPage;
 	dispatch(request, response, errorPageToDispatch);
     }
 
