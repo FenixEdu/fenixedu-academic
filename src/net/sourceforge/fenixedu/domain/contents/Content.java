@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
@@ -214,8 +215,13 @@ public abstract class Content extends Content_Base {
 	    }
 	    return getParentsSet().isEmpty();
 	} else {
-	    return availabilityPolicy.getTargetGroup() instanceof EveryoneGroup;
+	    return isPublicGroup(availabilityPolicy.getTargetGroup());
 	}
+    }
+
+    private boolean isPublicGroup(final Group group) {
+	    return group instanceof EveryoneGroup
+	    		|| (group instanceof ExpressionGroup && isPublicGroup(((ExpressionGroup) group).getGroup()));
     }
 
     public Boolean getPublicAvailable() {
