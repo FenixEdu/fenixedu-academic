@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -14,20 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.LogLevel;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestWrapperFilter.FenixHttpServletRequestWrapper;
 import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
-import net.sourceforge.fenixedu.renderers.plugin.upload.CommonsFile;
 import net.sourceforge.fenixedu.renderers.plugin.upload.RenderersRequestWrapper;
 import net.sourceforge.fenixedu.renderers.plugin.upload.StrutsFile;
 import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
-import org.apache.commons.fileupload.DefaultFileItemFactory;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUpload;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -99,15 +94,10 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
     }
 
     protected HttpServletRequest parseMultipartRequest(HttpServletRequest request, ActionForm form) {
-        Hashtable<String, UploadedFile> itemsMap = getNewFileItemsMap();
+        Hashtable<String, UploadedFile> itemsMap = getNewFileItemsMap(request);
 
         if (form == null) {
-            if (FileUpload.isMultipartContent(request)) {
-                return createWrapperFromRequest(request, itemsMap);
-            }
-            else {
-                return request;
-            }
+            return request;
         }
         else {
             if (form.getMultipartRequestHandler() != null) {
@@ -119,41 +109,13 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
         }
     }
 
-    protected Hashtable<String, UploadedFile> getNewFileItemsMap() {
-        Hashtable<String, UploadedFile> itemsMap = new Hashtable<String, UploadedFile>();
-        RenderersRequestProcessor.fileItems.set(itemsMap);
-        
-        return itemsMap;
-    }
-
-    protected HttpServletRequest createWrapperFromRequest(HttpServletRequest request, Hashtable<String, UploadedFile> itemsMap) {
-        RenderersRequestWrapper wrapper = new RenderersRequestWrapper(request);
-        
-        try {
-            List fileItems = new FileUpload(new DefaultFileItemFactory()).parseRequest(request);
-            
-            for (Object object : fileItems) {
-                FileItem item = (FileItem) object;
-                
-                if (item.isFormField()) {
-                    wrapper.addParameter(item.getFieldName(), item.getString());
-                }
-                else {
-                    UploadedFile uploadedFile = new CommonsFile(item);
-                    
-                    if (uploadedFile.getName() != null && uploadedFile.getName().length() > 0) {
-                        itemsMap.put(item.getFieldName(), uploadedFile);
-                    }
-                    
-                    wrapper.addParameter(item.getFieldName(), uploadedFile.getName());
-                }
-            }
-        } catch (FileUploadException e) {
-            e.printStackTrace();
-            return request;
+    protected Hashtable<String, UploadedFile> getNewFileItemsMap(final HttpServletRequest request) {
+        Hashtable<String, UploadedFile> itemsMap = (Hashtable<String, UploadedFile>) request.getAttribute(FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE);
+        if (itemsMap == null) {
+            itemsMap = new Hashtable<String, UploadedFile>();
         }
-        
-        return wrapper;
+        RenderersRequestProcessor.fileItems.set(itemsMap);
+        return itemsMap;
     }
 
     protected HttpServletRequest createWrapperFromActionForm(HttpServletRequest request, Hashtable<String, UploadedFile> itemsMap, ActionForm form) {
