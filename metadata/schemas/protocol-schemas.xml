@@ -504,7 +504,11 @@
 <!-- Search Protocol -->
 <schema name="edit.protocolSearch.number" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
 	<slot name="protocolNumber"	key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-	<slot name="year" key="label.activeInYear" bundle="SCIENTIFIC_COUNCIL_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+	<slot name="year" key="label.activeInYear" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			<property name="required" value="false"/>
+		</validator>
+	</slot>
 	<slot name="actives"	key="label.protocol.actives" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="option-select"/>
 	<slot name="inactives"	key="label.protocol.inactives" bundle="SCIENTIFIC_COUNCIL_RESOURCES" layout="option-select"/>
 </schema>
