@@ -850,7 +850,8 @@ public class Teacher extends Teacher_Base {
     }
 
     public boolean isActive() {
-	return getCurrentLegalRegimenWithoutSpecialSitutions() != null;
+	TeacherProfessionalSituation situation = getCurrentLegalRegimenWithoutSpecialSitutions();
+	return situation != null && situation.isActive(new YearMonthDay());
     }
     
     public boolean isInactive(ExecutionPeriod executionPeriod) {
