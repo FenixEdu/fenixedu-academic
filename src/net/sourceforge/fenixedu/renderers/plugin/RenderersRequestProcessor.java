@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -141,6 +143,19 @@ public class RenderersRequestProcessor extends TilesRequestProcessor {
             wrapper.addParameter(name, uploadedFile.getName());
         }
         
+        Map<String,String[]> existingParameters = request.getParameterMap();
+        for(String name : existingParameters.keySet()) {
+            String[] values = existingParameters.get(name);
+            for(String value : values) {
+        	wrapper.addParameter(name, value);
+            }
+        }
+        
+        Enumeration enumaration = request.getAttributeNames(); 
+        while(enumaration.hasMoreElements()) {
+            String name = (String) enumaration.nextElement();
+            wrapper.setAttribute(name, request.getAttribute(name));
+        }
         return wrapper;
     }
 
