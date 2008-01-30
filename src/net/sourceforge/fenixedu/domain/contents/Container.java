@@ -195,6 +195,10 @@ public abstract class Container extends Container_Base {
 		return;
 	    }
 	}
+	if(getParentsSet().isEmpty() && !(trailingPath.length() == 0 || 
+			(trailingPath.length() == 1 && trailingPath.charAt(0) == '/'))) {
+	    throw new InvalidContentPathException(this,trailingPath);
+	}
     }
 
     @Override
