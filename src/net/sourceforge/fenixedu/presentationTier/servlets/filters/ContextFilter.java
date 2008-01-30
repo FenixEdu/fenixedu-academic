@@ -53,7 +53,8 @@ public class ContextFilter implements Filter {
     private boolean shouldBeSkipped(String path) {
 	return path.contains(".css") || path.contains(".gif") || path.contains(".jpg") || path.contains(".js") 
 		|| path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do") || path.contains("/home.do") 
-		|| path.contains("/logoff.do") || path.contains("/siteMap.do") || path.contains("/login.do") || path.startsWith("/external/");
+		|| path.contains("/logoff.do") || path.contains("/siteMap.do") || path.contains("/login.do")
+		|| path.startsWith("/external/") || path.startsWith("/isAlive.do");
     }
 
     private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
