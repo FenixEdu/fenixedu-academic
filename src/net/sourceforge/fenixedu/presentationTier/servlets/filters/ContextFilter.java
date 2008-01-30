@@ -13,10 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 public class ContextFilter implements Filter {
+
+    public static String INVALID_CONTENT_PATH_EXCEPTION = "INVALID_CONTENT_PATH_EXCEPTION";
 
     public void init(FilterConfig config) throws ServletException {
     }
@@ -41,8 +42,7 @@ public class ContextFilter implements Filter {
 		    final FunctionalityContext context = createContext(httpServletRequest);
 		    setContextAttibute(httpServletRequest, context);
 		} catch (InvalidContentPathException ex) {
-		    CheckAvailabilityFilter.showUnavailablePage(ex.getContent(), httpServletRequest, httpServletResponse);
-		    return;
+		    httpServletRequest.setAttribute(INVALID_CONTENT_PATH_EXCEPTION, ex);
 		}
 	    }
 	}
@@ -54,7 +54,8 @@ public class ContextFilter implements Filter {
 	return path.contains(".css") || path.contains(".gif") || path.contains(".jpg") || path.contains(".js") 
 		|| path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do") || path.contains("/home.do") 
 		|| path.contains("/logoff.do") || path.contains("/siteMap.do") || path.contains("/login.do")
-		|| path.startsWith("/external/") || path.startsWith("/isAlive.do") || path.endsWith(".html");
+		|| path.startsWith("/external/") || path.startsWith("/isAlive.do") || path.endsWith(".html")
+		|| path.startsWith("/exceptionHandlingAction.do");
     }
 
     private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {

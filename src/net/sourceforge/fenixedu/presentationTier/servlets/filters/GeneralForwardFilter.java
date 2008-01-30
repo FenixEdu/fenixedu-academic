@@ -13,6 +13,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ContentProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeCurricularPlanProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeProcessor;
@@ -107,7 +109,13 @@ public class GeneralForwardFilter implements Filter {
         }
         
         if (!context.isChildAccepted()) {
-            chain.doFilter(request, response);
+            final InvalidContentPathException invalidContentPathException = (InvalidContentPathException) request.getAttribute(ContextFilter.INVALID_CONTENT_PATH_EXCEPTION);
+            if (invalidContentPathException == null) {        	
+        	chain.doFilter(request, response);
+            } else {
+        	CheckAvailabilityFilter.showUnavailablePage(invalidContentPathException.getContent(), httpRequest, httpResponse);
+        	return;
+            }
         }
         else {
             //httpResponse.sendRedirect(contextPath + this.notFoundURI);
