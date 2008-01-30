@@ -76,6 +76,7 @@ public enum ProfessionalSituationType {
         
     private ProfessionalSituationType(boolean isServiceExemption, boolean endSituation) {
 	this.isServiceExemption = isServiceExemption;
+	this.isEndSituation = endSituation;
     }    
            
     public String getName() {
