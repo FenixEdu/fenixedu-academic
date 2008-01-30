@@ -62,7 +62,7 @@ public abstract class Site extends Site_Base {
 	if (canBeDeleted()) {
 	    deleteRelations();
 
-	    deleteDomainObject();
+	    super.delete();
 	} else {
 	    throw new DomainException("site.cannot.be.deleted");
 	}
@@ -73,6 +73,10 @@ public abstract class Site extends Site_Base {
 	    section.delete();
 	}
 
+	getAvailabilityPolicy().delete();
+	removeCreator();
+	removeInitialContent();
+	removePortal();
 	removeRootDomainObject();
     }
 
