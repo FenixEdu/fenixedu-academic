@@ -39,21 +39,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     protected AcademicServiceRequest() {
 	super();
-	super.setServiceRequestYear(new YearMonthDay().year().get());
-	super.setServiceRequestNumber(generateServiceRequestNumber());
 	super.setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    private Integer generateServiceRequestNumber() {
-	final SortedSet<AcademicServiceRequest> requests = new TreeSet<AcademicServiceRequest>(COMPARATOR_BY_NUMBER);
-	
-	for (final AcademicServiceRequest academicServiceRequest : RootDomainObject.getInstance().getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest.getServiceRequestYear().intValue() == this.getServiceRequestYear().intValue()) {
-		requests.add(academicServiceRequest);
-	    }
-	}
-	
-	return requests.isEmpty() ? 1 : requests.last().getServiceRequestNumber() + 1;
     }
 
     protected void init(final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
@@ -66,14 +52,34 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	final AdministrativeOffice administrativeOffice = findAdministrativeOffice();
 	checkParameters(administrativeOffice, requestDate, urgentRequest, freeProcessed);
 
+	super.setServiceRequestYear(requestDate.year().get());
+	super.setServiceRequestNumber(generateServiceRequestNumber());
+	super.setRequestDate(requestDate);
+	
 	super.setAdministrativeOffice(administrativeOffice);
 	super.setUrgentRequest(urgentRequest);
 	super.setFreeProcessed(freeProcessed);
 	super.setExecutionYear(executionYear);
-	super.setRequestDate(requestDate);
-
+	
 	createAcademicServiceRequestSituations(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
-		AccessControl.getPerson().getEmployee()));
+		getEmployee()));
+    }
+
+    private Integer generateServiceRequestNumber() {
+	final SortedSet<AcademicServiceRequest> requests = new TreeSet<AcademicServiceRequest>(COMPARATOR_BY_NUMBER);
+	
+	for (final AcademicServiceRequest academicServiceRequest : RootDomainObject.getInstance().getAcademicServiceRequestsSet()) {
+	    if (academicServiceRequest != this && academicServiceRequest.getServiceRequestYear().intValue() == this.getServiceRequestYear().intValue()) {
+		requests.add(academicServiceRequest);
+	    }
+	}
+	
+	return requests.isEmpty() ? 1 : requests.last().getServiceRequestNumber() + 1;
+    }
+
+    private Employee getEmployee() {
+	final Person person = AccessControl.getPerson();
+	return person == null ? null : person.getEmployee();
     }
 
     protected AdministrativeOffice findAdministrativeOffice() {
@@ -160,39 +166,48 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public void process() throws DomainException {
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	process(getEmployee());
+    }
+
+    final public void process(final Employee employee) throws DomainException {
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.PROCESSING, employee));
     }
 
     final public void sendToExternalEntity(final YearMonthDay sendDate, final String description) {
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	final Employee employee = getEmployee();
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY, employee, sendDate,
 		description));
     }
 
     final public void receivedFromExternalEntity(final YearMonthDay receivedDate, final String description) {
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	final Employee employee = getEmployee();
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY, employee,
 		receivedDate, description));
     }
 
     final public void reject(final String justification) {
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	final Employee employee = getEmployee();
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.REJECTED, employee, justification));
     }
 
     final public void cancel(final String justification) {
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	final Employee employee = getEmployee();
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CANCELLED, employee, justification));
     }
 
     final public void conclude() {
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	conclude(getEmployee());
+    }
+
+    final public void conclude(final Employee employee) {
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee));
     }
 
     final public void delivered() {
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	delivered(getEmployee());
+    }
+
+    final public void delivered(final Employee employee) {
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.DELIVERED, employee));
     }
 
@@ -213,11 +228,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected void checkRulesToDelete() {
     }
 
-    @Override
-    public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
-	throw new DomainException("error.serviceRequests.RegistrationAcademicServiceRequest.cannot.modify.administrativeOffice");
-    }
-
+//    @Override
+//    public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
+//	throw new DomainException("error.serviceRequests.RegistrationAcademicServiceRequest.cannot.modify.administrativeOffice");
+//    }
+//
     @Override
     final public void setServiceRequestYear(Integer serviceRequestYear) {
 	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.serviceRequestYear");
@@ -420,8 +435,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public boolean getLoggedPersonCanCancel() {
 	return (isNewRequest() || isProcessing())
-		&& (createdByStudent() || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == AccessControl
-			.getPerson().getEmployee().getAdministrativeOffice()));
+		&& (createdByStudent() || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == getEmployee().getAdministrativeOffice()));
     }
 
     final public DateTime getCreationDate() {
