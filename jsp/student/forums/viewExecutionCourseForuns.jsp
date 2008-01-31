@@ -5,11 +5,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-
 <em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="label.viewExecutionCourseForuns.title" /></h2>
 
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <logic:notEmpty name="attendsForExecutionPeriod">
 <table>
@@ -39,7 +38,7 @@
 		
 	<logic:empty name="executionCourse" property="foruns">
 		<tr>
-			<td><span class="error"><!-- Error messages go here --><bean:message key="label.viewExecutionCourseForuns.noForumsForExecutionCourse" /></span></td>
+			<td><em><!-- Error messages go here --><bean:message key="label.viewExecutionCourseForuns.noForumsForExecutionCourse" />.</em></td>
 		</tr>
 	</logic:empty>
 	
@@ -49,6 +48,6 @@
 
 <logic:empty name="attendsForExecutionPeriod">
 	<p class="mtop15">
-		<em><bean:message  key="label.viewExecutionCourseForuns.noAttendsForExecutionPeriod" bundle="STUDENT_RESOURCES"/></em>
+		<em><bean:message key="label.viewExecutionCourseForuns.noAttendsForExecutionPeriod" bundle="STUDENT_RESOURCES"/></em>
 	</p>
 </logic:empty>

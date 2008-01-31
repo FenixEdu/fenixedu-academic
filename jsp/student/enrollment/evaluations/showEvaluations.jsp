@@ -20,7 +20,7 @@
 	<h:form>
 		<h:outputText value="<div class='evalcontainer'>" escape="false" />
 		<h:panelGrid columns="2" columnClasses="alignright,," styleClass="search">
-			<h:outputText value="#{bundle['label.student.enrollment.executionPeriod']}: " styleClass="boldFontClass" />
+			<h:outputText value="#{bundle['label.student.enrollment.executionPeriod']}: " styleClass="" />
 			<h:panelGroup>			
 				<fc:selectOneMenu value="#{displayEvaluationsToEnrol.executionPeriodID}" onchange="this.form.submit();" 
 				   valueChangeListener="#{displayEvaluationsToEnrol.changeExecutionPeriod}">
@@ -28,7 +28,7 @@
 				</fc:selectOneMenu>
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</h:panelGroup>
-			<h:outputText value="#{bundle['link.evaluations.enrolment']}: " styleClass="boldFontClass" />
+			<h:outputText value="#{bundle['link.evaluations.enrolment']}: " styleClass="" />
 			<h:panelGroup>
 				<fc:selectOneMenu value="#{displayEvaluationsToEnrol.evaluationType}" onchange="this.form.submit();"
 				   valueChangeListener="#{displayEvaluationsToEnrol.changeEvaluationType}">

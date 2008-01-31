@@ -6,14 +6,17 @@
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="documentRequests" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
-<h3 class="mtop15"><bean:message key="label.documentRequests.confirmation" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+
+<p class="mtop15"><strong><bean:message key="label.documentRequests.confirmation" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 
 <logic:messagesPresent message="true">
-	<span class="error"><!-- Error messages go here -->
-		<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
-			<bean:write name="message"/>
-		</html:messages>
-	</span>
+	<p>
+		<span class="error"><!-- Error messages go here -->
+			<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
+				<bean:write name="message"/>
+			</html:messages>
+		</span>
+	</p>
 </logic:messagesPresent>
 
 <logic:notEmpty name="warningsToReport">
@@ -30,7 +33,7 @@
 <fr:edit schema="DocumentRequestCreateBean.chooseDocumentRequestType" name="documentRequestCreateBean" visible="false"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4"/>
+		<fr:property name="classes" value="tstyle1"/>
       	<fr:property name="columnClasses" value="listClasses,,"/>
 	</fr:layout>
 </fr:edit>
@@ -46,7 +49,7 @@
 
 <fr:view schema="DocumentRequestCreateBean.chooseDocumentRequestType" name="documentRequestCreateBean" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+		<fr:property name="classes" value="tstyle1 thright thlight mvert0"/>
 		<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
 	</fr:layout>	
 </fr:view>
@@ -57,7 +60,7 @@
 	<fr:view name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" 
 		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" >
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+			<fr:property name="classes" value="tstyle1 thright thlight mvert0"/>
 			<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
 		</fr:layout>	
 	</fr:view>		
@@ -67,7 +70,7 @@
 <fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" 
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+		<fr:property name="classes" value="tstyle1 thright thlight mvert0"/>
 		<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
 	</fr:layout>	
 </fr:view>

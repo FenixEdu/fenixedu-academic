@@ -37,12 +37,14 @@
 					<bean:define id="postingRuleClassName" name="postingRule" property="class.simpleName" />
 						<fr:view name="postingRule" schema="<%=postingRuleClassName + ".view-student" %>">
 							<fr:layout name="tabular">
-								<fr:property name="classes" value="thlight mtop025"/>
+								<fr:property name="classes" value="thlight thleft mtop025"/>
 							</fr:layout>
 						</fr:view>
 				</logic:iterate>	
 			</div>
 		</logic:iterate>
+		
+		<div class="cboth"></div>
 
 	
 </logic:present>

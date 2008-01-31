@@ -46,7 +46,7 @@
 
 <%-- Registration Details --%>
 <logic:notPresent name="registration" property="ingressionEnum">
-	<h3 class="separator2 mbottom1"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<h3 class="separator2 mbottom1 fwnormal"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:view name="registration" schema="student.registrationsWithStartData" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
@@ -55,7 +55,7 @@
 	</fr:view>
 </logic:notPresent>
 <logic:present name="registration" property="ingressionEnum">
-	<h3 class="separator2 mbottom1"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	<h3 class="separator2 mbottom1 fwnormal"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:view name="registration" schema="student.registrationDetail" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
@@ -92,7 +92,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>
 	</logic:present>
 	
-	<h3 class="separator2 mbottom1 mtop2 printhidden"><bean:message key="label.visualize" bundle="STUDENT_RESOURCES" /></h3>
+	<h3 class="separator2 mbottom1 mtop2 printhidden fwnormal"><bean:message key="label.visualize" bundle="STUDENT_RESOURCES" /></h3>
 	<table class="tstyle5 thright thlight mtop025">
 		<tr>
 			<th><bean:message key="label.studentCurricularPlan.basic" bundle="STUDENT_RESOURCES" /></th>
@@ -216,10 +216,10 @@
 
 <div class="print_fsize08">
 	<p class="mtop2 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
-	<div style="width: 250px; float: left;">
-		<p class="mvert05"><em>m (): mínimo de créditos no grupo curricular</em></p>
-		<p class="mvert05"><em>c (): créditos no grupo curricular</em></p>
-		<p class="mvert05"><em>M (): máximo de créditos no grupo curricular</em></p>
+	<div style="width: 350px; float: left;">
+		<p class="mvert05"><em>m (): Mínimo de créditos no grupo curricular</em></p>
+		<p class="mvert05"><em>c (): Créditos no grupo curricular</em></p>
+		<p class="mvert05"><em>M (): Máximo de créditos no grupo curricular</em></p>
 	    <e:labelValues id="enrolmentEvaluationTypes" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" />
 		<logic:iterate id="enrolmentEvaluationType" name="enrolmentEvaluationTypes" type="LabelValueBean">
 			<p class="mvert05"><em><bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue() + ".acronym"%>" bundle="ENUMERATION_RESOURCES"/>: <bean:message key="<%="EnrolmentEvaluationType." + enrolmentEvaluationType.getValue()%>" bundle="ENUMERATION_RESOURCES"/></em></p>

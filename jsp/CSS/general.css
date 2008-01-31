@@ -66,9 +66,13 @@ background-color: #fff;
 }
 
 .showpersonid {
+/*
 background-color: #e6f3e1;
 border-bottom: 1px solid #bddeb2;
 padding: 0.4em 0.6em;
+*/
+border-bottom: 1px dotted #aaa;
+padding-bottom: 2px;
 }
 
 /* ----------------------

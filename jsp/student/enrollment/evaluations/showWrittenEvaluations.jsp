@@ -13,8 +13,8 @@
 	<h:form>
 		<h:inputHidden binding="#{manageEvaluationsForStudent.evaluationTypeHidden}"/>
 		<h:outputText value="<div class='evalcontainer'>	" escape="false"/>
-		<h:panelGrid columns="2" columnClasses="alignright,," styleClass="search">
-			<h:outputText value="#{bundle['label.student.enrollment.executionPeriod']}: " styleClass="boldFontClass" />
+		<h:panelGrid columns="2" columnClasses="alignright," styleClass="search">
+			<h:outputText value="#{bundle['label.student.enrollment.executionPeriod']}: " styleClass="" />
 			<fc:selectOneMenu value="#{manageEvaluationsForStudent.executionPeriodID}" onchange="this.form.submit();" 
 			   valueChangeListener="#{manageEvaluationsForStudent.changeExecutionPeriod}">
 				<f:selectItems value="#{manageEvaluationsForStudent.executionPeriodsLabels}" />

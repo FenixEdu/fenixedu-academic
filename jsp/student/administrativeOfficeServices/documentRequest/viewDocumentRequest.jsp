@@ -21,8 +21,8 @@
 <bean:define id="simpleClassName" name="documentRequest" property="class.simpleName" />
 <fr:view name="documentRequest" schema="<%= simpleClassName  + ".view"%>">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight thright" />
-		<fr:property name="rowClasses" value=",tdhl1,,,,,"/>
+		<fr:property name="classes" value="tstyle1 thlight thright" />
+		<fr:property name="rowClasses" value=",,,,,,"/>
 	</fr:layout>
 </fr:view>
 
@@ -30,13 +30,15 @@
 	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="request.situation"/></strong></p>
 	<fr:view name="documentRequest" property="activeSituation" schema="AcademicServiceRequestSituation.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+			<fr:property name="classes" value="tstyle1 thright thlight mtop025"/>
 		<fr:property name="rowClasses" value=",,tdhl1,"/>
 		</fr:layout>
 	</fr:view>
 </logic:present>
 
 <html:form action="/documentRequest.do?method=viewDocumentRequests">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationId" property="registrationId"/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.back" /></html:submit>
+	<p>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationId" property="registrationId"/>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.back" /></html:submit>
+	</p>
 </html:form>

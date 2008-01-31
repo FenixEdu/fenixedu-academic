@@ -40,7 +40,7 @@
 					
 						<fr:view name="yearDelegateResultsElection" layout="tabular-sortable" schema="student.yearDelegateElection.showResults" >
 							<fr:layout>
-								<fr:property name="classes" value="tstyle2 thlight tdcenter mtop0"/>
+								<fr:property name="classes" value="tstyle2 thlight tdcenter"/>
 								<fr:property name="columnClasses" value="width80px,aleft,,"/>
 								<fr:property name="sortParameter" value="sortBy"/>
 								<fr:property name="sortableSlots" value="student.number,student.person.name,votesNumber,votesRelativePercentage"/>

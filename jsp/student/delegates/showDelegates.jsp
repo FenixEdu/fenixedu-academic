@@ -11,14 +11,14 @@
 <logic:present name="searchBean" >
 	<fr:view name="searchBean" layout="tabular" schema="delegates.selectedDegreeTypeAndDegree">
 		<fr:layout>
-			<fr:property name="classes" value="tstyle2 thlight thright tdleft mtop2 mbottom05"/>
+			<fr:property name="classes" value="tstyle2 thlight thright tdleft mbottom05"/>
 			<fr:property name="rowClasses" value="bold,bold,"/>
 			<fr:property name="columnClasses" value="nowrap, width200px nowrap,"/>
 		</fr:layout>
 	</fr:view>
 	
 	<logic:present name="integratedMasterDegreeDelegate" >
-		<p class="mtop2 mbottom1">
+		<p class="mtop15 mbottom1">
 			<b><bean:message key="label.delegates.integratedMasterDegreeDelegate" bundle="DELEGATES_RESOURCES" /></b></p>	
 		<bean:define id="delegateBean" name="integratedMasterDegreeDelegate" toScope="request" />
 		<bean:define id="schema" value="delegates.searchDelegates.searchByDegree.restrictedDelegateResume" type="java.lang.String" toScope="request" />
@@ -27,7 +27,7 @@
 	</logic:present>
 	
 	<logic:present name="masterDegreeDelegate" >
-		<p class="mtop2 mbottom1">
+		<p class="mtop15 mbottom1">
 			<b><bean:message key="label.delegates.masterDegreeDelegate" bundle="DELEGATES_RESOURCES" /></b></p>
 		<bean:define id="delegateBean" name="masterDegreeDelegate" toScope="request" />
 		<bean:define id="schema" value="delegates.searchDelegates.searchByDegree.restrictedDelegateResume" type="java.lang.String" toScope="request" />
@@ -36,7 +36,7 @@
 	</logic:present>
 	
 	<logic:present name="degreeDelegate" >
-		<p class="mtop2 mbottom1">
+		<p class="mtop15 mbottom1">
 			<b><bean:message key="label.delegates.degreeDelegate" bundle="DELEGATES_RESOURCES" /></b></p>			
 		<bean:define id="delegateBean" name="degreeDelegate" toScope="request" />
 		<bean:define id="schema" value="delegates.searchDelegates.searchByDegree.restrictedDelegateResume" type="java.lang.String" toScope="request" />
@@ -47,7 +47,7 @@
 	<logic:present name="yearDelegates" >
 		<logic:notEmpty name="yearDelegates">
 			<logic:iterate id="delegate" name="yearDelegates">
-				<p class="mtop2 mbottom1 bold">
+				<p class="mtop15 mbottom1 bold">
 					<bean:message key="label.yearDelegatePreffixe" bundle="DELEGATES_RESOURCES" />
 					<bean:write name="delegate" property="curricularYear.year" />
 					<bean:message key="label.yearDelegateSuffixe" bundle="DELEGATES_RESOURCES" /></p>

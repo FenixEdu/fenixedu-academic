@@ -24,8 +24,8 @@
 
 <fr:view name="documentRequests" schema="DocumentRequest.summary-view-by-student">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight tdcenter" />
-		<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt,smalltxt,smalltxt,aleft smalltxt nowrap,smalltxt,smalltxt,smalltxt,smalltxt,nowrap" />
+		<fr:property name="classes" value="tstyle1 thlight tdcenter" />
+		<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt,smalltxt,smalltxt,aleft smalltxt nowrap,smalltxt,smalltxt,smalltxt,smalltxt nowrap," />
 		<fr:property name="linkFormat(view)" value="/documentRequest.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
 		<fr:property name="key(view)" value="label.view"/>
 		<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>

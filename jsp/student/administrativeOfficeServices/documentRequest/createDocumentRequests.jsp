@@ -19,7 +19,7 @@
 	<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
-<p class="mvert2">
+<p class="mvert15">
 	<span class="showpersonid">
 		<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
 		<fr:view name="documentRequestCreateBean" property="registration.student" schema="student.show.personAndStudentInformation.short">
@@ -32,27 +32,27 @@
 
 
 <logic:present name="documentRequestCreateBean" property="registration.ingressionEnum">
-<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<p class="mbottom05"><strong><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 <fr:view name="documentRequestCreateBean" property="registration" schema="student.registrationDetail.short" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-		<fr:property name="rowClasses" value=",tdhl1,,,,,,"/>
+		<fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
+		<fr:property name="rowClasses" value=",,,,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
 <logic:notPresent name="documentRequestCreateBean" property="registration.ingressionEnum">
-<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<p class="mbottom05"><strong><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 <fr:view name="documentRequestCreateBean" property="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-		<fr:property name="rowClasses" value=",tdhl1,,,,,,"/>
+		<fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
+		<fr:property name="rowClasses" value=",,,,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:notPresent>
 
 <logic:equal name="documentRequestCreateBean" property="registration.hasGratuityDebtsCurrently" value="true">
 	<p>
-		<span class="error0"><bean:message key="DocumentRequest.registration.has.not.payed.gratuities" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
+		<span class="warning0"><bean:message key="DocumentRequest.registration.has.not.payed.gratuities" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
 	</p>
 </logic:equal>
 <logic:equal name="documentRequestCreateBean" property="registration.hasGratuityDebtsCurrently" value="false">
@@ -63,7 +63,7 @@
 		<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 			<fr:destination name="documentRequestTypeChoosedPostBack" path="/documentRequest.do?method=documentRequestTypeChoosedPostBack"/>	
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thright thlight mtop025 mbottom0"/>
+				<fr:property name="classes" value="tstyle5 thright thlight mtop025 mbottom0 thmiddle"/>
 				<fr:property name="columnClasses" value="width14em,width35em,tdclear tderror1"/>
 			</fr:layout>	
 		</fr:edit>
@@ -72,7 +72,7 @@
 			<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>
 			<fr:edit name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thright thlight mvert0"/>
+					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 					<fr:property name="columnClasses" value="width14em,width35em,tdclear tderror1"/>
 				</fr:layout>	
 			</fr:edit>			
@@ -82,7 +82,7 @@
 		
 			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thright thlight mvert0"/>
+					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 					<fr:property name="columnClasses" value="width14em,width35em,tdclear tderror1"/>
 				</fr:layout>	
 			</fr:edit>
