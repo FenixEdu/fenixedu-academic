@@ -55,7 +55,7 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     }
     
     public StudentCurricularPlan getStudentCurricularPlan() {
-	final ExecutionYear executionYear = hasExecutionYear() ? getExecutionYear() : ExecutionYear.readByDateTime(getCreationDate());
+	final ExecutionYear executionYear = hasExecutionYear() ? getExecutionYear() : ExecutionYear.readByDateTime(getRequestDate());
 	return getRegistration().getStudentCurricularPlan(executionYear);
     }
     
