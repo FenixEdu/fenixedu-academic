@@ -85,6 +85,8 @@ public class LibraryCardSearch implements Serializable {
 		return getPersonsFromDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
 	    case BOLONHA_INTEGRATED_MASTER_DEGREE:
 		return getPersonsFromDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	    case BOLONHA_PHD_PROGRAM:
+		return getPersonsFromDegreeType(DegreeType.BOLONHA_PHD_PROGRAM);
 	    case BOLONHA_SPECIALIZATION_DEGREE:
 		return getPersonsFromDegreeType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 	    case PERSON:
@@ -96,8 +98,7 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private List<Person> getGrantOwners() {
-	Set<Person> persons = new HashSet<Person>(Role.getRoleByRoleType(RoleType.GRANT_OWNER)
-		.getAssociatedPersonsSet());
+	Set<Person> persons = new HashSet<Person>(Role.getRoleByRoleType(RoleType.GRANT_OWNER).getAssociatedPersonsSet());
 	for (LibraryCard libraryCard : RootDomainObject.getInstance().getLibraryCards()) {
 	    if (libraryCard.getPartyClassification().equals(PartyClassification.GRANT_OWNER)) {
 		persons.add(libraryCard.getPerson());
@@ -132,14 +133,16 @@ public class LibraryCardSearch implements Serializable {
     private List<Person> getPersonsFromDegreeType(DegreeType degreeType) {
 	List<Person> persons = new ArrayList<Person>();
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	//TODO *remove in 2008/2009 when the type DEGREE will no longer be relevant to obtain current data
-	if (degreeType.equals(DegreeType.DEGREE) || degreeType.equals(DegreeType.MASTER_DEGREE)) {
-	    executionYear = executionYear.getPreviousExecutionYear();
-	}
+	// TODO *remove in 2008/2009 when the type DEGREE will no longer be
+	// relevant to obtain current data
+	// if (degreeType.equals(DegreeType.DEGREE) ||
+	// degreeType.equals(DegreeType.MASTER_DEGREE)) {
+	// executionYear = executionYear.getPreviousExecutionYear();
+	// }
 	for (Degree degree : Degree.readAllByDegreeType(degreeType)) {
 	    for (StudentCurricularPlan scp : degree.getStudentCurricularPlans(executionYear)) {
-		if (scp.getRegistration().isActive()) {		    
-		    persons.add(scp.getRegistration().getPerson());		
+		if (scp.getRegistration() != null && scp.getRegistration().isActive()) {
+		    persons.add(scp.getRegistration().getPerson());
 		}
 	    }
 	}
@@ -152,8 +155,7 @@ public class LibraryCardSearch implements Serializable {
 
     private boolean satisfiesUserName(Person person) {
 	return StringUtils.isEmpty(getUserName())
-		|| net.sourceforge.fenixedu.util.StringUtils.verifyContainsWithEquality(
-			person.getName(), getUserName());
+		|| net.sourceforge.fenixedu.util.StringUtils.verifyContainsWithEquality(person.getName(), getUserName());
     }
 
     private boolean satisfiesCategory(Person person) {
@@ -162,8 +164,8 @@ public class LibraryCardSearch implements Serializable {
 		&& person.getLibraryCard().getPartyClassification().equals(getPartyClassification())) {
 	    return Boolean.TRUE;
 	}
-	PartyClassification partyClassification = person.getLibraryCard() != null ? person
-		.getLibraryCard().getPartyClassification() : personClassification;
+	PartyClassification partyClassification = person.getLibraryCard() != null ? person.getLibraryCard()
+		.getPartyClassification() : personClassification;
 	return getPartyClassification().equals(partyClassification);
     }
 
