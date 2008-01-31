@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +18,7 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,6 +34,11 @@ public class CreateContentsContextAction extends FenixAction {
 	request.setAttribute(FunctionalityContext.CONTEXT_KEY, functionalityContext);
 
 	final MenuEntry initialMenuEntry = getInitialMenuEntry(functionalityContext);
+	if (initialMenuEntry == null) {
+	    sendLoginRedirect(request, response);
+	    return null;
+	}
+
 	Content content = initialMenuEntry.getReferingContent();
 	if (content.isContainer()) {
 	    Container container = (Container) content;
@@ -41,6 +48,10 @@ public class CreateContentsContextAction extends FenixAction {
 	}
 
 	return menuActionForward(content, request);
+    }
+
+    private void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
     }
 
     private ActionForward menuActionForward(Content content, HttpServletRequest request) {
