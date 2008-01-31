@@ -22,13 +22,17 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     }
 
     public DiplomaRequest(final Registration registration, final CycleType requestedCycle) {
-	this();
-	
-	this.init(registration, requestedCycle);
+	this(registration, new DateTime(), requestedCycle);
     }
 
-    final private void init(final Registration registration, final CycleType requestedCycle) {
-	super.init(registration, new DateTime(), Boolean.FALSE, Boolean.FALSE);
+    public DiplomaRequest(final Registration registration, final DateTime requestDate, final CycleType requestedCycle) {
+	this();
+	
+	this.init(registration, requestDate, requestedCycle);
+    }
+
+    final private void init(final Registration registration, DateTime requestDate, final CycleType requestedCycle) {
+	super.init(registration, requestDate, Boolean.FALSE, Boolean.FALSE);
 	
 	this.checkParameters(requestedCycle);
 	
