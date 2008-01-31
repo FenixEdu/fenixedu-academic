@@ -73,7 +73,9 @@ public abstract class Site extends Site_Base {
 	    section.delete();
 	}
 
-	getAvailabilityPolicy().delete();
+	if (hasAvailabilityPolicy()) {
+	    getAvailabilityPolicy().delete();
+	}
 	removeCreator();
 	removeInitialContent();
 	removePortal();
