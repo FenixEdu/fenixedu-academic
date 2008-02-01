@@ -13,6 +13,7 @@ public class ExecutionPath extends ExecutionPath_Base {
         this();
         setFunctionality(functionality);
         setExecutionPath(executionPath);
+        setContentId(functionality.getContentId());
     }
 
     public void delete() {

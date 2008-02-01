@@ -4310,6 +4310,7 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 
                         class net.sourceforge.fenixedu.domain.functionalities.ExecutionPath extends net.sourceforge.fenixedu.domain.DomainObject {
                             String executionPath;
+                            String contentId;
                         }
 
 			class net.sourceforge.fenixedu.domain.functionalities.Functionality extends net.sourceforge.fenixedu.domain.contents.Element {
