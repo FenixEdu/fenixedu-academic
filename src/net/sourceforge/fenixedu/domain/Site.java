@@ -379,4 +379,13 @@ public abstract class Site extends Site_Base {
 	return initialContent;
     }
 
+    @Override
+    protected void disconnect() {
+	disconnectContent();
+
+	for (Node node : getChildrenSet()) {
+	    removeNode(node);
+	}
+    }
+
 }

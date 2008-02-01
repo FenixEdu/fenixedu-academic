@@ -170,6 +170,10 @@ public abstract class Content extends Content_Base {
          * deleted, this is the place to do it.
          */
     protected void disconnect() {
+	disconnectContent();
+    }
+
+    protected void disconnectContent() {
 	if (hasAvailabilityPolicy()) {
 	    getAvailabilityPolicy().delete();
 	}
