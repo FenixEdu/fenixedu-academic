@@ -303,13 +303,74 @@ public enum GradeScale {
 	    return value.equals(NA) || value.equals(RE) || value.equals(AP);
 	}
 	
-    };
+    },
 
+    TYPEAPT {
+	@Override
+	protected boolean checkFinal(final Grade grade) {
+	    final String value = grade.getValue();
+	    return value.equals(NA) || value.equals(RE) || value.equals(APT);
+	}
+
+	@Override
+	protected boolean checkNotFinal(final Grade grade) {
+	    final String value = grade.getValue();
+	    return value.equals(NA) || value.equals(RE) || value.equals(APT);
+	}
+
+	@Override
+	protected String qualify(final Grade grade) {
+	    if (grade.getGradeScale() != this) {
+		return StringUtils.EMPTY;
+	    }
+	    
+	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+	    
+	    final String value = grade.getValue();
+	    if (value.equals(APT)) {
+		return applicationResources.getString("msg.apt");
+	    } else if (value.equals(RE)) {
+		return applicationResources.getString("msg.notApproved");
+	    } else if (value.equals(NA)) {
+		return applicationResources.getString("msg.notEvaluated");
+	    } else {
+		throw new DomainException("GradeScale.unable.to.qualify.given.grade");
+	    }
+	}
+	
+	@Override
+	protected boolean isNotEvaluated(final Grade grade) {
+	    final String value = grade.getValue();
+	    return grade.isEmpty() || value.equals(GradeScale.NA);
+	}
+	
+	@Override
+	protected boolean isNotApproved(final Grade grade) {
+	    final String value = grade.getValue();
+	    return value.equals(GradeScale.RE) || isNotEvaluated(grade);
+	}
+	
+	@Override
+	protected boolean isApproved(final Grade grade) {
+	    final String value = grade.getValue();
+	    return value.equals(GradeScale.APT);
+	}
+	
+	@Override
+	public boolean belongsTo(final String value) {
+	    return value.equals(NA) || value.equals(RE) || value.equals(APT);
+	}
+	
+    };
+    
+    
     static final public String NA = "NA";
 
     static final public String RE = "RE";
     
     static final public String AP = "AP";
+    
+    static final public String APT = "APT";
 
     public String getName() {
 	return name();
