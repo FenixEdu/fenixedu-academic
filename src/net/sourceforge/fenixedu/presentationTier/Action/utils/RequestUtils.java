@@ -162,6 +162,7 @@ public class RequestUtils {
                 && (uri.indexOf("img/") == -1)
                 && (uri.indexOf("download/") == -1)
                 && (uri.indexOf("external/") == -1)
+                && (uri.indexOf("services/") == -1)
                 && (uri.indexOf("index.jsp") == -1)
                 && (uri.indexOf("index.html") == -1)
                 && (uri.indexOf("login.do") == -1)

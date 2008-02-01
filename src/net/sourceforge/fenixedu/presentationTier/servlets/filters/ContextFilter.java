@@ -55,7 +55,7 @@ public class ContextFilter implements Filter {
 		|| path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do") || path.contains("/home.do") 
 		|| path.contains("/logoff.do") || path.contains("/siteMap.do") || path.contains("/login.do")
 		|| path.startsWith("/external/") || path.startsWith("/isAlive.do") || path.endsWith(".html") || path.endsWith(".htm")
-		|| path.startsWith("/exceptionHandlingAction.do");
+		|| path.startsWith("/exceptionHandlingAction.do") || path.startsWith("/services/");
     }
 
     private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
