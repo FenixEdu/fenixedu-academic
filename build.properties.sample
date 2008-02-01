@@ -406,11 +406,13 @@ password.generator=net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswo
 #
 
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.CheckPasswordKerberosAction=127.0.0.1
+host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.CheckLocalPasswordAction=127.0.0.1
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.RetrieveUserInformation=127.0.0.1
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.UserPermissionCheck=127.0.0.1
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.GroupCheck=127.0.0.1
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction=127.0.0.1,0:0:0:0:0:0:0:1
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.AnnouncementBoardExport=127.0.0.1,0:0:0:0:0:0:0:1
+host.control.name.net.sourceforge.fenixedu.webServices.PersonManagement=
 
 #----------------------------------------------
 # CAS configuration
@@ -438,7 +440,8 @@ email.admin.password=xPtO!)&#.
 consult.roles.admin.allowed.hosts=127.0.0.1,localhost,192.168.1.101
 consult.roles.admin.password=xPtO
 externalServices.StudentInfoByUsername.externalAppPassword=xpto
-
+webServices.PersonManagement.getPersonInformation.username=u
+webServices.PersonManagement.getPersonInformation.password=p
 
 #------------------------------------------------------------------------------
 # Miscellaneous 
@@ -506,7 +509,7 @@ sibs.destinationInstitutionId=11111111
 # webServices.external.urls: comma seperated values of wsdl valid urls.
 #							 Example: http://localhost:8080/ciapl/services/InstitutionalEmailManagement?wsdl
 
-webServices.external.urls=
+webServices.external.urls=http://localhost:8080/ciapl/services/PersonManagement?wsdl
 
 #----------------------------------------------------------------
 # Merge Units - Emails for log
