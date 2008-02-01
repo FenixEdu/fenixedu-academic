@@ -93,7 +93,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	    }
 	}
 
-	if ((path.contains(".do") || path.contains(".faces")) && selectedContainer == null) {
+	if ((path.contains(".do") || path.contains(".faces")) && contents.isEmpty()) {
 	    throw new InvalidContentPathException(null, null);
 	}
 
