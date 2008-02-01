@@ -26,7 +26,7 @@
 
 					<fr:view name="thread" layout="tabular" schema="conversationThread.view-with-subject-creation-date-and-message-count">
 						<fr:layout>
-						    <fr:property name="classes" value="tstyle5 thlight thright"/>
+						    <fr:property name="classes" value="tstyle1 thlight thright"/>
 						</fr:layout>
 					</fr:view>
 

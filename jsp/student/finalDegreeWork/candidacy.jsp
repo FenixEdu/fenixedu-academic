@@ -14,9 +14,11 @@
 </div>
 
 <logic:notPresent name="infoExecutionDegrees">
-	<apan class="error">
-		<bean:message key="message.no.final.degree.proposals.available"/>
-	</span>
+	<p>
+		<em>
+			<bean:message key="message.no.final.degree.proposals.available"/>
+		</em>
+	</p>
 </logic:notPresent>
 
 <logic:present name="infoExecutionDegrees">

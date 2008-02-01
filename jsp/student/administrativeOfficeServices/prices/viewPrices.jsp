@@ -33,11 +33,12 @@
 			<div style="background: #f5f5f5; width: 300px; margin: 1em 1em 0 0; float: left; border: 1px solid #ddd; padding: 0 1em 1em 1em;">
 			<h3 style="color: #369;"><bean:message name="adminOfficeType" property="qualifiedName" bundle="ENUMERATION_RESOURCES" /></h3>
 				<logic:iterate id="postingRule" name="postingRules">
-					<p class="mtop15 mbottom025"><strong><bean:message name="postingRule" property="eventType.qualifiedName" bundle="ENUMERATION_RESOURCES" /></strong></p>
+					<p class="mtop2 mbottom025"><strong><bean:message name="postingRule" property="eventType.qualifiedName" bundle="ENUMERATION_RESOURCES" /></strong></p>
 					<bean:define id="postingRuleClassName" name="postingRule" property="class.simpleName" />
 						<fr:view name="postingRule" schema="<%=postingRuleClassName + ".view-student" %>">
 							<fr:layout name="tabular">
-								<fr:property name="classes" value="thlight thleft mtop025"/>
+								<fr:property name="classes" value="thlight thleft mtop025 width100"/>
+								<fr:property name="columnClasses" value=",aright,"/>
 							</fr:layout>
 						</fr:view>
 				</logic:iterate>	

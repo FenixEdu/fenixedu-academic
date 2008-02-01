@@ -28,7 +28,7 @@ function check(e,v){
 	<logic:empty name="component" property="infoGroupPropertiesList">
 		<h2><bean:message key="title.ExecutionCourseProjects"/></h2>
 
-		<table class="mtop15">
+		<table>
 			<tr>
 				<td><bean:message key="label.clarification"/>:</td>
 				<td>

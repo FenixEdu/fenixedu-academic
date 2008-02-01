@@ -13,7 +13,7 @@
 	
 	<fr:view name="forum" layout="tabular" schema="forum.view-full">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright"/>
+			<fr:property name="classes" value="tstyle1 thlight thright"/>
 		</fr:layout>
 	</fr:view>
 	

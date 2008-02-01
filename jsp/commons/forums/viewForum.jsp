@@ -23,7 +23,7 @@
 	<!-- Forum Details -->
 	<fr:view name="forum" schema="forum.view-full">
 		<fr:layout name="tabular">
-	        <fr:property name="classes" value="tstyle5 thlight thright"/>
+	        <fr:property name="classes" value="tstyle1 thlight thright"/>
 	    </fr:layout>
 	</fr:view>
 
@@ -41,7 +41,7 @@
 	</logic:equal>
 
 
-	<h3 class="mtop2"><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.threads"/></h3>
+	<h3 class="mtop15"><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.threads"/></h3>
 	
 	<!-- Conversation Threads -->
 	<logic:equal name="loggedPersonCanWrite" value="true">
@@ -57,7 +57,7 @@
 
 	<logic:empty name="conversationThreads">
 		<p class="mvert15">
-			<em class="error0"><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.noThreads"/></em>
+			<em><bean:message bundle="MESSAGING_RESOURCES" key="label.viewForum.noThreads"/>.</em>
 		</p>
 	</logic:empty>
 	

@@ -69,7 +69,7 @@
 				</fr:layout>--%>
 			<fr:layout>
 				<fr:property name="classes" value="tstyle1 mtop1 tdcenter mtop05"/>
-				<fr:property name="columnClasses" value="acenter,acenter,acenter,acenter,acenter"/>
+				<fr:property name="columnClasses" value="nowrap acenter,acenter,acenter,acenter,acenter"/>
 				<fr:property name="suffixes" value="º sem,,,%, "/>
 				<fr:property name="sortParameter" value="sortBy"/>
 				<fr:property name="sortableSlots" value="executionPeriod,totalEnrolmentsNumber,approvedEnrolmentsNumber,approvedRatio,aritmeticAverage"/>

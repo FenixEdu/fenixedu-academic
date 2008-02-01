@@ -18,7 +18,7 @@
 		  	   			
 		<fr:view name="senior" schema="ViewSeniorInfo">			
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 thlight thright tdcenter mtop05"/>
+				<fr:property name="classes" value="tstyle1 thlight thright"/>
 				<fr:property name="columnClasses" value="aleft,,,,"/>   		
 			</fr:layout>							
 		</fr:view>
@@ -50,7 +50,7 @@
 	     		  		   
 	    <fr:view name="senior" schema="ViewSeniorInfoLastModificationDate">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
+				<fr:property name="classes" value="tstyle4 thlight tdcenter mtop1"/>
 				<fr:property name="columnClasses" value="aleft,,,,"/>   		
 			</fr:layout>
 		</fr:view>			
