@@ -7,4 +7,24 @@
     <implementationClass>net.sourceforge.fenixedu.webServices.InstitutionalEmailManagement</implementationClass>    
   </service>  
   
+  <service>
+    <name>PersonManagement</name>
+    <namespace>PersonManagement</namespace>
+    <serviceClass>net.sourceforge.fenixedu.webServices.IPersonManagement</serviceClass>    
+    <implementationClass>net.sourceforge.fenixedu.webServices.PersonManagement</implementationClass>    
+  </service>    
+  
+  	<bean id="new.aegisTypeConfiguration" class="org.codehaus.xfire.aegis.type.Configuration">
+		<property name="defaultExtensibleElements" value="true"/>
+		<property name="defaultExtensibleAttributes" value="true"/>
+		<property name="defaultNillable" value="true"/>
+		<property name="defaultMinOccurs" value="1"/>
+	</bean>
+
+	<bean id="xfire.typeMappingRegistry"
+		class="org.codehaus.xfire.aegis.type.DefaultTypeMappingRegistry"
+		init-method="createDefaultMappings" singleton="true">
+		<property name="configuration" ref="new.aegisTypeConfiguration"/>
+	</bean>
+  
 </beans>
