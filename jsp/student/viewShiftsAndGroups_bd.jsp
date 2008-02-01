@@ -18,12 +18,19 @@
 
 
 	<logic:empty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
-		<html:link page="<%="/viewExecutionCourseProjects.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")%>">
-			<bean:message key="link.backToProjects"/>
-		</html:link>
 		<em><bean:message key="title.student.portalTitle"/></em>
-		<h2><bean:message key="title.ShiftsAndGroups"/>
-		<p><span class="warning0"><bean:message key="message.shifts.not.available" /></span></p>
+		<h2><bean:message key="title.ShiftsAndGroups"/></h2>
+		
+		<p class="mtop15"><em><bean:message key="message.shifts.not.available" /></em></p>
+
+		<ul>
+			<li>
+				<html:link page="<%="/viewExecutionCourseProjects.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")%>">
+					<bean:message key="link.backToProjects"/>
+				</html:link>
+			</li>
+		</ul>
+
 	</logic:empty>
 	
 	
@@ -31,16 +38,14 @@
 	<em><bean:message key="title.student.portalTitle"/></em>
 	<h2><bean:message key="title.ShiftsAndGroups"/>: <span class="infoop4"><bean:write name="infoSiteShiftsAndGroups" property="infoGrouping.name"/></span></h2>
 	
-	<p>
-		<span class="error0"><!-- Error messages go here --><html:errors /></span>
-	</p>
-
 	<ul class="mvert15">
 		<li><html:link page="<%="/viewExecutionCourseProjects.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")%>"><bean:message key="link.backToProjects"/></html:link> - <bean:message key="link.backToProjects.description"/></li>
 		<li><html:link page="<%="/viewAllStudentsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>"><bean:message key="link.viewAllStudentsAndGroups"/></html:link> - <bean:message key="link.viewAllStudentsAndGroups.description"/></li>
 	</ul>
 	
-	
+	<p>
+		<span class="error0"><!-- Error messages go here --><html:errors /></span>
+	</p>
 	
   <table class="tstyle4">	
 	<tbody>		
@@ -75,7 +80,7 @@
 	<logic:empty name="infoSiteGroupsByShift" property="infoSiteShift.infoShift">
 		<tr>
 								
-			<td >
+			<td>
 			<html:link page="<%="/viewStudentsAndGroupsWithoutShift.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 				Sem Turno
 			</html:link>	
@@ -235,15 +240,14 @@
         </tbody>
 	</table>
 	
-	<br />
 	
-	<div class="infoop">
-	<ul>
-	<li><bean:message key="label.student.viewShiftsAndGroups.description.item1" /></li>
-	<li><bean:message key="label.student.viewShiftsAndGroups.description.item2" /></li>
-	<li><bean:message key="label.student.viewShiftsAndGroups.description.item3" /></li>
-	<li><bean:message key="label.student.viewShiftsAndGroups.description.item4" /></li>
-	</ul>
+	<div class="infoop2 mtop15">
+		<ul>
+			<li><bean:message key="label.student.viewShiftsAndGroups.description.item1" /></li>
+			<li><bean:message key="label.student.viewShiftsAndGroups.description.item2" /></li>
+			<li><bean:message key="label.student.viewShiftsAndGroups.description.item3" /></li>
+			<li><bean:message key="label.student.viewShiftsAndGroups.description.item4" /></li>
+		</ul>
 	</div>
 	
 </logic:notEmpty>	
@@ -251,9 +255,9 @@
 </logic:present>
 
 <logic:notPresent name="infoSiteShiftsAndGroups">
-<h2>
-<bean:message key="message.shifts.not.available" />
-</h2>
+	<p>
+		<bean:message key="message.shifts.not.available" />
+	</p>
 </logic:notPresent>
 
 

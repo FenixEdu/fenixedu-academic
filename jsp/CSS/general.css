@@ -287,6 +287,7 @@ table td.cornerright { }
 .tderror1 span { background-color: #ffeadd; }
 
 table.thnowrap tr th { white-space: nowrap; }
+table.tdnowrap tr td { white-space: nowrap; }
 .nowrap { white-space: nowrap; }
 .breakword { word-wrap: break-word; }
 

@@ -19,11 +19,11 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="infoGroupPropertiesList">
-	<div class="infoop3">
-		<p class="mvert05"><strong>Disciplina:</strong> <bean:write name="infoExecutionCourse" property="nome"/></p>
+	<div class="infoop2">
+		<p class="mvert05">Disciplina: <bean:write name="infoExecutionCourse" property="nome"/></p>
 	</div>
 	
-	<p><b><bean:message key="label.student.viewExecutionCourseProjects.description" />:</b></p>
+	<p class="mtop15 mbottom05"><bean:message key="label.student.viewExecutionCourseProjects.description" /></p>
 
 	<table class="tstyle4" style="text-align: left;">
          <tr>
@@ -97,7 +97,7 @@
             </logic:iterate>
 </table>
 
-<div id="legend" style="margin-top: 2em;">
+<div id="legend" style="margin-top: 1em;">
 	<p style="margin: 0; padding: 0;"><strong><bean:message key="label.projectTable.properties"/>:</strong></p>
 	<p style="margin: 0; padding: 0;"><em><bean:message key="label.student.viewExecutionCourseProjects.MaximumCapacity"/></em> - <bean:message key="label.projectTable.MaximumCapacity.title" /></p>
 	<p style="margin: 0; padding: 0;"><em><bean:message key="label.student.viewExecutionCourseProjects.IdealCapacity"/></em> - <bean:message key="label.projectTable.IdealCapacity.title" /></p>
@@ -106,9 +106,9 @@
 	<p style="margin: 0; padding: 0;"><em><bean:message key="label.student.viewExecutionCourseProjects.GroupEnrolmentPolicy"/></em> - <bean:message key="label.projectTable.GroupEnrolmentPolicy.title" /></p>
 </div>
 
-<br />
 
-<div class="infoop">
+
+<div class="infoop mtop2">
 	<ul>
 		<li><strong><bean:message key="label.teacher.viewExecutionCourseProjects.atomicPolicy" bundle="APPLICATION_RESOURCES" />:</strong> <bean:message key="label.teacher.viewExecutionCourseProjects.atomicDescription" bundle="APPLICATION_RESOURCES" />.</li>
 		<li><strong><bean:message key="label.teacher.viewExecutionCourseProjects.individualPolicy" bundle="APPLICATION_RESOURCES" />:</strong> <bean:message key="label.teacher.viewExecutionCourseProjects.individualDescription" bundle="APPLICATION_RESOURCES" />.</li>

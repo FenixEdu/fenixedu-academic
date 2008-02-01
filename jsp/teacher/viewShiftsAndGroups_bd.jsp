@@ -26,12 +26,14 @@
 
 	<logic:present name="noShifts">
 
+		<h2><bean:message key="label.groupPropertiesManagement"/></h2>
+
 		<div class="infoop2">
 			<bean:message key="label.teacher.emptyShiftsAndGroups.description" />
 		</div>
 
 		
-		<p><span class="warning0"><bean:message key="message.shifts.not.available"/></span></p>
+		<p class="mtop15"><em><bean:message key="message.shifts.not.available"/></em></p>
 		
 		<p>
 			<span class="error0"><!-- Error messages go here --><html:errors /></span>
@@ -52,22 +54,22 @@
 		</logic:greaterThan>
 			
 		<p class="mtop15">
-			<b><bean:message key="label.groupPropertiesManagement"/></b>
+			<b><bean:message key="label.groupPropertiesManagement"/>:</b>
 		</p>
 	
 		<p class="mbottom05">	
 			<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
 				<bean:message key="link.editGroupProperties"/>
 			</html:link>
-			, 
+			| 
 			<html:link page="<%= "/viewAttendsSet.do?method=viewAttendsSet&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + groupingOID.toString()%>" paramId="objectCode" paramName="objectCode" >
 			<bean:message key="link.viewAttendsSet"/>
 			</html:link></b>
-			, 
+			| 
 			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
 				<bean:message key="link.exportGroupProperties"/>
 			</html:link>
-			, 
+			| 
 			<html:link page="<%= "/deleteGroupProperties.do?method=deleteGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" onclick='<%= onclick.toString() %>'>
 				<bean:message key="link.deleteGroupProperties"/>
 			</html:link>

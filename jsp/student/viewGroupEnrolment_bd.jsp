@@ -17,7 +17,7 @@
 		</logic:equal>
 	</div>
 
-	<p><strong>Agrupamento:</strong> <bean:write name="infoGrouping" property="name"/><p/>
+	<p>Agrupamento: <bean:write name="infoGrouping" property="name"/></p>
 
 <%--
 	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
@@ -31,12 +31,16 @@
 
 	<html:form action="/groupEnrolment"  style="margin: 0; padding: 0;">
 
-	<h2><span class="error"><!-- Error messages go here --><html:errors /></span></h2>		 
+	<p class="mvert15"><span class="error"><!-- Error messages go here --><html:errors /></span></p>		 
 
 	<bean:define id="groupNumber" name="groupNumber"/>
 
-		<p><b class="infoop3"><bean:message key="label.GroupNumber"/><bean:write name="groupNumber"/></b></p>
-		<p><bean:message key="label.infoStudents.studentsWithoutGroup" /></p>
+		<!--
+		<p><b class="infoop2"><bean:message key="label.GroupNumber"/><bean:write name="groupNumber"/></b></p>
+		-->
+		
+		<h3><bean:message key="label.GroupNumber"/><bean:write name="groupNumber"/></h3>
+		<p class="mvert05"><bean:message key="label.infoStudents.studentsWithoutGroup" /></p>
 
 <logic:present name="infoUserStudent"> 
 

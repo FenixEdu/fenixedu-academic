@@ -13,6 +13,7 @@
 
 <logic:present name="infoSiteStudentsAndGroups">
 
+	<em><bean:message key="title.student.portalTitle"/></em>
 	<h2><bean:message key="title.viewStudentsAndGroupsByShift"/></h2>
 
 	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
@@ -23,11 +24,14 @@
 		<!-- <div class="infoop"><bean:message key="label.student.viewStudentsAndGroupsByShift.description" /></div> -->
 	</logic:notEmpty>		
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+	<p>
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
+	</p>
 
-	<p><strong>Agrupamento:</strong> <span class="infoop4"><bean:write name="infoSiteStudentsAndGroups" property="infoGrouping.name"/></span></p>
+	<p class="mtop15 mbottom1"><strong>Agrupamento:</strong> <span class="infoop4"><bean:write name="infoSiteStudentsAndGroups" property="infoGrouping.name"/></span></p>
 
-<%-- ASD : mostrar disciplinas
+<%--
+	ASD : mostrar disciplinas
 	<logic:iterate id="infoExportGrouping" name="infoExportGroupings" length="1">
 		<bean:write name="infoExportGrouping" property="infoExecutionCourse.nome"/>
 	</logic:iterate>
@@ -41,28 +45,26 @@
 		<p><span class="infoop4"><strong><bean:message key="message.infoSiteStudentsAndGroupsList.not.available" /></strong></span></p>
  	</logic:empty> 
 
-<table class="style1" width="75%" cellpadding="0" border="0">	
-	<tbody>		
-	
-		<tr >
-			<th class="listClasses-header" width="30%" rowspan="2">
+<table class="tstyle4 tdnowrap mtop05">	
+		<tr>
+			<th rowspan="2">
 				<bean:message key="property.turno"/>
 			</th>
-			<th class="listClasses-header" colspan="4" width="70%"> 
+			<th colspan="4"> 
 				<bean:message key="property.lessons"/>
 			</th>
 		</tr>
 		<tr>
-			<th class="listClasses-header" width="25%">
+			<th>
 				<bean:message key="property.lesson.weekDay"/>
 			</th>
-			<th class="listClasses-header" width="15%">
+			<th>
 				<bean:message key="property.lesson.beginning"/>
 			</th>
-			<th class="listClasses-header" width="15%">
+			<th>
 				<bean:message key="property.lesson.end"/>
 			</th>
-			<th class="listClasses-header" width="15%">
+			<th>
 				<bean:message key="property.lesson.room"/>
 			</th>
 		</tr>
@@ -73,22 +75,22 @@
                 	<% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
                 	<% Integer fH = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.HOUR_OF_DAY)); %>
                 	<% Integer fM = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.MINUTE)); %>
-					<tr>
+						<tr>
 						
-						<td  class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
+						<td rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
 							<bean:write name="infoShift" property="nome"/>
 						</td>
-						<td class="listClasses">
+						<td>
 							<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
 						</td>
-						<td class="listClasses">
+						<td>
 							<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
 						</td>
-						<td class="listClasses">
+						<td>
 							<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>								
 						</td>
 							
-		               	<td class="listClasses">
+		               	<td>
 		               		<logic:notEmpty name="infoLesson" property="infoSala">
 								<bean:write name="infoLesson" property="infoSala.nome"/>
 							</logic:notEmpty>	
@@ -102,51 +104,53 @@
                        <% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
                        <% Integer fH = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.HOUR_OF_DAY)); %>
                        <% Integer fM = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.MINUTE)); %>
-						<tr >
-							<td class="listClasses">
+						<tr>
+							<td>
 								<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
 							</td>
-							<td class="listClasses">
+							<td>
 								<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
 							</td>
-							<td class="listClasses">
+							<td>
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 							</td>
-							<td class="listClasses">
+							<td>
 							   	<logic:notEmpty name="infoLesson" property="infoSala">
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</logic:notEmpty>	
 							</td>
 						</tr>
-					</logic:iterate>
-        </tbody>
+				</logic:iterate>
 	</table>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+	<p class="mvert0">
+		<span class="error"><!-- Error messages go here --><html:errors /></span>
+	</p>
 
-	<p>
+	<p class="mtop05">
 		<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-   		<bean:message key="link.backToShiftsAndGroups"/></html:link> - <bean:message key="link.backToShiftsAndGroups.description"/>
+   			<bean:message key="link.backToShiftsAndGroups"/>
+   		</html:link> - 
+   		<bean:message key="link.backToShiftsAndGroups.description"/>
    	</p>
 	
 	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
 				 			 		
- 	<bean:size id="count" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList"/> 
- 	<bean:message key="label.student.NumberOfStudentsInShift" /> <%= count %>
- 	
-	<br/><br/>
+	<p class="mtop15 mbottom05">
+	 	<bean:size id="count" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList"/>
+	 	<bean:message key="label.student.NumberOfStudentsInShift" /> <%= count %>
+ 	</p>
 
-<table class="style1" width="75%" cellpadding="0" border="0">
-	<tbody>
-	
+
+<table class="tstyle4 mtop05">
 	<tr>
-		<th class="listClasses-header" width="10%"><bean:message key="label.studentGroupNumber" />
+		<th><bean:message key="label.studentGroupNumber" />
 		</th>
-		<th class="listClasses-header" width="16%"><bean:message key="label.numberWord" />
+		<th><bean:message key="label.numberWord" />
 		</th>
-		<th class="listClasses-header" width="53%"><bean:message key="label.nameWord" />
+		<th><bean:message key="label.nameWord" />
 		</th>
-		<th class="listClasses-header" width="26%"><bean:message key="label.emailWord" />
+		<th><bean:message key="label.emailWord" />
 		</th>
 	</tr>
 			
@@ -156,55 +160,47 @@
  		<bean:define id="username" name="UserView" property="utilizador" type="java.lang.String"/>
 		<logic:equal name="infoSiteStudentInformation" property="username" value="<%= username %>">
 			<tr class="highlight">
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoStudentGroup" property="groupNumber"/>
 				</td>
 			
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>	
 			
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="name"/>
 				</td>		
 			
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="email"/>
 				</td>
 			</tr>
 		</logic:equal>
 		<logic:notEqual name="infoSiteStudentInformation" property="username" value="<%= username %>">
 			<tr>
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoStudentGroup" property="groupNumber"/>
 				</td>
 			
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>	
 			
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="name"/>
 				</td>		
 			
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="email"/>
 				</td>
 			</tr>
 		</logic:notEqual>
 	 </logic:iterate>
-
-</tbody>
 </table>
 
-<br/>
+</logic:notEmpty>
 
-  </logic:notEmpty>
 
-</td>
-  </tr>
- </tbody>
-	
-</table>
 	 
 </logic:present>

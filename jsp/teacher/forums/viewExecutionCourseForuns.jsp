@@ -41,7 +41,7 @@
 
 <logic:empty name="foruns">
 	<p>
-		<span class="error0"><!-- Error messages go here --><bean:message key="label.teacher.executionCourseManagement.viewForuns.noForuns"/></span>
+		<em><!-- Error messages go here --><bean:message key="label.teacher.executionCourseManagement.viewForuns.noForuns"/>.</em>
 	</p>
 </logic:empty>
   

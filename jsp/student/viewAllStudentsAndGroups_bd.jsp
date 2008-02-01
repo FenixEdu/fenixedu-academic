@@ -24,7 +24,7 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-		
+		<em><bean:message key="title.student.portalTitle"/></em>
 		<h2><bean:message key="title.viewAllStudentsAndGroups"/></h2>
 		
 		<ul>
@@ -37,20 +37,18 @@
 
  	<bean:size id="count" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList"/>
 	<bean:message key="label.student.NumberOfStudents" /><%= count %>
-	<br/>	
-	<br/>
 	
-<table class="style1" width="75%" cellpadding="0" border="0">
+<table class="tstyle4" width="75%" cellpadding="0" border="0">
 	<tbody>
 
 	<tr>
-		<th class="listClasses-header" width="10%"><bean:message key="label.studentGroupNumber" />
+		<th width="10%"><bean:message key="label.studentGroupNumber" />
 		</th>
-		<th class="listClasses-header" width="16%"><bean:message key="label.numberWord" />
+		<th width="16%"><bean:message key="label.numberWord" />
 		</th>
-		<th class="listClasses-header" width="53%"><bean:message key="label.nameWord" />
+		<th width="53%"><bean:message key="label.nameWord" />
 		</th>
-		<th class="listClasses-header" width="26%"><bean:message key="label.emailWord" />
+		<th width="26%"><bean:message key="label.emailWord" />
 		</th>
 	</tr>
 			
@@ -61,35 +59,35 @@
 		<bean:define id="username" name="UserView" property="utilizador" type="java.lang.String"/>
 		<logic:equal name="infoSiteStudentInformation" property="username" value="<%= username %>">
 			<tr class="highlight">
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoStudentGroup" property="groupNumber"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="name"/>
 				</td>
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="email"/>
 				</td>
 			</tr>
 		</logic:equal>
 		<logic:notEqual name="infoSiteStudentInformation" property="username" value="<%= username %>">
 			<tr>
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoStudentGroup" property="groupNumber"/>
 				</td>
 			
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="number"/>
 				</td>	
 			
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="name"/>
 				</td>		
 			
-				<td class="listClasses">
+				<td>
 					<bean:write name="infoSiteStudentInformation" property="email"/>
 				</td>
 			</tr>

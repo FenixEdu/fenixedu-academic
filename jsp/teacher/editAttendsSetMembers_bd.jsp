@@ -33,9 +33,9 @@
 
 <logic:empty name="infoGrouping" property="infoAttends">
 	<p>
-		<span class="warning0">
+		<em>
 			<bean:message key="message.infoAttendsSet.not.available" />
-		</span>
+		</em>
 	</p>
 </logic:empty> 	
 

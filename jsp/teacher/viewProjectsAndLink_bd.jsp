@@ -59,7 +59,7 @@ function check(e,v){
 			</logic:notPresent>
 		</div>
 		
-		<p><em class="warning0"><bean:message key="message.infoGroupPropertiesList.not.available" /></em></p>
+		<p class="mtop15"><em><bean:message key="message.infoGroupPropertiesList.not.available" /></em></p>
 		
 		<ul>
 			<li><html:link page="/createGroupProperties.do?method=prepareCreateGroupProperties" paramId="objectCode" paramName="objectCode" ><bean:message key="link.groupPropertiesDefinition"/></html:link></li>
@@ -102,7 +102,6 @@ function check(e,v){
 	</script>
 
 	<div class="infoop2 mtop1">
-		<p>
 		<logic:present name="hasProposals">
 			<logic:present name="waitingAnswer">
 				<bean:message key="label.teacher.viewProjectsAndLinkWithProposalsAndWaiting.description" />
@@ -119,7 +118,6 @@ function check(e,v){
 				<bean:message key="label.teacher.viewProjectsAndLink.description" />
 			</logic:notPresent>
 		</logic:notPresent>
-		</p>
 	</div>
 
 	<p class="indent1">

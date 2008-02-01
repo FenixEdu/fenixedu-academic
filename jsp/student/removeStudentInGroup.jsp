@@ -28,9 +28,9 @@
 		<bean:message key="label.student.removeStudentInGroup.description" />
 	</div>
 
-	<p><strong><bean:message key="label.StudentGroup"/></strong></p>
+	<p class="mtop1 mbottom05"><strong><bean:message key="label.StudentGroup"/></strong></p>
 
-	<table class="tstyle4" width="70%" cellpadding="0" border="0">
+	<table class="tstyle4 mtop05" width="70%">
 	<tr>
 		<th><bean:message key="label.numberWord" />
 		</th>
@@ -61,7 +61,7 @@
 	</table>
 
 
-	<p class="mvert15"><bean:message key="label.confirmGroupStudentUnrolment"/></p>
+		<p class="mbottom1"><bean:message key="label.confirmGroupStudentUnrolment"/></p>
 
 	
 

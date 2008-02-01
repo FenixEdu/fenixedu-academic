@@ -47,14 +47,14 @@
     </ul>
 		
 	<p>
-		<span class="warning0"><bean:message key="message.infoAttendsSet.not.available" /></span>
+		<em><bean:message key="message.infoAttendsSet.not.available" /></em>
 	</p>
 	
-	<p>
+	<p class="mtop15 mbottom05">
 		<b><bean:message key="label.attendsSetManagement"/></b>
 	</p>
 
-	<p>
+	<p class="mtop05">
 		<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
 	    	<bean:message key="link.editAttendsSetMembers"/>
 	    </html:link>
@@ -139,7 +139,7 @@
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">
-<p>
-	<span class="warning0"><bean:message key="message.infoAttendsSet.not.available" /></span>
-</p>
+	<p>
+		<em><bean:message key="message.infoAttendsSet.not.available" /></em>
+	</p>
 </logic:notPresent>
