@@ -28,4 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Create find spaces stuff on public portal." createFindSpacesFunctionality.sql
