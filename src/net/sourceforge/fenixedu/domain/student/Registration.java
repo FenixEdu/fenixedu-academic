@@ -1638,7 +1638,7 @@ public class Registration extends Registration_Base {
     final public void setEntryPhase(EntryPhase entryPhase) {
 	if (hasStudentCandidacy()) {
 	    getStudentCandidacy().setEntryPhase(entryPhase);
-	} else {
+	} else if(entryPhase != null) {
 	    throw new DomainException("error.registration.withou.student.candidacy");
 	}
     }
@@ -1669,7 +1669,7 @@ public class Registration extends Registration_Base {
 		checkIngression(Ingression.valueOf(ingression));
 	    }
 	    getStudentCandidacy().setIngression(ingression);
-	} else {
+	} else if(!StringUtils.isEmpty(ingression)){
 	    throw new DomainException("error.registration.withou.student.candidacy");
 	}
 
