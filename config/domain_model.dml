@@ -1256,6 +1256,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 	
+					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastDegreeDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
+						Money pastAmount;
+					}
+	
 					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaDegreeDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
 					}
 	
@@ -1263,7 +1267,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					}
 	
 					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaPhdProgramDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
-				}
+					}
 				
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
@@ -1434,6 +1438,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DiplomaRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR {
 				}
 
+				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastDegreeDiplomaRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR {
+				}
+			
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 				Money fixedAmount;
 				Money fixedAmountPenalty;
@@ -1450,7 +1457,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 			}
-			
+
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 			}
 
