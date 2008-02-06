@@ -335,6 +335,8 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	}
 
 	public String getTableFromKey(String concreteClassName, String key) {
+	    System.out.println("concreteClassName: " + concreteClassName);
+	    System.out.println("key: " + key);
 	    ObjectReferenceDescriptor descriptor = getOjbDescriptor(concreteClassName).getObjectReferenceDescriptorByName(
 		    extractNameFromKey(key));
 	    return getTableNameForClass(descriptor.getItemClass());

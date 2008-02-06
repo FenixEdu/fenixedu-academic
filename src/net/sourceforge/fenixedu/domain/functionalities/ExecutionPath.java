@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
+import java.util.UUID;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class ExecutionPath extends ExecutionPath_Base {
@@ -13,7 +15,7 @@ public class ExecutionPath extends ExecutionPath_Base {
         this();
         setFunctionality(functionality);
         setExecutionPath(executionPath);
-        setContentId(functionality.getContentId());
+        setContentId(UUID.randomUUID().toString());
     }
 
     public void delete() {

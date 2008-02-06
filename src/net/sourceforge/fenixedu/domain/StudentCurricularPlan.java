@@ -108,6 +108,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		.addComparator(new BeanComparator("student.person.name"));
     }
 
+    public static final Comparator<StudentCurricularPlan> COMPARATOR_BY_DEGREE_TYPE = new Comparator<StudentCurricularPlan>() {
+	public int compare(final StudentCurricularPlan studentCurricularPlan1, final StudentCurricularPlan studentCurricularPlan2) {
+	    final DegreeType degreeType1 = studentCurricularPlan1.getDegreeType();
+	    final DegreeType degreeType2 = studentCurricularPlan2.getDegreeType();
+	    return degreeType1.compareTo(degreeType2);
+	}	
+    };
+
     static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE = new BeanComparator(
 	    "startDateYearMonthDay");
 

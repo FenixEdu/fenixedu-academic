@@ -104,9 +104,10 @@
 		<forward name="showDegreeCodesAndLabels" path="df.page.card.generation.showDegreeCodesAndLabels"/>
 		<forward name="editDegree" path="df.page.card.generation.editDegree"/>
 		<forward name="manageCardGenerationBatch" path="df.page.card.generation.manageCardGenerationBatch"/>
+		<forward name="manageCardGenerationBatchProblems" path="df.page.card.generation.manageCardGenerationBatchProblems"/>
+		<forward name="showCardGenerationProblem" path="df.page.card.generation.showCardGenerationProblem"/>
 	</action>
-	
-      		  
+
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

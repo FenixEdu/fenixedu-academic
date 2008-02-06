@@ -41,45 +41,27 @@
 	</html:link>
 </logic:notEqual>
 
+<bean:define id="deleteConfirm">return confirm('<bean:message bundle="CARD_GENERATION_RESOURCES" key="message.confirm.delete"/>')</bean:define>
+
 <table class="tstyle4 thlight mtop05">
 	<tr>
-		<th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.created"/></th>
-		<th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.updated"/></th>
-		<th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.sent"/></th>
-		<th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.number.entries"/></th>
+		<jsp:include page="cardGenerationBatchHeader.jsp"></jsp:include>
 		<th></th>
 	</tr>
 	<logic:iterate id="cardGenerationBatch" name="cardGenerationContext" property="executionYear.cardGenerationBatches">
-	  	<tr>
-    		<td>
-				<logic:present name="cardGenerationBatch" property="created">
-	    			<dt:format pattern="yyyy-MM-dd HH:mm:ss"><bean:write name="cardGenerationBatch" property="created.millis"/></dt:format>
-				</logic:present>
-			</td>
-    		<td>
-				<logic:present name="cardGenerationBatch" property="updated">
-    				<dt:format pattern="yyyy-MM-dd HH:mm:ss"><bean:write name="cardGenerationBatch" property="updated.millis"/></dt:format>
-				</logic:present>
-			</td>
-    		<td>
-				<logic:present name="cardGenerationBatch" property="sent">
-    				<dt:format pattern="yyyy-MM-dd HH:mm:ss"><bean:write name="cardGenerationBatch" property="sent.millis"/></dt:format>
-				</logic:present>
-			</td>
-    		<td>
-				<bean:size id="numberEntries" name="cardGenerationBatch" property="cardGenerationEntries"/>
-    			<bean:write name="numberEntries"/>
-			</td>
-    		<td>
+		<bean:define id="cardGenerationBatch" name="cardGenerationBatch" toScope="request"/>
+		<tr>
+			<jsp:include page="cardGenerationBatchRow.jsp"></jsp:include>
+	   		<td>
 				<bean:define id="urlManage" type="java.lang.String">/manageCardGeneration.do?method=manageCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
 				<html:link page="<%= urlManage %>">
 					<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.manage"/>
 				</html:link>
 				<bean:define id="urlDelete" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/>&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
-				<html:link page="<%= urlDelete %>">
+				<html:link page="<%= urlDelete %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 					<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.delete"/>
 				</html:link>
 			</td>
-  		</tr>
+		</tr>
 	</logic:iterate>
 </table>

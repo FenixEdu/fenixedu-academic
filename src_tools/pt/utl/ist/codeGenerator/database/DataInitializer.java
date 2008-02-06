@@ -103,6 +103,7 @@ public class DataInitializer {
 	new Role(RoleType.INTERNATIONAL_RELATION_OFFICE, "/internationalRelatOffice", "/index.do", "portal.internRelationOffice");	
 	new ResourceAllocationRole("/resourceAllocationManager", "/paginaPrincipal.jsp", "portal.resourceAllocationManager");
 	new Role(RoleType.RESOURCE_MANAGER, "/resourceManager", "/index.do", "portal.resourceManager");
+	new Role(RoleType.IDENTIFICATION_CARD_MANAGER, "/identificationCardManager", "/index.do", "portal.identificationCardManager");
     }
 
     private static void createCurricularYearsAndSemesters() {

@@ -93,7 +93,9 @@ public enum RoleType {
     
     LIBRARY("Library"),
     
-    INTERNATIONAL_RELATION_OFFICE("International Relation Office");
+    INTERNATIONAL_RELATION_OFFICE("International Relation Office"),
+
+    IDENTIFICATION_CARD_MANAGER("Gestão de Cartões");
 
     public String getName() {
 	return name();

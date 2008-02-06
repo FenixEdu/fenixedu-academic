@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +19,22 @@ import org.apache.commons.lang.StringUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class CardGenerationEntry extends CardGenerationEntry_Base {
+
+    public static class CardGenerationEntryDeleter implements FactoryExecutor {
+
+	private final CardGenerationEntry cardGenerationEntry;
+
+	public CardGenerationEntryDeleter(final CardGenerationEntry cardGenerationEntry) {
+	    this.cardGenerationEntry = cardGenerationEntry;
+	}
+
+	public Object execute() {
+	    if (cardGenerationEntry != null) {
+		cardGenerationEntry.delete();
+	    }
+	    return null;
+	}
+    }
 
     public CardGenerationEntry() {
         super();
@@ -49,7 +66,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(translateDegreeType(degreeType));
 	stringBuilder.append(fillLeftString(student.getNumber().toString(), '0', 8));
 	stringBuilder.append("A");
-	stringBuilder.append("0812");
+	stringBuilder.append("1012");
 	stringBuilder.append(" ");
 	stringBuilder.append(" ");
 	stringBuilder.append("00");
@@ -72,6 +89,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append("     ");
 	stringBuilder.append(fillString(normalizePersonName(person), ' ', 84));
 	stringBuilder.append("\r\n");
+
+	setLine(stringBuilder.toString());
     }
 
     protected String getCampus(final DegreeCurricularPlan degreeCurricularPlan) {
@@ -85,16 +104,24 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         return null;
     }
 
-    protected int translateDegreeType(final DegreeType degreeType) {
+    public static Category getCategoryFromDegreeType(final DegreeType degreeType) {
 	for (final Category category : Category.values()) {
 	    for (final DegreeType otherDegreeType : category.getDegreeTypes()) {
 		if (degreeType == otherDegreeType) {
-		    return category.getCode();
+		    return category;
 		}
 	    }
 	}
-      throw new Error("Unkown degree type: " + degreeType.getName());
-  }
+	return null;
+    }
+
+    public static int translateDegreeType(final DegreeType degreeType) {
+	final Category category = getCategoryFromDegreeType(degreeType);
+	if (category == null) {
+	    throw new Error("Unkown degree type: " + degreeType.getName());
+	}
+	return category.getCode();
+    }
 
     protected String fillLeftString(final String uppered, final char c, final int fillTo) {
         final StringBuilder stringBuilder = new StringBuilder();
@@ -105,7 +132,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         return stringBuilder.toString();
     }
 
-    protected String fillString(final String uppered, final char c, final int fillTo) {
+    protected static String fillString(final String uppered, final char c, final int fillTo) {
         final StringBuilder stringBuilder = new StringBuilder(uppered);
         for (int i = uppered.length(); i < fillTo; i++) {
             stringBuilder.append(c);
@@ -182,12 +209,12 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         return degreeName;
     }
 
-    protected String normalize(String string) {
+    public static String normalize(final String string) {
         final String normalized = StringNormalizer.normalize(string);
         return StringUtils.upperCase(normalized);
     }
 
-    protected String normalizePersonName(final Person person) {
+    public static String normalizePersonName(final Person person) {
         final String normalized = StringNormalizer.normalize(person.getName());
         final String uppered = StringUtils.upperCase(normalized);
         if (uppered.length() > 84) {
@@ -196,6 +223,18 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
             return fillString(uppered, ' ', 84);
         }
         return uppered;
-    }    
+    }
 
+    public void delete() {
+	removeCardGenerationBatch();
+	removePerson();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
+    public Category getCategory() {
+	final String codeString = getLine().substring(11, 13);
+	final int code = Integer.valueOf(codeString);
+	return Category.valueOf(code);
+    }
 }

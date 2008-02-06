@@ -1,21 +1,29 @@
 package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
 import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchCreator;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchDeleter;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry.CardGenerationEntryDeleter;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem.CardGenerationProblemDeleter;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -74,7 +82,75 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	request.setAttribute("cardGenerationBatch", cardGenerationBatch);
 	return mapping.findForward("manageCardGenerationBatch");
     }
-    
+
+    public ActionForward manageCardGenerationBatchProblems(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
+	request.setAttribute("cardGenerationBatch", cardGenerationBatch);
+	return mapping.findForward("manageCardGenerationBatchProblems");
+    }
+
+    public ActionForward showCardGenerationProblem(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CardGenerationProblem cardGenerationProblem = getCardGenerationProblem(request);
+	request.setAttribute("cardGenerationProblem", cardGenerationProblem);
+	final CardGenerationBatch cardGenerationBatch = cardGenerationProblem.getCardGenerationBatch();
+	final Person person = cardGenerationProblem.getPerson();
+	request.setAttribute("cardGenerationProblems", person.getCardGenerationProblems(cardGenerationBatch));
+	return mapping.findForward("showCardGenerationProblem");
+    }
+
+    public ActionForward deleteCardGenerationEntry(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CardGenerationEntry cardGenerationEntry = getCardGenerationEntry(request);
+	final CardGenerationEntryDeleter cardGenerationEntryDeleter = new CardGenerationEntryDeleter(cardGenerationEntry);
+	executeFactoryMethod(cardGenerationEntryDeleter);
+	return showCardGenerationProblem(mapping, actionForm, request, response);
+    }
+
+    public ActionForward deleteCardGenerationProblem(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CardGenerationProblem cardGenerationProblem = getCardGenerationProblem(request);
+	final CardGenerationBatch cardGenerationBatch = cardGenerationProblem.getCardGenerationBatch();
+	final CardGenerationProblemDeleter cardGenerationProblemDeleter = new CardGenerationProblemDeleter(cardGenerationProblem);
+	executeFactoryMethod(cardGenerationProblemDeleter);
+	request.setAttribute("cardGenerationBatch", cardGenerationBatch);
+	return mapping.findForward("manageCardGenerationBatchProblems");
+    }
+
+    public ActionForward downloadCardGenerationBatch(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
+        try {
+            final ServletOutputStream writer = response.getOutputStream();
+            response.setHeader("Content-disposition", "attachment; filename=identificationCardsIST" + cardGenerationBatch.getCreated().toString("yyyyMMddHHmmss") + ".txt");
+            response.setContentType("text/plain");
+            writeFile(cardGenerationBatch, writer);
+            writer.flush();
+            response.flushBuffer();
+        } catch (IOException e1) {
+            throw new FenixActionException();
+        }
+        return null;
+    }
+
+    private void writeFile(final CardGenerationBatch cardGenerationBatch, final ServletOutputStream writer) throws IOException {
+	for (final CardGenerationEntry cardGenerationEntry : cardGenerationBatch.getCardGenerationEntriesSet()) {
+	    writer.print(cardGenerationEntry.getLine());
+	}
+	writer.print(fillLeftString("", ' ', 262));
+        writer.print("\r\n");
+    }
+
+    private String fillLeftString(final String uppered, final char c, final int fillTo) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (int i = uppered.length(); i < fillTo; i++) {
+            stringBuilder.append(c);
+        }
+        stringBuilder.append(uppered);
+        return stringBuilder.toString();
+    }
+
     protected Degree getDegree(final HttpServletRequest request) {
 	final String degreeIdParam = request.getParameter("degreeID");
 	final Integer degreeID = degreeIdParam == null || degreeIdParam.length() == 0 ? null : Integer.valueOf(degreeIdParam);
@@ -154,10 +230,22 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	return executionYearID == null ? null : rootDomainObject.readExecutionYearByOID(executionYearID);
     }
 
-    protected CardGenerationBatch getCardGenerationBatch(HttpServletRequest request) {
+    protected CardGenerationBatch getCardGenerationBatch(final HttpServletRequest request) {
 	final String cardGenerationBatchParam = request.getParameter("cardGenerationBatchID");
 	final Integer cardGenerationBatchID = cardGenerationBatchParam == null || cardGenerationBatchParam.length() == 0 ? null : Integer.valueOf(cardGenerationBatchParam);
 	return cardGenerationBatchID == null ? null : rootDomainObject.readCardGenerationBatchByOID(cardGenerationBatchID);	
+    }
+
+    private CardGenerationEntry getCardGenerationEntry(HttpServletRequest request) {
+	final String cardGenerationEntryParam = request.getParameter("cardGenerationEntryID");
+	final Integer cardGenerationEntryID = cardGenerationEntryParam == null || cardGenerationEntryParam.length() == 0 ? null : Integer.valueOf(cardGenerationEntryParam);
+	return cardGenerationEntryID == null ? null : rootDomainObject.readCardGenerationEntryByOID(cardGenerationEntryID);	
+    }
+
+    protected CardGenerationProblem getCardGenerationProblem(final HttpServletRequest request) {
+	final String cardGenerationProblemParam = request.getParameter("cardGenerationProblemID");
+	final Integer cardGenerationProblemID = cardGenerationProblemParam == null || cardGenerationProblemParam.length() == 0 ? null : Integer.valueOf(cardGenerationProblemParam);
+	return cardGenerationProblemID == null ? null : rootDomainObject.readCardGenerationProblemByOID(cardGenerationProblemID);
     }
 
 }

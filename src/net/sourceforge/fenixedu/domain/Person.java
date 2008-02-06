@@ -37,6 +37,8 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
@@ -1096,7 +1098,7 @@ public class Person extends Person_Base {
 		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
 		&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
 		&& !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().canBeDeleted())
-		&& !hasLibraryCard() && !hasAnyAcademicServiceRequests();
+		&& !hasLibraryCard() && !hasAnyAcademicServiceRequests() && !hasAnyCardGenerationEntries();
     }
 
     private boolean hasParking() {
@@ -1904,7 +1906,6 @@ public class Person extends Person_Base {
 
 	Person externalPerson = createExternalPerson(contributorName, Gender.MALE, data, null, null,
 		null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
-
 	externalPerson.setSocialSecurityNumber(contributorNumber);
 
 	new ExternalContract(externalPerson,
@@ -2626,7 +2627,7 @@ public class Person extends Person_Base {
 	}	
 	return false;
     }
-    
+
     public boolean isPhotoPubliclyAvailable() {
 	Boolean availablePhoto = getAvailablePhoto();
 	if (availablePhoto == null || !availablePhoto) {
@@ -2755,7 +2756,7 @@ public class Person extends Person_Base {
     public AdministrativeOffice getEmployeeAdministrativeOffice() {
 	return hasEmployee() ? getEmployee().getAdministrativeOffice() : null;
     }
-    
+
     public Collection<Forum> getForuns(final ExecutionPeriod executionPeriod) {
 	Collection<Forum> foruns = new HashSet<Forum>();
 	if(getTeacher() != null) {
@@ -2771,5 +2772,15 @@ public class Person extends Person_Base {
 	}
 	
 	return foruns;
+    }
+
+    public Set<CardGenerationProblem> getCardGenerationProblems(final CardGenerationBatch cardGenerationBatch) {
+	final Set<CardGenerationProblem> cardGenerationProblems = new HashSet<CardGenerationProblem>();
+	for (final CardGenerationProblem cardGenerationProblem : getCardGenerationProblemsSet()) {
+	    if (cardGenerationProblem.getCardGenerationBatch() == cardGenerationBatch) {
+		cardGenerationProblems.add(cardGenerationProblem);
+	    }
+	}
+	return cardGenerationProblems;
     }
 }

@@ -56,4 +56,13 @@ public enum Category {
 	return degreeTypes;
     }
 
+    public static Category valueOf(final int code) {
+	for (Category category : values()) {
+	    if (category.code == code) {
+		return category;
+	    }
+	}
+	return null;
+    }
+
 }

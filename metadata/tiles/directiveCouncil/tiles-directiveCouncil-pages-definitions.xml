@@ -27,18 +27,24 @@
         <put name="body" value="/directiveCouncil/assiduousnessStructure/createAssiduousnessPersonFunction.jsp"/>
     </definition>
      <definition name="df.page.card.generation.firstPage" extends="definition.directiveCouncil.masterPage">
-        <put name="body" value="/directiveCouncil/cardGenerationFirstPage.jsp"/>
+        <put name="body" value="/directiveCouncil/cardGeneration/cardGenerationFirstPage.jsp"/>
     </definition>
      <definition name="df.page.card.generation.showCategoryCodes" extends="definition.directiveCouncil.masterPage">
-        <put name="body" value="/directiveCouncil/showCategoryCodes.jsp"/>
+        <put name="body" value="/directiveCouncil/cardGeneration/showCategoryCodes.jsp"/>
     </definition>
      <definition name="df.page.card.generation.showDegreeCodesAndLabels" extends="definition.directiveCouncil.masterPage">
-        <put name="body" value="/directiveCouncil/showDegreeCodesAndLabels.jsp"/>
+        <put name="body" value="/directiveCouncil/cardGeneration/showDegreeCodesAndLabels.jsp"/>
     </definition>
      <definition name="df.page.card.generation.editDegree" extends="definition.directiveCouncil.masterPage">
-        <put name="body" value="/directiveCouncil/editDegree.jsp"/>
+        <put name="body" value="/directiveCouncil/cardGeneration/editDegree.jsp"/>
     </definition>
      <definition name="df.page.card.generation.manageCardGenerationBatch" extends="definition.directiveCouncil.masterPage">
-        <put name="body" value="/directiveCouncil/manageCardGenerationBatch.jsp"/>
+        <put name="body" value="/directiveCouncil/cardGeneration/manageCardGenerationBatch.jsp"/>
+    </definition>
+     <definition name="df.page.card.generation.manageCardGenerationBatchProblems" extends="definition.directiveCouncil.masterPage">
+        <put name="body" value="/directiveCouncil/cardGeneration/manageCardGenerationBatchProblems.jsp"/>
+    </definition>
+     <definition name="df.page.card.generation.showCardGenerationProblem" extends="definition.directiveCouncil.masterPage">
+        <put name="body" value="/directiveCouncil/cardGeneration/showCardGenerationProblem.jsp"/>
     </definition>
 </tiles-definitions>
