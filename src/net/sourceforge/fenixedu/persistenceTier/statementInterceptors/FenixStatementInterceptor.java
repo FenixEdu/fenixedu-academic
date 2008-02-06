@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Modifier;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -79,9 +80,9 @@ public class FenixStatementInterceptor implements StatementInterceptor {
     }
 
     /*
-         * No inserts into DB are generated so it doesn't need to be at top
-         * level only
-         */
+     * No inserts into DB are generated so it doesn't need to be at top level
+     * only
+     */
     public boolean executeTopLevelOnly() {
 	return false;
     }
@@ -120,16 +121,16 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	    }
 
 	    logFile.write("ALTER TABLE UUID_TEMP_TABLE ADD INDEX (COUNTER), ADD INDEX (UUID), ADD INDEX (FROM_UUID); \n\n");
-	    
+
 	    if (!uuidTableCommands.isEmpty()) {
 		for (Class clazz : loggingClasses) {
 		    Set<String> columns = objHelper.getInterestingColumnsForClass(clazz);
-		    
+
 		    for (String column : columns) {
 
 			logFile.write("\nUPDATE " + objHelper.getTableNameForClass(clazz) + " T, UUID_TEMP_TABLE UIT, "
-				+ objHelper.getTableFromKey(clazz, column) + " CT set T." + column + "=CT.ID_INTERNAL WHERE T." + column
-				+ "=UIT.COUNTER AND T.CONTENT_ID = UIT.FROM_UUID AND CT.CONTENT_ID=UIT.UUID;");
+				+ objHelper.getTableFromKey(clazz, column) + " CT set T." + column + "=CT.ID_INTERNAL WHERE T."
+				+ column + "=UIT.COUNTER AND T.CONTENT_ID = UIT.FROM_UUID AND CT.CONTENT_ID=UIT.UUID;");
 		    }
 		}
 	    }
@@ -284,7 +285,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 		enconding = "iso-8859-1";
 	    }
 	    try {
-		logFile = new PrintWriter(new File(filename),enconding);
+		logFile = new PrintWriter(new File(filename), enconding);
 		logFile.write("SET AUTOCOMMIT = 0;\n\nSTART TRANSACTION;\n\n");
 	    } catch (FileNotFoundException e) {
 		e.printStackTrace();
@@ -320,13 +321,13 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	private DescriptorRepository globalRepository = MetadataManager.getOjbMetadataManager().getGlobalRepository();
 
 	public String getTableFromKey(Class clazz, String key) {
-	    String keyName =extractNameFromKey(key); 
+	    String keyName = extractNameFromKey(key);
 	    ObjectReferenceDescriptor descriptor = getOjbDescriptorFor(clazz).getObjectReferenceDescriptorByName(keyName);
 	    if (descriptor == null) {
 		Vector<Class> classes = getMappedExtendedClasses(clazz);
 		for (Class concreteClass : classes) {
 		    descriptor = getOjbDescriptorFor(concreteClass).getObjectReferenceDescriptorByName(keyName);
-		    if(descriptor != null) {
+		    if (descriptor != null) {
 			break;
 		    }
 		}
@@ -423,7 +424,11 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	}
 
 	public Vector<Class> getMappedExtendedClasses(Class clazz) {
-	    return getOjbDescriptorFor(clazz).getExtentClasses();
+	    Vector<Class> classes = getOjbDescriptorFor(clazz).getExtentClasses();
+	    if (!Modifier.isAbstract(clazz.getModifiers())) {
+		classes.add(clazz);
+	    }
+	    return classes;
 	}
 
 	public ClassDescriptor getOjbDescriptor(String className) {
