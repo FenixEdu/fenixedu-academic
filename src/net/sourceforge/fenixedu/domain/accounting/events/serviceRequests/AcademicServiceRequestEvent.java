@@ -19,6 +19,9 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
     protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person, final AcademicServiceRequest academicServiceRequest) {
 	super.init(administrativeOffice, eventType, person);
 	checkParameters(academicServiceRequest);
+	if (academicServiceRequest.getRequestDate() != null) {
+	    super.setWhenOccured(academicServiceRequest.getRequestDate());
+	}
 	super.setAcademicServiceRequest(academicServiceRequest);
     }
 
