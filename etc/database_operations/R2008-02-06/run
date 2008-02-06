@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table execution path" alterTableExecutionPath.sql
