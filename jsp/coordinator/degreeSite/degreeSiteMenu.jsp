@@ -2,6 +2,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <html:xhtml/>
 
@@ -47,8 +48,9 @@
 		</li>
 		<br/>
 		<li>
-			<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;degreeID=" + infoDegreeID.toString() %>" target="_blank">
-			    <bean:message key="link.coordinator.degreeSite.viewSite" /></html:link>
+			<app:contentLink name="infoExecutionDegree" property="executionDegree.degreeCurricularPlan.degree.site">
+				<bean:message key="link.coordinator.degreeSite.viewSite" />
+			</app:contentLink>
 		</li>
 		<li>
 			<html:link page="<%= "/degreeSiteManagement.do?method=viewHistoric&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
