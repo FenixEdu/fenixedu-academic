@@ -6,6 +6,8 @@ import java.math.RoundingMode;
 
 public class Money implements Comparable<Money>, Serializable {
 
+    private static final BigDecimal CONVERSION_RATE_ESCUDOS_TO_EURO = BigDecimal.valueOf(200.482);
+
     private static final int EURO_SCALE = 2;
 
     public static final Money ZERO = new Money(0);
@@ -138,5 +140,9 @@ public class Money implements Comparable<Money>, Serializable {
     public Money abs() {
 	return new Money(this.amount.abs());
     }
-    
+
+    public Money escudosToEuros() {
+	return new Money(this.amount.divide(CONVERSION_RATE_ESCUDOS_TO_EURO, 2, RoundingMode.HALF_UP));
+    }
+
 }
