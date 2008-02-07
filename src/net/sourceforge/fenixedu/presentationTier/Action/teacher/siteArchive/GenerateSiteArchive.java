@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.ResourceRule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.Rule;
