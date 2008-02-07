@@ -2597,6 +2597,19 @@ public class Person extends Person_Base {
 	return units;
     }
 
+    public List<ResearchUnit> getWorkingResearchUnitsAndParents() {
+		Set<ResearchUnit> baseUnits = new HashSet<ResearchUnit>();
+		for(ResearchUnit unit : getWorkingResearchUnits()) {
+		    baseUnits.add(unit);
+		    for(Unit parentUnit : unit.getAllActiveParentUnits(new YearMonthDay())) {
+			if(parentUnit.isResearchUnit()) {
+			    baseUnits.add((ResearchUnit)parentUnit);
+			}
+		    }
+		}
+		return new ArrayList<ResearchUnit>(baseUnits);
+    }
+    
     public String getWorkingResearchUnitNames() {
 
 	String names = "";
