@@ -8,18 +8,18 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class CourseLoadRequest extends CourseLoadRequest_Base {
+public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 
-    protected CourseLoadRequest() {
+    private ProgramCertificateRequest() {
 	super();
 	setNumberOfPages(0);
     }
 
-    public CourseLoadRequest(final Registration registration, final ExecutionYear executionYear,
-	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
+    public ProgramCertificateRequest(final Registration registration, final ExecutionYear executionYear,
+	    final DocumentPurposeType purposeType, final String otherPurposeTypeDescription,
 	    final Collection<Enrolment> enrolments, final Boolean urgentRequest) {
 	this();
-	super.init(registration, executionYear, Boolean.FALSE, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	super.init(registration, executionYear, Boolean.FALSE, purposeType, otherPurposeTypeDescription, urgentRequest);
 	checkParameters(enrolments);
 	super.getEnrolments().addAll(enrolments);
     }
@@ -27,11 +27,11 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
     private void checkParameters(final Collection<Enrolment> enrolments) {
 	for (final Enrolment enrolment : enrolments) {
 	    if (!enrolment.isApproved()) {
-		throw new DomainException("error.CourseLoadRequest.cannot.add.not.approved.enrolments");
+		throw new DomainException("error.ProgramCertificateRequest.cannot.add.not.approved.enrolments");
 	    }
 	}
     }
-    
+
     @Override
     public Integer getNumberOfUnits() {
 	return Integer.valueOf(0);
@@ -39,7 +39,7 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
     @Override
     public DocumentRequestType getDocumentRequestType() {
-	return DocumentRequestType.COURSE_LOAD;
+	return DocumentRequestType.PROGRAM_CERTIFICATE;
     }
 
     @Override
@@ -49,12 +49,12 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
     @Override
     public EventType getEventType() {
-	return EventType.COURSE_LOAD_REQUEST;
+	return EventType.PROGRAM_CERTIFICATE_REQUEST;
     }
-    
+
     @Override
     public void delete() {
 	getEnrolments().clear();
-        super.delete();
+	super.delete();
     }
 }

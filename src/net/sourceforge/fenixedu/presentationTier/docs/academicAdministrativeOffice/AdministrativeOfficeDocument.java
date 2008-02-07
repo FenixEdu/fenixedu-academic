@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -68,6 +69,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return new ExamDateCertificate(documentRequest);
 	    case COURSE_LOAD:
 		return new CourseLoadRequestDocument((CourseLoadRequest) documentRequest);
+	    case PROGRAM_CERTIFICATE:
+		return new ProgramCertificateRequestDocument((ProgramCertificateRequest) documentRequest);
 	    default:
 		return new AdministrativeOfficeDocument(documentRequest);
 	    }
@@ -162,8 +165,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     final protected void setIntroFields(final Employee employee) {
-//	final AdministrativeOfficeUnit administrativeOfficeUnit = (AdministrativeOfficeUnit) employee.getCurrentCampus().getAdministrativeOfficeUnit(employee.getAdministrativeOffice());
-//	addParameter("administrativeOfficeCoordinator", administrativeOfficeUnit.getActiveUnitCoordinator());
 	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 

@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
@@ -25,7 +30,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
-	super.fillReport();
+	setPersonFields();
 	addDataSourceInformation();
 	addParametersInformation();
     }
@@ -34,8 +39,13 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	addParameter("studentNumber", getDocumentRequest().getRegistration().getStudent().getNumber());
 	addParameter("degreeDescription", getDegreeDescription());
 	
-	addParameter("administrativeOfficeName", AccessControl.getPerson().getEmployee().getCurrentWorkingPlace().getName());
+	final Employee employee = AccessControl.getPerson().getEmployee();
+	
+	addParameter("administrativeOfficeCoordinatorName", employee.getCurrentWorkingPlace().getActiveUnitCoordinator().getName());
+	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
+	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
     }
 
     private void addDataSourceInformation() {

@@ -40,7 +40,10 @@ public enum EntryType {
     
     PHOTOCOPY_REQUEST_FEE,
     
-    COURSE_LOAD_REQUEST_FEE;
+    COURSE_LOAD_REQUEST_FEE,
+    
+    PROGRAM_CERTIFICATE_REQUEST_FEE;
+    
 
     public String getName() {
 	return name();

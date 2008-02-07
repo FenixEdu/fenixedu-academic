@@ -29,13 +29,21 @@ public enum DocumentRequestType {
 
     COURSE_LOAD(true, false/* , AdministrativeOfficeType.DEGREE*/),
 
-    EXAM_DATE_CERTIFICATE(true, false /* ,AdministrativeOfficeType.DEGREE */);
+    EXAM_DATE_CERTIFICATE(true, false/* ,AdministrativeOfficeType.DEGREE */),
+    
+    PROGRAM_CERTIFICATE(true, false/* , AdministrativeOfficeType.DEGREE*/);
 
     private boolean hasAdditionalInformation;
 
     private Collection<AdministrativeOfficeType> administrativeOfficeTypes;
 
     private boolean allowedToQuickDeliver;
+    
+    static private List<DocumentRequestType> CERTIFICATES = Arrays.asList(SCHOOL_REGISTRATION_CERTIFICATE, ENROLMENT_CERTIFICATE,
+	    APPROVEMENT_CERTIFICATE, DEGREE_FINALIZATION_CERTIFICATE, EXAM_DATE_CERTIFICATE, COURSE_LOAD, PROGRAM_CERTIFICATE);
+
+    static private List<DocumentRequestType> DECLARATIONS = Arrays.asList(SCHOOL_REGISTRATION_DECLARATION, ENROLMENT_DECLARATION,
+	    IRS_DECLARATION);
 
     private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver,
 	    AdministrativeOfficeType... administrativeOfficeTypes) {
@@ -92,9 +100,4 @@ public enum DocumentRequestType {
 	return isDeclaration() || this == DEGREE_FINALIZATION_CERTIFICATE;
     }
 
-    static private List<DocumentRequestType> CERTIFICATES = Arrays.asList(SCHOOL_REGISTRATION_CERTIFICATE, ENROLMENT_CERTIFICATE,
-	    APPROVEMENT_CERTIFICATE, DEGREE_FINALIZATION_CERTIFICATE, EXAM_DATE_CERTIFICATE, COURSE_LOAD);
-
-    static private List<DocumentRequestType> DECLARATIONS = Arrays.asList(SCHOOL_REGISTRATION_DECLARATION, ENROLMENT_DECLARATION,
-	    IRS_DECLARATION);
 }

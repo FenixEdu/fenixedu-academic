@@ -1066,7 +1066,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Specialization specialization;
 		YearMonthDay startDateYearMonthDay;
 		DateTime whenDateTime;
-		}
+	}
 
 	class net.sourceforge.fenixedu.domain.StudentGroup extends net.sourceforge.fenixedu.domain.DomainObject {
 		Integer groupNumber;
@@ -1280,9 +1280,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhotocopyRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 				
-				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CourseLoadRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-				}
-
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 			YearMonthDay creationDate;
 		}
@@ -1292,7 +1289,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		
 		class net.sourceforge.fenixedu.domain.accounting.events.phd.PhDRegistrationEvent extends net.sourceforge.fenixedu.domain.accounting.Event { 
 		}
-			
+
 	class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime whenCreated;
 	}
@@ -3370,6 +3367,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 					}
 					
+					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
+					}
 	
 				class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest {
 					DocumentPurposeType documentPurposeType;
@@ -4612,6 +4611,15 @@ relation CourseLoadRequestEnrolment {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest playsRole courseLoadRequests {
+		multiplicity *;
+	}
+}
+
+relation ProgramCertificateRequestEnrolment {
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest playsRole programCertificateRequests {
 		multiplicity *;
 	}
 }

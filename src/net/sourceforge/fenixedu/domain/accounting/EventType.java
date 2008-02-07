@@ -46,7 +46,9 @@ public enum EventType {
     
     PHOTOCOPY_REQUEST,
     
-    COURSE_LOAD_REQUEST;
+    COURSE_LOAD_REQUEST,
+    
+    PROGRAM_CERTIFICATE_REQUEST;
 
     public String getName() {
 	return name();

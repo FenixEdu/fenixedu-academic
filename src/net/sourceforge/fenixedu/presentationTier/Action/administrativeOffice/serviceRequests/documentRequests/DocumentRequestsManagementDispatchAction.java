@@ -50,7 +50,8 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	final DocumentRequest documentRequest = getDocumentRequest(request);
 	final AdministrativeOfficeDocument administrativeOfficeDocument = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		.create(documentRequest);
-
+	administrativeOfficeDocument.addParameter("path", getServlet().getServletContext().getRealPath("/"));
+	
 	byte[] data = ReportsUtils.exportToPdf(administrativeOfficeDocument.getReportTemplateKey(), administrativeOfficeDocument
 		.getParameters(), administrativeOfficeDocument.getResourceBundle(), administrativeOfficeDocument.getDataSource());
 

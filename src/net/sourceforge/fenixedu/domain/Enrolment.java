@@ -341,6 +341,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	if (hasAnyEnrolmentWrappers()) {
 	    throw new DomainException("error.Enrolment.cannot.delete");
 	}
+	if (hasAnyCourseLoadRequests()) {
+	    throw new DomainException("error.Enrolment.cannot.delete");
+	}
+	if (hasAnyProgramCertificateRequests()) {
+	    throw new DomainException("error.Enrolment.cannot.delete");
+	}
     }
 
     final public Collection<Enrolment> getBrothers() {

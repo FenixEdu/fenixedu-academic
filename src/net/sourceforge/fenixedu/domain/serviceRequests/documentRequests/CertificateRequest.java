@@ -40,27 +40,37 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     static final public CertificateRequest create(Registration registration, DocumentRequestType chosenDocumentRequestType,
 	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, Boolean urgentRequest, Boolean average,
 	    Boolean detailed, ExecutionYear executionYear, MobilityProgram mobilityProgram, CycleType requestedCycle,
-	    Boolean freeProcessed, Collection<Enrolment> enrolments, ExecutionPeriod executionPeriod, Boolean internship, Boolean studyPlan) {
+	    Boolean freeProcessed, Collection<Enrolment> enrolments, ExecutionPeriod executionPeriod, Boolean internship,
+	    Boolean studyPlan) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
 	    return new SchoolRegistrationCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
 		    executionYear);
+
 	case ENROLMENT_CERTIFICATE:
 	    return new EnrolmentCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
 		    detailed, executionYear);
+
 	case APPROVEMENT_CERTIFICATE:
 	    return new ApprovementCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
 		    mobilityProgram);
+
 	case DEGREE_FINALIZATION_CERTIFICATE:
 	    return new DegreeFinalizationCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
 		    average, detailed, mobilityProgram, requestedCycle, freeProcessed, internship, studyPlan);
+
 	case EXAM_DATE_CERTIFICATE:
 	    return new ExamDateCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
 		    executionYear, enrolments, executionPeriod);
+
 	case COURSE_LOAD:
 	    return new CourseLoadRequest(registration, ExecutionYear.readCurrentExecutionYear(), chosenDocumentPurposeType,
 		    otherPurpose, enrolments, urgentRequest);
+
+	case PROGRAM_CERTIFICATE:
+	    return new ProgramCertificateRequest(registration, ExecutionYear.readCurrentExecutionYear(),
+		    chosenDocumentPurposeType, otherPurpose, enrolments, urgentRequest);
 	}
 
 	return null;
@@ -91,24 +101,28 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+
 	super.internalChangeState(academicServiceRequestBean);
 
 	if (academicServiceRequestBean.isToConclude()) {
+	    tryConcludeServiceRequest(academicServiceRequestBean);
+	}
+    }
 
-	    if (!hasNumberOfPages()) {
-		throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
-	    }
+    protected void tryConcludeServiceRequest(final AcademicServiceRequestBean academicServiceRequestBean) {
+	if (!hasNumberOfPages()) {
+	    throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
+	}
 
-	    if (!isFree()) {
-		new CertificateRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
-	    }
+	if (!isFree()) {
+	    new CertificateRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
 	}
     }
 
     /**
-     * Important: Notice that this method's return value may not be the same
-     * before and after conclusion of the academic service request.
-     */
+         * Important: Notice that this method's return value may not be the same
+         * before and after conclusion of the academic service request.
+         */
     @Override
     final public boolean isFree() {
 	if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE
@@ -137,9 +151,9 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     public boolean isToPrint() {
 	return true;
     }
-    
+
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-        return false;
+	return false;
     }
 }

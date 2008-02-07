@@ -45,7 +45,8 @@
 	<parameter name="degreeDescription" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="studentNumber" isForPrompting="false" class="java.lang.Integer"/>
-	<parameter name="administrativeOfficeCoordinator" isForPrompting="false" class="net.sourceforge.fenixedu.domain.Person"/>
+	<parameter name="administrativeOfficeCoordinatorName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
 
 	<field name="curricularCourseName" class="java.lang.String"/>
 	<field name="year" class="java.lang.String"/>
@@ -96,7 +97,7 @@
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="12" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do Instituto Superior Técnico da Universidade Técnica de Lisboa, em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que compulsando o processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\"> " + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horária semanal (em horas):"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do " + $P{institutionName} + " da " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que compulsando o processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\"> " + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horária semanal (em horas):"]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>
@@ -330,7 +331,7 @@
 					<reportElement
 						x="176"
 						y="172"
-						width="211"
+						width="239"
 						height="0"
 						key="line-3"/>
 					<graphicElement stretchType="NoStretch"/>
@@ -408,7 +409,7 @@
 					<reportElement
 						x="64"
 						y="66"
-						width="323"
+						width="469"
 						height="20"
 						key="textField-28"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -428,13 +429,13 @@
 					<textElement>
 						<font pdfFontName="Times-Roman" size="12"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator}.getName()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
 						y="48"
-						width="323"
+						width="469"
 						height="17"
 						key="textField-33"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>

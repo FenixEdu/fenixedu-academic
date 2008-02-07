@@ -127,6 +127,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public List<BibliographicReferences.BibliographicReference> getSecondaryBibliographicReferences(final ExecutionPeriod period) {
 	return this.getBibliographicReferences(period).getSecondaryBibliographicReferences();
     }
+    
+    public List<BibliographicReferences.BibliographicReference> getAllBibliographicReferences(final ExecutionPeriod executionPeriod) {
+	final List<BibliographicReferences.BibliographicReference> result = new ArrayList<BibliographicReferences.BibliographicReference>();
+	result.addAll(getMainBibliographicReferences(executionPeriod));
+	result.addAll(getSecondaryBibliographicReferences(executionPeriod));
+	return result;
+    }
 
     public void createBibliographicReference(String year, String title, String authors,
 	    String reference, String url, BibliographicReferenceType type) {

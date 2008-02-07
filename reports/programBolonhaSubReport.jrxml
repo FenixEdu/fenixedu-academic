@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="programBolonhaSubReport"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="595"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="56"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
+
+	<field name="curricularCourse" class="java.lang.String"/>
+	<field name="degree" class="java.lang.String"/>
+	<field name="degreeCurricularPlan" class="java.lang.String"/>
+	<field name="weigth" class="java.lang.String"/>
+	<field name="objectives" class="java.lang.String"/>
+	<field name="program" class="java.lang.String"/>
+	<field name="evaluationMethod" class="java.lang.String"/>
+	<field name="prerequisites" class="java.lang.String"/>
+	<field name="contexts" class="java.util.ArrayList"/>
+	<field name="bibliographics" class="java.util.ArrayList"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="721"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="12"
+						width="556"
+						height="20"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Disciplina: </style>" + $F{curricularCourse}]]></textFieldExpression>
+				</textField>
+				<break>
+					<reportElement
+						x="0"
+						y="4"
+						width="595"
+						height="0"
+						key="element-1"/>
+				</break>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="42"
+						width="482"
+						height="20"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Curso: </style>" + $F{degree}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="62"
+						width="482"
+						height="20"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Plano Curricular: </style>" + $F{degreeCurricularPlan}]]></textFieldExpression>
+				</textField>
+				<elementGroup><!--  Start: 1 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="20"
+						y="111"
+						width="556"
+						height="20"
+						backcolor="#F0F0F0"
+						key="textField-4"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Contextos </style>"]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 1 !-->
+				<elementGroup><!--  Start: 2 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="20"
+						y="180"
+						width="556"
+						height="20"
+						backcolor="#F0F0F0"
+						key="textField-5"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Peso </style>"]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 2 !-->
+				<elementGroup><!--  Start: 3 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="20"
+						y="321"
+						width="556"
+						height="20"
+						backcolor="#F0F0F0"
+						key="textField-6"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[!($F{objectives} == null || $F{objectives} .length() == 0)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Objectivos </style>"]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 3 !-->
+				<elementGroup><!--  Start: 4 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="20"
+						y="390"
+						width="556"
+						height="20"
+						backcolor="#F0F0F0"
+						key="textField-7"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[!($F{program} == null || $F{program}.length() == 0)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Programa </style>"]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 4 !-->
+				<elementGroup><!--  Start: 5 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="20"
+						y="459"
+						width="556"
+						height="20"
+						backcolor="#F0F0F0"
+						key="textField-8"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[!($F{evaluationMethod} == null || $F{evaluationMethod}.length() == 0)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Metodologia de Avaliação </style>"]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 5 !-->
+				<elementGroup><!--  Start: 6 !-->
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="204"
+						width="556"
+						height="38"
+						key="textField-9"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified">
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{weigth} + " (para cálculo da média)"]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 6 !-->
+				<elementGroup><!--  Start: 7 !-->
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="345"
+						width="556"
+						height="38"
+						key="textField-10"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[!($F{objectives} == null || $F{objectives} .length() == 0)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified">
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{objectives}]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 7 !-->
+				<elementGroup><!--  Start: 8 !-->
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="414"
+						width="556"
+						height="38"
+						key="textField-11"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[!($F{program} == null || $F{program}.length() == 0)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified">
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{program}]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 8 !-->
+				<elementGroup><!--  Start: 9 !-->
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="483"
+						width="556"
+						height="38"
+						key="textField-12"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[!($F{evaluationMethod} == null || $F{evaluationMethod}.length() == 0)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified">
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{evaluationMethod}]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 9 !-->
+				<elementGroup><!--  Start: 10 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="20"
+						y="249"
+						width="556"
+						height="20"
+						backcolor="#F0F0F0"
+						key="textField-13"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[!($F{prerequisites} == null || $F{prerequisites} .length() == 0)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Pré-requisitos </style>"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="273"
+						width="556"
+						height="38"
+						key="textField-14"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[!($F{prerequisites} == null || $F{prerequisites} .length() == 0)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified">
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{prerequisites}]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 10 !-->
+				<elementGroup><!--  Start: 11 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="20"
+						y="529"
+						width="556"
+						height="20"
+						backcolor="#F0F0F0"
+						key="textField-15"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[!$F{bibliographics}.isEmpty()]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Bibliografia </style>"]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 11 !-->
+				<elementGroup><!--  Start: 12 !-->
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="20"
+						y="135"
+						width="556"
+						height="39"
+						key="subreport-1"/>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$F{contexts}))]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/programContextsSubReport.jasper"]]></subreportExpression>
+				</subreport>
+				</elementGroup><!-- End 12 !-->
+				<elementGroup><!--  Start: 13 !-->
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="20"
+						y="553"
+						width="556"
+						height="106"
+						key="subreport-2"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[!$F{bibliographics}.isEmpty()]]></printWhenExpression>
+						</reportElement>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$F{bibliographics}))]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/programBibliographicsSubReport.jasper"]]></subreportExpression>
+				</subreport>
+				</elementGroup><!-- End 13 !-->
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
