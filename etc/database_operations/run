@@ -28,8 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "More identification card stuff" identificationCardStuff.sql
-execute "addPastAmountOnEventTable.sql" addPastAmountOnEventTable.sql
-execute "changeServiceRequestYearOnAcademicServiceRequestTable.sql" changeServiceRequestYearOnAcademicServiceRequestTable.sql
-
 execute "Create table ProgramCertificateRequest" createProgramCertificateRequestTable.sql

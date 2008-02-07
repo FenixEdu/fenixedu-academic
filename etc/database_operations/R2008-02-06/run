@@ -29,3 +29,8 @@ function executeWithTempFile() {
 }
 
 execute "Alter table execution path" alterTableExecutionPath.sql
+
+execute "More identification card stuff" identificationCardStuff.sql
+
+execute "addPastAmountOnEventTable.sql" addPastAmountOnEventTable.sql
+execute "changeServiceRequestYearOnAcademicServiceRequestTable.sql" changeServiceRequestYearOnAcademicServiceRequestTable.sql
