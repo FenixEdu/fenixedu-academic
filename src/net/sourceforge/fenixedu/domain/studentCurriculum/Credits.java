@@ -97,7 +97,7 @@ public class Credits extends Credits_Base {
 	if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionPeriod).doubleValue()) {
 	    return false;
 	}
-	if (courseGroup.isRoot()) {
+	if (courseGroup.isCycleCourseGroup() || courseGroup.isRoot()) {
 	    return true;
 	}
 	for (final Context context : courseGroup.getParentContexts()) {
