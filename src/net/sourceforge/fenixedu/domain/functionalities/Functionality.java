@@ -542,18 +542,16 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 	if (hasExecutionPathValue()) {
 	    getExecutionPathValue().delete();
 	}
-	for (; !getParameters().isEmpty(); getParameters().get(0).delete())
-	    ;
-
+	for (final FunctionalityParameter functionalityParameter : getParametersSet()) {
+	    functionalityParameter.delete();
+	}
 	super.disconnect();
     }
 
     @Override
-    protected void deleteSelf() {
-	super.deleteSelf();
-
-	// remove from cached table
+    public void delete() {
 	Functionality.UUID_TABLE.remove(getContentId());
+	super.delete();
     }
 
     //

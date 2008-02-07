@@ -70,15 +70,6 @@ public class Announcement extends Announcement_Base {
         super.setLastModification(new DateTime());
     }
 
-    public void delete() {
-	removeCreator();
-        for (final Node node : getParentsSet()) {
-            node.delete();
-        }
-        removeRootDomainObject();
-        deleteDomainObject();
-    }
-
     public boolean getOnline() {
         return ((this.getPublicationEnd() == null || this.getPublicationEnd().isAfterNow()) && getVisible());
     }

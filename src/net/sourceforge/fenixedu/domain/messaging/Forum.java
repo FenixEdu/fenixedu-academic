@@ -158,4 +158,13 @@ public abstract class Forum extends Forum_Base {
     public abstract Group getWritersGroup();
 
     public abstract Group getAdminGroup();
+
+    @Override
+    protected void disconnect() {
+	for (final ForumSubscription forumSubscription : getForumSubscriptionsSet()) {
+	    forumSubscription.delete();
+	}
+	super.disconnect();
+    }
+
 }

@@ -18,10 +18,11 @@ public abstract class PartyAnnouncementBoard extends PartyAnnouncementBoard_Base
         buffer.append(this.getName()).append(" - ").append(this.getParty().getName());
         return buffer.toString();
     }
-    
+
     @Override
-    public void delete() {
-        removeParty();
-        super.delete();
+    protected void disconnect() {
+	removeParty();
+	super.disconnect();
     }
+
 }

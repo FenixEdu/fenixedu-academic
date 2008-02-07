@@ -146,8 +146,7 @@ public abstract class Container extends Container_Base {
     @Override
     protected void disconnect() {
 	super.disconnect();
-
-	for (Node node : new ArrayList<Node>(getChildren())) {
+	for (Node node : getChildren()) {
 	    removeNode(node);
 	}
     }
@@ -246,6 +245,9 @@ public abstract class Container extends Container_Base {
 
     protected void removeNode(Node node) {
 	Content content = node.getChild();
+	if (getInitialContainer() == content) {
+	    setInitialContent(null);
+	}
 	node.delete();
 	if(!content.hasAnyParents()) {
 	    content.delete();

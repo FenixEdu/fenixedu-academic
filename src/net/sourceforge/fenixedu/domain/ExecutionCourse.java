@@ -374,7 +374,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	if (hasAnyAssociatedInquiriesCourses() || hasAnyAssociatedInquiriesRegistries() || hasAnyAssociatedSummaries()
 		|| !getGroupings().isEmpty() || hasAnyAssociatedBibliographicReferences() || hasAnyAssociatedEvaluations()
 		|| hasEvaluationMethod() || !getAssociatedShifts().isEmpty() || hasCourseReport() || hasAnyAttends()
-		|| (hasSite() && !getSite().canBeDeleted()) || (hasBoard() && !getBoard().canBeDeleted())) {
+		|| (hasSite() && !getSite().isDeletable()) || (hasBoard() && !getBoard().isDeletable())) {
 	    throw new DomainException("error.execution.course.cant.delete");
 	}
 

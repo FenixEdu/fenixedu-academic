@@ -178,10 +178,6 @@ public class Module extends Module_Base implements IFunctionality {
         return false;
     }
 
-    //
-    //
-    //
-
     public static Module getRootModule() {
         return RootDomainObject.getInstance().getRootModule();
     }
@@ -202,16 +198,12 @@ public class Module extends Module_Base implements IFunctionality {
         
         return null;
     }
-    
-        @Override
-    protected void checkDeletion() {
-        if (this == Module.getRootModule()) {
-            throw new DomainException("functionalities.module.root.notDeletable");
-        }
-        
-        super.checkDeletion();
+
+    @Override
+    public boolean isDeletable() {
+	return super.isDeletable() && this != Module.getRootModule();
     }
-    
+
     @Override
     public String getPath() {
         return getPublicPrefix();

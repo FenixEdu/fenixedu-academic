@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.contents.Element;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Node;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -43,44 +42,6 @@ public abstract class Site extends Site_Base {
     }
 
     public abstract IGroup getOwner();
-
-    public boolean canBeDeleted() {
-	if (!hasAnyAssociatedSections()) {
-	    return true;
-	} else {
-	    for (Section section : getTopLevelSections()) {
-		if (!section.isDeletable()) {
-		    return false;
-		}
-	    }
-	}
-
-	return true;
-    }
-
-    public void delete() {
-	if (canBeDeleted()) {
-	    deleteRelations();
-
-	    super.delete();
-	} else {
-	    throw new DomainException("site.cannot.be.deleted");
-	}
-    }
-
-    protected void deleteRelations() {
-	for (Section section : getTopLevelSections()) {
-	    section.delete();
-	}
-
-	if (hasAvailabilityPolicy()) {
-	    getAvailabilityPolicy().delete();
-	}
-	removeCreator();
-	removeInitialContent();
-	removePortal();
-	removeRootDomainObject();
-    }
 
     public List<Section> getTopLevelSections() {
 	return getAssociatedSections(null);
@@ -381,11 +342,10 @@ public abstract class Site extends Site_Base {
 
     @Override
     protected void disconnect() {
-	disconnectContent();
-
 	for (Node node : getChildrenSet()) {
 	    removeNode(node);
 	}
+	disconnectContent();
     }
 
 }

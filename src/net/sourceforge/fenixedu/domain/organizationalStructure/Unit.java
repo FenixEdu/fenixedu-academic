@@ -197,7 +197,7 @@ public class Unit extends Unit_Base {
 		&& !hasAnyExtraWorkingUnitAuthorizations() && !hasAnyExternalCurricularCourses()
 		&& !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate() && !hasAnyResearchInterests()
 		&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
-		&& (!hasSite() || getSite().canBeDeleted()) && !hasAnyOwnedReceipts() && !hasAnyCreatedReceipts()
+		&& (!hasSite() || getSite().isDeletable()) && !hasAnyOwnedReceipts() && !hasAnyCreatedReceipts()
 		&& !hasAnyProtocols() && !hasAnyPartnerProtocols() && !hasAnyPrecedentDegreeInformations()
 		&& !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators() && !hasAnyExtraWorkRequests()
 		&& !hasAnyExternalRegistrationDatas() && !hasAnyUnitExtraWorkAmounts() && !hasAnyCooperation() && !hasAnyFiles()

@@ -158,42 +158,6 @@ public class Section extends Section_Base {
 	}
     }
 
-    @Override
-    public boolean isDeletable() {
-	for (Section subSection : this.getAssociatedSections()) {
-	    if (!subSection.isDeletable()) {
-		return false;
-	    }
-	}
-
-	for (Item item : getAssociatedItems()) {
-	    if (!item.isDeletable()) {
-		return false;
-	    }
-	}
-
-	return true;
-    }
-
-    @Override
-    protected void checkDeletion() {
-	if (!isDeletable()) {
-	    throw new DomainException("site.section.delete.notAllowed");
-	}
-    }
-
-    @Override
-    protected void disconnect() {
-	for (Item item : getAssociatedItems()) {
-	    item.delete();
-	}
-	for (Section section : getAssociatedSections()) {
-	    section.delete();
-	}
-
-	super.disconnect();
-    }
-
     public SortedSet<Section> getOrderedSubSections() {
 	final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
 	sections.addAll(getAssociatedSections());

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.contents;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -134,7 +135,6 @@ public abstract class Content extends Content_Base {
     public void delete() {
 	checkDeletion();
 	disconnect();
-	deleteSelf();
 	deleteDomainObject();
     }
 
@@ -156,7 +156,7 @@ public abstract class Content extends Content_Base {
          */
     protected void checkDeletion() {
 	if (!isDeletable()) {
-	    throw new DomainException("accessibleItem.delete.notAvailable");
+	    throw new DomainException("content.delete.notAvailable");
 	}
     }
 
@@ -178,14 +178,17 @@ public abstract class Content extends Content_Base {
 	    getAvailabilityPolicy().delete();
 	}
 
-	for (Node node : new ArrayList<Node>(getParents())) {
+	for (Node node : getParents()) {
 	    node.delete();
 	}
 	
 	for(Container container : getInitialContainer()) {
 	    container.setInitialContent(null);
 	}
-	
+
+	removeCreator();
+	removePortal();
+
 	removeRootDomainObject();
     }
 

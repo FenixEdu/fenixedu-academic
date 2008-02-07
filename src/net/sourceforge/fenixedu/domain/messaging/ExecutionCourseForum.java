@@ -29,11 +29,6 @@ public class ExecutionCourseForum extends ExecutionCourseForum_Base {
     }
 
     @Override
-    public void delete() {
-        super.delete();
-    }
-
-    @Override
     public Group getReadersGroup() {
         return getExecutionCourseMembersGroup();
     }

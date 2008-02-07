@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -130,10 +131,25 @@ public class UnitSite extends UnitSite_Base {
     }
 
     @Override
-    protected void deleteRelations() {
-        super.deleteRelations();
-        
-        removeUnit();
+    public boolean isDeletable() {
+	return super.isDeletable() && !hasAnyBanners() && !hasLogo();
+    }
+
+    @Override
+    protected void disconnect() {
+	deleteLinks(getTopLinksSet());
+	for (final Person person : getManagersSet()) {
+	    removeManagers(person);
+	}
+	removeUnit();
+	deleteLinks(getFooterLinksSet());
+        super.disconnect();
+    }
+
+    protected void deleteLinks(final Set<UnitSiteLink> unitSiteLinks) {
+	for (final UnitSiteLink unitSiteLink : unitSiteLinks) {
+	    unitSiteLink.delete();
+	}
     }
 
     public void setTopLinksOrder(List<UnitSiteLink> links) {
@@ -219,24 +235,7 @@ public class UnitSite extends UnitSite_Base {
         
         return null;
     }
-    
-    @Override
-    public boolean canBeDeleted() {
-    	if (! super.canBeDeleted()) {
-    		return false;
-    	}
-    	
-    	if (hasAnyBanners()) {
-    		return false;
-    	}
-    	
-    	if (hasLogo()) {
-    		return false;
-    	}
-    	
-    	return true;
-    }
-    
+
     public Section getSideSection() {
 		for (Section section : getAssociatedSections()) {
 			if (isSideSection(section)) {

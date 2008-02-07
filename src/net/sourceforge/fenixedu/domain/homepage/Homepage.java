@@ -96,9 +96,9 @@ public class Homepage extends Homepage_Base {
     }
 
     @Override
-    protected void deleteRelations() {
-        super.deleteRelations();
-        removePerson();
+    protected void disconnect() {
+	removePerson();
+        super.disconnect();
     }
 
     public boolean isHomepageActivated() {

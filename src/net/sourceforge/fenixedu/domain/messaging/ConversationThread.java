@@ -64,21 +64,8 @@ public class ConversationThread extends ConversationThread_Base implements IDate
 	super.setCreator(creator);
     }
 
-    public void delete() {
-	for (; !getConversationMessages().isEmpty(); getConversationMessages().get(0).delete())
-	    ;
-
-	removeForum();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
-
     public Forum getForum() {
 	return (getParents().isEmpty()) ? null : (Forum) getParents().get(0).getParent();
-    }
-
-    public void removeForum() {
-	getParents().get(0).removeParent();
     }
 
     public void checkIfPersonCanWrite(Person person) {

@@ -17,10 +17,10 @@ public class Attachment extends Attachment_Base {
 
     @Override
     protected void disconnect() {
+	if(hasFileItem()) {
+	    getFileItem().delete();
+	}
         super.disconnect();
-        if(hasFileItem()) {
-            getFileItem().delete();
-        }
     }
     
     @Override

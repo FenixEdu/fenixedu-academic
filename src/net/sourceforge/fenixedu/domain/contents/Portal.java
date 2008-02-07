@@ -32,4 +32,11 @@ public class Portal extends Portal_Base {
     protected Node createChildNode(Content childContent) {
         return new ExplicitOrderNode(this, childContent);
     }
+
+    @Override
+    protected void disconnect() {
+	removePortalRootDomainObject();
+	super.disconnect();
+    }
+
 }

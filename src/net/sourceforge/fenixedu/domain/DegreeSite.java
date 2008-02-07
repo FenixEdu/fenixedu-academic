@@ -29,10 +29,9 @@ public class DegreeSite extends DegreeSite_Base {
     }
 
     @Override
-    protected void deleteRelations() {
-        super.deleteRelations();
-        
-        removeDegree();
+    protected void disconnect() {
+	removeDegree();
+        super.disconnect();
     }
 
     @Override

@@ -88,11 +88,11 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 	}
 	return result.toString();
     }
-    
+
     @Override
-    public void delete() {
+    protected void disconnect() {
 	removeExecutionCourse();
-        super.delete();
+	super.disconnect();
     }
 
 }

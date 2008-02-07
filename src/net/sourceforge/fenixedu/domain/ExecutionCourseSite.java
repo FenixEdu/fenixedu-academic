@@ -45,10 +45,9 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     }
 
     @Override
-    protected void deleteRelations() {
-        super.deleteRelations();
-        
-        removeSiteExecutionCourse();
+    protected void disconnect() {
+	removeSiteExecutionCourse();
+        super.disconnect();
     }
 
     @Override

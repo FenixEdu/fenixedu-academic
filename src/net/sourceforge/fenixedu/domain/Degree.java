@@ -167,7 +167,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             return false;   
         }
         
-        if (hasSite() && getSite().canBeDeleted()) {
+        if (hasSite() && getSite().isDeletable()) {
             return false;
         }
         
@@ -179,7 +179,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             throw new DomainException("error.degree.has.degree.curricular.plans");  
         }
         
-        if (hasSite() && !getSite().canBeDeleted()) {
+        if (hasSite() && !getSite().isDeletable()) {
             throw new DomainException("error.degree.has.site.undeletable");  
         }
     }

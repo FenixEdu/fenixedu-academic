@@ -62,4 +62,17 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
     public boolean isContentPoolAvailable() {
 	return getPoolCount() > 0;
     }
+
+    @Override
+    protected void disconnect() {
+	removeMetaDomainObject();
+	for (Content content : getPoolSet()) {
+	    if (!content.hasAnyParents()) {
+		content.delete();
+	    }
+	    removePool(content);
+	}
+	super.disconnect();
+    }
+
 }

@@ -176,23 +176,20 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         }
     }
 
-    public void delete() {
-	if (!canBeDeleted()) {
-	    throw new DomainException("error.messaging.announcementBoard.cannot.delete");
-	}
-	
-	removeBookmarkedBoards();
-	removeRootDomainObject();
-	deleteDomainObject();
+    @Override
+    public boolean isDeletable() {
+	return super.isDeletable() && !hasAnyChildren();
     }
 
-    public boolean canBeDeleted() {
-        return !hasAnyChildren();
+    @Override
+    protected void disconnect() {
+	removeBookmarkedBoards();
+	super.disconnect();
     }
 
     private void removeBookmarkedBoards() {
 	for (final Person person : this.getBookmarkOwner()) {
-	    person.removeBookmarkedBoards(this);
+	    removeBookmarkOwner(person);
 	}
     }
     

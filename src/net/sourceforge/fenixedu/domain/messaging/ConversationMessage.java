@@ -28,17 +28,6 @@ public class ConversationMessage extends ConversationMessage_Base implements IDa
         setCreator(creator);
     }
 
-    public void delete() {
-        removeConversationThread();
-        removeRootDomainObject();
-        super.deleteDomainObject();
-    }
-
-    
-    public void removeConversationThread() {
-	getParents().get(0).removeParent();
-    }
-
     @Override
     public void setCreator(Person creator) {
         if (creator == null) {
