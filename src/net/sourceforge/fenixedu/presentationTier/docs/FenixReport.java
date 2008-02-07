@@ -47,15 +47,15 @@ abstract public class FenixReport implements Serializable {
 	return null;
     }
 
-    protected void addParameter(final String key, final Object value) {
+    public void addParameter(final String key, final Object value) {
 	this.parameters.put(key, value);
     }
     
-    protected void addDataSourceElement(final Object object) {
+    public void addDataSourceElement(final Object object) {
 	this.dataSource.add(object);
     }
     
-    protected void addDataSourceElements(final Collection objects) {
+    public void addDataSourceElements(final Collection objects) {
 	this.dataSource.addAll(objects);
     }
 
