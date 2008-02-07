@@ -7,12 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
+import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.ResourceRule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.Rule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.SimpleTransformRule;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -70,8 +75,13 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         Fetcher fetcher = new Fetcher(archive, request, response);
         
         queueResources(request, executionCourse, options, fetcher);
+
+        List<Content> contents = new ArrayList<Content>();
+        contents.add(MetaDomainObject.getMeta(ExecutionCourseSite.class).getAssociatedPortal());
+        contents.add(executionCourse.getSite());
+        FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
         
-        fetcher.process();
+        fetcher.process(context);
         archive.finish();
         
         return null;
