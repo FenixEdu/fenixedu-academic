@@ -30,7 +30,7 @@ public enum DocumentRequestType {
     COURSE_LOAD(true, false/* , AdministrativeOfficeType.DEGREE*/),
 
     EXAM_DATE_CERTIFICATE(true, false/* ,AdministrativeOfficeType.DEGREE */),
-    
+
     PROGRAM_CERTIFICATE(true, false/* , AdministrativeOfficeType.DEGREE*/);
 
     private boolean hasAdditionalInformation;
@@ -38,7 +38,7 @@ public enum DocumentRequestType {
     private Collection<AdministrativeOfficeType> administrativeOfficeTypes;
 
     private boolean allowedToQuickDeliver;
-    
+
     static private List<DocumentRequestType> CERTIFICATES = Arrays.asList(SCHOOL_REGISTRATION_CERTIFICATE, ENROLMENT_CERTIFICATE,
 	    APPROVEMENT_CERTIFICATE, DEGREE_FINALIZATION_CERTIFICATE, EXAM_DATE_CERTIFICATE, COURSE_LOAD, PROGRAM_CERTIFICATE);
 
