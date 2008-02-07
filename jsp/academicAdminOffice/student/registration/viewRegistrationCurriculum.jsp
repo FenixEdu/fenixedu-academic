@@ -39,7 +39,7 @@
 	</div>
 	
 	<p class="mvert2">
-		<span style="background-color: #ebf5ea; border-bottom: 1px solid #cce5c7; padding: 0.4em 0.6em;">
+		<span class="showpersonid">
 		<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
 			<fr:view name="registration" property="student" schema="student.show.personAndStudentInformation.short">
 				<fr:layout name="flow">
@@ -50,7 +50,9 @@
 	</p>
 	
 	<logic:present name="registration" property="ingressionEnum">
-	<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	
+	<h3 class="mbottom1"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+	
 	<fr:view name="registration" schema="student.registrationDetail" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thright thlight mtop025"/>
