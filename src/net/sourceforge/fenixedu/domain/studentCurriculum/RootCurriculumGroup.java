@@ -220,11 +220,8 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
 	final DegreeType degreeType = getDegreeType();
 	if (degreeType.hasAnyCycleTypes()) {
-	    for (final CycleType cycleType : degreeType.getCycleTypes()) {
-		final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
-		if (cycleCurriculumGroup != null) {
-		    curriculum.add(cycleCurriculumGroup.getCurriculum(executionYear));
-		}
+	    for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGroups()) {
+		curriculum.add(cycleCurriculumGroup.getCurriculum(executionYear));
 	    }
 	} else {
 	    curriculum.add(super.getCurriculum(executionYear));
