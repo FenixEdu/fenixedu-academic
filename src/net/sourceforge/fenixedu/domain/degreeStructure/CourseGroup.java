@@ -510,14 +510,13 @@ public class CourseGroup extends CourseGroup_Base {
 	    return creditsLimitRules.get(0).getMaximumCredits();
 	}
 
+	final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
 	final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionPeriod);
 	if (modulesSelectionLimit != null) {
-	    final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
-	    if (modulesSelectionLimit.getMaximumLimit().intValue() != modulesByExecutionPeriod.size()) {
-		return countMaxEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMaximumLimit());
-	    }
+	    return countMaxEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMaximumLimit());
 	}
-	return countAllMaxEctsCredits(executionPeriod);
+	
+	return countMaxEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesByExecutionPeriod.size());
     }
 
     private Double countMaxEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
@@ -529,24 +528,6 @@ public class CourseGroup extends CourseGroup_Base {
 	}
 	Collections.sort(ectsCredits, new ReverseComparator());
 	return sumEctsCredits(ectsCredits, maximumLimit.intValue());
-    }
-
-    @Override
-    protected Double countAllMaxEctsCredits(final ExecutionPeriod executionPeriod) {
-	double result = 0d;
-	for (final DegreeModule degreeModule : getOpenChildDegreeModulesByExecutionPeriod(executionPeriod)) {
-	    result += degreeModule.countAllMaxEctsCredits(executionPeriod);
-	}
-	return result;
-    }
-
-    @Override
-    protected Double countAllMinEctsCredits(final ExecutionPeriod executionPeriod) {
-	double result = 0d;
-	for (final DegreeModule degreeModule : getOpenChildDegreeModulesByExecutionPeriod(executionPeriod)) {
-	    result += degreeModule.countAllMinEctsCredits(executionPeriod);
-	}
-	return result;
     }
 
     @Override
@@ -562,14 +543,13 @@ public class CourseGroup extends CourseGroup_Base {
 	    return creditsLimitRules.get(0).getMinimumCredits();
 	}
 
+	final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
 	final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionPeriod);
 	if (modulesSelectionLimit != null) {
-	    final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
-	    if (modulesSelectionLimit.getMinimumLimit().intValue() != modulesByExecutionPeriod.size()) {
-		return countMinEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMinimumLimit());
-	    }
+	    return countMinEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMinimumLimit());
 	}
-	return countAllMinEctsCredits(executionPeriod);
+	
+	return countMinEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesByExecutionPeriod.size());
     }
 
     private Double countMinEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
@@ -579,10 +559,10 @@ public class CourseGroup extends CourseGroup_Base {
 	for (final DegreeModule degreeModule : modulesByExecutionPeriod) {
 	    ectsCredits.add(degreeModule.getMinEctsCredits(executionPeriod));
 	}
-	Collections.sort(ectsCredits, new ReverseComparator());
+	Collections.sort(ectsCredits);
 	return sumEctsCredits(ectsCredits, minimumLimit.intValue());
     }
-
+    
     private Double sumEctsCredits(final List<Double> ectsCredits, int limit) {
 	double result = 0d;
 	final Iterator<Double> ectsCreditsIter = ectsCredits.iterator();

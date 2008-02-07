@@ -68,14 +68,4 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
 	return result.isEmpty() ? null : (AnyCurricularCourse) result.get(0);
     }
 
-    @Override
-    protected Double countAllMaxEctsCredits(ExecutionPeriod executionPeriod) {
-	return getMaxEctsCredits(executionPeriod);
-    }
-
-    @Override
-    protected Double countAllMinEctsCredits(ExecutionPeriod executionPeriod) {
-	return getMinEctsCredits(executionPeriod);
-    }
-
 }

@@ -452,10 +452,6 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract public Double getMinEctsCredits(final ExecutionPeriod executionPeriod);
 
-    abstract protected Double countAllMaxEctsCredits(final ExecutionPeriod executionPeriod);
-
-    abstract protected Double countAllMinEctsCredits(final ExecutionPeriod executionPeriod);
-
     abstract protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
 	    final Context context);
 

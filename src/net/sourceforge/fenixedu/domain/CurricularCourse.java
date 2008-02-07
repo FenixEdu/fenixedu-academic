@@ -1076,16 +1076,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    protected Double countAllMinEctsCredits(final ExecutionPeriod executionPeriod) {
-	return getEctsCredits(executionPeriod);
-    }
-
-    @Override
-    protected Double countAllMaxEctsCredits(final ExecutionPeriod executionPeriod) {
-	return getEctsCredits(executionPeriod);
-    }
-
-    @Override
     final public Double getWeigth() {
 	if (isBolonhaDegree()) {
 	    return getEctsCredits();
