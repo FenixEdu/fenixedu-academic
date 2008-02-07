@@ -29,8 +29,8 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
     }
 
     public String getCode() {
-	if (getCurricularCourse() != null) {
-	    code = getCurricularCourse().getCode();
+	if (code == null) {
+	    code = (getCurricularCourse() != null) ? getCurricularCourse().getCode() : "";
 	}
 	return code;
     }
