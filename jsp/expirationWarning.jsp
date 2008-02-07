@@ -50,7 +50,7 @@ function check(e,v){
 				</div>
 				<p style="margin-bottom: 0.5em;"><bean:message key="message.expiration.warning"/></p>
 				<p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-					<html:link styleClass="button" page="/person/changePasswordForward.do" ><bean:message key="link.expiration.warning.change.now"/></html:link>
+					<html:link styleClass="button" page="/person/changePasswordForward.do?contextPath=/person" ><bean:message key="link.expiration.warning.change.now"/></html:link>
 					<bean:define id="path" name="path"/>
 					<html:link page="<%= path.toString() %>" styleClass="button"><bean:message key="link.expiration.warning.change.later"/></html:link>
 				</p>
