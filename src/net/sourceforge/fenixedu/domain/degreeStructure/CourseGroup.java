@@ -752,5 +752,8 @@ public class CourseGroup extends CourseGroup_Base {
 	return getAllCurricularCourses(null);
     }
     
+    public Set<CurricularCourse> getAllOpenCurricularCourses() {
+	return getAllCurricularCourses(ExecutionPeriod.readActualExecutionPeriod());
+    }
     
 }

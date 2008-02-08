@@ -11,8 +11,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Grade;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -24,6 +26,7 @@ public class InfoExternalEnrollmentInfo
     private Collection evaluations;
     private InfoExternalCurricularCourseInfo course;
     private String finalGrade;
+    private String gradeScale;
     /**
      * @return Returns the finalGrade.
      */
@@ -32,16 +35,19 @@ public class InfoExternalEnrollmentInfo
         return this.finalGrade;
     }
     /**
-     * @param finalGrade The finalGrade to set.
-     */
-    public void setFinalGrade(String finalGrade)
-    {
-        this.finalGrade = finalGrade;
-    }
-    /**
      * @return Returns the grade.
      */
-  
+
+    public String getGradeScale()
+    {
+        return this.gradeScale;
+    }
+    
+    public void setGrade(Grade grade) {
+	this.finalGrade = grade.getValue();
+	this.gradeScale = grade.getGradeScale().toString();
+    }
+    
 
     /**
      * @return Returns the course.
@@ -57,6 +63,7 @@ public class InfoExternalEnrollmentInfo
     {
         this.course = course;
     }
+    
     public static InfoExternalEnrollmentInfo newFromEnrollment(Enrolment enrollment)
     {
         InfoExternalEnrollmentInfo info = new InfoExternalEnrollmentInfo();
@@ -64,6 +71,15 @@ public class InfoExternalEnrollmentInfo
         info.setEvaluations(InfoExternalEnrollmentInfo.buildExternalEvaluationsInfo(enrollment.getEvaluations()));        
         return info;
     }
+    
+    public static InfoExternalEnrollmentInfo newFromCurricularCourse(CurricularCourse curricularCourse, Grade finalGrade)
+    {
+        InfoExternalEnrollmentInfo info = new InfoExternalEnrollmentInfo();
+        info.setCourse(InfoExternalCurricularCourseInfo.newFromDomain(curricularCourse));
+        info.setGrade(finalGrade);        
+        return info;
+    }
+
     /**
      * @param evaluations2
      * @return

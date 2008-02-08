@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -86,10 +87,10 @@ public class InfoExternalCurricularCourseInfo
     static public InfoExternalCurricularCourseInfo newFromDomain(CurricularCourse course)
     {
         Integer year = null;
-        for (Iterator iter = course.getScopes().iterator(); iter.hasNext();)
+        for (Iterator iter = course.getDegreeModuleScopes().iterator(); iter.hasNext();)
         {
-            CurricularCourseScope element = (CurricularCourseScope) iter.next();
-            int currentYear = element.getCurricularSemester().getCurricularYear().getYear().intValue();
+            DegreeModuleScope element = (DegreeModuleScope) iter.next();
+            int currentYear = element.getCurricularYear().intValue();
             if (year == null || currentYear < year.intValue())
                 year = currentYear;
         }

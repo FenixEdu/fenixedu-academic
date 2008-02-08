@@ -54,7 +54,12 @@
 				<xsl:value-of select="./course/curricularYear"/>
 			</ano>	
 		<nota>
-			<xsl:value-of select="./finalGrade"/>
+			<valor>
+				<xsl:value-of select="./finalGrade"/>
+			</valor>
+			<escala>
+				<xsl:value-of select="./gradeScale"/>
+			</escala>							
 		</nota>
 	</disciplina>						
 </xsl:template> 
@@ -174,6 +179,9 @@
 				<numero>
 					<xsl:value-of select="./number"/>
 				</numero>
+				<tipo-documento>
+					<xsl:value-of select="./documentType"/>
+				</tipo-documento>				
 				<data-validade>
 					<xsl:value-of select="./expiryDate"/>
 				</data-validade>

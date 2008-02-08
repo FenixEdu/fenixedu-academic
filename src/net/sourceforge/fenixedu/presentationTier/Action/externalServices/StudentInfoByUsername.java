@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -147,15 +148,18 @@ public class StudentInfoByUsername extends FenixAction {
         state.externalAppPassword = request.getParameter("externalAppPassword");
     }
 
-    private IUserView authenticate(String username, String password, String requestURL,
-            String remoteHostName, String externalAppPassword) throws FenixServiceException, FenixFilterException {
-	if (externalAppPassword != null && externalAppPassword.equals(PropertiesManager.getProperty("externalServices.StudentInfoByUsername.externalAppPassword"))) {
-	    return new MockUserView(username, new ArrayList<Role>(), Person.readPersonByUsername(username));
+    private void authenticate(String username, String password, String requestURL, String remoteHostName,
+	    String externalAppPassword) throws FenixServiceException, FenixFilterException {
+	IUserView userView = null;
+	if (externalAppPassword != null
+		&& externalAppPassword.equals(PropertiesManager
+			.getProperty("externalServices.StudentInfoByUsername.externalAppPassword"))) {
+	    userView = new MockUserView(username, new ArrayList<Role>(), Person.readPersonByUsername(username));
+	} else {
+	    final Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
+	    userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
 	}
-        final Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-        final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
-                "Autenticacao", argsAutenticacao);
-        return userView;
+	AccessControl.setUserView(userView);
     }
 
     private void sendAnswer(HttpServletResponse response, String result) throws IOException {
