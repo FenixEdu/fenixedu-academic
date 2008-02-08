@@ -9,7 +9,7 @@ public class RegistrationPredicates {
 
     public static final AccessControlPredicate<Registration> transitToBolonha = new AccessControlPredicate<Registration>() {
 	public boolean evaluate(final Registration registration) {
-	    return AccessControl.getPerson().hasRole(RoleType.STUDENT) || AccessControl.getPerson().hasRole(RoleType.MANAGER);
+	    return AccessControl.getPerson().hasRole(RoleType.MANAGER);
 	};
     };
 

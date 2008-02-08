@@ -923,7 +923,6 @@
 			<forward name="chooseRegistration" path="enrolment.chooseRegistration" />
 			<forward name="choosePersonalDataAuthorizationChoice" path="enrolment.choosePersonalDataAuthorizationChoice"/>
 			<forward name="proceedToEnrolment" path="/bolonhaStudentEnrollment.do?method=prepare" />
-			<forward name="confirmBolonhaTransition" path="enrolment.confirmBolonhaTransition" />
 			<forward name="notAuthorized" path="df.page.notAuthorized"/>
 		</action>
 		

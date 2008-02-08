@@ -1,15 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -22,7 +17,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
     public ActionForward showWelcome(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	return mapping.findForward("welcome");
     }
 
@@ -35,71 +30,15 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    return mapping.findForward("choosePersonalDataAuthorizationChoice");
 	}
 
-	final Set<Registration> sourceRegistrationsForTransition = getTransitionSourceRegistrationsForStudent(request);
 	final List<Registration> registrationsToEnrol = getRegistrationsToEnrolByStudent(request);
-	if (sourceRegistrationsForTransition.isEmpty() && registrationsToEnrol.size() == 1) {
+	if (registrationsToEnrol.size() == 1) {
 	    final Registration registration = registrationsToEnrol.iterator().next();
 	    return getActionForwardForRegistration(mapping, request, registration);
 	}
 
-	request.setAttribute("sourceRegistrationsForTransition", sourceRegistrationsForTransition);
 	request.setAttribute("registrationsToEnrol", registrationsToEnrol);
 
 	return mapping.findForward("chooseRegistration");
-    }
-
-    private Set<Registration> getTransitionSourceRegistrationsForStudent(HttpServletRequest request) {
-	final Set<Registration> result = new HashSet<Registration>();
-
-	for (final Registration registration : getLoggedStudent(request).getTransitionRegistrations()) {
-	    final Registration sourceRegistrationForTransition = registration.getSourceRegistrationForTransition();
-	    if (sourceRegistrationForTransition != null) {
-		result.add(sourceRegistrationForTransition);
-	    }
-	}
-
-	return result;
-    }
-
-    public ActionForward prepareBolonhaTransitionConfirmation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final Registration sourceRegistrationForTransition = getSourceTransitionRegistration(request);
-	if (!sourceRegistrationForTransitionBelongsToStudent(request, sourceRegistrationForTransition)) {
-	    return mapping.findForward("notAuthorized");
-	}
-
-	request.setAttribute("sourceRegistrationForTransition", sourceRegistrationForTransition);
-
-	return mapping.findForward("confirmBolonhaTransition");
-    }
-
-    private boolean sourceRegistrationForTransitionBelongsToStudent(HttpServletRequest request,
-	    final Registration sourceRegistrationForTransition) {
-	return getTransitionSourceRegistrationsForStudent(request).contains(sourceRegistrationForTransition);
-    }
-
-    private Registration getSourceTransitionRegistration(final HttpServletRequest request) {
-	return getRegistrationFrom(request, "sourceRegistrationForTransitionId");
-    }
-
-    public ActionForward confirmBolonhaTransition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	final Registration sourceRegistrationForTransition = getSourceTransitionRegistration(request);
-	if (!sourceRegistrationForTransitionBelongsToStudent(request, sourceRegistrationForTransition)) {
-	    return mapping.findForward("notAuthorized");
-	}
-
-	try {
-	    executeService("TransitToBolonha", getLoggedPerson(request), sourceRegistrationForTransition);
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey(), e.getArgs());
-
-	    return prepareBolonhaTransitionConfirmation(mapping, form, request, response);
-	}
-
-	return prepare(mapping, form, request, response);
     }
 
     private ActionForward getActionForwardForRegistration(ActionMapping mapping, HttpServletRequest request,

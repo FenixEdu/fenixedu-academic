@@ -12247,7 +12247,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="StudentOrAcademicAdministrativeOfficeOrManagerAuthorization"/>
+        	<chain name="ManagerAuthorization"/>
         </filterChains>     
     </service>
     <service>
