@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSear
 
 public abstract class SearchParties extends Service implements AutoCompleteSearchService {
 
-    private static int DEFAULT_SIZE = 20;
+    private static int DEFAULT_SIZE = 50;
 
     public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
         int size = getSize(arguments);

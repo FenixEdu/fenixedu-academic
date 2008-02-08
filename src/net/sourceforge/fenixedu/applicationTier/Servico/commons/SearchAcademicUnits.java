@@ -1,16 +1,28 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchParties;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
-public class SearchAcademicUnits extends AbstractSearchObjects {
-	
-	public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-		
-		return super.process(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEGREE_UNIT), value, limit, arguments);
+public class SearchAcademicUnits extends SearchParties {
+
+    @Override
+    protected Collection search(String value, int size) {
+	Collection<UnitName> unitNames = UnitName.find(value, size);
+	List<DegreeUnit> units = new ArrayList<DegreeUnit>();
+
+	for (UnitName unitName : unitNames) {
+	    Unit unit = unitName.getUnit();
+	    if (unit.isDegreeUnit()) {
+		units.add((DegreeUnit) unit);
+	    }
 	}
+	return units;
+    }
 
 }

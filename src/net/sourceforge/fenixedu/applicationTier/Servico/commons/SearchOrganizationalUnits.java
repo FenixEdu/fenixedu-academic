@@ -3,21 +3,23 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchParties;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
-public class SearchOrganizationalUnits extends AbstractSearchObjects {
-
-	public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-		
-		 List<Unit> units = new ArrayList<Unit> ();
-		 units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT));
-		 units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.SCIENTIFIC_AREA));
-			 		 
-		 return super.process(units, value, limit, arguments);
+public class SearchOrganizationalUnits extends SearchParties {
+	@Override
+	protected Collection search(String value, int size) {
+	    Collection<UnitName> unitNames = UnitName.find(value, size);
+	    List<Unit> resultUnits = new ArrayList<Unit> ();
+	    for(UnitName name : unitNames) {
+		Unit unit = name.getUnit();
+		if(unit.isDepartmentUnit() || unit.isScientificAreaUnit()) {
+		    resultUnits.add(unit);
+		}
+	    }
+	    return resultUnits;
 	}
 
 }
