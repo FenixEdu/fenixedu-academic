@@ -26,9 +26,9 @@ public class GrantContract extends GrantContract_Base {
 	setContractNumber(contractNumber);
     }
 
-    public void delete() {	
+    public void delete() {
 	removeGrantCostCenter();
-	removeGrantInsurance();
+	getGrantInsurance().delete();
 	removeGrantOwner();
 	removeGrantType();
 	for (; hasAnyGrantOrientationTeachers(); getGrantOrientationTeachers().get(0).delete())
@@ -54,8 +54,7 @@ public class GrantContract extends GrantContract_Base {
     public List<GrantContractRegime> readGrantContractRegimeByGrantContract() {
 	List<GrantContractRegime> grantContractRegimes = new ArrayList();
 	grantContractRegimes.addAll(getContractRegimes());
-	Collections.sort(grantContractRegimes, new ReverseComparator(
-		GrantContractRegime.BEGIN_DATE_CONTRACT_COMPARATOR));
+	Collections.sort(grantContractRegimes, new ReverseComparator(GrantContractRegime.BEGIN_DATE_CONTRACT_COMPARATOR));
 	return grantContractRegimes;
     }
 
@@ -66,14 +65,13 @@ public class GrantContract extends GrantContract_Base {
 		grantContractRegimes.add(grantContractRegime);
 	    }
 	}
-	Collections.sort(grantContractRegimes, new ReverseComparator(
-		GrantContractRegime.BEGIN_DATE_CONTRACT_COMPARATOR));
+	Collections.sort(grantContractRegimes, new ReverseComparator(GrantContractRegime.BEGIN_DATE_CONTRACT_COMPARATOR));
 	return grantContractRegimes;
     }
 
     public GrantOrientationTeacher readActualGrantOrientationTeacher() {
-	return (!this.getGrantOrientationTeachers().isEmpty()) ? Collections.max(this
-		.getGrantOrientationTeachers(), GrantOrientationTeacher.BEGIN_DATE_COMPARATOR) : null;
+	return (!this.getGrantOrientationTeachers().isEmpty()) ? Collections.max(this.getGrantOrientationTeachers(),
+		GrantOrientationTeacher.BEGIN_DATE_COMPARATOR) : null;
 
     }
 
@@ -90,13 +88,11 @@ public class GrantContract extends GrantContract_Base {
 	final String dateFormat = "yyyy/MM/dd";
 	for (final GrantContractRegime grantContractRegime : this.getContractRegimesSet()) {
 	    if (beginContractDate != null
-		    && DateFormatUtil.isBefore(dateFormat, grantContractRegime.getDateBeginContract(),
-			    beginContractDate)) {
+		    && DateFormatUtil.isBefore(dateFormat, grantContractRegime.getDateBeginContract(), beginContractDate)) {
 		continue;
 	    }
 	    if (endContractDate != null
-		    && DateFormatUtil.isAfter(dateFormat, grantContractRegime.getDateEndContract(),
-			    endContractDate)) {
+		    && DateFormatUtil.isAfter(dateFormat, grantContractRegime.getDateEndContract(), endContractDate)) {
 		continue;
 	    }
 	    return true;
