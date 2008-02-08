@@ -1264,8 +1264,8 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_CREDITS_MANAGER);
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
 		removeRoleIfPresent(person, RoleType.PERSONNEL_SECTION);
-		removeRoleIfPresent(person, RoleType.PROJECTS_MANAGER);
-		removeRoleIfPresent(person, RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+//		removeRoleIfPresent(person, RoleType.PROJECTS_MANAGER);
+//		removeRoleIfPresent(person, RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
 		break;
 
 	    case STUDENT:
