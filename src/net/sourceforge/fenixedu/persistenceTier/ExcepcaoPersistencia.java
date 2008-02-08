@@ -38,6 +38,10 @@ public class ExcepcaoPersistencia extends java.lang.Exception {
     public ExcepcaoPersistencia() {
     }
 
+    public ExcepcaoPersistencia(Throwable cause) {
+	super(cause);
+    }
+
     public ExcepcaoPersistencia(int erro, Exception ex) {
         super(ex);
         _erro = erro;
