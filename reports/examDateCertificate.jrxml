@@ -23,32 +23,36 @@
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
-	<parameter name="imageUrl" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="documentRequest" isForPrompting="false" class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
-	<parameter name="registration" isForPrompting="false" class="net.sourceforge.fenixedu.domain.student.Registration"/>
-	<parameter name="printPriceFields" isForPrompting="false" class="java.lang.Boolean"/>
-	<parameter name="postingRule" isForPrompting="false" class="net.sourceforge.fenixedu.domain.accounting.PostingRule"/>
-	<parameter name="amountPerPage" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
-	<parameter name="baseAmountPlusAmountForUnits" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
-	<parameter name="urgencyAmount" isForPrompting="false" class="net.sourceforge.fenixedu.util.Money"/>
+	<style 
+		name="MarkCurricularCourseWithoutExam"
+		isDefault="false"
+	>
+
+		<conditionalStyle>
+			<conditionExpression><![CDATA[!$F{anyExamAvailable}.booleanValue()]]></conditionExpression>
+			<style 
+				name="MarkCurricularCourseWithoutExam"
+				isDefault="false"
+				forecolor="#FF0000"
+			/>
+		</conditionalStyle>
+	</style>
+
 	<parameter name="administrativeOfficeCoordinator" isForPrompting="false" class="net.sourceforge.fenixedu.domain.Person"/>
-	<parameter name="administrativeOfficeName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="birthLocale" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="nationality" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="situation" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="degreeDescription" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentNumber" isForPrompting="false" class="java.lang.String"/>
 
 	<field name="curricularCourseName" class="java.lang.String"/>
 	<field name="firstSeasonDate" class="java.lang.String"/>
 	<field name="firstSeasonHour" class="java.lang.String"/>
 	<field name="secondSeasonDate" class="java.lang.String"/>
 	<field name="secondSeasonHour" class="java.lang.String"/>
+	<field name="specialSeasonDate" class="java.lang.String"/>
+	<field name="specialSeasonHour" class="java.lang.String"/>
+	<field name="anyExamAvailable" class="java.lang.Boolean"/>
 
 
 		<group  name="endLine" >
@@ -92,7 +96,7 @@
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="10" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do Instituto Superior Técnico da Universidade Técnica de Lisboa, certifica que <style pdfFontName=\"Times-Bold\"> " + $P{name} + ",</style> aluno com o número <style pdfFontName=\"Times-Bold\"> " + "XXXXXX" + "</style>, do Curso de <style pdfFontName=\"Times-Bold\"> " + "XXXXXX CURSO XXXX" + "</style>, consta o(s) seguinte(s) registo(s) de teste(s) na(s) disciplina(s) abaixo discriminada(s):"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do Instituto Superior Técnico da Universidade Técnica de Lisboa, certifica que <style pdfFontName=\"Times-Bold\"> " + $P{name} + ",</style> aluno com o número <style pdfFontName=\"Times-Bold\"> " + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\"> " + $P{degreeDescription} + "</style>, consta o(s) seguinte(s) registo(s) de teste(s) na(s) disciplina(s) abaixo discriminada(s):"]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>
@@ -101,13 +105,13 @@
 			</band>
 		</pageHeader>
 		<columnHeader>
-			<band height="27"  isSplitAllowed="true" >
+			<band height="33"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="64"
-						y="4"
-						width="176"
-						height="22"
+						x="38"
+						y="1"
+						width="155"
+						height="31"
 						key="staticText-16"/>
 					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -117,10 +121,10 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="240"
-						y="4"
-						width="76"
-						height="22"
+						x="193"
+						y="1"
+						width="66"
+						height="31"
 						key="staticText-17"/>
 					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -130,10 +134,10 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="316"
-						y="4"
-						width="76"
-						height="22"
+						x="259"
+						y="1"
+						width="50"
+						height="31"
 						key="staticText-26"/>
 					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -143,10 +147,10 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="392"
-						y="4"
-						width="76"
-						height="22"
+						x="309"
+						y="1"
+						width="66"
+						height="31"
 						key="staticText-27"/>
 					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -156,11 +160,38 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="468"
-						y="4"
-						width="76"
-						height="22"
+						x="375"
+						y="1"
+						width="50"
+						height="31"
 						key="staticText-28"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Hora]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="425"
+						y="1"
+						width="82"
+						height="31"
+						key="staticText-29"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Época
+Especial]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="507"
+						y="1"
+						width="50"
+						height="31"
+						key="staticText-30"/>
 					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
@@ -170,13 +201,14 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="20"  isSplitAllowed="true" >
+			<band height="31"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="64"
+						style="MarkCurricularCourseWithoutExam"
+						x="38"
 						y="-1"
-						width="176"
-						height="21"
+						width="155"
+						height="32"
 						key="textField-21"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -186,55 +218,87 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="240"
+						style="MarkCurricularCourseWithoutExam"
+						x="193"
 						y="-1"
-						width="76"
-						height="21"
+						width="66"
+						height="32"
 						key="textField-22"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{firstSeasonDate}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{firstSeasonDate} != null ? $F{firstSeasonDate} : "----------"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="316"
+						style="MarkCurricularCourseWithoutExam"
+						x="259"
 						y="-1"
-						width="76"
-						height="21"
+						width="50"
+						height="32"
 						key="textField-30"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{firstSeasonHour}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{firstSeasonHour} != null ? $F{firstSeasonHour} : "-----"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="392"
+						style="MarkCurricularCourseWithoutExam"
+						x="309"
 						y="-1"
-						width="76"
-						height="21"
+						width="66"
+						height="32"
 						key="textField-31"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{secondSeasonDate}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{secondSeasonDate} != null ? $F{secondSeasonDate} : "----------"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="468"
+						style="MarkCurricularCourseWithoutExam"
+						x="375"
 						y="-1"
-						width="76"
-						height="21"
+						width="50"
+						height="32"
 						key="textField-32"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{secondSeasonHour}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{secondSeasonHour} != null ? $F{secondSeasonHour} : "-----"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="MarkCurricularCourseWithoutExam"
+						x="425"
+						y="-1"
+						width="82"
+						height="32"
+						key="textField-33"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{specialSeasonDate} != null ? $F{specialSeasonDate} : "----------"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="MarkCurricularCourseWithoutExam"
+						x="507"
+						y="-1"
+						width="50"
+						height="32"
+						key="textField-34"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Times-Roman"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{specialSeasonHour} != null ? $F{specialSeasonHour} : "-----"]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
@@ -246,7 +310,7 @@
 			<band height="34"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="452"
+						x="447"
 						y="12"
 						width="25"
 						height="19"
@@ -260,7 +324,7 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="490"
+						x="485"
 						y="12"
 						width="14"
 						height="19"
@@ -274,7 +338,7 @@
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="477"
+						x="472"
 						y="12"
 						width="13"
 						height="19"
@@ -288,7 +352,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="504"
+						x="499"
 						y="12"
 						width="13"
 						height="19"

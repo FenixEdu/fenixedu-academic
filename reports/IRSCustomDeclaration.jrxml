@@ -189,7 +189,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Times-Italic" size="13" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["O Instituto Superior Técnico, Contribuinte Nº 501507930, declara que recebeu de " + $P{studentName} + " aluno Nº " + $P{studentNumber} + " deste Instituto, portador do BI " + $P{studentDocumentIdNumber}+ ", no ano de " + $P{civilYear} + " as quantias abaixo indicadas."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["O Instituto Superior Técnico, Contribuinte Nº 501507930, declara que recebeu de " + $P{studentName} + " aluno Nº " + $P{studentNumber} + " deste Instituto, portador do documento de identificação Nº " + $P{studentDocumentIdNumber}+ ", no ano de " + $P{civilYear} + " as quantias abaixo indicadas."]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
