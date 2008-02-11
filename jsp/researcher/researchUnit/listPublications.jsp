@@ -9,7 +9,7 @@
 
 <bean:define id="url" value="<%= "/researchUnitFunctionalities.do?method=preparePublications&unitId=" + request.getParameter("unitId") %>"/>
 
-<p class="mbottom05"><strong>Para criar uma publicação deve escolher um dos autores:</strong></p>
+<p class="mbottom05"><strong><bean:message key="label.selectAuthorToCreatePublication" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 
 <fr:form action="/resultPublications/prepareCreate.do">
 <fr:edit name="bean" schema="edit.research.unit.publication.bean" >
