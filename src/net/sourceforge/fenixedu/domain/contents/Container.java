@@ -149,6 +149,13 @@ public abstract class Container extends Container_Base {
 	for (Node node : getChildren()) {
 	    removeNode(node);
 	}
+	final Content content = getInitialContent();
+	if (content != null) {
+	    removeInitialContent();
+	    if(!content.hasAnyParents()) {
+		content.delete();
+	    }
+	}
     }
 
     @Override
@@ -245,7 +252,7 @@ public abstract class Container extends Container_Base {
 
     protected void removeNode(Node node) {
 	Content content = node.getChild();
-	if (getInitialContainer() == content) {
+	if (getInitialContent() == content) {
 	    setInitialContent(null);
 	}
 	node.delete();

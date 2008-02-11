@@ -348,4 +348,17 @@ public abstract class Site extends Site_Base {
 	disconnectContent();
     }
 
+    @Override
+    protected boolean checkDisconnected() {
+        if (hasRootDomainObject()) return false;
+        if (hasAnyInitialContainer()) return false;
+        if (hasAvailabilityPolicy()) return false;
+        if (hasPortal()) return false;
+        if (hasAnyParents()) return false;
+        if (hasCreator()) return false;
+        if (hasAnyChildren()) return false;
+        if (hasPortalRootDomainObject()) return false;
+        return true;
+    }
+
 }
