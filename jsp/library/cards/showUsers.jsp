@@ -1,11 +1,9 @@
 <%@ page language="java" %>
-
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-
+<%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 <html:xhtml/>
 
 <h2>
@@ -81,8 +79,15 @@
 			<bean:define id="searchName" name="libraryCardSearch" property="userName" type="java.lang.String"/>
 		</logic:notEmpty>
 		<bean:define id="searchNumber" name="libraryCardSearch" property="numberString"/>
-		
-		<fr:view name="libraryCardSearch" property="searchResult" schema="library.card.list">
+
+		<br/>
+		<br/>
+
+		<bean:define id="url" type="java.lang.String">/library/cardManagement.do?method=showUsersFromPageSelect&amp;partyClassification=<bean:write name="libraryCardSearch" property="partyClassification"/>&amp;userName=<bean:write name="libraryCardSearch" property="userName"/>&amp;number=<bean:write name="libraryCardSearch" property="number"/></bean:define>
+		<cp:collectionPages url="<%= url %>" 
+			pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
+
+		<fr:view name="resultPage" schema="library.card.list">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle1"/>
 				<fr:property name="columnClasses" value="acenter,acenter,,,,acenter,,nowrap"/>

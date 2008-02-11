@@ -36,6 +36,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
@@ -47,6 +48,22 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     private final static int minimumPinNumber = 6910;
 
     private final static int maximumPinNumber = 100000;
+
+    private ActionForward showUsersBase(ActionMapping mapping, HttpServletRequest request, LibraryCardSearch libraryCardSearch) {
+	request.setAttribute("dontSearch", request.getParameter("dontSearch"));
+	request.setAttribute("libraryCardSearch", libraryCardSearch);
+	final List<LibraryCardDTO> result = libraryCardSearch.getSearchResult();
+
+	CollectionPager<LibraryCardDTO> collectionPager = new CollectionPager<LibraryCardDTO>(result != null ? result : new ArrayList<LibraryCardDTO>(), 50);
+	request.setAttribute("collectionPager", collectionPager);
+	final String pageNumberString = request.getParameter("pageNumber");
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+	request.setAttribute("pageNumber", pageNumber);
+	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
+	request.setAttribute("resultPage", collectionPager.getPage(pageNumber));
+
+	return mapping.findForward("show-users");
+    }
 
     public ActionForward showUsers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -72,10 +89,29 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    libraryCardSearch.doSearch();
 	}
 	RenderUtils.invalidateViewState();
-	request.setAttribute("dontSearch", request.getParameter("dontSearch"));
-	request.setAttribute("libraryCardSearch", libraryCardSearch);
-	return mapping.findForward("show-users");
+	return showUsersBase(mapping, request, libraryCardSearch);
     }
+
+    public ActionForward showUsersFromPageSelect(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final String numberString = request.getParameter("number");
+
+	final PartyClassification partyClassification = PartyClassification.valueOf(request.getParameter("partyClassification"));
+	final String userName = request.getParameter("userName");
+	final Integer number = numberString == null || numberString.length() == 0 ? null : Integer.valueOf(numberString);
+
+	final LibraryCardSearch libraryCardSearch = new LibraryCardSearch();
+	libraryCardSearch.setPartyClassification(partyClassification);
+	libraryCardSearch.setUserName(userName);
+	libraryCardSearch.setNumber(number);
+
+	libraryCardSearch.doSearch();
+
+	return showUsersBase(mapping, request, libraryCardSearch);
+    }
+
+    
 
     private void setSearchCriteria(HttpServletRequest request, LibraryCardSearch libraryCardSearch) {
 	String partyClassificationString = request.getParameter("partyClassification");

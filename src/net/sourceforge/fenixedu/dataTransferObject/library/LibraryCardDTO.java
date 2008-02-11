@@ -47,13 +47,16 @@ public class LibraryCardDTO implements Serializable {
     private YearMonthDay validUntil;
 
     public LibraryCardDTO(Person person, PartyClassification partyClassification) {
+	this(person, partyClassification, getPersonUnit(person, partyClassification));
+    }
+
+    public LibraryCardDTO(Person person, PartyClassification partyClassification, Unit unit) {
 	setPerson(person);
 	setPartyClassification(partyClassification);
 	setUserName(person.getNickname());
-	Unit unit = getPersonUnit();
 	setUnit(unit);
 	String unitName = unit != null ? unit.getName() : "";
-	if (isStudent()) {
+	if (isStudent(partyClassification)) {
 	    unitName = unit != null ? unit.getAcronym() : "";
 	} else if (partyClassification.equals(PartyClassification.PERSON)) {
 	    if (person.hasExternalContract()) {
@@ -62,9 +65,28 @@ public class LibraryCardDTO implements Serializable {
 	}
 	setUnitName(unitName);
 	setChosenUnitName(unitName);
-	setNumber(person.getMostSignificantNumber());
+	setNumber(getMostSignificantNumber());
 	setPhone(person.getPhone());
 	setMobile(person.getMobile());
+    }
+
+    private Integer getMostSignificantNumber() {
+	if (getPartyClassification() == PartyClassification.TEACHER) {
+	    return getPerson().getTeacher().getTeacherNumber();
+	}
+	if (getPartyClassification() == PartyClassification.EMPLOYEE) {
+	    return getPerson().getEmployee().getEmployeeNumber();
+	}
+	if (getPartyClassification() == PartyClassification.RESEARCHER && getPerson().getEmployee() != null) {
+	    return getPerson().getEmployee().getEmployeeNumber();
+	}
+	if (isStudent(getPartyClassification())) {
+	    return getPerson().getStudent().getNumber();
+	}
+	if (getPartyClassification() == PartyClassification.GRANT_OWNER) {
+	    return getPerson().getGrantOwner().getNumber();
+	}
+	return 0;
     }
 
     public LibraryCardDTO(LibraryCard libraryCard) {
@@ -81,34 +103,34 @@ public class LibraryCardDTO implements Serializable {
 	setMobile(libraryCard.getPerson().getMobile());
     }
 
-    private Unit getPersonUnit() {
-	if (getPartyClassification().equals(PartyClassification.EMPLOYEE)) {
-	    return getPerson().getEmployee().getLastWorkingPlace();
-	} else if (getPartyClassification().equals(PartyClassification.TEACHER)) {
-	    return getPerson().getTeacher().getCurrentWorkingUnit();
-	} else if (getPartyClassification().equals(PartyClassification.RESEARCHER)) {
+    private static Unit getPersonUnit(Person person, PartyClassification partyClassification) {
+	if (partyClassification == PartyClassification.EMPLOYEE) {
+	    return person.getEmployee().getLastWorkingPlace();
+	} else if (partyClassification == PartyClassification.TEACHER) {
+	    return person.getTeacher().getCurrentWorkingUnit();
+	} else if (partyClassification == PartyClassification.RESEARCHER) {
 	    YearMonthDay today = new YearMonthDay();
-	    for (Accountability accountability : getPerson().getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT,
+	    for (Accountability accountability : person.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT,
 		    ResearcherContract.class)) {
 		ResearcherContract researcherContract = (ResearcherContract) accountability;
 		if (researcherContract.isActive(today)) {
 		    return researcherContract.getUnit();
 		}
 	    }
-	} else if (isStudent()) {
-	    return getPerson().getStudentByType(DegreeType.valueOf(getPartyClassification().toString())).getDegree().getUnit();
+	} else if (isStudent(partyClassification)) {
+	    return person.getStudentByType(DegreeType.valueOf(partyClassification.toString())).getDegree().getUnit();
 	}
 	return null;
     }
 
-    public boolean isStudent() {
-	return getPartyClassification().equals(PartyClassification.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
-		|| getPartyClassification().equals(PartyClassification.BOLONHA_DEGREE)
-		|| getPartyClassification().equals(PartyClassification.BOLONHA_INTEGRATED_MASTER_DEGREE)
-		|| getPartyClassification().equals(PartyClassification.BOLONHA_MASTER_DEGREE)
-		|| getPartyClassification().equals(PartyClassification.BOLONHA_SPECIALIZATION_DEGREE)
-		|| getPartyClassification().equals(PartyClassification.DEGREE)
-		|| getPartyClassification().equals(PartyClassification.MASTER_DEGREE);
+    public static boolean isStudent(PartyClassification partyClassification) {
+	return partyClassification == PartyClassification.BOLONHA_ADVANCED_FORMATION_DIPLOMA
+		|| partyClassification == PartyClassification.BOLONHA_DEGREE
+		|| partyClassification == PartyClassification.BOLONHA_INTEGRATED_MASTER_DEGREE
+		|| partyClassification == PartyClassification.BOLONHA_MASTER_DEGREE
+		|| partyClassification == PartyClassification.BOLONHA_SPECIALIZATION_DEGREE
+		|| partyClassification == PartyClassification.DEGREE
+		|| partyClassification == PartyClassification.MASTER_DEGREE;
     }
 
     public String getMailCostCenterCode() {
