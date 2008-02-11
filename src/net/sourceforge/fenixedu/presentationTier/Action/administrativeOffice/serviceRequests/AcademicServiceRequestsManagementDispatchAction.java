@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -289,14 +291,30 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	AcademicServiceRequestBean bean = (AcademicServiceRequestBean) getObjectFromViewState("bean");
 	if (bean == null) {
 	    Integer year = getIntegerFromRequest(request, "year");
+	    if (year == null) {
+		year = new YearMonthDay().getYear();
+	    }
+
 	    bean = new AcademicServiceRequestBean(AcademicServiceRequestSituationType.valueOf(request
-		    .getParameter("academicSituationType")), getEmployee(), year == null ? new YearMonthDay().getYear() : year);
+		    .getParameter("academicSituationType")), getEmployee(), year);
 	}
 	request.setAttribute("bean", bean);
 
-	final Collection<AcademicServiceRequest> searchServiceRequests = bean.searchServiceRequests();
-	request.setAttribute("academicServiceRequests", searchServiceRequests);
-	request.setAttribute("employeeRequests", bean.searchEmployeeNotNewServiceRequests(searchServiceRequests));
+	final Collection<AcademicServiceRequest> academicServiceRequestsNotOwnedByEmployee = bean.searchAcademicServiceRequests();
+	final Collection<AcademicServiceRequest> academicServiceRequestsOwnedByEmployee = new HashSet<AcademicServiceRequest>();
+
+	if (bean.getAcademicServiceRequestSituationType() != AcademicServiceRequestSituationType.NEW) {
+	    for (Iterator<AcademicServiceRequest> iter = academicServiceRequestsNotOwnedByEmployee.iterator(); iter.hasNext();) {
+		final AcademicServiceRequest academicServiceRequest = (AcademicServiceRequest) iter.next();
+		if (academicServiceRequest.getActiveSituation().getEmployee() == getEmployee()) {
+		    iter.remove();
+		    academicServiceRequestsOwnedByEmployee.add(academicServiceRequest);
+		}
+	    }
+	}
+
+	request.setAttribute("academicServiceRequests", academicServiceRequestsNotOwnedByEmployee);
+	request.setAttribute("employeeRequests", academicServiceRequestsOwnedByEmployee);
 
 	return mapping.findForward("searchResults");
     }

@@ -2,17 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -104,11 +100,11 @@ public class AcademicServiceRequestBean implements Serializable {
     }
 
     public Integer getServiceRequestYear() {
-        return serviceRequestYear;
+	return serviceRequestYear;
     }
 
     public void setServiceRequestYear(Integer serviceRequestYear) {
-        this.serviceRequestYear = serviceRequestYear;
+	this.serviceRequestYear = serviceRequestYear;
     }
 
     public boolean isNew() {
@@ -159,31 +155,9 @@ public class AcademicServiceRequestBean implements Serializable {
 	return getEmployee() == null ? null : getEmployee().getCurrentCampus();
     }
 
-    public Collection<AcademicServiceRequest> searchServiceRequests() {
-	return getAdministrativeOffice().searchRegistrationAcademicServiceRequests(serviceRequestYear, getEmployee(), academicServiceRequestSituationType,
-		(Registration) null, (Boolean) null, (DocumentRequestType) null,
-		getCampus());
-    }
-
-    public Collection<AcademicServiceRequest> searchEmployeeNotNewServiceRequests(final Collection<AcademicServiceRequest> init) {
-	return init.isEmpty() ? searchServiceRequests() : collectEmployeeNotNewRequests(init);
-    }
-
-    private Collection<AcademicServiceRequest> collectEmployeeNotNewRequests(
-	    final Collection<AcademicServiceRequest> academicServiceRequests) {
-	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-
-	if (academicServiceRequestSituationType != AcademicServiceRequestSituationType.NEW) {
-	    for (Iterator<AcademicServiceRequest> iter = academicServiceRequests.iterator(); iter.hasNext();) {
-		AcademicServiceRequest academicServiceRequest = (AcademicServiceRequest) iter.next();
-		if (academicServiceRequest.getActiveSituation().getEmployee() == getEmployee()) {
-		    iter.remove();
-		    result.add(academicServiceRequest);
-		}
-	    }
-	}
-
-	return result;
+    public Collection<AcademicServiceRequest> searchAcademicServiceRequests() {
+	return getAdministrativeOffice().searchRegistrationAcademicServiceRequests(serviceRequestYear,
+		academicServiceRequestSituationType, getCampus());
     }
 
 }
