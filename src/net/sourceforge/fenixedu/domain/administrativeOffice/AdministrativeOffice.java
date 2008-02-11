@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -17,9 +16,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
@@ -43,14 +40,15 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     private void checkIfExistsAdministrativeOfficeForType(AdministrativeOfficeType administrativeOfficeType) {
 	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance().getAdministrativeOffices()) {
 	    if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
-		throw new DomainException("error.administrativeOffice.AdministrativeOffice.already.exists.with.administrativeOfficeType");
+		throw new DomainException(
+			"error.administrativeOffice.AdministrativeOffice.already.exists.with.administrativeOfficeType");
 	    }
 	}
     }
 
     protected void init(AdministrativeOfficeType administrativeOfficeType) {
 	checkParameters(administrativeOfficeType);
-	super.setAdministrativeOfficeType(administrativeOfficeType);	
+	super.setAdministrativeOfficeType(administrativeOfficeType);
     }
 
     @Override
@@ -63,58 +61,37 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	throw new DomainException("error.administrativeOffice.AdministrativeOffice.cannot.modify.unit");
     }
 
-    public Collection<AcademicServiceRequest> searchRegistrationAcademicServiceRequests(
-	    Integer serviceRequestYear, Employee employee,
-	    AcademicServiceRequestSituationType requestSituationType,
-	    Registration registration,
-	    Boolean isUrgent,
-	    DocumentRequestType documentRequestType,
-	    Campus campus) {
+    public Collection<AcademicServiceRequest> searchRegistrationAcademicServiceRequests(Integer serviceRequestYear,
+	    AcademicServiceRequestSituationType requestSituationType, Campus campus) {
 
 	final Collection<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
 
 	for (final AcademicServiceRequest request : getAcademicServiceRequestsSet()) {
-	    
 	    if (!request.isRequestForRegistration()) {
 		continue;
 	    }
-	    
-	    final RegistrationAcademicServiceRequest academicServiceRequest = (RegistrationAcademicServiceRequest) request;
-	    
-	    if (serviceRequestYear != null && academicServiceRequest.getServiceRequestYear().intValue() != serviceRequestYear.intValue()) {
-		continue;
-	    }
-	    
-	    if (employee != null && !academicServiceRequest.createdByStudent() && !academicServiceRequest.isNewRequest() && !academicServiceRequest.getActiveSituation().getEmployee().equals(employee)) {
-		continue;
-	    }
-	    
-	    if (requestSituationType != null && academicServiceRequest.getAcademicServiceRequestSituationType() != requestSituationType) {
+
+	    final RegistrationAcademicServiceRequest registrationAcademicServiceRequest = (RegistrationAcademicServiceRequest) request;
+
+	    if (serviceRequestYear != null
+		    && registrationAcademicServiceRequest.getServiceRequestYear().intValue() != serviceRequestYear.intValue()) {
 		continue;
 	    }
 
-	    if (registration != null && academicServiceRequest.getRegistration() != registration) {
+	    if (requestSituationType != null
+		    && registrationAcademicServiceRequest.getAcademicServiceRequestSituationType() != requestSituationType) {
 		continue;
 	    }
 
-	    if (isUrgent != null && academicServiceRequest.isUrgentRequest() != isUrgent.booleanValue()) {
-		continue;
-	    }
-
-	    if (academicServiceRequest.isDocumentRequest()) {
-		final DocumentRequest documentRequest = (DocumentRequest) academicServiceRequest;
-
-		if (documentRequestType != null && documentRequest.getDocumentRequestType() != documentRequestType) {
-		    continue;
-		}
+	    if (registrationAcademicServiceRequest.isDocumentRequest()) {
+		final DocumentRequest documentRequest = (DocumentRequest) registrationAcademicServiceRequest;
 
 		if (campus != null && documentRequest.getCampus() != null && !documentRequest.getCampus().equals(campus)) {
 		    continue;
 		}
-
 	    }
-	    
-	    result.add(academicServiceRequest);
+
+	    result.add(registrationAcademicServiceRequest);
 	}
 
 	return result;
@@ -132,11 +109,9 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     }
 
     // static methods
-    public static AdministrativeOffice readByAdministrativeOfficeType(
-	    AdministrativeOfficeType administrativeOfficeType) {
+    public static AdministrativeOffice readByAdministrativeOfficeType(AdministrativeOfficeType administrativeOfficeType) {
 
-	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance()
-		.getAdministrativeOffices()) {
+	for (final AdministrativeOffice administrativeOffice : RootDomainObject.getInstance().getAdministrativeOffices()) {
 
 	    if (administrativeOffice.getAdministrativeOfficeType() == administrativeOfficeType) {
 		return administrativeOffice;
@@ -187,21 +162,21 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    }
 	}
 
-	//FIXME: TEMPORARY HACK! TO REMOVE AFTER NOVEMBER 2007!!
-	if(getAdministrativeOfficeType() == AdministrativeOfficeType.MASTER_DEGREE){
+	// FIXME: TEMPORARY HACK! TO REMOVE AFTER NOVEMBER 2007!!
+	if (getAdministrativeOfficeType() == AdministrativeOfficeType.MASTER_DEGREE) {
 	    result.add(Degree.readBySigla("POSI"));
 	}
-	
+
 	Collections.sort(result, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	return result;
     }
 
     public void delete() {
 	checkRulesToDelete();
-	
+
 	removeUnit();
-	removeServiceAgreementTemplate();	
-	removeRootDomainObject();	
+	removeServiceAgreementTemplate();
+	removeRootDomainObject();
 	deleteDomainObject();
     }
 
