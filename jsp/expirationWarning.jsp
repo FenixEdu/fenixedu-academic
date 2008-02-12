@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt">
 	<head>
 		<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES" /> - <bean:message key="title.login" bundle="GLOBAL_RESOURCES" /></title>
@@ -50,7 +51,8 @@ function check(e,v){
 				</div>
 				<p style="margin-bottom: 0.5em;"><bean:message key="message.expiration.warning"/></p>
 				<p style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
-					<html:link styleClass="button" page="/person/changePasswordForward.do?contextPath=/person" ><bean:message key="link.expiration.warning.change.now"/></html:link>
+					<bean:define id="url" value="<%= "/person/changePasswordForward.do?" +  ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/pessoal/pessoal" %>"/>
+					<html:link styleClass="button" page="<%= url %>" ><bean:message key="link.expiration.warning.change.now"/></html:link>
 					<bean:define id="path" name="path"/>
 					<html:link page="<%= path.toString() %>" styleClass="button"><bean:message key="link.expiration.warning.change.later"/></html:link>
 				</p>
