@@ -323,8 +323,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    degreeCurricularPlanLink.setTarget("_blank");
 
 	    final StudentCurricularPlan studentCurricularPlan = bolonhaStudentEnrollmentBean.getStudentCurricularPlan();
-	    degreeCurricularPlanLink.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "cursos/"
-		    + studentCurricularPlan.getDegree().getSigla() + "/plano-curricular");
+	    degreeCurricularPlanLink.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME,
+		    studentCurricularPlan.getDegree().getSite().getReversePath());
 
 	    degreeCurricularPlanLink.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
 

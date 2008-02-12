@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="org.apache.struts.action.ActionMessages" %>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 
 <logic:present role="STUDENT">
 
@@ -30,11 +31,15 @@
 		</li>
 		<li>
 			<bean:define id="studentCurricularPlan" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan" />
+
+			<app:defineContentPath id="contextPathForUrl" name="studentCurricularPlan" property="degree.site" toScope="request"/>
+			<bean:define id="contextPathForUrl" name="contextPathForUrl" type="java.lang.String"/>
+
 			<bean:define id="degreeId" name="studentCurricularPlan" property="degree.idInternal" />
 			<bean:define id="degreeCurricularPlanId" name="studentCurricularPlan" property="degreeCurricularPlan.idInternal" />
 			<bean:define id="executionPeriodId" name="bolonhaStudentEnrollmentBean" property="executionPeriod.idInternal" />
 			
-			<html:link href="<%=request.getContextPath() + "/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?organizeBy=groups&amp;showRules=false&amp;hideCourses=false&amp;degreeID=" + degreeId + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanId + "&amp;executionPeriodOID=" + executionPeriodId%>" styleClass="externallink" target="_blank">
+			<%= net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%=request.getContextPath() + "/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?organizeBy=groups&amp;showRules=false&amp;hideCourses=false&amp;degreeID=" + degreeId + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanId + "&amp;executionPeriodOID=" + executionPeriodId + "&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + contextPathForUrl%>" styleClass="externallink" target="_blank">
 				<bean:message bundle="STUDENT_RESOURCES"  key="label.viewDegreeCurricularPlan"/>
 			</html:link>
 		</li>
