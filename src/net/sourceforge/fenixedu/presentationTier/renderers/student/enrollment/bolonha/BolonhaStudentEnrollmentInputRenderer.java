@@ -316,7 +316,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	private HtmlLink createDegreeCurricularPlanLink(final StudentCurriculumGroupBean studentCurriculumGroupBean) {
-	    final HtmlLink degreeCurricularPlanLink = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    final HtmlLink degreeCurricularPlanLink = new HtmlLinkWithPreprendedComment(
+		    ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
 	    degreeCurricularPlanLink.setText(studentCurriculumGroupBean.getCurriculumModule().getName().getContent());
 	    degreeCurricularPlanLink.setModuleRelative(false);
 	    degreeCurricularPlanLink.setTarget("_blank");
@@ -324,7 +325,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    final StudentCurricularPlan studentCurricularPlan = bolonhaStudentEnrollmentBean.getStudentCurricularPlan();
 	    degreeCurricularPlanLink.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "cursos/"
 		    + studentCurricularPlan.getDegree().getSigla() + "/plano-curricular");
-	    
+
 	    degreeCurricularPlanLink.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
 
 	    degreeCurricularPlanLink.setParameter("organizeBy", "groups");
