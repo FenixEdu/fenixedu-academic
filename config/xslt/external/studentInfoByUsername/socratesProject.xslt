@@ -54,13 +54,11 @@
 				<xsl:value-of select="./course/curricularYear"/>
 			</ano>	
 		<nota>
-			<valor>
-				<xsl:value-of select="./finalGrade"/>
-			</valor>
-			<escala>
-				<xsl:value-of select="./gradeScale"/>
-			</escala>							
+			<xsl:value-of select="./finalGrade"/>
 		</nota>
+		<escala>
+			<xsl:value-of select="./gradeScale"/>
+		</escala>							
 	</disciplina>						
 </xsl:template> 
 

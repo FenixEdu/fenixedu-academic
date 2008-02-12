@@ -222,4 +222,9 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     abstract public boolean isApproved();
     abstract public ExecutionPeriod getExecutionPeriod();
+    
+    @Override
+    public CurriculumLine getApprovedCurriculumLine(CurricularCourse curricularCourse) {
+        return isApproved(curricularCourse) ? this : null;
+    }
 }

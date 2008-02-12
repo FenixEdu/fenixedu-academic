@@ -101,7 +101,7 @@ public class InfoExternalCurricularCourseInfo
         {
             info.setCurricularYear(new Integer(year).toString());
         }
-        info.setCode(course.getCode());
+        info.setCode(course.getAcronym());
         info.setName(course.getName());
         if (course.getWeigth() != null)
         {

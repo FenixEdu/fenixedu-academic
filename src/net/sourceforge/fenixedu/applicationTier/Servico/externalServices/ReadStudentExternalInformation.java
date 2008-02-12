@@ -34,29 +34,36 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
+import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper;
-import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz </a>
@@ -68,6 +75,10 @@ public class ReadStudentExternalInformation extends Service {
     public Collection run(String username) throws ExcepcaoPersistencia, FenixServiceException {
 	Person person = Person.readPersonByUsername(username);
 
+	if(!person.getStudent().hasAnyActiveRegistration()) {
+	    throw new FenixServiceException("Não tem nenhuma matrícula activa");
+	}
+	
 	if (person.getStudent().getMostSignificantDegreeType().isBolonhaType()) {
 	    return getResultForBolonha(person);
 	} else {
@@ -85,24 +96,166 @@ public class ReadStudentExternalInformation extends Service {
 	info.setNumber(person.getStudent().getNumber().toString());
 
 	info.setDegree(this.buildExternalDegreeCurricularPlanInfoBolonha(studentCycles));
+	
+	setCoursesInformation(info, studentCycles);
 
-	Set externalEnrollmentsInfoBolonha = new HashSet();
-	Set availableRemainingCoursesBolonha = new HashSet();
-	for (CycleCurriculumGroup cycleCurriculumGroup : studentCycles) {
-
-	    externalEnrollmentsInfoBolonha.addAll(this.buildExternalEnrollmentsInfoBolonha(cycleCurriculumGroup));
-	    availableRemainingCoursesBolonha.addAll(this.buildAvailableRemainingCoursesBolonha(cycleCurriculumGroup));
-
-	}
-
-	info.setCourses(externalEnrollmentsInfoBolonha);
-	info.setAvailableRemainingCourses(availableRemainingCoursesBolonha);
 	info.setCurricularYear(getCurriculumYear(studentCycles));
 
 	final double average = getDegreeAverage(studentCycles);
 	info.setAverage(average);
 	result.add(info);
 	return result;
+    }
+
+    private void setCoursesInformation(InfoStudentExternalInformation info, Collection<CycleCurriculumGroup> studentCycles) {
+	for (CycleCurriculumGroup cycleCurriculumGroup : studentCycles) {   
+	    for(CurriculumLine curriculumLine : cycleCurriculumGroup.getApprovedCurriculumLines()) {
+		if(curriculumLine.getDegreeModule() != null) {
+		    addExternalEnrolmentInfoBolonha(info, curriculumLine, cycleCurriculumGroup);
+		    addCurricularCourse(info.getDegree(), curriculumLine.getCurricularCourse(), cycleCurriculumGroup);
+		}
+	    }
+	    
+	    for (CurricularCourse curricularCourse : getStudentRemainingDegree(cycleCurriculumGroup)) {
+		addCurricularCourse(info.getDegree(), curricularCourse, cycleCurriculumGroup);
+		addAvailableRemainingCoursesBolonha(info, curricularCourse, cycleCurriculumGroup);
+	    }
+	}
+    }
+
+    private Set<CurricularCourse> getStudentRemainingDegree(CycleCurriculumGroup cycleCurriculumGroup) {
+	return getRemainingCourses(cycleCurriculumGroup.getDegreeModule(), cycleCurriculumGroup);
+    }
+
+    private Set<CurricularCourse> getRemainingCourses(CourseGroup courseGroup,
+	    CycleCurriculumGroup cycleCurriculumGroup) {
+	if(isClosed(courseGroup, cycleCurriculumGroup)) {
+	    return Collections.emptySet();
+	}
+	
+	Set<CurricularCourse> res = getNotAprovedCourses(courseGroup, cycleCurriculumGroup);
+	for (CourseGroup group : getChildCourseGroups(courseGroup, cycleCurriculumGroup)) {
+	    res.addAll(getRemainingCourses(group, cycleCurriculumGroup));
+	}
+	return res;
+    }
+
+    private Set<CourseGroup> getChildCourseGroups(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
+	CurriculumGroup groupFor = cycleCurriculumGroup.findCurriculumGroupFor(courseGroup);
+
+	if(groupFor != null) {
+	    ICurricularRule degreeModulesRule = courseGroup.getMostRecentActiveCurricularRule(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, null, ExecutionYear.readCurrentExecutionYear());
+	    if(degreeModulesRule != null) {
+		DegreeModulesSelectionLimit degreeModulesSelectionLimit = (DegreeModulesSelectionLimit) degreeModulesRule;
+		if(groupFor.getCurriculumModulesCount() >= degreeModulesSelectionLimit.getMaximumLimit()) {
+		    Set<CourseGroup> res = new HashSet<CourseGroup>();
+		    for (CurriculumModule curriculumModule : groupFor.getCurriculumModules()) {
+			if(!curriculumModule.isLeaf()) {
+			    res.add((CourseGroup) curriculumModule.getDegreeModule());
+			}
+		    }
+		} 
+	    }
+	}
+
+	Set<CourseGroup> res = new HashSet<CourseGroup>();
+	for (Context context : courseGroup.getOpenChildContexts(CourseGroup.class, ExecutionYear.readCurrentExecutionYear())) {
+	    res.add((CourseGroup) context.getChildDegreeModule());
+	}
+	return res;
+    }
+
+    private boolean isClosed(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
+	CurriculumGroup groupFor = cycleCurriculumGroup.findCurriculumGroupFor(courseGroup);
+	if(groupFor == null) {
+	    return false;
+	}
+	
+	ICurricularRule creditsLimitRule = courseGroup.getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT, null, ExecutionYear.readCurrentExecutionYear());
+	if(creditsLimitRule != null) {
+	    CreditsLimit creditsLimit = (CreditsLimit) creditsLimitRule;
+	    if(groupFor.getCreditsConcluded() >= creditsLimit.getMaximumCredits()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    private Set<CurricularCourse> getNotAprovedCourses(CourseGroup courseGroup, CycleCurriculumGroup cycleCurriculumGroup) {
+	Set<CurricularCourse> res = new HashSet<CurricularCourse>();
+	for (Context context : courseGroup.getOpenChildContexts(CurricularCourse.class, ExecutionYear.readCurrentExecutionYear())) {
+	    CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+	    if(!cycleCurriculumGroup.isApproved(curricularCourse)) {
+		res.add(curricularCourse);		
+	    }
+	}	
+	return res;
+    }
+
+    private CurriculumLine getAprovedCurriculumLine(CycleCurriculumGroup cycleCurriculumGroup, CurricularCourse curricularCourse) {
+	return cycleCurriculumGroup.getApprovedCurriculumLine(curricularCourse);
+    }
+
+    private void addAvailableRemainingCoursesBolonha(InfoStudentExternalInformation info, CurricularCourse curricularCourse,
+	    CycleCurriculumGroup cycleCurriculumGroup) {
+	final InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo
+		.newFromDomain(curricularCourse);
+	infoExternalCurricularCourseInfo.setName("" + curricularCourse.getIdInternal() + " " + curricularCourse.getName());
+	if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE
+		&& cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+	    infoExternalCurricularCourseInfo.setCurricularYear((Integer.valueOf(infoExternalCurricularCourseInfo
+		    .getCurricularYear()) + 3)
+		    + "");
+	}
+	info.getAvailableRemainingCourses().add(infoExternalCurricularCourseInfo);
+    }
+
+    private void addExternalEnrolmentInfoBolonha(InfoStudentExternalInformation infoStudentExternalInformation, CurriculumLine curriculumLine, CycleCurriculumGroup cycleCurriculumGroup) {
+	if (curriculumLine.isEnrolment()) {
+	    Enrolment enrolment = (Enrolment) curriculumLine;
+	    InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromEnrollment(enrolment);
+	    info.setGrade(enrolment.getGrade());
+	    if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE && cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+		info.getCourse().setCurricularYear((Integer.valueOf(info.getCourse().getCurricularYear()) + 3) + "");
+	    }
+	    infoStudentExternalInformation.getCourses().add(info);
+	} else if (curriculumLine.isDismissal()) {
+	    Dismissal dismissal = (Dismissal) curriculumLine;
+	    if (dismissal.isCreditsDismissal()) {
+		return;
+	    }
+	    if (dismissal.getCredits().isEquivalence()) {
+		InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromCurricularCourse(dismissal
+			.getCurricularCourse(), dismissal.getCredits().getGrade());
+		if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE && cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+		    info.getCourse().setCurricularYear((Integer.valueOf(info.getCourse().getCurricularYear()) + 3) + "");
+		}
+		infoStudentExternalInformation.getCourses().add(info);
+	    } else if (dismissal.getCredits().isSubstitution() && !dismissal.getSourceIEnrolments().isEmpty()) {
+		Grade grade = getAverage((Substitution) dismissal.getCredits());
+		if(!grade.isEmpty()) {
+		    InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromCurricularCourse(dismissal
+			    .getCurricularCourse(), grade);
+		    if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE && cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+			info.getCourse().setCurricularYear((Integer.valueOf(info.getCourse().getCurricularYear()) + 3) + "");
+		    }
+		    infoStudentExternalInformation.getCourses().add(info);
+		}
+	    }
+	}	
+    }
+
+    private void addCurricularCourse(InfoExternalDegreeCurricularPlanInfo info, CurricularCourse curricularCourse, CycleCurriculumGroup cycleCurriculumGroup) {
+	InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo
+		.newFromDomain(curricularCourse);
+	if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE
+		&& cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+	    infoExternalCurricularCourseInfo.setCurricularYear((Integer.valueOf(infoExternalCurricularCourseInfo
+		    .getCurricularYear()) + 3)
+		    + "");
+	}
+	info.addCourse(infoExternalCurricularCourseInfo);
     }
 
     private int getCurriculumYear(Collection<CycleCurriculumGroup> studentCycles) {
@@ -155,21 +308,35 @@ public class ReadStudentExternalInformation extends Service {
 	    return Collections.singleton(activeRegistration.getActiveStudentCurricularPlan().getRoot().getCycleCurriculumGroup(
 		    CycleType.FIRST_CYCLE));
 	} else if (activeRegistration.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
+	    Set<CycleCurriculumGroup> groups = new HashSet<CycleCurriculumGroup>();
 	    CycleType currentCycleType = activeRegistration.getCurrentCycleType();
 	    if (currentCycleType == CycleType.FIRST_CYCLE) {
-		return Collections.singleton(activeRegistration.getActiveStudentCurricularPlan().getRoot()
+		groups.add(activeRegistration.getActiveStudentCurricularPlan().getRoot()
 			.getCycleCurriculumGroup(CycleType.FIRST_CYCLE));
-	    } else {
-		Set<CycleCurriculumGroup> groups = new HashSet<CycleCurriculumGroup>();
-		groups.add(activeRegistration.getActiveStudentCurricularPlan().getRoot().getCycleCurriculumGroup(
-			CycleType.SECOND_CYCLE));
-
-		CycleCurriculumGroup cycleCurriculumGroup = getConcludedFirstCycle(student);
+		
+		CycleCurriculumGroup cycleCurriculumGroup = activeRegistration.getActiveStudentCurricularPlan().getRoot().getCycleCurriculumGroup(
+			CycleType.SECOND_CYCLE);
+		
 		if (cycleCurriculumGroup != null) {
 		    groups.add(cycleCurriculumGroup);
 		}
-		return groups;
+
+	    } else {
+		groups.add(activeRegistration.getActiveStudentCurricularPlan().getRoot().getCycleCurriculumGroup(
+			CycleType.SECOND_CYCLE));
+
+		CycleCurriculumGroup cycleCurriculumGroup = activeRegistration.getActiveStudentCurricularPlan().getRoot().getCycleCurriculumGroup(
+			CycleType.FIRST_CYCLE);
+		
+		if(cycleCurriculumGroup == null) {
+		    cycleCurriculumGroup = getConcludedFirstCycle(student);
+		}
+		
+		if (cycleCurriculumGroup != null) {
+		    groups.add(cycleCurriculumGroup);
+		}
 	    }
+	    return groups;
 	} else {
 	    Set<CycleCurriculumGroup> groups = new HashSet<CycleCurriculumGroup>();
 	    groups.add(activeRegistration.getActiveStudentCurricularPlan().getRoot().getCycleCurriculumGroup(
@@ -217,26 +384,6 @@ public class ReadStudentExternalInformation extends Service {
 			.newFromDomain(curricularCourse);
 		infoExternalCurricularCourseInfo
 			.setName("" + curricularCourse.getIdInternal() + " " + curricularCourse.getName());
-		availableInfos.add(infoExternalCurricularCourseInfo);
-	    }
-	}
-	return availableInfos;
-    }
-
-    private Collection buildAvailableRemainingCoursesBolonha(final CycleCurriculumGroup cycleCurriculumGroup) {
-	final Collection<CurricularCourse> allCourses = cycleCurriculumGroup.getDegreeModule().getAllOpenCurricularCourses();
-	final Collection<InfoExternalCurricularCourseInfo> availableInfos = new ArrayList<InfoExternalCurricularCourseInfo>();
-	for (final CurricularCourse curricularCourse : allCourses) {
-	    if (hasActiveScope(curricularCourse) && !cycleCurriculumGroup.isApproved(curricularCourse)) {
-		final InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo
-			.newFromDomain(curricularCourse);
-		infoExternalCurricularCourseInfo
-			.setName("" + curricularCourse.getIdInternal() + " " + curricularCourse.getName());
-		if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE && cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-		    infoExternalCurricularCourseInfo.setCurricularYear((Integer.valueOf(infoExternalCurricularCourseInfo
-			    .getCurricularYear()) + 3)
-			    + "");
-		}
 		availableInfos.add(infoExternalCurricularCourseInfo);
 	    }
 	}
@@ -320,48 +467,12 @@ public class ReadStudentExternalInformation extends Service {
 	return enrollments;
     }
 
-    private Collection buildExternalEnrollmentsInfoBolonha(CycleCurriculumGroup cycleCurriculumGroup) {
-	Collection<InfoExternalEnrollmentInfo> curriculumLines = new ArrayList<InfoExternalEnrollmentInfo>();
-
-	for (CurriculumLine curriculumLine : cycleCurriculumGroup.getAllCurriculumLines()) {
-	    if (curriculumLine.isApproved()) {
-		if (curriculumLine.isEnrolment()) {
-		    Enrolment enrolment = (Enrolment) curriculumLine;
-		    InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromEnrollment(enrolment);
-		    info.setGrade(enrolment.getGrade());
-		    if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE && cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-			info.getCourse().setCurricularYear((Integer.valueOf(info.getCourse().getCurricularYear()) + 3) + "");
-		    }
-		    curriculumLines.add(info);
-		} else if (curriculumLine.isDismissal()) {
-		    Dismissal dismissal = (Dismissal) curriculumLine;
-		    if (dismissal.isCreditsDismissal()) {
-			continue;
-		    }
-		    if (dismissal.getCredits().isEquivalence()) {
-			InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromCurricularCourse(dismissal
-				.getCurricularCourse(), dismissal.getCredits().getGrade());
-			if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE && cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-			    info.getCourse().setCurricularYear((Integer.valueOf(info.getCourse().getCurricularYear()) + 3) + "");
-			}
-			curriculumLines.add(info);
-		    } else if (dismissal.getCredits().isSubstitution()) {
-			Grade grade = getAverage((Substitution) dismissal.getCredits());
-			InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromCurricularCourse(dismissal
-				.getCurricularCourse(), grade);
-			if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE && cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-			    info.getCourse().setCurricularYear((Integer.valueOf(info.getCourse().getCurricularYear()) + 3) + "");
-			}
-			curriculumLines.add(info);
-		    }
-		}
-	    }
-	}
-
-	return curriculumLines;
-    }
 
     private Grade getAverage(Substitution substitution) {
+	if(substitution.getEnrolments().size() == 1) {
+	    return substitution.getEnrolments().get(0).getIEnrolment().getGrade();
+	}
+	
 	BigDecimal gradeWeigth = BigDecimal.ZERO;
 	BigDecimal weigth = BigDecimal.ZERO;
 	for (EnrolmentWrapper enrolmentWrapper : substitution.getEnrolments()) {
@@ -369,14 +480,25 @@ public class ReadStudentExternalInformation extends Service {
 	    if (grade.getGradeScale() == GradeScale.TYPEAP && grade.isApproved()) {
 		return grade;
 	    }
-	    gradeWeigth = gradeWeigth.add(BigDecimal.valueOf(Long.valueOf(grade.getValue())).multiply(
-		    BigDecimal.valueOf(enrolmentWrapper.getIEnrolment().getWeigth())));
-	    weigth = weigth.add(BigDecimal.valueOf(enrolmentWrapper.getIEnrolment().getWeigth()));
+	    gradeWeigth = gradeWeigth.add(enrolmentWrapper.getIEnrolment().getWeigthTimesGrade());
+	    weigth = weigth.add(enrolmentWrapper.getIEnrolment().getWeigthForCurriculum());
+	}
+	
+	if(weigth.compareTo(BigDecimal.ZERO) == 0) {
+	    gradeWeigth = BigDecimal.ZERO;
+	    for (EnrolmentWrapper enrolmentWrapper : substitution.getEnrolments()) {
+		Grade grade = enrolmentWrapper.getIEnrolment().getGrade();
+		if (grade.getGradeScale() == GradeScale.TYPEAP && grade.isApproved()) {
+		    return grade;
+		}
+		gradeWeigth = gradeWeigth.add(BigDecimal.valueOf(Double.valueOf(enrolmentWrapper.getIEnrolment().getGradeValue())));
+	    }	    
+	    weigth = new BigDecimal(substitution.getEnrolmentsCount());
 	}
 
-	BigDecimal res = gradeWeigth.divide(weigth);
+	BigDecimal res = gradeWeigth.divide(weigth, 0, RoundingMode.HALF_UP);
 
-	return Grade.createGrade(res.setScale(0, RoundingMode.HALF_UP).toString(), GradeScale.TYPE20);
+	return Grade.createGrade(res.toString(), GradeScale.TYPE20);
 
     }
 
@@ -384,10 +506,8 @@ public class ReadStudentExternalInformation extends Service {
 	InfoExternalDegreeCurricularPlanInfo info = new InfoExternalDegreeCurricularPlanInfo();
 	DegreeCurricularPlan degreeCurricularPlan = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
 
-	final String degreeCode = degreeCurricularPlan.getDegree().getSigla();
-	final String name = degreeCode.indexOf('-') > 0 ? StringUtils.substringBefore(degreeCode, "-") : degreeCode;
-	info.setName(name);
-	info.setCode(degreeCurricularPlan.getDegree().getIdInternal().toString());
+	info.setName(degreeCurricularPlan.getDegree().getName());
+	info.setCode(degreeCurricularPlan.getDegree().getSigla());
 	info.setBranch(this.buildExternalDegreeBranchInfo(registration));
 
 	Collection courses = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
@@ -416,25 +536,10 @@ public class ReadStudentExternalInformation extends Service {
 	    Collection<CycleCurriculumGroup> studentCycles) {
 	InfoExternalDegreeCurricularPlanInfo info = new InfoExternalDegreeCurricularPlanInfo();
 	DegreeCurricularPlan degreeCurricularPlan = getCycleDegree(studentCycles);
-
-	final String degreeCode = degreeCurricularPlan.getDegree().getSigla();
-	final String name = degreeCode.indexOf('-') > 0 ? StringUtils.substringBefore(degreeCode, "-") : degreeCode;
-	info.setName(name);
-	info.setCode(degreeCurricularPlan.getDegree().getIdInternal().toString());
+	
+	info.setName(degreeCurricularPlan.getDegree().getName());
+	info.setCode(degreeCurricularPlan.getDegree().getSigla());
 	info.setBranch(null);
-
-	for (CycleCurriculumGroup cycleCurriculumGroup : studentCycles) {
-	    for (CurricularCourse curricularCourse : cycleCurriculumGroup.getDegreeModule().getAllOpenCurricularCourses()) {
-		InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo
-			.newFromDomain(curricularCourse);
-		if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE && cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-		    infoExternalCurricularCourseInfo.setCurricularYear((Integer.valueOf(infoExternalCurricularCourseInfo
-			    .getCurricularYear()) + 3)
-			    + "");
-		}
-		info.addCourse(infoExternalCurricularCourseInfo);
-	    }
-	}
 
 	return info;
     }

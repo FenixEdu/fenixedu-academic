@@ -393,6 +393,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return null;
     }
+    
+    @Override
+    final public CurriculumLine getApprovedCurriculumLine(final CurricularCourse curricularCourse) {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    final CurriculumLine curriculumLine = curriculumModule.getApprovedCurriculumLine(curricularCourse);
+	    if (curriculumLine != null) {
+		return curriculumLine;
+	    }
+	}
+	return null;
+    }
 
     public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
 	if (getDegreeModule() == courseGroup) {

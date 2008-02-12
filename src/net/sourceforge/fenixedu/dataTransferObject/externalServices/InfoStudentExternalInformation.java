@@ -6,6 +6,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -18,8 +19,8 @@ public class InfoStudentExternalInformation
     private String number;
     private InfoExternalPersonInfo person;
     private InfoExternalDegreeCurricularPlanInfo degree;
-    private Collection courses;
-    private Collection availableRemainingCourses; // courses that the student must choose from
+    private Collection courses = new ArrayList();
+    private Collection availableRemainingCourses = new ArrayList(); // courses that the student must choose from
     private int curricularYear;
     private double average;
 
