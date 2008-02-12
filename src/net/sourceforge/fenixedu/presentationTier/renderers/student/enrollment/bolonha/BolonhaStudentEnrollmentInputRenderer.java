@@ -66,7 +66,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	return initialWidth;
     }
 
-    public void setInitialWidth(Integer initialWidth) {
+    public void setInitialWidth(final Integer initialWidth) {
 	this.initialWidth = initialWidth;
     }
 
@@ -74,7 +74,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	return widthDecreasePerLevel;
     }
 
-    public void setWidthDecreasePerLevel(Integer widthDecreasePerLevel) {
+    public void setWidthDecreasePerLevel(final Integer widthDecreasePerLevel) {
 	this.widthDecreasePerLevel = widthDecreasePerLevel;
     }
 
@@ -82,7 +82,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	return tablesClasses;
     }
 
-    public void setTablesClasses(String tablesClasses) {
+    public void setTablesClasses(final String tablesClasses) {
 	this.tablesClasses = tablesClasses;
     }
 
@@ -90,7 +90,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	return groupRowClasses;
     }
 
-    public void setGroupRowClasses(String groupRowClasses) {
+    public void setGroupRowClasses(final String groupRowClasses) {
 	this.groupRowClasses = groupRowClasses;
     }
 
@@ -98,7 +98,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	return enrolmentClasses.split(",");
     }
 
-    public void setEnrolmentClasses(String enrolmentClasses) {
+    public void setEnrolmentClasses(final String enrolmentClasses) {
 	this.enrolmentClasses = enrolmentClasses;
     }
 
@@ -126,7 +126,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	return curricularCoursesToEnrolClasses.split(",");
     }
 
-    public void setCurricularCourseToEnrolClasses(String curricularCoursesToEnrol) {
+    public void setCurricularCourseToEnrolClasses(final String curricularCoursesToEnrol) {
 	this.curricularCoursesToEnrolClasses = curricularCoursesToEnrol;
     }
 
@@ -150,7 +150,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	return temporaryEnrolmentClasses.split(",");
     }
 
-    public void setTemporaryEnrolmentClasses(String enrolmentClasses) {
+    public void setTemporaryEnrolmentClasses(final String enrolmentClasses) {
 	this.temporaryEnrolmentClasses = enrolmentClasses;
     }
 
@@ -178,7 +178,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	return impossibleEnrolmentClasses.split(",");
     }
 
-    public void setImpossibleEnrolmentClasses(String enrolmentClasses) {
+    public void setImpossibleEnrolmentClasses(final String enrolmentClasses) {
 	this.impossibleEnrolmentClasses = enrolmentClasses;
     }
 
@@ -207,7 +207,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
     }
 
     @Override
-    protected Layout getLayout(Object object, Class type) {
+    protected Layout getLayout(final Object object, final Class type) {
 	return new BolonhaStudentEnrolmentLayout();
     }
 
@@ -220,7 +220,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	private BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = null;
 
 	@Override
-	public HtmlComponent createComponent(Object object, Class type) {
+	public HtmlComponent createComponent(final Object object, final Class type) {
 	    bolonhaStudentEnrollmentBean = (BolonhaStudentEnrollmentBean) object;
 
 	    if (bolonhaStudentEnrollmentBean == null) {
@@ -229,12 +229,12 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	    final HtmlBlockContainer container = new HtmlBlockContainer();
 
-	    HtmlMultipleHiddenField hiddenEnrollments = new HtmlMultipleHiddenField();
+	    final HtmlMultipleHiddenField hiddenEnrollments = new HtmlMultipleHiddenField();
 	    hiddenEnrollments.bind(getInputContext().getMetaObject(), "curriculumModulesToRemove");
 	    hiddenEnrollments.setConverter(new DomainObjectKeyArrayConverter());
 	    hiddenEnrollments.setController(enrollmentsController);
 
-	    HtmlMultipleHiddenField hiddenDegreeModulesToEvaluate = new HtmlMultipleHiddenField();
+	    final HtmlMultipleHiddenField hiddenDegreeModulesToEvaluate = new HtmlMultipleHiddenField();
 	    hiddenDegreeModulesToEvaluate.bind(getInputContext().getMetaObject(), "degreeModulesToEvaluate");
 	    hiddenDegreeModulesToEvaluate.setConverter(bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluateConverter());
 	    hiddenDegreeModulesToEvaluate.setController(degreeModulesToEvaluateController);
@@ -301,8 +301,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		}
 	    };
 
-	    MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(studentCurriculumGroupBean.getCurriculumModule(),
-		    new Schema(CurriculumGroup.class));
+	    final MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(studentCurriculumGroupBean
+		    .getCurriculumModule(), new Schema(CurriculumGroup.class));
 	    checkBox.setName("enrolmentCheckBox" + studentCurriculumGroupBean.getCurriculumModule().getIdInternal());
 	    checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
 	    checkBoxCell.setBody(checkBox);
@@ -348,12 +348,13 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    return coursesTable;
 	}
 
-	private void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean) {
+	private void generateCurricularCoursesToEnrol(final HtmlTable groupTable,
+		final StudentCurriculumGroupBean studentCurriculumGroupBean) {
 	    final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean.getSortedDegreeModulesToEvaluate();
 
 	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : coursesToEvaluate) {
-		HtmlTableRow htmlTableRow = groupTable.createRow();
-		HtmlTableCell cellName = htmlTableRow.createCell();
+		final HtmlTableRow htmlTableRow = groupTable.createRow();
+		final HtmlTableCell cellName = htmlTableRow.createCell();
 		cellName.setClasses(getCurricularCourseToEnrolNameClasses());
 		cellName.setBody(new HtmlText(degreeModuleToEvaluate.getName()));
 
@@ -373,10 +374,10 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 			    studentResources.getString("label.credits.abbreviation"));
 		    ectsCell.setBody(new HtmlText(ects.toString()));
 
-		    HtmlTableCell checkBoxCell = htmlTableRow.createCell();
+		    final HtmlTableCell checkBoxCell = htmlTableRow.createCell();
 		    checkBoxCell.setClasses(getCurricularCourseToEnrolCheckBoxClasses());
 
-		    HtmlCheckBox checkBox = new HtmlCheckBox(false);
+		    final HtmlCheckBox checkBox = new HtmlCheckBox(false);
 		    checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEvaluate.getKey());
 		    checkBox.setUserValue(degreeModuleToEvaluate.getKey());
 		    degreeModulesToEvaluateController.addCheckBox(checkBox);
@@ -386,7 +387,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		    cell.setClasses(getCurricularCourseToEnrolEctsClasses());
 		    cell.setBody(new HtmlText(""));
 
-		    HtmlTableCell linkTableCell = htmlTableRow.createCell();
+		    final HtmlTableCell linkTableCell = htmlTableRow.createCell();
 		    linkTableCell.setClasses(getCurricularCourseToEnrolCheckBoxClasses());
 
 		    final HtmlActionLink actionLink = new HtmlActionLink();
@@ -421,11 +422,11 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    }
 	}
 
-	private void generateEnrolment(final HtmlTable groupTable, Enrolment enrolment, final String enrolmentNameClasses,
+	private void generateEnrolment(final HtmlTable groupTable, final Enrolment enrolment, final String enrolmentNameClasses,
 		final String enrolmentYearClasses, final String enrolmentSemesterClasses, final String enrolmentEctsClasses,
 		final String enrolmentCheckBoxClasses) {
-	    HtmlTableRow htmlTableRow = groupTable.createRow();
-	    HtmlTableCell cellName = htmlTableRow.createCell();
+	    final HtmlTableRow htmlTableRow = groupTable.createRow();
+	    final HtmlTableCell cellName = htmlTableRow.createCell();
 	    cellName.setClasses(enrolmentNameClasses);
 	    cellName.setBody(new HtmlText(getPresentationNameFor(enrolment)));
 
@@ -455,14 +456,14 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		    studentResources.getString("label.credits.abbreviation"));
 	    ectsCell.setBody(new HtmlText(ects.toString()));
 
-	    MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(enrolment, new Schema(Enrolment.class));
+	    final MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(enrolment, new Schema(Enrolment.class));
 
-	    HtmlCheckBox checkBox = new HtmlCheckBox(true);
+	    final HtmlCheckBox checkBox = new HtmlCheckBox(true);
 	    checkBox.setName("enrolmentCheckBox" + enrolment.getIdInternal());
 	    checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
 	    enrollmentsController.addCheckBox(checkBox);
 
-	    HtmlTableCell cellCheckBox = htmlTableRow.createCell();
+	    final HtmlTableCell cellCheckBox = htmlTableRow.createCell();
 	    cellCheckBox.setClasses(enrolmentCheckBoxClasses);
 	    cellCheckBox.setBody(checkBox);
 	}
@@ -478,8 +479,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    }
 	}
 
-	private void generateGroups(HtmlBlockContainer blockContainer, StudentCurriculumGroupBean studentCurriculumGroupBean,
-		StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, int depth) {
+	private void generateGroups(final HtmlBlockContainer blockContainer,
+		final StudentCurriculumGroupBean studentCurriculumGroupBean, final StudentCurricularPlan studentCurricularPlan,
+		final ExecutionPeriod executionPeriod, final int depth) {
 	    final List<IDegreeModuleToEvaluate> courseGroupsToEnrol = studentCurriculumGroupBean
 		    .getCourseGroupsToEnrolSortedByContext();
 	    final List<StudentCurriculumGroupBean> curriculumGroups = studentCurriculumGroupBean
@@ -496,8 +498,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 			    + getWidthDecreasePerLevel());
 		    courseGroupsToEnrol.remove(0);
 		} else {
-		    Context context = courseGroupsToEnrol.get(0).getContext();
-		    CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumGroups.get(0).getCurriculumModule();
+		    final Context context = courseGroupsToEnrol.get(0).getContext();
+		    final CurriculumGroup curriculumGroup = curriculumGroups.get(0).getCurriculumModule();
 		    if (curriculumGroup.getChildOrder(executionPeriod) <= context.getChildOrder()) {
 			generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionPeriod, depth
 				+ getWidthDecreasePerLevel());
@@ -511,21 +513,22 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    }
 	}
 
-	private void generateCourseGroupToEnroll(HtmlBlockContainer blockContainer, IDegreeModuleToEvaluate degreeModuleToEnrol,
-		StudentCurricularPlan studentCurricularPlan, int depth) {
+	private void generateCourseGroupToEnroll(final HtmlBlockContainer blockContainer,
+		final IDegreeModuleToEvaluate degreeModuleToEnrol, final StudentCurricularPlan studentCurricularPlan,
+		final int depth) {
 	    final CourseGroup courseGroup = (CourseGroup) degreeModuleToEnrol.getContext().getChildDegreeModule();
 	    if (courseGroup.isCycleCourseGroup()) {
 		return;
 	    }
 
 	    final HtmlTable groupTable = createGroupTable(blockContainer, depth);
-	    HtmlTableRow htmlTableRow = groupTable.createRow();
+	    final HtmlTableRow htmlTableRow = groupTable.createRow();
 	    htmlTableRow.setClasses(getGroupRowClasses());
 	    htmlTableRow.createCell().setBody(new HtmlText(degreeModuleToEnrol.getContext().getChildDegreeModule().getName()));
-	    HtmlTableCell cell = htmlTableRow.createCell();
+	    final HtmlTableCell cell = htmlTableRow.createCell();
 	    cell.setClasses("aright");
 
-	    HtmlCheckBox checkBox = new HtmlCheckBox(false);
+	    final HtmlCheckBox checkBox = new HtmlCheckBox(false);
 	    final String name = StringAppender.append("degreeModuleToEnrolCheckBox", degreeModuleToEnrol.getContext()
 		    .getIdInternal().toString(), ":", degreeModuleToEnrol.getCurriculumGroup().getIdInternal().toString());
 	    checkBox.setName(name);
@@ -536,20 +539,21 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	private void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container,
-		final StudentCurricularPlan studentCurricularPlan, int depth) {
+		final StudentCurricularPlan studentCurricularPlan, final int depth) {
 
 	    for (final CycleType cycleType : studentCurricularPlan.getSupportedCycleTypesToEnrol()) {
 		generateCycleCourseGroupToEnrol(container, cycleType, depth + getWidthDecreasePerLevel());
 	    }
 	}
 
-	private void generateCycleCourseGroupToEnrol(HtmlBlockContainer container, CycleType cycleType, int depth) {
+	private void generateCycleCourseGroupToEnrol(final HtmlBlockContainer container, final CycleType cycleType,
+		final int depth) {
 
 	    final HtmlTable groupTable = createGroupTable(container, depth);
-	    HtmlTableRow htmlTableRow = groupTable.createRow();
+	    final HtmlTableRow htmlTableRow = groupTable.createRow();
 	    htmlTableRow.setClasses(getGroupRowClasses());
 	    htmlTableRow.createCell().setBody(new HtmlText(RenderUtils.getEnumString(cycleType)));
-	    HtmlTableCell cell = htmlTableRow.createCell();
+	    final HtmlTableCell cell = htmlTableRow.createCell();
 	    cell.setClasses("aright");
 
 	    final HtmlActionLink actionLink = new HtmlActionLink();
@@ -568,7 +572,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	 * 
 	 */
 	private static final long serialVersionUID = 2760270166511466030L;
-	private IDegreeModuleToEvaluate degreeModuleToEnrol;
+	private final IDegreeModuleToEvaluate degreeModuleToEnrol;
 
 	public OptionalCurricularCourseLinkController(final IDegreeModuleToEvaluate degreeModuleToEnrol) {
 	    this.degreeModuleToEnrol = degreeModuleToEnrol;
@@ -580,7 +584,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	@Override
-	public void linkPressed(IViewState viewState, HtmlActionLink link) {
+	public void linkPressed(final IViewState viewState, final HtmlActionLink link) {
 	    ((BolonhaStudentEnrollmentBean) viewState.getMetaObject().getObject())
 		    .setOptionalDegreeModuleToEnrol(this.degreeModuleToEnrol);
 
@@ -593,7 +597,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	 */
 	private static final long serialVersionUID = -5469571160954095720L;
 
-	private CycleType cycleTypeToEnrol;
+	private final CycleType cycleTypeToEnrol;
 
 	public CycleSelectionLinkController(final CycleType cycleTypeToEnrol) {
 	    this.cycleTypeToEnrol = cycleTypeToEnrol;
@@ -605,7 +609,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	@Override
-	public void linkPressed(IViewState viewState, HtmlActionLink link) {
+	public void linkPressed(final IViewState viewState, final HtmlActionLink link) {
 	    final BolonhaStudentEnrollmentBean studentEnrollmentBean = (BolonhaStudentEnrollmentBean) viewState.getMetaObject()
 		    .getObject();
 	    studentEnrollmentBean.setCycleTypeToEnrol(this.cycleTypeToEnrol);
