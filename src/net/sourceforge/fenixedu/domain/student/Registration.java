@@ -945,6 +945,34 @@ public class Registration extends Registration_Base {
 	result.addAll(getEnrolmentsExecutionYears());
 	return result;
     }
+    
+    public Set<ExecutionYear> getAllRelatedRegistrationsEnrolmentsExecutionYears(Set<ExecutionYear> result) {
+	if(result == null){
+	    result = new HashSet<ExecutionYear>();
+	}
+	result.addAll(getEnrolmentsExecutionYears());
+
+	if(this.isBolonha()){
+	    Registration source = hasSourceRegistration() ? getSourceRegistration() : getSourceRegistrationForTransition();
+	    if(source != null){
+		source.getAllRelatedRegistrationsEnrolmentsExecutionYears(result);
+	    }
+	    
+	}else{
+	    List<Registration> registrations = getStudent().getRegistrations();
+	    for (Registration registration : registrations) {
+		if(registration != this && !registration.isBolonha()){
+		    if(registration.isConcluded()){
+			System.out.println("SHIT!! :: " + registration.getNumber());
+		    }else{
+			result.addAll(registration.getEnrolmentsExecutionYears());
+		    }
+		}
+	    }
+	}
+	
+	return result;
+    }
 
     public Collection<ExecutionYear> getCurriculumLinesExecutionYears() {
 	final Collection<ExecutionYear> result = new ArrayList<ExecutionYear>();
