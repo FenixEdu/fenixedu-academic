@@ -12,7 +12,7 @@
 
 <p class="mtop2 mbottom05">Antes de prosseguir com a inscrição em disciplinas, para facilitar o processo tome conhecimento de:</p>
 <ul class="mtop05">
-	<li>regulamento oficial de inscrições: <a href="http://cd.ist.utl.pt/documentos/regciclo.pdf">Regulamentos dos Cursos de 1º e 2º Ciclo</a> (PDF, 159KB) "Regulamento de Matrículas e Inscrições" (pág. 21)</li>
+	<li>regulamento oficial de inscrições: <a href="http://www.ist.utl.pt/files/ensino/reg_1e2ciclo_20072008.pdf">Regulamentos dos Cursos de 1º e 2º Ciclo</a> (PDF, 159KB) "Regulamento de Matrículas e Inscrições" (pág. 21)</li>
 	<li>regras de inscrição do seu curso</li>
 	<li>disciplinas a que se pretende inscrever</li>
 </ul>
