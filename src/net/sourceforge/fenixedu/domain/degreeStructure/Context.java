@@ -137,9 +137,9 @@ public class Context extends Context_Base implements Comparable<Context> {
 		if (periodsCompare != 0) {
 		    return periodsCompare;
 		}
-		return this.getChildDegreeModule().getName().compareTo(o.getChildDegreeModule().getName());
+		return Collator.getInstance().compare(this.getChildDegreeModule().getName(), o.getChildDegreeModule().getName());
 	    } else {
-		return this.getChildDegreeModule().getName().compareTo(o.getChildDegreeModule().getName());
+		return Collator.getInstance().compare(this.getChildDegreeModule().getName(), o.getChildDegreeModule().getName());
 	    }
 	}
     }
@@ -305,8 +305,8 @@ public class Context extends Context_Base implements Comparable<Context> {
 	@Override
 	public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
 	    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-	    return getCurricularCourse().isAnual(executionYear) ? 
-		    	getContext().isValid(executionYear) : getContext().isValid(executionPeriod);
+	    return getCurricularCourse().isAnual(executionYear) ? getContext().isValid(executionYear) : getContext().isValid(
+		    executionPeriod);
 	}
 
 	@Override
