@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -66,6 +67,11 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
     @Override
     public boolean isFor(DegreeModule degreeModule) {
 	return getDegreeModule() == degreeModule || getOptionalCurricularCourse() == degreeModule;
+    }
+
+    @Override
+    public boolean isAnnualCurricularCourse(ExecutionYear executionYear) {
+	return getOptionalCurricularCourse().isAnual(executionYear);
     }
 
 }
