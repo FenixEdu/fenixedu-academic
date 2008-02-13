@@ -35,7 +35,7 @@
 	</span>
 </p>
 
-<logic:empty name="site" property="orderedTopLevelSections">
+<logic:empty name="site" property="directChildrenAsContent">
     <p>
         <span class="warning0">
             <bean:message key="message.sections.empty" bundle="SITE_RESOURCES"/>
@@ -93,6 +93,7 @@
 	<em><bean:message key="message.section.reorder.tip" bundle="SITE_RESOURCES"/></em>
 </p>
 
+</logic:notEmpty>
 <!-- Functionalities -->
 
 <h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
@@ -142,7 +143,4 @@
 			 </div>
 			
 	</logic:iterate>
-</logic:notEmpty>
-
-
 </logic:notEmpty>

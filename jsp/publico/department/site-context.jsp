@@ -34,7 +34,7 @@
     </html:link>
     
     &nbsp;&gt;&nbsp;
-    <%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link page="/department/showDepartments.faces">
+    <html:link page="/department/showDepartments.faces">
         <bean:message key="academic.units" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
         

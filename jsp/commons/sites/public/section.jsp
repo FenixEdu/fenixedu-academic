@@ -42,12 +42,6 @@
 		</fr:layout>
 	</fr:view>
 
-    <logic:empty name="protectedItems">
-		<p>
-			<em><bean:message key="message.section.empty" bundle="SITE_RESOURCES"/></em>
-		</p>
-    </logic:empty>
-
     <logic:notEmpty name="protectedItems">
        	
        	<logic:iterate id="protectedItem" name="protectedItems">

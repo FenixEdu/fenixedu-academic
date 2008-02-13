@@ -35,10 +35,10 @@
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="structure"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;
+                <%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
                 <html:link page="/publico/department/showDepartments.faces" module="">
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="academic.units"/>
                 </html:link>
-                <%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
                 &nbsp;&gt;&nbsp;            
                 <bean:define id="currentDepartment" name="homepage" property="person.employee.currentDepartmentWorkingPlace"/>
 				<app:contentLink name="currentDepartment" property="departmentUnit.site">
