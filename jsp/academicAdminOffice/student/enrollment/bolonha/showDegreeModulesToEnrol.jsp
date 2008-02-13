@@ -77,7 +77,6 @@
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.back" onclick="this.form.method.value='backToStudentEnrollments';"><bean:message bundle="APPLICATION_RESOURCES"  key="label.back"/></html:submit>			
 		</p>
 		
-		
 		<fr:edit id="bolonhaStudentEnrolments" name="bolonhaStudentEnrollmentBean">
 			<fr:layout name="bolonha-student-enrolment">
 				<fr:property name="enrolmentClasses" value="se_enrolled smalltxt,se_enrolled smalltxt aright,se_enrolled smalltxt aright,se_enrolled smalltxt aright,se_enrolled aright" />
@@ -87,7 +86,6 @@
 				<fr:property name="groupRowClasses" value="se_groups" />
 			</fr:layout>
 		</fr:edit>
-		
 		
 		<p class="mtop15 mbottom05"><bean:message bundle="APPLICATION_RESOURCES"  key="label.saveChanges.message"/>:</p>
 		<p class="mtop05 mbottom1">
@@ -100,6 +98,11 @@
 
 
 <p class="mtop2 mbottom0"><em><bean:message bundle="APPLICATION_RESOURCES" key="label.legend"/>:</em></p>
+
+<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.minCredits" bundle="APPLICATION_RESOURCES"/></em></p>
+<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.maxCredits" bundle="APPLICATION_RESOURCES"/></em></p>
+<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.creditsConcluded" bundle="APPLICATION_RESOURCES"/></em></p>
+
 <table class="mtop0">
 <tr>
 	<td><div style="width: 10px; height: 10px; border: 1px solid #84b181; background: #eff9ee; float:left;"></div></td>

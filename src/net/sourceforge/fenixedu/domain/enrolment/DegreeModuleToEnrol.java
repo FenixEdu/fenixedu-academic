@@ -7,6 +7,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -148,6 +149,15 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 
     public boolean isFor(DegreeModule degreeModule) {
 	return getDegreeModule() == degreeModule;
+    }
+
+    public boolean isAnnualCurricularCourse(ExecutionYear executionYear) {
+	if (getDegreeModule().isLeaf()) {
+	    return ((CurricularCourse) getDegreeModule()).isAnual(executionYear);
+	}
+
+	return false;
+
     }
 
 }

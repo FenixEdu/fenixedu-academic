@@ -113,7 +113,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final DegreeType degreeType1 = studentCurricularPlan1.getDegreeType();
 	    final DegreeType degreeType2 = studentCurricularPlan2.getDegreeType();
 	    return degreeType1.compareTo(degreeType2);
-	}	
+	}
     };
 
     static final public Comparator<StudentCurricularPlan> STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE = new BeanComparator(
@@ -272,6 +272,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public boolean hasConcludedCycle(CycleType cycleType) {
 	return getRoot().hasConcludedCycle(cycleType);
+    }
+
+    public boolean hasConcludedAnyInternalCycle() {
+	for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGrops()) {
+	    if (cycleCurriculumGroup.isConcluded()) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {

@@ -134,14 +134,21 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	RuleResult result = RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
 		.getAllChildDegreeModulesToEvaluateFor(sourceDegreeModuleToEvaluate.getDegreeModule())) {
-	    if (degreeModuleToEvaluate.isLeaf()
-		    && hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYear, degreeModuleToEvaluate
-			    .getContext().getCurricularYear())) {
+	    if (degreeModuleToEvaluate.isLeaf()) {
 
-		if (degreeModuleToEvaluate.isEnroled()) {
-		    result = result.and(createImpossibleRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
-		} else {
-		    result = result.and(createFalseRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
+		if (degreeModuleToEvaluate.isAnnualCurricularCourse(enrolmentContext.getExecutionPeriod().getExecutionYear())
+			&& degreeModuleToEvaluate.getContext() == null) {
+		    continue;
+		}
+
+		if (hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYear, degreeModuleToEvaluate
+			.getContext().getCurricularYear())) {
+
+		    if (degreeModuleToEvaluate.isEnroled()) {
+			result = result.and(createImpossibleRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
+		    } else {
+			result = result.and(createFalseRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
+		    }
 		}
 	    }
 	}
@@ -631,6 +638,12 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    if (degreeModuleToEvaluate.isLeaf() && degreeModuleToEvaluate.getCurriculumGroup() != null
 		    && degreeModuleToEvaluate.getCurriculumGroup().getDegreeModule() == courseGroup) {
+
+		if (degreeModuleToEvaluate.isAnnualCurricularCourse(enrolmentContext.getExecutionPeriod().getExecutionYear())
+			&& degreeModuleToEvaluate.getContext() == null) {
+		    continue;
+		}
+
 		result.add(degreeModuleToEvaluate.getContext());
 	    }
 	}
@@ -700,6 +713,12 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
 		.getAllChildDegreeModulesToEvaluateFor(sourceDegreeModuleToEvaluate.getDegreeModule())) {
 	    if (degreeModuleToEvaluate.isLeaf()) {
+
+		if (degreeModuleToEvaluate.isAnnualCurricularCourse(enrolmentContext.getExecutionPeriod().getExecutionYear())
+			&& degreeModuleToEvaluate.getContext() == null) {
+		    continue;
+		}
+
 		if (hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYearWithTemporaries,
 			degreeModuleToEvaluate.getContext().getCurricularYear())) {
 

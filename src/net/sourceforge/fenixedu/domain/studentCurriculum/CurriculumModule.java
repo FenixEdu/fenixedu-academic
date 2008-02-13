@@ -64,7 +64,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public boolean isCycleCurriculumGroup() {
 	return false;
     }
-    
+
     public boolean isNoCourseGroupCurriculumGroup() {
 	return false;
     }
@@ -80,7 +80,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public boolean isCreditsDismissal() {
 	return false;
     }
-    
+
     abstract public boolean isLeaf();
 
     abstract public boolean isRoot();
@@ -90,7 +90,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public List<Enrolment> getEnrolments();
 
     public abstract StudentCurricularPlan getStudentCurricularPlan();
-    
+
     /**
      * Temporary method, after all degrees migration this is no longer necessary
      * 
@@ -144,14 +144,21 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	final Set<ICurricularRule> result = hasCurriculumGroup() ? getCurriculumGroup().getCurricularRules(executionPeriod)
 		: new HashSet<ICurricularRule>();
 	result.addAll(getDegreeModule().getCurricularRules(executionPeriod));
-	
+
 	return result;
     }
 
     public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
-	return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, getCurriculumGroup().getDegreeModule(), executionYear);
+	return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, getCurriculumGroup().getDegreeModule(),
+		executionYear);
     }
-    
+
+    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType,
+	    final ExecutionPeriod executionPeriod) {
+	return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, getCurriculumGroup().getDegreeModule(),
+		executionPeriod);
+    }
+
     public String getFullPath() {
 	if (isRoot()) {
 	    return getName().getContent();
@@ -163,23 +170,23 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public boolean isFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getDegreeModule().getParentDegreeCurricularPlan() == degreeCurricularPlan;
     }
-    
+
     public boolean isConcluded() {
 	return isConcluded(getApprovedCurriculumLinesLastExecutionYear());
     }
-    
+
     public ExecutionYear getApprovedCurriculumLinesLastExecutionYear() {
 	final SortedSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
-	
+
 	for (final CurriculumLine curriculumLine : getApprovedCurriculumLines()) {
 	    if (curriculumLine.hasExecutionPeriod()) {
 		executionYears.add(curriculumLine.getExecutionPeriod().getExecutionYear());
 	    }
 	}
-	
+
 	return executionYears.isEmpty() ? ExecutionYear.readCurrentExecutionYear() : executionYears.last();
     }
-    
+
     final public Collection<CurriculumLine> getApprovedCurriculumLines() {
 	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
 	addApprovedCurriculumLines(result);
@@ -187,7 +194,8 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
 
     final public CurriculumLine getLastApprovement() {
-    	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE_AND_ID);
+	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(
+		CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE_AND_ID);
 	curriculumLines.addAll(getApprovedCurriculumLines());
 
 	if (curriculumLines.isEmpty()) {
@@ -208,15 +216,15 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public Curriculum getCurriculum() {
 	return getCurriculum(null);
     }
-    
+
     public BigDecimal calculateAverage() {
-        return getCurriculum().getAverage();
+	return getCurriculum().getAverage();
     }
-    
+
     public Integer calculateRoundedAverage() {
-        return getCurriculum().getRoundedAverage();
+	return getCurriculum().getRoundedAverage();
     }
-    
+
     public Double getCreditsConcluded() {
 	return getCreditsConcluded(getApprovedCurriculumLinesLastExecutionYear());
     }
@@ -258,17 +266,17 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public void collectDismissals(final List<Dismissal> result);
 
     abstract public void getAllDegreeModules(Collection<DegreeModule> degreeModules);
-    
+
     abstract public Set<CurriculumLine> getAllCurriculumLines();
 
     abstract protected boolean isConcluded(ExecutionYear executionYear);
-    
+
     abstract public boolean hasConcluded(DegreeModule degreeModule, ExecutionYear executionYear);
 
     public abstract YearMonthDay calculateConclusionDate();
 
     abstract public Curriculum getCurriculum(final ExecutionYear executionYear);
-    
+
     abstract public Double getCreditsConcluded(ExecutionYear executionYear);
 
     abstract public boolean isPropaedeutic();

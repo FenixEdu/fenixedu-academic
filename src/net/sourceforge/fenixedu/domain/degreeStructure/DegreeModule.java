@@ -248,7 +248,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
 	return result;
     }
-    
+
     public boolean hasAnyParentContexts(final ExecutionPeriod executionPeriod) {
 	for (final Context context : getParentContextsSet()) {
 	    if (executionPeriod == null || context.isValid(executionPeriod)) {
@@ -258,7 +258,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
 	return false;
     }
-    
+
     public boolean isBolonhaDegree() {
 	return getParentDegreeCurricularPlan().isBolonhaDegree();
     }
@@ -347,13 +347,27 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	return result;
     }
 
-    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final CourseGroup parentCourseGroup, final ExecutionYear executionYear) {
-	final List<ICurricularRule> curricularRules = new ArrayList<ICurricularRule>(getCurricularRules(ruleType, parentCourseGroup, null));
+    public List<? extends ICurricularRule> getCurricularRules(final CurricularRuleType ruleType,
+	    final CourseGroup parentCourseGroup, final ExecutionPeriod executionPeriod) {
+	final List<ICurricularRule> result = new ArrayList<ICurricularRule>();
+	for (final ICurricularRule curricularRule : getCurricularRules(executionPeriod)) {
+	    if (curricularRule.getCurricularRuleType() == ruleType
+		    && (!curricularRule.hasContextCourseGroup() || curricularRule.getContextCourseGroup() == parentCourseGroup)) {
+		result.add(curricularRule);
+	    }
+	}
+	return result;
+    }
+
+    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType,
+	    final CourseGroup parentCourseGroup, final ExecutionYear executionYear) {
+	final List<ICurricularRule> curricularRules = new ArrayList<ICurricularRule>(getCurricularRules(ruleType,
+		parentCourseGroup, (ExecutionYear) null));
 	Collections.sort(curricularRules, ICurricularRule.COMPARATOR_BY_BEGIN);
-	
+
 	if (curricularRules.isEmpty()) {
 	    return null;
-	    
+
 	} else if (executionYear == null) {
 	    final ListIterator<ICurricularRule> iter = curricularRules.listIterator(curricularRules.size());
 	    while (iter.hasPrevious()) {
@@ -363,13 +377,16 @@ abstract public class DegreeModule extends DegreeModule_Base {
 		}
 	    }
 	    return null;
-	    
+
 	} else {
 	    ICurricularRule result = null;
 	    for (final ICurricularRule curricularRule : curricularRules) {
 		if (curricularRule.isValid(executionYear)) {
 		    if (result != null) {
-			throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionPeriod", getName());
+			// TODO: remove this throw when curricular rule ensures
+			// that it can be only one active for execution period
+			throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionYear",
+				getName());
 		    }
 		    result = curricularRule;
 		}
@@ -377,6 +394,32 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
 	    return result;
 	}
+    }
+
+    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType,
+	    final CourseGroup parentCourseGroup, final ExecutionPeriod executionPeriod) {
+
+	final List<ICurricularRule> curricularRules = new ArrayList<ICurricularRule>(getCurricularRules(ruleType,
+		parentCourseGroup, executionPeriod));
+
+	if (curricularRules.isEmpty()) {
+	    return null;
+	}
+
+	ICurricularRule result = null;
+	for (final ICurricularRule curricularRule : curricularRules) {
+	    if (curricularRule.isValid(executionPeriod)) {
+		if (result != null) {
+		    // TODO: remove this throw when curricular rule ensures
+		    // that it can be only one active for execution period
+		    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionPeriod",
+			    getName());
+		}
+		result = curricularRule;
+	    }
+	}
+
+	return result;
     }
 
     public Double getMaxEctsCredits() {
@@ -407,10 +450,11 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	final Integer semester = Integer.valueOf(PropertiesManager.getProperty("start.semester.for.bolonha.degrees"));
 	return ExecutionPeriod.readBySemesterAndExecutionYear(semester, year);
     }
-    
+
     private ExecutionPeriod getFirstExecutionPeriodOfFirstExecutionDegree() {
 	final ExecutionDegree executionDegree = getParentDegreeCurricularPlan().getFirstExecutionDegree();
-	return executionDegree != null ? executionDegree.getExecutionYear().getFirstExecutionPeriod() : getBeginBolonhaExecutionPeriod();
+	return executionDegree != null ? executionDegree.getExecutionYear().getFirstExecutionPeriod()
+		: getBeginBolonhaExecutionPeriod();
     }
 
     public DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionPeriod executionPeriod) {
@@ -439,7 +483,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	}
 	return equivalencePlanEntries;
     }
-    
+
     abstract public DegreeCurricularPlan getParentDegreeCurricularPlan();
 
     abstract public void print(StringBuilder stringBuffer, String tabs, Context previousContext);
@@ -457,12 +501,13 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
 
-    abstract protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod, final ExecutionPeriod executionPeriod);
+    abstract protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
+	    final ExecutionPeriod executionPeriod);
 
     abstract public void getAllDegreeModules(final Collection<DegreeModule> degreeModules);
-    
+
     abstract public Set<CurricularCourse> getAllCurricularCourses(final ExecutionPeriod executionPeriod);
-    
+
     abstract public Set<CurricularCourse> getAllCurricularCourses();
 
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
@@ -472,7 +517,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	}
 	return res;
     }
-    
+
     public Set<CourseGroup> getParentCourseGroups() {
 	Set<CourseGroup> res = new HashSet<CourseGroup>();
 	for (Context context : getParentContextsSet()) {

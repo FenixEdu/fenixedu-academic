@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -49,5 +50,7 @@ public interface IDegreeModuleToEvaluate {
     public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionPeriod executionPeriod);
 
     public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionPeriod executionPeriod);
+    
+    public boolean isAnnualCurricularCourse(final ExecutionYear executionYear);
         
 }
