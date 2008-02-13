@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+<%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 
 <html:xhtml/>
 
@@ -126,7 +127,12 @@
 		</p>
 	</logic:empty>
 	<logic:notEmpty name="academicServiceRequests">
-		<fr:view name="academicServiceRequests" schema="DocumentRequest.view-documentPurposeTypeInformation">
+
+		<bean:define id="url" type="java.lang.String">/academicAdminOffice/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=<%= academicSituationType.getName() %>&amp;serviceRequestYear=<bean:write name="bean" property="serviceRequestYear"/></bean:define>
+		<cp:collectionPages url="<%= url %>" 
+			pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
+
+		<fr:view name="resultPage" schema="DocumentRequest.view-documentPurposeTypeInformation">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle4 tdcenter mtop05" />
 				<fr:property name="rowClasses" value="bgwhite," />

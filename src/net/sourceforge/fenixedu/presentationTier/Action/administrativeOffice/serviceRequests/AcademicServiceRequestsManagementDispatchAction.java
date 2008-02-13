@@ -33,6 +33,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.CollectionPager;
+
 public class AcademicServiceRequestsManagementDispatchAction extends FenixDispatchAction {
 
     private RegistrationAcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
@@ -315,6 +317,14 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
 	request.setAttribute("academicServiceRequests", academicServiceRequestsNotOwnedByEmployee);
 	request.setAttribute("employeeRequests", academicServiceRequestsOwnedByEmployee);
+
+	CollectionPager<AcademicServiceRequest> collectionPager = new CollectionPager<AcademicServiceRequest>(academicServiceRequestsNotOwnedByEmployee, 50);
+	request.setAttribute("collectionPager", collectionPager);
+	final String pageNumberString = request.getParameter("pageNumber");
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+	request.setAttribute("pageNumber", pageNumber);
+	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
+	request.setAttribute("resultPage", collectionPager.getPage(pageNumber));
 
 	return mapping.findForward("searchResults");
     }
