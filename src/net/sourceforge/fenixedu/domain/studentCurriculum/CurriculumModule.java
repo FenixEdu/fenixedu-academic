@@ -256,7 +256,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod);
 
     abstract public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse);
-    
+
     abstract public CurriculumLine getApprovedCurriculumLine(final CurricularCourse curricularCourse);
 
     abstract public Dismissal getDismissal(final CurricularCourse curricularCourse);
