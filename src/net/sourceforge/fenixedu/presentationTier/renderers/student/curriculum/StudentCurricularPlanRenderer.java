@@ -51,6 +51,20 @@ import org.joda.time.DateTime;
 
 public class StudentCurricularPlanRenderer extends InputRenderer {
 
+    private static final String SCPLANTEMPORARYDISMISSAL = "scplantemporarydismissal";
+
+    private static final String SCPLANDISMISSAL = "scplandismissal";
+
+    private static final String SCPLANENROLLMENT = "scplanenrollment";
+
+    private static final String SCPLANGROUP = "scplangroup";
+
+    private static final String SCPLAN = "scplan";
+
+    private static final String CELL_CLASSES = "scplancolident, scplancolcurricularcourse, scplancoldegreecurricularplan, scplancolenrollmentstate, "
+	    + "scplancolenrollmenttype, scplancolgrade, scplancolweight, scplancolects, "
+	    + "scplancolenrolmentevaluationtype, scplancolyear, scplancolsemester, scplancolexamdate, scplancolgraderesponsible";
+
     public static enum EnrolmentStateFilterType {
 	ALL, APPROVED_OR_ENROLED;
 
@@ -119,19 +133,17 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
     private ViewType viewType = ViewType.ALL;
 
-    private String studentCurricularPlanClass = "scplan";
+    private String studentCurricularPlanClass = SCPLAN;
 
-    private String curriculumGroupRowClass = "scplangroup";
+    private String curriculumGroupRowClass = SCPLANGROUP;
 
-    private String enrolmentRowClass = "scplanenrollment";
+    private String enrolmentRowClass = SCPLANENROLLMENT;
 
-    private String dismissalRowClass = "scplandismissal";
+    private String dismissalRowClass = SCPLANDISMISSAL;
 
-    private String temporaryDismissalRowClass = "scplantemporarydismissal";
+    private String temporaryDismissalRowClass = SCPLANTEMPORARYDISMISSAL;
 
-    private String cellClasses = "scplancolident, scplancolcurricularcourse, scplancoldegreecurricularplan, scplancolenrollmentstate, "
-	    + "scplancolenrollmenttype, scplancolgrade, scplancolweight, scplancolects, "
-	    + "scplancolenrolmentevaluationtype, scplancolyear, scplancolsemester, scplancolexamdate, scplancolgraderesponsible";
+    private String cellClasses = CELL_CLASSES;
 
     private boolean selectable;
 
@@ -946,8 +958,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    result.setText(degreeCurricularPlan.getName());
 	    result.setModuleRelative(false);
 	    result.setTarget("_blank");
-	    result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "cursos/"
-		    + degreeCurricularPlan.getDegree().getSigla() + "/plano-curricular");
+	    result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, 
+		    degreeCurricularPlan.getDegree().getSite().getReversePath());
 
 	    if (degreeCurricularPlan.isBoxStructure()) {
 		result.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");

@@ -49,19 +49,6 @@
 		    
 			</td>
 		</tr>
-<%--
-		<tr>
-			<td>
-				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.boardType" property="boardType" value="BOOKMARKED" onchange="this.form.submit();">
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.bookmarked" />
-				</html:radio>
-				<br/>
-				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.boardType" property="boardType" value="INSTITUTIONAL" onchange="this.form.submit();">
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.institutional" />
-				</html:radio>
-			</td>
-		</tr>
---%>
 	</table>
 </html:form>
 
