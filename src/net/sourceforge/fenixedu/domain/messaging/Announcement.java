@@ -104,6 +104,10 @@ public class Announcement extends Announcement_Base {
         return this.getCreationDate().getMillis() != this.getLastModification().getMillis();
     }
 
+    public boolean isOriginalVersion() {
+	return !wasModifiedSinceCreation();
+    }
+    
     public boolean isActive() {
         return this.isActiveIn(new DateTime());
     }

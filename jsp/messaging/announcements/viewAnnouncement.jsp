@@ -12,13 +12,6 @@
 	<%-- <em><bean:message key="label.communicationPortal.header" bundle="MESSAGING_RESOURCES"/></em> --%>
 	<h2><bean:message key="messaging.viewAnnouncement.title" bundle="MESSAGING_RESOURCES"/></h2>
 
-	<%
-	String contextPrefix = (String) request.getAttribute("contextPrefix");
-	String extraParameters = (String) request.getAttribute("extraParameters");
-	net.sourceforge.fenixedu.domain.Person person = (net.sourceforge.fenixedu.domain.Person) request.getAttribute("person");
-	%>
-	
-
 <div class="mvert2 announcement">
 
 
@@ -29,16 +22,12 @@
 			<logic:notEmpty name="announcement" property="publicationBegin">
 				Publicado em 
 					<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
-				<%
-				if (announcement.getAnnouncementBoard().hasWriter(person)) {
-				%>
+				<logic:equal name="announcement" property="announcementBoard.currentUserWriter" value="true">
 					<logic:notEmpty name="announcement" property="publicationEnd">
 					 	até
 						<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
 					</logic:notEmpty>
-				<%
-				}
-				%>
+				</logic:equal>
 			</logic:notEmpty>
 				
 			<logic:empty name="announcement" property="publicationBegin">
@@ -116,16 +105,13 @@ Canal: <bean:write name="announcement" property="announcementBoard.name"/> -
 	</logic:notEmpty>
 	
 <%-- Modificado em --%>
-	<%	if (announcement.wasModifiedSinceCreation())
-		{
-	%>
+	
+	<logic:equal name="announcement" property="originalVersion" value="false"> 
 		Modificado em:
 		<fr:view name="announcement" property="lastModification" type="org.joda.time.DateTime" layout="no-time"/>
 		 - 
-	<%
-	}
-	%>
-
+	</logic:equal>
+	
 <%-- Data de Criação --%>
 	<html:link linkName="<%= "ID_" + announcement.getIdInternal().toString()%>"/>
 		<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES"/>: 

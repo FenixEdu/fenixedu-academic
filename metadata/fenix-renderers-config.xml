@@ -209,6 +209,11 @@ Documentation:
     	   <property name="shortUnit" value="true"/>
     </renderer>
 
+	<renderer type="java.util.List" layout="announcements-board-table" class="net.sourceforge.fenixedu.presentationTier.renderers.AnnoucementBoardsRenderer">
+		<property name="sortBy" value="name"/>
+		<property name="rssImage" value="/images/rss_ico.png"/>
+	</renderer>
+	
     <renderer type="int" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
     <renderer type="long" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
     <renderer type="short" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>

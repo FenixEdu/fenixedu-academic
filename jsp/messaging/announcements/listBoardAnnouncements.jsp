@@ -12,7 +12,6 @@
 	<bean:define id="extraParameters" name="extraParameters" />
 	<bean:define id="announcementBoard" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
 	<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>		
-	<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 	<em><bean:message key="messaging.announcements.title.label" bundle="MESSAGING_RESOURCES"/></em>
 	<h2><bean:write name="announcementBoard" property="name"/>
@@ -24,31 +23,24 @@
 			parameters.put("method","simple");
 			parameters.put("announcementBoardId",announcementBoard.getIdInternal());
 			request.setAttribute("parameters",parameters);
-			if (announcementBoard.getReaders() == null)
-			{
 			%>
+
+			<logic:notPresent name="announcementBoard" property="readers">
 			(<html:link module="" action="/external/announcementsRSS" name="parameters">RSS<%--<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>--%></html:link>)
-			<%
-			}
-			%>							
+			</logic:notPresent>
 	</span>
 	
 	</h2>
 
 
 	<ul>
-			<%
-				if (announcementBoard.hasWriter(person))
-				{
-			%>
+			<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
 			<li>
 				<html:link action="<%= contextPrefix + "method=addAnnouncement&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
 					<bean:message key="label.createAnnouncement" bundle="MESSAGING_RESOURCES"/>
 				</html:link>
-			</li>				
-			<%
-				}
-			%>
+			</li>
+			</logic:equal>
 	</ul>
 
 

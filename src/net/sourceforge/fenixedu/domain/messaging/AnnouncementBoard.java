@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
@@ -144,6 +145,10 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	setCreationDate(new DateTime());
     }
 
+    public int getAnnouncementsCount() {
+	return getChildren(Announcement.class).size();
+    }
+    
     public List<Announcement> getActiveAnnouncements() {
         	final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
                 for (final Node node : getChildrenSet()) {
@@ -156,6 +161,10 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         	return activeAnnouncements;
     }
 
+    public int getActiveAnnoucementsCount() {
+	return getActiveAnnouncements().size();
+    }
+    
     public Collection<Announcement> getVisibleAnnouncements() {
 	final Collection<Announcement> activeAnnouncements = new ArrayList<Announcement>();
         for (final Node node : getChildrenSet()) {
@@ -209,16 +218,32 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	return (isPublicToRead() || getReaders().isMember(person));
     }
     
+    public boolean isCurrentUserReader() {
+	return hasReader(AccessControl.getPerson());
+    }
+    
     public boolean hasWriter(Person person) {
 	return (isPublicToWrite() || getWriters().isMember(person));
+    }
+    
+    public boolean isCurrentUserWriter() {
+	return hasWriter(AccessControl.getPerson());
     }
     
     public boolean hasManager(Person person) {
 	return (isPublicToManage() || getManagers().isMember(person));
     }
     
+    public boolean isCurrentUserManager() {
+	return hasManager(AccessControl.getPerson());
+    }
+    
     public boolean hasReaderOrWriter(Person person) {
 	return hasReader(person) || hasWriter(person);
+    }
+    
+    public boolean isCurrentUserReaderOrWriter() {
+	return hasReaderOrWriter(AccessControl.getPerson());
     }
     
     abstract public String getFullName();
@@ -265,6 +290,20 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     @Override
     protected Node createChildNode(Content childContent) {
         return new AnnouncementNode(this, (Announcement) childContent);
+    }
+    
+    public String getKeywords() {
+	StringBuffer keywords = new StringBuffer("");
+	for(Announcement announcement : getAnnouncements()) {
+	    MultiLanguageString announcementKeyword = announcement.getKeywords();
+	    if(announcementKeyword != null) {
+		if(keywords.length() > 0) {
+		    keywords.append(", ");
+		}
+		keywords.append(announcementKeyword.getContent());
+	    }
+	}
+	return keywords.toString();
     }
 
 }

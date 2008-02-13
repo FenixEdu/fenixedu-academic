@@ -50,176 +50,26 @@
 
 		<%							
 			int indexOfLastSlash = contextPrefix.lastIndexOf("/");
-			int indexOfDot = contextPrefix.lastIndexOf(".");
 			String prefix = contextPrefix.substring(0,indexOfLastSlash+1);
-			String suffix = contextPrefix.substring(indexOfDot,contextPrefix.length());
 		%>
-	
-		<%
-			boolean canManageAtLeastOneUnitBoard = false;
-			boolean atLeastOneUnitBoardIsPublic = false;
-			boolean canWriteAtLeastOneUnitBoard = false;
-			
-			for(net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard announcementBoard: unitAnnouncementBoards) {
-				if (announcementBoard.hasWriter(person)) {
-					canWriteAtLeastOneUnitBoard = true;
-					break;
-				}
-			}
-			
-			for(net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard announcementBoard: unitAnnouncementBoards) {
-				if (announcementBoard.getReaders() == null) {
-					atLeastOneUnitBoardIsPublic = true;
-					break;
-				}
-			}	
-			
-			for(net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard announcementBoard: unitAnnouncementBoards) {
-				if (announcementBoard.hasManager(person)) {
-					canManageAtLeastOneUnitBoard = true;
-					break;
-				}
-			}
-	
-		%>
+		
 	<bean:message key="label.page" bundle="MESSAGING_RESOURCES"/>:
  	        
        <bean:define id="urlToUnitBoards" type="java.lang.String">/messaging/announcements/announcementsStartPageHandler.do?page=0&amp;method=handleBoardListing&amp;<%=extraParameters%></bean:define>
        <cp:collectionPages url="<%= urlToUnitBoards %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberUnitBoards" numberOfPagesAttributeName="numberOfPagesUnitBoards"/>	
 	
-  	   <table class="tstyle2 tdcenter mtop05">	
-			<tr>
-				<th>									   
-					<bean:message key="label.name"/>
-				</th>
-				<th>
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.board.unit" />
-				</th>
-				<th>
-					<bean:message key="label.type" bundle="MESSAGING_RESOURCES"/>
-				</th>
-				<th>
-					Favoritos
-				</th>					
-				<%
-				if (canManageAtLeastOneUnitBoard)
-				{
-				%>
-				<th>
-					<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>
-				</th>
-				<%
-				}
-				%>
-				<%
-				if (atLeastOneUnitBoardIsPublic)
-				{
-				%>
-					<th>
-						RSS
-					</th>				
-				<%
-				}
-				%>				
-			</tr>
-			<logic:iterate name="unitAnnouncementBoards" id="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
-					<%
-					boolean ableToRead = announcementBoard.getReaders() == null || announcementBoard.getReaders().isMember(person);
-					boolean ableToWrite = announcementBoard.getWriters() == null || announcementBoard.getWriters().isMember(person);				
-					%>
-					<tr>
-						<td style="text-align: left;">
-						<%
-						if (ableToRead)
-						{
-						%>
-							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&amp;" +extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal()%>">
-								<bean:write name="announcementBoard" property="name"/>
-							</html:link>
-						<%
-						}
-						else
-						{
-						%>
-							<bean:write name="announcementBoard" property="name"/>
-						<%
-						}
-						%>
-						</td>							
-						<td class="smalltxt2 lowlight1" style="text-align: left;">
-							<bean:write name="announcementBoard" property="fullName"/>
-						</td>
-						<td class="acenter">
-							<logic:empty name="announcementBoard" property="readers">
-								<bean:message key="label.public" bundle="MESSAGING_RESOURCES"/>
-							</logic:empty>
-							<logic:notEmpty name="announcementBoard" property="readers">
-								<bean:message key="label.private" bundle="MESSAGING_RESOURCES"/>
-							</logic:notEmpty>					
-						</td>
-					<%
-					if (!announcementBoard.getBookmarkOwner().contains(person)) {
-					%>						
-						<td class="acenter">
-							<bean:message key="label.no" bundle="MESSAGING_RESOURCES"/>
-							(<html:link page="<%= contextPrefix + "method=addBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction=" + request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")%>">Adicionar</html:link>)
-						</td>									
-					<%
-					} else {
-					%>
-						<td class="acenter">
-							<bean:message key="label.yes" bundle="MESSAGING_RESOURCES"/>
-							(<html:link page="<%= contextPrefix + "method=removeBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction=" + request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")%>">Remover</html:link>)
-						</td>
-					<%
-					} 
-					%>						
-					<%
-					if (announcementBoard.getManagers() == null || announcementBoard.getManagers().isMember(person))
-					{
-					%>
-						<td class="acenter">
-							<html:link page="<%= prefix +"manage" + announcementBoard.getClass().getSimpleName() + suffix + "method=prepareEditAnnouncementBoard" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")+"&amp;tabularVersion=true"%>">
-									Gerir
-							</html:link>				
-						</td>
-					<%
-					}
-					else if (canManageAtLeastOneUnitBoard)
-					{
-					%>
-						<td>
-						</td>
-					<%
-						}
-						java.util.Map parameters = new java.util.HashMap();
-						parameters.put("method","simple");
-						parameters.put("announcementBoardId",announcementBoard.getIdInternal());
-						request.setAttribute("parameters",parameters);
-						%>
-						<%
-						if (announcementBoard.getReaders() == null)
-						{
-						%>
-						<td class="acenter">
-							<html:link module="" action="/external/announcementsRSS" name="parameters" styleClass="tdnone">
-									<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
-							</html:link>				
-						</td>						
-						<%
-						}
-						else if (atLeastOneUnitBoardIsPublic)
-						{					
-						%>					
-							<td>
-							</td>
-						<%
-						}
-						%>
-				</tr>
-			</logic:iterate>
-		</table>
-		
+	   <fr:view name="unitAnnouncementBoards">
+			<fr:layout name="announcements-board-table">
+				<fr:property name="classes" value="tstyle2 tdcenter mtop05"/>
+				<fr:property name="boardUrl" value="<%= contextPrefix + "method=viewAnnouncements" + "&" + extraParameters +"&announcementBoardId=${idInternal}"%>"/>
+				<fr:property name="managerUrl" value="<%= prefix + "manage${class.simpleName}.do?method=prepareEditAnnouncementBoard&" + extraParameters + "&announcementBoardId=${idInternal}&returnAction="+request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")+"&tabularVersion=true"%>"/>
+				<fr:property name="removeFavouriteUrl" value="<%= contextPrefix + "method=removeBookmark" + "&" + extraParameters + "&announcementBoardId=${idInternal}"%>" />
+				<fr:property name="addFavouriteUrl"  value="<%= contextPrefix + "method=addBookmark" + "&" + extraParameters + "&announcementBoardId=${idInternal}"%>"/>
+				<fr:property name="rssUrl" value="/external/announcementsRSS.do?method=simple&announcementBoardId=${idInternal}"/>
+			</fr:layout>
+		</fr:view>
+			
+			
 		<bean:message key="label.page" bundle="MESSAGING_RESOURCES"/>			 	       
         <cp:collectionPages url="<%= urlToUnitBoards %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberUnitBoards" numberOfPagesAttributeName="numberOfPagesUnitBoards"/>			       	
         
@@ -242,41 +92,7 @@
 
 		<%							
 			int indexOfLastSlash = contextPrefix.lastIndexOf("/");
-			int indexOfDot = contextPrefix.lastIndexOf(".");
 			String prefix = contextPrefix.substring(0,indexOfLastSlash+1);
-			String suffix = contextPrefix.substring(indexOfDot,contextPrefix.length());
-		%>
-	
-		<%
-			boolean canManageAtLeastOneExecutionCourseBoard = false;
-			boolean atLeastOneExecutionCourseBoardIsPublic = false;
-			boolean canWriteAtLeastOneExecutionCourseBoard = false;
-			for(net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard announcementBoard: executionCourseAnnouncementBoards)
-			{
-				if (announcementBoard.getWriters() == null || announcementBoard.getWriters().isMember(person))
-				{
-					canWriteAtLeastOneExecutionCourseBoard = true;
-					break;
-				}
-			}
-			
-			for(net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard announcementBoard: executionCourseAnnouncementBoards)
-			{
-			if (announcementBoard.getReaders() == null)
-				{
-					atLeastOneExecutionCourseBoardIsPublic = true;
-					break;
-				}
-			}						
-			for(net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard announcementBoard: executionCourseAnnouncementBoards)
-			{
-				if (announcementBoard.getManagers() == null || announcementBoard.getManagers().isMember(person))
-				{
-					canManageAtLeastOneExecutionCourseBoard = true;
-					break;
-				}
-			}
-	
 		%>
 
 	<bean:message key="label.page" bundle="MESSAGING_RESOURCES"/>:
@@ -284,140 +100,17 @@
        <bean:define id="urlToExecutionCourses" type="java.lang.String">/messaging/announcements/announcementsStartPageHandler.do?page=0&amp;method=handleBoardListing&amp;<%=extraParameters%></bean:define>
        <cp:collectionPages url="<%= urlToExecutionCourses %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberExecutionCourseBoards" numberOfPagesAttributeName="numberOfPagesExecutionCourseBoards"/>	
 	
-		<table class="tstyle2 tdcenter mtop05">	
-			<tr>
-				<th>
-					Nome
-				</th>
-				<th>
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.board.unit" />
-				</th>
-				<th>
-					Tipo
-				</th>
-				<th>
-					Favoritos
-				</th>
-				<%
-				if (canManageAtLeastOneExecutionCourseBoard)
-				{
-				%>
-				<th>
-					<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>
-				</th>
-				<%
-				}
-				%>
-				<%
-				if (atLeastOneExecutionCourseBoardIsPublic)
-				{
-				%>
-					<th>
-						RSS
-					</th>				
-				<%
-				}
-				%>				
-			</tr>
-			<logic:iterate name="executionCourseAnnouncementBoards" id="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
-				<tr>
-					<td style="text-align: left;">
-					<%
-					boolean ableToRead = announcementBoard.getReaders() == null || announcementBoard.getReaders().isMember(person);
-					boolean ableToWrite = announcementBoard.getWriters() == null || announcementBoard.getWriters().isMember(person);				
-					if (ableToRead)
-						{
-					%>
-							<html:link title="<%= announcementBoard.getQualifiedName()%>" page="<%= contextPrefix + "method=viewAnnouncements" +"&amp;" +extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal()%>">
-								<bean:write name="announcementBoard" property="name"/>
-							</html:link>
-						<%
-						}
-						else
-						{
-						%>
-							<bean:write name="announcementBoard" property="name"/>
-						<%
-						}
-						%>
-					</td>
-					<td class="smalltxt2 lowlight1" style="text-align: left;">
-						<bean:write name="announcementBoard" property="fullName"/>
-					</td>
-					<td class="acenter">
-						<logic:empty name="announcementBoard" property="readers">
-							<bean:message key="label.public" bundle="MESSAGING_RESOURCES"/>
-						</logic:empty>
-						<logic:notEmpty name="announcementBoard" property="readers">
-							<bean:message key="label.private" bundle="MESSAGING_RESOURCES"/>
-						</logic:notEmpty>					
-					</td>
-					<%
-					if (!announcementBoard.getBookmarkOwner().contains(person))
-					{
-					%>						
-					<td class="acenter">
-						<bean:message key="label.no" bundle="MESSAGING_RESOURCES"/>
-						(<html:link page="<%= contextPrefix + "method=addBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")%>">Adicionar</html:link>)
-					</td>									
-					<%
-					}
-					else
-					{
-					%>
-					<td class="acenter">
-						<bean:message key="label.yes" bundle="MESSAGING_RESOURCES"/> 
-						(<html:link page="<%= contextPrefix + "method=removeBookmark" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")%>">Remover</html:link>)
-					</td>										
-					<%				
-					}
-					%>
-						<%
-						if (announcementBoard.getManagers() == null || announcementBoard.getManagers().isMember(person))
-						{
-						%>
-							<td class="acenter">
-								<html:link page="<%= prefix +"manage" + announcementBoard.getClass().getSimpleName() + suffix + "method=prepareEditAnnouncementBoard" + "&amp;" + extraParameters +"&amp;announcementBoardId="+announcementBoard.getIdInternal() + "&amp;returnAction="+request.getAttribute("returnAction") + "&amp;returnMethod="+request.getAttribute("returnMethod")+"&amp;tabularVersion=true"%>">
-										Gerir
-								</html:link>				
-							</td>
-						<%
-						}
-						else if (canManageAtLeastOneExecutionCourseBoard)
-						{
-						%>
-							<td>
-								&nbsp;
-							</td>
-						<%
-						}
-						java.util.Map parameters = new java.util.HashMap();
-						parameters.put("method","simple");
-						parameters.put("announcementBoardId",announcementBoard.getIdInternal());
-						request.setAttribute("parameters",parameters);
-						%>
-						<%
-						if (announcementBoard.getReaders() == null)
-						{
-						%>
-						<td class="acenter">
-							<html:link module="" action="/external/announcementsRSS" name="parameters" styleClass="tdnone">
-									<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
-							</html:link>				
-						</td>						
-						<%
-						}
-						else if (atLeastOneExecutionCourseBoardIsPublic)
-						{					
-						%>					
-							<td>
-							</td>
-						<%
-						}
-						%>
-				</tr>
-			</logic:iterate>
-		</table>
+	   <fr:view name="executionCourseAnnouncementBoards">
+			<fr:layout name="announcements-board-table">
+				<fr:property name="classes" value="tstyle2 tdcenter mtop05"/>
+				<fr:property name="boardUrl" value="<%= contextPrefix + "method=viewAnnouncements" + "&" + extraParameters +"&announcementBoardId=${idInternal}"%>"/>
+				<fr:property name="managerUrl" value="<%= prefix + "manage${class.simpleName}.do?method=prepareEditAnnouncementBoard&" + extraParameters + "&announcementBoardId=${idInternal}&returnAction="+request.getAttribute("returnAction") + "&returnMethod="+request.getAttribute("returnMethod")+"&tabularVersion=true"%>"/>
+				<fr:property name="removeFavouriteUrl" value="<%= contextPrefix + "method=removeBookmark" + "&" + extraParameters + "&announcementBoardId=${idInternal}"%>" />
+				<fr:property name="addFavouriteUrl"  value="<%= contextPrefix + "method=addBookmark" + "&" + extraParameters + "&announcementBoardId=${idInternal}"%>"/>
+				<fr:property name="rssUrl" value="/external/announcementsRSS.do?method=simple&announcementBoardId=${idInternal}"/>
+			</fr:layout>
+		</fr:view>
+
 		<bean:message key="label.page" bundle="MESSAGING_RESOURCES"/>:
 	    <cp:collectionPages url="<%= urlToExecutionCourses %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumberExecutionCourseBoards" numberOfPagesAttributeName="numberOfPagesExecutionCourseBoards"/>	
 	

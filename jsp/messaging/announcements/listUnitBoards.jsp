@@ -30,10 +30,12 @@
 		</th>
 	</tr>
 	<logic:iterate id="board" name="boards" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
+		<bean:define id="qualifiedName" name="board" property="qualifiedName" type="java.lang.String"/>
+		
 		<tr>
 			<td style="text-align: left;">
 				<logic:equal name="board" property="reader" value="true">
-					<html:link title="<%= board.getQualifiedName()%>"
+					<html:link title="<%= qualifiedName %>"
 							page="/announcements/announcementsStartPageHandler.do?method=viewAnnouncements"
 							paramId="announcementBoardId" paramName="board" paramProperty="idInternal">
 						<bean:write name="board" property="name"/>
@@ -57,7 +59,7 @@
 			<td class="acenter">
 				<logic:equal name="board" property="bookmarkOwner" value="true">
 					<bean:message key="label.yes" bundle="MESSAGING_RESOURCES"/>
-					(<html:link title="<%= board.getQualifiedName()%>"
+					(<html:link title="<%= qualifiedName %>"
 							page="/announcements/announcementsStartPageHandler.do?method=removeBookmark"
 							paramId="announcementBoardId" paramName="board" paramProperty="idInternal">
 						<bean:message key="label.remove" bundle="MESSAGING_RESOURCES"/>
@@ -65,7 +67,7 @@
 				</logic:equal>
 				<logic:notEqual name="board" property="bookmarkOwner" value="true">
 					<bean:message key="label.no" bundle="MESSAGING_RESOURCES"/>
-					(<html:link title="<%= board.getQualifiedName()%>"
+					(<html:link title="<%= qualifiedName %>"
 							page="/announcements/announcementsStartPageHandler.do?method=addBookmark"
 							paramId="announcementBoardId" paramName="board" paramProperty="idInternal">
 						<bean:message key="label.add" bundle="MESSAGING_RESOURCES"/>
@@ -74,7 +76,7 @@
 			</td>
 			<td class="acenter">
 				<logic:equal name="board" property="manager" value="true">
-					<html:link title="<%= board.getQualifiedName()%>"
+					<html:link title="<%= qualifiedName %>"
 							page="<%= "/announcements/manage" + board.getClass().getSimpleName() + ".do?method=prepareEditAnnouncementBoard&amp;tabularVersion=true" %>"
 							paramId="announcementBoardId" paramName="board" paramProperty="idInternal">
 						<bean:message key="label.manage" bundle="MESSAGING_RESOURCES"/>

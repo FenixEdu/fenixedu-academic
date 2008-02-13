@@ -18,12 +18,6 @@
 <bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
 <bean:define id="announcementBoard" name="announcementBoard"/>
 
-<%							
-	int indexOfLastSlash = contextPrefix.lastIndexOf("/");
-	int indexOfDot = contextPrefix.lastIndexOf(".");
-	String prefix = contextPrefix.substring(0,indexOfLastSlash+1);
-	String suffix = contextPrefix.substring(indexOfDot,contextPrefix.length());
-%>
 <bean:define id="method" name="returnMethod" />
 <bean:define id="action"><%= "method=" + method + "&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
 

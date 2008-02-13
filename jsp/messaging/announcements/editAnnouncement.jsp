@@ -14,14 +14,15 @@
 <bean:define id="extraParameters" name="extraParameters" />
 <bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
 
-<%
-    String returnMethod = (String) pageContext.findAttribute("returnMethod");
-    if (returnMethod == null) {
-        returnMethod = "prepareEditAnnouncementBoard";
-    }
-%>
+<logic:notPresent name="returnMethod">
+	<bean:define id="formAction" toScope="request"><%= "method=prepareEditAnnouncementBoard&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
+</logic:notPresent>
+<logic:present name="returnMethod">
+	<bean:define id="returnMethod" name="returnMethod"/>
+	<bean:define id="formAction" toScope="request"><%= "method=" + returnMethod + "&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
+</logic:present>
 
-<bean:define id="action"><%= "method=" + returnMethod + "&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
+<bean:define id="action" name="formAction" type="java.lang.String"/>
 
 <fr:form action="<%=  contextPrefix + action %>">
 

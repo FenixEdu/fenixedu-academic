@@ -104,7 +104,7 @@
 	<slot name="body" key="net.sourceforge.fenixedu.domain.messaging.Announcement.body.label"/>	
 </schema>
 
-<schema name="announcementBoard.coordinator.view" type="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard" bundle="MESS">
+<schema name="announcementBoard.coordinator.view" type="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard" bundle="MESSAGING_RESOURCES">
     <slot name="name" layout="link">
         <property name="userParent" value="true"/>
         <property name="destination" value="board.view"/>
@@ -242,4 +242,11 @@
         <property name="columns" value="60"/>
         <property name="rows" value="20"/>
     </slot>
+</schema>
+
+
+<schema name="viewAnnoucementBoard" bundle="MESSAGING_RESOURCES"  type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
+	<slot name="name"/>
+	<slot name="fullName"/>
+	<slot name="readers"/>
 </schema>

@@ -94,21 +94,17 @@
 		<bean:define id="extraParameters" name="extraParameters" />
 		<bean:define id="announcementBoard" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
 		<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>		
-		<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
 	
 		<ul>
-				<%
-					if (announcementBoard.hasWriter(person))
-					{
-				%>
-				<li>
-					<html:link action="<%= contextPrefix + "method=addAnnouncement&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
-						<bean:message key="label.createAnnouncement" bundle="MESSAGING_RESOURCES"/>
-					</html:link>
-				</li>
-				<%
-					}
-				%>
+				
+				<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
+					<li>
+						<html:link action="<%= contextPrefix + "method=addAnnouncement&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
+							<bean:message key="label.createAnnouncement" bundle="MESSAGING_RESOURCES"/>
+						</html:link>
+					</li>
+				</logic:equal>
+				
 				<li>
 					<html:link action="<%= "announcements/announcementsStartPageHandler.do?method=viewAnnouncements&amp;announcementBoardId=" + announcementBoardId %>">
 						<bean:message key="label.board.page" bundle="MESSAGING_RESOURCES"/>
