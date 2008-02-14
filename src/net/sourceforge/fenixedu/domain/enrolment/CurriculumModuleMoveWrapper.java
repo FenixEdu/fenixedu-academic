@@ -8,7 +8,6 @@ public class CurriculumModuleMoveWrapper extends EnroledCurriculumModuleWrapper 
 
     private static final long serialVersionUID = 8766523234444669518L;
     private boolean collectRules;
-    
 
     public CurriculumModuleMoveWrapper(final CurriculumModule curriculumModule, final ExecutionPeriod executionPeriod) {
 	super(curriculumModule, executionPeriod);
@@ -17,16 +16,10 @@ public class CurriculumModuleMoveWrapper extends EnroledCurriculumModuleWrapper 
 
     @Override
     public boolean canCollectRules() {
-        return collectRules;
+	return collectRules;
     }
 
-    static public CurriculumModuleMoveWrapper create(final CurriculumGroup parent, final CurriculumModule curriculumLineMoved,
-	    final ExecutionPeriod executionPeriod) {
-	
-	if (curriculumLineMoved.isCreditsDismissal() || curriculumLineMoved.isNoCourseGroupCurriculumGroup() || parent.isNoCourseGroupCurriculumGroup()) {
-	    return new CurriculumModuleMoveWrapper(parent, executionPeriod);
-	} else {
-	    return new CurriculumModuleMoveWrapper(curriculumLineMoved, executionPeriod);
-	}
+    static public CurriculumModuleMoveWrapper create(final CurriculumGroup parent, final ExecutionPeriod executionPeriod) {
+	return new CurriculumModuleMoveWrapper(parent, executionPeriod);
     }
 }
