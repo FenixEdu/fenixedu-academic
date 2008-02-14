@@ -140,9 +140,9 @@ public class Registration extends Registration_Base {
 	this(person, studentNumber, RegistrationAgreement.NORMAL, null, null);
     }
 
-    public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan, StudentCandidacy studentCandidacy,
+    public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan, StudentCandidacy candidacy,
 	    RegistrationAgreement agreement, CycleType cycleType) {
-	this(person, degreeCurricularPlan, null, RegistrationAgreement.NORMAL, null, null);
+	this(person, degreeCurricularPlan, candidacy, RegistrationAgreement.NORMAL, null, null);
     }
 
     public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan, StudentCandidacy studentCandidacy,
