@@ -48,16 +48,15 @@ public class MoveCurriculumLinesBean implements Serializable {
 	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
 		studentCurricularPlan) : null;
     }
-    
+
     public Set<IDegreeModuleToEvaluate> getIDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
 	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>();
 	for (final CurriculumLineLocationBean bean : this.curriculumLineLocations) {
-	    result.add(CurriculumModuleMoveWrapper.create(bean.getCurriculumGroup(), bean.getCurriculumLine(), executionPeriod));
+	    result.add(CurriculumModuleMoveWrapper.create(bean.getCurriculumGroup(), executionPeriod));
 	}
 	return result;
     }
 
-    
     static public MoveCurriculumLinesBean buildFrom(final List<CurriculumLine> curriculumLines) {
 	final MoveCurriculumLinesBean result = new MoveCurriculumLinesBean();
 	for (final CurriculumLine curriculumLine : curriculumLines) {
