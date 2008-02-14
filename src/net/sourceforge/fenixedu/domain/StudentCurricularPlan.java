@@ -50,6 +50,7 @@ import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -364,9 +365,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-     * Temporary method, after all degrees migration this is no longer necessary
-     * 
-     */
+         * Temporary method, after all degrees migration this is no longer
+         * necessary
+         * 
+         */
     final public boolean isBoxStructure() {
 	return hasRoot();
     }
@@ -2218,9 +2220,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-     * Note: This is enrolment without rules and should only be used for first
-     * time enrolments
-     */
+         * Note: This is enrolment without rules and should only be used for
+         * first time enrolments
+         */
     private void internalCreateFirstTimeStudentEnrolmentsFor(CurriculumGroup curriculumGroup, CurricularPeriod curricularPeriod,
 	    ExecutionPeriod executionPeriod, String createdBy) {
 
@@ -2289,7 +2291,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final CurricularRuleLevel level) {
 
 	final Registration registration = this.getRegistration();
-	if (!registration.isInRegisteredState(executionPeriod)) {
+	if (!responsiblePerson.hasRole(RoleType.MANAGER) && !registration.isInRegisteredState(executionPeriod)) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
 
@@ -2396,9 +2398,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-     * Note that this method must not use the ExtraCurriculumGroup due to the
-     * pre-Bolonha SCPs
-     */
+         * Note that this method must not use the ExtraCurriculumGroup due to
+         * the pre-Bolonha SCPs
+         */
     final public Collection<Enrolment> getExtraCurricularEnrolments() {
 	final Collection<Enrolment> result = new ArrayList<Enrolment>();
 
@@ -2432,9 +2434,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-     * Note that this method must not use the ExtraCurriculumGroup due to the
-     * pre-Bolonha SCPs
-     */
+         * Note that this method must not use the ExtraCurriculumGroup due to
+         * the pre-Bolonha SCPs
+         */
     final public Collection<Enrolment> getPropaedeuticEnrolments() {
 	final Collection<Enrolment> result = new ArrayList<Enrolment>();
 
@@ -2842,4 +2844,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     }
 
+    public boolean hasAnyRegistrationWithFirstCycleAffinity() {
+	final CycleCurriculumGroup firstCycle = getFirstCycle();
+	if (firstCycle == null) {
+	    return false;
+	}
+	final Student student = getRegistration().getStudent();
+	for (final CycleCourseGroup affinity : getDegreeCurricularPlan().getRoot().getCycleCourseGroup(firstCycle.getCycleType())
+		.getDestinationAffinities()) {
+	    if (student.hasRegistrationFor(affinity.getParentDegreeCurricularPlan())) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public Collection<CycleType> getCycleTypes() {
+	return getDegreeType().getCycleTypes();
+    }
 }
