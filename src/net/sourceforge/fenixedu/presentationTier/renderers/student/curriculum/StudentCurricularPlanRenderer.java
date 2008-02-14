@@ -936,7 +936,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private void generateDegreeCurricularPlanCell(final HtmlTableRow enrolmentRow, final Enrolment enrolment) {
 
-	    if (enrolment.isFor(studentCurricularPlan.getDegreeCurricularPlan())) {
+	    if (enrolment.isFor(studentCurricularPlan.getRegistration())) {
 		generateCellWithText(enrolmentRow, EMPTY_INFO, getDegreeCurricularPlanCellClass());
 	    } else {
 		final HtmlTableCell cell = enrolmentRow.createCell();

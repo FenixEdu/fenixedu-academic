@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -92,10 +93,11 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public abstract StudentCurricularPlan getStudentCurricularPlan();
 
     /**
-     * Temporary method, after all degrees migration this is no longer necessary
-     * 
-     * @return
-     */
+         * Temporary method, after all degrees migration this is no longer
+         * necessary
+         * 
+         * @return
+         */
     final public boolean isBoxStructure() {
 	return getStudentCurricularPlan().isBoxStructure();
     }
@@ -169,6 +171,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 
     public boolean isFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getDegreeModule().getParentDegreeCurricularPlan() == degreeCurricularPlan;
+    }
+
+    public boolean isFor(final Registration registration) {
+	return getStudentCurricularPlan().getRegistration() == registration;
     }
 
     public boolean isConcluded() {
