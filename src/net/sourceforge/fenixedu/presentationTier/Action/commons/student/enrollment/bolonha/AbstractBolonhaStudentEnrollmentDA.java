@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
@@ -181,14 +182,22 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	return mapping.findForward("chooseCycleCourseGroupToEnrol");
     }
 
+    protected ActionForward prepareChooseCycleCourseGroupToEnrol(final ActionMapping mapping, final HttpServletRequest request,
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod,
+	    final CycleType sourceCycle, final CycleType cycleToEnrol) {
+
+	request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionPeriod, sourceCycle,
+		cycleToEnrol));
+	return mapping.findForward("chooseCycleCourseGroupToEnrol");
+    }
+
     public ActionForward enrolInCycleCourseGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 
 	try {
-	    executeService("EnrolInAffinityCycle", getLoggedPerson(request), cycleEnrolmentBean.getStudentCurricularPlan(),
-		    cycleEnrolmentBean.getCycleCourseGroupToEnrol(), cycleEnrolmentBean.getExecutionPeriod());
+	    executeService("EnrolInAffinityCycle", getLoggedPerson(request), cycleEnrolmentBean);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 

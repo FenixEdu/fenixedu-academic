@@ -8,12 +8,10 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 public class CycleEnrolmentBean implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -7926077929745839701L;
 
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
@@ -32,6 +30,12 @@ public class CycleEnrolmentBean implements Serializable {
 	setExecutionPeriod(executionPeriod);
 	setSourceCycleAffinity(sourceCycleAffinity);
 	setCycleTypeToEnrol(cycleTypeToEnrol);
+    }
+
+    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod,
+	    final CycleCourseGroup cycleCourseGroup) {
+	this(studentCurricularPlan, executionPeriod, CycleType.FIRST_CYCLE, cycleCourseGroup.getCycleType());
+	setCycleCourseGroupToEnrol(cycleCourseGroup);
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
@@ -79,6 +83,10 @@ public class CycleEnrolmentBean implements Serializable {
     public List<CycleCourseGroup> getCycleDestinationAffinities() {
 	return getStudentCurricularPlan().getDegreeCurricularPlan().getRoot().getCycleCourseGroup(getSourceCycleAffinity())
 		.getDestinationAffinities();
+    }
+
+    public CycleCurriculumGroup getSourceCycle() {
+	return getStudentCurricularPlan().getCycle(getSourceCycleAffinity());
     }
 
 }
