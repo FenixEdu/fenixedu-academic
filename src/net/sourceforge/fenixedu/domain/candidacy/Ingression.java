@@ -78,7 +78,9 @@ public enum Ingression {
 
     RI("Reingresso (de Pré-Bolonha)"),
 
-    TPB("Transição para Bolonha");
+    TPB("Transição para Bolonha"),
+
+    DA1C("Acesso directo do 1º Ciclo");
 
     String description;
 
