@@ -333,16 +333,19 @@
 	<definition name="enrolment.welcome" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/welcome.jsp"/>
 	</definition>	
-	
 	<definition name="enrolment.chooseRegistration" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/chooseRegistration.jsp"/>
 	</definition>
 	<definition name="enrolment.choosePersonalDataAuthorizationChoice" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/choosePersonalDataAuthorizationChoice.jsp"/>
 	</definition>
-	
-	
-	
+	<definition name="enrolment.selectAffinityToEnrol" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/selectAffinityToEnrol.jsp"/>
+	</definition>
+	<definition name="enrolment.showAffinityToEnrol" extends="definition.student.masterPage">
+		<put name="body" value="/student/enrollment/bolonha/showAffinityToEnrol.jsp"/>
+	</definition>
+
 	<!-- Begin: Bolonha Student Enrolment -->
 	<definition name="enrolment.bolonha.showDegreeModulesToEnrol" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"/>

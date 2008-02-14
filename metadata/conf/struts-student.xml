@@ -922,7 +922,10 @@
 			<forward name="welcome" path="enrolment.welcome"/>
 			<forward name="chooseRegistration" path="enrolment.chooseRegistration" />
 			<forward name="choosePersonalDataAuthorizationChoice" path="enrolment.choosePersonalDataAuthorizationChoice"/>
+			<forward name="selectAffinityToEnrol" path="enrolment.selectAffinityToEnrol" />
+			<forward name="showAffinityToEnrol" path="enrolment.showAffinityToEnrol" />
 			<forward name="proceedToEnrolment" path="/bolonhaStudentEnrollment.do?method=prepare" />
+			<forward name="enrollmentCannotProceed" path="enrolment.bolonha.enrollmentCannotProceed" />
 			<forward name="notAuthorized" path="df.page.notAuthorized"/>
 		</action>
 		

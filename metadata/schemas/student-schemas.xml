@@ -143,7 +143,7 @@
 <schema name="CycleEnrolmentBean.chooseCycleCourseGroupToEnrol" 
 		type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean"
 		bundle="APPLICATION_RESOURCES">
-	<slot 	name="cycleCourseGroupToEnrol" 
+	<slot name="cycleCourseGroupToEnrol" 
 			layout="radio-select"
 			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.bolonha.CompatibleCycleCourseGroupsProvider" />
@@ -155,6 +155,27 @@
 <schema name="CycleCourseGroup.view" type="net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup" bundle="APPLICATION_RESOURCES">
 	<slot name="name" />		
 	<slot name="parentDegreeCurricularPlan.name" />
+</schema>
+
+<schema name="CycleEnrolmentBean.showAffinityToEnrol.source" 
+		type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean" bundle="APPLICATION_RESOURCES">
+	<slot name="sourceCycle.name" key="cycleCurriculumGroup" />
+	<slot name="sourceCycle.degreeCurricularPlanOfDegreeModule" layout="format" key="label.net.sourceforge.fenixedu.domain.DegreeCurricularPlan.degree.name">
+		<property name="format" value="${degree.name} - ${name}"/>
+	</slot>
+	<slot name="sourceCycle.concluded" key="label.student.curricular.plan.state">
+		<property name="trueLabel" value="label.concluded" />
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="CycleEnrolmentBean.showAffinityToEnrol.destination" 
+		type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="cycleCourseGroupToEnrol.name" key="cycleCurriculumGroup" />
+	<slot name="cycleCourseGroupToEnrol.parentDegreeCurricularPlan" layout="format" key="label.net.sourceforge.fenixedu.domain.DegreeCurricularPlan.degree.name">
+		<property name="format" value="${degree.name} - ${name}"/>
+	</slot>
 </schema>
 
 <schema name="Student.editPersonalDataAuthorizationChoiceForCurrentExecutionYear" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
