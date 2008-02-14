@@ -53,6 +53,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     private static final double ECTS_CREDITS_FOR_PRE_BOLONHA = 6;
 
+    private static final double WEIGHT_FOR_PRE_BOLONHA = 6;
+
     static final public Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new Comparator<CurricularCourse>() {
 	public int compare(CurricularCourse o1, CurricularCourse o2) {
 	    final ComparatorChain comparatorChain = new ComparatorChain();
@@ -87,7 +89,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	setWeigth(d);
     }
 
-    protected CurricularCourse(DegreeCurricularPlan degreeCurricularPlan, String name, String code, String acronym, Boolean enrolmentAllowed, CurricularStage curricularStage) {
+    protected CurricularCourse(DegreeCurricularPlan degreeCurricularPlan, String name, String code, String acronym,
+	    Boolean enrolmentAllowed, CurricularStage curricularStage) {
 	this();
 	checkParameters(name, code, acronym);
 	checkForCurricularCourseWithSameAttributes(degreeCurricularPlan, name, code, acronym);
@@ -200,7 +203,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     /**
-     * - Edit Pre-Bolonha CurricularCourse 
+     * - Edit Pre-Bolonha CurricularCourse
      */
     public void edit(String name, String nameEn, String code, String acronym, Double weigth, Double credits, Double ectsCredits) {
 	checkForCurricularCourseWithSameAttributes(getDegreeCurricularPlan(), name, code, acronym);
@@ -212,10 +215,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 	setCredits(credits);
 	setEctsCredits(ectsCredits);
     }
-    
-    private void checkForCurricularCourseWithSameAttributes(DegreeCurricularPlan degreeCurricularPlan, String name, String code, String acronym) {
+
+    private void checkForCurricularCourseWithSameAttributes(DegreeCurricularPlan degreeCurricularPlan, String name, String code,
+	    String acronym) {
 	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-	    if(curricularCourse == this) {
+	    if (curricularCourse == this) {
 		continue;
 	    }
 	    if (curricularCourse.getName().equals(name) && curricularCourse.getCode().equals(code)) {
@@ -350,7 +354,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	final List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
 	for (final CurricularCourseScope scope : getScopes()) {
 	    if (scope.getBeginYearMonthDay().isBefore(executionPeriod.getBeginDateYearMonthDay())) {
-		if (!scope.hasEndYearMonthDay() || !scope.getEndYearMonthDay().isBefore(executionPeriod.getBeginDateYearMonthDay())) {
+		if (!scope.hasEndYearMonthDay()
+			|| !scope.getEndYearMonthDay().isBefore(executionPeriod.getBeginDateYearMonthDay())) {
 		    activeScopesInExecutionPeriod.add(scope);
 		}
 	    } else if (!scope.getBeginYearMonthDay().isAfter(executionPeriod.getEndDateYearMonthDay())) {
@@ -1081,7 +1086,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    return getEctsCredits();
 	}
 
-	return getDegreeType().isMasterDegree() ? getCredits() : super.getWeigth();
+	if (getDegreeType().isMasterDegree()) {
+	    return getCredits();
+	}
+
+	final Double weigth = super.getWeigth();
+	return (weigth == null || weigth == 0.0) ? ECTS_CREDITS_FOR_PRE_BOLONHA : weigth;
     }
 
     public CurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
@@ -1419,7 +1429,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public RegimeType getRegime(final ExecutionPeriod period) {
 	return this.getCompetenceCourse().getRegime(period);
     }
-    
+
     public RegimeType getRegime(final ExecutionYear executionYear) {
 	return this.getCompetenceCourse().getRegime(executionYear);
     }
@@ -1541,12 +1551,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     private boolean isInSamePeriod(Enrolment enrolment, ExecutionPeriod executionPeriod) {
-        if (isAnual()) {
-            return enrolment.getExecutionYear() == executionPeriod.getExecutionYear();
-        }
-        else {
-            return enrolment.getExecutionPeriod() == executionPeriod;
-        }
+	if (isAnual()) {
+	    return enrolment.getExecutionYear() == executionPeriod.getExecutionYear();
+	} else {
+	    return enrolment.getExecutionPeriod() == executionPeriod;
+	}
     }
 
     private boolean hasEnrolmentsNotInAnyMarkSheet(ExecutionPeriod executionPeriod) {
@@ -1898,28 +1907,28 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 	return null;
     }
-    
+
     public boolean hasAnyExecutionCourseIn(ExecutionPeriod executionPeriod) {
-    	for(ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
-    		if(executionCourse.getExecutionPeriod().equals(executionPeriod)) {
-    			return true;
-    		}
-    	}
-    	return false;
+	for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
+	    if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
     }
-    
+
     @Override
     public Set<CurricularCourse> getAllCurricularCourses() {
-        return Collections.singleton(this);
+	return Collections.singleton(this);
     }
-    
+
     @Override
     public Set<CurricularCourse> getAllCurricularCourses(ExecutionPeriod executionPeriod) {
-        return getAllCurricularCourses();
+	return getAllCurricularCourses();
     }
-    
+
     public boolean getCanCreateMarkSheet() {
 	return !isDissertation() || (isDissertation() && MarkSheetPredicates.checkDissertation());
     }
-    
+
 }
