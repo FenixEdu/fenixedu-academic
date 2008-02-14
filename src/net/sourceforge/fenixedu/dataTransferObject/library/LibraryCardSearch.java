@@ -118,6 +118,12 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private void getAssociatedPersons(final PersonSearchSet resultSet, PartyClassification partyClassification) {
+	for (final LibraryCard libraryCard : RootDomainObject.getInstance().getLibraryCardsSet()) {
+	    if (libraryCard.getPartyClassification() == partyClassification) {
+		resultSet.add(libraryCard.getPerson());
+	    }
+	}
+
 	if (partyClassification == null) {
 	    resultSet.addAll(Role.getRoleByRoleType(RoleType.TEACHER).getAssociatedPersons());
 	} else {

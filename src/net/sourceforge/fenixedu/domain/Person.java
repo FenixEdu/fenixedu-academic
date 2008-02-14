@@ -2012,13 +2012,29 @@ public class Person extends Person_Base {
 	if (student != null) {
 	    final DegreeType degreeType = student.getMostSignificantDegreeType();
 	    if (degreeType != null) {
-		return PartyClassification.getClassificationByDegreeType(degreeType);
+		if (hasActiveDegree(student, degreeType)) {
+		    return PartyClassification.getClassificationByDegreeType(degreeType);
+		}
 	    }
 	}
 	if (isResearcher()) {
 	    return PartyClassification.RESEARCHER;
 	}
 	return PartyClassification.PERSON;
+    }
+
+    private boolean hasActiveDegree(Student student, DegreeType degreeType) {
+	for (final Registration registration : student.getRegistrationsSet()) {
+	    if (registration.getDegreeType() == degreeType) {
+		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+		    if (degreeCurricularPlan.getExecutionDegreeByYear(ExecutionYear.readCurrentExecutionYear()) != null) {
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
     }
 
     public static class PersonBeanFactoryEditor extends PersonBean implements FactoryExecutor {
