@@ -88,8 +88,8 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     /**
-     * Just for pre-Bbolonha verification
-     */
+         * Just for pre-Bbolonha verification
+         */
     final private boolean shouldAdd(final ICurriculumEntry newEntry) {
 	if (newEntry instanceof IEnrolment) {
 	    final IEnrolment newIEnrolment = (IEnrolment) newEntry;
@@ -105,7 +105,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	    final Dismissal newDismissal = (Dismissal) newEntry;
 
 	    for (final ICurriculumEntry entry : curricularYearEntries) {
-		if (entry instanceof Dismissal && newDismissal.isSimilar((Dismissal) entry)) {
+		if (entry instanceof Dismissal && !newDismissal.isCreditsDismissal() && newDismissal.isSimilar((Dismissal) entry)) {
 		    return false;
 		}
 	    }
