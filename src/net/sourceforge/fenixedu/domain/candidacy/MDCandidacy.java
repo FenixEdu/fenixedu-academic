@@ -11,22 +11,22 @@ import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class MDCandidacy extends MDCandidacy_Base {
-    
-    public  MDCandidacy(Person person, ExecutionDegree executionDegree) {
-        super();
-        init(person, executionDegree);
+
+    public MDCandidacy(Person person, ExecutionDegree executionDegree) {
+	super();
+	init(person, executionDegree);
     }
 
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale()).getString("label.mdCandidacy")
-                + " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
-                + getExecutionDegree().getExecutionYear().getYear();
+	return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale()).getString("label.mdCandidacy")
+		+ " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
+		+ getExecutionDegree().getExecutionYear().getYear();
     }
 
     @Override
     public Set<Operation> getOperations(CandidacySituation candidacySituation) {
-        return new HashSet<Operation>();
+	return new HashSet<Operation>();
     }
 
     @Override
