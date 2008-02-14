@@ -5,8 +5,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -339,13 +342,48 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return ExecutionYear.readExecutionYearByName("2006/2007");
     }
 
-    static public ExecutionYear readByDateTime(final DateTime dateTime) {
-	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.containsDate(dateTime)) {
-		return executionYear;
+    public static class ExecutionYearSearchCache {
+	private Map<Integer, Set<ExecutionYear>> map = new HashMap<Integer, Set<ExecutionYear>>();
+
+	public ExecutionYear findByDateTime(final DateTime dateTime) {
+	    final Integer year = Integer.valueOf(dateTime.getYear());
+	    Set<ExecutionYear> executionYears = map.get(year);
+	    if (executionYears == null || executionYears.isEmpty()) {
+		for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+		    add(executionYear);
+		}
+		executionYears = map.get(year);
 	    }
+	    if (executionYears == null || executionYears.isEmpty()) {
+		for (final ExecutionYear executionYear : executionYears) {
+		    if (executionYear.containsDate(dateTime)) {
+			return executionYear;
+		    }
+		}
+	    }
+	    return null;
 	}
-	return null;
+
+	private void add(final ExecutionYear executionYear) {
+	    final Integer year1 = executionYear.getBeginDateYearMonthDay().getYear();
+	    final Integer year2 = executionYear.getEndDateYearMonthDay().getYear();
+	    add(executionYear, year1);
+	    add(executionYear, year2);
+	}
+
+	private void add(final ExecutionYear executionYear, final Integer year) {
+	    Set<ExecutionYear> executionYears = map.get(year);
+	    if (executionYears == null) {
+		executionYears = new HashSet<ExecutionYear>();
+		map.put(year, executionYears);
+	    }
+	    executionYears.add(executionYear);
+	}
+    }
+    private static final ExecutionYearSearchCache executionYearSearchCache = new ExecutionYearSearchCache();
+
+    static public ExecutionYear readByDateTime(final DateTime dateTime) {
+	return executionYearSearchCache.findByDateTime(dateTime);
     }
 
     public static ExecutionYear readBy(final YearMonthDay begin, YearMonthDay end) {
@@ -359,12 +397,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     static public ExecutionYear getExecutionYearByDate(final YearMonthDay date) {
-	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.containsDate(date.toDateTimeAtMidnight())) {
-		return executionYear;
-	    }
-	}
-	return null;
+	return readByDateTime(date.toDateTimeAtMidnight());
     }
 
     static public List<ExecutionYear> readExecutionYearsByCivilYear(int civilYear) {

@@ -83,10 +83,11 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 		continue;
 	    }
 
-	    if (registrationAcademicServiceRequest.isDocumentRequest()) {
+	    if (campus != null && registrationAcademicServiceRequest.isDocumentRequest()) {
 		final DocumentRequest documentRequest = (DocumentRequest) registrationAcademicServiceRequest;
+		final Campus documentCampus = documentRequest.getCampus();
 
-		if (campus != null && documentRequest.getCampus() != null && !documentRequest.getCampus().equals(campus)) {
+		if (documentCampus != null && !documentCampus.equals(campus)) {
 		    continue;
 		}
 	    }
