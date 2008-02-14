@@ -323,14 +323,14 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     @Override
     final public ExecutionYear getIEnrolmentsLastExecutionYear() {
 	ExecutionYear result = null;
-	
+
 	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
 	    final ExecutionYear lastExecutionYear = curriculumModule.getIEnrolmentsLastExecutionYear();
 	    if (result == null || result.isBefore(lastExecutionYear)) {
 		result = lastExecutionYear;
 	    }
 	}
-	
+
 	return result;
     }
 
@@ -684,10 +684,12 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    return checkAllModules(executionYear);
 	}
     }
-    
+
     public void assertCorrectStructure(final Collection<CurriculumGroup> result) {
 	for (final CurriculumGroup curriculumGroup : getCurriculumGroups()) {
-	    if (curriculumGroup.getCurriculumGroups().isEmpty() && curriculumGroup.getCreditsConcluded().doubleValue() != curriculumGroup.getAprovedEctsCredits().doubleValue()) {
+	    if (curriculumGroup.getCurriculumGroups().isEmpty()
+		    && curriculumGroup.getCreditsConcluded().doubleValue() != curriculumGroup.getAprovedEctsCredits()
+			    .doubleValue()) {
 		result.add(curriculumGroup);
 	    } else {
 		curriculumGroup.assertCorrectStructure(result);
@@ -747,7 +749,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @SuppressWarnings("unchecked")
     private boolean checkDegreeModulesSelectionLimit(ExecutionYear executionYear) {
-	final DegreeModulesSelectionLimit degreeModulesSelectionLimit = (DegreeModulesSelectionLimit) getMostRecentActiveCurricularRule(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionYear);
+	final DegreeModulesSelectionLimit degreeModulesSelectionLimit = (DegreeModulesSelectionLimit) getMostRecentActiveCurricularRule(
+		CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionYear);
 
 	if (degreeModulesSelectionLimit == null) {
 	    return false;
@@ -765,7 +768,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     @SuppressWarnings("unchecked")
     private boolean checkCreditsLimits(ExecutionYear executionYear) {
-	final CreditsLimit creditsLimit = (CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT,executionYear);
+	final CreditsLimit creditsLimit = (CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT,
+		executionYear);
 
 	if (creditsLimit == null) {
 	    return false;
@@ -834,7 +838,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public boolean canAdd(final CurriculumLine curriculumLine) {
-	return !curriculumLine.hasCurricularCourse() || !curriculumLine.isBolonhaDegree()  
+	return !curriculumLine.hasCurricularCourse() || !curriculumLine.isBolonhaDegree()
 		|| getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
     }
 
@@ -863,7 +867,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return getNoCourseGroupCurriculumGroups().size();
     }
 
-    public boolean hasChildDegreeModule(DegreeModule degreeModule) {
+    public boolean hasChildDegreeModule(final DegreeModule degreeModule) {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.getDegreeModule() == degreeModule) {
 		return true;
@@ -871,6 +875,15 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 
 	return false;
+    }
+
+    public CurriculumModule getChildCurriculumModule(final DegreeModule degreeModule) {
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (curriculumModule.getDegreeModule() == degreeModule) {
+		return curriculumModule;
+	    }
+	}
+	return null;
     }
 
 }
