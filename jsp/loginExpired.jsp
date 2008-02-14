@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:html xhtml="true" locale="true">
 	<head>
 		<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message key="title.login" bundle="GLOBAL_RESOURCES"/></title>
@@ -44,10 +45,11 @@
 					<td><span class="error"><!-- Error messages go here --><html:errors /></span></td>
 				</tr>
 			</table>
-			<html:form action="/loginExpired" focus="username" >
+			<html:form action="/loginExpired.do" focus="username" >
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changePass"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.fromCAS" property="fromCAS"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" property="<%= ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME %>" value="/"/>
 				<table align="center" border="0" class="lp_table1">
 					<tr>
 						<td class="lp_leftcol"><bean:message key="label.username" bundle="GLOBAL_RESOURCES"/>:</td>
