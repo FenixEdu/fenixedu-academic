@@ -207,7 +207,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     public boolean isSimilar(final Dismissal dismissal) {
-	return hasSameDegreeModules(dismissal) && hasSameSourceIEnrolments(dismissal);
+	return hasSameDegreeModules(dismissal) && hasSameSourceIEnrolments(getSourceIEnrolments(), dismissal);
     }
 
     protected boolean hasSameDegreeModules(final Dismissal dismissal) {
@@ -215,9 +215,9 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 		dismissal.getCurricularCourse()));
     }
 
-    protected boolean hasSameSourceIEnrolments(final Dismissal dismissal) {
-	return getSourceIEnrolments().containsAll(dismissal.getSourceIEnrolments())
-		&& getSourceIEnrolments().size() == dismissal.getSourceIEnrolments().size();
+    protected boolean hasSameSourceIEnrolments(final Collection<IEnrolment> ienrolments, final Dismissal dismissal) {
+	return ienrolments.containsAll(dismissal.getSourceIEnrolments())
+		&& ienrolments.size() == dismissal.getSourceIEnrolments().size();
     }
 
     @Override

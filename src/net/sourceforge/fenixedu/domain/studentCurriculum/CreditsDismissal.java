@@ -19,7 +19,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     public CreditsDismissal(Credits credits, CurriculumGroup curriculumGroup,
 	    Collection<CurricularCourse> noEnrolCurricularCourses) {
-	checkIfCanCreate(credits, curriculumGroup);
+	checkIfCanCreate(credits, noEnrolCurricularCourses, curriculumGroup);
 	init(credits, curriculumGroup);
 	checkParameters(credits);
 	if (noEnrolCurricularCourses != null) {
@@ -27,8 +27,27 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 	}
     }
 
-    private void checkIfCanCreate(final Credits credits, CurriculumGroup curriculumGroup) {
+    private void checkIfCanCreate(final Credits credits, final Collection<CurricularCourse> noEnrolCurricularCourses,
+	    final CurriculumGroup curriculumGroup) {
 
+	for (final Dismissal dismissal : curriculumGroup.getChildDismissals()) {
+	    if (dismissal.isCreditsDismissal()) {
+		final CreditsDismissal creditsDismissal = (CreditsDismissal) dismissal;
+		if (isSimilar(credits, noEnrolCurricularCourses, creditsDismissal)) {
+		    throw new DomainException("error.CreditsDismissal.already.exists.similar", curriculumGroup.getName()
+			    .getContent());
+		}
+	    }
+	}
+    }
+
+    private boolean isSimilar(final Credits credits, final Collection<CurricularCourse> curricularCourses,
+	    final CreditsDismissal creditsDismissalToCheck) {
+	boolean result = true;
+	result &= hasSameEctsCredits(credits.getGivenCredits(), creditsDismissalToCheck);
+	result &= hasSameSourceIEnrolments(credits.getIEnrolments(), creditsDismissalToCheck);
+	result &= curricularCourses == null || hasSameNoEnrolCurricularCourses(curricularCourses, creditsDismissalToCheck);
+	return result;
     }
 
     private void checkParameters(final Credits credits) {
@@ -88,18 +107,19 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     @Override
     public boolean isSimilar(final Dismissal dismissal) {
-	return dismissal.isCreditsDismissal() && hasSameSourceIEnrolments(dismissal)
-		&& hasSameNoEnrolCurricularCourses((CreditsDismissal) dismissal)
-		&& hasSameEctsCredits((CreditsDismissal) dismissal);
+	return dismissal.isCreditsDismissal() && hasSameSourceIEnrolments(getSourceIEnrolments(), dismissal)
+		&& hasSameNoEnrolCurricularCourses(getNoEnrolCurricularCourses(), (CreditsDismissal) dismissal)
+		&& hasSameEctsCredits(getEctsCredits(), (CreditsDismissal) dismissal);
     }
 
-    private boolean hasSameNoEnrolCurricularCourses(final CreditsDismissal dismissal) {
-	return getNoEnrolCurricularCourses().containsAll(dismissal.getNoEnrolCurricularCourses())
-		&& getNoEnrolCurricularCoursesCount() == dismissal.getNoEnrolCurricularCoursesCount();
+    private boolean hasSameNoEnrolCurricularCourses(final Collection<CurricularCourse> curricularCourses,
+	    final CreditsDismissal dismissal) {
+	return curricularCourses.containsAll(dismissal.getNoEnrolCurricularCourses())
+		&& curricularCourses.size() == dismissal.getNoEnrolCurricularCoursesCount();
     }
 
-    private boolean hasSameEctsCredits(final CreditsDismissal dismissal) {
-	return getEctsCredits().equals(dismissal.getEctsCredits());
+    private boolean hasSameEctsCredits(final Double ectsCredits, final CreditsDismissal dismissal) {
+	return ectsCredits.equals(dismissal.getEctsCredits());
     }
 
 }
