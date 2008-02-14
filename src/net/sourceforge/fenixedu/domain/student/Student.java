@@ -666,8 +666,8 @@ public class Student extends Student_Base {
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations directly
-     * (use {@link addRegistrations} method)
+     * registrations -> Do not use this method to add new registrations
+     * directly (use {@link addRegistrations} method)
      */
     @Override
     public List<Registration> getRegistrations() {
@@ -686,8 +686,8 @@ public class Student extends Student_Base {
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations directly
-     * (use {@link addRegistrations} method)
+     * registrations -> Do not use this method to add new registrations
+     * directly (use {@link addRegistrations} method)
      */
     @Override
     public Set<Registration> getRegistrationsSet() {
@@ -765,7 +765,7 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    public Registration getRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
+    public Registration getRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	for (Registration registration : super.getRegistrations()) {
 	    Set<DegreeCurricularPlan> degreeCurricularPlans = registration.getDegreeCurricularPlans();
 	    for (DegreeCurricularPlan degreeCurricularPlanToTest : degreeCurricularPlans) {
@@ -775,6 +775,10 @@ public class Student extends Student_Base {
 	    }
 	}
 	return null;
+    }
+
+    public boolean hasRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
+	return getRegistrationFor(degreeCurricularPlan) != null;
     }
 
     public Registration getRegistrationFor(Degree degree) {
@@ -881,7 +885,7 @@ public class Student extends Student_Base {
     }
 
     /*
-     * If student has delegate role, get the students he is responsible for  
+     * If student has delegate role, get the students he is responsible for
      */
     public List<Student> getStudentsResponsibleForGivenFunctionType(FunctionType delegateFunctionType, ExecutionYear executionYear) {
 	final Degree degree = getLastActiveRegistration().getDegree();
@@ -978,7 +982,7 @@ public class Student extends Student_Base {
 
 	return false;
     }
-    
+
     public SortedSet<ExternalEnrolment> getSortedExternalEnrolments() {
 	final SortedSet<ExternalEnrolment> result = new TreeSet<ExternalEnrolment>(ExternalEnrolment.COMPARATOR_BY_NAME);
 	for (final Registration registration : getRegistrationsSet()) {
@@ -986,16 +990,17 @@ public class Student extends Student_Base {
 	}
 	return result;
     }
-    
-     public Collection<? extends Forum> getForuns(ExecutionPeriod executionPeriod) {
+
+    public Collection<? extends Forum> getForuns(ExecutionPeriod executionPeriod) {
 	final Collection<Forum> res = new HashSet<Forum>();
 	for (Registration registration : getRegistrationsSet()) {
 	    for (Attends attends : registration.getAssociatedAttendsSet()) {
-		if(attends.getExecutionPeriod() == executionPeriod) {
+		if (attends.getExecutionPeriod() == executionPeriod) {
 		    res.addAll(attends.getExecutionCourse().getForuns());
 		}
 	    }
 	}
 	return res;
     }
+
 }
