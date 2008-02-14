@@ -71,7 +71,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	    final CurriculumGroup curriculumGroup, final Collection<CurricularCourse> noEnrolCurricularCourses) {
 	return new CreditsDismissal(credits, curriculumGroup, noEnrolCurricularCourses);
     }
-    
+
     static private CurriculumGroup findCurriculumGroupForCourseGroup(final StudentCurricularPlan studentCurricularPlan,
 	    final CourseGroup courseGroup) {
 	final CurriculumGroup curriculumGroup = studentCurricularPlan.findCurriculumGroupFor(courseGroup);
@@ -93,9 +93,10 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	    CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse) {
 	return new Dismissal(credits, curriculumGroup, curricularCourse);
     }
-    
-    static protected Dismissal createNewOptionalDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan,
-	    CurriculumGroup curriculumGroup, final OptionalCurricularCourse optionalCurricularCourse, final Double ectsCredits) {
+
+    static protected Dismissal createNewOptionalDismissal(final Credits credits,
+	    final StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+	    final OptionalCurricularCourse optionalCurricularCourse, final Double ectsCredits) {
 	return new OptionalDismissal(credits, curriculumGroup, optionalCurricularCourse, ectsCredits);
     }
 
@@ -136,14 +137,14 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     @Override
     final public ExecutionYear getIEnrolmentsLastExecutionYear() {
 	ExecutionYear result = null;
-	
+
 	for (final IEnrolment iEnrolment : this.getSourceIEnrolments()) {
 	    final ExecutionYear executionYear = iEnrolment.getExecutionYear();
 	    if (result == null || result.isBefore(executionYear)) {
 		result = executionYear;
 	    }
 	}
-	
+
 	return result;
     }
 
@@ -165,12 +166,14 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     protected boolean isValid(final ExecutionYear executionYear) {
-	return (executionYear == null || !hasExecutionPeriod() || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear));
+	return (executionYear == null || !hasExecutionPeriod() || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(
+		executionYear));
     }
 
     @Override
     public Double getEctsCredits() {
-	// FIXME must migrate Dismissal with optional curricular courses to OptionalDismissal
+	// FIXME must migrate Dismissal with optional curricular courses to
+	// OptionalDismissal
 	return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse().getEctsCredits(
 		getExecutionPeriod());
     }
@@ -204,9 +207,17 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     public boolean isSimilar(final Dismissal dismissal) {
-	return (getDegreeModule() == dismissal.getDegreeModule() || 
-		getCurricularCourse().isEquivalent(dismissal.getCurricularCourse())) && 
-		getSourceIEnrolments().containsAll(dismissal.getSourceIEnrolments());
+	return hasSameDegreeModules(dismissal) && hasSameSourceIEnrolments(dismissal);
+    }
+
+    protected boolean hasSameDegreeModules(final Dismissal dismissal) {
+	return (getDegreeModule() == dismissal.getDegreeModule() || getCurricularCourse().isEquivalent(
+		dismissal.getCurricularCourse()));
+    }
+
+    protected boolean hasSameSourceIEnrolments(final Dismissal dismissal) {
+	return getSourceIEnrolments().containsAll(dismissal.getSourceIEnrolments())
+		&& getSourceIEnrolments().size() == dismissal.getSourceIEnrolments().size();
     }
 
     @Override
@@ -226,7 +237,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     protected boolean isConcluded(final ExecutionYear executionYear) {
-	return executionYear == null || !hasExecutionPeriod() || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
+	return executionYear == null || !hasExecutionPeriod()
+		|| getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
     }
 
     @Override
@@ -235,10 +247,10 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public YearMonthDay calculateConclusionDate() {	
+    public YearMonthDay calculateConclusionDate() {
 	final SortedSet<IEnrolment> iEnrolments = new TreeSet<IEnrolment>(IEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
 	iEnrolments.addAll(getSourceIEnrolments());
-	
+
 	final YearMonthDay beginDate = getExecutionPeriod().getBeginDateYearMonthDay();
 	if (!iEnrolments.isEmpty()) {
 	    final IEnrolment enrolment = iEnrolments.last();
@@ -252,24 +264,18 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     @Override
     @SuppressWarnings("unchecked")
     public Curriculum getCurriculum(final ExecutionYear executionYear) {
-	return isValid(executionYear) ? 
-		new Curriculum(
-			this, 
-			executionYear, 
-			Collections.EMPTY_SET, 
-			getAverageEntries(), 
-			Collections.singleton((ICurriculumEntry) this))
-		: Curriculum.createEmpty(this, executionYear);
+	return isValid(executionYear) ? new Curriculum(this, executionYear, Collections.EMPTY_SET, getAverageEntries(),
+		Collections.singleton((ICurriculumEntry) this)) : Curriculum.createEmpty(this, executionYear);
     }
-    
+
     private Collection<ICurriculumEntry> getAverageEntries() {
 	return getCredits().isEquivalence() ? Collections.singleton((ICurriculumEntry) this) : getCredits().getAverageEntries();
     }
-    
+
     public Grade getGrade() {
 	return getCredits().isEquivalence() ? getCredits().getGrade() : Grade.createEmptyGrade();
     }
-    
+
     public String getGradeValue() {
 	return getGrade().getValue();
     }
@@ -277,19 +283,20 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     public Double getWeigth() {
 	return getCredits().isEquivalence() ? getEctsCredits() : null;
     }
-    
+
     final public BigDecimal getWeigthForCurriculum() {
 	return BigDecimal.valueOf(getWeigth());
     }
-    
+
     public BigDecimal getWeigthTimesGrade() {
-	return getCredits().isEquivalence() && getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : BigDecimal.ZERO;
+	return getCredits().isEquivalence() && getGrade().isNumeric() ? getWeigthForCurriculum().multiply(
+		getGrade().getNumericValue()) : BigDecimal.ZERO;
     }
-    
+
     public String getCode() {
 	return hasCurricularCourse() ? getCurricularCourse().getCode() : null;
     }
-    
+
     @Override
     public ExecutionPeriod getExecutionPeriod() {
 	return getCredits().getExecutionPeriod();
@@ -305,5 +312,5 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	result.add(new DismissalCurriculumModuleWrapper(this, executionPeriod));
 	return result;
     }
-    
+
 }
