@@ -76,7 +76,6 @@
 		</tr>
 		<logic:iterate id="infoLesson" name="siteCourseInformation" property="infoLessons">
 			<tr>
-				<logic:iterate id="">
 					<logic:equal name="infoLesson" property="infoShift.shiftTypesCodePrettyPrint" value="T">
 						<td><bean:message key="message.courseInformation.typeClassTeoricas"/></td>
 						<td><bean:write name="siteCourseInformation" property="numberOfTheoLessons"/></td>
@@ -108,7 +107,6 @@
 					<logic:equal name="infoLesson" property="infoShift.shiftTypesCodePrettyPrint" value="L">				
 						<td><bean:write name="executionCourse" property="weeklyLabHours"/></td>
 					</logic:equal>						
-				</logic:iterate>															
 			</tr>
 		</logic:iterate>
 	</table>
