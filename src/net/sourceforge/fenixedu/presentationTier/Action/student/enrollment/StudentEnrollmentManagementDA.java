@@ -60,13 +60,12 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
 	for (final Registration registration : student.getRegistrations()) {
 
-	    if (!registration.isConcluded()) {
+	    if (!registration.isBolonha() || !registration.isConcluded()) {
 		continue;
 	    }
 
 	    final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-	    if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_MASTER_DEGREE
-		    && !studentCurricularPlan.isConclusionProcessed()) {
+	    if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_MASTER_DEGREE) {
 
 		final CycleCurriculumGroup firstCycle = studentCurricularPlan.getFirstCycle();
 		if (firstCycle != null && firstCycle.isConcluded()
