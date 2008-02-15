@@ -188,10 +188,11 @@ public class SeparationCyclesManagement {
     }
 
     private void moveEnrolment(final Enrolment enrolment, final CurriculumGroup parent) {
-	if (parent.hasChildDegreeModule(enrolment.getDegreeModule())) {
+	final CurriculumModule child = parent.getChildCurriculumModule(enrolment.getDegreeModule());
+	if (child != null && child.isEnrolment()) {
 	    throw new DomainException("error.AffinityCyclesManagement.enrolment.should.not.exist");
 	}
-
+	
 	final Registration registration = parent.getStudentCurricularPlan().getRegistration();
 	enrolment.setCurriculumGroup(parent);
 
