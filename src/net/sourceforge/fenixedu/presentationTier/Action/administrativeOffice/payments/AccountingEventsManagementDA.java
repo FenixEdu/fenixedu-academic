@@ -47,12 +47,14 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
 	    request.setAttribute("createGratuityAndAdminOfficeFeeBean", createGratuityAndAdminOfficeFeeEventBean);
 
+	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
+
 	    return mapping.findForward("chooseExecutionYear");
 
 	} catch (DomainExceptionWithInvocationResult e) {
-	    addActionMessages(request, e.getInvocationResult().getMessages());
+	    addActionMessages("error", request, e.getInvocationResult().getMessages());
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey(), e.getArgs());
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	}
 
 	request.setAttribute("createGratuityAndAdminOfficeFeeBean", createGratuityAndAdminOfficeFeeEventBean);
@@ -71,12 +73,14 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
 	    request.setAttribute("createGratuityAndAdminOfficeFeeBean", createGratuityAndAdminOfficeFeeEventBean);
 
+	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
+
 	    return mapping.findForward("chooseExecutionYear");
 
 	} catch (DomainExceptionWithInvocationResult e) {
-	    addActionMessages(request, e.getInvocationResult().getMessages());
+	    addActionMessages("error", request, e.getInvocationResult().getMessages());
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey(), e.getArgs());
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	}
 
 	request.setAttribute("createGratuityAndAdminOfficeFeeBean", createGratuityAndAdminOfficeFeeEventBean);
