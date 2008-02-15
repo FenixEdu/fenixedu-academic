@@ -505,22 +505,21 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		if (creditsLimit != null) {
 		    groupName.append(" <span title=\"");
 		    groupName.append(applicationResources.getString("label.curriculum.credits.legend.minCredits"));
-		    groupName.append(" \">");
-		    groupName.append("m(");
+		    groupName.append(" \">m(");
 		    groupName.append(courseGroup.getMinEctsCredits(executionPeriodContext));
 		    groupName.append(")</span>,");
 		}
 
 		groupName.append(" <span title=\"");
 		groupName.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
-		groupName.append(" c(");
+		groupName.append(" \"> c(");
 		groupName.append(curriculumGroup.getCreditsConcluded(executionYearContext));
 		groupName.append(")</span>");
 
 		if (creditsLimit != null) {
-		    groupName.append(" <span title=\"");
+		    groupName.append("<span title=\"");
 		    groupName.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
-		    groupName.append(", M(");
+		    groupName.append("\">, M(");
 		    groupName.append(courseGroup.getMaxEctsCredits(executionPeriodContext));
 		    groupName.append(")</span>");
 		}

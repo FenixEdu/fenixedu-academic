@@ -350,14 +350,14 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	    result.append(" <span title=\"");
 	    result.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
-	    result.append(" \">c(");
+	    result.append(" \"> c(");
 	    result.append(curriculumGroup.getCreditsConcluded(executionPeriod.getExecutionYear()));
 	    result.append(")</span>");
 
 	    if (creditsLimit != null) {
-		result.append(" <span title=\"");
+		result.append(", <span title=\"");
 		result.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
-		result.append(" \">, M(");
+		result.append(" \">M(");
 		result.append(courseGroup.getMaxEctsCredits(executionPeriod));
 		result.append(")</span>");
 	    }
