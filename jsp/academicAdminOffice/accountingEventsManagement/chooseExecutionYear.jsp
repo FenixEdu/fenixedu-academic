@@ -40,9 +40,14 @@
 	
 	<br/>
 	
-	<html:messages id="message" message="true"
+	<html:messages id="message" message="true" property="error"
 		bundle="APPLICATION_RESOURCES">
-		<span class="error"> <bean:write name="message" /> </span>
+		<span class="error"> <bean:write name="message" property="error" /> </span>
+		<br />
+	</html:messages>
+	
+	<html:messages id="message" message="true" property="success" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<span class="success0"> <bean:write name="message" property="success"/> </span>
 		<br />
 	</html:messages>
 	
