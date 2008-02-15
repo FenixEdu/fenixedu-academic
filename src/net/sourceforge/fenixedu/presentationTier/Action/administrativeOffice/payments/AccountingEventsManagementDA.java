@@ -45,8 +45,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 	    executeService("CreateGratuityEvent", createGratuityAndAdminOfficeFeeEventBean.getStudentCurricularPlan(),
 		    createGratuityAndAdminOfficeFeeEventBean.getExecutionYear());
 
-	    request.setAttribute("registrationID", createGratuityAndAdminOfficeFeeEventBean.getStudentCurricularPlan()
-		    .getRegistration().getIdInternal());
+	    request.setAttribute("createGratuityAndAdminOfficeFeeBean", createGratuityAndAdminOfficeFeeEventBean);
 
 	    return mapping.findForward("chooseExecutionYear");
 
@@ -70,8 +69,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 	    executeService("CreateAdministrativeOfficeFeeAndInsuranceEvent", createGratuityAndAdminOfficeFeeEventBean
 		    .getStudentCurricularPlan(), createGratuityAndAdminOfficeFeeEventBean.getExecutionYear());
 
-	    request.setAttribute("registrationID", createGratuityAndAdminOfficeFeeEventBean.getStudentCurricularPlan()
-		    .getRegistration().getIdInternal());
+	    request.setAttribute("createGratuityAndAdminOfficeFeeBean", createGratuityAndAdminOfficeFeeEventBean);
 
 	    return mapping.findForward("chooseExecutionYear");
 
