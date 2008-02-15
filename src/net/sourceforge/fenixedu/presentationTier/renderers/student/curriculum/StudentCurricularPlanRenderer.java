@@ -475,7 +475,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		body = createDegreeCurricularPlanNameLink(curriculumGroup.getDegreeCurricularPlanOfDegreeModule(),
 			executionPeriodContext);
 	    } else {
-		body = new HtmlText(createGroupName(text, curriculumGroup).toString());
+		body = new HtmlText(createGroupName(text, curriculumGroup).toString(), false);
 	    }
 	    cell.setBody(body);
 
@@ -503,19 +503,26 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 			CurricularRuleType.CREDITS_LIMIT, executionYearContext);
 
 		if (creditsLimit != null) {
-		    groupName.append(" m(");
+		    groupName.append(" <span title=\"");
+		    groupName.append(applicationResources.getString("label.curriculum.credits.legend.minCredits"));
+		    groupName.append(" \">");
+		    groupName.append("m(");
 		    groupName.append(courseGroup.getMinEctsCredits(executionPeriodContext));
-		    groupName.append("),");
+		    groupName.append(")</span>,");
 		}
 
+		groupName.append(" <span title=\"");
+		groupName.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
 		groupName.append(" c(");
 		groupName.append(curriculumGroup.getCreditsConcluded(executionYearContext));
-		groupName.append(")");
+		groupName.append(")</span>");
 
 		if (creditsLimit != null) {
+		    groupName.append(" <span title=\"");
+		    groupName.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
 		    groupName.append(", M(");
 		    groupName.append(courseGroup.getMaxEctsCredits(executionPeriodContext));
-		    groupName.append(")");
+		    groupName.append(")</span>");
 		}
 	    }
 	    return groupName;

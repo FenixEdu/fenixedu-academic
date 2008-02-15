@@ -46,9 +46,11 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
-    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
+    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 
-    private static final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources");
+    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", LanguageUtils.getLocale());
+
+    private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
 
     private Integer initialWidth = 70;
 
@@ -295,7 +297,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		titleCell.setBody(createDegreeCurricularPlanLink(studentCurriculumGroupBean));
 	    } else {
 		titleCell.setBody(new HtmlText(buildCurriculumGroupLabel(studentCurriculumGroupBean.getCurriculumModule(),
-			executionPeriod)));
+			executionPeriod), false));
 	    }
 
 	    final HtmlTableCell checkBoxCell = groupHeaderRow.createCell();
@@ -339,19 +341,25 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    final CourseGroup courseGroup = curriculumGroup.getDegreeModule();
 
 	    if (creditsLimit != null) {
-		result.append(" m(");
+		result.append(" <span title=\"");
+		result.append(applicationResources.getString("label.curriculum.credits.legend.minCredits"));
+		result.append(" \">m(");
 		result.append(courseGroup.getMinEctsCredits(executionPeriod));
-		result.append("),");
+		result.append(")</span>,");
 	    }
 
-	    result.append(" c(");
+	    result.append(" <span title=\"");
+	    result.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
+	    result.append(" \">c(");
 	    result.append(curriculumGroup.getCreditsConcluded(executionPeriod.getExecutionYear()));
-	    result.append(")");
+	    result.append(")</span>");
 
 	    if (creditsLimit != null) {
-		result.append(", M(");
+		result.append(" <span title=\"");
+		result.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
+		result.append(" \">, M(");
 		result.append(courseGroup.getMaxEctsCredits(executionPeriod));
-		result.append(")");
+		result.append(")</span>");
 	    }
 
 	    if (curriculumGroup.isConcluded()) {
