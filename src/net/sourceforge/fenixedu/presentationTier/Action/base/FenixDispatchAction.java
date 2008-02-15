@@ -349,10 +349,15 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected void addActionMessages(final HttpServletRequest request, final Collection<LabelFormatter> messages) {
+	addActionMessages(ActionMessages.GLOBAL_MESSAGE, request, messages);
+    }
+
+    protected void addActionMessages(final String propertyName, final HttpServletRequest request,
+	    final Collection<LabelFormatter> messages) {
 	final StrutsMessageResourceProvider messageResourceProvider = getMessageResourceProvider(request);
-	
+
 	for (final LabelFormatter each : messages) {
-	    addActionMessageLiteral(request, each.toString(messageResourceProvider));
+	    addActionMessageLiteral(propertyName, request, each.toString(messageResourceProvider));
 	}
     }
 
