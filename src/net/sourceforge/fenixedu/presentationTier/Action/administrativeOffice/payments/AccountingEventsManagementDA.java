@@ -39,7 +39,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
     public ActionForward createGratuityEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final CreateGratuityAndAdminOfficeFeeEventBean createGratuityAndAdminOfficeFeeEventBean = (CreateGratuityAndAdminOfficeFeeEventBean) getRenderedObject();
+	final CreateGratuityAndAdminOfficeFeeEventBean createGratuityAndAdminOfficeFeeEventBean = (CreateGratuityAndAdminOfficeFeeEventBean) getRenderedObject("createGratuityAndAdminOfficeFeeBean");
 	try {
 
 	    executeService("CreateGratuityEvent", createGratuityAndAdminOfficeFeeEventBean.getStudentCurricularPlan(),
@@ -64,7 +64,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
     public ActionForward createAdministrativeOfficeFeeAndInsuranceEvent(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final CreateGratuityAndAdminOfficeFeeEventBean createGratuityAndAdminOfficeFeeEventBean = (CreateGratuityAndAdminOfficeFeeEventBean) getRenderedObject();
+	final CreateGratuityAndAdminOfficeFeeEventBean createGratuityAndAdminOfficeFeeEventBean = (CreateGratuityAndAdminOfficeFeeEventBean) getRenderedObject("createGratuityAndAdminOfficeFeeBean");
 	try {
 
 	    executeService("CreateAdministrativeOfficeFeeAndInsuranceEvent", createGratuityAndAdminOfficeFeeEventBean
