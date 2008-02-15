@@ -13,10 +13,6 @@
 		<!-- Error messages go here --><html:errors />
 	</div>
 	
-	<p>
-		<em>Reservas de turmas do 1º Ano só a partir de 24 de Setembro de 2007</em>
-	</p>
-
 	<logic:messagesPresent message="true">
 		<html:messages id="messages" message="true">
 			<p><span class="error0"><bean:write name="messages" /></span></p>
@@ -32,7 +28,6 @@
 			<ul>
 				<li>Alunos Externos</li>
 				<li>Melhorias de Nota</li>
-				<li>Alunos inscritos em Época Especial 2006/2007</li>
 				<li>Alunos com processos de Equivalência em curso</li>
 			</ul>
 		</li>
