@@ -35,8 +35,6 @@
 	<ul style="margin-left: 4em">
 		<li>Alunos Externos</li>
 		<li>Melhorias de Nota</li>
-		<li>Alunos inscritos em Época Especial 2003/2004</li>
-		<li>Alunos cuja inscrição é efectuada pelo Coordenador de Licenciatura/Tutor</li>
 		<li>Alunos com processos de Equivalência em curso</li>
 	</ul>
 
