@@ -214,6 +214,20 @@ Documentation:
 		<property name="rssImage" value="/images/rss_ico.png"/>
 	</renderer>
 	
+	<renderer type="net.sourceforge.fenixedu.domain.messaging.Announcement" layout="view-announcement" class="net.sourceforge.fenixedu.presentationTier.renderers.AnnouncementRenderer">
+			<property name="bundle" value="MESSAGING_RESOURCES"/>
+			<property name="viewMoreLabel" value="label.messaging.viewMore"/>
+			<property name="fromLabel" value="label.messaging.from"/>
+			<property name="toLabel" value="label.messaging.until"/>
+			<property name="inLabel" value="label.messaging.in"/>
+			<property name="placeSeparator" value=" / "/>
+			<property name="authorShown" value="false"/>
+			<property name="authorLabel" value="label.messaging.author"/>
+			<property name="dateFormat" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>						
+	</renderer>
+	
+	
+	
     <renderer type="int" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
     <renderer type="long" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
     <renderer type="short" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>

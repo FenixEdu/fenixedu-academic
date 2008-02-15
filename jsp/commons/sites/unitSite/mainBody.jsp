@@ -93,29 +93,16 @@
 			</logic:notEmpty>
 			
 			<logic:iterate id="announcement" name="announcements">
-				<h3 class="mvert025"><fr:view name="announcement" property="subject"/></h3>
-				<p class="mtop025 mbottom05" style="color: #888;"><fr:view name="announcement" property="creationDate" layout="no-time"/></p>
-				<div class="usitebody mvert025">
-					<logic:equal name="announcement" property="excerptEmpty" value="true">
-	                    <bean:define id="length" name="textLength"/>
-						<%= ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
-						<fr:view name="announcement" property="body">
-							<fr:layout name="html">
-	<%-- 							<fr:property name="length" value="<%= String.valueOf(length) %>"/> --%>
-	<%-- 							<fr:property name="tooltipShown" value="false"/> --%>
-							</fr:layout>
-						</fr:view>
-						<%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
-					</logic:equal>
-					<logic:notEqual name="announcement" property="excerptEmpty" value="true">
-						<fr:view name="announcement" property="excerpt" layout="html"/>
-					</logic:notEqual>
-				</div>
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
-				<bean:define id="siteID" name="site" property="idInternal"/>
-				<p class="mtop025 mbottom15">
-					<html:link page="<%= announcementAction + "?method=viewAnnouncement&amp;" + context +  "&amp;announcementId=" + announcementID%>"><bean:message key="link.viewMore"/></html:link><br/>				</p>
 
+				<fr:view name="announcement">
+					<fr:layout name="view-announcement">
+					  		<fr:property name="subjectClasses" value="mvert025"/>
+					  		<fr:property name="dateClasses" value="mtop025 mbottom05 color888"/>
+					  		<fr:property name="contentClasses" value="usiteBody mvert025"/>
+					  		<fr:property name="viewMoreUrl" value="<%= announcementAction + "?method=viewAnnouncement&amp;" + context +  "&amp;announcementId=" + announcementID%>"/>
+					</fr:layout>
+				</fr:view>
 			</logic:iterate>
 
 				<p>
@@ -151,47 +138,17 @@
 			</logic:notEmpty>
 			
 			<logic:iterate id="announcement" name="eventAnnouncements">
-				<h3 class="mvert025"><fr:view name="announcement" property="subject"/></h3>
-				<p class="mtop025 mbottom05" style="color: #888;">
-					<logic:present name="announcement" property="referedSubjectBegin">
-						<logic:present name="announcement" property="referedSubjectEnd">
-							<bean:message key="label.listAnnouncements.event.occurs.from" bundle="MESSAGING_RESOURCES"/>
-						</logic:present>
-						<logic:notPresent name="announcement" property="referedSubjectEnd">
-							<bean:message key="label.listAnnouncements.event.occurs.at" bundle="MESSAGING_RESOURCES"/>
-						</logic:notPresent>
-				        <fr:view name="announcement" property="referedSubjectBegin" type="org.joda.time.DateTime" layout="no-time" />
-					</logic:present>
-					<logic:present name="announcement" property="referedSubjectEnd">
-						<bean:message key="label.listAnnouncements.event.occurs.to" bundle="MESSAGING_RESOURCES"/>
-						<fr:view name="announcement" property="referedSubjectEnd" type="org.joda.time.DateTime" layout="no-time" />
-					</logic:present>
-					<logic:notEmpty name="announcement" property="place">
-					/ <fr:view name="announcement" property="place"/>
-					</logic:notEmpty>
-				</p>
-				<div class="usitebody mvert025">
-					<logic:equal name="announcement" property="excerptEmpty" value="true">
-	                    <bean:define id="length" name="textLength"/>
-						<%= ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
-						<fr:view name="announcement" property="body">
-		   					<fr:layout name="html">
-	<%--   		      					<fr:property name="length" value="<%= String.valueOf(length) %>"/> --%>
-	<%--								<fr:property name="tooltipShown" value="false"/> --%>
-							</fr:layout>
-						</fr:view>
-  					<%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX%>
-					</logic:equal>
-					<logic:notEqual name="announcement" property="excerptEmpty" value="true">
-						<fr:view name="announcement" property="excerpt" layout="html"/>
-					</logic:notEqual>
-				</div>
 				<bean:define id="announcementID" name="announcement" property="idInternal"/>
-				<bean:define id="siteID" name="site" property="idInternal"/>
-				<p class="mtop025 mbottom15">
-					<html:link page="<%= eventAction + "?method=viewEvent&amp;" + context + "&amp;announcementId=" + announcementID%>"><bean:message key="link.viewMore"/></html:link><br/>
-				</p>
-
+	
+				<fr:view name="announcement">
+					<fr:layout name="view-announcement">
+					  		<fr:property name="subjectClasses" value="mvert025"/>
+					  		<fr:property name="dateClasses" value="mtop025 mbottom05 color888"/>
+					  		<fr:property name="contentClasses" value="usiteBody mvert025"/>
+					  		<fr:property name="viewMoreUrl" value="<%= eventAction + "?method=viewAnnouncement&amp;" + context +  "&amp;announcementId=" + announcementID%>"/>
+					</fr:layout>
+				</fr:view>
+				<br/>
 			</logic:iterate>
 
 				<p>

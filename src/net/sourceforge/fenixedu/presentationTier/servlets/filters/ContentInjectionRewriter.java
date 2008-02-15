@@ -11,11 +11,15 @@ public class ContentInjectionRewriter extends RequestRewriter {
 
     public static final String HAS_CONTEXT_PREFIX_STRING = "HAS_CONTEXT";
     
+    public static final String BLOCK_HAS_CONTEXT_STRING = "BLOCK_HAS_CONTEXT ";
+    
+    public static final String BLOCK_END_HAS_CONTEXT_STRING = "END_BLOCK_HAS_CONTEXT";
+    
     public static final String HAS_CONTEXT_PREFIX = "<!-- " + HAS_CONTEXT_PREFIX_STRING + " -->";
     
-    public static final String BLOCK_HAS_CONTEXT_PREFIX = "<!-- BLOCK_HAS_CONTEXT -->";
+    public static final String BLOCK_HAS_CONTEXT_PREFIX = "<!-- " + BLOCK_HAS_CONTEXT_STRING + " -->";
     
-    public static final String END_BLOCK_HAS_CONTEXT_PREFIX = "<!-- END_BLOCK_HAS_CONTEXT -->";
+    public static final String END_BLOCK_HAS_CONTEXT_PREFIX = "<!-- " + BLOCK_END_HAS_CONTEXT_STRING + " -->";
 
     public static final String CONTEXT_ATTRIBUTE_NAME = FilterFunctionalityContext.CONTEXT_ATTRIBUTE_NAME + "_PATH";
 

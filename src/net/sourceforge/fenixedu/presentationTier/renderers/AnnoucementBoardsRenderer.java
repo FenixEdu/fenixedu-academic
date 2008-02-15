@@ -103,7 +103,7 @@ public class AnnoucementBoardsRenderer extends OutputRenderer {
 
     }
 
-    public class AnnouncementBoardsRendererLayout extends Layout {
+    private class AnnouncementBoardsRendererLayout extends Layout {
 
 	private List<AnnouncementBoard> boards;
 	private boolean canManageAtLeastOneBoard;
