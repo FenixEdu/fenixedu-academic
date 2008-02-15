@@ -72,6 +72,8 @@ Assim que tiver a matrícula Bolonha disponível deve proceder à sua inscrição.<br
 <html:link href="mailto:inscricoes@ist.utl.pt">inscricoes@ist.utl.pt</html:link>
 </p>
 
+</div>
+
 <html:form action="/studentEnrollmentManagement.do?method=prepare">
 	<p class="mtop15">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message  key="label.continue" bundle="APPLICATION_RESOURCES"/></html:submit>
