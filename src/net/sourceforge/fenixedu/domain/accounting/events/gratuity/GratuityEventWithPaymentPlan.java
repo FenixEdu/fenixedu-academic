@@ -39,6 +39,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	super();
     }
 
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public GratuityEventWithPaymentPlan(AdministrativeOffice administrativeOffice, Person person,
 	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
 	this();
@@ -47,8 +48,8 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    protected void init(AdministrativeOffice administrativeOffice, Person person,
-	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+    protected void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
+	    ExecutionYear executionYear) {
 	super.init(administrativeOffice, person, studentCurricularPlan, executionYear);
 
 	configuratePaymentPlan();
@@ -65,18 +66,16 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	ensureServiceAgreement();
 
 	if (!hasGratuityPaymentPlan()) {
-	    super.setGratuityPaymentPlan(getDegreeCurricularPlanServiceAgreement()
-		    .getGratuityPaymentPlanFor(getStudentCurricularPlan(), getExecutionYear()));
+	    super.setGratuityPaymentPlan(getDegreeCurricularPlanServiceAgreement().getGratuityPaymentPlanFor(
+		    getStudentCurricularPlan(), getExecutionYear()));
 	}
 
     }
 
     private void ensureServiceAgreement() {
 	if (getDegreeCurricularPlanServiceAgreement() == null) {
-	    new DegreeCurricularPlanServiceAgreement(getPerson(),
-		    DegreeCurricularPlanServiceAgreementTemplate
-			    .readByDegreeCurricularPlan(getStudentCurricularPlan()
-				    .getDegreeCurricularPlan()));
+	    new DegreeCurricularPlanServiceAgreement(getPerson(), DegreeCurricularPlanServiceAgreementTemplate
+		    .readByDegreeCurricularPlan(getStudentCurricularPlan().getDegreeCurricularPlan()));
 	}
     }
 
@@ -86,8 +85,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	for (final EntryDTO entryDTO : calculateEntries()) {
 
 	    if (entryDTO instanceof EntryWithInstallmentDTO) {
-		result.add(createInstallmentPaymentCode((EntryWithInstallmentDTO) entryDTO, getPerson()
-			.getStudent()));
+		result.add(createInstallmentPaymentCode((EntryWithInstallmentDTO) entryDTO, getPerson().getStudent()));
 	    } else {
 		result.add(createAccountingEventPaymentCode(entryDTO, getPerson().getStudent()));
 	    }
@@ -109,13 +107,12 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
 	    if (paymentCode instanceof InstallmentPaymentCode) {
 		final InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
-		paymentCode.update(new YearMonthDay(),
-			calculateInstallmentPaymentCodeEndDate(installmentPaymentCode.getInstallment()),
-			entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+		paymentCode.update(new YearMonthDay(), calculateInstallmentPaymentCodeEndDate(installmentPaymentCode
+			.getInstallment()), entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
 		result.add(paymentCode);
 	    } else {
-		paymentCode.update(new YearMonthDay(), calculateFullPaymentCodeEndDate(), entryDTO
-			.getAmountToPay(), entryDTO.getAmountToPay());
+		paymentCode.update(new YearMonthDay(), calculateFullPaymentCodeEndDate(), entryDTO.getAmountToPay(), entryDTO
+			.getAmountToPay());
 		result.add(paymentCode);
 	    }
 
@@ -136,8 +133,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	return today.isBefore(totalEndDate) ? totalEndDate : calculateNextEndDate(today);
     }
 
-    private EntryDTO findEntryDTOForPaymentCode(List<EntryDTO> entryDTOs,
-	    AccountingEventPaymentCode paymentCode) {
+    private EntryDTO findEntryDTOForPaymentCode(List<EntryDTO> entryDTOs, AccountingEventPaymentCode paymentCode) {
 
 	for (final EntryDTO entryDTO : entryDTOs) {
 	    if (entryDTO instanceof EntryWithInstallmentDTO) {
@@ -167,8 +163,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	}
     }
 
-    public void changeInstallmentPaymentCodeState(final Installment installment,
-	    final PaymentCodeState paymentCodeState) {
+    public void changeInstallmentPaymentCodeState(final Installment installment, final PaymentCodeState paymentCodeState) {
 	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
 	    if (paymentCode instanceof InstallmentPaymentCode
 		    && ((InstallmentPaymentCode) paymentCode).getInstallment() == installment) {
@@ -181,18 +176,15 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	changeGratuityTotalPaymentCodeState(PaymentCodeState.CANCELLED);
     }
 
-    private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO,
-	    final Student student) {
+    private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO, final Student student) {
 	return AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
-		calculateFullPaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO
-			.getAmountToPay(), student);
+		calculateFullPaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), student);
     }
 
-    private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry,
-	    final Student student) {
-	return InstallmentPaymentCode.create(getPaymentCodeTypeFor(entry.getInstallment()),
-		new YearMonthDay(), calculateInstallmentPaymentCodeEndDate(entry.getInstallment()),
-		this, entry.getInstallment(), entry.getAmountToPay(), entry.getAmountToPay(), student);
+    private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry, final Student student) {
+	return InstallmentPaymentCode.create(getPaymentCodeTypeFor(entry.getInstallment()), new YearMonthDay(),
+		calculateInstallmentPaymentCodeEndDate(entry.getInstallment()), this, entry.getInstallment(), entry
+			.getAmountToPay(), entry.getAmountToPay(), student);
     }
 
     private PaymentCodeType getPaymentCodeTypeFor(Installment installment) {
@@ -201,8 +193,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	} else if (installment.getOrder() == 2) {
 	    return PaymentCodeType.GRATUITY_SECOND_INSTALLMENT;
 	} else {
-	    throw new DomainException(
-		    "error.accounting.events.gratuity.GratuityEventWithPaymentPlan.invalid.installment.order");
+	    throw new DomainException("error.accounting.events.gratuity.GratuityEventWithPaymentPlan.invalid.installment.order");
 	}
 
     }
@@ -216,8 +207,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     public DegreeCurricularPlanServiceAgreement getDegreeCurricularPlanServiceAgreement() {
-	return (DegreeCurricularPlanServiceAgreement) getPerson().getServiceAgreementFor(
-		getServiceAgreementTemplate());
+	return (DegreeCurricularPlanServiceAgreement) getPerson().getServiceAgreementFor(getServiceAgreementTemplate());
 
     }
 
@@ -248,17 +238,16 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
-	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
-	return internalProcess(responsibleUser, Collections.singletonList(buildEntryDTOFrom(paymentCode,
-		amountToPay)), transactionDetail);
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+	    SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, Collections.singletonList(buildEntryDTOFrom(paymentCode, amountToPay)),
+		transactionDetail);
     }
 
-    private EntryDTO buildEntryDTOFrom(final AccountingEventPaymentCode paymentCode,
-	    final Money amountToPay) {
+    private EntryDTO buildEntryDTOFrom(final AccountingEventPaymentCode paymentCode, final Money amountToPay) {
 	if (paymentCode instanceof InstallmentPaymentCode) {
-	    return new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, this, amountToPay,
-		    ((InstallmentPaymentCode) paymentCode).getInstallment());
+	    return new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, this, amountToPay, ((InstallmentPaymentCode) paymentCode)
+		    .getInstallment());
 	} else {
 	    return new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay);
 	}
@@ -275,8 +264,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     @Override
     public boolean isInDebt() {
-	return isOpen()
-		&& (installmentIsInDebtToday(getFirstInstallment()) || installmentIsInDebtToday(getLastInstallment()));
+	return isOpen() && (installmentIsInDebtToday(getFirstInstallment()) || installmentIsInDebtToday(getLastInstallment()));
     }
 
     public InstallmentPenaltyExemption getInstallmentPenaltyExemptionFor(final Installment installment) {

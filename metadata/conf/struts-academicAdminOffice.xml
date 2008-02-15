@@ -402,6 +402,8 @@
 				<forward name="viewDocumentRequestsToCreate" path="documentRequest.viewDocumentRequestsToCreate"/>		
 				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
 				<forward name="processNewAcademicServiceRequest" path="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest"/>
+				<forward name="chooseExamsToCreateExamDateCertificateRequest" path="documentRequest.management.chooseExamsToCreateExamDateCertificateRequest" />
+				
 		</action>
 		
 		<!-- Begin Payments -->
@@ -886,6 +888,14 @@
             <forward name="showStudentData" path="show.studentData.by.executionYear"/>
         </action>
         <!-- End: StudentDataByExecutionYear -->
+        
+        
+        <action path="/accountingEventsManagement"
+            type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.AccountingEventsManagementDA"
+            parameter="method">
+            <forward name="chooseExecutionYear" path="accountingEventsManagement.chooseExecutionYear"/>
+        </action>
+        
 
     </action-mappings>
 

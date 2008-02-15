@@ -8,19 +8,19 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 public class DefaultResourceBundleProvider extends AbstractMessageResourceProvider {
 
     public DefaultResourceBundleProvider() {
-        super();
+	super();
     }
 
     public DefaultResourceBundleProvider(Properties bundleMappings) {
-        super(bundleMappings);
+	super(bundleMappings);
     }
 
-    public String getMessage(String key, String bundle) {
-        if (containsMapping(bundle)) {
-            return ResourceBundle.getBundle(getBundleMapping(bundle), LanguageUtils.getLocale()).getString(key);
-        } else {
-            return ResourceBundle.getBundle(bundle, LanguageUtils.getLocale()).getString(key);
-        }
+    public String getMessage(String bundle, String key, String... args) {
+	if (containsMapping(bundle)) {
+	    return format(ResourceBundle.getBundle(getBundleMapping(bundle), LanguageUtils.getLocale()).getString(key), args);
+	} else {
+	    return format(ResourceBundle.getBundle(bundle, LanguageUtils.getLocale()).getString(key), args);
+	}
     }
 
 }

@@ -185,8 +185,13 @@
 	<definition name="documentRequests.management.chooseStudentToCreateDocumentRequest" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/searchStudentToCreateDocumentRequest.jsp"/>
 	</definition>	
+	
 	<definition name="documentRequest.viewDocumentRequestsToCreate" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"/>
+	</definition>
+	
+	<definition name="documentRequest.management.chooseExamsToCreateExamDateCertificateRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/chooseExamsToCreateExamDateCertificateRequest.jsp"/>
 	</definition>
 	
 	<!-- ************* Payments ************* -->
@@ -551,5 +556,13 @@
     <definition name="show.studentData.by.executionYear" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/personalDataAuthorization/studentDataByExecutionYear.jsp"></put>
     </definition>
+    
+    <!-- Accounting Events Management -->
+    <definition name="accountingEventsManagement.chooseExecutionYear" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/accountingEventsManagement/chooseExecutionYear.jsp"></put>
+    </definition>
+    
+    
+
 
 </tiles-definitions>

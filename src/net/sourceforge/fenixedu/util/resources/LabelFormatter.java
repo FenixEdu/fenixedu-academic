@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 public class LabelFormatter implements Serializable {
 
     public final static String ENUMERATION_RESOURCES = "enum";
@@ -16,13 +18,13 @@ public class LabelFormatter implements Serializable {
 
 	private String bundle;
 
-	private boolean useBundle;
+	private String[] args;
 
-	public Label(String key, String bundle, boolean useBundle) {
+	public Label(String bundle, String key, String... args) {
 	    super();
 	    this.bundle = bundle;
 	    this.key = key;
-	    this.useBundle = useBundle;
+	    this.args = args;
 	}
 
 	public String getBundle() {
@@ -42,11 +44,11 @@ public class LabelFormatter implements Serializable {
 	}
 
 	public boolean isUseBundle() {
-	    return useBundle;
+	    return !StringUtils.isEmpty(this.bundle);
 	}
 
-	public void setUseBundle(boolean useBundle) {
-	    this.useBundle = useBundle;
+	public String[] getArgs() {
+	    return this.args;
 	}
 
     }
@@ -67,14 +69,25 @@ public class LabelFormatter implements Serializable {
 	appendLabel(key, bundle);
     }
 
+    public LabelFormatter(final String bundle, final String key, final String... args) {
+	this();
+	appendLabel(bundle, key, args);
+    }
+
     public LabelFormatter appendLabel(String text) {
-	this.labels.add(new Label(text, null, false));
+	this.labels.add(new Label(null, text));
 
 	return this;
     }
 
     public LabelFormatter appendLabel(String key, String bundle) {
-	this.labels.add(new Label(key, bundle, true));
+	this.labels.add(new Label(bundle, key));
+
+	return this;
+    }
+
+    public LabelFormatter appendLabel(String bundle, String key, String... args) {
+	this.labels.add(new Label(bundle, key, args));
 
 	return this;
     }
@@ -89,7 +102,7 @@ public class LabelFormatter implements Serializable {
 
 	for (final Label label : getLabels()) {
 	    if (label.isUseBundle()) {
-		result.append(messageResourceProvider.getMessage(label.getKey(), label.getBundle()));
+		result.append(messageResourceProvider.getMessage(label.getBundle(), label.getKey(), label.getArgs()));
 	    } else {
 		result.append(label.getKey());
 	    }

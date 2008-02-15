@@ -147,6 +147,12 @@
 			<%--
 			<fr:property name="visibleIfNot(dismissal)" value="registration.registrationConclusionProcessed"/>
 			--%>	
+			
+			<fr:property name="linkFormat(createAccountingEvents)" value="/accountingEventsManagement.do?method=prepare&amp;scpID=${idInternal}" />
+			<fr:property name="key(createAccountingEvents)" value="label.accountingEvents.management.createEvents"/>
+			<fr:property name="bundle(createAccountingEvents)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			<fr:property name="contextRelative(createAccountingEvents)" value="true"/>      	
+			<fr:property name="order(createAccountingEvents)" value="3"/>
 	
 		</fr:layout>
 	</fr:view>

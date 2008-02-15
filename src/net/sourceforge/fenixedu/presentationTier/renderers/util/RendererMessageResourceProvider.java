@@ -8,19 +8,18 @@ import net.sourceforge.fenixedu.util.resources.AbstractMessageResourceProvider;
 public class RendererMessageResourceProvider extends AbstractMessageResourceProvider {
 
     public RendererMessageResourceProvider() {
-        super();
+	super();
     }
 
     public RendererMessageResourceProvider(Properties bundleMappings) {
-        super(bundleMappings);
+	super(bundleMappings);
     }
 
-    public String getMessage(String key, String bundle) {
-        if (containsMapping(bundle)) {
-            return RenderUtils.getResourceString(getBundleMapping(bundle), key);
-        } else {
-            return RenderUtils.getResourceString(bundle, key);
-        }
+    public String getMessage(String bundle, String key, String... args) {
+	if (containsMapping(bundle)) {
+	    return format(RenderUtils.getResourceString(getBundleMapping(bundle), key), args);
+	} else {
+	    return format(RenderUtils.getResourceString(bundle, key), args);
+	}
     }
-
 }

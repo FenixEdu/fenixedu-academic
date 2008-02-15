@@ -21,35 +21,32 @@ public class StrutsMessageResourceProvider extends AbstractMessageResourceProvid
 
     private ServletContext servletContext;
 
-    public StrutsMessageResourceProvider(Properties properties, Locale locale,
-            ServletContext servletContext, HttpServletRequest request) {
-        super(properties);
-        this.locale = locale;
-        this.servletContext = servletContext;
-        this.request = request;
+    public StrutsMessageResourceProvider(Properties properties, Locale locale, ServletContext servletContext,
+	    HttpServletRequest request) {
+	super(properties);
+	this.locale = locale;
+	this.servletContext = servletContext;
+	this.request = request;
     }
 
-    public StrutsMessageResourceProvider(Locale locale, ServletContext servletContext,
-            HttpServletRequest request) {
-        super();
-        this.locale = locale;
-        this.servletContext = servletContext;
-        this.request = request;
+    public StrutsMessageResourceProvider(Locale locale, ServletContext servletContext, HttpServletRequest request) {
+	super();
+	this.locale = locale;
+	this.servletContext = servletContext;
+	this.request = request;
     }
 
     private MessageResources getMessageResources(String bundleName) {
-        // Identify the current module
-        ModuleConfig moduleConfig = ModuleUtils.getInstance().getModuleConfig(this.request,
-                this.servletContext);
+	// Identify the current module
+	ModuleConfig moduleConfig = ModuleUtils.getInstance().getModuleConfig(this.request, this.servletContext);
 
-        return (bundleName != null && bundleName.length() > 0) ? (MessageResources) this.servletContext
-                .getAttribute(bundleName + moduleConfig.getPrefix())
-                : (MessageResources) this.servletContext.getAttribute(Globals.MESSAGES_KEY
-                        + moduleConfig.getPrefix());
+	return (bundleName != null && bundleName.length() > 0) ? (MessageResources) this.servletContext.getAttribute(bundleName
+		+ moduleConfig.getPrefix()) : (MessageResources) this.servletContext.getAttribute(Globals.MESSAGES_KEY
+		+ moduleConfig.getPrefix());
 
     }
 
-    public String getMessage(String key, String bundle) {
-        return getMessageResources(getBundleMapping(bundle)).getMessage(this.locale, key);
+    public String getMessage(String bundle, String key, String... args) {
+	return format(getMessageResources(getBundleMapping(bundle)).getMessage(this.locale, key), args);
     }
 }

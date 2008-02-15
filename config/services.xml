@@ -12623,4 +12623,20 @@
 		<isTransactional>true</isTransactional>
 		<filterChains/>
 	</service>
+	<service>
+		<name>CreateAdministrativeOfficeFeeAndInsuranceEvent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateAdministrativeOfficeFeeAndInsuranceEvent</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateGratuityEvent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateGratuityEvent</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
 </serviceDefinitions>

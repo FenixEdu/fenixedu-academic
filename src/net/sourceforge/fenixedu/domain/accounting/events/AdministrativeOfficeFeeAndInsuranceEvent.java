@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOff
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -53,6 +54,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	});
     }
 
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     protected AdministrativeOfficeFeeAndInsuranceEvent() {
 	super();
     }

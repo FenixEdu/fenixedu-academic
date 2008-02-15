@@ -26,11 +26,13 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -44,6 +46,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.InvocationResult;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
@@ -666,8 +669,8 @@ public class Student extends Student_Base {
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations
-     * directly (use {@link addRegistrations} method)
+     * registrations -> Do not use this method to add new registrations directly
+     * (use {@link addRegistrations} method)
      */
     @Override
     public List<Registration> getRegistrations() {
@@ -686,8 +689,8 @@ public class Student extends Student_Base {
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations
-     * directly (use {@link addRegistrations} method)
+     * registrations -> Do not use this method to add new registrations directly
+     * (use {@link addRegistrations} method)
      */
     @Override
     public Set<Registration> getRegistrationsSet() {
@@ -1001,6 +1004,27 @@ public class Student extends Student_Base {
 	    }
 	}
 	return res;
+    }
+
+    public void createGratuityEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+	final AccountingEventsManager manager = new AccountingEventsManager();
+	final InvocationResult result = manager.createGratuityEvent(studentCurricularPlan, executionYear);
+
+	if (!result.isSuccess()) {
+	    throw new DomainExceptionWithInvocationResult(result);
+	}
+    }
+
+    public void createAdministrativeOfficeFeeEvent(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear) {
+	final AccountingEventsManager manager = new AccountingEventsManager();
+	final InvocationResult result = manager.createAdministrativeOfficeFeeAndInsuranceEvent(studentCurricularPlan,
+		executionYear);
+
+	if (!result.isSuccess()) {
+	    throw new DomainExceptionWithInvocationResult(result);
+	}
+
     }
 
 }
