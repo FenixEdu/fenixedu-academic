@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -65,18 +66,17 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	setYear(year);
     }
 
-    
     public String getYear() {
 	return getName();
     }
-    
+
     public void setYear(String year) {
-        if(year == null || StringUtils.isEmpty(year.trim())) {
-            throw new DomainException("error.ExecutionYear.empty.year");
-        }
-        super.setName(year);
+	if (year == null || StringUtils.isEmpty(year.trim())) {
+	    throw new DomainException("error.ExecutionYear.empty.year");
+	}
+	super.setName(year);
     }
-        
+
     public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
 	return CollectionUtils.select(getExecutionDegrees(), new Predicate() {
 	    public boolean evaluate(Object arg0) {
@@ -86,7 +86,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	});
     }
 
-    public ExecutionYear getNextExecutionYear() {	
+    public ExecutionYear getNextExecutionYear() {
 	AcademicYearCE year = getExecutionInterval().plusYear(1);
 	return getExecutionYear(year);
     }
@@ -94,13 +94,13 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     public ExecutionYear getPreviousExecutionYear() {
 	AcademicYearCE year = getExecutionInterval().minusYear(1);
 	return getExecutionYear(year);
-    }    
+    }
 
-    public ExecutionYear getPreviousExecutionYear(final Integer previousCivilYears) {	
-	if(previousCivilYears >= 0) {
+    public ExecutionYear getPreviousExecutionYear(final Integer previousCivilYears) {
+	if (previousCivilYears >= 0) {
 	    AcademicYearCE year = getExecutionInterval().minusYear(previousCivilYears);
 	    return getExecutionYear(year);
-	}	
+	}
 	return null;
     }
 
@@ -113,10 +113,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public int compareTo(ExecutionYear object) {
-	if(object == null) {
+	if (object == null) {
 	    return 1;
 	}
-	return getExecutionInterval().getStartDateTimeWithoutChronology().compareTo(object.getExecutionInterval().getStartDateTimeWithoutChronology());
+	return getExecutionInterval().getStartDateTimeWithoutChronology().compareTo(
+		object.getExecutionInterval().getStartDateTimeWithoutChronology());
     }
 
     public boolean isAfter(final ExecutionYear executionYear) {
@@ -136,10 +137,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
-	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(
-		getExecutionDegrees());
-	Collections.sort(executionDegrees,
-		ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
+	Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 	return executionDegrees;
     }
 
@@ -206,8 +205,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 	final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-	    if (degreeTypesList.contains(executionDegree.getDegreeCurricularPlan().getDegree()
-		    .getDegreeType())) {
+	    if (degreeTypesList.contains(executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType())) {
 		result.add(executionDegree);
 	    }
 	}
@@ -238,7 +236,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	if (!getExecutionDegreesSet().isEmpty()) {
 	    throw new Error("cannot.delete.execution.year.because.execution.degrees.exist");
 	}
-	for (; hasAnyExecutionPeriods(); getExecutionPeriodsSet().iterator().next().delete());
+	for (; hasAnyExecutionPeriods(); getExecutionPeriodsSet().iterator().next().delete())
+	    ;
 
 	removeRootDomainObject();
 	deleteDomainObject();
@@ -276,9 +275,9 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     private static class ExecutionPeriodExecutionYearListener extends RelationAdapter<ExecutionYear, ExecutionPeriod> {
 	@Override
 	public void beforeAdd(ExecutionYear executionYear, ExecutionPeriod executionPeriod) {
-	    if(executionYear != null && executionPeriod != null && executionYear.getExecutionPeriodsCount() == 2) {
+	    if (executionYear != null && executionPeriod != null && executionYear.getExecutionPeriodsCount() == 2) {
 		throw new DomainException("error.ExecutionYear.exceeded.number.of.executionPeriods", executionYear.getYear());
-	    }	    
+	    }
 	}
     }
 
@@ -287,16 +286,16 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     // -------------------------------------------------------------
 
     public static ExecutionYear getExecutionYear(AcademicYearCE entry) {
-	if(entry != null) {
+	if (entry != null) {
 	    entry = (AcademicYearCE) entry.getOriginalTemplateEntry();
 	    for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-		if(executionYear.getExecutionInterval().getAcademicCalendarEntry().equals(entry)) {
+		if (executionYear.getExecutionInterval().getAcademicCalendarEntry().equals(entry)) {
 		    return executionYear;
 		}
 	    }
 	}
 	return null;
-    }  
+    }
 
     static public ExecutionYear readCurrentExecutionYear() {
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
@@ -337,9 +336,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     static public ExecutionYear readFirstBolonhaExecutionYear() {
-	// TODO: have the patience and time to parameterize this in
-	// build.properties
-	return ExecutionYear.readExecutionYearByName("2006/2007");
+	return ExecutionYear.readExecutionYearByName(PropertiesManager.getProperty("start.year.for.bolonha.degrees"));
     }
 
     public static class ExecutionYearSearchCache {
@@ -354,7 +351,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 		}
 		executionYears = map.get(year);
 	    }
-	    if (executionYears == null || executionYears.isEmpty()) {
+	    if (executionYears != null) {
 		for (final ExecutionYear executionYear : executionYears) {
 		    if (executionYear.containsDate(dateTime)) {
 			return executionYear;
@@ -380,6 +377,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	    executionYears.add(executionYear);
 	}
     }
+
     private static final ExecutionYearSearchCache executionYearSearchCache = new ExecutionYearSearchCache();
 
     static public ExecutionYear readByDateTime(final DateTime dateTime) {
@@ -388,8 +386,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public static ExecutionYear readBy(final YearMonthDay begin, YearMonthDay end) {
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.getBeginDateYearMonthDay().isEqual(begin) 
-		    && executionYear.getEndDateYearMonthDay().isEqual(end)) {
+	    if (executionYear.getBeginDateYearMonthDay().isEqual(begin) && executionYear.getEndDateYearMonthDay().isEqual(end)) {
 		return executionYear;
 	    }
 	}
@@ -428,5 +425,5 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	    }
 	}
 	return null;
-    }   
+    }
 }
