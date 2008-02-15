@@ -478,18 +478,6 @@
 	<slot name="serviceRequestYear" key="label.date" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="ExamCertificateExamSelectionEntryBean.view" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates.ExamDateCertificateExamSelectionEntryBean"
-		bundle="APPLICATION_RESOURCES">
-	<slot name="enrolment.curricularCourse.name" read-only="true" />
-	<slot name="exam.season.description" read-only="true" />
-	<slot name="degreeModuleScopesForEnrolment" read-only="true" layout="flowLayout">
-		<property name="htmlSeparator" value="," />
-		<property name="eachLayout" value="values" />
-		<property name="eachSchema" value="DegreeModuleScope.view-description" />
-	</slot>
-</schema>
-
-
 <schema name="DegreeModuleScope.view-description" type="net.sourceforge.fenixedu.domain.DegreeModuleScope">
 	<slot name="description" />
 </schema>
