@@ -33,7 +33,7 @@ public class EnrolInAffinityCycle extends Service {
 
     /**
          * This method is used to create new registrations based on a new cycle.
-         * If second cycle belongs to the same DegreeCurricularPlan than we use
+         * If second cycle belongs to the same DegreeCurricularPlan then we use
          * studentCurricularPlan.enrolInAffinityCycle(cycleCourseGroupToEnrol,
          * executionPeriod). Else we create a new empty registration or we
          * separate the old second cycle that exists in previous
@@ -44,8 +44,12 @@ public class EnrolInAffinityCycle extends Service {
     public Registration run(final Person person, final StudentCurricularPlan studentCurricularPlan,
 	    final CycleCourseGroup cycleCourseGroupToEnrol, final ExecutionPeriod executionPeriod) throws FenixServiceException {
 
-	// TODO: move to domain
-	// TODO: refactor this code, should be more generic
+	/*
+         * TODO: refactor this code, should be more generic and moved to
+         * AffinityCyclesManagement, while refactoring
+         * SeparationCyclesManagement
+         * 
+         */
 
 	checkConditionsToEnrol(studentCurricularPlan, executionPeriod);
 
@@ -71,7 +75,7 @@ public class EnrolInAffinityCycle extends Service {
 		newRegistration.setSourceRegistration(newRegistration);
 		newRegistration.getActiveState().setResponsiblePerson(null);
 		newRegistration.setIngression(Ingression.DA1C);
-		
+
 		markOldRegistrationWithConcludedState(studentCurricularPlan);
 
 		return newRegistration;
@@ -88,7 +92,7 @@ public class EnrolInAffinityCycle extends Service {
 	if (studentCurricularPlan.getRegistration().hasState(RegistrationStateType.CONCLUDED)) {
 	    return;
 	}
-	
+
 	final Registration registration = studentCurricularPlan.getRegistration();
 	final RegistrationState state = RegistrationState.createState(registration, null, new DateTime(),
 		RegistrationStateType.CONCLUDED);

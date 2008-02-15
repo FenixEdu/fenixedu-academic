@@ -47,7 +47,7 @@ public class SeparationCyclesManagement {
 	return createNewSecondCycle(studentCurricularPlan);
     }
 
-    private void checkIfCanSeparateSecondCycle(final StudentCurricularPlan studentCurricularPlan) {
+    protected void checkIfCanSeparateSecondCycle(final StudentCurricularPlan studentCurricularPlan) {
 	if (!studentCurricularPlan.isBolonhaDegree()) {
 	    throw new DomainException("error.AffinityCyclesManagement.not.bolonha.degree");
 	}
@@ -335,7 +335,7 @@ public class SeparationCyclesManagement {
 	state.setResponsiblePerson(null);
     }
 
-    private ExecutionPeriod getExecutionPeriod() {
+    protected ExecutionPeriod getExecutionPeriod() {
 	return ExecutionPeriod.readActualExecutionPeriod();
     }
 
