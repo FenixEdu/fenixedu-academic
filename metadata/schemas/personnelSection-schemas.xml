@@ -29,9 +29,9 @@
 </schema>
 
 <schema name="show.employeeUnit"
-	type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-	<slot name="costCenterCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="name" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitEmployees">
+	<slot name="unit.costCenterCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="unit.name" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="show.workDaySheet"

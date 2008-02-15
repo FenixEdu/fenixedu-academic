@@ -39,8 +39,7 @@ public class AssiduousnessStructureSearch implements Serializable {
 
     private DomainListReference<PersonFunction> personFunctionList;
 
-    public AssiduousnessStructureSearch(
-	    AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory) {
+    public AssiduousnessStructureSearch(AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory) {
 	setResponsible(assiduousnessPersonFunctionFactory.getResponsible());
 	if (assiduousnessPersonFunctionFactory.getParty() instanceof Person) {
 	    searchPerson = true;
@@ -128,8 +127,7 @@ public class AssiduousnessStructureSearch implements Serializable {
     }
 
     public boolean getHasEmployeeInSearch() {
-	return ((getSearchPerson() != null && getSearchPerson()) && getEmployee() != null) ? true
-		: false;
+	return ((getSearchPerson() != null && getSearchPerson()) && getEmployee() != null) ? true : false;
     }
 
     public boolean getHasUnitInSearch() {
@@ -141,40 +139,33 @@ public class AssiduousnessStructureSearch implements Serializable {
 	List<PersonFunction> personFunctionList = new ArrayList<PersonFunction>();
 
 	if (getResponsible() != null) {
-	    List<PersonFunction> allPersonFunctionList = new ArrayList<PersonFunction>(getResponsible()
-		    .getPersonFunctions(AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE));
+	    List<PersonFunction> allPersonFunctionList = new ArrayList<PersonFunction>(getResponsible().getPersonFunctions(
+		    AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE));
 	    if ((getSearchPerson() != null && getSearchPerson()) && getEmployee() != null) {
-		personFunctionList.addAll(getResponsible().getPersonFunctions(getEmployee().getPerson(),
-			true, true, false, AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE));
+		personFunctionList.addAll(getResponsible().getPersonFunctions(getEmployee().getPerson(), true, true, false,
+			AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE));
 		if (getEmployee().getCurrentWorkingPlace() != null) {
-		    personFunctionList.addAll(getPersonFunctions(allPersonFunctionList, getEmployee()
-			    .getCurrentWorkingPlace()));
+		    personFunctionList.addAll(getPersonFunctions(allPersonFunctionList, getEmployee().getCurrentWorkingPlace()));
 		}
-	    } else if (((getSearchPerson() != null && !getSearchPerson()) || getSearchPerson() == null)
-		    && getUnit() != null) {
-		personFunctionList
-			.addAll(getPersonFunctions(allPersonFunctionList, getUnit().getUnit()));
+	    } else if (((getSearchPerson() != null && !getSearchPerson()) || getSearchPerson() == null) && getUnit() != null) {
+		personFunctionList.addAll(getPersonFunctions(allPersonFunctionList, getUnit().getUnit()));
 	    } else {
 		personFunctionList.addAll(allPersonFunctionList);
 	    }
 	} else {
 	    if ((getSearchPerson() != null && getSearchPerson()) && getEmployee() != null) {
-		personFunctionList.addAll(getPersonFunctions(getAssiduousnessPersonFunctions(),
-			getEmployee().getPerson()));
+		personFunctionList.addAll(getPersonFunctions(getAssiduousnessPersonFunctions(), getEmployee().getPerson()));
 		if (getEmployee().getCurrentWorkingPlace() != null) {
-		    personFunctionList.addAll(getPersonFunctions(getAssiduousnessPersonFunctions(),
-			    getEmployee().getCurrentWorkingPlace()));
+		    personFunctionList.addAll(getPersonFunctions(getAssiduousnessPersonFunctions(), getEmployee()
+			    .getCurrentWorkingPlace()));
 		}
-	    } else if (((getSearchPerson() != null && !getSearchPerson()) || getSearchPerson() == null)
-		    && getUnit() != null) {
-		personFunctionList.addAll(getPersonFunctions(getAssiduousnessPersonFunctions(),
-			getUnit().getUnit()));
+	    } else if (((getSearchPerson() != null && !getSearchPerson()) || getSearchPerson() == null) && getUnit() != null) {
+		personFunctionList.addAll(getPersonFunctions(getAssiduousnessPersonFunctions(), getUnit().getUnit()));
 	    }
 	}
 
 	for (PersonFunction personFunction : personFunctionList) {
 	    YearMonthDay begin = new YearMonthDay();
-	    begin = begin.minusDays(begin.getDayOfMonth() - 1);
 	    if (personFunction.isActive(begin)
 		    && personFunction.getFunction().getFunctionType() == FunctionType.ASSIDUOUSNESS_RESPONSIBLE) {
 		getPersonFunctionList().add(personFunction);
@@ -183,8 +174,7 @@ public class AssiduousnessStructureSearch implements Serializable {
 
     }
 
-    public List<PersonFunction> getPersonFunctions(List<PersonFunction> allPersonFunctionList,
-	    Party party) {
+    public List<PersonFunction> getPersonFunctions(List<PersonFunction> allPersonFunctionList, Party party) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 
 	Collection<Unit> allParentUnits = Collections.emptyList();
@@ -213,10 +203,8 @@ public class AssiduousnessStructureSearch implements Serializable {
 	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
 	    if (accountability instanceof PersonFunction) {
 		PersonFunction personFunction = (PersonFunction) accountability;
-		if ((!personFunction.getAccountabilityType().getType().equals(
-			AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE))
-			|| (!personFunction.isActive(today))
-			|| (personFunction.getFunction().isVirtual())) {
+		if ((!personFunction.getAccountabilityType().getType().equals(AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE))
+			|| (!personFunction.isActive(today)) || (personFunction.getFunction().isVirtual())) {
 		    continue;
 		}
 		result.add(personFunction);

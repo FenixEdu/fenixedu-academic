@@ -46,25 +46,32 @@
 	</logic:empty>
 	<logic:notEmpty name="unitEmployeesList">
 		<logic:iterate id="unitEmployees" name="unitEmployeesList">
-			
-			<div class="mtop2">
-				<fr:view name="unitEmployees" property="unit" schema="show.employeeUnit">
-					<fr:layout name="values-dash">
-						<fr:property name="classes" value="bold" />
-					</fr:layout>
-				</fr:view>
-			</div>
-
-			<fr:view name="unitEmployees" property="employeeList" schema="show.employeePersonalInformation.toList">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle1 printborder" />
-					<fr:property name="columnClasses" value="acenter,,"/>
-					<fr:property name="link(view)" value="<%="/assiduousnessResponsible.do?method=showEmployeeWorkSheet&month="+month.toString()+"&year="+year.toString()%>"/>
-					<fr:property name="key(view)" value="link.workSheet"/>
-					<fr:property name="param(view)" value="employeeNumber"/>
-					<fr:property name="bundle(view)" value="ASSIDUOUSNESS_RESOURCES"/>
+			<fr:view name="unitEmployees" property="unit">
+				<fr:layout name="link">
+					<fr:property name="classes" value="bold"/>
+					<fr:property name="linkFormat" value="<%="/assiduousnessResponsible.do?idInternal=${idInternal}&method=showEmployeeList&month="+month.toString()+"&year="+year.toString()%>"/>
+					<fr:property name="moduleRelative" value="true"/>
+					<fr:property name="contextRelative" value="true"/>
+					<fr:property name="subSchema" value="unit.name"/>
+					<fr:property name="subLayout" value="values"/>
 				</fr:layout>
 			</fr:view>
+			<br/>
+			<logic:present name="unitToShow">
+				<bean:define id="unitToShow" name="unitToShow"/>
+				<logic:equal name="unitEmployees" property="unit.idInternal" value="<%=unitToShow.toString()%>">
+					<fr:view name="unitEmployees" property="employeeList" schema="show.employeePersonalInformation.toList">
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle1 printborder" />
+							<fr:property name="columnClasses" value="acenter,,"/>
+							<fr:property name="link(view)" value="<%="/assiduousnessResponsible.do?method=showEmployeeWorkSheet&month="+month.toString()+"&year="+year.toString()%>"/>
+							<fr:property name="key(view)" value="link.workSheet"/>
+							<fr:property name="param(view)" value="employeeNumber"/>
+							<fr:property name="bundle(view)" value="ASSIDUOUSNESS_RESOURCES"/>
+						</fr:layout>
+					</fr:view>
+				</logic:equal>
+			</logic:present>
 		</logic:iterate>
 	</logic:notEmpty>
 </logic:present>
