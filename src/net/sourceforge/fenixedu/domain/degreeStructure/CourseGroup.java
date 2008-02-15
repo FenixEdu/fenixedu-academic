@@ -741,7 +741,7 @@ public class CourseGroup extends CourseGroup_Base {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 	for (final Context context : getChildContexts()) {
 	    if(executionPeriod == null || context.isOpen(executionPeriod)) {
-		result.addAll(context.getChildDegreeModule().getAllCurricularCourses());
+		result.addAll(context.getChildDegreeModule().getAllCurricularCourses(executionPeriod));
 	    }
 	}
 	return result;
