@@ -46,11 +46,14 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
-    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
+	    .getLocale());
 
-    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", LanguageUtils.getLocale());
+    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", LanguageUtils
+	    .getLocale());
 
-    private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+    private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
+	    .getLocale());
 
     private Integer initialWidth = 70;
 
@@ -261,11 +264,13 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    final HtmlTable groupTable = createGroupTable(blockContainer, depth);
 	    addGroupHeaderRow(groupTable, studentCurriculumGroupBean, executionPeriod);
 
-	    //TODO: Uncomment when isConcluded is implemented using credits
-//	    if (!hasManagerOrAcademicOfficeRole() && !studentCurriculumGroupBean.isRoot()
-//		    && studentCurriculumGroupBean.getCurriculumModule().isConcluded()) {
-//		return;
-//	    }
+	    // TODO: Uncomment when isConcluded is implemented using credits
+	    // if (!hasManagerOrAcademicOfficeRole() &&
+	    // !studentCurriculumGroupBean.isRoot()
+	    // &&
+	    // studentCurriculumGroupBean.getCurriculumModule().isConcluded()) {
+	    // return;
+	    // }
 
 	    final HtmlTable coursesTable = createCoursesTable(blockContainer, depth);
 	    generateEnrolments(studentCurriculumGroupBean, coursesTable);
@@ -363,9 +368,10 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		result.append(")</span>");
 	    }
 
-//	    if (curriculumGroup.isConcluded()) {
-//		result.append(" - ").append(studentResources.getString("label.curriculum.group.concluded"));
-//	    }
+	    // if (curriculumGroup.isConcluded()) {
+	    // result.append(" -
+	    // ").append(studentResources.getString("label.curriculum.group.concluded"));
+	    // }
 
 	    return result.toString();
 	}
@@ -504,8 +510,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    ectsCell.setClasses(enrolmentEctsClasses);
 
 	    final StringBuilder ects = new StringBuilder();
-	    ects.append(enrolment.getCurricularCourse().getEctsCredits()).append(" ").append(
+	    ects.append(enrolment.getAccumulatedEctsCredits(enrolment.getExecutionPeriod())).append(" ").append(
 		    studentResources.getString("label.credits.abbreviation"));
+
 	    ectsCell.setBody(new HtmlText(ects.toString()));
 
 	    MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(enrolment, new Schema(Enrolment.class));
