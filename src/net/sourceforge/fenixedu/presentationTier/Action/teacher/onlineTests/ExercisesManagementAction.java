@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestWrapperFilter;
+import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
@@ -48,6 +51,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.upload.DiskFile;
 import org.apache.struts.upload.FormFile;
 import org.apache.struts.util.LabelValueBean;
 
@@ -593,9 +597,15 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	request.setAttribute("order", request.getParameter("order"));
 	request.setAttribute("asc", request.getParameter("asc"));
 
-	FormFile xmlZipFile = (FormFile) ((DynaActionForm) form).get("xmlZipFile");
-	if (xmlZipFile == null || xmlZipFile.getFileData() == null
-		|| xmlZipFile.getFileData().length == 0) {
+	//FormFile xmlZipFile = (FormFile) ((DynaActionForm) form).get("xmlZipFile");
+	final String xmlZipFileName = (String) ((DynaActionForm) form).get("xmlZipFile");
+	if (xmlZipFileName == null) {
+	    error(request, "FileNotExist", "error.nullXmlZipFile");
+	    return mapping.findForward("addExerciseVariation");	    
+	}
+	
+	final UploadedFile xmlZipFile = ((Hashtable<String, UploadedFile>) request.getAttribute(RequestWrapperFilter.FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE)).get(xmlZipFileName);
+	if (xmlZipFile == null || xmlZipFile.getSize() == 0) {
 	    error(request, "FileNotExist", "error.nullXmlZipFile");
 	    return mapping.findForward("addExerciseVariation");
 	} else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed")
@@ -633,10 +643,23 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     public ActionForward loadExerciseFiles(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final IUserView userView = getUserView(request);
-	final FormFile metadataFile = (FormFile) ((DynaActionForm) form).get("metadataFile");
-	final FormFile xmlZipFile = (FormFile) ((DynaActionForm) form).get("xmlZipFile");
+	//final FormFile metadataFile = (FormFile) ((DynaActionForm) form).get("metadataFile");
+	final String metadataFileName = (String) ((DynaActionForm) form).get("metadataFile");
+	//final FormFile xmlZipFile = (FormFile) ((DynaActionForm) form).get("xmlZipFile");
+	final String xmlZipFileName = (String) ((DynaActionForm) form).get("xmlZipFile");
 	final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 	request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
+
+	if (metadataFileName == null) {
+		error(request, "FileNotExist", "error.badMetadataFile");
+		return mapping.findForward("insertNewExercise");
+	}
+	if (xmlZipFileName == null) {
+	    error(request, "FileNotExist", "error.nullXmlZipFile");
+	    return mapping.findForward("insertNewExercise");
+	}
+
+	final UploadedFile metadataFile = ((Hashtable<String, UploadedFile>) request.getAttribute(RequestWrapperFilter.FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE)).get(metadataFileName);
 	if (metadataFile != null)
 	    if ((metadataFile.getFileData().length != 0)
 		    && !(metadataFile.getContentType().equals("text/xml") || metadataFile
@@ -644,6 +667,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 		error(request, "FileNotExist", "error.badMetadataFile");
 		return mapping.findForward("insertNewExercise");
 	    }
+	final UploadedFile xmlZipFile = ((Hashtable<String, UploadedFile>) request.getAttribute(RequestWrapperFilter.FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE)).get(xmlZipFileName);
 	if (xmlZipFile == null || xmlZipFile.getFileData() == null
 		|| xmlZipFile.getFileData().length == 0) {
 	    error(request, "FileNotExist", "error.nullXmlZipFile");

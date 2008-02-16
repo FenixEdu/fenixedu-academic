@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.plugin.upload;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -35,6 +36,10 @@ public class CommonsFile implements UploadedFile {
 
     public InputStream getInputStream() throws IOException {
         return this.commonsFile.getInputStream();
+    }
+
+    public byte[] getFileData() throws FileNotFoundException, IOException {
+	return commonsFile.get();
     }
 
 }

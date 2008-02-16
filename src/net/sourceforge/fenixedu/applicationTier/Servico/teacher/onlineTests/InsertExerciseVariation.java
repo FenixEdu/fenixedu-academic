@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.upload.FormFile;
@@ -33,7 +34,7 @@ public class InsertExerciseVariation extends Service {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List run(Integer executionCourseId, Integer metadataId, FormFile xmlZipFile, String path) throws FenixServiceException,
+    public List run(Integer executionCourseId, Integer metadataId, UploadedFile xmlZipFile, String path) throws FenixServiceException,
             NotExecuteException, ExcepcaoPersistencia {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
@@ -76,14 +77,14 @@ public class InsertExerciseVariation extends Service {
         return badXmls;
     }
 
-    private List<LabelValueBean> getXmlFilesList(FormFile xmlZipFile) {
+    private List<LabelValueBean> getXmlFilesList(UploadedFile xmlZipFile) {
         List<LabelValueBean> xmlFilesList = new ArrayList<LabelValueBean>();
         ZipInputStream zipFile = null;
 
         try {
             if (xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml")) {
-                if (xmlZipFile.getFileSize() <= FILE_SIZE_LIMIT) {
-                    xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile.getFileData(), "ISO-8859-1")));
+                if (xmlZipFile.getSize() <= FILE_SIZE_LIMIT) {
+                    xmlFilesList.add(new LabelValueBean(xmlZipFile.getName(), new String(xmlZipFile.getFileData(), "ISO-8859-1")));
                 }
             } else {
                 zipFile = new ZipInputStream(xmlZipFile.getInputStream());

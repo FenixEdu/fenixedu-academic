@@ -26,12 +26,12 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
 import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.fop.tools.IOUtil;
-import org.apache.struts.upload.FormFile;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
@@ -45,7 +45,7 @@ public class InsertExercise extends Service {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List<String> run(Integer executionCourseId, FormFile xmlZipFile, String path)
+    public List<String> run(Integer executionCourseId, UploadedFile xmlZipFile, String path)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 
 	List<String> badXmls = new ArrayList<String>();
@@ -139,7 +139,7 @@ public class InsertExercise extends Service {
 	return result;
     }
 
-    private Collection<List<LabelValueBean>> getListOfExercisesList(FormFile xmlZipFile) {
+    private Collection<List<LabelValueBean>> getListOfExercisesList(UploadedFile xmlZipFile) {
 	Map<String, List<LabelValueBean>> xmlListMap = new HashMap<String, List<LabelValueBean>>();
 	try {
 	    if (xmlZipFile.getContentType().equals("application/x-zip-compressed")
@@ -149,11 +149,11 @@ public class InsertExercise extends Service {
 		List<LabelValueBean> xmlList = new ArrayList<LabelValueBean>();
 		if (xmlZipFile.getContentType().equals("text/xml")
 			|| xmlZipFile.getContentType().equals("application/xml")) {
-		    if (xmlZipFile.getFileSize() <= FILE_SIZE_LIMIT) {
-			xmlList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile
+		    if (xmlZipFile.getSize() <= FILE_SIZE_LIMIT) {
+			xmlList.add(new LabelValueBean(xmlZipFile.getName(), new String(xmlZipFile
 				.getFileData(), "ISO-8859-1")));
 		    } else {
-			xmlList.add(new LabelValueBean(xmlZipFile.getFileName(), null));
+			xmlList.add(new LabelValueBean(xmlZipFile.getName(), null));
 		    }
 		}
 		xmlListMap.put("", xmlList);

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.plugin.upload;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -16,4 +17,7 @@ public interface UploadedFile {
     public long getSize();
     
     public InputStream getInputStream() throws IOException;
+
+    public byte[] getFileData() throws FileNotFoundException, IOException;
+
 }

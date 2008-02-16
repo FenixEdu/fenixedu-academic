@@ -46,8 +46,8 @@
             <form-property name="imsFeedback" type="java.lang.String"/>
        </form-bean>
         <form-bean name="exerciseForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="metadataFile" type="org.apache.struts.upload.FormFile"/>
-            <form-property name="xmlZipFile" type="org.apache.struts.upload.FormFile"/>
+            <form-property name="metadataFile" type="java.lang.String"/>
+            <form-property name="xmlZipFile" type="java.lang.String"/>
             <form-property name="exerciseCode" type="java.lang.String"/>
             <form-property name="objectCode" type="java.lang.String"/>
             <form-property name="order" type="java.lang.String"/>
