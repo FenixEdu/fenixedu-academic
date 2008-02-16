@@ -261,10 +261,11 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    final HtmlTable groupTable = createGroupTable(blockContainer, depth);
 	    addGroupHeaderRow(groupTable, studentCurriculumGroupBean, executionPeriod);
 
-	    if (!hasManagerOrAcademicOfficeRole() && !studentCurriculumGroupBean.isRoot()
-		    && studentCurriculumGroupBean.getCurriculumModule().isConcluded()) {
-		return;
-	    }
+	    //TODO: Uncomment when isConcluded is implemented using credits
+//	    if (!hasManagerOrAcademicOfficeRole() && !studentCurriculumGroupBean.isRoot()
+//		    && studentCurriculumGroupBean.getCurriculumModule().isConcluded()) {
+//		return;
+//	    }
 
 	    final HtmlTable coursesTable = createCoursesTable(blockContainer, depth);
 	    generateEnrolments(studentCurriculumGroupBean, coursesTable);
@@ -362,9 +363,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		result.append(")</span>");
 	    }
 
-	    if (curriculumGroup.isConcluded()) {
-		result.append(" - ").append(studentResources.getString("label.curriculum.group.concluded"));
-	    }
+//	    if (curriculumGroup.isConcluded()) {
+//		result.append(" - ").append(studentResources.getString("label.curriculum.group.concluded"));
+//	    }
 
 	    return result.toString();
 	}
