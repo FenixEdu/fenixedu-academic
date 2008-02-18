@@ -41,7 +41,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	}
     };
 
-
     protected ExternalEnrolment() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -51,10 +50,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	}
     }
 
-    public ExternalEnrolment(final Registration registration,
-	    final ExternalCurricularCourse externalCurricularCourse, final Grade grade,
-	    final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate,
-	    final Double ectsCredits) {
+    public ExternalEnrolment(final Registration registration, final ExternalCurricularCourse externalCurricularCourse,
+	    final Grade grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate, final Double ectsCredits) {
 	this();
 
 	checkConstraints(registration, externalCurricularCourse, executionPeriod, grade, ectsCredits);
@@ -68,15 +65,19 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	setEctsCredits(ectsCredits);
     }
 
-    private void checkIfCanCreateExternalEnrolment(final Registration registration, final ExternalCurricularCourse externalCurricularCourse) {
+    private void checkIfCanCreateExternalEnrolment(final Registration registration,
+	    final ExternalCurricularCourse externalCurricularCourse) {
 	for (final ExternalEnrolment externalEnrolment : registration.getExternalEnrolmentsSet()) {
 	    if (externalEnrolment.getExternalCurricularCourse() == externalCurricularCourse) {
-		throw new DomainException("error.studentCurriculum.ExternalEnrolment.already.exists.externalEnrolment.for.externalCurricularCourse", externalCurricularCourse.getName());
+		throw new DomainException(
+			"error.studentCurriculum.ExternalEnrolment.already.exists.externalEnrolment.for.externalCurricularCourse",
+			externalCurricularCourse.getName());
 	    }
 	}
     }
 
-    private void checkConstraints(final Registration registration, final ExternalCurricularCourse externalCurricularCourse, final ExecutionPeriod executionPeriod, final Grade grade, final Double ectsCredits) {
+    private void checkConstraints(final Registration registration, final ExternalCurricularCourse externalCurricularCourse,
+	    final ExecutionPeriod executionPeriod, final Grade grade, final Double ectsCredits) {
 	if (registration == null) {
 	    throw new DomainException("error.externalEnrolment.student.cannot.be.null");
 	}
@@ -94,9 +95,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	}
     }
 
-    public void edit(final Registration registration, final Grade grade,
-	    final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate,
-	    final Double ectsCredits) {
+    public void edit(final Registration registration, final Grade grade, final ExecutionPeriod executionPeriod,
+	    final YearMonthDay evaluationDate, final Double ectsCredits) {
 
 	if (registration != getRegistration()) {
 	    checkIfCanCreateExternalEnrolment(registration, getExternalCurricularCourse());
@@ -131,7 +131,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     public void delete() {
 	checkRulesToDelete();
-	
+
 	removeExecutionPeriod();
 	removeExternalCurricularCourse();
 	removeRegistration();
@@ -164,8 +164,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     public Integer getFinalGrade() {
 	final String grade = getGradeValue();
-	return (StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null : Integer
-		.valueOf(grade);
+	return (StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null : Integer.valueOf(grade);
     }
 
     final public ExecutionYear getExecutionYear() {
@@ -173,9 +172,9 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     final public YearMonthDay getApprovementDate() {
-        return getEvaluationDate();
+	return getEvaluationDate();
     }
-    
+
     public Unit getAcademicUnit() {
 	return getExternalCurricularCourse().getAcademicUnit();
     }
@@ -183,11 +182,11 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     public String getGradeValue() {
 	return getGrade().getValue();
     }
-    
+
     final public BigDecimal getEctsCreditsForCurriculum() {
 	return BigDecimal.valueOf(getEctsCredits());
     }
-    
+
     public Double getWeigth() {
 	return getEctsCredits();
     }
@@ -195,26 +194,26 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     final public BigDecimal getWeigthForCurriculum() {
 	return BigDecimal.valueOf(getWeigth());
     }
-    
+
     public BigDecimal getWeigthTimesGrade() {
-	return  getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : null;
+	return getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : null;
     }
-    
+
     /**
      * There is no thesis associated to an external enrolment.
      * 
      * @return <code>null</code>
      */
     public Thesis getThesis() {
-        return null;
+	return null;
     }
 
     public boolean isResultOfMobility() {
 	if (!hasExecutionPeriod()) {
 	    return false;
 	}
-	
-	return getRegistration().getRegistrationStatesTypes(getExecutionPeriod()).contains(RegistrationStateType.MOBILITY);
+
+	return getRegistration().getRegistrationStatesTypes(getExecutionYear()).contains(RegistrationStateType.MOBILITY);
     }
 
 }
