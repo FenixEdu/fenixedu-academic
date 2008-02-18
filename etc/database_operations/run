@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "change competnece course information change requests" changeCompetenceCourseInformationChangeRequests.sql
