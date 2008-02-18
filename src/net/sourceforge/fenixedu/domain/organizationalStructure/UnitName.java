@@ -11,7 +11,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
     public static class UnitNameLimitedOrderedSet extends TreeSet<UnitName> {
 
-	private final int maxElements;
+	protected final int maxElements;
 
 	public UnitNameLimitedOrderedSet(final int maxElements) {
 	    super();
@@ -32,6 +32,29 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	}
     }
 
+    public static class InternalUnitNameAndTypeLimitedOrderedSet extends UnitNameLimitedOrderedSet {
+
+	private Class<? extends Unit> unitType;
+	
+	public InternalUnitNameAndTypeLimitedOrderedSet(int maxElements, Class<? extends Unit> unitType) {
+	    super(maxElements);
+	    this.unitType = unitType; 
+	}
+	
+	@Override
+	public boolean add(UnitName unitName) {
+	    if (size() < maxElements && unitName.getUnit().getClass().equals(unitType)) {
+		return super.add(unitName);
+	    }
+	    final UnitName lastUnitName = isEmpty() ? null : last();
+	    if (lastUnitName != null && lastUnitName.compareTo(unitName) > 0 && unitName.getUnit().getClass().equals(unitType)) {
+		remove(lastUnitName);
+		return super.add(unitName);
+	    }
+	    return false;
+	}
+    }
+    
     public static class InternalUnitNameLimitedOrderedSet extends UnitNameLimitedOrderedSet {
 
 	public InternalUnitNameLimitedOrderedSet(final int maxElements) {
@@ -103,6 +126,12 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	}
     }
 
+    public static Collection<UnitName> findInternalUnitWithType(final String name, final int size, Class<? extends Unit> unitType) {
+	InternalUnitNameAndTypeLimitedOrderedSet internalUnitNameAndTypeLimitedOrderedSet = new InternalUnitNameAndTypeLimitedOrderedSet(size,unitType);
+	find(internalUnitNameAndTypeLimitedOrderedSet,name,size);
+	return internalUnitNameAndTypeLimitedOrderedSet;
+    }
+    
     public static Collection<UnitName> findInternalUnit(final String name, final int size) {
 	final InternalUnitNameLimitedOrderedSet unitNameLimitedOrderedSet = new InternalUnitNameLimitedOrderedSet(
 		size);

@@ -13,15 +13,13 @@ public class SearchAcademicUnits extends SearchParties {
 
     @Override
     protected Collection search(String value, int size) {
-	Collection<UnitName> unitNames = UnitName.find(value, size);
-	List<DegreeUnit> units = new ArrayList<DegreeUnit>();
-
-	for (UnitName unitName : unitNames) {
-	    Unit unit = unitName.getUnit();
-	    if (unit.isDegreeUnit()) {
-		units.add((DegreeUnit) unit);
-	    }
+	Collection<UnitName> unitNames = UnitName.findInternalUnitWithType(value, size,DegreeUnit.class);
+	List<Unit> units = new ArrayList<Unit> ();
+	
+	for(UnitName name : unitNames) {
+	    units.add(name.getUnit());
 	}
+	
 	return units;
     }
 
