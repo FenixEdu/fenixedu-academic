@@ -39,8 +39,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     final private void checkParameters(final MobilityProgram mobilityProgram) {
 	if (mobilityProgram == null && hasAnyExternalEntriesToReport()) {
-	    throw new DomainException(
-		    "ApprovementCertificateRequest.mobility.program.cannot.be.null");
+	    throw new DomainException("ApprovementCertificateRequest.mobility.program.cannot.be.null");
 	}
     }
 
@@ -59,8 +58,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	    }
 
 	    if (getMobilityProgram() == null && hasAnyExternalEntriesToReport()) {
-		throw new DomainException(
-			"ApprovementCertificateRequest.mobility.program.cannot.be.null");
+		throw new DomainException("ApprovementCertificateRequest.mobility.program.cannot.be.null");
 	    }
 
 	    // FIXME For now, the following conditions are only valid for 5year
@@ -102,7 +100,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     final public Collection<ICurriculumEntry> getEntriesToReport() {
 	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
-	
+
 	for (final ICurriculumEntry entry : getCurriculum().getCurriculumEntries()) {
 	    if (entry instanceof Dismissal) {
 		final Dismissal dismissal = (Dismissal) entry;
@@ -116,10 +114,10 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 		    continue;
 		}
 	    }
-	    
+
 	    result.add(entry);
 	}
-	
+
 	return result;
     }
 
@@ -127,10 +125,12 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
 	for (final CurriculumLine curriculumLine : getRegistration().getExtraCurricularCurriculumLines()) {
-	    if (curriculumLine.isEnrolment()) {
-		result.add((IEnrolment) curriculumLine);
-	    } else if (curriculumLine.isDismissal() && ((Dismissal) curriculumLine).getCredits().isSubstitution()) {
-		result.addAll(((Dismissal) curriculumLine).getSourceIEnrolments());
+	    if (curriculumLine.isApproved()) {
+		if (curriculumLine.isEnrolment()) {
+		    result.add((IEnrolment) curriculumLine);
+		} else if (curriculumLine.isDismissal() && ((Dismissal) curriculumLine).getCredits().isSubstitution()) {
+		    result.addAll(((Dismissal) curriculumLine).getSourceIEnrolments());
+		}
 	    }
 	}
 
