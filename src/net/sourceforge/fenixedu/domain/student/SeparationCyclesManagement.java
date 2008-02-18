@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.MDCandidacy;
@@ -140,7 +141,7 @@ public class SeparationCyclesManagement {
 	new RootCurriculumGroup(studentCurricularPlan, degreeCurricularPlan.getRoot(), null);
 	// set ingression after create studentcurricularPlan
 	registration.setIngression(Ingression.DA1C);
-	
+
 	return studentCurricularPlan;
     }
 
@@ -192,7 +193,7 @@ public class SeparationCyclesManagement {
 	if (child != null && child.isEnrolment()) {
 	    throw new DomainException("error.AffinityCyclesManagement.enrolment.should.not.exist");
 	}
-	
+
 	final Registration registration = parent.getStudentCurricularPlan().getRegistration();
 	enrolment.setCurriculumGroup(parent);
 
@@ -211,7 +212,12 @@ public class SeparationCyclesManagement {
 	substitution.setExecutionPeriod(getExecutionPeriod());
 	EnrolmentWrapper.create(substitution, enrolment);
 
-	new Dismissal(substitution, parent, enrolment.getCurricularCourse());
+	if (enrolment.isOptional()) {
+	    final OptionalEnrolment optional = (OptionalEnrolment) enrolment;
+	    new OptionalDismissal(substitution, parent, optional.getOptionalCurricularCourse(), optional.getEctsCredits());
+	} else {
+	    new Dismissal(substitution, parent, enrolment.getCurricularCourse());
+	}
     }
 
     private void createDismissal(final Dismissal dismissal, final CurriculumGroup parent) {
