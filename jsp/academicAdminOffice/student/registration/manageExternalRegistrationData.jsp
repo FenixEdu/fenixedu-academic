@@ -13,11 +13,11 @@
 	</p>
 </html:messages>
 
-<ul class="mtop2">
+<ul class="mtop2 list5">
 	<li>
-	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
-		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-	</html:link>
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
 	</li>
 </ul>
 
@@ -38,28 +38,28 @@
 </p>
 
 <logic:present name="registration" property="ingressionEnum">
-<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
 
 
 <logic:notPresent name="registration" property="ingressionEnum">
-<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 	</fr:layout>
 </fr:view>
 </logic:notPresent>
 
-<h3 class="mbottom025"><bean:message key="label.externalRegistrationData.manage" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom05"><bean:message key="label.externalRegistrationData.manage" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:edit name="externalRegistrationDataBean" schema="student.externalRegistrationData" action="/manageExternalRegistrationData.do?method=edit">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 	</fr:layout>
 </fr:edit>
 

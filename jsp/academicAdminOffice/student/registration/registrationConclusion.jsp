@@ -16,7 +16,7 @@
 		</p>
 	</html:messages>
 	
-	<ul class="mtop2">
+	<ul class="mtop2 list5">
 		<li>
 			<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registrationConclusionBean" paramProperty="registration.idInternal">
 				<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
@@ -44,7 +44,7 @@
 		<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<fr:view name="registrationConclusionBean" property="registration" schema="student.registrationDetail" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thright thlight"/>
+				<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 				<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 			</fr:layout>
 		</fr:view>
@@ -54,7 +54,7 @@
 		<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<fr:view name="registrationConclusionBean" property="registration" schema="student.registrationsWithStartData" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thright thlight"/>
+				<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 				<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 			</fr:layout>
 		</fr:view>

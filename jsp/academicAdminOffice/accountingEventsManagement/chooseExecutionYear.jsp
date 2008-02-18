@@ -19,20 +19,20 @@
 	
 	<bean:define id="registration" name="createGratuityAndAdminOfficeFeeBean" property="studentCurricularPlan.registration" />	
 	<logic:present name="registration" property="ingressionEnum">
-		<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+		<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<fr:view name="registration" schema="student.registrationDetail" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+				<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 				<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 			</fr:layout>
 		</fr:view>
 		</logic:present>
 		
 		<logic:notPresent name="registration" property="ingressionEnum">
-		<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+		<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<fr:view name="registration" schema="student.registrationsWithStartData" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+				<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 				<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 			</fr:layout>
 		</fr:view>

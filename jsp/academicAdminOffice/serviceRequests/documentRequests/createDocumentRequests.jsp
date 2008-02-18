@@ -47,7 +47,7 @@
 	<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:view name="documentRequestCreateBean" property="registration" schema="student.registrationDetail.short" >
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
+			<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 			<fr:property name="rowClasses" value=",tdhl1,,,,,"/>
 		</fr:layout>
 	</fr:view>
@@ -56,7 +56,7 @@
 	<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<fr:view name="documentRequestCreateBean" property="registration" schema="student.registrationsWithStartData" >
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
+			<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 			<fr:property name="rowClasses" value=",tdhl1,,,,,"/>
 		</fr:layout>
 	</fr:view>

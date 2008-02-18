@@ -24,30 +24,30 @@
 </p>
 
 <logic:present name="registration" property="ingressionEnum">
-<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 	</fr:layout>
 </fr:view>
 </logic:present>
 
 
 <logic:notPresent name="registration" property="ingressionEnum">
-<h3 class="mbottom025"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 	</fr:layout>
 </fr:view>
 </logic:notPresent>
 
 
 <bean:define id="registrationID" name="registration" property="idInternal" />
-<h3 class="mbottom025"><bean:message key="label.registration.addNewSCP" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<h3 class="mbottom05"><bean:message key="label.registration.addNewSCP" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:edit name="studentCurricularPlanCreator" schema="studentCurricularPlan.create" action="/addNewStudentCurricularPlan.do?method=createSCP">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
+		<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 	</fr:layout>
 	<fr:destination name="cancel" path="<%="/student.do?method=visualizeRegistration&registrationID=" + registrationID %>" />	
 </fr:edit>

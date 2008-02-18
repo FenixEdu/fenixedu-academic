@@ -10,7 +10,7 @@
 	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	
-	<ul class="mtop2">
+	<ul class="mtop2 list5">
 		<li>
 			<html:link page="/student.do?method=visualizeRegistration" paramId="registrationId" paramName="registrationCurriculumBean" paramProperty="registration.idInternal">
 				<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>
@@ -39,7 +39,7 @@
 	<logic:present name="registrationCurriculumBean" property="registration.ingressionEnum">
 		<fr:view name="registrationCurriculumBean" property="registration" schema="student.registrationDetail" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thright thlight"/>
+				<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 				<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 			</fr:layout>
 		</fr:view>
@@ -47,7 +47,7 @@
 	<logic:notPresent name="registrationCurriculumBean" property="registration.ingressionEnum">
 		<fr:view name="registrationCurriculumBean" property="registration" schema="student.registrationsWithStartData" >
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thright thlight mtop0"/>
+				<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 				<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
 			</fr:layout>
 		</fr:view>
