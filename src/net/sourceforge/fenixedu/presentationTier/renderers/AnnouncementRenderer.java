@@ -216,8 +216,7 @@ public class AnnouncementRenderer extends OutputRenderer {
 	}
 
 	private boolean isCurrentAnnouncentAnEvent() {
-	    return announcement.getReferedSubjectBegin() != null || announcement.getReferedSubjectEnd() != null
-		    || !StringUtils.isEmpty(announcement.getPlace());
+	    return announcement.getReferedSubjectBegin() != null || announcement.getReferedSubjectEnd() != null;
 	}
 
     }
