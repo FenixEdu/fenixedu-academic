@@ -24,7 +24,7 @@ public class RestrictionEnroledDegreeModuleExecutor extends CurricularRuleExecut
 	}
 
 	final CurricularCourse curricularCourseToBeEnroled = rule.getPrecedenceDegreeModule();
-	if (isEnroled(enrolmentContext, curricularCourseToBeEnroled)
+	if (isApproved(enrolmentContext, curricularCourseToBeEnroled) || isEnroled(enrolmentContext, curricularCourseToBeEnroled)
 		|| isEnrolling(enrolmentContext, curricularCourseToBeEnroled)) {
 	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
@@ -47,7 +47,7 @@ public class RestrictionEnroledDegreeModuleExecutor extends CurricularRuleExecut
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
-    
+
     @Override
     protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
 	    EnrolmentContext enrolmentContext) {
@@ -66,6 +66,5 @@ public class RestrictionEnroledDegreeModuleExecutor extends CurricularRuleExecut
 
 	return false;
     }
-
 
 }
