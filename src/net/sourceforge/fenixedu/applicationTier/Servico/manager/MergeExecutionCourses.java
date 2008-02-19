@@ -5,6 +5,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -27,9 +29,14 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
+import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -40,6 +47,8 @@ import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
+import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -278,17 +287,76 @@ public class MergeExecutionCourses extends Service {
         final Site siteTo = executionCourseTo.getSite();
 
         if (siteFrom != null) {
-            for (final Node node : siteFrom.getChildrenSet()) {
-        	final Content content = node.getChild();
-        	final ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(siteTo, content);
-        	if (node instanceof ExplicitOrderNode) {
-        	    explicitOrderNode.setNodeOrder(((ExplicitOrderNode) node).getNodeOrder());
-        	}
-        	explicitOrderNode.setVisible(node.getVisible());
-        	node.delete();
-            }
+            copyContents(executionCourseTo, siteTo, siteFrom.getOrderedDirectChildren());
             siteFrom.delete();
         }
+    }
+
+    private void copyContents(final ExecutionCourse executionCourseTo, final Container parentTo, final Collection<Node> nodes) {
+	final Set<Content> transferedContents = new HashSet<Content>();
+
+        for (final Node node : nodes) {
+            final Content content = node.getChild();
+            final ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(parentTo, content);
+            if (node instanceof ExplicitOrderNode) {
+    	    	explicitOrderNode.setNodeOrder(((ExplicitOrderNode) node).getNodeOrder());
+            }
+            explicitOrderNode.setVisible(node.getVisible());
+            node.delete();
+
+            changeGroups(executionCourseTo, content, transferedContents);
+	}
+
+	final Collection<String> tos = createListOfEmailAddresses(executionCourseTo);
+	final StringBuilder message = new StringBuilder();
+	message.append("Viva, \n\n");
+	message.append("Devido à junção da disciplina acima referida entre vários cursos, não foi possível manter os ");
+	message.append("previlégios de acesso aos seguintes conteúdos: ");
+	for (final Content content : transferedContents) {
+	    message.append("\n\t");
+	    message.append(content.getName());
+	}
+	message.append("\n\nAgradecemos que actualize os previlégios ");
+	message.append("dos conteúdos logo que possível.\n\n");
+	message.append("Os melhores cumprimentos,\n\nO sistema Fénix.");
+
+	new Email("Sistema Fénix", "no-reply@ist.utl.pt", new String[]{}, tos, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
+			"Junção de disciplinas: " + executionCourseTo.getNome(), message.toString());
+    }
+
+    private void changeGroups(final ExecutionCourse executionCourseTo, final Content content, final Set<Content> transferedContents) {
+	if (content.getAvailabilityPolicy() != null) {
+	    content.getAvailabilityPolicy().delete();
+	    final Group group = createExecutionCourseResponsibleTeachersGroup(executionCourseTo);
+	    if (group != null) {
+		new GroupAvailability(content, group);
+	    }
+	    transferedContents.add(content);
+	}
+	if (content.isContainer()) {
+	    final Container container = (Container) content;
+	    for (final Node node : container.getOrderedDirectChildren()) {
+		changeGroups(executionCourseTo, node.getChild(), transferedContents);
+	    }
+	}
+    }
+
+    private Collection<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
+	final Collection<String> emails = new ArrayList<String>();
+	for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
+	    emails.add(professorship.getTeacher().getPerson().getEmail());
+	}
+	return emails;
+    }
+
+    private Group createExecutionCourseResponsibleTeachersGroup(final ExecutionCourse executionCourseTo) {
+	final Set<IGroup> groups = new HashSet<IGroup>();
+	for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
+	    if (professorship.isResponsibleFor()) {
+		groups.add(new PersonGroup(professorship.getTeacher().getPerson()));
+	    }
+	}
+	return groups.isEmpty() ? null : new GroupUnion(groups);
     }
 
     private void copyProfessorships(final ExecutionCourse executionCourseFrom,
