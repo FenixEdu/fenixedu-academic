@@ -124,6 +124,7 @@
 	
 	<form-bean name="printMarkSheetForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 		<form-property name="markSheet" type="java.lang.String" />
+		<form-property name="ecID" type="java.lang.String" />
 		<form-property name="printerName" type="java.lang.String" />
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
 	</form-bean>

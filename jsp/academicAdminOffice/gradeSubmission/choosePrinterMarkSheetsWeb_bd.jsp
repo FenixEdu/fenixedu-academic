@@ -10,19 +10,26 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.print.web.markSheets"/></h2>
 
-<p class="mvert2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.leftToPrint" arg0="<%= markSheets.toString() %>"/>.</p>
-
-<p class="mtop2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.choosePrinter"/>:</p>
-<logic:messagesPresent message="true">
-	<html:messages bundle="ACADEMIC_OFFICE_RESOURCES" id="messages" message="true">
-		<p><span class="error0"><bean:write name="messages" /></span></p>
-	</html:messages>
-</logic:messagesPresent>
 
 <html:form action="/printMarkSheetWeb.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="printMarkSheets"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.markSheet" property="markSheet" value="all"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	
+	
+	<html:select property="ecID" onchange="this.form.method.value='choosePrinterMarkSheetsWebPostBack';this.form.submit();">	
+		<html:options collection="periods" property="value" labelProperty="label"/>
+	</html:select>
+	
+	<p class="mvert2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.leftToPrint" arg0="<%= markSheets.toString() %>"/>.</p>
+	
+	<p class="mtop2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.choosePrinter"/>:</p>
+	<logic:messagesPresent message="true">
+		<html:messages bundle="ACADEMIC_OFFICE_RESOURCES" id="messages" message="true">
+			<p><span class="error0"><bean:write name="messages" /></span></p>
+		</html:messages>
+	</logic:messagesPresent>
+	
 	<table>
 		<tr>
 			<td>
