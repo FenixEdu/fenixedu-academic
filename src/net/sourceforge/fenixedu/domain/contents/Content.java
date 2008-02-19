@@ -398,8 +398,20 @@ public abstract class Content extends Content_Base {
 
     @Override
     public void setName(final MultiLanguageString name) {
+	if(!isNameValid(name)) {
+	    throw new DomainException("label.error.content.invalid.name");
+	}
 	super.setName(name);
 	setNormalizedName(normalize(name));
+    }
+
+    private boolean isNameValid(MultiLanguageString name) {
+	for(String content : name.getAllContents()) {
+	    if(content.indexOf('?') >= 0) {
+		return false;
+	    }
+	}
+	return true;
     }
 
     public MultiLanguageString getNormalizedName() {
