@@ -344,13 +344,11 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    final CreditsLimit creditsLimit = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
 		    CurricularRuleType.CREDITS_LIMIT, executionPeriod);
 
-	    final CourseGroup courseGroup = curriculumGroup.getDegreeModule();
-
 	    if (creditsLimit != null) {
 		result.append(" <span title=\"");
 		result.append(applicationResources.getString("label.curriculum.credits.legend.minCredits"));
 		result.append(" \">m(");
-		result.append(courseGroup.getMinEctsCredits(executionPeriod));
+		result.append(creditsLimit.getMinimumCredits());
 		result.append(")</span>,");
 	    }
 
@@ -364,7 +362,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		result.append(", <span title=\"");
 		result.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
 		result.append(" \">M(");
-		result.append(courseGroup.getMaxEctsCredits(executionPeriod));
+		result.append(creditsLimit.getMaximumCredits());
 		result.append(")</span>");
 	    }
 

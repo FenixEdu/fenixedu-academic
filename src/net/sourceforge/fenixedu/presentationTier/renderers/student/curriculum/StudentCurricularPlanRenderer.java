@@ -506,7 +506,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    groupName.append(" <span title=\"");
 		    groupName.append(applicationResources.getString("label.curriculum.credits.legend.minCredits"));
 		    groupName.append(" \">m(");
-		    groupName.append(courseGroup.getMinEctsCredits(executionPeriodContext));
+		    groupName.append(creditsLimit.getMinimumCredits());
 		    groupName.append(")</span>,");
 		}
 
@@ -520,7 +520,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    groupName.append("<span title=\"");
 		    groupName.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
 		    groupName.append("\">, M(");
-		    groupName.append(courseGroup.getMaxEctsCredits(executionPeriodContext));
+		    groupName.append(creditsLimit.getMaximumCredits());
 		    groupName.append(")</span>");
 		}
 	    }
