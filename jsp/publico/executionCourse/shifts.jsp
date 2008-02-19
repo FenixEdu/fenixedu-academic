@@ -59,13 +59,13 @@
 				<td>
 				    <logic:notEmpty name="lesson" property="sala">
 						<bean:define id="url"><%= request.getContextPath() %>/publico/siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="lesson" property="sala.name"/>&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/>&amp;executionPeriodOID=<bean:write name="executionCourse" property="executionPeriod.idInternal"/></bean:define>
-						<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= url %>"><bean:write name="lesson" property="sala.name"/></a>
+							<a href="<%= url %>"><bean:write name="lesson" property="sala.name"/></a>
 					</logic:notEmpty>
 				</td>
 				<td rowspan=<%= shift.getAssociatedLessons().size() %>>
 					<logic:iterate id="schoolClass" name="shift" property="associatedClasses">
 						<bean:define id="url"><%= request.getContextPath() %>/publico/viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?classId=<bean:write name="schoolClass" property="idInternal"/>&amp;className=<bean:write name="schoolClass" property="nome"/></bean:define>						
-						<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= url %>"><bean:write name="schoolClass" property="nome" /><br/></a>
+							<a href="<%= url %>"><bean:write name="schoolClass" property="nome" /><br/></a>
 					</logic:iterate>
 				</td>
 			</tr>
