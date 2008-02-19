@@ -208,7 +208,7 @@
     <definition name="view-homepage-section" extends="definition.public.homepage">
         <put name="body" value="/commons/sites/public/section.jsp"/>
     </definition>
-    <definition name="view-homepage-section-deny" extends="definition.public.homepage">
+    <definition name="homepage-section-deny" extends="definition.public.homepage">
         <put name="body" value="/commons/sites/public/section-deny.jsp"/>
     </definition>
     <definition name="homepage-section-adviseLogin" extends="definition.public.homepage">
