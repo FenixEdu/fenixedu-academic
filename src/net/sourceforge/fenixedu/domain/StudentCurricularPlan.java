@@ -2278,6 +2278,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		enrolmentContext, responsiblePerson).manage();
     }
 
+    final public RuleResult enrol(final Person responsiblePerson, final ExecutionPeriod executionPeriod,
+	    final CurricularRuleLevel curricularRuleLevel) {
+	return enrol(responsiblePerson, executionPeriod, Collections.EMPTY_SET, Collections.EMPTY_LIST, curricularRuleLevel);
+    }
+
     @Checked("StudentCurricularPlanPredicates.enrolInAffinityCycle")
     public void enrolInAffinityCycle(final CycleCourseGroup cycleCourseGroup, final ExecutionPeriod executionPeriod) {
 	if (getDegreeCurricularPlan().getRoot().hasDegreeModule(cycleCourseGroup)) {
