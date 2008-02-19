@@ -36,7 +36,7 @@ public class CloseTransactionFilter implements Filter {
 	}
 
 	public Person getPerson() {
-	    throw makeException();
+	    return null;
 	}
 
 	public String getUtilizador() {
