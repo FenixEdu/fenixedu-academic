@@ -662,8 +662,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public ExecutionYear getLastApprovementExecutionYear() {
-	final CurriculumLine lastApprovement = getLastApprovement();
-	return lastApprovement == null ? null : lastApprovement.getExecutionYear();
+	return getRoot().getApprovedCurriculumLinesLastExecutionYear();
     }
 
     final public boolean hasAnyApprovedCurriculumLines() {
