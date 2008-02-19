@@ -75,7 +75,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
 	    if (executionYear != lastReportedExecutionYear) {
 		lastReportedExecutionYear = executionYear;
-		result.append("\n");
+		// result.append("\n");
 	    }
 
 	    reportEntry(result, entry, academicUnitIdentifiers, executionYear);
