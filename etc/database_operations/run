@@ -28,3 +28,5 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "FIxing availability policies, hurray to value objects with hardcoded ids (NOT)" fixAvailabilityPoliciesDueToExecutionCourseMerge.sql
