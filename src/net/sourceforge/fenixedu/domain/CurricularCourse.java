@@ -1091,7 +1091,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 
 	final Double weigth = super.getWeigth();
-	return (weigth == null || weigth == 0.0) ? ECTS_CREDITS_FOR_PRE_BOLONHA : weigth;
+	return (weigth == null || weigth == 0.0) ? WEIGHT_FOR_PRE_BOLONHA : weigth;
     }
 
     public CurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
