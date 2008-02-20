@@ -388,7 +388,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return null;
     }
-    
+
     @Override
     final public CurriculumLine getApprovedCurriculumLine(final CurricularCourse curricularCourse) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
@@ -699,7 +699,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     private boolean isToCheckCreditsLimits(ExecutionYear executionYear) {
 	return getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT, executionYear) != null;
     }
-    
+
     @SuppressWarnings("unchecked")
     private boolean checkCreditsLimits(ExecutionYear executionYear) {
 	final CreditsLimit creditsLimit = (CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT,
@@ -710,7 +710,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	} else {
 	    Double creditsConcluded = 0d;
 	    for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-		if (!curriculumModule.isConcluded(executionYear).isNotConcluded()) {
+		if (curriculumModule.isConcluded(executionYear).isValid()) {
 		    creditsConcluded += curriculumModule.getCreditsConcluded(executionYear);
 		}
 	    }
@@ -759,7 +759,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	final Collection<CurriculumModule> curriculumModules = new HashSet<CurriculumModule>(getCurriculumModulesSet());
 	YearMonthDay result = null;
 	for (final CurriculumModule curriculumModule : curriculumModules) {
-	    if (curriculumModule.isConcluded() && curriculumModule.hasAnyApprovedCurriculumLines()) {
+	    if (curriculumModule.isConcluded(getApprovedCurriculumLinesLastExecutionYear()).isValid()
+		    && curriculumModule.hasAnyApprovedCurriculumLines()) {
 		final YearMonthDay curriculumModuleConclusionDate = curriculumModule.calculateConclusionDate();
 		if (result == null || curriculumModuleConclusionDate.isAfter(result)) {
 		    result = curriculumModuleConclusionDate;

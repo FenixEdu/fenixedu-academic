@@ -267,9 +267,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     public void delete() {
-	
+
 	checkRulesToDelete();
-	
+
 	createEnrolmentLog(EnrolmentAction.UNENROL);
 	// TODO: falta ver se é dos antigos enrolments ou dos novos
 	final Registration registration = getRegistration();
@@ -367,8 +367,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
 		Grade evaluationGrade = enrolmentEvaluation.getGrade();
 
-		return enrolmentEvaluation.getEnrolmentEvaluationType().equals(evaluationType)
-			&& evaluationGrade.equals(grade);
+		return enrolmentEvaluation.getEnrolmentEvaluationType().equals(evaluationType) && evaluationGrade.equals(grade);
 	    }
 
 	});
@@ -417,7 +416,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	// There can be only one enrolmentEvaluation with Temporary State
 	if (enrolmentEvaluation == null) {
-	    enrolmentEvaluation = new EnrolmentEvaluation(this, enrolmentEvaluationType, EnrolmentEvaluationState.TEMPORARY_OBJ, employee);
+	    enrolmentEvaluation = new EnrolmentEvaluation(this, enrolmentEvaluationType, EnrolmentEvaluationState.TEMPORARY_OBJ,
+		    employee);
 	} else {
 	    enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 	    enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
@@ -455,7 +455,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		EnrolmentEvaluationType.NORMAL, null);
 
 	if (enrolmentEvaluation == null) {
-	    enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.NORMAL, EnrolmentEvaluationState.TEMPORARY_OBJ);
+	    enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.NORMAL,
+		    EnrolmentEvaluationState.TEMPORARY_OBJ);
 	    enrolmentEvaluation.setWhenDateTime(new DateTime());
 
 	    addEvaluations(enrolmentEvaluation);
@@ -586,7 +587,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    return true;
 	}
 
-	for (ExecutionPeriod executionPeriod = enrolmentNextExecutionPeriod; executionPeriod != null && executionPeriod != improvementExecutionPeriod; executionPeriod = executionPeriod.getNextExecutionPeriod()) {
+	for (ExecutionPeriod executionPeriod = enrolmentNextExecutionPeriod; executionPeriod != null
+		&& executionPeriod != improvementExecutionPeriod; executionPeriod = executionPeriod.getNextExecutionPeriod()) {
 	    if (degreeModule.hasAnyParentContexts(executionPeriod)) {
 		return false;
 	    }
@@ -719,23 +721,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getLatestEnrolmentEvaluationExceptImprovements().getExamDateYearMonthDay();
     }
 
-
     @Override
     @SuppressWarnings("unchecked")
     public Curriculum getCurriculum(final ExecutionYear executionYear) {
-	return (executionYear == null || getExecutionYear().isBefore(executionYear)) && 
-		isApproved() && 
-		!getCurriculumGroup().isPropaedeutic() && 
-		!getCurriculumGroup().isExtraCurriculum() ? 
-		new Curriculum(
-			this, 
-			executionYear, 
-			Collections.singleton((ICurriculumEntry) this),
-			Collections.EMPTY_SET, 
-			Collections.singleton((ICurriculumEntry) this)) 
-		: Curriculum.createEmpty(this, executionYear);
+	return (executionYear == null || getExecutionYear().isBefore(executionYear)) && isApproved()
+		&& !getCurriculumGroup().isPropaedeutic() && !getCurriculumGroup().isExtraCurriculum() ? new Curriculum(this,
+		executionYear, Collections.singleton((ICurriculumEntry) this), Collections.EMPTY_SET, Collections
+			.singleton((ICurriculumEntry) this)) : Curriculum.createEmpty(this, executionYear);
     }
-    
+
     final public Grade getGrade() {
 	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return enrolmentEvaluation == null ? Grade.createEmptyGrade() : enrolmentEvaluation.getGrade();
@@ -753,10 +747,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public GradeScale getGradeScale() {
 	return getCurricularCourse().getGradeScaleChain();
     }
-    
+
     public BigDecimal getWeigthTimesGrade() {
 	return getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : null;
     }
+
     final public boolean isEnroled() {
 	return this.getEnrollmentState() == EnrollmentState.ENROLLED;
     }
@@ -860,9 +855,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public EnrolmentEvaluation addNewEnrolmentEvaluation(EnrolmentEvaluationState enrolmentEvaluationState,
 	    EnrolmentEvaluationType enrolmentEvaluationType, Person responsibleFor, String gradeValue, Date availableDate,
 	    Date examDate, ExecutionPeriod executionPeriod) {
-	
+
 	final Grade grade = Grade.createGrade(gradeValue, getGradeScale());
-	
+
 	final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, enrolmentEvaluationState,
 		enrolmentEvaluationType, responsibleFor, grade, availableDate, examDate, new DateTime());
 	if (enrolmentEvaluationType == EnrolmentEvaluationType.IMPROVEMENT) {
@@ -960,13 +955,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public EnrolmentEvaluation getLatestEnrolmentEvaluationExceptImprovements() {
 	final Collection<EnrolmentEvaluation> toInspect = new HashSet<EnrolmentEvaluation>();
-	
+
 	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
 	    if (!enrolmentEvaluation.isImprovment()) {
 		toInspect.add(enrolmentEvaluation);
 	    }
 	}
-	
+
 	return getLatestEnrolmentEvalution(toInspect);
     }
 
@@ -1119,7 +1114,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     static final BigDecimal LEIC_WEIGHT_BEFORE_0607_EXCEPT_TFC = BigDecimal.valueOf(4.0d);
-    
+
     static final BigDecimal LMAC_AND_LCI_WEIGHT_FACTOR = BigDecimal.valueOf(0.25d);
 
     @Override
@@ -1138,7 +1133,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		if (isStudentFromLEIC() && !getCurricularCourse().isTFC()) {
 		    return LEIC_WEIGHT_BEFORE_0607_EXCEPT_TFC;
 		}
-		
+
 		if (isDegreeModuleFromLMAC() || isDegreeModuleFromLCI()) {
 		    return getBaseWeigth().multiply(LMAC_AND_LCI_WEIGHT_FACTOR);
 		}
@@ -1148,9 +1143,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	return getBaseWeigth();
     }
-    
+
     private BigDecimal getBaseWeigth() {
-	return BigDecimal.valueOf((super.getWeigth() == null || super.getWeigth() == 0d) ? getCurricularCourse().getWeigth() : super.getWeigth());
+	return BigDecimal.valueOf((super.getWeigth() == null || super.getWeigth() == 0d) ? getCurricularCourse().getWeigth()
+		: super.getWeigth());
     }
 
     private boolean isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607() {
@@ -1172,10 +1168,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     /**
-     * Just for Master Degrees legacy code
-     * 
-     * @return
-     */
+         * Just for Master Degrees legacy code
+         * 
+         * @return
+         */
     @Deprecated
     final public double getCredits() {
 	return getEctsCredits();
@@ -1280,12 +1276,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * <p>
-     * This method assumes that each Student has at most one non evaluated
-     * Thesis and no more that two Thesis.
-     */
+         * {@inheritDoc}
+         * 
+         * <p>
+         * This method assumes that each Student has at most one non evaluated
+         * Thesis and no more that two Thesis.
+         */
     final public Thesis getThesis() {
 	List<Thesis> theses = getTheses();
 
@@ -1333,10 +1329,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
 	return enrolments.get(0);
     }
-    
+
     public boolean hasAnyAssociatedMarkSheetOrFinalGrade() {
 	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
-	    if(enrolmentEvaluation.hasMarkSheet() || enrolmentEvaluation.isFinal()) {
+	    if (enrolmentEvaluation.hasMarkSheet() || enrolmentEvaluation.isFinal()) {
 		return true;
 	    }
 	}

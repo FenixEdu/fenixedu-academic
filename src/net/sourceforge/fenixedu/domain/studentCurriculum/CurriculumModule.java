@@ -297,22 +297,22 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     static protected enum ConclusionValue {
 	CONCLUDED(true) {
 	    @Override
-	    public boolean isNotConcluded() {
-		return false;
+	    public boolean isValid() {
+		return true;
 	    }
 	},
 
 	NOT_CONCLUDED(false) {
 	    @Override
-	    public boolean isNotConcluded() {
-		return true;
+	    public boolean isValid() {
+		return false;
 	    }
 	},
 
 	UNKNOWN(false) {
 	    @Override
-	    public boolean isNotConcluded() {
-		return false;
+	    public boolean isValid() {
+		return true;
 	    }
 	};
 
@@ -326,7 +326,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 	    return this.value;
 	}
 
-	abstract public boolean isNotConcluded();
+	abstract public boolean isValid();
 
 	static public ConclusionValue create(final boolean value) {
 	    return value ? CONCLUDED : NOT_CONCLUDED;
