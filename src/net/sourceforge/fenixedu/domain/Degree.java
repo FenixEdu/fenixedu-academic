@@ -1295,4 +1295,13 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         setIdCardName(nome);
     }
 
+    public boolean isActive() {
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	for(DegreeCurricularPlan curricularPlan : getDegreeCurricularPlans()) {
+	    if(curricularPlan.getExecutionDegreeByYear(currentExecutionYear) != null) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

@@ -108,10 +108,18 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 	}
 
 	Map<DegreeType, SortedSet<Degree>> degreeAndTypes = new HashMap<DegreeType, SortedSet<Degree>>();
-
+	SortedSet<DegreeType> activeTypes = new TreeSet<DegreeType>();
+	SortedSet<DegreeType> inactiveTypes = new TreeSet<DegreeType>();
+	    
 	for (Degree degree : department.getDegrees()) {
 	    DegreeType type = degree.getDegreeType();
-
+	    if(degree.isActive()) {
+		activeTypes.add(type);
+	    }
+	    else {
+		inactiveTypes.add(type);
+	    }
+	    
 	    SortedSet<Degree> current = degreeAndTypes.get(type);
 	    if (current == null) {
 		current = new TreeSet<Degree>(Degree.COMPARATOR_BY_NAME_AND_ID);
@@ -121,13 +129,17 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 	    current.add(degree);
 	}
 
-	SortedSet<DegreeType> types = new TreeSet<DegreeType>(degreeAndTypes.keySet());
-	request.setAttribute("types", types);
-
-	for (DegreeType type : types) {
+	request.setAttribute("inactive-types", inactiveTypes);
+	request.setAttribute("active-types", activeTypes); 
+			
+	for (DegreeType type : inactiveTypes) {
 	    request.setAttribute(type.getName(), degreeAndTypes.get(type));
 	}
 
+	for (DegreeType type : activeTypes) {
+	    request.setAttribute(type.getName(), degreeAndTypes.get(type));
+	}
+	
 	return mapping.findForward("department-degrees");
     }
 

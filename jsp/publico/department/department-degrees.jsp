@@ -40,8 +40,8 @@
     <fr:view name="department" property="nameI18n"/>
 </h1>
 
-<logic:notEmpty name="types">
-    <logic:iterate id="type" name="types">
+<logic:notEmpty name="active-types">
+    <logic:iterate id="type" name="active-types">
         <bean:define id="typeName" name="type" property="name" type="java.lang.String"/>
         <h2 class="mtop2">
             <bean:message key="<%= "DegreeType." + typeName %>" bundle="ENUMERATION_RESOURCES"/>
@@ -49,11 +49,36 @@
     
         <ul>
             <logic:iterate id="degree" name="<%= typeName %>">
+                <logic:equal name="degree" property="active" value="true">
                 <li>                
                 	<app:contentLink name="degree" property="site">
                 		<fr:view name="degree" property="nameI18N"/>
                 	</app:contentLink>                    
                 </li>
+                </logic:equal>
+            </logic:iterate>
+        </ul>
+    </logic:iterate>
+</logic:notEmpty>
+
+<logic:notEmpty name="inactive-types">
+
+	<h3 class="mtop3 mbottom1" ><bean:message key="label.inactive.degrees" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></h3>
+    <logic:iterate id="type" name="inactive-types">
+        <bean:define id="typeName" name="type" property="name" type="java.lang.String"/>
+        <h2 class="mtop2 greytxt">
+            <bean:message key="<%= "DegreeType." + typeName %>" bundle="ENUMERATION_RESOURCES"/>
+        </h2>
+    
+        <ul>
+            <logic:iterate id="degree" name="<%= typeName %>">
+                <logic:equal name="degree" property="active" value="false">
+                <li>                
+                	<app:contentLink name="degree" property="site">
+                		<fr:view name="degree" property="nameI18N"/>
+                	</app:contentLink>                    
+                </li>
+                </logic:equal>
             </logic:iterate>
         </ul>
     </logic:iterate>
