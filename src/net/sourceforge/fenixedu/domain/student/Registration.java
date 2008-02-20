@@ -2803,20 +2803,21 @@ public class Registration extends Registration_Base {
     }
 
     @Checked("RegistrationPredicates.transitToBolonha")
-    public void transitToBolonha(final Person person) {
+    public void transitToBolonha(final Person person, final DateTime when) {
 
 	if (!isActive()) {
 	    throw new DomainException("error.student.Registration.cannot.transit.non.active.registrations");
 	}
 
-	RegistrationState.createState(this, person, new DateTime(), RegistrationStateType.TRANSITED);
+	RegistrationState.createState(this, person, when, RegistrationStateType.TRANSITED);
 
 	for (final Registration registration : getTargetTransitionRegistrations()) {
+	    
 	    if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-		RegistrationState.createState(registration, person, new DateTime(),
+		RegistrationState.createState(registration, person, when,
 			registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
 	    } else {
-		RegistrationState.createState(registration, person, new DateTime(), RegistrationStateType.REGISTERED);
+		RegistrationState.createState(registration, person, when, RegistrationStateType.REGISTERED);
 	    }
 
 	    registration.setRegistrationAgreement(getRegistrationAgreement());
