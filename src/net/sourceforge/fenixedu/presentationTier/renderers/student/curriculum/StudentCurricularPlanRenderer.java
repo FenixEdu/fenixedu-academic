@@ -823,8 +823,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getPersonResponsibleForGrade() != null) {
 
 		    final Person person = lastEnrolmentEvaluation.getPersonResponsibleForGrade();
-		    final String username = person.hasEmployee() ? person.getEmployee().getRoleLoginAlias() : person
-			    .getIstUsername();
+		    final String username = getUsername(person);
 		    generateCellWithSpan(enrolmentRow, username, applicationResources.getString("label.grade.responsiblePerson"),
 			    getCreatorCellClass());
 
@@ -833,6 +832,16 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		}
 	    }
 
+	}
+
+	private String getUsername(final Person person) {
+	    if (person.hasEmployee() && person.getEmployee().isAdministrativeOfficeEmployee()) {
+		return person.getEmployee().getRoleLoginAlias();
+	    } else if (person.hasTeacher()) {
+		return person.getTeacher().getRoleLoginAlias();
+	    } else {
+		return person.getIstUsername();
+	    }
 	}
 
 	private void generateLastEnrolmentEvaluationExamDateCellIfRequired(HtmlTableRow enrolmentRow, Enrolment enrolment) {
@@ -964,8 +973,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    result.setText(degreeCurricularPlan.getName());
 	    result.setModuleRelative(false);
 	    result.setTarget("_blank");
-	    result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, 
-		    degreeCurricularPlan.getDegree().getSite().getReversePath());
+	    result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, degreeCurricularPlan.getDegree().getSite()
+		    .getReversePath());
 
 	    if (degreeCurricularPlan.isBoxStructure()) {
 		result.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
