@@ -268,7 +268,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    // if (!hasManagerOrAcademicOfficeRole() &&
 	    // !studentCurriculumGroupBean.isRoot()
 	    // &&
-	    // studentCurriculumGroupBean.getCurriculumModule().isConcluded()) {
+	    // studentCurriculumGroupBean.getCurriculumModule().isConcluded())
+                // {
 	    // return;
 	    // }
 
@@ -508,8 +509,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    ectsCell.setClasses(enrolmentEctsClasses);
 
 	    final StringBuilder ects = new StringBuilder();
-	    ects.append(enrolment.getAccumulatedEctsCredits(enrolment.getExecutionPeriod())).append(" ").append(
-		    studentResources.getString("label.credits.abbreviation"));
+	    final double ectsCredits = enrolment.isBolonhaDegree() ? enrolment.getAccumulatedEctsCredits(enrolment
+		    .getExecutionPeriod()) : enrolment.getEctsCredits();
+	    ects.append(ectsCredits).append(" ").append(studentResources.getString("label.credits.abbreviation"));
 
 	    ectsCell.setBody(new HtmlText(ects.toString()));
 
@@ -632,9 +634,10 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
     private static class OptionalCurricularCourseLinkController extends HtmlActionLinkController {
 
 	/**
-	 * 
-	 */
+         * 
+         */
 	private static final long serialVersionUID = 2760270166511466030L;
+
 	private IDegreeModuleToEvaluate degreeModuleToEnrol;
 
 	public OptionalCurricularCourseLinkController(final IDegreeModuleToEvaluate degreeModuleToEnrol) {
@@ -656,8 +659,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     private static class CycleSelectionLinkController extends HtmlActionLinkController {
 	/**
-	 * 
-	 */
+         * 
+         */
 	private static final long serialVersionUID = -5469571160954095720L;
 
 	private CycleType cycleTypeToEnrol;
