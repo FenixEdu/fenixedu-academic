@@ -19,7 +19,7 @@
     <h3 class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsToEnrol" bundle="STUDENT_RESOURCES"/></strong></h3>
     <logic:empty name="registrationsToEnrol">
     	<p class="indent1">
-	    	<em class="warning0">
+	    	<em>
 		    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.noRegistrationsToEnrol"/>
 	    	</em>
     	</p>
@@ -40,9 +40,9 @@
     <logic:empty name="registrationsToChooseSecondCycle">
 	    <h3 class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsToChooseSecondCycle" bundle="STUDENT_RESOURCES"/></strong></h3>
     	<p class="indent1">
-	    	<em class="warning0">
+	    	<em>
 		    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.noRegistrationsToChooseSecondCycle"/>
-	    	</em>
+	    	</em>	    	
     	</p>
     </logic:empty>
 	<logic:notEmpty name="registrationsToChooseSecondCycle">
@@ -58,6 +58,17 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
+	<br/>
+	<logic:empty name="registrationsToEnrol">
+		<logic:empty name="registrationsToChooseSecondCycle">
+		<p>
+    		<em class="warning0">
+		    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.secondCycleInternalCandidacyIngression.note"/>
+	    	</em>	    	
+    	</p>
+    	</logic:empty>
+	</logic:empty>	
     
 </logic:present>
 
