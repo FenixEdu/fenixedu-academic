@@ -886,3 +886,11 @@ padding: 4px;
 	border-top: 1px dotted #999;
 }
 
+/* homepage departamentos - eventos  */
+.event_soon {
+background: #ccc;
+color: #fff;
+padding: 0 2px;
+font-weight: normal;
+font-size: 0.8em;
+}

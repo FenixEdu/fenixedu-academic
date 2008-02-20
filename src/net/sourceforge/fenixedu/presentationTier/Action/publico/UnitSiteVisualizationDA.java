@@ -30,6 +30,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
+import org.joda.time.YearMonthDay;
 
 public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
@@ -38,7 +39,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     public static final MultiLanguageString ANNOUNCEMENTS_NAME = MultiLanguageString.i18n().add("pt", "Anúncios").finish();
 
     public static final MultiLanguageString EVENTS_NAME = MultiLanguageString.i18n().add("pt", "Eventos").finish();
-  
+
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -95,9 +96,20 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	}
 
 	if (eventsBoard != null) {
-	    List<Announcement> announcements = eventsBoard.getActiveAnnouncements();
-	    announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER));
-	    request.setAttribute("eventAnnouncements", announcements);
+	    request.setAttribute("announcementBoard",eventsBoard);
+	    
+	    List<Announcement> currentDayAnnouncements = eventsBoard.getActiveAnnouncementsFor(new YearMonthDay());
+	    List<Announcement> futureAnnouncements = eventsBoard.getActiveAnnouncementsAfter(new YearMonthDay());
+
+	    request.setAttribute("today-events", currentDayAnnouncements);
+	    request.setAttribute("future-events", futureAnnouncements);
+
+	    int eventCount = currentDayAnnouncements.size() + futureAnnouncements.size(); 
+	    if (eventCount < ANNOUNCEMENTS_NUMBER) {
+		List<Announcement> announcements = eventsBoard.getActiveAnnouncements();
+		announcements = announcements.subList(0, Math.min(announcements.size(), ANNOUNCEMENTS_NUMBER - eventCount));
+		request.setAttribute("eventAnnouncements", announcements);
+	    }
 	}
 
 	return mapping.findForward("frontPage-" + site.getLayout());
@@ -113,7 +125,8 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	Unit unit = (Unit) request.getAttribute("unit");
 
 	if (unit == null) {
-	    FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+	    FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext
+		    .getCurrentContext(request);
 	    UnitSite site = (UnitSite) context.getSelectedContainer();
 	    unit = site.getUnit();
 	}

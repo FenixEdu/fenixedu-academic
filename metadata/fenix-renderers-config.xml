@@ -223,7 +223,10 @@ Documentation:
 			<property name="placeSeparator" value=" / "/>
 			<property name="authorShown" value="false"/>
 			<property name="authorLabel" value="label.messaging.author"/>
-			<property name="dateFormat" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>						
+			<property name="dateFormat" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
+			<property name="soonMarkerInDays" value="6"/>
+			<property name="soonMarkerClasses" value="event_soon"/>
+			<property name="soonMarkerLabel" value="label.events.soon"/>
 	</renderer>
 	
 	

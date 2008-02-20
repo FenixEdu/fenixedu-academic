@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -9,6 +11,7 @@ import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.Face;
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
@@ -31,6 +34,25 @@ public class AnnouncementRenderer extends OutputRenderer {
     private String dateClasses;
     private String contentClasses;
     private String authorClasses;
+    private int soonMarkerInDays;
+    private String soonMarkerClasses;
+    private String soonMarkerLabel;
+    
+    public String getSoonMarkerClasses() {
+        return soonMarkerClasses;
+    }
+
+    public void setSoonMarkerClasses(String soonMarkerClasses) {
+        this.soonMarkerClasses = soonMarkerClasses;
+    }
+
+    public int getSoonMarkerInDays() {
+        return soonMarkerInDays;
+    }
+
+    public void setSoonMarkerInDays(int soonMarkerInDays) {
+        this.soonMarkerInDays = soonMarkerInDays;
+    }
 
     public String getSubjectClasses() {
 	return subjectClasses;
@@ -209,10 +231,25 @@ public class AnnouncementRenderer extends OutputRenderer {
 	}
 
 	private HtmlComponent getSubject() {
+	    HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
 	    HtmlText subject = new HtmlText(announcement.getSubject().getContent());
 	    subject.setClasses(getSubjectClasses());
 	    subject.setFace(Face.H3);
-	    return subject;
+	    inlineContainer.addChild(subject);
+	    if(needsMarker()) {
+		HtmlText soonMarker = new HtmlText(RenderUtils.getResourceString(getBundle(), getSoonMarkerLabel()));
+		soonMarker.setClasses(getSoonMarkerClasses());
+		inlineContainer.addChild(soonMarker);
+	    }
+	    return inlineContainer;
+	}
+
+	private boolean needsMarker() {
+	    DateTime date = announcement.getReferedSubjectBegin();
+	    YearMonthDay begin = date != null ? date.toYearMonthDay() : null;
+	    YearMonthDay currentDay = new YearMonthDay();
+	    YearMonthDay useMarkerStartDay = begin != null ? begin.minusDays(getSoonMarkerInDays()) : null ;
+	    return begin != null && (currentDay.equals(useMarkerStartDay) || (currentDay.isAfter(useMarkerStartDay) && currentDay.isBefore(begin)));   
 	}
 
 	private boolean isCurrentAnnouncentAnEvent() {
@@ -243,6 +280,14 @@ public class AnnouncementRenderer extends OutputRenderer {
 
     public void setInLabel(String inLabel) {
         this.inLabel = inLabel;
+    }
+
+    public String getSoonMarkerLabel() {
+        return soonMarkerLabel;
+    }
+
+    public void setSoonMarkerLabel(String soonMarkerLabel) {
+        this.soonMarkerLabel = soonMarkerLabel;
     }
 
 }
