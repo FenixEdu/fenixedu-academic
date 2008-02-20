@@ -73,13 +73,13 @@ public class PersonUnitFunctionsTreeRenderer extends AbstractUnitFunctionsTreeRe
 		
 		YearMonthDay today = new YearMonthDay();
 		
+		if (personFunction.belongsToPeriod(today, null)) {
+		    return createLinkSequence(getEditPersonFunctionLink(), getDeletePersonFunctionLink());
+		}
+
 		if (personFunction.isActive(today)) {
 			return createLinkSequence(getEditPersonFunctionLink());
 		} 
-		
-		if (personFunction.belongsToPeriod(today, null)) {
-			return createLinkSequence(getEditPersonFunctionLink(), getDeletePersonFunctionLink());
-		}
 		
 		if (isFirstInactive(personFunction)) {
 			return createLinkSequence(getEditPersonFunctionLink());
