@@ -710,8 +710,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    protected final boolean isConcluded(ExecutionYear executionYear) {
-	return isAproved(executionYear);
+    protected final ConclusionValue isConcluded(ExecutionYear executionYear) {
+	return ConclusionValue.create(isAproved(executionYear));
     }
 
     @Override

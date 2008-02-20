@@ -217,7 +217,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     
     @Override
     public boolean hasConcluded(final DegreeModule degreeModule, final ExecutionYear executionYear) {
-	return getDegreeModule() == degreeModule && isConcluded(executionYear);
+	return getDegreeModule() == degreeModule && isConcluded(executionYear).value();
     }
 
     abstract public boolean isApproved();

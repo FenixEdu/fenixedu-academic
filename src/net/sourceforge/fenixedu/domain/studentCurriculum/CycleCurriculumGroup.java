@@ -168,8 +168,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     @Override
-    protected boolean isConcluded(final ExecutionYear executionYear) {
-	return hasFinalAverage() || super.isConcluded(executionYear);
+    protected ConclusionValue isConcluded(final ExecutionYear executionYear) {
+	return hasFinalAverage() ? ConclusionValue.CONCLUDED : super.isConcluded(executionYear);
     }
 
     final public BigDecimal getAverage() {
@@ -233,7 +233,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 		throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
 	    }
 	} else {
-	    final CycleType cycleType = getCycleType();
 
 	}
     }

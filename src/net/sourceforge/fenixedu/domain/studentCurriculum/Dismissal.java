@@ -236,14 +236,14 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    protected boolean isConcluded(final ExecutionYear executionYear) {
-	return executionYear == null || !hasExecutionPeriod()
-		|| getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
+    protected ConclusionValue isConcluded(final ExecutionYear executionYear) {
+	return ConclusionValue.create(executionYear == null || !hasExecutionPeriod()
+		|| getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear));
     }
 
     @Override
     public Double getCreditsConcluded(ExecutionYear executionYear) {
-	return isConcluded(executionYear) && !getCredits().isTemporary() ? getEctsCredits() : Double.valueOf(0d);
+	return isConcluded(executionYear).value() && !getCredits().isTemporary() ? getEctsCredits() : Double.valueOf(0d);
     }
 
     @Override

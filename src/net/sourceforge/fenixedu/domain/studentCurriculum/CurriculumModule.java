@@ -178,7 +178,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
 
     public boolean isConcluded() {
-	return isConcluded(getApprovedCurriculumLinesLastExecutionYear());
+	return isConcluded(getApprovedCurriculumLinesLastExecutionYear()).value();
     }
 
     public ExecutionYear getApprovedCurriculumLinesLastExecutionYear() {
@@ -275,7 +275,7 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 
     abstract public Set<CurriculumLine> getAllCurriculumLines();
 
-    abstract protected boolean isConcluded(ExecutionYear executionYear);
+    abstract protected ConclusionValue isConcluded(ExecutionYear executionYear);
 
     abstract public boolean hasConcluded(DegreeModule degreeModule, ExecutionYear executionYear);
 
@@ -287,4 +287,49 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
 
     abstract public boolean isPropaedeutic();
 
+    /**
+         * This enum represent possible conclusion values when checking
+         * registration processed - UNKNOWN: is used when some group doesn't
+         * have information to calculate it's value, for instance, doesn't have
+         * any curricular rules
+         * 
+         */
+    static protected enum ConclusionValue {
+	CONCLUDED(true) {
+	    @Override
+	    public boolean isNotConcluded() {
+		return false;
+	    }
+	},
+
+	NOT_CONCLUDED(false) {
+	    @Override
+	    public boolean isNotConcluded() {
+		return true;
+	    }
+	},
+
+	UNKNOWN(false) {
+	    @Override
+	    public boolean isNotConcluded() {
+		return false;
+	    }
+	};
+
+	private boolean value;
+
+	private ConclusionValue(final boolean value) {
+	    this.value = value;
+	}
+
+	public boolean value() {
+	    return this.value;
+	}
+
+	abstract public boolean isNotConcluded();
+
+	static public ConclusionValue create(final boolean value) {
+	    return value ? CONCLUDED : NOT_CONCLUDED;
+	}
+    }
 }
