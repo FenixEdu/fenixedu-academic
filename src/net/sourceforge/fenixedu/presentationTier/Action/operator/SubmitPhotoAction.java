@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Map.Entry;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -19,6 +21,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestWrapperFilter;
+import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.struts.action.ActionForm;
@@ -47,16 +51,19 @@ public class SubmitPhotoAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm photoForm = (DynaActionForm) form;
-        FormFile formFile = (FormFile) photoForm.get("theFile");
+        
+        String fileName = (String) photoForm.get("theFile");
         String username = (String) photoForm.get("username");
         ActionMessages actionMessages = new ActionMessages();
 
-        if (formFile == null || (formFile != null && formFile.getFileData().length == 0)) {
+        if (fileName == null || (fileName != null && fileName.length() == 0)) {
             actionMessages.add("fileRequired", new ActionMessage("errors.fileRequired"));
             saveMessages(request, actionMessages);
             return mapping.findForward("chooseFile");
         }
 
+        final UploadedFile formFile = ((Hashtable<String, UploadedFile>) request.getAttribute(RequestWrapperFilter.FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE)).get("theFile");
+        
         ContentType contentType = ContentType.getContentType(formFile.getContentType());
         if(contentType == null){
             actionMessages.add("unsupportedFile", new ActionMessage("errors.unsupportedFile"));
