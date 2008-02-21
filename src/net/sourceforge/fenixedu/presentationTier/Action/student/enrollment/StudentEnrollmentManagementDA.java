@@ -101,7 +101,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	} else {
 	    final CycleCurriculumGroup firstCycle = studentCurricularPlan.getFirstCycle();
 
-	    if (!firstCycle.isConcluded()) {
+	    if (firstCycle == null || !firstCycle.isConcluded()) {
 		request.setAttribute("registration", registration);
 		return mapping.findForward("proceedToEnrolment");
 
