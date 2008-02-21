@@ -37,6 +37,18 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
 	}
     };
+    
+    public static Comparator<RegistrationState> DATE_AND_STATE_TYPE_COMPARATOR = new Comparator<RegistrationState>() {
+	public int compare(RegistrationState leftState, RegistrationState rightState) {
+	    int comparationResult = DATE_COMPARATOR.compare(leftState, rightState);
+	    if (comparationResult != 0) {
+		return comparationResult;
+	    }
+	    comparationResult = leftState.getStateType().compareTo(rightState.getStateType());
+	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
+	}
+    };
+        
 
     public RegistrationState() {
 	super();
