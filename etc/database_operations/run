@@ -29,3 +29,4 @@ function executeWithTempFile() {
 }
 
 
+execute "A Mudar o nome em ingles do DEI... Depois do deploy apaguem este script sff" updateDEIenName.sql
