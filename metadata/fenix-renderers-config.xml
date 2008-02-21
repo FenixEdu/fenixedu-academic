@@ -1071,4 +1071,6 @@ Documentation:
 <!--	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="candidacy-period-link" class="net.sourceforge.fenixedu.presentationTier.renderers.CandidacyPeriodLinkRenderer"/>-->
 	
 	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="delegate-election-period" class="net.sourceforge.fenixedu.presentationTier.renderers.DelegateElectionPeriodRenderer" />
+	
+	<renderer type="java.lang.String" layout="slot-as-label" class="net.sourceforge.fenixedu.renderers.SlotAsLabelRenderer"/>
 </renderers-config>

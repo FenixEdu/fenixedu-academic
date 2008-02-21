@@ -2566,6 +2566,16 @@
 			input="/manageRegistrationState.do?method=prepare">
 	        	<forward name="showRegistrationStates" path="student.showRegistrationStates"/>
 	    </action>
+	    
+		<!-- Enrolment Logs -->
+		<action path="/enrolmentLogs"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments.EnrolmentlLogsDA"
+	        parameter="method"
+			scope="request"
+			validate="true">
+	        <forward name="searchEnrolmentLogs" path="enrolmentLogs.searchEnrolmentLogs"/>
+	    </action>
+	    
 
 	</action-mappings>
     

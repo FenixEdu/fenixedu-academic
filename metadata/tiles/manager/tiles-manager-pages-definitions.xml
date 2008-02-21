@@ -1108,5 +1108,10 @@
 	<definition name="student.showRegistrationStates" extends="definition.manager.masterPage">
         <put name="body" value="/manager/registration/manageRegistrationState.jsp"></put>
     </definition>
+
+	<definition name="enrolmentLogs.searchEnrolmentLogs" extends="definition.manager.masterPage">
+        <put name="body" value="/manager/viewEnrolmentLogs.jsp"></put>
+    </definition>
+
 	
 </tiles-definitions>

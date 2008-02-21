@@ -60,6 +60,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
@@ -611,7 +612,8 @@ public class Registration extends Registration_Base {
     @Override
     public Integer getFinalAverage() {
 	if (isBolonha()) {
-	    final List<CycleCurriculumGroup> internalCycleCurriculumGrops = getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
+	    final List<CycleCurriculumGroup> internalCycleCurriculumGrops = getLastStudentCurricularPlan()
+		    .getInternalCycleCurriculumGrops();
 	    if (internalCycleCurriculumGrops.size() == 1) {
 		return internalCycleCurriculumGrops.iterator().next().getFinalAverage();
 	    } else {
@@ -775,49 +777,49 @@ public class Registration extends Registration_Base {
 
     final public Collection<Enrolment> getExtraCurricularEnrolments() {
 	final Collection<Enrolment> result = new HashSet<Enrolment>();
-	
+
 	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan())
 		: getStudentCurricularPlansSet());
 	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
 	    result.addAll(studentCurricularPlan.getExtraCurricularEnrolments());
 	}
-	
+
 	return result;
     }
 
     final public Collection<CurriculumLine> getExtraCurricularCurriculumLines() {
 	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
-	
+
 	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan())
 		: getStudentCurricularPlansSet());
 	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
 	    result.addAll(studentCurricularPlan.getExtraCurricularCurriculumLines());
 	}
-	
+
 	return result;
     }
 
     final public Collection<Enrolment> getPropaedeuticEnrolments() {
 	final Collection<Enrolment> result = new HashSet<Enrolment>();
-	
+
 	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan())
 		: getStudentCurricularPlansSet());
 	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
 	    result.addAll(studentCurricularPlan.getPropaedeuticEnrolments());
 	}
-	
+
 	return result;
     }
 
     final public Collection<CurriculumLine> getPropaedeuticCurriculumLines() {
 	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
-	
+
 	final Collection<StudentCurricularPlan> toInspect = (isBolonha() ? Collections.singleton(getLastStudentCurricularPlan())
 		: getStudentCurricularPlansSet());
 	for (final StudentCurricularPlan studentCurricularPlan : toInspect) {
 	    result.addAll(studentCurricularPlan.getPropaedeuticCurriculumLines());
 	}
-	
+
 	return result;
     }
 
@@ -945,32 +947,32 @@ public class Registration extends Registration_Base {
 	result.addAll(getEnrolmentsExecutionYears());
 	return result;
     }
-    
+
     public Set<ExecutionYear> getAllRelatedRegistrationsEnrolmentsExecutionYears(Set<ExecutionYear> result) {
-	if(result == null){
+	if (result == null) {
 	    result = new HashSet<ExecutionYear>();
 	}
 	result.addAll(getEnrolmentsExecutionYears());
 
-	if(this.isBolonha()){
+	if (this.isBolonha()) {
 	    Registration source = hasSourceRegistration() ? getSourceRegistration() : getSourceRegistrationForTransition();
-	    if(source != null){
+	    if (source != null) {
 		source.getAllRelatedRegistrationsEnrolmentsExecutionYears(result);
 	    }
-	    
-	}else{
+
+	} else {
 	    List<Registration> registrations = getStudent().getRegistrations();
 	    for (Registration registration : registrations) {
-		if(registration != this && !registration.isBolonha()){
-		    if(registration.isConcluded()){
+		if (registration != this && !registration.isBolonha()) {
+		    if (registration.isConcluded()) {
 			System.out.println("SHIT!! :: " + registration.getNumber());
-		    }else{
+		    } else {
 			result.addAll(registration.getEnrolmentsExecutionYears());
 		    }
 		}
 	    }
 	}
-	
+
 	return result;
     }
 
@@ -985,7 +987,7 @@ public class Registration extends Registration_Base {
 	}
 	return result;
     }
-    
+
     public SortedSet<ExecutionYear> getSortedCurriculumLinesExecutionYears() {
 	final SortedSet<ExecutionYear> result = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
 	result.addAll(getCurriculumLinesExecutionYears());
@@ -1666,7 +1668,7 @@ public class Registration extends Registration_Base {
     final public void setEntryPhase(EntryPhase entryPhase) {
 	if (hasStudentCandidacy()) {
 	    getStudentCandidacy().setEntryPhase(entryPhase);
-	} else if(entryPhase != null) {
+	} else if (entryPhase != null) {
 	    throw new DomainException("error.registration.withou.student.candidacy");
 	}
     }
@@ -1697,7 +1699,7 @@ public class Registration extends Registration_Base {
 		checkIngression(Ingression.valueOf(ingression));
 	    }
 	    getStudentCandidacy().setIngression(ingression);
-	} else if(!StringUtils.isEmpty(ingression)){
+	} else if (!StringUtils.isEmpty(ingression)) {
 	    throw new DomainException("error.registration.withou.student.candidacy");
 	}
 
@@ -2036,7 +2038,7 @@ public class Registration extends Registration_Base {
     public String getConclusionProcessResponsibleIstUsername() {
 	return hasConclusionProcessResponsible() ? getConclusionProcessResponsible().getIstUsername() : null;
     }
-    
+
     public boolean isRegistrationConclusionProcessed() {
 	if (getDegreeType().isBolonhaType()) {
 	    return getLastStudentCurricularPlan().isConclusionProcessed();
@@ -2099,9 +2101,9 @@ public class Registration extends Registration_Base {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.cannot.modify.responsibleForConclusionProcess");
 	}
-        super.setConclusionProcessResponsible(responsibleForConclusionProcess);
+	super.setConclusionProcessResponsible(responsibleForConclusionProcess);
     }
-    
+
     public YearMonthDay calculateConclusionDate() {
 	return getLastStudentCurricularPlan().getLastApprovementDate();
     }
@@ -2236,7 +2238,7 @@ public class Registration extends Registration_Base {
 	super.setFinalAverage(calculateFinalAverage());
 	super.setConclusionDate(calculateConclusionDate());
 	super.setConclusionProcessResponsible(AccessControl.getPerson());
-	
+
 	RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
     }
 
@@ -2812,7 +2814,7 @@ public class Registration extends Registration_Base {
 	RegistrationState.createState(this, person, when, RegistrationStateType.TRANSITED);
 
 	for (final Registration registration : getTargetTransitionRegistrations()) {
-	    
+
 	    if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
 		RegistrationState.createState(registration, person, when,
 			registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
@@ -2924,10 +2926,19 @@ public class Registration extends Registration_Base {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.cannot.remove.concluded.information.in.registration.for.bolonha");
 	}
-	
+
 	super.setFinalAverage(null);
 	super.setConclusionDate(null);
 	super.setConclusionProcessResponsible(null);
     }
 
+    public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionPeriod executionPeriod) {
+	final Collection<EnrolmentLog> res = new HashSet<EnrolmentLog>();
+	for (EnrolmentLog enrolmentLog : getEnrolmentLogsSet()) {
+	    if (enrolmentLog.getExecutionPeriod() == executionPeriod) {
+		res.add(enrolmentLog);
+	    }
+	}
+	return res;
+    }
 }

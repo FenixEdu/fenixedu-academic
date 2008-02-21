@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
+import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -1025,6 +1026,14 @@ public class Student extends Student_Base {
 	    throw new DomainExceptionWithInvocationResult(result);
 	}
 
+    }
+
+    public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionPeriod executionPeriod) {
+	Collection<EnrolmentLog> res = new HashSet<EnrolmentLog>();
+	for (Registration registration : getRegistrationsSet()) {
+	    res.addAll(registration.getEnrolmentLogsByPeriod(executionPeriod));
+	}
+	return res;
     }
 
 }
