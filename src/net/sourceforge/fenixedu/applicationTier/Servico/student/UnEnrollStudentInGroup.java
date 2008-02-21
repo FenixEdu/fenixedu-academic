@@ -91,7 +91,7 @@ public class UnEnrollStudentInGroup extends Service {
                 new ArrayList(),
                 new ArrayList(), 
                 messages.getMessage("message.body.grouping.change.unenrolment", 
-                registration.getNumber().toString(), studentGroup.getGroupNumber().toString()));
+                registration.getNumber().toString(), studentGroup.getGroupNumber().toString(), attend.getExecutionCourse().getNome()));
 
         return Boolean.TRUE;
     }
