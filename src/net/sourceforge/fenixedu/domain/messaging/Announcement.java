@@ -18,6 +18,26 @@ public class Announcement extends Announcement_Base {
 	}
     };
 
+    public static final Comparator<Announcement> SUBJECT_BEGIN_DATE = new Comparator<Announcement>() {
+
+	public int compare(Announcement o1, Announcement o2) {
+	    DateTime referedSubjectBegin = o1.getReferedSubjectBegin();
+	    DateTime referedSubjectBegin2 = o2.getReferedSubjectBegin();
+	    if(referedSubjectBegin != null && referedSubjectBegin2 != null) {
+		return referedSubjectBegin.compareTo(referedSubjectBegin2);
+	    }else {
+		if(referedSubjectBegin == null && referedSubjectBegin2 == null) {
+		    return 0;
+		}
+		else {
+		  return referedSubjectBegin == null ? -1 : 1; 
+		}
+	    }
+	    
+	}
+	
+    };
+    
     private DateTime getBeginComparationDate() {
 	final DateTime publicationBegin = getPublicationBegin();
 	return publicationBegin != null ? publicationBegin : getCreationDate();

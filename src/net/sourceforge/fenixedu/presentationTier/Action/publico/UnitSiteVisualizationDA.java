@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.net.MalformedURLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -101,6 +102,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 	    List<Announcement> currentDayAnnouncements = eventsBoard.getActiveAnnouncementsFor(new YearMonthDay());
 	    List<Announcement> futureAnnouncements = eventsBoard.getActiveAnnouncementsAfter(new YearMonthDay());
 
+	    Collections.sort(futureAnnouncements, Announcement.SUBJECT_BEGIN_DATE);
 	    request.setAttribute("today-events", currentDayAnnouncements);
 	    request.setAttribute("future-events", futureAnnouncements);
 
