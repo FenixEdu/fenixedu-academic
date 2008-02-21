@@ -258,6 +258,7 @@ padding: 0.5em;
 }
 td.personInfo_info {
 padding-left: 0.5em;
+padding-right: 4em;
 }
 
 table.personInfo2 tr {
@@ -894,3 +895,27 @@ padding: 0 2px;
 font-weight: normal;
 font-size: 0.8em;
 }
+
+
+
+body h2:target { display: block; background: none; }
+body h2:target span { background-color: #FCFFBA; }
+
+.separator1 {
+padding-bottom: 0.2em;
+/*background: #efa;*/
+position: relative;
+width: 99%;
+}
+.separator1 span {
+margin: 0;
+padding:0;
+}
+.separator1 a {
+font-size: 0.85em;
+font-weight: normal;
+position: absolute;
+right: 5px;
+}
+.notarget:target { background: none; }
+#logoist:target { background: none; }
