@@ -70,7 +70,7 @@
 
 		<!-- research unit -->
 		<logic:equal name="homepage" property="showResearchUnitHomepage" value="true">
-		<%-- <logic:empty name="homepage" property="person.workingResearchUnits"> --%>
+		<logic:empty name="homepage" property="person.workingResearchUnits"> 
 			<logic:present name="homepage" property="person.teacher">
 				<logic:present name="homepage" property="person.employee.currentWorkingContract">
 					<logic:present name="homepage" property="researchUnitHomepage">
@@ -105,7 +105,7 @@
 					</logic:present>
 				</logic:present>
 			</logic:present>
-		<%-- </logic:empty>
+		 </logic:empty>
 		<logic:notEmpty name="homepage" property="person.workingResearchUnits">
 			<tr>
 				<th><bean:message key="label.homepage.showResearchUnitHomepage" bundle="HOMEPAGE_RESOURCES"/>:</th>
@@ -138,7 +138,6 @@
 				</logic:iterate>
 			</tr>
 		</logic:notEmpty>
-		--%>
 		</logic:equal>
 
 
