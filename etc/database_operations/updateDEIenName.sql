@@ -1,1 +1,0 @@
-update DEPARTMENT set REAL_NAME_EN="Department of Computer Science and Engineering (DEI)" where ID_INTERNAL=9;
