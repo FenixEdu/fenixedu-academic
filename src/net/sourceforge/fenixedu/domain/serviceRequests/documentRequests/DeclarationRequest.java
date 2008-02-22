@@ -14,12 +14,12 @@ import org.joda.time.DateTime;
 public abstract class DeclarationRequest extends DeclarationRequest_Base {
 
     private static final int MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR = 4;
-    
+
     protected DeclarationRequest() {
 	super();
 	super.setNumberOfPages(0);
     }
-    
+
     protected void init(Registration registration, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 	init(registration, null, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);
@@ -35,18 +35,15 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
     }
 
-    static final protected DeclarationRequest create(Registration registration,
-	    DocumentRequestType chosenDocumentRequestType,
-	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose,
-	    Boolean average, Boolean detailed, Integer year, Boolean freeProcessed) {
+    static final protected DeclarationRequest create(Registration registration, DocumentRequestType chosenDocumentRequestType,
+	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, Boolean average, Boolean detailed, Integer year,
+	    Boolean freeProcessed) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_DECLARATION:
-	    return new SchoolRegistrationDeclarationRequest(registration, chosenDocumentPurposeType,
-		    otherPurpose, freeProcessed);
+	    return new SchoolRegistrationDeclarationRequest(registration, chosenDocumentPurposeType, otherPurpose, freeProcessed);
 	case ENROLMENT_DECLARATION:
-	    return new EnrolmentDeclarationRequest(registration, chosenDocumentPurposeType,
-		    otherPurpose, freeProcessed);
+	    return new EnrolmentDeclarationRequest(registration, chosenDocumentPurposeType, otherPurpose, freeProcessed);
 	case IRS_DECLARATION:
 	    return new IRSDeclarationRequest(registration, chosenDocumentPurposeType, otherPurpose, year, freeProcessed);
 	}
@@ -56,8 +53,7 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 
     @Override
     final public void setDocumentPurposeType(DocumentPurposeType documentPurposeType) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.documentPurposeType");
+	throw new DomainException("error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.documentPurposeType");
     }
 
     @Override
@@ -70,13 +66,13 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     final public Boolean getUrgentRequest() {
 	return Boolean.FALSE;
     }
-    
+
     final public void edit(final DocumentRequestBean documentRequestBean) {
-	
+
 	if (isPayable() && isPayed() && !getNumberOfPages().equals(documentRequestBean.getNumberOfPages())) {
 	    throw new DomainException("error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
 	}
-	
+
 	super.edit(documentRequestBean);
 	super.setNumberOfPages(documentRequestBean.getNumberOfPages());
     }
@@ -96,9 +92,8 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	}
     }
 
-
     /**
-     * Important: Notice that this method's return value may not be the same 
+     * Important: Notice that this method's return value may not be the same
      * before and after conclusion of the academic service request.
      */
     @Override
@@ -120,16 +115,16 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 
     @Override
     public boolean isPagedDocument() {
-        return true;
+	return true;
     }
-    
+
     @Override
     public boolean isToPrint() {
-        return true;
+	return true;
     }
-    
+
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-        return false;
+	return false;
     }
 }

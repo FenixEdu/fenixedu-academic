@@ -7,16 +7,15 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.joda.time.YearMonthDay;
 
 public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
-    
+
     static final private int FIRST_VALID_YEAR = 2006;
-    
+
     private IRSDeclarationRequest() {
-        super();
+	super();
     }
 
-    public IRSDeclarationRequest(Registration registration,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Integer year, Boolean freeProcessed) {
+    public IRSDeclarationRequest(Registration registration, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Integer year, Boolean freeProcessed) {
 
 	this();
 	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, year, freeProcessed);
@@ -30,11 +29,11 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
 	if (!registration.isActive()) {
 	    throw new DomainException("IRSDeclarationRequest.registration.is.not.active");
 	}
-	
+
 	if (!registration.isBolonha()) {
 	    throw new DomainException("IRSDeclarationRequest.only.available.for.bolonha.registrations");
 	}
-	
+
 	checkParameters(year);
 	super.setYear(year);
     }
@@ -42,13 +41,13 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
     private void checkParameters(Integer year) {
 	if (year == null) {
 	    throw new DomainException(
-	    "error.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest.year.cannot.be.null");
+		    "error.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest.year.cannot.be.null");
 	}
 
 	if (new YearMonthDay(year, 1, 1).isBefore(new YearMonthDay(FIRST_VALID_YEAR, 1, 1))) {
 	    throw new DomainException("IRSDeclarationRequest.only.available.after.first.valid.year");
 	}
-	
+
     }
 
     @Override
@@ -60,11 +59,10 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
     final public String getDocumentTemplateKey() {
 	return getClass().getName();
     }
-    
+
     @Override
     final public void setYear(Integer year) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.IRSDeclarationRequest.cannot.modify.year");
+	throw new DomainException("error.serviceRequests.documentRequests.IRSDeclarationRequest.cannot.modify.year");
     }
 
     @Override

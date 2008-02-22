@@ -39,7 +39,7 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
     @Override
     public String getDocumentTemplateKey() {
 	// this request does not need a document template key, because no
-        // document will be printed
+	// document will be printed
 	return null;
     }
 
@@ -73,9 +73,9 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
     public boolean isToPrint() {
 	return false;
     }
-    
+
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-        return false;
+	return false;
     }
 }

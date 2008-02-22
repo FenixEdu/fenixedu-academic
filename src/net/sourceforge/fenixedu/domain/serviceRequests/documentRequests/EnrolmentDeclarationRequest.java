@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Base {
-    
+
     private EnrolmentDeclarationRequest() {
-        super();
+	super();
     }
 
-    public EnrolmentDeclarationRequest(Registration registration,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
+    public EnrolmentDeclarationRequest(Registration registration, DocumentPurposeType documentPurposeType,
+	    String otherDocumentPurposeTypeDescription, Boolean freeProcessed) {
 
 	this();
 	init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, freeProcessed);

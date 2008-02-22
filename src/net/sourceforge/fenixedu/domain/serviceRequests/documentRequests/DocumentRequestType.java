@@ -27,11 +27,11 @@ public enum DocumentRequestType {
 
     PHOTOCOPY(false, false),
 
-    COURSE_LOAD(true, false/* , AdministrativeOfficeType.DEGREE*/),
+    COURSE_LOAD(true, false/* , AdministrativeOfficeType.DEGREE */),
 
     EXAM_DATE_CERTIFICATE(true, false/* ,AdministrativeOfficeType.DEGREE */),
 
-    PROGRAM_CERTIFICATE(true, false/* , AdministrativeOfficeType.DEGREE*/);
+    PROGRAM_CERTIFICATE(true, false/* , AdministrativeOfficeType.DEGREE */);
 
     private boolean hasAdditionalInformation;
 

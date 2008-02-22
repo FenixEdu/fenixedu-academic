@@ -14,8 +14,8 @@ public enum AcademicServiceRequestType {
 
     FREE_SOLICITATION_ACADEMIC_REQUEST,
 
-    EXTRA_EXAM_REQUEST, 
-    
+    EXTRA_EXAM_REQUEST,
+
     PHOTOCOPY_REQUEST;
 
     public String getName() {

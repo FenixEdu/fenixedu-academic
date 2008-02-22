@@ -4,14 +4,14 @@ public enum DocumentPurposeType {
     FAMILY_ALLOWANCE, PUBLIC_TRANSPORTS, MILITARY, PROFESSIONAL, PPRE, STUDY_SCHOLARSHIP, OTHER;
 
     public String getName() {
-        return name();
+	return name();
     }
 
     public String getQualifiedName() {
-        return DocumentPurposeType.class.getSimpleName() + "." + name();
+	return DocumentPurposeType.class.getSimpleName() + "." + name();
     }
 
     public String getFullyQualifiedName() {
-        return DocumentPurposeType.class.getName() + "." + name();
+	return DocumentPurposeType.class.getName() + "." + name();
     }
 }
