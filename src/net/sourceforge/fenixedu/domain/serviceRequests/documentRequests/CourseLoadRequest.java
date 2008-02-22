@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.DateTime;
+
 public class CourseLoadRequest extends CourseLoadRequest_Base {
 
     protected CourseLoadRequest() {
@@ -15,11 +17,12 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 	setNumberOfPages(0);
     }
 
-    public CourseLoadRequest(final Registration registration, final ExecutionYear executionYear,
+    public CourseLoadRequest(final Registration registration, DateTime requestDate, final ExecutionYear executionYear,
 	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
 	    final Collection<Enrolment> enrolments, final Boolean urgentRequest) {
 	this();
-	super.init(registration, executionYear, Boolean.FALSE, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	super.init(registration, requestDate, executionYear, Boolean.FALSE, documentPurposeType,
+		otherDocumentPurposeTypeDescription, urgentRequest);
 	checkParameters(enrolments);
 	super.getEnrolments().addAll(enrolments);
     }
@@ -31,7 +34,7 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 	    }
 	}
     }
-    
+
     @Override
     public Integer getNumberOfUnits() {
 	return Integer.valueOf(0);
@@ -51,10 +54,10 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
     public EventType getEventType() {
 	return EventType.COURSE_LOAD_REQUEST;
     }
-    
+
     @Override
     public void delete() {
 	getEnrolments().clear();
-        super.delete();
+	super.delete();
     }
 }

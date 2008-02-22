@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
@@ -27,22 +28,23 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super();
     }
 
-    public DegreeFinalizationCertificateRequest(final Registration registration, final DocumentPurposeType documentPurposeType,
-	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest, final Boolean average,
-	    final Boolean detailed, MobilityProgram mobilityProgram, final CycleType requestedCyle, final Boolean freeProcessed,
-	    final Boolean internship, Boolean studyPlan) {
+    public DegreeFinalizationCertificateRequest(final Registration registration, DateTime requestDate,
+	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
+	    final Boolean urgentRequest, final Boolean average, final Boolean detailed, MobilityProgram mobilityProgram,
+	    final CycleType requestedCyle, final Boolean freeProcessed, final Boolean internship, Boolean studyPlan) {
 	this();
 
-	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, average, detailed,
-		mobilityProgram, requestedCyle, freeProcessed, internship, studyPlan);
+	this.init(registration, requestDate, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, average,
+		detailed, mobilityProgram, requestedCyle, freeProcessed, internship, studyPlan);
     }
 
-    final protected void init(final Registration registration, final DocumentPurposeType documentPurposeType,
-	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest, final Boolean average,
-	    final Boolean detailed, final MobilityProgram mobilityProgram, final CycleType requestedCycle,
-	    final Boolean freeProcessed, final Boolean internship, Boolean studyPlan) {
+    final protected void init(final Registration registration, DateTime requestDate,
+	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
+	    final Boolean urgentRequest, final Boolean average, final Boolean detailed, final MobilityProgram mobilityProgram,
+	    final CycleType requestedCycle, final Boolean freeProcessed, final Boolean internship, Boolean studyPlan) {
 
-	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, freeProcessed);
+	super.init(registration, requestDate, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
+		freeProcessed);
 
 	this.checkParameters(average, detailed, mobilityProgram, requestedCycle, internship, studyPlan);
 	super.setAverage(average);

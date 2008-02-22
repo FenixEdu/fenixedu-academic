@@ -9,28 +9,30 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.DateTime;
+
 public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base {
 
     protected ExamDateCertificateRequest() {
 	super();
     }
 
-    public ExamDateCertificateRequest(Registration registration, DocumentPurposeType documentPurposeType,
+    public ExamDateCertificateRequest(Registration registration, DateTime requestDate, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, ExecutionYear executionYear,
 	    Collection<Enrolment> enrolments, ExecutionPeriod executionPeriod) {
 
 	this();
-	init(registration, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, enrolments,
-		executionPeriod);
+	init(registration, requestDate, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
+		enrolments, executionPeriod);
     }
 
-    protected void init(Registration registration, ExecutionYear executionYear, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Collection<Enrolment> enrolments,
-	    ExecutionPeriod executionPeriod) {
+    protected void init(Registration registration, DateTime requestDate, ExecutionYear executionYear,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
+	    Collection<Enrolment> enrolments, ExecutionPeriod executionPeriod) {
 
 	checkParameters(executionYear, enrolments, executionPeriod);
-	super.init(registration, executionYear, Boolean.FALSE, documentPurposeType, otherDocumentPurposeTypeDescription,
-		urgentRequest);
+	super.init(registration, requestDate, executionYear, Boolean.FALSE, documentPurposeType,
+		otherDocumentPurposeTypeDescription, urgentRequest);
 	super.getEnrolments().addAll(enrolments);
 	super.setExecutionPeriod(executionPeriod);
 

@@ -8,24 +8,29 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.DateTime;
+
 public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Base {
 
     private EnrolmentCertificateRequest() {
 	super();
     }
 
-    public EnrolmentCertificateRequest(Registration registration, DocumentPurposeType documentPurposeType,
+    public EnrolmentCertificateRequest(Registration registration, DateTime requestDate, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed, ExecutionYear executionYear) {
 
 	this();
-	init(registration, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, detailed);
+	init(registration, requestDate, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
+		detailed);
     }
 
-    protected void init(Registration registration, ExecutionYear executionYear, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean detailed) {
+    protected void init(Registration registration, DateTime requestDate, ExecutionYear executionYear,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
+	    Boolean detailed) {
 
 	checkParameters(registration, detailed, executionYear);
-	super.init(registration, executionYear, Boolean.FALSE, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	super.init(registration, requestDate, executionYear, Boolean.FALSE, documentPurposeType,
+		otherDocumentPurposeTypeDescription, urgentRequest);
 	super.setDetailed(detailed);
     }
 
@@ -37,10 +42,9 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	if (executionYear == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.EnrolmentCertificateRequest.executionYear.cannot.be.null");
-	    
+
 	} else if (!registration.hasAnyEnrolmentsIn(executionYear)) {
-	    throw new DomainException(
-		    "EnrolmentCertificateRequest.no.enrolments.for.registration.in.given.executionYear");
+	    throw new DomainException("EnrolmentCertificateRequest.no.enrolments.for.registration.in.given.executionYear");
 	}
     }
 
@@ -56,8 +60,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 
     @Override
     final public void setDetailed(Boolean detailed) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.EnrolmentCertificateRequest.cannot.modify.detailed");
+	throw new DomainException("error.serviceRequests.documentRequests.EnrolmentCertificateRequest.cannot.modify.detailed");
     }
 
     @Override
@@ -68,7 +71,7 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     final public Collection<Enrolment> getEnrolmentsToDisplay() {
 	return getRegistration().getLatestCurricularCoursesEnrolments(getExecutionYear());
     }
-    
+
     @Override
     final public Integer getNumberOfUnits() {
 	return getEnrolmentsToDisplay().size();

@@ -22,54 +22,56 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super.setNumberOfPages(0);
     }
 
-    final protected void init(Registration registration, DocumentPurposeType documentPurposeType,
+    final protected void init(Registration registration, DateTime requestDate, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Boolean freeProcessed) {
-	init(registration, null, freeProcessed, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	init(registration, requestDate, null, freeProcessed, documentPurposeType, otherDocumentPurposeTypeDescription,
+		urgentRequest);
     }
 
-    final protected void init(Registration registration, final ExecutionYear executionYear, Boolean freeProcessed,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest) {
+    final protected void init(Registration registration, DateTime requestDate, final ExecutionYear executionYear,
+	    Boolean freeProcessed, DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
+	    Boolean urgentRequest) {
 
-	super.init(registration, executionYear, new DateTime(), urgentRequest, freeProcessed);
+	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
 
 	super.checkParameters(documentPurposeType, otherDocumentPurposeTypeDescription);
 	super.setDocumentPurposeType(documentPurposeType);
 	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
     }
 
-    static final public CertificateRequest create(Registration registration, DocumentRequestType chosenDocumentRequestType,
-	    DocumentPurposeType chosenDocumentPurposeType, String otherPurpose, Boolean urgentRequest, Boolean average,
-	    Boolean detailed, ExecutionYear executionYear, MobilityProgram mobilityProgram, CycleType requestedCycle,
-	    Boolean freeProcessed, Collection<Enrolment> enrolments, ExecutionPeriod executionPeriod, Boolean internship,
-	    Boolean studyPlan) {
+    static final public CertificateRequest create(Registration registration, DateTime requestDate,
+	    DocumentRequestType chosenDocumentRequestType, DocumentPurposeType chosenDocumentPurposeType, String otherPurpose,
+	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear,
+	    MobilityProgram mobilityProgram, CycleType requestedCycle, Boolean freeProcessed, Collection<Enrolment> enrolments,
+	    ExecutionPeriod executionPeriod, Boolean internship, Boolean studyPlan) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
-	    return new SchoolRegistrationCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
-		    executionYear);
+	    return new SchoolRegistrationCertificateRequest(registration, requestDate, chosenDocumentPurposeType, otherPurpose,
+		    urgentRequest, executionYear);
 
 	case ENROLMENT_CERTIFICATE:
-	    return new EnrolmentCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
-		    detailed, executionYear);
+	    return new EnrolmentCertificateRequest(registration, requestDate, chosenDocumentPurposeType, otherPurpose,
+		    urgentRequest, detailed, executionYear);
 
 	case APPROVEMENT_CERTIFICATE:
-	    return new ApprovementCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
-		    mobilityProgram);
+	    return new ApprovementCertificateRequest(registration, requestDate, chosenDocumentPurposeType, otherPurpose,
+		    urgentRequest, mobilityProgram);
 
 	case DEGREE_FINALIZATION_CERTIFICATE:
-	    return new DegreeFinalizationCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
-		    average, detailed, mobilityProgram, requestedCycle, freeProcessed, internship, studyPlan);
+	    return new DegreeFinalizationCertificateRequest(registration, requestDate, chosenDocumentPurposeType, otherPurpose,
+		    urgentRequest, average, detailed, mobilityProgram, requestedCycle, freeProcessed, internship, studyPlan);
 
 	case EXAM_DATE_CERTIFICATE:
-	    return new ExamDateCertificateRequest(registration, chosenDocumentPurposeType, otherPurpose, urgentRequest,
-		    executionYear, enrolments, executionPeriod);
+	    return new ExamDateCertificateRequest(registration, requestDate, chosenDocumentPurposeType, otherPurpose,
+		    urgentRequest, executionYear, enrolments, executionPeriod);
 
 	case COURSE_LOAD:
-	    return new CourseLoadRequest(registration, ExecutionYear.readCurrentExecutionYear(), chosenDocumentPurposeType,
-		    otherPurpose, enrolments, urgentRequest);
+	    return new CourseLoadRequest(registration, requestDate, ExecutionYear.readCurrentExecutionYear(),
+		    chosenDocumentPurposeType, otherPurpose, enrolments, urgentRequest);
 
 	case PROGRAM_CERTIFICATE:
-	    return new ProgramCertificateRequest(registration, ExecutionYear.readCurrentExecutionYear(),
+	    return new ProgramCertificateRequest(registration, requestDate, ExecutionYear.readCurrentExecutionYear(),
 		    chosenDocumentPurposeType, otherPurpose, enrolments, urgentRequest);
 	}
 
@@ -120,9 +122,9 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     }
 
     /**
-         * Important: Notice that this method's return value may not be the same
-         * before and after conclusion of the academic service request.
-         */
+     * Important: Notice that this method's return value may not be the same
+     * before and after conclusion of the academic service request.
+     */
     @Override
     final public boolean isFree() {
 	if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE

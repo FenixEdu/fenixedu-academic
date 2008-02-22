@@ -5,18 +5,21 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.DateTime;
+
 public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCertificateRequest_Base {
 
     private SchoolRegistrationCertificateRequest() {
 	super();
     }
 
-    public SchoolRegistrationCertificateRequest(Registration registration,
-	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription,
-	    Boolean urgentRequest, ExecutionYear executionYear) {
+    public SchoolRegistrationCertificateRequest(Registration registration, DateTime requestDate,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
+	    ExecutionYear executionYear) {
 
 	this();
-	super.init(registration, executionYear, Boolean.FALSE, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest);
+	super.init(registration, requestDate, executionYear, Boolean.FALSE, documentPurposeType,
+		otherDocumentPurposeTypeDescription, urgentRequest);
 	checkRulesToCreate(registration, executionYear);
     }
 

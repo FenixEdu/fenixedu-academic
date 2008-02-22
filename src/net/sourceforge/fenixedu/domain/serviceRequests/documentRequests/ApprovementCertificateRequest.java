@@ -15,24 +15,30 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
+import org.joda.time.DateTime;
+
 public class ApprovementCertificateRequest extends ApprovementCertificateRequest_Base {
 
     private ApprovementCertificateRequest() {
 	super();
     }
 
-    public ApprovementCertificateRequest(Registration registration, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, MobilityProgram mobilityProgram) {
+    public ApprovementCertificateRequest(Registration registration, DateTime requestDate,
+	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
+	    MobilityProgram mobilityProgram) {
 
 	this();
 
-	this.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, mobilityProgram);
+	this.init(registration, requestDate, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
+		mobilityProgram);
     }
 
-    final protected void init(final Registration registration, final DocumentPurposeType documentPurposeType,
-	    final String otherDocumentPurposeTypeDescription, final Boolean urgentRequest, final MobilityProgram mobilityProgram) {
+    final protected void init(final Registration registration, DateTime requestDate,
+	    final DocumentPurposeType documentPurposeType, final String otherDocumentPurposeTypeDescription,
+	    final Boolean urgentRequest, final MobilityProgram mobilityProgram) {
 
-	super.init(registration, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest, Boolean.FALSE);
+	super.init(registration, requestDate, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
+		Boolean.FALSE);
 	checkParameters(mobilityProgram);
 	super.setMobilityProgram(mobilityProgram);
     }

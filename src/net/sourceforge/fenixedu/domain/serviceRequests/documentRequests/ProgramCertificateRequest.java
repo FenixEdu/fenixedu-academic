@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.DateTime;
+
 public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 
     private ProgramCertificateRequest() {
@@ -15,11 +17,12 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 	setNumberOfPages(0);
     }
 
-    public ProgramCertificateRequest(final Registration registration, final ExecutionYear executionYear,
+    public ProgramCertificateRequest(final Registration registration, DateTime requestDate, final ExecutionYear executionYear,
 	    final DocumentPurposeType purposeType, final String otherPurposeTypeDescription,
 	    final Collection<Enrolment> enrolments, final Boolean urgentRequest) {
 	this();
-	super.init(registration, executionYear, Boolean.FALSE, purposeType, otherPurposeTypeDescription, urgentRequest);
+	super.init(registration, requestDate, executionYear, Boolean.FALSE, purposeType, otherPurposeTypeDescription,
+		urgentRequest);
 	checkParameters(enrolments);
 	super.getEnrolments().addAll(enrolments);
     }

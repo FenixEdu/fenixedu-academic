@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
+import org.joda.time.DateTime;
+
 public abstract class DocumentRequest extends DocumentRequest_Base {
 
     protected DocumentRequest() {
@@ -55,7 +57,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	public Object execute() {
 
 	    if (getChosenDocumentRequestType().isCertificate()) {
-		return CertificateRequest.create(getRegistration(), getChosenDocumentRequestType(),
+		return CertificateRequest.create(getRegistration(), new DateTime(), getChosenDocumentRequestType(),
 			getChosenDocumentPurposeType(), getOtherPurpose(), getUrgentRequest(), getAverage(), getDetailed(),
 			getExecutionYear(), getMobilityProgram(), getRequestedCycle(), getFreeProcessed(), getEnrolments(),
 			getExecutionPeriod(), getInternship(), getStudyPlan());
