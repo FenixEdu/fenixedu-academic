@@ -7,7 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
-import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -109,58 +108,13 @@ public abstract class CompositeRule extends CompositeRule_Base {
 
     @Override
     public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	switch (getCompositeRuleType()) {
-
-	case AND:
-	    RuleResult result = RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-	    for (final CurricularRule curricularRule : getCurricularRules()) {
-		result = result.and(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
-	    }
-	    return result;
-
-	case OR:
-	    RuleResult resultOR = RuleResult
-		    .createFalse(EnrolmentResultType.NULL, sourceDegreeModuleToEvaluate.getDegreeModule());
-	    for (final CurricularRule curricularRule : getCurricularRules()) {
-		resultOR = resultOR.or(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
-		if (resultOR.isTrue() && resultOR.isValidated(sourceDegreeModuleToEvaluate.getDegreeModule())) {
-		    return resultOR;
-		}
-	    }
-	    return resultOR;
-
-	default:
-	    throw new DomainException("unsupported.composite.rule");
-	}
+	throw new DomainException("unsupported.composite.rule");
     }
 
     @Override
     public RuleResult verify(VerifyRuleLevel verifyRuleLevel, EnrolmentContext enrolmentContext,
 	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
-	switch (getCompositeRuleType()) {
-
-	case AND:
-	    RuleResult result = RuleResult.createTrue(degreeModuleToVerify);
-	    for (final CurricularRule curricularRule : getCurricularRules()) {
-		result = result.and(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify,
-			parentCourseGroup));
-	    }
-	    return result;
-
-	case OR:
-	    RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL, degreeModuleToVerify);
-	    for (final CurricularRule curricularRule : getCurricularRules()) {
-		resultOR = resultOR.or(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify,
-			parentCourseGroup));
-		if (resultOR.isTrue() && resultOR.isValidated(degreeModuleToVerify)) {
-		    return resultOR;
-		}
-	    }
-	    return resultOR;
-
-	default:
-	    throw new DomainException("unsupported.composite.rule");
-	}
+	throw new DomainException("unsupported.composite.rule");
     }
 
     public VerifyRuleExecutor createVerifyRuleExecutor() {
