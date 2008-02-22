@@ -5,7 +5,9 @@ package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 
@@ -41,6 +43,8 @@ public class PersonInformationDTO {
 
     private List<String> roles;
 
+    private List<String> alias;
+
     private byte[] photo;
 
     public PersonInformationDTO(final Person person) {
@@ -51,7 +55,7 @@ public class PersonInformationDTO {
 	this.mobile = person.getMobile();
 	this.webAddress = person.getWebAddress();
 	this.email = person.getEmail();
-	this.gender = person.getGender().name();
+	this.gender = person.getGender() != null ? person.getGender().name() : null;
 	this.availableEmail = person.getAvailableEmail();
 	this.availableWebSite = person.getAvailableWebSite();
 	this.availablePhoto = person.getAvailablePhoto();
@@ -62,7 +66,12 @@ public class PersonInformationDTO {
 	    roles.add(role.getRoleType().name());
 	}
 
-	this.photo = person.getPersonalPhoto().getContent().getBytes();
+	this.photo = person.getPersonalPhoto() != null ? person.getPersonalPhoto().getContent().getBytes() : null;
+
+	this.alias = new ArrayList<String>();
+	for (LoginAlias loginAlias : person.getLoginAliasOrderByImportance()) {
+	    this.alias.add(loginAlias.getAlias());
+	}
 
     }
 
@@ -176,6 +185,14 @@ public class PersonInformationDTO {
 
     public void setPhoto(byte[] photo) {
 	this.photo = photo;
+    }
+
+    public List<String> getAlias() {
+	return alias;
+    }
+
+    public void setAlias(List<String> alias) {
+	this.alias = alias;
     }
 
 }
