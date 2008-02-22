@@ -2866,4 +2866,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Collection<CycleType> getCycleTypes() {
 	return getDegreeType().getCycleTypes();
     }
+
+    public CurriculumLine getApprovedCurriculumLine(final CurricularCourse curricularCourse) {
+	return isBoxStructure() ? getRoot().getApprovedCurriculumLine(curricularCourse) : null;
+    }
+    
 }
