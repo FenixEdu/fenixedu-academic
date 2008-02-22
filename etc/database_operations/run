@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix Competence Course Information Bibliografic References" fixCompetenceCourseInformationBibliograficReferences.sql
