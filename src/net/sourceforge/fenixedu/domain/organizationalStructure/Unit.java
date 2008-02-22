@@ -733,9 +733,8 @@ public class Unit extends Unit_Base {
     }
 
     /**
-         * This method should be used only for Unit types where acronyms are
-         * unique.
-         */
+     * This method should be used only for Unit types where acronyms are unique.
+     */
     public static Unit readUnitByAcronymAndType(String acronym, PartyTypeEnum partyTypeEnum) {
 	if (acronym != null
 		&& !acronym.equals("")
@@ -757,15 +756,19 @@ public class Unit extends Unit_Base {
 	return null;
     }
 
-    public static List<Unit> readUnitsByAcronym(String acronym) {
+    public static List<Unit> readUnitsByAcronym(String acronym, boolean shouldNormalize) {
 	List<Unit> result = new ArrayList<Unit>();
 	if (!StringUtils.isEmpty(acronym.trim())) {
-	    UnitAcronym unitAcronymByAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym);
+	    UnitAcronym unitAcronymByAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym, shouldNormalize);
 	    if (unitAcronymByAcronym != null) {
 		result.addAll(unitAcronymByAcronym.getUnitsSet());
 	    }
 	}
 	return result;
+    }
+
+    public static List<Unit> readUnitsByAcronym(String acronym) {
+	return readUnitsByAcronym(acronym, false);
     }
 
     public static Unit readByCostCenterCode(Integer costCenterCode) {
@@ -1297,8 +1300,8 @@ public class Unit extends Unit_Base {
     }
 
     /*
-         * ResearchResultPublication getters
-         */
+     * ResearchResultPublication getters
+     */
 
     public List<ResearchResultPublication> getBooks(Boolean checkSubunits) {
 	return this.getResearchResultPublicationsByType(Book.class, checkSubunits);
@@ -1588,4 +1591,5 @@ public class Unit extends Unit_Base {
 	}
 	return false;
     }
+
 }

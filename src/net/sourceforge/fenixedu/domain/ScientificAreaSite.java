@@ -69,7 +69,7 @@ public class ScientificAreaSite extends ScientificAreaSite_Base {
 		    stringBuilder.append('/');
 	    }
 	}
-	stringBuilder.append(unit.getAcronym());
+	stringBuilder.append(Content.normalize(unit.getAcronym()));
     }
 
 }
