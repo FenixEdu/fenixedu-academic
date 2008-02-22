@@ -434,4 +434,7 @@ public abstract class Content extends Content_Base {
 	return string == null ? null : StringNormalizer.normalize(string).replace(' ', '-');
     }
     
+    public boolean isUnitSite() {
+	return false;
+    }
 }

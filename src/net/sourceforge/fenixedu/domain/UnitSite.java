@@ -360,5 +360,10 @@ public class UnitSite extends UnitSite_Base {
     public Container getTopContainer() {
 	return getHardCodedContainers(this.TOP_SECTION_NAME);
     }
+    
+    @Override
+    public boolean isUnitSite() {
+	return true;
+    }
 
 }

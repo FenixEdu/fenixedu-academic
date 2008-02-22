@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
 <html:html xhtml="true" locale="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -15,7 +16,17 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 
-<title><tiles:getAsString name="title" ignore="true" /></title> <%-- TITLE --%>
+<title>
+<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
+<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/> 
+	<logic:equal name="contentContext" property="unitSite" value="true">
+		<bean:write name="contentContext" property="unit.partyName"/> -
+	</logic:equal>
+</logic:present>
+
+<tiles:getAsString name="title" ignore="true" />
+
+</title> <%-- TITLE --%>
 
 </head>
 
