@@ -2,20 +2,13 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
-import net.sourceforge.fenixedu.domain.User;
-import net.sourceforge.fenixedu.domain.accounting.Account;
-import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastDegreeDiplomaRequestEvent;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -23,7 +16,7 @@ import org.joda.time.DateTime;
 public class PastDegreeDiplomaRequestPR extends PastDegreeDiplomaRequestPR_Base {
 
     protected PastDegreeDiplomaRequestPR() {
-
+	super();
     }
 
     public PastDegreeDiplomaRequestPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate) {
@@ -41,30 +34,6 @@ public class PastDegreeDiplomaRequestPR extends PastDegreeDiplomaRequestPR_Base 
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	return ((PastDegreeDiplomaRequestEvent) event).getPastAmount();
-    }
-
-    @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
-	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-
-	if (entryDTOs.size() != 1) {
-	    throw new DomainException(
-		    "error.accounting.postingRules.gratuity.PastDegreeDiplomaRequestPR.invalid.number.of.entryDTOs");
-	}
-
-	checkIfCanAddAmount(entryDTOs.get(0).getAmountToPay(), event, transactionDetail.getWhenRegistered());
-
-	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
-		.get(0).getAmountToPay(), transactionDetail));
-    }
-
-    private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
-	if (event.calculateAmountToPay(when).greaterThan(amountToPay)) {
-	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.gratuity.PastDegreeDiplomaRequestPR.amount.being.payed.must.be.equal.to.amout.in.debt",
-		    event.getDescriptionForEntryType(getEntryType()));
-	}
-
     }
 
     @Override
