@@ -55,25 +55,26 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setServiceRequestYear(requestDate.year().get());
 	super.setServiceRequestNumber(generateServiceRequestNumber());
 	super.setRequestDate(requestDate);
-	
+
 	super.setAdministrativeOffice(administrativeOffice);
 	super.setUrgentRequest(urgentRequest);
 	super.setFreeProcessed(freeProcessed);
 	super.setExecutionYear(executionYear);
-	
+
 	createAcademicServiceRequestSituations(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
 		getEmployee()));
     }
 
     private Integer generateServiceRequestNumber() {
 	final SortedSet<AcademicServiceRequest> requests = new TreeSet<AcademicServiceRequest>(COMPARATOR_BY_NUMBER);
-	
+
 	for (final AcademicServiceRequest academicServiceRequest : RootDomainObject.getInstance().getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest != this && academicServiceRequest.getServiceRequestYear().intValue() == this.getServiceRequestYear().intValue()) {
+	    if (academicServiceRequest != this
+		    && academicServiceRequest.getServiceRequestYear().intValue() == this.getServiceRequestYear().intValue()) {
 		requests.add(academicServiceRequest);
 	    }
 	}
-	
+
 	return requests.isEmpty() ? 1 : requests.last().getServiceRequestNumber() + 1;
     }
 
@@ -228,11 +229,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected void checkRulesToDelete() {
     }
 
-//    @Override
-//    public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
-//	throw new DomainException("error.serviceRequests.RegistrationAcademicServiceRequest.cannot.modify.administrativeOffice");
-//    }
-//
+    @Override
+    public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
+	throw new DomainException("error.serviceRequests.RegistrationAcademicServiceRequest.cannot.modify.administrativeOffice");
+    }
+
     @Override
     final public void setServiceRequestYear(Integer serviceRequestYear) {
 	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.serviceRequestYear");
@@ -246,7 +247,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     final public String getServiceRequestNumberYear() {
 	return getServiceRequestNumber() + "/" + getServiceRequestYear();
     }
-    
+
     @Override
     final public void addAcademicServiceRequestSituations(AcademicServiceRequestSituation academicServiceRequestSituation) {
 	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.add.academicServiceRequestSituation");
@@ -435,7 +436,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public boolean getLoggedPersonCanCancel() {
 	return (isNewRequest() || isProcessing())
-		&& (createdByStudent() || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == getEmployee().getAdministrativeOffice()));
+		&& (createdByStudent() || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == getEmployee()
+			.getAdministrativeOffice()));
     }
 
     final public DateTime getCreationDate() {
@@ -466,9 +468,9 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     abstract public String getDescription();
 
     /**
-         * Indicates if is possible to AdministrativeOffice send this request to
-         * another entity
-         */
+     * Indicates if is possible to AdministrativeOffice send this request to
+     * another entity
+     */
     abstract public boolean isPossibleToSendToOtherEntity();
 
 }
