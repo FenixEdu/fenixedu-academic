@@ -460,3 +460,16 @@
 	<slot name="prettyCheckSum" key="label.checksum"/>				
 </schema>	
 
+<schema name="markSheet.teacher.gradeSubmission.view.submited.markSheets" bundle="ACADEMIC_OFFICE_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.MarkSheet">
+	<slot name="curricularCourse.degree.name" key="label.degree"/>
+	<slot name="curricularCourse.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />
+	<slot name="curricularCourse.name" key="label.curricular.course.name" />
+	<slot name="responsibleTeacher.teacherNumber" key="label.responsibleTeacher"/>	
+	<slot name="markSheetType"  key="label.markSheetType"/>
+	<slot name="creationDateDateTime" key="label.creationDate"/>
+	<slot name="stateDiscription" key="label.markSheetState"/>
+	<slot name="enrolmentEvaluationsCount" key="label.markSheet.evaluatedStudents"/>	
+</schema>
+
+

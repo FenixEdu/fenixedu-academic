@@ -46,6 +46,9 @@
 		<h:outputText value=" | " escape="false"/>
 		<h:outputText value="<a href='#{evaluationManagementBackingBean.contextPath}/teacher/markSheetManagement.do?method=prepareSubmitMarks&amp;executionCourseID=#{evaluationManagementBackingBean.executionCourseID}'>#{bundle['label.submit.listMarks']}</a>" escape="false"/>
 		
+		<h:outputText value=" | " escape="false"/>
+		<h:outputText value="<a href='#{evaluationManagementBackingBean.contextPath}/teacher/markSheetManagement.do?method=viewSubmitedMarkSheets&amp;executionCourseID=#{evaluationManagementBackingBean.executionCourseID}'>#{bundle['label.view.submited.markSheets']}</a>" escape="false"/>
+
 		<h:outputText value="</li></ul>" escape="false"/>
 	</h:form>
 

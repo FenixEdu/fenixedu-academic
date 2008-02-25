@@ -1839,4 +1839,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	super.setSigla(sigla.replace(' ', '_').replace('/', '-'));
     }
 
+    public Collection<MarkSheet> getAssociatedMarkSheets() {
+	Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
+	for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+	    markSheets.addAll(curricularCourse.getMarkSheetsByPeriod(getExecutionPeriod()));
+	}
+	return markSheets;
+    }
+
 }

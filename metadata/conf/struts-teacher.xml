@@ -2169,7 +2169,8 @@
         	<forward name="gradeSubmission.step.one" path="show.markSheetManagement.gradeSubmission.step.one"/>
         	<forward name="gradeSubmission.step.two" path="show.markSheetManagement.gradeSubmission.step.two"/>
         	<forward name="viewGradesSubmited" path="show.markSheetManagement.viewGradesSubmited"/>
-        	
+        	<forward name="viewSubmitedMarkSheets" path="show.markSheetManagement.viewSubmitedMarkSheets"/>
+			<forward name="viewMarkSheet" path="show.markSheetManagement.viewMarkSheet"/>
         </action>
         
         <action path="/announcementManagement"

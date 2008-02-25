@@ -723,6 +723,13 @@
 		<put name="body" value="/teacher/evaluation/gradeSubmission/viewGradesSubmited.jsp" />
 	</definition>
 	
+	<definition name="show.markSheetManagement.viewSubmitedMarkSheets" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/gradeSubmission/viewSubmitedMarkSheets.jsp" />
+	</definition>
+	
+	<definition name="show.markSheetManagement.viewMarkSheet" extends="df.teacher.evaluation-management">
+		<put name="body" value="/teacher/evaluation/gradeSubmission/viewMarkSheet.jsp" />
+	</definition>
 
 	<!-- ==== Project Submissions Management === -->
 	<definition name="view-last-project-submission-for-each-group" extends="df.teacher.evaluation-management">

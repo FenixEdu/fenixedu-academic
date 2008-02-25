@@ -1931,4 +1931,14 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return !isDissertation() || (isDissertation() && MarkSheetPredicates.checkDissertation());
     }
 
+    public Collection<MarkSheet> getMarkSheetsByPeriod(ExecutionPeriod executionPeriod) {
+	Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
+	for (MarkSheet markSheet : getMarkSheetsSet()) {
+	    if (markSheet.getExecutionPeriod() == executionPeriod) {
+		markSheets.add(markSheet);
+	    }
+	}
+	return markSheets;
+    }
+
 }
