@@ -100,7 +100,7 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 	final Collection<AnnouncementDTO> result = new ArrayList<AnnouncementDTO>(announcements.size());
 	for (final Announcement announcement : announcements) {
 	    
-	    if (selectedYear == null || selectedMonth == null || (announcement.isActiveIn(selectedMonth.intValue(), selectedYear.intValue()))) {
+	    if (selectedYear == null || selectedMonth == null || (announcement.isActiveIn(selectedYear, selectedMonth))) {
 		
 		result.add(new AnnouncementDTO(announcement, language));
 	    }
