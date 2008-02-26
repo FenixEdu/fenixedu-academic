@@ -1117,6 +1117,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     static final BigDecimal LMAC_AND_LCI_WEIGHT_FACTOR = BigDecimal.valueOf(0.25d);
 
+    static final BigDecimal LMAC_WEIGHT_BEFORE_0607_EXCEPT_LMAC_AND_LCI_DEGREE_MODULES = BigDecimal.valueOf(7.5d);
+
     @Override
     final public Double getWeigth() {
 	return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0) : getWeigthForCurriculum().doubleValue();
@@ -1125,20 +1127,32 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public BigDecimal getWeigthForCurriculum() {
 	if (!isBolonhaDegree()) {
 
-	    if (getDegreeCurricularPlanOfStudent().getDegreeType().isDegree()) {
+	    final DegreeCurricularPlan dcpOfStudent = getDegreeCurricularPlanOfStudent();
+	    if (dcpOfStudent.getDegreeType().isDegree()) {
 		if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
 		    return getEctsCreditsForCurriculum();
 		}
 
-		if (isStudentFromLEIC() && !getCurricularCourse().isTFC()) {
-		    return LEIC_WEIGHT_BEFORE_0607_EXCEPT_TFC;
+		final Degree leicPb = Degree.readBySigla("LEIC-pB");
+		if (isStudentFromDegree(leicPb, dcpOfStudent)) {
+		    return getCurricularCourse().isTFC() ? getBaseWeigth() : LEIC_WEIGHT_BEFORE_0607_EXCEPT_TFC;
 		}
 
-		if (isDegreeModuleFromLMAC() || isDegreeModuleFromLCI()) {
+		final Degree lmacPb = Degree.readBySigla("LMAC-pB");
+		final DegreeCurricularPlan dcpOfDegreeModule = getDegreeCurricularPlanOfDegreeModule();
+		if (isDegreeModuleFromDegree(lmacPb, dcpOfDegreeModule)) {
 		    return getBaseWeigth().multiply(LMAC_AND_LCI_WEIGHT_FACTOR);
 		}
-	    }
 
+		final Degree lciPb = Degree.readBySigla("LCI-pB");
+		if (isDegreeModuleFromDegree(lciPb, dcpOfDegreeModule)) {
+		    return getBaseWeigth().multiply(LMAC_AND_LCI_WEIGHT_FACTOR);
+		}
+
+		if (isStudentFromDegree(lmacPb, dcpOfStudent)) {
+		    return LMAC_WEIGHT_BEFORE_0607_EXCEPT_LMAC_AND_LCI_DEGREE_MODULES;
+		}
+	    }
 	}
 
 	return getBaseWeigth();
@@ -1155,23 +1169,19 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return executionYear.isAfterOrEquals(executionYear0607);
     }
 
-    private boolean isStudentFromLEIC() {
-	return Degree.readBySigla("LEIC-pB").hasDegreeCurricularPlans(getDegreeCurricularPlanOfStudent());
+    private boolean isStudentFromDegree(final Degree degree, final DegreeCurricularPlan degreeCurricularPlanOfStudent) {
+	return degree.hasDegreeCurricularPlans(degreeCurricularPlanOfStudent);
     }
 
-    private boolean isDegreeModuleFromLCI() {
-	return Degree.readBySigla("LCI-pB").hasDegreeCurricularPlans(getDegreeCurricularPlanOfDegreeModule());
-    }
-
-    private boolean isDegreeModuleFromLMAC() {
-	return Degree.readBySigla("LMAC-pB").hasDegreeCurricularPlans(getDegreeCurricularPlanOfDegreeModule());
+    private boolean isDegreeModuleFromDegree(final Degree degree, DegreeCurricularPlan degreeCurricularPlanOfDegreeModule) {
+	return degree.hasDegreeCurricularPlans(degreeCurricularPlanOfDegreeModule);
     }
 
     /**
-         * Just for Master Degrees legacy code
-         * 
-         * @return
-         */
+     * Just for Master Degrees legacy code
+     * 
+     * @return
+     */
     @Deprecated
     final public double getCredits() {
 	return getEctsCredits();
@@ -1276,12 +1286,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     /**
-         * {@inheritDoc}
-         * 
-         * <p>
-         * This method assumes that each Student has at most one non evaluated
-         * Thesis and no more that two Thesis.
-         */
+     * {@inheritDoc}
+     * 
+     * <p>
+     * This method assumes that each Student has at most one non evaluated
+     * Thesis and no more that two Thesis.
+     */
     final public Thesis getThesis() {
 	List<Thesis> theses = getTheses();
 
