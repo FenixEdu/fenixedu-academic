@@ -86,7 +86,7 @@
 							<td width="75px"><%= statistics.getApprovedEnrolmentsNumber()  %></td>
 							<td width="75px"><%= statistics.getStudentsNumber() %></td>
 							<td><%= statistics.getStudentsRatio() %>%</td>
-							<td width="100px"><div style="background: #369; width: <%= Float.parseFloat(statistics.getStudentsRatio()) %>px;">&nbsp;</div></td>
+							<td width="100px"><div style="background: #369; width: <%= statistics.getStudentsRatio() %>px;">&nbsp;</div></td>
 						</tr>
 					</logic:iterate>
 		 			 
@@ -145,7 +145,7 @@
 								<td width="75px"><%= studentStatistics.getApprovedEnrolmentsNumber()  %></td>
 								<td width="75px"><%= studentStatistics.getStudentsNumber() %></td>
 								<td><%= studentStatistics.getStudentsRatio() %>%</td>
-								<td width="100px"><div style="background: #369; width: <%= Float.parseFloat(studentStatistics.getStudentsRatio()) %>px;">&nbsp;</div></td>
+								<td width="100px"><div style="background: #369; width: <%= studentStatistics.getStudentsRatio() %>px;">&nbsp;</div></td>
 							</tr>
 						</logic:iterate>
 					</table>
