@@ -24,6 +24,8 @@
 
 <logic:present name="executionCourse">
 
+	<bean:define id="showNote" value="false" toScope="request"/>
+	
 	<bean:define id="executionPeriod" type="net.sourceforge.fenixedu.domain.ExecutionPeriod"
 			name="executionCourse" property="executionPeriod"/>
 
@@ -33,14 +35,19 @@
 
 		<logic:equal name="curricularCourse" property="bolonhaDegree" value="true">
 			<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
-			<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
+			
 				<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
-				<h3 class="mtop15">
+				<p class="mtop15 mbottom025 color777">
 					<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 					<bean:message key="label.in"/>
 					<bean:write name="degree" property="nome"/>
-					<br/>
-					<bean:write name="competenceCourse" property="name"/>
+				</p>
+				<h3 class="mtop025">
+					<bean:write name="competenceCourse" property="name"/>  
+						<logic:equal name="competenceCourse" property="curricularStage.name" value="PUBLISHED">
+								<bean:define id="showNote" value="true" toScope="request"/>
+								<span style="font-size: 0.7em; font-weight: normal; background: #ffa;"><bean:message key="label.competenceCourse.notAprroved"/>(*)</span>
+						</logic:equal>
 				</h3>
 				<blockquote>
 					<h4>
@@ -55,7 +62,6 @@
 						<bean:write name="competenceCourse" property="generalObjectivesEn" filter="false"/>
 					</logic:present>
 				</blockquote>
-			</logic:equal>
 		</logic:equal>
 
 		<logic:notEqual name="curricularCourse" property="bolonhaDegree" value="true">
@@ -124,5 +130,9 @@
 		</logic:notEqual>
 
 	</logic:iterate>
-
+	
+	<logic:equal name="showNote" value="true">
+		<p  class="mtop2"><em>* <bean:message key="label.competenceCourse.notAprroved.note"/></em></p>
+	</logic:equal>
+	
 </logic:present>
