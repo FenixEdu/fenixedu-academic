@@ -175,20 +175,29 @@ public class StudentDismissalRenderer extends InputRenderer {
 
 	    if (dismissalTypeValue == DismissalType.CURRICULUM_GROUP_CREDITS) {
 		radioButtonGroup = new HtmlRadioButtonGroup();
-		radioButtonGroup.bind(getInputContext().getMetaObject(), "courseGroup"); // slot refered by name
+
+		// slot refered by name
+		radioButtonGroup.bind(getInputContext().getMetaObject(), "courseGroup");
+
 		radioButtonGroup.setConverter(new DomainObjectKeyConverter());
 		container.addChild(radioButtonGroup);
 		generateCourseGroupCycles(container, dismissalBean.getStudentCurricularPlan(), dismissalBean.getExecutionPeriod());
 
 	    } else if (dismissalTypeValue == DismissalType.CURRICULAR_COURSE_CREDITS) {
 		final HtmlMultipleHiddenField hiddenCurricularCourses = new HtmlMultipleHiddenField();
-		hiddenCurricularCourses.bind(getInputContext().getMetaObject(), "dismissals"); // slot refered by name
+
+		// slot refered by name
+		hiddenCurricularCourses.bind(getInputContext().getMetaObject(), "dismissals");
+
 		hiddenCurricularCourses.setConverter(new SelectedCurricularCoursesKeyConverter());
 		hiddenCurricularCourses.setController(curricularCoursesController);
 		container.addChild(hiddenCurricularCourses);
 
 		final HtmlMultipleHiddenField hiddenOptionalCurricularCourses = new HtmlMultipleHiddenField();
-		hiddenOptionalCurricularCourses.bind(getInputContext().getMetaObject(), "optionalDismissals"); // slot refered by name
+
+		// slot refered by name
+		hiddenOptionalCurricularCourses.bind(getInputContext().getMetaObject(), "optionalDismissals");
+
 		hiddenOptionalCurricularCourses.setConverter(new SelectedOptionalCurricularCoursesKeyConverter());
 		hiddenOptionalCurricularCourses.setController(optionalCurricularCoursesController);
 		container.addChild(hiddenOptionalCurricularCourses);
@@ -196,7 +205,10 @@ public class StudentDismissalRenderer extends InputRenderer {
 		generateCurricularCourses(container, dismissalBean.getStudentCurricularPlan(), dismissalBean.getExecutionPeriod());
 	    } else {
 		radioButtonGroup = new HtmlRadioButtonGroup();
-		radioButtonGroup.bind(getInputContext().getMetaObject(), "curriculumGroup"); // slot refered by name
+
+		// slot refered by name
+		radioButtonGroup.bind(getInputContext().getMetaObject(), "curriculumGroup");
+
 		radioButtonGroup.setConverter(new DomainObjectKeyConverter());
 		container.addChild(radioButtonGroup);
 		generateNoCourseGroupCurriculumGroups(container, dismissalBean.getStudentCurricularPlan());
@@ -279,7 +291,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 		final HtmlTableCell nameCell = htmlTableRow.createCell();
 
 		final String code = curricularCourse.getCode();
-		final String oneFullName = curricularCourse.getOneFullName();
+		final String oneFullName = curricularCourse.getOneFullName(executionPeriod);
 		final String name = " <span class='bold'>" + curricularCourse.getName() + "</span> ("
 			+ oneFullName.substring(0, oneFullName.lastIndexOf(">")) + ")";
 		final String codeAndname = StringUtils.isEmpty(code) ? name : code + " - " + name;

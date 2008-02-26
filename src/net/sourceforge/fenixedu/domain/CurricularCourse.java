@@ -39,7 +39,6 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -1310,6 +1309,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
     }
 
+    @Override
     public String getName(ExecutionPeriod period) {
 	final String superName = super.getName();
 	return (superName == null || superName.length() == 0) ? getCompetenceCourse().getName(period) : superName;
@@ -1322,6 +1322,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 		.getName() : superName;
     }
 
+    @Override
     public String getNameEn(ExecutionPeriod period) {
 	final String superNameEn = super.getNameEn();
 	return ((superNameEn == null || superNameEn.length() == 0) && getCompetenceCourse() != null) ? getCompetenceCourse()
@@ -1713,17 +1714,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public List<DegreeModuleScope> getDegreeModuleScopes() {
 	return DegreeModuleScope.getDegreeModuleScopes(this);
-    }
-
-    public MultiLanguageString getNameI18N() {
-	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	if (getName() != null && getName().length() > 0) {
-	    multiLanguageString.setContent(Language.pt, getName());
-	}
-	if (getNameEn() != null && getNameEn().length() > 0) {
-	    multiLanguageString.setContent(Language.en, getNameEn());
-	}
-	return multiLanguageString;
     }
 
     private int countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(ExecutionPeriod executionPeriod, int enrolmentNumber) {

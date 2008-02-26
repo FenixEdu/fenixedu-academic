@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -86,15 +87,65 @@ abstract public class DegreeModule extends DegreeModule_Base {
      * 
      * @return A string with one possible full name of this course group
      */
-    public String getOneFullName() {
-	boolean pt = !(LanguageUtils.getUserLanguage() == Language.en);
+    protected void getOneFullName(final StringBuilder result, final ExecutionPeriod executionPeriod) {
+	final String selfName = getNameI18N(executionPeriod).getContent(LanguageUtils.getUserLanguage());
 
 	if (isRoot()) {
-	    return ((pt) ? getName() : getNameEn());
+	    result.append(selfName);
 	} else {
-	    final CourseGroup parentCourseGroup = getParentContexts().get(0).getParentCourseGroup();
-	    return parentCourseGroup.getOneFullName() + " > " + (((pt) ? getName() : getNameEn()));
+	    List<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionPeriod(executionPeriod);
+	    if (parentContextsByExecutionPeriod.isEmpty()) {
+		// if not existing, just return all (as previous implementation
+		// of method
+		parentContextsByExecutionPeriod = getParentContexts();
+	    }
+
+	    final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.get(0).getParentCourseGroup();
+
+	    parentCourseGroup.getOneFullName(result, executionPeriod);
+	    result.append(FULL_NAME_SEPARATOR);
+	    result.append(selfName);
 	}
+    }
+
+    private static final String FULL_NAME_SEPARATOR = " > ";
+
+    public String getOneFullName(final ExecutionPeriod executionPeriod) {
+	final StringBuilder result = new StringBuilder();
+	getOneFullName(result, executionPeriod);
+	return result.toString();
+    }
+
+    public String getOneFullName() {
+	return getOneFullName(null);
+    }
+
+    public MultiLanguageString getNameI18N(final ExecutionPeriod executionPeriod) {
+	final MultiLanguageString multiLanguageString = new MultiLanguageString();
+
+	String name = getName(executionPeriod);
+	if (name != null && name.length() > 0) {
+	    multiLanguageString.setContent(Language.pt, name);
+	}
+
+	String nameEn = getNameEn(executionPeriod);
+	if (nameEn != null && nameEn.length() > 0) {
+	    multiLanguageString.setContent(Language.en, nameEn);
+	}
+
+	return multiLanguageString;
+    }
+
+    public MultiLanguageString getNameI18N() {
+	return getNameI18N(null);
+    }
+
+    protected String getName(final ExecutionPeriod executionPeriod) {
+	return getName();
+    }
+
+    protected String getNameEn(final ExecutionPeriod executionPeriod) {
+	return getNameEn();
     }
 
     public void delete() {
