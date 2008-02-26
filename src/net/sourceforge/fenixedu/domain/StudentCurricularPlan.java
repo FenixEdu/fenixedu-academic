@@ -365,10 +365,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-         * Temporary method, after all degrees migration this is no longer
-         * necessary
-         * 
-         */
+     * Temporary method, after all degrees migration this is no longer necessary
+     * 
+     */
     final public boolean isBoxStructure() {
 	return hasRoot();
     }
@@ -648,6 +647,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
+    final public ExecutionYear getApprovedCurriculumLinesLastExecutionYear() {
+	if (hasRoot()) {
+	    return getRoot().getApprovedCurriculumLinesLastExecutionYear();
+	} else {
+	    final SortedSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
+
+	    for (final CurriculumLine curriculumLine : getAprovedEnrolments()) {
+		if (curriculumLine.hasExecutionPeriod()) {
+		    executionYears.add(curriculumLine.getExecutionPeriod().getExecutionYear());
+		}
+	    }
+
+	    return executionYears.isEmpty() ? ExecutionYear.readCurrentExecutionYear() : executionYears.last();
+	}
+    }
+
     final public CurriculumLine getLastApprovement() {
 	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(
 		CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE_AND_ID);
@@ -662,7 +677,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public ExecutionYear getLastApprovementExecutionYear() {
-	return getRoot().getApprovedCurriculumLinesLastExecutionYear();
+	return getApprovedCurriculumLinesLastExecutionYear();
     }
 
     final public boolean hasAnyApprovedCurriculumLines() {
@@ -2219,9 +2234,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-         * Note: This is enrolment without rules and should only be used for
-         * first time enrolments
-         */
+     * Note: This is enrolment without rules and should only be used for first
+     * time enrolments
+     */
     private void internalCreateFirstTimeStudentEnrolmentsFor(CurriculumGroup curriculumGroup, CurricularPeriod curricularPeriod,
 	    ExecutionPeriod executionPeriod, String createdBy) {
 
@@ -2402,9 +2417,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-         * Note that this method must not use the ExtraCurriculumGroup due to
-         * the pre-Bolonha SCPs
-         */
+     * Note that this method must not use the ExtraCurriculumGroup due to the
+     * pre-Bolonha SCPs
+     */
     final public Collection<Enrolment> getExtraCurricularEnrolments() {
 	final Collection<Enrolment> result = new ArrayList<Enrolment>();
 
@@ -2438,9 +2453,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /**
-         * Note that this method must not use the ExtraCurriculumGroup due to
-         * the pre-Bolonha SCPs
-         */
+     * Note that this method must not use the ExtraCurriculumGroup due to the
+     * pre-Bolonha SCPs
+     */
     final public Collection<Enrolment> getPropaedeuticEnrolments() {
 	final Collection<Enrolment> result = new ArrayList<Enrolment>();
 
@@ -2870,5 +2885,5 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public CurriculumLine getApprovedCurriculumLine(final CurricularCourse curricularCourse) {
 	return isBoxStructure() ? getRoot().getApprovedCurriculumLine(curricularCourse) : null;
     }
-    
+
 }
