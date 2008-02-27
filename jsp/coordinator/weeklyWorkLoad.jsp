@@ -71,6 +71,7 @@
 
 <logic:notPresent name="selectedExecutionCourse">
 	<logic:present name="curricularYearWeeklyWorkLoadView">
+	  <logic:present name="curricularYearWeeklyWorkLoadView" property="intervals">
 		<table class="tstyle3 tpadding01">
 			<tr>
 				<th rowspan="2">
@@ -122,7 +123,7 @@
 		</table>
 
 		<p><bean:message key="info.weekly.work.load.into.execution.courses"/></p>
-
+		</logic:present>
 	</logic:present>
 </logic:notPresent>
 
