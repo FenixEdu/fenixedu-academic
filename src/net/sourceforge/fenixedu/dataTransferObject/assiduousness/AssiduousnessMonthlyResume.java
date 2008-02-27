@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.joda.time.Duration;
@@ -32,9 +33,8 @@ public class AssiduousnessMonthlyResume implements Serializable {
     public AssiduousnessMonthlyResume() {
     }
 
-    public AssiduousnessMonthlyResume(Employee employee, Duration totalBalance,
-	    Duration totalComplementaryWeeklyRestBalance, Duration totalWeeklyRestBalance,
-	    Duration holidayRest, Duration nightWork, Duration unjustified) {
+    public AssiduousnessMonthlyResume(Employee employee, Duration totalBalance, Duration totalComplementaryWeeklyRestBalance,
+	    Duration totalWeeklyRestBalance, Duration holidayRest, Duration nightWork, Duration unjustified) {
 	setEmployee(employee);
 	setTotalBalance(totalBalance);
 	setUnjustifiedBalance(unjustified);
@@ -45,13 +45,26 @@ public class AssiduousnessMonthlyResume implements Serializable {
     }
 
     public AssiduousnessMonthlyResume(AssiduousnessClosedMonth assiduousnessClosedMonth) {
-	setEmployee(assiduousnessClosedMonth.getAssiduousness().getEmployee());
+	setEmployee(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().getEmployee());
 	setTotalBalance(assiduousnessClosedMonth.getBalance());
 	setUnjustifiedBalance(assiduousnessClosedMonth.getTotalUnjustifiedBalance());
 	setSaturdaysBalance(assiduousnessClosedMonth.getSaturdayBalance());
 	setSundaysBalance(assiduousnessClosedMonth.getSundayBalance());
 	setHolidayBalance(assiduousnessClosedMonth.getHolidayBalance());
 	setNightlyBalance(assiduousnessClosedMonth.getTotalNightBalance());
+    }
+
+    public AssiduousnessMonthlyResume(Employee employee, ClosedMonth closedMonth) {
+	setEmployee(employee);
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths(employee
+		.getAssiduousness())) {
+	    setTotalBalance(getTotalBalance().plus(assiduousnessClosedMonth.getBalance()));
+	    setUnjustifiedBalance(getUnjustifiedBalance().plus(assiduousnessClosedMonth.getTotalUnjustifiedBalance()));
+	    setSaturdaysBalance(getSaturdaysBalance().plus(assiduousnessClosedMonth.getSaturdayBalance()));
+	    setSundaysBalance(getSundaysBalance().plus(assiduousnessClosedMonth.getSundayBalance()));
+	    setHolidayBalance(getHolidayBalance().plus(assiduousnessClosedMonth.getHolidayBalance()));
+	    setNightlyBalance(getNightlyBalance().plus(assiduousnessClosedMonth.getTotalNightBalance()));
+	}
     }
 
     public Employee getEmployee() {
@@ -125,29 +138,23 @@ public class AssiduousnessMonthlyResume implements Serializable {
     public void getExcelRow(StyledExcelSpreadsheet spreadsheet) {
 	spreadsheet.newRow();
 	spreadsheet.addCell(getEmployee().getEmployeeNumber().toString());
-	spreadsheet.addCell(getTotalBalance().equals(Duration.ZERO) ? ""
-		: getDurationString(getTotalBalance()));
-	spreadsheet.addCell(getUnjustifiedBalance().equals(Duration.ZERO) ? ""
-		: getDurationString(getUnjustifiedBalance()));
-	spreadsheet.addCell(getSaturdaysBalance().equals(Duration.ZERO) ? ""
-		: getDurationString(getSaturdaysBalance()));
-	spreadsheet.addCell(getSundaysBalance().equals(Duration.ZERO) ? ""
-		: getDurationString(getSundaysBalance()));
-	spreadsheet.addCell(getHolidayBalance().equals(Duration.ZERO) ? ""
-		: getDurationString(getHolidayBalance()));
-	spreadsheet.addCell(getNightlyBalance().equals(Duration.ZERO) ? ""
-		: getDurationString(getNightlyBalance()));
+	spreadsheet.addCell(getTotalBalance().equals(Duration.ZERO) ? "" : getDurationString(getTotalBalance()));
+	spreadsheet.addCell(getUnjustifiedBalance().equals(Duration.ZERO) ? "" : getDurationString(getUnjustifiedBalance()));
+	spreadsheet.addCell(getSaturdaysBalance().equals(Duration.ZERO) ? "" : getDurationString(getSaturdaysBalance()));
+	spreadsheet.addCell(getSundaysBalance().equals(Duration.ZERO) ? "" : getDurationString(getSundaysBalance()));
+	spreadsheet.addCell(getHolidayBalance().equals(Duration.ZERO) ? "" : getDurationString(getHolidayBalance()));
+	spreadsheet.addCell(getNightlyBalance().equals(Duration.ZERO) ? "" : getDurationString(getNightlyBalance()));
     }
 
     public String getDurationString(Duration duration) {
-	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours()
-		.appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(":")
+		.minimumPrintedDigits(2).appendMinutes().toFormatter();
 	MutablePeriod finalDuration = new MutablePeriod(duration.getMillis(), PeriodType.time());
 	if (duration.toPeriod().getMinutes() < 0) {
 	    finalDuration.setMinutes(-duration.toPeriod().getMinutes());
 	    if (duration.toPeriod().getHours() == 0) {
-		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours()
-			.appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
+		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours().appendSeparator(":")
+			.minimumPrintedDigits(2).appendMinutes().toFormatter();
 	    }
 	}
 	return fmt.print(finalDuration);

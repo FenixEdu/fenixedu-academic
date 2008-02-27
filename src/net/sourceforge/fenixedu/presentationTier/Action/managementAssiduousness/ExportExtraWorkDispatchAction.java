@@ -32,8 +32,8 @@ import org.joda.time.DateTimeFieldType;
 
 public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 
-    public ActionForward chooseYearMonth(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseYearMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	request.setAttribute("action", getFromRequest(request, "action"));
 	request.setAttribute("chooseMonth", getFromRequest(request, "chooseMonth"));
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
@@ -49,12 +49,12 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	if (lastClosedMonth == null) {
 	    return null;
 	}
-	return new YearMonth(lastClosedMonth.getClosedYearMonth().get(DateTimeFieldType.year()),
-		lastClosedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()));
+	return new YearMonth(lastClosedMonth.getClosedYearMonth().get(DateTimeFieldType.year()), lastClosedMonth
+		.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()));
     }
 
-    public ActionForward exportByEmployees(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward exportByEmployees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("action", (String) getRenderedObject("action"));
 	request.setAttribute("chooseMonth", (String) getRenderedObject("chooseMonth"));
 	final YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
@@ -63,8 +63,7 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	}
 	if (!ClosedMonth.isMonthClosedForExtraWork(yearMonth.getPartial())) {
 	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add("message", new ActionMessage(
-		    "error.extraWorkRequest.extraWorkMonthNotClosed"));
+	    actionMessages.add("message", new ActionMessage("error.extraWorkRequest.extraWorkMonthNotClosed"));
 	    saveMessages(request, actionMessages);
 	    return chooseYearMonth(mapping, actionForm, request, response);
 	}
@@ -80,18 +79,15 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	comparatorChain.addComparator(new BeanComparator("assiduousness.employee.employeeNumber"));
 	Collections.sort(extraWorkRequests, comparatorChain);
 	Map<String, String> parameters = new HashMap<String, String>();
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources",
-		LanguageUtils.getLocale());
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
 	StringBuilder stringBuilder = new StringBuilder(month).append(" ").append(yearMonth.getYear());
 	parameters.put("yearMonth", stringBuilder.toString());
 
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=trabalhoExtraFunc.pdf");
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		LanguageUtils.getLocale());
-	byte[] data = ReportsUtils.exportToPdf("assiduousness.employeeExtraWork", parameters, bundle,
-		extraWorkRequests);
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	byte[] data = ReportsUtils.exportToPdf("assiduousness.employeeExtraWork", parameters, bundle, extraWorkRequests);
 	response.setContentLength(data.length);
 	ServletOutputStream writer = response.getOutputStream();
 	writer.write(data);
@@ -101,8 +97,8 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
-    public ActionForward exportByUnits(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward exportByUnits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("action", (String) getRenderedObject("action"));
 	request.setAttribute("chooseMonth", (String) getRenderedObject("chooseMonth"));
 	final YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
@@ -110,16 +106,13 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	    return chooseYearMonth(mapping, actionForm, request, response);
 	}
 
-	List<UnitExtraWorkAmount> unitExtraWorkAmountList = getUnitExtraWorkAmountsByYear(yearMonth
-		.getYear());
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		LanguageUtils.getLocale());
-	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources",
-		LanguageUtils.getLocale());
+	List<UnitExtraWorkAmount> unitExtraWorkAmountList = getUnitExtraWorkAmountsByYear(yearMonth.getYear());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 
 	String sheetName = bundle.getString("title.extraWork");
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(sheetName);
-	String title = bundle.getString("message.unitExtraWorkPlafon") + " "+ yearMonth.getYear().toString();
+	String title = bundle.getString("message.unitExtraWorkPlafon") + " " + yearMonth.getYear().toString();
 	UnitExtraWorkAmount.getExcelHeader(spreadsheet, bundle, enumBundle, title);
 	for (UnitExtraWorkAmount unitExtraWorkAmount : unitExtraWorkAmountList) {
 	    unitExtraWorkAmount.getExcelRow(spreadsheet);

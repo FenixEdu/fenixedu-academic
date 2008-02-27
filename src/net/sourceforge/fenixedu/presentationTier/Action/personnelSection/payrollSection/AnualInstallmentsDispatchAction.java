@@ -293,12 +293,15 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 		    ClosedMonth closedMonth = ClosedMonth.getClosedMonth(new YearMonth(employeeMonthlyBonusInstallment
 			    .getPartialYearMonth()));
 		    if (closedMonth != null) {
-			AssiduousnessClosedMonth assiduousnessClosedMonth = closedMonth
-				.getAssiduousnessClosedMonth(employeeMonthlyBonusInstallment.getEmployeeBonusInstallment()
+			List<AssiduousnessClosedMonth> assiduousnessClosedMonthList = closedMonth
+				.getAssiduousnessClosedMonths(employeeMonthlyBonusInstallment.getEmployeeBonusInstallment()
 					.getEmployee().getAssiduousness());
-			if (assiduousnessClosedMonth != null) {
-			    absences = new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
-				    - assiduousnessClosedMonth.getWorkedDays());
+			for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonthList) {
+			    if (assiduousnessClosedMonth != null) {
+				absences = new Integer(absences.intValue()
+					+ (new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
+						- assiduousnessClosedMonth.getWorkedDays()).intValue()));
+			    }
 			}
 		    }
 		    stringBuilder.append(absences).append(separator);
@@ -315,83 +318,4 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	}
 	return stringBuilder.toString();
     }
-
-    //    private String getAllLines2(EmployeeBonusInstallment employeeBonusInstallment) {
-    //	StringBuilder stringBuilder = new StringBuilder();
-    //	StringBuilder positiveLines = new StringBuilder();
-    //	int cutNumber = 0;
-    //	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
-    //		.getEmployeeMonthlyBonusInstallments()) {
-    //	    positiveLines.append(new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee().getEmployeeNumber()))
-    //		    .append(separator);
-    //	    positiveLines.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(separator);
-    //	    positiveLines.append(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode()))
-    //		    .append(separator);
-    //
-    //	    if (employeeMonthlyBonusInstallment.getValue() < 0) {
-    //		cutNumber++;
-    //		positiveLines.append((employeeMonthlyBonusInstallment.getValue() * -1)).append(separator);
-    //		stringBuilder.append(
-    //			new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee().getEmployeeNumber())).append(
-    //			separator);
-    //		stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(separator);
-    //		stringBuilder.append(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(
-    //			separator);
-    //		stringBuilder.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
-    //		stringBuilder.append("3").append(separator);
-    //		stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
-    //		stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
-    //		stringBuilder.append(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year())).append(
-    //			separator);
-    //		stringBuilder
-    //			.append(
-    //				getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(
-    //					DateTimeFieldType.monthOfYear()))).append(endLine);
-    //	    } else {
-    //		positiveLines.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
-    //	    }
-    //
-    //	    positiveLines.append("3").append(separator);
-    //	    positiveLines.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
-    //	    positiveLines.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
-    //	    positiveLines.append(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year())).append(
-    //		    separator);
-    //	    positiveLines.append(
-    //		    getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.monthOfYear())))
-    //		    .append(endLine);
-    //	}
-    //	if (cutNumber == 0) {
-    //	    stringBuilder.append(getLine(employeeBonusInstallment));
-    //	} else {
-    //	    stringBuilder.append(positiveLines);
-    //	}
-    //	return stringBuilder.toString();
-    //    }
-
-    //    private String getAditionalLines(EmployeeBonusInstallment employeeBonusInstallment) {
-    //	StringBuilder stringBuilder = new StringBuilder();
-    //	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
-    //		.getEmployeeMonthlyBonusInstallments()) {
-    //	    if (employeeMonthlyBonusInstallment.getValue() < 0) {
-    //		stringBuilder.append(
-    //			new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee().getEmployeeNumber())).append(
-    //			separator);
-    //		stringBuilder.append(getMovementCode(employeeBonusInstallment.getBonusType())).append(separator);
-    //		stringBuilder.append(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(
-    //			separator);
-    //		stringBuilder.append(employeeMonthlyBonusInstallment.getValue()).append(separator);
-    //		stringBuilder.append("3").append(separator);
-    //		stringBuilder.append(employeeBonusInstallment.getSubCostCenterCode()).append(separator);
-    //		stringBuilder.append(employeeBonusInstallment.getExplorationUnit()).append(separator);
-    //		stringBuilder.append(employeeMonthlyBonusInstallment.getPartialYearMonth().get(DateTimeFieldType.year())).append(
-    //			separator);
-    //		stringBuilder
-    //			.append(
-    //				getMonthString(employeeMonthlyBonusInstallment.getPartialYearMonth().get(
-    //					DateTimeFieldType.monthOfYear()))).append(endLine);
-    //	    }
-    //	}
-    //	return stringBuilder.toString();
-    //    }
-
 }

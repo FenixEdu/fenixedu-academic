@@ -1170,7 +1170,7 @@
 </schema>
 
 <schema name="show.negativeAssiduousnessClosedMonths" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth">
-	<slot name="assiduousness.employee" key="label.employee" schema="view.extraWorkEmployee" layout="values"/>
+	<slot name="assiduousnessStatusHistory.assiduousness.employee" key="label.employee" schema="view.extraWorkEmployee" layout="values"/>
 	<slot name="thisMonthArticle66" key="label.a66Acumulated"/>
 	<slot name="article66" key="label.a66"/>
 	<slot name="thisMonthUnjustifiedDays" key="label.totalUnjustified"/>

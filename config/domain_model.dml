@@ -1564,6 +1564,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Integer workedDays;
 		Duration finalBalance;
 		Duration finalBalanceToCompensate;
+		YearMonthDay beginDate;
+		YearMonthDay endDate;
 	}
 
 	class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4858,8 +4860,8 @@ relation AssiduousnessCampusHistoryCampus {
 	}
 }
 
-relation AssiduousnessClosedMonthAssiduousness {
-	net.sourceforge.fenixedu.domain.assiduousness.Assiduousness playsRole assiduousness;
+relation AssiduousnessClosedMonthAssiduousnessStatusHistory {
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistory;
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
 		multiplicity *;
 	}
@@ -5120,13 +5122,6 @@ relation ClosedMonthJustificationAssiduousnessClosedMonth {
 
 relation ClosedMonthJustificationJustificationMotive {
 	net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive playsRole justificationMotive;
-	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification playsRole closedMonthJustifications {
-		multiplicity *;
-	}
-}
-
-relation ClosedMonthJustificationAssiduousnessStatus {
-	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus playsRole assiduousnessStatus;
 	net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification playsRole closedMonthJustifications {
 		multiplicity *;
 	}

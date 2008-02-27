@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
 
-public class AssignedEmployeeMonthInfo implements Serializable {
+public class EmployeeMonthInfo implements Serializable {
 
-    private AssignedEmployeeAnualInfo assignedEmployeeAnualInfo;
+    private EmployeeAnualInfo employeeAnualInfo;
 
     private YearMonth yearMonth;
 
@@ -94,9 +94,8 @@ public class AssignedEmployeeMonthInfo implements Serializable {
 
     private Double strike;
 
-    public AssignedEmployeeMonthInfo(AssignedEmployeeAnualInfo assignedEmployeeAnualInfo,
-	    YearMonth yearMonth) {
-	setAssignedEmployeeAnualInfo(assignedEmployeeAnualInfo);
+    public EmployeeMonthInfo(EmployeeAnualInfo employeeAnualInfo, YearMonth yearMonth) {
+	setEmployeeAnualInfo(employeeAnualInfo);
 	setYearMonth(yearMonth);
     }
 
@@ -436,12 +435,12 @@ public class AssignedEmployeeMonthInfo implements Serializable {
 	this.yearMonth = yearMonth;
     }
 
-    public AssignedEmployeeAnualInfo getAssignedEmployeeAnualInfo() {
-	return assignedEmployeeAnualInfo;
+    public EmployeeAnualInfo getEmployeeAnualInfo() {
+	return employeeAnualInfo;
     }
 
-    public void setAssignedEmployeeAnualInfo(AssignedEmployeeAnualInfo assignedEmployeeAnualInfo) {
-	this.assignedEmployeeAnualInfo = assignedEmployeeAnualInfo;
+    public void setEmployeeAnualInfo(EmployeeAnualInfo employeeAnualInfo) {
+	this.employeeAnualInfo = employeeAnualInfo;
     }
 
     public Double getChildClinicMedicalTreatment() {

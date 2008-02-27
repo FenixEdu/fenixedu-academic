@@ -12,6 +12,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment;
@@ -93,40 +94,34 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 		    try {
 			String bonusType = row.getCell((short) 1).getStringCellValue();
 			if (bonusType != null
-				&& (bonusType.trim().toUpperCase().equals("P1") || bonusType.trim()
-					.toUpperCase().equals("P2"))) {
+				&& (bonusType.trim().toUpperCase().equals("P1") || bonusType.trim().toUpperCase().equals("P2"))) {
 
-			    EmployeeBonusInstallmentBean employeeBonusInstallmentBean = new EmployeeBonusInstallmentBean(
-				    row, bonusType.trim().toUpperCase());
-			    EmployeeBonusInstallmentBean old = employeeBonusInstallmentMap
-				    .get(employeeBonusInstallmentBean.getEmployee());
+			    EmployeeBonusInstallmentBean employeeBonusInstallmentBean = new EmployeeBonusInstallmentBean(row,
+				    bonusType.trim().toUpperCase());
+			    EmployeeBonusInstallmentBean old = employeeBonusInstallmentMap.get(employeeBonusInstallmentBean
+				    .getEmployee());
 			    if (old != null) {
-				return new ActionMessage("error.duplicatedBonus",
-					employeeBonusInstallmentBean.getEmployee().getEmployeeNumber());
+				return new ActionMessage("error.duplicatedBonus", employeeBonusInstallmentBean.getEmployee()
+					.getEmployeeNumber());
 			    }
 			    employeeBonusInstallmentMap.put(employeeBonusInstallmentBean.getEmployee(),
 				    employeeBonusInstallmentBean);
 			} else {
-			    return new ActionMessage("error.errorReadingFileLine",
-				    new Object[] { rowIndex + 1 });
+			    return new ActionMessage("error.errorReadingFileLine", new Object[] { rowIndex + 1 });
 			}
 		    } catch (Exception e) {
-			return new ActionMessage("error.errorReadingFileLine",
-				new Object[] { rowIndex + 1 });
+			return new ActionMessage("error.errorReadingFileLine", new Object[] { rowIndex + 1 });
 		    }
 		}
 	    } catch (IOException e) {
 		return new ActionMessage("error.errorReadingFile");
 	    }
-	    List<AnualBonusInstallment> anualBonusInstallmentList = AnualBonusInstallment
-		    .readByYear(getYear());
+	    List<AnualBonusInstallment> anualBonusInstallmentList = AnualBonusInstallment.readByYear(getYear());
 	    Collections.sort(anualBonusInstallmentList, new BeanComparator("paymentPartialDate"));
-	    AnualBonusInstallment choosenAnualBonusInstallment = anualBonusInstallmentList
-		    .get(getInstallment() - 1);
+	    AnualBonusInstallment choosenAnualBonusInstallment = anualBonusInstallmentList.get(getInstallment() - 1);
 
 	    Map<Integer, ClosedMonth> closedMonthMap = new HashMap<Integer, ClosedMonth>();
-	    for (YearMonth yearMonth : choosenAnualBonusInstallment.getAssiduousnessYearMonths()
-		    .getYearsMonths()) {
+	    for (YearMonth yearMonth : choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths()) {
 		ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 		if (closedMonth == null) {
 		    return new ActionMessage("error.notAllInstallmentMonthsAreClosed");
@@ -134,65 +129,58 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 		closedMonthMap.put(yearMonth.getNumberOfMonth(), closedMonth);
 	    }
 
-	    AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment
-		    .readByYearAndInstallment(getYear(), getInstallment());
-	    for (EmployeeBonusInstallmentBean employeeBonusInstallmentBean : employeeBonusInstallmentMap
-		    .values()) {
+	    AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment.readByYearAndInstallment(getYear(),
+		    getInstallment());
+	    for (EmployeeBonusInstallmentBean employeeBonusInstallmentBean : employeeBonusInstallmentMap.values()) {
 		EmployeeBonusInstallment thisEmployeeBonusInstallment = null;
 		if (!anualBonusInstallment.getEmployeeBonusInstallments().isEmpty()) {
-		    thisEmployeeBonusInstallment = anualBonusInstallment.getEmployeeBonusInstallment(
-			    employeeBonusInstallmentBean.getEmployee(),
-			    employeeBonusInstallmentBean.bonusType);
+		    thisEmployeeBonusInstallment = anualBonusInstallment.getEmployeeBonusInstallment(employeeBonusInstallmentBean
+			    .getEmployee(), employeeBonusInstallmentBean.bonusType);
 		}
 		if (thisEmployeeBonusInstallment == null) {
 		    thisEmployeeBonusInstallment = new EmployeeBonusInstallment(anualBonusInstallment,
-			    employeeBonusInstallmentBean.getEmployee(), employeeBonusInstallmentBean
-				    .getValue(), employeeBonusInstallmentBean.getBonusType(),
-			    employeeBonusInstallmentBean.getCostCenterCode(),
-			    employeeBonusInstallmentBean.getSubCostCenterCode(),
-			    employeeBonusInstallmentBean.getExplorationUnit());
-		} else {
-		    thisEmployeeBonusInstallment.edit(employeeBonusInstallmentBean.getValue(),
-			    employeeBonusInstallmentBean.getBonusType(), employeeBonusInstallmentBean
-				    .getCostCenterCode(), employeeBonusInstallmentBean
-				    .getSubCostCenterCode(), employeeBonusInstallmentBean
+			    employeeBonusInstallmentBean.getEmployee(), employeeBonusInstallmentBean.getValue(),
+			    employeeBonusInstallmentBean.getBonusType(), employeeBonusInstallmentBean.getCostCenterCode(),
+			    employeeBonusInstallmentBean.getSubCostCenterCode(), employeeBonusInstallmentBean
 				    .getExplorationUnit());
+		} else {
+		    thisEmployeeBonusInstallment.edit(employeeBonusInstallmentBean.getValue(), employeeBonusInstallmentBean
+			    .getBonusType(), employeeBonusInstallmentBean.getCostCenterCode(), employeeBonusInstallmentBean
+			    .getSubCostCenterCode(), employeeBonusInstallmentBean.getExplorationUnit());
 		}
 
 		double value = formatDouble(thisEmployeeBonusInstallment.getValue()
-			/ choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths()
-				.size());
+			/ choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths().size());
 		double lastValue = formatDouble(thisEmployeeBonusInstallment.getValue()
-			- (value * (choosenAnualBonusInstallment.getAssiduousnessYearMonths()
-				.getYearsMonths().size() - 1)));
+			- (value * (choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths().size() - 1)));
 
-		for (int yearMonthIndex = 0; yearMonthIndex < choosenAnualBonusInstallment
-			.getAssiduousnessYearMonths().getYearsMonths().size(); yearMonthIndex++) {
-		    YearMonth yearMonth = choosenAnualBonusInstallment.getAssiduousnessYearMonths()
-			    .getYearsMonths().get(yearMonthIndex);
+		for (int yearMonthIndex = 0; yearMonthIndex < choosenAnualBonusInstallment.getAssiduousnessYearMonths()
+			.getYearsMonths().size(); yearMonthIndex++) {
+		    YearMonth yearMonth = choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths().get(
+			    yearMonthIndex);
 
 		    double thisValue = value;
-		    if (yearMonthIndex == choosenAnualBonusInstallment.getAssiduousnessYearMonths()
-			    .getYearsMonths().size() - 1) {
+		    if (yearMonthIndex == choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths().size() - 1) {
 			thisValue = lastValue;
 		    }
 		    EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment = thisEmployeeBonusInstallment
 			    .getEmployeeMonthlyBonusInstallment(yearMonth);
 		    ClosedMonth closedMonth = closedMonthMap.get(yearMonth.getNumberOfMonth());
-		    if (closedMonth.getAssiduousnessClosedMonth(thisEmployeeBonusInstallment
-			    .getEmployee().getAssiduousness()) == null
-			    || closedMonth.getAssiduousnessClosedMonth(
-				    thisEmployeeBonusInstallment.getEmployee().getAssiduousness())
-				    .getWorkedDays() < miniumWorkedDays) {
+		    List<AssiduousnessClosedMonth> assiduousnessClosedMonthList = closedMonth
+			    .getAssiduousnessClosedMonths(thisEmployeeBonusInstallment.getEmployee().getAssiduousness());
+		    int workedDays = 0;
+		    for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonthList) {
+			workedDays += assiduousnessClosedMonth.getWorkedDays().intValue();
+		    }
+
+		    if (workedDays < miniumWorkedDays) {
 			thisValue = -thisValue;
 		    }
 		    if (employeeMonthlyBonusInstallment == null) {
-			DateTimeFieldType[] dateTimeFields = { DateTimeFieldType.year(),
-				DateTimeFieldType.monthOfYear() };
+			DateTimeFieldType[] dateTimeFields = { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() };
 			int[] fieldValues = { yearMonth.getYear(), yearMonth.getNumberOfMonth() };
-			employeeMonthlyBonusInstallment = new EmployeeMonthlyBonusInstallment(
-				thisEmployeeBonusInstallment, new Partial(dateTimeFields, fieldValues),
-				thisValue);
+			employeeMonthlyBonusInstallment = new EmployeeMonthlyBonusInstallment(thisEmployeeBonusInstallment,
+				new Partial(dateTimeFields, fieldValues), thisValue);
 		    } else {
 			employeeMonthlyBonusInstallment.edit(thisValue);
 		    }

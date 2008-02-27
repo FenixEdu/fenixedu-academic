@@ -154,6 +154,19 @@ public class ClosedMonth extends ClosedMonth_Base {
 	return null;
     }
 
+    public YearMonthDay getClosedMonthFirstDay() {
+	return new YearMonthDay(getClosedYearMonth().get(DateTimeFieldType.year()), getClosedYearMonth().get(
+		DateTimeFieldType.monthOfYear()), 01);
+    }
+
+    public YearMonthDay getClosedMonthLastDay() {
+	YearMonthDay beginDate = new YearMonthDay(getClosedYearMonth().get(DateTimeFieldType.year()), getClosedYearMonth().get(
+		DateTimeFieldType.monthOfYear()), 01);
+	int endDay = beginDate.dayOfMonth().getMaximumValue();
+	return new YearMonthDay(getClosedYearMonth().get(DateTimeFieldType.year()), getClosedYearMonth().get(
+		DateTimeFieldType.monthOfYear()), endDay);
+    }
+
     public void delete() {
 	if (canBeDelete()) {
 	    removeRootDomainObject();
@@ -173,13 +186,23 @@ public class ClosedMonth extends ClosedMonth_Base {
 	return !hasAnyClosedMonthDocuments();
     }
 
-    public AssiduousnessClosedMonth getAssiduousnessClosedMonth(Assiduousness assiduousness) {
+    public AssiduousnessClosedMonth getAssiduousnessClosedMonth(AssiduousnessStatusHistory assiduousnessStatusHistory) {
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
-	    if (assiduousnessClosedMonth.getAssiduousness() == assiduousness) {
+	    if (assiduousnessClosedMonth.getAssiduousnessStatusHistory().equals(assiduousnessStatusHistory)) {
 		return assiduousnessClosedMonth;
 	    }
 	}
 	return null;
+    }
+
+    public List<AssiduousnessClosedMonth> getAssiduousnessClosedMonths(Assiduousness assiduousness) {
+	List<AssiduousnessClosedMonth> result = new ArrayList<AssiduousnessClosedMonth>();
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
+	    if (assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().equals(assiduousness)) {
+		result.add(assiduousnessClosedMonth);
+	    }
+	}
+	return result;
     }
 
     public ClosedMonthDocument addFile(InputStream file, String fileName, ClosedMonthDocumentType closedMonthDocumentType)

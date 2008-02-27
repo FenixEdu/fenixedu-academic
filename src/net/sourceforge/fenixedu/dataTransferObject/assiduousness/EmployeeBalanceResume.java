@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 
 import org.joda.time.Duration;
@@ -15,7 +15,7 @@ import org.joda.time.format.PeriodFormatterBuilder;
 
 public class EmployeeBalanceResume implements Serializable {
 
-    Employee employee;
+    AssiduousnessStatusHistory assiduousnessStatusHistory;
 
     Duration monthlyBalance = Duration.ZERO;
 
@@ -31,12 +31,23 @@ public class EmployeeBalanceResume implements Serializable {
 
     Duration futureBalanceToCompensate = Duration.ZERO;
 
-    public EmployeeBalanceResume(Employee employee) {
-	setEmployee(employee);
+    public EmployeeBalanceResume() {
     }
 
-    public void setEmployeeBalanceResume(Duration thisBalance, Duration thisBalanceToCompensate, Partial thisMonth) {
-	setEmployee(employee);
+    public EmployeeBalanceResume(Duration thisBalance, Duration thisBalanceToCompensate, Partial thisMonth,
+	    AssiduousnessStatusHistory assiduousnessStatusHistory) {
+	setEmployeeBalanceResume(thisBalance, thisBalanceToCompensate, thisMonth, assiduousnessStatusHistory);
+    }
+
+    public void setEmployeeBalanceResume(AssiduousnessClosedMonth assiduosunessClosedMonth) {
+	setEmployeeBalanceResume(assiduosunessClosedMonth.getBalance(), assiduosunessClosedMonth.getBalanceToDiscount(),
+		assiduosunessClosedMonth.getClosedMonth().getClosedYearMonth(), assiduosunessClosedMonth
+			.getAssiduousnessStatusHistory());
+    }
+
+    public void setEmployeeBalanceResume(Duration thisBalance, Duration thisBalanceToCompensate, Partial thisMonth,
+	    AssiduousnessStatusHistory assiduousnessStatusHistory) {
+	setAssiduousnessStatusHistory(assiduousnessStatusHistory);
 	setMonthlyBalance(thisBalance.plus(thisBalanceToCompensate));
 	setMonthlyBalanceToCompensate(thisBalanceToCompensate);
 	Duration remainingBalanceToCompansate = Duration.ZERO;
@@ -52,7 +63,8 @@ public class EmployeeBalanceResume implements Serializable {
 	    }
 	}
 
-	AssiduousnessClosedMonth previousAssiduousnessClosedMonth = getPreviousAssiduousnessClosedMonth(new YearMonth(thisMonth));
+	AssiduousnessClosedMonth previousAssiduousnessClosedMonth = getPreviousAssiduousnessClosedMonth(new YearMonth(thisMonth),
+		assiduousnessStatusHistory);
 	if (previousAssiduousnessClosedMonth != null) {
 	    previousAnualBalance = previousAssiduousnessClosedMonth.getFinalBalance();
 	    anualBalanceToCompensate = previousAssiduousnessClosedMonth.getFinalBalanceToCompensate();
@@ -76,12 +88,13 @@ public class EmployeeBalanceResume implements Serializable {
 
     }
 
-    private AssiduousnessClosedMonth getPreviousAssiduousnessClosedMonth(YearMonth yearMonth) {
+    private AssiduousnessClosedMonth getPreviousAssiduousnessClosedMonth(YearMonth yearMonth,
+	    AssiduousnessStatusHistory assiduousnessStatusHistory) {
 	if (yearMonth.getMonth().getNumberOfMonth() != 1) {
 	    yearMonth.subtractMonth();
 	    ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	    if (closedMonth != null) {
-		return closedMonth.getAssiduousnessClosedMonth(getEmployee().getAssiduousness());
+		return closedMonth.getAssiduousnessClosedMonth(assiduousnessStatusHistory);
 	    }
 	}
 	return null;
@@ -103,12 +116,12 @@ public class EmployeeBalanceResume implements Serializable {
 	this.anualBalanceToCompensate = anualBalanceToCompensate;
     }
 
-    public Employee getEmployee() {
-	return employee;
+    public AssiduousnessStatusHistory getAssiduousnessStatusHistory() {
+	return assiduousnessStatusHistory;
     }
 
-    public void setEmployee(Employee employee) {
-	this.employee = employee;
+    public void setAssiduousnessStatusHistory(AssiduousnessStatusHistory assiduousnessStatusHistory) {
+	this.assiduousnessStatusHistory = assiduousnessStatusHistory;
     }
 
     public Duration getFinalAnualBalance() {

@@ -9755,8 +9755,8 @@
 		</filterChains>
     </service>
     	<service>
-		<name>ExportAssignedEmployeesInfo</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportAssignedEmployeesInfo</implementationClass>
+		<name>ExportEmployeesAnualInfo</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportEmployeesAnualInfo</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

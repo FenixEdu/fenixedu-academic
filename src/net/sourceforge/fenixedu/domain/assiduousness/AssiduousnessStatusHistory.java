@@ -9,28 +9,33 @@ import org.joda.time.YearMonthDay;
 
 public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base {
 
-    public AssiduousnessStatusHistory(Assiduousness assiduousness,
-            AssiduousnessStatus assiduousnessStatus, YearMonthDay beginDate, YearMonthDay endDate,
-            DateTime lastModifiedDate, Employee modifiedBy) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setAssiduousness(assiduousness);
-        setAssiduousnessStatus(assiduousnessStatus);
-        setBeginDate(beginDate);
-        setEndDate(endDate);
-        setLastModifiedDate(lastModifiedDate);
-        setModifiedBy(modifiedBy);
+    public AssiduousnessStatusHistory(Assiduousness assiduousness, AssiduousnessStatus assiduousnessStatus,
+	    YearMonthDay beginDate, YearMonthDay endDate, DateTime lastModifiedDate, Employee modifiedBy) {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setAssiduousness(assiduousness);
+	setAssiduousnessStatus(assiduousnessStatus);
+	setBeginDate(beginDate);
+	setEndDate(endDate);
+	setLastModifiedDate(lastModifiedDate);
+	setModifiedBy(modifiedBy);
     }
 
     public DateInterval getValidInterval() {
-        return new DateInterval(getBeginDate(), getEndDate());
+	return new DateInterval(getBeginDate(), getEndDate());
+    }
+
+    private boolean canBeDeleted() {
+	return getAssiduousnessClosedMonths().isEmpty();
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeAssiduousness();
-        removeAssiduousnessStatus();
-        removeModifiedBy();
-        deleteDomainObject();
+	if (canBeDeleted()) {
+	    removeRootDomainObject();
+	    removeAssiduousness();
+	    removeAssiduousnessStatus();
+	    removeModifiedBy();
+	    deleteDomainObject();
+	}
     }
 }

@@ -14,23 +14,19 @@ import org.joda.time.YearMonthDay;
 public class JustificationMotive extends JustificationMotive_Base {
 
     // construtors used in scripts
-    public JustificationMotive(String acronym, String description, Boolean actualWorkTime,
-	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup,
-	    DateTime lastModifiedDate, Employee modifiedBy) {
+    public JustificationMotive(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
+	    DayType dayType, JustificationGroup justificationGroup, DateTime lastModifiedDate, Employee modifiedBy) {
 	super();
-	init(acronym, description, actualWorkTime, justificationType, dayType, justificationGroup,
-		lastModifiedDate, modifiedBy);
+	init(acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, lastModifiedDate, modifiedBy);
     }
 
-    public JustificationMotive(String acronym, String description, DateTime lastModifiedDate,
-	    Employee modifiedBy) {
+    public JustificationMotive(String acronym, String description, DateTime lastModifiedDate, Employee modifiedBy) {
 	super();
 	init(acronym, description, false, null, null, null, lastModifiedDate, modifiedBy);
     }
 
-    private void init(String acronym, String description, Boolean actualWorkTime,
-	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup,
-	    DateTime lastModifiedDate, Employee modifiedBy) {
+    private void init(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
+	    DayType dayType, JustificationGroup justificationGroup, DateTime lastModifiedDate, Employee modifiedBy) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAcronym(acronym);
 	setDescription(description);
@@ -44,24 +40,21 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setDiscountBonus(Boolean.FALSE);
     }
 
-    public JustificationMotive(String acronym, String description, Boolean actualWorkTime,
-	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup,
-	    Employee modifiedBy) {
-	if (alreadyExistsJustificationMotiveAcronym(acronym)) {
-	    throw new DomainException("error.acronymAlreadyExists");
-	}
-	init(acronym, description, actualWorkTime, justificationType, dayType, justificationGroup,
-		new DateTime(), modifiedBy);
-    }
-
-    // in regularizations actualWorkTime is always false
-    public JustificationMotive(String acronym, String description, JustificationType justificationType,
+    public JustificationMotive(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
 	    DayType dayType, JustificationGroup justificationGroup, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym)) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
-	init(acronym, description, false, justificationType, dayType, justificationGroup,
-		new DateTime(), modifiedBy);
+	init(acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, new DateTime(), modifiedBy);
+    }
+
+    // in regularizations actualWorkTime is always false
+    public JustificationMotive(String acronym, String description, JustificationType justificationType, DayType dayType,
+	    JustificationGroup justificationGroup, Employee modifiedBy) {
+	if (alreadyExistsJustificationMotiveAcronym(acronym)) {
+	    throw new DomainException("error.acronymAlreadyExists");
+	}
+	init(acronym, description, false, justificationType, dayType, justificationGroup, new DateTime(), modifiedBy);
     }
 
     public JustificationMotive(String acronym, String description, Employee modifiedBy) {
@@ -76,10 +69,8 @@ public class JustificationMotive extends JustificationMotive_Base {
     }
 
     private boolean alreadyExistsJustificationMotiveAcronym(String acronym, Integer id) {
-	for (JustificationMotive justificationMotive : RootDomainObject.getInstance()
-		.getJustificationMotives()) {
-	    if (justificationMotive.getAcronym().equalsIgnoreCase(acronym)
-		    && (id == null || !getIdInternal().equals(id))) {
+	for (JustificationMotive justificationMotive : RootDomainObject.getInstance().getJustificationMotives()) {
+	    if (justificationMotive.getAcronym().equalsIgnoreCase(acronym) && (id == null || !getIdInternal().equals(id))) {
 		return true;
 	    }
 	}
@@ -97,8 +88,7 @@ public class JustificationMotive extends JustificationMotive_Base {
     }
 
     public void editJustificationMotive(String acronym, String description, Boolean actualWorkTime,
-	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup,
-	    Employee modifiedBy) {
+	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym, getIdInternal())) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
@@ -122,27 +112,26 @@ public class JustificationMotive extends JustificationMotive_Base {
 	return false;
     }
 
-    public Integer getGiafCode(Assiduousness assiduousness, AssiduousnessStatus assiduousnessStatus) {
-	if (assiduousnessStatus.getDescription().equalsIgnoreCase("Contrato a termo certo")) {
+    public Integer getGiafCode(AssiduousnessStatusHistory assiduousnessStatusHistory) {
+	if (assiduousnessStatusHistory.getAssiduousnessStatus().getDescription().equalsIgnoreCase("Contrato a termo certo")) {
 	    if (getGiafCodeContractedStatus() == null) {
-		throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(),
-			assiduousness.getEmployee().getEmployeeNumber().toString());
+		throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(), assiduousnessStatusHistory
+			.getAssiduousness().getEmployee().getEmployeeNumber().toString());
 	    }
 	    return getGiafCodeContractedStatus();
 	}
 	if (getGiafCodeOtherStatus() == null) {
-	    throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(),
-		    assiduousness.getEmployee().getEmployeeNumber().toString());
+	    throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(), assiduousnessStatusHistory
+		    .getAssiduousness().getEmployee().getEmployeeNumber().toString());
 	}
 	return getGiafCodeOtherStatus();
     }
 
     public static JustificationMotive getJustificationMotiveByGiafCode(Integer code,
-	    Assiduousness assiduousness, AssiduousnessStatus assiduousnessStatus) {
-	for (JustificationMotive justificationMotive : RootDomainObject.getInstance()
-		.getJustificationMotives()) {
+	    AssiduousnessStatusHistory assiduousnessStatusHistory) {
+	for (JustificationMotive justificationMotive : RootDomainObject.getInstance().getJustificationMotives()) {
 	    try {
-		if (justificationMotive.getGiafCode(assiduousness, assiduousnessStatus).equals(code)
+		if (justificationMotive.getGiafCode(assiduousnessStatusHistory).equals(code)
 			&& justificationMotive.getAccumulate()) {
 		    return justificationMotive;
 		}

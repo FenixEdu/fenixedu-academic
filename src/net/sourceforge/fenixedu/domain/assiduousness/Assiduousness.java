@@ -42,9 +42,11 @@ public class Assiduousness extends Assiduousness_Base {
 
     public static final TimeOfDay defaultEndNightWorkDay = new TimeOfDay(7, 0, 0, 0);
 
-    public static final Duration normalWorkDayDuration = new Duration(25200000); // 7 hours
+    public static final Duration normalWorkDayDuration = new Duration(25200000); // 7
+    // hours
 
-    public static final Duration IST_TOLERANCE_TIME = new Duration(3540000); //59 minutes
+    public static final Duration IST_TOLERANCE_TIME = new Duration(3540000); // 59
+    // minutes
 
     public static final int MAX_A66_PER_MONTH = 2;
 
@@ -426,22 +428,12 @@ public class Assiduousness extends Assiduousness_Base {
 	return lastActiveStatus;
     }
 
-    public AssiduousnessStatus getActiveAssiduousnessStatusInDate(YearMonthDay date) {
-	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
-	    if (assiduousnessStatusHistory.getEndDate() != null
-		    && assiduousnessStatusHistory.getValidInterval().containsDate(date)
-		    && assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
-		return assiduousnessStatusHistory.getAssiduousnessStatus();
-	    } else if ((assiduousnessStatusHistory.getBeginDate().isBefore(date) || assiduousnessStatusHistory.getBeginDate()
-		    .isEqual(date))
-		    && assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
-		return assiduousnessStatusHistory.getAssiduousnessStatus();
-	    }
-	}
-	return null;
+    public AssiduousnessStatus getLastAssiduousnessStatusBetween(YearMonthDay beginDate, YearMonthDay endDate) {
+	AssiduousnessStatusHistory lastActiveStatus = getLastAssiduousnessStatusHistoryBetween(beginDate, endDate);
+	return lastActiveStatus == null ? null : lastActiveStatus.getAssiduousnessStatus();
     }
 
-    public AssiduousnessStatus getLastAssiduousnessStatusBetween(YearMonthDay beginDate, YearMonthDay endDate) {
+    public AssiduousnessStatusHistory getLastAssiduousnessStatusHistoryBetween(YearMonthDay beginDate, YearMonthDay endDate) {
 	AssiduousnessStatusHistory lastActiveStatus = null;
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
 	    if (assiduousnessStatusHistory.getEndDate() != null) {
@@ -459,12 +451,12 @@ public class Assiduousness extends Assiduousness_Base {
 		if ((assiduousnessStatusHistory.getBeginDate().isBefore(endDate) || assiduousnessStatusHistory.getBeginDate()
 			.isEqual(endDate))
 			&& assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
-		    return assiduousnessStatusHistory.getAssiduousnessStatus();
+		    return assiduousnessStatusHistory;
 		}
 	    }
 
 	}
-	return lastActiveStatus == null ? null : lastActiveStatus.getAssiduousnessStatus();
+	return lastActiveStatus == null ? null : lastActiveStatus;
     }
 
     public List<AssiduousnessStatusHistory> getStatusBetween(YearMonthDay beginDate, YearMonthDay endDate) {
@@ -555,39 +547,6 @@ public class Assiduousness extends Assiduousness_Base {
 	return false;
     }
 
-    public AssiduousnessClosedMonth getClosedMonth(Partial closedPartial) {
-	for (AssiduousnessClosedMonth closedMonth : getAssiduousnessClosedMonths()) {
-	    if (closedMonth.getClosedMonth().getClosedYearMonth().equals(closedPartial)) {
-		return closedMonth;
-	    }
-	}
-	return null;
-    }
-
-    public AssiduousnessClosedMonth getAssiduousnessClosedMonth(ClosedMonth closedMonth) {
-	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
-	    if (assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()) == closedMonth
-		    .getClosedYearMonth().get(DateTimeFieldType.year())
-		    && assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == closedMonth
-			    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear())) {
-		return assiduousnessClosedMonth;
-	    }
-	}
-	return null;
-    }
-
-    public AssiduousnessClosedMonth getLastClosedMonth() {
-	AssiduousnessClosedMonth lastAssiduousnessClosedMonth = null;
-	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
-	    if (lastAssiduousnessClosedMonth == null
-		    || assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().isAfter(
-			    lastAssiduousnessClosedMonth.getClosedMonth().getClosedYearMonth())) {
-		lastAssiduousnessClosedMonth = assiduousnessClosedMonth;
-	    }
-	}
-	return lastAssiduousnessClosedMonth;
-    }
-
     public Duration getAverageWorkTimeDuration(YearMonthDay beginDate, YearMonthDay endDate) {
 	List<Schedule> schedules = getSchedules(beginDate, endDate);
 	Duration averageWorkTimeDuration = Duration.ZERO;
@@ -627,10 +586,9 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     private boolean canBeDeleted() {
-	return getAssiduousnessCampusHistories().isEmpty() && getAssiduousnessClosedMonths().isEmpty()
-		&& getAssiduousnessRecords().isEmpty() && getAssiduousnessStatusHistories().isEmpty()
-		&& getAssiduousnessVacations().isEmpty() && getSchedules().isEmpty() && getExtraWorkRequests().isEmpty()
-		&& getEmployeeExtraWorkAuthorizations().isEmpty();
+	return getAssiduousnessCampusHistories().isEmpty() && getAssiduousnessRecords().isEmpty()
+		&& getAssiduousnessStatusHistories().isEmpty() && getAssiduousnessVacations().isEmpty()
+		&& getSchedules().isEmpty() && getExtraWorkRequests().isEmpty() && getEmployeeExtraWorkAuthorizations().isEmpty();
     }
 
     public List<ExtraWorkRequest> getExtraWorkRequests(YearMonthDay begin) {

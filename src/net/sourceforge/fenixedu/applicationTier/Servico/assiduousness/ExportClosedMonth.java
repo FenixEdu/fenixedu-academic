@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
+import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
@@ -40,76 +41,79 @@ public class ExportClosedMonth extends Service {
     private final static String durationZeroString = "00:00";
 
     public String run(ClosedMonth closedMonth, YearMonthDay beginDate, YearMonthDay endDate) {
-	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(
-		beginDate, endDate);
+	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(beginDate, endDate);
 	StringBuilder result = new StringBuilder();
-	for (Assiduousness assiduousness : rootDomainObject.getAssiduousnesss()) {
-	    if (assiduousness.isStatusActive(beginDate, endDate)) {
-		result.append(getMonthAssiduousnessBalance(assiduousness, assiduousnessRecords
-			.get(assiduousness), closedMonth, beginDate, endDate));
+	// for (Assiduousness assiduousness :
+	// rootDomainObject.getAssiduousnesss()) {
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
+	    if (assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
+		result.append(getMonthAssiduousnessBalance(assiduousnessClosedMonth, assiduousnessRecords
+			.get(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()), closedMonth));
 	    }
 	}
 	return result.toString();
     }
 
-    private String getMonthAssiduousnessBalance(Assiduousness assiduousness,
-	    List<AssiduousnessRecord> assiduousnessRecords, ClosedMonth closedMonth,
-	    YearMonthDay beginDate, YearMonthDay endDate) {
+    private String getMonthAssiduousnessBalance(AssiduousnessClosedMonth assiduousnessClosedMonth,
+	    List<AssiduousnessRecord> assiduousnessRecords, ClosedMonth closedMonth) {
+	YearMonthDay beginDate = assiduousnessClosedMonth.getBeginDate();
+	YearMonthDay endDate = assiduousnessClosedMonth.getEndDate();
 	StringBuilder result = new StringBuilder();
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
 	YearMonthDay lowerBeginDate = beginDate.minusDays(8);
-	HashMap<YearMonthDay, WorkSchedule> workScheduleMap = assiduousness
-		.getWorkSchedulesBetweenDates(lowerBeginDate, endDate);
-	HashMap<YearMonthDay, List<Leave>> leavesMap = getLeavesMap(assiduousnessRecords, beginDate,
-		endDate);
+	HashMap<YearMonthDay, WorkSchedule> workScheduleMap = assiduousnessClosedMonth.getAssiduousnessStatusHistory()
+		.getAssiduousness().getWorkSchedulesBetweenDates(lowerBeginDate, endDate);
+	HashMap<YearMonthDay, List<Leave>> leavesMap = getLeavesMap(assiduousnessRecords, beginDate, endDate);
 	DateTime init = getInit(lowerBeginDate, workScheduleMap);
 	DateTime end = getEnd(endDate, workScheduleMap);
-	HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = getClockingsMap(
-		assiduousnessRecords, workScheduleMap, init, end);
-	for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay
-		.plusDays(1)) {
-	    final Schedule schedule = assiduousness.getSchedule(thisDay);
-	    if (schedule != null && assiduousness.isStatusActive(thisDay, thisDay)) {
-		final boolean isDayHoliday = assiduousness.isHoliday(thisDay);
+	HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = getClockingsMap(assiduousnessRecords, workScheduleMap,
+		init, end);
+	for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
+	    final Schedule schedule = assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().getSchedule(
+		    thisDay);
+	    if (schedule != null
+		    && assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().isStatusActive(thisDay,
+			    thisDay)) {
+		final boolean isDayHoliday = assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
+			.isHoliday(thisDay);
 		final WorkSchedule workSchedule = workScheduleMap.get(thisDay);
 		HashMap<JustificationMotive, List<Leave>> leavesList = getDayLeaves(leavesMap, thisDay);
-		String acronym = workSchedule == null ? "" : StringUtils.upperCase(workSchedule
-			.getWorkScheduleType().getAcronym());
+		String acronym = workSchedule == null ? "" : StringUtils.upperCase(workSchedule.getWorkScheduleType()
+			.getAcronym());
 		WorkDaySheet workDaySheet = null;
 		if (workSchedule != null && !isDayHoliday) {
 		    for (JustificationMotive justificationMotive : leavesList.keySet()) {
 			List<Leave> list = leavesList.get(justificationMotive);
 			Duration leaveDuration = Duration.ZERO;
-			workDaySheet = getWorkDaySheet(assiduousness, clockingsMap.get(thisDay),
-				thisDay, isDayHoliday, workSchedule, workDaySheet,
-				getListFromCollection(leavesList.values()));
+			workDaySheet = getWorkDaySheet(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
+				.getAssiduousness(), clockingsMap.get(thisDay), thisDay, isDayHoliday, workSchedule,
+				workDaySheet, getListFromCollection(leavesList.values()));
 			for (final Leave leave : list) {
 			    if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE
 				    || leave.getJustificationMotive().getJustificationType() == JustificationType.MULTIPLE_MONTH_BALANCE) {
 				if (!workDaySheet.getIrregular()) {
 				    leaveDuration = schedule.getEqualWorkPeriodDuration();
 				}
-			    } else if (leave.getJustificationMotive().getJustificationType().equals(
-				    JustificationType.BALANCE)) {
+			    } else if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.BALANCE)) {
 				if (workSchedule.getWorkScheduleType().getFixedWorkPeriod() == null) {
 				    leaveDuration = Duration.ZERO;
 				} else if (leave.getDuration().isLongerThan(
 					workDaySheet.getUnjustifiedTimeWithoutBalanceDiscount())) {
-				    leaveDuration = workDaySheet
-					    .getUnjustifiedTimeWithoutBalanceDiscount();
+				    leaveDuration = workDaySheet.getUnjustifiedTimeWithoutBalanceDiscount();
 				} else {
 				    leaveDuration = leaveDuration.plus(leave.getDuration());
 				}
+			    } else if (leave.getJustificationMotive().getJustificationType().equals(
+				    JustificationType.HALF_OCCURRENCE)) {
+				leaveDuration = new Duration(schedule.getEqualWorkPeriodDuration().getMillis() / 2);
 			    } else {
-				leaveDuration = leaveDuration.plus(workDaySheet.getLeaveDuration(
-					thisDay, workSchedule, leave));
+				leaveDuration = leaveDuration.plus(workDaySheet.getLeaveDuration(thisDay, workSchedule, leave));
 			    }
 			}
-			result.append(getLine(assiduousness.getEmployee().getEmployeeNumber(),
-				justificationMotive.getAcronym(), thisDay, thisDay, leaveDuration,
-				workSchedule.getWorkScheduleType().getNormalWorkPeriod()
-					.getWorkPeriodDuration(), acronym));
+			result.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
+				.getEmployee().getEmployeeNumber(), justificationMotive.getAcronym(), thisDay, thisDay,
+				leaveDuration, workSchedule.getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration(),
+				acronym));
 		    }
 		} else {
 		    for (JustificationMotive justificationMotive : leavesList.keySet()) {
@@ -122,34 +126,30 @@ public class ExportClosedMonth extends Service {
 				    && leave.getJustificationMotive().getDayType() != DayType.WORKDAY
 				    && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.CURRENT_YEAR_HOLIDAYS
 				    && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS
-                                    && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.NEXT_YEAR_HOLIDAYS) {
+				    && leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.NEXT_YEAR_HOLIDAYS) {
 				leaveDuration = schedule.getEqualWorkPeriodDuration();
 				showDuration = true;
 			    }
 			}
 			if (showDuration) {
 			    String dayDescription = bundle.getString("label.holiday");
-			    final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(thisDay
-				    .toDateTimeAtMidnight());
+			    final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(thisDay.toDateTimeAtMidnight());
 			    if (dayOfWeek.equals(WeekDay.SATURDAY)) {
 				dayDescription = bundle.getString("label.weeklyRest");
 			    } else if (dayOfWeek.equals(WeekDay.SUNDAY)) {
 				dayDescription = bundle.getString("label.complementaryWeeklyRest");
 			    }
-			    result.append(getLine(assiduousness.getEmployee().getEmployeeNumber(),
-				    justificationMotive.getAcronym(), thisDay, thisDay,
-				    getDurationString(leaveDuration), durationZeroString, StringUtils
-					    .upperCase(dayDescription)));
+			    result.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
+				    .getEmployee().getEmployeeNumber(), justificationMotive.getAcronym(), thisDay, thisDay,
+				    getDurationString(leaveDuration), durationZeroString, StringUtils.upperCase(dayDescription)));
 			}
 		    }
 		}
 	    }
 	}
 
-	AssiduousnessClosedMonth assiduousnessClosedMonth = getAssAssiduousnessClosedMonth(
-		assiduousness, closedMonth);
-	List<AssiduousnessExtraWork> assiduousnessExtraWorkList = new ArrayList<AssiduousnessExtraWork>(
-		assiduousnessClosedMonth.getAssiduousnessExtraWorks());
+	List<AssiduousnessExtraWork> assiduousnessExtraWorkList = new ArrayList<AssiduousnessExtraWork>(assiduousnessClosedMonth
+		.getAssiduousnessExtraWorks());
 
 	Collections.sort(assiduousnessExtraWorkList, new BeanComparator("workScheduleType.acronym"));
 	StringBuilder totalExtra25Result = new StringBuilder();
@@ -164,27 +164,27 @@ public class ExportClosedMonth extends Service {
 	    Duration totalUnjustified = assiduousnessExtraWork.getUnjustified();
 
 	    if (totalExtra25 != null && !totalExtra25.equals(Duration.ZERO)) {
-		totalExtra25Result.append(getLine(assiduousness.getEmployee().getEmployeeNumber(),
-			StringUtils.upperCase(bundle.getString("label.25.percent")), beginDate, endDate,
-			getDurationString(totalExtra25), durationZeroString, StringUtils
+		totalExtra25Result.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
+			.getEmployee().getEmployeeNumber(), StringUtils.upperCase(bundle.getString("label.25.percent")),
+			beginDate, endDate, getDurationString(totalExtra25), durationZeroString, StringUtils
 				.upperCase(assiduousnessExtraWork.getWorkScheduleType().getAcronym())));
 	    }
 	    if (totalExtra125 != null && !totalExtra125.equals(Duration.ZERO)) {
-		totalExtra125Result.append(getLine(assiduousness.getEmployee().getEmployeeNumber(),
-			StringUtils.upperCase(bundle.getString("label.125.percent")), beginDate,
-			endDate, getDurationString(totalExtra125), durationZeroString, StringUtils
+		totalExtra125Result.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
+			.getEmployee().getEmployeeNumber(), StringUtils.upperCase(bundle.getString("label.125.percent")),
+			beginDate, endDate, getDurationString(totalExtra125), durationZeroString, StringUtils
 				.upperCase(assiduousnessExtraWork.getWorkScheduleType().getAcronym())));
 	    }
 	    if (totalExtra150 != null && !totalExtra150.equals(Duration.ZERO)) {
-		totalExtra150Result.append(getLine(assiduousness.getEmployee().getEmployeeNumber(),
-			StringUtils.upperCase(bundle.getString("label.150.percent")), beginDate,
-			endDate, getDurationString(totalExtra150), durationZeroString, StringUtils
+		totalExtra150Result.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
+			.getEmployee().getEmployeeNumber(), StringUtils.upperCase(bundle.getString("label.150.percent")),
+			beginDate, endDate, getDurationString(totalExtra150), durationZeroString, StringUtils
 				.upperCase(assiduousnessExtraWork.getWorkScheduleType().getAcronym())));
 	    }
 	    if (totalUnjustified != null && !totalUnjustified.equals(Duration.ZERO)) {
-		totalUnjustifiedResult.append(getLine(assiduousness.getEmployee().getEmployeeNumber(),
-			StringUtils.upperCase(bundle.getString("label.unjustifieds")), beginDate,
-			endDate, getDurationString(totalUnjustified), durationZeroString, StringUtils
+		totalUnjustifiedResult.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
+			.getEmployee().getEmployeeNumber(), StringUtils.upperCase(bundle.getString("label.unjustifieds")),
+			beginDate, endDate, getDurationString(totalUnjustified), durationZeroString, StringUtils
 				.upperCase(assiduousnessExtraWork.getWorkScheduleType().getAcronym())));
 	    }
 	}
@@ -194,27 +194,27 @@ public class ExportClosedMonth extends Service {
 	result.append(totalUnjustifiedResult);
 	if (assiduousnessClosedMonth.getHolidayBalance() != null
 		&& !assiduousnessClosedMonth.getHolidayBalance().equals(Duration.ZERO)) {
-	    result.append(getLine(assiduousness.getEmployee().getEmployeeNumber(), bundle
-		    .getString("label.200.percent"), beginDate, endDate,
-		    getDurationString(assiduousnessClosedMonth.getHolidayBalance()), durationZeroString,
-		    StringUtils.upperCase(bundle.getString("label.holiday"))));
+	    result.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().getEmployee()
+		    .getEmployeeNumber(), bundle.getString("label.200.percent"), beginDate, endDate,
+		    getDurationString(assiduousnessClosedMonth.getHolidayBalance()), durationZeroString, StringUtils
+			    .upperCase(bundle.getString("label.holiday"))));
 	}
 	if (assiduousnessClosedMonth.getSaturdayBalance() != null
 		&& !assiduousnessClosedMonth.getSaturdayBalance().equals(Duration.ZERO)) {
-	    result.append(getLine(assiduousness.getEmployee().getEmployeeNumber(), bundle
-		    .getString("label.200.percent"), beginDate, endDate,
-		    getDurationString(assiduousnessClosedMonth.getSaturdayBalance()),
-		    durationZeroString, bundle.getString("label.weeklyRest")));
+	    result.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().getEmployee()
+		    .getEmployeeNumber(), bundle.getString("label.200.percent"), beginDate, endDate,
+		    getDurationString(assiduousnessClosedMonth.getSaturdayBalance()), durationZeroString, bundle
+			    .getString("label.weeklyRest")));
 	}
 	if (assiduousnessClosedMonth.getSundayBalance() != null
 		&& !assiduousnessClosedMonth.getSundayBalance().equals(Duration.ZERO)) {
-	    result.append(getLine(assiduousness.getEmployee().getEmployeeNumber(), bundle
-		    .getString("label.200.percent"), beginDate, endDate,
-		    getDurationString(assiduousnessClosedMonth.getSundayBalance()), durationZeroString,
-		    bundle.getString("label.complementaryWeeklyRest")));
+	    result.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().getEmployee()
+		    .getEmployeeNumber(), bundle.getString("label.200.percent"), beginDate, endDate,
+		    getDurationString(assiduousnessClosedMonth.getSundayBalance()), durationZeroString, bundle
+			    .getString("label.complementaryWeeklyRest")));
 	}
-	result.append(getLine(assiduousness.getEmployee().getEmployeeNumber(), StringUtils
-		.upperCase(bundle.getString("label.balance")), beginDate, endDate,
+	result.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().getEmployee()
+		.getEmployeeNumber(), StringUtils.upperCase(bundle.getString("label.balance")), beginDate, endDate,
 		getDurationString(assiduousnessClosedMonth.getBalance()), durationZeroString, null));
 	return result.toString();
     }
@@ -240,8 +240,7 @@ public class ExportClosedMonth extends Service {
 	return end;
     }
 
-    private DateTime getInit(YearMonthDay lowerBeginDate,
-	    HashMap<YearMonthDay, WorkSchedule> workScheduleMap) {
+    private DateTime getInit(YearMonthDay lowerBeginDate, HashMap<YearMonthDay, WorkSchedule> workScheduleMap) {
 	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay);
 	WorkSchedule beginWorkSchedule = workScheduleMap.get(lowerBeginDate);
 	if (beginWorkSchedule != null) {
@@ -250,9 +249,8 @@ public class ExportClosedMonth extends Service {
 	return init;
     }
 
-    private WorkDaySheet getWorkDaySheet(Assiduousness assiduousness,
-	    List<AssiduousnessRecord> clockings, YearMonthDay thisDay, final boolean isDayHoliday,
-	    final WorkSchedule workSchedule, WorkDaySheet workDaySheet, List<Leave> list) {
+    private WorkDaySheet getWorkDaySheet(Assiduousness assiduousness, List<AssiduousnessRecord> clockings, YearMonthDay thisDay,
+	    final boolean isDayHoliday, final WorkSchedule workSchedule, WorkDaySheet workDaySheet, List<Leave> list) {
 	if (workDaySheet == null) {
 	    if (clockings == null) {
 		clockings = new ArrayList<AssiduousnessRecord>();
@@ -263,24 +261,11 @@ public class ExportClosedMonth extends Service {
 	return workDaySheet;
     }
 
-    private AssiduousnessClosedMonth getAssAssiduousnessClosedMonth(Assiduousness assiduousness,
-	    ClosedMonth closedMonth) {
-	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousness
-		.getAssiduousnessClosedMonths()) {
-	    if (assiduousnessClosedMonth.getClosedMonth().sameClosedMonth(closedMonth)) {
-		return assiduousnessClosedMonth;
-	    }
-	}
-	return null;
-    }
-
-    private HashMap<YearMonthDay, List<AssiduousnessRecord>> getClockingsMap(
-	    List<AssiduousnessRecord> assiduousnessRecords,
+    private HashMap<YearMonthDay, List<AssiduousnessRecord>> getClockingsMap(List<AssiduousnessRecord> assiduousnessRecords,
 	    HashMap<YearMonthDay, WorkSchedule> workScheduleMap, DateTime init, DateTime end) {
 	HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = new HashMap<YearMonthDay, List<AssiduousnessRecord>>();
 	if (assiduousnessRecords != null) {
-	    final List<AssiduousnessRecord> clockings = new ArrayList<AssiduousnessRecord>(
-		    assiduousnessRecords);
+	    final List<AssiduousnessRecord> clockings = new ArrayList<AssiduousnessRecord>(assiduousnessRecords);
 	    Collections.sort(clockings, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	    for (AssiduousnessRecord record : clockings) {
 		if (record.isClocking() || record.isMissingClocking()) {
@@ -306,8 +291,8 @@ public class ExportClosedMonth extends Service {
 	return clockingsMap;
     }
 
-    private HashMap<YearMonthDay, List<Leave>> getLeavesMap(
-	    List<AssiduousnessRecord> assiduousnessRecords, YearMonthDay beginDate, YearMonthDay endDate) {
+    private HashMap<YearMonthDay, List<Leave>> getLeavesMap(List<AssiduousnessRecord> assiduousnessRecords,
+	    YearMonthDay beginDate, YearMonthDay endDate) {
 	HashMap<YearMonthDay, List<Leave>> leavesMap = new HashMap<YearMonthDay, List<Leave>>();
 	if (assiduousnessRecords != null) {
 	    for (AssiduousnessRecord record : assiduousnessRecords) {
@@ -316,11 +301,10 @@ public class ExportClosedMonth extends Service {
 		    if (((Leave) record).getEndYearMonthDay() != null) {
 			endLeaveDay = ((Leave) record).getEndYearMonthDay().plusDays(1);
 		    }
-		    for (YearMonthDay leaveDay = record.getDate().toYearMonthDay(); leaveDay
-			    .isBefore(endLeaveDay); leaveDay = leaveDay.plusDays(1)) {
+		    for (YearMonthDay leaveDay = record.getDate().toYearMonthDay(); leaveDay.isBefore(endLeaveDay); leaveDay = leaveDay
+			    .plusDays(1)) {
 			if (((Leave) record).getAplicableWeekDays() == null
-				|| ((Leave) record).getAplicableWeekDays().contains(
-					leaveDay.toDateTimeAtMidnight())) {
+				|| ((Leave) record).getAplicableWeekDays().contains(leaveDay.toDateTimeAtMidnight())) {
 			    List<Leave> leaveList = leavesMap.get(leaveDay);
 			    if (leaveList == null) {
 				leaveList = new ArrayList<Leave>();
@@ -335,8 +319,8 @@ public class ExportClosedMonth extends Service {
 	return leavesMap;
     }
 
-    private HashMap<JustificationMotive, List<Leave>> getDayLeaves(
-	    HashMap<YearMonthDay, List<Leave>> leavesMap, YearMonthDay thisDay) {
+    private HashMap<JustificationMotive, List<Leave>> getDayLeaves(HashMap<YearMonthDay, List<Leave>> leavesMap,
+	    YearMonthDay thisDay) {
 	HashMap<JustificationMotive, List<Leave>> leavesMapList = new HashMap<JustificationMotive, List<Leave>>();
 
 	if (leavesMap != null && leavesMap.get(thisDay) != null) {
@@ -353,18 +337,16 @@ public class ExportClosedMonth extends Service {
 	return leavesMapList;
     }
 
-    public HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(
-	    YearMonthDay beginDate, YearMonthDay endDate) {
+    public HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(YearMonthDay beginDate, YearMonthDay endDate) {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessLeaves = new HashMap<Assiduousness, List<AssiduousnessRecord>>();
-	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(),
-		Assiduousness.defaultEndWorkDay.toDateTime(endDate.toDateMidnight()));
+	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
+		.toDateMidnight()));
 	for (AssiduousnessRecord assiduousnessRecord : rootDomainObject.getAssiduousnessRecords()) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
-		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(),
-			((Leave) assiduousnessRecord).getEndDate().plusSeconds(1));
+		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord).getEndDate()
+			.plusSeconds(1));
 		if (leaveInterval.overlaps(interval)) {
-		    List<AssiduousnessRecord> leavesList = assiduousnessLeaves.get(assiduousnessRecord
-			    .getAssiduousness());
+		    List<AssiduousnessRecord> leavesList = assiduousnessLeaves.get(assiduousnessRecord.getAssiduousness());
 		    if (leavesList == null) {
 			leavesList = new ArrayList<AssiduousnessRecord>();
 		    }
@@ -374,8 +356,7 @@ public class ExportClosedMonth extends Service {
 	    } else if ((assiduousnessRecord.isClocking() || assiduousnessRecord.isMissingClocking())
 		    && (!assiduousnessRecord.isAnulated())) {
 		if (interval.contains(assiduousnessRecord.getDate().getMillis())) {
-		    List<AssiduousnessRecord> list = assiduousnessLeaves.get(assiduousnessRecord
-			    .getAssiduousness());
+		    List<AssiduousnessRecord> list = assiduousnessLeaves.get(assiduousnessRecord.getAssiduousness());
 		    if (list == null) {
 			list = new ArrayList<AssiduousnessRecord>();
 		    }
@@ -387,8 +368,8 @@ public class ExportClosedMonth extends Service {
 	return assiduousnessLeaves;
     }
 
-    private StringBuilder getLine(Integer employeeNumber, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String duration1, String duration2, String scheduleAcronym) {
+    private StringBuilder getLine(Integer employeeNumber, String acronym, YearMonthDay beginDate, YearMonthDay endDate,
+	    String duration1, String duration2, String scheduleAcronym) {
 	StringBuilder stringBuilder = new StringBuilder();
 	stringBuilder.append(getTokens(employeeNumber.toString(), 8)).append(";");
 	stringBuilder.append(getTokens(acronym, 8)).append(";");
@@ -410,26 +391,24 @@ public class ExportClosedMonth extends Service {
 	return StringUtils.rightPad(value, size);
     }
 
-    private StringBuilder getLine(Integer employeeNumber, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, Duration duration1, Duration duration2, String scheduleAcronym) {
-	return getLine(employeeNumber, acronym, beginDate, endDate, getDurationString(duration1),
-		getDurationString(duration2), scheduleAcronym);
+    private StringBuilder getLine(Integer employeeNumber, String acronym, YearMonthDay beginDate, YearMonthDay endDate,
+	    Duration duration1, Duration duration2, String scheduleAcronym) {
+	return getLine(employeeNumber, acronym, beginDate, endDate, getDurationString(duration1), getDurationString(duration2),
+		scheduleAcronym);
 
     }
 
     public String getDurationString(Duration duration) {
 	if (duration == null)
 	    return durationZeroString;
-	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2)
-		.appendHours().appendSeparator(":").minimumPrintedDigits(2).appendMinutes()
-		.toFormatter();
+	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2).appendHours()
+		.appendSeparator(":").minimumPrintedDigits(2).appendMinutes().toFormatter();
 	MutablePeriod finalTotalBalance = new MutablePeriod(duration.getMillis(), PeriodType.time());
 	if (duration.toPeriod().getMinutes() < 0) {
 	    finalTotalBalance.setMinutes(-duration.toPeriod().getMinutes());
 	    if (duration.toPeriod().getHours() == 0) {
-		fmt = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2)
-			.appendLiteral("-").minimumPrintedDigits(2).appendHours().appendSeparator(":")
-			.appendMinutes().toFormatter();
+		fmt = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2).appendLiteral("-")
+			.minimumPrintedDigits(2).appendHours().appendSeparator(":").appendMinutes().toFormatter();
 	    }
 	}
 	return fmt.print(finalTotalBalance);

@@ -64,8 +64,9 @@
 	</fr:form>
 </logic:present>
 <logic:present name="yearMonth">
-	<logic:present name="assignedEmployees">
-		<fr:form action="/exportAssiduousness.do?method=exportAssignedEmployees">
+	<logic:present name="employeesAnualInfo">
+		<fr:form action="<%="/exportAssiduousness.do?method="+nextAction%>">
+		<html:hidden property="action" value="<%=nextAction %>" />
 			<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
 				<fr:layout>
 					<fr:property name="classes" value="thlight thright" />
@@ -78,7 +79,7 @@
 			</p>
 		</fr:form>
 	</logic:present>
-	<logic:notPresent name="assignedEmployees">
+	<logic:notPresent name="employeesAnualInfo">
 		<fr:form action="<%="/exportExtraWork.do?method="+nextAction%>">
 			<html:hidden property="action" value="<%=nextAction %>" />
 			<logic:present name="chooseMonth">

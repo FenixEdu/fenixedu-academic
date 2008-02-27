@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.DomainListReference;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
@@ -150,14 +151,16 @@ public class BonusInstallment implements Serializable {
 		Integer workedDays = 0;
 		Integer absences = 0;
 		if (closedMonth != null) {
-		    AssiduousnessClosedMonth assiduousnessClosedMonth = closedMonth
-			    .getAssiduousnessClosedMonth(employeeMonthlyBonusInstallment.getEmployeeBonusInstallment()
-				    .getEmployee().getAssiduousness());
-		    if (assiduousnessClosedMonth != null) {
-			maximumWorkingDays = new Integer(assiduousnessClosedMonth.getMaximumWorkingDays());
-			workedDays = new Integer(assiduousnessClosedMonth.getWorkedDays());
-			absences = new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
-				- assiduousnessClosedMonth.getWorkedDays());
+		    Assiduousness assiduousness = employeeMonthlyBonusInstallment.getEmployeeBonusInstallment().getEmployee()
+			    .getAssiduousness();
+		    for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth
+			    .getAssiduousnessClosedMonths(assiduousness)) {
+			if (assiduousnessClosedMonth != null) {
+			    maximumWorkingDays += new Integer(assiduousnessClosedMonth.getMaximumWorkingDays());
+			    workedDays += new Integer(assiduousnessClosedMonth.getWorkedDays());
+			    absences += new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
+				    - assiduousnessClosedMonth.getWorkedDays());
+			}
 		    }
 		}
 		spreadsheet.addCell(maximumWorkingDays);

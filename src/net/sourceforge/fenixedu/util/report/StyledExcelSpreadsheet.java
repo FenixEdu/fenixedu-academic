@@ -15,10 +15,15 @@ import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.MutablePeriod;
+import org.joda.time.PeriodType;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 public class StyledExcelSpreadsheet {
     private HSSFWorkbook workbook;
@@ -31,8 +36,7 @@ public class StyledExcelSpreadsheet {
 
     private static final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
 
-    private static final DateTimeFormatter dateTimeFormat = DateTimeFormat
-	    .forPattern("dd/MM/yyyy HH:mm");
+    private static final DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
 
     private static final DateTimeFormatter timeFormat = DateTimeFormat.forPattern("HH:mm");
 
@@ -229,8 +233,17 @@ public class StyledExcelSpreadsheet {
 	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle(), wrapText));
     }
 
-    public void sumColumn(int firstRow, int lastRow, int firstColumn, int lastColumn,
-	    HSSFCellStyle newStyle) {
+    public void addDuration(Duration value) {
+	HSSFRow currentRow = getRow();
+	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
+	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(":")
+		.minimumPrintedDigits(2).appendMinutes().toFormatter();
+	MutablePeriod finalUnjustifiedBalance = new MutablePeriod(value.getMillis(), PeriodType.time());
+	cell.setCellValue(fmt.print(finalUnjustifiedBalance));
+	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle(), wrapText));
+    }
+
+    public void sumColumn(int firstRow, int lastRow, int firstColumn, int lastColumn, HSSFCellStyle newStyle) {
 	for (int col = firstColumn; col <= lastColumn; col++) {
 	    CellReference cellRef1 = new CellReference(firstRow, col);
 	    CellReference cellRef2 = new CellReference(lastRow, col);
@@ -241,8 +254,7 @@ public class StyledExcelSpreadsheet {
 	}
     }
 
-    public void sumRows(int firstRow, int lastRow, int firstColumn, int lastColumn, int increment,
-	    HSSFCellStyle newStyle) {
+    public void sumRows(int firstRow, int lastRow, int firstColumn, int lastColumn, int increment, HSSFCellStyle newStyle) {
 	for (int row = firstRow; row <= lastRow; row++) {
 	    CellReference[] refs = new CellReference[lastColumn - firstColumn / increment];
 	    for (int colIndex = 0, col = firstColumn; col <= lastColumn; col = col + increment, colIndex++) {
@@ -290,16 +302,14 @@ public class StyledExcelSpreadsheet {
     }
 
     public void mergeCells(int firstRow, int lastRow, int firstColumn, int lastColumn) {
-	Region region = new Region((short) firstRow, (short) firstColumn, (short) lastRow,
-		(short) lastColumn);
+	Region region = new Region((short) firstRow, (short) firstColumn, (short) lastRow, (short) lastColumn);
 	getSheet().addMergedRegion(region);
 	try {
 	    HSSFRegionUtil.setBorderBottom(HSSFCellStyle.BORDER_THIN, region, getSheet(), getWorkbook());
 	    HSSFRegionUtil.setBorderTop(HSSFCellStyle.BORDER_THIN, region, getSheet(), getWorkbook());
 	    HSSFRegionUtil.setBorderLeft(HSSFCellStyle.BORDER_THIN, region, getSheet(), getWorkbook());
 	    HSSFRegionUtil.setBorderRight(HSSFCellStyle.BORDER_THIN, region, getSheet(), getWorkbook());
-	    HSSFRegionUtil
-		    .setBottomBorderColor(HSSFColor.BLACK.index, region, getSheet(), getWorkbook());
+	    HSSFRegionUtil.setBottomBorderColor(HSSFColor.BLACK.index, region, getSheet(), getWorkbook());
 	    HSSFRegionUtil.setTopBorderColor(HSSFColor.BLACK.index, region, getSheet(), getWorkbook());
 	    HSSFRegionUtil.setLeftBorderColor(HSSFColor.BLACK.index, region, getSheet(), getWorkbook());
 	    HSSFRegionUtil.setRightBorderColor(HSSFColor.BLACK.index, region, getSheet(), getWorkbook());
@@ -310,8 +320,7 @@ public class StyledExcelSpreadsheet {
     public int getMaxiumColumnNumber() {
 	int result = 0;
 	for (int row = 0; row <= sheet.getLastRowNum(); row++) {
-	    result = sheet.getRow(row).getLastCellNum() > result ? sheet.getRow(row).getLastCellNum()
-		    : result;
+	    result = sheet.getRow(row).getLastCellNum() > result ? sheet.getRow(row).getLastCellNum() : result;
 	}
 	return result;
     }

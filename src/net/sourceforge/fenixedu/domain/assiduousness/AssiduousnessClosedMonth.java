@@ -17,14 +17,15 @@ import org.joda.time.YearMonthDay;
 
 public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 
-    public AssiduousnessClosedMonth(Assiduousness assiduousness, ClosedMonth closedMonth, Duration balance,
-	    Duration totalComplementaryWeeklyRestBalance, Duration totalWeeklyRestBalance, Duration holidayRest,
-	    Duration balanceToDiscount, double vacations, double tolerance, double article17, double article66,
-	    Integer maximumWorkingDays, Integer workedDays, Duration finalBalance, Duration finalBalanceToCompensate) {
+    public AssiduousnessClosedMonth(AssiduousnessStatusHistory assiduousnessStatusHistory, ClosedMonth closedMonth,
+	    Duration balance, Duration totalComplementaryWeeklyRestBalance, Duration totalWeeklyRestBalance,
+	    Duration holidayRest, Duration balanceToDiscount, double vacations, double tolerance, double article17,
+	    double article66, Integer maximumWorkingDays, Integer workedDays, Duration finalBalance,
+	    Duration finalBalanceToCompensate, YearMonthDay beginDate, YearMonthDay endDate) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBalance(balance);
 	setBalanceToDiscount(balanceToDiscount);
-	setAssiduousness(assiduousness);
+	setAssiduousnessStatusHistory(assiduousnessStatusHistory);
 	setClosedMonth(closedMonth);
 	setSaturdayBalance(totalComplementaryWeeklyRestBalance);
 	setSundayBalance(totalWeeklyRestBalance);
@@ -40,11 +41,13 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setWorkedDays(workedDays);
 	setFinalBalance(finalBalance);
 	setFinalBalanceToCompensate(finalBalanceToCompensate);
+	setBeginDate(beginDate);
+	setEndDate(endDate);
     }
 
     public HashMap<Integer, Duration> getPastJustificationsDurations() {
 	HashMap<Integer, Duration> pastJustificationsDurations = new HashMap<Integer, Duration>();
-	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousness().getAssiduousnessClosedMonths()) {
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessStatusHistory().getAssiduousnessClosedMonths()) {
 	    if (assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()) == getClosedMonth()
 		    .getClosedYearMonth().get(DateTimeFieldType.year())
 		    && assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) < getClosedMonth()
@@ -52,7 +55,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 		for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth.getClosedMonthJustifications()) {
 		    if (closedMonthJustification.getJustificationMotive().getActive()) {
 			Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
-				assiduousnessClosedMonth.getAssiduousness(), closedMonthJustification.getAssiduousnessStatus());
+				assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 			Duration duration = pastJustificationsDurations.get(code);
 			if (duration == null) {
 			    duration = Duration.ZERO;
@@ -69,8 +72,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
     public HashMap<Integer, Duration> getClosedMonthJustificationsMap() {
 	HashMap<Integer, Duration> closedMonthJustificationscodesMap = new HashMap<Integer, Duration>();
 	for (ClosedMonthJustification closedMonthJustification : getClosedMonthJustifications()) {
-	    Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(getAssiduousness(),
-		    closedMonthJustification.getAssiduousnessStatus());
+	    Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(getAssiduousnessStatusHistory());
 	    Duration duration = closedMonthJustificationscodesMap.get(code);
 	    if (duration == null) {
 		duration = Duration.ZERO;
@@ -84,7 +86,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
     private double getTotalUnjustifiedPercentage(YearMonthDay beginDate, YearMonthDay endDate) {
 	double unjustified = 0;
 	Duration balanceWithoutDiscount = getBalance().plus(getBalanceToDiscount());
-	Duration averageWorkTimeDuration = getAssiduousness().getAverageWorkTimeDuration(beginDate, endDate);
+	Duration averageWorkTimeDuration = getAssiduousnessStatusHistory().getAssiduousness().getAverageWorkTimeDuration(
+		beginDate, endDate);
 	if (!balanceWithoutDiscount.isShorterThan(Duration.ZERO)) {
 	    unjustified = getUnjustifiedPercentage(getAssiduousnessExtraWorks());
 	} else {
@@ -126,7 +129,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 
     public void delete() {
 	removeRootDomainObject();
-	removeAssiduousness();
+	removeAssiduousnessStatusHistory();
 	List<AssiduousnessExtraWork> assiduousnessExtraWorks = new ArrayList<AssiduousnessExtraWork>(getAssiduousnessExtraWorks());
 	for (AssiduousnessExtraWork assiduousnessExtraWork : assiduousnessExtraWorks) {
 	    getAssiduousnessExtraWorks().remove(assiduousnessExtraWork);
@@ -179,7 +182,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setAccumulatedUnjustified(previousUnjustified + unjustified);
 
 	int countUnjustifiedWorkingDays = 0;
-	for (Leave leave : getAssiduousness().getLeaves(beginDate, endDate)) {
+	for (Leave leave : getAssiduousnessStatusHistory().getAssiduousness().getLeaves(beginDate, endDate)) {
 	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase("FINJUST")) {
 		countUnjustifiedWorkingDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(), endDate
 			.toDateTimeAtMidnight()));
@@ -198,8 +201,9 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 		previousMonth));
 	if (previousClosedMonth != null) {
 	    AssiduousnessClosedMonth assiduousnessClosedMonth = previousClosedMonth
-		    .getAssiduousnessClosedMonth(getAssiduousness());
-	    if (assiduousnessClosedMonth != null) {
+		    .getAssiduousnessClosedMonth(getAssiduousnessStatusHistory());
+	    if (assiduousnessClosedMonth != null
+		    && assiduousnessClosedMonth.getAssiduousnessStatusHistory().equals(getAssiduousnessStatusHistory())) {
 		return assiduousnessClosedMonth;
 	    }
 	}
