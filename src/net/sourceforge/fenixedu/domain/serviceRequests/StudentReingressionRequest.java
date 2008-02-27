@@ -16,19 +16,21 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import org.joda.time.DateTime;
 
 public class StudentReingressionRequest extends StudentReingressionRequest_Base {
-    
-    static final private List<RegistrationStateType> ALLOWED_TYPES = 
-	Arrays.asList(RegistrationStateType.FLUNKED, RegistrationStateType.INTERRUPTED);
-    
+
+    static final private List<RegistrationStateType> ALLOWED_TYPES = Arrays.asList(RegistrationStateType.FLUNKED,
+	    RegistrationStateType.INTERRUPTED);
+
     private StudentReingressionRequest() {
-        super();
+	super();
     }
-    
-    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
+
+    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear,
+	    final DateTime requestDate) {
 	this(registration, executionYear, requestDate, false, false);
     }
-    
-    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
+
+    public StudentReingressionRequest(final Registration registration, final ExecutionYear executionYear,
+	    final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
 	this();
 	checkParameters(executionYear);
 	checkRulesToCreate(registration);
@@ -43,15 +45,15 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     }
 
     private void checkRulesToCreate(final Registration registration) {
-	
+
 	if (!hasValidState(registration)) {
 	    throw new DomainException("error.StudentReingressionRequest.registration.with.invalid.state");
 	}
-	
+
 	if (hasInterruptedAtLeastThreeTimes(registration)) {
 	    throw new DomainException("error.StudentReingressionRequest.registration.was.flunked.at.least.three.times");
 	}
-	
+
 	if (!isEnrolmentPeriodOpen(registration)) {
 	    throw new DomainException("error.StudentReingressionRequest.out.of.enrolment.period");
 	}
@@ -60,7 +62,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     private boolean hasValidState(final Registration registration) {
 	return registration.hasAnyState(ALLOWED_TYPES);
     }
-    
+
     private boolean hasInterruptedAtLeastThreeTimes(final Registration registration) {
 	return registration.getRegistrationStates(ALLOWED_TYPES).size() >= 3;
     }
@@ -68,10 +70,10 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     private boolean isEnrolmentPeriodOpen(final Registration registration) {
 	return registration.getLastDegreeCurricularPlan().hasActualEnrolmentPeriodInCurricularCourses();
     }
-    
+
     @Override
-    public String getDescription() {
-	return getDescription(AcademicServiceRequestType.REINGRESSION);
+    public AcademicServiceRequestType getAcademicServiceRequestType() {
+	return AcademicServiceRequestType.REINGRESSION;
     }
 
     @Override
@@ -81,10 +83,10 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-	
+
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
-	    
+
 	} else if (academicServiceRequestBean.isToProcess()) {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
@@ -94,19 +96,19 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 		    new DateTime(), RegistrationStateType.REGISTERED);
 	}
     }
-    
+
     @Override
     protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
-        super.createAcademicServiceRequestSituations(academicServiceRequestBean);
-        
-        if (academicServiceRequestBean.isToConclude()) {
-            AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
+	super.createAcademicServiceRequestSituations(academicServiceRequestBean);
+
+	if (academicServiceRequestBean.isToConclude()) {
+	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
-        }
+	}
     }
-    
+
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-        return true;
+	return true;
     }
 }

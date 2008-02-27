@@ -31,6 +31,8 @@ import org.joda.time.YearMonthDay;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
+    private static final String SERVICE_REQUEST_NUMBER_YEAR_SEPARATOR = "/";
+
     static final Comparator<AcademicServiceRequest> COMPARATOR_BY_NUMBER = new Comparator<AcademicServiceRequest>() {
 	public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
 	    return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
@@ -166,6 +168,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getDescription(academicServiceRequestType, null);
     }
 
+    public String getDescription() {
+	return getDescription(getAcademicServiceRequestType());
+    }
+
     final public void process() throws DomainException {
 	process(getEmployee());
     }
@@ -245,7 +251,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public String getServiceRequestNumberYear() {
-	return getServiceRequestNumber() + "/" + getServiceRequestYear();
+	return getServiceRequestNumber() + SERVICE_REQUEST_NUMBER_YEAR_SEPARATOR + getServiceRequestYear();
     }
 
     @Override
@@ -465,7 +471,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     abstract public EventType getEventType();
 
-    abstract public String getDescription();
+    abstract public AcademicServiceRequestType getAcademicServiceRequestType();
 
     /**
      * Indicates if is possible to AdministrativeOffice send this request to

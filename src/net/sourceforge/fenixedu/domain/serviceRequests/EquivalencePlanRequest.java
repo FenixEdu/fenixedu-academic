@@ -35,8 +35,8 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     }
 
     @Override
-    public String getDescription() {
-	return getDescription(AcademicServiceRequestType.EQUIVALENCE_PLAN);
+    public AcademicServiceRequestType getAcademicServiceRequestType() {
+	return AcademicServiceRequestType.EQUIVALENCE_PLAN;
     }
 
     @Override
@@ -63,9 +63,9 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 	    throw new DomainException("error.AcademicServiceRequest.cannot.be.deleted");
 	}
     }
-    
+
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-        return true;
+	return true;
     }
 }

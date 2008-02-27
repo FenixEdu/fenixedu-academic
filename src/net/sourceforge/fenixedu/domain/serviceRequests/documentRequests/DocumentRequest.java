@@ -25,7 +25,12 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
     @Override
     public String getDescription() {
-	return getDescription(AcademicServiceRequestType.DOCUMENT, getDocumentRequestType().getQualifiedName());
+	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName());
+    }
+
+    @Override
+    public AcademicServiceRequestType getAcademicServiceRequestType() {
+	return AcademicServiceRequestType.DOCUMENT;
     }
 
     abstract public DocumentRequestType getDocumentRequestType();
@@ -82,7 +87,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	super.internalChangeState(academicServiceRequestBean);
 
 	if (academicServiceRequestBean.isToProcess()) {
-	    if (getRegistration().hasGratuityDebtsCurrently() && !getFreeProcessed()) {
+	    if (!getFreeProcessed() && getRegistration().hasGratuityDebtsCurrently()) {
 		throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
 	    }
 	}

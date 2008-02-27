@@ -47,17 +47,17 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
     }
 
     @Override
-    public String getDescription() {
-	return getDescription(AcademicServiceRequestType.FREE_SOLICITATION_ACADEMIC_REQUEST);
+    public AcademicServiceRequestType getAcademicServiceRequestType() {
+	return AcademicServiceRequestType.FREE_SOLICITATION_ACADEMIC_REQUEST;
     }
 
     @Override
     public EventType getEventType() {
 	return null;
     }
-    
+
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-        return true;
+	return true;
     }
 }

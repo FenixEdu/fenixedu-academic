@@ -67,8 +67,8 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     }
 
     @Override
-    public String getDescription() {
-	return getDescription(AcademicServiceRequestType.EXTRA_EXAM_REQUEST);
+    public AcademicServiceRequestType getAcademicServiceRequestType() {
+	return AcademicServiceRequestType.EXTRA_EXAM_REQUEST;
     }
 
     @Override
@@ -91,9 +91,9 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
 	}
     }
-    
+
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-        return true;
+	return true;
     }
 }
