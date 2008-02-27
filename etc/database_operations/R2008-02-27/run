@@ -28,3 +28,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Assiduousness Functionality" addAssiduousnessFunctionality.sql
+execute "Change Assiduousness Functionality" changeAssiduousnessFuncionalities.sql
+execute "Alter Table AssiduousnessClosedMonth" alterTableAssiduousnessClosedMonth.sql
+
