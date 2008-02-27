@@ -255,7 +255,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	if (!iEnrolments.isEmpty()) {
 	    final IEnrolment enrolment = iEnrolments.last();
 	    final YearMonthDay approvementDate = enrolment.getApprovementDate();
-	    return approvementDate != null && approvementDate.isAfter(beginDate) ? approvementDate : beginDate;
+	    return approvementDate != null ? approvementDate : beginDate;
 	} else {
 	    return beginDate;
 	}
