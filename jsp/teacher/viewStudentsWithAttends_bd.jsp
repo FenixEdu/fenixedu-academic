@@ -1,6 +1,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@page import="java.util.Collection"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.teacher.StudentsWithAttendsByCurricularCourseListAction"%>
+<%@page import="net.sourceforge.fenixedu.util.WorkingStudentSelectionType"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -83,6 +85,9 @@ function cleanSelect(checkboxes) {
 		<th>
 			<bean:message key="label.selectShift"/>
 		</th>
+		<th>
+			<bean:message key="label.workingStudents"/>
+		</th>		
 	</tr>
 	
 	<tr>
@@ -164,16 +169,30 @@ function cleanSelect(checkboxes) {
 					</p>
 				</logic:iterate>
 		</td>
+		<td>
+			<p>	
+				<html:multibox property="workingStudentType" value="<%= WorkingStudentSelectionType.ALL.toString() %>" onclick="invertSelect(document.forms[0].workingStudentType)" />
+				<bean:message key="label.attends.allStudents"/>
+			</p>
+			<p>
+				<html:multibox property="workingStudentType" value="<%= WorkingStudentSelectionType.WORKING_STUDENT.toString() %>" onclick="cleanSelect(document.forms[0].workingStudentType)" />
+				<bean:message key="label.attends.workingStudents"/>
+			</p>
+			<p>
+				<html:multibox property="workingStudentType" value="<%= WorkingStudentSelectionType.NOT_WORKING_STUDENT.toString() %>" onclick="cleanSelect(document.forms[0].workingStudentType)" />
+				<bean:message key="label.attends.notWorkingStudents"/>
+			</p>
+		</td>
 	</tr>
 	
 	<tr>
-		<td colspan="3">
+		<td colspan="4">
 			<bean:message key="label.viewPhoto" />
 			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.viewPhoto"  property="viewPhoto" />
 		</td>
 	</tr>
 	<tr>
-		<td colspan="3">
+		<td colspan="4">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" property="submition"><bean:message key="button.selectShift"/></html:submit>
 		</td>
 	</tr>

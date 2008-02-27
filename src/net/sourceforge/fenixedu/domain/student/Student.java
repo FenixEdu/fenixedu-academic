@@ -1036,4 +1036,13 @@ public class Student extends Student_Base {
 	return res;
     }
 
+    public boolean hasActiveStatuteInPeriod(StudentStatuteType studentStatuteType, ExecutionPeriod executionPeriod) {
+	for (StudentStatute studentStatute : getStudentStatutesSet()) {
+	    if (studentStatute.getStatuteType() == studentStatuteType && studentStatute.isValidInExecutionPeriod(executionPeriod)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

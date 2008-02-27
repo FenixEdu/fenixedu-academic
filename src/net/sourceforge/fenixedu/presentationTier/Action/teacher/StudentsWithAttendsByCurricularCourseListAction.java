@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
+import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -35,19 +36,19 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispatchAction {
 
-    public ActionForward readStudents(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-	    FenixFilterException {
+    public ActionForward readStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	DynaActionForm formBean = (DynaActionForm) form;
 	Integer executionCourseID = null;
 	List coursesIDs = null;
 	List enrollmentTypeList = null;
 	String[] enrollmentType = null;
+	List<WorkingStudentSelectionType> wsSelectionTypes = new ArrayList<WorkingStudentSelectionType>();
 	List shiftIDs = null;
 	try {
 	    executionCourseID = new Integer(request.getParameter("objectCode"));
 	} catch (NumberFormatException ex) {
-	    //ok, we don't want to view a shift's student list
+	    // ok, we don't want to view a shift's student list
 	}
 
 	Integer degreeCurricularPlanID = (Integer) formBean.get("degreeCurricularPlanID");
@@ -84,14 +85,23 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	    shiftIDs.add(checkedShiftIds[i]);
 	}
 
+	String[] wsSelected = (String[]) formBean.get("workingStudentType");
+	for (int i = 0; i < wsSelected.length; i++) {
+	    if (wsSelected[i].equals(WorkingStudentSelectionType.ALL.toString())) {
+		wsSelectionTypes = null;
+		break;
+	    }
+	    wsSelectionTypes.add(WorkingStudentSelectionType.valueOf(wsSelected[i]));
+	}
+
 	IUserView userView = getUserView(request);
-	Object args[] = { executionCourseID, coursesIDs, enrollmentTypeList, shiftIDs };
+	Object args[] = { executionCourseID, coursesIDs, enrollmentTypeList, shiftIDs, wsSelectionTypes };
 	TeacherAdministrationSiteView siteView = null;
 	InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = null;
 
 	try {
-	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
-		    userView, "ReadStudentsWithAttendsByExecutionCourse", args);
+	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
+		    "ReadStudentsWithAttendsByExecutionCourse", args);
 
 	    infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
 
@@ -121,20 +131,18 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	    cbShiftsString[i] = checkedShiftIds[i].toString();
 	}
 
-	Map selectionForSendMailLink = this.getSelection(infoDTO, cbCoursesString, cbShiftsString,
-		enrollmentType);
+	Map selectionForSendMailLink = this.getSelection(infoDTO, cbCoursesString, cbShiftsString, enrollmentType);
 	selectionForSendMailLink.put("method", "start");
 	request.setAttribute("sendMailLinkParameters", selectionForSendMailLink);
-	Map selectionForSpreadSheet = this.getSelection(infoDTO, cbCoursesString, cbShiftsString,
-		enrollmentType);
+	Map selectionForSpreadSheet = this.getSelection(infoDTO, cbCoursesString, cbShiftsString, enrollmentType);
 	selectionForSpreadSheet.put("method", "prepare");
 	request.setAttribute("spreadSheetLinkArgs", selectionForSpreadSheet);
 
 	return mapping.findForward("success");
     }
 
-    private Map getSelection(InfoForReadStudentsWithAttendsByExecutionCourse infoDTO,
-	    String cbCoursesString[], String cbShiftsString[], String[] enrollmentType) {
+    private Map getSelection(InfoForReadStudentsWithAttendsByExecutionCourse infoDTO, String cbCoursesString[],
+	    String cbShiftsString[], String[] enrollmentType) {
 	Map selectionParameters = new HashMap();
 	selectionParameters.put("objectCode", infoDTO.getInfoExecutionCourse().getIdInternal());
 	selectionParameters.put("method", "prepare");
@@ -146,15 +154,15 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 
     }
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException {
 
 	Integer executionCourseID = null;
 	try {
 	    executionCourseID = new Integer(request.getParameter("objectCode"));
 
 	} catch (NumberFormatException ex) {
-	    //ok, we don't want to view a shift's student list
+	    // ok, we don't want to view a shift's student list
 	}
 
 	DynaActionForm formBean = (DynaActionForm) form;
@@ -167,13 +175,13 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	}
 
 	// all the information, no filtering applied
-	Object args[] = { executionCourseID, null, null, null };
+	Object args[] = { executionCourseID, null, null, null, null };
 	TeacherAdministrationSiteView siteView = null;
 	InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = null;
 
 	try {
-	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
-		    userView, "ReadStudentsWithAttendsByExecutionCourse", args);
+	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
+		    "ReadStudentsWithAttendsByExecutionCourse", args);
 
 	    infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
 
@@ -186,7 +194,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	request.setAttribute("objectCode", executionCourseID);
 	request.setAttribute("viewPhoto", Boolean.FALSE);
 
-	//filling the courses checkboxes in the form-bean
+	// filling the courses checkboxes in the form-bean
 	List infoDCPs = ((InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent())
 		.getInfoDegreeCurricularPlans();
 	Integer cbCourses[] = new Integer[infoDCPs.size() + 1];
@@ -198,9 +206,8 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	    cbCoursesString[i] = cbCourses[i].toString();
 	}
 
-	//filling the shifts checkboxes in the form-bean
-	List infoShifts = ((InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent())
-		.getInfoShifts();
+	// filling the shifts checkboxes in the form-bean
+	List infoShifts = ((InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent()).getInfoShifts();
 	Integer cbShifts[] = new Integer[infoShifts.size() + 1];
 	String cbShiftsString[] = new String[infoShifts.size() + 1];
 	cbShifts[0] = new Integer(0);
@@ -210,7 +217,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	    cbShiftsString[i] = cbShifts[i].toString();
 	}
 
-	//      filling the enrollment filters checkboxes in the form-bean
+	// filling the enrollment filters checkboxes in the form-bean
 	String cbFilters[] = new String[5]; // 4 selection criteria
 	cbFilters[0] = AttendacyStateSelectionType.ALL.toString();
 	cbFilters[1] = AttendacyStateSelectionType.ENROLLED.toString();
@@ -218,9 +225,14 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	cbFilters[3] = AttendacyStateSelectionType.NOT_ENROLLED.toString();
 	cbFilters[4] = AttendacyStateSelectionType.IMPROVEMENT.toString();
 
+	String[] wsFilters = { WorkingStudentSelectionType.ALL.toString(),
+		WorkingStudentSelectionType.WORKING_STUDENT.toString(),
+		WorkingStudentSelectionType.NOT_WORKING_STUDENT.toString() };
+
 	formBean.set("coursesIDs", cbCourses);
 	formBean.set("shiftIDs", cbShifts);
 	formBean.set("enrollmentType", cbFilters);
+	formBean.set("workingStudentType", wsFilters);
 
 	Map sendMailParameters = new HashMap();
 	sendMailParameters.put("objectCode", infoDTO.getInfoExecutionCourse().getIdInternal());

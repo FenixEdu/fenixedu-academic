@@ -41,8 +41,10 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
+import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -50,11 +52,10 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
-    public Object run(Integer executionCourseCode, List curricularPlansIds, List enrollmentTypeFilters,
-	    List shiftIds) throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(Integer executionCourseCode, List curricularPlansIds, List enrollmentTypeFilters, List shiftIds,
+	    List<WorkingStudentSelectionType> wsSelectionType) throws FenixServiceException, ExcepcaoPersistencia {
 
-	final ExecutionCourse executionCourse = rootDomainObject
-		.readExecutionCourseByOID(executionCourseCode);
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 	InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 
 	final ExecutionCourseSite site = executionCourse.getSite();
@@ -96,14 +97,10 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 	// filter by Enrollment type
 	if (enrollmentTypeFilters != null) {
-	    boolean enrolledFilter = enrollmentTypeFilters
-		    .contains(AttendacyStateSelectionType.ENROLLED);
-	    boolean notEnrolledFilter = enrollmentTypeFilters
-		    .contains(AttendacyStateSelectionType.NOT_ENROLLED);
-	    boolean improvementFilter = enrollmentTypeFilters
-		    .contains(AttendacyStateSelectionType.IMPROVEMENT);
-	    boolean specialSeasonFilter = enrollmentTypeFilters
-		    .contains(AttendacyStateSelectionType.SPECIAL_SEASON);
+	    boolean enrolledFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.ENROLLED);
+	    boolean notEnrolledFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.NOT_ENROLLED);
+	    boolean improvementFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.IMPROVEMENT);
+	    boolean specialSeasonFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.SPECIAL_SEASON);
 
 	    List newAttends = new ArrayList();
 	    Iterator attendsIterator = attends.iterator();
@@ -111,28 +108,21 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		Attends attendacy = (Attends) attendsIterator.next();
 
 		// improvement student (he/she is enrolled)
-		if (improvementFilter
-			&& attendacy.getEnrolment() != null
-			&& (!attendacy.getEnrolment().getExecutionPeriod().equals(
-				executionCourse.getExecutionPeriod()))) {
+		if (improvementFilter && attendacy.getEnrolment() != null
+			&& (!attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))) {
 		    newAttends.add(attendacy);
 
 		    // normal student (cannot be an improvement student)
-		} else if (enrolledFilter
-			&& attendacy.getEnrolment() != null
-			&& (attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse
-				.getExecutionPeriod()))
-			&& !hasSpecialSeasonEnrolmentEvaluation(attendacy.getEnrolment()
-				.getEvaluations())) {
+		} else if (enrolledFilter && attendacy.getEnrolment() != null
+			&& (attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
+			&& !hasSpecialSeasonEnrolmentEvaluation(attendacy.getEnrolment().getEvaluations())) {
 		    newAttends.add(attendacy);
 		    // not enrolled student
 		} else if (notEnrolledFilter && attendacy.getEnrolment() == null) {
 		    newAttends.add(attendacy);
 		    // persistentSupportecial season student
-		} else if (specialSeasonFilter
-			&& attendacy.getEnrolment() != null
-			&& (attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse
-				.getExecutionPeriod()))
+		} else if (specialSeasonFilter && attendacy.getEnrolment() != null
+			&& (attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
 			&& hasSpecialSeasonEnrolmentEvaluation(attendacy.getEnrolment().getEvaluations())) {
 		    newAttends.add(attendacy);
 		}
@@ -166,6 +156,20 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	    attends = collectedAttends;
 	}
 
+	if (wsSelectionType != null && !wsSelectionType.contains(WorkingStudentSelectionType.ALL)) {
+	    boolean workingStudentSelected = wsSelectionType.contains(WorkingStudentSelectionType.WORKING_STUDENT);
+	    boolean notWorkingStudentSelected = wsSelectionType.contains(WorkingStudentSelectionType.NOT_WORKING_STUDENT);
+	    List<Attends> attendsList = new ArrayList<Attends>();
+	    for (Attends attendacy : (List<Attends>) attends) {
+		boolean isWorkingStudent = attendacy.getRegistration().getStudent().hasActiveStatuteInPeriod(
+			StudentStatuteType.WORKING_STUDENT, executionCourse.getExecutionPeriod());
+		if ((workingStudentSelected && isWorkingStudent) || (notWorkingStudentSelected && !isWorkingStudent)) {
+		    attendsList.add(attendacy);
+		}
+	    }
+	    attends = attendsList;
+	}
+
 	// building the info
 	InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = new InfoForReadStudentsWithAttendsByExecutionCourse();
 	Set shifts = executionCourse.getAssociatedShifts();
@@ -183,19 +187,16 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		alreadyAddedStudents.add(registrationToAdd);
 		InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups infoComposition = new InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups();
 
-		InfoFrequenta infoFrequenta = InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment
-			.newInfoFromDomain(iFrequenta);
+		InfoFrequenta infoFrequenta = InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment.newInfoFromDomain(iFrequenta);
 		infoComposition.setInfoAttends(infoFrequenta);
 
 		// determining the EnrolmentEvaluationType
 		if (iFrequenta.getEnrolment() != null) {
 		    EnrolmentEvaluationType enrollmentEvaluationType = null;
-		    if (!iFrequenta.getEnrolment().getExecutionPeriod().equals(
-			    executionCourse.getExecutionPeriod())) {
+		    if (!iFrequenta.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod())) {
 			enrollmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT;
 		    } else {
-			if (hasSpecialSeasonEnrolmentEvaluation(iFrequenta.getEnrolment()
-				.getEvaluations())) {
+			if (hasSpecialSeasonEnrolmentEvaluation(iFrequenta.getEnrolment().getEvaluations())) {
 			    enrollmentEvaluationType = EnrolmentEvaluationType.SPECIAL_SEASON;
 			} else {
 			    enrollmentEvaluationType = EnrolmentEvaluationType.NORMAL;
@@ -221,15 +222,13 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		int numberOfEnrollments = 0;
 
 		if (enrollment != null) {
-		    numberOfEnrollments = countAllEnrolmentsForSameStudent(studentCurricularPlan,
-			    enrollment.getCurricularCourse().getName());
+		    numberOfEnrollments = countAllEnrolmentsForSameStudent(studentCurricularPlan, enrollment
+			    .getCurricularCourse().getName());
 		}
 
 		if (numberOfEnrollments >= enrollmentDistribution.length) {
-		    int[] newDistribution = new int[Math.max(numberOfEnrollments + 1,
-			    enrollmentDistribution.length * 2)];
-		    System.arraycopy(enrollmentDistribution, 0, newDistribution, 0,
-			    enrollmentDistribution.length);
+		    int[] newDistribution = new int[Math.max(numberOfEnrollments + 1, enrollmentDistribution.length * 2)];
+		    System.arraycopy(enrollmentDistribution, 0, newDistribution, 0, enrollmentDistribution.length);
 		    enrollmentDistribution = newDistribution;
 		}
 		enrollmentDistribution[numberOfEnrollments]++;
@@ -247,8 +246,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	infoDTO.setClassTypes(tipoAulas);
 
 	infoDTO.setInfoShifts(getInfoShiftsFromList(allShifts));
-	infoDTO
-		.setInfoDegreeCurricularPlans(getInfoDegreeCurricularPlansFromList(allDegreeCurricularPlans));
+	infoDTO.setInfoDegreeCurricularPlans(getInfoDegreeCurricularPlansFromList(allDegreeCurricularPlans));
 
 	List infoGroupProperties = getInfoGroupPropertiesFromList(groupProperties);
 	infoDTO.setInfoGroupProperties(infoGroupProperties);
@@ -273,8 +271,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	return siteView;
     }
 
-    private int countAllEnrolmentsForSameStudent(StudentCurricularPlan studentCurricularPlan,
-	    String curricularCourseName) {
+    private int countAllEnrolmentsForSameStudent(StudentCurricularPlan studentCurricularPlan, String curricularCourseName) {
 	int count = 0;
 	Degree degree = studentCurricularPlan.getDegreeCurricularPlan().getDegree();
 	for (StudentCurricularPlan scp : studentCurricularPlan.getRegistration().getStudentCurricularPlans()) {
@@ -283,8 +280,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		    CurricularCourse course = enrolment.getCurricularCourse();
 		    if (course != null) {
 			String name = course.getName();
-			if ((name == curricularCourseName)
-				|| ((name != null) && name.equals(curricularCourseName))) {
+			if ((name == curricularCourseName) || ((name != null) && name.equals(curricularCourseName))) {
 			    count++;
 			}
 		    }
@@ -294,21 +290,19 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	return count;
     }
 
-    private TeacherAdministrationSiteView createSiteView(
-	    InfoForReadStudentsWithAttendsByExecutionCourse infoSiteStudents, ExecutionCourseSite site)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+    private TeacherAdministrationSiteView createSiteView(InfoForReadStudentsWithAttendsByExecutionCourse infoSiteStudents,
+	    ExecutionCourseSite site) throws FenixServiceException, ExcepcaoPersistencia {
 
 	TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-	ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
-		null, null);
+	ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
 
 	return new TeacherAdministrationSiteView(commonComponent, infoSiteStudents);
     }
 
     StudentCurricularPlan getStudentCurricularPlanFromAttends(Attends attendance) {
-        final Enrolment enrolment = attendance.getEnrolment();
-        return enrolment == null ? attendance.getRegistration().getLastStudentCurricularPlan()
-                : enrolment.getStudentCurricularPlan();
+	final Enrolment enrolment = attendance.getEnrolment();
+	return enrolment == null ? attendance.getRegistration().getLastStudentCurricularPlan() : enrolment
+		.getStudentCurricularPlan();
     }
 
     List getDegreeCurricularPlansFromAttends(List<Attends> attends) {
@@ -323,8 +317,8 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	return degreeCurricularPlans;
     }
 
-    private Map getShiftsByAttends(final Set<Shift> shifts, final Attends attend,
-	    final Map<Integer, InfoShift> clonedShifts) throws ExcepcaoPersistencia {
+    private Map getShiftsByAttends(final Set<Shift> shifts, final Attends attend, final Map<Integer, InfoShift> clonedShifts)
+	    throws ExcepcaoPersistencia {
 	final Map result = new HashMap();
 
 	for (final Shift shift : shifts) {
@@ -351,13 +345,13 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
     }
 
     private Set getClassTypesFromExecutionCourse(ExecutionCourse executionCourse) {
-        final Set<ShiftType> shiftTypes = new TreeSet<ShiftType>();
-        for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
-            if (!courseLoad.isEmpty()) {
-                shiftTypes.add(courseLoad.getType());
-            }
-        }
-        return shiftTypes;
+	final Set<ShiftType> shiftTypes = new TreeSet<ShiftType>();
+	for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
+	    if (!courseLoad.isEmpty()) {
+		shiftTypes.add(courseLoad.getType());
+	    }
+	}
+	return shiftTypes;
     }
 
     private List getInfoShiftsFromList(Set<Shift> allShifts) {
@@ -390,21 +384,20 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	return result;
     }
 
-    private Map getStudentGroupsMapFromGroupPropertiesList(List<Grouping> groupPropertiesList)
-	    throws ExcepcaoPersistencia {
+    private Map getStudentGroupsMapFromGroupPropertiesList(List<Grouping> groupPropertiesList) throws ExcepcaoPersistencia {
 
 	Map result = new HashMap();
 
 	for (final Grouping grouping : groupPropertiesList) {
 	    for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
-	        List groupAttends = studentGroup.getAttends();
-	        List attendsList = (List) CollectionUtils.collect(groupAttends, new Transformer() {
-	            public Object transform(Object input) {
-	                Attends attendacy = (Attends) input;
-	                return attendacy;
-	            }
-	        });
-	        result.put(studentGroup, attendsList);
+		List groupAttends = studentGroup.getAttends();
+		List attendsList = (List) CollectionUtils.collect(groupAttends, new Transformer() {
+		    public Object transform(Object input) {
+			Attends attendacy = (Attends) input;
+			return attendacy;
+		    }
+		});
+		result.put(studentGroup, attendsList);
 	    }
 	}
 
@@ -432,11 +425,11 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
     }
 
     private boolean hasSpecialSeasonEnrolmentEvaluation(final List<EnrolmentEvaluation> evaluations) {
-        for (final EnrolmentEvaluation enrolmentEvaluation : evaluations) {
-            if (enrolmentEvaluation.getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON) {
-                return true;
-            }
-        }
-        return false;
+	for (final EnrolmentEvaluation enrolmentEvaluation : evaluations) {
+	    if (enrolmentEvaluation.getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON) {
+		return true;
+	    }
+	}
+	return false;
     }
 }
