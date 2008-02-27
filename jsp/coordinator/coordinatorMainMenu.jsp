@@ -246,6 +246,13 @@
 				</li>
 			</logic:equal>
 		</logic:notEqual>
+        
+        		<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>
+        		<li> 
+        			<html:link page="<%= "/sendDegreeMail.do?method=send&degreeId=" + degree.getIdInternal() %>">
+        				 <bean:message key="link.coordinator.sendMail"/>
+        			</html:link>
+        		</li>
         </logic:present>
         <%-- end of isCoordinator logic --%>
         

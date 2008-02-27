@@ -90,4 +90,13 @@
 	<definition name="showDelegates" extends="pedagogicalCouncil.masterPage">
        <put name="body" value="/commons/delegates/showDelegates.jsp"/>  
     </definition>
+    
+    <definition name="teacherSummariesControlList" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/control/teachersSummariesControlList.jsp"/>  
+    </definition>
+    
+    <definition name="evaluationMethodControl" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/control/evaluationMethodControl.jsp"/>  
+    </definition>
+    
 </tiles-definitions>

@@ -91,5 +91,16 @@
 				<bean:message key="link.findDelegates" bundle="PEDAGOGICAL_COUNCIL"/>
 			</html:link>
 		</li>
+		
+		
+		<li class="navheader">
+			<bean:message key="link.control" bundle="APPLICATION_RESOURCES"/>
+		</li>
+		<li>
+			<html:link page="/summariesControl.do?method=prepareSummariesControl&page=0"><bean:message key="link.summaries.control" bundle="APPLICATION_RESOURCES"/></html:link>
+		</li>
+		<li>
+			<html:link page="/evaluationMethodControl.do?method=search"><bean:message key="label.evaluationMethodControl" bundle="APPLICATION_RESOURCES"/></html:link>
+		</li>
 	</ul>
 </logic:present>

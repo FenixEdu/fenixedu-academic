@@ -108,6 +108,8 @@
 		<forward name="showCardGenerationProblem" path="df.page.card.generation.showCardGenerationProblem"/>
 	</action>
 
+
+
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

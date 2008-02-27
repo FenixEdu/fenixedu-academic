@@ -365,4 +365,9 @@
 	
 	<!-- End: Equivalence Management -->
     
+     <!--  ===== Send degree Email ====== -->
+     <definition name="sendMail-degree" extends="definition.coordinator.two-column.extra-menu">
+		<put name="body" value="/coordinator/sendDegreeEmail.jsp"/>
+	</definition>
+	
 </tiles-definitions>

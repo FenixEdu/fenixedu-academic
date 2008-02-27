@@ -14,6 +14,13 @@
 			<form-property name="curricularYearID" type="java.lang.String" />
 			<form-property name="executionCourseID" type="java.lang.String" />
 		</form-bean>
+		<form-bean name="summariesControlForm" 
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0" />
+            <form-property name="executionPeriod" type="java.lang.String"/>
+            <form-property name="department" type="java.lang.String"/>           
+    	</form-bean> 	
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -128,6 +135,23 @@
 			 <forward name="showDelegates" path="showDelegates"/>
 		 </action>
 
+
+		<!--  ==== Shared actions with directive council  -->
+		<action path="/summariesControl"
+			type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.SummariesControlAction"
+			parameter="method"
+			name="summariesControlForm"
+			scope="request"
+			input="/index.do">
+			<forward name="success" path="teacherSummariesControlList" />			
+		</action>
+	
+		<action path="/evaluationMethodControl"
+				type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.EvaluationMethodControlDA"
+				parameter="method">
+			<forward name="search" path="evaluationMethodControl"/>
+		</action>
+
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->
@@ -136,6 +160,7 @@
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
 	<message-resources parameter="resources.PedagogicalCouncilResources" key="PEDAGOGICAL_COUNCIL" null="false"/>
 	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>

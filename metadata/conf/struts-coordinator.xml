@@ -1012,6 +1012,16 @@
         </action>
         <!-- End : Bolonha Transition Management -->
 
+
+		<!--  ======= Mail Sending Action ====== -->
+        <action path="/sendDegreeMail" 
+        		type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.DegreeMailSenderAction" 
+        		parameter="method">
+				<forward name="compose-mail" path="sendMail-degree"/>
+	            <forward name="success" path="sendMail-degree"/>
+    	        <forward name="problem" path="sendMail-degree"/>
+        </action>
+
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
