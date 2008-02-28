@@ -193,7 +193,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
 		request.setAttribute("resultId", publication.getIdInternal());
 		setRequestAttributes(request, publication);
-		return mapping.findForward("ViewEditPublication");
+		request.setAttribute("publicationCreated",true);
+		return mapping.findForward("forwardToUnitAssociation");
 
 	}
 

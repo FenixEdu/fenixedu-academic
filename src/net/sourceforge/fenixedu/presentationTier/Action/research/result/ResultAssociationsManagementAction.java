@@ -32,6 +32,27 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	return mapping.findForward("editUnitAssociations");
     }
     
+    public ActionForward addSugestion(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+	ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) RenderUtils.getViewState("suggestion").getMetaObject().getObject();
+    	request.setAttribute("unitBean", bean);
+    	bean.setSuggestion(true);
+    	
+    	try {
+	    final Object[] args = { bean };
+	    executeService(request, "CreateResultUnitAssociation", args);
+	} catch (FileManagerException e) {
+	    e.printStackTrace();
+	    addActionMessage(request, "label.communicationError");
+	}catch(Exception e) {
+	    addActionMessage(request, e.getMessage());
+	}
+    	request.setAttribute("result", bean.getResult());
+    	RenderUtils.invalidateViewState("suggestion");
+    	return mapping.findForward("editUnitAssociations");
+    }
+    
     public ActionForward changeTypeOfUnit(ActionMapping mapping, ActionForm form,
     	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
     	    FenixServiceException {
@@ -60,7 +81,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 	final ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) getRenderedObject("unitBean");
-	
+	bean.setSuggestion(false);
 	try {
 	    final Object[] args = { bean };
 	    executeService(request, "CreateResultUnitAssociation", args);

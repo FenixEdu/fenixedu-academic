@@ -22,6 +22,7 @@
 	<bean:define id="prepareAlter" value="<%="/resultAssociations/prepareEditUnitRole.do?" + parameters%>"/>	
 	<bean:define id="remove" value="<%="/resultAssociations/removeUnitAssociation.do?" + parameters%>"/>
 	<bean:define id="backLink" value="<%="/resultAssociations/backToResult.do?" + parameters%>" />
+	<bean:define id="addSugestion" value="<%="/resultAssociations/addSugestion.do?" + parameters%>"/>
 
 <%-- Title --%>		
 	<logic:equal name="resultType" value="ResultPatent">
@@ -32,16 +33,22 @@
 		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 	</logic:notEqual>
 
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.useCase.title"/></h2>
+	<h2><bean:message key="label.prizeUnits" bundle="RESEARCHER_RESOURCES"/></h2>
 	
 	<h3><fr:view name="result" property="title"/></h3>
 
+	<bean:define id="linkKey" value="link.goBackToView" toScope="request"/>
+	
+	<logic:present name="publicationCreated">
+			<bean:define id="linkKey" value="link.viewPublicationPage" toScope="request"/>
+			<p><span class="success0"><bean:message key="label.publication.created.with.success" bundle="RESEARCHER_RESOURCES"/>.</span></p>
+			<p class="mvert05"><bean:message key="label.publication.created.note" bundle="RESEARCHER_RESOURCES"/></p>
+	</logic:present>
+	
+	
 	<%-- Go to previous page --%>
-		<ul class="mvert2 list5">
-		<li>
-			<html:link page="<%= backLink %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.goBackToView"/></html:link>
-		</li>
-	</ul>
+	<p class="mtop05"><html:link page="<%= backLink %>"><bean:message bundle="RESEARCHER_RESOURCES" key="<%= linkKey%>"/></html:link></p> 
+	
 	
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">
@@ -51,7 +58,7 @@
 	</logic:messagesPresent>
 
 	<%-- List of existing unit associations --%>
-	<p class="mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b></p>
+	<p class="mtop25 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b></p>
 	<logic:empty name="associations">
 		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.emptyList"/></em></p>
 	</logic:empty>
@@ -85,10 +92,25 @@
 	</logic:notEmpty>
 	
 	
+	<%-- Unit suggestions --%>
+	<logic:present name="unitBean">
+	
+	<div class="infoop2">
+		<bean:message key="label.unit.suggestion.explanation" bundle="RESEARCHER_RESOURCES"/>
+	</div>
+	
+	<p class="mtop2 mbottom0"><b>1) <bean:message key="label.unit.suggestion" bundle="RESEARCHER_RESOURCES"/>:</b></p>
+	<fr:form action="<%= addSugestion %>">
+	<fr:edit id="suggestion" name="unitBean" schema="resultUnitAssociation.create.with.suggestion" >
+		<fr:layout name="flow">
+			<fr:property name="labelExcluded" value="true"/>
+		</fr:layout>
+	</fr:edit>
+	<html:submit><bean:message key="label.addUnit" bundle="RESEARCHER_RESOURCES"/></html:submit>
+	</fr:form>
 	
 	<%-- Create new result unit association --%>
-	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.add"/></b></p>
-	<logic:present name="unitBean">
+	<p class="mtop2 mbottom0"><b>2) <bean:message bundle="RESEARCHER_RESOURCES" key="label.otherUnits"/></b></p>
 		<bean:define id="beanForUnit" name="unitBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean"/>
 		<fr:form action="<%= create %>">
 		<fr:edit id="unitBean" name="unitBean" schema="<%= "resultUnitAssociation.create." + beanForUnit.getUnitType()%>">
@@ -102,8 +124,7 @@
 			<fr:destination name="postBack" path="<%= "/resultAssociations/changeTypeOfUnit.do?" + parameters %>"/>
 			<fr:destination name="change.unit.searchType" path="<%= "/resultAssociations/changeTypeOfUnit.do?" + parameters %>"/>
 		</fr:edit>
-		<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
-		<html:cancel><bean:message key="label.finish" bundle="APPLICATION_RESOURCES"/></html:cancel>
+		<html:submit><bean:message key="label.addUnit" bundle="APPLICATION_RESOURCES"/></html:submit>
 		</fr:form>
 	</logic:present>
 

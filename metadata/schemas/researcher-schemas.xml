@@ -1169,6 +1169,20 @@ extends="eventCreation">
 </schema>
 -->
 <!-- Schemas used for Result Unit Associations Management -->
+<schema name="resultUnitAssociation.create.with.suggestion" bundle="RESEARCHER_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean" >
+	<slot name="suggestedUnits" layout="option-select" key="label.unit.suggestion">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AuthorsRelatedUnits"/>
+		<property name="saveOptions" value="true"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="unit.name"/>
+		<property name="sortBy" value="name"/>
+		<property name="classes" value="nobullet"/>
+		<property name="style" value="padding: 0;"/>
+		<property name="selectAllShown" value="true"/>
+	</slot>
+</schema>
+
 <schema name="resultUnitAssociation.create.internal" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean" >
 	<slot name="unit" layout="autoComplete" key="label.party.name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">

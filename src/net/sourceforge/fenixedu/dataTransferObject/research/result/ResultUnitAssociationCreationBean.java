@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -10,9 +12,12 @@ import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.Res
 public class ResultUnitAssociationCreationBean implements Serializable {
     private DomainReference<ResearchResult> result;
     private DomainReference<Unit> unit;
+    private List<DomainReference<Unit>> suggestedUnits;
     private String role;
     private String unitName;
     private UnitType unitType; 
+    private boolean isSuggestion;
+    
     
     public ResultUnitAssociationCreationBean(ResearchResult result) {
 	setResult(new DomainReference<ResearchResult>(result));
@@ -20,6 +25,8 @@ public class ResultUnitAssociationCreationBean implements Serializable {
 	setUnitName(null);
 	setRole(ResultUnitAssociationRole.getDefaultRole());
 	setUnitType(UnitType.ACADEMIC_UNIT);
+	suggestedUnits = new ArrayList<DomainReference<Unit>>();
+	setSuggestion(false);
     }
     
     public ResultUnitAssociationRole getRole() {
@@ -75,5 +82,28 @@ public class ResultUnitAssociationCreationBean implements Serializable {
 
 	public void setUnitType(UnitType unitType) {
 		this.unitType = unitType;
+	}
+	
+	public List<Unit> getSuggestedUnits() {
+	    List<Unit> units = new ArrayList<Unit> ();
+	    for(DomainReference<Unit> suggestedUnit : this.suggestedUnits) {
+		units.add(suggestedUnit.getObject());
+	    }
+	    return units;
+	}
+	
+	public void setSuggestedUnits(List<Unit> units) {
+	    this.suggestedUnits.clear();
+	    for(Unit unit : units) {
+		suggestedUnits.add(new DomainReference<Unit>(unit));
+	    }
+	}
+
+	public boolean isSuggestion() {
+	    return isSuggestion;
+	}
+
+	public void setSuggestion(boolean isSuggestion) {
+	    this.isSuggestion = isSuggestion;
 	}
 }

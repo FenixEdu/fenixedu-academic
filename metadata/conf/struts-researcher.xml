@@ -186,6 +186,7 @@
 		    <forward name="ListUnitPublications" path="/researchUnitFunctionalities.do?method=preparePublications"/>
 		    <forward name="associatePrize" path="publications.associate.prize"/>
 		    <forward name="editPrize" path="edit.prize"/>
+		    <forward name="forwardToUnitAssociation" path="/resultAssociations/prepareEditUnitAssociations.do"/>
 		</action>
 		
 		<!-- Bibtex Publications Management Action Mapping -->
