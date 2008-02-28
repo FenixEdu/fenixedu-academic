@@ -795,7 +795,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public DepartmentUnit getDepartmentUnit() {
-	return this.getCompetenceCourseGroupUnit().getDepartmentUnit();
+	final CompetenceCourseGroupUnit competenceCourseGroupUnit = getCompetenceCourseGroupUnit();
+	return competenceCourseGroupUnit == null ? null : competenceCourseGroupUnit.getDepartmentUnit();
     }
 
     public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads(final ExecutionPeriod period) {
