@@ -42,16 +42,14 @@ import dml.Slot;
  */
 public class MergeObjectsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	request.setAttribute("domainClasses", getClasses());
 	return mapping.findForward("chooseObjects");
     }
 
-    public ActionForward chooseObjects(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException, IllegalAccessException, InvocationTargetException,
+    public ActionForward chooseObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
 	    NoSuchMethodException, ClassNotFoundException {
 
 	DynaActionForm actionForm = (DynaActionForm) form;
@@ -65,10 +63,8 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	    object2IdInternal = Integer.valueOf(request.getParameter("object2IdInternal"));
 	}
 
-	DomainObject domainObject1 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge),
-		object1IdInternal);
-	DomainObject domainObject2 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge),
-		object2IdInternal);
+	DomainObject domainObject1 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object1IdInternal);
+	DomainObject domainObject2 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object2IdInternal);
 
 	if (domainObject1 == null || domainObject2 == null) {
 	    request.setAttribute("domainClasses", getClasses());
@@ -90,8 +86,14 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 		    continue;
 		}
 
-		Object objProperty1 = PropertyUtils.getSimpleProperty(domainObject1, slotName);
-		Object objProperty2 = PropertyUtils.getSimpleProperty(domainObject2, slotName);
+		Object objProperty1 = null;
+		Object objProperty2 = null;
+		try {
+		    objProperty1 = PropertyUtils.getSimpleProperty(domainObject1, slotName);
+		    objProperty2 = PropertyUtils.getSimpleProperty(domainObject2, slotName);
+		} catch (InvocationTargetException e) {
+		    continue;
+		}
 
 		String property1 = (objProperty1 == null) ? "" : objProperty1.toString();
 		String property2 = (objProperty2 == null) ? "" : objProperty2.toString();
@@ -113,8 +115,14 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 		String slotName = roleSlot.getName();
 		MergeSlotDTO mergeSlot = new MergeSlotDTO(slotName);
 
-		Object property1 = PropertyUtils.getSimpleProperty(domainObject1, slotName);
-		Object property2 = PropertyUtils.getSimpleProperty(domainObject2, slotName);
+		Object property1 = null;
+		Object property2 = null;
+		try {
+		    property1 = PropertyUtils.getSimpleProperty(domainObject1, slotName);
+		    property2 = PropertyUtils.getSimpleProperty(domainObject2, slotName);
+		} catch (InvocationTargetException e) {
+		    continue;
+		}
 
 		if (roleSlot.getMultiplicityUpper() == 1) {
 
@@ -137,10 +145,8 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 		    // collection
 		    mergeSlot.setType("Collection");
 
-		    fillDtoWithCollectionProperty(mergeSlot, property1, MergeSlotDTO.VALUE1,
-			    domainObject1.getOID(), classToMerge);
-		    fillDtoWithCollectionProperty(mergeSlot, property2, MergeSlotDTO.VALUE2,
-			    domainObject2.getOID(), classToMerge);
+		    fillDtoWithCollectionProperty(mergeSlot, property1, MergeSlotDTO.VALUE1, domainObject1.getOID(), classToMerge);
+		    fillDtoWithCollectionProperty(mergeSlot, property2, MergeSlotDTO.VALUE2, domainObject2.getOID(), classToMerge);
 		}
 
 		results.add(mergeSlot);
@@ -156,20 +162,18 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("displayObjects");
     }
 
-    private void fillDtoWithCollectionProperty(MergeSlotDTO mergeSlot, Object collection, String order,
-	    long oid, String domainClass) {
+    private void fillDtoWithCollectionProperty(MergeSlotDTO mergeSlot, Object collection, String order, long oid,
+	    String domainClass) {
 	if (collection != null) {
 	    mergeSlot.setValueProperty(order, "Size: " + ((Collection) collection).size());
-	    mergeSlot.setValueLinkProperty(order, "/domainbrowser/listRole?OID=" + oid + "&role="
-		    + mergeSlot.getName());
+	    mergeSlot.setValueLinkProperty(order, "/domainbrowser/listRole?OID=" + oid + "&role=" + mergeSlot.getName());
 
 	} else {
 	    mergeSlot.setValueProperty(order, "null collection");
 	}
     }
 
-    private void fillDtoWithSimpleProperty(Role roleSlot, MergeSlotDTO mergeSlot, Object reference,
-	    String order) {
+    private void fillDtoWithSimpleProperty(Role roleSlot, MergeSlotDTO mergeSlot, Object reference, String order) {
 	if (reference != null) {
 	    if (roleSlot.getType() instanceof DomainClass) {
 		final long idInternal = ((DomainObject) reference).getOID();
@@ -184,10 +188,9 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	}
     }
 
-    public ActionForward mergeProperty(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException, IllegalAccessException, InvocationTargetException,
-	    NoSuchMethodException, ClassNotFoundException {
+    public ActionForward mergeProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+	    InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 
 	IUserView userView = SessionUtils.getUserView(request);
 
@@ -195,26 +198,23 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	Integer object1IdInternal = Integer.valueOf(request.getParameter("object1IdInternal"));
 	Integer object2IdInternal = Integer.valueOf(request.getParameter("object2IdInternal"));
 
-	DomainObject domainObject1 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge),
-		object1IdInternal);
-	DomainObject domainObject2 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge),
-		object2IdInternal);
+	DomainObject domainObject1 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object1IdInternal);
+	DomainObject domainObject2 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object2IdInternal);
 
 	Integer sourceOrder = Integer.valueOf(request.getParameter("source"));
 	String slotName = request.getParameter("slotName");
 
-	Object[] args = { (sourceOrder == 1) ? domainObject1 : domainObject2,
-		(sourceOrder == 1) ? domainObject2 : domainObject1, slotName };
+	Object[] args = { (sourceOrder == 1) ? domainObject1 : domainObject2, (sourceOrder == 1) ? domainObject2 : domainObject1,
+		slotName };
 	ServiceUtils.executeService(userView, "TransferDomainObjectProperty", args);
 
 	return chooseObjects(mapping, form, request, response);
 
     }
 
-    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException,
-	    IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-	    ClassNotFoundException {
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException, IllegalAccessException, InvocationTargetException,
+	    NoSuchMethodException, ClassNotFoundException {
 
 	IUserView userView = SessionUtils.getUserView(request);
 	Integer objectIdInternal = Integer.valueOf(request.getParameter("objectIdInternal"));
