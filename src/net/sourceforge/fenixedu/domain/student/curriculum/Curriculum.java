@@ -88,8 +88,8 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     /**
-         * Just for pre-Bbolonha verification
-         */
+     * Just for pre-Bbolonha verification
+     */
     final private boolean shouldAdd(final ICurriculumEntry newEntry) {
 	if (newEntry instanceof IEnrolment) {
 	    final IEnrolment newIEnrolment = (IEnrolment) newEntry;
@@ -278,6 +278,10 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     private Integer calculateCurricularYear() {
+	if (curricularYearEntries.isEmpty()) {
+	    return Integer.valueOf(0);
+	}
+
 	final int curricularYears = getTotalCurricularYears();
 	final BigDecimal ectsCreditsCurricularYear = sumEctsCredits.add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60),
 		SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
