@@ -81,8 +81,8 @@ public class Item extends Item_Base {
      *         <code>null</code> if the item is the last
      */
     public Item getNextItem() {
-	List<Item> items = (List<Item>) getParents().get(0).getParent().getChildren(Item.class);
-	Integer order = getItemOrder() + 1;
+	List<Item> items = (List<Item>) getParents().get(0).getParent().getOrderedChildren(Item.class);
+	Integer order = items.indexOf(this) + 1;
 	return order < items.size() ? items.get(order) : null;
     }
 
