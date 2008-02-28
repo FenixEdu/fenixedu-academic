@@ -35,4 +35,11 @@ public abstract class Transaction extends Transaction_Base {
 	setValueBigDecimal(BigDecimal.valueOf(value));
     }
     
+    public void delete() {
+	removePersonAccount();
+	removeResponsiblePerson();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
+    
 }

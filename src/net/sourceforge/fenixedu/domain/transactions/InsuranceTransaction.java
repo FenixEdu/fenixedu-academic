@@ -74,5 +74,12 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 	    return false;
 	}
     }
+    
+    @Override
+    public void delete() {
+        removeExecutionYear();
+        removeStudent();
+        super.delete();
+    }
 
 }

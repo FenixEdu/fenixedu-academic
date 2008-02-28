@@ -58,10 +58,7 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 	}
 
 	removeGuideEntry();
-	removeResponsiblePerson();
-	removePersonAccount();
-	removeRootDomainObject();
-	deleteDomainObject();
+	super.delete();
     }
 
     public BigDecimal getValueWithAdjustment() {
