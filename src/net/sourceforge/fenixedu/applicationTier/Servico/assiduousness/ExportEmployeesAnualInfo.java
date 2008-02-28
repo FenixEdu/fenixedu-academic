@@ -78,10 +78,19 @@ public class ExportEmployeesAnualInfo extends Service {
 	    employeeMonthInfo.setMarriageLeave(countLeaveNumberOfDays(leaves, "LPC", beginDate, endDate));
 	    employeeMonthInfo.setChildbirthLeave(countLeaveNumberOfDays(leaves, "LP", beginDate, endDate));
 	    employeeMonthInfo.setLeaveWithoutPayment(countLeaveNumberOfDays(leaves, "LS/V", beginDate, endDate));
-	    employeeMonthInfo.setPointTolerance(countLeaveNumberOfWorkDays(leaves, "TOL", beginDate, endDate));
-	    employeeMonthInfo.setArticle17(countLeaveNumberOfDays(leaves, "A17", beginDate, endDate));
+	    employeeMonthInfo.setPointTolerance(getJustificationWorkingDays(leaves, beginDate, endDate, "TOL", "T1306"));
+	    employeeMonthInfo.setArticle17(getJustificationDays(leaves, beginDate, endDate, "A17", "A1306"));
 	    setAcquiredVacations(employeeMonthInfo, beginDate);
-	    employeeMonthInfo.setUsedExtraWorkVacations(countLeaveNumberOfDays(leaves, "FHE", beginDate, endDate));
+	    employeeMonthInfo.setUsedVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FER", "F1306", "FA42"));
+	    employeeMonthInfo.setUsedTransferedVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FTRANS",
+		    "FT1306", "FA42T"));
+	    employeeMonthInfo.setUsedPastHourVacations(countLeaveNumberOfWorkDays(leaves, "FHEA", beginDate, endDate));
+	    employeeMonthInfo.setUsedA17Vacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FA17", "FA1306"));
+	    employeeMonthInfo.setUsedLowSeasonVacations(countLeaveNumberOfWorkDays(leaves, "FEB", beginDate, endDate));
+	    employeeMonthInfo.setUsedExtraWorkVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FHE", "FH1306"));
+	    employeeMonthInfo.setUsedHalfDaysVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "1/2 FÉRIAS",
+		    "1/2 FER"));
+
 	    // TODO not supported yet, dispensas adquiridas no mes por work
 	    // extra
 	    setAcquiredDismissal(employeeAnualInfo.getEmployee().getAssiduousness());
@@ -116,6 +125,35 @@ public class ExportEmployeesAnualInfo extends Service {
 	    Double totalStrike = countLeaveNumberOfHalfDays(leaves, "1/2GREVE") + strikeDays;
 	    employeeMonthInfo.setStrike(totalStrike != 0 ? totalStrike : null);
 	}
+    }
+
+    private Integer getJustificationDays(List<Leave> leaves, YearMonthDay beginDate, YearMonthDay endDate,
+	    String... justifications) {
+	int total = 0;
+	for (String justification : justifications) {
+	    Integer days = countLeaveNumberOfDays(leaves, justification, beginDate, endDate);
+	    if (days != null) {
+		total += days.intValue();
+	    }
+	}
+	return total == 0 ? null : new Integer(total);
+    }
+
+    private Integer getJustificationWorkingDays(List<Leave> leaves, YearMonthDay beginDate, YearMonthDay endDate,
+	    String... justifications) {
+	int total = 0;
+	for (String justification : justifications) {
+	    Integer days = countLeaveNumberOfWorkDays(leaves, justification, beginDate, endDate);
+	    if (days != null) {
+		total += days.intValue();
+	    }
+	}
+	return total == 0 ? null : new Integer(total);
+    }
+
+    private int getJustificationDays(List<Leave> leaves, String justification, YearMonthDay beginDate, YearMonthDay endDate) {
+	Integer halfDaysVacations1 = countLeaveNumberOfDays(leaves, justification, beginDate, endDate);
+	return halfDaysVacations1 == null ? 0 : halfDaysVacations1.intValue();
     }
 
     private void setArticle52(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,

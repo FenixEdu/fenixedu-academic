@@ -38,7 +38,19 @@ public class EmployeeMonthInfo implements Serializable {
 
     private Integer acquiredExtraWorkVacations;
 
+    private Integer usedVacations;
+
+    private Integer usedTransferedVacations;
+
+    private Integer usedPastHourVacations;
+
+    private Integer usedA17Vacations;
+
+    private Integer usedLowSeasonVacations;
+
     private Integer usedExtraWorkVacations;
+
+    private Integer usedHalfDaysVacations;
 
     private Integer acquiredDismissal;
 
@@ -457,5 +469,53 @@ public class EmployeeMonthInfo implements Serializable {
 
     public void setRelativeClinicMedicalTreatment(Double relativeClinicMedicalTreatment) {
 	this.relativeClinicMedicalTreatment = relativeClinicMedicalTreatment;
+    }
+
+    public Integer getUsedVacations() {
+	return usedVacations;
+    }
+
+    public void setUsedVacations(Integer usedVacations) {
+	this.usedVacations = usedVacations;
+    }
+
+    public Integer getUsedTransferedVacations() {
+	return usedTransferedVacations;
+    }
+
+    public void setUsedTransferedVacations(Integer usedTransferedVacations) {
+	this.usedTransferedVacations = usedTransferedVacations;
+    }
+
+    public Integer getUsedPastHourVacations() {
+	return usedPastHourVacations;
+    }
+
+    public void setUsedPastHourVacations(Integer usedPastHourVacations) {
+	this.usedPastHourVacations = usedPastHourVacations;
+    }
+
+    public Integer getUsedA17Vacations() {
+	return usedA17Vacations;
+    }
+
+    public void setUsedA17Vacations(Integer usedA17Vacations) {
+	this.usedA17Vacations = usedA17Vacations;
+    }
+
+    public Integer getUsedLowSeasonVacations() {
+	return usedLowSeasonVacations;
+    }
+
+    public void setUsedLowSeasonVacations(Integer usedLowSeasonVacations) {
+	this.usedLowSeasonVacations = usedLowSeasonVacations;
+    }
+
+    public Integer getUsedHalfDaysVacations() {
+	return usedHalfDaysVacations;
+    }
+
+    public void setUsedHalfDaysVacations(Integer usedHalfDaysVacations) {
+	this.usedHalfDaysVacations = usedHalfDaysVacations;
     }
 }
