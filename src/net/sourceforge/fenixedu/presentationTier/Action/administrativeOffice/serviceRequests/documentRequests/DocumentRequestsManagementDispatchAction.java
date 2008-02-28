@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -10,9 +13,12 @@ import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates.ExamDateCertificateExamSelectionBean;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.DocumentRequestCreator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -51,7 +57,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	final AdministrativeOfficeDocument administrativeOfficeDocument = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		.create(documentRequest);
 	administrativeOfficeDocument.addParameter("path", getServlet().getServletContext().getRealPath("/"));
-	
+
 	byte[] data = ReportsUtils.exportToPdf(administrativeOfficeDocument.getReportTemplateKey(), administrativeOfficeDocument
 		.getParameters(), administrativeOfficeDocument.getResourceBundle(), administrativeOfficeDocument.getDataSource());
 
@@ -204,9 +210,54 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) RenderUtils.getViewState()
 		.getMetaObject().getObject();
 
+	if (requestCreateBean.getChosenDocumentRequestType() == DocumentRequestType.EXAM_DATE_CERTIFICATE) {
+	    return prepareChooseExamsToCreateExamDateCertificateRequest(mapping, actionForm, request, response, requestCreateBean);
+	}
+
 	setAdditionalInformationSchemaName(request, requestCreateBean);
 	request.setAttribute("documentRequestCreateBean", requestCreateBean);
 	return mapping.findForward("viewDocumentRequestsToCreate");
+    }
+
+    public ActionForward prepareChooseExamsToCreateExamDateCertificateRequest(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response, DocumentRequestCreateBean requestCreateBean) {
+
+	request.setAttribute("documentRequestCreateBean", requestCreateBean);
+	final ExamDateCertificateExamSelectionBean examSelectionBean = ExamDateCertificateExamSelectionBean.buildFor(
+		requestCreateBean.getEnrolments(), requestCreateBean.getExecutionPeriod());
+	request.setAttribute("examSelectionBean", examSelectionBean);
+	request.setAttribute("enrolmentsWithoutExam", examSelectionBean.getEnrolmentsWithoutExam(requestCreateBean
+		.getEnrolments()));
+
+	return mapping.findForward("chooseExamsToCreateExamDateCertificateRequest");
+
+    }
+
+    public ActionForward chooseExamsToCreateExamDateCertificateRequest(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) getRenderedObject("documentRequestCreateBean");
+	requestCreateBean.setExams(getSelectedExams(request));
+
+	setAdditionalInformationSchemaName(request, requestCreateBean);
+	request.setAttribute("documentRequestCreateBean", requestCreateBean);
+	return mapping.findForward("viewDocumentRequestsToCreate");
+    }
+
+    private List<Exam> getSelectedExams(final HttpServletRequest request) {
+	final String[] examIds = request.getParameterValues("selectedExams");
+
+	if (examIds == null) {
+	    return Collections.emptyList();
+	}
+
+	final List<Exam> result = new ArrayList<Exam>();
+	for (final String examId : examIds) {
+	    result.add((Exam) rootDomainObject.readEvaluationByOID(Integer.valueOf(examId)));
+	}
+
+	return result;
+
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

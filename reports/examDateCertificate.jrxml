@@ -457,7 +457,7 @@ Especial]]></text>
 					<textElement textAlignment="Justified">
 						<font pdfFontName="Times-Roman" size="10"/>
 					</textElement>
-				<text><![CDATA[Por ser verdade e me haver sido pedido mandei passar o presente certificado que vou assinar e autenticar com o selo branco em uso neste Secretaria.]]></text>
+				<text><![CDATA[Por ser verdade e me haver sido pedido mandei passar o presente certificado que vou assinar e autenticar com o selo branco em uso nesta Secretaria.]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

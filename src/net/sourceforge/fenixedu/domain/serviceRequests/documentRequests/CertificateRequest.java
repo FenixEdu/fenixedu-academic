@@ -5,6 +5,7 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
@@ -43,7 +44,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	    DocumentRequestType chosenDocumentRequestType, DocumentPurposeType chosenDocumentPurposeType, String otherPurpose,
 	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear,
 	    MobilityProgram mobilityProgram, CycleType requestedCycle, Boolean freeProcessed, Collection<Enrolment> enrolments,
-	    ExecutionPeriod executionPeriod, Boolean internship, Boolean studyPlan) {
+	    Collection<Exam> exams, ExecutionPeriod executionPeriod, Boolean internship, Boolean studyPlan) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
@@ -64,8 +65,7 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
 	case EXAM_DATE_CERTIFICATE:
 	    return new ExamDateCertificateRequest(registration, requestDate, chosenDocumentPurposeType, otherPurpose,
-		    urgentRequest, executionYear, enrolments, executionPeriod);
-
+		    urgentRequest, executionYear, enrolments, exams, executionPeriod);
 	case COURSE_LOAD:
 	    return new CourseLoadRequest(registration, requestDate, ExecutionYear.readCurrentExecutionYear(),
 		    chosenDocumentPurposeType, otherPurpose, enrolments, urgentRequest);

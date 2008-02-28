@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -31,9 +32,9 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private Boolean average;
 
     private Boolean detailed;
-    
+
     private Boolean internship;
-    
+
     private Boolean studyPlan;
 
     private Boolean toBeCreated;
@@ -52,9 +53,12 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     private DomainReference<ExecutionPeriod> executionPeriod;
 
+    private List<DomainReference<Exam>> exams;
+
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
 	this.enrolments = new ArrayList<DomainReference<Enrolment>>();
+	this.exams = new ArrayList<DomainReference<Exam>>();
     }
 
     public DocumentRequestType getChosenDocumentRequestType() {
@@ -246,6 +250,24 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 	this.enrolments = enrolmentsToSet;
     }
 
+    public List<Exam> getExams() {
+	final List<Exam> result = new ArrayList<Exam>();
+	for (final DomainReference<Exam> each : this.exams) {
+	    result.add(each.getObject());
+	}
+
+	return result;
+    }
+
+    public void setExams(List<Exam> exams) {
+	final List<DomainReference<Exam>> result = new ArrayList<DomainReference<Exam>>();
+	for (final Exam each : exams) {
+	    result.add(new DomainReference<Exam>(each));
+	}
+
+	this.exams = result;
+    }
+
     public ExecutionPeriod getExecutionPeriod() {
 	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
     }
@@ -253,6 +275,5 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
 	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
     }
-    
-    
+
 }

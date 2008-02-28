@@ -1838,13 +1838,29 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public void setSigla(String sigla) {
 	super.setSigla(sigla.replace(' ', '_').replace('/', '-'));
     }
-
+    
     public Collection<MarkSheet> getAssociatedMarkSheets() {
 	Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
 	for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
 	    markSheets.addAll(curricularCourse.getMarkSheetsByPeriod(getExecutionPeriod()));
 	}
 	return markSheets;
+    }
+
+    public Set<Exam> getPublishedExamsFor(final CurricularCourse curricularCourse) {
+
+	final Set<Exam> result = new HashSet<Exam>();
+	for (final WrittenEvaluation eachEvaluation : getWrittenEvaluations()) {
+	    if (eachEvaluation.isExam()) {
+		final Exam exam = (Exam) eachEvaluation;
+		if (exam.isExamsMapPublished() && exam.contains(curricularCourse)) {
+		    result.add(exam);
+		}
+	    }
+	}
+
+	return result;
+
     }
 
 }

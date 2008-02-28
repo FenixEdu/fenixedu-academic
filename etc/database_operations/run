@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding table ExamDateCertificateRequestExam" AddTableExamDateCertificateRequestExam.sql

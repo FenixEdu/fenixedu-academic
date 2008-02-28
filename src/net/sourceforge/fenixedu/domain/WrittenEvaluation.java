@@ -732,4 +732,25 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public boolean isExam() {
 	return false;
     }
+
+    public boolean contains(final CurricularCourse curricularCourse) {
+	for (final DegreeModuleScope each : getDegreeModuleScopes()) {
+	    if (each.getCurricularCourse() == curricularCourse) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+    
+    public Set<DegreeModuleScope> getDegreeModuleScopesFor(CurricularCourse curricularCourse) {
+	final Set<DegreeModuleScope> result = new HashSet<DegreeModuleScope>();
+	for (final DegreeModuleScope each : getDegreeModuleScopes()) {
+	    if (each.getCurricularCourse() == curricularCourse) {
+		result.add(each);
+	    }
+	}
+
+	return result;
+    }
 }

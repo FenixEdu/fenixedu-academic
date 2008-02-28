@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -152,6 +154,10 @@ public class Exam extends Exam_Base {
     @Override
     public boolean isExam() {
 	return true;
+    }
+
+    public boolean isForSeason(final Season season) {
+	return this.getSeason().equals(season);
     }
 
 }

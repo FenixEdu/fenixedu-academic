@@ -4579,6 +4579,16 @@ relation ExamDateCertificateRequestEnrolment {
 	}
 }
 
+relation ExamDateCertificateRequestExam {
+	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest playsRole examDateCertificateRequests {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.Exam playsRole exams {
+		multiplicity *;
+	}
+}
+
 relation ExamDateCertificateRequestExecutionPeriod {
 	net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest playsRole examDateCertificateRequests {
 		multiplicity *;
