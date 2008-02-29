@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
@@ -235,16 +234,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return getCurriculumGroup().getStudentCurricularPlan();
     }
 
-    // alterar isto, colocar as regras
     private Collection<Context> getDegreeModulesFor(ExecutionPeriod executionPeriod) {
-	Collection<Context> result = new HashSet<Context>();
-	for (Context context : this.getDegreeModule().getValidChildContexts(executionPeriod)) {
-	    if (context.getCurricularPeriod() == null
-		    || context.getCurricularPeriod().contains(CurricularPeriodType.SEMESTER, executionPeriod.getSemester()) != null) {
-		result.add(context);
-	    }
-	}
-	return result;
+	return this.getDegreeModule().getValidChildContexts(executionPeriod);
     }
 
     public List<Context> getCurricularCourseContextsToEnrol(ExecutionPeriod executionPeriod) {

@@ -163,8 +163,16 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public boolean isValid(ExecutionPeriod executionPeriod) {
-	return isOpen(executionPeriod)
-		&& ((getChildDegreeModule() instanceof CurricularCourse && containsSemester(executionPeriod.getSemester())) || !(getChildDegreeModule() instanceof CurricularCourse));
+	if (isOpen(executionPeriod)) {
+	    if (getChildDegreeModule().isCurricularCourse()) {
+		CurricularCourse curricularCourse = (CurricularCourse) getChildDegreeModule();
+		if (!curricularCourse.isAnual(executionPeriod.getExecutionYear())) {
+		    return containsSemester(executionPeriod.getSemester());
+		}
+	    }
+	    return true;
+	}
+	return false;
     }
 
     public boolean isValid(final ExecutionYear executionYear) {
