@@ -412,8 +412,7 @@ public class Protocol extends Protocol_Base {
 		spreadsheet.getExcelStyle().getStringStyle());
 	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.TECHNICAL_COOPERATION) ? "X"
 		: "", spreadsheet.getExcelStyle().getStringStyle());
-	spreadsheet.addCell(getProtocolAction().getOtherTypes() == null ? "" : getProtocolAction()
-		.getOtherTypes(), true);
+	spreadsheet.addCell(getProtocolAction().getOtherTypes(), true);
 	spreadsheet.addCell(getObservations(), true);
 	spreadsheet.addCell(getCommaSeparatedPartyNames(getUnits()));
 	spreadsheet.addCell(getCommaSeparatedResponsiblesNames());

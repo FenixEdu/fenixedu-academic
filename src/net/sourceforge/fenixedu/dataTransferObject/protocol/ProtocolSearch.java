@@ -66,14 +66,13 @@ public class ProtocolSearch implements Serializable {
 	List<Protocol> protocols = new ArrayList<Protocol>();
 	for (Protocol protocol : RootDomainObject.getInstance().getProtocols()) {
 	    if (satisfiedProtocolNumber(protocol)
-		    && satisfiedDates(getBeginProtocolBeginDate(), getEndProtocolBeginDate(), protocol
-			    .getLastProtocolHistory().getBeginDate())
-		    && satisfiedDates(getBeginProtocolEndDate(), getEndProtocolEndDate(), protocol
-			    .getLastProtocolHistory().getBeginDate())
+		    && satisfiedDates(getBeginProtocolBeginDate(), getEndProtocolBeginDate(), protocol.getLastProtocolHistory()
+			    .getBeginDate())
+		    && satisfiedDates(getBeginProtocolEndDate(), getEndProtocolEndDate(), protocol.getLastProtocolHistory()
+			    .getBeginDate())
 		    && satisfiedDates(getBeginSignedDate(), getEndSignedDate(), protocol.getSignedDate())
-		    && satisfiedOtherProtocolActionTypes(protocol)
-		    && satiefiedProtocolActionTypes(protocol) && satisfiedProtocolPartner(protocol)
-		    && satisfiedNationality(protocol) && satisfiedActivity(protocol)
+		    && satisfiedOtherProtocolActionTypes(protocol) && satiefiedProtocolActionTypes(protocol)
+		    && satisfiedProtocolPartner(protocol) && satisfiedNationality(protocol) && satisfiedActivity(protocol)
 		    && satisfiedActiveInYear(protocol)) {
 		protocols.add(protocol);
 	    }
@@ -85,11 +84,9 @@ public class ProtocolSearch implements Serializable {
 	if (getYear() != null) {
 	    for (ProtocolHistory protocolHistory : protocol.getProtocolHistories()) {
 		if (protocolHistory.getEndDate() == null) {
-		    return protocolHistory.getBeginDate() == null
-			    || protocolHistory.getBeginDate().getYear() <= getYear();
+		    return protocolHistory.getBeginDate() == null || protocolHistory.getBeginDate().getYear() <= getYear();
 		} else {
-		    return (protocolHistory.getBeginDate() == null || protocolHistory.getBeginDate()
-			    .getYear() <= getYear())
+		    return (protocolHistory.getBeginDate() == null || protocolHistory.getBeginDate().getYear() <= getYear())
 			    && protocolHistory.getEndDate().getYear() >= getYear();
 		}
 	    }
@@ -105,18 +102,42 @@ public class ProtocolSearch implements Serializable {
     }
 
     private boolean satisfiedNationality(Protocol protocol) {
-	if (getSearchNationalityType() == null
-		|| getSearchNationalityType().equals(SearchNationalityType.COUNTRY)) {
+	if (getSearchNationalityType() == null || getSearchNationalityType().equals(SearchNationalityType.COUNTRY)) {
 	    return satisfiedCountry(protocol);
 	}
-	for (Unit partner : protocol.getPartners()) {
-	    if ((partner.getCountry() != null && ((getSearchNationalityType().equals(
-		    SearchNationalityType.NATIONAL) && partner.getCountry().getName().equalsIgnoreCase(
-		    "PORTUGAL")) || (getSearchNationalityType().equals(
-		    SearchNationalityType.INTERNATIONAL) && !partner.getCountry().getName()
-		    .equalsIgnoreCase("PORTUGAL"))))
-		    || (partner.getCountry() == null && getSearchNationalityType().equals(
-			    SearchNationalityType.WITHOUT_NATIONALITY))) {
+
+	if (!hasAnyPartnerWithoutNationality(protocol.getPartners())) {
+
+	    if (getSearchNationalityType().equals(SearchNationalityType.NATIONAL)
+		    && !hasAnyInternationalPartner(protocol.getPartners())) {
+		return true;
+	    }
+
+	    if (getSearchNationalityType().equals(SearchNationalityType.INTERNATIONAL)
+		    && hasAnyInternationalPartner(protocol.getPartners())) {
+		return true;
+	    }
+	} else if (getSearchNationalityType().equals(SearchNationalityType.WITHOUT_NATIONALITY)) {
+	    return true;
+	}
+	return false;
+    }
+
+    private boolean hasAnyInternationalPartner(List<Unit> partners) {
+	for (Unit partner : partners) {
+	    if (partner.getCountry() == null) {
+		return false;
+	    }
+	    if (!partner.getCountry().getName().equalsIgnoreCase("PORTUGAL")) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private boolean hasAnyPartnerWithoutNationality(List<Unit> partners) {
+	for (Unit partner : partners) {
+	    if (partner.getCountry() == null) {
 		return true;
 	    }
 	}
@@ -128,8 +149,7 @@ public class ProtocolSearch implements Serializable {
 	    return true;
 	}
 	for (Unit partner : protocol.getPartners()) {
-	    if (partner.getCountry() != null
-		    && partner.getCountry().getName().equals(getCountry().getName())) {
+	    if (partner.getCountry() != null && partner.getCountry().getName().equals(getCountry().getName())) {
 		return true;
 	    }
 	}
@@ -137,17 +157,15 @@ public class ProtocolSearch implements Serializable {
     }
 
     private boolean satiefiedProtocolActionTypes(Protocol protocol) {
-	return (getProtocolActionTypes() == null || protocol.getProtocolAction().contains(
-		getProtocolActionTypes()));
+	return (getProtocolActionTypes() == null || protocol.getProtocolAction().contains(getProtocolActionTypes()));
     }
 
     private boolean satisfiedProtocolPartner(Protocol protocol) {
 	if (getPartnerName() != null && getPartnerName().getUnit() != null) {
 	    return protocol.getPartners().contains(getPartnerName().getUnit());
 	}
-	if (getPartnerName() == null && getPartnerNameString() != null) {
-	    String[] values = StringNormalizer.normalize(getPartnerNameString()).toLowerCase().split(
-		    "\\p{Space}+");
+	if (getPartnerName() == null && (!org.apache.commons.lang.StringUtils.isEmpty(getPartnerNameString()))) {
+	    String[] values = StringNormalizer.normalize(getPartnerNameString()).toLowerCase().split("\\p{Space}+");
 	    boolean result = false;
 	    for (Unit unit : protocol.getPartners()) {
 		String normalizedValue = StringNormalizer.normalize(unit.getName()).toLowerCase();
@@ -178,8 +196,7 @@ public class ProtocolSearch implements Serializable {
     private boolean satisfiedDates(YearMonthDay beginDate, YearMonthDay endDate, YearMonthDay date) {
 	if (beginDate != null && date != null) {
 	    if (endDate != null) {
-		Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), endDate
-			.toDateTimeAtMidnight().plus(1));
+		Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight().plus(1));
 		return interval.contains(date.toDateTimeAtMidnight());
 	    } else {
 		return !beginDate.isAfter(date);
@@ -189,9 +206,8 @@ public class ProtocolSearch implements Serializable {
     }
 
     private boolean satisfiedProtocolNumber(Protocol protocol) {
-	return (org.apache.commons.lang.StringUtils.isEmpty(getProtocolNumber()) || StringUtils
-		.normalize(protocol.getProtocolNumber()).indexOf(
-			StringUtils.normalize(getProtocolNumber())) != -1);
+	return (org.apache.commons.lang.StringUtils.isEmpty(getProtocolNumber()) || StringUtils.normalize(
+		protocol.getProtocolNumber()).indexOf(StringUtils.normalize(getProtocolNumber())) != -1);
     }
 
     public YearMonthDay getBeginProtocolBeginDate() {

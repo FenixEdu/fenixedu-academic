@@ -113,7 +113,7 @@
 </logic:present>
 
 <fieldset class="fieldset1 mtop15">
-<legend><bean:message key="label.protocol.insertResponsible"/></legend>
+<legend><bean:message key="label.protocol.insertResponsible" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></legend>
 <logic:equal name="protocolFactory" property="istResponsible" value="true">
 	<logic:equal name="protocolFactory" property="istResponsibleIsPerson" value="true">
 		<fr:edit id="istResponsible" name="protocolFactory" schema="search.istResponsible">

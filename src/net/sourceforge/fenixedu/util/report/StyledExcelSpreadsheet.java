@@ -162,6 +162,9 @@ public class StyledExcelSpreadsheet {
     }
 
     public void addCell(Object value, boolean wrap) {
+	if (value == null) {
+	    value = "";
+	}
 	addCell(value, getDefaultExcelStyle(value), (getRow().getLastCellNum() + 1), wrap);
     }
 
