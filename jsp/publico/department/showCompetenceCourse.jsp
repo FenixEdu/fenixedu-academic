@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.department" attributeName="body-inline">
 	
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
@@ -162,7 +163,7 @@
 			<h:outputText value="<div class='lfloat mbottom2'>" escape="false"/>
 			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['title']}:</label>" escape="false"/>
-			<h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
+			<h:outputText value="#{CompetenceCourseManagement.hasContextAndChecksumString}" escape="false"/><h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
 			<h:outputText rendered="#{bibliographicReference.url == 'http://'}" value="#{bibliographicReference.title}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 			
@@ -193,7 +194,7 @@
 			<h:outputText value="<div class='lfloat mbottom2'>" escape="false"/>
 			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['title']}:</label>" escape="false"/>
-			<h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
+			<h:outputText value="#{CompetenceCourseManagement.hasContextAndChecksumString}" escape="false"/><h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
 			<h:outputText rendered="#{bibliographicReference.url == 'http://'}" value="#{bibliographicReference.title}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 			
