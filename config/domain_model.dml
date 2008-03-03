@@ -4465,6 +4465,9 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 			class net.sourceforge.fenixedu.domain.TutorSite extends net.sourceforge.fenixedu.domain.UnitSite {
 			}
 			
+			class net.sourceforge.fenixedu.domain.StudentsSite extends net.sourceforge.fenixedu.domain.UnitSite {
+			}
+			
 			class net.sourceforge.fenixedu.domain.InstitutionSite extends net.sourceforge.fenixedu.domain.UnitSite {
 			}
 

@@ -1001,6 +1001,29 @@
         </action>
 
    
+   <!--  Directive Council Students Site -->
+     <action path="/studentsSite/viewSite"
+                parameter="method"
+                type="net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA">
+            <forward name="frontPage-BANNER_INTRO" path="basicUnit-site-front-page-banner-intro"/>
+            <forward name="frontPage-INTRO_BANNER" path="basicUnit-site-front-page-intro-banner"/>
+            <forward name="frontPage-BANNER_INTRO_COLLAPSED" path="basicUnit-site-front-page-intro-float"/>
+            <forward name="site-section" path="basicUnit-section"/>
+            <forward name="site-section-deny" path="basicUnit-section-deny"/>
+            <forward name="site-section-adviseLogin" path="basicUnit-section-adviseLogin"/>
+            <forward name="site-item" path="basicUnit-item"/>
+            <forward name="site-item-deny" path="basicUnit-item-deny"/>
+            <forward name="site-item-adviseLogin" path="basicUnit-item-adviseLogin"/>
+            <forward name="unit-organization" path="basicUnit-organization"/>
+
+            <forward name="announcementsAction" path="/units/announcements.do"/>
+            <forward name="eventsAction" path="/units/events.do"/>
+            <forward name="announcementsRSSAction" path="/units/announcementsRSS.do"/>
+            <forward name="eventsRSSAction" path="/units/eventsRSS.do"/>
+        </action>
+   
+   
+   
    <!-- Department site -->
         <action path="/department/departmentSite"
                 parameter="method"
@@ -1278,6 +1301,7 @@
 				<forward name="viewSection-ScientificCouncilSite" path="scientificCouncil-section"/>
 				<forward name="viewSection-ScientificAreaSite" path="basicUnit-section"/>
 				<forward name="viewSection-TutorSite" path="basicUnit-section"/>
+				<forward name="viewSection-StudentsSite" path="basicUnit-section"/>
 				
 				<forward name="viewItem-Homepage" path="view-homepage-item"/>
 				<forward name="viewItem-DegreeSite" path="degree-item"/>
@@ -1289,7 +1313,8 @@
 				<forward name="viewItem-ScientificCouncilSite" path="scientificCouncil-item"/>
 				<forward name="viewItem-ScientificAreaSite" path="basicUnit-item"/>
 				<forward name="viewItem-TutorSite" path="basicUnit-item"/>
-												
+				<forward name="viewItem-StudentsSite" path="basicUnit-item"/>
+				
 				<forward name="site-section-deny-Homepage" path="homepage-section-deny"/>
 				<forward name="site-section-deny-DegreeSite" path="degree-section-deny"/>
 				<forward name="site-section-deny-DepartmentSite" path="department-section-deny"/>
@@ -1300,6 +1325,7 @@
 				<forward name="site-section-deny-ScientificCouncilSite" path="scientificCouncil-section-deny"/>
 				<forward name="site-section-deny-ScientificAreaSite" path="basicUnit-section-deny"/>
 				<forward name="site-section-deny-TutorSite" path="basicUnit-section-deny"/>
+				<forward name="site-section-deny-StudentsSite" path="basicUnit-section-deny"/>
 				
 				<forward name="site-section-adviseLogin-Homepage" path="homepage-section-adviseLogin"/>
 				<forward name="site-section-adviseLogin-DegreeSite" path="degree-section-adviseLogin"/>
@@ -1311,6 +1337,7 @@
 				<forward name="site-section-adviseLogin-ScientificCouncilSite" path="scientificCouncil-section-adviseLogin"/>
 				<forward name="site-section-adviseLogin-ScientificAreaSite" path="basicUnit-section-adviseLogin"/>
 				<forward name="site-section-adviseLogin-TutorSite" path="basicUnit-section-adviseLogin"/>
+				<forward name="site-section-adviseLogin-StudentsSite" path="basicUnit-section-adviseLogin"/>
 		</action>
 
 	 <!-- =================== Find Spaces Interface  =================== -->

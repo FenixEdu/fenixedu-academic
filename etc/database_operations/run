@@ -29,3 +29,5 @@ function executeWithTempFile() {
 }
 
 execute "!!!!!!!!!!!!! remove updateCreatedBy.sql after run ----------------" updateCreatedBy.sql
+execute "Creating setup for Directive Council Students WebSite" setupStudentsSite.sql
+execute "Creating Functionality that presents initial page" ViewStudentsSiteFunctionality.sql
