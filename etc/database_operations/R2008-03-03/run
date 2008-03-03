@@ -28,3 +28,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creating setup for Directive Council Students WebSite" setupStudentsSite.sql
+execute "Creating Functionality that presents initial page" ViewStudentsSiteFunctionality.sql
