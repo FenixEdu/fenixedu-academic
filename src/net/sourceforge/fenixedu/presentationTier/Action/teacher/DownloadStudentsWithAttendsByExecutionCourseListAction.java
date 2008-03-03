@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
+import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -44,7 +45,7 @@ import org.joda.time.YearMonthDay;
  * @author Andre Fernandes / Joao Brito
  */
 public class DownloadStudentsWithAttendsByExecutionCourseListAction extends FenixAction {
-    
+
     private static final String SEPARATOR = "\t";
 
     private static final String NEWLINE = "\n";
@@ -89,227 +90,236 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String NUMBER_STUDENTS = "Número de alunos";
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-        Integer executionCourseID = null;
-        List coursesIDs = null;
-        List enrollmentTypeList = null;
-        List shiftIDs = null;
-        try {
-            executionCourseID = Integer.valueOf(request.getParameter("objectCode"));
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixActionException, FenixFilterException, FenixServiceException {
+	Integer executionCourseID = null;
+	List coursesIDs = null;
+	List enrollmentTypeList = null;
+	List shiftIDs = null;
+	List<WorkingStudentSelectionType> wsSelectionTypes = new ArrayList<WorkingStudentSelectionType>();
 
-        } catch (NumberFormatException ex) {
-            // ok, we don't want to view a shift's student list
-        }
+	try {
+	    executionCourseID = Integer.valueOf(request.getParameter("objectCode"));
 
-        IUserView userView = getUserView(request);
+	} catch (NumberFormatException ex) {
+	    // ok, we don't want to view a shift's student list
+	}
 
-        String checkedCoursesIds[] = request.getParameterValues("coursesIDs");
-        String enrollmentType[] = request.getParameterValues("enrollmentType");
-        String checkedShiftIds[] = request.getParameterValues("shiftIDs");
+	IUserView userView = getUserView(request);
 
-        enrollmentTypeList = new ArrayList();
-        for (int i = 0; i < enrollmentType.length; i++) {
-            if (enrollmentType[i].equals(AttendacyStateSelectionType.ALL.toString())) {
-                enrollmentTypeList = null;
-                break;
-            }
-            enrollmentTypeList.add(new AttendacyStateSelectionType(enrollmentType[i]));
-        }
+	String checkedCoursesIds[] = request.getParameterValues("coursesIDs");
+	String enrollmentType[] = request.getParameterValues("enrollmentType");
+	String checkedShiftIds[] = request.getParameterValues("shiftIDs");
 
-        coursesIDs = new ArrayList();
-        for (int i = 0; i < checkedCoursesIds.length; i++) {
-            if (checkedCoursesIds[i].equals("0")) {
-                coursesIDs = null;
-                break;
-            }
-            Integer courseID = new Integer(Integer.parseInt(checkedCoursesIds[i]));
-            coursesIDs.add(courseID);
-        }
+	enrollmentTypeList = new ArrayList();
+	for (int i = 0; i < enrollmentType.length; i++) {
+	    if (enrollmentType[i].equals(AttendacyStateSelectionType.ALL.toString())) {
+		enrollmentTypeList = null;
+		break;
+	    }
+	    enrollmentTypeList.add(new AttendacyStateSelectionType(enrollmentType[i]));
+	}
 
-        shiftIDs = new ArrayList();
-        for (int i = 0; i < checkedShiftIds.length; i++) {
-            if (checkedShiftIds[i].equals("0")) {
-                shiftIDs = null;
-                break;
-            }
-            Integer shiftID = new Integer(Integer.parseInt(checkedShiftIds[i]));
-            shiftIDs.add(shiftID);
-        }
+	coursesIDs = new ArrayList();
+	for (int i = 0; i < checkedCoursesIds.length; i++) {
+	    if (checkedCoursesIds[i].equals("0")) {
+		coursesIDs = null;
+		break;
+	    }
+	    Integer courseID = new Integer(Integer.parseInt(checkedCoursesIds[i]));
+	    coursesIDs.add(courseID);
+	}
 
-        Object args[] = { executionCourseID, coursesIDs, enrollmentTypeList, shiftIDs };
-        TeacherAdministrationSiteView siteView = null;
+	shiftIDs = new ArrayList();
+	for (int i = 0; i < checkedShiftIds.length; i++) {
+	    if (checkedShiftIds[i].equals("0")) {
+		shiftIDs = null;
+		break;
+	    }
+	    Integer shiftID = new Integer(Integer.parseInt(checkedShiftIds[i]));
+	    shiftIDs.add(shiftID);
+	}
 
-        InfoForReadStudentsWithAttendsByExecutionCourse infoDTO;
+	String[] wsSelected = request.getParameterValues("workingStudentType");
+	for (int i = 0; i < wsSelected.length; i++) {
+	    if (wsSelected[i].equals(WorkingStudentSelectionType.ALL.toString())) {
+		wsSelectionTypes = null;
+		break;
+	    }
+	    wsSelectionTypes.add(WorkingStudentSelectionType.valueOf(wsSelected[i]));
+	}
 
-        siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
-                "ReadStudentsWithAttendsByExecutionCourse", args);
+	Object args[] = { executionCourseID, coursesIDs, enrollmentTypeList, shiftIDs, wsSelectionTypes };
+	TeacherAdministrationSiteView siteView = null;
 
-        infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
+	InfoForReadStudentsWithAttendsByExecutionCourse infoDTO;
 
-        Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
+	siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
+		"ReadStudentsWithAttendsByExecutionCourse", args);
 
-        String fileContents = new String();
+	infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
 
-        // building the table header
-        fileContents += STUDENT_NUMBER + SEPARATOR;
-        fileContents += NUMBER_OF_ENROLLMENTS + SEPARATOR;
-        fileContents += ATTENDACY_TYPE + SEPARATOR;
-        fileContents += COURSE + SEPARATOR;
-        fileContents += NAME + SEPARATOR;
+	Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
 
-        List groupProperties = infoDTO.getInfoGroupProperties();
-        if (groupProperties != null && !groupProperties.isEmpty()) {
-            Iterator gpIterator = groupProperties.iterator();
-            while (gpIterator.hasNext()) {
-                InfoGrouping gp = (InfoGrouping) gpIterator.next();
-                fileContents += GROUP + gp.getName() + SEPARATOR;
-            }
-        }
+	String fileContents = new String();
 
-        fileContents += EMAIL + SEPARATOR;
+	// building the table header
+	fileContents += STUDENT_NUMBER + SEPARATOR;
+	fileContents += NUMBER_OF_ENROLLMENTS + SEPARATOR;
+	fileContents += ATTENDACY_TYPE + SEPARATOR;
+	fileContents += COURSE + SEPARATOR;
+	fileContents += NAME + SEPARATOR;
 
-        Collection classTypes = infoDTO.getClassTypes();
-        if (classTypes != null && !classTypes.isEmpty()) {
-            Iterator ctIterator = classTypes.iterator();
-            while (ctIterator.hasNext()) {
-                ShiftType classType = (ShiftType) ctIterator.next();
+	List groupProperties = infoDTO.getInfoGroupProperties();
+	if (groupProperties != null && !groupProperties.isEmpty()) {
+	    Iterator gpIterator = groupProperties.iterator();
+	    while (gpIterator.hasNext()) {
+		InfoGrouping gp = (InfoGrouping) gpIterator.next();
+		fileContents += GROUP + gp.getName() + SEPARATOR;
+	    }
+	}
 
-                String classTypeString = new String();
-                if (classType.equals(ShiftType.TEORICA)) {
-                    classTypeString = THEORETICAL;
-                } else if (classType.equals(ShiftType.PRATICA)) {
-                    classTypeString = PRACTICAL;
-                } else if (classType.equals(ShiftType.LABORATORIAL)) {
-                    classTypeString = LABORATORIAL;
-                } else if (classType.equals(ShiftType.TEORICO_PRATICA)) {
-                    classTypeString = THEO_PRACTICAL;
-                }
+	fileContents += EMAIL + SEPARATOR;
 
-                fileContents += SHIFT + classTypeString + SEPARATOR;
-            }
-        }
+	Collection classTypes = infoDTO.getClassTypes();
+	if (classTypes != null && !classTypes.isEmpty()) {
+	    Iterator ctIterator = classTypes.iterator();
+	    while (ctIterator.hasNext()) {
+		ShiftType classType = (ShiftType) ctIterator.next();
 
-        fileContents += NEWLINE;
+		String classTypeString = new String();
+		if (classType.equals(ShiftType.TEORICA)) {
+		    classTypeString = THEORETICAL;
+		} else if (classType.equals(ShiftType.PRATICA)) {
+		    classTypeString = PRACTICAL;
+		} else if (classType.equals(ShiftType.LABORATORIAL)) {
+		    classTypeString = LABORATORIAL;
+		} else if (classType.equals(ShiftType.TEORICO_PRATICA)) {
+		    classTypeString = THEO_PRACTICAL;
+		}
 
-        // building each line
-        List attends = infoDTO.getInfoAttends();
-        Iterator attendsIterator = attends.iterator();
-        while (attendsIterator.hasNext()) {
-            InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups attendacy = (InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups) attendsIterator
-                    .next();
-            InfoFrequenta infoAttends = attendacy.getInfoAttends();
+		fileContents += SHIFT + classTypeString + SEPARATOR;
+	    }
+	}
 
-            // student number
-            fileContents += infoAttends.getAluno().getNumber() + SEPARATOR;
+	fileContents += NEWLINE;
 
-            // number of enrollments
-            fileContents += (attendacy.getNumberOfEnrollments().intValue() == 0 ? NULL : attendacy
-                    .getNumberOfEnrollments().toString())
-                    + SEPARATOR;
+	// building each line
+	List attends = infoDTO.getInfoAttends();
+	Iterator attendsIterator = attends.iterator();
+	while (attendsIterator.hasNext()) {
+	    InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups attendacy = (InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups) attendsIterator
+		    .next();
+	    InfoFrequenta infoAttends = attendacy.getInfoAttends();
 
-            // attendacy type (normal, improvement, not enrolled)
-            String attendacyType = "";
-            if (infoAttends.getInfoEnrolment() != null) {
-        	
-                if (infoAttends.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
-                    attendacyType = ATTENDACY_TYPE_NORMAL;
-                    
-                } else if (infoAttends.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)) {
-                    attendacyType = ATTENDACY_TYPE_IMPROVEMENT;
-                }
-            } else {
-                attendacyType = ATTENDACY_TYPE_NOT_ENROLLED;
-            }
+	    // student number
+	    fileContents += infoAttends.getAluno().getNumber() + SEPARATOR;
 
-            fileContents += attendacyType + SEPARATOR;
+	    // number of enrollments
+	    fileContents += (attendacy.getNumberOfEnrollments().intValue() == 0 ? NULL : attendacy.getNumberOfEnrollments()
+		    .toString())
+		    + SEPARATOR;
 
-            // course name
-            InfoDegreeCurricularPlan infoDCP = attendacy.getAttendingStudentInfoDCP();
+	    // attendacy type (normal, improvement, not enrolled)
+	    String attendacyType = "";
+	    if (infoAttends.getInfoEnrolment() != null) {
 
-            fileContents += infoDCP.getName() + SEPARATOR;
+		if (infoAttends.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
+		    attendacyType = ATTENDACY_TYPE_NORMAL;
 
-            // student name
-            String shortName = infoAttends.getAluno().getInfoPerson().getNome();
-            fileContents += shortName + SEPARATOR;
+		} else if (infoAttends.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)) {
+		    attendacyType = ATTENDACY_TYPE_IMPROVEMENT;
+		}
+	    } else {
+		attendacyType = ATTENDACY_TYPE_NOT_ENROLLED;
+	    }
 
-            // student groups
-            if (groupProperties != null && !groupProperties.isEmpty()) {
-                Iterator gpIterator = groupProperties.iterator();
-                Map studentGroups = attendacy.getInfoStudentGroups();
-                while (gpIterator.hasNext()) {
-                    InfoGrouping gp = (InfoGrouping) gpIterator.next();
-                    String groupNumber = "";
-                    InfoStudentGroup infoStudentGroup = (InfoStudentGroup) studentGroups.get(gp
-                            .getName());
+	    fileContents += attendacyType + SEPARATOR;
 
-                    if (infoStudentGroup != null)
-                        groupNumber = infoStudentGroup.getGroupNumber().toString();
-                    else
-                        groupNumber = NOT_AVAILABLE;
+	    // course name
+	    InfoDegreeCurricularPlan infoDCP = attendacy.getAttendingStudentInfoDCP();
 
-                    fileContents += groupNumber + SEPARATOR;
-                }
-            }
+	    fileContents += infoDCP.getName() + SEPARATOR;
 
-            // student e-mail
-            fileContents += infoAttends.getAluno().getInfoPerson().getEmail() + SEPARATOR;
+	    // student name
+	    String shortName = infoAttends.getAluno().getInfoPerson().getNome();
+	    fileContents += shortName + SEPARATOR;
 
-            // student shifts
-            if (classTypes != null && !classTypes.isEmpty()) {
-                Iterator ctIterator = classTypes.iterator();
-                Map studentShifts = attendacy.getInfoShifts();
-                while (ctIterator.hasNext()) {
-                    ShiftType classType = (ShiftType) ctIterator.next();
-                    String shiftNameString = "";
-                    InfoShift shift = (InfoShift) studentShifts.get(classType.getSiglaTipoAula());
+	    // student groups
+	    if (groupProperties != null && !groupProperties.isEmpty()) {
+		Iterator gpIterator = groupProperties.iterator();
+		Map studentGroups = attendacy.getInfoStudentGroups();
+		while (gpIterator.hasNext()) {
+		    InfoGrouping gp = (InfoGrouping) gpIterator.next();
+		    String groupNumber = "";
+		    InfoStudentGroup infoStudentGroup = (InfoStudentGroup) studentGroups.get(gp.getName());
 
-                    if (shift != null)
-                        shiftNameString = shift.getNome();
-                    else
-                        shiftNameString = NOT_AVAILABLE;
+		    if (infoStudentGroup != null)
+			groupNumber = infoStudentGroup.getGroupNumber().toString();
+		    else
+			groupNumber = NOT_AVAILABLE;
 
-                    fileContents += shiftNameString + SEPARATOR;
-                }
-            }
+		    fileContents += groupNumber + SEPARATOR;
+		}
+	    }
 
-            fileContents += NEWLINE;
+	    // student e-mail
+	    fileContents += infoAttends.getAluno().getInfoPerson().getEmail() + SEPARATOR;
 
-        }
+	    // student shifts
+	    if (classTypes != null && !classTypes.isEmpty()) {
+		Iterator ctIterator = classTypes.iterator();
+		Map studentShifts = attendacy.getInfoShifts();
+		while (ctIterator.hasNext()) {
+		    ShiftType classType = (ShiftType) ctIterator.next();
+		    String shiftNameString = "";
+		    InfoShift shift = (InfoShift) studentShifts.get(classType.getSiglaTipoAula());
 
-        fileContents += NEWLINE;
-        fileContents += SUMMARY + NEWLINE;
+		    if (shift != null)
+			shiftNameString = shift.getNome();
+		    else
+			shiftNameString = NOT_AVAILABLE;
 
-        // statistics table
-        InfoAttendsSummary infoAttendsSummary = infoDTO.getInfoAttendsSummary();
-        List keys = infoAttendsSummary.getNumberOfEnrollments();
-        Iterator keysIterator = keys.iterator();
+		    fileContents += shiftNameString + SEPARATOR;
+		}
+	    }
 
-        fileContents += NUMBER_ENROLLMENTS + SEPARATOR + NUMBER_STUDENTS + NEWLINE;
-        while (keysIterator.hasNext()) {
-            Integer key = (Integer) keysIterator.next();
-            fileContents += key + SEPARATOR + infoAttendsSummary.getEnrollmentDistribution().get(key)
-                    + NEWLINE;
-        }
+	    fileContents += NEWLINE;
 
-        try {            
-            ServletOutputStream writer = response.getOutputStream();
-            response.setContentType("plain/text");
-            StringBuilder fileName = new StringBuilder();
-            YearMonthDay currentDate = new YearMonthDay();
-            fileName.append("listaDeAlunos_");
-            fileName.append(infoDTO.getInfoExecutionCourse().getSigla()).append("_").append(currentDate.getDayOfMonth());
-            fileName.append("-").append(currentDate.getMonthOfYear()).append("-").append(currentDate.getYear());
-            fileName.append(".tsv");
-            response.setHeader("Content-disposition", "attachment; filename=" + fileName);
-            writer.print(fileContents);
-            writer.flush();
-            response.flushBuffer();
-        } catch (IOException e1) {
-            throw new FenixActionException();
-        }
+	}
 
-        return null;
+	fileContents += NEWLINE;
+	fileContents += SUMMARY + NEWLINE;
+
+	// statistics table
+	InfoAttendsSummary infoAttendsSummary = infoDTO.getInfoAttendsSummary();
+	List keys = infoAttendsSummary.getNumberOfEnrollments();
+	Iterator keysIterator = keys.iterator();
+
+	fileContents += NUMBER_ENROLLMENTS + SEPARATOR + NUMBER_STUDENTS + NEWLINE;
+	while (keysIterator.hasNext()) {
+	    Integer key = (Integer) keysIterator.next();
+	    fileContents += key + SEPARATOR + infoAttendsSummary.getEnrollmentDistribution().get(key) + NEWLINE;
+	}
+
+	try {
+	    ServletOutputStream writer = response.getOutputStream();
+	    response.setContentType("plain/text");
+	    StringBuilder fileName = new StringBuilder();
+	    YearMonthDay currentDate = new YearMonthDay();
+	    fileName.append("listaDeAlunos_");
+	    fileName.append(infoDTO.getInfoExecutionCourse().getSigla()).append("_").append(currentDate.getDayOfMonth());
+	    fileName.append("-").append(currentDate.getMonthOfYear()).append("-").append(currentDate.getYear());
+	    fileName.append(".tsv");
+	    response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+	    writer.print(fileContents);
+	    writer.flush();
+	    response.flushBuffer();
+	} catch (IOException e1) {
+	    throw new FenixActionException();
+	}
+
+	return null;
     }
 
 }

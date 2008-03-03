@@ -131,10 +131,10 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	    cbShiftsString[i] = checkedShiftIds[i].toString();
 	}
 
-	Map selectionForSendMailLink = this.getSelection(infoDTO, cbCoursesString, cbShiftsString, enrollmentType);
+	Map selectionForSendMailLink = this.getSelection(infoDTO, cbCoursesString, cbShiftsString, enrollmentType, wsSelected);
 	selectionForSendMailLink.put("method", "start");
 	request.setAttribute("sendMailLinkParameters", selectionForSendMailLink);
-	Map selectionForSpreadSheet = this.getSelection(infoDTO, cbCoursesString, cbShiftsString, enrollmentType);
+	Map selectionForSpreadSheet = this.getSelection(infoDTO, cbCoursesString, cbShiftsString, enrollmentType, wsSelected);
 	selectionForSpreadSheet.put("method", "prepare");
 	request.setAttribute("spreadSheetLinkArgs", selectionForSpreadSheet);
 
@@ -142,13 +142,14 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
     }
 
     private Map getSelection(InfoForReadStudentsWithAttendsByExecutionCourse infoDTO, String cbCoursesString[],
-	    String cbShiftsString[], String[] enrollmentType) {
+	    String cbShiftsString[], String[] enrollmentType, String[] wsSelected) {
 	Map selectionParameters = new HashMap();
 	selectionParameters.put("objectCode", infoDTO.getInfoExecutionCourse().getIdInternal());
 	selectionParameters.put("method", "prepare");
 	selectionParameters.put("coursesIDs", cbCoursesString);
 	selectionParameters.put("enrollmentType", enrollmentType);
 	selectionParameters.put("shiftIDs", cbShiftsString);
+	selectionParameters.put("workingStudentType", wsSelected);
 
 	return selectionParameters;
 
@@ -245,6 +246,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	spreadSheetParameters.put("coursesIDs", cbCoursesString);
 	spreadSheetParameters.put("enrollmentType", cbFilters);
 	spreadSheetParameters.put("shiftIDs", cbShiftsString);
+	spreadSheetParameters.put("workingStudentType", wsFilters);
 	request.setAttribute("spreadSheetLinkArgs", spreadSheetParameters);
 
 	return mapping.findForward("success");
