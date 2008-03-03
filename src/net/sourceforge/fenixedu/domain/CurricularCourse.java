@@ -1565,7 +1565,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    if (curriculumModule.isEnrolment()) {
 		final Enrolment enrolment = (Enrolment) curriculumModule;
 
-		if (enrolment.getExecutionPeriod() == executionPeriod
+		if (isInSamePeriod(enrolment, executionPeriod)
 			&& enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL) {
 		    if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(MarkSheetType.NORMAL)) {
 			return true;
