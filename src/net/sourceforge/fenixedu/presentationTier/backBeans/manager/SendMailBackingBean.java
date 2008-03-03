@@ -96,7 +96,7 @@ public class SendMailBackingBean extends FenixBackingBean {
 	if (employees.booleanValue()) {
 	    final Role role = Role.getRoleByRoleType(RoleType.EMPLOYEE);
 	    for (final Person person : role.getAssociatedPersons()) {
-		if (person.getTeacher() == null) {
+		if (!person.hasRole(RoleType.TEACHER)) {
 		    if (person.getEmail() != null && person.getEmail().length() > 0) {
 			emails.add(person.getEmail());
 		    }
