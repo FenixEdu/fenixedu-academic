@@ -114,12 +114,14 @@ public class Lesson extends Lesson_Base {
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public void delete() {
+	final Shift shift = getShift();
+	final boolean isLastLesson = isLastLesson(shift);
 
-	if (getShift().hasAnyAssociatedStudentGroups()) {
+	if (isLastLesson && shift.hasAnyAssociatedStudentGroups()) {
 	    throw new DomainException("error.deleteLesson.with.Shift.with.studentGroups", prettyPrint());
 	}
 
-	if (getShift().hasAnyStudents()) {
+	if (isLastLesson && shift.hasAnyStudents()) {
 	    throw new DomainException("error.deleteLesson.with.Shift.with.students", prettyPrint());
 	}
 
@@ -146,6 +148,15 @@ public class Lesson extends Lesson_Base {
 	deleteDomainObject();
     }
     
+    private boolean isLastLesson(final Shift shift) {
+	for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
+	    if (lesson != this) {
+		return false;
+	    }
+	}
+	return true;
+    }
+
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
 	return getFrequency() != null && getDiaSemana() != null;		 
