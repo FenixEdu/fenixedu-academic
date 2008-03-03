@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 
 <html:xhtml/>
 
@@ -138,8 +139,7 @@
 				</td>
 				<td>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
-						<html:link href="<%= url %>">
+						<app:contentLink name="studentCurricularPlan" property="degreeCurricularPlan.degree.site" target="_blank">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
 								<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
@@ -153,7 +153,7 @@
 							</logic:notPresent>
 							<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
 							<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
-						</html:link>
+						</app:contentLink>
 					</logic:iterate>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
 						,
