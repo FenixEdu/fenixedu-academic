@@ -25,6 +25,9 @@
 		<strong><bean:message bundle="MANAGER_RESOURCES"  key="message.registration.transitToBolonha" /> (<bean:write name="studentCurricularPlan" property="name" /> )?</strong>
 		<br/>
 		<br/>
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.date"/>: <html:text property="date" size="10" /> <bean:message bundle="APPLICATION_RESOURCES" key="label.date.instructions.small" />
+		<br/>
+		<br/>
 		<html:submit><bean:message bundle="MANAGER_RESOURCES"  key="label.manager.yes" /></html:submit>
 		<html:cancel onclick="this.form.method.value='showAllStudentCurricularPlans';"><bean:message bundle="MANAGER_RESOURCES"  key="label.manager.no" /></html:cancel>
 	</html:form>

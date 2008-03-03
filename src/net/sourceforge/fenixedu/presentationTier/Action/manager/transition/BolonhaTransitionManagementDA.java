@@ -16,22 +16,20 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionManagementDA {
-    
 
-    public ActionForward prepareChooseStudent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareChooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	request.setAttribute("studentNumberBean", new StudentNumberBean());
 
 	return mapping.findForward("chooseStudent");
     }
 
-    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	final StudentNumberBean studentNumberBean = (StudentNumberBean) getObjectFromViewState("student-number-bean");
-	request.setAttribute("studentId", Student.readStudentByNumber(studentNumberBean.getNumber())
-		.getIdInternal());
+	request.setAttribute("studentId", Student.readStudentByNumber(studentNumberBean.getNumber()).getIdInternal());
 
 	return prepare(mapping, form, request, response);
 

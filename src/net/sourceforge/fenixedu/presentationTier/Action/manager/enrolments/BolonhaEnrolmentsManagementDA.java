@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -27,6 +29,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollmentDA {
 
@@ -51,7 +55,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 
     public ActionForward showAllStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	final StudentNumberBean studentNumberBean = new StudentNumberBean();
 	final Student student = getStudent(request);
 	studentNumberBean.setNumber(student.getNumber());
@@ -81,26 +85,25 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
 	return rootDomainObject.readStudentCurricularPlanByOID(getIntegerFromRequest(request, "scpId"));
     }
-    
+
     public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	((DynaActionForm)form).set("scpId", getStudentCurricularPlan(request).getIdInternal());
+	((DynaActionForm) form).set("scpId", getStudentCurricularPlan(request).getIdInternal());
 	request.setAttribute("infoExecutionPeriod", new InfoExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod()));
 	return mapping.findForward("showExecutionPeriodToEnrol");
     }
 
     public ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	InfoExecutionPeriod executionPeriodBean = (InfoExecutionPeriod) getRenderedObject("infoExecutionPeriod");
-	
+
 	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(getStudentCurricularPlan(request),
-		executionPeriodBean.getExecutionPeriod(), getCurricularYearForCurricularCourses(),
-		getCurricularRuleLevel(form)));
-	
+		executionPeriodBean.getExecutionPeriod(), getCurricularYearForCurricularCourses(), getCurricularRuleLevel(form)));
+
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
-    
+
     public ActionForward backToAllStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -108,7 +111,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	request.setAttribute("studentId", bean.getStudentCurricularPlan().getRegistration().getStudent().getIdInternal());
 	return showAllStudentCurricularPlans(mapping, form, request, response);
     }
-    
+
     public ActionForward viewStudentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -117,7 +120,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	    form.set("detailed", Boolean.TRUE.toString());
 	}
 	request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
-	
+
 	return mapping.findForward("viewStudentCurriculum");
     }
 
@@ -151,22 +154,33 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	return null;
     }
 
-    public ActionForward prepareTransit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareTransit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
 	return mapping.findForward("transitToBolonha");
     }
-    
+
     public ActionForward transitToBolonha(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final DynaActionForm form = (DynaActionForm) actionForm;
+	final DateTime date;
+	try {
+	    date = YearMonthDay.fromDateFields(DateFormatUtil.parse("dd/MM/yyyy", form.getString("date"))).toDateTimeAtMidnight();
+	} catch (final ParseException e) {
+	    addActionMessage(request, "error.invalid.date.format");
+	    return prepareTransit(mapping, actionForm, request, response);
+	}
 
 	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
 	try {
 	    executeService("TransitToBolonha", new Object[] { null,
-		    studentCurricularPlan.getRegistration().getSourceRegistrationForTransition() });
-	} catch (DomainException e) {
+		    studentCurricularPlan.getRegistration().getSourceRegistrationForTransition(), date });
+	} catch (final DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return prepareTransit(mapping, actionForm, request, response);
 	}
+
 	return showAllStudentCurricularPlans(mapping, actionForm, request, response);
     }
 }

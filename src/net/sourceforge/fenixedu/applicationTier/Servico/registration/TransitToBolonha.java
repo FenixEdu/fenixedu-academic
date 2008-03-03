@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class TransitToBolonha extends Service {
 
-    public void run(final Person person, final Registration sourceRegistrationForTransition) {
-	sourceRegistrationForTransition.transitToBolonha(person, new DateTime());
+    public void run(final Person person, final Registration sourceRegistrationForTransition, final DateTime dateTime) {
+	sourceRegistrationForTransition.transitToBolonha(person, dateTime);
     }
 
 }
