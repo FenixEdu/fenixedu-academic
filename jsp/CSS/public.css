@@ -1,0 +1,900 @@
+h2.arrow_bullet { padding: 1.1em 0em 0em 1.2em; background: url(../images/icon_arrow.gif) no-repeat 0 1.2em; }
+h3.arrow_bullet { padding-left: 1.4em; background: url(../images/icon_arrow.gif) no-repeat 0 0; }
+
+.tab_lay caption { text-align: center; font-weight: normal; font-size: 1.1em; }
+
+#latnav li a.rss { background: url(../images/feed-icon-14x14.gif) 8px 3px no-repeat; padding-left: 28px !important; }
+#latnav li a:hover.rss { background: #fff url(../images/feed-icon-14x14.gif) 8px 3px no-repeat;  padding-left: 28px !important; }
+
+#latnav li ul li a { padding-left: 20px !important;	}
+
+td#latnav_container { white-space: normal; }
+
+#perfnav ul li span { font-size: 1.1em; }
+
+
+/***********************************************************
+	Execution Course - Annoucements
+***********************************************************/
+
+div.announcement {
+/*width: 500px;*/
+padding-top: 0.5em;
+background: url(../images/ann_sep.gif) top left repeat-x;
+}
+div.announcement div.ann_body div, div.announcement div.ann_body p {
+margin: 0;
+padding: 0;
+}
+div.announcement div.ann_body br {
+margin: -4px 0;
+padding: 0;
+}
+
+div.announcement h3 a { text-decoration: none; }
+.greytxt2 { color: #999; }
+
+
+div.announcement div.ann_body * { /* overrides user defined font-family and font-size */
+font-size: 1.0em !important;
+font-family: Verdana, Arial, Helvetica, sans-serif !important;
+}
+
+/* ----------------------
+------ Unit Site -------
+----------------------- */
+
+div.unitname {
+position: absolute;
+left: 93px;
+top: 38px;
+}
+div.unitname h1 {
+display: inline;
+padding: 1em 0;
+color: #45556a;
+font-family: "Trebuchet MS", "Bitstream Vera Sans", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+font-size: 21px;
+font-weight: bold;
+}
+div.unitname p {
+color: #7a8899;
+margin-top: 5px;
+}
+
+/* -----------------------------------
+--- General.css shared properties ---
+------------------------------------ */
+
+.showinfo3 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+
+.showinfo3 th {
+vertical-align: top;
+font-weight: normal;
+border-bottom: 1px solid #aaa;
+padding: 0.5em;
+text-align: left;
+}
+.showinfo3 td {
+border-bottom: 1px solid #ddd;
+padding: 0.5em;
+}
+
+/***********************************************************
+	General - Fenix
+***********************************************************/
+.aleft { text-align: left; }
+.aright { text-align: right; }
+.acenter { text-align: center; }
+
+.altJavaScriptSubmitButton { display:block; }
+.showHideDetailsButton { display:none; }
+
+table.smalltxt tr td { font-size: 0.85em;}
+.smalltxt { font-size: 0.85em; }
+.color888 { color: #888; }
+
+/* accessibility javascript */
+.switchInline { display: none; }
+.switchBlock { display: none; }
+.switchNone { display: block; }
+.dnone { display: none; }
+.dinline { display: inline; }
+.dblock { display: block; }
+
+.nobullet { list-style: none; }
+
+.cnone { clear: none; }
+.mtop0 { margin-top: 0 !important; }
+.mtop025 { margin-top: 0.25em;}
+.mtop05 { margin-top: 0.5em;}
+.mtop1 { margin-top: 1em;}
+.mtop15 { margin-top: 1.5em;}
+.mtop2 { margin-top: 2em;}
+.mtop3 { margin-top: 3em;}
+.mbottom0 { margin-bottom: 0 !important; }
+.mbottom025 { margin-bottom: 0.25em;}
+.mbottom03 { margin-bottom: 0.3em;}
+.mbottom05 { margin-bottom: 0.5em;}
+.mbottom1 { margin-bottom: 1em;}
+.mbottom15 { margin-bottom: 1.5em;}
+.mbottom2 { margin-bottom: 2em;}
+.mbottom3 { margin-bottom: 3em;}
+.mleft0 { margin-left: 0; }
+.mleft1 { margin-left: 1em; }
+.mvert0 { margin-top: 0; margin-bottom: 0; }
+.mvert025 { margin-top: 0.25em; margin-bottom: 0.25em; }
+.mvert05 { margin-top: 0.5em; margin-bottom: 0.5em; }
+.mvert1 { margin-top: 1em; margin-bottom: 1em; }
+.mvert2 { margin-top: 2em; margin-bottom: 2em; }
+.mvert3 { margin-top: 3em; margin-bottom: 3em; }
+.indent6 { margin-left: 6em; }
+.indent9 { margin-left: 9em; }
+.indent12 { margin-left: 12em; }
+.indent15 { margin-left: 15em; }
+.indent18 { margin-left: 18em; }
+.indent21 { margin-left: 21em; }
+.indent24 { margin-left: 24em; }
+
+table.thlight th { font-weight: normal; }
+table.thright th { text-align: right; }
+table.thleft th { text-align: left; }
+table.thwhite th { background: #fff; }
+
+.bold { font-weight: bold; }
+
+
+/* background-colors */
+.highlight1 { background-color: #fff7bb; } /* amarelo */
+.highlight2 { background-color: #f5f5f5; } 
+.highlight3 { background-color: #def; } /* azul */
+.highlight4 { background-color: #dfb ; } /* verde */
+.highlight5 { background-color: #fdfbdd; } /* amarelo */
+.highlight6 { background-color: #ffc; }
+.bgcolor1 { background-color: #fcfcf0; }
+.bgcolor2 { background-color: #fbfbdd; }
+.bgcolor3 { background-color: #fafaf6; }
+.bgcolor4 { background-color: #f8f8f8; }
+.bgcolorfafafa { background-color: #fbfbfb; }
+
+
+/* content output margin reset 1 */
+.coutput1 div, .coutput1 p {
+margin: 0;
+padding: 0;
+}
+.coutput1 blockquote {
+margin-top: 0.25em;
+margin-bottom: 0.25em;
+}
+
+/* content output margin reset 2 */
+.coutput2 div, .coutput2 p, .coutput2 span p {
+margin: 0.25em 0;
+padding: 0.25em 0;
+}
+p.coutput2 {
+}
+
+.coutput2 blockquote {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
+
+
+.coutput2 ul {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
+.coutput2 ul li {
+margin-top: 0;
+margin-bottom: 0;
+padding-top: 0.15em;
+padding-bottom: 0.15em;
+}
+
+.permalink1 {
+color: #999;
+font-size: 10px;
+font-weight: normal;
+}
+.permalink1 a {
+color: #999;
+}
+
+ul.liinline {
+margin: 0;
+padding: 0;
+}
+ul.liinline li {
+display: inline;
+margin: 0;
+padding: 0 0.25em;
+}
+
+/* noborder */
+table.noborder { padding-left: 1em; padding-bottom: 1em; }
+table.noborder tr td { border: none; }
+table.noborder tr td { padding: 0; margin: 0; }
+td.noborder { border: none; }
+
+/** temporary place for teachers and employees presentation */
+.personInfo tr td {
+vertical-align: top;
+}
+td.personInfo_photo {
+width: 115px;
+text-align: center;
+}
+td.personInfo_photo div {
+width: 105px;
+border: 1px solid #ccc;
+background: #fafafa;
+padding: 0.5em;
+}
+td.personInfo_info {
+padding-left: 0.5em;
+padding-right: 4em;
+}
+
+table.personInfo2 tr {
+margin: 0;
+padding: 0;
+}
+table.personInfo2 tr td {
+margin: 0;
+padding: 0;
+}
+
+/* ----------------------
+------- Tables ---------
+----------------------- */
+
+table {
+line-height: 1.5em;
+}
+
+table caption {
+padding: 0.5em 1em 0.1em 1em;
+font-style: italic;
+}
+
+.tstyle1, .tstyle2, .tstyle3, .tstyle4, .tstyle5, .tstyle7, .tstyle8 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+
+table.tstylenone { margin: 0; padding: 0; }
+table.tstylenone th { border: none; background: none; margin: 0; padding: 0.1em; }
+table.tstylenone td { border: none; background: none; margin: 0; padding: 0.1em; }
+
+.tstylebordernone table tr td { border: none; }
+
+/* --------------------- */
+/* General table classes */
+
+/* vertical aligment */
+table.thtop th { vertical-align: top; }
+table.thmiddle th { vertical-align: middle; }
+table.tdtop td { vertical-align: top; }
+table.tdmiddle td { vertical-align: middle !important; }
+table.vamiddle td, table.vamiddle th { vertical-align: middle; }
+
+.thwhite th {
+background: #fff !important;
+}
+
+/* font-weight */
+table.thlight th { font-weight: normal; }
+table.thbold th { font-weight: bold; }
+.tdbold td { font-weight: bold; }
+
+/* text-align */
+table.taleft th, table.taleft td { text-align: left; }
+table.taright th, table.taright td { text-align: right; }
+table.tacenter th, table.tacenter td { text-align: center; }
+table.thleft th { text-align: left; }
+table.thright th { text-align: right; }
+table.thcenter th { text-align: center; }
+.tdleft td { text-align: left; }
+.tdright td { text-align: right; } /* take table from all, to work with tr ? */
+.tdcenter td { text-align: center; }
+
+/* background-color */
+table.thbgnone th { background: none; }
+tr.trhighlight1 td { background: #ffa; }
+tr.selected td { background: #fdfbdd; }
+
+/* delete? */
+table .aleft  { text-align: left; }
+table .aright  { text-align: right; }
+
+/* paddings */
+.tpadding01 th, .tpadding01 td {
+padding: 4px 1px;
+}
+table.tdpright2 td {
+padding-right: 4em;
+}
+/*
+table.cellpadding3 tr th, table.cellpadding3 tr td {
+padding: 3px;
+}
+*/
+
+/* nostyle */
+.tstylenone th, .tstylenone td {
+border: none;
+background: none;
+}
+/* noborder */
+table.noborder { padding-left: 1em; padding-bottom: 1em; }
+table.noborder tr td { border: none; }
+table.noborder tr td { padding: 0; margin: 0; }
+
+/* txt */
+table.smalltxt tr td { font-size: 0.85em;}
+
+.emphasis1 th { background: #ffc; }
+.emphasis2 th { font-weight: bold; }
+
+/* -------------------- */
+/* General cell classes */
+
+/* corners */
+table th.cornerleft { background: none; border-left: none; border-top: none; }
+table th.cornerleft2 { background: none; border-left: none; border-top: none; border-bottom: none; }
+table td.cornerright { }
+
+/* error , warning */
+.tderror1 { color: #c00; }
+.tderror1 span { background-color: #ffeadd; }
+
+table.thnowrap tr th { white-space: nowrap; }
+.nowrap { white-space: nowrap; }
+.breakword { word-wrap: break-word; }
+
+
+/* ------------------------- */
+/* Table classes definitions */
+
+/* table classes - general properties */
+.tstyle1 { }
+.tstyle2 { }
+.tstyle3 { border: 2px solid #ccc; }
+.tstyle4 { }
+.tstyle5 { }
+.tstyle7 { }
+.tstyle8 { }
+
+
+/* table classes - th properties */
+
+.tstyle1 th, .tstyle2 th, .tstyle3 th, .tstyle4 th {
+padding: 7px 5px; /* different top/bottom padding affect left/right padding rendering in different tables with same dimensions (?) */
+text-align: center;
+}
+
+
+.tstyle1 th { border: 1px solid #ccc; background: #f8f8f8;}
+.tstyle2 th { border: none; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; background: #f5f5f5; }
+.tstyle3 th { border: 1px solid #ccc; background: #eee; }
+.tstyle4 th { border: 1px solid #ccc; background: #eee; }
+.tstyle5 th { padding: 4px; border: 1px solid #fff; vertical-align: top; background: #f5f5f5; }
+.tstyle7 th { border: 1px solid #eee; background: #eee; }
+.tstyle8 th { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
+
+
+/* table classes - td properties */
+
+.tstyle1 td, .tstyle2 td, .tstyle3 td, .tstyle4 td  {
+padding: 7px 5px; /*padding em "em" tem problemas de rendering no firefox, faz arredondamentos incoerentes */
+}
+
+/*
+fa - fbfaf8
+f8 - faf9f5
+f5 - f8f6f1
+ee - f3f0e7
+cc - dad3ba
+*/
+
+.tstyle1 td { border: 1px solid #ccc; background-color: #fff; }
+.tstyle2 td { border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; background-color: #fff; }
+.tstyle3 td { border: 1px solid #ccc; background-color: #fafafa; }
+.tstyle4 td { border: 1px solid #ccc; background-color: #fafafa; }
+.tstyle5 td { padding: 4px; border: 1px solid #fff; background: #f5f5f5; }
+.tstyle7 td { border: 1px solid #eee; background: #eee; }
+.tstyle8 td { padding: 4px; background-color: #fff; }
+
+
+/* table classes - tr properties */
+
+table tr.bgwhite td {
+background: #fff;	
+}
+
+
+/* ------------ */
+/* Miscelaneous */
+
+.leftcol { text-align: right; vertical-align: top; }
+td.tdclear {  /* used in renderers column dedicated to feedback messages */
+border-right: none;
+border-bottom: none;
+border-top: none;
+background: none;
+}
+th.thclear {
+border-left: none;
+border-bottom: none;
+border-top: none;
+background: none;
+}
+
+td.tdwarning span {
+background-color: #fff8bb; color: #664400;
+}
+
+table.ulnomargin tr td ul { margin: 0; padding: 0; }
+table.ulnomargin tr td ul li { margin: 0; padding: 0; }
+
+
+table.mtop05 { margin-top: 0.5em; }
+table.smallmargin td { padding: 0.25em; }
+	/* n�o funcionava com indent ou padding normal? testar*/
+td.pleft1 { padding-left: 1em; }
+td.pleft2 { padding-left: 2em; }
+td.pleft3 { padding-left: 3em; }
+td.pleft4 { padding-left: 4em; }
+td.pleft5 { padding-left: 5em; }
+td.pleft6 { padding-left: 6em; }
+
+/* ----------------------
+------ Feedback  -------
+----------------------- */
+
+.error0 { /*margin: 1em 0; padding: 0.1em 0.3em 0.1em 0.3em;*/ background-color: #ffeadd; color: #c00; /*padding: 0.1em 0.2em;*/ }
+.error1, .error2 { background-color: #ffeadd; color: #c00; }
+.error1 { border: 2px solid #c00; }
+.error1 h4 { border-bottom: 1px dotted #d00; background: #fff; color: #c00; }
+.error1 p { padding: 0.5em 0.5em;}
+.error2 { padding: 0.2em 0.5em 0.2em 28px; background: #ffeadd) 6px 50% no-repeat; }
+
+.success0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #e2f5e2; color: #146e14; }
+.success1, .success2, .success3 { background-color: #efe; color: #070; }
+.success1 { border: 2px solid #0a0; }
+.success1 h4 { border-bottom: 1px dotted #0a0; background: #fff; }
+.success1 p { background-color: #efe; padding: 0.5em 0.5em;}
+.success2 h4 { border-bottom: 1px dotted #0a0; background: #fff; }
+.success2 p { padding: 0.5em 0.5em;}
+.success3 { padding: 0.2em 0.5em 0.2em 28px; background: #efe; }
+.success4 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 28px; background: #dfd; color: #070; }
+
+.warning0 { margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em; background-color: #fbf8cc; color: #805500; }
+
+
+
+/* ----------------------
+------ Timetables  -------
+----------------------- */
+
+.timetable{
+font-family: Verdana, Arial, Helvetica, sans-serif;
+color: #003333;
+text-decoration: bold;
+border-collapse:collapse;
+border-color: #000;
+border-width: 2px;
+border-style: solid;
+}
+
+.timetable tr{
+font-size: 9px;
+color: #003333;
+font-weight:bold;
+background-color: #E1E1E1;
+text-align: left;
+}
+
+.timetable th{
+font-size: 11px;
+color: #333333;
+background-color: #999999;
+text-align: center;
+height: 20px;
+vertical-align: middle;
+border-style:solid;
+border-top-width: 2px;
+border-bottom-width: 2px;
+border-left-width: 1.5px;
+border-right-width: 1.5px
+}
+
+.period-first-slot{
+border-width: 1.5px;
+border-style: solid;
+border-bottom-style:none;
+}
+
+.period-middle-slot{
+border-width: 1.5px;
+border-right-style: solid;
+border-left-style: solid;
+}
+
+.period-last-slot{
+border-width: 1.5px;
+border-style: solid;
+border-top-style:none;
+}
+
+.period-single-slot {
+border-width: 1.5px;
+border-style: solid;
+}
+
+.period-empty-slot{
+border-width: 1px;
+border-top-style: dashed;
+border-left-style: solid;
+border-right-style: solid;
+}
+
+.period-hours {
+font-size: 10px; /*changed from 11px to 10px*/
+color: #333333;
+background-color: #999999;
+text-align: center;
+/*height: 20px;*/
+vertical-align: middle;
+border-style:solid;
+border-width: 1px;
+border-left-width: 1px;
+border-right-width: 2px
+}
+
+.timetable a{
+color: #003333;
+font-weight: bold;
+font-size: 9px;	
+border-style:none;
+}
+
+table.timetable tr td.period-last-slot img {
+float: right;
+border: none;
+padding: 2px;
+}
+
+table.timetable tr td.period-single-slot img {
+float: right;
+border: none;
+padding: 2px;
+}
+
+span.float-left {
+float: left;
+}
+
+
+/* ----------------------
+------- Calendar -------
+----------------------- */
+
+.fenixCalendar {
+width: 80%;
+padding: 0;
+border-collapse: collapse;
+}
+
+.fenixCalendar_monthRow {
+color: #000000;
+font-weight: 600;
+background: #bbb;
+text-align: center;
+}
+
+.fenixCalendar_weekRow td {
+border: 1px solid #bbb;
+}
+
+.fenixCalendar_daysOfWeek td {
+color: #ffffff;
+font-weight: 600;
+text-align: center;	
+background: #000000;
+border: 1px solid #000;
+border-bottom: 1px solid #bbb;
+width: 16.7%;
+}
+
+.fenixCalendar_defaultDay{
+text-align: right; 
+background: #eee;
+border-left: 1px solid #bbb; 
+border-right: 1px solid #bbb; 	
+width: 16.7%;		
+}
+
+.fenixCalendar_dayWithObjectOccurence{
+text-align: right;
+background: #ddd;
+border-left: 1px solid #bbb; 
+border-right: 1px solid #bbb; 	
+width: 16.7%;	
+}
+
+.greyBorderClass {
+background-color: #eee;
+border: 1px solid #909090;
+width: 100%
+}
+.blackBorderClass {
+background-color: #ffffff;
+border: 1px solid #909090;
+}
+.boldFontClass { 
+font-weight: bold
+}
+
+
+/* ----------------------
+---- Personal Card -----
+----------------------- */
+
+div.personalcard {
+padding: 0.5em;
+margin-top: 0em;
+margin-bottom: 1em;
+background: #fafafa;
+border-bottom: 1px dotted #999;
+}
+.personalcard table {
+margin-top: 0em;
+margin-bottom: 0em;
+}
+.personalcard table tr td {
+vertical-align: top;
+}
+td.personalcard_photo {
+width: 115px;
+text-align: center;
+}
+td.personalcard_photo div {
+width: 105px;
+border: 1px solid #ccc;
+background: #fff;
+padding: 0.5em;
+}
+td.personalcard_info {
+padding-left: 0.5em;
+}
+td.personalcard_info ul {
+padding-left: 1em;
+}
+
+
+/* ----------------------
+----- To Organize ------
+----------------------- */
+
+table .tab_lay {
+width: 100%;
+margin-bottom: 1em;
+}
+table .tab_lay th {
+font-size: 130%;
+}
+table .tab_lay th center {
+vertical-align: middle;
+padding: 0;
+margin: 0;
+font-size: 80%;
+text-decoration: underline;
+}
+
+
+ul.ostructure li.osrootunit h3 { margin: 0; }
+ul.ostructure1 li.osrootunit h3 { margin: 0; }
+ul.ostructure1 { padding-left: 2em; padding-top: 0.75em; }
+ul.ostructure1 ul { padding-left: 1.5em; padding-top: 1.0em; padding-bottom: 1.0em; }
+
+
+/* lists */
+.ulindent15 ul, ul.ulindent15 {
+margin-left: 1.5em; /* IE */
+padding-left: 1.5em; /* FF */
+}
+
+.infoop2 {
+background-color: #faf5de; /*faf5de,f2e5a6 or f5fade,e5f2a6 */
+vertical-align: middle;
+padding: 0.5em 0.75em;
+border-bottom: 1px solid #f2e5a6;
+margin: 0.5em 0;
+}
+
+.infoop2 p { margin: 0.25em 0; }
+.width100pc { width: 100%; }
+.width100px { width: 100px; }
+.width300px { width: 300px; }
+.width500px { width: 500px; }
+.width10em { width: 10em; }
+.width50em { width: 50em; }
+.width60em { width: 60em; }
+
+
+fieldset {
+margin: 1em 0;
+padding: 1em;
+border: 1px solid #e1e1dc;
+background: #f0f0e2 url(../images/fieldset_bg_01.gif) top left repeat-x;
+}
+fieldset legend {
+margin: 0;
+padding: 0 0.5em;
+color: #000;
+font-weight: bold;
+font-size: 1.2em;
+}
+.tstyle0 tr td {
+padding: 4px;
+}
+
+/*****************************************************************
+	SOP - exams table format
+******************************************************************/
+
+.examMapContainer{
+	margin-bottom: 5px;	
+	text-align: left;
+}
+
+.courseList{
+	text-align:left;
+	vertical-align: top;
+}
+
+.examMap{
+	border: 1px solid #999;
+}
+
+.examMap_header_first{	
+	color: #fff;
+	font-weight: bold;
+	border-bottom: 1px solid #999;	
+	background: #999;
+	text-align: center;	
+	width: 16.7%;
+}
+
+.examMap_header{
+	color: #fff;
+	font-weight: bold;	
+	border-left: 1px solid #999;
+	border-bottom: 1px solid #999;
+	background: #999;
+	text-align: center;
+	width: 16.7%;	
+}
+
+.exam_cell_day_first{	
+	color: #000;
+	text-align: right;
+	background: #ccc;
+	font-size: 10px;
+}
+
+.exam_cell_day{
+	color: #000;
+	text-align: right;
+	border-left: 1px solid #999;
+	background: #ccc;
+	font-size: 10px;
+	}
+
+.exam_cell_content{
+	text-align: left;
+	color: #000;
+	border-left: 1px solid #999;
+	background: #EBECED;
+}
+
+.exam_cell_content_first{
+	text-align: left;
+	color: #000;
+	background: #EBECED;
+}
+
+.exam_cell_content_bottom{
+	text-align: left;
+	color: #000;
+	border-left: 1px solid #999;
+	background: #EBECED;
+}
+
+.exam_cell_content_first_bottom{
+	text-align: left;
+	color: #000;
+	background: #EBECED;
+}
+	
+.tab_exams_details { 
+	font-size: 11px;
+	padding: 10px;
+	border: 1px solid #999;
+}
+	
+.tab_exams_details th { 
+	color: #333;
+	padding: 2px;
+	text-align: left; 
+}
+
+.tab_exams_details th.ordYear { 
+	color: #333; 
+	padding: 2px;
+	text-align: left;
+	font-size: 12px;
+	border-bottom: 1px solid #999;
+}
+
+.tab_exams_details td.subheader {
+	color: #333; 
+	text-align: left;
+	padding: 2px;
+ 	font-weight: bold;	
+	border-top: 0px;
+	border-bottom: 1px solid #999;
+}
+
+.tab_exams_details td.firstRow { 
+	text-align: left;
+	padding: 2px; 
+	height: 2em; 
+	border-top: 0px;
+}
+
+.tab_exams_details td.notFirstRow { 
+	text-align: left;
+	padding: 2px; 
+	height: 2em; 
+	border-top: 1px dotted #999;
+}
+
+/* homepage departamentos - eventos  */
+.event_soon {
+background: #ccc;
+color: #fff;
+padding: 0 2px;
+font-weight: normal;
+font-size: 0.8em;
+}
+
+
+
+body h2:target { display: block; background: none; }
+body h2:target span { background-color: #FCFFBA; }
+
+.separator1 {
+padding-bottom: 0.2em;
+/*background: #efa;*/
+position: relative;
+width: 99%;
+}
+.separator1 span {
+margin: 0;
+padding:0;
+}
+.separator1 a {
+font-size: 0.85em;
+font-weight: normal;
+position: absolute;
+right: 5px;
+}
+.notarget:target { background: none; }
+#logoist:target { background: none; }
