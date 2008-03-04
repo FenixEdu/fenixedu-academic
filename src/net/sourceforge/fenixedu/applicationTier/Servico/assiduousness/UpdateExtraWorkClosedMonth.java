@@ -24,13 +24,9 @@ public class UpdateExtraWorkClosedMonth extends Service {
 		    Double oldValue = extraWorkRequest.getAmount();
 		    giafInterface.updateExtraWorkRequest(extraWorkRequest);
 		    int year = extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year());
-
 		    if (extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) == 12) {
-			UnitExtraWorkAmount unitExtraWorkAmount = extraWorkRequest.getUnit().getUnitExtraWorkAmountByYear(year);
-			unitExtraWorkAmount.updateValue(oldValue, 0.0);
 			year++;
 		    }
-
 		    UnitExtraWorkAmount unitExtraWorkAmount = extraWorkRequest.getUnit().getUnitExtraWorkAmountByYear(year);
 		    unitExtraWorkAmount.updateValue(oldValue, extraWorkRequest.getAmount());
 		    totalMonthAmount = totalMonthAmount.add(BigDecimal.valueOf(extraWorkRequest.getAmount()));
