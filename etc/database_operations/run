@@ -28,4 +28,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "updateEnrolmentWeight.sql" update Enrolment Weight
