@@ -28,10 +28,8 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
     }
 
     private boolean isUniqueYearUnit(Integer year, Unit unit) {
-	for (UnitExtraWorkAmount unitExtraWorkAmount : RootDomainObject.getInstance()
-		.getUnitsExtraWorkAmounts()) {
-	    if (unitExtraWorkAmount != this && unitExtraWorkAmount.getYear() == year
-		    && unitExtraWorkAmount.getUnit() == unit) {
+	for (UnitExtraWorkAmount unitExtraWorkAmount : RootDomainObject.getInstance().getUnitsExtraWorkAmounts()) {
+	    if (unitExtraWorkAmount != this && unitExtraWorkAmount.getYear() == year && unitExtraWorkAmount.getUnit() == unit) {
 		return false;
 	    }
 	}
@@ -73,8 +71,8 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	sumSpent(newValue);
     }
 
-    public static void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle,
-	    ResourceBundle enumBundle, String title) {
+    public static void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle, ResourceBundle enumBundle,
+	    String title) {
 	spreadsheet.newHeaderRow();
 	spreadsheet.addCell(title, spreadsheet.getExcelStyle().getTitleStyle());
 	spreadsheet.newHeaderRow();
@@ -88,8 +86,7 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	    spreadsheet.addHeader(enumBundle.getString(month.getName()), 2000);
 	}
 	spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 0, 2, (short) 1));
-	spreadsheet.getSheet().addMergedRegion(
-		new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));
+	spreadsheet.getSheet().addMergedRegion(new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));
     }
 
     public static void getExcelFooter(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle) {
@@ -99,10 +96,9 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(bundle.getString("label.total").toUpperCase());
-	spreadsheet.sumColumn(firstRow, lastRow, 2, lastColumn, spreadsheet.getExcelStyle()
-		.getDoubleStyle());
-	spreadsheet.setRegionBorder(firstRow, spreadsheet.getSheet().getLastRowNum() + 1, 0, spreadsheet
-		.getMaxiumColumnNumber() + 1);
+	spreadsheet.sumColumn(firstRow, lastRow, 2, lastColumn, spreadsheet.getExcelStyle().getDoubleStyle());
+	spreadsheet.setRegionBorder(firstRow, spreadsheet.getSheet().getLastRowNum() + 1, 0,
+		spreadsheet.getMaxiumColumnNumber() + 1);
     }
 
     public void getExcelRow(StyledExcelSpreadsheet spreadsheet) {
@@ -131,8 +127,7 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	    if (monthValue.equals(0.0)) {
 		spreadsheet.addCell("");
 	    } else {
-		spreadsheet.addCell(new Double(decimalFormat.format(monthValue)), spreadsheet
-			.getExcelStyle().getDoubleStyle());
+		spreadsheet.addCell(new Double(decimalFormat.format(monthValue)), spreadsheet.getExcelStyle().getDoubleStyle());
 	    }
 	}
     }
@@ -141,22 +136,19 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	Double monthTotal = 0.0;
 	for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequests()) {
 	    if (((extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year()) == getYear() - 1 && extraWorkRequest
-		    .getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) == 12) && month
-		    .getNumberOfMonth() == 1)
+		    .getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) == 12) && month.getNumberOfMonth() == 1)
 		    || (extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year()) == getYear()
-			    && extraWorkRequest.getPartialPayingDate().get(
-				    DateTimeFieldType.monthOfYear()) + 1 == month.getNumberOfMonth() && extraWorkRequest
-			    .getApproved())) {
+			    && extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) + 1 == month
+				    .getNumberOfMonth() && extraWorkRequest.getApproved())) {
 		monthTotal += extraWorkRequest.getAmount();
 	    }
 	}
 	return monthTotal;
     }
 
-    public void getExtraWorkAuthorizationsExcelRows(StyledExcelSpreadsheet spreadsheet,
-	    ResourceBundle bundle, ResourceBundle enumBundle) {
-	for (ExtraWorkAuthorization extraWorkAuthorization : getUnit()
-		.getExtraPayingUnitAuthorizations()) {
+    public void getExtraWorkAuthorizationsExcelRows(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle,
+	    ResourceBundle enumBundle) {
+	for (ExtraWorkAuthorization extraWorkAuthorization : getUnit().getExtraPayingUnitAuthorizations()) {
 	    if (!spreadsheet.hasSheet(getUnit().getCostCenterCode().toString())) {
 		spreadsheet.getSheet(getUnit().getCostCenterCode().toString());
 
@@ -165,39 +157,39 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 		decimalFormatSymbols.setDecimalSeparator('.');
 		decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
 		spreadsheet.newHeaderRow();
-		spreadsheet.addCell(getUnit().getCostCenterCode().toString() + " - "
-			+ getUnit().getName(), spreadsheet.getExcelStyle().getTitleStyle());
+		spreadsheet.addCell(getUnit().getCostCenterCode().toString() + " - " + getUnit().getName(), spreadsheet
+			.getExcelStyle().getTitleStyle());
 
 		spreadsheet.newHeaderRow();
 		spreadsheet.newHeaderRow();
-		spreadsheet.addCell(bundle.getString("label.initial"), spreadsheet.getExcelStyle()
-			.getLabelStyle());
+		spreadsheet.addCell(bundle.getString("label.initial"), spreadsheet.getExcelStyle().getLabelStyle());
 		spreadsheet.addCell(decimalFormat.format(getInitial()));
 		spreadsheet.newHeaderRow();
-		spreadsheet.addCell(bundle.getString("label.actual"), spreadsheet.getExcelStyle()
-			.getLabelStyle());
+		spreadsheet.addCell(bundle.getString("label.actual"), spreadsheet.getExcelStyle().getLabelStyle());
 		spreadsheet.addCell(decimalFormat.format(getTotal()));
 		spreadsheet.newHeaderRow();
-		spreadsheet.addCell(bundle.getString("label.balance"), spreadsheet.getExcelStyle()
-			.getLabelStyle());
+		spreadsheet.addCell(bundle.getString("label.balance"), spreadsheet.getExcelStyle().getLabelStyle());
 		spreadsheet.addCell(decimalFormat.format(getBalance()));
 		spreadsheet.newHeaderRow();
 		spreadsheet.newHeaderRow();
-	//	int rowNum = spreadsheet.getRow().getRowNum();
-		//spreadsheet.addCell(bundle.getString("message.extraWorkFirstYearMonthNote"));
+		// int rowNum = spreadsheet.getRow().getRowNum();
+		// spreadsheet.addCell(bundle.getString("message.extraWorkFirstYearMonthNote"));
 		spreadsheet.newHeaderRow();
 		EmployeeExtraWorkAuthorization.getExcelHeader(spreadsheet, bundle, enumBundle);
-		spreadsheet.getSheet().addMergedRegion(
-			new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));
-//		spreadsheet.getSheet().addMergedRegion(
-//			new Region(rowNum, (short) 0, rowNum, (short) spreadsheet
-//				.getMaxiumColumnNumber()));
+		spreadsheet.getSheet().addMergedRegion(new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));
+		// spreadsheet.getSheet().addMergedRegion(
+		// new Region(rowNum, (short) 0, rowNum, (short) spreadsheet
+		// .getMaxiumColumnNumber()));
 	    } else {
 		spreadsheet.getSheet(getUnit().getCostCenterCode().toString());
 	    }
 	    for (EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization : extraWorkAuthorization
 		    .getEmployeeExtraWorkAuthorizations()) {
-		employeeExtraWorkAuthorization.getExcelRow(spreadsheet, getYear());
+		if (employeeExtraWorkAuthorization.getExtraWorkAuthorization().getBeginDate().getYear() == getYear().intValue()
+			|| employeeExtraWorkAuthorization.getExtraWorkAuthorization().getEndDate().getYear() == getYear()
+				.intValue()) {
+		    employeeExtraWorkAuthorization.getExcelRow(spreadsheet, getYear());
+		}
 	    }
 	}
     }
