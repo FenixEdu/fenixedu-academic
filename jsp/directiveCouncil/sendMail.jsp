@@ -41,6 +41,10 @@
 		<h:outputText value="<span class='color888'>Incluir todos os</span> docentes <span class='color888'>em destinatários (bcc).</span>" escape="false"/>
 
 		<h:outputText value="<br/>" escape="false"/>
+		<h:selectBooleanCheckbox value="#{SendMailBackingBean.researchers}"/>
+		<h:outputText value="<span class='color888'>Incluir todos os</span> investigadores <span class='color888'>em destinatários (bcc).</span>" escape="false"/>
+		
+		<h:outputText value="<br/>" escape="false"/>
 		<h:selectBooleanCheckbox value="#{SendMailBackingBean.executionCourseResponsibles}"/>
 		<h:outputText value="<span class='color888'>Incluir todos os</span> docentes responsáveis por disciplinas <span class='color888'>em destinatários (bcc).</span>" escape="false"/>
 

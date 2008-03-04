@@ -37,7 +37,8 @@ public class SendMailBackingBean extends FenixBackingBean {
     private Boolean teachers = null;
     private Boolean employees = null;
     private Boolean students = null;
-
+    private Boolean researchers = null;
+    
     private Boolean bolonhaAdvancedFormationDiplomaStudents = null;
     private Boolean bolonhaDegreeStudents = null;
     private Boolean bolonhaIntegratedMasterDegreeStudents = null;
@@ -104,6 +105,14 @@ public class SendMailBackingBean extends FenixBackingBean {
 	    }
 	}
 
+	if(getResearchers()) {
+	    final Role role = Role.getRoleByRoleType(RoleType.RESEARCHER);
+	    for(final Person person : role.getAssociatedPersons()) {
+		    if (person.getEmail() != null && person.getEmail().length() > 0) {
+			emails.add(person.getEmail());
+		    }
+	    }
+	}
 	final boolean students = getStudents().booleanValue();
 	final boolean bolonhaAdvancedFormationDiplomaStudents = getBolonhaAdvancedFormationDiplomaStudents().booleanValue();
 	final boolean bolonhaDegreeStudents = getBolonhaDegreeStudents().booleanValue();
@@ -438,6 +447,14 @@ public class SendMailBackingBean extends FenixBackingBean {
 
     public void setSent(Boolean sent) {
         this.sent = sent;
+    }
+
+    public Boolean getResearchers() {
+        return researchers;
+    }
+
+    public void setResearchers(Boolean researchers) {
+        this.researchers = researchers;
     }
 
 }
