@@ -83,16 +83,16 @@
 				<bean:define id="banner" name="banner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner"/>
 				
 				<logic:empty name="banner" property="link">
-					<img src="<%= banner.getMainImage().getDownloadUrl() %>"></img>
+					<img src="<%= banner.getMainImage().getDownloadUrl() %>"/>
 				</logic:empty>
 				<logic:notEmpty name="banner" property="link">
 					<a href="<bean:write name="banner" property="link"/>" target="_blank">
-						<img src="<%= banner.getMainImage().getDownloadUrl() %>"></img>
+						<img src="<%= banner.getMainImage().getDownloadUrl() %>"/>
 					</a>
 				</logic:notEmpty>
 			</logic:present>
 			<logic:notPresent name="banner">
-				<a href="http://www.bolonha.ist.eu"><img src="<%= request.getContextPath() %>/images/site/bolonha.gif" alt="Com o IST, entra no melhor ensino superior europeu - www.bolonha.ist.eu" width="420" height="150"></img></a>
+				<a href="http://www.bolonha.ist.eu"><img src="<%= request.getContextPath() %>/images/site/bolonha.gif" alt="Com o IST, entra no melhor ensino superior europeu - www.bolonha.ist.eu" width="420" height="150"/></a>
 			</logic:notPresent>
 		</logic:equal>
 		
