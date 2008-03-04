@@ -11795,7 +11795,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="DepartmentAdministrativeOfficeAuthorization" />
+			<chain name="DepartmentAdministrativeOfficeAuthorizationOrWebsiteManagerAuthorizationOrManagerAuthorization" />
 		</filterChains>
     </service>
 	<service>
@@ -11804,7 +11804,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
 		<filterChains>
-			<chain name="DepartmentAdministrativeOfficeAuthorization" />
+			<chain name="DepartmentAdministrativeOfficeAuthorizationOrWebsiteManagerAuthorizationOrManagerAuthorization" />
 		</filterChains>
     </service>
 	<service>

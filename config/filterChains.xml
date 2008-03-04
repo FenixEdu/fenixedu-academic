@@ -913,7 +913,13 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
-
+	<filterChain>	
+        <name>DepartmentAdministrativeOfficeAuthorizationOrWebsiteManagerAuthorizationOrManagerAuthorization</name>
+        <expression>DepartmentAdministrativeOfficeAuthorization || WebSiteManagerAuthorization || ManagerAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 <!-- ======================================  --> 
 
 <!--######################################-->
