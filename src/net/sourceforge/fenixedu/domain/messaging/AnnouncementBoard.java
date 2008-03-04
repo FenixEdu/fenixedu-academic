@@ -321,6 +321,17 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	});
     }
 
+    public List<Announcement> getActiveAnnouncementsBefore(final YearMonthDay date) {
+	return filterAnnouncements(getChildren(Announcement.class), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		Announcement announcement = (Announcement) arg0;
+		DateTime announcementDate = announcement.getReferedSubjectBegin();
+		return announcement.isActive() && announcement.getVisible() && announcementDate != null
+			&& announcementDate.toYearMonthDay().isBefore(date);
+	    }
+	});
+    }
+    
     public List<Announcement> getAnnouncements() {
 	final List<Announcement> announcements = new ArrayList<Announcement>();
 	for (final Node node : getChildrenSet()) {

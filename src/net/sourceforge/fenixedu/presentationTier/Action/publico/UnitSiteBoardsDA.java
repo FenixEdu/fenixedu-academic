@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
@@ -63,7 +65,8 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
 	String parameter = request.getParameter(getContextParamName());
 
 	if (parameter == null) {
-	    return null;
+	    UnitSite site = (UnitSite) FilterFunctionalityContext.getCurrentContext(request).getSelectedContainer();
+	    return site.getUnit();
 	}
 
 	try {
