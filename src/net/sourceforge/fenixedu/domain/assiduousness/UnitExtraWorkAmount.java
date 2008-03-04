@@ -2,8 +2,12 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -148,7 +152,8 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 
     public void getExtraWorkAuthorizationsExcelRows(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle,
 	    ResourceBundle enumBundle) {
-	for (ExtraWorkAuthorization extraWorkAuthorization : getUnit().getExtraPayingUnitAuthorizations()) {
+	HashSet<Employee> inserted = new HashSet<Employee>();
+	for (ExtraWorkAuthorization extraWorkAuthorization : getExtraPayingUnitAuthorizationsForYear(getUnit())) {
 	    if (!spreadsheet.hasSheet(getUnit().getCostCenterCode().toString())) {
 		spreadsheet.getSheet(getUnit().getCostCenterCode().toString());
 
@@ -159,7 +164,6 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 		spreadsheet.newHeaderRow();
 		spreadsheet.addCell(getUnit().getCostCenterCode().toString() + " - " + getUnit().getName(), spreadsheet
 			.getExcelStyle().getTitleStyle());
-
 		spreadsheet.newHeaderRow();
 		spreadsheet.newHeaderRow();
 		spreadsheet.addCell(bundle.getString("label.initial"), spreadsheet.getExcelStyle().getLabelStyle());
@@ -185,13 +189,24 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	    }
 	    for (EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization : extraWorkAuthorization
 		    .getEmployeeExtraWorkAuthorizations()) {
-		if (employeeExtraWorkAuthorization.getExtraWorkAuthorization().getBeginDate().getYear() == getYear().intValue()
-			|| employeeExtraWorkAuthorization.getExtraWorkAuthorization().getEndDate().getYear() == getYear()
-				.intValue()) {
+		if (!inserted.contains(employeeExtraWorkAuthorization.getAssiduousness().getEmployee())) {
 		    employeeExtraWorkAuthorization.getExcelRow(spreadsheet, getYear());
+		    inserted.add(employeeExtraWorkAuthorization.getAssiduousness().getEmployee());
 		}
 	    }
 	}
     }
 
+    private List<ExtraWorkAuthorization> getExtraPayingUnitAuthorizationsForYear(Unit unit) {
+	List<ExtraWorkAuthorization> extraWorkAuthorizationList = new ArrayList<ExtraWorkAuthorization>();
+	for (ExtraWorkAuthorization extraWorkAuthorization : unit.getExtraPayingUnitAuthorizations()) {
+	    if ((extraWorkAuthorization.getBeginDate().getYear() == getYear().intValue() && extraWorkAuthorization.getBeginDate()
+		    .getMonthOfYear() < 12)
+		    || (extraWorkAuthorization.getEndDate().getYear() == (getYear().intValue() - 1) && extraWorkAuthorization
+			    .getEndDate().getMonthOfYear() == 12)) {
+		extraWorkAuthorizationList.add(extraWorkAuthorization);
+	    }
+	}
+	return extraWorkAuthorizationList;
+    }
 }

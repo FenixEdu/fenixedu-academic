@@ -23,24 +23,26 @@ public class UpdateExtraWorkClosedMonth extends Service {
 		try {
 		    Double oldValue = extraWorkRequest.getAmount();
 		    giafInterface.updateExtraWorkRequest(extraWorkRequest);
-		    UnitExtraWorkAmount unitExtraWorkAmount = extraWorkRequest.getUnit()
-			    .getUnitExtraWorkAmountByYear(
-				    extraWorkRequest.getPartialPayingDate()
-					    .get(DateTimeFieldType.year()));
+		    int year = extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.year());
+
+		    if (extraWorkRequest.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) == 12) {
+			UnitExtraWorkAmount unitExtraWorkAmount = extraWorkRequest.getUnit().getUnitExtraWorkAmountByYear(year);
+			unitExtraWorkAmount.updateValue(oldValue, 0.0);
+			year++;
+		    }
+
+		    UnitExtraWorkAmount unitExtraWorkAmount = extraWorkRequest.getUnit().getUnitExtraWorkAmountByYear(year);
 		    unitExtraWorkAmount.updateValue(oldValue, extraWorkRequest.getAmount());
-		    totalMonthAmount = totalMonthAmount.add(BigDecimal.valueOf(extraWorkRequest
-			    .getAmount()));
+		    totalMonthAmount = totalMonthAmount.add(BigDecimal.valueOf(extraWorkRequest.getAmount()));
 		} catch (ExcepcaoPersistencia e) {
 		    e.printStackTrace();
 		    return new ActionMessage("error.connectionError");
 		}
 	    }
 	}
-	double giafTotalMonthAmount = giafInterface
-		.getTotalMonthAmount(closedMonth.getClosedYearMonth());
+	double giafTotalMonthAmount = giafInterface.getTotalMonthAmount(closedMonth.getClosedYearMonth());
 	if (totalMonthAmount.doubleValue() != giafTotalMonthAmount) {
-	    return new ActionMessage("error.extraWork.totalMonthValueNotEqual", totalMonthAmount,
-		    giafTotalMonthAmount);
+	    return new ActionMessage("error.extraWork.totalMonthValueNotEqual", totalMonthAmount, giafTotalMonthAmount);
 	}
 	return null;
     }
