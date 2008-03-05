@@ -3311,8 +3311,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 	class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation extends net.sourceforge.fenixedu.domain.DomainObject {
 		AcademicServiceRequestSituationType academicServiceRequestSituationType;
-		DateTime creationDate;
 		String justification;
+		DateTime creationDate;
+		DateTime situationDate;
 	}
 	
 		class net.sourceforge.fenixedu.domain.serviceRequests.SentToExternalEntityAcademicServiceRequestSituation extends net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation {
@@ -3325,9 +3326,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	
 	class net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest extends net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean freeProcessed;
+		Boolean urgentRequest;
 		Integer serviceRequestNumber;
 		Integer serviceRequestYear;
-		Boolean urgentRequest;
+		DateTime creationDate;
 		DateTime requestDate;
 	}
 		

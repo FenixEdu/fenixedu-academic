@@ -28,3 +28,6 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "add creation date column to AcademicServiceRequest" AlterTableAcademicServiceRequest.sql
+execute "add situation date column to AcademicServiceRequestSituation" AlterTableAcademicServiceRequestSituation.sql
