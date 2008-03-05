@@ -2446,13 +2446,13 @@ public class Registration extends Registration_Base {
 	return getInterruptedStudies() ? false : getRegistrationAgreement() == RegistrationAgreement.NORMAL;
     }
 
-    final public boolean hasPayedDiplomaRequest(final CycleType cycleType) {
-	return getPayedDiplomaRequest(cycleType) != null;
+    final public boolean hasPayedOrFreeDiplomaRequest(final CycleType cycleType) {
+	return getPayedOrFreeDiplomaRequest(cycleType) != null;
     }
 
-    final public DiplomaRequest getPayedDiplomaRequest(final CycleType cycleType) {
+    final public DiplomaRequest getPayedOrFreeDiplomaRequest(final CycleType cycleType) {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
-	    if (documentRequest.isDiploma() && documentRequest.hasEvent() && documentRequest.getEvent().isPayed()) {
+	    if (documentRequest.isDiploma() && (documentRequest.isFree() || documentRequest.getEvent().isPayed())) {
 		final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
 		if (cycleType == null || cycleType == diplomaRequest.getRequestedCycle()) {
 		    return diplomaRequest;
@@ -2814,7 +2814,6 @@ public class Registration extends Registration_Base {
 	RegistrationState.createState(this, person, when, RegistrationStateType.TRANSITED);
 
 	for (final Registration registration : getTargetTransitionRegistrations()) {
-
 	    if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
 		RegistrationState.createState(registration, person, when,
 			registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);

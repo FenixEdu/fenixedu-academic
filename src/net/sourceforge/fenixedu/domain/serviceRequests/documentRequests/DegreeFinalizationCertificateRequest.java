@@ -86,7 +86,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     private void checkForDiplomaRequest(final CycleType requestedCycle) {
-	if (!getRegistration().hasPayedDiplomaRequest(requestedCycle)) {
+	if (!getRegistration().hasPayedOrFreeDiplomaRequest(requestedCycle)) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutDiplomaRequest");
 	}
     }
