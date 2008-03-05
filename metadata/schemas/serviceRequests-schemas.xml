@@ -409,8 +409,8 @@
 
 <schema name="CourseGroupChangeRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest"
 		extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="oldCourseGroup.oneFullName" key="label.serviceRequests.oldCourseGroup" />
-	<slot name="newCourseGroup.oneFullName" key="label.serviceRequests.newCourseGroup" />
+	<slot name="oldCourseGroupOneFullName" key="label.serviceRequests.oldCourseGroup" />
+	<slot name="newCourseGroupOneFullName" key="label.serviceRequests.newCourseGroup" />
 </schema>
 
 <schema name="RegistrationAcademicServiceRequestCreateBean.FREE_SOLICITATION_ACADEMIC_REQUEST"
