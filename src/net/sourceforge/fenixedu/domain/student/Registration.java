@@ -2452,7 +2452,7 @@ public class Registration extends Registration_Base {
 
     final public DiplomaRequest getPayedOrFreeDiplomaRequest(final CycleType cycleType) {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
-	    if (documentRequest.isDiploma() && (documentRequest.isFree() || documentRequest.getEvent().isPayed())) {
+	    if (documentRequest.isDiploma() && (!documentRequest.hasEvent() || documentRequest.getEvent().isPayed())) {
 		final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
 		if (cycleType == null || cycleType == diplomaRequest.getRequestedCycle()) {
 		    return diplomaRequest;
