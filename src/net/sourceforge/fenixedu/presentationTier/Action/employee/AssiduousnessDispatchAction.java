@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.employee;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -14,15 +13,13 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkScheduleDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
-import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
-import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -30,7 +27,6 @@ import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Month;
-import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -55,25 +51,8 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 	    saveMessages(request, actionMessages);
 	    return mapping.getInputForward();
 	}
-	HashMap<String, WorkScheduleDaySheet> workScheduleDays = new HashMap<String, WorkScheduleDaySheet>();
-	if (employee.getAssiduousness() != null) {
-	    if (employee.getAssiduousness().getCurrentSchedule() != null) {
-		ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-			LanguageUtils.getLocale());
-		WorkWeek workWeek = new WorkWeek(EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY));
-		for (WorkSchedule workSchedule : employee.getAssiduousness().getCurrentSchedule()
-			.getWorkSchedules()) {
-		    workSchedule.setWorkScheduleDays(workScheduleDays, bundle);
-		}
-		workWeek.validateWorkScheduleDays(workScheduleDays, bundle);
-		List<WorkScheduleDaySheet> workScheduleDaySheetList = new ArrayList<WorkScheduleDaySheet>(
-			workScheduleDays.values());
-		Collections.sort(workScheduleDaySheetList, new BeanComparator("weekDay"));
-		request.setAttribute("workScheduleDayList", workScheduleDaySheetList);
-		request.setAttribute("hasFixedPeriod", employee.getAssiduousness().getCurrentSchedule()
-			.hasFixedPeriod());
-	    }
-	}
+	EmployeeScheduleFactory employeeScheduleFactory = new EmployeeScheduleFactory(employee, null, employee.getAssiduousness().getCurrentSchedule());
+	request.setAttribute("employeeScheduleBean", employeeScheduleFactory);
 	request.setAttribute("employee", employee);
 	return mapping.findForward("show-employee-info");
     }
