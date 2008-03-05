@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import org.joda.time.DateTime;
 
 public class DiplomaRequest extends DiplomaRequest_Base {
-    
+
     private DiplomaRequest() {
-        super();
+	super();
     }
 
     public DiplomaRequest(final Registration registration, final CycleType requestedCycle) {
@@ -27,15 +27,15 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     public DiplomaRequest(final Registration registration, final DateTime requestDate, final CycleType requestedCycle) {
 	this();
-	
+
 	this.init(registration, requestDate, requestedCycle);
     }
 
     final private void init(final Registration registration, DateTime requestDate, final CycleType requestedCycle) {
 	super.init(registration, requestDate, Boolean.FALSE, Boolean.FALSE);
-	
+
 	this.checkParameters(requestedCycle);
-	
+
 	if (!isFree()) {
 	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
@@ -46,17 +46,18 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	    if (requestedCycle == null) {
 		throw new DomainException("DiplomaRequest.diploma.requested.cycle.must.be.given");
 	    } else if (!getDegreeType().getCycleTypes().contains(requestedCycle)) {
-		throw new DomainException("DiplomaRequest.diploma.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
+		throw new DomainException(
+			"DiplomaRequest.diploma.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
 	    }
 
 	    super.setRequestedCycle(requestedCycle);
 	}
-	
+
 	checkForDuplicate(requestedCycle);
     }
-    
+
     private void checkForDuplicate(final CycleType requestedCycle) {
-	final DiplomaRequest payedDiplomaRequest = getRegistration().getPayedDiplomaRequest(requestedCycle);
+	final DiplomaRequest payedDiplomaRequest = getRegistration().getPayedOrFreeDiplomaRequest(requestedCycle);
 	if (payedDiplomaRequest != null && payedDiplomaRequest != this) {
 	    throw new DomainException("DiplomaRequest.diploma.already.requested");
 	}
@@ -71,8 +72,9 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     final public String getDescription() {
 	final DegreeType degreeType = getDegreeType();
 	final CycleType requestedCycle = getRequestedCycle();
-	
-	return getDescription(AcademicServiceRequestType.DOCUMENT, getDocumentRequestType().getQualifiedName() + "." + degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+
+	return getDescription(AcademicServiceRequestType.DOCUMENT, getDocumentRequestType().getQualifiedName() + "."
+		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
@@ -82,11 +84,11 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     final public String getDocumentTemplateKey() {
-	String result = getClass().getName() + "." +  getDegreeType().getName();  
+	String result = getClass().getName() + "." + getDegreeType().getName();
 	if (getRequestedCycle() != null) {
 	    result += "." + getRequestedCycle().name();
 	}
-	
+
 	return result;
     }
 
@@ -100,7 +102,8 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	case BOLONHA_MASTER_DEGREE:
 	    return EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST;
 	case BOLONHA_INTEGRATED_MASTER_DEGREE:
-	    return (getRequestedCycle() == CycleType.FIRST_CYCLE) ? EventType.BOLONHA_DEGREE_DIPLOMA_REQUEST : EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST;
+	    return (getRequestedCycle() == CycleType.FIRST_CYCLE) ? EventType.BOLONHA_DEGREE_DIPLOMA_REQUEST
+		    : EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST;
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
 	    return EventType.BOLONHA_ADVANCED_FORMATION_DIPLOMA_REQUEST;
 	case BOLONHA_PHD_PROGRAM:
@@ -120,38 +123,37 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 			throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
 		    }
 		} else if (getRegistration().hasGratuityDebtsCurrently()) {
-			throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+		    throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
 		}
 	    }
-	    
+
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 
 	    checkForDuplicate(getRequestedCycle());
-	    
+
 	    if (NOT_AVAILABLE.contains(getRegistration().getDegreeType())) {
 		throw new DomainException("DiplomaRequest.diploma.not.available");
 	    }
-	    
+
 	    if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
 		throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
 	    }
-	    
+
 	    if (hasDissertationTitle() && !getRegistration().hasDissertationThesis()) {
 		throw new DomainException("DiplomaRequest.registration.doesnt.have.dissertation.thesis");
 	    }
 	}
-	
+
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	}
     }
 
-    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] {
-	    DegreeType.BOLONHA_PHD_PROGRAM,
-	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE});
-    
+    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] { DegreeType.BOLONHA_PHD_PROGRAM,
+	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE });
+
     final public boolean hasFinalAverageDescription() {
 	return !hasDissertationTitle();
     }
@@ -160,12 +162,12 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	return getDegreeType() == DegreeType.MASTER_DEGREE;
     }
 
-    /* TODO refactor, always set requested cycle type in document creation*/
-    
+    /* TODO refactor, always set requested cycle type in document creation */
+
     public CycleType getWhatShouldBeRequestedCycle() {
-        return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCycleType() : null;
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCycleType() : null;
     }
-    
+
     public CycleCurriculumGroup getCycleCurriculumGroup() {
 	final CycleType requestedCycle = getRequestedCycle();
 	final Registration registration = getRegistration();
@@ -180,7 +182,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	    return registration.getLastStudentCurricularPlan().getCycle(requestedCycle);
 	}
     }
-    
+
     public boolean hasCycleCurriculumGroup() {
 	return getCycleCurriculumGroup() != null;
     }
@@ -194,9 +196,9 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     public boolean isToPrint() {
 	return true;
     }
-    
+
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-        return false;
+	return false;
     }
 }
