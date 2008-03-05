@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
@@ -60,9 +61,17 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
 	throw new DomainException("error.CourseGroupChangeRequest.cannot.modify.oldCourseGroup");
     }
 
+    public String getOldCourseGroupOneFullName() {
+	return hasOldCourseGroup() ? getOldCourseGroup().getOneFullName() : StringUtils.EMPTY;
+    }
+
     @Override
     public void setNewCourseGroup(CourseGroup newCourseGroup) {
 	throw new DomainException("error.CourseGroupChangeRequest.cannot.modify.newCourseGroup");
+    }
+
+    public String getNewCourseGroupOneFullName() {
+	return hasNewCourseGroup() ? getNewCourseGroup().getOneFullName() : StringUtils.EMPTY;
     }
 
     @Override
