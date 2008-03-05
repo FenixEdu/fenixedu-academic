@@ -105,7 +105,9 @@ public class SendMailBackingBean extends FenixBackingBean {
 	    }
 	}
 
-	if(getResearchers()) {
+	boolean useReachers = (getResearchers() == null) ? false : getResearchers();
+	
+	if(useReachers) {
 	    final Role role = Role.getRoleByRoleType(RoleType.RESEARCHER);
 	    for(final Person person : role.getAssociatedPersons()) {
 		    if (person.getEmail() != null && person.getEmail().length() > 0) {

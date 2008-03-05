@@ -42,6 +42,10 @@
 		<h:outputText value="Incluir todos os docentes em destinatários (bcc)." escape="false"/>
 
 		<h:outputText value="<br/><br/>" escape="false"/>
+		<h:selectBooleanCheckbox value="#{SendMailBackingBean.researchers}"/>
+		<h:outputText value="Incluir todos os  investigadores em destinatários (bcc)." escape="false"/>
+		
+		<h:outputText value="<br/><br/>" escape="false"/>
 		<h:selectBooleanCheckbox value="#{SendMailBackingBean.executionCourseResponsibles}"/>
 		<h:outputText value="Incluir todos os docentes responsáveis por disciplinas em destinatários (bcc)." escape="false"/>
 
