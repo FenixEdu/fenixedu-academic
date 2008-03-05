@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent;
@@ -33,7 +36,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
 	this();
 	checkParameters(executionYear);
-	checkRulesToCreate(registration);
+	checkRulesToCreate(registration, executionYear, requestDate);
 	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
 	new StudentReingressionRequestEvent(getAdministrativeOffice(), getPerson(), this);
     }
@@ -44,7 +47,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	}
     }
 
-    private void checkRulesToCreate(final Registration registration) {
+    private void checkRulesToCreate(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
 
 	if (!hasValidState(registration)) {
 	    throw new DomainException("error.StudentReingressionRequest.registration.with.invalid.state");
@@ -54,7 +57,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    throw new DomainException("error.StudentReingressionRequest.registration.was.flunked.at.least.three.times");
 	}
 
-	if (!isEnrolmentPeriodOpen(registration)) {
+	if (!isEnrolmentPeriodOpen(registration, executionYear, requestDate)) {
 	    throw new DomainException("error.StudentReingressionRequest.out.of.enrolment.period");
 	}
     }
@@ -67,8 +70,15 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	return registration.getRegistrationStates(ALLOWED_TYPES).size() >= 3;
     }
 
-    private boolean isEnrolmentPeriodOpen(final Registration registration) {
-	return registration.getLastDegreeCurricularPlan().hasActualEnrolmentPeriodInCurricularCourses();
+    private boolean isEnrolmentPeriodOpen(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
+	final DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
+	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+	    final EnrolmentPeriod enrolmentPeriod = degreeCurricularPlan.getEnrolmentPeriodInCurricularCoursesBy(executionPeriod);
+	    if (enrolmentPeriod != null && enrolmentPeriod.containsDate(requestDate)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     @Override
