@@ -12,7 +12,7 @@ public class ConcludeAcademicServiceRequest extends Service {
     public void run(final AcademicServiceRequest academicServiceRequest, final Boolean sendEmailToStudent) {
 	if (!academicServiceRequest.isConcluded()) {
 	    academicServiceRequest.conclude();
-	    
+
 	    if (sendEmailToStudent != null && sendEmailToStudent.booleanValue()) {
 		sendEmail(academicServiceRequest);
 	    }
@@ -20,24 +20,24 @@ public class ConcludeAcademicServiceRequest extends Service {
     }
 
     private void sendEmail(final AcademicServiceRequest academicServiceRequest) {
-	
+
 	final ResourceBundle globalBundle = ResourceBundle.getBundle("resources.GlobalResources");
 	final ResourceBundle appBundle = ResourceBundle.getBundle("resources.ApplicationResources");
-	
+
 	final Email email = new Email();
 
 	email.setFromName(globalBundle.getString("degreeAdminOffice.name"));
 	email.setFromAddress(globalBundle.getString("degreeAdminOffice.mail"));
 	email.setToAddresses(new EmailAddressList(academicServiceRequest.getPerson().getEmail()));
 	email.setSubject(academicServiceRequest.getDescription());
-	
-	String body = appBundle.getString("message.academicServiceRequest.concluded.mail1");
-	body += " " + academicServiceRequest.getServiceRequestNumber().toString();
-	body += " " + appBundle.getString("message.academicServiceRequest.concluded.mail2");
-	body += " " + academicServiceRequest.getDescription();
-	body += " " + appBundle.getString("message.academicServiceRequest.concluded.mail3");
-	body += "\n" + appBundle.getString("message.academicServiceRequest.concluded.mail4");
-	
+
+	String body = appBundle.getString("mail.academicServiceRequest.concluded.message1");
+	body += " " + academicServiceRequest.getServiceRequestNumberYear();
+	body += " " + appBundle.getString("mail.academicServiceRequest.concluded.message2");
+	body += " '" + academicServiceRequest.getDescription();
+	body += "' " + appBundle.getString("mail.academicServiceRequest.concluded.message3");
+	body += "\n\n" + appBundle.getString("mail.academicServiceRequest.concluded.message4");
+
 	email.setBody(body);
     }
 }

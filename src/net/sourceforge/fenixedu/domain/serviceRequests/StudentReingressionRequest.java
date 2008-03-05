@@ -17,7 +17,7 @@ import org.joda.time.DateTime;
 
 public class StudentReingressionRequest extends StudentReingressionRequest_Base {
 
-    static final private List<RegistrationStateType> ALLOWED_TYPES = Arrays.asList(RegistrationStateType.FLUNKED,
+    static final public List<RegistrationStateType> ALLOWED_TYPES = Arrays.asList(RegistrationStateType.FLUNKED,
 	    RegistrationStateType.INTERRUPTED);
 
     private StudentReingressionRequest() {
@@ -91,6 +91,8 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
+	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
+	    
 	} else if (academicServiceRequestBean.isToConclude()) {
 	    RegistrationState.createState(getRegistration(), academicServiceRequestBean.getEmployee().getPerson(),
 		    new DateTime(), RegistrationStateType.REGISTERED);

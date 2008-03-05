@@ -35,6 +35,7 @@ public class AcademicServiceRequestBean implements Serializable {
 	this();
 	setAcademicServiceRequestSituationType(academicServiceRequestSituationType);
 	setEmployee(employee);
+	setSituationDate(new YearMonthDay());
     }
 
     public AcademicServiceRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,

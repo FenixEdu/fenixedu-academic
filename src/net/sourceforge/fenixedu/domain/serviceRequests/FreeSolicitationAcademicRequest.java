@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -54,6 +55,15 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
     @Override
     public EventType getEventType() {
 	return null;
+    }
+
+    @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
+
+	if (academicServiceRequestBean.isToProcess()) {
+	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
+	}
     }
 
     @Override

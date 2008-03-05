@@ -42,6 +42,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected AcademicServiceRequest() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
+	super.setCreationDate(new DateTime());
     }
 
     protected void init(final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
@@ -63,8 +64,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setFreeProcessed(freeProcessed);
 	super.setExecutionYear(executionYear);
 
-	createAcademicServiceRequestSituations(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
-		getEmployee()));
+	final AcademicServiceRequestBean bean = new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW, getEmployee());
+	bean.setSituationDate(requestDate.toYearMonthDay());
+	
+	createAcademicServiceRequestSituations(bean);
     }
 
     private Integer generateServiceRequestNumber() {
@@ -121,6 +124,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     @Override
     final public void setExecutionYear(ExecutionYear executionYear) {
 	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.executionYear");
+    }
+
+    @Override
+    final public void setCreationDate(DateTime creationDate) {
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.creationDate");
     }
 
     @Override
@@ -474,9 +482,9 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     abstract public AcademicServiceRequestType getAcademicServiceRequestType();
 
     /**
-     * Indicates if is possible to AdministrativeOffice send this request to
-     * another entity
-     */
+         * Indicates if is possible to AdministrativeOffice send this request to
+         * another entity
+         */
     abstract public boolean isPossibleToSendToOtherEntity();
 
 }

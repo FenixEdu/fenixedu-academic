@@ -42,7 +42,7 @@ public class ReceivedFromExternalEntityAcademicServiceRequestSituation extends
 	}
 
 	if (academicServiceRequestBean.getFinalSituationDate().isBefore(
-		academicServiceRequest.getActiveSituation().getCreationDate())) {
+		academicServiceRequest.getActiveSituation().getSituationDate())) {
 	    throw new DomainException("error.serviceRequests.ReceivedFromUnitAcademicServiceRequestSituation.invalid.situation.date");
 	}
     }

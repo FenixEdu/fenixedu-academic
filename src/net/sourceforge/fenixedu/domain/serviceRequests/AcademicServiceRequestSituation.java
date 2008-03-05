@@ -39,6 +39,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	super.setAcademicServiceRequestSituationType(academicServiceRequestBean.getAcademicServiceRequestSituationType());
 	super.setEmployee(academicServiceRequestBean.getEmployee());
 	super.setJustification(academicServiceRequestBean.hasJustification() ? academicServiceRequestBean.getJustification() : null);
+	super.setSituationDate(academicServiceRequestBean.getFinalSituationDate());
     }
     
     protected void checkParameters(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
@@ -48,6 +49,15 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	
 	if (!academicServiceRequestBean.hasAcademicServiceRequestSituationType()) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType.cannot.be.null");
+	}
+	
+	final AcademicServiceRequestSituation activeSituation = academicServiceRequest.getActiveSituation();
+	if (activeSituation != null && academicServiceRequestBean.getFinalSituationDate().isBefore(activeSituation.getSituationDate())) {
+	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.situation.date.is.before");	    
+	}
+	
+	if (academicServiceRequestBean.getFinalSituationDate().isAfterNow()) {
+	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.situation.date.is.after");
 	}
 
 	if (academicServiceRequestBean.isToCancelOrReject()) {

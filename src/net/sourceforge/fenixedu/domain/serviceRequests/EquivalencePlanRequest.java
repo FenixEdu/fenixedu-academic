@@ -54,6 +54,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
+	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
 	}
     }
 
@@ -63,7 +64,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 	    throw new DomainException("error.AcademicServiceRequest.cannot.be.deleted");
 	}
     }
-
+    
     @Override
     public boolean isPossibleToSendToOtherEntity() {
 	return true;

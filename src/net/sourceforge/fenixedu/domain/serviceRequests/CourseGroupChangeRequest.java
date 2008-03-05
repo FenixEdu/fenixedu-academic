@@ -102,6 +102,15 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     }
 
     @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
+
+	if (academicServiceRequestBean.isToProcess()) {
+	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
+	}
+    }
+
+    @Override
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }

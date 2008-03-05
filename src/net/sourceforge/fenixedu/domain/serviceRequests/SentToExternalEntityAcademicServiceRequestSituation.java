@@ -37,7 +37,7 @@ public class SentToExternalEntityAcademicServiceRequestSituation extends SentToE
 	    throw new DomainException("error.serviceRequests.SentToUnitAcademicServiceRequestSituation.invalid.situation.type");
 	}
 	
-	if (academicServiceRequestBean.getFinalSituationDate().isBefore(academicServiceRequest.getActiveSituation().getCreationDate())) {
+	if (academicServiceRequestBean.getFinalSituationDate().isBefore(academicServiceRequest.getActiveSituation().getSituationDate())) {
 	    throw new DomainException("error.serviceRequests.SentToUnitAcademicServiceRequestSituation.invalid.situation.date");
 	}
     }

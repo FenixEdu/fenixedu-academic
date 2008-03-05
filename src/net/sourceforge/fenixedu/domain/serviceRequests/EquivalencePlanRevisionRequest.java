@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -35,6 +36,11 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
 	if (equivalencePlanRequest == null) {
 	    throw new DomainException("error.EquivalencePlanRevisionRequest.equivalencePlanRequest.cannot.be.null");
 	}
+	
+	if (!equivalencePlanRequest.isConcluded()) {
+	    throw new DomainException("error.EquivalencePlanRevisionRequest.equivalencePlanRequest.is.not.concluded");
+	}
+	
 	if (executionYear == null) {
 	    throw new DomainException("error.EquivalencePlanRevisionRequest.executionYear.cannot.be.null");
 	}
@@ -55,7 +61,16 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
 	super.setEquivalencePlanRequest(null);
 	super.delete();
     }
-
+    
+    @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+        super.internalChangeState(academicServiceRequestBean);
+        
+	if (academicServiceRequestBean.isToProcess()) {
+	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
+	}
+    }
+    
     @Override
     public boolean isPossibleToSendToOtherEntity() {
 	return true;

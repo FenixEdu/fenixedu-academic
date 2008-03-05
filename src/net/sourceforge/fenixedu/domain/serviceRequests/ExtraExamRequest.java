@@ -91,6 +91,15 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
 	}
     }
+    
+    @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+        super.internalChangeState(academicServiceRequestBean);
+        
+	if (academicServiceRequestBean.isToProcess()) {
+	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
+	}
+    }
 
     @Override
     public boolean isPossibleToSendToOtherEntity() {
