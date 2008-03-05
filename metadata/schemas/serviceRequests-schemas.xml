@@ -444,7 +444,7 @@
 
 <schema name="ExtraExamRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.ExtraExamRequest"
 		extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="enrolment.name" key="label.serviceRequests.enrolment" />
+	<slot name="enrolmentName" key="label.serviceRequests.enrolment" />
 </schema>
 
 <schema name="RegistrationAcademicServiceRequestCreateBean.PHOTOCOPY_REQUEST"

@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 public class ExtraExamRequest extends ExtraExamRequest_Base {
@@ -66,6 +67,10 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 	throw new DomainException("error.ExtraExamRequest.cannot.modify.enrolment");
     }
 
+    public String getEnrolmentName() {
+	return hasEnrolment() ? getEnrolment().getName().getContent() : StringUtils.EMPTY;
+    }
+
     @Override
     public AcademicServiceRequestType getAcademicServiceRequestType() {
 	return AcademicServiceRequestType.EXTRA_EXAM_REQUEST;
@@ -91,7 +96,7 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
 	}
     }
-    
+
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         super.internalChangeState(academicServiceRequestBean);
