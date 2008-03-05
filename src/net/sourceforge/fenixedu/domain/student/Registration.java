@@ -722,6 +722,10 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasEnrolments(final Enrolment enrolment) {
+	if (enrolment == null) {
+	    return false;
+	}
+
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    if (studentCurricularPlan.hasEnrolments(enrolment)) {
 		return true;
