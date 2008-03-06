@@ -56,7 +56,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="721"  isSplitAllowed="true" >
+			<band height="662"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="20"
@@ -84,7 +84,8 @@
 						y="42"
 						width="482"
 						height="20"
-						key="textField-2"/>
+						key="textField-2"
+						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement isStyledText="true">
 						<font pdfFontName="Times-Roman" size="14"/>
@@ -97,7 +98,8 @@
 						y="62"
 						width="482"
 						height="20"
-						key="textField-3"/>
+						key="textField-3"
+						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement isStyledText="true">
 						<font pdfFontName="Times-Roman" size="14"/>
