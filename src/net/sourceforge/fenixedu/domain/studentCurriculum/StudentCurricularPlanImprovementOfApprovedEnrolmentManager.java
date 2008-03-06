@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -18,11 +19,31 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanImprovementOfApprovedEnrolmentManager(StudentCurricularPlan plan, EnrolmentContext enrolmentContext, Person responsiblePerson) {
+    public StudentCurricularPlanImprovementOfApprovedEnrolmentManager(StudentCurricularPlan plan,
+	    EnrolmentContext enrolmentContext, Person responsiblePerson) {
 	super(plan, enrolmentContext, responsiblePerson);
+    }
+
+    @Override
+    protected void assertEnrolmentPreConditions() {
+
+	if (!responsiblePerson.hasRole(RoleType.MANAGER) && !hasRegistrationInValidState()) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
+	}
+
+	super.assertEnrolmentPreConditions();
+    }
+
+    private boolean hasRegistrationInValidState() {
+	final Registration registration = studentCurricularPlan.getRegistration();
+	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	return registration.isInRegisteredState(executionYear)
+		|| registration.isInRegisteredState(executionYear.getPreviousExecutionYear());
     }
 
     @Override
@@ -32,11 +53,12 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 		final Enrolment enrolment = (Enrolment) curriculumModule;
 		enrolment.unEnrollImprovement(enrolmentContext.getExecutionPeriod());
 	    } else {
-		throw new DomainException("StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
+		throw new DomainException(
+			"StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
 	    }
 	}
     }
-    
+
     @Override
     protected void addEnroled() {
     }
@@ -46,10 +68,10 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
 
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-	    
+
 	    if (degreeModuleToEvaluate.isEnroled() && degreeModuleToEvaluate.canCollectRules()) {
 		final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
-		
+
 		if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 		    final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
 
@@ -58,18 +80,19 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
 		    result.put(degreeModuleToEvaluate, curricularRules);
 		} else {
-		    throw new DomainException("StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
+		    throw new DomainException(
+			    "StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
 		}
 	    }
 	}
-	
+
 	return result;
     }
 
     @Override
     protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEvaluate) {
 	Collection<Enrolment> toCreate = new HashSet<Enrolment>();
-	
+
 	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEvaluate.entrySet()) {
 
 	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
@@ -80,14 +103,16 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
 			toCreate.add(enrolment);
 		    } else {
-			throw new DomainException("StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
+			throw new DomainException(
+				"StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
 		    }
 		}
 	    }
 	}
-	
+
 	if (!toCreate.isEmpty()) {
-	    studentCurricularPlan.createEnrolmentEvaluationForImprovement(toCreate, responsiblePerson.getEmployee(), enrolmentContext.getExecutionPeriod());
+	    studentCurricularPlan.createEnrolmentEvaluationForImprovement(toCreate, responsiblePerson.getEmployee(),
+		    enrolmentContext.getExecutionPeriod());
 	}
     }
 

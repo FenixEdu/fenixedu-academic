@@ -18,11 +18,25 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(StudentCurricularPlan plan, EnrolmentContext enrolmentContext, Person responsiblePerson) {
+    public StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(StudentCurricularPlan plan,
+	    EnrolmentContext enrolmentContext, Person responsiblePerson) {
 	super(plan, enrolmentContext, responsiblePerson);
+    }
+
+    @Override
+    protected void assertEnrolmentPreConditions() {
+	final Registration registration = studentCurricularPlan.getRegistration();
+
+	if (!responsiblePerson.hasRole(RoleType.MANAGER) && !registration.isInRegisteredState(executionPeriod)) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
+	}
+
+	super.assertEnrolmentPreConditions();
     }
 
     @Override
@@ -32,11 +46,12 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 		final Enrolment enrolment = (Enrolment) curriculumModule;
 		enrolment.deleteSpecialSeasonEvaluation();
 	    } else {
-		throw new DomainException("StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
+		throw new DomainException(
+			"StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
 	    }
 	}
     }
-    
+
     @Override
     protected void addEnroled() {
 	for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionPeriod.getExecutionYear())) {
@@ -47,12 +62,12 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     @Override
     protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate() {
 	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
-	
+
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-	    
+
 	    if (degreeModuleToEvaluate.isEnroled() && degreeModuleToEvaluate.canCollectRules()) {
 		final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
-		
+
 		if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 		    final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
 
@@ -64,11 +79,12 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
 		    result.put(degreeModuleToEvaluate, curricularRules);
 		} else {
-		    throw new DomainException("StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
+		    throw new DomainException(
+			    "StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
 		}
 	    }
 	}
-	
+
 	return result;
     }
 
@@ -82,12 +98,13 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-			
+
 			if (!enrolment.hasSpecialSeason()) {
 			    enrolment.createSpecialSeasonEvaluation(responsiblePerson.getEmployee());
 			}
 		    } else {
-			throw new DomainException("StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
+			throw new DomainException(
+				"StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
 		    }
 		}
 	    }

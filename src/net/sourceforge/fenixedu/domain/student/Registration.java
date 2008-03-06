@@ -410,8 +410,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     final public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
 
@@ -460,24 +460,24 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     private void setApprovationRatio(Double approvationRatio) {
 	this.approvationRatio = approvationRatio;
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     private void setArithmeticMean(Double arithmeticMean) {
 	this.arithmeticMean = arithmeticMean;
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     final public Integer getApprovedEnrollmentsNumber() {
 	if (this.approvedEnrollmentsNumber == null) {
@@ -487,16 +487,16 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     private void setApprovedEnrollmentsNumber(Integer approvedEnrollmentsNumber) {
 	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     final public Double getApprovationRatio() {
 	if (this.approvationRatio == null) {
@@ -506,8 +506,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     final public Double getArithmeticMean() {
 	if (this.arithmeticMean == null) {
@@ -1848,15 +1848,15 @@ public class Registration extends Registration_Base {
     public boolean isInRegisteredState(ExecutionPeriod executionPeriod) {
 	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionPeriod);
 
-	return registrationStatesTypes.contains(RegistrationStateType.REGISTERED) || hasAnyEnrolmentsIn(executionPeriod)
-		|| registrationStatesTypes.contains(RegistrationStateType.MOBILITY);
+	return registrationStatesTypes.contains(RegistrationStateType.REGISTERED)
+		|| registrationStatesTypes.contains(RegistrationStateType.MOBILITY) || hasAnyEnrolmentsIn(executionPeriod);
     }
 
     final public boolean isInRegisteredState(ExecutionYear executionYear) {
 	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionYear);
 
-	return registrationStatesTypes.contains(RegistrationStateType.REGISTERED) || hasAnyEnrolmentsIn(executionYear)
-		|| registrationStatesTypes.contains(RegistrationStateType.MOBILITY);
+	return registrationStatesTypes.contains(RegistrationStateType.REGISTERED)
+		|| registrationStatesTypes.contains(RegistrationStateType.MOBILITY) || hasAnyEnrolmentsIn(executionYear);
     }
 
     final public RegistrationState getActiveState() {
@@ -2188,8 +2188,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * Retrieve concluded cycles before or equal to the given cycle
-     */
+         * Retrieve concluded cycles before or equal to the given cycle
+         */
     final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
 	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 

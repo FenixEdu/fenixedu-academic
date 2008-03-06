@@ -15,7 +15,13 @@
 		<h2><bean:message bundle="TREASURY_RESOURCES" key="label.payments.operations" /></h2>
 		
 		<strong><bean:write name="administrativeOfficeUnit" property="nameWithAcronym"/></strong>
-		<br/><br/>
+		<br/>
+		<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+			<p>
+				<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+			</p>
+		</html:messages>
+		<br/>
 
 		<strong><bean:message bundle="TREASURY_RESOURCES" key="label.payments.person" /></strong>
 		<fr:view name="person" 	schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
@@ -45,7 +51,6 @@
 				<bean:message bundle="TREASURY_RESOURCES" key="label.payments.receipts" />
 			</html:link></li>
 		</ul>
-
 
 		<ul>
 			<li><html:link action="<%="/payments.do?method=showEventsWithPayments&amp;personId=" + personId + "&amp;administrativeOfficeId=" + administrativeOfficeId + "&amp;administrativeOfficeUnitId=" + administrativeOfficeUnitId%>">

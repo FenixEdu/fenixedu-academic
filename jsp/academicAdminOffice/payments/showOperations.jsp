@@ -6,6 +6,12 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
+	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+		<p>
+			<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+		</p>
+	</html:messages>
+
 	<bean:define id="personId" name="person" property="idInternal" />
 	<fr:form action='<%= "/payments.do?personId=" + personId %>'>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -18,13 +19,19 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 abstract public class StudentCurricularPlanEnrolment {
 
     protected StudentCurricularPlan studentCurricularPlan;
+
     protected EnrolmentContext enrolmentContext;
+
     protected ExecutionPeriod executionPeriod;
+
     protected CurricularRuleLevel curricularRuleLevel;
+
     protected Person responsiblePerson;
 
     protected StudentCurricularPlanEnrolment(final StudentCurricularPlan studentCurricularPlan,
@@ -56,6 +63,9 @@ abstract public class StudentCurricularPlanEnrolment {
     }
 
     final public RuleResult manage() {
+
+	assertEnrolmentPreConditions();
+
 	unEnrol();
 	addEnroled();
 
@@ -66,9 +76,33 @@ abstract public class StudentCurricularPlanEnrolment {
 	return result;
     }
 
-    abstract protected void unEnrol();
+    protected void assertEnrolmentPreConditions() {
 
-    abstract protected void addEnroled();
+	final Registration registration = studentCurricularPlan.getRegistration();
+	
+	if (!responsiblePerson.hasRole(RoleType.MANAGER) && registration.getStudent().isAnyTuitionInDebt()) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.gratuity.debts.for.previous.execution.years");
+	}
+
+	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+	if (responsiblePerson.hasRole(RoleType.STUDENT)) {
+
+	    if (!responsiblePerson.getStudent().getRegistrationsToEnrolByStudent().contains(registration)) {
+		throw new DomainException("error.StudentCurricularPlan.student.is.not.allowed.to.perform.enrol");
+	    }
+
+	    if (curricularRuleLevel != CurricularRuleLevel.ENROLMENT_WITH_RULES) {
+		throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
+	    }
+
+	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionPeriod)
+		    && !studentCurricularPlan.hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionPeriod)) {
+		throw new DomainException(
+			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
+	    }
+
+	}
+    }
 
     private RuleResult evaluateDegreeModules(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
 
@@ -102,8 +136,6 @@ abstract public class StudentCurricularPlanEnrolment {
 
     }
 
-    abstract protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate();
-
     private RuleResult evaluateRules(final IDegreeModuleToEvaluate degreeModuleToEvaluate,
 	    final Set<ICurricularRule> curricularRules) {
 	RuleResult ruleResult = RuleResult.createTrue(degreeModuleToEvaluate.getDegreeModule());
@@ -125,6 +157,11 @@ abstract public class StudentCurricularPlanEnrolment {
 	information.add(degreeModuleToEnrol);
     }
 
-    abstract protected void performEnrolments(Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEnrolMap);
+    abstract protected void unEnrol();
 
+    abstract protected void addEnroled();
+
+    abstract protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate();
+    
+    abstract protected void performEnrolments(Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEnrolMap);
 }

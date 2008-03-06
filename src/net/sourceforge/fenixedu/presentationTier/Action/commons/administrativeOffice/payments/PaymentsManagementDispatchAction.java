@@ -36,12 +36,11 @@ import org.joda.time.DateTime;
 
 public abstract class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
-    protected PaymentsManagementDTO searchNotPayedEventsForPerson(HttpServletRequest request,
-	    Person person, boolean withInstallments) {
+    protected PaymentsManagementDTO searchNotPayedEventsForPerson(HttpServletRequest request, Person person,
+	    boolean withInstallments) {
 
 	final PaymentsManagementDTO paymentsManagementDTO = new PaymentsManagementDTO(person);
-	for (final Event event : person.getNotPayedEventsPayableOn(getAdministrativeOffice(request),
-		withInstallments)) {
+	for (final Event event : person.getNotPayedEventsPayableOn(getAdministrativeOffice(request), withInstallments)) {
 	    paymentsManagementDTO.addEntryDTOs(event.calculateEntries());
 	}
 
@@ -51,49 +50,46 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     public ActionForward showEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(request,
-		getPerson(request), false));
+	try {
+	    request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(request, getPerson(request), false));
+	    
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	    return showOperations(mapping, form, request, response);
+	}
 
 	return mapping.findForward("showEvents");
     }
 
-    public ActionForward showEventsWithInstallments(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showEventsWithInstallments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(request,
-		getPerson(request), true));
-
+	request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(request, getPerson(request), true));
 	return mapping.findForward("showEventsWithInstallments");
     }
 
-    protected List<SelectableEntryBean> getSelectableEntryBeans(final Set<Entry> entries,
-	    final Collection<Entry> entriesToSelect) {
+    protected List<SelectableEntryBean> getSelectableEntryBeans(final Set<Entry> entries, final Collection<Entry> entriesToSelect) {
 	final List<SelectableEntryBean> selectableEntryBeans = new ArrayList<SelectableEntryBean>();
 	for (final Entry entry : entries) {
-	    selectableEntryBeans.add(new SelectableEntryBean(entriesToSelect.contains(entry) ? true
-		    : false, entry));
+	    selectableEntryBeans.add(new SelectableEntryBean(entriesToSelect.contains(entry) ? true : false, entry));
 	}
 	return selectableEntryBeans;
     }
 
-    public ActionForward preparePayment(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	return internalPreparePayment(mapping, request,(DynaActionForm) form, "showEvents");
-
+    public ActionForward preparePayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return internalPreparePayment(mapping, request, (DynaActionForm) form, "showEvents");
     }
 
-    public ActionForward preparePaymentWithInstallments(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	return internalPreparePayment(mapping, request,(DynaActionForm) form, "showEventsWithInstallments");
-
+    public ActionForward preparePaymentWithInstallments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return internalPreparePayment(mapping, request, (DynaActionForm) form, "showEventsWithInstallments");
     }
 
-    private ActionForward internalPreparePayment(ActionMapping mapping, HttpServletRequest request,
-	    DynaActionForm form, String errorForward) {
-	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
-		.getViewState("paymentsManagementDTO").getMetaObject().getObject();
+    private ActionForward internalPreparePayment(ActionMapping mapping, HttpServletRequest request, DynaActionForm form,
+	    String errorForward) {
+	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
+		"paymentsManagementDTO").getMetaObject().getObject();
 
 	paymentsManagementDTO.setPaymentDate(new DateTime());
 
@@ -112,8 +108,8 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     public ActionForward doPayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
-		.getViewState("paymentsManagementDTO-edit").getMetaObject().getObject();
+	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
+		"paymentsManagementDTO-edit").getMetaObject().getObject();
 
 	if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
 
@@ -124,12 +120,10 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	}
 
 	try {
-	    final Collection<Entry> resultingEntries = (Collection<Entry>) ServiceUtils.executeService(
-		    getUserView(request), "CreatePaymentsForEvents", new Object[] {
-			    getUserView(request).getPerson().getUser(),
+	    final Collection<Entry> resultingEntries = (Collection<Entry>) ServiceUtils.executeService(getUserView(request),
+		    "CreatePaymentsForEvents", new Object[] { getUserView(request).getPerson().getUser(),
 			    paymentsManagementDTO.getSelectedEntries(), PaymentMode.CASH,
-			    paymentsManagementDTO.isDifferedPayment(),
-			    paymentsManagementDTO.getPaymentDate() });
+			    paymentsManagementDTO.isDifferedPayment(), paymentsManagementDTO.getPaymentDate() });
 
 	    request.setAttribute("person", paymentsManagementDTO.getPerson());
 	    request.setAttribute("entriesToSelect", resultingEntries);
@@ -137,8 +131,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	    return mapping.findForward("paymentConfirmed");
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
-	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
-		    .getLabelFormatterArgs()));
+	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	    request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
 	    return mapping.findForward(getErrorForwardFromRequest(request));
 	} catch (DomainException ex) {
@@ -162,34 +155,34 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	return getUserView(request).getPerson().getEmployee().getCurrentWorkingPlace();
     }
 
-    public ActionForward preparePaymentInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward preparePaymentInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState(
-		"paymentsManagementDTO-edit").getMetaObject().getObject());
+	request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState("paymentsManagementDTO-edit").getMetaObject()
+		.getObject());
 	return mapping.findForward("preparePayment");
     }
 
-    public ActionForward prepareShowEventsInvalid(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareShowEventsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState("paymentsManagementDTO")
-		.getMetaObject().getObject());
+	request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState("paymentsManagementDTO").getMetaObject()
+		.getObject());
 
 	return mapping.findForward("showEvents");
     }
 
-    public ActionForward prepareShowEventsWithInstallmentsInvalid(ActionMapping mapping,
-	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareShowEventsWithInstallmentsInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState("paymentsManagementDTO")
-		.getMetaObject().getObject());
+	request.setAttribute("paymentsManagementDTO", RenderUtils.getViewState("paymentsManagementDTO").getMetaObject()
+		.getObject());
 
 	return mapping.findForward("showEventsWithInstallments");
     }
 
-    public ActionForward backToShowOperations(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward backToShowOperations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	setContextInformation(request);
 	return findMainForward(mapping);
     }
@@ -202,16 +195,16 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	return mapping.findForward("showOperations");
     }
 
-    public ActionForward showOperations(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showOperations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	request.setAttribute("person", getPerson(request));
 
 	return mapping.findForward("showOperations");
     }
 
-    public ActionForward showEventsWithPayments(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showEventsWithPayments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	request.setAttribute("person", getPerson(request));
 
@@ -219,12 +212,11 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     }
 
     protected Event getEvent(HttpServletRequest request) {
-	return (Event) RootDomainObject.readDomainObjectByOID(Event.class, getIntegerFromRequest(
-		request, "eventId"));
+	return (Event) RootDomainObject.readDomainObjectByOID(Event.class, getIntegerFromRequest(request, "eventId"));
     }
 
-    public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return mapping.findForward("preparePrintGuide");
     }
 

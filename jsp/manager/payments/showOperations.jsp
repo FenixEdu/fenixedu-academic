@@ -6,6 +6,12 @@
 
 <logic:present role="MANAGER">
 
+	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+		<p>
+			<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+		</p>
+	</html:messages>
+
 	<bean:define id="personId" name="person" property="idInternal" />
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
 		key="label.payments.management" /></h2>

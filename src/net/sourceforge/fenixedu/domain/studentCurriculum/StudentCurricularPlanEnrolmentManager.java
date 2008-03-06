@@ -25,12 +25,26 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlanEnrolment {
 
     public StudentCurricularPlanEnrolmentManager(StudentCurricularPlan plan, EnrolmentContext enrolmentContext,
 	    Person responsiblePerson) {
 	super(plan, enrolmentContext, responsiblePerson);
+    }
+
+    @Override
+    protected void assertEnrolmentPreConditions() {
+	final Registration registration = studentCurricularPlan.getRegistration();
+
+	if (!responsiblePerson.hasRole(RoleType.MANAGER) && !registration.isInRegisteredState(executionPeriod)) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
+	}
+
+	super.assertEnrolmentPreConditions();
     }
 
     @Override
