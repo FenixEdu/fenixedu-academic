@@ -89,7 +89,7 @@
 		</logic:equal>
 	</logic:equal>
 	
-	<logic:equal name="registrationConclusionBean" property="canBeConclusionProcessed" value="true">
+	<logic:equal name="registrationConclusionBean" property="concluded" value="true">
 		<logic:equal name="registrationConclusionBean" property="byCycle" value="true" >
 			<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForCycle">
 				<fr:layout name="tabular">
