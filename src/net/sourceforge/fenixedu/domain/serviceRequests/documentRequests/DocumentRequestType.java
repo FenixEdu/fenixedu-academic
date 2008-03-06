@@ -16,6 +16,8 @@ public enum DocumentRequestType {
     APPROVEMENT_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
 
     DEGREE_FINALIZATION_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    
+    EXAM_DATE_CERTIFICATE(true, false ,AdministrativeOfficeType.DEGREE),
 
     SCHOOL_REGISTRATION_DECLARATION(false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
 
@@ -27,11 +29,9 @@ public enum DocumentRequestType {
 
     PHOTOCOPY(false, false),
 
-    COURSE_LOAD(true, false/* , AdministrativeOfficeType.DEGREE */),
+    COURSE_LOAD(true, false , AdministrativeOfficeType.DEGREE),
 
-    EXAM_DATE_CERTIFICATE(true, false/* ,AdministrativeOfficeType.DEGREE */),
-
-    PROGRAM_CERTIFICATE(true, false/* , AdministrativeOfficeType.DEGREE */);
+    PROGRAM_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE);
 
     private boolean hasAdditionalInformation;
 

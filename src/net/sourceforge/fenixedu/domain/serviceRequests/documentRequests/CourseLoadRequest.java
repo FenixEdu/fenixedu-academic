@@ -28,6 +28,10 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
     }
 
     private void checkParameters(final Collection<Enrolment> enrolments) {
+	if (enrolments.isEmpty()) {
+	    throw new DomainException("error.CourseLoadRequest.invalid.number.of.enrolments");
+	}
+	
 	for (final Enrolment enrolment : enrolments) {
 	    if (!enrolment.isApproved()) {
 		throw new DomainException("error.CourseLoadRequest.cannot.add.not.approved.enrolments");

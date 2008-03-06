@@ -48,6 +48,8 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private CycleType requestedCycle;
 
     private MobilityProgram mobilityProgram;
+    
+    private boolean toUseAll = false;
 
     private List<DomainReference<Enrolment>> enrolments;
 
@@ -231,6 +233,14 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     final public void setMobilityProgram(final MobilityProgram mobilityProgram) {
 	this.mobilityProgram = mobilityProgram;
     }
+    
+    public boolean isToUseAll() {
+        return toUseAll;
+    }
+
+    public void setToUseAll(boolean toUseAll) {
+        this.toUseAll = toUseAll;
+    }
 
     public List<Enrolment> getEnrolments() {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
@@ -248,6 +258,10 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 	}
 
 	this.enrolments = enrolmentsToSet;
+    }
+    
+    public List<Enrolment> getSelectedEnrolments() {
+	return isToUseAll() ? getRegistration().getLastStudentCurricularPlan().getAprovedEnrolments() : getEnrolments();
     }
 
     public List<Exam> getExams() {

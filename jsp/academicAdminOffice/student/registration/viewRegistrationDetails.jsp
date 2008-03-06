@@ -196,12 +196,12 @@
 		<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="certificates"/>
 		</html:link>
-		<%-- 
+
 		|
 		<html:link action="/academicServiceRequestsManagement.do?method=chooseServiceRequestType" paramId="registrationID" paramName="registration" paramProperty="idInternal">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.serviceRequests"/>
 		</html:link>
-		--%>
+
 	</p>
 	
 	<p class="mtop1">
@@ -289,6 +289,7 @@
 	 				
 					<fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(conclude)" value="conclude"/>
+					<fr:property name="visibleIfNot(conclude)" value="sentToExternalEntity"/>
 	
 					<fr:property name="order(view)" 		value="1" />
 					<fr:property name="order(reject)" 		value="2" />

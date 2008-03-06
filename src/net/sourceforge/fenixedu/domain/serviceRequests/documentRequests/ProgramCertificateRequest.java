@@ -28,6 +28,10 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
     }
 
     private void checkParameters(final Collection<Enrolment> enrolments) {
+	if (enrolments.isEmpty()) {
+	    throw new DomainException("error.CourseLoadRequest.invalid.number.of.enrolments");
+	}
+	
 	for (final Enrolment enrolment : enrolments) {
 	    if (!enrolment.isApproved()) {
 		throw new DomainException("error.ProgramCertificateRequest.cannot.add.not.approved.enrolments");
