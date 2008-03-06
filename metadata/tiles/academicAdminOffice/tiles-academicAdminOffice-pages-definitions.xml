@@ -558,11 +558,20 @@
     </definition>
     
     <!-- Accounting Events Management -->
-    <definition name="accountingEventsManagement.chooseExecutionYear" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/accountingEventsManagement/chooseExecutionYear.jsp"></put>
+    <definition name="accountingEventsManagement.chooseEventType" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/accountingEventsManagement/chooseEventType.jsp"></put>
     </definition>
     
+    <definition name="accountingEventsManagement.createGratuityEvent" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/accountingEventsManagement/createGratuityEvent.jsp"></put>
+    </definition>
     
-
+    <definition name="accountingEventsManagement.createAdministrativeOfficeFeeAndInsuranceEvent" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/accountingEventsManagement/createAdministrativeOfficeFeeAndInsuranceEvent.jsp"></put>
+    </definition>
+    
+    <definition name="accountingEventsManagement.createEnrolmentOutOfPeriodEvent" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp"></put>
+    </definition>
 
 </tiles-definitions>

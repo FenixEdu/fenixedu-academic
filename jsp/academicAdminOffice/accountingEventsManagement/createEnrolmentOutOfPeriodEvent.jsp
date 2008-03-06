@@ -9,15 +9,8 @@
 		key="label.accountingEvents.management.createEvents"
 		bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 		
-	<ul class="mtop2 list5">
-		<li>
-			<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="createGratuityAndAdminOfficeFeeBean" paramProperty="studentCurricularPlan.registration.idInternal">
-				<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</li>
-	</ul>
 	
-	<bean:define id="registration" name="createGratuityAndAdminOfficeFeeBean" property="studentCurricularPlan.registration" />	
+	<bean:define id="registration" name="accountingEventCreateBean" property="studentCurricularPlan.registration" />	
 	<logic:present name="registration" property="ingressionEnum">
 		<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<fr:view name="registration" schema="student.registrationDetail" >
@@ -52,7 +45,7 @@
 		<br />
 	</html:messages>
 	
-	<fr:hasMessages type="conversion" for="createGratuityAndAdminOfficeFeeBean">
+	<fr:hasMessages type="conversion" for="accountingEventCreateBean">
 		<ul class="nobullet list6">
 			<fr:messages>
 				<li><span class="error0"><fr:message show="label"/>:<fr:message /></span></li>
@@ -60,29 +53,20 @@
 		</ul>
 	</fr:hasMessages>
 	
-	<bean:define id="scpID" name="createGratuityAndAdminOfficeFeeBean" property="studentCurricularPlan.idInternal" />
-	<fr:form action="/accountingEventsManagement.do">
-		<input type="hidden" name="method"/>
-		<fr:edit id="createGratuityAndAdminOfficeFeeBean"
-			name="createGratuityAndAdminOfficeFeeBean"
-			schema="CreateGratuityAndAdminOfficeFeeEventBean.editExecutionYear">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight" />
-				<fr:property name="columnClasses" value="nowrap," />
-				<fr:destination name="invalid"
-					path="/accountingEventsManagement.do?method=prepareInvalid" />
-				<fr:destination name="cancel" path="<%="/accountingEventsManagement.do?method=backToViewRegistration&scpID=" +  scpID%>"/>
-			</fr:layout>
-		</fr:edit>
-		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='createGratuityEvent';">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.accountingEvents.management.createEvents.createGratuityEvent"/>
-		</html:submit>
-		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='createAdministrativeOfficeFeeAndInsuranceEvent';">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.accountingEvents.management.createEvents.createAdministrativeOfficeFeeAndInsuranceEvent"/>
-		</html:submit>
-		
-	</fr:form>
+	<bean:define id="scpID" name="accountingEventCreateBean" property="studentCurricularPlan.idInternal" />
+	<fr:edit id="accountingEventCreateBean"
+		name="accountingEventCreateBean"
+		schema="EnrolmentOutOfPeriodEventCreateBean.edit"
+		action="/accountingEventsManagement.do?method=createEnrolmentOutOfPeriodEvent">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight" />
+			<fr:property name="columnClasses" value="nowrap," />
+			<fr:destination name="invalid"
+				path="/accountingEventsManagement.do?method=prepareCreateEnrolmentOutOfPeriodInvalid" />
+			<fr:destination name="executionYearPostBack" path="/accountingEventsManagement.do?method=prepareCreateEnrolmentOutOfPeriodPostback"/>
+			<fr:destination name="cancel" path="<%="/accountingEventsManagement.do?method=prepare&scpID=" + scpID %>" />
+		</fr:layout>
+	</fr:edit>
+
 
 </logic:present>

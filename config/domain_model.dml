@@ -1289,6 +1289,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		
 		class net.sourceforge.fenixedu.domain.accounting.events.phd.PhDRegistrationEvent extends net.sourceforge.fenixedu.domain.accounting.Event { 
 		}
+		
+		class net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+			Integer numberOfDelayDays;
+		}
 
 	class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime whenCreated;
@@ -1393,6 +1397,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			EntryType entryType;
 		}
 
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR{
+				Money baseAmount;
+				Money amountPerDay;
+				Money maxAmount;
+			}
+			
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR{
 				Money baseAmount;
 				Money amountPerPage;
@@ -5919,6 +5929,22 @@ relation EnrolmentWrapperCredits {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits;
+}
+
+relation EnrolmentOutOfPeriodEventStudentCurricularPlan {
+ 	net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent playsRole enrolmentOutOfPeriodEvents {
+ 		multiplicity *;
+ 	}
+ 	
+ 	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation EnrolmentOutOfPeriodEventExecutionPeriod {
+ 	net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent playsRole enrolmentOutOfPeriodEvents {
+ 		multiplicity *;
+ 	}
+ 	
+ 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation InternalEnrolmentWrapperEnrolment {

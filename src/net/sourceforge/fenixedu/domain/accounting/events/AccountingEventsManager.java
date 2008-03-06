@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.events;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
@@ -18,7 +19,6 @@ public class AccountingEventsManager {
     private final List<DegreeType> acceptedDegreeTypes = Arrays.asList(new DegreeType[] { DegreeType.BOLONHA_DEGREE,
 	    DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
 
-    
     public InvocationResult createGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear) {
 
@@ -50,6 +50,12 @@ public class AccountingEventsManager {
 
 	return result;
 
+    }
+
+    public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionPeriod executionPeriod, final Integer numberOfDelayDays) {
+	new EnrolmentOutOfPeriodEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan.getPerson(),
+		studentCurricularPlan, executionPeriod, numberOfDelayDays);
     }
 
     private AdministrativeOffice getAdministrativeOffice(final StudentCurricularPlan studentCurricularPlan) {

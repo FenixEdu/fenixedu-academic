@@ -17,7 +17,7 @@
 	</ul>
 </logic:messagesPresent>
 
-<fr:hasMessages>
+<fr:hasMessages type="conversion">
 	<ul class="nobullet">
 	<fr:messages>
 		<li><span class="error0"><fr:message/></span></li>

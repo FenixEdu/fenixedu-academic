@@ -44,7 +44,9 @@ public enum EntryType {
 
     PROGRAM_CERTIFICATE_REQUEST_FEE,
 
-    EXAM_DATE_CERTIFICATE_REQUEST_FEE;
+    EXAM_DATE_CERTIFICATE_REQUEST_FEE,
+
+    ENROLMENT_OUT_OF_PERIOD_PENALTY;
 
     public String getName() {
 	return name();

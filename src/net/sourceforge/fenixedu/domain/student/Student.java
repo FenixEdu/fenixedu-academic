@@ -1028,6 +1028,11 @@ public class Student extends Student_Base {
 
     }
 
+    public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionPeriod executionPeriod, final Integer numberOfDelayDays) {
+	new AccountingEventsManager().createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionPeriod, numberOfDelayDays);
+    }
+
     public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionPeriod executionPeriod) {
 	Collection<EnrolmentLog> res = new HashSet<EnrolmentLog>();
 	for (Registration registration : getRegistrationsSet()) {

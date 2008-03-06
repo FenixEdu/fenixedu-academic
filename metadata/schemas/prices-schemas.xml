@@ -266,3 +266,41 @@
 		<property name="maxLength" value="10"/>
 	</slot>
 </schema>
+
+
+<schema name="EnrolmentOutOfPeriodPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="baseAmount"/>
+	<slot name="amountPerDay"/>
+	<slot name="maxAmount"/>
+</schema>
+
+<schema name="EnrolmentOutOfPeriodPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view-student">
+	<slot name="baseAmount"/>
+	<slot name="amountPerDay"/>
+	<slot name="maxAmount"/>
+</schema>
+
+
+<schema name="EnrolmentOutOfPeriodPR.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="baseAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="amountPerDay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="maxAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<setter signature="edit(baseAmount,amountPerDay,maxAmount)"/>
+</schema>
+
+

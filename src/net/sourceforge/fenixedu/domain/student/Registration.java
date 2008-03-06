@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
+import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
@@ -2943,5 +2944,17 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return res;
+    }
+
+    public boolean containsEnrolmentOutOfPeriodEventFor(ExecutionPeriod executionPeriod) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+	    for (final EnrolmentOutOfPeriodEvent event : studentCurricularPlan.getEnrolmentOutOfPeriodEvents()) {
+		if (event.getExecutionPeriod() == executionPeriod) {
+		    return true;
+		}
+	    }
+	}
+
+	return false;
     }
 }

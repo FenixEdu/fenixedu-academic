@@ -1439,11 +1439,29 @@
 	<slot name="average" />
 </schema>
 
+<schema name="AccountingEventCreateBean.editExecutionYear" type="net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+	</slot>			
+</schema>
 
-<schema name="CreateGratuityAndAdminOfficeFeeEventBean.editExecutionYear" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateGratuityAndAdminOfficeFeeEventBean" bundle="APPLICATION_RESOURCES">	
-	<slot name="executionYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-		<property name="format" value="${name}"/>
+<schema name="EnrolmentOutOfPeriodEventCreateBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.events.EnrolmentOutOfPeriodEventCreateBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+		<property name="destination" value="executionYearPostBack"/>
+	</slot>
+	<slot name="executionPeriod" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.events.ExecutionPeriodsForAccountingEventCreationProvider" />
+		<property name="format" value="${name}" />
+	</slot>
+	<slot name="numberOfDelayDays" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="4" />
+		<property name="maxLength" value="4" />
 	</slot>
 </schema>
 

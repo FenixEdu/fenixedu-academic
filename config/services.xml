@@ -12639,4 +12639,13 @@
 			<chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
+	<service>
+		<name>CreateEnrolmentOutOfPeriodEvent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateEnrolmentOutOfPeriodEvent</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
+		</filterChains>
+	</service>
+	
 </serviceDefinitions>

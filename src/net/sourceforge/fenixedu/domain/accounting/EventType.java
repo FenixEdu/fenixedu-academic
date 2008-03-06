@@ -50,7 +50,9 @@ public enum EventType {
 
     PROGRAM_CERTIFICATE_REQUEST,
 
-    EXAM_DATE_CERTIFICATE_REQUEST;
+    EXAM_DATE_CERTIFICATE_REQUEST,
+
+    ENROLMENT_OUT_OF_PERIOD;
 
     public String getName() {
 	return name();
