@@ -29,3 +29,8 @@ function executeWithTempFile() {
 }
 
 
+execute "add creation date column to AcademicServiceRequest" AlterTableAcademicServiceRequest.sql
+execute "add situation date column to AcademicServiceRequestSituation" AlterTableAcademicServiceRequestSituation.sql
+execute "Please delete this after running" dataFix.sql
+execute "Adding column key execution period to event table" AlterTableEvent.sql
+execute "Adding enrolment out of period posting rule fields" AlterTablePostingRule.sql
