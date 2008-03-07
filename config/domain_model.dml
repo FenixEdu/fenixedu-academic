@@ -4098,6 +4098,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		MultiLanguageString thesisAbstract;
 		MultiLanguageString title;
 		ThesisVisibilityType visibility;
+		DateTime confirmmedDocuments;
 	}
 
 	class net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant extends net.sourceforge.fenixedu.domain.DomainObject {
