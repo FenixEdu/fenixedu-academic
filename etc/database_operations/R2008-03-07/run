@@ -28,5 +28,6 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Alter Thesis Table" alterTableThesis.sql
+execute "Add AnnouncementBoard Approvers" alterTableContentAddAnnouncementBoardApprovers.sql
+executeWithTempFile "Set Approvers Group" setApproversGroup.sql
  
