@@ -177,7 +177,7 @@ public class Spreadsheet {
 	    if(cellValue == null) {
 		outputStream.write(StringUtils.EMPTY.getBytes());
 	    } else {
-		outputStream.write(cellValue.toString().getBytes());
+		outputStream.write(cellValue.toString().replace(columnSeperator, "").getBytes());
 	    }
 	}
 	outputStream.write(lineSepeator.getBytes());
