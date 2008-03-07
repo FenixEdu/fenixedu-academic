@@ -411,8 +411,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
 
@@ -461,24 +461,24 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     private void setApprovationRatio(Double approvationRatio) {
 	this.approvationRatio = approvationRatio;
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     private void setArithmeticMean(Double arithmeticMean) {
 	this.arithmeticMean = arithmeticMean;
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public Integer getApprovedEnrollmentsNumber() {
 	if (this.approvedEnrollmentsNumber == null) {
@@ -488,16 +488,16 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     private void setApprovedEnrollmentsNumber(Integer approvedEnrollmentsNumber) {
 	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public Double getApprovationRatio() {
 	if (this.approvationRatio == null) {
@@ -507,8 +507,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public Double getArithmeticMean() {
 	if (this.arithmeticMean == null) {
@@ -2168,15 +2168,13 @@ public class Registration extends Registration_Base {
 	if (lastStudentCurricularPlan == null || !lastStudentCurricularPlan.isBolonhaDegree()) {
 	    return true;
 	}
-	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getCycleCurriculumGroups()) {
-	    if (cycleCurriculumGroup.isExternal()
-		    || !getDegreeType().getCycleTypes().contains(cycleCurriculumGroup.getCycleType())) {
-		continue;
-	    }
+
+	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getInternalCycleCurriculumGrops()) {
 	    if (!cycleCurriculumGroup.isConcluded()) {
 		return false;
 	    }
 	}
+
 	return !lastStudentCurricularPlan.getCycleCurriculumGroups().isEmpty();
     }
 
@@ -2189,8 +2187,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * Retrieve concluded cycles before or equal to the given cycle
-         */
+     * Retrieve concluded cycles before or equal to the given cycle
+     */
     final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
 	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 
