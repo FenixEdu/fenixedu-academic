@@ -4331,6 +4331,7 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
                 DateTime referedSubjectEnd;
                 MultiLanguageString subject;
                 Boolean visible;
+                Boolean approved;
 	}
 
                         class net.sourceforge.fenixedu.domain.functionalities.ExecutionPath extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4376,6 +4377,7 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
                     Boolean mandatory;
                     Group readers;
                     Group writers;
+                    Group approvers;
                 }
 
                     class net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard {
@@ -4386,9 +4388,6 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 
                     class net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard {
                     }
-
-                        class net.sourceforge.fenixedu.domain.messaging.PersonAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard {
-                        }
 
                         class net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard {
                                 UnitBoardPermittedGroupType unitPermittedManagementGroupType;

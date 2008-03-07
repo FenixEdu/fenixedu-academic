@@ -28,4 +28,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add AnnouncementBoard Approvers" alterTableContentAddAnnouncementBoardApprovers.sql
+executeWithTempFile "Set Approvers Group" setApproversGroup.sql
 

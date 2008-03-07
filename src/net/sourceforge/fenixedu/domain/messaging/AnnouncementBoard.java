@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.messaging;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
@@ -154,12 +153,29 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
 	for (final Node node : getChildrenSet()) {
 	    final Announcement announcement = (Announcement) node.getChild();
-	    if (announcement.isActive() && announcement.getVisible()) {
+	    if (announcement.isActive() && announcement.getVisible() && announcement.getApproved()) {
 		activeAnnouncements.add(announcement);
 	    }
 	}
 
 	return activeAnnouncements;
+    }
+
+    public List<Announcement> getApprovedAnnouncements() {
+	final Person person = AccessControl.getPerson();
+	final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
+	for (final Node node : getChildrenSet()) {
+	    final Announcement announcement = (Announcement) node.getChild();
+	    if (announcement.isActive()
+		    && announcement.getVisible()
+		    && (announcement.getApproved() || (person != null && (announcement.getCreator().equals(person) || announcement
+			    .getAnnouncementBoard().getApprovers().isMember(person))))) {
+		activeAnnouncements.add(announcement);
+	    }
+	}
+
+	return activeAnnouncements;
+
     }
 
     public int getActiveAnnoucementsCount() {
@@ -215,6 +231,10 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	return getManagers() == null;
     }
 
+    public boolean isPublicToApprove() {
+	return getApprovers() == null;
+    }
+
     public boolean hasReader(Person person) {
 	return (isPublicToRead() || getReaders().isMember(person));
     }
@@ -229,6 +249,14 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     public boolean isCurrentUserWriter() {
 	return hasWriter(AccessControl.getPerson());
+    }
+
+    public boolean isCurrentUserApprover() {
+	return hasApprover(AccessControl.getPerson());
+    }
+
+    public boolean hasApprover(Person person) {
+	return (isPublicToApprove() || getApprovers().isMember(person));
     }
 
     public boolean hasManager(Person person) {
@@ -260,11 +288,15 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public boolean isWriter() {
-	return isGroupMember(getReaders());
+	return isGroupMember(getWriters());
     }
 
     public boolean isManager() {
 	return isGroupMember(getManagers());
+    }
+
+    public boolean isApprover() {
+	return isGroupMember(getApprovers());
     }
 
     public boolean isBookmarkOwner() {
@@ -280,8 +312,14 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	announcements.setAnnouncementBoard(this);
     }
 
-    private List<Announcement> filterAnnouncements(Collection<Announcement> announcements, Predicate predicate) {
-	return (List<Announcement>) CollectionUtils.select(announcements, predicate);
+    private List<Announcement> filterAnnouncements(Collection<Announcement> announcements, final Predicate predicate) {
+	return (List<Announcement>) CollectionUtils.select(announcements, new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		Announcement announcement = (Announcement) arg0;
+		return announcement.getApproved() && predicate.evaluate(arg0);
+	    }
+
+	});
     }
 
     public List<Announcement> getActiveAnnouncementsFor(final YearMonthDay date) {
@@ -331,13 +369,9 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	    }
 	});
     }
-    
+
     public List<Announcement> getAnnouncements() {
-	final List<Announcement> announcements = new ArrayList<Announcement>();
-	for (final Node node : getChildrenSet()) {
-	    announcements.add((Announcement) node.getChild());
-	}
-	return announcements;
+	return new ArrayList<Announcement>(getChildren(Announcement.class));
     }
 
     @Override
@@ -357,6 +391,10 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	    }
 	}
 	return keywords.toString();
+    }
+
+    public Boolean getInitialAnnouncementsApprovedState() {
+	return false;
     }
 
 }

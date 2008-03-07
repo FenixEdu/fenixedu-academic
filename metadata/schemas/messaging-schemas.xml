@@ -277,3 +277,9 @@
 	<slot name="fullName"/>
 	<slot name="readers"/>
 </schema>
+
+<schema name="messaging.announcementBoards.view.approvers" bundle="MESSAGING_RESOURCES"  type="net.sourceforge.fenixedu.dataTransferObject.messaging.AnnouncementBoardApproversBean">
+	<slot name="approver" key="label.empty"/>
+	<slot name="person.mostImportantAlias" read-only="true" key="label.username"/>
+	<slot name="person.name" read-only="true" key="messaging.name.label"/>
+</schema>

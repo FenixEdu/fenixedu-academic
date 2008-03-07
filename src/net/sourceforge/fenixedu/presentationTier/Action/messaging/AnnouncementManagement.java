@@ -43,8 +43,8 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return this.viewAllBoards(mapping, actionForm, request, response);
     }
 
-    public ActionForward viewAnnouncement(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward viewAnnouncement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Announcement announcement = this.getRequestedAnnouncement(request);
 	request.setAttribute("announcement", announcement.getVisible() ? announcement : null);
 
@@ -52,8 +52,8 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     }
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	request.setAttribute("contextPrefix", getContextPrefix(mapping, request));
 	request.setAttribute("extraParameters", getExtraRequestParameters(request));
@@ -89,37 +89,32 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return this.start(mapping, form, request, response);
     }
 
-    protected void createBookmark(HttpServletRequest request) throws FenixServiceException,
-	    FenixFilterException {
+    protected void createBookmark(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
 	final IUserView userView = getUserView(request);
 	final AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-	ServiceUtils.executeService(userView, "AddAnnouncementBoardBookmark", new Object[] { board,
-		userView.getPerson() });
+	ServiceUtils.executeService(userView, "AddAnnouncementBoardBookmark", new Object[] { board, userView.getPerson() });
     }
 
-    public ActionForward removeBookmark(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward removeBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	removeBookmark(request);
 	return this.start(mapping, form, request, response);
     }
 
-    protected void removeBookmark(HttpServletRequest request) throws FenixServiceException,
-	    FenixFilterException {
+    protected void removeBookmark(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
 	IUserView userView = getUserView(request);
 	AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-	ServiceUtils.executeService(userView, "RemoveAnnouncementBoardBookmark", new Object[] { board,
-		userView.getPerson() });
+	ServiceUtils.executeService(userView, "RemoveAnnouncementBoardBookmark", new Object[] { board, userView.getPerson() });
     }
 
-    public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
 	if (board.getWriters() != null && !board.getWriters().isMember(getLoggedPerson(request))) {
 	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
-		    "error.not.allowed.to.write.board"));
+	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.write.board"));
 	    saveErrors(request, actionMessages);
 	    return this.start(mapping, form, request, response);
 	}
@@ -127,14 +122,14 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return mapping.findForward("add");
     }
 
-    public ActionForward viewAnnouncements(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward viewAnnouncements(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
 	if (board == null) {
 	    return this.start(mapping, form, request, response);
 	}
-	if (! board.hasReader(getLoggedPerson(request))) {
+	if (!board.hasReader(getLoggedPerson(request))) {
 	    ActionMessages actionMessages = new ActionMessages();
 	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.read.board"));
 	    saveErrors(request, actionMessages);
@@ -147,17 +142,17 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     }
 
     protected AnnouncementArchive buildArchive(AnnouncementBoard board, HttpServletRequest request) {
-	AnnouncementArchive archive = new AnnouncementArchive(board, board
-		.hasWriter(getLoggedPerson(request)) ? AnnouncementArchiveAnnouncementsVisibility.ALL
-		: AnnouncementArchiveAnnouncementsVisibility.ACTIVE);
+	AnnouncementArchive archive = new AnnouncementArchive(board,
+		board.hasWriter(getLoggedPerson(request)) ? AnnouncementArchiveAnnouncementsVisibility.ALL
+			: AnnouncementArchiveAnnouncementsVisibility.ACTIVE);
 	return archive;
     }
 
     protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
-	
-	final List<Announcement> announcements = board.hasWriter(getLoggedPerson(request)) ? 
-		new ArrayList<Announcement>(board.getAnnouncements()) : board.getActiveAnnouncements();
-		
+
+	final List<Announcement> announcements = board.hasWriter(getLoggedPerson(request)) ? new ArrayList<Announcement>(board
+		.getAnnouncements()) : board.getApprovedAnnouncements();
+
 	List<Announcement> thisMonthAnnouncements = getThisMonthAnnouncements(announcements);
 	if (thisMonthAnnouncements.isEmpty()) {
 	    thisMonthAnnouncements = getLastSixAnnouncements(announcements);
@@ -165,7 +160,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	Collections.sort(thisMonthAnnouncements, Announcement.NEWEST_FIRST);
 	return thisMonthAnnouncements;
     }
-    
+
     private List<Announcement> getLastSixAnnouncements(List<Announcement> announcements) {
 	return announcements.subList(0, Math.min(6, announcements.size()));
     }
@@ -181,15 +176,14 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return result;
     }
 
-    public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Announcement announcement = this.getRequestedAnnouncement(request);
 	if (announcement.getAnnouncementBoard().getWriters() != null
 		&& !announcement.getAnnouncementBoard().getWriters().isMember(getLoggedPerson(request))) {
 	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
-		    "error.not.allowed.to.write.board"));
+	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.write.board"));
 	    saveErrors(request, actionMessages);
 	    return this.start(mapping, form, request, response);
 	}
@@ -199,15 +193,15 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return mapping.findForward("edit");
     }
 
-    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	if (!deleteAnnouncement(request)) {
 	    return this.start(mapping, form, request, response);
 	}
 	return this.viewAnnouncements(mapping, form, request, response);
     }
-    
+
     protected boolean deleteAnnouncement(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 	IUserView userView = getUserView(request);
 	final Announcement announcement = getRequestedAnnouncement(request);
@@ -216,6 +210,27 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	    return false;
 	}
 	ServiceUtils.executeService(userView, "DeleteAnnouncement", new Object[] { announcement });
+	return true;
+    }
+
+    public ActionForward aproveAction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	if (!aproveAction(request)) {
+	    return this.start(mapping, form, request, response);
+	}
+	return this.viewAnnouncements(mapping, form, request, response);
+    }
+
+    protected boolean aproveAction(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+	IUserView userView = getUserView(request);
+	final Announcement announcement = getRequestedAnnouncement(request);
+	final Boolean action = Boolean.valueOf(request.getParameter("action"));
+	if (!announcement.getAnnouncementBoard().hasApprover(getLoggedPerson(request))) {
+	    addActionMessage(request, "error.not.allowed.to.approve.board");
+	    return false;
+	}
+	ServiceUtils.executeService(userView, "AproveActionAnnouncement", new Object[] { announcement, action });
 	return true;
     }
 
@@ -231,8 +246,8 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return contextPrefix;
     }
 
-    public ActionForward viewAllBoards(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward viewAllBoards(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("announcementBoards", this.boardsToView(request));
 	return mapping.findForward("listAnnouncementBoards");
     }
@@ -245,57 +260,57 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return Integer.valueOf(request.getParameter("selectedYear"));
     }
 
-    public ActionForward viewArchive(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Integer selectedArchiveYear = this.getSelectedArchiveYear(request);
-        Integer selectedArchiveMonth = this.getSelectedArchiveMonth(request);
+    public ActionForward viewArchive(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Integer selectedArchiveYear = this.getSelectedArchiveYear(request);
+	Integer selectedArchiveMonth = this.getSelectedArchiveMonth(request);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MONTH, selectedArchiveMonth - 1);
-        calendar.set(Calendar.YEAR, selectedArchiveYear);
-        request.setAttribute("archiveDate", calendar.getTime());
-        
-        AnnouncementArchive archive = this.buildArchive(this.getRequestedAnnouncementBoard(request),
-		request);
+	Calendar calendar = Calendar.getInstance();
+	calendar.set(Calendar.MONTH, selectedArchiveMonth - 1);
+	calendar.set(Calendar.YEAR, selectedArchiveYear);
+	request.setAttribute("archiveDate", calendar.getTime());
+
+	AnnouncementArchive archive = this.buildArchive(this.getRequestedAnnouncementBoard(request), request);
 	this.viewAnnouncements(mapping, form, request, response);
-    request.setAttribute("announcements", archive.getEntries().get(
-		selectedArchiveYear).getEntries().get(
+	request.setAttribute("announcements", archive.getEntries().get(selectedArchiveYear).getEntries().get(
 		(selectedArchiveMonth)).getAnnouncements());
 
 	return mapping.findForward("listAnnouncements");
     }
 
     /**
-         * Method to override in action specific context, to allow specification
-         * of additional parameters regarding to action context. Example:
-         * /actionXpto.do?someObjectID=1234
-         * 
-         * 
-         * 
-         * @return
-         */
+     * Method to override in action specific context, to allow specification of
+     * additional parameters regarding to action context. Example:
+     * /actionXpto.do?someObjectID=1234
+     * 
+     * 
+     * 
+     * @return
+     */
     protected abstract String getExtraRequestParameters(HttpServletRequest request);
 
     /**
-         * This method must return any additional request parameters that may be
-         * necessary
-     * @param mapping TODO
-         * 
-         * 
-         * 
-         * @return
-         */
+     * This method must return any additional request parameters that may be
+     * necessary
+     * 
+     * @param mapping
+     *                TODO
+     * 
+     * 
+     * 
+     * @return
+     */
     protected abstract String getContextInformation(ActionMapping mapping, HttpServletRequest request);
 
     /**
-         * This method should return all the boards to show. Example: <code><br>
+     * This method should return all the boards to show. Example: <code><br>
      * Party istUnit = UnitUtils.readUnitWithoutParentstByName(UnitUtils.IST_UNIT_NAME);<br>
      * return istUnit.getBoards());<br>
      * </code>
-         * 
-         * @param request
-         * @return
-         */
-    protected abstract Collection<AnnouncementBoard> boardsToView(HttpServletRequest request)
-	    throws Exception;
+     * 
+     * @param request
+     * @return
+     */
+    protected abstract Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception;
 
 }

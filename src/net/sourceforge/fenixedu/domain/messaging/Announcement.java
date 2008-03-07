@@ -5,6 +5,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Node;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -47,6 +48,7 @@ public class Announcement extends Announcement_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	super.setCreationDate(new DateTime());
 	super.setLastModification(new DateTime());
+	super.setApproved(false);
     }
 
     @Override
@@ -82,6 +84,13 @@ public class Announcement extends Announcement_Base {
     @Override
     public void setVisible(Boolean visible) {
 	super.setVisible(visible);
+	this.updateLastModification();
+    }
+
+    @Checked("AnnouncementPredicates.approvePredicate")
+    @Override
+    public void setApproved(Boolean aproved) {
+	super.setApproved(aproved);
 	this.updateLastModification();
     }
 
@@ -143,18 +152,18 @@ public class Announcement extends Announcement_Base {
     // boolean result = true;
     // result = result
     // && (this.getCreationDate().getYear() < year ||
-        // (this.getCreationDate().getYear() == year && this
+    // (this.getCreationDate().getYear() == year && this
     // .getCreationDate().getMonthOfYear() <= month));
     // result = result
     // && (this.getPublicationEnd() == null ||
-        // this.getPublicationEnd().getYear() > year || (this
+    // this.getPublicationEnd().getYear() > year || (this
     // .getPublicationEnd().getYear() == year && this.getPublicationEnd()
     // .getMonthOfYear() >= month));
     // result = result
     // && (this.getPublicationBegin() == null ||
-        // this.getPublicationBegin().getYear() < year || (this
+    // this.getPublicationBegin().getYear() < year || (this
     // .getPublicationBegin().getYear() == year &&
-        // this.getPublicationBegin()
+    // this.getPublicationBegin()
     // .getMonthOfYear() <= month));
     //
     // return result;
@@ -227,6 +236,7 @@ public class Announcement extends Announcement_Base {
 	    } else if (announcementNode.getParent() != announcementBoard) {
 		announcementNode.setParent(announcementBoard);
 	    }
+	    super.setApproved(announcementBoard.getInitialAnnouncementsApprovedState());
 	}
     }
 
@@ -235,4 +245,11 @@ public class Announcement extends Announcement_Base {
 	return getSubject();
     }
 
+    public boolean isCanApproveUser() {
+	return !getApproved() && getAnnouncementBoard().isCurrentUserApprover();
+    }
+
+    public boolean isCanNotApproveUser() {
+	return getApproved() && getAnnouncementBoard().isCurrentUserApprover();
+    }
 }

@@ -40,6 +40,9 @@
 	</definition>
 	<definition name="announcement-boards-management-edit-unit-board" extends="definition.messaging.masterPage" >
 		<put name="body" value="/messaging/announcements/editUnitAnnouncementBoard.jsp" />
+	</definition>
+	<definition name="announcement-boards-approvers-management-edit-unit-board" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/editUnitAnnouncementBoardApprovers.jsp" />
 	</definition>	
 	<definition name="announcement-boards-management-create-board" extends="definition.messaging.masterPage" >
 		<put name="body" value="/messaging/announcements/createUnitAnnouncementBoard.jsp" />

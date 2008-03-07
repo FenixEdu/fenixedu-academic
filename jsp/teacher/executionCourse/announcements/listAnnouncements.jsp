@@ -131,7 +131,37 @@ if (month != null && year!=null)
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.delete.link"/>
 				</html:link>
 				
+				<%	
+					if (announcement.getAnnouncementBoard().isCurrentUserApprover() && !announcement.getApproved()) {
+				%>
+
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.comma" />
+					
+					<html:link action="<%= contextPrefix + "method=aproveAction&amp;announcementId="+announcementId+"&amp;action=true&amp;"+extraParameters%>">
+					  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.approve.link"/>
+					</html:link>				 
+
+				<%	
+					}
+				%>
+
+				<%	
+					if (announcement.getAnnouncementBoard().isCurrentUserApprover() && announcement.getApproved()) {
+				%>
+
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.comma" />
+					
+					<html:link action="<%= contextPrefix + "method=aproveAction&amp;announcementId="+announcementId+"&amp;action=false&amp;"+extraParameters%>">
+					  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.not.approve.link"/>
+					</html:link>				 
+
+				<%	
+					}
+				%>
+						
 				 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />
+
+				 
 			<%	
 				}
 			%>		

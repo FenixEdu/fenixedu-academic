@@ -677,6 +677,11 @@
 	<definition name="manager-announcement-boards-management-edit-unit-board" extends="definition.manager.masterPage" >
 		<put name="body" value="/messaging/announcements/editUnitAnnouncementBoard.jsp" />
 		<put name="navLocal" value="/manager/announcements/menu.jsp" />
+	</definition>
+	
+	<definition name="manager-announcement-boards-approvers-management-edit-unit-board" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/editUnitAnnouncementBoardApprovers.jsp" />
+		<put name="navLocal" value="/manager/announcements/menu.jsp" />
 	</definition>	
 	
 	<definition name="manager-unit-board-add-announcement" extends="definition.manager.masterPage" >

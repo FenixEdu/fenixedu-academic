@@ -1531,7 +1531,8 @@
           <forward name="add" path="manager-boards-add-announcement"/>
           <forward name="listAnnouncementBoards" path="manager-list-announcement-boards"/>
 		  <forward name="listAnnouncements" path="manager-board-list-announcements"/>		  
-		  <forward name="editAnnouncementBoard" path="manager-announcement-boards-management-edit-unit-board"/>		  		  
+		  <forward name="editAnnouncementBoard" path="manager-announcement-boards-management-edit-unit-board"/>	
+		  <forward name="editAnnouncementBoardApprovers" path="manager-announcement-boards-approvers-management-edit-unit-board"/>
 		  <forward name="edit" path="manager-unit-board-edit-announcement"/>
 		  <forward name="viewAnnouncement" path="manager-view-announcement"/>
       </action>

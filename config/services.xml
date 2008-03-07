@@ -180,7 +180,13 @@
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.EditUnitAnnouncementBoard</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-	</service>		
+	</service>
+	<service>
+		<name>EditUnitAnnouncementBoardApprovers</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.EditUnitAnnouncementBoardApprovers</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>			
 	<service>
 		<name>DeleteAnnouncementBoard</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.DeleteAnnouncementBoard</implementationClass>
@@ -2892,6 +2898,13 @@
 		<name>DeleteAnnouncement</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.messaging.DeleteAnnouncement</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>
+	<service>
+		<name>AproveActionAnnouncement</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.messaging.AproveActionAnnouncement</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 	</service>	

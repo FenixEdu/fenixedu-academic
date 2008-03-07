@@ -25,41 +25,50 @@ public class AnnoucementBoardsRenderer extends OutputRenderer {
     private String classes;
     private String boardUrl;
     private String managerUrl;
+    private String manageApproversUrl;
     private String rssUrl;
     private String rssImage;
     private String removeFavouriteUrl;
     private String addFavouriteUrl;
-    
+
     public String getRemoveFavouriteUrl() {
-        return removeFavouriteUrl;
+	return removeFavouriteUrl;
     }
 
     public void setRemoveFavouriteUrl(String removeFavouriteUrl) {
-        this.removeFavouriteUrl = removeFavouriteUrl;
+	this.removeFavouriteUrl = removeFavouriteUrl;
     }
 
     public String getAddFavouriteUrl() {
-        return addFavouriteUrl;
+	return addFavouriteUrl;
     }
 
     public void setAddFavouriteUrl(String addFavouriteUrl) {
-        this.addFavouriteUrl = addFavouriteUrl;
+	this.addFavouriteUrl = addFavouriteUrl;
     }
 
     public String getRssUrl() {
-        return rssUrl;
+	return rssUrl;
     }
 
     public void setRssUrl(String rssUrl) {
-        this.rssUrl = rssUrl;
+	this.rssUrl = rssUrl;
     }
 
     public String getRssImage() {
-        return rssImage;
+	return rssImage;
     }
 
     public void setRssImage(String rssImage) {
-        this.rssImage = rssImage;
+	this.rssImage = rssImage;
+    }
+
+    public String getManageApproversUrl() {
+	return manageApproversUrl;
+    }
+
+    public void setManageApproversUrl(String manageApproversUrl) {
+	this.manageApproversUrl = manageApproversUrl;
     }
 
     public String getManagerUrl() {
@@ -143,45 +152,52 @@ public class AnnoucementBoardsRenderer extends OutputRenderer {
 		    : RenderUtils.getResourceString("MESSAGING_RESOURCES", "label.private"));
 	    HtmlInlineContainer container = new HtmlInlineContainer();
 	    dataRow.createCell().setBody(container);
-	    
-	    if(board.getBookmarkOwner().contains(AccessControl.getPerson())) {
+
+	    if (board.getBookmarkOwner().contains(AccessControl.getPerson())) {
 		container.addChild(new HtmlText(RenderUtils.getResourceString("MESSAGING_RESOURCES", "label.yes")));
 		container.addChild(new HtmlText("("));
 		HtmlLink link = generateLinkToRemoveFavourite(board);
-		link.setBody(new HtmlText(RenderUtils.getResourceString("MESSAGING_RESOURCES","label.remove")));
+		link.setBody(new HtmlText(RenderUtils.getResourceString("MESSAGING_RESOURCES", "label.remove")));
 		container.addChild(link);
 		container.addChild(new HtmlText(")"));
-	    }
-	    else {
+	    } else {
 		container.addChild(new HtmlText(RenderUtils.getResourceString("MESSAGING_RESOURCES", "label.no")));
 		container.addChild(new HtmlText("("));
 		HtmlLink link = generateLinkToAddFavourite(board);
-		link.setBody(new HtmlText(RenderUtils.getResourceString("MESSAGING_RESOURCES","label.add")));
+		link.setBody(new HtmlText(RenderUtils.getResourceString("MESSAGING_RESOURCES", "label.add")));
 		container.addChild(link);
 		container.addChild(new HtmlText(")"));
 	    }
 
 	    if (canManageAtLeastOneBoard) {
-		HtmlComponent component = null;
+		HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
 		if (board.isCurrentUserManager()) {
 		    HtmlLink link = generateLinkForManageBoard(board);
 		    link.setBody(new HtmlText(RenderUtils.getResourceString("MESSAGING_RESOURCES", "label.board.manage")));
-		    component = link;
-		} else {
-		    component = new HtmlText("-");
+		    inlineContainer.addChild(link);
 		}
-		dataRow.createCell().setBody(component);
+		if (board.isCurrentUserWriter()) {
+		    if (board.isCurrentUserManager()) {
+			inlineContainer.addChild(new HtmlText(","));
+		    }
+		    HtmlLink link = generateLinkForManageBoardApprovers(board);
+		    link.setBody(new HtmlText(RenderUtils
+			    .getResourceString("MESSAGING_RESOURCES", "label.board.manage.approvers")));
+		    inlineContainer.addChild(link);
+		} else if (!board.isCurrentUserManager() && !board.isCurrentUserWriter()) {
+		    inlineContainer.addChild(new HtmlText("-"));
+		}
+		dataRow.createCell().setBody(inlineContainer);
 	    }
-	    if(canReadAtLeastOneBoard) {
+	    if (canReadAtLeastOneBoard) {
 		HtmlComponent component = null;
-		if(board.isCurrentUserReader()) {
+		if (board.isCurrentUserReader()) {
 		    HtmlLink link = generateLinkForRss(board);
 		    HtmlImage image = new HtmlImage();
 		    image.setSource(getContext().getViewState().getRequest().getContextPath() + getRssImage());
 		    link.setBody(image);
 		    component = link;
-		}
-		else {
+		} else {
 		    component = new HtmlText("-");
 		}
 		dataRow.createCell().setBody(component);
@@ -215,6 +231,14 @@ public class AnnoucementBoardsRenderer extends OutputRenderer {
 	private HtmlLink generateLinkForManageBoard(AnnouncementBoard board) {
 	    HtmlLink link = new HtmlLink();
 	    link.setUrl(RenderUtils.getFormattedProperties(getManagerUrl(), board));
+	    link.setModuleRelative(true);
+	    link.setContextRelative(true);
+	    return link;
+	}
+
+	private HtmlLink generateLinkForManageBoardApprovers(AnnouncementBoard board) {
+	    HtmlLink link = new HtmlLink();
+	    link.setUrl(RenderUtils.getFormattedProperties(getManageApproversUrl(), board));
 	    link.setModuleRelative(true);
 	    link.setContextRelative(true);
 	    return link;
@@ -255,7 +279,7 @@ public class AnnoucementBoardsRenderer extends OutputRenderer {
 
 	private boolean canManageAtLeastOneBoard() {
 	    for (AnnouncementBoard announcementBoard : boards) {
-		if (announcementBoard.isCurrentUserManager()) {
+		if (announcementBoard.isCurrentUserManager() || announcementBoard.isCurrentUserWriter()) {
 		    return true;
 		}
 	    }

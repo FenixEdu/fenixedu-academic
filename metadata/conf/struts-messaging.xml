@@ -92,6 +92,7 @@
           <forward name="listAnnouncementBoards" path="announcement-boards-unit-list-announcement-boards"/>
 		  <forward name="listAnnouncements" path="board-list-announcements"/>		  
 		  <forward name="editAnnouncementBoard" path="announcement-boards-management-edit-unit-board"/>
+		  <forward name="editAnnouncementBoardApprovers" path="announcement-boards-approvers-management-edit-unit-board"/>
 		  <forward name="createBoard" path="announcement-boards-management-createUnitAnnouncementBoard"/>
 		  <forward name="edit" path="edit-announcement"/>
 		  <forward name="viewAnnouncement" path="view-announcement"/>

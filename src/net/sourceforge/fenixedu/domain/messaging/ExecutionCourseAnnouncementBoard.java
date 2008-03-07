@@ -6,6 +6,7 @@ import java.util.Iterator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -18,7 +19,8 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 	    if (result == 0) {
 		result = o1.getExecutionCourse().getNome().compareTo(o2.getExecutionCourse().getNome());
 	    }
-	    return (result == 0) ? o1.getExecutionCourse().getIdInternal().compareTo(o2.getExecutionCourse().getIdInternal()) : result;
+	    return (result == 0) ? o1.getExecutionCourse().getIdInternal().compareTo(o2.getExecutionCourse().getIdInternal())
+		    : result;
 	}
     };
 
@@ -26,19 +28,16 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 	super();
     }
 
-    public ExecutionCourseAnnouncementBoard(String name, ExecutionCourse executionCourse, Group writers,
-	    Group readers, Group managers, ExecutionCourseBoardPermittedGroupType writersGroupType,
-	    ExecutionCourseBoardPermittedGroupType readersGroupType,
-	    ExecutionCourseBoardPermittedGroupType managersGroupType) {
+    public ExecutionCourseAnnouncementBoard(String name, ExecutionCourse executionCourse, Group writers, Group readers,
+	    Group managers, ExecutionCourseBoardPermittedGroupType writersGroupType,
+	    ExecutionCourseBoardPermittedGroupType readersGroupType, ExecutionCourseBoardPermittedGroupType managersGroupType) {
 
 	this();
-	init(name, executionCourse, writers, readers, managers, writersGroupType, readersGroupType,
-		managersGroupType);
+	init(name, executionCourse, writers, readers, managers, writersGroupType, readersGroupType, managersGroupType);
     }
 
-    private void init(String name, ExecutionCourse executionCourse, Group writers, Group readers,
-	    Group managers, ExecutionCourseBoardPermittedGroupType writersGroupType,
-	    ExecutionCourseBoardPermittedGroupType readersGroupType,
+    private void init(String name, ExecutionCourse executionCourse, Group writers, Group readers, Group managers,
+	    ExecutionCourseBoardPermittedGroupType writersGroupType, ExecutionCourseBoardPermittedGroupType readersGroupType,
 	    ExecutionCourseBoardPermittedGroupType managersGroupType) {
 
 	checkParameters(name, executionCourse);
@@ -58,15 +57,13 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 
     private void checkParameters(String name, ExecutionCourse executionCourse) {
 	if (name == null) {
-	    throw new DomainException(
-		    "error.messaging.ExecutionCourseAnnouncementBoard.name.cannot.be.null");
+	    throw new DomainException("error.messaging.ExecutionCourseAnnouncementBoard.name.cannot.be.null");
 	}
 	if (executionCourse == null) {
-	    throw new DomainException(
-		    "error.messaging.ExecutionCourseAnnouncementBoard.executionCourse.cannot.be.null");
+	    throw new DomainException("error.messaging.ExecutionCourseAnnouncementBoard.executionCourse.cannot.be.null");
 	}
     }
-    
+
     @Override
     public String getFullName() {
 	final StringBuilder result = new StringBuilder(20);
@@ -93,6 +90,26 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
     protected void disconnect() {
 	removeExecutionCourse();
 	super.disconnect();
+    }
+
+    @Override
+    public boolean isCurrentUserApprover() {
+	return false;
+    }
+
+    @Override
+    public boolean hasApprover(Person person) {
+	return false;
+    }
+
+    @Override
+    public boolean isPublicToApprove() {
+	return false;
+    }
+
+    @Override
+    public Boolean getInitialAnnouncementsApprovedState() {
+	return true;
     }
 
 }
