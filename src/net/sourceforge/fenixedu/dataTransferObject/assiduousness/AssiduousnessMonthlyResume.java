@@ -56,6 +56,12 @@ public class AssiduousnessMonthlyResume implements Serializable {
 
     public AssiduousnessMonthlyResume(Employee employee, ClosedMonth closedMonth) {
 	setEmployee(employee);
+	setTotalBalance(Duration.ZERO);
+	setUnjustifiedBalance(Duration.ZERO);
+	setSaturdaysBalance(Duration.ZERO);
+	setSundaysBalance(Duration.ZERO);
+	setHolidayBalance(Duration.ZERO);
+	setNightlyBalance(Duration.ZERO);
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths(employee
 		.getAssiduousness())) {
 	    setTotalBalance(getTotalBalance().plus(assiduousnessClosedMonth.getBalance()));
