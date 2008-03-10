@@ -38,6 +38,10 @@
 	<slot name="ingression" />
 </schema>
 
+<schema name="EditCurricularCourseDomainObject" type="net.sourceforge.fenixedu.domain.CurricularCourse" bundle="MANAGER_RESOURCES">
+	<slot name="name"/>	
+</schema>
+
 <schema name="EditExecutionYearDomainObject" type="net.sourceforge.fenixedu.domain.ExecutionYear" bundle="MANAGER_RESOURCES">
 	<slot name="beginDateYearMonthDay" />
 	<slot name="endDateYearMonthDay" />
