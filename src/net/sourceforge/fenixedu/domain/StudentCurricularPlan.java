@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -2850,6 +2851,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public CurriculumLine getApprovedCurriculumLine(final CurricularCourse curricularCourse) {
 	return isBoxStructure() ? getRoot().getApprovedCurriculumLine(curricularCourse) : null;
+    }
+
+    @Override
+    public List<EnrolmentOutOfPeriodEvent> getEnrolmentOutOfPeriodEvents() {
+	final List<EnrolmentOutOfPeriodEvent> result = new ArrayList<EnrolmentOutOfPeriodEvent>();
+
+	for (final EnrolmentOutOfPeriodEvent each : super.getEnrolmentOutOfPeriodEvents()) {
+	    if (!each.isCancelled()) {
+		result.add(each);
+	    }
+	}
+
+	return result;
     }
 
 }
