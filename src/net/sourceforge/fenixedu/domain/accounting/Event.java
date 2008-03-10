@@ -465,6 +465,10 @@ public abstract class Event extends Event_Base {
     }
 
     public void cancel(final Employee responsibleEmployee, final String cancelJustification) {
+	if (isCancelled()) {
+	    return;
+	}
+
 	checkRulesToCancel(responsibleEmployee);
 
 	changeState(EventState.CANCELLED, new DateTime());
