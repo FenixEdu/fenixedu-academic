@@ -199,6 +199,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-	return false;
+	return true;
     }
+    
 }
