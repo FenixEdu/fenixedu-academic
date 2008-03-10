@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class TSDCurricularLoad extends TSDCurricularLoad_Base {
@@ -54,7 +55,7 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
 			if(courseList != null && !courseList.isEmpty()){
 				BigDecimal shiftHours = courseList.get(0).getTotalHoursByShiftType(getType(), course.getExecutionPeriod());
 				
-				return shiftHours == null ? 0d : shiftHours.doubleValue();
+				return shiftHours == null ? 0d : shiftHours.doubleValue() / CompetenceCourseLoad.NUMBER_OF_WEEKS;
 			}
 		} 
 		
@@ -94,4 +95,16 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
     	return getTSDCourse().getWeightSecondTimeEnrolledStudentsPerShift(getType());
     }
     
+    public Integer getNumberOfShifts() {
+	return getTSDCourse().getNumberOfShifts(getType());
+    }
+    
+    public double getNumberOfHoursForStudents() {
+	return getTSDCourse().getNumberOfHoursForStudents(getType());
+    }
+    
+    public double getNumberOfHoursForTeachers() {
+	return getTSDCourse().getNumberOfHoursForTeachers(getType());
+    }
+
 }

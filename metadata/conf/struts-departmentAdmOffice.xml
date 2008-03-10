@@ -274,8 +274,10 @@
 			<form-property name="tsdCoursesAndTeachersManagementPermission" type="java.lang.Boolean"/>
 			<form-property name="tsdCourseDissociation" type="java.lang.Integer"/>
 			<form-property name="tsdTeacherDissociation" type="java.lang.Integer"/>
-			<form-property name="coursesAndTeachersValuationPermission" type="java.lang.Boolean"/>
-			<form-property name="coursesAndTeachersManagementPermission" type="java.lang.Boolean"/>
+			<form-property name="coursesManagementGroup" type="java.lang.Boolean"/>
+			<form-property name="teacherManagementGroup" type="java.lang.Boolean"/>
+			<form-property name="coursesValuationManagers" type="java.lang.Boolean"/>
+			<form-property name="teachersValuationManagers" type="java.lang.Boolean"/>
 			<form-property name="otherGrouping" type="java.lang.Integer"/>
 		</form-bean>
 

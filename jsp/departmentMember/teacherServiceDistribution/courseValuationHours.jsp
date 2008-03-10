@@ -177,6 +177,30 @@
 			<bean:write name="selectedTSDLoad" property="hoursPerShift" /> 
 		</td>
 	</tr>
+	<tr>
+		<td class='highlight7'>
+			<bean:message key="label.teacherServiceDistribution.numberOfShifts"/>
+		</td>
+		<td class='aright'>
+			<%= selectedTSDCourse.getNumberOfShifts(shiftType) %>
+		</td>
+	</tr>
+	<tr>
+		<td class='highlight7'>
+			<bean:message key="label.teacherServiceDistribution.hoursPerStudent"/>
+		</td>
+		<td class='aright'>
+			<%= selectedTSDCourse.getNumberOfHoursForStudents(shiftType) %>
+		</td>
+	</tr>
+	<tr>
+		<td class='highlight7'>
+			<bean:message key="label.teacherServiceDistribution.hoursForTeachers"/>
+		</td>
+		<td class='aright'>
+			<%= selectedTSDCourse.getNumberOfHoursForTeachers(shiftType) %>
+		</td>
+	</tr>
 	<%-- <tr>
 		<td class='highlight7'>
 			<bean:message key="label.teacherServiceDistribution.timeTableSlots"/>
@@ -244,7 +268,8 @@
 		<td class='aright'>
 			<%= selectedTSDCourse.getRealStudentsPerShift(shiftType) %>
 		</td>
-		<td>
+		<td class="acenter">
+			-
 		</td>
 	</tr>
 	<tr>

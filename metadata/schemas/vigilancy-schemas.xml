@@ -220,7 +220,17 @@
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
+	<slot name="pointsForDismissedTeacher">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>	
+	</slot>
 	<slot name="pointsForMissing">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>	
+	</slot>
+	<slot name="pointsForMissingTeacher">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
@@ -299,7 +309,8 @@ extends="presentSimpleConvokesWithoutLink">
 <schema name="presentWrittenEvaluationName" type="net.sourceforge.fenixedu.domain.WrittenEvaluation" bundle="VIGILANCY_RESOURCES">	
 		<slot name="name" key="label.vigilancy.writtenEvaluation.header"/>
 		<slot name="dayDateYearMonthDay" key="label.vigilancy.date"/>		
-		<slot name="beginningDateHourMinuteSecond" key="label.vigilancy.date"/>		
+		<slot name="beginningDateHourMinuteSecond" key="label.vigilancy.date"/>
+		<slot name="campus.name" key="label.campus"/>		
 </schema>
 
 

@@ -12,7 +12,6 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-
 <em><bean:message key="link.teacherServiceDistribution"/></em>
 <h2><bean:message key="link.teacherServiceDistribution.tsdCourseService"/></h2>
 
@@ -27,14 +26,13 @@
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
 		>
-		<bean:message key="link.teacherServiceDistribution.tsdCourseService"/>
+		<bean:message key="link.teacherServiceDistribution.tsdCourseService"/>	
 	</em>
 </p>
 
 <html:form action="/tsdCourse">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdProcess" property="tsdProcess"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdCurricularCourse" property="tsdCurricularCourse"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsdCourseViewLink" property="tsdCourseViewLink"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
@@ -168,7 +166,7 @@
 					<bean:write name="selectedTSDCourse" property="secondTimeEnrolledStudents" />
 				</td>
 			</tr>
-	<logic:iterate name="selectedTSDCourse" property="TSDCurricularLoads" id="curricularLoad">
+	<logic:iterate name="selectedTSDCourse" property="sortedTSDCurricularLoads" id="curricularLoad">
 		<bean:define id="typeName" name="curricularLoad" property="type.name"/>
 			<tr>
 				<th>
@@ -223,6 +221,30 @@
 				</td>
 				<td class='aright'>
 					<bean:write name="curricularLoad" property="hoursPerShift" />
+				</td>
+			</tr>
+			<tr>
+				<td class='highlight7'>
+						<bean:message key="label.teacherServiceDistribution.numberOfShifts"/>
+				</td>
+				<td class='aright'>
+					<bean:write name="curricularLoad" property="numberOfShifts"/> 
+				</td>
+		  </tr>
+		  <tr>
+				<td class='highlight7'>
+					<bean:message key="label.teacherServiceDistribution.hoursPerStudent"/>
+				</td>
+				<td class='aright'>
+					<bean:write name="curricularLoad" property="numberOfHoursForStudents"/>
+				</td>
+		 </tr>
+		 <tr>
+				<td class='highlight7'>
+					<bean:message key="label.teacherServiceDistribution.hoursForTeachers"/>
+				</td>
+				<td class='aright'>
+					<bean:write name="curricularLoad" property="numberOfHoursForTeachers"/>
 				</td>
 			</tr>
 			<tr>

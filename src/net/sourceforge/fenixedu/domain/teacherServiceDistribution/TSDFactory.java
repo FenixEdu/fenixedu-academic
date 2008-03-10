@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class TSDFactory {
@@ -40,7 +41,7 @@ public class TSDFactory {
     	List<TSDCourse> tsdCourses = createTSDCompetenceCourses(tsdProcess);
 
     	return new TeacherServiceDistribution(tsdPhase, tsdProcess.getDepartment().getAcronym(), null,
-    			tsdTeachers, tsdCourses, null, null);
+    			tsdTeachers, tsdCourses, null, null,null,null);
     }
 
     private void createSubGroupings(TSDProcessPhase tsdPhase) {
@@ -78,9 +79,10 @@ public class TSDFactory {
 				if (teachersNewGrouping == null) {
 				    scientificAreaGrouping = new TeacherServiceDistribution(tsdPhase, scientificAreaUnit.getName(),
 					    rootTSD, new ArrayList<TSDTeacher>(),
-					    new ArrayList<TSDCourse>(), rootTSD
-						    .getCoursesAndTeachersValuationManagers(), rootTSD
-						    .getCoursesAndTeachersManagementGroup());
+					    new ArrayList<TSDCourse>(), rootTSD.getCoursesValuationManagers(),
+					    	rootTSD.getTeachersValuationManagers(),
+					    	rootTSD.getCoursesManagementGroup(),
+					    	rootTSD.getTeachersValuationManagers());
 				} else {
 				    scientificAreaGrouping = teachersNewGrouping;
 				}
@@ -112,7 +114,7 @@ public class TSDFactory {
 		    List<TSDCourse> emptyCourseList = new ArrayList<TSDCourse>();
 	
 		    newTSD = new TeacherServiceDistribution(tsdPhase, unit.getName(), null, teachersList, 
-		    		emptyCourseList, null, null);
+		    		emptyCourseList, null, null,null,null);
 		    
 		    unitNewTSD.put(unit, newTSD);
 	
@@ -149,7 +151,7 @@ public class TSDFactory {
 		    List<TSDTeacher> emptyTSDTeacherList = new ArrayList<TSDTeacher>();
 	
 		    newGrouping = new TeacherServiceDistribution(tsdPhase, competenceCourse.getCompetenceCourseGroupUnit()
-			    .getName(), rootTSD, emptyTSDTeacherList, courseList, null, null);
+			    .getName(), rootTSD, emptyTSDTeacherList, courseList, null, null,null,null);
 		    unitNewGrouping.put(competenceCourse.getCompetenceCourseGroupUnit(), newGrouping);
 	
 		} else {

@@ -29,4 +29,5 @@ function executeWithTempFile() {
 }
 
 execute "Alter Thesis Table" alterTableThesis.sql
- 
+ execute "Alter Vigilant Group" addDismissedPointsForTeacher.sql
+ execute "update TSD" updateTSD.sql

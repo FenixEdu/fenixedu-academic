@@ -8,25 +8,12 @@ public class PersonPermissionsDTOEntry {
 	Boolean automaticValuationPermission = false;
 	Boolean omissionConfigurationPermission = false;
 	Boolean tsdCoursesAndTeachersManagementPermission = false;
-	Boolean coursesAndTeachersValuationPermission = false;
-	Boolean coursesAndTeachersManagementPermission = false;
+	Boolean coursesValuationPermission = false;
+	Boolean teachersValuationPermission = false;
+	Boolean teachersManagementPermission = false;
+	Boolean coursesManagementPermission = false;
 	
-	public Boolean getCoursesAndTeachersManagementPermission() {
-		return coursesAndTeachersManagementPermission;
-	}
-
-	public void setCoursesAndTeachersManagementPermission(Boolean coursesAndTeachersManagementPermission) {
-		this.coursesAndTeachersManagementPermission = coursesAndTeachersManagementPermission;
-	}
-
-	public Boolean getCoursesAndTeachersValuationPermission() {
-		return coursesAndTeachersValuationPermission;
-	}
-
-	public void setCoursesAndTeachersValuationPermission(Boolean coursesAndTeachersValuationPermission) {
-		this.coursesAndTeachersValuationPermission = coursesAndTeachersValuationPermission;
-	}
-
+	
 	public PersonPermissionsDTOEntry(Person person) {
 		this.person = person;
 	}
@@ -59,6 +46,42 @@ public class PersonPermissionsDTOEntry {
 		this.omissionConfigurationPermission = omissionConfiguration;
 	}
 
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public Boolean getCoursesValuationPermission() {
+	    return coursesValuationPermission;
+	}
+
+	public void setCoursesValuationPermission(Boolean coursesValuationPermission) {
+	    this.coursesValuationPermission = coursesValuationPermission;
+	}
+
+	public Boolean getTeachersValuationPermission() {
+	    return teachersValuationPermission;
+	}
+
+	public void setTeachersValuationPermission(Boolean teachersValuationPermission) {
+	    this.teachersValuationPermission = teachersValuationPermission;
+	}
+
+	public Boolean getTeachersManagementPermission() {
+	    return teachersManagementPermission;
+	}
+
+	public void setTeachersManagementPermission(Boolean teachersManagementPermission) {
+	    this.teachersManagementPermission = teachersManagementPermission;
+	}
+
+	public Boolean getCoursesManagementPermission() {
+	    return coursesManagementPermission;
+	}
+
+	public void setCoursesManagementPermission(Boolean coursesManagementPermission) {
+	    this.coursesManagementPermission = coursesManagementPermission;
+	}
+
 	public Boolean getCompetenceCoursesAndTeachersManagementPermission() {
 		return tsdCoursesAndTeachersManagementPermission;
 	}
@@ -66,9 +89,5 @@ public class PersonPermissionsDTOEntry {
 	public void setCompetenceCoursesAndTeachersManagementPermission(
 			Boolean tsdCoursesAndTeachersManagementPermission) {
 		this.tsdCoursesAndTeachersManagementPermission = tsdCoursesAndTeachersManagementPermission;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
 	}
 }

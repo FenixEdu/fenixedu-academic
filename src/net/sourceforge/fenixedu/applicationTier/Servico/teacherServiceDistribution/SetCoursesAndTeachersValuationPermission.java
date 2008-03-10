@@ -8,21 +8,36 @@ public class SetCoursesAndTeachersValuationPermission extends Service {
 	public void run(
 			Integer tsdId,
 			Integer personId,
-			Boolean coursesAndTeachersValuationPermission,
-			Boolean coursesAndTeachersManagementPermission) {
+			Boolean coursesValuationPermission,
+			Boolean teachersValuationPermission,
+			Boolean coursesManagementPermission,
+			Boolean teachersManagementPermission) {
 		TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
 		Person person = (Person) rootDomainObject.readPartyByOID(personId);
-				
-		if(coursesAndTeachersValuationPermission) {
-			tsd.addCoursesAndTeachersValuationPermission(person);
+		
+		
+		if(coursesValuationPermission) {
+			tsd.addCourseValuationPermission(person);
 		} else {
-			tsd.removeCoursesAndTeachersValuationPermission(person);
+			tsd.removeCourseValuationPermission(person);
 		}
 				
-		if(coursesAndTeachersManagementPermission) {
-			tsd.addCoursesAndTeachersManagement(person);
+		if(teachersValuationPermission) {
+			tsd.addTeacherValuationPermission(person);
 		} else {
-			tsd.removeCoursesAndTeachersManagement(person);
+			tsd.removeTeacherValuationPermission(person);
+		}
+		
+		if(coursesManagementPermission) {
+			tsd.addCourseManagersPermission(person);
+		} else {
+			tsd.removeCourseManagersPermission(person);
+		}
+		
+		if(teachersManagementPermission) {
+			tsd.addTeachersManagersPermission(person);
+		} else {
+			tsd.removeTeachersManagersPermission(person);
 		}
 	}
 }

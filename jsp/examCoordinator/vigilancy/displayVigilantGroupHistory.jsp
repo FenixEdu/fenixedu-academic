@@ -69,7 +69,7 @@
 		<fr:property name="columnClasses" value=",,width250px aleft,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	
 		<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
-			<fr:property name="convokeSchema" value="presentConvokesWithoutLink"/>	
+			<fr:property name="convokeSchema" value="present.convokesForCoordinator.withoutLink"/>	
 		</logic:equal>
 		<logic:equal name="bean" property="showAllVigilancyInfo" value="false">
 			<fr:property name="convokeSchema" value="presentSimpleConvokesWithoutLink"/>	

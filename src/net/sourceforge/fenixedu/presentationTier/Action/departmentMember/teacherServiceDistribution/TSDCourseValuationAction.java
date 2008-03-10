@@ -128,12 +128,22 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
 
 	
 	private void fillFormWithTSDCourseParameters(DynaActionForm dynaForm, TSDCourse selectedTSDCourse, ShiftType shiftType) {
-		dynaForm.set("firstTimeEnrolledStudentsManual",
-				selectedTSDCourse.getFirstTimeEnrolledStudents().toString());
+		
+	    Integer firstTimeEnrolledManualValue = selectedTSDCourse.getFirstTimeEnrolledStudents();
+	    if(firstTimeEnrolledManualValue == null || firstTimeEnrolledManualValue == 0) {
+		firstTimeEnrolledManualValue = selectedTSDCourse.getRealFirstTimeEnrolledStudentsNumberLastYear();
+	    }
+	    Integer secondTimeEnrolledManualValue = selectedTSDCourse.getSecondTimeEnrolledStudents(); 
+	    if(secondTimeEnrolledManualValue == null || secondTimeEnrolledManualValue == 0) {
+		secondTimeEnrolledManualValue = selectedTSDCourse.getRealSecondTimeEnrolledStudentsNumberLastYear();
+	    }
+	    
+	    dynaForm.set("firstTimeEnrolledStudentsManual",
+				firstTimeEnrolledManualValue.toString());
 		dynaForm.set("firstTimeEnrolledStudentsType",
 				selectedTSDCourse.getFirstTimeEnrolledStudentsType().toString());
 		dynaForm.set("secondTimeEnrolledStudentsManual",
-				selectedTSDCourse.getSecondTimeEnrolledStudents().toString());
+			secondTimeEnrolledManualValue.toString());
 		dynaForm.set("secondTimeEnrolledStudentsType",
 				selectedTSDCourse.getSecondTimeEnrolledStudentsType().toString());
 						
@@ -153,7 +163,11 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
 			dynaForm.set("weightSecondTimeEnrolledStudentsPerShiftType", 
 					tsdLoad.getWeightSecondTimeEnrolledStudentsPerShiftType().toString());
 			
-			dynaForm.set("hoursManual", tsdLoad.getHours().toString());
+			Double manualHours = tsdLoad.getHours();
+			if(manualHours == null || manualHours == 0) {
+			    manualHours = selectedTSDCourse.getHoursCalculated(shiftType);
+			}
+			dynaForm.set("hoursManual", manualHours.toString());
 			dynaForm.set("hoursType", tsdLoad.getHoursType().toString());
 			dynaForm.set("hoursPerShift", tsdLoad.getHoursPerShift().toString());
 			dynaForm.set("timeTableSlots", tsdLoad.getTimeTableSlotsNumber().toString());

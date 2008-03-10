@@ -68,8 +68,10 @@
 			<bean:message key="label.teacherServiceDistribution.permissions"/>:
 		</th>
 		<td>
-			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.coursesAndTeachersValuationPermission" property="coursesAndTeachersValuationPermission"/> <bean:message key="label.teacherServiceDistribution.coursesAndTeachersValuationPermission"/><br/>
-			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.coursesAndTeachersManagementPermission" property="coursesAndTeachersManagementPermission"/> <bean:message key="label.teacherServiceDistribution.coursesAndTeachersManagementPermission"/>
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.coursesValuationPermission" property="coursesValuationManagers"/> <bean:message key="label.teacherServiceDistribution.coursesValuationPermission"/><br/>
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.teachersValuationPermission" property="teachersValuationManagers"/> <bean:message key="label.teacherServiceDistribution.teachersValuationPermission"/><br/>
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.coursesManagementPermission" property="coursesManagementGroup"/> <bean:message key="label.teacherServiceDistribution.coursesManagementPermission"/><br/>
+			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.teachersManagementPermission" property="teacherManagementGroup"/> <bean:message key="label.teacherServiceDistribution.teachersManagementPermission"/><br/>
 		</td>
 	</tr>
 </table>
@@ -97,10 +99,16 @@
 				<bean:message key="label.teacherServiceDistribution.person"/>
 			</th>
 			<th>
-				<bean:message key="label.teacherServiceDistribution.coursesAndTeachersValuationPermission"/>
+				<bean:message key="label.teacherServiceDistribution.coursesValuationPermission"/>
 			</th>
 			<th>
-				<bean:message key="label.teacherServiceDistribution.coursesAndTeachersManagementPermission"/>
+				<bean:message key="label.teacherServiceDistribution.teachersValuationPermission"/>
+			</th>
+			<th>
+				<bean:message key="label.teacherServiceDistribution.coursesManagementPermission"/>
+			</th>
+			<th>
+				<bean:message key="label.teacherServiceDistribution.teachersManagementPermission"/>
 			</th>
 		</tr>
 	<logic:notPresent name="notCoursesAndTeachersValuationManagers">
@@ -111,18 +119,34 @@
 					(<bean:write name="personPermissionsDTOEntry" property="person.mostImportantAlias"/>)
 				</td>
 				<td class="acenter">
-					<logic:equal name="personPermissionsDTOEntry" property="coursesAndTeachersValuationPermission" value="true">
+					<logic:equal name="personPermissionsDTOEntry" property="coursesValuationPermission" value="true">
 						<html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/>
 					</logic:equal>
-					<logic:notEqual name="personPermissionsDTOEntry" property="coursesAndTeachersValuationPermission" value="true">
+					<logic:notEqual name="personPermissionsDTOEntry" property="coursesValuationPermission" value="true">
+						<html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/>
+					</logic:notEqual>
+				</td>
+				<td class="acenter">
+					<logic:equal name="personPermissionsDTOEntry" property="teachersValuationPermission" value="true">
+						<html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/>
+					</logic:equal>
+					<logic:notEqual name="personPermissionsDTOEntry" property="teachersValuationPermission" value="true">
+						<html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/>
+					</logic:notEqual>
+				</td>						
+				<td class="acenter">
+					<logic:equal name="personPermissionsDTOEntry" property="coursesManagementPermission" value="true">
+						<html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/>
+					</logic:equal>
+					<logic:notEqual name="personPermissionsDTOEntry" property="coursesManagementPermission" value="true">
 						<html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/>
 					</logic:notEqual>
 				</td>			
 				<td class="acenter">
-					<logic:equal name="personPermissionsDTOEntry" property="coursesAndTeachersManagementPermission" value="true">
+					<logic:equal name="personPermissionsDTOEntry" property="teachersManagementPermission" value="true">
 						<html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/>
 					</logic:equal>
-					<logic:notEqual name="personPermissionsDTOEntry" property="coursesAndTeachersManagementPermission" value="true">
+					<logic:notEqual name="personPermissionsDTOEntry" property="teachersManagementPermission" value="true">
 						<html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/>
 					</logic:notEqual>
 				</td>			

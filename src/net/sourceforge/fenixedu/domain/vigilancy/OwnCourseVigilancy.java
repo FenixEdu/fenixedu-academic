@@ -23,7 +23,7 @@ public class OwnCourseVigilancy extends OwnCourseVigilancy_Base {
     public int getPoints() {
 	if (isActive() && !isStatusUndefined()) {
 	    return isAttended() ? getAssociatedVigilantGroup().getPointsForTeacher()
-		    : (isDismissed() ? getAssociatedVigilantGroup().getPointsForDismissed() : (hasPointsAttributed() ? getAssociatedVigilantGroup().getPointsForMissing() : this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN));
+		    : (isDismissed() ? getAssociatedVigilantGroup().getPointsForDismissedTeacher() : (hasPointsAttributed() ? getAssociatedVigilantGroup().getPointsForMissingTeacher() : this.POINTS_WON_FOR_CONVOKE_YET_TO_HAPPEN));
 	}
 	return getAssociatedVigilantGroup().getPointsForDisconvoked();
 

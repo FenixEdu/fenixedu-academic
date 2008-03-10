@@ -636,7 +636,7 @@ extends="eventCreation">
 </schema>
 
 <schema name="JournalIssue.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue">
-	<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="volume">
 		<property name="size" value="20"/>
 	</slot>
 	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
@@ -1498,7 +1498,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Ar
 
 <schema name="result.publication.create.Article.createIssue" bundle="RESEARCHER_RESOURCES"		
 type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
-		<slot name="volume" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="volume">
 			<property name="size" value="30"/>
 		</slot>
 		<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">

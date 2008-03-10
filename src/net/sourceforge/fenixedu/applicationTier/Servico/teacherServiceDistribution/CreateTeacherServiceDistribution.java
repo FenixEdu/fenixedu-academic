@@ -14,7 +14,7 @@ public class CreateTeacherServiceDistribution extends Service {
 		TeacherServiceDistribution fatherTeacherServiceDistribution = rootDomainObject.readTeacherServiceDistributionByOID(fatherTeacherServiceDistributionId);
 		
 		TeacherServiceDistribution tsd = new TeacherServiceDistribution(tsdProcessPhase, name, fatherTeacherServiceDistribution, 
-				new ArrayList<TSDTeacher>(), new ArrayList<TSDCourse>(), null, null);
+				new ArrayList<TSDTeacher>(), new ArrayList<TSDCourse>(), null, null,null,null);
 				
 		return tsd;
 	}

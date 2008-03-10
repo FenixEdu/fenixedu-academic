@@ -60,7 +60,7 @@
 <logic:equal name="omissionConfigurationPermission" value="true">		
 	<li>
 	  	<html:link page='<%= "/tsdProcessPhasesManagement.do?method=prepareForOmissionValuesValuation&amp;edit=no&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
-	  		<bean:message key="link.teacherServiceDistribution.omissionValuesValuation"/>
+	 		<bean:message key="link.teacherServiceDistribution.omissionValuesValuation"/>
 	  	</html:link>
 	</li>
 </logic:equal>
@@ -71,19 +71,22 @@
 	  	</html:link>
 	</li>
 </logic:equal>
-<logic:equal name="coursesAndTeachersManagementPermission" value="true">			
+
+<logic:equal name="teachersManagementPermission" value="true">			
 	<li>
 		<html:link page='<%= "/tsdSupport.do?method=prepareForTeacherServiceDistributionSupportServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.groupingAreaSupportService"/>
 		</html:link>
 	</li>
 </logic:equal>	
-<logic:equal name="coursesAndTeachersValuationPermission" value="true">	
+<logic:equal name="coursesValuationPermission" value="true">	
 	<li>
 		<html:link page='<%= "/tsdCourse.do?method=prepareForTSDCourse&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.tsdCourseService"/>
 		</html:link>
 	</li>
+</logic:equal>
+<logic:equal name="teachersValuationPermission" value="true">
 	<li>
 		<html:link page='<%= "/tsdProfessorship.do?method=prepareForTSDProfessorship&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.tsdProfessorshipService"/>
@@ -105,7 +108,7 @@
 	</li>	
 </logic:equal>
 <logic:equal name="viewTSDProcessValuationPermission" value="false">
-	<li>
+	 <li>
 		<span class="error">
 			<bean:message key="label.teacherServiceDistribution.noPermissionsForTSD"/>
 		</span>

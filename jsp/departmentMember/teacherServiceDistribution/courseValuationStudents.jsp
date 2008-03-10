@@ -117,7 +117,7 @@
 			<bean:message key="label.teacherServiceDistribution.firstTimeEnrolledStudents"/>
 		</td>
 		<td class='aright'>
-			<html:text bundle="HTMLALT_RESOURCES" altKey="text.firstTimeEnrolledStudentsManual" property="firstTimeEnrolledStudentsManual" size="3" maxlength="4" styleClass="aleft"/>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.firstTimeEnrolledStudentsManual" property="firstTimeEnrolledStudentsManual"  size="3" maxlength="4" styleClass="aleft"/>
 		</td>
 		<td class='aright'>
 			<bean:write name="selectedTSDCourse" property="realFirstTimeEnrolledStudentsNumberLastYear"/>

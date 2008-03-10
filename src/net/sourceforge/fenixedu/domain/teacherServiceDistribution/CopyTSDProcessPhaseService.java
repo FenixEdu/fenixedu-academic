@@ -280,8 +280,10 @@ public class CopyTSDProcessPhaseService {
 				fatherTSD,
 				newTSDTeacherList,
 				emptyList,
-				null,//oldTSD.getCoursesAndTeachersValuationManagers(),
-				null);//oldTSD.getCoursesAndTeachersManagementGroup());
+				null,
+				null,
+				null,
+				null);
 		
 		oldAndNewTSDMap.put(oldTSD, newTeacherServiceDistribution);
 

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 
 public abstract class TSDCourse extends TSDCourse_Base {
@@ -205,6 +207,18 @@ public abstract class TSDCourse extends TSDCourse_Base {
     	return totalNumberOfStudents.intValue();
     }
 
+    public Integer getNumberOfShifts(ShiftType type) {
+	double ratio = new Double(getTotalNumberOfStudents(type)) / getStudentsPerShift(type);
+	return Double.valueOf((Math.ceil(ratio))).intValue();
+    }
+
+    public double getNumberOfHoursForStudents(ShiftType type) {
+	return getHoursPerShift(type) * getShiftFrequency(type);
+    }
+    
+    public double getNumberOfHoursForTeachers(ShiftType type) {
+	return getHoursPerShift(type) * getShiftFrequency(type) * getNumberOfShifts(type);
+    }
     
     public Integer getStudentsPerShiftCalculated(ShiftType type) {
     	if(getHoursType(type) == TSDValueType.CALCULATED_VALUE) {
@@ -517,4 +531,10 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	return totalEnrolledStudentsNumber;   	    	
     }
     
+    public List<TSDCurricularLoad> getSortedTSDCurricularLoads() {
+        List<TSDCurricularLoad> loads = new ArrayList<TSDCurricularLoad>(super.getTSDCurricularLoads());
+        Collections.sort(loads,new BeanComparator("type"));
+        return loads;
+    }
+  
 }

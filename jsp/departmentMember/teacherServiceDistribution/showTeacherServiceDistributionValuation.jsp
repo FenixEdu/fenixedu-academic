@@ -6,6 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.ShiftType" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@page import="net.sourceforge.fenixedu.domain.Person"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -14,7 +15,6 @@
 
 <em><bean:message key="link.teacherServiceDistribution"/></em>
 <h2><bean:message key="link.teacherServiceDistribution.tsdProcessValuation"/></h2>
-
 <p class="breadcumbs">
 	<em>
 		<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
@@ -30,7 +30,6 @@
 		<bean:message key="link.teacherServiceDistribution.tsdProcessValuation"/>
 	</em>
 </p>
-
 
 <html:form action="/tsdProcessValuation">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
@@ -147,6 +146,7 @@
 		<bean:message key="label.teacherServiceDistribution.viewByCharts"/>
 	</html:link>
 </p>
+
 
 <table class='tstyle4'>
 	<logic:notEmpty name="tsdCourseDTOEntryList">
@@ -286,7 +286,8 @@
 						<%
 							Integer tsdTeacherId = ((TSDProfessorshipDTOEntry) tsdProfessorshipDTOEntry).getTSDTeacherDTOEntry().getTSDTeachers().get(0).getIdInternal();
 							TeacherServiceDistribution tsd = (TeacherServiceDistribution) request.getAttribute("selectedTSD");
-							if(tsd.getHaveCoursesAndTeachersValuationPermission(SessionUtils.getUserView(request).getPerson())) {
+							Person person = SessionUtils.getUserView(request).getPerson();
+							if(tsd.isMemberOfCoursesValuationManagers(person) || tsd.isMemberOfTeachersValuationManagers(person)) {
 						%>
 						<html:link page="<%= "/tsdProfessorship.do?method=prepareLinkForTSDProfessorshipByCourse&amp;tsdProcess=" + 
 						tsdProcessId  + "&amp;tsdTeacher=" + tsdTeacherId + "&amp;tsdCourse=" + tsdCourseId  %>"> 

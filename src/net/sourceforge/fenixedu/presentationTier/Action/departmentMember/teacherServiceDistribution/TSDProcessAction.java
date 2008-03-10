@@ -29,397 +29,346 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 public class TSDProcessAction extends FenixDispatchAction {
-	private static final Integer NOT_SELECTED_EXECUTION_PERIOD = -1;
+    private static final Integer NOT_SELECTED_EXECUTION_PERIOD = -1;
 
-	public ActionForward prepareTSDProcess(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return mapping.findForward("showMain");
+    public ActionForward prepareTSDProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("showMain");
+    }
+
+    public ActionForward prepareForTSDProcessCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("showTSDProcessCreationOptions");
+    }
+
+    public ActionForward prepareForEmptyTSDProcessCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+
+	DynaActionForm dynaForm = (DynaActionForm) form;
+
+	List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
+	Collections.sort(executionYearList, new BeanComparator("year"));
+
+	ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, executionYearList);
+	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>(selectedExecutionYear.getExecutionPeriods());
+	setCurrentExecutionYearInDynamicForm(userView, dynaForm, selectedExecutionYear);
+
+	Collections.sort(executionPeriodList, new BeanComparator("semester"));
+
+	request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
+		.getRealName());
+	request.setAttribute("executionYearList", executionYearList);
+	request.setAttribute("executionPeriodsList", executionPeriodList);
+
+	return mapping.findForward("showTSDProcessCreationForm");
+    }
+
+    public ActionForward createTSDProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+
+	DynaActionForm dynaForm = (DynaActionForm) form;
+
+	List<Integer> selectedExecutionPeriodIdList = new ArrayList<Integer>();
+
+	Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
+	if (selectedExecutionPeriodId.equals(NOT_SELECTED_EXECUTION_PERIOD)) {
+	    ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
+
+	    for (ExecutionPeriod executionPeriod : selectedExecutionYear.getExecutionPeriods()) {
+		selectedExecutionPeriodIdList.add(executionPeriod.getIdInternal());
+	    }
+	} else {
+	    selectedExecutionPeriodIdList.add(selectedExecutionPeriodId);
 	}
 
-	public ActionForward prepareForTSDProcessCreation(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		return mapping.findForward("showTSDProcessCreationOptions");
+	Integer selectedDepartmentId = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal();
+	String name = (String) dynaForm.get("name");
+
+	Object[] parameters = new Object[] { selectedExecutionPeriodIdList, selectedDepartmentId,
+		userView.getPerson().getIdInternal(), name };
+
+	TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService(userView, "CreateTSDProcess", parameters);
+
+	return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
+    }
+
+    public ActionForward prepareForTSDProcessEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+
+	DynaActionForm dynaForm = (DynaActionForm) form;
+
+	List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
+	Collections.sort(executionYearList, new BeanComparator("year"));
+
+	ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
+
+	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
+	if (selectedExecutionYear != null) {
+	    executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
 	}
 
-	public ActionForward prepareForEmptyTSDProcessCreation(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
+	Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
 
-		DynaActionForm dynaForm = (DynaActionForm) form;
+	Collections.sort(executionPeriodList, new BeanComparator("semester"));
 
-		List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
-		Collections.sort(executionYearList, new BeanComparator("year"));
-		
-		ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, executionYearList);
-		List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>(selectedExecutionYear.getExecutionPeriods());
-		setCurrentExecutionYearInDynamicForm(userView, dynaForm, selectedExecutionYear);
+	List<TSDProcess> tsdProcessList;
 
-		Collections.sort(executionPeriodList, new BeanComparator("semester"));
+	ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
 
-		request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getRealName());
-		request.setAttribute("executionYearList", executionYearList);
-		request.setAttribute("executionPeriodsList", executionPeriodList);
-
-		return mapping.findForward("showTSDProcessCreationForm");
+	if (selectedExecutionPeriod != null) {
+	    tsdProcessList = selectedDepartment.getTSDProcessesByExecutionPeriod(selectedExecutionPeriod);
+	} else if (selectedExecutionYear != null) {
+	    tsdProcessList = selectedDepartment.getTSDProcessesByExecutionYear(selectedExecutionYear);
+	} else {
+	    tsdProcessList = new ArrayList<TSDProcess>(selectedDepartment.getTSDProcesses());
 	}
 
-	public ActionForward createTSDProcess(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
+	final Person person = userView.getPerson();
+	tsdProcessList = (List<TSDProcess>) CollectionUtils.select(tsdProcessList, new Predicate() {
 
-		DynaActionForm dynaForm = (DynaActionForm) form;
+	    public boolean evaluate(Object arg0) {
+		TSDProcess tsd = (TSDProcess) arg0;
+		return tsd.hasAnyPermission(person);
+	    }
+	});
 
-		List<Integer> selectedExecutionPeriodIdList = new ArrayList<Integer>();
+	Collections.sort(tsdProcessList, new BeanComparator("name"));
 
-		Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
-		if (selectedExecutionPeriodId.equals(NOT_SELECTED_EXECUTION_PERIOD)) {
-			ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
+	request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
+		.getRealName());
+	request.setAttribute("executionYearList", executionYearList);
+	request.setAttribute("executionPeriodsList", executionPeriodList);
+	request.setAttribute("tsdProcessList", tsdProcessList);
 
-			for (ExecutionPeriod executionPeriod : selectedExecutionYear.getExecutionPeriods()) {
-				selectedExecutionPeriodIdList.add(executionPeriod.getIdInternal());
-			}
-		} else {
-			selectedExecutionPeriodIdList.add(selectedExecutionPeriodId);
-		}
+	return mapping.findForward("showTSDProcesss");
+    }
 
-		Integer selectedDepartmentId = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal();
-		String name = (String) dynaForm.get("name");
+    public ActionForward showTSDProcessServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
+	IUserView userView = SessionUtils.getUserView(request);
 
-		Object[] parameters = new Object[] {
-				selectedExecutionPeriodIdList,
-				selectedDepartmentId,
-				userView.getPerson().getIdInternal(),
-				name };
+	return loadTSDProcessServices(mapping, request, tsdProcessId, userView);
+    }
 
-		TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService(
-				userView,
-				"CreateTSDProcess",
-				parameters);
+    private ActionForward loadTSDProcessServices(ActionMapping mapping, HttpServletRequest request, Integer tsdProcessId,
+	    IUserView userView) {
+	setPermissionsOnRequest(request, rootDomainObject.readTSDProcessByOID(tsdProcessId), userView.getPerson());
 
-		return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);	
+	request.setAttribute("tsdProcess", rootDomainObject.readTSDProcessByOID(tsdProcessId));
+	return mapping.findForward("showTSDProcessServices");
+    }
+
+    private void setPermissionsOnRequest(HttpServletRequest request, TSDProcess tsdProcess, Person userViewPerson) {
+
+	Boolean permissionCourseValuation = tsdProcess.hasPermissionToCoursesValuation(userViewPerson)
+		|| tsdProcess.getHasSuperUserPermission(userViewPerson);
+	Boolean permissionTeacherValuation = tsdProcess.hasPermissionToTeachersValuation(userViewPerson)
+		|| tsdProcess.getHasSuperUserPermission(userViewPerson);
+	Boolean permissionToCoursesManagement = tsdProcess.hasPermissionToCourseManagement(userViewPerson)
+		|| tsdProcess.getHasSuperUserPermission(userViewPerson);
+	Boolean permissionToTeachersManagement = tsdProcess.hasPermissionToTeacherManagement(userViewPerson)
+		|| tsdProcess.getHasSuperUserPermission(userViewPerson);
+
+	Boolean phaseManagementPermission = tsdProcess.getIsMemberOfPhasesManagementGroup(userViewPerson);
+
+	Boolean automaticValuationPermission = tsdProcess.getIsMemberOfAutomaticValuationGroup(userViewPerson);
+
+	Boolean omissionConfigurationPermission = tsdProcess.getIsMemberOfOmissionConfigurationGroup(userViewPerson);
+
+	Boolean tsdCoursesAndTeachersManagementPermission = tsdProcess
+		.getIsMemberOfCompetenceCoursesAndTeachersManagementGroup(userViewPerson);
+
+	request.setAttribute("coursesValuationPermission", permissionCourseValuation);
+	request.setAttribute("teachersValuationPermission", permissionTeacherValuation);
+	request.setAttribute("coursesManagementPermission", permissionToCoursesManagement);
+	request.setAttribute("teachersManagementPermission", permissionToTeachersManagement);
+
+	request.setAttribute("phaseManagementPermission", phaseManagementPermission);
+
+	request.setAttribute("automaticValuationPermission", automaticValuationPermission);
+
+	request.setAttribute("omissionConfigurationPermission", omissionConfigurationPermission);
+
+	request.setAttribute("tsdCoursesAndTeachersManagementPermission", tsdCoursesAndTeachersManagementPermission);
+
+	request.setAttribute("permissionsGrantPermission", tsdProcess.getHavePermissionSettings(userViewPerson));
+
+	request.setAttribute("viewTSDProcessValuationPermission", permissionCourseValuation || permissionTeacherValuation
+		|| permissionToCoursesManagement || permissionToTeachersManagement || phaseManagementPermission
+		|| automaticValuationPermission || omissionConfigurationPermission || tsdCoursesAndTeachersManagementPermission);
+    }
+
+    public ActionForward prepareForTSDProcessCopy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+	DynaActionForm dynaForm = (DynaActionForm) form;
+
+	List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
+	Collections.sort(executionYearList, new BeanComparator("year"));
+
+	ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
+
+	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
+	if (selectedExecutionYear != null) {
+	    executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
 	}
 
-	public ActionForward prepareForTSDProcessEdition(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
+	ExecutionYear selectedExecutionYearForCopy = getSelectedExecutionYearForCopy(userView, dynaForm, executionYearList);
 
-		DynaActionForm dynaForm = (DynaActionForm) form;
-
-		List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
-		Collections.sort(executionYearList, new BeanComparator("year"));
-
-		ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
-
-		List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
-		if (selectedExecutionYear != null) {
-			executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
-		}
-
-		Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
-
-		Collections.sort(executionPeriodList, new BeanComparator("semester"));
-
-		List<TSDProcess> tsdProcessList;
-
-		ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
-
-		if (selectedExecutionPeriod != null) {
-			tsdProcessList = selectedDepartment.getTSDProcessesByExecutionPeriod(selectedExecutionPeriod);
-		} else if (selectedExecutionYear != null) {
-			tsdProcessList = selectedDepartment.getTSDProcessesByExecutionYear(selectedExecutionYear);
-		} else {
-			tsdProcessList = new ArrayList<TSDProcess>(selectedDepartment.getTSDProcesses());
-		}
-		
-		final Person person = userView.getPerson();
-		tsdProcessList = (List<TSDProcess>) CollectionUtils.select(tsdProcessList, new Predicate() {
-
-			public boolean evaluate(Object arg0) {
-				TSDProcess tsd = (TSDProcess) arg0;
-				return tsd.hasAnyPermission(person);
-			}
-		});
-		
-		Collections.sort(tsdProcessList, new BeanComparator("name"));
-
-		request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getRealName());
-		request.setAttribute("executionYearList", executionYearList);
-		request.setAttribute("executionPeriodsList", executionPeriodList);
-		request.setAttribute("tsdProcessList", tsdProcessList);
-
-		return mapping.findForward("showTSDProcesss");
+	List<ExecutionPeriod> executionPeriodListForCopy = new ArrayList<ExecutionPeriod>();
+	if (selectedExecutionYearForCopy != null) {
+	    executionPeriodListForCopy.addAll(selectedExecutionYearForCopy.getExecutionPeriods());
 	}
 
-	public ActionForward showTSDProcessServices(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
-		IUserView userView = SessionUtils.getUserView(request);
+	Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
 
-		return loadTSDProcessServices(mapping, request, tsdProcessId, userView);
+	Collections.sort(executionPeriodList, new BeanComparator("semester"));
+	Collections.sort(executionPeriodListForCopy, new BeanComparator("semester"));
+
+	List<TSDProcess> tsdProcessList;
+
+	ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
+
+	if (selectedExecutionPeriod != null) {
+	    tsdProcessList = selectedDepartment.getTSDProcessesByExecutionPeriod(selectedExecutionPeriod);
+	} else if (selectedExecutionYear != null) {
+	    tsdProcessList = selectedDepartment.getTSDProcessesByExecutionYear(selectedExecutionYear);
+	} else {
+	    tsdProcessList = new ArrayList<TSDProcess>(selectedDepartment.getTSDProcesses());
 	}
 
-	private ActionForward loadTSDProcessServices(ActionMapping mapping, HttpServletRequest request, Integer tsdProcessId, IUserView userView) {
-		setPermissionsOnRequest(
-				request,
-				rootDomainObject.readTSDProcessByOID(tsdProcessId),
-				userView.getPerson());
-
-		request.setAttribute("tsdProcess", rootDomainObject.readTSDProcessByOID(tsdProcessId));
-		return mapping.findForward("showTSDProcessServices");
+	if (tsdProcessList.size() > 0) {
+	    Collections.sort(tsdProcessList, new BeanComparator("name"));
+	    dynaForm.set("tsdProcess", tsdProcessList.get(0).getIdInternal());
 	}
 
-	private void setPermissionsOnRequest(
-			HttpServletRequest request,
-			TSDProcess tsdProcess,
-			Person userViewPerson) {
-		Boolean permissionToCoursesAndTeachersValuation = tsdProcess.hasPermissionToCoursesAndTeachersValuation(userViewPerson)
-				|| tsdProcess.getHasSuperUserPermission(userViewPerson);
-		
-		Boolean permissionToCoursesAndTeachersManagement = tsdProcess.hasPermissionToCoursesAndTeachersManagement(userViewPerson)
-				|| tsdProcess.getHasSuperUserPermission(userViewPerson);
-		
-		Boolean phaseManagementPermission = tsdProcess.getIsMemberOfPhasesManagementGroup(userViewPerson);
-		
-		Boolean automaticValuationPermission = tsdProcess.getIsMemberOfAutomaticValuationGroup(userViewPerson);
-		
-		Boolean omissionConfigurationPermission = tsdProcess.getIsMemberOfOmissionConfigurationGroup(userViewPerson);
-		
-		Boolean tsdCoursesAndTeachersManagementPermission = tsdProcess.getIsMemberOfCompetenceCoursesAndTeachersManagementGroup(userViewPerson);
-		
-		request.setAttribute("coursesAndTeachersValuationPermission", permissionToCoursesAndTeachersValuation);
+	request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
+		.getRealName());
+	dynaForm.set("executionYearForCopy", selectedExecutionYearForCopy.getIdInternal());
+	request.setAttribute("executionYearList", executionYearList);
+	request.setAttribute("executionPeriodsList", executionPeriodList);
+	request.setAttribute("executionPeriodsListForCopy", executionPeriodListForCopy);
+	request.setAttribute("tsdProcessList", tsdProcessList);
 
-		request.setAttribute("coursesAndTeachersManagementPermission", permissionToCoursesAndTeachersManagement);
+	return mapping.findForward("showTSDProcesssForCopy");
+    }
 
-		request.setAttribute(
-				"phaseManagementPermission",
-				phaseManagementPermission);
+    public ActionForward copyTSDProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
+	DynaActionForm dynaForm = (DynaActionForm) form;
 
-		request.setAttribute(
-				"automaticValuationPermission",
-				automaticValuationPermission);
+	ExecutionYear selectedExecutionYear = getSelectedExecutionYearForCopy(userView, dynaForm, null);
+	ExecutionPeriod selectedExecutionPeriodForCopy = getSelectedExecutionPeriodForCopy(userView, dynaForm);
+	String name = (String) dynaForm.get("name");
+	TSDProcess selectedTSDProcess = getSelectedTSDProcess(userView, dynaForm);
 
-		request.setAttribute(
-				"omissionConfigurationPermission",
-				omissionConfigurationPermission);
-
-		request.setAttribute(
-				"tsdCoursesAndTeachersManagementPermission",
-				tsdCoursesAndTeachersManagementPermission);
-
-		request.setAttribute("permissionsGrantPermission", tsdProcess.getHavePermissionSettings(userViewPerson));
-		
-		request.setAttribute("viewTSDProcessValuationPermission", permissionToCoursesAndTeachersValuation || permissionToCoursesAndTeachersManagement || phaseManagementPermission || automaticValuationPermission || omissionConfigurationPermission || tsdCoursesAndTeachersManagementPermission);
+	List<Integer> selectedExecutionPeriodListForCopyId = new ArrayList<Integer>();
+	if (selectedExecutionPeriodForCopy != null) {
+	    selectedExecutionPeriodListForCopyId.add(selectedExecutionPeriodForCopy.getIdInternal());
+	} else {
+	    for (ExecutionPeriod executionPeriod : selectedExecutionYear.getExecutionPeriods())
+		selectedExecutionPeriodListForCopyId.add(executionPeriod.getIdInternal());
 	}
 
+	Object[] parameters = new Object[] { selectedExecutionPeriodListForCopyId, selectedTSDProcess.getIdInternal(),
+		userView.getPerson().getIdInternal(), name };
 
-	public ActionForward prepareForTSDProcessCopy(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm dynaForm = (DynaActionForm) form;
+	TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService(userView, "CopyTSDProcess", parameters);
 
-		List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
-		Collections.sort(executionYearList, new BeanComparator("year"));
-	
-		ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
+	request.setAttribute("tsdProcess", tsdProcess);
+	return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
+    }
 
-		List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
-		if (selectedExecutionYear != null) {
-			executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
-		}
+    public ActionForward deleteTSDProcessServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
+	IUserView userView = SessionUtils.getUserView(request);
 
-		ExecutionYear selectedExecutionYearForCopy = getSelectedExecutionYearForCopy(
-				userView,
-				dynaForm,
-				executionYearList);
+	ServiceUtils.executeService(userView, "DeleteTSDProcess", new Object[] { tsdProcessId });
 
-		List<ExecutionPeriod> executionPeriodListForCopy = new ArrayList<ExecutionPeriod>();
-		if (selectedExecutionYearForCopy != null) {
-			executionPeriodListForCopy.addAll(selectedExecutionYearForCopy.getExecutionPeriods());
-		}
+	return prepareForTSDProcessEdition(mapping, form, request, response);
+    }
 
-		Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
+    private ExecutionYear getSelectedExecutionYear(IUserView userView, DynaActionForm dynaForm,
+	    List<ExecutionYear> executionYearList) throws FenixServiceException, FenixFilterException {
+	Integer selectedExecutionYearId = (Integer) dynaForm.get("executionYear");
 
-		Collections.sort(executionPeriodList, new BeanComparator("semester"));
-		Collections.sort(executionPeriodListForCopy, new BeanComparator("semester"));
+	ExecutionYear selectedExecutionYear = rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
 
-		List<TSDProcess> tsdProcessList;
-
-		ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
-
-		if (selectedExecutionPeriod != null) {
-			tsdProcessList = selectedDepartment.getTSDProcessesByExecutionPeriod(selectedExecutionPeriod);
-		} else if (selectedExecutionYear != null) {
-			tsdProcessList = selectedDepartment.getTSDProcessesByExecutionYear(selectedExecutionYear);
-		} else {
-			tsdProcessList =  new ArrayList<TSDProcess>(selectedDepartment.getTSDProcesses());
-		}
-
-		if (tsdProcessList.size() > 0) {
-			Collections.sort(tsdProcessList, new BeanComparator("name"));
-			dynaForm.set("tsdProcess", tsdProcessList.get(0).getIdInternal());
-		}
-
-		request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getRealName());
-		dynaForm.set("executionYearForCopy", selectedExecutionYearForCopy.getIdInternal());
-		request.setAttribute("executionYearList", executionYearList);
-		request.setAttribute("executionPeriodsList", executionPeriodList);
-		request.setAttribute("executionPeriodsListForCopy", executionPeriodListForCopy);
-		request.setAttribute("tsdProcessList", tsdProcessList);
-
-		return mapping.findForward("showTSDProcesssForCopy");
+	if (selectedExecutionYear == null) {
+	    if (executionYearList != null && !executionYearList.isEmpty()) {
+		return executionYearList.get(executionYearList.size() - 1);
+	    } else {
+		return null;
+	    }
 	}
 
-	public ActionForward copyTSDProcess(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm dynaForm = (DynaActionForm) form;
+	return selectedExecutionYear;
+    }
 
-		ExecutionYear selectedExecutionYear = getSelectedExecutionYearForCopy(userView, dynaForm, null);
-		ExecutionPeriod selectedExecutionPeriodForCopy = getSelectedExecutionPeriodForCopy(userView, dynaForm);
-		String name = (String) dynaForm.get("name");
-		TSDProcess selectedTSDProcess = getSelectedTSDProcess(
-				userView,
-				dynaForm);
+    private ExecutionPeriod getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException,
+	    FenixFilterException {
+	Integer selectedExeuctionPeriodId = (Integer) dynaForm.get("executionPeriod");
 
-		List<Integer> selectedExecutionPeriodListForCopyId = new ArrayList<Integer>();
-		if (selectedExecutionPeriodForCopy != null) {
-			selectedExecutionPeriodListForCopyId.add(selectedExecutionPeriodForCopy.getIdInternal());
-		} else {
-			for (ExecutionPeriod executionPeriod : selectedExecutionYear.getExecutionPeriods())
-				selectedExecutionPeriodListForCopyId.add(executionPeriod.getIdInternal());
-		}
-
-		Object[] parameters = new Object[] {
-				selectedExecutionPeriodListForCopyId,
-				selectedTSDProcess.getIdInternal(),
-				userView.getPerson().getIdInternal(),
-				name };
-
-		TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService(
-				userView,
-				"CopyTSDProcess",
-				parameters);
-
-		request.setAttribute("tsdProcess", tsdProcess);
-		return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
-	}
-	
-	public ActionForward deleteTSDProcessServices(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
-		IUserView userView = SessionUtils.getUserView(request);
-		
-		ServiceUtils.executeService(userView, "DeleteTSDProcess", new Object[]{ tsdProcessId });
-
-		return prepareForTSDProcessEdition(mapping, form, request, response);
+	if (selectedExeuctionPeriodId == NOT_SELECTED_EXECUTION_PERIOD) {
+	    return null;
 	}
 
+	ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExeuctionPeriodId);
 
-	private ExecutionYear getSelectedExecutionYear(
-			IUserView userView,
-			DynaActionForm dynaForm,
-			List<ExecutionYear> executionYearList) throws FenixServiceException, FenixFilterException {
-		Integer selectedExecutionYearId = (Integer) dynaForm.get("executionYear");
+	return selectedExecutionPeriod;
+    }
 
-		ExecutionYear selectedExecutionYear = rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
+    private void setCurrentExecutionYearInDynamicForm(IUserView userView, DynaActionForm dynaForm, ExecutionYear executionYear)
+	    throws FenixServiceException, FenixFilterException {
+	dynaForm.set("executionYear", executionYear.getIdInternal());
+    }
 
-		if (selectedExecutionYear == null) {
-			if (executionYearList != null && !executionYearList.isEmpty()) {
-				return executionYearList.get(executionYearList.size() - 1);
-			} else {
-				return null;
-			}
-		}
+    private ExecutionYear getCurrentExecutionYear(List<ExecutionYear> executionYearList) {
+	return (ExecutionYear) CollectionUtils.find(executionYearList, new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		ExecutionYear executionYear = (ExecutionYear) arg0;
+		return executionYear.getState().equals(PeriodState.CURRENT);
+	    }
+	});
+    }
 
-		return selectedExecutionYear;
+    private ExecutionYear getSelectedExecutionYearForCopy(IUserView userView, DynaActionForm dynaForm,
+	    List<ExecutionYear> executionYearList) throws FenixFilterException, FenixServiceException {
+	Integer selectedExecutionYearId = (Integer) dynaForm.get("executionYearForCopy");
+
+	ExecutionYear selectedExecutionYear = rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
+
+	if (selectedExecutionYear == null) {
+	    if (executionYearList != null && !executionYearList.isEmpty()) {
+		return getCurrentExecutionYear(executionYearList);
+	    } else {
+		return null;
+	    }
 	}
 
-	private ExecutionPeriod getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
-		Integer selectedExeuctionPeriodId = (Integer) dynaForm.get("executionPeriod");
+	return selectedExecutionYear;
+    }
 
-		if (selectedExeuctionPeriodId == NOT_SELECTED_EXECUTION_PERIOD) {
-			return null;
-		}
+    private ExecutionPeriod getSelectedExecutionPeriodForCopy(IUserView userView, DynaActionForm dynaForm)
+	    throws FenixFilterException, FenixServiceException {
+	Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriodForCopy");
 
-		ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExeuctionPeriodId);
+	ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExecutionPeriodId);
 
-		return selectedExecutionPeriod;
-	}
+	return selectedExecutionPeriod;
+    }
 
-	private void setCurrentExecutionYearInDynamicForm(
-			IUserView userView,
-			DynaActionForm dynaForm,
-			ExecutionYear executionYear) throws FenixServiceException, FenixFilterException {
-		dynaForm.set("executionYear", executionYear.getIdInternal());
-	}
-	
-	private ExecutionYear getCurrentExecutionYear(List<ExecutionYear> executionYearList) {
-		return (ExecutionYear) CollectionUtils.find(executionYearList, new Predicate() {
-			public boolean evaluate(Object arg0) {
-				ExecutionYear executionYear = (ExecutionYear) arg0;
-				return executionYear.getState().equals(PeriodState.CURRENT);
-			}
-		});
-	}
+    private TSDProcess getSelectedTSDProcess(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException,
+	    FenixFilterException {
+	Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
+	TSDProcess tsdProcess = rootDomainObject.readTSDProcessByOID(tsdProcessId);
 
-	private ExecutionYear getSelectedExecutionYearForCopy(
-			IUserView userView,
-			DynaActionForm dynaForm,
-			List<ExecutionYear> executionYearList) throws FenixFilterException, FenixServiceException {
-		Integer selectedExecutionYearId = (Integer) dynaForm.get("executionYearForCopy");
-
-		ExecutionYear selectedExecutionYear = rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
-
-		if (selectedExecutionYear == null) {
-			if (executionYearList != null && !executionYearList.isEmpty()) {
-				return getCurrentExecutionYear(executionYearList);
-			} else {
-				return null;
-			}
-		}
-
-		return selectedExecutionYear;
-	}
-
-	private ExecutionPeriod getSelectedExecutionPeriodForCopy(IUserView userView, DynaActionForm dynaForm) throws FenixFilterException, FenixServiceException {
-		Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriodForCopy");
-
-		ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExecutionPeriodId);
-
-		return selectedExecutionPeriod;
-	}
-
-	private TSDProcess getSelectedTSDProcess(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
-		Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
-		TSDProcess tsdProcess = rootDomainObject.readTSDProcessByOID(tsdProcessId);
-
-		return tsdProcess;
-	}
+	return tsdProcess;
+    }
 }

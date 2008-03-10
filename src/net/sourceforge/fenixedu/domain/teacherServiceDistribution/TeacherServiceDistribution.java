@@ -33,8 +33,10 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 			TeacherServiceDistribution parent,
 			List<TSDTeacher> tsdTeacherList,
 			List<TSDCourse> courseList,
-			Group coursesAndTeachersValuationGroup,
-			Group coursesAndTeachersManagementGroup) {
+			Group courseValuationGroup,
+			Group teacherValuationGroup,
+			Group courseManagementGroup,
+			Group teacherManagementGroup) {
 		this();
 
 		if (tsdProcessPhase == null) {
@@ -46,8 +48,10 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 		this.setParent(parent);
 		this.getTSDTeachers().addAll(tsdTeacherList);
 		this.getTSDCourses().addAll(courseList);
-		this.setCoursesAndTeachersValuationManagers(coursesAndTeachersValuationGroup);
-		this.setCoursesAndTeachersManagementGroup(coursesAndTeachersManagementGroup);
+		this.setTeachersManagementGroup(teacherManagementGroup);
+		this.setCoursesManagementGroup(courseManagementGroup);
+		this.setCoursesValuationManagers(courseValuationGroup);
+		this.setTeachersValuationManagers(teacherValuationGroup);
 	}
 
 	public Boolean getIsRoot() {
@@ -116,25 +120,22 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 	}
 	
 	private List<TSDCourse> getTSDCompetenceAndVirtualCoursesByExecutionPeriod(List<ExecutionPeriod> periods) {
-		List<TSDCourse> courseList = new ArrayList<TSDCourse>();
+		Set<TSDCourse> courseList = new HashSet<TSDCourse>();
 		Set<CompetenceCourse> competenceCourseSet = new HashSet<CompetenceCourse>();
 		
 		for(ExecutionPeriod period : periods){	
 			for (TSDCourse tsdCourse : getTSDCoursesByExecutionPeriod(period)) {
-				if(tsdCourse instanceof TSDCompetenceCourse){ 
-					if(!competenceCourseSet.contains(tsdCourse.getCompetenceCourse())){
+				if(tsdCourse instanceof TSDCompetenceCourse && tsdCourse.getCompetenceCourse().isBolonha()){ 
 						courseList.add(tsdCourse);
 						competenceCourseSet.add(tsdCourse.getCompetenceCourse());
-					}
 				}
-				
 				if(tsdCourse instanceof TSDVirtualCourseGroup){
 					courseList.add(tsdCourse);
 				}
 			}
 		}
 		
-		return courseList;
+		return new ArrayList<TSDCourse>(courseList);
 	}
 	
 	public List<TSDCourse> getTSDCoursesByCompetenceCourse(CompetenceCourse course) {
@@ -316,61 +317,89 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 		return returnList;		
 	}
 
-	public Boolean getIsMemberOfCoursesAndTeachersValuationManagers(Person person) {
-		Group group = getCoursesAndTeachersValuationManagers();
-
-		return group != null ? group.isMember(person) : false;
+	
+	private boolean isUserMemberOfGroup(Person person, Group group) {
+	    return group == null ? false : group.isMember(person);
+	}
+	
+	public boolean isMemberOfCoursesValuationManagers(Person person) {
+	    return isUserMemberOfGroup(person, getCoursesValuationManagers());
+	}
+	
+	public boolean isMemberOfTeachersValuationManagers(Person person) {
+	    return isUserMemberOfGroup(person, getTeachersValuationManagers());
+	}
+	
+	public boolean isMemberOfCoursesManagementGroup(Person person) {
+	    return isUserMemberOfGroup(person, getCoursesManagementGroup());
+	}
+	
+	public boolean isMemberOfTeachersManagementGroup(Person person) {
+	    return isUserMemberOfGroup(person,getTeachersManagementGroup());
 	}
 
-	public Boolean getIsMemberOfCoursesAndTeachersManagementGroup(Person person) {
-		Group group = getCoursesAndTeachersManagementGroup();
-
-		return group != null ? group.isMember(person) : false;
+	public boolean hasCourseValuationPermission(Person person) {
+	    return getTSDProcessPhase().getTSDProcess().getHasSuperUserPermission(person) || isMemberOfCoursesValuationManagers(person) ||
+	    ((getParent() != null) ? getParent().isMemberOfCoursesValuationManagers(person) : false);
 	}
-
-	public Boolean getHaveCoursesAndTeachersValuationPermission(Person person) {
+	
+	public boolean hasTeachersValuationPermission(Person person) {
+	    return getTSDProcessPhase().getTSDProcess().getHasSuperUserPermission(person) || isMemberOfTeachersValuationManagers(person) ||
+	    ((getParent() != null) ? getParent().isMemberOfTeachersValuationManagers(person) : false);
+	}
+	
+	public boolean hasCourseManagementPermission(Person person) {
 		return getTSDProcessPhase().getTSDProcess().getHasSuperUserPermission(person)
-				|| getIsMemberOfCoursesAndTeachersValuationManagers(person)
-				|| ((getParent() != null) ? getParent().getHaveCoursesAndTeachersValuationPermission(person) : false);
-
+		|| isMemberOfCoursesManagementGroup(person) 
+		|| ((getParent() != null) ? getParent().hasCourseManagementPermission(person) : false);
+	}
+	
+	public boolean hasTeachersManagementPermission(Person person) {
+	    return getTSDProcessPhase().getTSDProcess().getHasSuperUserPermission(person)
+		|| isMemberOfTeachersManagementGroup(person) 
+		|| ((getParent() != null) ? getParent().hasTeachersManagementPermission(person) : false);
 	}
 
-	public Boolean getHaveCoursesAndTeachersManagement(Person person) {
-		return getTSDProcessPhase().getTSDProcess().getHasSuperUserPermission(person)
-				|| getIsMemberOfCoursesAndTeachersManagementGroup(person)
-				|| ((getParent() != null) ? getParent().getHaveCoursesAndTeachersManagement(person) : false);
+	private Group addPersonToGroup(Group group, Person person) {
+	    return group != null ? new GroupUnion(group, new PersonGroup(person)) : new PersonGroup(person);
+	}
+	
+	private Group removePersonFromGroup(Group group, Person person) {
+	    return group != null ? new GroupDifference(group,new PersonGroup(person)) : null;
+	}
+	
+	public void addCourseValuationPermission(Person person) {
+	    setCoursesValuationManagers(addPersonToGroup(getCoursesValuationManagers(), person));
 	}
 
-	public void addCoursesAndTeachersValuationPermission(Person person) {
-		Group group = getCoursesAndTeachersValuationManagers();
-
-		setCoursesAndTeachersValuationManagers((group != null) ? new GroupUnion(group, new PersonGroup(person))
-				: new PersonGroup(person));
+	public void removeCourseValuationPermission(Person person) {
+	    setCoursesValuationManagers(removePersonFromGroup(getCoursesValuationManagers(), person));
 	}
-
-	public void removeCoursesAndTeachersValuationPermission(Person person) {
-		Group group = getCoursesAndTeachersValuationManagers();
-
-		if (group != null) {
-			setCoursesAndTeachersValuationManagers(new GroupDifference(group, new PersonGroup(person)));
-		}
+	
+	public void addTeacherValuationPermission(Person person) {
+	    setTeachersValuationManagers(addPersonToGroup(getTeachersValuationManagers(), person));
 	}
-
-	public void addCoursesAndTeachersManagement(Person person) {
-		Group group = getCoursesAndTeachersManagementGroup();
-
-		setCoursesAndTeachersManagementGroup((group != null) ? new GroupUnion(group, new PersonGroup(person))
-				: new PersonGroup(person));
+	
+	public void removeTeacherValuationPermission(Person person) {
+	    setTeachersValuationManagers(removePersonFromGroup(getTeachersValuationManagers(), person));
 	}
-
-	public void removeCoursesAndTeachersManagement(Person person) {
-		Group group = getCoursesAndTeachersManagementGroup();
-
-		if (group != null) {
-			setCoursesAndTeachersManagementGroup(new GroupDifference(group, new PersonGroup(person)));
-		}
+	
+	public void addCourseManagersPermission(Person person) {
+	    setCoursesManagementGroup(addPersonToGroup(getCoursesManagementGroup(),person));
 	}
-
+	
+	public void removeCourseManagersPermission(Person person) {
+	    setCoursesManagementGroup(removePersonFromGroup(getCoursesManagementGroup(), person));
+	}
+	
+	public void addTeachersManagersPermission(Person person) {
+	    setTeachersManagementGroup(addPersonToGroup(getTeachersManagementGroup(),person));
+	}
+	
+	public void removeTeachersManagersPermission(Person person) {
+	    setTeachersManagementGroup(removePersonFromGroup(getTeachersManagementGroup(), person));
+	}
+	
 	public Double getAllActiveTSDCourseTotalHoursByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
 		double totalHours = 0d; 
 		

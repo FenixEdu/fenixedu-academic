@@ -3933,8 +3933,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	}
 
 	class net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution extends net.sourceforge.fenixedu.domain.DomainObject {
-		Group coursesAndTeachersManagementGroup;
-		Group coursesAndTeachersValuationManagers;
+		Group coursesManagementGroup;
+		Group teachersManagementGroup;
+		Group coursesValuationManagers;
+		Group teachersValuationManagers;
 		String name;
 	}
 
@@ -4244,7 +4246,9 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Integer pointsForConvoked;
 		Integer pointsForDisconvoked;
 		Integer pointsForDismissed;
+		Integer pointsForDismissedTeacher;
 		Integer pointsForMissing;
+		Integer pointsForMissingTeacher;
 		Integer pointsForTeacher;
 		String rulesLink;
 	}
