@@ -7,8 +7,7 @@ public class AnnouncementNode extends AnnouncementNode_Base {
     
     public AnnouncementNode(final AnnouncementBoard announcementBoard, final Announcement announcement) {
         super();
-        setParent(announcementBoard);
-        setChild(announcement);
+        init(announcementBoard, announcement, Boolean.TRUE);
     }
 
     public int compareTo(Node o) {
