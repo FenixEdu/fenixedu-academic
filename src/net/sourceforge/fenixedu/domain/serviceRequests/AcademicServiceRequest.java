@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,6 +27,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -64,9 +66,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	super.setFreeProcessed(freeProcessed);
 	super.setExecutionYear(executionYear);
 
-	final AcademicServiceRequestBean bean = new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW, getEmployee());
+	final AcademicServiceRequestBean bean = new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
+		getEmployee());
 	bean.setSituationDate(requestDate.toYearMonthDay());
-	
+
 	createAcademicServiceRequestSituations(bean);
     }
 
@@ -385,6 +388,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	}
 
+	if (academicServiceRequestBean.isToProcess() && hasPersonalInfo() && hasMissingPersonalInfo()) {
+	    throw new DomainException("AcademicServiceRequest.has.missing.personal.info");
+	}
+
 	if (academicServiceRequestBean.isToDeliver()) {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
@@ -482,9 +489,26 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     abstract public AcademicServiceRequestType getAcademicServiceRequestType();
 
     /**
-         * Indicates if is possible to AdministrativeOffice send this request to
-         * another entity
-         */
+     * Indicates if is possible to AdministrativeOffice send this request to
+     * another entity
+     */
     abstract public boolean isPossibleToSendToOtherEntity();
+
+    abstract public boolean hasPersonalInfo();
+
+    private boolean hasMissingPersonalInfo() {
+	final List<String> toTest = new ArrayList<String>();
+
+	toTest.add(getPerson().getParishOfBirth());
+	toTest.add(getPerson().getDistrictOfBirth());
+
+	for (final String testing : toTest) {
+	    if (testing == null || StringUtils.isEmpty(testing)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
 
 }

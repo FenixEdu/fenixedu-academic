@@ -81,4 +81,9 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return false;
+    }
+
 }

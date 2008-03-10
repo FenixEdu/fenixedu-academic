@@ -116,4 +116,9 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return false;
+    }
+
 }

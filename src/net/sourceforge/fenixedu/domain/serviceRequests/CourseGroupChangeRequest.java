@@ -120,4 +120,9 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return false;
+    }
+
 }

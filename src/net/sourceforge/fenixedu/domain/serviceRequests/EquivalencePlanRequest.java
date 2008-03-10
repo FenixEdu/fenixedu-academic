@@ -75,4 +75,9 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return false;
+    }
+
 }

@@ -76,4 +76,9 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return false;
+    }
+
 }

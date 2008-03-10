@@ -130,4 +130,9 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return false;
+    }
+
 }
