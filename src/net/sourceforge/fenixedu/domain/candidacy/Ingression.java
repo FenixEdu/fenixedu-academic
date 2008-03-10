@@ -80,7 +80,9 @@ public enum Ingression {
 
     TPB("Transição para Bolonha"),
 
-    DA1C("Acesso directo do 1º Ciclo");
+    DA1C("Acesso directo do 1º Ciclo"),
+
+    AG1C("Atribuição de Grau de 1º Ciclo");
 
     String description;
 
