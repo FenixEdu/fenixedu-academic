@@ -5,11 +5,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
-<h2><bean:message key="title.evaluation" /></h2>
+<bean:size id="attendsSize" name="attendsMap"/>
+<h2><bean:message key="title.evaluation" /></h2> 
 <br/>
 <bean:message key="classification.nonOfficial.information" />
 <br/>
 <br/>
+<em>(<bean:message key="label.students.size"/>: <bean:write name="attendsSize"/>)</em>
 <table class="tab_complex" cellspacing="1" cellpadding="2">
 	<tr>
 		<th nowrap>
