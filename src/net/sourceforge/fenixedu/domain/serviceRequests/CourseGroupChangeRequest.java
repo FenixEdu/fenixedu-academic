@@ -114,4 +114,10 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }
+
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+	return false;
+    }
+
 }

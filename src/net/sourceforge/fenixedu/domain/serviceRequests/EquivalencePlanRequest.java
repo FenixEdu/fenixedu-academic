@@ -64,9 +64,15 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 	    throw new DomainException("error.AcademicServiceRequest.cannot.be.deleted");
 	}
     }
-    
+
     @Override
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }
+
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+	return false;
+    }
+
 }

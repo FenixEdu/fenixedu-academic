@@ -54,4 +54,9 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	return 0;
     }
 
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+	return false;
+    }
+
 }

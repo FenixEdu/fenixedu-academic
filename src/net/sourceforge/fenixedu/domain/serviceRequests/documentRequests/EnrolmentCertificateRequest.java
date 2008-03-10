@@ -77,4 +77,9 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	return getEnrolmentsToDisplay().size();
     }
 
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+	return true;
+    }
+
 }

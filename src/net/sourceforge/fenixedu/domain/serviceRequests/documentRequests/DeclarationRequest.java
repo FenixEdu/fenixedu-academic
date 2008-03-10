@@ -127,4 +127,10 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     public boolean isPossibleToSendToOtherEntity() {
 	return false;
     }
+
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+	return false;
+    }
+
 }

@@ -15,16 +15,18 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 
 abstract public class RegistrationAcademicServiceRequest extends RegistrationAcademicServiceRequest_Base {
-    
+
     protected RegistrationAcademicServiceRequest() {
-        super();
+	super();
     }
-    
-    protected void init(final Registration registration, final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
+
+    protected void init(final Registration registration, final DateTime requestDate, final Boolean urgentRequest,
+	    final Boolean freeProcessed) {
 	init(registration, null, requestDate, urgentRequest, freeProcessed);
     }
-    
-    protected void init(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate, final Boolean urgentRequest, final Boolean freeProcessed) {
+
+    protected void init(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate,
+	    final Boolean urgentRequest, final Boolean freeProcessed) {
 	// first set own parameters because of findAdministrativeOffice
 	checkParameters(registration);
 	super.setRegistration(registration);
@@ -35,30 +37,31 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     private void checkParameters(final Registration registration) {
 	if (registration == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.registration.cannot.be.null");
-	} else if (registration.isTransited()) {
+	} else if (!isAvailableForTransitedRegistrations() && registration.isTransited()) {
 	    throw new DomainException("RegistrationAcademicServiceRequest.registration.cannot.be.transited");
 	}
     }
-    
+
     @Override
     protected AdministrativeOffice findAdministrativeOffice() {
-        AdministrativeOffice administrativeOffice = super.findAdministrativeOffice();
-        if (administrativeOffice == null) {
-            administrativeOffice = AdministrativeOffice.getResponsibleAdministrativeOffice(getRegistration().getDegree());
-        }
-        return administrativeOffice;
+	AdministrativeOffice administrativeOffice = super.findAdministrativeOffice();
+	if (administrativeOffice == null) {
+	    administrativeOffice = AdministrativeOffice.getResponsibleAdministrativeOffice(getRegistration().getDegree());
+	}
+	return administrativeOffice;
     }
-    
+
     @Override
     public void setRegistration(Registration registration) {
 	throw new DomainException("error.serviceRequests.RegistrationAcademicServiceRequest.cannot.modify.registration");
     }
-    
+
     public StudentCurricularPlan getStudentCurricularPlan() {
-	final ExecutionYear executionYear = hasExecutionYear() ? getExecutionYear() : ExecutionYear.readByDateTime(getRequestDate());
+	final ExecutionYear executionYear = hasExecutionYear() ? getExecutionYear() : ExecutionYear
+		.readByDateTime(getRequestDate());
 	return getRegistration().getStudentCurricularPlan(executionYear);
     }
-    
+
     public Degree getDegree() {
 	return getStudentCurricularPlan().getDegree();
     }
@@ -66,13 +69,13 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     public DegreeType getDegreeType() {
 	return getDegree().getDegreeType();
     }
-    
+
     public boolean isBolonha() {
 	return getDegree().isBolonhaDegree();
     }
 
     public Campus getCampus() {
-	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(); 
+	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan();
 	return studentCurricularPlan != null ? studentCurricularPlan.getCurrentCampus() : null;
     }
 
@@ -86,19 +89,23 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
 	    throw new DomainException("RegistrationAcademicServiceRequest.non.employee.person.attempt.to.change.request");
 	}
     }
-    
+
     @Override
     public boolean isRequestForRegistration() {
-        return true;
+	return true;
     }
-    
+
     @Override
     public void delete() {
-        super.setRegistration(null);
-        super.delete();
+	super.setRegistration(null);
+	super.delete();
     }
-    
+
+    @Override
     public Person getPerson() {
 	return getRegistration().getPerson();
     }
+
+    abstract public boolean isAvailableForTransitedRegistrations();
+
 }

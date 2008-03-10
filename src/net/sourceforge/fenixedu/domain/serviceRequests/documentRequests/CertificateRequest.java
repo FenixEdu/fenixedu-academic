@@ -158,4 +158,10 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
     public boolean isPossibleToSendToOtherEntity() {
 	return false;
     }
+
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+	return false;
+    }
+
 }

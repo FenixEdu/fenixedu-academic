@@ -70,7 +70,8 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	return registration.getRegistrationStates(ALLOWED_TYPES).size() >= 3;
     }
 
-    private boolean isEnrolmentPeriodOpen(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
+    private boolean isEnrolmentPeriodOpen(final Registration registration, final ExecutionYear executionYear,
+	    final DateTime requestDate) {
 	final DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
 	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
 	    final EnrolmentPeriod enrolmentPeriod = degreeCurricularPlan.getEnrolmentPeriodInCurricularCoursesBy(executionPeriod);
@@ -102,7 +103,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
-	    
+
 	} else if (academicServiceRequestBean.isToConclude()) {
 	    RegistrationState.createState(getRegistration(), academicServiceRequestBean.getEmployee().getPerson(),
 		    new DateTime(), RegistrationStateType.REGISTERED);
@@ -123,4 +124,10 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }
+
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+	return false;
+    }
+
 }

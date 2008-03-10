@@ -201,5 +201,10 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }
-    
+
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+	return false;
+    }
+
 }

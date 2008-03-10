@@ -70,4 +70,10 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }
+
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+	return false;
+    }
+
 }

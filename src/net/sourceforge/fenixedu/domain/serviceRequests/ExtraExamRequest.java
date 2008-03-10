@@ -99,8 +99,8 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-        super.internalChangeState(academicServiceRequestBean);
-        
+	super.internalChangeState(academicServiceRequestBean);
+
 	if (academicServiceRequestBean.isToProcess()) {
 	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
 	}
@@ -110,4 +110,10 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }
+
+    @Override
+    public boolean isAvailableForTransitedRegistrations() {
+	return false;
+    }
+
 }
