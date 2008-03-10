@@ -74,14 +74,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-     * This might look a strange comparator, but the idea is to show a list of
-     * degree curricular plans according to, in the following order: 1. It's
-     * degree type 2. Reverse order of ExecutionDegrees 3. It's degree code (in
-     * order to roughly order them by prebolonha/bolonha) OR reverse order of
-     * their own name
-     * 
-     * For an example, see the coordinator's portal.
-     */
+         * This might look a strange comparator, but the idea is to show a list
+         * of degree curricular plans according to, in the following order: 1.
+         * It's degree type 2. Reverse order of ExecutionDegrees 3. It's degree
+         * code (in order to roughly order them by prebolonha/bolonha) OR
+         * reverse order of their own name
+         * 
+         * For an example, see the coordinator's portal.
+         */
     public static final Comparator<DegreeCurricularPlan> DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE = new Comparator<DegreeCurricularPlan>() {
 
 	public int compare(DegreeCurricularPlan degreeCurricularPlan1, DegreeCurricularPlan degreeCurricularPlan2) {
@@ -246,6 +246,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private void approve(ExecutionYear beginExecutionYear) {
 	if (isApproved()) {
+	    return;
+	}
+	
+	if (!getCanModify().booleanValue()) {
 	    throw new DomainException("error.degreeCurricularPlan.already.approved");
 	}
 
@@ -253,7 +257,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	if (beginExecutionYear == null) {
 	    throw new DomainException("error.invalid.execution.year");
 	} else {
-	    beginExecutionPeriod = beginExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
+	    beginExecutionPeriod = beginExecutionYear.getFirstExecutionPeriod();
 	    if (beginExecutionPeriod == null) {
 		throw new DomainException("error.invalid.execution.period");
 	    }
@@ -304,8 +308,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-     * Temporary method, after all degrees migration this is no longer necessary
-     */
+         * Temporary method, after all degrees migration this is no longer
+         * necessary
+         */
     public boolean isBoxStructure() {
 	return !getCurricularStage().equals(CurricularStage.OLD);
     }
@@ -704,10 +709,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-     * Method to get an unfiltered list of a dcp's curricular courses
-     * 
-     * @return All curricular courses that were or still are present in the dcp
-     */
+         * Method to get an unfiltered list of a dcp's curricular courses
+         * 
+         * @return All curricular courses that were or still are present in the
+         *         dcp
+         */
     @Override
     public List<CurricularCourse> getCurricularCourses() {
 	return isBoxStructure() ? getCurricularCourses((ExecutionYear) null) : super.getCurricularCourses();
@@ -737,11 +743,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-     * Method to get a filtered list of a dcp's curricular courses, with at
-     * least one open context in the given execution year
-     * 
-     * @return All curricular courses that are present in the dcp
-     */
+         * Method to get a filtered list of a dcp's curricular courses, with at
+         * least one open context in the given execution year
+         * 
+         * @return All curricular courses that are present in the dcp
+         */
     private List<CurricularCourse> getCurricularCourses(final ExecutionYear executionYear) {
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	if (isBoxStructure()) {
@@ -759,11 +765,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-     * Method to get an unfiltered list of a bolonha dcp's competence courses
-     * 
-     * @return All competence courses that were or still are present in the dcp,
-     *         ordered by name
-     */
+         * Method to get an unfiltered list of a bolonha dcp's competence
+         * courses
+         * 
+         * @return All competence courses that were or still are present in the
+         *         dcp, ordered by name
+         */
     public List<CompetenceCourse> getCompetenceCourses() {
 	if (isBolonhaDegree()) {
 	    return getCompetenceCourses(null);
@@ -774,12 +781,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-     * Method to get a filtered list of a dcp's competence courses in the given
-     * execution year. Each competence courses is connected with a curricular
-     * course with at least one open context in the execution year
-     * 
-     * @return All competence courses that are present in the dcp
-     */
+         * Method to get a filtered list of a dcp's competence courses in the
+         * given execution year. Each competence courses is connected with a
+         * curricular course with at least one open context in the execution
+         * year
+         * 
+         * @return All competence courses that are present in the dcp
+         */
     public List<CompetenceCourse> getCompetenceCourses(ExecutionYear executionYear) {
 	SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
 
@@ -938,8 +946,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-     * Used to create a CurricularCourse to non box structure
-     */
+         * Used to create a CurricularCourse to non box structure
+         */
     public CurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
 	    CurricularStage curricularStage) {
 	return new CurricularCourse(this, name, code, acronym, enrolmentAllowed, curricularStage);
@@ -1016,6 +1024,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	Person person = AccessControl.getPerson();
 	return (person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER) || this
 		.getCurricularPlanMembersGroup().isMember(person));
+    }
+
+    public Boolean getCanModify() {
+	if (isApproved()) {
+	    return false;
+	}
+
+	final List<ExecutionDegree> executionDegrees = getExecutionDegrees();
+	return (executionDegrees.size() > 1) ? false : executionDegrees.isEmpty()
+		|| executionDegrees.get(0).getExecutionYear().isCurrent();
     }
 
     @Override
@@ -1658,10 +1676,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /*
-     * Returns a list of students without tutor for the given entry year. This
-     * students never had a tutor. Students that have expired tutorships do not
-     * appear in this list.
-     */
+         * Returns a list of students without tutor for the given entry year.
+         * This students never had a tutor. Students that have expired
+         * tutorships do not appear in this list.
+         */
     public List<StudentCurricularPlan> getStudentsWithoutTutorGivenEntryYear(ExecutionYear entryYear) {
 	List<StudentCurricularPlan> studentsWithoutTutor = new ArrayList<StudentCurricularPlan>();
 	for (StudentCurricularPlan scp : getStudentsCurricularPlanGivenEntryYear(entryYear)) {
@@ -1689,10 +1707,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     /**
-     * This must be completely refactored. A pattern of some sort is desirable
-     * in order to make this instance-dependent. Just did this due to time
-     * constrains.
-     */
+         * This must be completely refactored. A pattern of some sort is
+         * desirable in order to make this instance-dependent. Just did this due
+         * to time constrains.
+         */
 
     static final Set<String> bestAverage = new HashSet<String>();
     static {

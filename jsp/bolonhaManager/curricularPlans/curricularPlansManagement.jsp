@@ -53,8 +53,8 @@
 					<f:param name="hideCourses" value="false"/>					
 					<f:param name="action" value="view"/>
 				</h:outputLink>
-				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
-				<h:outputLink value="#{DegreeManagement.request.contextPath}/bolonhaManager/curricularPlans/buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
+				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild && degreeCurricularPlan.canModify}"/>
+				<h:outputLink value="#{DegreeManagement.request.contextPath}/bolonhaManager/curricularPlans/buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild && degreeCurricularPlan.canModify}">
 					<h:outputText value="#{bolonhaBundle['manageCurricularPlan']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 					<f:param name="organizeBy" value="groups"/>

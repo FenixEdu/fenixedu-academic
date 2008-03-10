@@ -26,7 +26,7 @@
 		
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 		<h:outputText value="<p><label>#{scouncilBundle['curricularStage']}:</label> " escape="false"/>
-		<h:selectOneMenu id="curricularStage" value="#{DegreeCurricularPlanManagement.curricularStage}" onchange="this.form.submit();">
+		<h:selectOneMenu id="curricularStage" disabled="#{DegreeCurricularPlanManagement.dcp.curricularStage == 'APPROVED' && !DegreeCurricularPlanManagement.dcp.canModify}" value="#{DegreeCurricularPlanManagement.curricularStage}" onchange="this.form.submit();">
 			<f:selectItems value="#{DegreeCurricularPlanManagement.curricularStages}" />
 		</h:selectOneMenu>
 		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
