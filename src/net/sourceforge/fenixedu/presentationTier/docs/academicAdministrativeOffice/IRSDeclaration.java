@@ -27,20 +27,20 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-	
+
 	final Registration registration = getDocumentRequest().getRegistration();
 	addParameter("registration", registration);
-	
+
 	final Person person = registration.getPerson();
 	setPersonFields(registration, person);
-	
+
 	final Integer civilYear = ((IRSDeclarationRequest) getDocumentRequest()).getYear();
 	addParameter("civilYear", civilYear.toString());
 
 	setAmounts(person, civilYear);
-        setEmployeeFields();
+	setEmployeeFields();
 
-        addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
     }
 
     final private void setPersonFields(final Registration registration, final Person person) {
@@ -48,8 +48,9 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	addParameter("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, '-'));
 
 	final String registrationNumber = registration.getNumber().toString();
-	addParameter("registrationNumber", StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH - "aluno deste Instituto com o Número ".length(), '-'));
-	
+	addParameter("registrationNumber", StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH
+		- "aluno deste Instituto com o Número ".length(), '-'));
+
 	final StringBuilder documentIdType = new StringBuilder();
 	documentIdType.append("portador" + (person.isMale() ? "" : "a"));
 	documentIdType.append(" do ");
@@ -58,18 +59,13 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	addParameter("documentIdType", documentIdType.toString());
 
 	final String documentIdNumber = person.getDocumentIdNumber();
-	addParameter("documentIdNumber", StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH - documentIdType.toString().length(), '-'));
+	addParameter("documentIdNumber", StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH
+		- documentIdType.toString().length(), '-'));
     }
 
     final private void setAmounts(final Person person, final Integer civilYear) {
 	Money gratuityPayedAmount = person.getMaxDeductableAmountForLegalTaxes(EventType.GRATUITY, civilYear);
-	Money officeFeeAndInsurancePayedAmount = person.getMaxDeductableAmountForLegalTaxes(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, civilYear);
-	Money othersPayedAmount = Money.ZERO;
-	for (final EventType eventType : EventType.values()) {
-	    if (eventType != EventType.GRATUITY && eventType != EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE) {
-		othersPayedAmount = othersPayedAmount.add(person.getMaxDeductableAmountForLegalTaxes(eventType, civilYear));
-	    }
-	}
+	Money othersPayedAmount = calculateOthersPayedAmount(person, civilYear);
 
 	final StringBuilder eventTypes = new StringBuilder();
 	final StringBuilder payedAmounts = new StringBuilder();
@@ -77,25 +73,32 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	    eventTypes.append("- ").append(enumerationBundle.getString(EventType.GRATUITY.getQualifiedName())).append("\n");
 	    payedAmounts.append("*").append(gratuityPayedAmount.toPlainString()).append("Eur").append("\n");
 	}
-	if (!officeFeeAndInsurancePayedAmount.isZero()) {
-	    eventTypes.append("- ").append(enumerationBundle.getString(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE.getQualifiedName())).append("\n");
-	    payedAmounts.append("*").append(officeFeeAndInsurancePayedAmount.toPlainString()).append("Eur").append("\n");
-	}
 	if (!othersPayedAmount.isZero()) {
-	    eventTypes.append("- Diversos").append("\n");
+	    eventTypes.append("- Outras despesas de educação").append("\n");
 	    payedAmounts.append("*").append(othersPayedAmount.toPlainString()).append("Eur").append("\n");
 	}
-	
 	addParameter("eventTypes", eventTypes.toString());
 	addParameter("payedAmounts", payedAmounts.toString());
 
-	Money totalPayedAmount = othersPayedAmount.add(gratuityPayedAmount).add(officeFeeAndInsurancePayedAmount);
+	Money totalPayedAmount = othersPayedAmount.add(gratuityPayedAmount);
 	addParameter("totalPayedAmount", "*" + totalPayedAmount.toString() + "Eur");
     }
-    
+
+    private Money calculateOthersPayedAmount(final Person person, final Integer civilYear) {
+	Money result = Money.ZERO;
+
+	for (final EventType eventType : EventType.values()) {
+	    if (eventType != EventType.GRATUITY) {
+		result = result.add(person.getMaxDeductableAmountForLegalTaxes(eventType, civilYear));
+	    }
+	}
+
+	return result;
+    }
+
     final private void setEmployeeFields() {
 	final Employee employee = AccessControl.getPerson().getEmployee();
-	
+
 	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 	addParameter("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
