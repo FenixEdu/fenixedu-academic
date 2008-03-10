@@ -84,4 +84,9 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return false;
+    }
+
 }

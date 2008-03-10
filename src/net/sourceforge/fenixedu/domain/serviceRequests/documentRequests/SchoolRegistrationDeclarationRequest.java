@@ -43,4 +43,9 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
 	return EventType.SCHOOL_REGISTRATION_DECLARATION_REQUEST;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return true;
+    }
+
 }

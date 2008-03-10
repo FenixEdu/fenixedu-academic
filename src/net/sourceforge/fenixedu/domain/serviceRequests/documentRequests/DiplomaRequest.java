@@ -188,6 +188,11 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     }
 
     @Override
+    public boolean hasPersonalInfo() {
+	return true;
+    }
+
+    @Override
     public boolean isPagedDocument() {
 	return false;
     }

@@ -164,4 +164,9 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return false;
+    }
+
 }

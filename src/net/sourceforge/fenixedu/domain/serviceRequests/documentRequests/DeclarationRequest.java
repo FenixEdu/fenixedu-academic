@@ -133,4 +133,9 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return false;
+    }
+
 }

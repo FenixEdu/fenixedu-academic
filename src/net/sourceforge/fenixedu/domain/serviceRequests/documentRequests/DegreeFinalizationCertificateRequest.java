@@ -246,6 +246,11 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     @Override
+    public boolean hasPersonalInfo() {
+	return true;
+    }
+
+    @Override
     final public boolean isToPrint() {
 	return super.isToPrint() && (getInternship() == null || !getInternship())
 		&& (getStudyPlan() == null || !getStudyPlan() || getRegistration().isBolonha());

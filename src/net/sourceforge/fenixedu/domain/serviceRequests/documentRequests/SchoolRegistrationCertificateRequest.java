@@ -59,4 +59,9 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return true;
+    }
+
 }

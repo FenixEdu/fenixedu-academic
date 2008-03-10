@@ -42,4 +42,10 @@ public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Bas
     final public EventType getEventType() {
 	return EventType.ENROLMENT_DECLARATION_REQUEST;
     }
+
+    @Override
+    public boolean hasPersonalInfo() {
+	return true;
+    }
+
 }

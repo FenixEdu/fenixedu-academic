@@ -176,4 +176,9 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	return false;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return true;
+    }
+
 }

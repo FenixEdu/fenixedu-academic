@@ -82,4 +82,9 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 	return true;
     }
 
+    @Override
+    public boolean hasPersonalInfo() {
+	return true;
+    }
+
 }
