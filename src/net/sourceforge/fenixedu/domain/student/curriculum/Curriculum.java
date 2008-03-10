@@ -240,8 +240,6 @@ public class Curriculum implements Serializable, ICurriculum {
 	sumEctsCredits = BigDecimal.ZERO;
 	countCurricularYear(curricularYearEntries);
 	curricularYear = calculateCurricularYear();
-
-	// System.out.println(toString());
     }
 
     public void setAverageType(AverageType averageType) {
@@ -279,7 +277,7 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private Integer calculateCurricularYear() {
 	if (curricularYearEntries.isEmpty()) {
-	    return Integer.valueOf(0);
+	    return Integer.valueOf(1);
 	}
 
 	final int curricularYears = getTotalCurricularYears();
