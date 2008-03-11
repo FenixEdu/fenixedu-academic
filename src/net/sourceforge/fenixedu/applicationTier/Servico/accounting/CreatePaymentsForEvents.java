@@ -24,9 +24,8 @@ public class CreatePaymentsForEvents extends Service {
 	super();
     }
 
-    public Collection<Entry> run(final User responsibleUser, final List<EntryDTO> entryDTOs,
-	    final PaymentMode paymentMode, final boolean differedPayment, final DateTime whenRegistered)
-	    throws FenixServiceException {
+    public Collection<Entry> run(final User responsibleUser, final List<EntryDTO> entryDTOs, final PaymentMode paymentMode,
+	    final boolean differedPayment, final DateTime whenRegistered) throws FenixServiceException {
 
 	final Map<Event, List<EntryDTO>> entryDTOsByEvent = splitEntryDTOsByEvent(entryDTOs);
 	final Collection<Entry> resultingEntries = new HashSet<Entry>();
@@ -51,12 +50,9 @@ public class CreatePaymentsForEvents extends Service {
 	for (final EntryDTO entryDTO : entryDTOs) {
 	    List<EntryDTO> entryDTOsByEvent = result.get(entryDTO.getEvent());
 	    if (entryDTOsByEvent == null) {
-		entryDTOsByEvent = new ArrayList<EntryDTO>();
+		result.put(entryDTO.getEvent(), entryDTOsByEvent = new ArrayList<EntryDTO>());
 	    }
-
 	    entryDTOsByEvent.add(entryDTO);
-
-	    result.put(entryDTO.getEvent(), entryDTOsByEvent);
 	}
 
 	return result;
