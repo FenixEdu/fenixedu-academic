@@ -2,13 +2,10 @@ package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
@@ -56,44 +53,11 @@ public class TSDProcess extends TSDProcess_Base {
     }
 
     private void createInitialTSDProcessPhase(String initialTSDProcessPhaseName) {
-	new TSDProcessPhase(this, initialTSDProcessPhaseName, null, null, TSDProcessPhaseStatus.CURRENT,
-		getDefaultOmissionValues());
-    }
-
-    private Map<String, Object> getDefaultOmissionValues() {
-	Map<String, Object> defaultOmissionValues = new HashMap<String, Object>();
-
-	defaultOmissionValues.put("studentsPerTheoreticalShift", Integer.parseInt(PropertiesManager
-		.getProperty("studentsPerTheoreticalShift")));
-	defaultOmissionValues.put("studentsPerPraticalShift", new Integer(PropertiesManager
-		.getProperty("studentsPerPraticalShift")));
-	defaultOmissionValues.put("studentsPerTheoPratShift", new Integer(PropertiesManager
-		.getProperty("studentsPerTheoPratShift")));
-	defaultOmissionValues.put("studentsPerLaboratorialShift", new Integer(PropertiesManager
-		.getProperty("studentsPerLaboratorialShift")));
-	defaultOmissionValues.put("weightFirstTimeEnrolledStudentsPerTheoShift", new Double(PropertiesManager
-		.getProperty("weightFirstTimeEnrolledStudentsPerTheoShift")));
-	defaultOmissionValues.put("weightFirstTimeEnrolledStudentsPerPratShift", new Double(PropertiesManager
-		.getProperty("weightFirstTimeEnrolledStudentsPerPratShift")));
-	defaultOmissionValues.put("weightFirstTimeEnrolledStudentsPerTheoPratShift", new Double(PropertiesManager
-		.getProperty("weightFirstTimeEnrolledStudentsPerTheoPratShift")));
-	defaultOmissionValues.put("weightFirstTimeEnrolledStudentsPerLabShift", new Double(PropertiesManager
-		.getProperty("weightFirstTimeEnrolledStudentsPerLabShift")));
-	defaultOmissionValues.put("weightSecondTimeEnrolledStudentsPerTheoShift", new Double(PropertiesManager
-		.getProperty("weightSecondTimeEnrolledStudentsPerTheoShift")));
-	defaultOmissionValues.put("weightSecondTimeEnrolledStudentsPerPratShift", new Double(PropertiesManager
-		.getProperty("weightSecondTimeEnrolledStudentsPerPratShift")));
-	defaultOmissionValues.put("weightSecondTimeEnrolledStudentsPerTheoPratShift", new Double(PropertiesManager
-		.getProperty("weightSecondTimeEnrolledStudentsPerTheoPratShift")));
-	defaultOmissionValues.put("weightSecondTimeEnrolledStudentsPerLabShift", new Double(PropertiesManager
-		.getProperty("weightSecondTimeEnrolledStudentsPerLabShift")));
-	return defaultOmissionValues;
+	new TSDProcessPhase(this, initialTSDProcessPhaseName, null, null, TSDProcessPhaseStatus.CURRENT);
     }
 
     public TSDProcessPhase createTSDProcessPhase(String tsdProcessPhaseName) {
-	return new TSDProcessPhase(this, tsdProcessPhaseName, getLastTSDProcessPhase(), null, TSDProcessPhaseStatus.OPEN,
-		getDefaultOmissionValues());
-
+	return new TSDProcessPhase(this, tsdProcessPhaseName, getLastTSDProcessPhase(), null, TSDProcessPhaseStatus.OPEN);
     }
 
     public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriodsAndDepartment(List<ExecutionPeriod> executionPeriods,

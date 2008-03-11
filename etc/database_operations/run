@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "update tsd tables" updateTSD.sql

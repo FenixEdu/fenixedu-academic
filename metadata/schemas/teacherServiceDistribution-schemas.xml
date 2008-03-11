@@ -4,14 +4,26 @@
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
-        <slot name="studentsPerPraticalShift" key="label.teacherServiceDistribution.studentsPerPraticalShift"  validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<slot name="studentsPerProblemShift" key="label.teacherServiceDistribution.studentsPerProblemShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
-		<slot name="studentsPerTheoPratShift" key="label.teacherServiceDistribution.studentsPerTheoPratShift"  validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<slot name="studentsPerSeminaryShift" key="label.teacherServiceDistribution.studentsPerSeminaryShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
+		<slot name="studentsPerFieldWorkShift" key="label.teacherServiceDistribution.studentsPerFieldWorkShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			<property name="size" value="2"/>
+        	<property name="maxLength" value="3"/>
+        </slot>
+		<slot name="studentsPerTrainingPeriodShift" key="label.teacherServiceDistribution.studentsPerTrainingPeriodShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			<property name="size" value="2"/>
+        	<property name="maxLength" value="3"/>
+        </slot>		
+		<slot name="studentsPerTutDirectionShift" key="label.teacherServiceDistribution.studentsPerTutDirectionShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			<property name="size" value="2"/>
+        	<property name="maxLength" value="3"/>
+        </slot>		
 		<slot name="studentsPerLaboratorialShift" key="label.teacherServiceDistribution.studentsPerLaboratorialShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
@@ -25,7 +37,34 @@
         	<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
-		<slot name="weightFirstTimeEnrolledStudentsPerPratShift" key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerPratShift">
+		<slot name="weightFirstTimeEnrolledStudentsPerProblemShift" key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerProblemShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            	<property name="regexp" value="0?\.[0-9]|1.0|0|1"/>
+            	<property name="message" value="errors.teacherServiceDistribution.double.notInRange"/>
+            	<property name="key" value="true"/>
+        	</validator>
+        	<property name="size" value="2"/>
+        	<property name="maxLength" value="3"/>
+        </slot>		
+		<slot name="weightFirstTimeEnrolledStudentsPerSeminaryShift" key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerSeminaryShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            	<property name="regexp" value="0?\.[0-9]|1.0|0|1"/>
+            	<property name="message" value="errors.teacherServiceDistribution.double.notInRange"/>
+            	<property name="key" value="true"/>
+        	</validator>
+        	<property name="size" value="2"/>
+        	<property name="maxLength" value="3"/>
+        </slot>		
+		<slot name="weightFirstTimeEnrolledStudentsPerFieldWorkShift" key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerFieldWorkShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            	<property name="regexp" value="0?\.[0-9]|1.0|0|1"/>
+            	<property name="message" value="errors.teacherServiceDistribution.double.notInRange"/>
+            	<property name="key" value="true"/>
+        	</validator>
+        	<property name="size" value="2"/>
+        	<property name="maxLength" value="3"/>
+        </slot>		
+		<slot name="weightFirstTimeEnrolledStudentsPerTrainingShift" key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerTrainingShift">
 			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             	<property name="regexp" value="0?\.[0-9]|1.0|0|1"/>
             	<property name="message" value="errors.teacherServiceDistribution.double.notInRange"/>
@@ -34,13 +73,13 @@
         	<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
-		<slot name="weightFirstTimeEnrolledStudentsPerTheoPratShift" key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerTheoPratShift">
+		<slot name="weightFirstTimeEnrolledStudentsPerTutDirectionShift" key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerTutDirectionShift">
 			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             	<property name="regexp" value="0?\.[0-9]|1.0|0|1"/>
             	<property name="message" value="errors.teacherServiceDistribution.double.notInRange"/>
             	<property name="key" value="true"/>
         	</validator>
-			<property name="size" value="2"/>
+        	<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
 		<slot name="weightFirstTimeEnrolledStudentsPerLabShift" key="label.teacherServiceDistribution.weightFirstTimeEnrolledStudentsPerLabShift">
@@ -61,7 +100,34 @@
         	<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
-		<slot name="weightSecondTimeEnrolledStudentsPerPratShift" key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerPratShift">
+				<slot name="weightSecondTimeEnrolledStudentsPerProblemShift" key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerProblemShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            	<property name="regexp" value="0?\.[0-9]|1.0|0|1"/>
+            	<property name="message" value="errors.teacherServiceDistribution.double.notInRange"/>
+            	<property name="key" value="true"/>
+        	</validator>
+        	<property name="size" value="2"/>
+        	<property name="maxLength" value="3"/>
+        </slot>		
+		<slot name="weightSecondTimeEnrolledStudentsPerSeminaryShift" key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerSeminaryShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            	<property name="regexp" value="0?\.[0-9]|1.0|0|1"/>
+            	<property name="message" value="errors.teacherServiceDistribution.double.notInRange"/>
+            	<property name="key" value="true"/>
+        	</validator>
+        	<property name="size" value="2"/>
+        	<property name="maxLength" value="3"/>
+        </slot>		
+		<slot name="weightSecondTimeEnrolledStudentsPerFieldWorkShift" key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerFieldWorkShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            	<property name="regexp" value="0?\.[0-9]|1.0|0|1"/>
+            	<property name="message" value="errors.teacherServiceDistribution.double.notInRange"/>
+            	<property name="key" value="true"/>
+        	</validator>
+        	<property name="size" value="2"/>
+        	<property name="maxLength" value="3"/>
+        </slot>		
+		<slot name="weightSecondTimeEnrolledStudentsPerTrainingShift" key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerTrainingShift">
 			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             	<property name="regexp" value="0?\.[0-9]|1.0|0|1"/>
             	<property name="message" value="errors.teacherServiceDistribution.double.notInRange"/>
@@ -70,7 +136,7 @@
         	<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
-		<slot name="weightSecondTimeEnrolledStudentsPerTheoPratShift" key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerTheoPratShift">
+		<slot name="weightSecondTimeEnrolledStudentsPerTutDirectionShift" key="label.teacherServiceDistribution.weightSecondTimeEnrolledStudentsPerTutDirectionShift">
 			<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             	<property name="regexp" value="0?\.[0-9]|1.0|0|1"/>
             	<property name="message" value="errors.teacherServiceDistribution.double.notInRange"/>

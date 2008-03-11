@@ -169,4 +169,5 @@ public class SQL2JavaConverters {
     public static FieldConversion AcademicInterval2SqlAcademicIntervalConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicInterval2SqlAcademicIntervalConversion();
     public static FieldConversion ClosedMonthDocumentType2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.ClosedMonthDocumentType2SqlVarcharConverter();
     public static FieldConversion CategoryType2SqlConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.CategoryType2SqlConversion();
+    public static FieldConversion SchoolClassCalculationMethod2SqlConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.SchoolClassCalculationMethodConversion();
 }

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -18,9 +17,8 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public TSDProcessPhase(TSDProcess tsdProcess, String name,
-	    TSDProcessPhase previousTSDProcessPhase, TSDProcessPhase nextTSDProcessPhase,
-	    TSDProcessPhaseStatus status, Map<String, Object> omissionValues) {
+    public TSDProcessPhase(TSDProcess tsdProcess, String name, TSDProcessPhase previousTSDProcessPhase,
+	    TSDProcessPhase nextTSDProcessPhase, TSDProcessPhaseStatus status) {
 	this();
 
 	this.setTSDProcess(tsdProcess);
@@ -29,28 +27,6 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
 	this.setNextTSDProcessPhase(nextTSDProcessPhase);
 	this.setStatus(status);
 	this.setIsPublished(false);
-
-	this.setStudentsPerTheoreticalShift((Integer) omissionValues.get("studentsPerTheoreticalShift"));
-	this.setStudentsPerPraticalShift((Integer) omissionValues.get("studentsPerPraticalShift"));
-	this.setStudentsPerTheoPratShift((Integer) omissionValues.get("studentsPerTheoPratShift"));
-	this.setStudentsPerLaboratorialShift((Integer) omissionValues
-		.get("studentsPerLaboratorialShift"));
-	this.setWeightFirstTimeEnrolledStudentsPerTheoShift((Double) omissionValues
-		.get("weightFirstTimeEnrolledStudentsPerTheoShift"));
-	this.setWeightFirstTimeEnrolledStudentsPerPratShift((Double) omissionValues
-		.get("weightFirstTimeEnrolledStudentsPerPratShift"));
-	this.setWeightFirstTimeEnrolledStudentsPerTheoPratShift((Double) omissionValues
-		.get("weightFirstTimeEnrolledStudentsPerTheoPratShift"));
-	this.setWeightFirstTimeEnrolledStudentsPerLabShift((Double) omissionValues
-		.get("weightFirstTimeEnrolledStudentsPerLabShift"));
-	this.setWeightSecondTimeEnrolledStudentsPerTheoShift((Double) omissionValues
-		.get("weightSecondTimeEnrolledStudentsPerTheoShift"));
-	this.setWeightSecondTimeEnrolledStudentsPerPratShift((Double) omissionValues
-		.get("weightSecondTimeEnrolledStudentsPerPratShift"));
-	this.setWeightSecondTimeEnrolledStudentsPerTheoPratShift((Double) omissionValues
-		.get("weightSecondTimeEnrolledStudentsPerTheoPratShift"));
-	this.setWeightSecondTimeEnrolledStudentsPerLabShift((Double) omissionValues
-		.get("weightSecondTimeEnrolledStudentsPerLabShift"));
 
 	TSDFactory tsdFactory = TSDFactory.getInstance();
 	tsdFactory.createTSDTreeStructure(this);
@@ -86,19 +62,18 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
 
 	return tsdProcessPhase;
     }
-    
+
     public List<TSDProcessPhase> getPreviousTSDProcessPhases() {
-		List<TSDProcessPhase> previousTSDProcessPhaseList = new ArrayList<TSDProcessPhase>();
-		TSDProcessPhase phase = getPreviousTSDProcessPhase();
-		
-		while(phase != null){
-			previousTSDProcessPhaseList.add(phase);
-			phase = phase.getPreviousTSDProcessPhase();
-		}
-		
-		return previousTSDProcessPhaseList;
+	List<TSDProcessPhase> previousTSDProcessPhaseList = new ArrayList<TSDProcessPhase>();
+	TSDProcessPhase phase = getPreviousTSDProcessPhase();
+
+	while (phase != null) {
+	    previousTSDProcessPhaseList.add(phase);
+	    phase = phase.getPreviousTSDProcessPhase();
 	}
 
+	return previousTSDProcessPhaseList;
+    }
 
     public Integer getNumberOfTeacherServiceDistributions() {
 	return getGroupings().size();
@@ -149,7 +124,7 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
 	for (TeacherServiceDistribution tsd : getGroupings()) {
 	    removeGroupings(tsd);
 	}
-	
+
 	removeNextTSDProcessPhase();
 	removePreviousTSDProcessPhase();
 	removeTSDProcess();
@@ -168,7 +143,7 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
 		tsdTeacher.delete();
 	    }
 	    for (TSDCourse course : tsd.getTSDCourses()) {
-	    	course.delete();
+		course.delete();
 	    }
 
 	    tsd.delete();
@@ -253,16 +228,32 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setStudentsPerPraticalShift(Integer studentsPerPraticalShift) {
-
-	super.setStudentsPerPraticalShift(studentsPerPraticalShift);
+    public void setStudentsPerFieldWorkShift(Integer studentsPerFieldWorkShift) {
+	super.setStudentsPerFieldWorkShift(studentsPerFieldWorkShift);
     }
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setStudentsPerTheoPratShift(Integer studentsPerTheoPratShift) {
+    public void setStudentsPerProblemShift(Integer studentsPerProblemShift) {
+	super.setStudentsPerProblemShift(studentsPerProblemShift);
+    }
 
-	super.setStudentsPerTheoPratShift(studentsPerTheoPratShift);
+    @Override
+    @Checked("TSDProcessPhasePredicates.writePredicate")
+    public void setStudentsPerSeminaryShift(Integer studentsPerSeminaryShift) {
+	super.setStudentsPerSeminaryShift(studentsPerSeminaryShift);
+    }
+
+    @Override
+    @Checked("TSDProcessPhasePredicates.writePredicate")
+    public void setStudentsPerTrainingPeriodShift(Integer studentsPerTrainingPeriodShift) {
+	super.setStudentsPerTrainingPeriodShift(studentsPerTrainingPeriodShift);
+    }
+
+    @Override
+    @Checked("TSDProcessPhasePredicates.writePredicate")
+    public void setStudentsPerTutDirectionShift(Integer studentsPerTutDirectionShift) {
+	super.setStudentsPerTutDirectionShift(studentsPerTutDirectionShift);
     }
 
     @Override
@@ -274,139 +265,181 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setWeightFirstTimeEnrolledStudentsPerLabShift(
-	    Double weightFirstTimeEnrolledStudentsPerLabShift) {
+    public void setWeightFirstTimeEnrolledStudentsPerLabShift(Double weightFirstTimeEnrolledStudentsPerLabShift) {
 
 	super.setWeightFirstTimeEnrolledStudentsPerLabShift(weightFirstTimeEnrolledStudentsPerLabShift);
     }
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setWeightFirstTimeEnrolledStudentsPerPratShift(
-	    Double weightFirstTimeEnrolledStudentsPerPratShift) {
+    public void setWeightFirstTimeEnrolledStudentsPerTheoShift(Double weightFirstTimeEnrolledStudentsPerTheoShift) {
 
-	super
-		.setWeightFirstTimeEnrolledStudentsPerPratShift(weightFirstTimeEnrolledStudentsPerPratShift);
+	super.setWeightFirstTimeEnrolledStudentsPerTheoShift(weightFirstTimeEnrolledStudentsPerTheoShift);
     }
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setWeightFirstTimeEnrolledStudentsPerTheoPratShift(
-	    Double weightFirstTimeEnrolledStudentsPerTheoPratShift) {
+    public void setWeightSecondTimeEnrolledStudentsPerLabShift(Double weightSecondTimeEnrolledStudentsPerLabShift) {
 
-	super
-		.setWeightFirstTimeEnrolledStudentsPerTheoPratShift(weightFirstTimeEnrolledStudentsPerTheoPratShift);
+	super.setWeightSecondTimeEnrolledStudentsPerLabShift(weightSecondTimeEnrolledStudentsPerLabShift);
     }
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setWeightFirstTimeEnrolledStudentsPerTheoShift(
-	    Double weightFirstTimeEnrolledStudentsPerTheoShift) {
+    public void setWeightSecondTimeEnrolledStudentsPerTheoShift(Double weightSecondTimeEnrolledStudentsPerTheoShift) {
 
-	super
-		.setWeightFirstTimeEnrolledStudentsPerTheoShift(weightFirstTimeEnrolledStudentsPerTheoShift);
+	super.setWeightSecondTimeEnrolledStudentsPerTheoShift(weightSecondTimeEnrolledStudentsPerTheoShift);
     }
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setWeightSecondTimeEnrolledStudentsPerLabShift(
-	    Double weightSecondTimeEnrolledStudentsPerLabShift) {
-
-	super
-		.setWeightSecondTimeEnrolledStudentsPerLabShift(weightSecondTimeEnrolledStudentsPerLabShift);
+    public void setWeightFirstTimeEnrolledStudentsPerFieldWorkShift(Double weightFirstTimeEnrolledStudentsPerFieldWorkShift) {
+	super.setWeightFirstTimeEnrolledStudentsPerFieldWorkShift(weightFirstTimeEnrolledStudentsPerFieldWorkShift);
     }
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setWeightSecondTimeEnrolledStudentsPerPratShift(
-	    Double weightSecondTimeEnrolledStudentsPerPratShift) {
-
-	super
-		.setWeightSecondTimeEnrolledStudentsPerPratShift(weightSecondTimeEnrolledStudentsPerPratShift);
+    public void setWeightFirstTimeEnrolledStudentsPerProblemShift(Double weightFirstTimeEnrolledStudentsPerProblemShift) {
+	super.setWeightFirstTimeEnrolledStudentsPerProblemShift(weightFirstTimeEnrolledStudentsPerProblemShift);
     }
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setWeightSecondTimeEnrolledStudentsPerTheoPratShift(
-	    Double weightSecondTimeEnrolledStudentsPerTheoPratShift) {
-
-	super
-		.setWeightSecondTimeEnrolledStudentsPerTheoPratShift(weightSecondTimeEnrolledStudentsPerTheoPratShift);
+    public void setWeightFirstTimeEnrolledStudentsPerSeminaryShift(Double weightFirstTimeEnrolledStudentsPerSeminaryShift) {
+	super.setWeightFirstTimeEnrolledStudentsPerSeminaryShift(weightFirstTimeEnrolledStudentsPerSeminaryShift);
     }
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setWeightSecondTimeEnrolledStudentsPerTheoShift(
-	    Double weightSecondTimeEnrolledStudentsPerTheoShift) {
-
-	super
-		.setWeightSecondTimeEnrolledStudentsPerTheoShift(weightSecondTimeEnrolledStudentsPerTheoShift);
-    }
-    
-    
-    public Integer getStudentsPerShift(ShiftType type){
-    	Integer studentsNumber = 0;
-    	
-    	switch(type) {
-    	case TEORICA: 
-    		studentsNumber = getStudentsPerTheoreticalShift();
-    		break;
-    	case PRATICA: 
-    		studentsNumber = getStudentsPerPraticalShift();
-    		break;
-    	case TEORICO_PRATICA: 
-    		studentsNumber = getStudentsPerTheoPratShift();
-    		break;
-    	case LABORATORIAL: 
-    		studentsNumber = getStudentsPerLaboratorialShift();
-    		break;
-    	}
-    	
-    	return studentsNumber;
-    }
-    
-    public Double getWeightFirstTimeEnrolledStudentsPerShift(ShiftType type){
-    	Double weight = 0d;
-    	
-    	switch(type) {
-    	case TEORICA: 
-    		weight = getWeightFirstTimeEnrolledStudentsPerTheoShift();
-    		break;
-    	case PRATICA: 
-    		weight = getWeightFirstTimeEnrolledStudentsPerPratShift();
-    		break;
-    	case TEORICO_PRATICA: 
-    		weight = getWeightFirstTimeEnrolledStudentsPerTheoPratShift();
-    		break;
-    	case LABORATORIAL: 
-    		weight = getWeightFirstTimeEnrolledStudentsPerLabShift();
-    		break;
-    	}
-    	
-    	return weight;
-    }
-    
-    public Double getWeightSecondTimeEnrolledStudentsPerShift(ShiftType type){
-    	Double weight = 0d;
-    	
-    	switch(type) {
-    	case TEORICA: 
-    		weight = getWeightSecondTimeEnrolledStudentsPerTheoShift();
-    		break;
-    	case PRATICA: 
-    		weight = getWeightSecondTimeEnrolledStudentsPerPratShift();
-    		break;
-    	case TEORICO_PRATICA: 
-    		weight = getWeightSecondTimeEnrolledStudentsPerTheoPratShift();
-    		break;
-    	case LABORATORIAL: 
-    		weight = getWeightSecondTimeEnrolledStudentsPerLabShift();
-    		break;
-    	}
-    	
-    	return weight;
+    public void setWeightFirstTimeEnrolledStudentsPerTrainingShift(Double weightFirstTimeEnrolledStudentsPerTrainingShift) {
+	super.setWeightFirstTimeEnrolledStudentsPerTrainingShift(weightFirstTimeEnrolledStudentsPerTrainingShift);
     }
 
-    
+    @Override
+    @Checked("TSDProcessPhasePredicates.writePredicate")
+    public void setWeightFirstTimeEnrolledStudentsPerTutDirectionShift(Double weightFirstTimeEnrolledStudentsPerTutDirectionShift) {
+	super.setWeightFirstTimeEnrolledStudentsPerTutDirectionShift(weightFirstTimeEnrolledStudentsPerTutDirectionShift);
+    }
+
+    @Override
+    @Checked("TSDProcessPhasePredicates.writePredicate")
+    public void setWeightSecondTimeEnrolledStudentsPerFieldWorkShift(Double weightSecondTimeEnrolledStudentsPerFieldWorkShift) {
+	super.setWeightSecondTimeEnrolledStudentsPerFieldWorkShift(weightSecondTimeEnrolledStudentsPerFieldWorkShift);
+    }
+
+    @Override
+    @Checked("TSDProcessPhasePredicates.writePredicate")
+    public void setWeightSecondTimeEnrolledStudentsPerProblemShift(Double weightSecondTimeEnrolledStudentsPerProblemShift) {
+	super.setWeightSecondTimeEnrolledStudentsPerProblemShift(weightSecondTimeEnrolledStudentsPerProblemShift);
+    }
+
+    @Override
+    @Checked("TSDProcessPhasePredicates.writePredicate")
+    public void setWeightSecondTimeEnrolledStudentsPerSeminaryShift(Double weightSecondTimeEnrolledStudentsPerSeminaryShift) {
+	super.setWeightSecondTimeEnrolledStudentsPerSeminaryShift(weightSecondTimeEnrolledStudentsPerSeminaryShift);
+    }
+
+    @Override
+    @Checked("TSDProcessPhasePredicates.writePredicate")
+    public void setWeightSecondTimeEnrolledStudentsPerTrainingShift(Double weightSecondTimeEnrolledStudentsPerTrainingShift) {
+	super.setWeightSecondTimeEnrolledStudentsPerTrainingShift(weightSecondTimeEnrolledStudentsPerTrainingShift);
+    }
+
+    @Override
+    @Checked("TSDProcessPhasePredicates.writePredicate")
+    public void setWeightSecondTimeEnrolledStudentsPerTutDirectionShift(
+	    Double weightSecondTimeEnrolledStudentsPerTutDirectionShift) {
+	super.setWeightSecondTimeEnrolledStudentsPerTutDirectionShift(weightSecondTimeEnrolledStudentsPerTutDirectionShift);
+    }
+
+    public Integer getStudentsPerShift(ShiftType type) {
+	Integer studentsNumber = 0;
+
+	switch (type) {
+	case TEORICA:
+	    studentsNumber = getStudentsPerTheoreticalShift();
+	    break;
+	case PROBLEMS:
+	    studentsNumber = getStudentsPerProblemShift();
+	    break;
+	case SEMINARY:
+	    studentsNumber = getStudentsPerSeminaryShift();
+	    break;
+	case FIELD_WORK:
+	    studentsNumber = getStudentsPerFieldWorkShift();
+	    break;
+	case TRAINING_PERIOD:
+	    studentsNumber = getStudentsPerTrainingPeriodShift();
+	    break;
+	case TUTORIAL_ORIENTATION:
+	    studentsNumber = getStudentsPerTutDirectionShift();
+	    break;
+	case LABORATORIAL:
+	    studentsNumber = getStudentsPerLaboratorialShift();
+	    break;
+	}
+
+	return studentsNumber;
+    }
+
+    public Double getWeightFirstTimeEnrolledStudentsPerShift(ShiftType type) {
+	Double weight = 0d;
+
+	switch (type) {
+	case TEORICA:
+	    weight = getWeightFirstTimeEnrolledStudentsPerTheoShift();
+	    break;
+	case PROBLEMS:
+	    weight = getWeightFirstTimeEnrolledStudentsPerProblemShift();
+	    break;
+	case SEMINARY:
+	    weight = getWeightFirstTimeEnrolledStudentsPerSeminaryShift();
+	    break;
+	case FIELD_WORK:
+	    weight = getWeightFirstTimeEnrolledStudentsPerFieldWorkShift();
+	    break;
+	case TRAINING_PERIOD:
+	    weight = getWeightFirstTimeEnrolledStudentsPerTrainingShift();
+	    break;
+	case TUTORIAL_ORIENTATION:
+	    weight = getWeightFirstTimeEnrolledStudentsPerTutDirectionShift();
+	    break;
+	case LABORATORIAL:
+	    weight = getWeightFirstTimeEnrolledStudentsPerLabShift();
+	    break;
+	}
+
+	return weight;
+    }
+
+    public Double getWeightSecondTimeEnrolledStudentsPerShift(ShiftType type) {
+	Double weight = 0d;
+
+	switch (type) {
+	case TEORICA:
+	    weight = getWeightSecondTimeEnrolledStudentsPerTheoShift();
+	    break;
+	case PROBLEMS:
+	    weight = getWeightSecondTimeEnrolledStudentsPerProblemShift();
+	    break;
+	case SEMINARY:
+	    weight = getWeightSecondTimeEnrolledStudentsPerSeminaryShift();
+	    break;
+	case FIELD_WORK:
+	    weight = getWeightSecondTimeEnrolledStudentsPerFieldWorkShift();
+	    break;
+	case TRAINING_PERIOD:
+	    weight = getWeightSecondTimeEnrolledStudentsPerTrainingShift();
+	    break;
+	case TUTORIAL_ORIENTATION:
+	    weight = getWeightSecondTimeEnrolledStudentsPerTutDirectionShift();
+	    break;
+	case LABORATORIAL:
+	    weight = getWeightSecondTimeEnrolledStudentsPerLabShift();
+	    break;
+	}
+
+	return weight;
+    }
 
 }

@@ -191,7 +191,7 @@ valueType net.sourceforge.fenixedu.domain.PartyClassification														 as P
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval									 as AcademicInterval;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType								 as ClosedMonthDocumentType;
 valueType net.sourceforge.fenixedu.domain.teacher.CategoryType														 as CategoryType;
-
+valueType net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad.SchoolClassCalculationMethod as SchoolClassCalculationMethod;
 /*
 *
 * Class definitions
@@ -3916,6 +3916,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		TSDValueType weightFirstTimeEnrolledStudentsPerShiftType;
  		Double weightSecondTimeEnrolledStudentsPerShiftManual;
 		TSDValueType weightSecondTimeEnrolledStudentsPerShiftType;
+		SchoolClassCalculationMethod schoolClassCalculationMethod;
 		}
 
 	class net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3945,17 +3946,28 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String name;
 		TSDProcessPhaseStatus status;
 		Integer studentsPerLaboratorialShift;
-		Integer studentsPerPraticalShift;
-		Integer studentsPerTheoPratShift;
 		Integer studentsPerTheoreticalShift;
+		Integer studentsPerProblemShift;
+		Integer studentsPerSeminaryShift;
+		Integer studentsPerFieldWorkShift;
+		Integer studentsPerTrainingPeriodShift;
+		Integer studentsPerTutDirectionShift;
+		
 		Double weightFirstTimeEnrolledStudentsPerLabShift;
-		Double weightFirstTimeEnrolledStudentsPerPratShift;
-		Double weightFirstTimeEnrolledStudentsPerTheoPratShift;
 		Double weightFirstTimeEnrolledStudentsPerTheoShift;
+		Double weightFirstTimeEnrolledStudentsPerProblemShift;
+		Double weightFirstTimeEnrolledStudentsPerSeminaryShift;
+		Double weightFirstTimeEnrolledStudentsPerFieldWorkShift;
+		Double weightFirstTimeEnrolledStudentsPerTrainingShift;
+		Double weightFirstTimeEnrolledStudentsPerTutDirectionShift;
+		
 		Double weightSecondTimeEnrolledStudentsPerLabShift;
-		Double weightSecondTimeEnrolledStudentsPerPratShift;
-		Double weightSecondTimeEnrolledStudentsPerTheoPratShift;
 		Double weightSecondTimeEnrolledStudentsPerTheoShift;
+		Double weightSecondTimeEnrolledStudentsPerProblemShift;
+		Double weightSecondTimeEnrolledStudentsPerSeminaryShift;
+		Double weightSecondTimeEnrolledStudentsPerFieldWorkShift;
+		Double weightSecondTimeEnrolledStudentsPerTrainingShift;
+		Double weightSecondTimeEnrolledStudentsPerTutDirectionShift;
 	}
 
 	class net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher extends net.sourceforge.fenixedu.domain.DomainObject {

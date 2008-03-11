@@ -10,6 +10,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class TSDCurricularLoad extends TSDCurricularLoad_Base {
     
+    public enum SchoolClassCalculationMethod {
+	SHIFT_BASED,
+	SHIFT_AND_FREQUENCY_BASED;
+    }
+
     private  TSDCurricularLoad() {
         super();
     }
@@ -107,4 +112,7 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
 	return getTSDCourse().getNumberOfHoursForTeachers(getType());
     }
 
+    public Integer getNumberOfSchoolClasses() {
+	return new Double(Math.ceil((getSchoolClassCalculationMethod().equals(SchoolClassCalculationMethod.SHIFT_BASED)) ? getNumberOfShifts() : getNumberOfShifts() * getFrequency())).intValue();
+    }
 }

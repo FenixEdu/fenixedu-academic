@@ -22,189 +22,189 @@ import org.apache.commons.collections.Predicate;
 
 public abstract class TSDCourse extends TSDCourse_Base {
 
-    protected  TSDCourse() {
-		super();
-		setIsActive(false);
-		setRootDomainObject(RootDomainObject.getInstance());
-		
-		this.setFirstTimeEnrolledStudentsManual(0);
-		this.setFirstTimeEnrolledStudentsType(TSDValueType.MANUAL_VALUE);
-		this.setSecondTimeEnrolledStudentsManual(0);
-		this.setSecondTimeEnrolledStudentsType(TSDValueType.MANUAL_VALUE);
+    protected TSDCourse() {
+	super();
+	setIsActive(false);
+	setRootDomainObject(RootDomainObject.getInstance());
+
+	this.setFirstTimeEnrolledStudentsManual(0);
+	this.setFirstTimeEnrolledStudentsType(TSDValueType.MANUAL_VALUE);
+	this.setSecondTimeEnrolledStudentsManual(0);
+	this.setSecondTimeEnrolledStudentsType(TSDValueType.MANUAL_VALUE);
     }
 
     public abstract List<CurricularCourse> getAssociatedCurricularCourses();
+
     public abstract String getName();
-    
-        
-    public Set<TSDTeacher> getAssociatedTSDTeachers(){
-    	Set<TSDTeacher> teachersSet = new HashSet<TSDTeacher>();
-    	
-    	for(TSDProfessorship professorship : getTSDProfessorships()){
-    		teachersSet.add(professorship.getTSDTeacher());
-    	}
-    	
-    	return teachersSet;
+
+    public Set<TSDTeacher> getAssociatedTSDTeachers() {
+	Set<TSDTeacher> teachersSet = new HashSet<TSDTeacher>();
+
+	for (TSDProfessorship professorship : getTSDProfessorships()) {
+	    teachersSet.add(professorship.getTSDTeacher());
+	}
+
+	return teachersSet;
     }
-    
-    public TSDCurricularLoad getTSDCurricularLoadByShiftType(ShiftType type){
-    	for(TSDCurricularLoad curricularLoad : super.getTSDCurricularLoads()){
-    		if(curricularLoad.getType().equals(type)){
-    			return curricularLoad;
-    		}
-    	}
-    	
-    	return null;
+
+    public TSDCurricularLoad getTSDCurricularLoadByShiftType(ShiftType type) {
+	for (TSDCurricularLoad curricularLoad : super.getTSDCurricularLoads()) {
+	    if (curricularLoad.getType().equals(type)) {
+		return curricularLoad;
+	    }
+	}
+
+	return null;
     }
-    
-    public Double getHoursManual(ShiftType type){
-    	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
-    	return curricularLoad == null ? 0d : curricularLoad.getHoursManual();
+
+    public Double getHoursManual(ShiftType type) {
+	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
+	return curricularLoad == null ? 0d : curricularLoad.getHoursManual();
     }
-    
-    public TSDValueType getHoursType(ShiftType type){
-    	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
-    	return curricularLoad == null ? TSDValueType.MANUAL_VALUE : curricularLoad.getHoursType();
+
+    public TSDValueType getHoursType(ShiftType type) {
+	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
+	return curricularLoad == null ? TSDValueType.MANUAL_VALUE : curricularLoad.getHoursType();
     }
-        
-    public Double getShiftFrequency (ShiftType type){
-    	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
-    	return curricularLoad == null ? 0d : curricularLoad.getFrequency();
+
+    public Double getShiftFrequency(ShiftType type) {
+	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
+	return curricularLoad == null ? 0d : curricularLoad.getFrequency();
     }
-        
-    public Integer getStudentsPerShiftManual (ShiftType type){
-    	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
-    	return curricularLoad == null ? 0 : curricularLoad.getStudentsPerShiftManual();
+
+    public Integer getStudentsPerShiftManual(ShiftType type) {
+	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
+	return curricularLoad == null ? 0 : curricularLoad.getStudentsPerShiftManual();
     }
-    
-    public TSDValueType getStudentsPerShiftType(ShiftType type){
-    	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
-    	return curricularLoad == null ? TSDValueType.MANUAL_VALUE : curricularLoad.getStudentsPerShiftType();
+
+    public TSDValueType getStudentsPerShiftType(ShiftType type) {
+	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
+	return curricularLoad == null ? TSDValueType.MANUAL_VALUE : curricularLoad.getStudentsPerShiftType();
     }
-    
-    public Double getWeightFirstTimeEnrolledStudentsPerShiftManual(ShiftType type){
-    	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
-    	return curricularLoad == null ? 0d : curricularLoad.getWeightFirstTimeEnrolledStudentsPerShiftManual();
+
+    public Double getWeightFirstTimeEnrolledStudentsPerShiftManual(ShiftType type) {
+	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
+	return curricularLoad == null ? 0d : curricularLoad.getWeightFirstTimeEnrolledStudentsPerShiftManual();
     }
-    
-    public TSDValueType getWeightFirstTimeEnrolledStudentsPerShiftType(ShiftType type){
-    	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
-    	return curricularLoad == null ? TSDValueType.MANUAL_VALUE : curricularLoad.getWeightFirstTimeEnrolledStudentsPerShiftType();
+
+    public TSDValueType getWeightFirstTimeEnrolledStudentsPerShiftType(ShiftType type) {
+	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
+	return curricularLoad == null ? TSDValueType.MANUAL_VALUE : curricularLoad
+		.getWeightFirstTimeEnrolledStudentsPerShiftType();
     }
-        
-    public Double getWeightSecondTimeEnrolledStudentsPerShiftManual(ShiftType type){
-    	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
-    	return curricularLoad == null ? 0d : curricularLoad.getWeightSecondTimeEnrolledStudentsPerShiftManual();
+
+    public Double getWeightSecondTimeEnrolledStudentsPerShiftManual(ShiftType type) {
+	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
+	return curricularLoad == null ? 0d : curricularLoad.getWeightSecondTimeEnrolledStudentsPerShiftManual();
     }
-    
-    public TSDValueType getWeightSecondTimeEnrolledStudentsPerShiftType(ShiftType type){
-    	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
-    	return curricularLoad == null ? TSDValueType.MANUAL_VALUE : curricularLoad.getWeightSecondTimeEnrolledStudentsPerShiftType();
+
+    public TSDValueType getWeightSecondTimeEnrolledStudentsPerShiftType(ShiftType type) {
+	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
+	return curricularLoad == null ? TSDValueType.MANUAL_VALUE : curricularLoad
+		.getWeightSecondTimeEnrolledStudentsPerShiftType();
     }
-    
+
     public Integer getRealStudentsPerShiftLastYear(ShiftType type) {
-    	return getRealStudentsByShiftAndExecutionPeriod(type, getLastYearExecutionPeriod());
+	return getRealStudentsByShiftAndExecutionPeriod(type, getLastYearExecutionPeriod());
     }
 
     public Integer getRealStudentsPerShift(ShiftType type) {
-    	return getRealStudentsByShiftAndExecutionPeriod(type, getExecutionPeriod());
+	return getRealStudentsByShiftAndExecutionPeriod(type, getExecutionPeriod());
     }
-    
-    public Double getHoursPerShift(ShiftType type){
-    	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
-    	return curricularLoad == null ? 0d : curricularLoad.getHoursPerShift();
+
+    public Double getHoursPerShift(ShiftType type) {
+	TSDCurricularLoad curricularLoad = getTSDCurricularLoadByShiftType(type);
+	return curricularLoad == null ? 0d : curricularLoad.getHoursPerShift();
     }
-        
+
     public Double getRealHoursLastYear(ShiftType type) {
-    	return getRealHoursByShiftAndExecutionPeriod(type, getLastYearExecutionPeriod());
+	return getRealHoursByShiftAndExecutionPeriod(type, getLastYearExecutionPeriod());
     }
-    
+
     public Double getRealHours(ShiftType type) {
-    	return getRealHoursByShiftAndExecutionPeriod(type, getExecutionPeriod());
+	return getRealHoursByShiftAndExecutionPeriod(type, getExecutionPeriod());
     }
-    
+
     public Double getHoursCalculated(ShiftType type) {
-    	if(getStudentsPerShiftType(type) == TSDValueType.CALCULATED_VALUE) {
-    	    return 0d;
-    	}
+	if (getStudentsPerShiftType(type) == TSDValueType.CALCULATED_VALUE) {
+	    return 0d;
+	}
 
-    	if(getStudentsPerShift(type).equals(0)) {
-    	    return 0d;
-    	}
-    	
-    	Double numberOfShifts = null;
+	if (getStudentsPerShift(type).equals(0)) {
+	    return 0d;
+	}
 
-    	try {
-    		numberOfShifts = StrictMath.ceil(((new Double (getTotalNumberOfStudents(type)) / getStudentsPerShift(type))));
-    	} catch(ArithmeticException e){
-    		numberOfShifts = 0d;
-    	}
+	Double numberOfShifts = null;
 
-    	return numberOfShifts * getHoursPerShift(type) * getShiftFrequency(type);
-    }
-    
-    public TSDProcessPhase getTSDProcessPhase(){
-    	return getTeacherServiceDistributions().get(0).getTSDProcessPhase();
+	try {
+	    numberOfShifts = StrictMath.ceil(((new Double(getTotalNumberOfStudents(type)) / getStudentsPerShift(type))));
+	} catch (ArithmeticException e) {
+	    numberOfShifts = 0d;
+	}
+
+	return numberOfShifts * getHoursPerShift(type) * getShiftFrequency(type);
     }
 
-    
+    public TSDProcessPhase getTSDProcessPhase() {
+	return getTeacherServiceDistributions().get(0).getTSDProcessPhase();
+    }
+
     public Double getHours(ShiftType type) {
-    	if(getHoursType(type) == TSDValueType.MANUAL_VALUE) {
-    		return getHoursManual(type);
-    	} else if(getHoursType(type) == TSDValueType.LAST_YEAR_REAL_VALUE) {
-    	    return getRealHoursLastYear(type);
-    	} else if(getHoursType(type) == TSDValueType.REAL_VALUE) {
-    	    return getRealHours(type);
-    	} else if(getHoursType(type) == TSDValueType.CALCULATED_VALUE) {
-    	    return getHoursCalculated(type);
-    	}
-    	
-    	return 0d;
+	if (getHoursType(type) == TSDValueType.MANUAL_VALUE) {
+	    return getHoursManual(type);
+	} else if (getHoursType(type) == TSDValueType.LAST_YEAR_REAL_VALUE) {
+	    return getRealHoursLastYear(type);
+	} else if (getHoursType(type) == TSDValueType.REAL_VALUE) {
+	    return getRealHours(type);
+	} else if (getHoursType(type) == TSDValueType.CALCULATED_VALUE) {
+	    return getHoursCalculated(type);
+	}
+
+	return 0d;
     }
-    
+
     public Integer getStudentsPerShift(ShiftType type) {
-    	if(getStudentsPerShiftType(type) == TSDValueType.MANUAL_VALUE) {
-    	    return getStudentsPerShiftManual(type);
-    	} else if(getStudentsPerShiftType(type) == TSDValueType.LAST_YEAR_REAL_VALUE) {
-    	    return getRealStudentsPerShiftLastYear(type);
-    	} else if(getStudentsPerShiftType(type) == TSDValueType.REAL_VALUE) {
-    	    return getRealStudentsPerShift(type);
-    	} else if(getStudentsPerShiftType(type) == TSDValueType.CALCULATED_VALUE) {
-    	    return getStudentsPerShiftCalculated(type);
-    	} else if(getStudentsPerShiftType(type) == TSDValueType.OMISSION_VALUE) {
-    	    return getTSDProcessPhase().getStudentsPerShift(type);
-    	}
-    	
-    	return 0;
+	if (getStudentsPerShiftType(type) == TSDValueType.MANUAL_VALUE) {
+	    return getStudentsPerShiftManual(type);
+	} else if (getStudentsPerShiftType(type) == TSDValueType.LAST_YEAR_REAL_VALUE) {
+	    return getRealStudentsPerShiftLastYear(type);
+	} else if (getStudentsPerShiftType(type) == TSDValueType.REAL_VALUE) {
+	    return getRealStudentsPerShift(type);
+	} else if (getStudentsPerShiftType(type) == TSDValueType.CALCULATED_VALUE) {
+	    return getStudentsPerShiftCalculated(type);
+	} else if (getStudentsPerShiftType(type) == TSDValueType.OMISSION_VALUE) {
+	    return getTSDProcessPhase().getStudentsPerShift(type);
+	}
+
+	return 0;
     }
-    
+
     public Double getWeightFirstTimeEnrolledStudentsPerShift(ShiftType type) {
-    	if(getWeightFirstTimeEnrolledStudentsPerShiftType(type) == TSDValueType.MANUAL_VALUE) {
-    	    return getWeightFirstTimeEnrolledStudentsPerShiftManual(type);
-    	} else if(getWeightFirstTimeEnrolledStudentsPerShiftType(type) == TSDValueType.OMISSION_VALUE) {
-    	    return getTSDProcessPhase().getWeightFirstTimeEnrolledStudentsPerShift(type);
-    	}
+	if (getWeightFirstTimeEnrolledStudentsPerShiftType(type) == TSDValueType.MANUAL_VALUE) {
+	    return getWeightFirstTimeEnrolledStudentsPerShiftManual(type);
+	} else if (getWeightFirstTimeEnrolledStudentsPerShiftType(type) == TSDValueType.OMISSION_VALUE) {
+	    return getTSDProcessPhase().getWeightFirstTimeEnrolledStudentsPerShift(type);
+	}
 
-    	return 0d;
+	return 0d;
     }
-    
+
     public Double getWeightSecondTimeEnrolledStudentsPerShift(ShiftType type) {
-    	if(getWeightSecondTimeEnrolledStudentsPerShiftType(type) == TSDValueType.MANUAL_VALUE) {
-    	    return getWeightSecondTimeEnrolledStudentsPerShiftManual(type);
-    	} else if(getWeightSecondTimeEnrolledStudentsPerShiftType(type) == TSDValueType.OMISSION_VALUE) {
-    	    return getTSDProcessPhase().getWeightSecondTimeEnrolledStudentsPerShift(type);
-    	}
+	if (getWeightSecondTimeEnrolledStudentsPerShiftType(type) == TSDValueType.MANUAL_VALUE) {
+	    return getWeightSecondTimeEnrolledStudentsPerShiftManual(type);
+	} else if (getWeightSecondTimeEnrolledStudentsPerShiftType(type) == TSDValueType.OMISSION_VALUE) {
+	    return getTSDProcessPhase().getWeightSecondTimeEnrolledStudentsPerShift(type);
+	}
 
-    	return 0d;
+	return 0d;
     }
-   
-    public Integer getTotalNumberOfStudents(ShiftType type) {
-    	Double totalNumberOfStudents = 
-    	    (getFirstTimeEnrolledStudents() * getWeightFirstTimeEnrolledStudentsPerShift(type)) +
-    	    (getSecondTimeEnrolledStudents() * getWeightSecondTimeEnrolledStudentsPerShift(type));
 
-    	totalNumberOfStudents = StrictMath.ceil(totalNumberOfStudents);
-    	return totalNumberOfStudents.intValue();
+    public Integer getTotalNumberOfStudents(ShiftType type) {
+	Double totalNumberOfStudents = (getFirstTimeEnrolledStudents() * getWeightFirstTimeEnrolledStudentsPerShift(type))
+		+ (getSecondTimeEnrolledStudents() * getWeightSecondTimeEnrolledStudentsPerShift(type));
+
+	totalNumberOfStudents = StrictMath.ceil(totalNumberOfStudents);
+	return totalNumberOfStudents.intValue();
     }
 
     public Integer getNumberOfShifts(ShiftType type) {
@@ -215,98 +215,91 @@ public abstract class TSDCourse extends TSDCourse_Base {
     public double getNumberOfHoursForStudents(ShiftType type) {
 	return getHoursPerShift(type) * getShiftFrequency(type);
     }
-    
+
     public double getNumberOfHoursForTeachers(ShiftType type) {
 	return getHoursPerShift(type) * getShiftFrequency(type) * getNumberOfShifts(type);
     }
-    
+
     public Integer getStudentsPerShiftCalculated(ShiftType type) {
-    	if(getHoursType(type) == TSDValueType.CALCULATED_VALUE) {
-    	    return 0;
-    	} else {
-    	    if(getHoursPerShift(type).equals(0d)) {
-    	    	return 0;
-    	    }
-    	    
-    	    Double numberOfShifts = null;
-    	    
-    	    try{
-    	    	numberOfShifts = StrictMath.ceil( new Double((getHours(type) / getHoursPerShift(type))));
-    	    } catch(ArithmeticException e){
-    	    	numberOfShifts = 0d;
-    	    }
-    	    
-    	    if(numberOfShifts.equals(0d)) {
-    	    	return 0;
-    	    }
+	if (getHoursType(type) == TSDValueType.CALCULATED_VALUE) {
+	    return 0;
+	} else {
+	    if (getHoursPerShift(type).equals(0d)) {
+		return 0;
+	    }
 
-    	    Double studentsPerShift = StrictMath.ceil(new Double(getTotalNumberOfStudents(type) / numberOfShifts));
-    	    
-    	    return studentsPerShift.intValue();
-    	}
+	    Double numberOfShifts = null;
+
+	    try {
+		numberOfShifts = StrictMath.ceil(new Double((getHours(type) / getHoursPerShift(type))));
+	    } catch (ArithmeticException e) {
+		numberOfShifts = 0d;
+	    }
+
+	    if (numberOfShifts.equals(0d)) {
+		return 0;
+	    }
+
+	    Double studentsPerShift = StrictMath.ceil(new Double(getTotalNumberOfStudents(type) / numberOfShifts));
+
+	    return studentsPerShift.intValue();
+	}
     }
-    
+
     public Double getTotalHoursLecturedByShiftType(ShiftType shiftType) {
-    	Double totalHours = 0d;
+	Double totalHours = 0d;
 
-    	for (TSDProfessorship tsdProfessorship : getTSDProfessorships()) {
-    	    if(tsdProfessorship.getType().equals(shiftType)){
-    	    	totalHours += tsdProfessorship. getHours();
-    	    } 
-    	}
+	for (TSDProfessorship tsdProfessorship : getTSDProfessorships()) {
+	    if (shiftType == null || tsdProfessorship.getType().equals(shiftType)) {
+		totalHours += tsdProfessorship.getHours();
+	    }
+	}
 
-    	return totalHours;
+	return totalHours;
     }
 
-        
     public Double getTotalHours() {
-    	Double hours = 0d;
-    	
-    	for( TSDCurricularLoad tsdLoad : getTSDCurricularLoads()){
-    		hours += tsdLoad.getHours();
-    	}
-    	
-    	return hours;    		
+	Double hours = 0d;
+
+	for (TSDCurricularLoad tsdLoad : getTSDCurricularLoads()) {
+	    hours += tsdLoad.getHours();
+	}
+
+	return hours;
     }
-    
+
     public Double getTotalHoursLectured() {
-    	Double totalHours = 0d;
-
-    	for (TSDProfessorship tsdProfessorship : getTSDProfessorships()) {
-    	    totalHours += tsdProfessorship. getHours();
-    	}
-
-    	return totalHours;
+	return getTotalHoursLecturedByShiftType(null);
     }
-     
+
     private Integer getRealFirstTimeEnrolledStudentsNumberByExecutionPeriod(ExecutionPeriod executionPeriod) {
 	int firstTimeEnrolledStudents = 0;
 
-	for(CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    firstTimeEnrolledStudents += curricularCourse.getFirstTimeEnrolmentStudentNumber(executionPeriod);
 	}
 
-	return firstTimeEnrolledStudents;    	
+	return firstTimeEnrolledStudents;
     }
 
     private Integer getRealSecondTimeEnrolledStudentsNumberByExecutionPeriod(ExecutionPeriod executionPeriod) {
 	Integer secondTimeEnrolledStudentsNumber = 0;
 
-	if(executionPeriod != null) {
-	    for(CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	if (executionPeriod != null) {
+	    for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 		secondTimeEnrolledStudentsNumber += curricularCourse.getSecondTimeEnrolmentStudentNumber(executionPeriod);
 	    }
 	}
 
-	return secondTimeEnrolledStudentsNumber;   	    	
+	return secondTimeEnrolledStudentsNumber;
     }
 
-    public Integer getRealFirstTimeEnrolledStudentsNumberLastYear()  {
+    public Integer getRealFirstTimeEnrolledStudentsNumberLastYear() {
 	return getRealFirstTimeEnrolledStudentsNumberByExecutionPeriod(getLastYearExecutionPeriod());
     }
 
     public Integer getRealSecondTimeEnrolledStudentsNumberLastYear() {
-	return getRealSecondTimeEnrolledStudentsNumberByExecutionPeriod(getLastYearExecutionPeriod());   	
+	return getRealSecondTimeEnrolledStudentsNumberByExecutionPeriod(getLastYearExecutionPeriod());
     }
 
     public Integer getRealFirstTimeEnrolledStudentsNumber() {
@@ -314,15 +307,15 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     public Integer getRealSecondTimeEnrolledStudentsNumber() {
-	return getRealSecondTimeEnrolledStudentsNumberByExecutionPeriod(getExecutionPeriod());   	
+	return getRealSecondTimeEnrolledStudentsNumberByExecutionPeriod(getExecutionPeriod());
     }
 
-    public Integer getFirstTimeEnrolledStudents() {  	
-	if(getFirstTimeEnrolledStudentsType() == TSDValueType.MANUAL_VALUE) {
+    public Integer getFirstTimeEnrolledStudents() {
+	if (getFirstTimeEnrolledStudentsType() == TSDValueType.MANUAL_VALUE) {
 	    return super.getFirstTimeEnrolledStudentsManual();
-	} else if(getFirstTimeEnrolledStudentsType() == TSDValueType.LAST_YEAR_REAL_VALUE) {
+	} else if (getFirstTimeEnrolledStudentsType() == TSDValueType.LAST_YEAR_REAL_VALUE) {
 	    return getRealFirstTimeEnrolledStudentsNumberLastYear();
-	} else if(getFirstTimeEnrolledStudentsType() == TSDValueType.REAL_VALUE) {
+	} else if (getFirstTimeEnrolledStudentsType() == TSDValueType.REAL_VALUE) {
 	    return getRealFirstTimeEnrolledStudentsNumber();
 	}
 
@@ -330,11 +323,11 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     public Integer getSecondTimeEnrolledStudents() {
-	if(getSecondTimeEnrolledStudentsType() == TSDValueType.MANUAL_VALUE) {
+	if (getSecondTimeEnrolledStudentsType() == TSDValueType.MANUAL_VALUE) {
 	    return super.getSecondTimeEnrolledStudentsManual();
-	} else if(getSecondTimeEnrolledStudentsType() == TSDValueType.LAST_YEAR_REAL_VALUE) {
+	} else if (getSecondTimeEnrolledStudentsType() == TSDValueType.LAST_YEAR_REAL_VALUE) {
 	    return getRealSecondTimeEnrolledStudentsNumberLastYear();
-	} else if(getSecondTimeEnrolledStudentsType() == TSDValueType.REAL_VALUE) {
+	} else if (getSecondTimeEnrolledStudentsType() == TSDValueType.REAL_VALUE) {
 	    return getRealSecondTimeEnrolledStudentsNumber();
 	}
 
@@ -344,18 +337,18 @@ public abstract class TSDCourse extends TSDCourse_Base {
     public Integer getTotalEnrolledStudents() {
 	TSDValueType firstTimeType = getFirstTimeEnrolledStudentsType();
 
-	if(firstTimeType == getSecondTimeEnrolledStudentsType()){
-	    if(firstTimeType ==  TSDValueType.REAL_VALUE){
+	if (firstTimeType == getSecondTimeEnrolledStudentsType()) {
+	    if (firstTimeType == TSDValueType.REAL_VALUE) {
 		return getTotalEnrolledStudentsNumberByExecutionPeriod(getExecutionPeriod());
 	    }
-	    if(firstTimeType == TSDValueType.LAST_YEAR_REAL_VALUE){
+	    if (firstTimeType == TSDValueType.LAST_YEAR_REAL_VALUE) {
 		return getTotalEnrolledStudentsNumberByExecutionPeriod(getLastYearExecutionPeriod());
 	    }
-	} 
+	}
 
 	return getFirstTimeEnrolledStudents() + getSecondTimeEnrolledStudents();
     }
-       
+
     private Double getRealHoursByShiftAndExecutionPeriod(ShiftType shiftType, ExecutionPeriod executionPeriod) {
 	Double hours = 0d;
 	for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesByExecutionPeriod(executionPeriod)) {
@@ -363,17 +356,17 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	}
 	return hours;
     }
-   
+
     private Integer getRealStudentsByShiftAndExecutionPeriod(ShiftType shiftType, ExecutionPeriod executionPeriod) {
 	Double numberOfShifts = 0.0;
 	Double totalNumberOfStudents = 0d;
 
-	for(CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    List<ExecutionCourse> executionCourseList = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
 
 	    for (ExecutionCourse executionCourse : executionCourseList) {
-		numberOfShifts += 
-			executionCourse.getNumberOfShifts(shiftType) * executionCourse.getCurricularCourseEnrolmentsWeight(curricularCourse);
+		numberOfShifts += executionCourse.getNumberOfShifts(shiftType)
+			* executionCourse.getCurricularCourseEnrolmentsWeight(curricularCourse);
 	    }
 
 	    totalNumberOfStudents += curricularCourse.getTotalEnrolmentStudentNumber(executionPeriod);
@@ -381,15 +374,14 @@ public abstract class TSDCourse extends TSDCourse_Base {
 
 	numberOfShifts = StrictMath.ceil(numberOfShifts);
 
-	if(numberOfShifts > 0d) {
+	if (numberOfShifts > 0d) {
 	    return ((Double) StrictMath.ceil((totalNumberOfStudents / numberOfShifts))).intValue();
 	} else {
 	    return 0;
-	}		
+	}
     }
 
-    public TSDProfessorship getTSDProfessorshipByTSDTeacherAndShiftType(final TSDTeacher tsdTeacher,
-    		final ShiftType type) {
+    public TSDProfessorship getTSDProfessorshipByTSDTeacherAndShiftType(final TSDTeacher tsdTeacher, final ShiftType type) {
 	return (TSDProfessorship) CollectionUtils.find(getTSDProfessorships(), new Predicate() {
 
 	    public boolean evaluate(Object arg0) {
@@ -399,7 +391,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	    }
 	});
     }
-    
+
     public List<TSDProfessorship> getTSDProfessorshipByTSDTeacher(final TSDTeacher tsdTeacher) {
 	return (List<TSDProfessorship>) CollectionUtils.select(getTSDProfessorships(), new Predicate() {
 
@@ -411,11 +403,10 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	});
     }
 
-
     public List<ExecutionCourse> getAssociatedExecutionCoursesByExecutionPeriod(ExecutionPeriod executionPeriod) {
 	Set<ExecutionCourse> executionCourseSet = new HashSet<ExecutionCourse>();
 
-	for(CurricularCourse valuationCurricularcourse : getAssociatedCurricularCourses()) {
+	for (CurricularCourse valuationCurricularcourse : getAssociatedCurricularCourses()) {
 	    executionCourseSet.addAll(valuationCurricularcourse.getExecutionCoursesByExecutionPeriod(executionPeriod));
 	}
 
@@ -433,15 +424,14 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	return getAssociatedExecutionCoursesByExecutionPeriod(getExecutionPeriod());
     }
 
-
     public ExecutionPeriod getLastYearExecutionPeriod() {
 	ExecutionYear executionYear = getExecutionPeriod().getExecutionYear();
 
 	ExecutionYear lastExecutionYear = executionYear.getPreviousExecutionYear();
 
-	if(lastExecutionYear != null) {
+	if (lastExecutionYear != null) {
 	    for (ExecutionPeriod executionPeriod : lastExecutionYear.getExecutionPeriods()) {
-		if(executionPeriod.getSemester().equals(getExecutionPeriod().getSemester())) {
+		if (executionPeriod.getSemester().equals(getExecutionPeriod().getSemester())) {
 		    return executionPeriod;
 		}
 	    }
@@ -450,17 +440,20 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	return null;
     }
 
+    public Double getHoursNotLectured(ShiftType type) {
+	return getHours(type) - getTotalHoursLecturedByShiftType(type);
+    }
+    
     public Double getTotalHoursNotLectured() {
 	return getTotalHours() - getTotalHoursLectured();
     }
-
 
     public List<String> getCampus() {
 	Set<String> campusSet = new LinkedHashSet<String>();
 	ExecutionPeriod executionPeriod = getExecutionPeriod();
 
 	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-	    //if(!curricularCourse.getIsRealCurricularCourse()) continue;
+	    // if(!curricularCourse.getIsRealCurricularCourse()) continue;
 	    for (ExecutionDegree executionDegree : curricularCourse.getDegreeCurricularPlan().getExecutionDegrees()) {
 		if (executionDegree.getExecutionYear() == executionPeriod.getExecutionYear()) {
 		    campusSet.add(executionDegree.getCampus().getName());
@@ -476,30 +469,30 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     public CompetenceCourse getCompetenceCourse() {
-    	if(getAssociatedCurricularCourses().size() > 0) {
-    		return getAssociatedCurricularCourses().get(0).getCompetenceCourse();
-    	} else {
-    		return null; 
-    	}
+	if (getAssociatedCurricularCourses().size() > 0) {
+	    return getAssociatedCurricularCourses().get(0).getCompetenceCourse();
+	} else {
+	    return null;
+	}
     }
 
     public String getCompetenceName() {
-    	return getCompetenceCourse() == null ? getName() : getCompetenceCourse().getName();
+	return getCompetenceCourse() == null ? getName() : getCompetenceCourse().getName();
     }
 
-    public void delete(){		
-	for(TSDProfessorship tsdProfessorship : getTSDProfessorships()){
+    public void delete() {
+	for (TSDProfessorship tsdProfessorship : getTSDProfessorships()) {
 	    tsdProfessorship.delete();
-	}		
-	
-	for(TeacherServiceDistribution teacherServiceDistribution : getTeacherServiceDistributions()){
+	}
+
+	for (TeacherServiceDistribution teacherServiceDistribution : getTeacherServiceDistributions()) {
 	    removeTeacherServiceDistributions(teacherServiceDistribution);
 	}
-	
-	for(TSDCurricularLoad load : getTSDCurricularLoads()){
-		load.delete();
+
+	for (TSDCurricularLoad load : getTSDCurricularLoads()) {
+	    load.delete();
 	}
-	
+
 	removeExecutionPeriod();
 	removeRootDomainObject();
 	super.deleteDomainObject();
@@ -507,34 +500,34 @@ public abstract class TSDCourse extends TSDCourse_Base {
 
     public String getAcronym() {
 
-    CurricularCourse curricularCourse = null;
-	if(getAssociatedCurricularCourses().size() > 0) {
+	CurricularCourse curricularCourse = null;
+	if (getAssociatedCurricularCourses().size() > 0) {
 	    curricularCourse = getAssociatedCurricularCourses().get(0);
 	}
 
-	if(curricularCourse != null) {
+	if (curricularCourse != null) {
 	    return curricularCourse.getAcronym();
 	} else {
 	    return getCompetenceName();
 	}
     }
-    
+
     private Integer getTotalEnrolledStudentsNumberByExecutionPeriod(ExecutionPeriod executionPeriod) {
 	Integer totalEnrolledStudentsNumber = 0;
 
-	if(executionPeriod != null) {
-	    for(CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	if (executionPeriod != null) {
+	    for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 		totalEnrolledStudentsNumber += curricularCourse.getTotalEnrolmentStudentNumber(executionPeriod);
 	    }
 	}
 
-	return totalEnrolledStudentsNumber;   	    	
+	return totalEnrolledStudentsNumber;
     }
-    
+
     public List<TSDCurricularLoad> getSortedTSDCurricularLoads() {
-        List<TSDCurricularLoad> loads = new ArrayList<TSDCurricularLoad>(super.getTSDCurricularLoads());
-        Collections.sort(loads,new BeanComparator("type"));
-        return loads;
+	List<TSDCurricularLoad> loads = new ArrayList<TSDCurricularLoad>(super.getTSDCurricularLoads());
+	Collections.sort(loads, new BeanComparator("type"));
+	return loads;
     }
-  
+
 }

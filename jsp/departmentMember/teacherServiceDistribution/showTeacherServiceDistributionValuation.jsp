@@ -181,6 +181,12 @@
 		<th>
 			<bean:message key="label.teacherService.course.totalHours"/>
 		</th>
+<logic:iterate name="selectedShiftTypes" id="type">
+		<th>
+			H. <bean:write name="type" property="fullNameTipoAula"/>
+		<bean:message key="label.teacherService.course.availability"/>
+		</th>
+</logic:iterate>
 		<th>
 			<bean:message key="label.teacherService.course.availability"/>
 		</th>
@@ -258,6 +264,15 @@
 		<td class="aright">
 			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1"><bean:write name="tsdCourseDTOEntry" property="TSDCourse.totalHours"/></fmt:formatNumber>
 		</td>
+<logic:iterate name="selectedShiftTypes" id="type">
+			
+			<bean:define name="tsdCourseDTOEntry" property="TSDCourse" id="tsdCourse"/>
+		<td class="aright">
+			<fmt:formatNumber maxFractionDigits="2" minFractionDigits="1">
+				<%= ((TSDCourse)tsdCourse).getHoursNotLectured((ShiftType)type) %>
+			</fmt:formatNumber>
+		</td>
+</logic:iterate>		
 		<logic:greaterThan name="tsdCourseDTOEntry" property="TSDCourse.totalHoursNotLectured" value="0.0"> 
 		<td class="aright" style="background-color: #ffddcc;"><%-- red --%>
 		</logic:greaterThan>
