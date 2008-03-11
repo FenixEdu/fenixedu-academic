@@ -481,6 +481,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     public boolean isRequestForRegistration() {
 	return false;
     }
+    
+    public boolean isFor(final ExecutionYear executionYear) {
+	return hasExecutionYear() && getExecutionYear().equals(executionYear);
+    }
 
     abstract public Person getPerson();
 

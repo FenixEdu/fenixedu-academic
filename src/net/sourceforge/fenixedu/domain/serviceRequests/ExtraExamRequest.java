@@ -50,6 +50,22 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 	if (!studentHasValidStatutes(registration, enrolment)) {
 	    throw new DomainException("error.ExtraExamRequest.registration.doesnot.have.valid.statutes");
 	}
+
+	if (registrationAlreadyHasRequest(registration, enrolment, executionYear)) {
+	    throw new DomainException("error.ExtraExamRequest.registration.already.has.same.request", enrolment.getName()
+		    .getContent(), executionYear.getYear());
+	}
+    }
+
+    private boolean registrationAlreadyHasRequest(final Registration registration, final Enrolment enrolment,
+	    final ExecutionYear executionYear) {
+	for (final AcademicServiceRequest request : registration.getAcademicServiceRequests(this.getClass())) {
+	    final ExtraExamRequest extraExamRequest = (ExtraExamRequest) request;
+	    if (extraExamRequest.hasEnrolment(enrolment) && extraExamRequest.isFor(executionYear)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean studentHasValidStatutes(final Registration registration, final Enrolment enrolment) {
@@ -59,7 +75,16 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 		return true;
 	    }
 	}
+	for (final StudentStatuteBean bean : student.getStatutes(enrolment.getExecutionPeriod().getPreviousExecutionPeriod())) {
+	    if (acceptedStatutes.contains(bean.getStatuteType())) {
+		return true;
+	    }
+	}
 	return false;
+    }
+
+    public boolean hasEnrolment(final Enrolment enrolment) {
+	return getEnrolment().equals(enrolment);
     }
 
     @Override
