@@ -9,6 +9,9 @@ SELECT UUID, 'net.sourceforge.fenixedu.domain.functionalities.Module', 1, KEY_AV
 FROM ACCESSIBLE_ITEM WHERE OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.functionalities.Module';
 
 
+-- ISCTE
+ALTER TABLE CONTENT ADD INDEX CONTENT_ID(CONTENT_ID);
+
 -- create nodes
 INSERT INTO NODE (OJB_CONCRETE_CLASS, KEY_PARENT, KEY_CHILD, NODE_ORDER, VISIBLE)
 SELECT 'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode', C_P.ID_INTERNAL, C_C.ID_INTERNAL, AI_C.ORDER_IN_MODULE, AI_C.VISIBLE

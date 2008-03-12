@@ -16,7 +16,7 @@ alter table EXECUTION_PATH add primary key (ID_INTERNAL);
 alter table FUNCTIONALITY_PARAMETER add index (KEY_FUNCTIONALITY);
 alter table FUNCTIONALITY_PARAMETER add index (KEY_ROOT_DOMAIN_OBJECT);
 alter table FUNCTIONALITY_PARAMETER add index (KEY_TYPE);
-alter table GAUGING_TEST_RESULT add column CF_STRING text;
+--alter table GAUGING_TEST_RESULT add column CF_STRING text;
 alter table META_DOMAIN_OBJECT add index (KEY_ROOT_DOMAIN_OBJECT);
 alter table NODE add index (KEY_CHILD);
 alter table NODE add index (KEY_PARENT);
