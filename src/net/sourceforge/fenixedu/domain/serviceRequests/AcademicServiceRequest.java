@@ -163,6 +163,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return isPayed();
     }
 
+    abstract public boolean isPayedUponCreation();
+
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
 	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
 		.getLocale());
@@ -440,7 +442,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public boolean finishedSuccessfully() {
-	return (isConcluded() || isDelivered());
+	return isConcluded() || isDelivered();
+    }
+
+    final public boolean finishedUnsuccessfully() {
+	return isRejected() || isCancelled();
     }
 
     final public boolean isDocumentRequest() {
@@ -461,6 +467,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 			.getAdministrativeOffice()));
     }
 
+    @Override
     final public DateTime getCreationDate() {
 	return getCreationSituation().getCreationDate();
     }
@@ -481,7 +488,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     public boolean isRequestForRegistration() {
 	return false;
     }
-    
+
     public boolean isFor(final ExecutionYear executionYear) {
 	return hasExecutionYear() && getExecutionYear().equals(executionYear);
     }
