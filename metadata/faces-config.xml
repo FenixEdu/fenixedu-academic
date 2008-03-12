@@ -145,6 +145,13 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
+	<managed-bean>
+		<description>AdHocEvaluationManagementBackingBean</description>
+		<managed-bean-name>adHocEvaluationManagementBackingBean</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.AdHocEvaluationManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
 	<!-- END: TEACHER Managed Beans -->
 	
 	
@@ -924,6 +931,46 @@
 	</navigation-rule>
 	
 	<navigation-rule>
+		<from-view-id>/teacher/evaluation/adHocEvaluationIndex.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>enterCreateAdHocEvaluation</from-outcome>
+			<to-view-id>/teacher/evaluation/createAdHocEvaluation.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>enterEditAdHocEvaluation</from-outcome>
+			<to-view-id>/teacher/evaluation/editAdHocEvaluation.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterShowMarksListOptions</from-outcome>
+			<to-view-id>/teacher/evaluation/editMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterPublishMarks</from-outcome>
+			<to-view-id>/teacher/evaluation/publishMarks.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>enterSubmitMarksList</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule> 
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/createAdHocEvaluation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>adHocEvaluationsIndex</from-outcome>
+			<to-view-id>/teacher/evaluation/adHocEvaluationIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/editAdHocEvaluation.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>adHocEvaluationsIndex</from-outcome>
+			<to-view-id>/teacher/evaluation/adHocEvaluationIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
 		<from-view-id>/teacher/evaluation/showStudentsEnroled.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>Exam</from-outcome>
@@ -999,6 +1046,10 @@
 			<to-view-id>/teacher/evaluation/finalEvaluationIndex.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
+			<from-outcome>AdHocEvaluation</from-outcome>
+			<to-view-id>/teacher/evaluation/adHocEvaluationIndex.jsp</to-view-id>
+		</navigation-case>		
+ 		<navigation-case>
 			<from-outcome>enterLoadMarks</from-outcome>
 			<to-view-id>/teacher/evaluation/loadMarks.jsp</to-view-id>
 		</navigation-case>
@@ -1029,6 +1080,10 @@
  		<navigation-case>
 			<from-outcome>FinalEvaluation</from-outcome>
 			<to-view-id>/teacher/evaluation/finalEvaluationIndex.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>
+			<from-outcome>AdHocEvaluation</from-outcome>
+			<to-view-id>/teacher/evaluation/adHocEvaluationIndex.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

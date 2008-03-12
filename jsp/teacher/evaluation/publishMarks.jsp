@@ -63,6 +63,7 @@
 
 
 	<h:form>
+		<h:outputText value="<input type=hidden name='executionCourseID' value='#{evaluationManagementBackingBean.executionCourse.idInternal}'/>" escape="false"/>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 

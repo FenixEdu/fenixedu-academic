@@ -28,3 +28,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Evaluation Table" alterTableEvaluationAddCreationDate.sql
+ 

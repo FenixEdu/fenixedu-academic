@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -10,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
 
 public enum GradeScale {
 
-    TYPE20 {
+    TYPE20(true) {
 	@Override
 	protected boolean checkFinal(final Grade grade) {
 	    final String value = grade.getValue();
@@ -48,16 +50,17 @@ public enum GradeScale {
 		return false;
 	    }
 	}
-	
+
 	@Override
 	protected String qualify(final Grade grade) {
 	    if (grade.getGradeScale() != this) {
 		return StringUtils.EMPTY;
 	    }
-	    
+
 	    try {
 		final int intValue = Integer.valueOf(grade.getValue());
-		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
+			LanguageUtils.getLocale());
 
 		if (18 <= intValue && intValue <= 20) {
 		    return applicationResources.getString("label.grade.a");
@@ -74,13 +77,13 @@ public enum GradeScale {
 		throw new DomainException("GradeScale.unable.to.qualify.given.grade");
 	    }
 	}
-	
+
 	@Override
 	protected boolean isNotEvaluated(final Grade grade) {
 	    final String value = grade.getValue();
 	    return grade.isEmpty() || value.equals(GradeScale.NA);
 	}
-	
+
 	@Override
 	protected boolean isNotApproved(final Grade grade) {
 	    final String value = grade.getValue();
@@ -94,14 +97,14 @@ public enum GradeScale {
 		return false;
 	    }
 	}
-	
+
 	@Override
 	protected boolean isApproved(final Grade grade) {
 	    final String value = grade.getValue();
 	    if (value.equals(GradeScale.AP)) {
 		return true;
 	    }
-	    
+
 	    try {
 		final int intValue = Integer.valueOf(value);
 		return 10 <= intValue && intValue <= 20;
@@ -109,13 +112,13 @@ public enum GradeScale {
 		return false;
 	    }
 	}
-	
+
 	@Override
 	public boolean belongsTo(final String value) {
 	    if (value.equals(NA) || value.equals(RE)) {
 		return true;
 	    }
-	    
+
 	    try {
 		final Double doubleValue = Double.valueOf(value);
 		if ((doubleValue >= 0) && (doubleValue <= 20)) {
@@ -127,17 +130,17 @@ public enum GradeScale {
 		return false;
 	    }
 	}
-	
+
     },
 
-    TYPE5 {
+    TYPE5(true) {
 	@Override
 	protected boolean checkFinal(final Grade grade) {
 	    final String value = grade.getValue();
 	    if (value.equals(NA) || value.equals(RE)) {
 		return true;
 	    }
-	    
+
 	    try {
 		final int intValue = Integer.valueOf(value);
 		if ((intValue >= 3) && (intValue <= 5)) {
@@ -156,7 +159,7 @@ public enum GradeScale {
 	    if (value.equals(NA) || value.equals(RE)) {
 		return true;
 	    }
-	    
+
 	    try {
 		final Double doubleValue = Double.valueOf(value);
 		if ((doubleValue >= 0) && (doubleValue <= 20)) {
@@ -168,16 +171,17 @@ public enum GradeScale {
 		return false;
 	    }
 	}
-    
+
 	@Override
 	protected String qualify(final Grade grade) {
 	    if (grade.getGradeScale() != this) {
 		return StringUtils.EMPTY;
 	    }
-	    
+
 	    try {
 		final int intValue = Integer.valueOf(grade.getValue());
-		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
+			LanguageUtils.getLocale());
 
 		if (intValue == 5) {
 		    return applicationResources.getString("label.grade.a");
@@ -192,16 +196,16 @@ public enum GradeScale {
 		throw new DomainException("GradeScale.unable.to.qualify.given.grade");
 	    }
 	}
-	
+
 	@Override
 	protected boolean isNotEvaluated(final Grade grade) {
 	    if (grade.isEmpty()) {
 		return true;
 	    }
-	    
+
 	    return grade.getValue().equals(GradeScale.NA);
 	}
-	
+
 	@Override
 	protected boolean isNotApproved(final Grade grade) {
 	    final String value = grade.getValue();
@@ -215,7 +219,7 @@ public enum GradeScale {
 		return false;
 	    }
 	}
-	
+
 	@Override
 	protected boolean isApproved(final Grade grade) {
 	    try {
@@ -225,7 +229,7 @@ public enum GradeScale {
 		return false;
 	    }
 	}
-	
+
 	@Override
 	public boolean belongsTo(final String value) {
 	    if (value.equals(NA) || value.equals(RE)) {
@@ -244,10 +248,9 @@ public enum GradeScale {
 	    }
 	}
 
-	
     },
 
-    TYPEAP {
+    TYPEAP(true) {
 	@Override
 	protected boolean checkFinal(final Grade grade) {
 	    final String value = grade.getValue();
@@ -265,9 +268,10 @@ public enum GradeScale {
 	    if (grade.getGradeScale() != this) {
 		return StringUtils.EMPTY;
 	    }
-	    
-	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
-	    
+
+	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
+		    .getLocale());
+
 	    final String value = grade.getValue();
 	    if (value.equals(AP)) {
 		return applicationResources.getString("msg.approved");
@@ -279,33 +283,33 @@ public enum GradeScale {
 		throw new DomainException("GradeScale.unable.to.qualify.given.grade");
 	    }
 	}
-	
+
 	@Override
 	protected boolean isNotEvaluated(final Grade grade) {
 	    final String value = grade.getValue();
 	    return grade.isEmpty() || value.equals(GradeScale.NA);
 	}
-	
+
 	@Override
 	protected boolean isNotApproved(final Grade grade) {
 	    final String value = grade.getValue();
 	    return value.equals(GradeScale.RE) || isNotEvaluated(grade);
 	}
-	
+
 	@Override
 	protected boolean isApproved(final Grade grade) {
 	    final String value = grade.getValue();
 	    return value.equals(GradeScale.AP);
 	}
-	
+
 	@Override
 	public boolean belongsTo(final String value) {
 	    return value.equals(NA) || value.equals(RE) || value.equals(AP);
 	}
-	
+
     },
 
-    TYPEAPT {
+    TYPEAPT(false) {
 	@Override
 	protected boolean checkFinal(final Grade grade) {
 	    final String value = grade.getValue();
@@ -323,9 +327,10 @@ public enum GradeScale {
 	    if (grade.getGradeScale() != this) {
 		return StringUtils.EMPTY;
 	    }
-	    
-	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
-	    
+
+	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
+		    .getLocale());
+
 	    final String value = grade.getValue();
 	    if (value.equals(APT)) {
 		return applicationResources.getString("msg.apt");
@@ -337,40 +342,45 @@ public enum GradeScale {
 		throw new DomainException("GradeScale.unable.to.qualify.given.grade");
 	    }
 	}
-	
+
 	@Override
 	protected boolean isNotEvaluated(final Grade grade) {
 	    final String value = grade.getValue();
 	    return grade.isEmpty() || value.equals(GradeScale.NA);
 	}
-	
+
 	@Override
 	protected boolean isNotApproved(final Grade grade) {
 	    final String value = grade.getValue();
 	    return value.equals(GradeScale.RE) || isNotEvaluated(grade);
 	}
-	
+
 	@Override
 	protected boolean isApproved(final Grade grade) {
 	    final String value = grade.getValue();
 	    return value.equals(GradeScale.APT);
 	}
-	
+
 	@Override
 	public boolean belongsTo(final String value) {
 	    return value.equals(NA) || value.equals(RE) || value.equals(APT);
 	}
-	
+
     };
-    
-    
+
+    private boolean isPublic;
+
     static final public String NA = "NA";
 
     static final public String RE = "RE";
-    
+
     static final public String AP = "AP";
-    
+
     static final public String APT = "APT";
+
+    private GradeScale(final boolean isPublic) {
+	setPublic(isPublic);
+    }
 
     public String getName() {
 	return name();
@@ -394,27 +404,45 @@ public enum GradeScale {
     abstract protected boolean checkNotFinal(final Grade grade);
 
     abstract protected String qualify(final Grade grade);
-    
+
     abstract protected boolean isNotEvaluated(final Grade grade);
 
     abstract protected boolean isNotApproved(final Grade grade);
 
     abstract protected boolean isApproved(final Grade grade);
-    
+
     abstract public boolean belongsTo(final String value);
-    
+
     final protected boolean belongsTo(final Grade grade) {
 	return belongsTo(grade.getValue());
     }
-    
+
     final public String getQualifiedName(final String value) {
 	final Grade grade = Grade.createGrade(value, this);
-	
+
 	if (isApproved(grade)) {
 	    return qualify(grade);
 	} else {
 	    throw new DomainException("GradeScale.unable.to.qualify.given.grade");
 	}
+    }
+
+    public boolean isPublic() {
+	return isPublic;
+    }
+
+    public void setPublic(boolean isPublic) {
+	this.isPublic = isPublic;
+    }
+
+    static public List<GradeScale> getPublicGradeScales() {
+	List<GradeScale> publicGradeScales = new ArrayList<GradeScale>();
+	for (GradeScale gradeScale : values()) {
+	    if (gradeScale.isPublic) {
+		publicGradeScales.add(gradeScale);
+	    }
+	}
+	return publicGradeScales;
     }
 
 }

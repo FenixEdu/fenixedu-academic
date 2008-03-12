@@ -38,6 +38,9 @@
 					<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.FinalEvaluation">
 						<bean:message key="label.final.evaluation"/>
 					</logic:equal>
+					<logic:equal name="evaluation" property="class.name" value="net.sourceforge.fenixedu.domain.AdHocEvaluation">
+						<bean:write name="evaluation" property="name"/>
+					</logic:equal>
 				</th>
 			</logic:present>
 		</logic:iterate>

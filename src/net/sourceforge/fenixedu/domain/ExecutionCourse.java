@@ -535,7 +535,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    final Date evaluationComparisonDate;
 	    final String evaluationTypeDistinguisher;
 
-	    if (evaluation instanceof OnlineTest) {
+	    if (evaluation instanceof AdHocEvaluation) {
+		evaluationTypeDistinguisher = "0";
+		final AdHocEvaluation adHocEvaluation = (AdHocEvaluation) evaluation;
+		evaluationComparisonDate = adHocEvaluation.getCreationDateTime().toDate();
+	    } else if (evaluation instanceof OnlineTest) {
 		evaluationTypeDistinguisher = "1";
 		final OnlineTest onlineTest = (OnlineTest) evaluation;
 		evaluationComparisonDate = onlineTest.getDistributedTest().getBeginDateDate();
@@ -1838,7 +1842,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public void setSigla(String sigla) {
 	super.setSigla(sigla.replace(' ', '_').replace('/', '-'));
     }
-    
+
     public Collection<MarkSheet> getAssociatedMarkSheets() {
 	Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
 	for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
@@ -1861,6 +1865,23 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	return result;
 
+    }
+
+    public List<AdHocEvaluation> getAssociatedAdHocEvaluations() {
+	final List<AdHocEvaluation> result = new ArrayList<AdHocEvaluation>();
+
+	for (Evaluation evaluation : this.getAssociatedEvaluations()) {
+	    if (evaluation instanceof AdHocEvaluation) {
+		result.add((AdHocEvaluation) evaluation);
+	    }
+	}
+	return result;
+    }
+
+    public List<AdHocEvaluation> getOrderedAssociatedAdHocEvaluations() {
+	List<AdHocEvaluation> associatedAdHocEvaluations = getAssociatedAdHocEvaluations();
+	Collections.sort(associatedAdHocEvaluations, AdHocEvaluation.AD_HOC_EVALUATION_CREATION_DATE_COMPARATOR);
+	return associatedAdHocEvaluations;
     }
 
 }

@@ -5964,7 +5964,7 @@
 		<filterChains>
 			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
 		</filterChains>
-	</service>
+	</service>	
 	<service>
 		<name>EditProject</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditProject</implementationClass>
@@ -5983,6 +5983,21 @@
 		<filterChains>
 			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
 		</filterChains>
+	</service>
+	<service>
+		<name>CreateAdHocEvaluation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateAdHocEvaluation</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
+		</filterChains>
+	</service>	
+	<service>
+		<name>EditAdHocEvaluation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditAdHocEvaluation</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
 	</service>
 	<service>
 		<name>EditWrittenEvaluation</name>

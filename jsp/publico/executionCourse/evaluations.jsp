@@ -40,6 +40,23 @@
 
 <table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
 	<tr>
+		<th><bean:message key="label.adHocEvaluations"/></th>
+		<th><bean:message key="label.description"/></th>
+	</tr>
+	<logic:iterate id="evaluation" name="executionCourse" property="orderedAssociatedAdHocEvaluations">
+		<tr>
+			<td>
+				<bean:write name="evaluation" property="name"/>
+			</td>
+			<td>
+				<bean:write name="evaluation" property="description"/>
+			</td>			
+		</tr>
+	</logic:iterate>
+</table>
+
+<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
+	<tr>
 		<th><bean:message key="label.projects"/></th>
 		<th><bean:message key="label.beginning"/></th>
 		<th><bean:message key="label.end"/></th>

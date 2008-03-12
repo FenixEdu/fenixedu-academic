@@ -511,6 +511,13 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 		class net.sourceforge.fenixedu.domain.FinalEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {
 		}
+		
+		class net.sourceforge.fenixedu.domain.AdHocEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {
+			String description;
+			String name;
+			DateTime creationDateTime;
+			GradeScale gradeScale;
+		}
 
 		class net.sourceforge.fenixedu.domain.Project extends net.sourceforge.fenixedu.domain.Evaluation {
 			String description;

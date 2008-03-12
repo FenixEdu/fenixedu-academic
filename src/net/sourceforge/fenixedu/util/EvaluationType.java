@@ -17,6 +17,8 @@ public class EvaluationType extends FenixUtil {
 
     public static final int PROJECT = 5;
 
+    public static final int AD_HOC = 6;
+
     public static final EvaluationType EXAM_TYPE = new EvaluationType(EXAM);
 
     public static final EvaluationType FINAL_TYPE = new EvaluationType(FINAL);
@@ -26,6 +28,8 @@ public class EvaluationType extends FenixUtil {
     public static final EvaluationType TEST_TYPE = new EvaluationType(TEST);
 
     public static final EvaluationType PROJECT_TYPE = new EvaluationType(PROJECT);
+
+    public static final EvaluationType AD_HOC_TYPE = new EvaluationType(AD_HOC);
 
     public static final String EXAM_STRING = "Exame";
 
@@ -37,62 +41,68 @@ public class EvaluationType extends FenixUtil {
 
     public static final String PROJECT_STRING = "Projecto";
 
+    public static final String AD_HOC_STRING = "Ad Hoc";
+
     private Integer type;
 
     public EvaluationType() {
     }
 
     public EvaluationType(int type) {
-        this.type = new Integer(type);
+	this.type = new Integer(type);
     }
 
     public EvaluationType(Integer type) {
-        this.type = type;
+	this.type = type;
     }
 
     public EvaluationType(String type) {
-        if (type.equals(EvaluationType.EXAM_STRING))
-            this.type = Integer.valueOf(EvaluationType.EXAM);
-        if (type.equals(EvaluationType.FINAL_STRING))
-            this.type = Integer.valueOf(EvaluationType.FINAL);
-        if (type.equals(EvaluationType.ONLINE_TEST_STRING))
-            this.type = Integer.valueOf(EvaluationType.ONLINE_TEST);
-        if (type.equals(EvaluationType.TEST_STRING))
-            this.type = Integer.valueOf(EvaluationType.TEST);
-        if (type.equals(EvaluationType.PROJECT_TYPE))
-            this.type = Integer.valueOf(EvaluationType.PROJECT);
+	if (type.equals(EvaluationType.EXAM_STRING))
+	    this.type = Integer.valueOf(EvaluationType.EXAM);
+	if (type.equals(EvaluationType.FINAL_STRING))
+	    this.type = Integer.valueOf(EvaluationType.FINAL);
+	if (type.equals(EvaluationType.ONLINE_TEST_STRING))
+	    this.type = Integer.valueOf(EvaluationType.ONLINE_TEST);
+	if (type.equals(EvaluationType.TEST_STRING))
+	    this.type = Integer.valueOf(EvaluationType.TEST);
+	if (type.equals(EvaluationType.PROJECT_TYPE))
+	    this.type = Integer.valueOf(EvaluationType.PROJECT);
+	if (type.equals(EvaluationType.AD_HOC_TYPE))
+	    this.type = Integer.valueOf(EvaluationType.AD_HOC);
 
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof EvaluationType) {
-            EvaluationType ds = (EvaluationType) obj;
-            resultado = this.getType().equals(ds.getType());
-        }
-        return resultado;
+	boolean resultado = false;
+	if (obj instanceof EvaluationType) {
+	    EvaluationType ds = (EvaluationType) obj;
+	    resultado = this.getType().equals(ds.getType());
+	}
+	return resultado;
     }
 
     public String toString() {
-        if (type.intValue() == EvaluationType.EXAM)
-            return EvaluationType.EXAM_STRING;
-        if (type.intValue() == EvaluationType.FINAL)
-            return EvaluationType.FINAL_STRING;
-        if (type.intValue() == EvaluationType.ONLINE_TEST)
-            return EvaluationType.ONLINE_TEST_STRING;
-        if (type.intValue() == EvaluationType.TEST)
-            return EvaluationType.TEST_STRING;
-        if (type.intValue() == EvaluationType.PROJECT)
-            return EvaluationType.PROJECT_STRING;
+	if (type.intValue() == EvaluationType.EXAM)
+	    return EvaluationType.EXAM_STRING;
+	if (type.intValue() == EvaluationType.FINAL)
+	    return EvaluationType.FINAL_STRING;
+	if (type.intValue() == EvaluationType.ONLINE_TEST)
+	    return EvaluationType.ONLINE_TEST_STRING;
+	if (type.intValue() == EvaluationType.TEST)
+	    return EvaluationType.TEST_STRING;
+	if (type.intValue() == EvaluationType.PROJECT)
+	    return EvaluationType.PROJECT_STRING;
+	if (type.intValue() == EvaluationType.AD_HOC)
+	    return EvaluationType.AD_HOC_STRING;
 
-        return "ERRO!";
+	return "ERRO!";
     }
 
     public Integer getType() {
-        return type;
+	return type;
     }
 
     public void setType(Integer integer) {
-        type = integer;
+	type = integer;
     }
 }

@@ -6,44 +6,49 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 public class Mark extends Mark_Base {
 
     public Mark() {
-    	super();
-    	setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public Mark(final Attends attends, final Evaluation evaluation, final String mark) {
-    	this();
-        setAttend(attends);
-        setEvaluation(evaluation);
-        setMark(mark);
-        setPublishedMark(null);
+	this();
+	setAttend(attends);
+	setEvaluation(evaluation);
+	setMark(mark);
+	setPublishedMark(null);
     }
 
     public void setMark(String mark) {
-    	if(validateMark(mark)) {
-    		super.setMark(mark);
-    	} else {
-    		throw new InvalidMarkDomainException("errors.invalidMark", mark, getAttend().getRegistration().getNumber().toString());
-    	}
+	if (validateMark(mark)) {
+	    super.setMark(mark);
+	} else {
+	    throw new InvalidMarkDomainException("errors.invalidMark", mark, getAttend().getRegistration().getNumber().toString());
+	}
     }
 
     public void delete() {
-    	removeAttend();
-    	removeEvaluation();
-        removeRootDomainObject();
-    	deleteDomainObject();
+	removeAttend();
+	removeEvaluation();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
-    
+
     private boolean validateMark(String mark) {
-    	GradeScale gradeScale;
-    	if(getAttend().getEnrolment() == null) {
-    		gradeScale = getAttend().getRegistration().getActiveStudentCurricularPlan().getDegreeCurricularPlan().getGradeScaleChain();
-    	} else {
-    		gradeScale = getAttend().getEnrolment().getCurricularCourse().getGradeScaleChain();
-    	}
-        if(gradeScale==null && getEvaluation().getEvaluationType().getType() == EvaluationType.ONLINE_TEST) {
-            return GradeScale.TYPE20.isValid(mark, getEvaluation().getEvaluationType());
-        }
-    	return gradeScale.isValid(mark, getEvaluation().getEvaluationType());
+	GradeScale gradeScale;
+	if (getEvaluation() instanceof AdHocEvaluation) {
+	    gradeScale = ((AdHocEvaluation) getEvaluation()).getGradeScale();
+	} else {
+	    if (getAttend().getEnrolment() == null) {
+		gradeScale = getAttend().getRegistration().getStudentCurricularPlan(getAttend().getExecutionPeriod())
+			.getDegreeCurricularPlan().getGradeScaleChain();
+	    } else {
+		gradeScale = getAttend().getEnrolment().getCurricularCourse().getGradeScaleChain();
+	    }
+	    if (gradeScale == null && getEvaluation().getEvaluationType().getType() == EvaluationType.ONLINE_TEST) {
+		return GradeScale.TYPE20.isValid(mark, getEvaluation().getEvaluationType());
+	    }
+	}
+	return gradeScale.isValid(mark, getEvaluation().getEvaluationType());
     }
 
 }

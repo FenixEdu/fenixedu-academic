@@ -4,6 +4,7 @@
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>	
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:outputFormat value="<h2>#{bundle['title.evaluation.manage.marksList']}</h2>" escape="false">
@@ -11,6 +12,7 @@
 	</h:outputFormat>
 	<h:messages layout="table" errorClass="error"/>
 	<h:form>
+		<h:outputText value="<input type=hidden name='executionCourseID' value='#{evaluationManagementBackingBean.executionCourse.idInternal}'/>" escape="false"/>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 
@@ -56,6 +58,14 @@
 					<f:param value="#{evaluationManagementBackingBean.evaluation.beginningDate}"/>
 				</h:outputFormat>
 			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.AdHocEvaluation'}">
+				<h:outputText value="<b>#{bundle['label.adHocEvaluation']}:</b> " escape="false"/>
+				<h:outputText value="#{evaluationManagementBackingBean.evaluation.name}, "/>		
+				<h:outputText value="<b>#{bundle['label.description']}:</b> " escape="false"/>		
+				<h:outputText value="#{evaluationManagementBackingBean.evaluation.description}, "/>
+			</h:panelGroup>
+			
 
 			<h:outputText value="<div class='infoop2'>" escape="false"/>
 
@@ -87,7 +97,7 @@
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.enrolmentEvaluationType']}"/></f:facet>
 					<h:outputText rendered="#{attends.enrolment == null}" value="#{bundle['message.notEnroled']}"/>
-					<h:outputText rendered="#{attends.enrolment != null}" value="#{attends.enrolment.enrolmentEvaluationType}"/>
+					<h:outputText rendered="#{attends.enrolment != null}" value="#{enumerationBundle[attends.enrolment.enrolmentEvaluationType]}"/>
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.mark']}"/></f:facet>
