@@ -77,6 +77,11 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
     }
 
     @Override
+    public boolean isPayedUponCreation() {
+	return false;
+    }
+
+    @Override
     public boolean hasPersonalInfo() {
 	return false;
     }

@@ -82,6 +82,11 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
     }
 
     @Override
+    public boolean isPayedUponCreation() {
+	return false;
+    }
+
+    @Override
     public boolean hasPersonalInfo() {
 	return false;
     }

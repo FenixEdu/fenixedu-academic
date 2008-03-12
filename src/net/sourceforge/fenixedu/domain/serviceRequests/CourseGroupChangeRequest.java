@@ -121,6 +121,11 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     }
 
     @Override
+    public boolean isPayedUponCreation() {
+	return false;
+    }
+
+    @Override
     public boolean hasPersonalInfo() {
 	return false;
     }

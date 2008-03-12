@@ -131,6 +131,11 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     }
 
     @Override
+    public boolean isPayedUponCreation() {
+	return true;
+    }
+
+    @Override
     public boolean hasPersonalInfo() {
 	return false;
     }

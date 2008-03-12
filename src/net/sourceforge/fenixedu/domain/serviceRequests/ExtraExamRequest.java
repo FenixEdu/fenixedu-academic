@@ -142,6 +142,11 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     }
 
     @Override
+    public boolean isPayedUponCreation() {
+	return false;
+    }
+
+    @Override
     public boolean hasPersonalInfo() {
 	return false;
     }

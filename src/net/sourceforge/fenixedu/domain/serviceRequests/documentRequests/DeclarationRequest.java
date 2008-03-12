@@ -114,6 +114,11 @@ public abstract class DeclarationRequest extends DeclarationRequest_Base {
     }
 
     @Override
+    public boolean isPayedUponCreation() {
+	return false;
+    }
+
+    @Override
     public boolean isPagedDocument() {
 	return true;
     }

@@ -135,6 +135,11 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	return super.isFree();
     }
 
+    @Override
+    public boolean isPayedUponCreation() {
+	return false;
+    }
+
     private boolean isRequestForPreviousExecutionYear() {
 	return getExecutionYear() != ExecutionYear.readCurrentExecutionYear();
     }
