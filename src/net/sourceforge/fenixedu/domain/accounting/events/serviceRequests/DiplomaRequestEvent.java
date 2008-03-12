@@ -29,6 +29,9 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
 	case BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST:
 	    return new BolonhaMasterDegreeDiplomaRequestEvent(administrativeOffice, diplomaRequest.getEventType(), person,
 		    diplomaRequest);
+	case BOLONHA_ADVANCED_FORMATION_DIPLOMA_REQUEST:
+	    return new BolonhaAdvancedFormationDiplomaRequestEvent(administrativeOffice, diplomaRequest.getEventType(), person,
+		    diplomaRequest);
 	case BOLONHA_PHD_PROGRAM_DIPLOMA_REQUEST:
 	    return new BolonhaPhdProgramDiplomaRequestEvent(administrativeOffice, diplomaRequest.getEventType(), person,
 		    diplomaRequest);
