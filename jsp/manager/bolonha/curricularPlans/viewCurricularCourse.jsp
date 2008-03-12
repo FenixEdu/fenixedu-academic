@@ -54,11 +54,20 @@
 	<h:outputText value="<h4 class='first'>#{bolonhaBundle['contexts']}</h4>" escape="false"/>	
 	<fc:dataRepeater value="#{ManagerCurricularCourseManagement.curricularCourse.parentContexts}" var="context">
 		<h:outputText value="<fieldset class='lfloat mbottom1'>" escape="false"/>
+
 		<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
 		<h:outputText value="#{context.parentCourseGroup.oneFullName}</p>" escape="false"/>
 		
 		<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
 		<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
+		<h:outputText value="#{context.beginExecutionPeriod.qualifiedName}</p>" escape="false"/>
+					
+		<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
+		<h:outputText value="#{context.endExecutionPeriod.qualifiedName}</p>" escape="false" rendered="#{!empty context.endExecutionPeriod}"/>
+		<h:outputText value="#{bolonhaBundle['opened']}</p>" escape="false" rendered="#{empty context.endExecutionPeriod}"/>
+		
 		<h:outputText value="</fieldset>" escape="false"/>
 	</fc:dataRepeater>
 	<h:outputText value="</div>" escape="false"/>

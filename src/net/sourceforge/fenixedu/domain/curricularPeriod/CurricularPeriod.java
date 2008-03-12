@@ -303,4 +303,12 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         }
         return result;
     }
+
+    public boolean hasChildOrder() {
+	return getChildOrder() != null;
+    }
+    
+    public boolean hasChildOrderValue(final Integer order) {
+	return hasChildOrder() && getChildOrder().equals(order);
+    }
 }

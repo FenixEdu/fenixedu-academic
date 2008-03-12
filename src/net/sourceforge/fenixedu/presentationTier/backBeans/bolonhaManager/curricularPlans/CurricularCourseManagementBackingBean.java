@@ -69,7 +69,6 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     private CompetenceCourse competenceCourse = null;
     private DegreeCurricularPlan degreeCurricularPlan = null;
-    private CourseGroup courseGroup = null;
     private CurricularCourse curricularCourse = null;
     private Context context = null;
 
@@ -209,7 +208,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public CourseGroup getCourseGroup() {
-        return (courseGroup == null) ? (courseGroup = (CourseGroup) rootDomainObject.readDegreeModuleByOID(getCourseGroupID())) : courseGroup;
+        return (CourseGroup) rootDomainObject.readDegreeModuleByOID(getCourseGroupID());
     }
 
     public DepartmentUnit getDepartmentUnit() {
@@ -643,7 +642,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public String editCurricularCourseReturnPath() {
         return !toDelete ? "" : "deleteCurricularCourseContext";
     }
-
+    
     private List<SelectItem> readDepartmentUnits() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final Unit unit : UnitUtils.readAllDepartmentUnits()) {
@@ -724,4 +723,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return getDegreeCurricularPlan().getCompetenceCourses(getExecutionYear());
     }
 
+    public ExecutionPeriod getBeginExecutionPeriod() {
+	return rootDomainObject.readExecutionPeriodByOID(getBeginExecutionPeriodID());
+    }
+    
+    public ExecutionPeriod getEndExecutionPeriod() {
+	return getEndExecutionPeriodID() == null ? null : rootDomainObject.readExecutionPeriodByOID(getEndExecutionPeriodID());
+    }
 }

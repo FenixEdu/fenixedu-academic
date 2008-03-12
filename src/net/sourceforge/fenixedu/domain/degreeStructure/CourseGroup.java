@@ -140,7 +140,8 @@ public class CourseGroup extends CourseGroup_Base {
 	return getValidChildContexts(null, executionPeriod);
     }
 
-    // Valid means that is open to execution year, and if is CurricularCourse
+    // Valid means that is open to execution year, and if is
+    // CurricularCourse
     // the context must have same semester of any ExecutionPeriod of
     // ExecutionYear
     public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
@@ -153,7 +154,8 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    // Valid means that is open to execution period, and if is CurricularCourse
+    // Valid means that is open to execution period, and if is
+    // CurricularCourse
     // the context must have same semester than executionPeriod
     public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
 	final List<Context> result = new ArrayList<Context>();
@@ -178,13 +180,12 @@ public class CourseGroup extends CourseGroup_Base {
 	Collections.sort(result);
 	return result;
     }
-    
+
     public List<Context> getSortedOpenChildContextsWithCourseGroups(final ExecutionPeriod executionPeriod) {
 	final List<Context> result = this.getOpenChildContexts(CourseGroup.class, executionPeriod);
 	Collections.sort(result);
 	return result;
     }
-
 
     public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
 	final List<Context> result = new ArrayList<Context>();
@@ -235,25 +236,11 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     @Override
-    protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
-	    final Context ignoreContext) {
-
-	for (final Context context : this.getParentContexts()) {
-	    if (context != ignoreContext && context.getParentCourseGroup() == parentCourseGroup) {
-		throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
-	    }
-	}
-    }
-
-    @Override
-    protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
+    public List<CurricularRule> getParticipatingCurricularRules() {
+	final List<CurricularRule> result = new ArrayList<CurricularRule>();
+	result.addAll(super.getParticipatingCurricularRules());
 	result.addAll(getParticipatingContextCurricularRules());
-    }
-
-    @Override
-    protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
-	    final ExecutionPeriod executionPeriod) {
-	parentCourseGroup.checkDuplicateChildNames(getName(), getNameEn());
+	return result;
     }
 
     @Override
@@ -268,7 +255,7 @@ public class CourseGroup extends CourseGroup_Base {
 	super.setNameEn(nameEn);
     }
 
-    public void checkDuplicateChildNames(final String name, final String nameEn) throws DomainException {
+    public void checkDuplicateChildNames(final String name, final String nameEn) {
 	String normalizedName = StringFormatter.normalize(name);
 	String normalizedNameEn = StringFormatter.normalize(nameEn);
 	if (!verifyNames(normalizedName, normalizedNameEn)) {
@@ -276,7 +263,7 @@ public class CourseGroup extends CourseGroup_Base {
 	}
     }
 
-    public void checkDuplicateBrotherNames(final String name, final String nameEn) throws DomainException {
+    public void checkDuplicateBrotherNames(final String name, final String nameEn) {
 	String normalizedName = StringFormatter.normalize(name);
 	String normalizedNameEn = StringFormatter.normalize(nameEn);
 	for (Context parentContext : getParentContexts()) {
@@ -515,7 +502,7 @@ public class CourseGroup extends CourseGroup_Base {
 	if (modulesSelectionLimit != null) {
 	    return countMaxEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMaximumLimit());
 	}
-	
+
 	return countMaxEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesByExecutionPeriod.size());
     }
 
@@ -548,7 +535,7 @@ public class CourseGroup extends CourseGroup_Base {
 	if (modulesSelectionLimit != null) {
 	    return countMinEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMinimumLimit());
 	}
-	
+
 	return countMinEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesByExecutionPeriod.size());
     }
 
@@ -562,7 +549,7 @@ public class CourseGroup extends CourseGroup_Base {
 	Collections.sort(ectsCredits);
 	return sumEctsCredits(ectsCredits, minimumLimit.intValue());
     }
-    
+
     private Double sumEctsCredits(final List<Double> ectsCredits, int limit) {
 	double result = 0d;
 	final Iterator<Double> ectsCreditsIter = ectsCredits.iterator();
@@ -585,9 +572,19 @@ public class CourseGroup extends CourseGroup_Base {
 	return false;
     }
 
-    public Context addCurricularCourse(final CurricularPeriod curricularPeriod, final CurricularCourse curricularCourse,
-	    final ExecutionPeriod start, final ExecutionPeriod end) {
-	return curricularCourse.addContext(this, curricularPeriod, start, end);
+    public Context addCurricularCourse(final CurricularCourse curricularCourse, final CurricularPeriod curricularPeriod,
+	    final ExecutionPeriod begin, final ExecutionPeriod end) {
+	return addContext(curricularCourse, curricularPeriod, begin, end);
+    }
+
+    public Context addContext(final DegreeModule degreeModule, final CurricularPeriod curricularPeriod,
+	    final ExecutionPeriod begin, final ExecutionPeriod end) {
+
+	if (!allowChildWith(begin)) {
+	    throw new DomainException("degreeModule.cannot.add.context.with.begin.execution.period", getName(), begin.getName(),
+		    begin.getExecutionYear().getYear());
+	}
+	return new Context(this, degreeModule, curricularPeriod, begin, end);
     }
 
     @Override
@@ -630,7 +627,7 @@ public class CourseGroup extends CourseGroup_Base {
 
 	return result;
     }
-    
+
     public Set<DegreeModule> getChildDegreeModulesValidOn(final ExecutionYear executionYear) {
 	final Set<DegreeModule> result = new HashSet<DegreeModule>();
 	for (final Context context : getValidChildContexts(executionYear)) {
@@ -735,25 +732,24 @@ public class CourseGroup extends CourseGroup_Base {
     public boolean isCourseGroup() {
 	return true;
     }
-    
+
     @Override
     public Set<CurricularCourse> getAllCurricularCourses(final ExecutionPeriod executionPeriod) {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 	for (final Context context : getChildContexts()) {
-	    if(executionPeriod == null || context.isOpen(executionPeriod)) {
+	    if (executionPeriod == null || context.isOpen(executionPeriod)) {
 		result.addAll(context.getChildDegreeModule().getAllCurricularCourses(executionPeriod));
 	    }
 	}
 	return result;
     }
-    
+
     @Override
     public Set<CurricularCourse> getAllCurricularCourses() {
 	return getAllCurricularCourses(null);
     }
-    
+
     public Set<CurricularCourse> getAllOpenCurricularCourses() {
 	return getAllCurricularCourses(ExecutionPeriod.readActualExecutionPeriod());
     }
-    
 }

@@ -19,10 +19,11 @@ public class EditContextFromCurricularCourse extends Service {
 		.getDegreeStructure();
 
 	// ********************************************************
-	/* TODO: Important - change this code (must be generic to support several curricularPeriodInfoDTOs,
-	 *                   instead of year and semester)
-	 * 
-	 */
+	/*
+         * TODO: Important - change this code (must be generic to support
+         * several curricularPeriodInfoDTOs, instead of year and semester)
+         * 
+         */
 	CurricularPeriod curricularPeriod = null;
 	CurricularPeriodInfoDTO curricularPeriodInfoYear = null;
 	if (courseGroup.getParentDegreeCurricularPlan().getDegree().getDegreeType().getYears() > 1) {
@@ -46,7 +47,7 @@ public class EditContextFromCurricularCourse extends Service {
 
 	// ********************************************************
 
-	curricularCourse.editContext(context, courseGroup, curricularPeriod, getBeginExecutionPeriod(beginExecutionPeriodID),
+	context.edit(courseGroup, curricularPeriod, getBeginExecutionPeriod(beginExecutionPeriodID),
 		getEndExecutionPeriod(endExecutionPeriodID));
     }
 
@@ -55,11 +56,8 @@ public class EditContextFromCurricularCourse extends Service {
 	if (beginExecutionPeriodID == null) {
 	    final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	    final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
-	    if (nextExecutionYear == null) {
-		beginExecutionPeriod = currentExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
-	    } else {
-		beginExecutionPeriod = nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
-	    }
+	    beginExecutionPeriod = (nextExecutionYear == null) ? currentExecutionYear.getFirstExecutionPeriod()
+		    : nextExecutionYear.getFirstExecutionPeriod();
 	} else {
 	    beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
 	}

@@ -218,6 +218,13 @@
 					<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
 					<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
 					
+					<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
+					<h:outputText value="#{context.beginExecutionPeriod.qualifiedName}</p>" escape="false"/>
+					
+					<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
+					<h:outputText value="#{context.endExecutionPeriod.qualifiedName}</p>" escape="false" rendered="#{!empty context.endExecutionPeriod}"/>
+					<h:outputText value="#{bolonhaBundle['opened']}</p>" escape="false" rendered="#{empty context.endExecutionPeriod}"/>
+					
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 					<h:outputLink value="editCurricularCourse.faces">
 						<h:outputText value="#{bolonhaBundle['edit']}" />

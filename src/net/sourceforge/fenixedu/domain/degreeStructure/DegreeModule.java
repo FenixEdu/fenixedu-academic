@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -77,16 +76,17 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     /**
-     * We need a method to return a full name of a course group - from it's
-     * parent course group to the degree curricular plan's root course group.
-     * 
-     * Given this is impossible, for there are many routes from the root course
-     * group to one particular course group, we choose (for now...) to get one
-     * possible full name, always visiting the first element of every list of
-     * contexts on our way to the root course group.
-     * 
-     * @return A string with one possible full name of this course group
-     */
+         * We need a method to return a full name of a course group - from it's
+         * parent course group to the degree curricular plan's root course
+         * group.
+         * 
+         * Given this is impossible, for there are many routes from the root
+         * course group to one particular course group, we choose (for now...)
+         * to get one possible full name, always visiting the first element of
+         * every list of contexts on our way to the root course group.
+         * 
+         * @return A string with one possible full name of this course group
+         */
     protected void getOneFullName(final StringBuilder result, final ExecutionPeriod executionPeriod) {
 	final String selfName = getNameI18N(executionPeriod).getContent(LanguageUtils.getUserLanguage());
 
@@ -169,31 +169,6 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	return !hasAnyCurriculumModules();
     }
 
-    public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
-	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-
-	if (isRoot()) {
-	    throw new DomainException("degreeModule.cannot.add.context.to.root");
-	}
-	if (!parentCourseGroup.allowChildWith(beginExecutionPeriod)) {
-	    throw new DomainException("degreeModule.cannot.add.context.with.begin.execution.period", parentCourseGroup.getName(),
-		    beginExecutionPeriod.getName(), beginExecutionPeriod.getExecutionYear().getYear());
-	}
-
-	checkContextsFor(parentCourseGroup, curricularPeriod, null);
-	checkOwnRestrictions(parentCourseGroup, curricularPeriod, endExecutionPeriod);
-
-	return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
-    }
-
-    public void editContext(Context context, CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
-	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-
-	checkContextsFor(parentCourseGroup, curricularPeriod, context);
-	checkOwnRestrictions(parentCourseGroup, curricularPeriod, endExecutionPeriod);
-	context.edit(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
-    }
-
     public void deleteContext(Context context) {
 	if (hasParentContexts(context)) {
 	    context.delete();
@@ -219,10 +194,9 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public List<CurricularRule> getParticipatingCurricularRules() {
-	List<CurricularRule> result = new ArrayList<CurricularRule>();
+	final List<CurricularRule> result = new ArrayList<CurricularRule>();
 	result.addAll(getParticipatingPrecedenceCurricularRules());
 	result.addAll(getParticipatingExclusivenessCurricularRules());
-	addOwnPartipatingCurricularRules(result);
 	return result;
     }
 
@@ -535,32 +509,6 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	return equivalencePlanEntries;
     }
 
-    abstract public DegreeCurricularPlan getParentDegreeCurricularPlan();
-
-    abstract public void print(StringBuilder stringBuffer, String tabs, Context previousContext);
-
-    abstract public boolean isLeaf();
-
-    abstract public boolean isRoot();
-
-    abstract public Double getMaxEctsCredits(final ExecutionPeriod executionPeriod);
-
-    abstract public Double getMinEctsCredits(final ExecutionPeriod executionPeriod);
-
-    abstract protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
-	    final Context context);
-
-    abstract protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result);
-
-    abstract protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
-	    final ExecutionPeriod executionPeriod);
-
-    abstract public void getAllDegreeModules(final Collection<DegreeModule> degreeModules);
-
-    abstract public Set<CurricularCourse> getAllCurricularCourses(final ExecutionPeriod executionPeriod);
-
-    abstract public Set<CurricularCourse> getAllCurricularCourses();
-
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
 	Collection<CycleCourseGroup> res = new HashSet<CycleCourseGroup>();
 	for (CourseGroup courseGroup : getParentCourseGroups()) {
@@ -576,5 +524,23 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	}
 	return res;
     }
+
+    abstract public DegreeCurricularPlan getParentDegreeCurricularPlan();
+
+    abstract public void print(StringBuilder stringBuffer, String tabs, Context previousContext);
+
+    abstract public boolean isLeaf();
+
+    abstract public boolean isRoot();
+
+    abstract public Double getMaxEctsCredits(final ExecutionPeriod executionPeriod);
+
+    abstract public Double getMinEctsCredits(final ExecutionPeriod executionPeriod);
+
+    abstract public void getAllDegreeModules(final Collection<DegreeModule> degreeModules);
+
+    abstract public Set<CurricularCourse> getAllCurricularCourses(final ExecutionPeriod executionPeriod);
+
+    abstract public Set<CurricularCourse> getAllCurricularCourses();
 
 }

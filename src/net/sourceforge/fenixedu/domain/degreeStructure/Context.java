@@ -84,36 +84,75 @@ public class Context extends Context_Base implements Comparable<Context> {
 	this.setChildOrder(0);
     }
 
-    public Context(CourseGroup courseGroup, DegreeModule degreeModule, CurricularPeriod curricularPeriod,
-	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+    public Context(final CourseGroup courseGroup, final DegreeModule degreeModule, final CurricularPeriod curricularPeriod,
+	    final ExecutionPeriod begin, final ExecutionPeriod end) {
 
 	this();
-	if (courseGroup == null || degreeModule == null || beginExecutionPeriod == null) {
-	    throw new DomainException("error.incorrectContextValues");
-	}
 
-	checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
+	checkParameters(courseGroup, degreeModule, begin);
+	checkExecutionPeriods(begin, end);
+	checkIfCanAddDegreeModuleToCourseGroup(courseGroup, degreeModule, curricularPeriod, begin.getExecutionYear());
+	checkExistingCourseGroupContexts(courseGroup, degreeModule, curricularPeriod, begin, end);
 
 	super.setParentCourseGroup(courseGroup);
 	super.setChildDegreeModule(degreeModule);
 	super.setCurricularPeriod(curricularPeriod);
-	super.setBeginExecutionPeriod(beginExecutionPeriod);
-	super.setEndExecutionPeriod(endExecutionPeriod);
+	super.setBeginExecutionPeriod(begin);
+	super.setEndExecutionPeriod(end);
     }
 
-    public void edit(CourseGroup parentCourseGroup, DegreeModule degreeModule, CurricularPeriod curricularPeriod,
-	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+    private void checkIfCanAddDegreeModuleToCourseGroup(final CourseGroup courseGroup, final DegreeModule degreeModule,
+	    final CurricularPeriod curricularPeriod, final ExecutionYear executionYear) {
+	if (degreeModule.isLeaf()) {
+	    checkIfCanAddCurricularCourseToCourseGroup(courseGroup, (CurricularCourse) degreeModule, curricularPeriod,
+		    executionYear);
+	} else {
+	    checkIfCanAddCourseGroupToCourseGroup(courseGroup, (CourseGroup) degreeModule);
+	}
+    }
 
-	edit(beginExecutionPeriod, endExecutionPeriod);
-	setParentCourseGroup(parentCourseGroup);
-	setChildDegreeModule(degreeModule);
+    private void checkIfCanAddCurricularCourseToCourseGroup(final CourseGroup parent, final CurricularCourse curricularCourse,
+	    final CurricularPeriod curricularPeriod, final ExecutionYear executionYear) {
+	if (curricularCourse.hasCompetenceCourse() && curricularCourse.getCompetenceCourse().isAnual(executionYear)
+		&& !curricularPeriod.hasChildOrderValue(1)) {
+	    throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
+	}
+    }
+
+    private void checkIfCanAddCourseGroupToCourseGroup(final CourseGroup parent, final CourseGroup courseGroup) {
+	parent.checkDuplicateChildNames(courseGroup.getName(), courseGroup.getNameEn());
+    }
+
+    private void checkParameters(CourseGroup courseGroup, DegreeModule degreeModule, ExecutionPeriod beginExecutionPeriod) {
+	if (courseGroup == null || degreeModule == null || beginExecutionPeriod == null) {
+	    throw new DomainException("error.incorrectContextValues");
+	}
+    }
+
+    private void checkExistingCourseGroupContexts(final CourseGroup courseGroup, final DegreeModule degreeModule,
+	    final CurricularPeriod curricularPeriod, final ExecutionPeriod begin, final ExecutionPeriod end) {
+
+	for (final Context context : courseGroup.getChildContexts()) {
+	    if (context != this && context.hasChildDegreeModule(degreeModule) && context.hasCurricularPeriod(curricularPeriod)
+		    && context.contains(begin, end)) {
+		throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
+	    }
+	}
+    }
+
+    public void edit(final CourseGroup parent, final CurricularPeriod curricularPeriod, final ExecutionPeriod begin,
+	    final ExecutionPeriod end) {
+
+	setParentCourseGroup(parent);
 	setCurricularPeriod(curricularPeriod);
+	edit(begin, end);
     }
 
-    protected void edit(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-	checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
-	setBeginExecutionPeriod(beginExecutionPeriod);
-	setEndExecutionPeriod(endExecutionPeriod);
+    protected void edit(final ExecutionPeriod begin, final ExecutionPeriod end) {
+	checkExecutionPeriods(begin, end);
+	checkExistingCourseGroupContexts(getParentCourseGroup(), getChildDegreeModule(), getCurricularPeriod(), begin, end);
+	setBeginExecutionPeriod(begin);
+	setEndExecutionPeriod(end);
     }
 
     public void delete() {
@@ -162,7 +201,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 	super.setChildDegreeModule(degreeModule);
     }
 
-    public boolean isValid(ExecutionPeriod executionPeriod) {
+    public boolean isValid(final ExecutionPeriod executionPeriod) {
 	if (isOpen(executionPeriod)) {
 	    if (getChildDegreeModule().isCurricularCourse()) {
 		CurricularCourse curricularCourse = (CurricularCourse) getChildDegreeModule();
@@ -209,6 +248,18 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     public boolean isOpen() {
 	return isOpen(ExecutionPeriod.readActualExecutionPeriod());
+    }
+
+    public boolean contains(final ExecutionPeriod begin, final ExecutionPeriod end) {
+	if (end != null && begin.isAfter(end)) {
+	    throw new DomainException("context.begin.is.after.end.execution.period");
+	}
+
+	if (begin.isAfterOrEquals(getBeginExecutionPeriod())) {
+	    return !hasEndExecutionPeriod() || begin.isBeforeOrEquals(getEndExecutionPeriod());
+	} else {
+	    return end == null || end.isAfterOrEquals(getBeginExecutionPeriod());
+	}
     }
 
     @Deprecated
@@ -278,6 +329,32 @@ public class Context extends Context_Base implements Comparable<Context> {
 	super.setBeginExecutionPeriod(null);
     }
 
+    public Integer getCurricularYear() {
+	return getCurricularPeriod().getParent().getAbsoluteOrderOfChild();
+    }
+
+    public void addAllCourseGroups(Set<CourseGroup> courseGroups) {
+	final DegreeModule degreeModule = getChildDegreeModule();
+	if (!degreeModule.isLeaf()) {
+	    final CourseGroup courseGroup = (CourseGroup) degreeModule;
+	    courseGroups.add(courseGroup);
+	    courseGroup.getAllCoursesGroupse(courseGroups);
+	}
+    }
+
+    public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
+	final DegreeModule degreeModule = getChildDegreeModule();
+	degreeModule.getAllDegreeModules(degreeModules);
+    }
+
+    public boolean hasChildDegreeModule(final DegreeModule degreeModule) {
+	return hasChildDegreeModule() && getChildDegreeModule().equals(degreeModule);
+    }
+
+    public boolean hasCurricularPeriod(final CurricularPeriod curricularPeriod) {
+	return hasCurricularPeriod() && getCurricularPeriod().equals(curricularPeriod);
+    }
+
     public class DegreeModuleScopeContext extends DegreeModuleScope {
 
 	private final Context context;
@@ -344,24 +421,6 @@ public class Context extends Context_Base implements Comparable<Context> {
 	public int hashCode() {
 	    return context.hashCode();
 	}
-    }
-
-    public Integer getCurricularYear() {
-	return getCurricularPeriod().getParent().getAbsoluteOrderOfChild();
-    }
-
-    public void addAllCourseGroups(Set<CourseGroup> courseGroups) {
-	final DegreeModule degreeModule = getChildDegreeModule();
-	if (!degreeModule.isLeaf()) {
-	    final CourseGroup courseGroup = (CourseGroup) degreeModule;
-	    courseGroups.add(courseGroup);
-	    courseGroup.getAllCoursesGroupse(courseGroups);
-	}
-    }
-
-    public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
-	final DegreeModule degreeModule = getChildDegreeModule();
-	degreeModule.getAllDegreeModules(degreeModules);
     }
 
 }

@@ -17,62 +17,61 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class AddContextToCurricularCourse extends Service {
 
     public void run(CurricularCourse curricularCourse, CourseGroup courseGroup, Integer beginExecutionPeriodID,
-            Integer endExecutionPeriodID, Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
+	    Integer endExecutionPeriodID, Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
 
-        CurricularPeriod degreeCurricularPeriod = courseGroup.getParentDegreeCurricularPlan().getDegreeStructure();
-        
-        // ********************************************************
-        /* TODO: Important - change this code (must be generic to support several curricularPeriodInfoDTOs,
-         *                   instead of year and semester)
+	CurricularPeriod degreeCurricularPeriod = courseGroup.getParentDegreeCurricularPlan().getDegreeStructure();
+
+	// ********************************************************
+	/*
+         * TODO: Important - change this code (must be generic to support
+         * several curricularPeriodInfoDTOs, instead of year and semester)
          * 
          */
-        CurricularPeriod curricularPeriod = null;
-        CurricularPeriodInfoDTO curricularPeriodInfoYear = null;
-        if (courseGroup.getParentDegreeCurricularPlan().getDegree().getDegreeType().getYears() > 1) {
-            curricularPeriodInfoYear = new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR);
-        }
-        final CurricularPeriodInfoDTO curricularPeriodInfoSemester = new CurricularPeriodInfoDTO(semester, CurricularPeriodType.SEMESTER);
-        
-        if (curricularPeriodInfoYear != null) {
-            curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(curricularPeriodInfoYear, curricularPeriodInfoSemester);
-            if (curricularPeriod == null) {
-                curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(curricularPeriodInfoYear, curricularPeriodInfoSemester);
-            }
-        } else {
-            curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(curricularPeriodInfoSemester);
-            if (curricularPeriod == null) {
-                curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(curricularPeriodInfoSemester);
-            }
-        }
-        
-        // ********************************************************
-        
-        final ExecutionPeriod beginExecutionPeriod = getBeginExecutionPeriod(beginExecutionPeriodID);
-        final ExecutionPeriod endExecutionPeriod = getEndExecutionPeriod(endExecutionPeriodID);
+	CurricularPeriod curricularPeriod = null;
+	CurricularPeriodInfoDTO curricularPeriodInfoYear = null;
+	if (courseGroup.getParentDegreeCurricularPlan().getDegree().getDegreeType().getYears() > 1) {
+	    curricularPeriodInfoYear = new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR);
+	}
+	final CurricularPeriodInfoDTO curricularPeriodInfoSemester = new CurricularPeriodInfoDTO(semester,
+		CurricularPeriodType.SEMESTER);
 
-        curricularCourse.addContext(courseGroup, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+	if (curricularPeriodInfoYear != null) {
+	    curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(curricularPeriodInfoYear, curricularPeriodInfoSemester);
+	    if (curricularPeriod == null) {
+		curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(curricularPeriodInfoYear,
+			curricularPeriodInfoSemester);
+	    }
+	} else {
+	    curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(curricularPeriodInfoSemester);
+	    if (curricularPeriod == null) {
+		curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(curricularPeriodInfoSemester);
+	    }
+	}
+
+	// ********************************************************
+
+	final ExecutionPeriod beginExecutionPeriod = getBeginExecutionPeriod(beginExecutionPeriodID);
+	final ExecutionPeriod endExecutionPeriod = getEndExecutionPeriod(endExecutionPeriodID);
+
+	courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
     private ExecutionPeriod getBeginExecutionPeriod(Integer beginExecutionPeriodID) throws FenixServiceException {
-        final ExecutionPeriod beginExecutionPeriod;
-        if (beginExecutionPeriodID == null) {
-            final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-            final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
-            
-            if (nextExecutionYear == null) {
-        	beginExecutionPeriod = currentExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
-            } else {
-        	beginExecutionPeriod = nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
-            }
-        } else {
-            beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
-        }
-        return beginExecutionPeriod;
+	final ExecutionPeriod beginExecutionPeriod;
+	if (beginExecutionPeriodID == null) {
+	    final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	    final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
+	    beginExecutionPeriod = (nextExecutionYear == null) ? currentExecutionYear.getFirstExecutionPeriod()
+		    : nextExecutionYear.getFirstExecutionPeriod();
+	} else {
+	    beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
+	}
+	return beginExecutionPeriod;
     }
-    
+
     private ExecutionPeriod getEndExecutionPeriod(Integer endExecutionPeriodID) {
-        final ExecutionPeriod endExecutionPeriod = (endExecutionPeriodID == null) ? null
-                : rootDomainObject.readExecutionPeriodByOID(endExecutionPeriodID);
-        return endExecutionPeriod;
+	final ExecutionPeriod endExecutionPeriod = (endExecutionPeriodID == null) ? null : rootDomainObject
+		.readExecutionPeriodByOID(endExecutionPeriodID);
+	return endExecutionPeriod;
     }
 }

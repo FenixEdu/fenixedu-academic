@@ -248,7 +248,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	if (isApproved()) {
 	    return;
 	}
-	
+
 	if (!getCanModify().booleanValue()) {
 	    throw new DomainException("error.degreeCurricularPlan.already.approved");
 	}
@@ -980,9 +980,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private void checkIfAnualBeginsInFirstPeriod(final CompetenceCourse competenceCourse, final CurricularPeriod curricularPeriod) {
-
-	if (competenceCourse.getRegime().equals(RegimeType.ANUAL)
-		&& (curricularPeriod.getChildOrder() == null || curricularPeriod.getChildOrder() != 1)) {
+	if (competenceCourse.isAnual() && !curricularPeriod.hasChildOrderValue(1)) {
 	    throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
 	}
     }

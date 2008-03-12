@@ -160,8 +160,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     /**
-     * Temporary method, after all degrees migration this is no longer necessary
-     */
+         * Temporary method, after all degrees migration this is no longer
+         * necessary
+         */
     private boolean isBoxStructure() {
 	return !(getCurricularStage() == CurricularStage.OLD);
     }
@@ -192,9 +193,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     /**
-     * - This method is used to edit a 'special' curricular course that will
-     * represent any curricular course according to a rule
-     */
+         * - This method is used to edit a 'special' curricular course that will
+         * represent any curricular course according to a rule
+         */
     public void edit(String name, String nameEn, CurricularStage curricularStage) {
 	setName(name);
 	setNameEn(nameEn);
@@ -202,8 +203,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     /**
-     * - Edit Pre-Bolonha CurricularCourse
-     */
+         * - Edit Pre-Bolonha CurricularCourse
+         */
     public void edit(String name, String nameEn, String code, String acronym, Double weigth, Double credits, Double ectsCredits) {
 	checkForCurricularCourseWithSameAttributes(getDegreeCurricularPlan(), name, code, acronym);
 	setName(name);
@@ -1285,31 +1286,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
-	    final Context ignoreContext) {
-	for (final Context context : this.getParentContexts()) {
-	    if (context != ignoreContext && context.getParentCourseGroup() == parentCourseGroup
-		    && context.getCurricularPeriod() == curricularPeriod) {
-		throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
-	    }
-	}
-    }
-
-    @Override
-    protected void addOwnPartipatingCurricularRules(final List<CurricularRule> result) {
-	// no rules to add
-    }
-
-    @Override
-    protected void checkOwnRestrictions(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod,
-	    final ExecutionPeriod executionPeriod) {
-	if (hasCompetenceCourse() && getRegime(executionPeriod) == RegimeType.ANUAL
-		&& (curricularPeriod.getChildOrder() == null || curricularPeriod.getChildOrder() != 1)) {
-	    throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
-	}
-    }
-
-    @Override
     public String getName(ExecutionPeriod period) {
 	final String superName = super.getName();
 	return (superName == null || superName.length() == 0) ? getCompetenceCourse().getName(period) : superName;
@@ -1447,11 +1423,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     /**
-     * Maintened for legacy code compatibility purposes only. Makes no sense to
-     * check an Enrolment concept in a CurricularCourse.
-     * 
-     * @return true if CurricularCourseType checks accordingly
-     */
+         * Maintened for legacy code compatibility purposes only. Makes no sense
+         * to check an Enrolment concept in a CurricularCourse.
+         * 
+         * @return true if CurricularCourseType checks accordingly
+         */
     @Deprecated
     final public boolean isPropaedeutic() {
 	if (isBolonhaDegree()) {
