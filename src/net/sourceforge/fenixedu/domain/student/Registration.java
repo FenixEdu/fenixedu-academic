@@ -2449,13 +2449,9 @@ public class Registration extends Registration_Base {
 	return getInterruptedStudies() ? false : getRegistrationAgreement() == RegistrationAgreement.NORMAL;
     }
 
-    final public boolean hasPayedOrFreeDiplomaRequest(final CycleType cycleType) {
-	return getPayedOrFreeDiplomaRequest(cycleType) != null;
-    }
-
-    final public DiplomaRequest getPayedOrFreeDiplomaRequest(final CycleType cycleType) {
+    final public DiplomaRequest getDiplomaRequest(final CycleType cycleType) {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
-	    if (documentRequest.isDiploma() && (!documentRequest.hasEvent() || documentRequest.getEvent().isPayed())) {
+	    if (documentRequest.isDiploma() && !documentRequest.finishedUnsuccessfully()) {
 		final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
 		if (cycleType == null || cycleType == diplomaRequest.getRequestedCycle()) {
 		    return diplomaRequest;
