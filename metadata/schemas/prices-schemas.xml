@@ -244,7 +244,7 @@
 
 <schema name="BaseAmountPlusAmountPerPagePR.view-student"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR"
-	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view-student">
 	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 </schema>
