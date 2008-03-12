@@ -10472,6 +10472,13 @@ relation RootDomainObjectTeacherServiceDistribution {
 	}
 }
 
+relation TSDCurricularLoadRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad playsRole TSDCurricularLoads {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectTSDCourse {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse playsRole TSDCourses {

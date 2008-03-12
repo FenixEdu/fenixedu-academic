@@ -11,6 +11,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
 <em><bean:message key="link.teacherServiceDistribution"/></em>
@@ -35,6 +36,7 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value=""/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.TSDProcess" property="tsdProcess"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.viewType" property="viewType"/>
+
 
 <table class='tstyle5'>
 	<tr>
@@ -145,8 +147,11 @@
 	<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='changeToViewCharts'; document.forms[0].submit();">
 		<bean:message key="label.teacherServiceDistribution.viewByCharts"/>
 	</html:link>
+						|
+	<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='changeToViewPlanning'; document.forms[0].submit();">
+		<bean:message key="label.teacherServiceDistribution.viewPlanning"/>
+	</html:link>
 </p>
-
 
 <table class='tstyle4'>
 	<logic:notEmpty name="tsdCourseDTOEntryList">
@@ -357,7 +362,6 @@
 	</logic:iterate>
 </table>
 </logic:present>
-
 
 <logic:empty name="tsdCourseDTOEntryList">
 	<logic:notPresent name="nonValuatedTSDCourses">

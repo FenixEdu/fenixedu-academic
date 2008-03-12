@@ -15,13 +15,15 @@
 <em><bean:message key="link.teacherServiceDistribution"/></em>
 <h2><bean:message key="link.teacherServiceDistribution.tsdCourseService"/></h2>
 
+<bean:define id="tsdProcessId" value="<%= ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>"/>
+
 <p class="breadcumbs">
 	<em>
 		<html:link page='/tsdProcess.do?method=prepareTSDProcess'>
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + tsdProcessId %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
@@ -249,6 +251,17 @@
 			</tr>
 			<tr>
 				<td class='highlight7'>
+					<bean:message key="label.teacherServiceDistribution.numberOfSchoolClasses"/>
+					(<html:link page='<%= "/tsdCourseValuation.do?method=defineSchoolClassCalculationMethod&amp;tsd=" + tsdId + "&amp;tsdCourse=" + tsdCourseId + "&amp;tsdProcessId=" + tsdProcessId + "&amp;shiftType=" + typeName%>'>  
+						<bean:message key="label.teacherServiceDistribution.defineSchoolClassCalculationMethod"/>
+					</html:link>)
+				</td>
+				<td class='aright'>
+					<bean:write name="curricularLoad" property="numberOfSchoolClasses" /> 
+				</td>
+			</tr>
+			<tr>
+				<td class='highlight7'>
 					<b><bean:message key="label.teacherServiceDistribution.weeklyHours"/></b>
 				</td>
 				<td class='aright'>
@@ -276,13 +289,12 @@
 <br/>
 <logic:notEmpty name="tsdCourseForm" property="tsdCourseViewLink">
 	<bean:define id="tsdCourseID" name="tsdCourseForm" property="tsdCourseViewLink"/>
-	<html:link page='<%= "/tsdProcessValuation.do?method=prepareForTSDProcessValuation&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() 
-	+ "#" + tsdCourseID %>'>
+	<html:link page='<%= "/tsdProcessValuation.do?method=prepareForTSDProcessValuation&amp;tsdProcess=" + tsdProcessId 	+ "#" + tsdCourseID %>'>
 		<bean:message key="link.teacherServiceDistribution.backTotsdProcessVisualization"/>
 	</html:link>
 </logic:notEmpty>
 <logic:empty name="tsdCourseForm" property="tsdCourseViewLink">
-	<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+	<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + tsdProcessId %>'>
 		<bean:message key="link.back"/>
 	</html:link>
 </logic:empty>

@@ -281,6 +281,10 @@
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionValuation.jsp" />
 	</definition>
 
+	<definition name="df.page.teacherServiceDistribution.showTSDPlanning" extends="departmentAdmOffice.masterPage"> 
+		<put name="body" value="/departmentMember/teacherServiceDistribution/teacherServiceDistributionPlanning.jsp" />
+	</definition>
+	
 	<definition name="df.page.teacherServiceDistribution.showTSDProcessValuationByTeachersAndCourses" extends="departmentAdmOffice.masterPage"> 
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionValuationByTeachersAndCourses.jsp" />
 	</definition>
@@ -343,6 +347,10 @@
 	
  	<definition name="df.page.teacherServiceDistribution.showGlobalTSDProcesssValuationByTeachersAndCourses" extends="departmentAdmOffice.masterPage">
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses.jsp"/>
+	</definition>
+
+<definition name="df.page.teacherServiceDistribution.defineSchoolClassCalculationMethod" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentMember/teacherServiceDistribution/editSchoolClassCalculationMethod.jsp"/>
 	</definition>
 
 	<!-- ==== Summaries Management === -->

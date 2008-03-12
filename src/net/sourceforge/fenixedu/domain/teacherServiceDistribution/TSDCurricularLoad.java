@@ -113,6 +113,6 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
     }
 
     public Integer getNumberOfSchoolClasses() {
-	return new Double(Math.ceil((getSchoolClassCalculationMethod().equals(SchoolClassCalculationMethod.SHIFT_BASED)) ? getNumberOfShifts() : getNumberOfShifts() * getFrequency())).intValue();
+	return new Double(Math.ceil((SchoolClassCalculationMethod.SHIFT_BASED.equals(getSchoolClassCalculationMethod())) ? getNumberOfShifts() : getNumberOfShifts() * getFrequency())).intValue();
     }
 }

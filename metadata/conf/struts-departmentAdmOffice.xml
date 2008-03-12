@@ -921,6 +921,7 @@
         	<forward name="courseValuationShifts" path="df.page.teacherServiceDistribution.courseValuationShifts"/>
         	<forward name="courseValuationWeights" path="df.page.teacherServiceDistribution.courseValuationWeights"/>
         	<forward name="courseValuationHours" path="df.page.teacherServiceDistribution.courseValuationHours"/>
+        	<forward name="defineSchoolClassCalculationMethod" path="df.page.teacherServiceDistribution.defineSchoolClassCalculationMethod"/>
         </action>
 
         <action path="/tsdCurricularCourseGroupCreation"
@@ -966,7 +967,9 @@
 			<forward name="showTSDProcessValuationByTeachersAndCourses" path="df.page.teacherServiceDistribution.showTSDProcessValuationByTeachersAndCourses"/>
 			<forward name="showTSDProcessValuationByTeachers" path="df.page.teacherServiceDistribution.showTSDProcessValuationByTeachers"/>
 			<forward name="showTSDProcessValuationByCharts" path="df.page.teacherServiceDistribution.showTSDProcessValuationByCharts"/>
+			<forward name="showPlanning" path="df.page.teacherServiceDistribution.showTSDPlanning"/>
 		</action>
+
 			
 		<action path="/tsdTeachersGroup"
 			type = "net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDTeachersGroupAction"

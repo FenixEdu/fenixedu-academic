@@ -193,3 +193,6 @@
 		<slot name="name" key="label.teacher.person.nome"/>
     </schema>    
     
+<schema name="edit.studentClassMethod" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad">
+	<slot name="schoolClassCalculationMethod" key="label.teacherServiceDistribution.schoolClassCalculationMethod" layout="option-select"/>
+</schema>	

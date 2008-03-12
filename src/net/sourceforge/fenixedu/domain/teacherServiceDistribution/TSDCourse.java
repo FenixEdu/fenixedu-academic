@@ -212,6 +212,11 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	return Double.valueOf((Math.ceil(ratio))).intValue();
     }
 
+    public Integer getNumberOfSchoolClasses(ShiftType type) {
+	TSDCurricularLoad load = getTSDCurricularLoadByShiftType(type); 
+	return load == null ? 0 : load.getNumberOfSchoolClasses();
+    }
+    
     public double getNumberOfHoursForStudents(ShiftType type) {
 	return getHoursPerShift(type) * getShiftFrequency(type);
     }

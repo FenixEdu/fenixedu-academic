@@ -117,6 +117,9 @@
 	</html:link> |
 	<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='changeToViewCharts'; document.forms[0].submit();">
 		<bean:message key="label.teacherServiceDistribution.viewByCharts"/>
+	</html:link>|
+	<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='changeToViewPlanning'; document.forms[0].submit();">
+		<bean:message key="label.teacherServiceDistribution.viewPlanning"/>
 	</html:link>
 </p>
 
