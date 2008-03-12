@@ -36,7 +36,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
 	this.checkParameters(requestedCycle);
 
-	if (!isFree()) {
+	if (isPayedUponCreation() && !isFree()) {
 	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
     }
@@ -57,8 +57,8 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     }
 
     private void checkForDuplicate(final CycleType requestedCycle) {
-	final DiplomaRequest payedDiplomaRequest = getRegistration().getPayedOrFreeDiplomaRequest(requestedCycle);
-	if (payedDiplomaRequest != null && payedDiplomaRequest != this) {
+	final DiplomaRequest diplomaRequest = getRegistration().getDiplomaRequest(requestedCycle);
+	if (diplomaRequest != null && diplomaRequest != this) {
 	    throw new DomainException("DiplomaRequest.diploma.already.requested");
 	}
     }
@@ -146,6 +146,10 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	    }
 	}
 
+	if (academicServiceRequestBean.isToConclude() && !isFree() && !isPayedUponCreation()) {
+	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
+	}
+
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	}
@@ -210,6 +214,11 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     @Override
     public boolean isAvailableForTransitedRegistrations() {
 	return false;
+    }
+
+    @Override
+    public boolean isPayedUponCreation() {
+	return getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
     }
 
 }
