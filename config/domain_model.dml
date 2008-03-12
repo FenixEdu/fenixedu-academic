@@ -1268,8 +1268,11 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaMasterDegreeDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
 					}
 	
+					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaAdvancedFormationDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
+					}
+	
 					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaPhdProgramDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
-				}
+					}
 				
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
