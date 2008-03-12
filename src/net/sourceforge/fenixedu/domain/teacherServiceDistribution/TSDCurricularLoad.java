@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -43,6 +44,7 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
         super.setWeightSecondTimeEnrolledStudentsPerShiftManual(weightSecondTimeEnrolledStudentsPerShiftManual);
         super.setWeightSecondTimeEnrolledStudentsPerShiftType(weightSecondTimeEnrolledStudentsPerShiftType);
         super.setFrequency(1d);
+        this.setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public void delete(){
