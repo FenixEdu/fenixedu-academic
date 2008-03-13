@@ -1420,6 +1420,15 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR {
 				}
+				
+				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR {
+				}
+				
+				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR {
+				}
+				
+				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR {
+				}
 
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 				Money amountPerUnit;

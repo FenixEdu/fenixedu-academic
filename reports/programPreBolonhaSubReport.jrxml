@@ -53,12 +53,12 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="450"  isSplitAllowed="true" >
+			<band height="427"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="20"
 						y="10"
-						width="556"
+						width="567"
 						height="20"
 						key="textField-1"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>

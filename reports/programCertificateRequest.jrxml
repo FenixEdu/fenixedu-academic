@@ -32,9 +32,10 @@
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="administrativeOfficeCoordinatorName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="programsList" isForPrompting="false" class="java.util.ArrayList"/>
+	<parameter name="bolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
 	<parameter name="programSubReportName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="preBolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -153,20 +154,35 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="105"  isSplitAllowed="true" >
+			<band height="93"  isSplitAllowed="true" >
 				<subreport  isUsingCache="true">
 					<reportElement
 						mode="Transparent"
 						x="0"
-						y="6"
+						y="3"
 						width="595"
-						height="99"
+						height="44"
 						key="subreport-1"/>
 					<subreportParameter  name="path">
 						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
 					</subreportParameter>
-					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{programsList}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + $P{programSubReportName}]]></subreportExpression>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{bolonhaList}))]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/programBolonhaSubReport.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="47"
+						width="595"
+						height="44"
+						key="subreport-2"
+						positionType="Float"/>
+					<subreportParameter  name="path">
+						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{preBolonhaList}))]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/programPreBolonhaSubReport.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</detail>
@@ -179,7 +195,7 @@
 			</band>
 		</pageFooter>
 		<summary>
-			<band height="2"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</summary>
 </jasperReport>

@@ -55,16 +55,11 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
 	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
 
-	addParameter("programSubReportName", getSubReportName());
-	addParameter("programsList", createProgramsList());
+	createProgramsList();
     }
 
     public boolean isBolonha() {
 	return getDocumentRequest().isBolonha();
-    }
-
-    private String getSubReportName() {
-	return "WEB-INF/classes/reports/" + (isBolonha() ? "programBolonhaSubReport" : "programPreBolonhaSubReport") + ".jasper";
     }
 
     @Override
@@ -81,12 +76,20 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	return false;
     }
 
-    private List<ProgramInformation> createProgramsList() {
-	final List<ProgramInformation> result = new ArrayList<ProgramInformation>();
+    private void createProgramsList() {
+	final List<ProgramInformation> bolonha = new ArrayList<ProgramInformation>();
+	final List<ProgramInformation> preBolonha = new ArrayList<ProgramInformation>();
+	
+	addParameter("bolonhaList", bolonha);
+	addParameter("preBolonhaList", preBolonha);
+	
 	for (final Enrolment enrolment : getDocumentRequest().getEnrolmentsSet()) {
-	    result.add(ProgramInformation.create(enrolment));
+	    if (enrolment.isBolonhaDegree()) {
+		bolonha.add(new BolonhaProgramInformation(enrolment));
+	    } else {
+		preBolonha.add(new PreBolonhaProgramInformation(enrolment));
+	    }
 	}
-	return result;
     }
 
     static abstract public class ProgramInformation implements Serializable {
@@ -129,14 +132,6 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
 	public List<ContextInformation> getContexts() {
 	    return contexts;
-	}
-
-	static ProgramInformation create(final Enrolment enrolment) {
-	    if (enrolment.isBolonhaDegree()) {
-		return new BolonhaProgramInformation(enrolment);
-	    } else {
-		return new PreBolonhaProgramInformation(enrolment);
-	    }
 	}
     }
 

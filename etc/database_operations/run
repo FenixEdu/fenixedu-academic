@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update concrete class for new certificate requests" correctCertificateRequestsConcreteClass.sql

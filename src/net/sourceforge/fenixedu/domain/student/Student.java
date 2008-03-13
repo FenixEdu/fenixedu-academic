@@ -525,8 +525,8 @@ public class Student extends Student_Base {
     }
 
     public Set<Enrolment> getApprovedEnrolments() {
-	Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
-	for (Registration registration : getRegistrationsSet()) {
+	final Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
+	for (final Registration registration : getRegistrationsSet()) {
 	    aprovedEnrolments.addAll(registration.getApprovedEnrolments());
 	}
 	return aprovedEnrolments;
@@ -1050,4 +1050,15 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public boolean hasEnrolments(final Enrolment enrolment) {
+	if (enrolment == null) {
+	    return false;
+	}
+	for (final Registration registration : getRegistrationsSet()) {
+	    if (registration.hasEnrolments(enrolment)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

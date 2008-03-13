@@ -260,8 +260,8 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 	this.enrolments = enrolmentsToSet;
     }
     
-    public List<Enrolment> getSelectedEnrolments() {
-	return isToUseAll() ? getRegistration().getLastStudentCurricularPlan().getAprovedEnrolments() : getEnrolments();
+    public Collection<Enrolment> getSelectedEnrolments() {
+	return isToUseAll() ? getStudent().getApprovedEnrolments() : getEnrolments();
     }
 
     public List<Exam> getExams() {

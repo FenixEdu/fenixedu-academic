@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.joda.time.YearMonthDay;
-
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+
+import org.joda.time.YearMonthDay;
 
 public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
@@ -31,7 +34,6 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
 	setPersonFields();
-	addDataSourceInformation();
 	addParametersInformation();
     }
 
@@ -46,15 +48,26 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
 	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	
+	createCourseLoadsList();
     }
 
-    private void addDataSourceInformation() {
-	final List<CourseLoadEntry> entries = new ArrayList<CourseLoadEntry>();
+    private void createCourseLoadsList() {
+	final List<CourseLoadEntry> bolonha = new ArrayList<CourseLoadEntry>();
+	final List<CourseLoadEntry> preBolonha = new ArrayList<CourseLoadEntry>();
+	
+	addParameter("bolonhaList", bolonha);
+	addParameter("preBolonhaList", preBolonha);
+	
 	for (final Enrolment enrolment : getDocumentRequest().getEnrolmentsSet()) {
-	    entries.add(CourseLoadEntry.create(enrolment));
+	    if (enrolment.isBolonhaDegree()) {
+		bolonha.add(new BolonhaCourseLoadEntry(enrolment));
+	    } else {
+		preBolonha.add(new PreBolonhaCourseLoadEntry(enrolment));
+	    }
 	}
-	Collections.sort(entries);
-	addDataSourceElements(entries);
+	Collections.sort(bolonha);
+	Collections.sort(preBolonha);
     }
 
     @Override
@@ -62,11 +75,6 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	return false;
     }
 
-    @Override
-    public String getReportTemplateKey() {
-	return getDocumentRequest().getDocumentTemplateKey() + (getDocumentRequest().isBolonha() ? ".BOLONHA" : ".PREBOLONHA");
-    }
-    
     @Override
     protected void setPersonFields() {
         addParameter("name", getDocumentRequest().getPerson().getName());
@@ -162,12 +170,36 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	public PreBolonhaCourseLoadEntry(final Enrolment enrolment) {
 	    super(enrolment.getCurricularCourse().getName(), enrolment.getExecutionYear().getYear());
 
-	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+	    if (enrolment.hasAttendsFor(enrolment.getExecutionPeriod())) {
+		initInformation(enrolment.getAttendsFor(enrolment.getExecutionPeriod()).getExecutionCourse());
+	    } else {
+		initInformation(enrolment.getCurricularCourse());
+	    }
+	}
+	
+	private void initInformation(final CurricularCourse curricularCourse) {
 	    setTheoreticalHours(curricularCourse.getTheoreticalHours());
 	    setPraticalHours(curricularCourse.getPraticalHours());
 	    setLabHours(curricularCourse.getLabHours());
 	    setTheoPratHours(curricularCourse.getTheoPratHours());
 	    setTotal(calculateTotal(curricularCourse));
+	}
+	
+	private void initInformation(final ExecutionCourse executionCourse) {
+	    setTheoreticalHours(getWeeklyHours(executionCourse, ShiftType.TEORICA));
+	    setPraticalHours(getWeeklyHours(executionCourse, ShiftType.PRATICA));
+	    setLabHours(getWeeklyHours(executionCourse, ShiftType.LABORATORIAL));
+	    setTheoPratHours(getWeeklyHours(executionCourse, ShiftType.TEORICO_PRATICA));
+	    setTotal(calculateTotal());
+	}
+	
+	private Double calculateTotal() {
+	    return getTheoreticalHours() + getPraticalHours() + getLabHours() + getTheoPratHours();
+	}
+
+	private Double getWeeklyHours(final ExecutionCourse executionCourse, final ShiftType type) {
+	    final CourseLoad courseLoad = executionCourse.getCourseLoadByShiftType(type);
+	    return courseLoad == null ? 0d : courseLoad.getWeeklyHours().doubleValue();
 	}
 	
 	public Double getLabHours() {

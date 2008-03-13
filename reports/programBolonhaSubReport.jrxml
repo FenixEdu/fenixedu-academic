@@ -56,7 +56,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="662"  isSplitAllowed="true" >
+			<band height="581"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="20"
@@ -356,8 +356,9 @@
 						x="20"
 						y="553"
 						width="556"
-						height="106"
+						height="22"
 						key="subreport-2"
+						stretchType="RelativeToBandHeight"
 						positionType="Float"
 						isRemoveLineWhenBlank="true">
 							<printWhenExpression><![CDATA[!$F{bibliographics}.isEmpty()]]></printWhenExpression>

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -104,6 +105,10 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     @Override
     public Person getPerson() {
 	return getRegistration().getPerson();
+    }
+    
+    public Student getStudent() {
+	return getRegistration().getStudent();
     }
 
     abstract public boolean isAvailableForTransitedRegistrations();

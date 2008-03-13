@@ -13,7 +13,7 @@ public class ApprovedEnrolmentsToCreateDocumentRequestProvider implements DataPr
 
     public Object provide(Object source, Object currentValue) {
 	final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
-	return documentRequestCreateBean.getRegistration().getLastStudentCurricularPlan().getAprovedEnrolments();
+	return documentRequestCreateBean.getStudent().getApprovedEnrolments();
     }
 
 }

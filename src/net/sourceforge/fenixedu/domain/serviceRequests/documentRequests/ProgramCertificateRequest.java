@@ -36,6 +36,9 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 	    if (!enrolment.isApproved()) {
 		throw new DomainException("error.ProgramCertificateRequest.cannot.add.not.approved.enrolments");
 	    }
+	    if (!getStudent().hasEnrolments(enrolment)) {
+		throw new DomainException("error.ProgramCertificateRequest.enrolment.doesnot.belong.to.student");
+	    }
 	}
     }
 

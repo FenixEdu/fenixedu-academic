@@ -1,0 +1,3 @@
+UPDATE POSTING_RULE SET POSTING_RULE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR' WHERE POSTING_RULE.EVENT_TYPE = 'COURSE_LOAD_REQUEST';
+UPDATE POSTING_RULE SET POSTING_RULE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR' WHERE POSTING_RULE.EVENT_TYPE = 'EXAM_DATE_CERTIFICATE_REQUEST';
+UPDATE POSTING_RULE SET POSTING_RULE.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR' WHERE POSTING_RULE.EVENT_TYPE = 'PROGRAM_CERTIFICATE_REQUEST';

@@ -105,7 +105,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setExecutionPeriod(executionPeriod);
 	setComment("");
 
-	MultiLanguageString forumName = new MultiLanguageString(nome);
 	createExecutionCourseAnnouncementBoard(nome);
 
 	if (entryPhase == null) {

@@ -6,40 +6,41 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhotocopyRequestEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-public class PhotocopyRequestPR extends PhotocopyRequestPR_Base {
+public class ProgramCertificateRequestPR extends ProgramCertificateRequestPR_Base {
 
-    protected PhotocopyRequestPR() {
+    protected ProgramCertificateRequestPR() {
 	super();
     }
 
-    public PhotocopyRequestPR(final ServiceAgreementTemplate serviceAgreementTemplate, final DateTime startDate,
+    public ProgramCertificateRequestPR(final ServiceAgreementTemplate serviceAgreementTemplate, final DateTime startDate,
 	    final DateTime endDate, final Money baseAmount, final Money amountPerPage) {
 	this();
-	super.init(EntryType.PHOTOCOPY_REQUEST_FEE, EventType.PHOTOCOPY_REQUEST, startDate, endDate, serviceAgreementTemplate,
-		baseAmount, amountPerPage);
+	super.init(EntryType.PROGRAM_CERTIFICATE_REQUEST_FEE, EventType.PROGRAM_CERTIFICATE_REQUEST, startDate, endDate,
+		serviceAgreementTemplate, baseAmount, amountPerPage);
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public PhotocopyRequestPR edit(final Money baseAmount, final Money amountPerUnit) {
+    public ProgramCertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit) {
 	deactivate();
-	return new PhotocopyRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount, amountPerUnit);
+	return new ProgramCertificateRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount,
+		amountPerUnit);
     }
 
     @Override
     protected Money getAmountForPages(final Event event) {
-	final PhotocopyRequestEvent requestEvent = (PhotocopyRequestEvent) event;
+	final CertificateRequestEvent requestEvent = (CertificateRequestEvent) event;
 	final int extraPages = requestEvent.getNumberOfPages().intValue() - 1;
 	return getAmountPerPage().multiply(BigDecimal.valueOf(extraPages < 0 ? 0 : extraPages));
     }
 
     @Override
     protected boolean isUrgent(final Event event) {
-	return ((PhotocopyRequestEvent) event).isUrgentRequest();
+	return ((CertificateRequestEvent) event).isUrgentRequest();
     }
 }
