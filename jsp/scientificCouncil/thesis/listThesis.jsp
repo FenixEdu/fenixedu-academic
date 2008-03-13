@@ -42,6 +42,17 @@
     </p>
 </logic:empty>
 
+<logic:present name="contextBean" property="executionYear">
+	<logic:present name="contextBean" property="degree">
+		<bean:define id="url">/scientificCouncilManageThesis.do?method=listScientificComission&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/></bean:define>
+		<html:link page="<%= url %>">
+			<bean:message key="link.list.scientific.comission"/>
+		</html:link>
+		<br/>
+		<br/>
+	</logic:present>
+</logic:present>
+
 <logic:notEmpty name="theses">
     <div class="color888">
         <p class="mvert0"><bean:message key="ThesisState.SUBMITTED.simple"/> - <bean:message key="ThesisState.SUBMITTED.label"/></p>
@@ -53,7 +64,7 @@
     <fr:view name="theses" schema="scientificCouncil.thesis.table">
         <fr:layout name="tabular-sortable">
             <fr:property name="classes" value="tstyle1"/>
-        
+
             <fr:property name="link(approve)" value="<%= String.format("/scientificCouncilManageThesis.do?method=reviewProposal&amp;degreeID=%s&amp;executionYearID=%s", degreeId, executionYearId) %>"/>
             <fr:property name="key(approve)" value="link.scientificCouncil.view.proposal"/>
             <fr:property name="param(approve)" value="idInternal/thesisID"/>

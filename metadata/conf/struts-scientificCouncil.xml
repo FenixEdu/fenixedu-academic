@@ -282,6 +282,7 @@
             <forward name="review-proposal" path="thesis-review-proposal"/>
             <forward name="review-thesis" path="thesis-review-thesis"/>
             <forward name="view-thesis" path="thesis-view-thesis"/>
+            <forward name="list-scientific-comission" path="list-scientific-comission"/>
   		</action>
      
         

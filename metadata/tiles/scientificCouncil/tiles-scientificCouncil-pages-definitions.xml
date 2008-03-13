@@ -136,6 +136,10 @@
     <definition name="thesis-view-thesis" extends="scientificCouncil.masterPage">
         	<put name="body" value="/scientificCouncil/thesis/viewThesis.jsp"/>
     </definition>
+    <definition name="list-scientific-comission" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/thesis/listScientificComission.jsp"/>
+    </definition>
+    
     
     <!-- ============  =========== -->
     <definition name="show-scientific-journal-merge-page" extends="scientificCouncil.masterPage">

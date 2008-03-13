@@ -1,12 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -105,6 +109,35 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
         request.setAttribute("theses", theses);
         
         return mapping.findForward("list-thesis");
+    }
+
+    public Integer getIntegerParameter(final HttpServletRequest request, final String paramName) {
+	final String string = request.getParameter(paramName);
+	return string == null ? null : Integer.valueOf(string);
+    }
+
+    public ActionForward listScientificComission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final Integer degreeId = getIntegerParameter(request, "degreeId");
+	final Degree degree = degreeId == null ? null : rootDomainObject.readDegreeByOID(degreeId);
+	request.setAttribute("degree", degree);
+
+	final Integer executionYearId = getIntegerParameter(request, "executionYearId");
+	final ExecutionYear executionYear = (ExecutionYear) (executionYearId == null ? null : rootDomainObject.readAcademicPeriodByOID(executionYearId));
+	request.setAttribute("executionYear", executionYear);
+
+	if (degree != null || executionYear != null) {
+	    final Set<ExecutionDegree> executionDegrees = new HashSet<ExecutionDegree>();
+	    for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+		for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+		    if (executionDegree.getExecutionYear() == executionYear) {
+			executionDegrees.add(executionDegree);
+		    }
+		}
+	    }
+	    request.setAttribute("executionDegrees", executionDegrees);
+	}
+        
+        return mapping.findForward("list-scientific-comission");
     }
 
     private ThesisContextBean getContextBean(HttpServletRequest request) {

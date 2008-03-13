@@ -245,6 +245,7 @@
         <property name="format" value="${name} (${loginIdentification.mostImportantAlias})"/>
     </slot>
     <slot name="contact" key="label.scientificCommission.contact"/>
+    <slot name="person.email" key="email"/>
 </schema>
 
 <schema name="coordinator.commissionTeam.addMember" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">

@@ -15,6 +15,12 @@
 
 <ul>
     <li>
+		<bean:define id="url">/scientificCouncilManageThesis.do?method=listScientificComission&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/></bean:define>
+		<html:link page="<%= url %>">
+			<bean:message key="link.list.scientific.comission"/>
+		</html:link>
+    </li>
+    <li>
         <html:link page="/scientificCouncilManageThesis.do?method=listThesis">
             <bean:message key="link.scientificCouncil.thesis.list.back"/>
         </html:link>
