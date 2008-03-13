@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 public class RegistrationSelectExecutionYearBean implements Serializable {
 
@@ -37,4 +38,7 @@ public class RegistrationSelectExecutionYearBean implements Serializable {
 		: null;
     }
 
+    public Student getStudent() {
+	return getRegistration().getStudent();
+    }
 }
