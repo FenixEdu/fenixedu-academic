@@ -30,3 +30,4 @@ function executeWithTempFile() {
 
 execute "Alter Evaluation Table" alterTableEvaluationAddCreationDate.sql
 execute "Add key to TSDCurricularLoad" addKeyRootDomainObjectToTSDCurricularLoad.sql
+execute "Update concrete class for new certificate requests" correctCertificateRequestsConcreteClass.sql
