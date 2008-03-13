@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -336,7 +335,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     static public ExecutionYear readFirstBolonhaExecutionYear() {
-	return ExecutionYear.readExecutionYearByName(PropertiesManager.getProperty("start.year.for.bolonha.degrees"));
+	return ExecutionPeriod.readFirstBolonhaExecutionPeriod().getExecutionYear();
     }
 
     public static class ExecutionYearSearchCache {
