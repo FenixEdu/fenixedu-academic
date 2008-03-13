@@ -563,6 +563,8 @@ semester.for.from.enrolments.leec=2
 #----------------------------------------------------------------
 start.year.for.bolonha.degrees=2006/2007
 start.semester.for.bolonha.degrees=1
+start.year.for.bolonha.transition=2007/2008
+start.semester.for.bolonha.transition=1
 
 #
 #
