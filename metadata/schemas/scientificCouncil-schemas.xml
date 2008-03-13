@@ -2,6 +2,7 @@
     <slot name="student.number" key="label.student.number.short"/>
     <slot name="student.person.name" key="student"/>
     <slot name="finalTitle" key="label.scientificCouncil.title" layout="short">
+    	<property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
         <property name="length" value="60"/>
     </slot>
     <slot name="state" key="label.thesis.state">

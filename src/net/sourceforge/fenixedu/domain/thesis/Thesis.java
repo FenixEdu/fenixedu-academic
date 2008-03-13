@@ -81,7 +81,8 @@ public class Thesis extends Thesis_Base {
 
     public static final Comparator<Thesis> COMPARATOR_BY_STUDENT = new Comparator<Thesis>() {
 	public int compare(Thesis t1, Thesis t2) {
-	    return Student.NUMBER_COMPARATOR.compare(t1.getStudent(), t2.getStudent());
+	    final int n = Student.NUMBER_COMPARATOR.compare(t1.getStudent(), t2.getStudent());
+	    return n == 0 ? COMPARATOR_BY_ID.compare(t1, t2) : n;
 	}
     };
 
@@ -567,6 +568,38 @@ public class Thesis extends Thesis_Base {
 
 	setRejectionComment(rejectionComment);
 	setState(ThesisState.DRAFT);
+    }
+
+    // Not an actual state change... but it is an aparent state change (whatever that means).
+    @Override
+    public void setConfirmmedDocuments(final DateTime confirmmedDocuments) {
+	if (getState() != ThesisState.APPROVED && getState() != ThesisState.REVISION) {
+	    throw new DomainException("thesis.confirm.notApprovedOrInRevision");
+	}
+
+	if (! isThesisAbstractInBothLanguages()) {
+	    throw new DomainException("thesis.confirm.noAbstract");
+	}
+
+	if (! isKeywordsInBothLanguages()) {
+	    throw new DomainException("thesis.confirm.noKeywords");
+	}
+
+	if (! hasExtendedAbstract()) {
+	    throw new DomainException("thesis.confirm.noExtendedAbstract");
+	}
+
+	if (! hasDissertation()) {
+	    throw new DomainException("thesis.confirm.noDissertation");
+	}
+
+	if (getDiscussed() == null) {
+	    throw new DomainException("thesis.confirm.noDiscussionDate");
+	}
+
+	setConfirmer(AccessControl.getPerson());
+
+	super.setConfirmmedDocuments(confirmmedDocuments);
     }
 
     // APPROVED -> CONFIRMED
@@ -1377,6 +1410,9 @@ public class Thesis extends Thesis_Base {
 	if (hasFutureEnrolment()) {
 	    throw new DomainException("thesis.has.enrolment.in.future");
 	}
+	if (state == ThesisState.REVISION) {
+	    super.setConfirmmedDocuments(null);
+	}
 	super.setState(state);
     }
 
@@ -1393,6 +1429,17 @@ public class Thesis extends Thesis_Base {
 	    }
 	}
 	return false;
+    }
+
+    public static Set<Thesis> getThesesByParticipationType(final Person person, final ThesisParticipationType thesisParticipationType) {
+	final Set<Thesis> theses = new HashSet<Thesis>();
+	for (final ThesisEvaluationParticipant thesisEvaluationParticipant : person.getThesisEvaluationParticipantsSet()) {
+	    if (thesisParticipationType == thesisEvaluationParticipant.getType()) {
+		final Thesis thesis = thesisEvaluationParticipant.getThesis();
+		theses.add(thesis);
+	    }
+	}
+	return theses;
     }
 
 }

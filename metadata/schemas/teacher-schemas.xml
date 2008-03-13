@@ -130,3 +130,12 @@
 		<slot name="studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla"/>
 		<slot name="studentCurricularPlan.person.email" key="label.email"/>
 </schema>
+
+<schema name="teacher.thesis.table" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ThesisDocumentConfirmationDA$ThesisPresentationWrapper" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+    <slot name="thesis.student.number" key="label.student.number.short"/>
+    <slot name="thesis.student.person.name" key="student"/>
+    <slot name="thesis.finalTitle" key="label.scientificCouncil.title">
+        <property name="length" value="60"/>
+    </slot>
+    <slot name="thesisPresentationState" key="label.thesis.state"/>
+</schema>

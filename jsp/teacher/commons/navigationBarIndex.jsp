@@ -53,10 +53,6 @@
   		<bean:message key="link.manage.credits"/>
   	</html:link>
   </li> --%>
-	<li><html:link
-		href="<%= request.getContextPath() + "/teacher/finalWorkManagement.do?method=chooseDegree" %>">
-		<bean:message key="link.manage.finalWork" />
-	</html:link></li>
 	<%--
    <li>
    	<html:link href="<%= request.getContextPath() + "/teacher/publicationManagement.do" %>">
@@ -101,5 +97,19 @@
 		href="<%= request.getContextPath() + "/teacher/roomsReserveManagement.do?method=viewReserves" %>">
 		<bean:message key="link.rooms.reserve" bundle="APPLICATION_RESOURCES" />
 	</html:link></li>
+
+	<li class="navheader">
+		<bean:message key="link.manage.finalWork"/>
+	</li>
+	<li>
+		<html:link href="<%= request.getContextPath() + "/teacher/finalWorkManagement.do?method=chooseDegree" %>">
+			<bean:message key="link.manage.finalWork.candidacies" />
+		</html:link>
+	</li>
+	<li>
+		<html:link href="<%= request.getContextPath() + "/teacher/thesisDocumentConfirmation.do?method=showThesisList" %>">
+			<bean:message key="link.manage.thesis.document.confirmation" />
+		</html:link>
+	</li>
 
 </ul>

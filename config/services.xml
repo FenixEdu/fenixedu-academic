@@ -11692,6 +11692,14 @@
         </filterChains>
     </service>
     <service>
+        <name>ConfirmThesisDocumentSubmission</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.ConfirmThesisDocumentSubmission</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
         <name>RejectThesisDeclaration</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.RejectThesisDeclaration</implementationClass>
         <description></description>

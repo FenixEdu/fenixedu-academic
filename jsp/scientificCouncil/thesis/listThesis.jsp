@@ -76,7 +76,6 @@
             <fr:property name="key(view)" value="link.scientificCouncil.evaluated.view"/>
             <fr:property name="param(view)" value="idInternal/thesisID"/>
             <fr:property name="order(view)" value="4"/>
-            <fr:property name="visibleIf(view)" value="evaluated"/>
 
             <fr:property name="sortParameter" value="sortBy"/>
             <fr:property name="sortUrl" value="<%= String.format("/scientificCouncilManageThesis.do?method=listThesis&amp;degreeID=%s&amp;executionYearID=%s", degreeId, executionYearId) %>"/>

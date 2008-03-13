@@ -2228,6 +2228,14 @@
         	<forward name="seeSpecifiedRoomsReserve" path="see-specified-rooms-reserve"/>        	        	        	
         </action>
 
+        <action path="/thesisDocumentConfirmation"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ThesisDocumentConfirmationDA"
+        	parameter="method"
+        	scope="request">        	  
+        	<forward name="showThesisList" path="df.page.showThesisList"/>
+        	<forward name="viewThesis" path="df.page.viewThesis"/>        	
+        </action>
+
 		<!-- Action mappings for tests -->
 		&tests-actions;
 		<!-- End of action mappings for tests -->
@@ -2252,6 +2260,7 @@
     <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>    
    	<message-resources parameter="resources.WebsiteManagerResources" key="WEBSITEMANAGER_RESOURCES" null="false"/>
    	<message-resources parameter="resources.ContentResources" key="CONTENT_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

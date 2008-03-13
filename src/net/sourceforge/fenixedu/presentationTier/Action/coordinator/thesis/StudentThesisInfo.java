@@ -55,37 +55,7 @@ public class StudentThesisInfo {
     }
 
     private void setState(Thesis thesis) {
-        if (thesis == null) {
-            this.state = ThesisPresentationState.UNEXISTING;
-        }
-        else {
-            if (thesis.isRejected()) {
-                this.state = ThesisPresentationState.REJECTED;
-            }
-            else if (thesis.isDraft()) {
-                this.state = ThesisPresentationState.DRAFT;
-            }
-            else if (thesis.isSubmitted()) {
-                this.state = ThesisPresentationState.SUBMITTED;
-            }
-            else if (thesis.isWaitingConfirmation()) {
-                this.state = ThesisPresentationState.APPROVED;
-            }
-            else if (thesis.isConfirmed()) {
-                this.state = ThesisPresentationState.CONFIRMED;
-            }
-            else if (thesis.isEvaluated()) {
-                if (thesis.isFinalThesis()) {
-                    this.state = ThesisPresentationState.EVALUATED;
-                }
-                else {
-                    this.state = ThesisPresentationState.EVALUATED_1ST;
-                }
-            }
-            else {
-                this.state = ThesisPresentationState.UNKNOWN;
-            }
-        }
+	this.state = ThesisPresentationState.getThesisPresentationState(thesis);
     }
     
     public Integer getThesisId() {

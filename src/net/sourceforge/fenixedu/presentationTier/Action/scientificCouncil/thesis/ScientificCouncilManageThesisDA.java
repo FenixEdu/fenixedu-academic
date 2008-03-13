@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -22,8 +23,14 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("thesis", getThesis(request));
-        
+	final Thesis thesis = getThesis(request);
+        request.setAttribute("thesis", thesis);
+
+        if (thesis != null) {
+            final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
+            request.setAttribute("thesisPresentationState", thesisPresentationState);
+        }
+
         Degree degree = getDegree(request);
         ExecutionYear executionYear = getExecutionYear(request);
 
