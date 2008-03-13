@@ -65,7 +65,7 @@
 	</tr>
 	<tr>
 			<td align="right">
-			<bean:message key="label.teacherServiceDistribution.viewHoursPerShift"/>:
+			<bean:message key="label.teacherServiceDistribution.selectShifts"/>:
 		</td>
 	
 			<td>
