@@ -177,8 +177,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     final public BigDecimal getAverage(final ExecutionYear executionYear) {
-	return executionYear == null && isConcluded() && isConclusionProcessed() ? BigDecimal
-		.valueOf(getFinalAverage()) : getCurriculum(executionYear).getAverage();
+	return executionYear == null && isConcluded() && isConclusionProcessed() ? BigDecimal.valueOf(getFinalAverage())
+		: getCurriculum(executionYear).getAverage();
     }
 
     public boolean hasFinalAverage() {
@@ -200,14 +200,31 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     @Override
+    public YearMonthDay calculateConclusionDate() {
+	YearMonthDay result = super.calculateConclusionDate();
+
+	if (getRegistration().getWasTransition()) {
+	    final ExecutionPeriod firstBolonhaTransitionExecutionPeriod = ExecutionPeriod
+		    .readFirstBolonhaTransitionExecutionPeriod();
+	    final YearMonthDay begin = firstBolonhaTransitionExecutionPeriod.getBeginDateYearMonthDay();
+
+	    if (result.isBefore(begin)) {
+		result = begin;
+	    }
+	}
+
+	return result;
+    }
+
+    @Override
     public void setConclusionProcessResponsible(Person responsibleForConclusionProcess) {
 	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.responsibleForConclusionProcess");
     }
-    
+
     public String getConclusionProcessResponsibleIstUsername() {
 	return hasConclusionProcessResponsible() ? getConclusionProcessResponsible().getIstUsername() : null;
     }
-    
+
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void removeConcludedInformation() {
 	// checkRulesToRemoveConcludedInformation();
@@ -222,14 +239,13 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	// registrations
 	final DegreeType degreeType = getStudentCurricularPlan().getDegreeType();
 	if (degreeType.getCycleTypes().size() == 1) {
-	    if (!getStudentCurricularPlan().getRegistration().getSucessfullyFinishedDocumentRequests(
-		    DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE).isEmpty()) {
+	    if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE)
+		    .isEmpty()) {
 		throw new DomainException(
 			"cannot.delete.concluded.state.of.registration.with.concluded.degree.finalization.request");
 	    }
 
-	    if (!getStudentCurricularPlan().getRegistration().getSucessfullyFinishedDocumentRequests(
-		    DocumentRequestType.DIPLOMA_REQUEST).isEmpty()) {
+	    if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST).isEmpty()) {
 		throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
 	    }
 	} else {
