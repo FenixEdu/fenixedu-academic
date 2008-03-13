@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -76,17 +75,16 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     /**
-         * We need a method to return a full name of a course group - from it's
-         * parent course group to the degree curricular plan's root course
-         * group.
-         * 
-         * Given this is impossible, for there are many routes from the root
-         * course group to one particular course group, we choose (for now...)
-         * to get one possible full name, always visiting the first element of
-         * every list of contexts on our way to the root course group.
-         * 
-         * @return A string with one possible full name of this course group
-         */
+     * We need a method to return a full name of a course group - from it's
+     * parent course group to the degree curricular plan's root course group.
+     * 
+     * Given this is impossible, for there are many routes from the root course
+     * group to one particular course group, we choose (for now...) to get one
+     * possible full name, always visiting the first element of every list of
+     * contexts on our way to the root course group.
+     * 
+     * @return A string with one possible full name of this course group
+     */
     protected void getOneFullName(final StringBuilder result, final ExecutionPeriod executionPeriod) {
 	final String selfName = getNameI18N(executionPeriod).getContent(LanguageUtils.getUserLanguage());
 
@@ -470,10 +468,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	return executionPeriods.first();
     }
 
-    private ExecutionPeriod getBeginBolonhaExecutionPeriod() {
-	final String year = PropertiesManager.getProperty("start.year.for.bolonha.degrees");
-	final Integer semester = Integer.valueOf(PropertiesManager.getProperty("start.semester.for.bolonha.degrees"));
-	return ExecutionPeriod.readBySemesterAndExecutionYear(semester, year);
+    public ExecutionPeriod getBeginBolonhaExecutionPeriod() {
+	return ExecutionPeriod.readFirstBolonhaExecutionPeriod();
     }
 
     private ExecutionPeriod getFirstExecutionPeriodOfFirstExecutionDegree() {
