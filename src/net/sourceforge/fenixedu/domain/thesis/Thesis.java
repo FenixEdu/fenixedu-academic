@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.thesis;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -8,6 +9,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
@@ -35,11 +37,14 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EvaluationType;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
@@ -535,14 +540,14 @@ public class Thesis extends Thesis_Base {
     }
 
     // SUBMITTED -> DRAFT
-    public void reject() {
-	if (getState() != ThesisState.SUBMITTED) {
-	    throw new DomainException("thesis.approve.notSubmitted");
-	}
-
-	setSubmitter(null);
-	setState(ThesisState.DRAFT);
-    }
+//    public void reject() {
+//	if (getState() != ThesisState.SUBMITTED) {
+//	    throw new DomainException("thesis.approve.notSubmitted");
+//	}
+//
+//	setSubmitter(null);
+//	setState(ThesisState.DRAFT);
+//    }
 
     // SUBMITTED -> APPROVED
     public void approveProposal() {
@@ -568,6 +573,48 @@ public class Thesis extends Thesis_Base {
 
 	setRejectionComment(rejectionComment);
 	setState(ThesisState.DRAFT);
+
+	sendRejectionEmail(rejectionComment);
+    }
+
+    private void sendRejectionEmail(final String rejectionComment) {
+	final Person person = AccessControl.getPerson();
+	final String emailAddr = person == null ? "no-reply@ist.utl.pt" : person.getEmail();
+
+	final Collection<String> tos = new HashSet<String>();
+	final ExecutionYear executionYear = getEnrolment().getExecutionYear();
+	for (ScientificCommission member : getDegree().getScientificCommissionMembers(executionYear)) {
+	    if (member.isContact()) {
+		final Person memberPerson = member.getPerson();
+		final String toAddr = memberPerson.getEmail();
+		if (toAddr != null && toAddr.length() > 0) {
+		    tos.add(toAddr);
+		}
+	    }
+	}
+	for (final ThesisEvaluationParticipant thesisEvaluationParticipant : getParticipationsSet()) {
+	    final ThesisParticipationType thesisParticipationType = thesisEvaluationParticipant.getType();
+	    if (thesisParticipationType == ThesisParticipationType.ORIENTATOR || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
+		final Person memberPerson = thesisEvaluationParticipant.getPerson();
+		final String toAddr = memberPerson.getEmail();
+		if (toAddr != null && toAddr.length() > 0) {
+		    tos.add(toAddr);
+		}
+	    }
+	}
+
+	final String studentNumber = getStudent().getNumber().toString();
+	final String title = getFinalFullTitle().getContent();
+	final String subject = getMessage("message.thesis.reject.submission.email.subject", studentNumber);
+	final String body = getMessage("message.thesis.reject.submission.email.body", studentNumber, title, rejectionComment);
+
+	new Email(RoleType.SCIENTIFIC_COUNCIL.getDefaultLabel(), emailAddr, null, tos, null, null, subject, body);
+    }
+
+    protected String getMessage(final String key, final Object ... args) {
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ScientificCouncilResources", LanguageUtils.getLocale());
+        final String message = bundle.getString(key);
+        return MessageFormat.format(message, args);
     }
 
     // Not an actual state change... but it is an aparent state change (whatever that means).
