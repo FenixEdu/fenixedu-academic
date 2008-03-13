@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-public abstract class CurriculumModule extends CurriculumModule_Base {
+abstract public class CurriculumModule extends CurriculumModule_Base {
 
     static final public Comparator<CurriculumModule> COMPARATOR_BY_NAME_AND_ID = new Comparator<CurriculumModule>() {
 	public int compare(CurriculumModule o1, CurriculumModule o2) {
@@ -93,11 +93,10 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     public abstract StudentCurricularPlan getStudentCurricularPlan();
 
     /**
-         * Temporary method, after all degrees migration this is no longer
-         * necessary
-         * 
-         * @return
-         */
+     * Temporary method, after all degrees migration this is no longer necessary
+     * 
+     * @return
+     */
     final public boolean isBoxStructure() {
 	return getStudentCurricularPlan().isBoxStructure();
     }
@@ -174,7 +173,11 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     }
 
     public boolean isFor(final Registration registration) {
-	return getStudentCurricularPlan().getRegistration() == registration;
+	return getRegistration() == registration;
+    }
+
+    final public Registration getRegistration() {
+	return getStudentCurricularPlan().getRegistration();
     }
 
     public boolean isConcluded() {
@@ -288,12 +291,11 @@ public abstract class CurriculumModule extends CurriculumModule_Base {
     abstract public boolean isPropaedeutic();
 
     /**
-         * This enum represent possible conclusion values when checking
-         * registration processed - UNKNOWN: is used when some group doesn't
-         * have information to calculate it's value, for instance, doesn't have
-         * any curricular rules
-         * 
-         */
+     * This enum represent possible conclusion values when checking registration
+     * processed - UNKNOWN: is used when some group doesn't have information to
+     * calculate it's value, for instance, doesn't have any curricular rules
+     * 
+     */
     static protected enum ConclusionValue {
 	CONCLUDED(true) {
 	    @Override

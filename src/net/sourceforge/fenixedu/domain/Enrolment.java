@@ -1025,10 +1025,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return hasCurriculumGroup() ? getCurriculumGroup().getStudentCurricularPlan() : super.getStudentCurricularPlan();
     }
 
-    final public Registration getRegistration() {
-	return getStudentCurricularPlan().getRegistration();
-    }
-
     @Override
     public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
 	return isValid(executionPeriod) && this.getCurricularCourse().equals(curricularCourse);
