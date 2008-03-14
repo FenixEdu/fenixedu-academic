@@ -225,8 +225,8 @@ public class Person extends Person_Base {
 	setIsPassInKerberos(Boolean.FALSE);
     }
 
-    public Person(final String name, final String identificationDocumentNumber,
-	    final IDDocumentType identificationDocumentType, final Gender gender) {
+    public Person(final String name, final String identificationDocumentNumber, final IDDocumentType identificationDocumentType,
+	    final Gender gender) {
 
 	this();
 	setName(name);
@@ -254,9 +254,9 @@ public class Person extends Person_Base {
 	new Login(new User(this));
     }
 
-    private Person(final String name, final Gender gender, final PhysicalAddressData data,
-	    final String phone, final String mobile, final String homepage, final String email,
-	    final String documentIDNumber, final IDDocumentType documentType) {
+    private Person(final String name, final Gender gender, final PhysicalAddressData data, final String phone,
+	    final String mobile, final String homepage, final String email, final String documentIDNumber,
+	    final IDDocumentType documentType) {
 
 	this();
 
@@ -271,16 +271,13 @@ public class Person extends Person_Base {
 	createDefaultEmailAddress(email);
     }
 
-    static public Person createExternalPerson(final String name, final Gender gender,
-	    final PhysicalAddressData data, final String phone, final String mobile,
-	    final String homepage, final String email, final String documentIdNumber,
+    static public Person createExternalPerson(final String name, final Gender gender, final PhysicalAddressData data,
+	    final String phone, final String mobile, final String homepage, final String email, final String documentIdNumber,
 	    final IDDocumentType documentType) {
-	return new Person(name, gender, data, phone, mobile, homepage, email, documentIdNumber,
-		documentType);
+	return new Person(name, gender, data, phone, mobile, homepage, email, documentIdNumber, documentType);
     }
 
-    public Person(final String name, final Gender gender, final String documentIDNumber,
-	    final IDDocumentType documentType) {
+    public Person(final String name, final Gender gender, final String documentIDNumber, final IDDocumentType documentType) {
 
 	this();
 	setName(name);
@@ -309,8 +306,7 @@ public class Person extends Person_Base {
 	updateDefaultEmailAddress(personBean.getEmail());
     }
 
-    public void edit(String name, String address, String phone, String mobile, String homepage,
-	    String email) {
+    public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
 	setName(name);
 	updateDefaultPhysicalAddress(new PhysicalAddressData().setAddress(address));
 	updateDefaultPhone(phone);
@@ -319,8 +315,8 @@ public class Person extends Person_Base {
 	updateDefaultWebAddress(homepage);
     }
 
-    public void editPersonalData(String documentIdNumber, IDDocumentType documentType,
-	    String personName, String socialSecurityNumber) {
+    public void editPersonalData(String documentIdNumber, IDDocumentType documentType, String personName,
+	    String socialSecurityNumber) {
 
 	setName(personName);
 	setIdentification(documentIdNumber, documentType);
@@ -581,8 +577,7 @@ public class Person extends Person_Base {
     }
 
     public Boolean getIsExamCoordinatorInCurrentYear() {
-	ExamCoordinator examCoordinator = this.getExamCoordinatorForGivenExecutionYear(ExecutionYear
-		.readCurrentExecutionYear());
+	ExamCoordinator examCoordinator = this.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	return (examCoordinator == null) ? false : true;
     }
 
@@ -652,8 +647,7 @@ public class Person extends Person_Base {
     private void setProperties(InfoPersonEditor infoPerson) {
 
 	setName(infoPerson.getNome());
-	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson
-		.getTipoDocumentoIdentificacao());
+	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson.getTipoDocumentoIdentificacao());
 	setFiscalCode(infoPerson.getCodigoFiscal());
 
 	updateDefaultPhysicalAddress(infoPerson.getPhysicalAddressData());
@@ -665,14 +659,11 @@ public class Person extends Person_Base {
 	setWorkPhone(infoPerson.getWorkPhone());
 
 	setDistrictSubdivisionOfBirth(infoPerson.getConcelhoNaturalidade());
-	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
-		.getDataEmissaoDocumentoIdentificacao()));
-	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson
-		.getDataValidadeDocumentoIdentificacao()));
+	setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()));
+	setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao()));
 	setDistrictOfBirth(infoPerson.getDistritoNaturalidade());
 
-	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson
-		.getMaritalStatus());
+	setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson.getMaritalStatus());
 	setParishOfBirth(infoPerson.getFreguesiaNaturalidade());
 	setEmissionLocationOfDocumentId(infoPerson.getLocalEmissaoDocumentoIdentificacao());
 
@@ -686,64 +677,51 @@ public class Person extends Person_Base {
 
 	// Generate person's Password
 	if (getPassword() == null) {
-	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance()
-		    .generatePassword(this)));
+	    setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(this)));
 	}
 
-	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail()
-		: Boolean.TRUE);
-	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite()
-		: Boolean.TRUE);
+	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail() : Boolean.TRUE);
+	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite() : Boolean.TRUE);
 	setAvailablePhoto(Boolean.TRUE);
     }
 
     private void updateProperties(InfoPersonEditor infoPerson) {
 
 	setName(valueToUpdateIfNewNotNull(getName(), infoPerson.getNome()));
-	setIdentification(valueToUpdateIfNewNotNull(getDocumentIdNumber(), infoPerson
-		.getNumeroDocumentoIdentificacao()), (IDDocumentType) valueToUpdateIfNewNotNull(
-		getIdDocumentType(), infoPerson.getTipoDocumentoIdentificacao()));
+	setIdentification(valueToUpdateIfNewNotNull(getDocumentIdNumber(), infoPerson.getNumeroDocumentoIdentificacao()),
+		(IDDocumentType) valueToUpdateIfNewNotNull(getIdDocumentType(), infoPerson.getTipoDocumentoIdentificacao()));
 
 	setFiscalCode(valueToUpdateIfNewNotNull(getFiscalCode(), infoPerson.getCodigoFiscal()));
 
 	setAddress(valueToUpdateIfNewNotNull(getAddress(), infoPerson.getMorada()));
 	setAreaCode(valueToUpdateIfNewNotNull(getAreaCode(), infoPerson.getCodigoPostal()));
-	setAreaOfAreaCode(valueToUpdateIfNewNotNull(getAreaOfAreaCode(), infoPerson
-		.getLocalidadeCodigoPostal()));
+	setAreaOfAreaCode(valueToUpdateIfNewNotNull(getAreaOfAreaCode(), infoPerson.getLocalidadeCodigoPostal()));
 	setArea(valueToUpdateIfNewNotNull(getArea(), infoPerson.getLocalidade()));
-	setParishOfResidence(valueToUpdateIfNewNotNull(getParishOfResidence(), infoPerson
-		.getFreguesiaMorada()));
-	setDistrictSubdivisionOfResidence(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfResidence(),
-		infoPerson.getConcelhoMorada()));
-	setDistrictOfResidence(valueToUpdateIfNewNotNull(getDistrictOfResidence(), infoPerson
-		.getDistritoMorada()));
+	setParishOfResidence(valueToUpdateIfNewNotNull(getParishOfResidence(), infoPerson.getFreguesiaMorada()));
+	setDistrictSubdivisionOfResidence(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfResidence(), infoPerson
+		.getConcelhoMorada()));
+	setDistrictOfResidence(valueToUpdateIfNewNotNull(getDistrictOfResidence(), infoPerson.getDistritoMorada()));
 
 	setEmissionDateOfDocumentIdYearMonthDay(infoPerson.getDataEmissaoDocumentoIdentificacao() != null ? YearMonthDay
-		.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao())
-		: getEmissionDateOfDocumentIdYearMonthDay());
-	setEmissionLocationOfDocumentId(valueToUpdateIfNewNotNull(getEmissionLocationOfDocumentId(),
-		infoPerson.getLocalEmissaoDocumentoIdentificacao()));
+		.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()) : getEmissionDateOfDocumentIdYearMonthDay());
+	setEmissionLocationOfDocumentId(valueToUpdateIfNewNotNull(getEmissionLocationOfDocumentId(), infoPerson
+		.getLocalEmissaoDocumentoIdentificacao()));
 	setExpirationDateOfDocumentIdYearMonthDay(infoPerson.getDataValidadeDocumentoIdentificacao() != null ? YearMonthDay
-		.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao())
-		: getExpirationDateOfDocumentIdYearMonthDay());
+		.fromDateFields(infoPerson.getDataValidadeDocumentoIdentificacao()) : getExpirationDateOfDocumentIdYearMonthDay());
 
-	MaritalStatus maritalStatus = (MaritalStatus) valueToUpdateIfNewNotNull(getMaritalStatus(),
-		infoPerson.getMaritalStatus());
+	MaritalStatus maritalStatus = (MaritalStatus) valueToUpdateIfNewNotNull(getMaritalStatus(), infoPerson.getMaritalStatus());
 	setMaritalStatus((maritalStatus == null) ? MaritalStatus.UNKNOWN : maritalStatus);
 
-	setDateOfBirthYearMonthDay(infoPerson.getNascimento() != null ? YearMonthDay
-		.fromDateFields(infoPerson.getNascimento()) : getDateOfBirthYearMonthDay());
-	setParishOfBirth(valueToUpdateIfNewNotNull(getParishOfBirth(), infoPerson
-		.getFreguesiaNaturalidade()));
-	setDistrictSubdivisionOfBirth(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfBirth(),
-		infoPerson.getConcelhoNaturalidade()));
-	setDistrictOfBirth(valueToUpdateIfNewNotNull(getDistrictOfBirth(), infoPerson
-		.getDistritoNaturalidade()));
+	setDateOfBirthYearMonthDay(infoPerson.getNascimento() != null ? YearMonthDay.fromDateFields(infoPerson.getNascimento())
+		: getDateOfBirthYearMonthDay());
+	setParishOfBirth(valueToUpdateIfNewNotNull(getParishOfBirth(), infoPerson.getFreguesiaNaturalidade()));
+	setDistrictSubdivisionOfBirth(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfBirth(), infoPerson
+		.getConcelhoNaturalidade()));
+	setDistrictOfBirth(valueToUpdateIfNewNotNull(getDistrictOfBirth(), infoPerson.getDistritoNaturalidade()));
 
 	setNameOfMother(valueToUpdateIfNewNotNull(getNameOfMother(), infoPerson.getNomeMae()));
 	setNameOfFather(valueToUpdateIfNewNotNull(getNameOfFather(), infoPerson.getNomePai()));
-	setSocialSecurityNumber(valueToUpdateIfNewNotNull(getSocialSecurityNumber(), infoPerson
-		.getNumContribuinte()));
+	setSocialSecurityNumber(valueToUpdateIfNewNotNull(getSocialSecurityNumber(), infoPerson.getNumContribuinte()));
 	setProfession(valueToUpdateIfNewNotNull(getProfession(), infoPerson.getProfissao()));
 	setGender((Gender) valueToUpdateIfNewNotNull(getGender(), infoPerson.getSexo()));
 
@@ -877,8 +855,8 @@ public class Person extends Person_Base {
     }
 
     public Collection<PersonFunction> getPersonFunctions() {
-	return (Collection<PersonFunction>) getParentAccountabilities(
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class);
+	return (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION,
+		PersonFunction.class);
     }
 
     public Collection<PersonFunction> getPersonFunctions(Function function) {
@@ -901,18 +879,15 @@ public class Person extends Person_Base {
 	return getPersonFuntions(AccountabilityTypeEnum.MANAGEMENT_FUNCTION, begin, end);
     }
 
-    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active,
-	    Boolean virtual) {
-	return getPersonFunctions(unit, includeSubUnits, active, virtual,
-		AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
+    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual) {
+	return getPersonFunctions(unit, includeSubUnits, active, virtual, AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }
 
     public boolean hasActivePersonFunction(FunctionType functionType, Unit unit) {
 	YearMonthDay currentDate = new YearMonthDay();
 	for (PersonFunction personFunction : (Collection<PersonFunction>) getParentAccountabilities(
 		AccountabilityTypeEnum.MANAGEMENT_FUNCTION, PersonFunction.class)) {
-	    if (personFunction.getUnit().equals(unit)
-		    && personFunction.getFunction().getFunctionType() == functionType
+	    if (personFunction.getUnit().equals(unit) && personFunction.getFunction().getFunctionType() == functionType
 		    && personFunction.isActive(currentDate)) {
 		return true;
 	    }
@@ -921,15 +896,14 @@ public class Person extends Person_Base {
     }
 
     public Collection<PersonFunction> getPersonFunctions(AccountabilityTypeEnum accountabilityTypeEnum) {
-	return (Collection<PersonFunction>) getParentAccountabilities(accountabilityTypeEnum,
-		PersonFunction.class);
+	return (Collection<PersonFunction>) getParentAccountabilities(accountabilityTypeEnum, PersonFunction.class);
     }
 
-    public List<PersonFunction> getPersonFuntions(AccountabilityTypeEnum accountabilityTypeEnum,
-	    YearMonthDay begin, YearMonthDay end) {
+    public List<PersonFunction> getPersonFuntions(AccountabilityTypeEnum accountabilityTypeEnum, YearMonthDay begin,
+	    YearMonthDay end) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(
-		accountabilityTypeEnum, PersonFunction.class)) {
+	for (Accountability accountability : (Collection<PersonFunction>) getParentAccountabilities(accountabilityTypeEnum,
+		PersonFunction.class)) {
 	    if (accountability.belongsToPeriod(begin, end)) {
 		result.add((PersonFunction) accountability);
 	    }
@@ -945,12 +919,17 @@ public class Person extends Person_Base {
      * Filters all parent PersonFunction accountabilities and returns all the
      * PersonFunctions that selection indicated in the parameters.
      * 
-     * @param unit filter all PersonFunctions to this unit, or <code>null</code> for all PersonFunctions
-     * @param includeSubUnits if even subunits of the given unit are considered
-     * @param active the state of the function, <code>null</code> for all PersonFunctions 
+     * @param unit
+     *                filter all PersonFunctions to this unit, or
+     *                <code>null</code> for all PersonFunctions
+     * @param includeSubUnits
+     *                if even subunits of the given unit are considered
+     * @param active
+     *                the state of the function, <code>null</code> for all
+     *                PersonFunctions
      */
-    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active,
-	    Boolean virtual, AccountabilityTypeEnum accountabilityTypeEnum) {
+    public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual,
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 
 	Collection<Unit> allSubUnits = Collections.emptyList();
@@ -970,8 +949,7 @@ public class Person extends Person_Base {
 	    }
 
 	    Unit functionUnit = personFunction.getUnit();
-	    if (unit == null || functionUnit.equals(unit)
-		    || (includeSubUnits && allSubUnits.contains(functionUnit))) {
+	    if (unit == null || functionUnit.equals(unit) || (includeSubUnits && allSubUnits.contains(functionUnit))) {
 		result.add(personFunction);
 	    }
 	}
@@ -979,11 +957,10 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public List<PersonFunction> getPersonFunctions(Party party, boolean includeSubUnits, Boolean active,
-	    Boolean virtual, AccountabilityTypeEnum accountabilityTypeEnum) {
+    public List<PersonFunction> getPersonFunctions(Party party, boolean includeSubUnits, Boolean active, Boolean virtual,
+	    AccountabilityTypeEnum accountabilityTypeEnum) {
 	if (party.isUnit()) {
-	    return getPersonFunctions((Unit) party, includeSubUnits, active, virtual,
-		    AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
+	    return getPersonFunctions((Unit) party, includeSubUnits, active, virtual, AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
 	}
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
 
@@ -1006,10 +983,8 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public boolean hasFunctionType(FunctionType functionType,
-	    AccountabilityTypeEnum accountabilityTypeEnum) {
-	for (PersonFunction accountability : getPersonFunctions(null, false, true, false,
-		accountabilityTypeEnum)) {
+    public boolean hasFunctionType(FunctionType functionType, AccountabilityTypeEnum accountabilityTypeEnum) {
+	for (PersonFunction accountability : getPersonFunctions(null, false, true, false, accountabilityTypeEnum)) {
 	    if (accountability.getFunction().getFunctionType() == functionType) {
 		return true;
 	    }
@@ -1017,8 +992,7 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end,
-	    Double credits) {
+    public PersonFunction addPersonFunction(Function function, YearMonthDay begin, YearMonthDay end, Double credits) {
 	return new PersonFunction(function.getUnit(), this, function, begin, end, credits);
     }
 
@@ -1074,8 +1048,7 @@ public class Person extends Person_Base {
 
 	for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete())
 	    ;
-	for (; !getScientificCommissions().isEmpty(); getScientificCommissions().iterator().next()
-		.delete())
+	for (; !getScientificCommissions().isEmpty(); getScientificCommissions().iterator().next().delete())
 	    ;
 
 	removeNationality();
@@ -1085,20 +1058,17 @@ public class Person extends Person_Base {
     }
 
     private boolean canBeDeleted() {
-	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs()
-		&& !hasAnySentSms() && !hasAnyExportGroupingReceivers() && !hasAnyPersistentGroups()
-		&& !hasAnyPersonSpaceOccupations() && !hasAnyPunctualRoomsOccupationComments()
-		&& !hasAnyVehicleAllocations() && !hasAnyPunctualRoomsOccupationRequests()
-		&& !hasAnyPunctualRoomsOccupationRequestsToProcess()
-		&& !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums()
-		&& !hasAnyEnrolmentEvaluations() && !hasAnyExportGroupingSenders()
-		&& !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
-		&& !hasAnyGuides() && !hasAnyProjectAccesses() && !hasAnyPersonAuthorships()
-		&& !hasEmployee() && !hasTeacher() && !hasGrantOwner() && !hasAnyPayedGuides()
-		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
-		&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
-		&& !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable())
-		&& !hasLibraryCard() && !hasAnyAcademicServiceRequests() && !hasAnyCardGenerationEntries();
+	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs() && !hasAnySentSms()
+		&& !hasAnyExportGroupingReceivers() && !hasAnyPersistentGroups() && !hasAnyPersonSpaceOccupations()
+		&& !hasAnyPunctualRoomsOccupationComments() && !hasAnyVehicleAllocations()
+		&& !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
+		&& !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
+		&& !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
+		&& !hasAnyGuides() && !hasAnyProjectAccesses() && !hasAnyPersonAuthorships() && !hasEmployee() && !hasTeacher()
+		&& !hasGrantOwner() && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasParking()
+		&& !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
+		&& !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard()
+		&& !hasAnyAcademicServiceRequests() && !hasAnyCardGenerationEntries();
     }
 
     private boolean hasParking() {
@@ -1156,8 +1126,7 @@ public class Person extends Person_Base {
 
 	@Override
 	public void beforeRemove(Role roleToBeRemoved, Person person) {
-	    if (person != null && roleToBeRemoved != null
-		    && person.hasRole(roleToBeRemoved.getRoleType())) {
+	    if (person != null && roleToBeRemoved != null && person.hasRole(roleToBeRemoved.getRoleType())) {
 		removeDependencies(person, roleToBeRemoved);
 	    }
 	}
@@ -1264,8 +1233,9 @@ public class Person extends Person_Base {
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_CREDITS_MANAGER);
 		removeRoleIfPresent(person, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
 		removeRoleIfPresent(person, RoleType.PERSONNEL_SECTION);
-//		removeRoleIfPresent(person, RoleType.PROJECTS_MANAGER);
-//		removeRoleIfPresent(person, RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+		// removeRoleIfPresent(person, RoleType.PROJECTS_MANAGER);
+		// removeRoleIfPresent(person,
+		// RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
 		break;
 
 	    case STUDENT:
@@ -1304,8 +1274,8 @@ public class Person extends Person_Base {
 	int count = 0;
 	for (final SentSms sentSms : this.getSentSmsSet()) {
 	    if (sentSms.getDeliveryType() != SmsDeliveryType.NOT_SENT_TYPE
-		    && (sentSms.getSendDateDateTime().isAfter(start) || sentSms.getSendDateDateTime()
-			    .equals(start)) && sentSms.getSendDateDateTime().isBefore(end)) {
+		    && (sentSms.getSendDateDateTime().isAfter(start) || sentSms.getSendDateDateTime().equals(start))
+		    && sentSms.getSendDateDateTime().isBefore(end)) {
 		count++;
 	    }
 	}
@@ -1326,8 +1296,7 @@ public class Person extends Person_Base {
 	return getStudent().readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
     }
 
-    public MasterDegreeCandidate getMasterDegreeCandidateByExecutionDegree(
-	    final ExecutionDegree executionDegree) {
+    public MasterDegreeCandidate getMasterDegreeCandidateByExecutionDegree(final ExecutionDegree executionDegree) {
 	for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
 	    if (masterDegreeCandidate.getExecutionDegree() == executionDegree) {
 		return masterDegreeCandidate;
@@ -1409,19 +1378,17 @@ public class Person extends Person_Base {
     }
 
     public Collection<Invitation> getInvitationsOrderByDate() {
-	Set<Invitation> invitations = new TreeSet<Invitation>(
-		Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
-	invitations.addAll((Collection<Invitation>) getParentAccountabilities(
-		AccountabilityTypeEnum.INVITATION, Invitation.class));
+	Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
+	invitations
+		.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
 	return invitations;
     }
 
     public List<Invitation> getActiveInvitations() {
 	YearMonthDay today = new YearMonthDay();
 	List<Invitation> invitations = new ArrayList<Invitation>();
-	for (Accountability accoutAccountability : getParentAccountabilities(AccountabilityTypeEnum.INVITATION,
-		Invitation.class)) {
-	    if(((Invitation)accoutAccountability).isActive(today)){
+	for (Accountability accoutAccountability : getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class)) {
+	    if (((Invitation) accoutAccountability).isActive(today)) {
 		invitations.add((Invitation) accoutAccountability);
 	    }
 	}
@@ -1429,8 +1396,8 @@ public class Person extends Person_Base {
     }
 
     public boolean isInvited(YearMonthDay date) {
-	for (Invitation invitation : (Collection<Invitation>) getParentAccountabilities(
-		AccountabilityTypeEnum.INVITATION, Invitation.class)) {
+	for (Invitation invitation : (Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION,
+		Invitation.class)) {
 	    if (invitation.isActive(date)) {
 		return true;
 	    }
@@ -1481,8 +1448,7 @@ public class Person extends Person_Base {
 	return null;
     }
 
-    public static Person readByDocumentIdNumberAndDateOfBirth(final String documentIdNumber,
-	    final YearMonthDay dateOfBirth) {
+    public static Person readByDocumentIdNumberAndDateOfBirth(final String documentIdNumber, final YearMonthDay dateOfBirth) {
 	for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
 	    final Person person = idDocument.getPerson();
 	    if (person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
@@ -1492,12 +1458,10 @@ public class Person extends Person_Base {
 	return null;
     }
 
-    public static Collection<Person> findByDateOfBirth(final YearMonthDay dateOfBirth,
-	    final Collection<Person> persons) {
+    public static Collection<Person> findByDateOfBirth(final YearMonthDay dateOfBirth, final Collection<Person> persons) {
 	List<Person> result = new ArrayList<Person>();
 	for (Person person : persons) {
-	    if (person.getDateOfBirthYearMonthDay() == null
-		    || person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
+	    if (person.getDateOfBirthYearMonthDay() == null || person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
 		result.add(person);
 	    }
 	}
@@ -1505,8 +1469,7 @@ public class Person extends Person_Base {
     }
 
     // used by grant owner
-    public static List<Person> readPersonsByName(final String name, final Integer startIndex,
-	    final Integer numberOfElementsInSpan) {
+    public static List<Person> readPersonsByName(final String name, final Integer startIndex, final Integer numberOfElementsInSpan) {
 	final List<Person> personsList = readPersonsByName(name, Integer.MAX_VALUE);
 	if (startIndex != null && numberOfElementsInSpan != null && !personsList.isEmpty()) {
 	    int finalIndex = Math.min(personsList.size(), startIndex + numberOfElementsInSpan);
@@ -1570,8 +1533,7 @@ public class Person extends Person_Base {
 	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
 	for (final Registration registration : getStudentsSet()) {
-	    final StudentCurricularPlan studentCurricularPlan = registration
-		    .getActiveStudentCurricularPlan();
+	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 	    if (studentCurricularPlan != null) {
 		studentCurricularPlans.add(studentCurricularPlan);
 	    }
@@ -1672,8 +1634,7 @@ public class Person extends Person_Base {
 		people.add(employee.getPerson());
 	    }
 
-	    for (Registration registration : Registration.readByNumber(findPersonFactory
-		    .getInstitutionalNumber())) {
+	    for (Registration registration : Registration.readByNumber(findPersonFactory.getInstitutionalNumber())) {
 		people.add(registration.getPerson());
 	    }
 
@@ -1681,8 +1642,7 @@ public class Person extends Person_Base {
 	return people;
     }
 
-    public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice,
-	    boolean withInstallments) {
+    public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice, boolean withInstallments) {
 	final Set<Event> result = new HashSet<Event>();
 
 	for (final Event event : getEventsSet()) {
@@ -1706,10 +1666,8 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    private boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice,
-	    final Event event) {
-	return ((administrativeOffice == null) || (event
-		.isPayableOnAdministrativeOffice(administrativeOffice)));
+    private boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice, final Event event) {
+	return ((administrativeOffice == null) || (event.isPayableOnAdministrativeOffice(administrativeOffice)));
     }
 
     public List<Event> getPayedEvents() {
@@ -1738,8 +1696,7 @@ public class Person extends Person_Base {
 	return getPaymentsWithoutReceiptByAdministrativeOffice(null);
     }
 
-    public Set<Entry> getPaymentsWithoutReceiptByAdministrativeOffice(
-	    AdministrativeOffice administrativeOffice) {
+    public Set<Entry> getPaymentsWithoutReceiptByAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	final Set<Entry> result = new HashSet<Entry>();
 
 	for (final Event event : getEventsSet()) {
@@ -1769,8 +1726,7 @@ public class Person extends Person_Base {
 	final Set<Event> result = new HashSet<Event>();
 
 	for (final Event event : getEventsSet()) {
-	    if (!event.isCancelled() && event.getEventType() == eventType
-		    && (clazz == null || event.getClass().equals(clazz))) {
+	    if (!event.isCancelled() && event.getEventType() == eventType && (clazz == null || event.getClass().equals(clazz))) {
 		result.add(event);
 	    }
 	}
@@ -1806,10 +1762,8 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public boolean hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(
-	    final ExecutionYear executionYear) {
-	return hasInsuranceEventFor(executionYear)
-		|| hasAdministrativeOfficeFeeInsuranceEventFor(executionYear);
+    public boolean hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
+	return hasInsuranceEventFor(executionYear) || hasAdministrativeOfficeFeeInsuranceEventFor(executionYear);
     }
 
     public InsuranceEvent getInsuranceEventFor(final ExecutionYear executionYear) {
@@ -1828,8 +1782,7 @@ public class Person extends Person_Base {
 	return getInsuranceEventFor(executionYear) != null;
     }
 
-    public AdministrativeOfficeFeeAndInsuranceEvent getAdministrativeOfficeFeeInsuranceEventFor(
-	    final ExecutionYear executionYear) {
+    public AdministrativeOfficeFeeAndInsuranceEvent getAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
 	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
 	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
 	    if (!administrativeOfficeFeeAndInsuranceEvent.isCancelled()
@@ -1904,12 +1857,12 @@ public class Person extends Person_Base {
     static public Party createContributor(final String contributorName, final String contributorNumber,
 	    final PhysicalAddressData data) {
 
-	Person externalPerson = createExternalPerson(contributorName, Gender.MALE, data, null, null,
-		null, null, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+	Person externalPerson = createExternalPerson(contributorName, Gender.MALE, data, null, null, null, null, String
+		.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
 	externalPerson.setSocialSecurityNumber(contributorNumber);
 
-	new ExternalContract(externalPerson,
-		RootDomainObject.getInstance().getExternalInstitutionUnit(), new YearMonthDay(), null);
+	new ExternalContract(externalPerson, RootDomainObject.getInstance().getExternalInstitutionUnit(), new YearMonthDay(),
+		null);
 
 	return externalPerson;
     }
@@ -1927,8 +1880,7 @@ public class Person extends Person_Base {
 	}
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Professorship professorship : getTeacher().getProfessorships()) {
-	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod
-		    .readActualExecutionPeriod()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod.readActualExecutionPeriod()) {
 		final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
 		if (board != null && board.hasReaderOrWriter(this)) {
 		    result.add(board);
@@ -1945,8 +1897,7 @@ public class Person extends Person_Base {
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Registration registration : getStudent().getRegistrationsSet()) {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
-		if (attends.getExecutionCourse().isLecturedIn(
-			ExecutionPeriod.readActualExecutionPeriod())) {
+		if (attends.getExecutionCourse().isLecturedIn(ExecutionPeriod.readActualExecutionPeriod())) {
 		    final AnnouncementBoard board = attends.getExecutionCourse().getBoard();
 		    if (board != null && board.hasReaderOrWriter(this)) {
 			result.add(board);
@@ -1994,8 +1945,7 @@ public class Person extends Person_Base {
     public PartyClassification getPartyClassification() {
 	final Teacher teacher = getTeacher();
 	if (teacher != null) {
-	    if (teacher.getCurrentWorkingDepartment() != null
-		    && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+	    if (teacher.getCurrentWorkingDepartment() != null && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
 		return PartyClassification.TEACHER;
 	    }
 	}
@@ -2048,8 +1998,7 @@ public class Person extends Person_Base {
 	}
     }
 
-    public static class ExternalPersonBeanFactoryCreator extends ExternalPersonBean implements
-	    FactoryExecutor {
+    public static class ExternalPersonBeanFactoryCreator extends ExternalPersonBean implements FactoryExecutor {
 	public ExternalPersonBeanFactoryCreator() {
 	    super();
 	}
@@ -2099,21 +2048,17 @@ public class Person extends Person_Base {
 	    this.name = name;
 	}
 
-	private boolean matchesAnyCriteria(final String[] nameValues,
-		final String[] documentIdNumberValues, final Person person) {
+	private boolean matchesAnyCriteria(final String[] nameValues, final String[] documentIdNumberValues, final Person person) {
 	    return matchesAnyCriteriaField(nameValues, name, person.getName())
-		    || matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, person
-			    .getDocumentIdNumber());
+		    || matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, person.getDocumentIdNumber());
 	}
 
-	private boolean matchesAnyCriteriaField(final String[] nameValues, final String string,
-		final String stringFromPerson) {
+	private boolean matchesAnyCriteriaField(final String[] nameValues, final String string, final String stringFromPerson) {
 	    return isSpecified(string) && areNamesPresent(stringFromPerson, nameValues);
 	}
 
 	public SortedSet<Person> search() {
-	    final String[] nameValues = name == null ? null : StringNormalizer.normalize(name)
-		    .toLowerCase().split("\\p{Space}+");
+	    final String[] nameValues = name == null ? null : StringNormalizer.normalize(name).toLowerCase().split("\\p{Space}+");
 	    final String[] documentIdNumberValues = documentIdNumber == null ? null : StringNormalizer
 		    .normalize(documentIdNumber).toLowerCase().split("\\p{Space}+");
 
@@ -2168,8 +2113,7 @@ public class Person extends Person_Base {
 	if (getStudent() != null) {
 	    for (final Registration registration : getStudent().getRegistrationsSet()) {
 		if (registration.isActive()) {
-		    final DegreeCurricularPlan degreeCurricularPlan = registration
-			    .getLastDegreeCurricularPlan();
+		    final DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
 		    final Degree degree = degreeCurricularPlan.getDegree();
 		    organizationalUnits.add(degree.getPresentationName());
 		}
@@ -2212,10 +2156,8 @@ public class Person extends Person_Base {
 
     private boolean validNickname(final String name) {
 	if (name != null && name.length() > 0) {
-	    final String normalizedName = StringNormalizer.normalize(name.replace('-', ' '))
-		    .toLowerCase();
-	    final String normalizedPersonName = StringNormalizer.normalize(getName().replace('-', ' '))
-		    .toLowerCase();
+	    final String normalizedName = StringNormalizer.normalize(name.replace('-', ' ')).toLowerCase();
+	    final String normalizedPersonName = StringNormalizer.normalize(getName().replace('-', ' ')).toLowerCase();
 
 	    final String[] nameParts = normalizedName.split(" ");
 	    final String[] personNameParts = normalizedPersonName.split(" ");
@@ -2240,8 +2182,7 @@ public class Person extends Person_Base {
 	    return false;
 	}
 	for (final String string : strings) {
-	    if (string.length() == xpto.length() && string.hashCode() == xpto.hashCode()
-		    && string.equals(xpto)) {
+	    if (string.length() == xpto.length() && string.hashCode() == xpto.hashCode() && string.equals(xpto)) {
 		return true;
 	    }
 	}
@@ -2262,8 +2203,7 @@ public class Person extends Person_Base {
 	return getAvailableWebSite() != null && getAvailableWebSite().booleanValue();
     }
 
-    public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(
-	    DegreeCurricularPlan degreeCurricularPlan) {
+    public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(DegreeCurricularPlan degreeCurricularPlan) {
 	Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(new BeanComparator("executionYear"));
 	for (Coordinator coordinator : getCoordinators()) {
 	    if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
@@ -2273,8 +2213,7 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan,
-	    ExecutionYear executionYear) {
+    public boolean isCoordinatorFor(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear) {
 	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
 	    if (executionDegree.getExecutionYear() == executionYear) {
 		return executionDegree.getCoordinatorByTeacher(this) != null;
@@ -2283,25 +2222,24 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public boolean isResponsibleOrCoordinatorFor(CurricularCourse curricularCourse,
-	    ExecutionPeriod executionPeriod) {
+    public boolean isResponsibleOrCoordinatorFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
 	final Teacher teacher = getTeacher();
 	return (teacher != null && teacher.isResponsibleFor(curricularCourse, executionPeriod))
-		|| isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod
-			.getExecutionYear());
+		|| isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod.getExecutionYear());
     }
 
-    private final static List<DegreeType> degreeTypesForIsMasterDegreeOrBolonhaMasterDegreeCoordinator
-    		= Arrays.asList(new DegreeType[] { DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE });
+    private final static List<DegreeType> degreeTypesForIsMasterDegreeOrBolonhaMasterDegreeCoordinator = Arrays
+	    .asList(new DegreeType[] { DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE });
+
     public boolean isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
 	return isCoordinatorFor(executionYear, degreeTypesForIsMasterDegreeOrBolonhaMasterDegreeCoordinator);
 
     }
 
-    private final static List<DegreeType> degreeTypesForisDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor
-    		= Arrays.asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
-    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(
-	    ExecutionYear executionYear) {
+    private final static List<DegreeType> degreeTypesForisDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor = Arrays
+	    .asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
+
+    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor(ExecutionYear executionYear) {
 	return isCoordinatorFor(executionYear, degreeTypesForisDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegreeCoordinatorFor);
 
     }
@@ -2309,8 +2247,7 @@ public class Person extends Person_Base {
     public boolean isCoordinatorFor(ExecutionYear executionYear, List<DegreeType> degreeTypes) {
 	for (final Coordinator coordinator : getCoordinatorsSet()) {
 	    final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
-	    if (executionDegree != null
-		    && executionDegree.getExecutionYear() == executionYear
+	    if (executionDegree != null && executionDegree.getExecutionYear() == executionYear
 		    && degreeTypes.contains(executionDegree.getDegree().getDegreeType())) {
 		return true;
 	    }
@@ -2320,8 +2257,7 @@ public class Person extends Person_Base {
 
     }
 
-    public ServiceAgreement getServiceAgreementFor(
-	    final ServiceAgreementTemplate serviceAgreementTemplate) {
+    public ServiceAgreement getServiceAgreementFor(final ServiceAgreementTemplate serviceAgreementTemplate) {
 	for (final ServiceAgreement serviceAgreement : getServiceAgreementsSet()) {
 	    if (serviceAgreement.getServiceAgreementTemplate() == serviceAgreementTemplate) {
 		return serviceAgreement;
@@ -2357,8 +2293,7 @@ public class Person extends Person_Base {
 	List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();
 	result.addAll(getPunctualRoomsOccupationRequests());
 	if (!result.isEmpty()) {
-	    Collections.sort(result,
-		    PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
+	    Collections.sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
 	}
 	return result;
     }
@@ -2422,8 +2357,7 @@ public class Person extends Person_Base {
     // after
     // interface updates remove these methods)
     public Phone getPersonWorkPhone() {
-	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class,
-		PartyContactType.WORK);
+	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class, PartyContactType.WORK);
 	// actually exists only one
 	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0);
     }
@@ -2458,8 +2392,7 @@ public class Person extends Person_Base {
     public void updateInstitutionalEmail(final String institutionalEmailString) {
 	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
 	if (institutionalEmailAddress == null) {
-	    PartyContact.createEmailAddress(this, PartyContactType.INSTITUTIONAL, true, false,
-		    institutionalEmailString);
+	    PartyContact.createEmailAddress(this, PartyContactType.INSTITUTIONAL, true, false, institutionalEmailString);
 	} else {
 	    institutionalEmailAddress.setValue(institutionalEmailString);
 	}
@@ -2469,8 +2402,8 @@ public class Person extends Person_Base {
     // use
     // get(0) method)
     private EmailAddress getInstitutionalEmailAddress() {
-	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(
-		EmailAddress.class, PartyContactType.INSTITUTIONAL);
+	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class,
+		PartyContactType.INSTITUTIONAL);
 	// actually exists only one (protected in domain)
 	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0);
     }
@@ -2503,8 +2436,8 @@ public class Person extends Person_Base {
     public static Collection<Person> findInternalPersonMatchingFirstAndLastName(final String completeName) {
 	if (completeName != null) {
 	    String[] splittedName = completeName.split(" ");
-	    return splittedName.length > 0 ? findInternalPerson(splittedName[0] + " "
-		    + splittedName[splittedName.length - 1]) : Collections.EMPTY_LIST;
+	    return splittedName.length > 0 ? findInternalPerson(splittedName[0] + " " + splittedName[splittedName.length - 1])
+		    : Collections.EMPTY_LIST;
 	}
 	return Collections.EMPTY_LIST;
     }
@@ -2529,8 +2462,7 @@ public class Person extends Person_Base {
 
     public static Person readPersonByEmailAddress(final String email) {
 	final EmailAddress emailAddress = EmailAddress.find(email);
-	return (emailAddress != null && emailAddress.getParty().isPerson()) ? (Person) emailAddress
-		.getParty() : null;
+	return (emailAddress != null && emailAddress.getParty().isPerson()) ? (Person) emailAddress.getParty() : null;
     }
 
     public String getUnitText() {
@@ -2542,13 +2474,11 @@ public class Person extends Person_Base {
 	return "";
     }
 
-    public List<ThesisEvaluationParticipant> getThesisEvaluationParticipants(
-	    ExecutionPeriod executionPeriod) {
+    public List<ThesisEvaluationParticipant> getThesisEvaluationParticipants(ExecutionPeriod executionPeriod) {
 	ArrayList<ThesisEvaluationParticipant> participants = new ArrayList<ThesisEvaluationParticipant>();
 
 	for (ThesisEvaluationParticipant participant : this.getThesisEvaluationParticipants()) {
-	    if (participant.getThesis().getEnrolment().getExecutionYear().equals(
-		    executionPeriod.getExecutionYear())) {
+	    if (participant.getThesis().getEnrolment().getExecutionYear().equals(executionPeriod.getExecutionYear())) {
 		participants.add(participant);
 	    }
 	}
@@ -2565,38 +2495,35 @@ public class Person extends Person_Base {
 
     public List<TSDProcess> getTSDProcesses() {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
-	return department == null ? Collections.EMPTY_LIST
-		: (List<TSDProcess>) CollectionUtils.select(department
-			.getTSDProcesses(), new Predicate() {
-		    public boolean evaluate(Object arg0) {
-			TSDProcess tsd = (TSDProcess) arg0;
-			return tsd.hasAnyPermission(Person.this);
-		    }
-		});
+	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(department
+		.getTSDProcesses(), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		TSDProcess tsd = (TSDProcess) arg0;
+		return tsd.hasAnyPermission(Person.this);
+	    }
+	});
     }
 
     public List<TSDProcess> getTSDProcesses(ExecutionPeriod period) {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
-	return department == null ? Collections.EMPTY_LIST
-		: (List<TSDProcess>) CollectionUtils.select(department
-			.getTSDProcessesByExecutionPeriod(period), new Predicate() {
-		    public boolean evaluate(Object arg0) {
-			TSDProcess tsd = (TSDProcess) arg0;
-			return tsd.hasAnyPermission(Person.this);
-		    }
-		});
+	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(department
+		.getTSDProcessesByExecutionPeriod(period), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		TSDProcess tsd = (TSDProcess) arg0;
+		return tsd.hasAnyPermission(Person.this);
+	    }
+	});
     }
 
     public List<TSDProcess> getTSDProcesses(ExecutionYear year) {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
-	return department == null ? Collections.EMPTY_LIST
-		: (List<TSDProcess>) CollectionUtils.select(department
-			.getTSDProcessesByExecutionYear(year), new Predicate() {
-		    public boolean evaluate(Object arg0) {
-			TSDProcess tsd = (TSDProcess) arg0;
-			return tsd.hasAnyPermission(Person.this);
-		    }
-		});
+	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(department
+		.getTSDProcessesByExecutionYear(year), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		TSDProcess tsd = (TSDProcess) arg0;
+		return tsd.hasAnyPermission(Person.this);
+	    }
+	});
     }
 
     public List<ResearchUnit> getWorkingResearchUnits() {
@@ -2614,18 +2541,18 @@ public class Person extends Person_Base {
     }
 
     public List<ResearchUnit> getWorkingResearchUnitsAndParents() {
-		Set<ResearchUnit> baseUnits = new HashSet<ResearchUnit>();
-		for(ResearchUnit unit : getWorkingResearchUnits()) {
-		    baseUnits.add(unit);
-		    for(Unit parentUnit : unit.getAllActiveParentUnits(new YearMonthDay())) {
-			if(parentUnit.isResearchUnit()) {
-			    baseUnits.add((ResearchUnit)parentUnit);
-			}
-		    }
+	Set<ResearchUnit> baseUnits = new HashSet<ResearchUnit>();
+	for (ResearchUnit unit : getWorkingResearchUnits()) {
+	    baseUnits.add(unit);
+	    for (Unit parentUnit : unit.getAllActiveParentUnits(new YearMonthDay())) {
+		if (parentUnit.isResearchUnit()) {
+		    baseUnits.add((ResearchUnit) parentUnit);
 		}
-		return new ArrayList<ResearchUnit>(baseUnits);
+	    }
+	}
+	return new ArrayList<ResearchUnit>(baseUnits);
     }
-    
+
     public String getWorkingResearchUnitNames() {
 
 	String names = "";
@@ -2647,13 +2574,13 @@ public class Person extends Person_Base {
     private boolean hasActiveInternalContract() {
 	Collection<EmployeeContract> contracts = (Collection<EmployeeContract>) getParentAccountabilities(
 		AccountabilityTypeEnum.WORKING_CONTRACT, EmployeeContract.class);
-	
-	YearMonthDay currentDate = new YearMonthDay();	
+
+	YearMonthDay currentDate = new YearMonthDay();
 	for (EmployeeContract employeeContract : contracts) {
-	    if(employeeContract.isActive(currentDate)) {
+	    if (employeeContract.isActive(currentDate)) {
 		return true;
-	    }	
-	}	
+	    }
+	}
 	return false;
     }
 
@@ -2754,15 +2681,17 @@ public class Person extends Person_Base {
 	}
 	if (getStudent() != null) {
 	    return getStudent().getNumber();
-	    //            DegreeType degreeType = getStudent().getMostSignificantDegreeType();
-	    //            Collection<Registration> registrations = getStudent()
-	    //                    .getRegistrationsByDegreeType(degreeType);
-	    //            for (Registration registration : registrations) {
-	    //                StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
-	    //                if (scp != null) {
-	    //                    return getStudent().getNumber();
-	    //                }
-	    //            }
+	    // DegreeType degreeType =
+	    // getStudent().getMostSignificantDegreeType();
+	    // Collection<Registration> registrations = getStudent()
+	    // .getRegistrationsByDegreeType(degreeType);
+	    // for (Registration registration : registrations) {
+	    // StudentCurricularPlan scp =
+	    // registration.getActiveStudentCurricularPlan();
+	    // if (scp != null) {
+	    // return getStudent().getNumber();
+	    // }
+	    // }
 	}
 	if (getPartyClassification().equals(PartyClassification.GRANT_OWNER)) {
 	    return getGrantOwner().getNumber();
@@ -2788,18 +2717,18 @@ public class Person extends Person_Base {
 
     public Collection<Forum> getForuns(final ExecutionPeriod executionPeriod) {
 	Collection<Forum> foruns = new HashSet<Forum>();
-	if(getTeacher() != null) {
+	if (getTeacher() != null) {
 	    foruns.addAll(getTeacher().getForuns(executionPeriod));
 	}
-	
-	if(getStudent() != null) {
+
+	if (getStudent() != null) {
 	    foruns.addAll(getStudent().getForuns(executionPeriod));
 	}
-	
-	for(ForumSubscription forumSubscription : getForumSubscriptionsSet()) {
+
+	for (ForumSubscription forumSubscription : getForumSubscriptionsSet()) {
 	    foruns.add(forumSubscription.getForum());
 	}
-	
+
 	return foruns;
     }
 
