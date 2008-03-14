@@ -2121,13 +2121,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public List<Enrolment> getEnroledImprovements() {
-	List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
-	for (Enrolment enrolment : getEnrolmentsSet()) {
+	final List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
 	    if (enrolment.isImprovementEnroled()) {
 		enroledImprovements.add(enrolment);
 	    }
 	}
 	return enroledImprovements;
+    }
+    
+    public List<Enrolment> getEnroledImprovements(final ExecutionPeriod executionPeriod) {
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    if (enrolment.hasImprovementFor(executionPeriod)) {
+		result.add(enrolment);
+	    }
+	}
+	return result;
     }
 
     final public List<Enrolment> getEnrolmentsToImprov(ExecutionPeriod executionPeriod) {

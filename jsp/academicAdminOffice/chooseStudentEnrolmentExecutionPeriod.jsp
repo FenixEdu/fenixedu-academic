@@ -61,8 +61,8 @@
 		</li>
 	</ul>
 
+	<p class="mtop2 mbottom0"><strong><bean:message key="label.student.enrolments.executionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	<logic:notEmpty name="studentEnrolments">
-		<p class="mtop2 mbottom0"><strong><bean:message key="label.student.enrolments.executionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 		<fr:view name="studentEnrolments" schema="student.show.enrolments">
 			<fr:layout name="tabular">	 
 				<fr:property name="classes" value="tstyle2"/>
@@ -76,6 +76,23 @@
 			<em><bean:message key="label.no.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em>
 		</p>
 	</logic:empty>
+	
+	<p class="mtop2 mbottom0"><strong><bean:message key="label.student.improvement.enrolments.executionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+	<logic:notEmpty name="studentImprovementEnrolments">
+		<fr:view name="studentImprovementEnrolments" schema="student.show.enrolments">
+			<fr:layout name="tabular">	 
+				<fr:property name="classes" value="tstyle2"/>
+		      	<fr:property name="columnClasses" value="nowrap,acenter,nowrap,smalltxt color888,acenter"/>
+				<fr:property name="sortBy" value="name"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+	<logic:empty name="studentImprovementEnrolments">
+		<p class="mtop15">
+			<em><bean:message key="label.no.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em>
+		</p>
+	</logic:empty>
+	
 </logic:present>
 
 <fr:form action="/studentEnrolments.do?method=backViewRegistration">

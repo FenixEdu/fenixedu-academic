@@ -656,7 +656,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public boolean hasImprovementFor(ExecutionPeriod executionPeriod) {
 	for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
-	    if (enrolmentEvaluation.isImprovment() && enrolmentEvaluation.getExecutionPeriod() != null
+	    if (enrolmentEvaluation.isImprovment() && enrolmentEvaluation.hasExecutionPeriod()
 		    && enrolmentEvaluation.getExecutionPeriod().equals(executionPeriod)) {
 		return true;
 	    }
@@ -1174,10 +1174,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     /**
-     * Just for Master Degrees legacy code
-     * 
-     * @return
-     */
+         * Just for Master Degrees legacy code
+         * 
+         * @return
+         */
     @Deprecated
     final public double getCredits() {
 	return getEctsCredits();
@@ -1282,12 +1282,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * <p>
-     * This method assumes that each Student has at most one non evaluated
-     * Thesis and no more that two Thesis.
-     */
+         * {@inheritDoc}
+         * 
+         * <p>
+         * This method assumes that each Student has at most one non evaluated
+         * Thesis and no more that two Thesis.
+         */
     final public Thesis getThesis() {
 	List<Thesis> theses = getTheses();
 
