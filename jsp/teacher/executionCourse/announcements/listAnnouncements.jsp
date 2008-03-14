@@ -12,16 +12,18 @@
 net.sourceforge.fenixedu.domain.Person person = (net.sourceforge.fenixedu.domain.Person) request.getAttribute("person");
 String contextPrefix = (String) request.getAttribute("contextPrefix");
 String extraParameters = (String) request.getAttribute("extraParameters");
-String year =  request.getParameter("selectedYear");
-String month = request.getParameter("selectedMonth");
+%>
 
-if (month != null && year!=null)
-{
-%>
-<p><em style="background: #fff8dd;"><%= new net.sourceforge.fenixedu.util.Mes(Integer.valueOf(month)).toString()%> de <%=year%></em></p>
-<%
-}
-%>
+<bean:define id="hasYear" value="<%= Boolean.valueOf(request.getParameter("selectedYear") != null).toString() %>" type="java.lang.String"/>
+<bean:define id="hasMonth" value="<%= Boolean.valueOf(request.getParameter("selectedMonth") != null).toString()%>" type="java.lang.String"/>
+
+<logic:equal name="hasYear" value="true">
+	<logic:equal name="hasMonth" value="true">
+		<p><em style="background: #fff8dd;"><%=new net.sourceforge.fenixedu.util.Mes(Integer.valueOf(request.getParameter("selectedMonth"))).toString()%>
+		de <%=request.getParameter("selectedYear")%></em></p>
+	</logic:equal>
+</logic:equal>
+
 
 <logic:present name="announcements">
 
@@ -38,16 +40,12 @@ if (month != null && year!=null)
 					<logic:notEmpty name="announcement" property="publicationBegin">
 						Publicado em 
 							<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
-						<%
-						if (announcement.getAnnouncementBoard().hasWriter(person)) {
-						%>
-							<logic:notEmpty name="announcement" property="publicationEnd">
-							 	<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.until" /> 
-								<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
-							</logic:notEmpty>
-						<%
-						}
-						%>
+							<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
+								<logic:notEmpty name="announcement" property="publicationEnd">
+								 	<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.until" /> 
+									<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
+								</logic:notEmpty>
+							</logic:equal>
 					</logic:notEmpty>
 						
 					<logic:empty name="announcement" property="publicationBegin">
@@ -80,22 +78,15 @@ if (month != null && year!=null)
 		<%-- Corpo --%>
 			 <logic:notPresent name="announcementBoard">
 				 <div class="ann_body mvert025">
-				 <% if (!announcement.isExcerptEmpty())
-				 	{
-				 %>				 
+				 <logic:equal name="announcement" property="excerptEmpty" value="false">
 				 	<fr:view name="announcement" property="excerpt" layout="html"/>
 				 	 <html:link action="<%=contextPrefix + "method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
 						 Continuar a ler...
 					 </html:link> 
-				 <%				 		
-				 	}
-				 	else
-				 	{
-				 %>
+				</logic:equal>
+				 <logic:equal name="announcement" property="excerptEmpty" value="true">
 				 	<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html"/>				 	
-				 <% 
-				 	}
-				 %>
+				</logic:equal>
 				 </div>
 			 </logic:notPresent>
 				
@@ -116,9 +107,7 @@ if (month != null && year!=null)
 				  <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />  
 
 		<%-- Editar, Apagar --%>
-			<%	
-				if (announcement.getAnnouncementBoard().hasWriter(person)) {
-			%>
+			<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
 				<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES"/>:
 				<bean:define id="announcementId" name="announcement" property="idInternal" />
 				<html:link action="<%= contextPrefix + "method=editAnnouncement&amp;announcementId="+announcementId+"&amp;"+extraParameters%>">
@@ -131,40 +120,28 @@ if (month != null && year!=null)
 				  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.delete.link"/>
 				</html:link>
 				
-				<%	
-					if (announcement.getAnnouncementBoard().isCurrentUserApprover() && !announcement.getApproved()) {
-				%>
-
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.comma" />
-					
-					<html:link action="<%= contextPrefix + "method=aproveAction&amp;announcementId="+announcementId+"&amp;action=true&amp;"+extraParameters%>">
+				<logic:equal name="announcementBoard" property="currentUserApprover" value="true">
+					<logic:equal name="announcement" property="approved" value="false">
+						<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.comma" />
+							
+						<html:link action="<%= contextPrefix + "method=aproveAction&amp;announcementId="+announcementId+"&amp;action=true&amp;"+extraParameters%>">
 					  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.approve.link"/>
-					</html:link>				 
-
-				<%	
-					}
-				%>
-
-				<%	
-					if (announcement.getAnnouncementBoard().isCurrentUserApprover() && announcement.getApproved()) {
-				%>
-
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.comma" />
-					
-					<html:link action="<%= contextPrefix + "method=aproveAction&amp;announcementId="+announcementId+"&amp;action=false&amp;"+extraParameters%>">
+						</html:link>				 
+					</logic:equal>
+						
+	
+					<logic:equal name="announcement" property="approved" value="true">
+						<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.comma" />
+							
+						<html:link action="<%= contextPrefix + "method=aproveAction&amp;announcementId="+announcementId+"&amp;action=false&amp;"+extraParameters%>">
 					  	<bean:message bundle="MESSAGING_RESOURCES" key="messaging.not.approve.link"/>
-					</html:link>				 
-
-				<%	
-					}
-				%>
+						</html:link>				 
+					</logic:equal>
+				</logic:equal>
 						
 				 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />
 
-				 
-			<%	
-				}
-			%>		
+				</logic:equal>				 
 
 		<%-- ReferedSubject Date --%>
 		
@@ -208,28 +185,18 @@ if (month != null && year!=null)
 				 </logic:notEmpty>
 				 
 		<%-- Modificado em --%> 
-				<%
-				if (announcement.wasModifiedSinceCreation())
-				{
-				%>
-					Modificado em:
-					<fr:view name="announcement" property="lastModification" type="org.joda.time.DateTime" layout="no-time"/>
-					<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
-				<%
-				}
-				%>
+					<logic:equal name="announcement" property="originalVersion" value="false">
+						Modificado em:
+						<fr:view name="announcement" property="lastModification" type="org.joda.time.DateTime" layout="no-time"/>
+						<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />
+					</logic:equal> 
 		<%-- CreationDate --%>
-				<%
-				if (announcement.getAnnouncementBoard().hasWriter(person)) {
-				
-				%>
+					<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
 					<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES"/>
 					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
 						<fr:view name="announcement" property="creationDate" layout="no-time"/>
 					</span>
-				<%
-				}
-				%>
+					</logic:equal>
 				</em>
 			</p>
 			

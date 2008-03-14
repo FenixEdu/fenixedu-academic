@@ -20,18 +20,18 @@
 	<span>
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="Publicar"/>
 			<logic:notEmpty name="announcement" property="publicationBegin">
-				Publicado em 
+				<bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.published.in" />
 					<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
 				<logic:equal name="announcement" property="announcementBoard.currentUserWriter" value="true">
 					<logic:notEmpty name="announcement" property="publicationEnd">
-					 	até
+					 	<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.until" />
 						<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
 					</logic:notEmpty>
 				</logic:equal>
 			</logic:notEmpty>
 				
 			<logic:empty name="announcement" property="publicationBegin">
-				Publicado em 
+				<bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.published.in" />
 				<fr:view name="announcement" property="creationDate" layout="no-time"/>
 			</logic:empty>
 		</span>
@@ -53,13 +53,13 @@
 
 <%-- Canal --%>
 
-Canal: <bean:write name="announcement" property="announcementBoard.name"/> -
+<bean:message key="label.messaging.board" bundle="MESSAGING_RESOURCES"/>: <bean:write name="announcement" property="announcementBoard.name"/> -
 
 <%-- Autor --%>
 	
 	<logic:notEmpty name="announcement" property="author">
 		<logic:notEmpty name="announcement" property="authorEmail">
-			Autor: 
+			<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.author" />: 
 			<html:link href="<%="mailto:"+announcement.getAuthorEmail()%>">
 				<fr:view name="announcement" property="author"/>
 			</html:link>
@@ -71,7 +71,7 @@ Canal: <bean:write name="announcement" property="announcementBoard.name"/> -
 <%-- Data do Evento --%>
 		<logic:notEmpty name="announcement" property="referedSubjectBegin">
 			<logic:notEmpty name="announcement" property="referedSubjectEnd">
-				De
+			<bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.event.occurs.from" />
 			</logic:notEmpty>
 		</logic:notEmpty>
 		
@@ -81,7 +81,7 @@ Canal: <bean:write name="announcement" property="announcementBoard.name"/> -
 		
 		<logic:notEmpty name="announcement" property="referedSubjectBegin">
 			<logic:notEmpty name="announcement" property="referedSubjectEnd">
-				a
+					<bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.event.occurs.to" />
 			</logic:notEmpty>
 		</logic:notEmpty>				
 		 
@@ -93,21 +93,21 @@ Canal: <bean:write name="announcement" property="announcementBoard.name"/> -
 <%-- Autor --%>
 	<logic:notEmpty name="announcement" property="author">
 		<logic:empty name="announcement" property="authorEmail">
-			Autor: <fr:view name="announcement" property="author"/>
+			<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.author" />: <fr:view name="announcement" property="author"/>
 			 - 
 		</logic:empty>
 	</logic:notEmpty>
 
 <%-- Local --%>
 	<logic:notEmpty name="announcement" property="place">
-		Local: <fr:view name="announcement" property="place"/>
+		<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.place" />: <fr:view name="announcement" property="place"/>
 		 - 
 	</logic:notEmpty>
 	
 <%-- Modificado em --%>
 	
 	<logic:equal name="announcement" property="originalVersion" value="false"> 
-		Modificado em:
+		<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.modified.in" />:
 		<fr:view name="announcement" property="lastModification" type="org.joda.time.DateTime" layout="no-time"/>
 		 - 
 	</logic:equal>

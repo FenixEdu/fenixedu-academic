@@ -26,29 +26,21 @@
 			parameters.put("method","simple");
 			parameters.put("announcementBoardId",announcementBoard.getIdInternal());
 			request.setAttribute("parameters",parameters);
-			if (announcementBoard.getReaders() == null)
-			{
 			%>
+			<logic:notPresent name="announcementBoard" property="readers">
 			(<html:link module="" action="/external/announcementsRSS" name="parameters">RSS<%--<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>--%></html:link>)
-			<%
-			}
-			%>							
+			</logic:notPresent>
 	</span>
 	</div>
 	
 	<ul>
-			<%
-				if (announcementBoard.hasWriter(person))
-				{
-			%>
+			<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
 			<li>
 				<html:link action="<%= contextPrefix + "method=addAnnouncement&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
 					<bean:message key="label.createAnnouncement" bundle="MESSAGING_RESOURCES"/>
 				</html:link>
 			</li>				
-			<%
-				}
-			%>
+			</logic:equal>
 	</ul>
 
 	<jsp:include page="/teacher/executionCourse/announcements/listAnnouncements.jsp" flush="true"/>
