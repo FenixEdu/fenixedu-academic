@@ -947,5 +947,11 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ProtocolsManagementGroup</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
-    </filter>        
+    </filter>
+     <filter>
+        <name>ScientificCouncilOrStudentThesisAuthorizationFilter</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.ScientificCouncilOrStudentThesisAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

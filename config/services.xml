@@ -11679,7 +11679,6 @@
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -11714,7 +11713,7 @@
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="StudentThesisAuthorization"/>
+            <chain name="ScientificCouncilOrStudentThesisAuthorizationFilter"/>
         </filterChains>
     </service>
     <service>
@@ -11723,7 +11722,23 @@
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="StudentThesisAuthorization"/>
+            <chain name="ScientificCouncilOrStudentThesisAuthorizationFilter"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>MakeThesisDocumentsUnavailable</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsUnavailable</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
+        <name>MakeThesisDocumentsAvailable</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsAvailable</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
         </filterChains>
     </service>
 	<service>

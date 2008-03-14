@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CreateThesisDissertationFile extends CreateThesisFile {
 
@@ -11,7 +13,11 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
     protected void removePreviousFile(Thesis thesis) {
         ThesisFile dissertation = thesis.getDissertation();
         if (dissertation != null) {
-            dissertation.delete();
+            if (AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+        	dissertation.deleteWithoutStateCheck();
+            } else {
+        	dissertation.delete();
+            }
         }
     }
 

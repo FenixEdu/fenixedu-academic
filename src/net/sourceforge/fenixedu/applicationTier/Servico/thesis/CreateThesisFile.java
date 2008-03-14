@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -33,11 +34,11 @@ public abstract class CreateThesisFile extends Service {
 	public ThesisFile run(Thesis thesis, File fileToUpload, String fileName, String title,
 			String subTitle, Language language) throws FenixServiceException, IOException {
 
-		if (!thesis.isWaitingConfirmation()) {
+		if (!thesis.isWaitingConfirmation() && !AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
 			throw new DomainException("thesis.files.submit.unavailable");
 		}
 
-		if (!thesis.isDeclarationAccepted()) {
+		if (!thesis.isDeclarationAccepted() && !AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
 			throw new DomainException("thesis.files.submit.unavailable");
 		}
 

@@ -732,8 +732,7 @@ public class ManageThesisDA extends FenixDispatchAction {
         }
         
         try {
-            DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-            executeService("ReviseThesis", degreeCurricularPlan, thesis);
+            executeService("ReviseThesis", thesis);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());
         }

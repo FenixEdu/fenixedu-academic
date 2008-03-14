@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
 public class ReviseThesis extends Service {
 
-    public void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis) {
+    public void run(Thesis thesis) {
         thesis.allowRevision();
     }
     

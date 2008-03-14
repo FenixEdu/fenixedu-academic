@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,15 +14,23 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
+import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
+import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
@@ -209,7 +218,114 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
     }
     
     public ActionForward viewThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	setDocumentAvailability(request);
         return mapping.findForward("view-thesis");
+    }
+
+    private void setDocumentAvailability(final HttpServletRequest request) {
+	final Thesis thesis = getThesis(request);
+	final ThesisFile thesisFile = thesis.getDissertation();
+	if (thesisFile != null) {
+	    final Group group = thesisFile.getPermittedGroup();
+	    if (containsThesisFileReadersGroup(group)) {
+		request.setAttribute("containsThesisFileReadersGroup", Boolean.TRUE);
+	    }
+	}
+    }
+
+    private boolean containsThesisFileReadersGroup(final IGroup group) {
+	if (group instanceof GroupUnion) {
+	    final GroupUnion groupUnion = (GroupUnion) group;
+	    for (IGroup child : groupUnion.getChildren()) {
+		if (containsThesisFileReadersGroup(child)) {
+		    return true;
+		}
+	    }
+	} else if (group instanceof ThesisFileReadersGroup) {
+	    return true;
+	}
+	return false;
+    }
+
+    public ActionForward showMakeDocumentUnavailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	request.setAttribute("showMakeDocumentUnavailablePage", Boolean.TRUE);
+	return viewThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward showMakeDocumentsAvailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	request.setAttribute("showMakeDocumentsAvailablePage", Boolean.TRUE);
+	return viewThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward showSubstituteDocumentsPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final Thesis thesis = getThesis(request);
+	final ThesisFile thesisFile = thesis.getDissertation();
+	final ThesisFileBean thesisFileBean = new ThesisFileBean();
+	thesisFileBean.setTitle(thesisFile.getTitle());
+	thesisFileBean.setSubTitle(thesisFile.getSubTitle());
+	thesisFileBean.setLanguage(thesisFile.getLanguage());
+	request.setAttribute("fileBean", thesisFileBean);
+	request.setAttribute("showSubstituteDocumentsPage", Boolean.TRUE);
+	return viewThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward showSubstituteExtendedAbstractPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final ThesisFileBean thesisFileBean = new ThesisFileBean();
+	request.setAttribute("fileBean", thesisFileBean);
+	request.setAttribute("showSubstituteExtendedAbstractPage", Boolean.TRUE);
+	return viewThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward makeDocumentUnavailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final Thesis thesis = getThesis(request);
+	executeService("MakeThesisDocumentsUnavailable", new Object[] { thesis });
+	return viewThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward makeDocumentAvailablePage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final Thesis thesis = getThesis(request);
+	executeService("MakeThesisDocumentsAvailable", new Object[] { thesis });
+	return viewThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward substituteDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
+	RenderUtils.invalidateViewState();
+    
+	if (bean != null && bean.getFile() != null) {
+	    File temporaryFile = null;
+    	
+	    try {
+		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
+		executeService("CreateThesisDissertationFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
+	    } finally {
+		if (temporaryFile != null) {
+		    temporaryFile.delete();
+		}
+	    }
+	}
+
+	return viewThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward substituteExtendedAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
+	RenderUtils.invalidateViewState();
+    
+	if (bean != null && bean.getFile() != null) {
+	    File temporaryFile = null;
+    	
+	    try {
+		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
+		executeService("CreateThesisAbstractFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
+	    } finally {
+		if (temporaryFile != null) {
+		    temporaryFile.delete();
+		}
+	    }
+	}
+
+	return viewThesis(mapping, actionForm, request, response);
     }
 
 }

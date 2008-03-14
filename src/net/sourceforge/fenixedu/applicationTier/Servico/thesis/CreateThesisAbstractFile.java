@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CreateThesisAbstractFile extends CreateThesisFile {
 
@@ -10,7 +12,11 @@ public class CreateThesisAbstractFile extends CreateThesisFile {
     protected void removePreviousFile(Thesis thesis) {
         ThesisFile extendedAbstract = thesis.getExtendedAbstract();
         if (extendedAbstract != null) {
-            extendedAbstract.delete();
+            if (AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+        	extendedAbstract.deleteWithoutStateCheck();
+            } else {
+        	extendedAbstract.delete();
+            }
         }
     }
 

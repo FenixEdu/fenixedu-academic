@@ -25,7 +25,126 @@
             <bean:message key="link.scientificCouncil.thesis.list.back"/>
         </html:link>
     </li>
+	<logic:present name="thesis" property="dissertation">
+		<logic:present name="containsThesisFileReadersGroup">
+    		<li>
+				<bean:define id="url">/scientificCouncilManageThesis.do?method=showMakeDocumentUnavailablePage&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/>&amp;thesisID=<bean:write name="thesisId"/></bean:define>
+				<html:link page="<%= url %>">
+					<bean:message key="link.thesis.make.documents.unavailable"/>
+				</html:link>
+    		</li>
+    	</logic:present>
+		<logic:notPresent name="containsThesisFileReadersGroup">
+    		<li>
+				<bean:define id="url">/scientificCouncilManageThesis.do?method=showMakeDocumentsAvailablePage&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/>&amp;thesisID=<bean:write name="thesisId"/></bean:define>
+				<html:link page="<%= url %>">
+					<bean:message key="link.thesis.make.documents.available"/>
+				</html:link>
+    		</li>
+    		<li>
+				<bean:define id="url">/scientificCouncilManageThesis.do?method=showSubstituteDocumentsPage&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/>&amp;thesisID=<bean:write name="thesisId"/></bean:define>
+				<html:link page="<%= url %>">
+					<bean:message key="link.thesis.substitute.documents"/>
+				</html:link>
+    		</li>
+    		<li>
+				<bean:define id="url">/scientificCouncilManageThesis.do?method=showSubstituteExtendedAbstractPage&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/>&amp;thesisID=<bean:write name="thesisId"/></bean:define>
+				<html:link page="<%= url %>">
+					<bean:message key="link.thesis.substitute.extended.abstract"/>
+				</html:link>
+    		</li>
+    	</logic:notPresent>
+    </logic:present>
 </ul>
+
+<%-- Approve proposal --%>
+<logic:present name="showMakeDocumentUnavailablePage">
+    <div class="warning0" style="padding: 1em;">
+        <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
+        <bean:message key="message.thesis.make.documents.unavailable"/>
+        <div class="mtop1 forminline">
+        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=makeDocumentUnavailablePage&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
+                <html:submit>
+                    <bean:message key="button.scientificCouncil.thesis.documents.make.unavailable"/>
+                </html:submit>
+            </fr:form>
+        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=viewThesis&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
+                <html:cancel>
+                    <bean:message key="button.cancel"/>
+                </html:cancel>
+            </fr:form>
+        </div>
+    </div>
+</logic:present>
+<logic:present name="showMakeDocumentsAvailablePage">
+    <div class="warning0" style="padding: 1em;">
+        <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
+        <bean:message key="message.thesis.make.documents.available"/>
+        <div class="mtop1 forminline">
+        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=makeDocumentAvailablePage&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
+                <html:submit>
+                    <bean:message key="button.scientificCouncil.thesis.documents.make.available"/>
+                </html:submit>
+            </fr:form>
+        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=viewThesis&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
+                <html:cancel>
+                    <bean:message key="button.cancel"/>
+                </html:cancel>
+            </fr:form>
+        </div>
+    </div>
+</logic:present>
+<logic:present name="showSubstituteDocumentsPage">
+	<div class="infoop2 mvert15">
+    	<p>
+        	<bean:message key="label.student.thesis.upload.dissertation.message"/>
+    	</p>
+	</div>
+
+	<fr:form encoding="multipart/form-data" action="<%= String.format("/scientificCouncilManageThesis.do?method=substituteDocuments&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
+    	<fr:edit id="dissertationFile" name="fileBean" schema="student.thesisBean.upload.dissertation">
+        	<fr:layout name="tabular">
+            	<fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
+            	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+        	</fr:layout>
+        
+    	    <fr:destination name="cancel" path="<%= String.format("/scientificCouncilManageThesis.do?method=viewThesis&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
+    	</fr:edit>
+    
+	    <html:submit>
+    	    <bean:message key="button.submit"/>
+    	</html:submit>
+    	<html:cancel>
+	        <bean:message key="button.cancel"/>
+	    </html:cancel>
+	</fr:form>
+</logic:present>
+<logic:present name="showSubstituteExtendedAbstractPage">
+	<div class="infoop2 mvert15">
+    	<p>
+        	<bean:message key="label.student.thesis.upload.extended.abstract.message"/>
+    	</p>
+	</div>
+
+	<fr:form encoding="multipart/form-data" action="<%= String.format("/scientificCouncilManageThesis.do?method=substituteExtendedAbstract&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
+    	<fr:edit id="extendedAbstractFile" name="fileBean" schema="student.thesisBean.upload">
+        	<fr:layout name="tabular">
+            	<fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
+            	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+        	</fr:layout>
+        
+    	    <fr:destination name="cancel" path="<%= String.format("/scientificCouncilManageThesis.do?method=viewThesis&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
+    	</fr:edit>
+    
+	    <html:submit>
+    	    <bean:message key="button.submit"/>
+    	</html:submit>
+    	<html:cancel>
+	        <bean:message key="button.cancel"/>
+	    </html:cancel>
+	</fr:form>
+</logic:present>
+
 
 <%-- Dissertation --%>
 

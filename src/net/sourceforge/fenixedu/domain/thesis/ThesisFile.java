@@ -19,6 +19,15 @@ public class ThesisFile extends ThesisFile_Base {
         if (! thesis.isWaitingConfirmation()) {
             throw new DomainException("thesis.file.delete.notAllowed");
         }
+
+        deleteWithoutStateCheck();
+    }
+
+    public void deleteWithoutStateCheck() {
+        Thesis thesis = getDissertationThesis();
+        if (thesis == null) {
+            thesis = getAbstractThesis();
+        }
         
         removeRootDomainObject();
         removeDissertationThesis();
@@ -26,5 +35,5 @@ public class ThesisFile extends ThesisFile_Base {
         
         deleteDomainObject();
     }
-    
+
 }
