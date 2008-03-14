@@ -752,4 +752,14 @@ public class CourseGroup extends CourseGroup_Base {
     public Set<CurricularCourse> getAllOpenCurricularCourses() {
 	return getAllCurricularCourses(ExecutionPeriod.readActualExecutionPeriod());
     }
+    
+    public Set<ExecutionYear> getBeginContextExecutionYears() {
+	final Set<ExecutionYear> result = new HashSet<ExecutionYear>();
+	for (final Context context : getChildContexts(CourseGroup.class)) {
+	    result.add(context.getBeginExecutionPeriod().getExecutionYear());
+	    result.addAll(((CourseGroup) context.getChildDegreeModule()).getBeginContextExecutionYears());
+	}
+	return result;
+    }
+
 }

@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteCurricularRule extends Service {
 
     public void run(Integer curricularRuleID) throws FenixServiceException, ExcepcaoPersistencia {
-        final CurricularRule curricularRule = rootDomainObject.readCurricularRuleByOID(curricularRuleID);
-        if (curricularRule == null) {
-            throw new FenixServiceException("error.noCurricularRule");
-        }
-        curricularRule.delete();
+	final CurricularRule curricularRule = rootDomainObject.readCurricularRuleByOID(curricularRuleID);
+	if (curricularRule == null) {
+	    throw new FenixServiceException("error.noCurricularRule");
+	}
+	curricularRule.delete();
     }
 }

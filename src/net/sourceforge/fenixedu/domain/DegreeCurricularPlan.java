@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -1814,5 +1813,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
 	sortedExecutionDegrees.addAll(getExecutionDegreesSet());
 	return sortedExecutionDegrees.last().getExecutionYear().equals(executionYear.getPreviousExecutionYear());
+    }
+    
+    public Set<ExecutionYear> getBeginContextExecutionYears() {
+	return isBoxStructure() ? getRoot().getBeginContextExecutionYears() : Collections.EMPTY_SET;
     }
 }

@@ -24,6 +24,10 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 	init(degreeModuleToApplyRule, null, begin, end, CurricularRuleType.MAXIMUM_NUMBER_OF_CREDITS_FOR_ENROLMENT_PERIOD);
     }
 
+    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin) {
+	this(degreeModuleToApplyRule, begin, null);
+    }
+
     private void checkDegreeModule(final DegreeModule degreeModule) {
 	if (!degreeModule.isRoot()) {
 	    throw new DomainException(
@@ -31,8 +35,11 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 	}
     }
 
-    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin) {
-	this(degreeModuleToApplyRule, begin, null);
+    @Override
+    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin) {
+	if (degreeModuleToApplyRule == null || begin == null) {
+	    throw new DomainException("curricular.rule.invalid.parameters");
+	}
     }
 
     @Override

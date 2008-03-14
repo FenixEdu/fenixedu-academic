@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteContextFromDegreeModule extends Service {
 
     public void run(final Integer degreeModuleID, final Integer contextID) throws ExcepcaoPersistencia, FenixServiceException {
-        final DegreeModule degreeModule = rootDomainObject.readDegreeModuleByOID(degreeModuleID);
-        if (degreeModule == null) {
-            throw new FenixServiceException("error.noDegreeModule");
-        }
-        final Context context = rootDomainObject.readContextByOID(contextID);
-        if (context == null) {
-            throw new FenixServiceException("error.noCourseGroup");
-        }
-        degreeModule.deleteContext(context);
+	final DegreeModule degreeModule = rootDomainObject.readDegreeModuleByOID(degreeModuleID);
+	if (degreeModule == null) {
+	    throw new FenixServiceException("error.noDegreeModule");
+	}
+	final Context context = rootDomainObject.readContextByOID(contextID);
+	if (context == null) {
+	    throw new FenixServiceException("error.noCourseGroup");
+	}
+	degreeModule.deleteContext(context);
     }
 }

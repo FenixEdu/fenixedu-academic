@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.manager.curricularPlans;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +22,13 @@ public class ManagerDegreeManagementBackingBean extends DegreeManagementBackingB
             }
         }
         
+        Collections.sort(orderedResult, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+        return orderedResult;
+    }
+
+    @Override
+    public List<Degree> getFilteredBolonhaDegrees() {
+        final List<Degree> orderedResult = new ArrayList<Degree>(Degree.readBolonhaDegrees());
         Collections.sort(orderedResult, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
         return orderedResult;
     }

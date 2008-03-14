@@ -53,7 +53,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	setEnd(end);
     }
 
-    private void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin) {
+    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin) {
 	if (degreeModuleToApplyRule == null || begin == null) {
 	    throw new DomainException("curricular.rule.invalid.parameters");
 	}

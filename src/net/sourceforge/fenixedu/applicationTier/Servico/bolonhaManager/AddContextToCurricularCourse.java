@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -56,17 +55,12 @@ public class AddContextToCurricularCourse extends Service {
 	courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
-    private ExecutionPeriod getBeginExecutionPeriod(Integer beginExecutionPeriodID) throws FenixServiceException {
-	final ExecutionPeriod beginExecutionPeriod;
+    private ExecutionPeriod getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
 	if (beginExecutionPeriodID == null) {
-	    final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	    final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
-	    beginExecutionPeriod = (nextExecutionYear == null) ? currentExecutionYear.getFirstExecutionPeriod()
-		    : nextExecutionYear.getFirstExecutionPeriod();
+	    return ExecutionPeriod.readActualExecutionPeriod();
 	} else {
-	    beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
+	    return rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
 	}
-	return beginExecutionPeriod;
     }
 
     private ExecutionPeriod getEndExecutionPeriod(Integer endExecutionPeriodID) {

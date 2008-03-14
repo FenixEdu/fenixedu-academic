@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -15,7 +14,7 @@ public class EditContextFromCurricularCourse extends Service {
     public void run(CurricularCourse curricularCourse, Context context, CourseGroup courseGroup, Integer year, Integer semester,
 	    Integer beginExecutionPeriodID, Integer endExecutionPeriodID) {
 
-	CurricularPeriod degreeCurricularPeriod = context.getParentCourseGroup().getParentDegreeCurricularPlan()
+	final CurricularPeriod degreeCurricularPeriod = context.getParentCourseGroup().getParentDegreeCurricularPlan()
 		.getDegreeStructure();
 
 	// ********************************************************
@@ -51,17 +50,12 @@ public class EditContextFromCurricularCourse extends Service {
 		getEndExecutionPeriod(endExecutionPeriodID));
     }
 
-    private ExecutionPeriod getBeginExecutionPeriod(Integer beginExecutionPeriodID) {
-	final ExecutionPeriod beginExecutionPeriod;
+    private ExecutionPeriod getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
 	if (beginExecutionPeriodID == null) {
-	    final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	    final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
-	    beginExecutionPeriod = (nextExecutionYear == null) ? currentExecutionYear.getFirstExecutionPeriod()
-		    : nextExecutionYear.getFirstExecutionPeriod();
+	    return ExecutionPeriod.readActualExecutionPeriod();
 	} else {
-	    beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
+	    return rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
 	}
-	return beginExecutionPeriod;
     }
 
     private ExecutionPeriod getEndExecutionPeriod(Integer endExecutionPeriodID) {

@@ -13,13 +13,6 @@
 	<h:outputText value=" (#{enumerationBundle[ManagerCurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</em>" escape="false"/>
 	<h:outputText value="<h2>#{bolonhaBundle['buildCurricularPlan']}</h2>" escape="false"/>
 
-<%-- 
-	<h:panelGroup rendered="#{empty ManagerCurricularCourseManagement.degreeCurricularPlan.executionDegrees}">
-		<h:outputText value="<p><em>#{bolonhaBundle['error.curricularPlanHasNoExecutionDegrees']}</em><p>" escape="false"/>
-	</h:panelGroup>
---%>
-
-<%-- 	<h:panelGroup rendered="#{!empty ManagerCurricularCourseManagement.degreeCurricularPlan.executionDegrees}"> --%>
 	<h:form>
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
@@ -110,6 +103,5 @@
 		<h:outputText value="</p>" escape="false"/>
 		
 	</h:form>
-<%-- 	</h:panelGroup>	--%>
 	
 </ft:tilesView>

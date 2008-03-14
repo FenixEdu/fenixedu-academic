@@ -1,7 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.manager.curricularPlans;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.faces.model.SelectItem;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -10,11 +17,17 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curric
 public class ManagerCurricularCourseManagementBackingBean extends CurricularCourseManagementBackingBean {
 
     private String code;
+
     private String acronym;
+
     private Integer minimumValueForAcumulatedEnrollments;
+
     private Integer maximumValueForAcumulatedEnrollments;
+
     private Integer enrollmentWeigth;
+
     private Double credits;
+
     private Double ectsCredits;
 
     public String getAcronym() {
@@ -146,4 +159,33 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 		getMinimumValueForAcumulatedEnrollments(), getMaximumValueForAcumulatedEnrollments(), getWeight(),
 		getEnrollmentWeigth(), getCredits(), getEctsCredits() };
     }
+
+    @Override
+    protected List<SelectItem> readExecutionYearItems() {
+	final List<SelectItem> result = new ArrayList<SelectItem>();
+
+	final List<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegrees();
+
+	if (executionDegrees.isEmpty()) {
+	    for (final ExecutionYear executionYear : getDegreeCurricularPlan().getBeginContextExecutionYears()) {
+		result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+	    }
+	    if (getExecutionYearID() == null) {
+		setExecutionYearID((Integer) result.get(0).getValue());
+	    }
+	    return result;
+	}
+
+	for (final ExecutionDegree executionDegree : executionDegrees) {
+	    result.add(new SelectItem(executionDegree.getExecutionYear().getIdInternal(), executionDegree.getExecutionYear()
+		    .getYear()));
+	}
+
+	if (getExecutionYearID() == null) {
+	    setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getIdInternal());
+	}
+
+	return result;
+    }
+
 }

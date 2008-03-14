@@ -5,14 +5,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteCompetenceCourse extends Service {
 
-    public void run(Integer competenceCourseID) throws ExcepcaoPersistencia {
-        CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
-        if (competenceCourse != null) {
-            competenceCourse.delete();
-        }
+    public void run(final Integer competenceCourseID) {
+	final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
+	if (competenceCourse != null) {
+	    competenceCourse.delete();
+	}
     }
 }

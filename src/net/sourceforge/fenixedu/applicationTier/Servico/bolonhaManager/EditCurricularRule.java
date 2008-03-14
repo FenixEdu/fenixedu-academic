@@ -6,15 +6,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditCurricularRule extends Service {
 
     public void run(Integer curricularRuleID, Integer beginExecutionPeriodID, Integer endExecutionPeriodID)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException {
 
         final CurricularRule curricularRule = rootDomainObject.readCurricularRuleByOID(curricularRuleID);
         if (curricularRule == null) {
@@ -23,13 +21,7 @@ public class EditCurricularRule extends Service {
         
         final ExecutionPeriod beginExecutionPeriod;
         if (beginExecutionPeriodID == null) {
-            final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-            final ExecutionYear nextExecutionYear = currentExecutionYear.getNextExecutionYear();
-            if (nextExecutionYear == null) {
-        	beginExecutionPeriod = currentExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
-            } else {
-        	beginExecutionPeriod = nextExecutionYear.readExecutionPeriodForSemester(Integer.valueOf(1));
-            }
+          beginExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();  
         } else {
             beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
         }
