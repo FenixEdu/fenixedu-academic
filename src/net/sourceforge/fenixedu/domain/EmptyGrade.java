@@ -36,7 +36,7 @@ public class EmptyGrade extends Grade {
     
     @Override
     public String exportAsString() {
-        return null;
+        return StringUtils.EMPTY;
     }
     
     @Override
