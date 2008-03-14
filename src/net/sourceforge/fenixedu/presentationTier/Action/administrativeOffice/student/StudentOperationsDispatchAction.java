@@ -198,7 +198,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	if (person != null) {
 	    personBean = new PersonBean(person);
 
-	    if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null) {
+	    if (isEmployeeAndHasCurrentWorkingContract(person)) {
 		request.setAttribute("personBean", personBean);
 		return mapping.findForward("fillNewPersonDataForEmployee");
 	    }
@@ -210,6 +210,10 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute("personBean", personBean);
 	return mapping.findForward("fillNewPersonData");
+    }
+
+    private boolean isEmployeeAndHasCurrentWorkingContract(Person person) {
+	return person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null;
     }
 
     private boolean checkIngression(HttpServletRequest request, ExecutionDegreeBean executionDegreeBean,
@@ -245,6 +249,23 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	request.setAttribute("precedentDegreeInformationBean", precedentDegreeInformationBean);
 
 	return mapping.findForward("showCreateStudentConfirmation");
+    }
+
+    public ActionForward prepareCreateStudentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("executionDegreeBean", RenderUtils.getViewState("executionDegree").getMetaObject().getObject());
+	request.setAttribute("ingressionInformationBean", RenderUtils.getViewState("chooseIngression").getMetaObject()
+		.getObject());
+	request.setAttribute("precedentDegreeInformationBean", RenderUtils.getViewState("precedentDegreeInformation")
+		.getMetaObject().getObject());
+
+	PersonBean personBean = (PersonBean) RenderUtils.getViewState("person").getMetaObject().getObject();
+	request.setAttribute("personBean", personBean);
+
+	return isEmployeeAndHasCurrentWorkingContract(personBean.getPerson()) ? mapping
+		.findForward("fillNewPersonDataForEmployee") : mapping.findForward("fillNewPersonData");
+
     }
 
     public ActionForward createStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

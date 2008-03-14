@@ -53,6 +53,7 @@
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 		</fr:layout>
+		<fr:destination name="invalid" path="/createStudent.do?method=prepareCreateStudentInvalid"/>
 	</fr:edit>
 	<p>
 		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit>	

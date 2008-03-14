@@ -89,6 +89,8 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -297,6 +299,7 @@ public class Person extends Person_Base {
 	}
     }
 
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void edit(PersonBean personBean) {
 	setProperties(personBean);
 	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
