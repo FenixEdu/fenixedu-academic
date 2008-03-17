@@ -231,17 +231,17 @@ public class AnnouncementRenderer extends OutputRenderer {
 	}
 
 	private HtmlComponent getSubject() {
-	    HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
+	    HtmlBlockContainer blockContainer = new HtmlBlockContainer();
 	    HtmlText subject = new HtmlText(announcement.getSubject().getContent());
 	    subject.setClasses(getSubjectClasses());
 	    subject.setFace(Face.H3);
-	    inlineContainer.addChild(subject);
+	    blockContainer.addChild(subject);
 	    if(needsMarker()) {
 		HtmlText soonMarker = new HtmlText(RenderUtils.getResourceString(getBundle(), getSoonMarkerLabel()));
 		soonMarker.setClasses(getSoonMarkerClasses());
-		inlineContainer.addChild(soonMarker);
+		blockContainer.addChild(soonMarker);
 	    }
-	    return inlineContainer;
+	    return blockContainer;
 	}
 
 	private boolean needsMarker() {
