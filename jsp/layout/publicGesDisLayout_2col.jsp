@@ -30,6 +30,7 @@
 </head>
 
 <body>
+<jsp:include page="deployWarning.jsp" flush="true"/>
 <!-- BEGIN BROWSER UPGRADE MESSAGE -->
 <div class="browser_upgrade">
 <p><strong>Aviso:</strong> Se est&aacute; a ler esta mensagem,

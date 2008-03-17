@@ -2292,4 +2292,10 @@ color: #000;
 font-weight: bold;
 }
 
-
+.deploywarning {
+background: #cd4108;
+border-bottom: 3px solid #eb5f26;
+color: #fbb699;
+padding: 0.75em;
+text-align: center;	
+}

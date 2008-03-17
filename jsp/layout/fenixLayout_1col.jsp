@@ -20,6 +20,7 @@
 </head>
 
 <body>
+<jsp:include page="deployWarning.jsp" flush="true"/>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 
 <!-- Header -->

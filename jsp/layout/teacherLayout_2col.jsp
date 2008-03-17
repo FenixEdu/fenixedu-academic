@@ -31,6 +31,7 @@
 </head>
 
 <body>
+<jsp:include page="deployWarning.jsp" flush="true"/>
 <%-- Layout component parameters : header, navLocal, body --%>
 
 

@@ -695,5 +695,23 @@
           <rtexprvalue>true</rtexprvalue>
       </attribute>                  
   </tag>
-
+  
+  <tag>
+  	<name>rootDomainObjectDefiner</name>
+      <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.RootDomainObjectDefiner</tagclass>
+      <bodycontent>JSP</bodycontent>
+      <info>
+          Defines root domain object for a given scope
+      </info>
+      <attribute>
+          <name>id</name>
+          <required>true</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+          <name>scope</name>
+          <required>false</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      </tag>
 </taglib>

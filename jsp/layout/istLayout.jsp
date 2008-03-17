@@ -31,6 +31,7 @@
 </head>
 
 <body>
+<jsp:include page="deployWarning.jsp" flush="true"/>
 <tiles:insert attribute="page-context" ignore="true"/>
 
 <!-- BEGIN BROWSER UPGRADE MESSAGE -->

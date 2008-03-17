@@ -29,3 +29,4 @@ function executeWithTempFile() {
 }
 
 execute "Fix Broken Data" fixBrokenData.sql
+execute "Adding Deploy Notifier" deployNotifier.sql

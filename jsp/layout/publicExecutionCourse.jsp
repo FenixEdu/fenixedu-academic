@@ -39,6 +39,7 @@
 	</head>
 
 	<body>
+	<jsp:include page="deployWarning.jsp" flush="true"/>
 		<div id="header">
 			<tiles:insert attribute="symbols_row" ignore="true" />
 		</div>

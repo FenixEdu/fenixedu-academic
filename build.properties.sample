@@ -566,6 +566,11 @@ start.semester.for.bolonha.degrees=1
 start.year.for.bolonha.transition=2007/2008
 start.semester.for.bolonha.transition=1
 
+#---------------------------------------------------------------
+# Deploy notifier activation
+#--------------------------------------------------------------
+notifier.active=false
+
 #
 #
 #

@@ -4554,6 +4554,10 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 			Boolean showWorkTelephone;
 		}
 
+		class net.sourceforge.fenixedu.domain.DeployNotifier extends net.sourceforge.fenixedu.domain.DomainObject {
+			Boolean notifyUsers;
+			DateTime timeStamp;
+		}	
 /*
  * Relations definitions
  * 
@@ -12349,4 +12353,9 @@ relation PersonCardGenerationProblem {
         net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem playsRole cardGenerationProblems {
                 multiplicity *;
         }
+}
+
+relation DeployNotifierRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DeployNotifier playsRole deployNotifier; 
 }
