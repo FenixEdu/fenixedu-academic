@@ -1,5 +1,6 @@
 package pt.utl.ist.propreaders;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +15,12 @@ public class RoleTypePropertyReader extends AbstractPropertyReader{
 		super();
 	}
 
-	public String readProperty() throws InvalidPropertySpecException {
+	public String readProperty() throws InvalidPropertySpecException, UnsupportedEncodingException {
 		
 		return getRoleTypesString();
 	}
 	
-	public String getRoleTypesString() throws InvalidPropertySpecException
+	public String getRoleTypesString() throws InvalidPropertySpecException, UnsupportedEncodingException
 	{
 		MenuMessage menuOptionsLang=new MenuMessage();
 		menuOptionsLang.setMessage(buildDefaultMessage(false));
