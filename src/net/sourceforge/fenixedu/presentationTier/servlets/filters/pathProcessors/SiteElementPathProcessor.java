@@ -17,7 +17,7 @@ public abstract class SiteElementPathProcessor extends PathProcessor {
             name = element.getName().getContent();
         }
         
-        return StringUtils.normalize(name.toLowerCase().replace(' ', '-').replace('/', '-'));
+        return name != null ? StringUtils.normalize(name.toLowerCase().replace(' ', '-').replace('/', '-')) : "";
     }
     
 }
