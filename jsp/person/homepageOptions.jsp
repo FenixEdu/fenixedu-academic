@@ -186,18 +186,16 @@
 				<td>
 					<logic:iterate id="attend" name="personAttends" length="1">
 						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
-						<html:link href="<%= url %>">
+						<app:contentLink name="executionCourse" property="site">
 							<bean:write name="executionCourse" property="nome"/>
-						</html:link>
+						</app:contentLink>
 					</logic:iterate>
 					<logic:iterate id="attend" name="personAttends" offset="1">
 						,
 						<bean:define id="executionCourse" name="attend" property="disciplinaExecucao"/>
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
-						<html:link href="<%= url %>">
+						<app:contentLink name="executionCourse" property="site">
 							<bean:write name="executionCourse" property="nome"/>
-						</html:link>
+						</app:contentLink>
 					</logic:iterate>
 				</td>
 			</tr>
@@ -210,8 +208,7 @@
 				</td>
 				<td>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
-						<html:link href="<%= url %>">
+						<app:contentLink name="studentCurricularPlan" property="degreeCurricularPlan.degree.site">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
 								<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
@@ -225,12 +222,11 @@
 							</logic:notPresent>
 							<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
 							<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
-						</html:link>
+						</app:contentLink>
 					</logic:iterate>
 					<logic:iterate id="studentCurricularPlan" name="UserView" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
 						,
-						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.idInternal"/></bean:define>
-						<html:link href="<%= url %>">
+						<app:contentLink name="studentCurricularPlan" property="degreeCurricularPlan.degree.site">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
 								<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
 									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
@@ -244,7 +240,7 @@
 							</logic:notPresent>
 							<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
 							<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
-						</html:link>
+						</app:contentLink>
 					</logic:iterate>
 				</td>
 			</tr>
