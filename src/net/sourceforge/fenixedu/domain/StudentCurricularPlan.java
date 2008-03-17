@@ -128,7 +128,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     };
 
-    private StudentCurricularPlan() {
+    protected StudentCurricularPlan() {
 	super();
 	setCurrentState(StudentCurricularPlanState.ACTIVE);
 	setRootDomainObject(RootDomainObject.getInstance());
