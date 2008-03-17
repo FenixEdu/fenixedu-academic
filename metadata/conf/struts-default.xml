@@ -170,6 +170,7 @@
 	<message-resources parameter="resources.ImageResources" key="IMAGE_RESOURCES" null="false"/>
 	<message-resources parameter="resources.HtmlAltResources" key="HTMLALT_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" null="false"/>
+    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.PortalResources" key="PORTAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES" null="false"/>

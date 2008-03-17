@@ -122,6 +122,7 @@
   
    <message-resources parameter="resources.CmsResources" key="CMS_RESOURCES" null="false" />
    <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false" />
+	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 
   <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

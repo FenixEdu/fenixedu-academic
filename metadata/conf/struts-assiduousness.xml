@@ -152,7 +152,8 @@
   
 	<message-resources parameter="resources.AssiduousnessResources" null="false"/>
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-  
+  	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
+  	
   <plug-in className="org.apache.struts.tiles.TilesPlugin" >
     <set-property property="definitions-config"
 	              value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml" />

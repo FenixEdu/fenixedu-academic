@@ -198,6 +198,7 @@
 	<message-resources parameter="resources.AssiduousnessResources" null="false"/>
 	<message-resources parameter="resources.AssiduousnessResources" key="ASSIDUOUSNESS_RESOURCES" null="false" />
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-managementAssiduousness.xml"/>
