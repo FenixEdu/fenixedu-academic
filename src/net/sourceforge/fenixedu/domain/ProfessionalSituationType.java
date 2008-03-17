@@ -6,6 +6,7 @@ public enum ProfessionalSituationType {
     PROVISIONS_ADMINISTRATIVE_CONTRACT(false, false),
     PROVISIONS_ADMINISTRATIVE_CONTRACT_SUSPENDED(false, false),
     TERM_CONTRACT(false, false),
+    RESOLUTION_TERM_CONTRACT(false, false),
     INDETERMINATE_TIME_CONTRACT(false, false),
     TEMPORARY_SUBSTITUTION_CONTRACT(false, false),
     PROVISORY_NOMINATION(false, false),
