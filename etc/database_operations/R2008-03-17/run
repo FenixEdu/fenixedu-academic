@@ -28,3 +28,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix Broken Data" fixBrokenData.sql
+execute "Adding Deploy Notifier" deployNotifier.sql
