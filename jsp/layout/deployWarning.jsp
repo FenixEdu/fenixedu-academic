@@ -12,7 +12,7 @@
 	<logic:equal name="rootDomainObject" property="deployNotifier.notifierState" value="true">
 		<script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/prototype.js"></script>
 		<script type="text/javascript">
-			setTimeout("new Ajax.PeriodicalUpdater('deployWarning', '/ciapl/ajax/DeployNotifierServlet', { method: 'get', frequency: 300, decay: 1})",300000);
+ 			setTimeout("new Ajax.PeriodicalUpdater('deployWarning', <%= "'" + request.getContextPath() + "/ajax/DeployNotifierServlet'" %>, { method: 'get', frequency: 300, decay: 1})",300000); 
 		</script>
 	
 		<div class="switchInline">
