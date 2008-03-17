@@ -19,13 +19,22 @@
 </fr:view>
 
 <logic:notEmpty name="person" property="eventsWithPayments">
-	<fr:view name="person" property="eventsWithPayments" schema="AccountingEvent.view-with-extra-payed-amount">
+	<%-- <fr:view name="person" property="eventsWithPayments" schema="AccountingEvent.view-with-extra-payed-amount">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 tdleftm mtop05" />
 			<fr:property name="columnClasses" value=",acenter,aright,aright" />
 			<fr:property name="sortBy" value="whenOccured=asc"/>
 		</fr:layout>
-	</fr:view>
+	</fr:view> --%>
+	
+	<fr:view name="person" property="payments" schema="Entry.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 tdleftm mtop05" />
+			<fr:property name="columnClasses" value=",acenter,aright,aright" />
+			<fr:property name="sortBy" value="accountingTransaction.transactionDetail.whenRegistered=desc"/>
+		</fr:layout>
+	</fr:view>	
+	
 </logic:notEmpty>
 
 <logic:empty name="person" property="eventsWithPayments">
