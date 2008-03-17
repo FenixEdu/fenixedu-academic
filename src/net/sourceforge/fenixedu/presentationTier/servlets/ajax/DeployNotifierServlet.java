@@ -32,11 +32,20 @@ public class DeployNotifierServlet extends HttpServlet {
 	response.setContentType("text/html");
 	if (getDeployNotifier().getNotifyUsers()) {
 	    StringBuffer notifyString = new StringBuffer("");
+	    String responseString = null;
+	    Integer estimateMinutesForDeploy = getDeployNotifier().getEstimateMinutesForDeploy();
 	    notifyString.append("<div class=\"deploywarning\">");
-	    notifyString.append(getResourceBundle().getString("label.deploy.warning"));
-	    notifyString.append("</div>");
-	    MessageFormat messageFormat = new MessageFormat(notifyString.toString());
-	    response.getWriter().write(messageFormat.format(new Object[] { getDeployNotifier().getEstimateMinutesForDeploy() }));
+
+	    if (estimateMinutesForDeploy > 0) {
+		notifyString.append(getResourceBundle().getString("label.deploy.warning"));
+		notifyString.append("</div>");
+		MessageFormat messageFormat = new MessageFormat(notifyString.toString());
+		responseString = messageFormat.format(new Object[] { estimateMinutesForDeploy, estimateMinutesForDeploy + 1 });
+	    } else {
+		notifyString.append(getResourceBundle().getString("label.deploy.warning.moment"));
+		responseString = notifyString.toString();
+	    }
+	    response.getWriter().write(responseString);
 	}
     }
 
@@ -46,11 +55,10 @@ public class DeployNotifierServlet extends HttpServlet {
 	}
 	return deployNotifier;
     }
-    
+
     private ResourceBundle getResourceBundle() {
-	if(resourceBundle == null) {
-	    resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
-		    .getLocale());
+	if (resourceBundle == null) {
+	    resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
 	}
 	return resourceBundle;
     }

@@ -19,8 +19,13 @@
 			<div id="deployWarning">
 				<logic:equal name="rootDomainObject" property="deployNotifier.notifyUsers" value="true">
 					<div class="deploywarning">
-						<bean:define id="minutes" name="rootDomainObject" property="deployNotifier.estimateMinutesForDeploy"/> 
-						<bean:message key="label.deploy.warning" bundle="APPLICATION_RESOURCES" arg0="<%= minutes.toString() %>"/>
+						<bean:define id="minutes" name="rootDomainObject" property="deployNotifier.estimateMinutesForDeploy" type="java.lang.Integer"/> 
+						<logic:equal name="minutes" value="0">
+								<bean:message key="label.deploy.warning.moment" bundle="APPLICATION_RESOURCES"/>
+						</logic:equal>
+						<logic:notEqual name="minutes" value="0">
+							<bean:message key="label.deploy.warning" bundle="APPLICATION_RESOURCES" arg0="<%= minutes.toString() %>" arg1="<%=  new Integer(minutes + 1).toString() %>"/>
+						</logic:notEqual>
 					</div>
 				</logic:equal>
 			</div>
@@ -29,8 +34,13 @@
 			<logic:equal name="rootDomainObject" property="deployNotifier.notifyUsers" value="true">
 		
 					<div class="deploywarning switchNone">
-						<bean:define id="minutes" name="rootDomainObject" property="deployNotifier.estimateMinutesForDeploy"/> 
-						<bean:message key="label.deploy.warning" bundle="APPLICATION_RESOURCES" arg0="<%= minutes.toString() %>"/> 
+						<bean:define id="minutes" name="rootDomainObject" property="deployNotifier.estimateMinutesForDeploy" type="java.lang.Integer"/> 
+						<logic:equal name="minutes" value="0">
+								<bean:message key="label.deploy.warning.moment" bundle="APPLICATION_RESOURCES"/>
+						</logic:equal>
+						<logic:notEqual name="minutes" value="0">
+							<bean:message key="label.deploy.warning" bundle="APPLICATION_RESOURCES" arg0="<%= minutes.toString() %>" arg1="<%=  new Integer(minutes + 1).toString() %>"/>
+						</logic:notEqual> 
 					</div>
 			</logic:equal>
 	</logic:equal>

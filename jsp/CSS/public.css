@@ -898,3 +898,21 @@ right: 5px;
 }
 .notarget:target { background: none; }
 #logoist:target { background: none; }
+
+
+/* -------------------------
+---- Deploy Warning ----
+-------------------------- */
+
+.deploywarning {
+background: #cd4108;
+border-bottom: 3px solid #eb5f26;
+color: #fbb699;
+padding: 0.75em;
+text-align: center;	
+}
+
+#header { position: relative; }
+#logoist { top: 15px; }
+#header_links { top: 10px; }
+#search { top: 45px; }
