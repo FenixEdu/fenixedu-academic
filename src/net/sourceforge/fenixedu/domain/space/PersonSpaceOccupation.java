@@ -86,7 +86,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
     }
     
     public boolean contains(YearMonthDay currentDate) {
-	return (!getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
+	return (getBegin() == null || !getBegin().isAfter(currentDate)) && (getEnd() == null || !getEnd().isBefore(currentDate));
     }
 
     public Unit getPersonWorkingPlace() {
