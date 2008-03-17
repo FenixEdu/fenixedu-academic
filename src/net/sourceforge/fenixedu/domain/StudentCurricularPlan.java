@@ -128,7 +128,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     };
 
-    public StudentCurricularPlan() {
+    private StudentCurricularPlan() {
 	super();
 	setCurrentState(StudentCurricularPlanState.ACTIVE);
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -150,12 +150,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	init(registration, degreeCurricularPlan, startDate);
     }
 
-    public static StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
+    static public StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
 	    DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate, ExecutionPeriod executionPeriod) {
-	return createBolonhaStudentCurricularPlan(registration, degreeCurricularPlan, startDate, executionPeriod, null);
+	return createBolonhaStudentCurricularPlan(registration, degreeCurricularPlan, startDate, executionPeriod,
+		(CycleType) null);
     }
 
-    public static StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
+    static public StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
 	    DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate, ExecutionPeriod executionPeriod,
 	    CycleType cycleType) {
 	return new StudentCurricularPlan(registration, degreeCurricularPlan, startDate, executionPeriod, cycleType);
@@ -176,7 +177,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private void init(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
-
 	checkParameters(registration, degreeCurricularPlan, startDate);
 
 	setRegistration(registration);
@@ -187,7 +187,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private void checkParameters(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
-
 	if (registration == null) {
 	    throw new DomainException("error.studentCurricularPlan.registration.cannot.be.null");
 	}
@@ -2129,7 +2128,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return enroledImprovements;
     }
-    
+
     public List<Enrolment> getEnroledImprovements(final ExecutionPeriod executionPeriod) {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
