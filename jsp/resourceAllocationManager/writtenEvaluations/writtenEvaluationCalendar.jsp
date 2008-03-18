@@ -56,7 +56,7 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueExecutionDegreeID}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionDegrees}"/>
 			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
 		<h:outputText value="<tr>" escape="false"/>
@@ -88,14 +88,15 @@
 		<h:outputText value="</tr>" escape="false"/>
 		<h:outputText value="</table>" escape="false"/>
 
+	</h:form>
 
 	 	<h:panelGroup rendered="#{SOPEvaluationManagementBackingBean.renderContextSelection}">
 
 		 	<fc:fenixCalendar 
 		 		begin="#{SOPEvaluationManagementBackingBean.writtenEvaluationsCalendarBegin}" 
 		 		end="#{SOPEvaluationManagementBackingBean.writtenEvaluationsCalendarEnd}"
-		 		createLink="showExecutionCourses.faces?executionPeriodID=#{SOPEvaluationManagementBackingBean.executionPeriodID}&executionDegreeID=#{SOPEvaluationManagementBackingBean.executionDegreeID}&executionPeriodOID=#{SOPEvaluationManagementBackingBean.executionPeriodOID}&curricularYearIDsParameterString=#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"
-		 		editLinkPage="editWrittenTest.faces"
+		 		createLink="showExecutionCourses.faces?executionPeriodID=#{SOPEvaluationManagementBackingBean.executionPeriodID}&executionDegreeID=#{SOPEvaluationManagementBackingBean.executionDegreeID}&executionPeriodOID=#{SOPEvaluationManagementBackingBean.executionPeriodOID}&curricularYearIDsParameterString=#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}&contentContextPath_PATH=/gestao-de-recursos/gestao-de-recursos"
+		 		editLinkPage="editWrittenTest.faces?contentContextPath_PATH=/gestao-de-recursos/gestao-de-recursos"
 		 		editLinkParameters="#{SOPEvaluationManagementBackingBean.writtenTestsCalendarLink}"
 		 	/>
 
@@ -285,6 +286,6 @@
 
 	 	</h:panelGroup>
 
-	</h:form>
+	
 
 </ft:tilesView>

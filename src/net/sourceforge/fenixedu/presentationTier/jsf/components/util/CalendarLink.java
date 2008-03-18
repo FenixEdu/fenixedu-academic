@@ -68,7 +68,7 @@ public class CalendarLink {
         linkParameters.append(editLinkPage);
 
         if (this.linkParameters != null && !this.linkParameters.isEmpty()) {
-            linkParameters.append('?');
+            linkParameters.append( editLinkPage.indexOf('?') > 0 ? '&' : '?');
             for (final Iterator<Entry<String, String>> iterator = this.linkParameters.entrySet().iterator();
                     iterator.hasNext(); ) {
                 final Entry<String, String> entry = iterator.next();

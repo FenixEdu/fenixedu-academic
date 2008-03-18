@@ -4,6 +4,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.webapp.UIComponentTag;
 
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.JsfTagUtils;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 public class FenixCalendarTag extends UIComponentTag {
     
