@@ -460,9 +460,9 @@ public class Thesis extends Thesis_Base {
     public void setEnrolment(Enrolment enrolment) {
 	final ExecutionYear firstAllowedExecutionYear = ExecutionYear.readExecutionYearByName("2007/2008");
 	final ExecutionYear executionYear = enrolment.getExecutionYear();
-	if (executionYear.isBefore(firstAllowedExecutionYear)) {
-	    throw new DomainException("thesis.creation.not.allowed.because.out.of.period");
-	}
+//	if (executionYear.isBefore(firstAllowedExecutionYear)) {
+//	    throw new DomainException("thesis.creation.not.allowed.because.out.of.period");
+//	}
 
 	if (enrolment != null) {
 	    CurricularCourse curricularCourse = enrolment.getCurricularCourse();
