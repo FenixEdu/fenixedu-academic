@@ -10,12 +10,22 @@
 <logic:present name="rootDomainObject" property="deployNotifier">
 
 	<logic:equal name="rootDomainObject" property="deployNotifier.notifierState" value="true">
+		<bean:define id="timeoutInMiliSeconds" value="300000"/>
+		<bean:define id="frequencyInSeconds" value="300"/>
 		<script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/prototype.js"></script>
 		<script type="text/javascript">
- 			setTimeout("new Ajax.PeriodicalUpdater('deployWarning', <%= "'" + request.getContextPath() + "/ajax/DeployNotifierServlet'" %>, { method: 'get', frequency: 300, decay: 1})",300000); 
+			function verifyForDowntime(request) {
+					var responseText = request.responseText;
+					if(responseText.indexOf('<html>') >= 0) {
+						hideElement('jsWarning');
+					}else {
+					   showElement('jsWarning');
+					}
+			}
+ 			setTimeout("new Ajax.PeriodicalUpdater({success: 'deployWarning', failure: null}, <%= "'" + request.getContextPath() + "/ajax/DeployNotifierServlet'" %>, { method: 'get', frequency: <%= frequencyInSeconds %>, decay: 1, onSuccess: verifyForDowntime})",<%= timeoutInMiliSeconds %>); 
 		</script>
 	
-		<div class="switchInline">
+		<div id="jsWarning" class="switchInline">
 			<div id="deployWarning">
 				<logic:equal name="rootDomainObject" property="deployNotifier.notifyUsers" value="true">
 					<div class="deploywarning">
