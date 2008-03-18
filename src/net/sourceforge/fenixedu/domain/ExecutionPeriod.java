@@ -462,6 +462,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 
     static transient private ExecutionPeriod firstBolonhaTransitionExecutionPeriod = null;
 
+    static transient private ExecutionPeriod firstEnrolmentsExecutionPeriod = null;
+
     public static ExecutionPeriod readActualExecutionPeriod() {
 	if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()
 		|| !currentExecutionPeriod.isCurrent()) {
@@ -507,6 +509,12 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	firstBolonhaTransitionExecutionPeriod = readFromProperties(firstBolonhaTransitionExecutionPeriod,
 		"start.year.for.bolonha.transition", "start.semester.for.bolonha.transition");
 	return firstBolonhaTransitionExecutionPeriod;
+    }
+
+    static public ExecutionPeriod readFirstEnrolmentsExecutionPeriod() {
+	firstEnrolmentsExecutionPeriod = readFromProperties(firstEnrolmentsExecutionPeriod, "year.for.from.enrolments",
+		"semester.for.from.enrolments");
+	return firstEnrolmentsExecutionPeriod;
     }
 
     public static ExecutionPeriod readFirstExecutionPeriod() {
