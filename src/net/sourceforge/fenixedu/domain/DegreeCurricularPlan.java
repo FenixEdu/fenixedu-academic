@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
@@ -1787,8 +1786,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public ExecutionPeriod getFirstExecutionPeriodEnrolments() {
-	return ExecutionPeriod.readBySemesterAndExecutionYear(Integer.valueOf(PropertiesManager
-		.getProperty("semester.for.from.enrolments")), PropertiesManager.getProperty("year.for.from.enrolments"));
+	return ExecutionPeriod.readFirstEnrolmentsExecutionPeriod();
     }
 
     public boolean hasTargetEquivalencePlanFor(final DegreeCurricularPlan degreeCurricularPlan) {
