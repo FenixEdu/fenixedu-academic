@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -40,10 +39,9 @@ import org.joda.time.YearMonthDay;
 
 public class RegisterCandidate extends Service {
 
-    public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber,
-	    IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-	MasterDegreeCandidate masterDegreeCandidate = rootDomainObject
-		.readMasterDegreeCandidateByOID(candidateID);
+    public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
+	    throws FenixServiceException {
+	MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
 	Person person = masterDegreeCandidate.getPerson();
 
@@ -60,8 +58,8 @@ public class RegisterCandidate extends Service {
 
 	// person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 
-	StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(registration,
-		branchID, masterDegreeCandidate);
+	StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(registration, branchID,
+		masterDegreeCandidate);
 
 	person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 
@@ -77,15 +75,15 @@ public class RegisterCandidate extends Service {
 
     }
 
-    private InfoCandidateRegistration createNewInfoCandidateRegistration(
-	    MasterDegreeCandidate masterDegreeCandidate, StudentCurricularPlan studentCurricularPlan) {
+    private InfoCandidateRegistration createNewInfoCandidateRegistration(MasterDegreeCandidate masterDegreeCandidate,
+	    StudentCurricularPlan studentCurricularPlan) {
 	InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
 	infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
 		.newInfoFromDomain(masterDegreeCandidate));
-	infoCandidateRegistration.setInfoStudentCurricularPlan(InfoStudentCurricularPlan
-		.newInfoFromDomain(studentCurricularPlan));
+	infoCandidateRegistration
+		.setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
 	infoCandidateRegistration.setEnrolments(new ArrayList<InfoEnrolment>());
-	Iterator iteratorSCPs = studentCurricularPlan.getEnrolments().iterator();
+	Iterator<Enrolment> iteratorSCPs = studentCurricularPlan.getEnrolments().iterator();
 	while (iteratorSCPs.hasNext()) {
 	    Enrolment enrolment = (Enrolment) iteratorSCPs.next();
 	    infoCandidateRegistration.getEnrolments().add(InfoEnrolment.newInfoFromDomain(enrolment));
@@ -93,14 +91,13 @@ public class RegisterCandidate extends Service {
 	return infoCandidateRegistration;
     }
 
-    private void createGratuitySituation(MasterDegreeCandidate masterDegreeCandidate,
-	    StudentCurricularPlan studentCurricularPlan) throws GratuityValuesNotDefinedServiceException {
+    private void createGratuitySituation(MasterDegreeCandidate masterDegreeCandidate, StudentCurricularPlan studentCurricularPlan)
+	    throws GratuityValuesNotDefinedServiceException {
 
 	GratuityValues gratuityValues = masterDegreeCandidate.getExecutionDegree().getGratuityValues();
 
 	if (gratuityValues == null) {
-	    throw new GratuityValuesNotDefinedServiceException(
-		    "error.exception.masterDegree.gratuity.gratuityValuesNotDefined");
+	    throw new GratuityValuesNotDefinedServiceException("error.exception.masterDegree.gratuity.gratuityValuesNotDefined");
 	}
 
 	new GratuitySituation(gratuityValues, studentCurricularPlan);
@@ -140,33 +137,31 @@ public class RegisterCandidate extends Service {
     }
 
     private void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
-	    StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+	    StudentCurricularPlan studentCurricularPlan) {
 	List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
 	ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
 	for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
-	    new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(),
-		    executionPeriod, EnrollmentCondition.FINAL, userView.getUtilizador());
+	    new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(), executionPeriod,
+		    EnrollmentCondition.FINAL, userView.getUtilizador());
 	}
     }
 
-    private StudentCurricularPlan createNewStudentCurricularPlan(Registration registration,
-	    Integer branchID, MasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
+    private StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, Integer branchID,
+	    MasterDegreeCandidate masterDegreeCandidate) {
 	Branch branch = rootDomainObject.readBranchByOID(branchID);
-	DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
-		.getDegreeCurricularPlan();
+	DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan();
 
-	StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(registration, degreecurricularPlan, branch,
-		new YearMonthDay(), masterDegreeCandidate.getGivenCredits(), masterDegreeCandidate.getSpecialization());
+	StudentCurricularPlan studentCurricularPlan = StudentCurricularPlan.createPreBolonhaMasterDegree(registration,
+		degreecurricularPlan, new YearMonthDay(), branch, masterDegreeCandidate.getGivenCredits(), masterDegreeCandidate
+			.getSpecialization());
 	return studentCurricularPlan;
     }
 
-    private Registration createNewRegistration(Person person, Integer studentNumber)
-	    throws ExcepcaoPersistencia {
+    private Registration createNewRegistration(Person person, Integer studentNumber) {
 	return new Registration(person, studentNumber);
     }
 
-    private void checkOldStudentNumber(Integer studentNumber, Person person)
-	    throws ExcepcaoPersistencia, ExistingServiceException {
+    private void checkOldStudentNumber(Integer studentNumber, Person person) throws ExistingServiceException {
 	if (studentNumber != null) {
 
 	    Registration existingStudent = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
@@ -177,8 +172,7 @@ public class RegisterCandidate extends Service {
 	}
     }
 
-    private void checkCandidateSituation(CandidateSituation situation)
-	    throws InvalidChangeServiceException {
+    private void checkCandidateSituation(CandidateSituation situation) throws InvalidChangeServiceException {
 	if (situation.getSituation().equals(SituationName.ADMITIDO_OBJ)
 		|| situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_OBJ)
 		|| situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_FINALIST_OBJ)

@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
-import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.studentCurriculum.TemporarySubstitution;
 
@@ -132,17 +131,16 @@ public class SeparationCyclesManagement {
     private StudentCurricularPlan createStudentCurricularPlan(final Registration registration,
 	    final DegreeCurricularPlan degreeCurricularPlan) {
 
-	StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(degreeCurricularPlan);
-	if (studentCurricularPlan != null) {
-	    return studentCurricularPlan;
+	StudentCurricularPlan result = registration.getStudentCurricularPlan(degreeCurricularPlan);
+	if (result != null) {
+	    return result;
 	}
 
-	studentCurricularPlan = new StudentCurricularPlan(registration, degreeCurricularPlan, registration.getStartDate());
-	new RootCurriculumGroup(studentCurricularPlan, degreeCurricularPlan.getRoot(), null);
+	result = StudentCurricularPlan.createWithEmptyStructure(registration, degreeCurricularPlan, registration.getStartDate());
 	// set ingression after create studentcurricularPlan
 	registration.setIngression(Ingression.DA1C);
 
-	return studentCurricularPlan;
+	return result;
     }
 
     private void copyCycleCurriculumGroupsInformation(final CycleCurriculumGroup oldSecondCycle,

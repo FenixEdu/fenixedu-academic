@@ -128,15 +128,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     };
 
-    protected StudentCurricularPlan() {
+    private StudentCurricularPlan() {
 	super();
 	setCurrentState(StudentCurricularPlanState.ACTIVE);
 	setRootDomainObject(RootDomainObject.getInstance());
+	setWhenDateTime(new DateTime());
+	setGivenCredits(Double.valueOf(0));
     }
 
-    @Deprecated
-    public StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, Branch branch,
-	    YearMonthDay startDate, Double givenCredits, Specialization specialization) {
+    static public StudentCurricularPlan createPreBolonhaMasterDegree(Registration registration,
+	    DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate, Branch branch, Double givenCredits,
+	    Specialization specialization) {
+	return new StudentCurricularPlan(registration, degreeCurricularPlan, startDate, branch, givenCredits, specialization);
+    }
+
+    private StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate,
+	    Branch branch, Double givenCredits, Specialization specialization) {
 
 	this(registration, degreeCurricularPlan, startDate);
 
@@ -145,9 +152,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	setSpecialization(specialization);
     }
 
-    public StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
+    private StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
 	this();
 	init(registration, degreeCurricularPlan, startDate);
+    }
+
+    static public StudentCurricularPlan createWithEmptyStructure(final Registration registration,
+	    final DegreeCurricularPlan degreeCurricularPlan, final YearMonthDay startDate) {
+
+	final StudentCurricularPlan result = new StudentCurricularPlan(registration, degreeCurricularPlan, startDate);
+
+	if (degreeCurricularPlan.isBoxStructure()) {
+	    new RootCurriculumGroup(result, degreeCurricularPlan.getRoot(), null);
+	}
+
+	return result;
     }
 
     static public StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
@@ -165,12 +184,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate,
 	    ExecutionPeriod executionPeriod, CycleType cycleType) {
 
-	this();
-	init(registration, degreeCurricularPlan, startDate);
-	createStudentCurriculumStructureFor(executionPeriod, cycleType);
+	this(registration, degreeCurricularPlan, startDate);
+	createStructure(executionPeriod, cycleType);
     }
 
-    private void createStudentCurriculumStructureFor(final ExecutionPeriod executionPeriod, CycleType cycleType) {
+    private void createStructure(final ExecutionPeriod executionPeriod, CycleType cycleType) {
 	if (getDegreeCurricularPlan().isBoxStructure()) {
 	    new RootCurriculumGroup(this, getDegreeCurricularPlan().getRoot(), executionPeriod, cycleType);
 	}
@@ -182,8 +200,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	setRegistration(registration);
 	setDegreeCurricularPlan(degreeCurricularPlan);
 	setStartDateYearMonthDay(startDate);
-	setWhenDateTime(new DateTime());
-	setGivenCredits(Double.valueOf(0));
     }
 
     private void checkParameters(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
