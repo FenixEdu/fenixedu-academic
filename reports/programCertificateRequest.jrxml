@@ -123,22 +123,22 @@
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
-						x="152"
-						y="664"
-						width="291"
+						x="120"
+						y="663"
+						width="354"
 						height="0"
 						key="line-1"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="177"
+						x="46"
 						y="668"
-						width="298"
+						width="503"
 						height="21"
 						key="textField-4"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font pdfFontName="Times-Roman" size="14"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName}]]></textFieldExpression>

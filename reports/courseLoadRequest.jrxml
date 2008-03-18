@@ -68,11 +68,11 @@
 			</band>
 		</background>
 		<title>
-			<band height="392"  isSplitAllowed="true" >
+			<band height="368"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="219"
-						y="105"
+						y="116"
 						width="157"
 						height="25"
 						key="staticText-15"/>
@@ -87,7 +87,7 @@
 						x="64"
 						y="196"
 						width="469"
-						height="179"
+						height="166"
 						key="textField-16"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
@@ -98,7 +98,8 @@
 			</band>
 		</title>
 		<pageHeader>
-			<band height="18"  isSplitAllowed="true" >
+			<band height="200"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.compareTo(1) > 0]]></printWhenExpression>
 			</band>
 		</pageHeader>
 		<columnHeader>
@@ -135,11 +136,11 @@
 			</band>
 		</columnFooter>
 		<pageFooter>
-			<band height="39"  isSplitAllowed="true" >
+			<band height="26"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="450"
-						y="17"
+						x="451"
+						y="4"
 						width="25"
 						height="19"
 						key="staticText-18"
@@ -152,8 +153,8 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="488"
-						y="17"
+						x="489"
+						y="4"
 						width="14"
 						height="19"
 						key="staticText-19"
@@ -166,8 +167,8 @@
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="475"
-						y="17"
+						x="476"
+						y="4"
 						width="13"
 						height="19"
 						key="textField-23"
@@ -180,8 +181,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="502"
-						y="17"
+						x="503"
+						y="4"
 						width="13"
 						height="19"
 						key="textField-24"
@@ -211,9 +212,9 @@
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
-						x="176"
+						x="136"
 						y="172"
-						width="239"
+						width="314"
 						height="0"
 						key="line-3"/>
 					<graphicElement stretchType="NoStretch"/>
@@ -302,13 +303,13 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="181"
+						x="64"
 						y="177"
-						width="275"
+						width="469"
 						height="21"
 						key="textField-29"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font pdfFontName="Times-Roman" size="12"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName}]]></textFieldExpression>
