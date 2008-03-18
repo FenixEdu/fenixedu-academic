@@ -43,6 +43,7 @@ public class DeployNotifierServlet extends HttpServlet {
 		responseString = messageFormat.format(new Object[] { estimateMinutesForDeploy, estimateMinutesForDeploy + 1 });
 	    } else {
 		notifyString.append(getResourceBundle().getString("label.deploy.warning.moment"));
+		notifyString.append("</div>");
 		responseString = notifyString.toString();
 	    }
 	    response.getWriter().write(responseString);
