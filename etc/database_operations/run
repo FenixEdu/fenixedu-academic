@@ -29,3 +29,5 @@ function executeWithTempFile() {
 }
 
 execute "Fix StudentGroup Data Delete After Deploy!!!" fixStudentGroupAttendsData.sql
+execute "New Functionality View Course Teachers" createNewFunctionalityViewCourseTeachers.sql
+execute "New Functionality View Course Teachers 2" createNewFunctionalityViewCourseTeachers2.sql
