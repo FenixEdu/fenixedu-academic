@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix StudentGroup Data Delete After Deploy!!!" fixStudentGroupAttendsData.sql
