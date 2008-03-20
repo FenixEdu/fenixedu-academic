@@ -35,7 +35,7 @@
 		<logic:notEqual name="isUsed" value="false">
 			<fr:edit id="editJustificationMotive" name="justificationMotive"
 				type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
-				schema="edit.regularizationMotives"
+				schema="edit.usedJustificationMotives"
 				action="assiduousnessParametrization.do?method=showJustificationMotives">
 				<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
 				<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />

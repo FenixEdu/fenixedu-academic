@@ -87,8 +87,20 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setModifiedBy(modifiedBy);
     }
 
+    public void editJustificationMotive(String acronym, String description, Boolean active, Employee modifiedBy) {
+	if (alreadyExistsJustificationMotiveAcronym(acronym, getIdInternal())) {
+	    throw new DomainException("error.acronymAlreadyExists");
+	}
+	setAcronym(acronym);
+	setDescription(description);
+	setActive(active);
+	setLastModifiedDate(new DateTime());
+	setModifiedBy(modifiedBy);
+    }
+
     public void editJustificationMotive(String acronym, String description, Boolean actualWorkTime,
-	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup, Employee modifiedBy) {
+	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup, Boolean active,
+	    Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym, getIdInternal())) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
@@ -98,6 +110,7 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setDayType(dayType);
 	setJustificationGroup(justificationGroup);
 	setActualWorkTime(actualWorkTime);
+	setActive(active);
 	setLastModifiedDate(new DateTime());
 	setModifiedBy(modifiedBy);
     }
