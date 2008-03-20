@@ -28,4 +28,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "New Functionality View Course Teachers" createNewFunctionalityViewCourseTeachers.sql
+execute "New Functionality View Course Teachers 2" createNewFunctionalityViewCourseTeachers2.sql
 
+execute "Create new columns and indexes." updates.sql
