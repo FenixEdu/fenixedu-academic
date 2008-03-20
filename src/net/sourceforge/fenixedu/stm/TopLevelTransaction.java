@@ -16,7 +16,13 @@ import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
 
+import org.apache.log4j.Logger;
+
 public class TopLevelTransaction extends ConsistentTopLevelTransaction implements FenixTransaction {
+
+    private static Logger logger = Logger.getLogger(TopLevelTransaction.class);
+    private static int NUM_READS_THRESHOLD = 10000000;
+    private static int NUM_WRITES_THRESHOLD = 100000;
 
     private static final Object COMMIT_LISTENERS_LOCK = new Object();
     private static volatile Cons<CommitListener> COMMIT_LISTENERS = Cons.empty();
@@ -140,9 +146,12 @@ public class TopLevelTransaction extends ConsistentTopLevelTransaction implement
             Transaction.STATISTICS.incReads(this);
         }
 
-        //if (numBoxReads + numBoxWrites > 0) {
-        //    System.out.printf("INFO: Commiting transaction with (reads = %d, writes = %d)\n", numBoxReads, numBoxWrites);
-        //}
+        if ((numBoxReads > NUM_READS_THRESHOLD) || (numBoxWrites > NUM_WRITES_THRESHOLD)) {
+            logger.warn(String.format("WARN: Very-large transaction (reads = %d, writes = %d, uri = %s)",
+                                      numBoxReads,
+                                      numBoxWrites,
+                                      RequestInfo.getRequestURI()));
+        }
 
         // reset statistics counters
         numBoxReads = 0;

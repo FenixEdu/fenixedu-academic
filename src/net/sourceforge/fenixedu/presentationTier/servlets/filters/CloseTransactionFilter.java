@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
+import net.sourceforge.fenixedu.stm.RequestInfo;
 import net.sourceforge.fenixedu.stm.Transaction;
 
 import org.joda.time.DateTime;
@@ -102,6 +103,11 @@ public class CloseTransactionFilter implements Filter {
 
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
     		throws IOException, ServletException {
+
+	if (request instanceof HttpServletRequest) {
+	    RequestInfo.setRequestURI(((HttpServletRequest)request).getRequestURI());
+	}
+
 	try {
 	    Transaction.begin(true);
 	    Transaction.currentFenixTransaction().setReadOnly();
