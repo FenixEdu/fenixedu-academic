@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnroll
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularCourseFunctor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -717,6 +718,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    return new HashSet<CurricularCourse>(this.getCurricularCourses((ExecutionYear) null));
 	} else {
 	    return super.getCurricularCoursesSet();
+	}
+    }
+
+    public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor) {
+	for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
+	    curricularCourse.doForAllCurricularCourses(curricularCourseFunctor);
+	}
+	final RootCourseGroup rootCourseGroup = getRoot();
+	if (rootCourseGroup != null) {
+	    rootCourseGroup.doForAllCurricularCourses(curricularCourseFunctor);
 	}
     }
 

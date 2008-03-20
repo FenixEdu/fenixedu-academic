@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularCourseFunctor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -1905,6 +1906,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    }
 	}
 	return markSheets;
+    }
+
+    @Override
+    public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor) {
+	curricularCourseFunctor.doWith(this);
     }
 
 }

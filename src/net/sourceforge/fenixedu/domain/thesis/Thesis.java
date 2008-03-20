@@ -16,11 +16,13 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gr
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -49,6 +51,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import dml.runtime.RelationAdapter;
 
@@ -456,13 +459,25 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
+    private ExecutionDegree getExecutionDegree(final Enrolment enrolment) {
+	final ExecutionYear executionYear = enrolment.getExecutionYear();
+	final DegreeCurricularPlan degreeCurricularPlan = enrolment.getDegreeCurricularPlanOfDegreeModule();
+	return degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+    }
+
     @Override
     public void setEnrolment(Enrolment enrolment) {
-	final ExecutionYear firstAllowedExecutionYear = ExecutionYear.readExecutionYearByName("2007/2008");
-	final ExecutionYear executionYear = enrolment.getExecutionYear();
-//	if (executionYear.isBefore(firstAllowedExecutionYear)) {
-//	    throw new DomainException("thesis.creation.not.allowed.because.out.of.period");
-//	}
+	final ExecutionDegree executionDegree = getExecutionDegree(enrolment);
+	final YearMonthDay beginThesisCreationPeriod = executionDegree.getBeginThesisCreationPeriod();
+	final YearMonthDay endThesisCreationPeriod = executionDegree.getEndThesisCreationPeriod();
+
+	final YearMonthDay today = new YearMonthDay();
+	if (beginThesisCreationPeriod == null || beginThesisCreationPeriod.isAfter(today)) {
+	    throw new DomainException("thesis.creation.not.allowed.because.out.of.period");
+	}
+	if (endThesisCreationPeriod != null && endThesisCreationPeriod.isBefore(today)) {
+	    throw new DomainException("thesis.creation.not.allowed.because.out.of.period");
+	}
 
 	if (enrolment != null) {
 	    CurricularCourse curricularCourse = enrolment.getCurricularCourse();

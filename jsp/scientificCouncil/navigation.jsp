@@ -50,6 +50,11 @@
                 <bean:message key="navigation.list.jury.proposals"/>
             </html:link>  
         </li>
+        <li>
+            <html:link page="/scientificCouncilManageThesis.do?method=listThesisCreationPeriods">
+                <bean:message key="navigation.list.thesis.creation.periods"/>
+            </html:link>  
+        </li>
 
 		<li class="navheader">
 			<bean:message key="label.credits.navigation.header"/>

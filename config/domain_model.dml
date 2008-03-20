@@ -566,8 +566,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 	class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fenixedu.domain.DomainObject {
 		MultiLanguageString anotation;
-		Boolean temporaryExamMap;							
+		Boolean temporaryExamMap;
 		AcademicInterval executionInterval;
+		YearMonthDay beginThesisCreationPeriod;
+		YearMonthDay endThesisCreationPeriod;
 	}
 
 	class net.sourceforge.fenixedu.domain.AcademicPeriod extends net.sourceforge.fenixedu.domain.DomainObject {

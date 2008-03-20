@@ -6,6 +6,7 @@
 
 package net.sourceforge.fenixedu.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,9 +25,11 @@ import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -42,25 +45,25 @@ import org.joda.time.YearMonthDay;
 public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<ExecutionDegree> {
 
     static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_YEAR = new Comparator<ExecutionDegree>() {
-        public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
 	    return o1.getExecutionYear().compareTo(o2.getExecutionYear());
-        }
+	}
     };
 
     static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME = new Comparator<ExecutionDegree>() {
-        public int compare(ExecutionDegree o1, ExecutionDegree o2) {
-            return Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID.compare(o1.getDegree(), o2.getDegree());
-        }
+	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+	    return Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID.compare(o1.getDegree(), o2.getDegree());
+	}
     };
 
     static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR = new Comparator<ExecutionDegree>() {
-        public int compare(ExecutionDegree o1, ExecutionDegree o2) {
-            final ComparatorChain comparatorChain = new ComparatorChain();
-            comparatorChain.addComparator(EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-            comparatorChain.addComparator(EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
-            
-            return comparatorChain.compare(o1, o2);
-        }
+	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+	    comparatorChain.addComparator(EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+
+	    return comparatorChain.compare(o1, o2);
+	}
     };
 
     private ExecutionDegree() {
@@ -68,8 +71,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    protected ExecutionDegree(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear,
-	    Campus campus, Boolean temporaryExamMap) {
+    protected ExecutionDegree(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Campus campus,
+	    Boolean temporaryExamMap) {
 	this();
 
 	if (degreeCurricularPlan == null || executionYear == null || campus == null) {
@@ -81,26 +84,27 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	setCampus(campus);
 	setTemporaryExamMap(temporaryExamMap);
     }
-    
 
     public boolean canBeDeleted() {
-	return !hasAnySchoolClasses() && !hasAnyMasterDegreeCandidates() 
-		&& !hasAnyGuides() && !hasScheduling() && !hasAnyAssociatedFinalDegreeWorkGroups()
-		&& !hasAnyAssociatedInquiriesCoursesByCourse() && !hasAnyAssociatedInquiriesCoursesByStudent()
-		&& !hasAnyStudentCandidacies() && !hasAnyShiftDistributionEntries();
+	return !hasAnySchoolClasses() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides() && !hasScheduling()
+		&& !hasAnyAssociatedFinalDegreeWorkGroups() && !hasAnyAssociatedInquiriesCoursesByCourse()
+		&& !hasAnyAssociatedInquiriesCoursesByStudent() && !hasAnyStudentCandidacies()
+		&& !hasAnyShiftDistributionEntries();
     }
 
     public void delete() {
-	
+
 	if (canBeDeleted()) {
-	    
-	    for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete());	    
-	    for (; hasAnyScientificCommissionMembers(); getScientificCommissionMembers().get(0).delete());
-	    
+
+	    for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete())
+		;
+	    for (; hasAnyScientificCommissionMembers(); getScientificCommissionMembers().get(0).delete())
+		;
+
 	    if (hasGratuityValues()) {
 		getGratuityValues().delete();
 	    }
-	    
+
 	    deletePeriodLessonsFirstSemester();
 	    deletePeriodLessonsSecondSemester();
 
@@ -117,8 +121,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    removeCampus();
 
 	    removeRootDomainObject();
-	    deleteDomainObject();	   	   	  
-	   
+	    deleteDomainObject();
+
 	} else {
 	    throw new DomainException("execution.degree.cannot.be.deleted");
 	}
@@ -191,10 +195,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public void edit(ExecutionYear executionYear, Campus campus, Boolean temporaryExamMap,
 	    OccupationPeriod periodLessonsFirstSemester, OccupationPeriod periodExamsFirstSemester,
 	    OccupationPeriod periodLessonsSecondSemester, OccupationPeriod periodExamsSecondSemester,
-	    OccupationPeriod periodExamsSpecialSeason,
-	    OccupationPeriod gradeSubmissionNormalSeasonFirstSemester,
-	    OccupationPeriod gradeSubmissionNormalSeasonSecondSemester,
-	    OccupationPeriod gradeSubmissionSpecialSeason) {
+	    OccupationPeriod periodExamsSpecialSeason, OccupationPeriod gradeSubmissionNormalSeasonFirstSemester,
+	    OccupationPeriod gradeSubmissionNormalSeasonSecondSemester, OccupationPeriod gradeSubmissionSpecialSeason) {
 
 	setExecutionYear(executionYear);
 	setCampus(campus);
@@ -240,12 +242,12 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    setPeriodGradeSubmissionSpecialSeason(gradeSubmissionSpecialSeason);
 	}
     }
-    
+
     public boolean isBolonhaDegree() {
 	return this.getDegreeCurricularPlan().isBolonhaDegree();
     }
 
-    public int compareTo(ExecutionDegree executionDegree) {	
+    public int compareTo(ExecutionDegree executionDegree) {
 	final ExecutionYear executionYear = executionDegree.getExecutionYear();
 	return getExecutionYear().compareTo(executionYear);
     }
@@ -260,8 +262,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public boolean isFirstYear() {
 	final List<ExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
-	final ExecutionDegree firstExecutionDegree = (ExecutionDegree) Collections.min(executionDegrees,
-		new BeanComparator("executionYear.year"));
+	final ExecutionDegree firstExecutionDegree = (ExecutionDegree) Collections.min(executionDegrees, new BeanComparator(
+		"executionYear.year"));
 	return firstExecutionDegree.equals(this);
     }
 
@@ -269,7 +271,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	final Set<Shift> shifts = new HashSet<Shift>();
 	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-	    if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan, executionPeriod)) {
+	    if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
+		    executionPeriod)) {
 		for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
 		    if (executionCourse.getExecutionPeriod() == executionPeriod) {
 			shifts.addAll(executionCourse.getAssociatedShifts());
@@ -290,11 +293,11 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return schoolClasses;
     }
 
-    public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(final ExecutionPeriod executionPeriod, final Integer curricularYear) {
+    public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(final ExecutionPeriod executionPeriod,
+	    final Integer curricularYear) {
 	final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
 	for (final SchoolClass schoolClass : getSchoolClasses()) {
-	    if (schoolClass.getExecutionPeriod() == executionPeriod
-		    && schoolClass.getAnoCurricular().equals(curricularYear)) {
+	    if (schoolClass.getExecutionPeriod() == executionPeriod && schoolClass.getAnoCurricular().equals(curricularYear)) {
 		schoolClasses.add(schoolClass);
 	    }
 	}
@@ -303,8 +306,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionPeriod executionPeriod, final String name) {
 	for (final SchoolClass schoolClass : getSchoolClasses()) {
-	    if (schoolClass.getExecutionPeriod() == executionPeriod
-		    && schoolClass.getNome().equalsIgnoreCase(name)) {
+	    if (schoolClass.getExecutionPeriod() == executionPeriod && schoolClass.getNome().equalsIgnoreCase(name)) {
 		return schoolClass;
 	    }
 	}
@@ -317,8 +319,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	for (MasterDegreeCandidate candidate : getMasterDegreeCandidates()) {
 	    for (CandidateSituation situation : candidate.getSituations()) {
 
-		if (situation.getValidation().getState() == null
-			|| situation.getValidation().getState() != State.ACTIVE) {
+		if (situation.getValidation().getState() == null || situation.getValidation().getState() != State.ACTIVE) {
 		    continue;
 		}
 
@@ -343,8 +344,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return null;
     }
 
-    public MasterDegreeCandidate getMasterDegreeCandidateBySpecializationAndCandidateNumber(
-	    Specialization specialization, Integer candidateNumber) {
+    public MasterDegreeCandidate getMasterDegreeCandidateBySpecializationAndCandidateNumber(Specialization specialization,
+	    Integer candidateNumber) {
 
 	for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
 	    if (masterDegreeCandidate.getSpecialization() == specialization
@@ -358,10 +359,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public Integer generateCandidateNumberForSpecialization(Specialization specialization) {
 	int maxCandidateNumber = 0;
 	for (final MasterDegreeCandidate masterDegreeCandidate : this.getMasterDegreeCandidatesSet()) {
-	    if (masterDegreeCandidate.getSpecialization() == specialization
-		    && masterDegreeCandidate.getCandidateNumber() != null) {
-		maxCandidateNumber = Math.max(maxCandidateNumber, masterDegreeCandidate
-			.getCandidateNumber());
+	    if (masterDegreeCandidate.getSpecialization() == specialization && masterDegreeCandidate.getCandidateNumber() != null) {
+		maxCandidateNumber = Math.max(maxCandidateNumber, masterDegreeCandidate.getCandidateNumber());
 	    }
 	}
 	return Integer.valueOf(++maxCandidateNumber);
@@ -369,8 +368,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     private static Comparator<ExecutionDegree> COMPARATOR_BY_DEGREE_CURRICULAR_PLAN_ID_INTERNAL_DESC = new Comparator<ExecutionDegree>() {
 	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
-	    return o2.getDegreeCurricularPlan().getIdInternal().compareTo(
-		    o1.getDegreeCurricularPlan().getIdInternal());
+	    return o2.getDegreeCurricularPlan().getIdInternal().compareTo(o1.getDegreeCurricularPlan().getIdInternal());
 	}
     };
 
@@ -399,8 +397,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
 	final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 
-	for (final ExecutionDegree executionDegree : RootDomainObject.getInstance()
-		.getExecutionDegrees()) {
+	for (final ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
 	    if (executionDegree.getExecutionYear() == executionYear) {
 		result.add(executionDegree);
 	    }
@@ -410,14 +407,12 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
-    public static List<ExecutionDegree> getAllByExecutionCourseAndTeacher(
-	    ExecutionCourse executionCourse, Person person) {
+    public static List<ExecutionDegree> getAllByExecutionCourseAndTeacher(ExecutionCourse executionCourse, Person person) {
 	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 
 	for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
 	    boolean matchExecutionCourse = false;
-	    for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan()
-		    .getCurricularCourses()) {
+	    for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
 		if (curricularCourse.getAssociatedExecutionCourses().contains(executionCourse)) {
 		    matchExecutionCourse = true;
 		    break;
@@ -483,8 +478,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
-    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(String year,
-	    DegreeType typeOfCourse) {
+    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(String year, DegreeType typeOfCourse) {
 
 	if (year == null || typeOfCourse == null) {
 	    return Collections.EMPTY_LIST;
@@ -498,8 +492,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return getDegree().getDegreeType();
     }
 
-    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(ExecutionYear executionYear,
-	    DegreeType typeOfCourse) {
+    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(ExecutionYear executionYear, DegreeType typeOfCourse) {
 
 	if (executionYear == null || typeOfCourse == null) {
 	    return Collections.EMPTY_LIST;
@@ -539,8 +532,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
-    public static List<ExecutionDegree> getAllByDegreeAndCurricularStage(Degree degree,
-	    CurricularStage stage) {
+    public static List<ExecutionDegree> getAllByDegreeAndCurricularStage(Degree degree, CurricularStage stage) {
 	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 
 	if (degree == null) {
@@ -580,9 +572,9 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
 	return null;
     }
-    
-    public static ExecutionDegree getByDegreeCurricularPlanAndExecutionYear(
-	    DegreeCurricularPlan degreeCurricularPlan, String executionYear) {
+
+    public static ExecutionDegree getByDegreeCurricularPlanAndExecutionYear(DegreeCurricularPlan degreeCurricularPlan,
+	    String executionYear) {
 	if (degreeCurricularPlan == null) {
 	    return null;
 	}
@@ -599,9 +591,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
 	return null;
     }
-        
-    public static ExecutionDegree getByDegreeCurricularPlanNameAndExecutionYear(String degreeName,
-	    ExecutionYear executionYear) {
+
+    public static ExecutionDegree getByDegreeCurricularPlanNameAndExecutionYear(String degreeName, ExecutionYear executionYear) {
 	if (degreeName == null) {
 	    return null;
 	}
@@ -619,11 +610,11 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return null;
     }
 
-    public static ExecutionDegree readByDegreeCodeAndExecutionYearAndCampus(String degreeCode,
-	    ExecutionYear executionYear, Campus campus) {
+    public static ExecutionDegree readByDegreeCodeAndExecutionYearAndCampus(String degreeCode, ExecutionYear executionYear,
+	    Campus campus) {
 	for (final Degree degree : Degree.readAllByDegreeCode(degreeCode)) {
-	    final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan()
-		    .getExecutionDegreeByYear(executionYear);
+	    final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan().getExecutionDegreeByYear(
+		    executionYear);
 	    if (executionDegree.getCampus() == campus) {
 		return executionDegree;
 	    }
@@ -632,25 +623,22 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return null;
     }
 
-    public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionPeriod executionPeriod,
-	    MarkSheetType markSheetType) {
+    public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
 	return isSpecialAuthorization(markSheetType, executionPeriod, evaluationDate)
 		|| checkOccupationPeriod(evaluationDate, executionPeriod, markSheetType);
     }
 
-    private boolean isSpecialAuthorization(MarkSheetType markSheetType, ExecutionPeriod executionPeriod,
-	    Date evaluationDate) {
+    private boolean isSpecialAuthorization(MarkSheetType markSheetType, ExecutionPeriod executionPeriod, Date evaluationDate) {
 	return (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION);
     }
 
     private boolean checkOccupationPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
 	OccupationPeriod occupationPeriod = getOccupationPeriodFor(executionPeriod, markSheetType);
-	return (evaluationDate != null && occupationPeriod != null 
-		&& occupationPeriod.nestedOccupationPeriodsContainsDay(YearMonthDay.fromDateFields(evaluationDate)));
+	return (evaluationDate != null && occupationPeriod != null && occupationPeriod
+		.nestedOccupationPeriodsContainsDay(YearMonthDay.fromDateFields(evaluationDate)));
     }
 
-    public OccupationPeriod getOccupationPeriodFor(ExecutionPeriod executionPeriod,
-	    MarkSheetType markSheetType) {
+    public OccupationPeriod getOccupationPeriodFor(ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
 	OccupationPeriod occupationPeriod = null;
 	switch (markSheetType) {
 	case NORMAL:
@@ -699,14 +687,14 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     final public String getPresentationName() {
 	return getDegreeCurricularPlan().getPresentationName();
     }
-    
+
     public Degree getDegree() {
 	return getDegreeCurricularPlan().getDegree();
     }
 
     public Set<DFACandidacy> getDfaCandidacies() {
 	return getDFACandidacies();
-	    }
+    }
 
     public Set<DegreeCandidacy> getDegreeCandidacies() {
 	final Set<DegreeCandidacy> result = new HashSet<DegreeCandidacy>();
@@ -729,17 +717,18 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	}
 	return result;
     }
-    
+
     public Collection<StudentCandidacy> getFirstCycleCandidacies(final CandidacySituationType candidacySituationType) {
 	final Collection<StudentCandidacy> result = new HashSet<StudentCandidacy>();
 	for (final StudentCandidacy studentCandidacy : getStudentCandidaciesSet()) {
-	    if ((studentCandidacy instanceof DegreeCandidacy || studentCandidacy instanceof IMDCandidacy) && studentCandidacy.getActiveCandidacySituationType() == candidacySituationType) {
+	    if ((studentCandidacy instanceof DegreeCandidacy || studentCandidacy instanceof IMDCandidacy)
+		    && studentCandidacy.getActiveCandidacySituationType() == candidacySituationType) {
 		result.add(studentCandidacy);
 	    }
 	}
 	return result;
     }
-    
+
     public List<Registration> getRegistrationsForDegreeCandidacies() {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final DegreeCandidacy degreeCandidacy : getDegreeCandidacies()) {
@@ -759,7 +748,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	}
 	return result;
     }
-    
+
     public Set<DFACandidacy> getDFACandidacies() {
 	final Set<DFACandidacy> result = new HashSet<DFACandidacy>();
 
@@ -772,32 +761,29 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
-    public List<ShiftDistributionEntry> getNotDistributedShiftsFromShiftDistributionBasedOn(
-	    Integer studentNumberPosition) {
+    public List<ShiftDistributionEntry> getNotDistributedShiftsFromShiftDistributionBasedOn(Integer studentNumberPosition) {
 	final Integer studentNumber = getStudentNumberForShiftDistributionBasedOn(studentNumberPosition);
 	if (studentNumber == null) {
-	    throw new DomainException(
-		    "error.candidacy.degree.ShiftDistribution.invalid.studentNumberPosition");
+	    throw new DomainException("error.candidacy.degree.ShiftDistribution.invalid.studentNumberPosition");
 	}
 	return getShiftsFor(studentNumber, false);
     }
 
     public List<ShiftDistributionEntry> getNextFreeShiftDistributions() {
 
-        final ArrayList<ShiftDistributionEntry> entries = new ArrayList<ShiftDistributionEntry>(getShiftDistributionEntriesSet());
-        Collections.sort(entries, ShiftDistributionEntry.NUMBER_COMPARATOR);
+	final ArrayList<ShiftDistributionEntry> entries = new ArrayList<ShiftDistributionEntry>(getShiftDistributionEntriesSet());
+	Collections.sort(entries, ShiftDistributionEntry.NUMBER_COMPARATOR);
 
-        for (final ShiftDistributionEntry shiftDistributionEntry : entries) {
-            if (!shiftDistributionEntry.getDistributed()) {
-                return ShiftDistributionEntry.readByAbstractNumber(shiftDistributionEntry.getAbstractStudentNumber());
-            }
-        }
+	for (final ShiftDistributionEntry shiftDistributionEntry : entries) {
+	    if (!shiftDistributionEntry.getDistributed()) {
+		return ShiftDistributionEntry.readByAbstractNumber(shiftDistributionEntry.getAbstractStudentNumber());
+	    }
+	}
 
-        System.out.println("Empty result!!!");
-        return Collections.EMPTY_LIST;
+	System.out.println("Empty result!!!");
+	return Collections.EMPTY_LIST;
     }
 
-    
     public Integer getStudentNumberForShiftDistributionBasedOn(Integer studentNumberPosition) {
 	final List<Integer> abstractStudentNumbers = new ArrayList<Integer>();
 	for (final ShiftDistributionEntry shiftDistributionEntry : getShiftDistributionEntriesSet()) {
@@ -806,8 +792,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    }
 	}
 	Collections.sort(abstractStudentNumbers);
-	return (!abstractStudentNumbers.isEmpty()) ? abstractStudentNumbers.get(studentNumberPosition)
-		: null;
+	return (!abstractStudentNumbers.isEmpty()) ? abstractStudentNumbers.get(studentNumberPosition) : null;
     }
 
     public List<ShiftDistributionEntry> getDistributedShiftsFor(Integer studentNumber) {
@@ -835,7 +820,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	}
 	return result;
     }
-    
+
     public List<StudentCandidacy> getFirstCycleCandidaciesBy(CandidacySituationType candidacySituationType) {
 	final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
 	for (final StudentCandidacy candidacy : getFirstCycleCandidacies()) {
@@ -846,12 +831,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
-    public void changeShiftFromShiftDistributionFor(int studentNumberPosition, Shift oldShift,
-	    Shift newShift) {
+    public void changeShiftFromShiftDistributionFor(int studentNumberPosition, Shift oldShift, Shift newShift) {
 	final Integer studentNumber = getStudentNumberForShiftDistributionBasedOn(studentNumberPosition);
 	if (studentNumber == null) {
-	    throw new DomainException(
-		    "error.candidacy.degree.ShiftDistribution.invalid.studentNumberPosition");
+	    throw new DomainException("error.candidacy.degree.ShiftDistribution.invalid.studentNumberPosition");
 	}
 
 	for (final ShiftDistributionEntry shiftDistributionEntry : getShiftDistributionEntriesSet()) {
@@ -877,28 +860,92 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public boolean isPersonInScientificCommission(Person person) {
-        for (ScientificCommission commission : getScientificCommissionMembers()) {
-            if (commission.getPerson() == person) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
-    /*
-	 * Returns a list of teachers from the coordinator department that can be
-	 * tutors of a student from the given execution degree
-	 */
-	public List<Teacher> getPossibleTutorsFromExecutionDegreeDepartments() {
-		List<Department> departments = this.getDegree().getDepartments();
-		
-		ArrayList<Teacher> possibleTeachers = new ArrayList<Teacher>();
-		for(Department department : departments) {
-			possibleTeachers.addAll(department.getPossibleTutors());
-		}
-		
-		return possibleTeachers;
+	for (ScientificCommission commission : getScientificCommissionMembers()) {
+	    if (commission.getPerson() == person) {
+		return true;
+	    }
 	}
+
+	return false;
+    }
+
+    /*
+     * Returns a list of teachers from the coordinator department that can be
+     * tutors of a student from the given execution degree
+     */
+    public List<Teacher> getPossibleTutorsFromExecutionDegreeDepartments() {
+	List<Department> departments = this.getDegree().getDepartments();
+
+	ArrayList<Teacher> possibleTeachers = new ArrayList<Teacher>();
+	for (Department department : departments) {
+	    possibleTeachers.addAll(department.getPossibleTutors());
+	}
+
+	return possibleTeachers;
+    }
+
+    public static class ThesisCreationPeriodFactoryExecutor implements FactoryExecutor, HasExecutionYear, Serializable {
+
+	private DomainReference<ExecutionYear> executionYear;
+
+	private DomainReference<ExecutionDegree> executionDegree;
+
+	private YearMonthDay beginThesisCreationPeriod;
+
+	private YearMonthDay endThesisCreationPeriod;
+
+	public Object execute() {
+	    final ExecutionDegree executionDegree = getExecutionDegree();
+	    if (executionDegree == null) {
+		final ExecutionYear executionYear = getExecutionYear();
+		if (executionYear != null) {
+		    for (final ExecutionDegree otherExecutionDegree : executionYear.getExecutionDegreesSet()) {
+			execute(otherExecutionDegree);
+		    }
+		}
+	    } else {
+		execute(executionDegree);
+	    }
+	    return null;
+	}
+
+	private void execute(final ExecutionDegree executionDegree) {
+	    executionDegree.setBeginThesisCreationPeriod(beginThesisCreationPeriod);
+	    executionDegree.setEndThesisCreationPeriod(endThesisCreationPeriod);
+	}
+
+	public ExecutionYear getExecutionYear() {
+	    return executionYear == null ? null : executionYear.getObject();
+	}
+
+	public void setExecutionYear(final ExecutionYear executionYear) {
+	    this.executionYear = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
+	}
+
+	public ExecutionDegree getExecutionDegree() {
+	    return executionDegree == null ? null : executionDegree.getObject();
+	}
+
+	public void setExecutionDegree(final ExecutionDegree executionDegree) {
+	    this.executionDegree = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
+	}
+
+	public YearMonthDay getBeginThesisCreationPeriod() {
+	    return beginThesisCreationPeriod;
+	}
+
+	public void setBeginThesisCreationPeriod(YearMonthDay beginThesisCreationPeriod) {
+	    this.beginThesisCreationPeriod = beginThesisCreationPeriod;
+	}
+
+	public YearMonthDay getEndThesisCreationPeriod() {
+	    return endThesisCreationPeriod;
+	}
+
+	public void setEndThesisCreationPeriod(YearMonthDay endThesisCreationPeriod) {
+	    this.endThesisCreationPeriod = endThesisCreationPeriod;
+	}
+
+    }
 
 }

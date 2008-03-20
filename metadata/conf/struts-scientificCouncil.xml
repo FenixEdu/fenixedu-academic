@@ -283,6 +283,7 @@
             <forward name="review-thesis" path="thesis-review-thesis"/>
             <forward name="view-thesis" path="thesis-view-thesis"/>
             <forward name="list-scientific-comission" path="list-scientific-comission"/>
+            <forward name="list-thesis-creation-periods" path="list-thesis-creation-periods"/>
   		</action>
      
         

@@ -539,4 +539,6 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract public Set<CurricularCourse> getAllCurricularCourses();
 
+    abstract public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor);
+
 }

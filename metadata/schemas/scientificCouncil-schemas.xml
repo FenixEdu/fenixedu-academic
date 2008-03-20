@@ -382,5 +382,43 @@
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
 			<property name="required" value="true"/>
 		</validator> 
-	</slot>			
+	</slot>
+</schema>
+
+<schema name="scientificCouncil.thesis.creation.period.context.bean" type="net.sourceforge.fenixedu.domain.ExecutionDegree$ThesisCreationPeriodFactoryExecutor">
+    <slot name="executionYear" key="label.execution.year" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+    	<property name="format" value="${year}"/>
+    	<property name="destination" value="listThesisCreationPeriods"/>
+    </slot>
+<!--
+    <slot name="executionDegree" key="label.degree" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider"/>
+    	<property name="format" value="${degreeCurricularPlan.degree.presentationName} (${degreeCurricularPlan.degree.sigla})"/>
+    	<property name="destination" value="listThesisCreationPeriods"/>
+    </slot>
+-->
+</schema>
+
+<schema name="scientificCouncil.thesis.creationPeriod" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+    <slot name="degreeCurricularPlan.degree.presentationName" key="label.degree"/>
+    <slot name="beginThesisCreationPeriod" key="label.begin"/>
+    <slot name="endThesisCreationPeriod" key="label.end"/>
+</schema>
+
+<schema name="scientificCouncil.thesis.creation.period.definition" type="net.sourceforge.fenixedu.domain.ExecutionDegree$ThesisCreationPeriodFactoryExecutor">
+	<slot name="beginThesisCreationPeriod" key="label.begin">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="false"/>
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<property name="size" value="10"/>
+	</slot>
+	<slot name="endThesisCreationPeriod" key="label.end">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="required" value="false"/>
+			<property name="dateFormat" value="dd/MM/yyyy"/>
+		</validator>
+		<property name="size" value="10"/>
+	</slot>
 </schema>

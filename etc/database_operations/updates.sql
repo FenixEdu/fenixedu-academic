@@ -1,0 +1,9 @@
+
+
+
+-- Inserted at 2008-03-17T17:22:03.317Z
+
+alter table DEPLOY_NOTIFIER add index (KEY_ROOT_DOMAIN_OBJECT);
+alter table EXECUTION_DEGREE add column BEGIN_THESIS_CREATION_PERIOD text;
+alter table EXECUTION_DEGREE add column END_THESIS_CREATION_PERIOD text;
+alter table ROOT_DOMAIN_OBJECT add index (KEY_DEPLOY_NOTIFIER);

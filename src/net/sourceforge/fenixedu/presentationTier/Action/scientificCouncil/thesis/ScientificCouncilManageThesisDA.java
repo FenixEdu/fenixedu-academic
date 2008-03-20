@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.ExecutionDegree.ThesisCreationPeriodFactoryExecutor;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
@@ -24,11 +25,13 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -326,6 +329,87 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	}
 
 	return viewThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward listThesisCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = getThesisCreationPeriodFactoryExecutor(request);
+
+	return forwardToListThesisCreationPeriodsPage(mapping, request, thesisCreationPeriodFactoryExecutor);
+    }
+
+    private ActionForward forwardToListThesisCreationPeriodsPage(ActionMapping mapping, HttpServletRequest request,
+	    final ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor) {
+	if (thesisCreationPeriodFactoryExecutor.getExecutionDegree() == null) {
+	    final ExecutionDegreesWithDissertationByExecutionYearProvider provider = new ExecutionDegreesWithDissertationByExecutionYearProvider();
+	    request.setAttribute("executionDegrees", provider.provide(thesisCreationPeriodFactoryExecutor, null));
+	}
+
+	return mapping.findForward("list-thesis-creation-periods");
+    }
+
+    private ThesisCreationPeriodFactoryExecutor getThesisCreationPeriodFactoryExecutor(final HttpServletRequest request) {
+	ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = (ThesisCreationPeriodFactoryExecutor) getRenderedObject("thesisCreationPeriodFactoryExecutor");
+	if (thesisCreationPeriodFactoryExecutor == null) {
+	    thesisCreationPeriodFactoryExecutor = new ThesisCreationPeriodFactoryExecutor();
+
+	    final String executionYearIdString = request.getParameter("executionYearId");
+	    final ExecutionYear executionYear;
+	    if (executionYearIdString == null) {
+		executionYear = ExecutionYear.readCurrentExecutionYear();
+	    } else {
+		final Integer executionYearId = Integer.valueOf(executionYearIdString);
+		executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+	    }
+	    thesisCreationPeriodFactoryExecutor.setExecutionYear(executionYear);
+
+	    final String executionDegreeIdString = request.getParameter("executionDegreeId");
+	    if (executionDegreeIdString != null) {
+		final Integer executionDegreeId = Integer.valueOf(executionDegreeIdString);
+		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+		thesisCreationPeriodFactoryExecutor.setExecutionDegree(executionDegree);		
+	    }
+	}
+	RenderUtils.invalidateViewState();
+	request.setAttribute("thesisCreationPeriodFactoryExecutor", thesisCreationPeriodFactoryExecutor);
+	return thesisCreationPeriodFactoryExecutor;
+    }
+
+    public ActionForward prepareDefineCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = getThesisCreationPeriodFactoryExecutor(request);
+
+	final ExecutionDegree executionDegree = thesisCreationPeriodFactoryExecutor.getExecutionDegree();
+	if (executionDegree == null) {
+	    final ExecutionYear executionYear = thesisCreationPeriodFactoryExecutor.getExecutionYear();
+	    if (executionYear != null) {
+		for (final ExecutionDegree otherExecutionDegree : executionYear.getExecutionDegreesSet()) {
+		    final YearMonthDay beginThesisCreationPeriod = otherExecutionDegree.getBeginThesisCreationPeriod();
+		    final YearMonthDay endThesisCreationPeriod = otherExecutionDegree.getEndThesisCreationPeriod();
+		    if (beginThesisCreationPeriod != null) {
+			thesisCreationPeriodFactoryExecutor.setBeginThesisCreationPeriod(beginThesisCreationPeriod);
+		    }
+		    if (endThesisCreationPeriod != null) {
+			thesisCreationPeriodFactoryExecutor.setEndThesisCreationPeriod(endThesisCreationPeriod);
+		    }
+		    if (thesisCreationPeriodFactoryExecutor.getBeginThesisCreationPeriod() != null && thesisCreationPeriodFactoryExecutor.getEndThesisCreationPeriod() != null) {
+			break;
+		    }
+		}
+	    }
+	} else {
+	    thesisCreationPeriodFactoryExecutor.setBeginThesisCreationPeriod(executionDegree.getBeginThesisCreationPeriod());
+	    thesisCreationPeriodFactoryExecutor.setEndThesisCreationPeriod(executionDegree.getEndThesisCreationPeriod());
+	}
+
+	request.setAttribute("prepareDefineCreationPeriods", Boolean.TRUE);
+
+	return mapping.findForward("list-thesis-creation-periods");
+    }
+
+    public ActionForward defineCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = getThesisCreationPeriodFactoryExecutor(request);
+	executeFactoryMethod(thesisCreationPeriodFactoryExecutor);
+	thesisCreationPeriodFactoryExecutor.setExecutionDegree(null);
+	return forwardToListThesisCreationPeriodsPage(mapping, request, thesisCreationPeriodFactoryExecutor);
     }
 
 }

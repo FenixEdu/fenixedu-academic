@@ -762,4 +762,15 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
+    @Override
+    public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor) {
+	for (final Context context : getChildContexts()) {
+	    final DegreeModule degreeModule = context.getChildDegreeModule();
+	    degreeModule.doForAllCurricularCourses(curricularCourseFunctor);
+	    if (!curricularCourseFunctor.keepDoing()) {
+		return ;
+	    }
+	}
+    }
+
 }

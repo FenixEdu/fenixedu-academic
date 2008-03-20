@@ -139,6 +139,9 @@
     <definition name="list-scientific-comission" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/thesis/listScientificComission.jsp"/>
     </definition>
+    <definition name="list-thesis-creation-periods" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/thesis/listThesisCreationPeriods.jsp"/>
+    </definition>
     
     
     <!-- ============  =========== -->
