@@ -51,6 +51,7 @@ public class EnumInputRenderer extends InputRenderer {
     private String excludedValues;
     private String includedValues;
     private boolean sort;
+    private boolean disabled;
     
     public String getBundle() {
         return this.bundle;
@@ -167,6 +168,14 @@ public class EnumInputRenderer extends InputRenderer {
                 return holderComponent;
             }
 
+            @Override
+            public void applyStyle(HtmlComponent component) {
+                super.applyStyle(component);
+
+                HtmlSimpleValueComponent holderComponent  = (HtmlSimpleValueComponent) component;
+                holderComponent.setDisabled(getDisabled());
+            }
+            
         };
     }
     
@@ -247,5 +256,13 @@ public class EnumInputRenderer extends InputRenderer {
 
 	public void setSort(boolean sort) {
 		this.sort = sort;
+	}
+
+	public boolean getDisabled() {
+	    return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+	    this.disabled = disabled;
 	}
 }
