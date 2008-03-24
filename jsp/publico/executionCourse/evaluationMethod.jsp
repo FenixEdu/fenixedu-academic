@@ -9,11 +9,6 @@
 <h2>
 	<bean:message key="title.evaluationMethod"/>
 </h2>
-<logic:empty name="executionCourse" property="evaluationMethod">
-	<p>
-		<em><bean:message key="message.evaluation.not.available"/></em>
-	</p>
-</logic:empty>
 
 <logic:notEmpty name="executionCourse" property="evaluationMethod">
 	<div class="mtop1 coutput2" style="line-height: 1.5em;">
@@ -25,3 +20,22 @@
 		</fr:view>
 	</div>
 </logic:notEmpty>
+
+
+<logic:empty name="executionCourse" property="evaluationMethod">
+	<logic:notEmpty name="executionCourse" property="evaluationMethodText" >
+	<div class="mtop1 coutput2" style="line-height: 1.5em;">
+			<fr:view name="executionCourse" property="evaluationMethodText">
+				<fr:layout>
+					<fr:property name="escaped" value="false" />
+					<fr:property name="newlineAware" value="true" />
+				</fr:layout>
+			</fr:view>
+		</div>
+	</logic:notEmpty>	
+	<logic:empty name="executionCourse" property="evaluationMethodText">
+		<p>
+			<em><bean:message key="message.evaluation.not.available"/></em>
+		</p>
+	</logic:empty>
+</logic:empty>
