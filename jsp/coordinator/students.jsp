@@ -273,7 +273,7 @@
 				</h:outputLink>
 			</f:facet>
 			<h:panelGroup rendered="#{studentCurricularPlan.registration.concluded}">
-				<h:outputText rendered="#{studentCurricularPlan.registration.registrationConclusionProcessed}" value="#{studentCurricularPlan.registration.average}">
+				<h:outputText rendered="#{studentCurricularPlan.registration.registrationConclusionProcessed && (!studentCurricularPlan.registration.bolonha || (studentCurricularPlan.internalCycleCurriculumGroupsSize eq 1))}" value="#{studentCurricularPlan.registration.average}">
 					<f:convertNumber maxFractionDigits="0" minIntegerDigits="1" maxIntegerDigits="2"/>
 				</h:outputText>
 				<h:outputText rendered="#{ ! studentCurricularPlan.registration.registrationConclusionProcessed}" value=" - "  />
