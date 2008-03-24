@@ -195,6 +195,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private void init(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
+
 	checkParameters(registration, degreeCurricularPlan, startDate);
 
 	setRegistration(registration);
@@ -203,6 +204,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private void checkParameters(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
+
 	if (registration == null) {
 	    throw new DomainException("error.studentCurricularPlan.registration.cannot.be.null");
 	}
@@ -2144,7 +2146,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return enroledImprovements;
     }
-
+    
     public List<Enrolment> getEnroledImprovements(final ExecutionPeriod executionPeriod) {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
@@ -2798,6 +2800,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return hasRoot() ? getRoot().getInternalCycleCurriculumGroups() : Collections.EMPTY_LIST;
     }
 
+    public Integer getInternalCycleCurriculumGroupsSize() {
+	return getInternalCycleCurriculumGrops().size();
+    }
+    
     public List<CycleType> getSupportedCycleTypesToEnrol() {
 	final List<CycleType> result = new ArrayList<CycleType>();
 
