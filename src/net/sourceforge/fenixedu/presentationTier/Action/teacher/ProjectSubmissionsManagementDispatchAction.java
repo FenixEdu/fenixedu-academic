@@ -82,7 +82,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
 	Fetcher fetcher = new Fetcher(archive, request, response);
 
 	for (ProjectSubmission submission : projectSubmissions) {
-	    fetcher.queue(new Resource(submission.getProjectSubmissionFile().getFilename(), submission
+	    fetcher.queue(new Resource(submission.getStudentGroup().getGroupNumber() + "/"  + submission.getProjectSubmissionFile().getFilename(), submission
 		    .getProjectSubmissionFile().getDownloadUrl()));
 	}
 
