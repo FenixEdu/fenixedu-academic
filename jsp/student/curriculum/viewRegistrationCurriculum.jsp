@@ -103,8 +103,6 @@
 			</div>
 		</logic:equal>
 
-	</div>
-
 	<table class="tstyle4 thlight tdcenter mtop15">
 		<tr>
 			<th><bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
