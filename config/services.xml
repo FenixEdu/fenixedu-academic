@@ -717,7 +717,7 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>GiveUpQuestion</name>
+		<name>GiveUpTestQuestion</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.GiveUpQuestion</implementationClass>
 		<description />

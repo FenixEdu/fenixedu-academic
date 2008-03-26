@@ -46,6 +46,7 @@
 </logic:equal>
 <tr><td><h2><bean:write name="subQuestion" property="itemId"/></h2></td></tr>
 <tr><td><b><bean:write name="subQuestion" property="title"/></b></td></tr>
+<tr><td><b><bean:message key="message.tests.subQuestionValue"/></b><bean:write name="subQuestion" property="questionValue"/></td></tr>
 <tr><td>
 <logic:iterate id="questionBody" name="subQuestion" property="presentation" indexId="indexQuestion">
 	<bean:define id="questionLabel" name="questionBody" property="label"/>
@@ -176,11 +177,11 @@
 	<bean:define id="index" value="<%=firstOptionImage.toString()%>"/>
 	<tr>
 	<logic:equal name="rpIndex" value="0">
-		<td><b>Cota��o</b></td>
+		<td><b><bean:message key="label.questionValue"/></b></td>
 		<td><b>Resposta</b></td>
 		<td><b>Feedback</b></td>
 		<td><b>Fenix</b></td>
-		<td><b>Pr�x al�nea</b></td>
+		<td><b><bean:message key="label.nextSubQuestion"/></b></td>
 		</tr><tr>
 	</logic:equal>
 	<td><bean:write name="rp" property="responseValue"/></td>

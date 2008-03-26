@@ -444,7 +444,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
             studentTestQuestionList = (List<StudentTestQuestion>) ServiceUtils.executeService(userView,
-                    "GiveUpQuestion", new Object[] { registration, distributedTest, exerciseCode,
+                    "GiveUpTestQuestion", new Object[] { registration, distributedTest, exerciseCode,
                             itemCode, getServlet().getServletContext().getRealPath("/") });
         } catch (NotAuthorizedFilterException e) {
             request.setAttribute("cantDoTest", new Boolean(true));

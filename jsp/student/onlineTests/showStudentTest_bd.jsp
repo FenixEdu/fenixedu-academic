@@ -36,7 +36,7 @@
 	<%}
 	 if(testQuestion.getStudentSubQuestions().size()>1){
 	 	if(itemIndex.equals(new Integer(0))){%>
-	 		<tr><td><span class="error">Esta pergunta � uma pergunta com al�neas. Ap�s responder poder� surgir uma nova al�nea para responder.</span></td></tr>
+	 		<tr><td><span class="error"><bean:message key="message.subQuestions"/></span></td></tr>
 	 	<%}
 	 }%>
 	 <tr><td>

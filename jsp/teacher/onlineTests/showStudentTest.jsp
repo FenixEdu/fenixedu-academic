@@ -48,6 +48,9 @@
 		<bean:define id="testQuestionValue" name="testQuestion" property="testQuestionValue"/>
 		<bean:define id="mark" name="testQuestion" property="testQuestionMark"/>
 		<logic:equal name="correctionType" value="studentCorrection">
+		<%if(testQuestion.getStudentSubQuestions().size()<=1 || itemIndex.equals(new Integer(0))){%>
+				<tr><td><hr/></td></tr>
+		<%}%>		
 		<tr><td><div class="gen-button">
 			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")%>">
 				<bean:message key="label.changeQuestion" />
@@ -63,13 +66,12 @@
 		</div></td></tr>
 		</logic:equal>
 		<%if(testQuestion.getStudentSubQuestions().size()<=1 || itemIndex.equals(new Integer(0))){%>
-				<tr><td><hr/></td></tr>
 				<tr><td><b><bean:message key="message.tests.question" />:</b>&nbsp;<bean:write name="order"/></td></tr>
 				<bean:define id="order" value="<%= (new Integer(Integer.parseInt(order)+1)).toString() %>"/>
 			<%}
 			 if(testQuestion.getStudentSubQuestions().size()>1){
 			 	if(itemIndex.equals(new Integer(0))){%>
-			 		<tr><td><span class="error">Esta pergunta � uma pergunta com al�neas. Ap�s responder poder� surgir uma nova al�nea para responder.</span></td></tr>
+			 		<tr><td><span class="error"><bean:message key="message.subQuestions"/></span></td></tr>
 			 	<%}%>
 				<tr><td><br/><b><bean:write name="subQuestion" property="title"/></b></td></tr>
 			<%}%>
