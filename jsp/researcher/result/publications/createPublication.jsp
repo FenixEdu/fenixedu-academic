@@ -30,12 +30,7 @@
 		
 			<fr:form action="/resultPublications/create.do">
 				<!-- Present Author -->
-				<logic:notEqual name="publicationBean" property="class.simpleName" value="ProceedingsBean">
 				<p class="mtop15 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/></b></p>
-				</logic:notEqual>
-				<logic:equal name="publicationBean" property="class.simpleName" value="ProceedingsBean">
-				<p class="mtop15 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.editor"/></b></p>
-				</logic:equal>
 				<fr:edit id="author" name="publicationBean" schema="<%= publicationBean.getParticipationSchema() %>" nested="true">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thright thlight"/>

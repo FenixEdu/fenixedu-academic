@@ -248,4 +248,8 @@ public class BookPart extends BookPart_Base {
 	return usedSchema;
     }
 
+    @Override
+    public Boolean getIsPossibleSelectPersonRole() {
+	return true;
+    }
 }

@@ -21,37 +21,38 @@ import bibtex.dom.BibtexString;
  */
 public class Book extends Book_Base {
 
-	private static final String usedSchema = "result.publication.presentation.Book";
+    private static final String usedSchema = "result.publication.presentation.Book";
+
     private Book() {
 	super();
     }
 
-    public Book(Person participator, ResultParticipationRole participatorRole, String title,
-    	MultiLanguageString keywords, String publisher, Integer year, String volume, String series, String address, String edition,
-	    Integer isbn, Integer numberPages, String language, Country country, ScopeType scope,
-	    MultiLanguageString note, Month month, String url) {
+    public Book(Person participator, ResultParticipationRole participatorRole, String title, MultiLanguageString keywords,
+	    String publisher, Integer year, String volume, String series, String address, String edition, Integer isbn,
+	    Integer numberPages, String language, Country country, ScopeType scope, MultiLanguageString note, Month month,
+	    String url) {
 	this();
 	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, note, keywords, publisher, year);
 	super.setCreatorParticipation(participator, participatorRole);
-	fillAllAttributes(title, keywords, publisher, year, volume, series, address, edition, isbn, numberPages,
-		language, country, scope, note, month, url);
+	fillAllAttributes(title, keywords, publisher, year, volume, series, address, edition, isbn, numberPages, language,
+		country, scope, note, month, url);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public void setEditAll(String title, MultiLanguageString keywords, String publisher, Integer year, String volume, String series,
-	    String address, String edition, Integer isbn, Integer numberPages, String language,
-	    Country country, ScopeType scope, MultiLanguageString note, Month month, String url) {
-    super.checkRequiredParameters(keywords, note);
-    checkRequiredParameters(title, note, keywords, publisher, year);
-	fillAllAttributes(title, keywords, publisher, year, volume, series, address, edition, isbn, numberPages,
-		language, country, scope, note, month, url);
+    public void setEditAll(String title, MultiLanguageString keywords, String publisher, Integer year, String volume,
+	    String series, String address, String edition, Integer isbn, Integer numberPages, String language, Country country,
+	    ScopeType scope, MultiLanguageString note, Month month, String url) {
+	super.checkRequiredParameters(keywords, note);
+	checkRequiredParameters(title, note, keywords, publisher, year);
+	fillAllAttributes(title, keywords, publisher, year, volume, series, address, edition, isbn, numberPages, language,
+		country, scope, note, month, url);
 	super.setModifiedByAndDate();
     }
 
     private void fillAllAttributes(String title, MultiLanguageString keywords, String publisher, Integer year, String volume,
-	    String series, String address, String edition, Integer isbn, Integer numberPages,
-	    String language, Country country, ScopeType scope, MultiLanguageString note, Month month, String url) {
+	    String series, String address, String edition, Integer isbn, Integer numberPages, String language, Country country,
+	    ScopeType scope, MultiLanguageString note, Month month, String url) {
 	super.setTitle(title);
 	super.setPublisher(publisher);
 	super.setYear(year);
@@ -70,7 +71,8 @@ public class Book extends Book_Base {
 	super.setKeywords(keywords);
     }
 
-    private void checkRequiredParameters(String title, MultiLanguageString note, MultiLanguageString keywords, String publisher, Integer year) {
+    private void checkRequiredParameters(String title, MultiLanguageString note, MultiLanguageString keywords, String publisher,
+	    Integer year) {
 	if (title == null || title.length() == 0)
 	    throw new DomainException("error.researcher.Book.title.null");
 	if (publisher == null)
@@ -217,8 +219,13 @@ public class Book extends Book_Base {
 	throw new DomainException("error.researcher.Book.call", "setOrganization");
     }
 
-	@Override
-	public String getSchema() {
-		return usedSchema;
-	}
+    @Override
+    public String getSchema() {
+	return usedSchema;
+    }
+
+    @Override
+    public Boolean getIsPossibleSelectPersonRole() {
+	return true;
+    }
 }

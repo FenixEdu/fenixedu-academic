@@ -235,5 +235,9 @@ public class Inproceedings extends Inproceedings_Base {
     public ScopeType getScope() {
 	return this.getEvent().getLocationType();
     }
-	
+
+    @Override
+    public Boolean getIsPossibleSelectPersonRole() {
+	return true;
+    }
 }

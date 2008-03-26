@@ -62,7 +62,7 @@ public abstract class ResultPublicationService extends Service {
 	protected Proceedings createProceedingsFromBean(ProceedingsBean bean) {
 
 		return new Proceedings(bean.getPerson(), bean.getTitle(), bean.getKeywords(), bean.getEventEdition(), bean.getPublisher(),
-				bean.getAddress(), bean.getNote(), bean.getUrl());
+				bean.getAddress(), bean.getNote(), bean.getUrl(), bean.getRole());
 	}
 
 	protected Thesis createThesisFromBean(ThesisBean bean) {

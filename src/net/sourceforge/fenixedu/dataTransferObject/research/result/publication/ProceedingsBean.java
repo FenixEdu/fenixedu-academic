@@ -13,7 +13,7 @@ public class ProceedingsBean extends ConferenceArticlesBean implements Serializa
 		super();
 		this.setPublicationType(ResultPublicationType.Proceedings);
 		this.setActiveSchema("result.publication.create.Proceedings");
-		this.setParticipationSchema("resultParticipation.simple");
+		this.setParticipationSchema("resultParticipation.simpleWithRole");
 	}
 
 	public ProceedingsBean(Proceedings proceedings) {

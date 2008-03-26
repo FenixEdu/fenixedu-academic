@@ -250,23 +250,14 @@ public abstract class ResearchResult extends ResearchResult_Base {
 	return false;
     }
 
-    public final Boolean getIsPossibleSelectPersonRole() {
-	if ((this instanceof Book) || (this instanceof BookPart) || (this instanceof Inproceedings))
-	    return true;
+    public Boolean getIsPossibleSelectPersonRole() {
 	return false;
     }
 
     public final boolean acceptsParticipationRole(ResultParticipationRole role) {
 	if (role == null)
 	    return false;
-	if (this instanceof Proceedings) {
-	    if (role.equals(ResultParticipationRole.Editor)) {
-		return true;
-	    } else {
-		return false;
-	    }
-	}
-	if (this instanceof Book || this instanceof BookPart || this instanceof Inproceedings) {
+	if (this instanceof Book || this instanceof BookPart || this instanceof Inproceedings || this instanceof Proceedings) {
 	    if (role.equals(ResultParticipationRole.Editor) || role.equals(ResultParticipationRole.Author)) {
 		return true;
 	    }
