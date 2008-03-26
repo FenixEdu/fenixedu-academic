@@ -113,6 +113,18 @@
 		extends="BaseAmountPlusAmountPerPagePR.view" bundle="APPLICATION_RESOURCES">
 </schema>
 
+<schema name="CourseLoadRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ProgramCertificateRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ExamDateCertificateRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view" bundle="APPLICATION_RESOURCES">
+</schema>
+
 <schema name="ImprovementOfApprovedEnrolmentPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR"
 	bundle="APPLICATION_RESOURCES">
@@ -194,6 +206,18 @@
 		extends="BaseAmountPlusAmountPerPagePR.edit" bundle="APPLICATION_RESOURCES">
 </schema>
 
+<schema name="CourseLoadRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.edit" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ProgramCertificateRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.edit" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ExamDateCertificateRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.edit" bundle="APPLICATION_RESOURCES">
+</schema>
+
 <!-- Student Prices View -->
 <schema name="PostingRule.view-student"	type="net.sourceforge.fenixedu.domain.accounting.PostingRule" bundle="APPLICATION_RESOURCES">
 </schema>
@@ -254,6 +278,18 @@
 </schema>
 
 <schema name="PhotocopyRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="CourseLoadRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ProgramCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR"
+		extends="BaseAmountPlusAmountPerPagePR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ExamDateCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR"
 		extends="BaseAmountPlusAmountPerPagePR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 
