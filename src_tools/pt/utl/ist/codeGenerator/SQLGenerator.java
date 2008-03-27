@@ -34,6 +34,7 @@ public class SQLGenerator {
             stringBuilder.append("\n\n");            
         }
 
+        stringBuilder.append("insert into ROOT_DOMAIN_OBJECT (ID_INTERNAL) values (1);\n\n");
         writeFile(destinationFilename, stringBuilder.toString());
 	}
 

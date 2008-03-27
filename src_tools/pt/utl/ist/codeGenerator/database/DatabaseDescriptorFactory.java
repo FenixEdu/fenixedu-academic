@@ -51,8 +51,9 @@ public class DatabaseDescriptorFactory {
         if (!classname.startsWith("pt.utl.ist.berserk")
                 && tablename != null
                 && !tablename.startsWith("OJB")
+            /*
                 && !tablename.equals("ROLE")
-                && !tablename.equals("ROOT_DOMAIN_OBJECT")) {
+                && !tablename.equals("ROOT_DOMAIN_OBJECT")*/) {
             final SqlTable sqlTable = obtainSQLTable(sqlTables, tablename);
 
             addColumns(sqlTable, classDescriptor.getFieldDescriptions());
