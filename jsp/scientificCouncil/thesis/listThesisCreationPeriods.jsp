@@ -25,11 +25,12 @@
 		<logic:present name="thesisCreationPeriodFactoryExecutor" property="executionYear">
 			<logic:notPresent name="thesisCreationPeriodFactoryExecutor" property="executionDegree">
 
-				<html:link page="/scientificCouncilManageThesis.do?method=prepareDefineCreationPeriods">
+				<bean:define id="executionYearId" name="thesisCreationPeriodFactoryExecutor" property="executionYear.idInternal"/>
+				<bean:define id="url">/scientificCouncilManageThesis.do?method=prepareDefineCreationPeriods&amp;executionYearId=<bean:write name="executionYearId"/></bean:define>
+
+				<html:link page="<%= url %>">
 					<bean:message key="link.thesis.set.periods"/>
 				</html:link>
-
-				<bean:define id="executionYearId" name="thesisCreationPeriodFactoryExecutor" property="executionYear.idInternal"/>
 
    				<fr:view name="executionDegrees" schema="scientificCouncil.thesis.creationPeriod">
        				<fr:layout name="tabular">
