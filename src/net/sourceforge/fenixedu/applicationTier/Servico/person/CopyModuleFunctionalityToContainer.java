@@ -21,13 +21,11 @@ public class CopyModuleFunctionalityToContainer extends Service {
 	mimicPolicy(module.getAvailabilityPolicy(), container);
 	for (Functionality functionality : module.getFunctionalities()) {
 	    final ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(container, functionality);
-	    explicitOrderNode.setVisible(functionality.getVisible());
 	}
 	for (Module subModule : module.getChildren(Module.class)) {
 	    Section section = new Section(container, subModule.getName());
 	    mimicPolicy(module.getAvailabilityPolicy(), section);
 	    process(subModule, section);
-	    section.setVisible(subModule.getVisible());
 	}
     }
 
