@@ -34,14 +34,14 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
 	    throw new DomainException("label.error.unable.to.add.element.to.the.same.container.more.than.once");
 	}
 	init(parent, child, isAscending);
-	super.setVisible(true);
+	super.setVisible(Boolean.TRUE);
     }
 
     public ExplicitOrderNode(Container parent, Content child, Boolean isAscending) {
 	super();
 	super.setNodeOrder(getOrderFor(parent));
 	init(parent, child, isAscending);
-	super.setVisible(true);
+	super.setVisible(Boolean.TRUE);
     }
 
     public ExplicitOrderNode(Container parent, Content child) {

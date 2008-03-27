@@ -66,10 +66,6 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
 	return super.getVisible() && getChild().isAvailable();
     }
 
-    public void setVisible(boolean visible) {
-	setVisible(Boolean.valueOf(visible));
-    }
-    
     /**
          * Deletes this node removing the associating between the container in
          * {@link #getParent()} and the content in {@link #getChild()}.
