@@ -70,13 +70,12 @@
 
 	<p class="mtop1 mbottom1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<bean:define id="url">
-			<%="/registration.do?method=prepareViewRegistrationCurriculum&amp;registrationID=" + registration.getIdInternal()%>
-			<logic:present name="degreeCurricularPlanID">
+		<bean:define id="url" value="<%="/registration.do?method=prepareViewRegistrationCurriculum&amp;registrationID=" + registration.getIdInternal()%>"/>
+		<logic:present name="degreeCurricularPlanID">
 				<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
-				<%="&amp;degreeCurricularPlanID=" + degreeCurricularPlanID%>
-			</logic:present>
-		</bean:define>
+				<bean:define id="url" value="<%= url + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID%>"/>
+		</logic:present>
+
 		<html:link target="_blank" page="<%=url%>">
 			<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
