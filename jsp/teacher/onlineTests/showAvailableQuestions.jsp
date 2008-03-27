@@ -14,12 +14,13 @@ function invertSelect(){
 	} else { 
 		select = false;
 	}
-	if(document.forms[0].metadataCode.type=='checkbox'){
-		var e = document.forms[0].metadataCode;
+
+	if(document.forms[2].metadataCode.type=='checkbox'){
+		var e = document.forms[2].metadataCode;
 		e.checked = select;
 	}else{
-		for (var i=0; i<document.forms[0].metadataCode.length; i++){
-			var e = document.forms[0].metadataCode[i];
+		for (var i=0; i<document.forms[2].metadataCode.length; i++){
+			var e = document.forms[2].metadataCode[i];
 			e.checked = select;
 		}
 	}
