@@ -659,10 +659,12 @@ public class TestsManagementAction extends FenixDispatchAction {
 		final ActionForward actionForward = new ActionForward();
 	actionForward.setRedirect(true);
 	final String path = request.getContextPath() + "/teacher/testDistribution.do?method=showDistributedTests&amp;objectCode="
-		+ objectCode;
-	final String requestPath = "/testDistribution.do?method=showDistributedTests&objectCode=" + objectCode
-		+ "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(path) + "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + 
+		+ objectCode + "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + 
 		FilterFunctionalityContext.getCurrentContext(request).getCurrentContextPath();
+	final String requestPath = "/testDistribution.do?method=showDistributedTests&objectCode=" + objectCode
+	+ "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + 
+	FilterFunctionalityContext.getCurrentContext(request).getCurrentContextPath() 
+	+ "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(path);
 	actionForward.setPath(requestPath);
 	return actionForward;
     }
