@@ -16,7 +16,8 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
 	super();
     }
 
-    protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person, final AcademicServiceRequest academicServiceRequest) {
+    protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person,
+	    final AcademicServiceRequest academicServiceRequest) {
 	super.init(administrativeOffice, eventType, person);
 	checkParameters(academicServiceRequest);
 	super.setAcademicServiceRequest(academicServiceRequest);
@@ -37,17 +38,18 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
     final public Account getToAccount() {
 	return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
     }
-    
+
     @Override
     final protected Account getFromAccount() {
 	return getPerson().getAccountBy(AccountType.EXTERNAL);
     }
-    
+
     @Override
     final public PostingRule getPostingRule() {
-	return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
+	return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
+		getWhenOccured());
     }
-    
+
     final protected ExecutionYear getExecutionYear() {
 	return getAcademicServiceRequest().getExecutionYear();
     }
@@ -55,5 +57,11 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
     final public boolean isUrgentRequest() {
 	return getAcademicServiceRequest().isUrgentRequest();
     }
-    
+
+    @Override
+    public void delete() {
+	super.setAcademicServiceRequest(null);
+	super.delete();
+    }
+
 }
