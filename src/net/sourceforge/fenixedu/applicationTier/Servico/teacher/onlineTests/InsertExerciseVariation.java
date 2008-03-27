@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import javax.mail.IllegalWriteException;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -69,8 +71,6 @@ public class InsertExerciseVariation extends Service {
                 badXmls.add(xmlFileName);
             } catch (ParseQuestionException e) {
                 badXmls.add(xmlFileName + e);
-            } catch (Exception e) {
-                badXmls.add(xmlFileName);
             }
         }
 
