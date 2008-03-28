@@ -73,7 +73,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	final DegreeType degreeType = getDegreeType();
 	final CycleType requestedCycle = getRequestedCycle();
 
-	return getDescription(AcademicServiceRequestType.DOCUMENT, getDocumentRequestType().getQualifiedName() + "."
+	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
 		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
