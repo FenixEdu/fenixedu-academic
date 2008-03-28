@@ -1909,6 +1909,10 @@ public class Registration extends Registration_Base {
 	return getActiveStateType() == RegistrationStateType.TRANSITED;
     }
 
+    final public boolean isTransited(final DateTime when) {
+	return getStateInDate(when).getStateType() == RegistrationStateType.TRANSITED;
+    }
+
     final public boolean isTransition() {
 	return getActiveStateType() == RegistrationStateType.TRANSITION;
     }
