@@ -136,7 +136,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	final DegreeType degreeType = getDegreeType();
 	final CycleType requestedCycle = getRequestedCycle();
 
-	return getDescription(AcademicServiceRequestType.DOCUMENT, getDocumentRequestType().getQualifiedName() + "."
+	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
 		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
