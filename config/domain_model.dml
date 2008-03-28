@@ -511,7 +511,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 		class net.sourceforge.fenixedu.domain.FinalEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {
 		}
-		
+
 		class net.sourceforge.fenixedu.domain.AdHocEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {
 			String description;
 			String name;
@@ -566,7 +566,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 	class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fenixedu.domain.DomainObject {
 		MultiLanguageString anotation;
-		Boolean temporaryExamMap;
+		Boolean temporaryExamMap;							
 		AcademicInterval executionInterval;
 		YearMonthDay beginThesisCreationPeriod;
 		YearMonthDay endThesisCreationPeriod;
@@ -1261,6 +1261,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 	
+					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastCertificateRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent {
+						Money pastAmount;
+					}
+
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 	
@@ -1281,17 +1285,33 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					}
 	
 					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.BolonhaPhdProgramDiplomaRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent {
-					}
+				}
 				
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
+
+					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastStudentReingressionRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent {
+						Money pastAmount;
+					}
 				
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.EquivalencePlanRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 
-				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhotocopyRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastEquivalencePlanRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.EquivalencePlanRequestEvent {
+						Money pastAmount;
+					}
+
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastEquivalencePlanRevisionRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+					Money pastAmount;
 				}
 				
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhotocopyRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
+
+					class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastPhotocopyRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhotocopyRequestEvent {
+						Money pastAmount;
+					}
+
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 			YearMonthDay creationDate;
 		}
@@ -1301,7 +1321,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		
 		class net.sourceforge.fenixedu.domain.accounting.events.phd.PhDRegistrationEvent extends net.sourceforge.fenixedu.domain.accounting.Event { 
 		}
-		
+
 		class net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 			Integer numberOfDelayDays;
 		}
@@ -1414,7 +1434,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				Money amountPerDay;
 				Money maxAmount;
 			}
-			
+
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR{
 				Money baseAmount;
 				Money amountPerPage;
@@ -1422,7 +1442,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR {
 				}
-				
+
 				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR {
 				}
 				
@@ -1468,9 +1488,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DiplomaRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR {
 				}
 
-				class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastDegreeDiplomaRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR {
-				}
-
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.ImprovementOfApprovedEnrolmentPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 				Money fixedAmount;
 				Money fixedAmountPenalty;
@@ -1490,6 +1507,25 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 			}
+			
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastCertificateRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastDegreeDiplomaRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastPhotocopyRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastStudentReingressionRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastEquivalencePlanRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastEquivalencePlanRevisionRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+
 
 	class net.sourceforge.fenixedu.domain.accounting.Receipt extends net.sourceforge.fenixedu.domain.DomainObject {
 		Integer number;
@@ -4425,7 +4461,7 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
                     }
 
                     class net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard {
-                    }
+                        }
 
                         class net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard extends net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard {
                                 UnitBoardPermittedGroupType unitPermittedManagementGroupType;
