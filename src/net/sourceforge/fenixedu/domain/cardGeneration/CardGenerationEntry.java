@@ -215,14 +215,13 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     public static String normalizePersonName(final Person person) {
-        final String normalized = StringNormalizer.normalize(person.getName());
-        final String uppered = StringUtils.upperCase(normalized);
-        if (uppered.length() > 84) {
-            throw new Error("Name exceeds max length of 84: " + uppered);
-        } else if (uppered.length() < 84) {
-            return fillString(uppered, ' ', 84);
+	final String  normalizedName = normalize(person.getName());
+        if (normalizedName.length() > 84) {
+            throw new Error("Name exceeds max length of 84: " + normalizedName);
+        } else if (normalizedName.length() < 84) {
+            return fillString(normalizedName, ' ', 84);
         }
-        return uppered;
+        return normalizedName;
     }
 
     public void delete() {
