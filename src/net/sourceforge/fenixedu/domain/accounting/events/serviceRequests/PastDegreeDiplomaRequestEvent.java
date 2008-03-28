@@ -7,21 +7,21 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.util.Money;
 
-public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent_Base {
+public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent_Base implements IPastRequestEvent {
 
     protected PastDegreeDiplomaRequestEvent() {
 	super();
     }
 
-    public PastDegreeDiplomaRequestEvent(final AdministrativeOffice administrativeOffice, final EventType eventType,
-	    final Person person, final DiplomaRequest diplomaRequest) {
+    public PastDegreeDiplomaRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+	    final DiplomaRequest diplomaRequest) {
 	this();
-	super.init(administrativeOffice, eventType, person, diplomaRequest);
+	super.init(administrativeOffice, EventType.PAST_DEGREE_DIPLOMA_REQUEST, person, diplomaRequest);
     }
 
     @Override
     public void setPastAmount(Money pastDegreeDiplomaRequestAmount) {
-	throw new DomainException("error.accounting.events.gratuity.PastDegreeDiplomaRequestEvent.cannot.modify.pastAmount");
+	throw new DomainException("error.accounting.events.cannot.modify.pastAmount");
     }
 
 }
