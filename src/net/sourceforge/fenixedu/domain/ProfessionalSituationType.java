@@ -17,6 +17,8 @@ public enum ProfessionalSituationType {
     DETACHED_FROM(false, false),
     REQUESTED_FROM(false, false),
     
+    EXERCISE_OF_FUNCTIONS(false, false),
+    
     //Functions Accumulation    
     FUNCTIONS_ACCUMULATION_WITH_LEADING_POSITIONS(false, false),
     
