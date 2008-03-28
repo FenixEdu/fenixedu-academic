@@ -313,7 +313,10 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	for (; !getAdjustmentTransactions().isEmpty(); getAdjustmentTransactions().get(0).delete())
 	    ;
 
-	getTransactionDetail().delete();
+	if (hasTransactionDetail()) {
+	    getTransactionDetail().delete();
+	}
+
 	for (; !getEntries().isEmpty(); getEntries().get(0).delete())
 	    ;
 
