@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.cache.FenixCache;
 
 import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
 
 public abstract class Transaction extends jvstm.Transaction {
     public final static TransactionStatistics STATISTICS = new TransactionStatistics();
@@ -144,6 +145,34 @@ public abstract class Transaction extends jvstm.Transaction {
 
     public static PersistenceBroker getOJBBroker() {
 	return currentFenixTransaction().getOJBBroker();
+    }
+
+
+    // This method is temporary.  It will be used only to remove the dependencies 
+    // on OJB from the remaining code.  After that, it should either be removed 
+    // or replaced by something else
+    public static java.sql.Connection getCurrentJdbcConnection() {
+        try {
+            return getOJBBroker()
+                .serviceConnectionManager()
+                .getConnection();
+        } catch (org.apache.ojb.broker.accesslayer.LookupException le) {
+            throw new Error("Couldn't find a JDBC connection");
+        }
+    }
+
+    // This method is temporary.  It will be used only to remove the dependencies 
+    // on OJB from the remaining code.  After that, it should either be removed 
+    // or replaced by something else
+    public static java.sql.Connection getNewJdbcConnection() {
+        try {
+            return PersistenceBrokerFactory
+                .defaultPersistenceBroker()
+                .serviceConnectionManager()
+                .getConnection();
+        } catch (org.apache.ojb.broker.accesslayer.LookupException le) {
+            throw new Error("Couldn't find a JDBC connection");
+        }
     }
 
     public static FenixCache getCache() {
