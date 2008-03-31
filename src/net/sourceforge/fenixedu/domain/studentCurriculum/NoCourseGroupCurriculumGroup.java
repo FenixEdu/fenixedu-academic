@@ -158,8 +158,6 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	return false;
     }
 
-    public abstract NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();
-
     @Override
     public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(CurricularCourse curricularCourse) {
 	return Collections.singleton(this);
@@ -183,4 +181,5 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	return null;
     }
 
+    abstract public NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();
 }
