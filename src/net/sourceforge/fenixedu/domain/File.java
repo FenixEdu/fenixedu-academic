@@ -6,10 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.stm.Transaction;
 
-import org.apache.ojb.broker.PBFactoryException;
-import org.apache.ojb.broker.PersistenceBrokerFactory;
-import org.apache.ojb.broker.accesslayer.LookupException;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
@@ -57,8 +55,7 @@ public abstract class File extends File_Base {
 	// For performance reasons...
 	PreparedStatement stmt = null;
 	try {
-	    final Connection connection = PersistenceBrokerFactory.defaultPersistenceBroker()
-		    .serviceConnectionManager().getConnection();
+	    final Connection connection = Transaction.getNewJdbcConnection();
 	    stmt = connection
 		    .prepareStatement("SELECT ID_INTERNAL FROM FILE WHERE EXTERNAL_STORAGE_IDENTIFICATION = ?");
 
@@ -69,11 +66,6 @@ public abstract class File extends File_Base {
 	    }
 
 	    return null;
-
-	} catch (PBFactoryException e) {
-	    throw new Error(e);
-	} catch (LookupException e) {
-	    throw new Error(e);
 	} catch (SQLException e) {
 	    throw new Error(e);
 	} finally {
