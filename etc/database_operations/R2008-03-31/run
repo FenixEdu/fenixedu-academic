@@ -28,3 +28,6 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Create card identification functionality stuff" createCardIdentificationFunctionalityStuff.sql
+execute "Create more card identification functionality stuff" createCardIdentificationFunctionalityStuff2.sql
