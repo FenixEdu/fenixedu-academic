@@ -1910,7 +1910,8 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isTransited(final DateTime when) {
-	return getStateInDate(when).getStateType() == RegistrationStateType.TRANSITED;
+	final RegistrationState stateInDate = getStateInDate(when);
+	return stateInDate != null && stateInDate.getStateType() == RegistrationStateType.TRANSITED;
     }
 
     final public boolean isTransition() {
