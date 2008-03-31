@@ -43,6 +43,20 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         setEndYearMonthDay(endDate);
     }   
   
+    public void setNextPeriodWithoutChecks(OccupationPeriod nextPeriod) {
+	if (nextPeriod != null && !nextPeriod.getStartYearMonthDay().isAfter(getEndYearMonthDay())) {
+	    throw new DomainException("error.occupationPeriod.invalid.nextPeriod");
+	}
+	super.setNextPeriod(nextPeriod);
+    }
+
+    public void setPreviousPeriodWithoutChecks(OccupationPeriod previousPeriod) {
+	if (previousPeriod != null && !previousPeriod.getEndYearMonthDay().isBefore(getStartYearMonthDay())) {
+	    throw new DomainException("error.occupationPeriod.invalid.previousPeriod");
+	}
+	super.setPreviousPeriod(previousPeriod);
+    }
+
     @Override
     public void setNextPeriod(OccupationPeriod nextPeriod) {
 	if (!allNestedPeriodsAreEmpty()) {
