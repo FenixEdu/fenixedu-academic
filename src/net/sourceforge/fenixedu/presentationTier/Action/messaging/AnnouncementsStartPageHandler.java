@@ -44,23 +44,23 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
     private static final int PAGE_SIZE = 20;
 
     public ActionForward news(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-	
+	    HttpServletResponse response) throws Exception {
+
 	request.setAttribute("returnMethod", "news");
 	request.setAttribute("announcements", getAnnouncementsToShow(request, actionForm));
-	//request.setAttribute("announcementBoards", boardsToView(request));
-	
-        return mapping.findForward("news");
+	// request.setAttribute("announcementBoards", boardsToView(request));
+
+	return mapping.findForward("news");
     }
-    
+
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
 	request.setAttribute("returnMethod", "start");
-        request.setAttribute("bookmarkedAnnouncementBoards", getSortedBookmarkedBoards(request));
-        request.setAttribute("currentExecutionCoursesAnnouncementBoards", getCurrentExecutionCoursesAnnouncementBoards(request));
-        
-        return mapping.findForward("startPage");
+	request.setAttribute("bookmarkedAnnouncementBoards", getSortedBookmarkedBoards(request));
+	request.setAttribute("currentExecutionCoursesAnnouncementBoards", getCurrentExecutionCoursesAnnouncementBoards(request));
+
+	return mapping.findForward("startPage");
     }
 
     private List<AnnouncementBoard> getSortedBookmarkedBoards(final HttpServletRequest request) {
@@ -78,219 +78,229 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
     private List<AnnouncementBoard> getRecentBoards(HttpServletRequest request) {
 
-        final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>();
-        
-        final DateTime startDate = getStartDate(request);
-        int toShowCount = AnnouncementsStartPageHandler.RECENT_BOARDS_TO_SHOW;
-        
-        for (final Content content : rootDomainObject.getContentsSet()) {
-            if (content.isAnAnnouncementBoard()) {
-                final AnnouncementBoard board = (AnnouncementBoard) content;
-                if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
-                    if (toShowCount == 0 || (startDate != null && board.getCreationDate().isBefore(startDate))) {
-                        break;
-                    }
-                    result.add(board);
-                    toShowCount--;
-                }
-            }
-        }
+	final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>();
 
-        Collections.sort(result, AnnouncementBoard.NEWEST_FIRST);
+	final DateTime startDate = getStartDate(request);
+	int toShowCount = AnnouncementsStartPageHandler.RECENT_BOARDS_TO_SHOW;
 
-        return result;
+	for (final Content content : rootDomainObject.getContentsSet()) {
+	    if (content.isAnAnnouncementBoard()) {
+		final AnnouncementBoard board = (AnnouncementBoard) content;
+		if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
+		    if (toShowCount == 0 || (startDate != null && board.getCreationDate().isBefore(startDate))) {
+			break;
+		    }
+		    result.add(board);
+		    toShowCount--;
+		}
+	    }
+	}
+
+	Collections.sort(result, AnnouncementBoard.NEWEST_FIRST);
+
+	return result;
     }
 
     private DateTime getStartDate(HttpServletRequest request) {
-	
-        final String selectedTimeSpanString = request.getParameter("recentBoardsTimeSpanSelection");
-        final RecentBoardsTimeSpanSelection selectedTimeSpan = (selectedTimeSpanString != null) ? RecentBoardsTimeSpanSelection
-		.valueOf(selectedTimeSpanString)
-		: RecentBoardsTimeSpanSelection.TS_LAST_WEEK;
-		
+
+	final String selectedTimeSpanString = request.getParameter("recentBoardsTimeSpanSelection");
+	final RecentBoardsTimeSpanSelection selectedTimeSpan = (selectedTimeSpanString != null) ? RecentBoardsTimeSpanSelection
+		.valueOf(selectedTimeSpanString) : RecentBoardsTimeSpanSelection.TS_LAST_WEEK;
+
 	final DateTime now = new DateTime();
-        DateTime startDate = null;
-  
-        switch (selectedTimeSpan) {
-        case TS_ALL_ACTIVE:
-            break;
-        case TS_LAST_WEEK:
-            startDate = now.minusDays(7);
-            break;
-        case TS_ONE_MONTH:
-            startDate = now.minusDays(30);
-            break;
-        case TS_TWO_MONTHS:
-            startDate = now.minusDays(60);
-            break;
-        case TS_TODAY:
-            startDate = now.minusHours(now.hourOfDay().get());
-            startDate = startDate.minusMinutes(now.minuteOfHour().get());
-            startDate = startDate.minusSeconds(now.secondOfMinute().get());
-            break;
-        case TS_TWO_WEEKS:
-            startDate = now.minusDays(15);
-            break;
-        case TS_YESTERDAY:
-            startDate = now.minusDays(1);
-            break;
-        }
-        return startDate;
+	DateTime startDate = null;
+
+	switch (selectedTimeSpan) {
+	case TS_ALL_ACTIVE:
+	    break;
+	case TS_LAST_WEEK:
+	    startDate = now.minusDays(7);
+	    break;
+	case TS_ONE_MONTH:
+	    startDate = now.minusDays(30);
+	    break;
+	case TS_TWO_MONTHS:
+	    startDate = now.minusDays(60);
+	    break;
+	case TS_TODAY:
+	    startDate = now.minusHours(now.hourOfDay().get());
+	    startDate = startDate.minusMinutes(now.minuteOfHour().get());
+	    startDate = startDate.minusSeconds(now.secondOfMinute().get());
+	    break;
+	case TS_TWO_WEEKS:
+	    startDate = now.minusDays(15);
+	    break;
+	case TS_YESTERDAY:
+	    startDate = now.minusDays(1);
+	    break;
+	}
+	return startDate;
     }
-    
+
     private Collection<Announcement> getAnnouncementsToShow(HttpServletRequest request, ActionForm actionForm) {
-	
+
 	final AnnouncementsStartPageForm form = (AnnouncementsStartPageForm) actionForm;
 
-        final AnnouncementPresentationBean announcementPresentationBean = new AnnouncementPresentationBean(
-		form.getHowManyAnnouncementsToShow(), Announcement.NEWEST_FIRST);
+	final AnnouncementPresentationBean announcementPresentationBean = new AnnouncementPresentationBean(form
+		.getHowManyAnnouncementsToShow(), Announcement.NEWEST_FIRST);
 
 	if (form.getBoardType().equals("BOOKMARKED")) {
 	    getBookmarkedAnnouncements(request, announcementPresentationBean);
-	} 
-	
+	}
+
 	if (form.getBoardType().equals("INSTITUTIONAL") || announcementPresentationBean.isEmpty()) {
 	    getInstitutionalAnnouncements(request, announcementPresentationBean);
-	    form.setBoardType("INSTITUTIONAL"); // because bean could be empty, must set this value
+	    form.setBoardType("INSTITUTIONAL"); // because bean could be empty,
+						// must set this value
 	}
 
-        return announcementPresentationBean;
+	return announcementPresentationBean;
     }
 
-    private void getInstitutionalAnnouncements(HttpServletRequest request, final AnnouncementPresentationBean announcementPresentationBean) {
-	for (final AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
-	    addBoardAnnouncements(request, board, announcementPresentationBean);
+    private void getInstitutionalAnnouncements(HttpServletRequest request,
+	    final AnnouncementPresentationBean announcementPresentationBean) {
+	if (rootDomainObject.hasInstitutionUnit()) {
+	    for (final AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
+		addBoardAnnouncements(request, board, announcementPresentationBean);
+	    }
 	}
     }
 
-    private void getBookmarkedAnnouncements(HttpServletRequest request, final AnnouncementPresentationBean announcementPresentationBean) {
+    private void getBookmarkedAnnouncements(HttpServletRequest request,
+	    final AnnouncementPresentationBean announcementPresentationBean) {
 	for (final AnnouncementBoard board : getLoggedPerson(request).getBookmarkedBoards()) {
 	    addBoardAnnouncements(request, board, announcementPresentationBean);
 	}
     }
 
     private void addBoardAnnouncements(HttpServletRequest request, final AnnouncementBoard board,
-                final AnnouncementPresentationBean announcementPresentationBean) {
+	    final AnnouncementPresentationBean announcementPresentationBean) {
 	final Person person = getLoggedPerson(request);
 	if (board.hasReader(person) || board.hasWriter(person)) {
-            board.addVisibleAnnouncements(announcementPresentationBean);
+	    board.addVisibleAnnouncements(announcementPresentationBean);
 	}
     }
 
     @Override
     protected String getExtraRequestParameters(HttpServletRequest request) {
-        StringBuffer buffer = new StringBuffer();
-        String announcementBoardAccessType = request.getParameter("announcementBoardAccessType");
-        String announcementBoardAccessLevel = request.getParameter("announcementBoardAccessLevel");
+	StringBuffer buffer = new StringBuffer();
+	String announcementBoardAccessType = request.getParameter("announcementBoardAccessType");
+	String announcementBoardAccessLevel = request.getParameter("announcementBoardAccessLevel");
 
-        if (announcementBoardAccessType != null) {
-            buffer.append("&amp;announcementBoardAccessType=").append(announcementBoardAccessType);
-        }
-        if (announcementBoardAccessLevel != null) {
-            buffer.append("&amp;announcementBoardAccessLevel=").append(announcementBoardAccessLevel);
-        }
-        if (request.getParameter("howManyAnnouncementsToShow") != null) {
-            buffer.append("&amp;howManyAnnouncementsToShow=").append(request.getParameter("howManyAnnouncementsToShow"));
-        }
-        if (request.getParameter("recentBoardsTimeSpanSelection") != null) {
-            buffer.append("&amp;recentBoardsTimeSpanSelection=").append(request.getParameter("recentBoardsTimeSpanSelection"));
-        }
-        if (request.getParameter("boardType") != null) {
-            buffer.append("&amp;boardType=").append(request.getParameter("boardType"));
-        }
+	if (announcementBoardAccessType != null) {
+	    buffer.append("&amp;announcementBoardAccessType=").append(announcementBoardAccessType);
+	}
+	if (announcementBoardAccessLevel != null) {
+	    buffer.append("&amp;announcementBoardAccessLevel=").append(announcementBoardAccessLevel);
+	}
+	if (request.getParameter("howManyAnnouncementsToShow") != null) {
+	    buffer.append("&amp;howManyAnnouncementsToShow=").append(request.getParameter("howManyAnnouncementsToShow"));
+	}
+	if (request.getParameter("recentBoardsTimeSpanSelection") != null) {
+	    buffer.append("&amp;recentBoardsTimeSpanSelection=").append(request.getParameter("recentBoardsTimeSpanSelection"));
+	}
+	if (request.getParameter("boardType") != null) {
+	    buffer.append("&amp;boardType=").append(request.getParameter("boardType"));
+	}
 
-        return buffer.toString();
+	return buffer.toString();
     }
 
     @Override
     protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-        return "/announcements/announcementsStartPageHandler.do";
+	return "/announcements/announcementsStartPageHandler.do";
     }
 
     @Override
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
-        return getRecentBoards(request);
+	return getRecentBoards(request);
     }
 
-    public ActionForward handleBoardListing(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward handleBoardListing(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        final AnnouncementsStartPageForm form = (AnnouncementsStartPageForm) actionForm;
+	final AnnouncementsStartPageForm form = (AnnouncementsStartPageForm) actionForm;
 
-        Collection<UnitAnnouncementBoard> unitAnnouncementBoards = new TreeSet<UnitAnnouncementBoard>(UnitAnnouncementBoard.BY_UNIT_DEPTH_AND_NAME);
-        Collection<ExecutionCourseAnnouncementBoard> executionCourseAnnouncementBoards = new TreeSet<ExecutionCourseAnnouncementBoard>(ExecutionCourseAnnouncementBoard.COMPARE_BY_EXECUTION_PERIOD_AND_NAME);
+	Collection<UnitAnnouncementBoard> unitAnnouncementBoards = new TreeSet<UnitAnnouncementBoard>(
+		UnitAnnouncementBoard.BY_UNIT_DEPTH_AND_NAME);
+	Collection<ExecutionCourseAnnouncementBoard> executionCourseAnnouncementBoards = new TreeSet<ExecutionCourseAnnouncementBoard>(
+		ExecutionCourseAnnouncementBoard.COMPARE_BY_EXECUTION_PERIOD_AND_NAME);
 
-        for (final Content content : rootDomainObject.getContentsSet()) {
-            if (content.isAnAnnouncementBoard()) {
-                final AnnouncementBoard board = (AnnouncementBoard) content;
-                if (board.hasReaderOrWriter(getLoggedPerson(request))) {
-                    if (board instanceof UnitAnnouncementBoard) {
-                        unitAnnouncementBoards.add((UnitAnnouncementBoard) board);
+	for (final Content content : rootDomainObject.getContentsSet()) {
+	    if (content.isAnAnnouncementBoard()) {
+		final AnnouncementBoard board = (AnnouncementBoard) content;
+		if (board.hasReaderOrWriter(getLoggedPerson(request))) {
+		    if (board instanceof UnitAnnouncementBoard) {
+			unitAnnouncementBoards.add((UnitAnnouncementBoard) board);
 
-                    } else if (board instanceof ExecutionCourseAnnouncementBoard) {
-                        ExecutionCourseAnnouncementBoard executionCourseBoard = (ExecutionCourseAnnouncementBoard) board;
-                        if (executionCourseBoard.hasExecutionCourse() && executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
-                            executionCourseAnnouncementBoards.add(executionCourseBoard);
-                        }
-                    }
-                }
-            }
-        }
+		    } else if (board instanceof ExecutionCourseAnnouncementBoard) {
+			ExecutionCourseAnnouncementBoard executionCourseBoard = (ExecutionCourseAnnouncementBoard) board;
+			if (executionCourseBoard.hasExecutionCourse()
+				&& executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState().equals(
+					PeriodState.CURRENT)) {
+			    executionCourseAnnouncementBoards.add(executionCourseBoard);
+			}
+		    }
+		}
+	    }
+	}
 
-        final AnnouncementBoardAccessLevel level = AnnouncementBoardAccessLevel.valueOf(form.getAnnouncementBoardAccessLevel());
-        final AnnouncementBoardAccessType type = AnnouncementBoardAccessType.valueOf(form.getAnnouncementBoardAccessType());
+	final AnnouncementBoardAccessLevel level = AnnouncementBoardAccessLevel.valueOf(form.getAnnouncementBoardAccessLevel());
+	final AnnouncementBoardAccessType type = AnnouncementBoardAccessType.valueOf(form.getAnnouncementBoardAccessType());
 
-        unitAnnouncementBoards = (Collection<UnitAnnouncementBoard>) filterAnnouncementBoardsByLevelAndType(request, unitAnnouncementBoards, level, type);
-        executionCourseAnnouncementBoards = (Collection<ExecutionCourseAnnouncementBoard>) filterAnnouncementBoardsByLevelAndType(request, executionCourseAnnouncementBoards, level, type);
+	unitAnnouncementBoards = (Collection<UnitAnnouncementBoard>) filterAnnouncementBoardsByLevelAndType(request,
+		unitAnnouncementBoards, level, type);
+	executionCourseAnnouncementBoards = (Collection<ExecutionCourseAnnouncementBoard>) filterAnnouncementBoardsByLevelAndType(
+		request, executionCourseAnnouncementBoards, level, type);
 
-        request.setAttribute("unitAnnouncementBoards", getPagedUnitAnnouncementBoard(unitAnnouncementBoards, request));
-        request.setAttribute("executionCourseAnnouncementBoards", getPagedExecutionCourseAnnouncementBoard(executionCourseAnnouncementBoards, request));
-        request.setAttribute("returnMethod", "handleBoardListing");
-        
-        return mapping.findForward("boardListingWithCriteria");
+	request.setAttribute("unitAnnouncementBoards", getPagedUnitAnnouncementBoard(unitAnnouncementBoards, request));
+	request.setAttribute("executionCourseAnnouncementBoards", getPagedExecutionCourseAnnouncementBoard(
+		executionCourseAnnouncementBoards, request));
+	request.setAttribute("returnMethod", "handleBoardListing");
+
+	return mapping.findForward("boardListingWithCriteria");
     }
 
     private Collection<? extends AnnouncementBoard> filterAnnouncementBoardsByLevelAndType(HttpServletRequest request,
-	    Collection<? extends AnnouncementBoard> announcementBoards,
-	    final AnnouncementBoardAccessLevel level, final AnnouncementBoardAccessType type) {
-	announcementBoards = CollectionUtils.select(announcementBoards,
-                new AnnouncementBoard.AcessLevelPredicate(level, getLoggedPerson(request)));
-        announcementBoards = CollectionUtils.select(announcementBoards,
-                new AnnouncementBoard.AcessTypePredicate(type, getLoggedPerson(request)));
+	    Collection<? extends AnnouncementBoard> announcementBoards, final AnnouncementBoardAccessLevel level,
+	    final AnnouncementBoardAccessType type) {
+	announcementBoards = CollectionUtils.select(announcementBoards, new AnnouncementBoard.AcessLevelPredicate(level,
+		getLoggedPerson(request)));
+	announcementBoards = CollectionUtils.select(announcementBoards, new AnnouncementBoard.AcessTypePredicate(type,
+		getLoggedPerson(request)));
 	return announcementBoards;
     }
 
     private Collection<UnitAnnouncementBoard> getPagedUnitAnnouncementBoard(
-            Collection<UnitAnnouncementBoard> unitAnnouncementBoards, HttpServletRequest request) {
-        final String pageNumberString = request.getParameter("pageNumberUnitBoards");
-        final Integer pageNumber = pageNumberString != null && pageNumberString.length() > 0 ? Integer
-                .valueOf(pageNumberString) : Integer.valueOf(1);
-        request.setAttribute("pageNumberUnitBoards", pageNumber);
-        final CollectionPager<UnitAnnouncementBoard> unitBoardsPager = new CollectionPager<UnitAnnouncementBoard>(
-                unitAnnouncementBoards, PAGE_SIZE);
-        request.setAttribute("numberOfPagesUnitBoards", Integer.valueOf(unitBoardsPager
-                .getNumberOfPages()));
-        return unitBoardsPager.getPage(pageNumber);
+	    Collection<UnitAnnouncementBoard> unitAnnouncementBoards, HttpServletRequest request) {
+	final String pageNumberString = request.getParameter("pageNumberUnitBoards");
+	final Integer pageNumber = pageNumberString != null && pageNumberString.length() > 0 ? Integer.valueOf(pageNumberString)
+		: Integer.valueOf(1);
+	request.setAttribute("pageNumberUnitBoards", pageNumber);
+	final CollectionPager<UnitAnnouncementBoard> unitBoardsPager = new CollectionPager<UnitAnnouncementBoard>(
+		unitAnnouncementBoards, PAGE_SIZE);
+	request.setAttribute("numberOfPagesUnitBoards", Integer.valueOf(unitBoardsPager.getNumberOfPages()));
+	return unitBoardsPager.getPage(pageNumber);
     }
 
     private Collection<ExecutionCourseAnnouncementBoard> getPagedExecutionCourseAnnouncementBoard(
-            Collection<ExecutionCourseAnnouncementBoard> executionCourseAnnouncementBoards,
-            HttpServletRequest request) {
-        final String pageNumberString = request.getParameter("pageNumberExecutionCourseBoards");
-        final Integer pageNumber = pageNumberString != null && pageNumberString.length() > 0 ? Integer
-                .valueOf(pageNumberString) : Integer.valueOf(1);
-        request.setAttribute("pageNumberExecutionCourseBoards", pageNumber);
+	    Collection<ExecutionCourseAnnouncementBoard> executionCourseAnnouncementBoards, HttpServletRequest request) {
+	final String pageNumberString = request.getParameter("pageNumberExecutionCourseBoards");
+	final Integer pageNumber = pageNumberString != null && pageNumberString.length() > 0 ? Integer.valueOf(pageNumberString)
+		: Integer.valueOf(1);
+	request.setAttribute("pageNumberExecutionCourseBoards", pageNumber);
 
-        final CollectionPager<ExecutionCourseAnnouncementBoard> executionCourseBoardsPager = new CollectionPager<ExecutionCourseAnnouncementBoard>(
-                executionCourseAnnouncementBoards, PAGE_SIZE);
-        request.setAttribute("numberOfPagesExecutionCourseBoards", Integer
-                .valueOf(executionCourseBoardsPager.getNumberOfPages()));
-        return executionCourseBoardsPager.getPage(pageNumber);
+	final CollectionPager<ExecutionCourseAnnouncementBoard> executionCourseBoardsPager = new CollectionPager<ExecutionCourseAnnouncementBoard>(
+		executionCourseAnnouncementBoards, PAGE_SIZE);
+	request
+		.setAttribute("numberOfPagesExecutionCourseBoards", Integer
+			.valueOf(executionCourseBoardsPager.getNumberOfPages()));
+	return executionCourseBoardsPager.getPage(pageNumber);
     }
-    
+
     @Override
-    public ActionForward removeBookmark(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward removeBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	super.removeBookmark(request);
 
 	final String returnMethod = getReturnMethod(request);
@@ -301,15 +311,15 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 		return this.start(mapping, form, request, response);
 	    } else if (returnMethod.equals("handleBoardListing")) {
 		return this.handleBoardListing(mapping, form, request, response);
-	    } 
+	    }
 	}
 	return this.start(mapping, form, request, response);
     }
-    
+
     @Override
-    public ActionForward addBookmark(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+    public ActionForward addBookmark(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
 	super.createBookmark(request);
 	final String returnMethod = getReturnMethod(request);
 	if (returnMethod != null) {
@@ -323,15 +333,15 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
     }
 
     private String getReturnMethod(HttpServletRequest request) {
-	return (request.getAttribute("returnMethod") != null) ? request.getAttribute("returnMethod")
-		.toString() : request.getParameter("returnMethod");
+	return (request.getAttribute("returnMethod") != null) ? request.getAttribute("returnMethod").toString() : request
+		.getParameter("returnMethod");
     }
-    
+
     @Override
-    public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("returnMethod", "viewAnnouncements");
-        return super.addAnnouncement(mapping, form, request, response);
+	return super.addAnnouncement(mapping, form, request, response);
     }
 
 }
