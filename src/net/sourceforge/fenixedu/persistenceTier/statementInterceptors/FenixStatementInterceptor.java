@@ -403,8 +403,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 			.getObjectReferenceDescriptors();
 		for (ObjectReferenceDescriptor referenceDescriptor : referenceDescriptors) {
 		    if (shouldBeLogged(referenceDescriptor.getItemClass())) {
-			interestingKeys.add(referenceDescriptor.getForeignKeyFields().get(0).toString().replaceAll(
-				"([a-z]*)([A-Z])(.*?)", "$1_$2$3").toUpperCase());
+			interestingKeys.add(toSqlName(referenceDescriptor.getForeignKeyFields().get(0).toString()));
 		    }
 		}
 	    }
@@ -412,6 +411,10 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	    return interestingKeys;
 	}
 
+	public String toSqlName(String name) {
+	    return name.replaceAll(
+			"([a-z]*)([A-Z])(.*?)", "$1_$2$3").toUpperCase();
+	}
 	private boolean shouldBeLogged(Class itemClass) {
 	    for (Class clazz : loggingClasses) {
 		if (clazz.isAssignableFrom(itemClass)) {
