@@ -489,6 +489,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return result;
     }
 
+    public Set<LessonInstance> getAssociatedLessonInstances() {
+	Set<LessonInstance> result = new HashSet<LessonInstance>();
+	for(CourseLoad courseLoad : getCourseLoadsSet()) {
+	    result.addAll(courseLoad.getLessonInstances());
+	}
+	
+	return result;
+    }
+    
     public Double getStudentsNumberByShift(ShiftType shiftType) {
 	int numShifts = getNumberOfShifts(shiftType);
 
