@@ -170,7 +170,7 @@ public class Module extends Module_Base implements IFunctionality {
      */
     public boolean isVisible(FunctionalityContext context) {
         for (Node node : getChildren()) {
-            if (node.isVisible()) {
+            if (node.isNodeVisible()) {
                 return true;
             }
         }

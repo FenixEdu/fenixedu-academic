@@ -159,7 +159,7 @@ public class MenuRenderer extends OutputRenderer {
 		    final Collection<MenuEntry> entries, final Collection<String> subPath) {
 
 		for (MenuEntry entry : entries) {
-		    if (!entry.isVisible() || !entry.isAvailable(context)) {
+		    if (!entry.isNodeVisible() || !entry.isAvailable(context)) {
 			continue;
 		    }
 

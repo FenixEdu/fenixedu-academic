@@ -266,7 +266,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         ExplicitOrderNode node = (ExplicitOrderNode) functionality.getParentNode(parent);
         
         element.setAttribute("order", String.valueOf(node.getNodeOrder()));
-        element.setAttribute("visible", String.valueOf(node.isVisible()));
+        element.setAttribute("visible", String.valueOf(node.isNodeVisible()));
 
         if (functionality.getAvailabilityPolicy() != null) {
             String expression = ((ExpressionGroupAvailability) functionality.getAvailabilityPolicy()).getExpression();

@@ -173,7 +173,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 
 	    public void createList(HtmlList list, FilterFunctionalityContext context, Collection<MenuEntry> entries, Integer depth) {
 		for (MenuEntry entry : entries) {
-		    if (!entry.isVisible()) {
+		    if (!entry.isNodeVisible()) {
 			continue;
 		    }
 

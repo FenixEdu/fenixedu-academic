@@ -108,7 +108,7 @@ public class Item extends Item_Base {
 	final List<FileItem> sortedFileItems = new ArrayList<FileItem>();
 
 	for (Node node : getOrderedChildrenNodes(Attachment.class)) {
-	    if (node.isVisible()) {
+	    if (node.isNodeVisible()) {
 		sortedFileItems.add(((Attachment) node.getChild()).getFileItem());
 	    }
 	}

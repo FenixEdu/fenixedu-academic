@@ -11,7 +11,7 @@ public interface MenuEntry {
     public MultiLanguageString getName();
     public MultiLanguageString getTitle();
     public String getPath();
-    public boolean isVisible();
+    public boolean isNodeVisible();
     public boolean isAvailable();
     public boolean isAvailable(FunctionalityContext context);
     

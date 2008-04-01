@@ -87,7 +87,7 @@ public class TopLevelMenuRenderer extends OutputRenderer {
 
 		    AvailabilityPolicy policy = getAvailablityPocility(node);
 
-		    if (!node.isVisible() || (policy != null && !policy.isAvailable(context)) || node.getReferingContent() instanceof MetaDomainObjectPortal) {
+		    if (!node.isNodeVisible() || (policy != null && !policy.isAvailable(context)) || node.getReferingContent() instanceof MetaDomainObjectPortal) {
 			continue;
 		    }
 

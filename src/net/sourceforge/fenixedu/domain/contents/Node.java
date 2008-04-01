@@ -57,12 +57,7 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
 	setAscending(isAscending);
     }
 
-    @Override
-    public Boolean getVisible() {
-	return super.getVisible();
-    }
-
-    public boolean isVisible() {
+    public boolean isNodeVisible() { 
 	return super.getVisible() && getChild().isAvailable();
     }
 
