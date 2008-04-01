@@ -41,7 +41,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	addParameter("name", StringFormatter.prettyPrint(person.getName()));
 	addParameter("nameOfFather", StringFormatter.prettyPrint(person.getNameOfFather()));
 	addParameter("nameOfMother", StringFormatter.prettyPrint(person.getNameOfMother()));
-	addParameter("birthLocale", StringFormatter.prettyPrint(person.getDistrictOfBirth()));
+	addParameter("birthLocale", getBirthLocale(person));
 
 	final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, diplomaRequest
 		.getCycleCurriculumGroup());
@@ -67,6 +67,16 @@ public class Diploma extends AdministrativeOfficeDocument {
 	final CycleType cycleToInspect = diplomaRequest.getWhatShouldBeRequestedCycle();
 	addParameter("graduateTitle", registration.getGraduateTitle(cycleToInspect));
 	addParameter("degreeDescription", registration.getDegreeDescription(cycleToInspect));
+    }
+
+    private String getBirthLocale(final Person person) {
+	final StringBuilder result = new StringBuilder();
+
+	result.append(StringFormatter.prettyPrint(person.getParishOfBirth()));
+	result.append(", ");
+	result.append(StringFormatter.prettyPrint(person.getDistrictSubdivisionOfBirth()));
+
+	return result.toString();
     }
 
     private Registration getRegistration() {
