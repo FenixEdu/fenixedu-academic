@@ -21,7 +21,7 @@
 		<bean:message key="label.information.about.search.line2"/>
 	</div>
 
- 	<fr:form id="searchForm" action="<%= "/searchScormContent.do?method=searchScormContents&amp;executionCourseID=" + executionCourseID %>">
+ 	<fr:form id="searchForm" action="<%= "/searchScormContent.do?method=searchScormContents" %>">
 		<fr:hasMessages for="search" type="validation">
 			<p>
 			<span class="error0"><bean:message key="label.requiredFieldsNotPresent"/></span>
@@ -44,7 +44,7 @@
 					<fr:property name="defaultText" value="label.masterDegree.administrativeOffice.allExecutionYears"/>
 					<fr:property name="key" value="true"/>
 				</fr:layout>
-				<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeTimeStamp&amp;executionCourseID=" + executionCourseID %>"/>
+				<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeTimeStamp" %>"/>
 				</fr:edit>	
 	
 				<bean:message key="label.executionPeriod" bundle="APPLICATION_RESOURCES"/>:
@@ -56,7 +56,7 @@
 					<fr:property name="defaultText" value="label.masterDegree.administrativeOffice.allExecutionYears"/>
 					<fr:property name="key" value="true"/>
 				</fr:layout>
-				<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeTimeStamp&amp;executionCourseID=" + executionCourseID %>"/>
+				<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeTimeStamp" %>"/>
 				</fr:edit>
 			</td>
 		</tr>
@@ -128,29 +128,29 @@
  
 				<logic:equal name="index" value="0">
 					<div class="switchNone">
-					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
+					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria"  + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
 					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
 					 , 
-					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></html:link>								
+					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></html:link>								
 					</logic:greaterThan>
 					</div>
 					<div class="switchInline">
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a>
 					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
 					 , 
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></a>
 					</logic:greaterThan>
 					</div>
 				</logic:equal>
 				
 				<logic:notEqual name="index" value="0">
 					<div class="switchNone">
-					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link> , 			
-					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
+					<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link> , 			
+					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
 					</div>
 					<div class="switchInline">
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria&amp;executionCourseID=" + executionCourseID + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></a>
 					</div>
 				</logic:notEqual>
 			</td>
@@ -174,7 +174,7 @@
 <cp:collectionPages url="<%= 
 	"/publico/searchScormContent.do?method=moveIndex&amp" + bean.getSearchElementsAsParameters() + 
 	"&amp;executionCourseID=" + request.getParameter("executionCourseID") %>" 
-	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
+	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
 </p>
 </logic:notEqual>
 
@@ -202,7 +202,7 @@
 <cp:collectionPages url="<%= 
     "/publico/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters() + 
 	"&amp;executionCourseID=" + request.getParameter("executionCourseID") %>" 
-	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
+	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
 </p>
 </logic:notEqual>
 
