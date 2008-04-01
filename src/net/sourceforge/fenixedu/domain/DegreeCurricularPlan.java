@@ -1777,7 +1777,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Set<Registration> getRegistrations(ExecutionYear executionYear, Set<Registration> registrations) {
 	for (final StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
 	    if (studentCurricularPlan.isActive(executionYear)) {
-		registrations.add(studentCurricularPlan.getRegistration());
+		if (studentCurricularPlan.getRegistration() != null) {
+		    registrations.add(studentCurricularPlan.getRegistration());
+		}
 	    }
 	}
 	return registrations;
