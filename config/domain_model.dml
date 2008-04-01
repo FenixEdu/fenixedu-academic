@@ -4596,6 +4596,30 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 			Boolean notifyUsers;
 			DateTime timeStamp;
 		}	
+		
+		
+class net.sourceforge.fenixedu.domain.log.requests.RequestMapping extends net.sourceforge.fenixedu.domain.DomainObject {
+	String path;
+	String parameters;
+}	
+	
+class net.sourceforge.fenixedu.domain.log.requests.RequestLog extends net.sourceforge.fenixedu.domain.DomainObject {
+	String queryString;
+	DateTime requestTime;
+	String requester;
+	String requestAttributes;
+	String sessionAttributes;
+}	
+	
+class net.sourceforge.fenixedu.domain.log.requests.ErrorLog extends net.sourceforge.fenixedu.domain.DomainObject {
+	String stackTrace;
+}	
+
+class net.sourceforge.fenixedu.domain.log.requests.ExceptionType extends net.sourceforge.fenixedu.domain.DomainObject {
+	String type;
+}	
+
+
 /*
  * Relations definitions
  * 
@@ -12396,4 +12420,53 @@ relation PersonCardGenerationProblem {
 relation DeployNotifierRootDomainObject {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.DeployNotifier playsRole deployNotifier; 
+}
+
+relation RequestMappingRequestLog {
+	net.sourceforge.fenixedu.domain.log.requests.RequestMapping playsRole mapping;
+	net.sourceforge.fenixedu.domain.log.requests.RequestLog playsRole logs {
+		multiplicity *;
+	}
+}
+
+relation RequestLogErrorLog {
+	net.sourceforge.fenixedu.domain.log.requests.RequestLog playsRole requestLogs {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.log.requests.ErrorLog playsRole errorLog;
+}
+
+relation ErrorLogExceptionType {
+	net.sourceforge.fenixedu.domain.log.requests.ErrorLog playsRole errorLogs {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.log.requests.ExceptionType playsRole exception;
+}
+
+relation RequestMappingRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.log.requests.RequestMapping playsRole requestMappings {
+		multiplicity *;
+	}
+}
+
+relation ErrorLogRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.log.requests.ErrorLog playsRole errorLogs {
+		multiplicity *;
+	}
+}
+
+relation RequestLogRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.log.requests.RequestLog playsRole requestLogs {
+		multiplicity *;
+	}
+}
+
+relation ExceptionTypeRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.log.requests.ExceptionType playsRole exceptionTypes {
+		multiplicity *;
+	}
 }
