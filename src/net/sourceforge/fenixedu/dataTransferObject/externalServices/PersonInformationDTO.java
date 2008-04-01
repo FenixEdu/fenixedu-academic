@@ -5,11 +5,11 @@ package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -47,6 +47,8 @@ public class PersonInformationDTO {
 
     private byte[] photo;
 
+    private String citizenIdNumber;
+
     public PersonInformationDTO(final Person person) {
 	this.name = person.getName();
 	this.displayName = person.getNickname();
@@ -60,6 +62,10 @@ public class PersonInformationDTO {
 	this.availableWebSite = person.getAvailableWebSite();
 	this.availablePhoto = person.getAvailablePhoto();
 	this.userUID = person.getIstUsername();
+
+	if (person.getIdDocumentType() == IDDocumentType.IDENTITY_CARD) {
+	    this.citizenIdNumber = person.getDocumentIdNumber();
+	}
 
 	this.roles = new ArrayList<String>();
 	for (Role role : person.getPersonRoles()) {
@@ -193,6 +199,14 @@ public class PersonInformationDTO {
 
     public void setAlias(List<String> alias) {
 	this.alias = alias;
+    }
+
+    public String getCitizenIdNumber() {
+	return citizenIdNumber;
+    }
+
+    public void setCitizenIdNumber(String citizenIdNumber) {
+	this.citizenIdNumber = citizenIdNumber;
     }
 
 }
