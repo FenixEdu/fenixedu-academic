@@ -283,7 +283,7 @@ table th.cornerleft2 { background: none; border-left: none; border-top: none; bo
 table td.cornerright { }
 
 /* error , warning */
-.tderror1 { color: #c00; }
+.tderror1 { color: #c00; white-space: nowrap; }
 .tderror1 span { background-color: #ffeadd; }
 
 table.thnowrap tr th { white-space: nowrap; }
@@ -2290,6 +2290,14 @@ margin: 0;
 padding: 0 0.5em;
 color: #000;
 font-weight: bold;
+}
+
+.tinvisible td {
+padding: 0;
+border: none;
+}
+.dinlineinside * {
+display: inline;
 }
 
 /* -------------------------
