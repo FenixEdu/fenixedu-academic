@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Request Logging Request Tables" createRequestLoggingTables.sql
