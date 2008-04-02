@@ -138,6 +138,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	try {
 	    errorLogger.join();
 	} catch (InterruptedException e) {
+	    e.printStackTrace();
 	}
 
 	return super.execute(ex, ae, mapping, formInstance, request, response);
@@ -216,12 +217,8 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	public void run() {
 	    Transaction.withTransaction(new jvstm.TransactionalCommand() {
 		public void doIt() {
-		    try {
-			RequestLog.registerError(path, parameters, queryString, user, requestAttributes, sessionAttributes,
-				stackTrace, exceptionType);
-		    } catch (Exception e) {
-			e.printStackTrace();
-		    }
+		    RequestLog.registerError(path, parameters, queryString, user, requestAttributes, sessionAttributes,
+			    stackTrace, exceptionType);
 		}
 	    });
 	}
