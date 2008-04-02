@@ -503,6 +503,10 @@ public abstract class Event extends Event_Base {
 
 	return null;
     }
+    
+    public boolean hasAccountingTransactionFor(final Installment installment) {
+	return installment != null && getAccountingTransactionFor(installment) != null;
+    }
 
     public boolean hasInstallments() {
 	return false;
