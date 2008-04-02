@@ -124,4 +124,8 @@ public abstract class Installment extends Installment_Base {
 	return labelFormatter;
 
     }
+    
+    public boolean isWithMonthlyPenalty() {
+	return false;
+    }
 }

@@ -77,5 +77,10 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
 	return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths
 		: getMaxMonthsToApplyPenalty();
     }
+    
+    @Override
+    public boolean isWithMonthlyPenalty() {
+        return true;
+    }
 
 }
