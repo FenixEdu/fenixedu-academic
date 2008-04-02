@@ -25,6 +25,7 @@ import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.MetadataManager;
 import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 import org.apache.ojb.broker.metadata.fieldaccess.PersistentField;
+import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import dml.DmlCompiler;
 import dml.DomainClass;
@@ -125,7 +126,7 @@ public class OJBMetadataGenerator {
         	if (classDescriptor != null) {
         	    setFactoryMethodAndClass(classDescriptor);
 
-        	    updateFields(classDescriptor, domClass, ojbMetadata, clazz);
+        	    updateFields(domainModel, classDescriptor, domClass, ojbMetadata, clazz);
         	    if (!Modifier.isAbstract(clazz.getModifiers())) {
         		updateRelations(classDescriptor, domClass, ojbMetadata, clazz);
         	    }
@@ -197,13 +198,16 @@ public class OJBMetadataGenerator {
     }
 
 
-    protected static void updateFields(final ClassDescriptor classDescriptor,
-            final DomainClass domClass, Map ojbMetadata, Class persistentFieldClass) throws Exception {
+    protected static void updateFields(final DomainModel domainModel,
+                                       final ClassDescriptor classDescriptor,
+                                       final DomainClass domClass, 
+                                       final Map ojbMetadata, 
+                                       final Class persistentFieldClass) throws Exception {
 
         DomainEntity domEntity = domClass;
         int fieldID = 1;
 
-        addFieldDescriptor("idInternal", "java.lang.Integer", fieldID++, classDescriptor, persistentFieldClass);
+        addFieldDescriptor(domainModel, "idInternal", "java.lang.Integer", fieldID++, classDescriptor, persistentFieldClass);
 
         while (domEntity instanceof DomainClass) {
             DomainClass dClass = (DomainClass) domEntity;
@@ -212,7 +216,7 @@ public class OJBMetadataGenerator {
             while (slots.hasNext()) {
                 Slot slot = slots.next();
 
-                addFieldDescriptor(slot.getName(), slot.getType(), fieldID++, classDescriptor, persistentFieldClass);
+                addFieldDescriptor(domainModel, slot.getName(), slot.getType(), fieldID++, classDescriptor, persistentFieldClass);
             }
 
             domEntity = dClass.getSuperclass();
@@ -220,26 +224,16 @@ public class OJBMetadataGenerator {
 
     }
 
-    protected static void addFieldDescriptor(String slotName,
+    protected static void addFieldDescriptor(DomainModel domainModel,
+                                             String slotName,
                                              String slotType,
                                              int fieldID, 
                                              ClassDescriptor classDescriptor,
-                                             Class persistentFieldClass) {
+                                             Class persistentFieldClass) throws Exception {
         if (classDescriptor.getFieldDescriptorByName(slotName) == null){
             FieldDescriptor fieldDescriptor = new FieldDescriptor(classDescriptor, fieldID);
             fieldDescriptor.setColumnName(StringFormatter.convertToDBStyle(slotName));
-            // System.out.println(">> " + slotType);
-            // System.out.println("\t" +
-            // java2JdbcConversion.get(slotType));
-            fieldDescriptor.setColumnType(rbJDBCTypes.getString(slotType).trim());
-
             fieldDescriptor.setAccess("readwrite");
-
-            try {
-                String conversor = rbConversors.getString(slotType).trim();
-                fieldDescriptor.setFieldConversionClassName(conversor);
-            } catch (MissingResourceException e) {
-            }
 
             if (slotName.equals("idInternal")) {
                 fieldDescriptor.setPrimaryKey(true);
@@ -247,6 +241,33 @@ public class OJBMetadataGenerator {
             }
             PersistentField persistentField = new FenixPersistentField(persistentFieldClass, slotName);
             fieldDescriptor.setPersistentField(persistentField);
+
+            String converter = null;
+            try {
+                converter = rbConversors.getString(slotType);
+            } catch (MissingResourceException e) {
+                // it's ok if some type does not exist in this bundle
+                // so, ignore the errors that may occur
+            }
+
+            // specifying a converter overrides the special handling of enums
+            boolean isEnum = ((converter == null) && domainModel.isEnumType(slotType));
+
+            if (isEnum) {
+                // we can't use a Class.forName(slotType) here because the value
+                // of slotType is not correct for inner classes: it uses the Java source code 
+                // notation (a dot) rather than the $ needed by the Class.forName method
+                Class<? extends Enum> enumClass = (Class<? extends Enum>) persistentField.getType();
+                fieldDescriptor.setFieldConversion(new Enum2SqlConversion(enumClass));
+            } else {
+                if (converter != null) {
+                    fieldDescriptor.setFieldConversionClassName(converter.trim());
+                }
+            }
+
+            String sqlType = (isEnum ? "VARCHAR" : rbJDBCTypes.getString(slotType).trim());
+            fieldDescriptor.setColumnType(sqlType);
+
             classDescriptor.addFieldDescriptor(fieldDescriptor);
         }
     }

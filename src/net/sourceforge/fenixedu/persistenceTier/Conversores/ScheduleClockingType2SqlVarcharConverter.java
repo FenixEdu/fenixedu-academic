@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
@@ -8,7 +7,7 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 public class ScheduleClockingType2SqlVarcharConverter implements FieldConversion {
 
 	public Object javaToSql(Object source) {
-		if (source instanceof JustificationType) {
+		if (source instanceof ScheduleClockingType) {
 			ScheduleClockingType scheduleClockingType = (ScheduleClockingType) source;
 			return scheduleClockingType.toString();
 		}
