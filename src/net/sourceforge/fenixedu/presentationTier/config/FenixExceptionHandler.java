@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.stm.Transaction;
 import net.sourceforge.fenixedu.util.ArrayUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -130,8 +131,9 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	super.storeException(request, property, error, forward, ae.getScope());
 
 	String[] parameters = ArrayUtils.toStringArray(request.getParameterNames(), "_request_checksum_", "jsessionid");
-	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), parameters, request.getQueryString(), userView
-		.getUtilizador(), requestContext, sessionContext, stackTrace, ex.getClass().getName());
+	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), parameters, request.getQueryString(),
+		userView == null ? StringUtils.EMPTY : userView.getUtilizador(), requestContext, sessionContext, stackTrace, ex
+			.getClass().getName());
 	errorLogger.start();
 	try {
 	    errorLogger.join();
