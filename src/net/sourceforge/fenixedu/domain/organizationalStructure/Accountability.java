@@ -38,6 +38,10 @@ public class Accountability extends Accountability_Base {
 	return belongsToPeriod(currentDate, currentDate);
     }
 
+    public boolean isFinished() {
+	return getEndDate() != null && getEndDate().isBefore(new YearMonthDay());
+    }
+
     public boolean isPersonFunction() {
 	return false;
     }
@@ -77,7 +81,7 @@ public class Accountability extends Accountability_Base {
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
 	final YearMonthDay start = getBeginDate();
-	final YearMonthDay end = getEndDate();	
+	final YearMonthDay end = getEndDate();
 	return start != null && (end == null || !start.isAfter(end));
-    }     
+    }
 }

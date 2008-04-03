@@ -73,6 +73,7 @@
 					<fr:property name="link(edit)" value="/assiduousnessStructure.do?method=prepareEditPersonFunction" />
 					<fr:property name="key(edit)" value="label.edit" />
 					<fr:property name="param(edit)" value="idInternal" />
+					<fr:property name="visibleIfNot(edit)" value="finished" />
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>

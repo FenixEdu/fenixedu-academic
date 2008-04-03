@@ -165,9 +165,9 @@ public class AssiduousnessStructureSearch implements Serializable {
 	}
 
 	for (PersonFunction personFunction : personFunctionList) {
-	    YearMonthDay begin = new YearMonthDay();
-	    if (personFunction.isActive(begin)
-		    && personFunction.getFunction().getFunctionType() == FunctionType.ASSIDUOUSNESS_RESPONSIBLE) {
+	    // YearMonthDay begin = new YearMonthDay();
+	    if (// (!personFunction.getEndDate().isBefore(begin)) &&
+	    personFunction.getFunction().getFunctionType() == FunctionType.ASSIDUOUSNESS_RESPONSIBLE) {
 		getPersonFunctionList().add(personFunction);
 	    }
 	}
@@ -181,12 +181,12 @@ public class AssiduousnessStructureSearch implements Serializable {
 	if (party instanceof Unit) {
 	    allParentUnits = ((Unit) party).getAllParentUnits();
 	}
-	YearMonthDay today = new YearMonthDay();
+	// YearMonthDay today = new YearMonthDay();
 
 	for (PersonFunction personFunction : allPersonFunctionList) {
-	    if (!personFunction.isActive(today)) {
-		continue;
-	    }
+	    // if (!personFunction.getEndDate().isBefore(today)) {
+	    // continue;
+	    // }
 
 	    Party functionParty = personFunction.getParentParty();
 	    if (party == null || functionParty.equals(party) || (allParentUnits.contains(functionParty))) {
@@ -204,7 +204,8 @@ public class AssiduousnessStructureSearch implements Serializable {
 	    if (accountability instanceof PersonFunction) {
 		PersonFunction personFunction = (PersonFunction) accountability;
 		if ((!personFunction.getAccountabilityType().getType().equals(AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE))
-			|| (!personFunction.isActive(today)) || (personFunction.getFunction().isVirtual())) {
+		// || (!personFunction.isActive(today))
+			|| (personFunction.getFunction().isVirtual())) {
 		    continue;
 		}
 		result.add(personFunction);

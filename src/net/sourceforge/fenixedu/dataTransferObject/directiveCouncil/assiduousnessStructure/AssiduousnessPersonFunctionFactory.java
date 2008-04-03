@@ -35,11 +35,14 @@ public class AssiduousnessPersonFunctionFactory implements Serializable, Factory
 
     private YearMonthDay endDate;
 
-    public AssiduousnessPersonFunctionFactory(AssiduousnessStructureSearch assiduousnessStructureSearch,
-	    boolean byPersons) {
+    public AssiduousnessPersonFunctionFactory(AssiduousnessStructureSearch assiduousnessStructureSearch, boolean byPersons) {
 	setResponsible(assiduousnessStructureSearch.getResponsible());
 	setParty(assiduousnessStructureSearch.getParty());
 	setByPersons(byPersons);
+	YearMonthDay now = new YearMonthDay();
+	YearMonthDay lastDay = new YearMonthDay(now.getYear(), 12, 31);
+	setBeginDate(now);
+	setEndDate(lastDay);
     }
 
     public boolean isByPersons() {
@@ -111,25 +114,21 @@ public class AssiduousnessPersonFunctionFactory implements Serializable, Factory
 	    Function function = getFunction((Unit) getParty(), getBeginDate());
 	    if (getEmployeesList() != null && getEmployeesList().size() != 0) {
 		for (Employee employee : getEmployeesList()) {
-		    new PersonFunction(employee.getPerson(), getResponsible(), function, getBeginDate(),
-			    getEndDate());
+		    new PersonFunction(employee.getPerson(), getResponsible(), function, getBeginDate(), getEndDate());
 		}
 	    } else {
 		new PersonFunction(getParty(), getResponsible(), function, getBeginDate(), getEndDate());
 	    }
 
 	} else if (getParty() instanceof Person) {
-	    Function function = getFunction(
-		    ((Person) getParty()).getEmployee().getCurrentWorkingPlace(), getBeginDate());
-	    new PersonFunction((Person) getParty(), getResponsible(), function, getBeginDate(),
-		    getEndDate());
+	    Function function = getFunction(((Person) getParty()).getEmployee().getCurrentWorkingPlace(), getBeginDate());
+	    new PersonFunction((Person) getParty(), getResponsible(), function, getBeginDate(), getEndDate());
 	}
 	return null;
     }
 
     private Function getFunction(Unit unit, YearMonthDay begin) {
-	for (AccountabilityType accountabilityType : RootDomainObject.getInstance()
-		.getAccountabilityTypes()) {
+	for (AccountabilityType accountabilityType : RootDomainObject.getInstance().getAccountabilityTypes()) {
 	    if (accountabilityType instanceof Function) {
 		Function function = ((Function) accountabilityType);
 		if (function.getUnit().equals(unit) && function.getFunctionType() != null
@@ -138,8 +137,8 @@ public class AssiduousnessPersonFunctionFactory implements Serializable, Factory
 		}
 	    }
 	}
-	return new Function(new MultiLanguageString(Language.pt, "Responsável pela Assiduidade"), begin,
-		null, FunctionType.ASSIDUOUSNESS_RESPONSIBLE, unit);
+	return new Function(new MultiLanguageString(Language.pt, "Responsável pela Assiduidade"), begin, null,
+		FunctionType.ASSIDUOUSNESS_RESPONSIBLE, unit);
     }
 
 }
