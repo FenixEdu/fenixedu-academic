@@ -90,7 +90,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
