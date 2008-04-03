@@ -28,16 +28,19 @@ else
 		 %>
 		<html:messages id="infoMsg" message="true" bundle="CMS_RESOURCES">
 			<logic:present name="infoMsg">
-				<ul onclick="check(document.getElementById('<%="I"+infoMessageNumber%>'));check(document.getElementById('<%="ID"+infoMessageNumber%>'));">
+				<div onclick="check(document.getElementById('<%="I"+infoMessageNumber%>'));check(document.getElementById('<%="ID"+infoMessageNumber%>'));">
 					<div id="<%="ID"+infoMessageNumber%>" <%if(! (infoMessages instanceof StartHiddenActionMessages)) {%> style="display:none"<%} %>>
-						<u><bean:message bundle="CMS_RESOURCES" key="cms.context.infoDetails"/></u>
+						<a href="#"/><bean:message key="cms.context.showDetails" bundle="CMS_RESOURCES"/></a>
 					</div>
 					<div id="<%="I"+infoMessageNumber%>" <%if(infoMessages instanceof StartHiddenActionMessages) {%> style="display:none"<%} %>>
-						<li onclick="check(document.getElementById('<%=infoMessageNumber %>'));">
-							<bean:write name="infoMsg" filter="false"/>
-						</li>
+							<div onclick="check(document.getElementById('<%=infoMessageNumber %>'));">
+								<a href="#"/><bean:message key="cms.context.hideDetails" bundle="CMS_RESOURCES"/></a>
+								<div class="infoop2">
+									<bean:write name="infoMsg" filter="false"/>
+								</div>
+							</div>
 					</div>
-				</ul>
+				</div>
 				<% infoMessageNumber++; %>
 			</logic:present>		 
 		</html:messages>
@@ -51,16 +54,19 @@ else
 		 %>
 		<html:messages id="errorMsg" message="false" bundle="CMS_RESOURCES">
 			<logic:present name="errorMsg">
-				<ul onclick="check(document.getElementById('<%="E"+errorMessageNumber%>'));check(document.getElementById('<%="ED"+errorMessageNumber%>'));">
-					<div id="<%="ED"+errorMessageNumber%>" <%if(!(errorMessages instanceof StartHiddenActionMessages)) {%> style="display:none"<%} %>>
-						<u><bean:message bundle="CMS_RESOURCES" key="cms.context.errorDetails"/></u>
+				<div onclick="check(document.getElementById('<%="E"+errorMessageNumber%>'));check(document.getElementById('<%="ED"+errorMessageNumber%>'));">
+					<div id="<%="ED"+errorMessageNumber%>" <%if(! (errorMessages instanceof StartHiddenActionMessages)) {%> style="display:none"<%} %>>
+						<a href="#"/><bean:message key="cms.context.showErrors" bundle="CMS_RESOURCES"/></a>
 					</div>
 					<div id="<%="E"+errorMessageNumber%>" <%if(errorMessages instanceof StartHiddenActionMessages) {%> style="display:none"<%} %>>
-						<li>
-							<bean:write name="errorMsg" filter="false"/>
-						</li>
+							<div onclick="check(document.getElementById('<%=infoMessageNumber %>'));">
+								<a href="#"/><bean:message key="cms.context.hideErrors" bundle="CMS_RESOURCES"/></a>
+								<div class="error2">
+									<bean:write name="errorMsg" filter="false"/>
+								</div>
+							</div>
 					</div>
-				</ul>
+				</div>
 				<% errorMessageNumber++; %>
 			</logic:present>
 		</html:messages>

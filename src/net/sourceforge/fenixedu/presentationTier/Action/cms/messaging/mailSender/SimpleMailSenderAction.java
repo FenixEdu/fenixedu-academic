@@ -104,7 +104,12 @@ public class SimpleMailSenderAction extends FenixDispatchAction {
 
                 if (report.getPersonReport(status) != null) {
                     for (Person person : report.getPersonReport(status)) {
-                        addActionMessage("problem", request, "messaging.mail.address.problem", person.getEmail());
+                	StringBuffer buffer = new StringBuffer("");
+                	buffer.append(person.getName());
+                	buffer.append(" (");
+                	buffer.append(person.getEmail());
+                	buffer.append(")");
+                        addActionMessage("problem", request, "messaging.mail.address.problem", buffer.toString());
                         hasProblems = true;
                     }
                 }

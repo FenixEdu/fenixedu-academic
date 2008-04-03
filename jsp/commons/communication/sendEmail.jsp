@@ -30,9 +30,12 @@
     <p>
         <span class="error0">
             <bean:message key="messaging.mail.address.problem.text" bundle="MESSAGING_RESOURCES"/>:
+          
+          	<ul>
             <html:messages id="message" property="problem" message="true" bundle="MESSAGING_RESOURCES">
-                <bean:write name="message"/>,
+				   <li><bean:write name="message"/></li>
             </html:messages>
+            </ul>
         </span>
     </p>
 </logic:messagesPresent>
