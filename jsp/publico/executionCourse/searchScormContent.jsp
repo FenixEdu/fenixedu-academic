@@ -172,8 +172,7 @@
 <p>
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-	"/publico/searchScormContent.do?method=moveIndex&amp" + bean.getSearchElementsAsParameters() + 
-	"&amp;executionCourseID=" + request.getParameter("executionCourseID") %>" 
+	"/publico/searchScormContent.do?method=moveIndex&amp" + bean.getSearchElementsAsParameters()  %>" 
 	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
 </p>
 </logic:notEqual>
@@ -200,8 +199,7 @@
 <p>
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-    "/publico/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters() + 
-	"&amp;executionCourseID=" + request.getParameter("executionCourseID") %>" 
+    "/publico/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters() %>" 
 	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
 </p>
 </logic:notEqual>
