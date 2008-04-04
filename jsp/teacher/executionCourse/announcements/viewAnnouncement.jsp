@@ -7,11 +7,10 @@
 
 <logic:present name="announcement">
 
-	<bean:define id="announcement" name="announcement" type="net.sourceforge.fenixedu.domain.messaging.Announcement"/>
 		
 	<em><bean:message key="label.messaging.portal" bundle="MESSAGING_RESOURCES"/></em>
 	<h2><bean:write name="announcement" property="announcementBoard.name"/></h2>
-
+	
 	<%
 	String contextPrefix = (String) request.getAttribute("contextPrefix");
 	String extraParameters = (String) request.getAttribute("extraParameters");
@@ -29,7 +28,7 @@
 					<bean:message bundle="MESSAGING_RESOURCES" key="label.listAnnouncements.published.in" />
 					<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
 
-					<logic:equal name="announcementBoard" property="currentUserWritter">
+					<logic:equal name="announcementBoard" property="currentUserWritter" value="true">
 						<logic:notEmpty name="announcement" property="publicationEnd">
 						 	<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.until" />
 							<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
@@ -43,7 +42,7 @@
 			</logic:empty>
 		</span>
 	</p>
-				
+					
 <%-- Tï¿½tulo --%>
 	<h3 class="mvert025">
 		<b><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></b>
@@ -63,7 +62,8 @@
 	<logic:notEmpty name="announcement" property="author">
 		<logic:notEmpty name="announcement" property="authorEmail">
 			<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.author" />:
-			<html:link href="<%="mailto:"+announcement.getAuthorEmail()%>">
+			<bean:define id="email" name="announcement" property="authorEmail"/>
+			<html:link href="<%="mailto:"+ email %>">
 				<fr:view name="announcement" property="author"/>
 			</html:link>
 			 - 
@@ -108,14 +108,15 @@
 	</logic:notEmpty>
 	
 <%-- Modificado em --%>
-		<logic:equal name="annoucement" property="originalVersion" value="false">
+		<logic:equal name="announcement" property="originalVersion" value="false">
 			<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.modified.in" />:
 			<fr:view name="announcement" property="lastModification" type="org.joda.time.DateTime" layout="no-time"/>
 			 - 
 		 </logic:equal>
 
-<%-- Data de Criaï¿½ï¿½o --%>
-	<html:link linkName="<%=announcement.getIdInternal().toString()%>"/>
+<%-- Data de Criação --%>
+	<bean:define id="idInternal" name="announcement" property="idInternal" type="java.lang.Integer"/> 
+	<html:link linkName="<%= idInternal.toString() %>"/>
 		<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES" />: 
 		<fr:view name="announcement" property="creationDate" type="org.joda.time.DateTime" layout="no-time"/>
 	</em>
