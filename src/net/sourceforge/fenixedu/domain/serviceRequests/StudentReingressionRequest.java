@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -21,7 +22,7 @@ import org.joda.time.DateTime;
 public class StudentReingressionRequest extends StudentReingressionRequest_Base {
 
     static final public List<RegistrationStateType> ALLOWED_TYPES = Arrays.asList(RegistrationStateType.FLUNKED,
-	    RegistrationStateType.INTERRUPTED);
+	    RegistrationStateType.INTERRUPTED, RegistrationStateType.EXTERNAL_ABANDON);
 
     private StudentReingressionRequest() {
 	super();
@@ -72,7 +73,27 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     private boolean isEnrolmentPeriodOpen(final Registration registration, final ExecutionYear executionYear,
 	    final DateTime requestDate) {
+
 	final DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
+	if (hasOpenEnrolmentPeriod(degreeCurricularPlan, executionYear, requestDate)) {
+	    return true;
+	}
+
+	if (!degreeCurricularPlan.isBolonhaDegree()
+		&& !(registration.hasConclusionProcessResponsible() || registration.isConcluded())) {
+	    
+	    for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : degreeCurricularPlan.getTargetEquivalencePlans()) {
+		if (hasOpenEnrolmentPeriod(equivalencePlan.getDegreeCurricularPlan(), executionYear, requestDate)) {
+		    return true;
+		}
+	    }
+	}
+
+	return false;
+    }
+
+    private boolean hasOpenEnrolmentPeriod(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear,
+	    final DateTime requestDate) {
 	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
 	    final EnrolmentPeriod enrolmentPeriod = degreeCurricularPlan.getEnrolmentPeriodInCurricularCoursesBy(executionPeriod);
 	    if (enrolmentPeriod != null && enrolmentPeriod.containsDate(requestDate)) {
