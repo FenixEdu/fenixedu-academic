@@ -3,8 +3,9 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import java.sql.Date;
 import java.util.Calendar;
+
+import org.joda.time.YearMonthDay;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,9 +19,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -30,7 +31,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 
-import org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -71,35 +71,20 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         dynaForm.set("name", oldInfoDegreeCP.getName());
         dynaForm.set("state", oldInfoDegreeCP.getState().toString());
 
-        if (oldInfoDegreeCP.getInitialDate() != null) {
+        DegreeCurricularPlan oldDegreeCP = oldInfoDegreeCP.getDegreeCurricularPlan();
 
-            JavaDate2SqlDateFieldConversion iJavaDate = new JavaDate2SqlDateFieldConversion();
-            Date iSqlDate = (Date) iJavaDate.javaToSql(oldInfoDegreeCP.getInitialDate());
-            Calendar2DateFieldConversion initialCal = new Calendar2DateFieldConversion();
-            Calendar initialCalendar = (Calendar) initialCal.sqlToJava(iSqlDate);
-
-            String day = (new Integer(initialCalendar.get(Calendar.DAY_OF_MONTH))).toString();
-            String month = (new Integer(initialCalendar.get(Calendar.MONTH) + 1)).toString();
-            String year = (new Integer(initialCalendar.get(Calendar.YEAR))).toString();
-            String initialDateString = day + "/" + month + "/" + year;
+        if (oldDegreeCP.getInitialDateYearMonthDay() != null) {
+            YearMonthDay ymd = oldDegreeCP.getInitialDateYearMonthDay();
+            String initialDateString = ymd.getDayOfMonth() + "/" + ymd.getMonthOfYear() + "/" + ymd.getYear();
 
             dynaForm.set("initialDate", initialDateString);
         }
 
-        if (oldInfoDegreeCP.getEndDate() != null) {
-
-            JavaDate2SqlDateFieldConversion javaDate = new JavaDate2SqlDateFieldConversion();
-            Date sqlDate = (Date) javaDate.javaToSql(oldInfoDegreeCP.getEndDate());
-            Calendar2DateFieldConversion endCal = new Calendar2DateFieldConversion();
-            Calendar endCalendar = (Calendar) endCal.sqlToJava(sqlDate);
-
-            String day = (new Integer(endCalendar.get(Calendar.DAY_OF_MONTH))).toString();
-            String month = (new Integer(endCalendar.get(Calendar.MONTH) + 1)).toString();
-            String year = (new Integer(endCalendar.get(Calendar.YEAR))).toString();
-            String endDateString = day + "/" + month + "/" + year;
+        if (oldDegreeCP.getEndDateYearMonthDay() != null) {
+            YearMonthDay ymd = oldDegreeCP.getEndDateYearMonthDay();
+            String endDateString = ymd.getDayOfMonth() + "/" + ymd.getMonthOfYear() + "/" + ymd.getYear();
 
             dynaForm.set("endDate", endDateString);
-
         }
 
         if (oldInfoDegreeCP.getDegreeDuration() != null) {
