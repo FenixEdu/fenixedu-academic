@@ -64,7 +64,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	    if (getChosenDocumentRequestType().isCertificate()) {
 		return CertificateRequest.create(getRegistration(), new DateTime(), getChosenDocumentRequestType(),
 			getChosenDocumentPurposeType(), getOtherPurpose(), getUrgentRequest(), getAverage(), getDetailed(),
-			getExecutionYear(), getMobilityProgram(), getRequestedCycle(), getFreeProcessed(), getSelectedEnrolments(),
+			getExecutionYear(), getMobilityProgram(), getRequestedCycle(), getFreeProcessed(), getEnrolments(),
 			getExams(), getExecutionPeriod(), getInternship(), getStudyPlan());
 
 	    } else if (getChosenDocumentRequestType().isDeclaration()) {

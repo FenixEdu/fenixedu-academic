@@ -14,13 +14,16 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates.ExamDateCertificateExamSelectionBean;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.DocumentRequestCreator;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -294,4 +297,23 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	return forwardBuilded;
     }
 
+    public ActionForward useAllPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) getRenderedObject();
+	if (documentRequestCreateBean.isToUseAll()) {
+	    documentRequestCreateBean.setEnrolments(documentRequestCreateBean.getStudent().getApprovedEnrolments(getAdministrativeOffice()));
+	} else {
+	    documentRequestCreateBean.setEnrolments(new ArrayList<Enrolment>());
+	}
+	RenderUtils.invalidateViewState();
+	request.setAttribute("documentRequestCreateBean", documentRequestCreateBean);
+	setAdditionalInformationSchemaName(request, documentRequestCreateBean);
+	
+	return mapping.findForward("createDocumentRequests");
+    }
+    
+    private AdministrativeOffice getAdministrativeOffice() {
+	return AccessControl.getPerson().getEmployeeAdministrativeOffice();
+    }
 }

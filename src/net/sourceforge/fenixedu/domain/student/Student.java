@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
@@ -300,6 +301,20 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public List<Registration> getRegistrationsFor(final AdministrativeOffice administrativeOffice) {
+	final List<Registration> result = new ArrayList<Registration>();
+	for (final Registration registration : getRegistrations()) {
+	    if (registration.isForOffice(administrativeOffice)) {
+		result.add(registration);
+	    }
+	}
+	return result;
+    }
+
+    public List<Registration> getRegistrationsFor(final AdministrativeOfficeType administrativeOfficeType) {
+	return getRegistrationsFor(AdministrativeOffice.readByAdministrativeOfficeType(administrativeOfficeType));
+    }
+
     public boolean hasActiveRegistrationForOffice(Unit office) {
 	Set<Registration> registrations = getRegistrationsSet();
 	for (Registration registration : registrations) {
@@ -531,6 +546,14 @@ public class Student extends Student_Base {
 	}
 	return aprovedEnrolments;
     }
+    
+    public List<Enrolment> getApprovedEnrolments(final AdministrativeOffice administrativeOffice) {
+	final List<Enrolment> aprovedEnrolments = new ArrayList<Enrolment>();
+	for (final Registration registration : getRegistrationsFor(administrativeOffice)) {
+	    aprovedEnrolments.addAll(registration.getApprovedEnrolments());
+	}
+	return aprovedEnrolments;
+    }
 
     public Set<Enrolment> getDismissalApprovedEnrolments() {
 	Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
@@ -670,8 +693,8 @@ public class Student extends Student_Base {
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations directly
-     * (use {@link addRegistrations} method)
+     * registrations -> Do not use this method to add new registrations
+     * directly (use {@link addRegistrations} method)
      */
     @Override
     public List<Registration> getRegistrations() {
@@ -690,8 +713,8 @@ public class Student extends Student_Base {
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations directly
-     * (use {@link addRegistrations} method)
+     * registrations -> Do not use this method to add new registrations
+     * directly (use {@link addRegistrations} method)
      */
     @Override
     public Set<Registration> getRegistrationsSet() {

@@ -260,10 +260,6 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 	this.enrolments = enrolmentsToSet;
     }
     
-    public Collection<Enrolment> getSelectedEnrolments() {
-	return isToUseAll() ? getStudent().getApprovedEnrolments() : getEnrolments();
-    }
-
     public List<Exam> getExams() {
 	final List<Exam> result = new ArrayList<Exam>();
 	for (final DomainReference<Exam> each : this.exams) {

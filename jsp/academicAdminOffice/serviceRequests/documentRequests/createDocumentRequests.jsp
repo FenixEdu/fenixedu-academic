@@ -88,7 +88,8 @@
 				</fr:layout>	
 				<fr:destination name="executionYearChangedPostBack" path="/documentRequestsManagement.do?method=executionYearToCreateDocumentChangedPostBack"/>
 				<fr:destination name="executionPeriodChangedPostBack" path="/documentRequestsManagement.do?method=executionPeriodToCreateDocumentChangedPostBack"/>
-			</fr:edit>			
+				<fr:destination name="useAllPostBack" path="/documentRequestsManagement.do?method=useAllPostBack"/>
+			</fr:edit>
 		</logic:present>
 		
 		<logic:notEmpty name="documentRequestCreateBean" property="chosenDocumentRequestType">
