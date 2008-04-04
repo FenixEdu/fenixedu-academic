@@ -202,16 +202,16 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    InfoLesson infoLesson = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
 	    InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 	    
-	    GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = null; 	    
 	    String action = request.getParameter("action");	    
-	    	    
+
+	    final Shift shift;
 	    if (action != null && action.equals("edit")) {
-		Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
-		maxLessonsPeriod = lesson.getShift().getExecutionCourse().getMaxLessonsPeriod();
+		final Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
+		shift = lesson.getShift();
 	    } else {				
-		Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
-		maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
+		shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
 	    }	    	    
+	    final GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 			    	      
 	    YearMonthDay lessonNewBeginDate = getDateFromForm(manageLessonForm, "newBeginDate");
 	    YearMonthDay lessonEndDate = getDateFromForm(manageLessonForm, "newEndDate");

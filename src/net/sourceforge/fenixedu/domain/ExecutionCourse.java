@@ -1692,8 +1692,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    minBeginDate = executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay();
 		}
 		if (maxEndDate == null
-			|| maxEndDate.isBefore(executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDay())) {
-		    maxEndDate = executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDay();
+			|| maxEndDate.isBefore(executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDayWithNextPeriods())) {
+		    maxEndDate = executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDayWithNextPeriods();
 		}
 	    } else {
 		if (minBeginDate == null
@@ -1701,8 +1701,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    minBeginDate = executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay();
 		}
 		if (maxEndDate == null
-			|| maxEndDate.isBefore(executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDay())) {
-		    maxEndDate = executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDay();
+			|| maxEndDate.isBefore(executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDayWithNextPeriods())) {
+		    maxEndDate = executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDayWithNextPeriods();
 		}
 	    }
 	}

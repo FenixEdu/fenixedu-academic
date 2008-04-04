@@ -259,4 +259,9 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	int thisDays = Days.daysBetween(getStartYearMonthDay(), getEndYearMonthDay()).getDays();
 	return thisDays > periodDays;
     }
+
+    public YearMonthDay getEndYearMonthDayWithNextPeriods() {
+	return hasNextPeriod() ? getNextPeriod().getEndYearMonthDayWithNextPeriods() : getEndYearMonthDay();
+    }
+
 }
