@@ -66,7 +66,11 @@
 		</div></td></tr>
 		</logic:equal>
 		<%if(testQuestion.getStudentSubQuestions().size()<=1 || itemIndex.equals(new Integer(0))){%>
-				<tr><td><b><bean:message key="message.tests.question" />:</b>&nbsp;<bean:write name="order"/></td></tr>
+				<tr><td><b><bean:message key="message.tests.question" />:</b>&nbsp;<bean:write name="order"/>
+				(
+				<bean:write name="testQuestion" property="question.xmlFileName"/>
+				)
+				</td></tr>
 				<bean:define id="order" value="<%= (new Integer(Integer.parseInt(order)+1)).toString() %>"/>
 			<%}
 			 if(testQuestion.getStudentSubQuestions().size()>1){

@@ -27,7 +27,7 @@ import com.sun.faces.el.impl.parser.ParseException;
  */
 public class AddStudentsToDistributedTest extends Service {
 
-    public void run(Integer executionCourseId, Integer distributedTestId, List infoStudentList, String contextPath)
+    public void run(Integer executionCourseId, Integer distributedTestId, List<InfoStudent> infoStudentList, String contextPath)
 	    throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
 	if (infoStudentList == null || infoStudentList.size() == 0)
 	    return;
@@ -37,40 +37,43 @@ public class AddStudentsToDistributedTest extends Service {
 
 	Set<StudentTestQuestion> studentTestQuestions = distributedTest
 		.findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder();
+	int order = 0;
 	for (StudentTestQuestion studentTestQuestionExample : studentTestQuestions) {
-	    List<Question> questionList = new ArrayList<Question>();
-	    questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
+	    if (!studentTestQuestionExample.isSubQuestion()) {
+		order++;
+		List<Question> questionList = new ArrayList<Question>();
+		questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
-	    for (int j = 0; j < infoStudentList.size(); j++) {
-		Registration registration = rootDomainObject.readRegistrationByOID(((InfoStudent) infoStudentList.get(j))
-			.getIdInternal());
-		StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
-		studentTestQuestion.setStudent(registration);
-		studentTestQuestion.setDistributedTest(distributedTest);
-		studentTestQuestion.setTestQuestionOrder(studentTestQuestionExample.getTestQuestionOrder());
-		studentTestQuestion.setTestQuestionValue(studentTestQuestionExample.getTestQuestionValue());
-		studentTestQuestion.setCorrectionFormula(studentTestQuestionExample.getCorrectionFormula());
-		studentTestQuestion.setTestQuestionMark(new Double(0));
-		studentTestQuestion.setResponse(null);
+		for (InfoStudent infoStudent : infoStudentList) {
+		    Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
+		    StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
+		    studentTestQuestion.setStudent(registration);
+		    studentTestQuestion.setDistributedTest(distributedTest);
+		    studentTestQuestion.setTestQuestionOrder(order);
+		    studentTestQuestion.setTestQuestionValue(studentTestQuestionExample.getTestQuestionValue());
+		    studentTestQuestion.setCorrectionFormula(studentTestQuestionExample.getCorrectionFormula());
+		    studentTestQuestion.setTestQuestionMark(new Double(0));
+		    studentTestQuestion.setResponse(null);
 
-		if (questionList.size() == 0)
-		    questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
-		Question question = null;
-		try {
-		    question = getStudentQuestion(questionList, contextPath.replace('\\', '/'));
-		} catch (ParseException e) {
-		    throw new InvalidArgumentsServiceException();
-		} catch (ParseQuestionException e) {
-		    throw new InvalidArgumentsServiceException();
+		    if (questionList.size() == 0)
+			questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
+		    Question question = null;
+		    try {
+			question = getStudentQuestion(questionList, contextPath.replace('\\', '/'));
+		    } catch (ParseException e) {
+			throw new InvalidArgumentsServiceException();
+		    } catch (ParseQuestionException e) {
+			throw new InvalidArgumentsServiceException();
+		    }
+		    if (question == null) {
+			throw new InvalidArgumentsServiceException();
+		    }
+		    if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().get(0).getItemId() != null) {
+			studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
+		    }
+		    studentTestQuestion.setQuestion(question);
+		    questionList.remove(question);
 		}
-		if (question == null) {
-		    throw new InvalidArgumentsServiceException();
-		}
-		if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().get(0).getItemId() != null) {
-		    studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
-		}
-		studentTestQuestion.setQuestion(question);
-		questionList.remove(question);
 	    }
 	}
     }

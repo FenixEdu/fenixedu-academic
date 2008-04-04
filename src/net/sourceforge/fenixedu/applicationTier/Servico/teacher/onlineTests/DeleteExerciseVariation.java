@@ -25,81 +25,78 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class DeleteExerciseVariation extends Service {
 
-    public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode, Integer metadataCode) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
-        List<LabelValueBean> result = new ArrayList<LabelValueBean>();
+    public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode) throws ExcepcaoPersistencia,
+	    InvalidArgumentsServiceException {
+	List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
-        Question question = null;
-        Metadata metadata = rootDomainObject.readMetadataByOID(metadataCode);
-        for (Question visibleQuestion : metadata.getVisibleQuestions()) {
-            if(visibleQuestion.getIdInternal().equals(questionCode)){
-                question = visibleQuestion; 
-            }
-        }
-        
-        if (question == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+	Question question = rootDomainObject.readQuestionByOID(questionCode);
 
-        for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestions()) {
-            if (compareDates(studentTestQuestion.getDistributedTest().getEndDate(), studentTestQuestion.getDistributedTest().getEndHour())) {
-                result.add(new LabelValueBean(studentTestQuestion.getDistributedTest().getTitle(), studentTestQuestion.getStudent().getNumber()
-                        .toString()));
-            }
-        }
+	if (question == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        if (result.size() == 0) {
-            Question newQuestion = getNewQuestion(question);
-            for (TestQuestion testQuestion : question.getTestQuestions()) {
-                if (newQuestion == null) {
-                    testQuestion.getTest().deleteTestQuestion(testQuestion);
-                } else {
-                    testQuestion.setQuestion(getNewQuestion(question));
-                }
-            }
-            if (question.getStudentTestsQuestions() == null || question.getStudentTestsQuestions().size() == 0) {
-                question.delete();
-                if (metadata.getQuestionsCount() <= 1) {
-                    metadata.delete();
-                } else if (metadata.getVisibleQuestions().size() == 0) {
-                    metadata.setVisibility(Boolean.FALSE);
-                }
-            } else {
-                if (metadata.getVisibleQuestions().size() <= 1) {
-                    metadata.setVisibility(Boolean.FALSE);
-                }
-                question.setVisibility(Boolean.FALSE);
-            }
-        }
+	for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestions()) {
+	    if (compareDates(studentTestQuestion.getDistributedTest().getEndDate(), studentTestQuestion.getDistributedTest()
+		    .getEndHour())) {
+		result.add(new LabelValueBean(studentTestQuestion.getDistributedTest().getTitle(), studentTestQuestion
+			.getStudent().getNumber().toString()));
+	    }
+	}
 
-        return result;
+	if (result.size() == 0) {
+	    Question newQuestion = getNewQuestion(question);
+	    for (TestQuestion testQuestion : question.getTestQuestions()) {
+		if (newQuestion == null) {
+		    testQuestion.getTest().deleteTestQuestion(testQuestion);
+		} else {
+		    testQuestion.setQuestion(getNewQuestion(question));
+		}
+	    }
+	    Metadata metadata = question.getMetadata();
+	    if (question.getStudentTestsQuestions() == null || question.getStudentTestsQuestions().size() == 0) {
+		question.delete();
+		if (metadata.getQuestionsCount() <= 1) {
+		    metadata.delete();
+		} else if (metadata.getVisibleQuestions().size() == 0) {
+		    metadata.setVisibility(Boolean.FALSE);
+		}
+	    } else {
+		if (metadata.getVisibleQuestions().size() <= 1) {
+		    metadata.setVisibility(Boolean.FALSE);
+		}
+		question.setVisibility(Boolean.FALSE);
+	    }
+	}
+
+	return result;
     }
 
     private boolean compareDates(Calendar date, Calendar hour) {
-        final Calendar calendar = Calendar.getInstance();
-        final CalendarDateComparator dateComparator = new CalendarDateComparator();
-        final CalendarHourComparator hourComparator = new CalendarHourComparator();
-        if (dateComparator.compare(calendar, date) <= 0) {
-            if (dateComparator.compare(calendar, date) == 0) {
-                if (hourComparator.compare(calendar, hour) <= 0) {
-                    return true;
-                }
+	final Calendar calendar = Calendar.getInstance();
+	final CalendarDateComparator dateComparator = new CalendarDateComparator();
+	final CalendarHourComparator hourComparator = new CalendarHourComparator();
+	if (dateComparator.compare(calendar, date) <= 0) {
+	    if (dateComparator.compare(calendar, date) == 0) {
+		if (hourComparator.compare(calendar, hour) <= 0) {
+		    return true;
+		}
 
-                return false;
-            }
-            return true;
-        }
-        return false;
+		return false;
+	    }
+	    return true;
+	}
+	return false;
     }
 
     private Question getNewQuestion(Question oldQuestion) {
-        Metadata metadata = oldQuestion.getMetadata();
-        if (metadata.getVisibleQuestions().size() > 1) {
-            for (Question question : metadata.getVisibleQuestions()) {
-                if (question.equals(oldQuestion)) {
-                    return question;
-                }
-            }
-        }
-        return null;
+	Metadata metadata = oldQuestion.getMetadata();
+	if (metadata.getVisibleQuestions().size() > 1) {
+	    for (Question question : metadata.getVisibleQuestions()) {
+		if (question.equals(oldQuestion)) {
+		    return question;
+		}
+	    }
+	}
+	return null;
     }
 }

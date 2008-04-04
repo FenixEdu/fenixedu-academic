@@ -29,10 +29,10 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
 
     public static final Comparator<StudentTestQuestion> COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER = new ComparatorChain();
     static {
-	((ComparatorChain) COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER)
-		.addComparator(new BeanComparator("student.number"));
-	((ComparatorChain) COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER)
-		.addComparator(new BeanComparator("testQuestionOrder"));
+	((ComparatorChain) COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER).addComparator(new BeanComparator(
+		"student.number"));
+	((ComparatorChain) COMPARATOR_BY_STUDENT_NUMBER_AND_TEST_QUESTION_ORDER).addComparator(new BeanComparator(
+		"testQuestionOrder"));
     }
 
     public StudentTestQuestion() {
@@ -61,8 +61,7 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
     }
 
     public SubQuestion getSubQuestionByItem() {
-	if (getItemId() == null && !getStudentSubQuestions().isEmpty()
-		&& getStudentSubQuestions().size() == 1) {
+	if (getItemId() == null && !getStudentSubQuestions().isEmpty() && getStudentSubQuestions().size() == 1) {
 	    return getStudentSubQuestions().iterator().next();
 	}
 	for (SubQuestion subQuestion : getStudentSubQuestions()) {
@@ -77,6 +76,13 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
 	return null;
     }
 
+    public boolean isSubQuestion() {
+	if (getItemId() != null && (!getQuestion().getSubQuestions().get(0).getItemId().equals(getItemId()))) {
+	    return true;
+	}
+	return false;
+    }
+
     public void delete() {
 	removeDistributedTest();
 	removeQuestion();
@@ -85,15 +91,12 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
 	super.deleteDomainObject();
     }
 
-    public static boolean hasStudentTestQuestions(final Student student,
-	    final DistributedTest distributedTest) {
-	Set<StudentTestQuestion> studentTestQuestions = findStudentTestQuestions(student,
-		distributedTest);
+    public static boolean hasStudentTestQuestions(final Student student, final DistributedTest distributedTest) {
+	Set<StudentTestQuestion> studentTestQuestions = findStudentTestQuestions(student, distributedTest);
 	return (studentTestQuestions == null || studentTestQuestions.size() == 0) ? false : true;
     }
 
-    public static Set<StudentTestQuestion> findStudentTestQuestions(final Student student,
-	    final DistributedTest distributedTest) {
+    public static Set<StudentTestQuestion> findStudentTestQuestions(final Student student, final DistributedTest distributedTest) {
 	final Set<StudentTestQuestion> studentTestQuestions = new HashSet<StudentTestQuestion>();
 	for (final Registration registration : student.getRegistrationsSet()) {
 	    studentTestQuestions.addAll(registration.getStudentTestsQuestionsSet());
@@ -106,13 +109,12 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
 	return findStudentTestQuestions(registration.getStudent(), distributedTest);
     }
 
-    public static Set<StudentTestQuestion> findStudentTestQuestions(final Question question,
-	    final DistributedTest distributedTest) {
+    public static Set<StudentTestQuestion> findStudentTestQuestions(final Question question, final DistributedTest distributedTest) {
 	return findStudentTestQuestions(question.getStudentTestsQuestionsSet(), distributedTest);
     }
 
-    private static Set<StudentTestQuestion> findStudentTestQuestions(
-	    final Set<StudentTestQuestion> inputSet, final DistributedTest distributedTest) {
+    private static Set<StudentTestQuestion> findStudentTestQuestions(final Set<StudentTestQuestion> inputSet,
+	    final DistributedTest distributedTest) {
 	final Set<StudentTestQuestion> studentTestQuestions = new HashSet<StudentTestQuestion>();
 	for (final StudentTestQuestion studentTestQuestion : inputSet) {
 	    if (studentTestQuestion.getDistributedTest() == distributedTest) {
@@ -122,11 +124,10 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
 	return studentTestQuestions;
     }
 
-    public static StudentTestQuestion findStudentTestQuestion(final Question question,
-	    final Registration registration, final DistributedTest distributedTest) {
+    public static StudentTestQuestion findStudentTestQuestion(final Question question, final Registration registration,
+	    final DistributedTest distributedTest) {
 	for (final StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestionsSet()) {
-	    if (distributedTest == studentTestQuestion.getDistributedTest()
-		    && registration == studentTestQuestion.getStudent()) {
+	    if (distributedTest == studentTestQuestion.getDistributedTest() && registration == studentTestQuestion.getStudent()) {
 		return studentTestQuestion;
 	    }
 	}
@@ -134,8 +135,7 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
     }
 
     public void setSubQuestionByItem(SubQuestion newSubQuestion) {
-	if (getItemId() == null && !getStudentSubQuestions().isEmpty()
-		&& getStudentSubQuestions().size() == 1) {
+	if (getItemId() == null && !getStudentSubQuestions().isEmpty() && getStudentSubQuestions().size() == 1) {
 	    getStudentSubQuestions().set(0, newSubQuestion);
 	} else {
 	    int i = 0;

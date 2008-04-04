@@ -727,6 +727,16 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>CleanSubQuestions</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.CleanSubQuestions</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="StudentAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>VerifyStudentGroupAtributes</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes</implementationClass>

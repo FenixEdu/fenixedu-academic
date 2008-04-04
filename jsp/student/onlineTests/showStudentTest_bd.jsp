@@ -156,16 +156,20 @@
 					<logic:notEqual name="pageType" value="doTest">
 						<bean:define id="checkDisable" value="true"/>
 					</logic:notEqual>
+				<%} else if (((Integer)testType).intValue()==2 && testQuestion.getStudentSubQuestions().size()>1){%>
+					<logic:notEmpty name="testQuestion" property="response">
+						<logic:equal name="testQuestion" property="response.responsed" value="true">
+							<bean:define id="checkDisable" value="true"/>	
+						</logic:equal>
+					</logic:notEmpty>
 				<%}%>
-				
 				<%if(((Integer)questionType).intValue()==1 ){ %> <%--QuestionType.LID--%>
 					<logic:equal name="indexOption" value="0">
 						<table><tr><td>
 					</logic:equal>
 					<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
 					<bean:define id="button" value="true"/>
-					
-					<logic:equal name="pageType" value="correction">
+					<%if(pageType.equals("correction") || correction.getAvailability()==2){%> <%-- show correction or  CorrectionAvailability.ALWAYS--%>
 						<logic:notEqual name="correction" property="availability" value="1">
 							<%if(((Integer)testType).intValue()!=3 && ((Integer)formula).intValue()==1){%> <%-- Not TestType.INQUIRY  and CorrectionFormula.FENIX--%>
 							<bean:define id="isResponsed" value="false"/>
@@ -229,7 +233,7 @@
 							</td></tr><tr><td>
 							<%}%>
 						</logic:notEqual>
-					</logic:equal>
+					<%}%>
 					<logic:equal name="pageType" value="doTest">
 					</td></tr><tr><td>
 					</logic:equal>
@@ -345,21 +349,29 @@
 		<%if(testQuestion.getStudentSubQuestions().size()>1){%>
 			<logic:empty name="testQuestion" property="response">
 				<tr><td>
-				<html:link page="<%= "/studentTests.do?method=prepareToGiveUp&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()%>">
-				<bean:message key="link.giveUp" />
-				</html:link>
+					<html:link page="<%= "/studentTests.do?method=prepareToGiveUp&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()%>">
+					<bean:message key="link.giveUp" />
+					</html:link>
+				</td></tr><tr><td>
+					<html:link page="<%= "/studentTests.do?method=cleanSubQuestions&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()%>">
+					<bean:message key="link.cleanResponses" />
+					</html:link>
 				</td></tr>
 			</logic:empty>
 			<logic:notEmpty name="testQuestion" property="response">
 				<logic:equal name="testQuestion" property="response.responsed" value="false">
 					<tr><td>
-					<html:link page="<%= "/studentTests.do?method=prepareToGiveUp&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()%>">
-					<bean:message key="link.giveUp" />
-					</html:link>
+						<html:link page="<%= "/studentTests.do?method=prepareToGiveUp&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()%>">
+						<bean:message key="link.giveUp" />
+						</html:link>
+					</td></tr><tr><td>
+						<html:link page="<%= "/studentTests.do?method=cleanSubQuestions&amp;objectCode="+objectCode.toString()+"&amp;testCode="+testCode.toString()+ "&amp;exerciseCode="+ questionCode +"&amp;item="+item.toString()%>">
+						<bean:message key="link.cleanResponses" />
+						</html:link>
 					</td></tr>
 				</logic:equal>
 			</logic:notEmpty>
-		<%}%>			
+		<%}%>		
 		</logic:equal>
 		<logic:equal name="imageLabel" value="true">
 			</td></tr></table>
@@ -367,7 +379,7 @@
 		</logic:equal>
 		<%if((((Integer)testType).intValue()!=3) &&(((Integer)formula).intValue()==1)){%> <%-- Not TestType.INQUIRY  and CorrectionFormula.FENIX--%>
 			<%if(((Integer)questionType).intValue()==1 ){ %> <%--QuestionType.LID--%>
-				<logic:equal name="pageType" value="correction">
+				<%if(pageType.equals("correction") || correction.getAvailability()==2){%> <%-- show correction or  CorrectionAvailability.ALWAYS--%>
 					<logic:notEqual name="correction" property="availability" value="1">
 						<logic:notEmpty name="testQuestion" property="response">
 						<logic:notEmpty name="testQuestion" property="response.response">
@@ -390,10 +402,10 @@
 						</logic:notEmpty>
 						</logic:notEmpty>
 					</logic:notEqual>
-				</logic:equal>
+				<%}%>
 				</td></tr></table>
 			<%}else{%> <%--QuestionType.STR or QuestionType.NUM --%>
-				<logic:equal name="pageType" value="correction">
+				<%if(pageType.equals("correction") || correction.getAvailability()==2){%> <%-- show correction or  CorrectionAvailability.ALWAYS--%>
 					<logic:notEqual name="correction" property="availability" value="1">
 						<logic:notEmpty name="testQuestion" property="response">
 						<logic:notEmpty name="testQuestion" property="response.response">
@@ -408,7 +420,7 @@
 						</logic:notEmpty>
 						</logic:notEmpty>
 					</logic:notEqual>
-				</logic:equal>
+				<%}%>
 				</td></tr><tr><td>
 			<%}%>
 		<%} else if((((Integer)testType).intValue()!=3) &&(((Integer)formula).intValue()!=1)){%> <%-- Not TestType.INQUIRY  and CorrectionFormula.IMS--%>

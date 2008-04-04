@@ -458,6 +458,49 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         return prepareToDoTest(mapping, form, request, response);
     }
+    
+    public ActionForward cleanSubQuestions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+        request.setAttribute("exerciseCode", request.getParameter("exerciseCode"));
+        request.setAttribute("item", request.getParameter("item"));
+        final IUserView userView = getUserView(request);
+
+        Integer testCode = null;
+        Integer exerciseCode = null;
+        Integer itemCode = null;
+        try {
+            testCode = new Integer(request.getParameter("testCode"));
+            exerciseCode = new Integer(request.getParameter("exerciseCode"));
+            itemCode = new Integer(request.getParameter("item"));
+        } catch (NumberFormatException e) {
+            request.setAttribute("invalidTest", new Boolean(true));
+            return mapping.findForward("testError");
+        }
+        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(testCode);
+        if (distributedTest == null) {
+            request.setAttribute("invalidTest", new Boolean(true));
+            return mapping.findForward("testError");
+        }
+
+        Registration registration = Registration.readByUsername(userView.getUtilizador());
+
+        List<StudentTestQuestion> studentTestQuestionList = null;
+        try {
+            studentTestQuestionList = (List<StudentTestQuestion>) ServiceUtils.executeService(userView,
+                    "CleanSubQuestions", new Object[] { registration, distributedTest, exerciseCode,
+                            itemCode, getServlet().getServletContext().getRealPath("/") });
+        } catch (NotAuthorizedFilterException e) {
+            request.setAttribute("cantDoTest", new Boolean(true));
+            return mapping.findForward("testError");
+        } catch (InvalidArgumentsServiceException e) {
+            request.setAttribute("invalidTest", new Boolean(true));
+            return mapping.findForward("testError");
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        return prepareToDoTest(mapping, form, request, response);
+    }
 
     public ActionForward showTestCorrection(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
