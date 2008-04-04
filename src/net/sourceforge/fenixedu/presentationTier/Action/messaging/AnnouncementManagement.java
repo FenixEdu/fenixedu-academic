@@ -46,7 +46,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     public ActionForward viewAnnouncement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Announcement announcement = this.getRequestedAnnouncement(request);
-	request.setAttribute("announcement", announcement.getVisible() ? announcement : null);
+	request.setAttribute("announcement", (announcement != null && announcement.getVisible()) ? announcement : null);
 
 	return mapping.findForward("viewAnnouncement");
     }
