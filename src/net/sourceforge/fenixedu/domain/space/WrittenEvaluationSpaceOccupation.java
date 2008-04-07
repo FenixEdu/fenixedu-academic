@@ -17,29 +17,28 @@ import org.joda.time.YearMonthDay;
 
 public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccupation_Base {
 
-    @Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
-    public WrittenEvaluationSpaceOccupation(AllocatableSpace allocatableSpace) {	
+    // @Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
+    public WrittenEvaluationSpaceOccupation(AllocatableSpace allocatableSpace) {
 
-	super();		
+	super();
 
-	ResourceAllocation allocation = allocatableSpace.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
-	if(allocation != null) {
-	    throw new DomainException("error.WrittenEvaluationSpaceOccupation.occupation.for.this.space.already.exists");   
-	}	
+	ResourceAllocation allocation = allocatableSpace
+		.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
+	if (allocation != null) {
+	    throw new DomainException("error.WrittenEvaluationSpaceOccupation.occupation.for.this.space.already.exists");
+	}
 
-	setResource(allocatableSpace);                		       		  
-    }    
+	setResource(allocatableSpace);
+    }
 
-    @Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
-    public void edit(WrittenEvaluation writtenEvaluation) {	
+    // @Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
+    public void edit(WrittenEvaluation writtenEvaluation) {
 
-	if(hasWrittenEvaluations(writtenEvaluation)) {
+	if (hasWrittenEvaluations(writtenEvaluation)) {
 	    removeWrittenEvaluations(writtenEvaluation);
 	}
 
-	if(!getRoom().isFree(writtenEvaluation.getBeginningDateTime().toYearMonthDay(), writtenEvaluation.getEndDateTime().toYearMonthDay(),
-		writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond(),
-		writtenEvaluation.getDayOfWeek(), null, null, null)) {		
+	if (!writtenEvaluation.canBeAssociatedToRoom(getRoom())) {
 	    throw new DomainException("error.roomOccupied", getRoom().getName());
 	}
 
@@ -48,7 +47,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 
     @Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
     public void delete() {
-	if(canBeDeleted()) {	    	    
+	if (canBeDeleted()) {
 	    super.delete();
 	}
     }
@@ -62,13 +61,14 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 
 	List<Interval> result = new ArrayList<Interval>();
 	List<WrittenEvaluation> writtenEvaluations = getWrittenEvaluations();
-		
-	for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {	   
+
+	for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
 	    YearMonthDay writtenEvaluationDay = writtenEvaluation.getDayDateYearMonthDay();
-	    if(startDateToSearch == null || (!writtenEvaluationDay.isBefore(startDateToSearch)
-		    && !writtenEvaluationDay.isAfter(endDateToSearch))) {
-		
-		result.add(createNewInterval(writtenEvaluationDay, writtenEvaluationDay, writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
+	    if (startDateToSearch == null
+		    || (!writtenEvaluationDay.isBefore(startDateToSearch) && !writtenEvaluationDay.isAfter(endDateToSearch))) {
+
+		result.add(createNewInterval(writtenEvaluationDay, writtenEvaluationDay, writtenEvaluation
+			.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
 	    }
 	}
 	return result;
@@ -122,7 +122,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     @Override
     public DiaSemana getDayOfWeek() {
 	return null;
-    }    
+    }
 
     @Override
     public FrequencyType getFrequency() {

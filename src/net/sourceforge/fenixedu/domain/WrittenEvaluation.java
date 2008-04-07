@@ -356,22 +356,41 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
     }
 
-    private List<WrittenEvaluationSpaceOccupation> associateNewRooms(final List<AllocatableSpace> rooms) {
+    public void removeRoomOccupations(List<AllocatableSpace> rooms) {
+	for (AllocatableSpace room : rooms) {
+	    if (hasOccupationForRoom(room)) {
+		WrittenEvaluationSpaceOccupation occupation = (WrittenEvaluationSpaceOccupation) room
+			.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
+		removeWrittenEvaluationSpaceOccupations(occupation);
+	    }
+	}
+
+    }
+
+    protected List<WrittenEvaluationSpaceOccupation> associateNewRooms(final List<AllocatableSpace> rooms) {
 
 	List<WrittenEvaluationSpaceOccupation> newInsertedOccupations = new ArrayList<WrittenEvaluationSpaceOccupation>();
 	for (final AllocatableSpace room : rooms) {
-	    if (!hasOccupationForRoom(room)) {
-
-		WrittenEvaluationSpaceOccupation occupation = (WrittenEvaluationSpaceOccupation) room
-			.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
-
-		occupation = occupation == null ? new WrittenEvaluationSpaceOccupation(room) : occupation;
-		occupation.edit(this);
-
-		newInsertedOccupations.add(occupation);
+	    WrittenEvaluationSpaceOccupation spaceOccupation = associateNewRoom(room);
+	    if (spaceOccupation != null) {
+		newInsertedOccupations.add(spaceOccupation);
 	    }
 	}
 	return newInsertedOccupations;
+    }
+
+    protected WrittenEvaluationSpaceOccupation associateNewRoom(AllocatableSpace room) {
+	if (!hasOccupationForRoom(room)) {
+
+	    WrittenEvaluationSpaceOccupation occupation = (WrittenEvaluationSpaceOccupation) room
+		    .getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
+
+	    occupation = occupation == null ? new WrittenEvaluationSpaceOccupation(room) : occupation;
+	    occupation.edit(this);
+	    return occupation;
+	} else {
+	    return null;
+	}
     }
 
     private boolean hasOccupationForRoom(AllocatableSpace room) {
@@ -742,7 +761,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
 	return false;
     }
-    
+
     public Set<DegreeModuleScope> getDegreeModuleScopesFor(CurricularCourse curricularCourse) {
 	final Set<DegreeModuleScope> result = new HashSet<DegreeModuleScope>();
 	for (final DegreeModuleScope each : getDegreeModuleScopes()) {
@@ -753,4 +772,6 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
 	return result;
     }
+
+    public abstract boolean canBeAssociatedToRoom(AllocatableSpace room);
 }

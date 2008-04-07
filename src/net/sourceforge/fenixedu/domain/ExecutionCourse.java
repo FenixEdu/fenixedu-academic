@@ -106,9 +106,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setComment("");
 
 	createExecutionCourseAnnouncementBoard(nome);
-	createForum(MultiLanguageString.i18n().add("pt", nome.replace('?', ' ')).finish(),
-		new MultiLanguageString(""));
-	
+	createForum(MultiLanguageString.i18n().add("pt", nome.replace('?', ' ')).finish(), new MultiLanguageString(""));
+
 	if (entryPhase == null) {
 	    entryPhase = EntryPhase.FIRST_PHASE_OBJ;
 	}
@@ -396,7 +395,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public boolean teacherLecturesExecutionCourse(Teacher teacher) {
 	for (Professorship professorship : this.getProfessorships()) {
-	    if (teacher.getProfessorships().contains(professorship)) {
+	    if (professorship.getTeacher() == teacher) {
 		return true;
 	    }
 	}

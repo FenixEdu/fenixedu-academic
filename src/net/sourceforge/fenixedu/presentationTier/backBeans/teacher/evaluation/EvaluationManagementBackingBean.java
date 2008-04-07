@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.FinalMark;
 import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
@@ -46,6 +47,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -139,6 +141,12 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     protected List<FinalMark> alreadySubmitedMarks;
 
     protected List<Attends> notSubmitedMarks;
+
+    protected Integer[] roomsToDelete;
+
+    protected Integer[] roomsToAssociate;
+
+    protected Map<Integer, Boolean> canManageRoomsMap = new HashMap<Integer, Boolean>();
 
     public EvaluationManagementBackingBean() {
 	/*
@@ -483,14 +491,20 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<WrittenTest> getWrittenTestList() throws FenixFilterException, FenixServiceException {
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
+	ExecutionCourse executionCourse = getExecutionCourse();
+	Teacher teacher = AccessControl.getPerson().getTeacher();
 
-	List<WrittenTest> writtenTestList = new ArrayList(executionCourse.getAssociatedWrittenTests());
+	List<WrittenTest> writtenTestList = new ArrayList();
+	for (WrittenTest writtenTest : executionCourse.getAssociatedWrittenTests()) {
+	    writtenTestList.add(writtenTest);
+	    canManageRoomsMap.put(writtenTest.getIdInternal(), writtenTest.canTeacherChooseRoom(executionCourse, teacher));
+	}
+
 	Collections.sort(writtenTestList, new BeanComparator("dayDate"));
 	return writtenTestList;
     }
 
-    public Evaluation getEvaluation() throws FenixFilterException, FenixServiceException {
+    public Evaluation getEvaluation() {
 	if (this.evaluation == null) {
 	    if (this.getEvaluationID() != null) {
 		evaluation = rootDomainObject.readEvaluationByOID(getEvaluationID());
@@ -612,7 +626,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	return WrittenTest.class.getSimpleName();
     }
 
-    public ExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
+    public ExecutionCourse getExecutionCourse() {
 	return rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
     }
 
@@ -1124,4 +1138,79 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public void setSubmitEvaluationDateTextBox(HtmlInputText submitEvaluationDateTextBox) {
 	this.submitEvaluationDateTextBox = submitEvaluationDateTextBox;
     }
+
+    public List<SelectItem> getAssociatedRoomsSelectItem() {
+	List<SelectItem> result = new ArrayList<SelectItem>();
+	WrittenTest writtenTest = (WrittenTest) getEvaluation();
+	for (AllocatableSpace room : writtenTest.getAssociatedRooms()) {
+	    SelectItem selectItem = new SelectItem(room.getIdInternal(), room.getIdentification());
+	    selectItem.setDisabled(!writtenTest.canTeacherRemoveRoom(getExecutionCourse(),
+		    AccessControl.getPerson().getTeacher(), room));
+	    result.add(selectItem);
+	}
+	return result;
+    }
+
+    public Integer[] getRoomsToDelete() {
+	return roomsToDelete;
+    }
+
+    public void setRoomsToDelete(Integer[] roomsToDelete) {
+	this.roomsToDelete = roomsToDelete;
+    }
+
+    public List<SelectItem> getAvailableRoomsToAssociate() {
+	List<SelectItem> result = new ArrayList<SelectItem>();
+	WrittenTest writtenTest = (WrittenTest) getEvaluation();
+	Teacher teacher = AccessControl.getPerson().getTeacher();
+	for (AllocatableSpace room : writtenTest.getTeacherAvailableRooms(getExecutionCourse(), teacher)) {
+	    result.add(new SelectItem(room.getIdInternal(), room.getIdentification()));
+	}
+	return result;
+    }
+
+    public Integer[] getRoomsToAssociate() {
+	return roomsToAssociate;
+    }
+
+    public void setRoomsToAssociate(Integer[] roomsToAssociate) {
+	this.roomsToAssociate = roomsToAssociate;
+    }
+
+    public String editEvaluationAddRooms() throws FenixFilterException, FenixServiceException {
+
+	ServiceUtils.executeService(getUserView(), "TeacherAddRoomsToWrittenTest", new Object[] { getExecutionCourse(),
+		AccessControl.getPerson().getTeacher(), (WrittenTest) getEvaluation(), getRooms(getRoomsToAssociate()) });
+
+	return this.getEvaluation().getClass().getSimpleName();
+    }
+
+    public String editEvaluationRemoveRooms() throws FenixFilterException, FenixServiceException {
+
+	ServiceUtils.executeService(getUserView(), "TeacherRemoveRoomsFromWrittenTest", new Object[] { getExecutionCourse(),
+		(WrittenTest) getEvaluation(), getRooms(getRoomsToDelete()) });
+
+	return this.getEvaluation().getClass().getSimpleName();
+    }
+
+    private List<AllocatableSpace> getRooms(Integer[] roomsToAssociate) {
+	List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+	for (Integer roomId : roomsToAssociate) {
+	    AllocatableSpace space = (AllocatableSpace) rootDomainObject.readResourceByOID(roomId);
+	    if (space == null) {
+		throw new IllegalArgumentException();
+	    }
+	    rooms.add(space);
+	}
+	return rooms;
+    }
+
+    public Map<Integer, Boolean> getCanManageRoomsMap() {
+	return canManageRoomsMap;
+    }
+
+    public void setCanManageRoomsMap(Map<Integer, Boolean> canManageRoomsMap) {
+	this.canManageRoomsMap = canManageRoomsMap;
+    }
+
 }

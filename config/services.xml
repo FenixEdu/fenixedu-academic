@@ -12709,4 +12709,21 @@
 		</filterChains>
 	</service>
 	
+	<service>
+		<name>TeacherAddRoomsToWrittenTest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAddRoomsToWrittenTest</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>TeacherRemoveRoomsFromWrittenTest</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherRemoveRoomsFromWrittenTest</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
+		</filterChains>
+	</service>
+	
 </serviceDefinitions>

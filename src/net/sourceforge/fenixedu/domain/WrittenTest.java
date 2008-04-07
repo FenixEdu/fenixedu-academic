@@ -4,17 +4,22 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -138,6 +143,71 @@ public class WrittenTest extends WrittenTest_Base {
 
     public EvaluationType getEvaluationType() {
 	return EvaluationType.TEST_TYPE;
+    }
+
+    public boolean canTeacherChooseRoom(ExecutionCourse executionCourse, Teacher teacher) {
+	if (executionCourse.teacherLecturesExecutionCourse(teacher)) {
+	    for (Lesson lesson : executionCourse.getLessons()) {
+		if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    public Collection<AllocatableSpace> getTeacherAvailableRooms(ExecutionCourse executionCourse, Teacher teacher) {
+	Collection<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+	if (executionCourse.teacherLecturesExecutionCourse(teacher)) {
+	    for (Lesson lesson : executionCourse.getLessons()) {
+		if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))
+			&& !getAssociatedRooms().contains(lesson.getRoomOccupation().getRoom())) {
+		    rooms.add(lesson.getRoomOccupation().getRoom());
+		}
+	    }
+	}
+
+	return rooms;
+    }
+
+    public void teacherAddRooms(ExecutionCourse executionCourse, Teacher teacher, List<AllocatableSpace> rooms) {
+	Collection<AllocatableSpace> teacherAvailableRooms = getTeacherAvailableRooms(executionCourse, teacher);
+
+	for (AllocatableSpace room : rooms) {
+	    if (!teacherAvailableRooms.contains(room)) {
+		throw new DomainException("error.room.does.not.belong.to.teachers.avaliable.rooms");
+	    }
+
+	    associateNewRoom(room);
+	}
+    }
+
+    @Override
+    public boolean canBeAssociatedToRoom(AllocatableSpace room) {
+	for (ResourceAllocation resourceAllocation : room.getResourceAllocationsForCheck()) {
+	    if (resourceAllocation.isEventSpaceOccupation()) {
+		EventSpaceOccupation eventSpaceOccupation = (EventSpaceOccupation) resourceAllocation;
+		if (!eventSpaceOccupation.isLessonInstanceSpaceOccupation() && !eventSpaceOccupation.isLessonSpaceOccupation()) {
+		    if (eventSpaceOccupation.alreadyWasOccupiedIn(getBeginningDateTime().toYearMonthDay(), getEndDateTime()
+			    .toYearMonthDay(), getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(),
+			    null, null, null)) {
+			return false;
+		    }
+		}
+	    }
+	}
+	return true;
+    }
+
+    public boolean canTeacherRemoveRoom(ExecutionCourse executionCourse, Teacher teacher, AllocatableSpace room) {
+	for (Lesson lesson : room.getAssociatedLessons(executionCourse.getExecutionPeriod())) {
+	    if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
+		if (lesson.getExecutionCourse().teacherLecturesExecutionCourse(teacher)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
 }

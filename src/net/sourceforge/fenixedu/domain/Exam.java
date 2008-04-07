@@ -3,9 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -160,4 +158,9 @@ public class Exam extends Exam_Base {
 	return this.getSeason().equals(season);
     }
 
+    @Override
+    public boolean canBeAssociatedToRoom(AllocatableSpace room) {
+	return !room.isFree(getBeginningDateTime().toYearMonthDay(), getEndDateTime().toYearMonthDay(),
+		getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(), null, null, null);
+    }
 }

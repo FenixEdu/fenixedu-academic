@@ -857,6 +857,10 @@
 			<to-view-id>/teacher/evaluation/editEnrolmentPeriod.jsp</to-view-id>
 		</navigation-case>
  		<navigation-case>
+			<from-outcome>enterChooseRoom</from-outcome>
+			<to-view-id>/teacher/evaluation/chooseRoom.jsp</to-view-id>
+		</navigation-case>		
+ 		<navigation-case>
 			<from-outcome>enterShowStudentsEnroled</from-outcome>
 			<to-view-id>/teacher/evaluation/showStudentsEnroled.jsp</to-view-id>
 		</navigation-case>
