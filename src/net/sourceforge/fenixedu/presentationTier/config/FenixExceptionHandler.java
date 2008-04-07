@@ -131,7 +131,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	super.storeException(request, property, error, forward, ae.getScope());
 
 	String[] parameters = ArrayUtils.toStringArray(request.getParameterNames(), "_request_checksum_", "jsessionid");
-	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), parameters, request.getQueryString(),
+	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(),  request.getHeader("referer"), parameters, request.getQueryString(),
 		userView == null ? StringUtils.EMPTY : userView.getUtilizador(), requestContext, sessionContext, stackTrace, ex
 			.getClass().getName());
 	errorLogger.start();
@@ -186,6 +186,8 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
 	private String path;
 
+	private String referer;
+	
 	private String[] parameters;
 
 	private String queryString;
@@ -200,11 +202,12 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
 	private String exceptionType;
 
-	public ErrorLogger(String path, String[] parameters, String queryString, String user, String requestAttributes,
+	public ErrorLogger(String path, String referer, String[] parameters, String queryString, String user, String requestAttributes,
 		String sessionAttributes, String stackTrace, String exceptionType) {
 	    super();
 	    this.path = path;
 	    this.parameters = parameters;
+	    this.referer = referer;
 	    this.queryString = queryString;
 	    this.user = user;
 	    this.requestAttributes = requestAttributes;
@@ -217,7 +220,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	public void run() {
 	    Transaction.withTransaction(new jvstm.TransactionalCommand() {
 		public void doIt() {
-		    RequestLog.registerError(path, parameters, queryString, user, requestAttributes, sessionAttributes,
+		    RequestLog.registerError(path, referer, parameters, queryString, user, requestAttributes, sessionAttributes,
 			    stackTrace, exceptionType);
 		}
 	    });

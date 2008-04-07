@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add referer to Request Mapping Logging" addRefererToRequestMapping.sql

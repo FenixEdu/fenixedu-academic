@@ -17,23 +17,24 @@ public class RequestMapping extends RequestMapping_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    private RequestMapping(String path, String... parameters) {
+    private RequestMapping(String path, String referer, String... parameters) {
 	this();
 	setPath(path);
+	setReferer(referer);
 	setParameters(StringUtils.join(parameters, '&'));
     }
 
-    public static RequestMapping createOrRetrieveRequestMapping(String path, String... parameters) {
+    public static RequestMapping createOrRetrieveRequestMapping(String path, String referer, String... parameters) {
 
 	for (RequestMapping requestMapping : RootDomainObject.getInstance().getRequestMappings()) {
 	    if (requestMapping.getPath().equals(path)) {
-		if (ArrayUtils.haveArraysSameElements(requestMapping.getParameters().split("&"), parameters)) {
+		if (ArrayUtils.haveArraysSameElements(requestMapping.getParameters().split("&"), parameters) && requestMapping.getReferer().equalsIgnoreCase(referer)) {
 		    return requestMapping;
 		}
 	    }
 	}
 
-	return new RequestMapping(path, parameters);
+	return new RequestMapping(path, referer, parameters);
     }
 
 }
