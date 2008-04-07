@@ -1,64 +1,45 @@
 package net.sourceforge.fenixedu.renderers.validators;
 
-import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
-public class NumberValidator extends RequiredValidator {
+public class NumberValidator extends HtmlValidator {
 
-	private int base;
+    private int base;
 
-	private boolean required;
+    public NumberValidator(HtmlChainValidator htmlChainValidator) {
+	super(htmlChainValidator);
+	setBase(10);
+    }
 
-	public NumberValidator(Validatable component) {
-		super(component);
+    public NumberValidator(HtmlChainValidator htmlChainValidator, int base) {
+	this(htmlChainValidator);
 
-		component.setValidator(this);
-		setRequired(true);
-		setBase(10);
-	}
+	setBase(base);
+    }
 
-	public NumberValidator(Validatable component, int base) {
-		this(component);
+    public int getBase() {
+	return this.base;
+    }
 
-		setBase(base);
-	}
+    public void setBase(int base) {
+	this.base = base;
+    }
 
-	public boolean isRequired() {
-		return this.required;
-	}
+    @Override
+    public String getErrorMessage() {
+	return RenderUtils.getResourceString("renderers.validator.number");
+    }
 
-	public void setRequired(boolean required) {
-		this.required = required;
-	}
+    @Override
+    public void performValidation() {
 
-	public int getBase() {
-		return this.base;
-	}
+	    String numberText = getComponent().getValue().trim();
 
-	public void setBase(int base) {
-		this.base = base;
-	}
-
-	@Override
-	public String getErrorMessage() {
-		return RenderUtils.getResourceString("renderers.validator.number");
-	}
-
-	@Override
-	public void performValidation() {
-		super.performValidation();
-
-		if (isValid()) {
-			String numberText = getComponent().getValue().trim();
-
-			try {
-				Integer.parseInt(numberText, getBase());
-				setValid(true);
-			} catch (NumberFormatException e) {
-				setValid(false);
-			}
-		} else {
-			setValid(!isRequired());
-		}
-	}
+	    try {
+		Integer.parseInt(numberText, getBase());
+		setValid(true);
+	    } catch (NumberFormatException e) {
+		setValid(false);
+	    }
+    }
 }

@@ -74,6 +74,7 @@
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 

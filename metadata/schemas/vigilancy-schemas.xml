@@ -207,36 +207,43 @@
 <schema name="edit.vigilantGroup.points" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" bundle="VIGILANCY_RESOURCES">
 	<slot name="pointsForTeacher">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForConvoked">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForDismissed">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForDismissedTeacher">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForMissing">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForMissingTeacher">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForDisconvoked">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
@@ -809,6 +816,7 @@ extends="presentSimpleConvokesWithoutLink">
 	<slot name="person.name" read-only="true" key="label.vigilancy.vigilant"/>
 	<slot name="startPoints" key="label.vigilancy.startPoints">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
 	</slot>

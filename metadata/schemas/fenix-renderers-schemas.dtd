@@ -91,7 +91,7 @@
   JSP. Otherwise the slot will have the null value or any other value that was previously 
   set.
 -->
-<!ELEMENT slot (validator?,property*)>
+<!ELEMENT slot (validator*,property*)>
 
 <!ATTLIST slot
 	name CDATA #REQUIRED

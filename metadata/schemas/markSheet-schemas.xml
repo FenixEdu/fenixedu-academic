@@ -148,10 +148,11 @@
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
 	extends="markSheet.base">
 
-	<slot name="teacherNumber" key="label.teacher" 
-		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+	<slot name="teacherNumber" key="label.teacher">
 		<property name="size" value="8" />
 		<property name="maxLength" value="6" />
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="evaluationDate" key="label.evaluationDate">
 		<validator
@@ -160,6 +161,7 @@
 			<property name="message" value="error.invalid.date.format" />
 			<property name="key" value="true" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="12" />
 		<property name="maxLength" value="10" />
 	</slot>
@@ -202,6 +204,7 @@
 			<property name="message" value="error.invalid.date.format" />
 			<property name="key" value="true" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="12" />
 		<property name="maxLength" value="10" />
 	</slot>
@@ -264,6 +267,7 @@
 			<property name="message" value="error.invalid.date.format" />
 			<property name="key" value="true" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="12" />
 		<property name="maxLength" value="10" />
 	</slot>
@@ -282,6 +286,7 @@
 			<property name="message" value="error.invalid.date.format" />
 			<property name="key" value="true" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -303,6 +308,7 @@
 			<property name="message" value="error.invalid.date.format" />
 			<property name="key" value="true" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="12" />
 		<property name="maxLength" value="10" />
 	</slot>
@@ -338,6 +344,7 @@
 			<property name="message" value="error.invalid.date.format" />
 			<property name="key" value="true" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="12" />
 		<property name="maxLength" value="10" />
 	</slot>

@@ -77,6 +77,7 @@
 		<validator class="net.sourceforge.fenixedu.renderers.validators.AdvancedDateValidator">
 			<property name="validationPeriod" value="pastOrToday" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>	
 </schema>	
 <schema name="candidacy.show.candidady"
@@ -225,6 +226,7 @@
 		<validator class="net.sourceforge.fenixedu.renderers.validators.AdvancedDateValidator">
 			<property name="validationPeriod" value="pastOrToday" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -302,10 +304,11 @@
 <schema name="candidate.precedentDegreeInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="CANDIDATE_RESOURCES">
 	<slot name="degreeDesignation"  />
 	<slot name="conclusionGrade"  />
-	<slot name="conclusionYear" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator" >
+	<slot name="conclusionYear"> 
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
-		<property name="required" value="true"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>	
 	<slot name="institution" layout="format">
 		<property name="format" value="${name}"/>
@@ -485,13 +488,17 @@
 		<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>
-    <slot name="documentIdEmissionDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+    <slot name="documentIdEmissionDate">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
     </slot>
-    <slot name="documentIdExpirationDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+    <slot name="documentIdExpirationDate">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
     </slot>
     <slot name="socialSecurityNumber">
     	<property name="size" value="9"/>
@@ -520,9 +527,11 @@
 		<property name="format" value="${nationality}"/>
 		<property name="sortBy" value="nationality=asc" />
 	</slot>
-    <slot name="dateOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+    <slot name="dateOfBirth">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
     </slot>
     <slot name="parishOfBirth"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
     	<property name="size" value="50"/>

@@ -14,17 +14,17 @@ import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 import net.sourceforge.fenixedu.renderers.validators.RequiredValidator;
 
 public class GradeInputRenderer extends InputRenderer {
-    
+
     private boolean required = false;
-    
+
     private Integer maxLength;
-    
+
     private String size;
-    
 
     @Override
     protected Layout getLayout(Object object, Class type) {
@@ -34,15 +34,15 @@ public class GradeInputRenderer extends InputRenderer {
 	    public HtmlComponent createComponent(Object object, Class type) {
 		Grade grade = (Grade) object;
 		HtmlInlineContainer container = new HtmlInlineContainer();
-		
+
 		MetaSlot slot = (MetaSlot) getInputContext().getMetaObject();
-		
+
 		final HtmlGradeTextInput value = new HtmlGradeTextInput(isRequired());
 		value.bind(slot);
 
 		value.setMaxLength(getMaxLength());
 		value.setSize(getSize());
-		
+
 		HtmlMenu menu = new HtmlMenu();
 		menu.setName(slot.getKey().toString() + "_scale");
 
@@ -50,13 +50,12 @@ public class GradeInputRenderer extends InputRenderer {
 		for (GradeScale scale : GradeScale.values()) {
 		    menu.createOption(RenderUtils.getEnumString(scale)).setValue(scale.getName());
 		}
-		
-		if (grade != null) {
+
+		if (grade != null && !grade.isEmpty()) {
 		    value.setValue(grade.getValue());
 		    menu.setValue(grade.getGradeScale().getName());
 		}
 
-		
 		menu.setController(new HtmlController() {
 
 		    @Override
@@ -64,24 +63,24 @@ public class GradeInputRenderer extends InputRenderer {
 			HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getControlledComponent();
 			value.setConverter(new GradeConverter(component.getValue()));
 		    }
-		    
+
 		});
-		
+
 		container.addChild(value);
 		container.addChild(menu);
 
 		return container;
 	    }
-	    
+
 	};
     }
-    
+
     private static class GradeConverter extends Converter {
-	
+
 	private GradeScale gradeScale;
-	
+
 	public GradeConverter(String gradeScaleName) {
-	    if(gradeScaleName != null && gradeScaleName.length() > 0) {
+	    if (gradeScaleName != null && gradeScaleName.length() > 0) {
 		gradeScale = GradeScale.valueOf(gradeScaleName);
 	    }
 	}
@@ -89,7 +88,7 @@ public class GradeInputRenderer extends InputRenderer {
 	@Override
 	public Object convert(Class type, Object value) {
 	    String gradeValue = (String) value;
-	    if(gradeValue == null || gradeValue.length() == 0) {
+	    if (gradeValue == null || gradeValue.length() == 0) {
 		return Grade.createEmptyGrade();
 	    } else {
 		return Grade.createGrade(gradeValue, getGradeScale());
@@ -103,106 +102,98 @@ public class GradeInputRenderer extends InputRenderer {
 	public void setGradeScale(GradeScale gradeScale) {
 	    this.gradeScale = gradeScale;
 	}
-	
+
     }
-    
+
     private static class HtmlGradeTextInput extends HtmlTextInput {
-	
+
 	public HtmlGradeTextInput(final boolean required) {
-	   super.setValidator(new HtmlGradeTextInputValidator(required, this)); 
+	    HtmlChainValidator htmlChainValidator = new HtmlChainValidator(this);
+	    super.setChainValidator(htmlChainValidator);
+	    new HtmlGradeTextInputValidator(htmlChainValidator);
+	    if (required) {
+		htmlChainValidator.addValidator(new RequiredValidator(htmlChainValidator));
+	    }
 	}
-	
+
 	@Override
-	public void setValidator(HtmlValidator validator) {
-	    
+	public void setChainValidator(HtmlChainValidator chainValidator) {
 	}
-	
+
 	@Override
-	public void setValidator(MetaSlot slot) {
-	    
+	public void setChainValidator(MetaSlot slot) {
 	}
-		
-	private static class HtmlGradeTextInputValidator extends RequiredValidator {
-	
-	    private boolean required;
+
+	@Override
+	public void addValidator(HtmlValidator htmlValidator) {
+	}
+
+	private static class HtmlGradeTextInputValidator extends HtmlValidator {
+
 	    private Object[] arguments;
-	    
-	    public HtmlGradeTextInputValidator(boolean required, HtmlGradeTextInput htmlGradeTextInput) {
-		super(htmlGradeTextInput);
-		setRequired(required);
+
+	    public HtmlGradeTextInputValidator(HtmlChainValidator htmlChainValidator) {
+		super(htmlChainValidator);
 	    }
 
-	    public boolean isRequired() {
-	        return required;
-	    }
-
-	    public void setRequired(boolean required) {
-	        this.required = required;
-	    }
-	    
 	    public Object[] getArguments() {
-	        return arguments;
+		return arguments;
 	    }
 
-	    public void setArguments(Object ... arguments) {
-	        this.arguments = arguments;
+	    public void setArguments(Object... arguments) {
+		this.arguments = arguments;
 	    }
 
 	    @Override
 	    protected String getResourceMessage(String message) {
 		return RenderUtils.getFormatedResourceString(message, getArguments());
 	    }
-	    
+
 	    @Override
 	    public void performValidation() {
-		if(isRequired()) {
-		    super.performValidation();
-		}
-		
-		if(isValid()) {
-		    HtmlGradeTextInput htmlGradeTextInput = (HtmlGradeTextInput) getComponent();
-		    GradeConverter gradeConverter = (GradeConverter) htmlGradeTextInput.getConverter();
-		    GradeScale gradeScale = gradeConverter.getGradeScale();
-		    
-		    String value = getComponent().getValue().trim();
-		    if(value != null && value.length() > 0) {
-			if(gradeScale == null) {
+
+		HtmlGradeTextInput htmlGradeTextInput = (HtmlGradeTextInput) getComponent();
+		GradeConverter gradeConverter = (GradeConverter) htmlGradeTextInput.getConverter();
+		GradeScale gradeScale = gradeConverter.getGradeScale();
+
+		String value = getComponent().getValue().trim();
+		if (value != null && value.length() > 0) {
+		    if (gradeScale == null) {
+			setValid(false);
+			setMessage("renderers.validator.grade.no.grade.scale");
+		    } else {
+			if (!gradeScale.belongsTo(value)) {
 			    setValid(false);
-			    setMessage("renderers.validator.grade.no.grade.scale");
-			} else {
-			    if(!gradeScale.belongsTo(value)) {
-				setValid(false);
-				setMessage("renderers.validator.grade.invalid.grade.value");
-				setArguments(value, RenderUtils.getEnumString(gradeScale));
-			    }
+			    setMessage("renderers.validator.grade.invalid.grade.value");
+			    setArguments(value, RenderUtils.getEnumString(gradeScale));
 			}
 		    }
 		}
-	    }	    
-	}	
+	    }
+	}
     }
 
     public boolean isRequired() {
-        return required;
+	return required;
     }
 
     public void setRequired(boolean required) {
-        this.required = required;
+	this.required = required;
     }
 
     public Integer getMaxLength() {
-        return maxLength;
+	return maxLength;
     }
 
     public void setMaxLength(Integer maxLength) {
-        this.maxLength = maxLength;
+	this.maxLength = maxLength;
     }
 
     public String getSize() {
-        return size;
+	return size;
     }
 
     public void setSize(String size) {
-        this.size = size;
+	this.size = size;
     }
 }

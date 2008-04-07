@@ -93,7 +93,6 @@
     <slot name="weight" key="label.site.banner.weight">
     	<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
     		<property name="lowerBound" value="0"/>
-    		<property name="required" value="false"/>
     	</validator>
         <property name="size" value="10"/>
     </slot>
@@ -177,11 +176,13 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 		<property name="minChars" value="4"/>
 	</slot>
-	<slot name="begin" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	<slot name="begin"> 
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	</slot>
 	<slot name="end">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="required" value="false"/>
-		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
 	</slot>
 	<slot name="contractType" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract$ResearchContractType"/> 

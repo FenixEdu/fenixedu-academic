@@ -4,34 +4,34 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringInputRenderer.LanguageBean;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
-import net.sourceforge.fenixedu.renderers.components.Validatable;
+import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
 
 public class RequiredMultiLanguageStringValidator extends MultiLanguageStringValidator {
 
-    public RequiredMultiLanguageStringValidator(Validatable component) {
-        super(component);
-        
-        setMessage("renderers.validator.language.required");
+    public RequiredMultiLanguageStringValidator(HtmlChainValidator htmlChainValidator) {
+	super(htmlChainValidator);
+
+	setMessage("renderers.validator.language.required");
     }
 
     @Override
     public void performValidation() {
-        super.performValidation();
+	super.performValidation();
 
-        if (! isValid()) {
-            return;
-        }
-        
-        HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getComponent();
-        Collection<LanguageBean> beans = LanguageBean.importAllFromString(component.getValue());
+	if (!isValid()) {
+	    return;
+	}
 
-        for (LanguageBean bean : beans) {
-            if (bean.value != null && bean.value.length() > 0) {
-                setValid(true);
-                return;
-            }
-        }
-        
-        setValid(false);
+	HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getComponent();
+	Collection<LanguageBean> beans = LanguageBean.importAllFromString(component.getValue());
+
+	for (LanguageBean bean : beans) {
+	    if (bean.value != null && bean.value.length() > 0) {
+		setValid(true);
+		return;
+	    }
+	}
+
+	setValid(false);
     }
 }

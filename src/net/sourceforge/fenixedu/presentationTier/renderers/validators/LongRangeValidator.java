@@ -1,100 +1,79 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
-import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.renderers.validators.RequiredValidator;
+import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
+import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
-public class LongRangeValidator extends RequiredValidator {
+public class LongRangeValidator extends HtmlValidator {
 
-	private boolean isNumber;
+    private boolean isNumber;
 
-	private Long upperBound;
+    private Long upperBound;
 
-	private Long lowerBound;
+    private Long lowerBound;
 
-	private boolean required;
+    public LongRangeValidator(HtmlChainValidator htmlChainValidator) {
+	super(htmlChainValidator);
 
-	public LongRangeValidator(Validatable component) {
-		super(component);
+	upperBound = null;
+	lowerBound = null;
+    }
 
-		upperBound = null;
-		lowerBound = null;
-		component.setValidator(this);
-		setRequired(true);
+    public long getLowerBound() {
+	return lowerBound;
+    }
+
+    public void setLowerBound(long lowerBound) {
+	this.lowerBound = lowerBound;
+    }
+
+    public long getUpperBound() {
+	return upperBound;
+    }
+
+    public void setUpperBound(long upperBound) {
+	this.upperBound = upperBound;
+    }
+
+    @Override
+    public void performValidation() {
+
+	try {
+	    long number = Long.parseLong(getComponent().getValue().trim());
+
+	    boolean inRange = true;
+	    isNumber = true;
+
+	    if (lowerBound != null) {
+		inRange &= lowerBound <= number;
+	    }
+
+	    if (upperBound != null) {
+		inRange &= upperBound >= number;
+	    }
+
+	    this.setValid(inRange);
+	} catch (NumberFormatException e) {
+	    isNumber = false;
+	    setValid(false);
+	}
+    }
+
+    @Override
+    public String getErrorMessage() {
+	if (!isNumber) {
+	    return RenderUtils.getResourceString("renderers.validator.number");
 	}
 
-	public long getLowerBound() {
-		return lowerBound;
+	if (lowerBound != null && upperBound != null) {
+	    return RenderUtils.getFormatedResourceString("renderers.validator.number.range.both", lowerBound, upperBound);
 	}
 
-	public void setLowerBound(long lowerBound) {
-		this.lowerBound = lowerBound;
+	if (lowerBound != null) {
+	    return RenderUtils.getFormatedResourceString("renderers.validator.number.range.lower", lowerBound);
 	}
 
-	public long getUpperBound() {
-		return upperBound;
-	}
-
-	public void setUpperBound(long upperBound) {
-		this.upperBound = upperBound;
-	}
-
-	public boolean isRequired() {
-		return this.required;
-	}
-
-	public void setRequired(boolean required) {
-		this.required = required;
-	}
-
-	@Override
-	public void performValidation() {
-		super.performValidation();
-
-		if (isValid()) {
-			try {
-				long number = Long.parseLong(getComponent().getValue().trim());
-
-				boolean inRange = true;
-				isNumber = true;
-
-				if (lowerBound != null) {
-					inRange &= lowerBound <= number;
-				}
-
-				if (upperBound != null) {
-					inRange &= upperBound >= number;
-				}
-
-				this.setValid(inRange);
-			} catch (NumberFormatException e) {
-				isNumber = false;
-				setValid(false);
-			}
-		} else {
-			setValid(!isRequired());
-		}
-	}
-
-	@Override
-	public String getErrorMessage() {
-		if (!isNumber) {
-			return RenderUtils.getResourceString("renderers.validator.number");
-		}
-
-		if (lowerBound != null && upperBound != null) {
-			return RenderUtils.getFormatedResourceString(
-					"renderers.validator.number.range.both", lowerBound,
-					upperBound);
-		}
-
-		if (lowerBound != null) {
-			return RenderUtils.getFormatedResourceString(
-					"renderers.validator.number.range.lower", lowerBound);
-		}
-
-		return RenderUtils.getFormatedResourceString(
-				"renderers.validator.number.range.upper", upperBound);
-	}
+	return RenderUtils.getFormatedResourceString("renderers.validator.number.range.upper", upperBound);
+    }
 
 }

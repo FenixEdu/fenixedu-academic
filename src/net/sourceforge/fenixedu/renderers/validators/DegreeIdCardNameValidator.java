@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.renderers.components.Validatable;
 
 public class DegreeIdCardNameValidator extends HtmlValidator {
 
-    public DegreeIdCardNameValidator(final Validatable component) {
-	super(component);
+    public DegreeIdCardNameValidator(HtmlChainValidator htmlChainValidator) {
+	super(htmlChainValidator);
 	setMessage("renderers.validator.degree.id.card.name");
     }
 

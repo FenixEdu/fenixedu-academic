@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.renderers.validators;
 
-import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class RegexpValidator extends HtmlValidator {
@@ -10,37 +9,37 @@ public class RegexpValidator extends HtmlValidator {
     /**
      * Required constructor.
      */
-    public RegexpValidator(Validatable component) {
-        this(component, ".*");
+    public RegexpValidator(HtmlChainValidator htmlChainValidator) {
+	this(htmlChainValidator, ".*");
     }
 
-    public RegexpValidator(Validatable component, String regexp) {
-        super(component);
+    public RegexpValidator(HtmlChainValidator htmlChainValidator, String regexp) {
+	super(htmlChainValidator);
 
-        setRegexp(regexp);
-        
-        // default messsage
-        setMessage("renderers.validator.regexp");
+	setRegexp(regexp);
+
+	// default messsage
+	setMessage("renderers.validator.regexp");
     }
 
     public String getRegexp() {
-        return this.regexp;
+	return this.regexp;
     }
 
     public void setRegexp(String regexp) {
-        this.regexp = regexp;
+	this.regexp = regexp;
     }
 
     @Override
     protected String getResourceMessage(String message) {
-        return RenderUtils.getFormatedResourceString(message, new Object[] { getRegexp() });
+	return RenderUtils.getFormatedResourceString(message, new Object[] { getRegexp() });
     }
 
     @Override
     public void performValidation() {
-        String text = getComponent().getValue();
+	String text = getComponent().getValue();
 
-        setValid(text.matches(getRegexp()));
+	setValid(text.matches(getRegexp()));
     }
 
 }

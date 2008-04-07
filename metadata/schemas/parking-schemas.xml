@@ -338,6 +338,7 @@
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
 			<property name="lowerBound" value="1"/>
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="parkingGroup" key="label.group" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.parking.ParkingGroup"/>
@@ -442,9 +443,7 @@
 		<property name="sortBy" value="groupName"/>
 	</slot>
 	<slot name="actualEndDate" key="label.cardEndDate">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="required" value="false"/>
-		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>		
 	</slot>

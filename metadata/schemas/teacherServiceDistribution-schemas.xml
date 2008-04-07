@@ -1,30 +1,44 @@
 <!-- Teacher Service Distribution -->
     <schema name="omissionValuesValuation.details" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase">
-		<slot name="studentsPerTheoreticalShift" key="label.teacherServiceDistribution.studentsPerTheoreticalShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<slot name="studentsPerTheoreticalShift" key="label.teacherServiceDistribution.studentsPerTheoreticalShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
-		<slot name="studentsPerProblemShift" key="label.teacherServiceDistribution.studentsPerProblemShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<slot name="studentsPerProblemShift" key="label.teacherServiceDistribution.studentsPerProblemShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
-		<slot name="studentsPerSeminaryShift" key="label.teacherServiceDistribution.studentsPerSeminaryShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<slot name="studentsPerSeminaryShift" key="label.teacherServiceDistribution.studentsPerSeminaryShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
-		<slot name="studentsPerFieldWorkShift" key="label.teacherServiceDistribution.studentsPerFieldWorkShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<slot name="studentsPerFieldWorkShift" key="label.teacherServiceDistribution.studentsPerFieldWorkShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>
-		<slot name="studentsPerTrainingPeriodShift" key="label.teacherServiceDistribution.studentsPerTrainingPeriodShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<slot name="studentsPerTrainingPeriodShift" key="label.teacherServiceDistribution.studentsPerTrainingPeriodShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>		
-		<slot name="studentsPerTutDirectionShift" key="label.teacherServiceDistribution.studentsPerTutDirectionShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<slot name="studentsPerTutDirectionShift" key="label.teacherServiceDistribution.studentsPerTutDirectionShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>		
-		<slot name="studentsPerLaboratorialShift" key="label.teacherServiceDistribution.studentsPerLaboratorialShift" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<slot name="studentsPerLaboratorialShift" key="label.teacherServiceDistribution.studentsPerLaboratorialShift">
+			<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 			<property name="size" value="2"/>
         	<property name="maxLength" value="3"/>
         </slot>

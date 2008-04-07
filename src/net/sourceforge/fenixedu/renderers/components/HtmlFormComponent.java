@@ -1,8 +1,13 @@
 package net.sourceforge.fenixedu.renderers.components;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.jsp.PageContext;
+
+import pt.ist.utl.fenix.utils.Pair;
 
 import net.sourceforge.fenixedu.renderers.components.controllers.Controllable;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
@@ -13,14 +18,15 @@ import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
 public abstract class HtmlFormComponent extends HtmlComponent implements Convertible, Controllable, SlotChanger, Validatable {
 
     public static int COMPONENT_NUMBER = 0;
-    
+
     private String name;
-    
+
     private Converter converter;
 
     private HtmlController controller;
@@ -28,18 +34,18 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
     private MetaSlotKey slotKey;
 
     private boolean disabled;
-    
-    private HtmlValidator validator;
-    
+
+    private HtmlChainValidator chainValidator;
+
     public HtmlFormComponent() {
-        super();
-        
-        this.name = getNewName();
-        this.disabled = false;
+	super();
+
+	this.name = getNewName();
+	this.disabled = false;
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
@@ -48,123 +54,129 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
      * {@link #getName()} may return a value that is not equal to the name given
      * in this method.
      * 
-     * @param name the desired name
+     * @param name
+     *                the desired name
      */
     public void setName(String name) {
-        this.name = getValidIdOrName(name);
+	this.name = getValidIdOrName(name);
     }
-    
+
     public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
+	this.disabled = disabled;
     }
-    
+
     public boolean isDisabled() {
-        return this.disabled;
+	return this.disabled;
     }
 
     public boolean hasConverter() {
-        return this.converter != null;
+	return this.converter != null;
     }
 
     public Converter getConverter() {
-        return converter;
+	return converter;
     }
 
     public void setConverter(Converter converter) {
-        this.converter = converter;
+	this.converter = converter;
     }
-    
+
     public Object getConvertedValue() {
-        return null;
+	return null;
     }
-    
+
     public Object getConvertedValue(MetaSlot slot) {
-        return null;
+	return null;
     }
 
-    public HtmlValidator getValidator() {
-        return this.validator;
+    public HtmlChainValidator getChainValidator() {
+	return this.chainValidator;
     }
 
-    public void setValidator(HtmlValidator validator) {
-        this.validator = validator;
+    public void setChainValidator(HtmlChainValidator validator) {
+	this.chainValidator = validator;
     }
 
-    public void setValidator(MetaSlot slot) {
-        Class<HtmlValidator> validatorType = slot.getValidator();
-        
-        if (validatorType == null) {
-            setValidator((HtmlValidator) null);
-            return;
-        }
-    
-        Constructor<HtmlValidator> constructor;
-        try {
-            constructor = validatorType.getConstructor(new Class[] { Validatable.class });
-    
-            HtmlValidator validator = constructor.newInstance(this);
-            RenderUtils.setProperties(validator, slot.getValidatorProperties());
-            
-            setValidator(validator);
-        } catch (Exception e) {
-            throw new RuntimeException("could not create validator '" + validatorType.getName() + "' for slot '"
-                    + slot.getName() + "': ", e);
-        }
+    public void setChainValidator(MetaSlot slot) {
+	HtmlChainValidator htmlChainValidator = new HtmlChainValidator(this);
+	List<HtmlValidator> validators = new ArrayList<HtmlValidator>();
+	for (Pair<Class<HtmlValidator>, Properties> validatorPair : slot.getValidators()) {
+	    Constructor<HtmlValidator> constructor;
+	    try {
+		constructor = validatorPair.getKey().getConstructor(new Class[] { HtmlChainValidator.class });
+
+		HtmlValidator validator = constructor.newInstance(htmlChainValidator);
+		RenderUtils.setProperties(validator, validatorPair.getValue());
+
+		validators.add(validator);
+	    } catch (Exception e) {
+		throw new RuntimeException("could not create validator '" + validatorPair.getKey().getName() + "' for slot '"
+			+ slot.getName() + "': ", e);
+	    }
+	}
+	setChainValidator(htmlChainValidator);
     }
-    
+
+    public void addValidator(HtmlValidator htmlValidator) {
+	if (this.chainValidator == null) {
+	    this.chainValidator = new HtmlChainValidator(this);
+	}
+	this.chainValidator.addValidator(htmlValidator);
+    }
+
     public boolean hasController() {
-        return controller != null;
+	return controller != null;
     }
 
     public HtmlController getController() {
-        return controller;
+	return controller;
     }
 
     public void setController(HtmlController controller) {
-        this.controller = controller;
-        this.controller.setControlledComponent(this);
+	this.controller = controller;
+	this.controller.setControlledComponent(this);
     }
- 
+
     public MetaSlotKey getTargetSlot() {
-        return this.slotKey;
+	return this.slotKey;
     }
 
     public boolean hasTargetSlot() {
-        return this.slotKey != null;
+	return this.slotKey != null;
     }
 
     public void setTargetSlot(MetaSlotKey key) {
-        setName(key != null ? key.toString() : null);
-        this.slotKey = key;
+	setName(key != null ? key.toString() : null);
+	this.slotKey = key;
     }
 
     public void bind(MetaSlot slot) {
-        if (slot != null) {
-            setTargetSlot(slot.getKey());
-        }
+	if (slot != null) {
+	    setTargetSlot(slot.getKey());
+	}
     }
-    
+
     public void bind(MetaObject object, String slotName) {
-        bind(object.getSlot(slotName));
+	bind(object.getSlot(slotName));
     }
-    
+
     public static String getNewName() {
-        int number;
-        
-        synchronized (HtmlFormComponent.class) {
-            number = HtmlFormComponent.COMPONENT_NUMBER++;
-        }
-        
-        String name = Integer.toHexString(number);
-        return "C" + name.toUpperCase();
+	int number;
+
+	synchronized (HtmlFormComponent.class) {
+	    number = HtmlFormComponent.COMPONENT_NUMBER++;
+	}
+
+	String name = Integer.toHexString(number);
+	return "C" + name.toUpperCase();
     }
-    
+
     @Override
     public HtmlTag getOwnTag(PageContext context) {
-        HtmlTag tag = super.getOwnTag(context);
-        
-        tag.setAttribute("name", getName());
-        
-        return tag;
+	HtmlTag tag = super.getOwnTag(context);
+
+	tag.setAttribute("name", getName());
+
+	return tag;
     }
 }

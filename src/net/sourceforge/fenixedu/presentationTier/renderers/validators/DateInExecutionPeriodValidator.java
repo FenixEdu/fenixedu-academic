@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 import java.text.ParseException;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.validators.DateValidator;
+import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.joda.time.DateTime;
@@ -18,12 +18,12 @@ import org.joda.time.DateTime;
  */
 public class DateInExecutionPeriodValidator extends DateValidator {
 
-    public DateInExecutionPeriodValidator(Validatable component) {
-	super(component);
+    public DateInExecutionPeriodValidator(HtmlChainValidator htmlChainValidator) {
+	super(htmlChainValidator);
     }
 
-    public DateInExecutionPeriodValidator(Validatable component, String dateFormat) {
-	super(component, dateFormat);
+    public DateInExecutionPeriodValidator(HtmlChainValidator htmlChainValidator, String dateFormat) {
+	super(htmlChainValidator, dateFormat);
     }
 
     @Override

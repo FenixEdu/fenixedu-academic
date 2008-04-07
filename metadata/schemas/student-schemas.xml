@@ -49,7 +49,6 @@
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
 			<property name="lowerBound" value="0"/>
 			<property name="upperBound" value="20"/>
-			<property name="required" value="false"/>
 		</validator>
 	</slot>
 </schema>
@@ -231,21 +230,19 @@
 <schema name="student.thesis.abstract.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="thesisAbstractPt" layout="longText" key="label.thesis.abstract.pt">
         <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
-            <property name="required" value="true"/>
             <property name="type" value="word"/>
             <property name="length" value="250"/>
         </validator>
-        
+         <validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
         <property name="columns" value="65"/>
         <property name="rows" value="12"/>
     </slot>
     <slot name="thesisAbstractEn" layout="longText" key="label.thesis.abstract.en">
         <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
-            <property name="required" value="true"/>
             <property name="type" value="word"/>
             <property name="length" value="250"/>
         </validator>
-        
+        <validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
         <property name="columns" value="65"/>
         <property name="rows" value="12"/>
     </slot>

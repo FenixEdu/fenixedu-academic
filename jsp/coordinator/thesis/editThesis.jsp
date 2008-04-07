@@ -208,6 +208,7 @@
                     <td class="width35em">
                         <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                             <fr:edit id="editCreditsOrientator" name="thesis" slot="orientatorCreditsDistribution">
+                                <fr:validator name="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
                                 <fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
                                     <fr:property name="lowerBound" value="0"/>
                                     <fr:property name="upperBound" value="100"/>

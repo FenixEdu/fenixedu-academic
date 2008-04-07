@@ -62,13 +62,17 @@
 		<property name="readOnly" value="true" />
 		<property name="size" value="70"/>
 	</slot>
-	<slot name="beginDate" key="label.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+	<slot name="beginDate" key="label.beginDate">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
 	</slot>
-	<slot name="endDate" key="label.endDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+	<slot name="endDate" key="label.endDate">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
 	</slot>
 	<setter signature="setOccupationInterval(beginDate, endDate)"/>
 </schema>
@@ -101,13 +105,17 @@
 </schema>
 
 <schema name="create.assiduousnessPersonFunctionFactory" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure.AssiduousnessPersonFunctionFactory">
-	<slot name="beginDate" key="label.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+	<slot name="beginDate" key="label.beginDate">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
 	</slot>
-	<slot name="endDate" key="label.endDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+	<slot name="endDate" key="label.endDate">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
 	</slot>
 </schema>
 

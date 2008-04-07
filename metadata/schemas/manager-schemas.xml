@@ -280,7 +280,7 @@
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
-        </validator>
+        </validator>        
     </slot>        
     <slot name="mobile">
     	<property name="size" value="9"/>
@@ -692,3 +692,4 @@
 	</slot>	
 	<slot name="who" key="label.who" />	
 </schema>
+

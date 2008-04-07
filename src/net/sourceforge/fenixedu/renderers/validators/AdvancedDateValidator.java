@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.renderers.validators;
 
 import java.text.ParseException;
 
-import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.collections.Predicate;
@@ -20,12 +19,12 @@ public class AdvancedDateValidator extends DateValidator {
 
     private String validationPeriod;
 
-    public AdvancedDateValidator(Validatable component) {
-	super(component);
+    public AdvancedDateValidator(HtmlChainValidator htmlChainValidator) {
+	super(htmlChainValidator);
     }
 
-    public AdvancedDateValidator(Validatable component, String dateFormat) {
-	super(component, dateFormat);
+    public AdvancedDateValidator(HtmlChainValidator htmlChainValidator, String dateFormat) {
+	super(htmlChainValidator, dateFormat);
     }
 
     @Override
@@ -34,8 +33,7 @@ public class AdvancedDateValidator extends DateValidator {
 
 	if (isValid()) {
 	    try {
-		DateTime dateTime = new DateTime(DateFormatUtil.parse(getDateFormat(),
-			getComponent().getValue()).getTime());
+		DateTime dateTime = new DateTime(DateFormatUtil.parse(getDateFormat(), getComponent().getValue()).getTime());
 		setValid(getValidationPeriodType().evaluateDate(dateTime));
 	    } catch (ParseException e) {
 		setValid(false);

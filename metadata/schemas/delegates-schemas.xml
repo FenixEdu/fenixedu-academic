@@ -174,7 +174,9 @@
 </schema>
 
 <schema name="delegates.searchDelegates.searchByNumber" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
-	<slot name="studentNumber" key="label.studentNumber"  validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+	<slot name="studentNumber" key="label.studentNumber">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10" />
 	</slot>
 	<slot name="delegateSearchType" key="label.delegateSearchType" layout="radio">

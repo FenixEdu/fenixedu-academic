@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.renderers.components.Validatable;
 
 public class MinistryDegreeCodeValidator extends HtmlValidator {
 
-    public MinistryDegreeCodeValidator(final Validatable component) {
-	super(component);
+    public MinistryDegreeCodeValidator(HtmlChainValidator htmlChainValidator) {
+	super(htmlChainValidator);
 	setMessage("renderers.validator.ministry.code");
     }
 

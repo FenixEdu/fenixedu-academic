@@ -124,9 +124,7 @@
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.contact.info" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="phone" key="label.person.telephone">
-		 <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
-            <property name="required" value="false"/>
-        </validator>
+		 <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="mobile" key="label.person.mobilePhone">
@@ -151,9 +149,7 @@
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.contact.info.without.email" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="phone" key="label.person.telephone">
-		 <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
-            <property name="required" value="false"/>
-        </validator>
+		 <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="mobile" key="label.person.mobilePhone">

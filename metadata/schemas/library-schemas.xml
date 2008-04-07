@@ -134,9 +134,8 @@
 
 <schema name="library.card.generate.date" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
 	<slot name="validUntil" key="label.card.date">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="required" value="false"/>
-		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
 	</slot>
 </schema>
 
@@ -176,9 +175,7 @@
 		<property name="nullOptionHidden" value="true"/>		
 	</slot>
     <slot name="validUntil" key="label.card.date">
-  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="required" value="false"/>
-		</validator>
+  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
 	</slot>
 </schema>
 
@@ -205,9 +202,8 @@
 		<property name="nullOptionHidden" value="true"/>		
 	</slot>	
     <slot name="validUntil" key="label.card.date">
-   		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="required" value="false"/>
-		</validator>
+   		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
     </slot>
 </schema>
 
@@ -234,9 +230,7 @@
 		<property name="nullOptionHidden" value="true"/>		
 	</slot>
     <slot name="validUntil" key="label.card.date">
-  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
-			<property name="required" value="false"/>
-		</validator>
+  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
 	</slot>
 </schema>
 

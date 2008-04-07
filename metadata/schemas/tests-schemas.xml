@@ -175,8 +175,10 @@
 <schema name="tests.answer.percentage"
 	type="net.sourceforge.fenixedu.domain.tests.NewAnswer"
 	bundle="TESTS_RESOURCES">
-	<slot name="percentage" key="label.tests.corrector.percentage"
-		validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator" />
+	<slot name="percentage" key="label.tests.corrector.percentage">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DoubleValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	</slot>
 </schema>
 
 <schema name="tests.answer.correction"
@@ -341,6 +343,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="0" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -360,6 +363,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="0" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -379,6 +383,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="0" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -398,6 +403,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="0" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -535,8 +541,11 @@
 		<property name="saveOptions" value="true" />
 	</slot>
 	<slot name="percentage"
-		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"
-		key="label.tests.corrector.percentage" />
+		key="label.tests.corrector.percentage">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	</slot>
+		
 </schema>
 
 <schema name="tests.validator.choose"
@@ -842,6 +851,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="0" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="5" />
 	</slot>
 </schema>
@@ -903,8 +913,8 @@
 		<validator
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
-			<property name="required" value="true" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -927,7 +937,6 @@
 		<validator
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
-			<property name="required" value="false" />
 		</validator>
 	</slot>
 </schema>
@@ -940,9 +949,12 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
-	<slot name="value" key="label.modelRestriction.value"
-		validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator" />
+	<slot name="value" key="label.modelRestriction.value">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DoubleValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	</slot>
 </schema>
 
 <schema name="tests.testModel.selectQuestionGroup.count"
@@ -953,6 +965,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -999,6 +1012,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="useFinalDate" read-only="true"
 		key="tests.generateTests.useFinalDate" />
@@ -1039,6 +1053,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="useFinalDate" read-only="true"
 		key="tests.generateTests.useFinalDate" />

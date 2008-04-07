@@ -1,5 +1,7 @@
 package pt.ist.utl.fenix.utils;
 
+import java.io.Serializable;
+
 /**
  * A pair is simple aggregation of two values. This class can be used to keep
  * two values together, like a key and value, without depending in any
@@ -9,27 +11,27 @@ package pt.ist.utl.fenix.utils;
  *         <br/> Created on 13:27:42,31/Mar/2006
  * @version $Id$
  */
-public class Pair<K, V> {
+public class Pair<K, V> implements Serializable {
 
     private K key;
     private V value;
 
     public Pair(K key, V value) {
-        this.key = key;
-        this.value = value;
+	this.key = key;
+	this.value = value;
     }
 
     public K getKey() {
-        return key;
+	return key;
     }
 
     public V getValue() {
-        return value;
+	return value;
     }
 
     @Override
     public String toString() {
-        return "Pair(" +  getKey() + ", " + getValue() + ")";
+	return "Pair(" + getKey() + ", " + getValue() + ")";
     }
-    
+
 }

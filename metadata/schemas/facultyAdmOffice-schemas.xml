@@ -1,8 +1,6 @@
 <schema name="search.grants.contract" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
 	<slot name="grantYearMonth.year" key="label.year">
-		<validator name="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
-			<property name="required" value="false" />
-		</validator>
+		<validator name="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>

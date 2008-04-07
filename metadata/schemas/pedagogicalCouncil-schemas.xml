@@ -97,8 +97,14 @@
 <schema name="elections.singleElectionPeriod" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
 	<slot name="degree.sigla" key="label.degree" read-only="true" />
 	<slot name="curricularYear.year" key="label.curricularYear"	read-only="true" />
-	<slot name="startDate" key="label.startDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
-	<slot name="endDate" key="label.endDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	<slot name="startDate" key="label.startDate"> 
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	</slot>
+	<slot name="endDate" key="label.endDate">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	</slot>
 </schema>
 
 <schema name="elections.electionsPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
@@ -108,8 +114,14 @@
 		<property name="sortBy" value="year"/>
 		<property name="nullOptionHidden" value="true"/>
 	</slot>
-	<slot name="startDate" key="label.startDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
-	<slot name="endDate" key="label.endDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	<slot name="startDate" key="label.startDate">
+		 <validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	 </slot>
+	<slot name="endDate" key="label.endDate">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>	
+	</slot>
 </schema>
 
 <schema name="elections.deleteElectionsPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
@@ -201,8 +213,14 @@
 	<slot name="election.candidacyPeriod" layout="delegate-election-period" key="label.candidacyPeriod" read-only="true" >
 		<property name="dateHtmlSeparator" value=" - " />
 	</slot>
-	<slot name="startDate" key="label.startVotingDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
-	<slot name="endDate" key="label.endVotingDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	<slot name="startDate" key="label.startVotingDate">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	</slot>
+	<slot name="endDate" key="label.endVotingDate">
+	 	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	 </slot>
 </schema>
 
 <schema name="elections.editSingleElectionVotingPeriod" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
@@ -222,8 +240,14 @@
 		<property name="sortBy" value="year"/>
 		<property name="nullOptionHidden" value="true"/>
 	</slot>
-	<slot name="startDate" key="label.startVotingDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
-	<slot name="endDate" key="label.endVotingDate" validator="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	<slot name="startDate" key="label.startVotingDate">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	</slot>
+	<slot name="endDate" key="label.endVotingDate"> 
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	</slot>
 </schema>
 
 <schema name="elections.deleteElectionsVotingPeriods" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean" >
@@ -531,7 +555,9 @@
 </schema>
 
 <schema name="delegate.studentNumber" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean" >
-	<slot name="studentNumber" key="label.studentNumber" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+	<slot name="studentNumber" key="label.studentNumber">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10" />
 	</slot>
 </schema>

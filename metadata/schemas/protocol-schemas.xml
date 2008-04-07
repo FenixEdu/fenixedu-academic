@@ -15,7 +15,6 @@
 		<property name="maxLength" value="10"/>
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
-			<property name="required" value="false"/>
 		</validator>
 	</slot>
 	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
@@ -23,7 +22,6 @@
 		<property name="maxLength" value="10"/>
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
-			<property name="required" value="false"/>
 		</validator>
 	</slot>
 	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
@@ -32,6 +30,7 @@
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="scientificAreas" key="label.protocol.scientificAreas" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="columns" value="60" />
@@ -60,6 +59,7 @@
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="scientificAreas" key="label.protocol.scientificAreas" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="columns" value="40" />
@@ -87,7 +87,6 @@
 		<property name="maxLength" value="10"/>
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
-			<property name="required" value="false"/>			
 		</validator>
 	</slot>
 	<slot name="active" key="label.protocol.active" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
@@ -444,7 +443,6 @@
 		<property name="maxLength" value="10"/>
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
-			<property name="required" value="false"/>
 		</validator>
 		<property name="formatText" value=""/>		
 	</slot>
@@ -453,14 +451,15 @@
 		<property name="maxLength" value="10"/>
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
-			<property name="required" value="false"/>
 		</validator>
 		<property name="formatText" value=""/>
 	</slot>
 </schema>
 
 <schema name="renew.protocolHistoryFactory" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory">
-	<slot name="duration" bundle="SCIENTIFIC_COUNCIL_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+	<slot name="duration" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 		<property name="maxLength" value="2"/>
 		<property name="size" value="3"/>
 	</slot>
@@ -474,6 +473,7 @@
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="10"/>
@@ -481,6 +481,7 @@
 		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 

@@ -1,27 +1,22 @@
 package net.sourceforge.fenixedu.renderers.validators;
 
-import net.sourceforge.fenixedu.renderers.components.HtmlInputComponent;
-import net.sourceforge.fenixedu.renderers.components.Validatable;
+import org.apache.commons.lang.StringUtils;
 
-public class DateValidator extends RequiredValidator {
+public class DateValidator extends HtmlValidator {
 
     private String dateFormat;
 
-    private boolean required;
-
     /**
-         * Required constructor.
-         */
-    public DateValidator(Validatable component) {
-	this(component, "dd/MM/yyyy");
+     * Required constructor.
+     */
+    public DateValidator(HtmlChainValidator htmlChainValidator) {
+	this(htmlChainValidator, "dd/MM/yyyy");
     }
 
-    public DateValidator(Validatable component, String dateFormat) {
-	super(component);
+    public DateValidator(HtmlChainValidator htmlChainValidator, String dateFormat) {
+	super(htmlChainValidator);
 
 	setDateFormat(dateFormat);
-	setRequired(true);
-	// default messsage
 	setKey(true);
 
     }
@@ -34,29 +29,17 @@ public class DateValidator extends RequiredValidator {
 	this.dateFormat = dateFormat;
     }
 
-    public boolean isRequired() {
-	return required;
-    }
-
-    public void setRequired(boolean required) {
-	this.required = required;
-    }
-
     @Override
     public void performValidation() {
-	super.performValidation();
+
+	String text = getComponent().getValue();
 	
-	if (isValid()) {
-	    String text = getComponent().getValue();
+	if (!StringUtils.isEmpty(text)) {
+	    setValid(org.apache.commons.validator.DateValidator.getInstance().isValid(text, getDateFormat(), true));
+	}
 
-	    setValid(org.apache.commons.validator.DateValidator.getInstance().isValid(text, getDateFormat(),
-		    true));
-
-	    if (!isValid()) {
-		setMessage("renderers.validator.date");
-	    }
-	} else {
-	    setValid(!isRequired());
+	if (!isValid()) {
+	    setMessage("renderers.validator.date");
 	}
     }
 }
