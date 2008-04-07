@@ -48,7 +48,8 @@
 						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
 						<h:outputFormat value="#{bundle['link.edit']}" />
 					</h:commandLink>
-		
+
+		<%--
 					<h:panelGroup rendered="#{evaluationManagementBackingBean.canManageRoomsMap[writtenTest.idInternal]}">
 						<h:outputText value="<p class='indent1 mvert05'>#{bundle['label.teacher.evaluation.room.management']}: " escape="false"/>
 						<h:commandLink action="enterChooseRoom">
@@ -56,6 +57,7 @@
 							<h:outputFormat value="#{bundle['link.evaluation.choose.room']}"/>
 						</h:commandLink>
 					</h:panelGroup>
+		--%>
 
 					<h:outputText value="<p class='indent1 mvert05'>#{bundle['label.teacher.evaluation.enrolment.management']}: " escape="false"/>
 					<h:commandLink action="enterEditEnrolmentPeriod">
