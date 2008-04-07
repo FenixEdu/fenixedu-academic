@@ -61,6 +61,8 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 
     private String contactEmail ="";
     
+    private String emailPrefix ="";
+    
     private String rulesLink ="";
     
     public String getContactEmail() {
@@ -307,5 +309,13 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
     	List<Vigilant> vigilantsList = new ArrayList<Vigilant>(vigilants);
     	Collections.sort(vigilantsList,chain);
     	return vigilantsList;
+    }
+
+    public String getEmailPrefix() {
+        return emailPrefix;
+    }
+
+    public void setEmailPrefix(String emailPrefix) {
+        this.emailPrefix = emailPrefix;
     }
 }

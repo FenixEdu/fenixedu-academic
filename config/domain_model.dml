@@ -4308,6 +4308,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime beginOfFirstPeriodForUnavailablePeriods;
 		DateTime beginOfSecondPeriodForUnavailablePeriods;
 		String contactEmail;
+		String emailSubjectPrefix;	
 		String convokeStrategy;
 		DateTime endOfFirstPeriodForUnavailablePeriods;
 		DateTime endOfSecondPeriodForUnavailablePeriods;

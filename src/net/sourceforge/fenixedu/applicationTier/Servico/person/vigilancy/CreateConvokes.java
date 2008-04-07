@@ -47,7 +47,7 @@ public class CreateConvokes extends Service {
         	DateTime date = writtenEvaluation.getBeginningDateTime();
         	String beginDateString = date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear();
         	
-        	String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject",new Object[] {writtenEvaluation.getName(), group.getName(), beginDateString});
+        	String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject",new Object[] {group.getEmailSubjectPrefix(), writtenEvaluation.getName(), group.getName(), beginDateString});
         	  
         	new Email(person.getName(), (groupEmail == null) ? person.getEmail() : groupEmail, replyTo, tos, null, null, subject,
                     emailMessage);

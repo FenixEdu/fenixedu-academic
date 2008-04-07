@@ -81,6 +81,9 @@
 		<slot name="contactEmail" key="label.vigilancy.contactEmail" validator="net.sourceforge.fenixedu.renderers.validators.EmailValidator">
 			<property name="size" value="40"/>
 		</slot>
+		<slot name="emailPrefix" key="label.vigilancy.subjectEmailPrefix" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+			<property name="size" value="40"/>
+		</slot>
 		<slot name="rulesLink" key="label.vigilancy.rulesLink.optionalField" layout="input-with-comment">
 			<property name="subProperty(size)" value="60"/>
 			<property name="bundle" value="VIGILANCY_RESOURCES"/>

@@ -253,7 +253,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 		VigilantGroup vigilantGroup = beanWithName.getSelectedVigilantGroup();
 
 		Object[] args = { vigilantGroup, beanWithName.getName(), beanWithName.getConvokeStrategy(),
-				beanWithName.getContactEmail(), beanWithName.getRulesLink(),
+				beanWithName.getContactEmail(), beanWithName.getEmailPrefix(), beanWithName.getRulesLink(),
 				beanWithFirstPeriod.getBeginFirstUnavailablePeriod(),
 				beanWithFirstPeriod.getEndFirstUnavailablePeriod(),
 				beanWithSecondPeriod.getBeginSecondUnavailablePeriod(),
@@ -629,6 +629,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	private void prepareBeanForVigilantGroupEdition(HttpServletRequest request, VigilantGroup group) {
 
 		VigilantGroupBean bean = new VigilantGroupBean();
+		bean.setEmailPrefix(group.getEmailSubjectPrefix());
 		bean.setSelectedVigilantGroup(group);
 		bean.setConvokeStrategy(group.getConvokeStrategy());
 		bean.setName(group.getName());
