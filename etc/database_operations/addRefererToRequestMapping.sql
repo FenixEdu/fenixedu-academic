@@ -1,1 +1,1 @@
-alter table REQUEST_MAPPING add column REFERER text;
+alter table REQUEST_LOG add column REFERER text;

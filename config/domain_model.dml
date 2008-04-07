@@ -4602,7 +4602,6 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 class net.sourceforge.fenixedu.domain.log.requests.RequestMapping extends net.sourceforge.fenixedu.domain.DomainObject {
 	String path;
 	String parameters;
-	String referer;
 }	
 	
 class net.sourceforge.fenixedu.domain.log.requests.RequestLog extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4611,6 +4610,7 @@ class net.sourceforge.fenixedu.domain.log.requests.RequestLog extends net.source
 	String requester;
 	String requestAttributes;
 	String sessionAttributes;
+	String referer;
 }	
 	
 class net.sourceforge.fenixedu.domain.log.requests.ErrorLog extends net.sourceforge.fenixedu.domain.DomainObject {

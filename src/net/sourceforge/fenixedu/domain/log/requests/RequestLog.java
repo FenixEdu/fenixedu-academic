@@ -24,7 +24,8 @@ public class RequestLog extends RequestLog_Base {
 	setRequester(user);
 	setRequestAttributes(requestAttributes);
 	setSessionAttributes(sessionAttributes);
-	setMapping(RequestMapping.createOrRetrieveRequestMapping(path, referer, parameters));
+	setReferer(referer);
+	setMapping(RequestMapping.createOrRetrieveRequestMapping(path, parameters));
     }
 
     public static RequestLog registerError(String path, String referer, String[] parameters, String queryString, String user,
