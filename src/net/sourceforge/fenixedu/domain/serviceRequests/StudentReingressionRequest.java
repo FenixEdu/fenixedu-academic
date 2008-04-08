@@ -81,7 +81,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
 	if (!degreeCurricularPlan.isBolonhaDegree()
 		&& !(registration.hasConclusionProcessResponsible() || registration.isConcluded())) {
-	    
+
 	    for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : degreeCurricularPlan.getTargetEquivalencePlans()) {
 		if (hasOpenEnrolmentPeriod(equivalencePlan.getDegreeCurricularPlan(), executionYear, requestDate)) {
 		    return true;
@@ -125,7 +125,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    }
 	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
 
-	} else if (academicServiceRequestBean.isToConclude()) {
+	} else if (academicServiceRequestBean.isToConclude() && hasExecutionDegree()) {
 	    RegistrationState.createState(getRegistration(), academicServiceRequestBean.getEmployee().getPerson(),
 		    new DateTime(), RegistrationStateType.REGISTERED);
 	}
@@ -139,6 +139,14 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
 	}
+    }
+
+    private DegreeCurricularPlan getDegreeCurricularPlan() {
+	return getRegistration().getLastDegreeCurricularPlan();
+    }
+
+    private boolean hasExecutionDegree() {
+	return getDegreeCurricularPlan().hasExecutionDegreeFor(getExecutionYear());
     }
 
     @Override
