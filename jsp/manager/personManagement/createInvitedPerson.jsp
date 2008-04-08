@@ -96,7 +96,8 @@
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>
-					</fr:layout>	
+					</fr:layout>
+					<fr:destination name="invalid" path="/createInvitedPerson.do?method=invalid"/>
 				</fr:edit>			
 							
 				<p><b>b) <bean:message key="label.invitedPerson.personal.info" bundle="MANAGER_RESOURCES"/></b></p>			
@@ -104,7 +105,8 @@
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>
-					</fr:layout>	
+					</fr:layout>
+					<fr:destination name="invalid" path="/createInvitedPerson.do?method=invalid"/>	
 				</fr:edit>
 								
 				<p><b>c) <bean:message key="label.invitedPerson.filiation.info" bundle="MANAGER_RESOURCES"/></b></p>			
@@ -113,6 +115,7 @@
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>	
+					<fr:destination name="invalid" path="/createInvitedPerson.do?method=invalid"/>
 				</fr:edit>		
 				
 				<p><b>d) <bean:message key="label.invitedPerson.residence.info" bundle="MANAGER_RESOURCES"/></b></p>			
@@ -121,6 +124,7 @@
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>	
+					<fr:destination name="invalid" path="/createInvitedPerson.do?method=invalid"/>
 				</fr:edit>		
 				
 				<p><b>e) <bean:message key="label.invitedPerson.contacts.info" bundle="MANAGER_RESOURCES"/></b></p>			
@@ -129,6 +133,7 @@
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>	
+					<fr:destination name="invalid" path="/createInvitedPerson.do?method=invalid"/>
 				</fr:edit>
 				
 				<p><b>f) <bean:message key="label.invitedPerson.login.info" bundle="MANAGER_RESOURCES"/></b></p>			
@@ -137,6 +142,7 @@
 						<fr:property name="classes" value="tstyle1"/>
 				        <fr:property name="columnClasses" value=",,noborder"/>
 					</fr:layout>	
+					<fr:destination name="invalid" path="/createInvitedPerson.do?method=invalid"/>
 				</fr:edit>						
 							
 				<html:submit><bean:message key="button.submit" bundle="MANAGER_RESOURCES" /></html:submit>	
