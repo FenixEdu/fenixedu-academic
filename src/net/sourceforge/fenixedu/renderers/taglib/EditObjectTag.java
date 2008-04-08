@@ -507,4 +507,9 @@ public class EditObjectTag extends BaseRenderObjectTag {
     protected void setValidators(Map<String, Properties> validators) {
 	this.validators = validators;
     }
+    
+    public void setValidator(String validatorName) {
+	this.validators.clear();
+	this.validators.put(validatorName, new Properties());
+    }
 }
