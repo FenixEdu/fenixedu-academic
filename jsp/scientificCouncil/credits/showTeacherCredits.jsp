@@ -51,7 +51,7 @@
 
 <%-- ========================== PROFESSOR SHIPS ========================================== --%>
 
-<h3 class="mtop1"><span class="underline1">1)  <bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop1"><span class="underline1">1)  <bean:message key="label.teacherCreditsSheet.professorships.graduation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <logic:notEmpty name="professorshipDTOs">
 	<logic:iterate id="professorshipDTO" name="professorshipDTOs">
@@ -247,7 +247,7 @@
 <%-- ================================================================================== --%>
 
 <%-- ========================== MASTER DEGREE PROFESSORSHIPS =============================== --%>
-<h3 class="mtop2"><span class="underline1">2) <bean:message key="label.teacherCreditsSheet.masterDegreeProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2"><span class="underline1">2) <bean:message key="label.teacherCreditsSheet.professorships.postGraduation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
 <logic:notEmpty name="masterDegreeServices">
 	<table class="tstyle4 mbottom05">
@@ -324,7 +324,8 @@
 <%-- ================================================================================== --%>
 
 <%-- ============================== ADVISES TFC ======================================= --%>
-<h3 class="mtop2"><span class="underline1">3) <bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>3) <bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+<bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents.expirationWarning" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 <p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
 <logic:notEmpty name="adviseServices">
