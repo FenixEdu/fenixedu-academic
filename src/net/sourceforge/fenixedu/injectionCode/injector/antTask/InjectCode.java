@@ -31,7 +31,7 @@ import org.apache.tools.ant.types.Path;
  * @version $Id$
  */
 public class InjectCode extends Task {
-   
+
     private File targetClassesDir;
 
     private Path injectionClassPath;
@@ -70,8 +70,8 @@ public class InjectCode extends Task {
 	this.verbose = verbose;
     }
 
-    private CodeGenerator producerClassByName() throws ClassNotFoundException,
-	    ClassCastException, InstantiationException, IllegalAccessException {
+    private CodeGenerator producerClassByName() throws ClassNotFoundException, ClassCastException, InstantiationException,
+	    IllegalAccessException {
 	return (CodeGenerator) Class.forName(this.codeProducerClassName).newInstance();
     }
 
@@ -107,15 +107,20 @@ public class InjectCode extends Task {
 	for (int i = 0; i < files.length; i++) {
 	    if (this.isClassFile(files[i])) {
 		final String separator = File.separator.equals("\\") ? "\\\\" : File.separator;
-		String nextClass = files[i].replaceAll(separator, ".").substring(0,
-			files[i].lastIndexOf("."));
+		String nextClass = files[i].replaceAll(separator, ".").substring(0, files[i].lastIndexOf("."));
 		try {
-		    boolean changed = injector.perform(nextClass, targetClassesDir.getAbsolutePath(),
-			    this.producerClassByName(), this
-				    .annotationClassByName(this.annotation));
+		    boolean changed = injector.perform(nextClass, targetClassesDir.getAbsolutePath(), this.producerClassByName(),
+			    this.annotationClassByName(this.annotation));
 		    if (changed)
 			changedFiles++;
 		    processedFiles++;
+		} catch (ExceptionInInitializerError e) {
+		    e.printStackTrace();
+		    StringBuilder message = new StringBuilder();
+		    Formatter f = new Formatter(message);
+		    f.format("C %s not found.\nCause:", files[i], e);
+		    System.err.printf(message.toString());
+		    throw new BuildException(message.toString());
 		} catch (NotFoundException e) {
 		    e.printStackTrace();
 		    StringBuilder message = new StringBuilder();
@@ -127,7 +132,7 @@ public class InjectCode extends Task {
 		    e.printStackTrace();
 		    StringBuilder message = new StringBuilder();
 		    Formatter f = new Formatter(message);
-		    f.format("Could not compile file %s with the injected code.\nCause:", files[i], e);		    
+		    f.format("Could not compile file %s with the injected code.\nCause:", files[i], e);
 		    System.err.printf(message.toString());
 		    throw new BuildException(message.toString());
 		} catch (IOException e) {
@@ -149,20 +154,14 @@ public class InjectCode extends Task {
 		    e.printStackTrace();
 		    StringBuilder message = new StringBuilder();
 		    Formatter f = new Formatter(message);
-		    f
-			    .format(
-				    "Provided generator does not implement AccessControlCodeGenerator.\n Exception: %s.",
-				    e);
+		    f.format("Provided generator does not implement AccessControlCodeGenerator.\n Exception: %s.", e);
 		    System.err.printf(message.toString());
 		    throw new BuildException(message.toString());
 		} catch (InstantiationException e) {
 		    e.printStackTrace();
 		    StringBuilder message = new StringBuilder();
 		    Formatter f = new Formatter(message);
-		    f
-			    .format(
-				    "Provided generator does not have an empty public constructor.\n Exception: %s.",
-				    e);
+		    f.format("Provided generator does not have an empty public constructor.\n Exception: %s.", e);
 		    System.err.printf(message.toString());
 		    throw new BuildException(message.toString());
 		} catch (IllegalAccessException e) {
@@ -176,10 +175,7 @@ public class InjectCode extends Task {
 		    e.printStackTrace();
 		    StringBuilder message = new StringBuilder();
 		    Formatter f = new Formatter(message);
-		    f
-			    .format(
-				    "Not allowed to access the \"value\" field for the specified annotation.\n Exception: %s.",
-				    e);
+		    f.format("Not allowed to access the \"value\" field for the specified annotation.\n Exception: %s.", e);
 		    System.err.printf(message.toString());
 		    throw new BuildException(message.toString());
 		} catch (IllegalArgumentException e) {
@@ -232,15 +228,14 @@ public class InjectCode extends Task {
 		}
 	    } else {
 		if (this.verbose) {
-		    System.out.printf("Skipped %s as it is not a class file (does not end in .class)",
-			    files[i]);
+		    System.out.printf("Skipped %s as it is not a class file (does not end in .class)", files[i]);
 		}
 	    }
 	}
 	long after = System.currentTimeMillis();
-	System.out.printf("\nProcessed %d file%s. %d class%s re-written (%s).\nDone.", processedFiles,
-		processedFiles == 0 || processedFiles > 1 ? "s" : "", changedFiles, changedFiles == 0
-			|| changedFiles > 1 ? "es were" : " was", this.calcHMS((after - before) / 1000));
+	System.out.printf("\nProcessed %d file%s. %d class%s re-written (%s).\nDone.", processedFiles, processedFiles == 0
+		|| processedFiles > 1 ? "s" : "", changedFiles, changedFiles == 0 || changedFiles > 1 ? "es were" : " was", this
+		.calcHMS((after - before) / 1000));
     }
 
     protected String calcHMS(long timeInSeconds) {
@@ -252,8 +247,8 @@ public class InjectCode extends Task {
 	seconds = timeInSeconds;
 	StringBuilder format = new StringBuilder();
 	Formatter f = new Formatter(format);
-	f.format("%d minute%s, %d second%s", minutes, minutes > 0 || minutes == 0 ? "s" : "", seconds,
-		seconds > 0 || seconds == 0 ? "s" : "");
+	f.format("%d minute%s, %d second%s", minutes, minutes > 0 || minutes == 0 ? "s" : "", seconds, seconds > 0
+		|| seconds == 0 ? "s" : "");
 
 	return format.toString();
     }
