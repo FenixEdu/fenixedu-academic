@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -32,7 +33,7 @@ public class MetaSlot extends MetaObject {
 
     private String layout;
 
-    private List<Pair<Class<HtmlValidator>, Properties>> validators;
+    private List<Pair<Class<HtmlValidator>, Properties>> validators = new ArrayList<Pair<Class<HtmlValidator>, Properties>>();
 
     private Class<Converter> converter;
 
@@ -103,7 +104,7 @@ public class MetaSlot extends MetaObject {
 	}
 
 	StringBuffer label = new StringBuffer(RenderUtils.getSlotLabel(type, getName(), getBundle(), getLabelKey()));
-	
+
 	return label.toString();
     }
 
@@ -312,7 +313,9 @@ public class MetaSlot extends MetaObject {
     }
 
     public void setValidators(List<Pair<Class<HtmlValidator>, Properties>> validators) {
-	this.validators = validators;
+	if (validators != null) {
+	    this.validators = validators;
+	}
     }
 
     public boolean isRequired() {
