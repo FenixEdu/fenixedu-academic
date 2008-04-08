@@ -30,3 +30,5 @@ function executeWithTempFile() {
 
 execute "Add referer to Request Mapping Logging" addRefererToRequestMapping.sql
 execute "Add Email Subject Prefix to Vigilant Group" addEmailPrefixToConvokeEmails.sql
+execute "Add columns to PaymentPlan" alterTablePaymentPlan.sql
+execute "Remove not null restriction to key_employee" alterTableExemption.sql

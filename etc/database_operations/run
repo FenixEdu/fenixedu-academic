@@ -28,5 +28,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add columns to PaymentPlan" alterTablePaymentPlan.sql
-execute "Remove not null restriction to key_employee" alterTableExemption.sql
