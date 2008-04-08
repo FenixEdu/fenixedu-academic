@@ -1139,37 +1139,26 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	this.submitEvaluationDateTextBox = submitEvaluationDateTextBox;
     }
 
-    public List<SelectItem> getAssociatedRoomsSelectItem() {
+    public List<SelectItem> getAvailableRooms() {
 	List<SelectItem> result = new ArrayList<SelectItem>();
 	WrittenTest writtenTest = (WrittenTest) getEvaluation();
-	for (AllocatableSpace room : writtenTest.getAssociatedRooms()) {
+	Teacher teacher = AccessControl.getPerson().getTeacher();
+	for (AllocatableSpace room : writtenTest.getAvailableRooms()) {
 	    SelectItem selectItem = new SelectItem(room.getIdInternal(), room.getIdentification());
-	    selectItem.setDisabled(!writtenTest.canTeacherRemoveRoom(getExecutionCourse(),
-		    AccessControl.getPerson().getTeacher(), room));
+	    selectItem.setDisabled(!writtenTest.canTeacherRemoveRoom(getExecutionCourse().getExecutionPeriod(), teacher, room));
 	    result.add(selectItem);
 	}
 	return result;
     }
 
-    public Integer[] getRoomsToDelete() {
-	return roomsToDelete;
-    }
-
-    public void setRoomsToDelete(Integer[] roomsToDelete) {
-	this.roomsToDelete = roomsToDelete;
-    }
-
-    public List<SelectItem> getAvailableRoomsToAssociate() {
-	List<SelectItem> result = new ArrayList<SelectItem>();
-	WrittenTest writtenTest = (WrittenTest) getEvaluation();
-	Teacher teacher = AccessControl.getPerson().getTeacher();
-	for (AllocatableSpace room : writtenTest.getTeacherAvailableRooms(getExecutionCourse(), teacher)) {
-	    result.add(new SelectItem(room.getIdInternal(), room.getIdentification()));
-	}
-	return result;
-    }
-
     public Integer[] getRoomsToAssociate() {
+	if (roomsToAssociate == null) {
+	    List<Integer> roomIds = new ArrayList<Integer>();
+	    for (AllocatableSpace room : ((WrittenTest) getEvaluation()).getAssociatedRooms()) {
+		roomIds.add(room.getIdInternal());
+	    }
+	    roomsToAssociate = roomIds.toArray(new Integer[] {});
+	}
 	return roomsToAssociate;
     }
 
@@ -1177,20 +1166,13 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	this.roomsToAssociate = roomsToAssociate;
     }
 
-    public String editEvaluationAddRooms() throws FenixFilterException, FenixServiceException {
+    public String editEvaluationRooms() throws FenixFilterException, FenixServiceException {
 
-	ServiceUtils.executeService(getUserView(), "TeacherAddRoomsToWrittenTest", new Object[] { getExecutionCourse(),
+	ServiceUtils.executeService(getUserView(), "TeacherEditWrittenTestRooms", new Object[] { getExecutionCourse(),
 		AccessControl.getPerson().getTeacher(), (WrittenTest) getEvaluation(), getRooms(getRoomsToAssociate()) });
+	setRoomsToAssociate(null);
 
-	return this.getEvaluation().getClass().getSimpleName();
-    }
-
-    public String editEvaluationRemoveRooms() throws FenixFilterException, FenixServiceException {
-
-	ServiceUtils.executeService(getUserView(), "TeacherRemoveRoomsFromWrittenTest", new Object[] { getExecutionCourse(),
-		(WrittenTest) getEvaluation(), getRooms(getRoomsToDelete()) });
-
-	return this.getEvaluation().getClass().getSimpleName();
+	return "";
     }
 
     private List<AllocatableSpace> getRooms(Integer[] roomsToAssociate) {

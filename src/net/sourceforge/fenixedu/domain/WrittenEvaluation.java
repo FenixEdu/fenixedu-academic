@@ -356,15 +356,12 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
     }
 
-    public void removeRoomOccupations(List<AllocatableSpace> rooms) {
-	for (AllocatableSpace room : rooms) {
-	    if (hasOccupationForRoom(room)) {
-		WrittenEvaluationSpaceOccupation occupation = (WrittenEvaluationSpaceOccupation) room
-			.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
-		removeWrittenEvaluationSpaceOccupations(occupation);
-	    }
+    public void removeRoomOccupation(AllocatableSpace room) {
+	if (hasOccupationForRoom(room)) {
+	    WrittenEvaluationSpaceOccupation occupation = (WrittenEvaluationSpaceOccupation) room
+		    .getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
+	    removeWrittenEvaluationSpaceOccupations(occupation);
 	}
-
     }
 
     protected List<WrittenEvaluationSpaceOccupation> associateNewRooms(final List<AllocatableSpace> rooms) {

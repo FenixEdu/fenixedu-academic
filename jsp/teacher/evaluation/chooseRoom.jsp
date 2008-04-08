@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
@@ -26,7 +27,10 @@
 		<h:outputText value=" #{bundle['label.to']} " escape="false"/>
 		<h:outputFormat value="{0, date, HH:mm}">
 			<f:param value="#{evaluationManagementBackingBean.evaluation.endDate}"/>
-		</h:outputFormat>			
+		</h:outputFormat>
+		<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.evaluation.associatedRooms}">
+			<h:outputText value="#{evaluationManagementBackingBean.evaluation.associatedRoomsAsStringList}" escape="false"/>
+		</h:panelGroup>
 	<h:outputText value="</p>" escape="false" />
 
 	<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
@@ -37,39 +41,22 @@
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 
-
-		<h:outputText value="<p>" escape="false" />
-		<h:outputText value="#{bundle['message.writtenTests.selected.rooms']}" />
-		<h:outputText value="</p>" escape="false" />
-		<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.evaluation.associatedRooms}">
-			<h:selectManyCheckbox styleClass="tstyle5 thlight thright" id="selectedRooms" value="#{evaluationManagementBackingBean.roomsToDelete}">
-				<f:selectItems value="#{evaluationManagementBackingBean.associatedRoomsSelectItem}"/>
-			</h:selectManyCheckbox>
-			
-			<h:outputText value="<p>" escape="false" />
-				<h:commandButton alt="#{htmlAltBundle['commandButton.remove']}" action="#{evaluationManagementBackingBean.editEvaluationRemoveRooms}" value="#{bundle['button.remove']}"/>
-			<h:outputText value="</p>" escape="false" />			
-		</h:panelGroup>	
-		<h:panelGroup rendered="#{empty evaluationManagementBackingBean.evaluation.associatedRooms}">
-			<h:outputText value="<p>" escape="false" />
-			<h:outputText value="#{bundle['message.writtenTests.empty.selected.rooms']}" />
-			<h:outputText value="</p>" escape="false" />
-		</h:panelGroup>
-
 		<h:outputText value="<p>" escape="false" />
 		<h:outputText value="#{bundle['message.writtenTests.associate.rooms']}" />
 		<h:outputText value="</p>" escape="false" />
-		<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.availableRoomsToAssociate}">
+		<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.availableRooms}">
 			
 			<h:selectManyCheckbox styleClass="tstyle5 thlight thright" id="associateRooms" value="#{evaluationManagementBackingBean.roomsToAssociate}" layout="pageDirection">
-				<f:selectItems value="#{evaluationManagementBackingBean.availableRoomsToAssociate}"/>
+				<f:selectItems value="#{evaluationManagementBackingBean.availableRooms}"/>
 			</h:selectManyCheckbox>
 
 			<h:outputText value="<p>" escape="false" />
-				<h:commandButton alt="#{htmlAltBundle['commandButton.add']}" action="#{evaluationManagementBackingBean.editEvaluationAddRooms}" value="#{bundle['button.add']}"/>
+				<h:commandButton alt="#{htmlAltBundle['commandButton.update']}" action="#{evaluationManagementBackingBean.editEvaluationRooms}" value="#{bundle['button.update']}" styleClass="inputButton"/>
+				<h:outputText value="&nbsp;" escape="false"/>
+				<h:commandButton alt="#{htmlAltBundle['commandButton.goBack']}" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['link.goBack']}" styleClass="inputButton" />
 			<h:outputText value="</p>" escape="false" />			
 		</h:panelGroup>	
-		<h:panelGroup rendered="#{empty evaluationManagementBackingBean.availableRoomsToAssociate}">
+		<h:panelGroup rendered="#{empty evaluationManagementBackingBean.availableRooms}">
 			<h:outputText value="<p>" escape="false" />
 			<h:outputText value="#{bundle['message.writtenTests.empty.associate.rooms']}" />
 			<h:outputText value="</p>" escape="false" />

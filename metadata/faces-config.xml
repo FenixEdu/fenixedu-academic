@@ -883,6 +883,14 @@
 	</navigation-rule>
 
 	<navigation-rule>
+		<from-view-id>/teacher/evaluation/chooseRoom.jsp</from-view-id>
+ 		<navigation-case>
+			<from-outcome>WrittenTest</from-outcome>
+			<to-view-id>/teacher/evaluation/writtenTestsIndex.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
 		<from-view-id>/teacher/evaluation/examsIndex.jsp</from-view-id>
  		<navigation-case>
 			<from-outcome>enterEditEnrolmentPeriod</from-outcome>

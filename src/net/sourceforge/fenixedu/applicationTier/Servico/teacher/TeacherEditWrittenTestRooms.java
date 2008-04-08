@@ -4,12 +4,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
-public class TeacherRemoveRoomsFromWrittenTest extends Service {
+public class TeacherEditWrittenTestRooms extends Service {
 
-    public void run(ExecutionCourse executionCourse, WrittenTest writtenTest, List<AllocatableSpace> rooms) {
-	writtenTest.removeRoomOccupations(rooms);
+    public void run(ExecutionCourse executionCourse, Teacher teacher, WrittenTest writtenTest, List<AllocatableSpace> rooms) {
+	writtenTest.teacherEditRooms(teacher, executionCourse.getExecutionPeriod(), rooms);
     }
 }

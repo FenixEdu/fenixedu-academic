@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -156,29 +157,49 @@ public class WrittenTest extends WrittenTest_Base {
 	return false;
     }
 
-    public Collection<AllocatableSpace> getTeacherAvailableRooms(ExecutionCourse executionCourse, Teacher teacher) {
+    public Collection<AllocatableSpace> getTeacherAvailableRooms(Teacher teacher) {
 	Collection<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
-	if (executionCourse.teacherLecturesExecutionCourse(teacher)) {
+	for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
+	    if (executionCourse.teacherLecturesExecutionCourse(teacher)) {
+		for (Lesson lesson : executionCourse.getLessons()) {
+		    if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
+			rooms.add(lesson.getRoomOccupation().getRoom());
+		    }
+		}
+	    }
+	}
+	return rooms;
+    }
+
+    public Collection<AllocatableSpace> getAvailableRooms() {
+	Collection<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+	for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
 	    for (Lesson lesson : executionCourse.getLessons()) {
-		if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))
-			&& !getAssociatedRooms().contains(lesson.getRoomOccupation().getRoom())) {
+		if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
 		    rooms.add(lesson.getRoomOccupation().getRoom());
 		}
 	    }
 	}
-
 	return rooms;
     }
 
-    public void teacherAddRooms(ExecutionCourse executionCourse, Teacher teacher, List<AllocatableSpace> rooms) {
-	Collection<AllocatableSpace> teacherAvailableRooms = getTeacherAvailableRooms(executionCourse, teacher);
+    public void teacherEditRooms(Teacher teacher, ExecutionPeriod executionPeriod, List<AllocatableSpace> rooms) {
+	Collection<AllocatableSpace> teacherAvailableRooms = getTeacherAvailableRooms(teacher);
+	List<AllocatableSpace> associatedRooms = getAssociatedRooms();
 
 	for (AllocatableSpace room : rooms) {
-	    if (!teacherAvailableRooms.contains(room)) {
-		throw new DomainException("error.room.does.not.belong.to.teachers.avaliable.rooms");
+	    if (!associatedRooms.contains(room)) {
+		if (!teacherAvailableRooms.contains(room)) {
+		    throw new DomainException("error.room.does.not.belong.to.teachers.avaliable.rooms");
+		}
+		associateNewRoom(room);
 	    }
+	}
 
-	    associateNewRoom(room);
+	for (AllocatableSpace room : associatedRooms) {
+	    if (!rooms.contains(room) && canTeacherRemoveRoom(executionPeriod, teacher, room)) {
+		removeRoomOccupation(room);
+	    }
 	}
     }
 
@@ -199,8 +220,8 @@ public class WrittenTest extends WrittenTest_Base {
 	return true;
     }
 
-    public boolean canTeacherRemoveRoom(ExecutionCourse executionCourse, Teacher teacher, AllocatableSpace room) {
-	for (Lesson lesson : room.getAssociatedLessons(executionCourse.getExecutionPeriod())) {
+    public boolean canTeacherRemoveRoom(ExecutionPeriod executionPeriod, Teacher teacher, AllocatableSpace room) {
+	for (Lesson lesson : room.getAssociatedLessons(executionPeriod)) {
 	    if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
 		if (lesson.getExecutionCourse().teacherLecturesExecutionCourse(teacher)) {
 		    return true;
@@ -208,6 +229,19 @@ public class WrittenTest extends WrittenTest_Base {
 	    }
 	}
 	return false;
+    }
+
+    public String getAssociatedRoomsAsStringList() {
+	StringBuilder builder = new StringBuilder("(");
+	Iterator<AllocatableSpace> iterator = getAssociatedRooms().iterator();
+	while (iterator.hasNext()) {
+	    builder.append(iterator.next().getIdentification());
+	    if (iterator.hasNext()) {
+		builder.append(", ");
+	    }
+	}
+	builder.append(")");
+	return builder.toString();
     }
 
 }
