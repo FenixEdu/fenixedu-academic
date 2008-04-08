@@ -20,6 +20,12 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
 	init(employee, gratuityExemptionJustificationType, reason, dispatchDate, gratuityEvent, percentage);
     }
 
+    public PercentageGratuityExemption(final GratuityEvent gratuityEvent,
+	    final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason,
+	    final YearMonthDay dispatchDate, final BigDecimal percentage) {
+	this(null, gratuityEvent, gratuityExemptionJustificationType, reason, dispatchDate, percentage);
+    }
+
     protected void init(Employee employee, GratuityExemptionJustificationType exemptionType, String reason,
 	    YearMonthDay dispatchDate, GratuityEvent gratuityEvent, BigDecimal percentage) {
 

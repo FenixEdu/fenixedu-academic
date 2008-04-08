@@ -39,12 +39,18 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	final AnnualEvent annualEvent = (AnnualEvent) event;
-	return getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate())
-		.calculateTotalAmountToPay(event, when).add(
-			getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate())
-				.calculateTotalAmountToPay(event, when));
+    public Money calculateTotalAmountToPay(Event toCalculate, DateTime when, boolean applyDiscount) {
+	final AdministrativeOfficeFeeAndInsuranceEvent event = (AdministrativeOfficeFeeAndInsuranceEvent) toCalculate;
+	Money result = Money.ZERO;
+	if (event.hasToPayAdministrativeOfficeFee()) {
+	    result = result.add(getPostingRuleForAdministrativeOfficeFee(event.getStartDate(), event.getEndDate())
+		    .calculateTotalAmountToPay(toCalculate, when));
+	}
+	if (event.hasToPayInsurance()) {
+	    result = result.add(getPostingRuleForInsurance(event.getStartDate(), event.getEndDate()).calculateTotalAmountToPay(
+		    toCalculate, when));
+	}
+	return result;
     }
 
     @Override
@@ -147,7 +153,7 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 	} else if (entryType == EntryType.ADMINISTRATIVE_OFFICE_FEE) {
 	    getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate()).depositAmount(
 		    responsibleUser, event, fromAcount, toAccount, amount, transactionDetailDTO);
-	    
+
 	} else {
 	    throw new DomainException("error.AdministrativeOfficeFeeAndInsurancePR.unsupported.entry.type");
 	}

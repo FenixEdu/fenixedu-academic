@@ -477,6 +477,20 @@ public abstract class Event extends Event_Base {
 	closeNonProcessedCodes();
     }
 
+    public void cancel(final String cancelJustification) {
+	if (isCancelled()) {
+	    return;
+	}
+
+	if (getPayedAmount().isPositive()) {
+	    throw new DomainException("error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.than.zero");
+	}
+
+	changeState(EventState.CANCELLED, new DateTime());
+	super.setCancelJustification(cancelJustification);
+	closeNonProcessedCodes();
+    }
+
     private void checkRulesToCancel(final Employee employee) {
 	if (!employee.getPerson().hasRole(RoleType.MANAGER) && !isOpen()) {
 	    throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
@@ -503,7 +517,7 @@ public abstract class Event extends Event_Base {
 
 	return null;
     }
-    
+
     public boolean hasAccountingTransactionFor(final Installment installment) {
 	return installment != null && getAccountingTransactionFor(installment) != null;
     }

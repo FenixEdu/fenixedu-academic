@@ -26,8 +26,11 @@ public enum GratuityExemptionJustificationType {
     // Students teaching classes
     STUDENT_TEACH,
 
-    //Directive council authorization dispatch
-    DIRECTIVE_COUNCIL_AUTHORIZATION;
+    // Directive council authorization dispatch
+    DIRECTIVE_COUNCIL_AUTHORIZATION,
+    
+    // Used to mark exemptions created by separation cycles
+    SEPARATION_CYCLES_AUTHORIZATION;
 
     public String getName() {
 	return name();

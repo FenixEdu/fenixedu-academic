@@ -16,6 +16,7 @@ public class GratuityExemptionJustificationFactory {
 	case SON_OF_DECORATED_MILITARY:
 	case SOCIAL_SHARE_GRANT_OWNER:
 	case STUDENT_TEACH:
+	case SEPARATION_CYCLES_AUTHORIZATION:
 	    return new GratuityExemptionJustification(gratuityExemption, justificationType, reason);
 	case DIRECTIVE_COUNCIL_AUTHORIZATION:
 	    return new GratuityExemptionJustificationByDispatch(gratuityExemption, justificationType,

@@ -16,19 +16,17 @@ public abstract class Installment extends Installment_Base {
 
     public static Comparator<Installment> COMPARATOR_BY_END_DATE = new Comparator<Installment>() {
 	public int compare(Installment leftInstallment, Installment rightInstallment) {
-	    int comparationResult = leftInstallment.getEndDate()
-		    .compareTo(rightInstallment.getEndDate());
-	    return (comparationResult == 0) ? leftInstallment.getIdInternal().compareTo(
-		    rightInstallment.getIdInternal()) : comparationResult;
+	    int comparationResult = leftInstallment.getEndDate().compareTo(rightInstallment.getEndDate());
+	    return (comparationResult == 0) ? leftInstallment.getIdInternal().compareTo(rightInstallment.getIdInternal())
+		    : comparationResult;
 	}
     };
 
     public static Comparator<Installment> COMPARATOR_BY_ORDER = new Comparator<Installment>() {
 	public int compare(Installment leftInstallment, Installment rightInstallment) {
-	    int comparationResult = leftInstallment.getInstallmentOrder().compareTo(
-		    rightInstallment.getInstallmentOrder());
-	    return (comparationResult == 0) ? leftInstallment.getIdInternal().compareTo(
-		    rightInstallment.getIdInternal()) : comparationResult;
+	    int comparationResult = leftInstallment.getInstallmentOrder().compareTo(rightInstallment.getInstallmentOrder());
+	    return (comparationResult == 0) ? leftInstallment.getIdInternal().compareTo(rightInstallment.getIdInternal())
+		    : comparationResult;
 	}
     };
 
@@ -38,8 +36,7 @@ public abstract class Installment extends Installment_Base {
 	super.setWhenCreated(new DateTime());
     }
 
-    protected void init(final PaymentPlan paymentPlan, final Money amount, YearMonthDay startDate,
-	    YearMonthDay endDate) {
+    protected void init(final PaymentPlan paymentPlan, final Money amount, YearMonthDay startDate, YearMonthDay endDate) {
 
 	checkParameters(paymentPlan, amount, startDate, endDate);
 
@@ -50,8 +47,7 @@ public abstract class Installment extends Installment_Base {
 	super.setEndDate(endDate);
     }
 
-    private void checkParameters(PaymentPlan paymentPlan, Money amount, YearMonthDay startDate,
-	    YearMonthDay endDate) {
+    private void checkParameters(PaymentPlan paymentPlan, Money amount, YearMonthDay startDate, YearMonthDay endDate) {
 
 	if (paymentPlan == null) {
 	    throw new DomainException("error.accounting.Installment.paymentCondition.cannot.be.null");
@@ -93,8 +89,7 @@ public abstract class Installment extends Installment_Base {
 
     @Override
     public void setWhenCreated(DateTime whenCreated) {
-	throw new DomainException(
-		"error.accounting.installments.InstallmentWithMonthlyPenalty.cannot.modify.whenCreated");
+	throw new DomainException("error.accounting.installments.InstallmentWithMonthlyPenalty.cannot.modify.whenCreated");
     }
 
     @Override
@@ -118,14 +113,21 @@ public abstract class Installment extends Installment_Base {
 	final LabelFormatter labelFormatter = new LabelFormatter();
 	labelFormatter.appendLabel("label.installment", "application").appendLabel(" ").appendLabel(
 		getInstallmentOrder().toString()).appendLabel(" (").appendLabel(
-		getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(" - ")
-		.appendLabel(getEndDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
+		getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(" - ").appendLabel(
+		getEndDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
 
 	return labelFormatter;
 
     }
-    
+
     public boolean isWithMonthlyPenalty() {
 	return false;
     }
+
+    public void delete() {
+	super.setPaymentPlan(null);
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
+
 }

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,9 +19,11 @@ import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlans.CustomGratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
@@ -55,11 +58,25 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	configuratePaymentPlan();
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
-    public void setGratuityPaymentPlan(GratuityPaymentPlan gratuityPaymentPlan) {
-	ensureServiceAgreement();
-	super.setGratuityPaymentPlan(gratuityPaymentPlan);
+    public void setGratuityPaymentPlan(final PaymentPlan gratuityPaymentPlan) {
+	throw new DomainException("error.GratuityEventWithPaymentPlan.do.not.use.this.method");
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void setGratuityPaymentPlan(final GratuityPaymentPlan paymentPlan) {
+	if (paymentPlan != null) {
+	    ensureServiceAgreement();
+	    super.setGratuityPaymentPlan(paymentPlan);
+	}
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void setGratuityPaymentPlan(final CustomGratuityPaymentPlan paymentPlan) {
+	if (paymentPlan != null) {
+	    ensureServiceAgreement();
+	    super.setGratuityPaymentPlan(paymentPlan);
+	}
     }
 
     public void configuratePaymentPlan() {
@@ -69,13 +86,20 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	    super.setGratuityPaymentPlan(getDegreeCurricularPlanServiceAgreement().getGratuityPaymentPlanFor(
 		    getStudentCurricularPlan(), getExecutionYear()));
 	}
-
     }
 
     private void ensureServiceAgreement() {
 	if (getDegreeCurricularPlanServiceAgreement() == null) {
 	    new DegreeCurricularPlanServiceAgreement(getPerson(), DegreeCurricularPlanServiceAgreementTemplate
 		    .readByDegreeCurricularPlan(getStudentCurricularPlan().getDegreeCurricularPlan()));
+	}
+    }
+
+    public void configureCustomPaymentPlan() {
+	if (!hasCustomGratuityPaymentPlan()) {
+	    ensureServiceAgreement();
+	    super.setGratuityPaymentPlan(new CustomGratuityPaymentPlan(getExecutionYear(),
+		    getDegreeCurricularPlanServiceAgreement()));
 	}
     }
 
@@ -318,12 +342,13 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	return true;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void delete() {
-
+	if (hasCustomGratuityPaymentPlan()) {
+	    ((CustomGratuityPaymentPlan) getGratuityPaymentPlan()).delete();
+	}
 	super.setGratuityPaymentPlan(null);
-
 	super.delete();
     }
 
@@ -331,4 +356,25 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     public boolean isGratuityEventWithPaymentPlan() {
 	return true;
     }
+
+    public boolean hasCustomGratuityPaymentPlan() {
+	return getGratuityPaymentPlan().isCustomGratuityPaymentPlan();
+    }
+
+    public Money getPayedAmountLessPenalty() {
+	if (isCancelled()) {
+	    throw new DomainException("error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+	}
+
+	final DateTime now = new DateTime();
+	Money result = Money.ZERO;
+
+	for (final Installment installment : getGratuityPaymentPlan().getInstallments()) {
+	    if (!getGratuityPaymentPlan().isInstallmentInDebt(installment, this, now, BigDecimal.ZERO)) {
+		result = result.add(installment.getAmount());
+	    }
+	}
+	return result;
+    }
+
 }

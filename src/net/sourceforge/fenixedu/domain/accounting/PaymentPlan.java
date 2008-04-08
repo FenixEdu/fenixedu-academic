@@ -11,34 +11,13 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import dml.runtime.RelationAdapter;
-
 public abstract class PaymentPlan extends PaymentPlan_Base {
-
-    static {
-	ServiceAgreementTemplatePaymentPlan
-		.addListener(new RelationAdapter<PaymentPlan, ServiceAgreementTemplate>() {
-		    @Override
-		    public void beforeAdd(PaymentPlan paymentPlanToAdd,
-			    ServiceAgreementTemplate serviceAgreementTemplate) {
-
-			if (paymentPlanToAdd != null) {
-			    if (paymentPlanToAdd.isDefault()
-				    && serviceAgreementTemplate.hasDefaultPaymentPlan(paymentPlanToAdd
-					    .getExecutionYear())) {
-				throw new DomainException(
-					"error.domain.accounting.ServiceAgreementTemplate.already.has.a.default.payment.plan.for.execution.year");
-			    }
-
-			}
-		    }
-		});
-    }
 
     protected PaymentPlan() {
 	super();
@@ -46,25 +25,17 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	super.setWhenCreated(new DateTime());
     }
 
-    protected void init(final ExecutionYear executionYear,
-	    final ServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
+    protected void init(final ExecutionYear executionYear, final Boolean defaultPlan) {
 
-	checkParameters(executionYear, serviceAgreementTemplate, defaultPlan);
+	checkParameters(executionYear, defaultPlan);
 
 	super.setDefaultPlan(defaultPlan);
 	super.setExecutionYear(executionYear);
-	super.setServiceAgreementTemplate(serviceAgreementTemplate);
     }
 
-    private void checkParameters(final ExecutionYear executionYear,
-	    final ServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
+    private void checkParameters(final ExecutionYear executionYear, final Boolean defaultPlan) {
 	if (executionYear == null) {
 	    throw new DomainException("error.accounting.PaymentPlan.executionYear.cannot.be.null");
-	}
-
-	if (serviceAgreementTemplate == null) {
-	    throw new DomainException(
-		    "error.accounting.PaymentPlan.serviceAgreementTemplate.cannot.be.null");
 	}
 
 	if (defaultPlan == null) {
@@ -76,12 +47,6 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
     @Override
     public void setExecutionYear(ExecutionYear executionYear) {
 	throw new DomainException("error.accounting.PaymentCondition.cannot.modify.executionYear");
-    }
-
-    @Override
-    public void setServiceAgreementTemplate(ServiceAgreementTemplate serviceAgreementTemplate) {
-	throw new DomainException(
-		"error.accounting.PaymentCondition.cannot.modify.serviceAgreementTemplate");
     }
 
     @Override
@@ -97,13 +62,11 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
     }
 
     public Installment getLastInstallment() {
-	return (getInstallmentsCount() == 0) ? null : Collections.max(getInstallmentsSet(),
-		Installment.COMPARATOR_BY_ORDER);
+	return (getInstallmentsCount() == 0) ? null : Collections.max(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
     }
 
     public Installment getFirstInstallment() {
-	return (getInstallmentsCount() == 0) ? null : Collections.min(getInstallmentsSet(),
-		Installment.COMPARATOR_BY_ORDER);
+	return (getInstallmentsCount() == 0) ? null : Collections.min(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
     }
 
     public int getLastInstallmentOrder() {
@@ -149,20 +112,18 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	return result;
     }
 
-    public Money calculateTotalAmount(final Event event, final DateTime when,
-	    final BigDecimal discountPercentage) {
+    public Money calculateTotalAmount(final Event event, final DateTime when, final BigDecimal discountPercentage) {
 
 	Money result = Money.ZERO;
-	for (final Money amount : calculateInstallmentTotalAmounts(event, when, discountPercentage)
-		.values()) {
+	for (final Money amount : calculateInstallmentTotalAmounts(event, when, discountPercentage).values()) {
 	    result = result.add(amount);
 	}
 
 	return result;
     }
 
-    private Map<Installment, Money> calculateInstallmentTotalAmounts(final Event event,
-	    final DateTime when, final BigDecimal discountPercentage) {
+    private Map<Installment, Money> calculateInstallmentTotalAmounts(final Event event, final DateTime when,
+	    final BigDecimal discountPercentage) {
 
 	final Map<Installment, Money> result = new HashMap<Installment, Money>();
 	final List<AccountingTransaction> transactions = event.getSortedNonAdjustingTransactions();
@@ -174,8 +135,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	    while (iterator.hasNext()) {
 		final AccountingTransaction transaction = iterator.next();
 		iterator.remove();
-		final Money installmentAmount = installment.calculateAmount(transaction
-			.getWhenRegistered(), discountPercentage, isToApplyPenalty(event, installment));
+		final Money installmentAmount = installment.calculateAmount(transaction.getWhenRegistered(), discountPercentage,
+			isToApplyPenalty(event, installment));
 		payedAmount = payedAmount.add(transaction.getAmountWithAdjustment());
 		if (payedAmount.greaterOrEqualThan(installmentAmount)) {
 		    installmentPayed = true;
@@ -185,8 +146,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	    }
 
 	    if (!installmentPayed) {
-		final Money amountToPay = installment.calculateAmount(when, discountPercentage,
-			isToApplyPenalty(event, installment));
+		final Money amountToPay = installment.calculateAmount(when, discountPercentage, isToApplyPenalty(event,
+			installment));
 
 		result.put(installment, amountToPay);
 
@@ -197,8 +158,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 
     }
 
-    public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event,
-	    final DateTime when, final BigDecimal discountPercentage) {
+    public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event, final DateTime when,
+	    final BigDecimal discountPercentage) {
 
 	final Map<Installment, Money> result = new HashMap<Installment, Money>();
 	final List<AccountingTransaction> transactions = event.getSortedNonAdjustingTransactions();
@@ -210,8 +171,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	    while (iterator.hasNext()) {
 		final AccountingTransaction transaction = iterator.next();
 		iterator.remove();
-		final Money installmentAmount = installment.calculateAmount(transaction
-			.getWhenRegistered(), discountPercentage, isToApplyPenalty(event, installment));
+		final Money installmentAmount = installment.calculateAmount(transaction.getWhenRegistered(), discountPercentage,
+			isToApplyPenalty(event, installment));
 		payedAmount = payedAmount.add(transaction.getAmountWithAdjustment());
 		if (payedAmount.greaterOrEqualThan(installmentAmount)) {
 		    payedAmount = payedAmount.subtract(installmentAmount);
@@ -221,8 +182,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	    }
 
 	    if (!installmentPayed) {
-		final Money amountToPay = installment.calculateAmount(when, discountPercentage,
-			isToApplyPenalty(event, installment));
+		final Money amountToPay = installment.calculateAmount(when, discountPercentage, isToApplyPenalty(event,
+			installment));
 
 		result.put(installment, amountToPay.subtract(payedAmount));
 
@@ -234,22 +195,17 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 
     }
 
-    protected boolean isToApplyPenalty(final Event event, final Installment installment) {
-	return true;
-    }
+    public Money calculateRemainingAmountFor(final Installment installment, final Event event, final DateTime when,
+	    final BigDecimal discountPercentage) {
 
-    public Money calculateRemainingAmountFor(final Installment installment, final Event event,
-	    final DateTime when, final BigDecimal discountPercentage) {
-
-	final Map<Installment, Money> amountsByInstallment = calculateInstallmentRemainingAmounts(event,
-		when, discountPercentage);
+	final Map<Installment, Money> amountsByInstallment = calculateInstallmentRemainingAmounts(event, when, discountPercentage);
 	final Money installmentAmount = amountsByInstallment.get(installment);
 
 	return (installmentAmount != null) ? installmentAmount : Money.ZERO;
     }
 
-    public boolean isInstallmentInDebt(final Installment installment, final Event event,
-	    final DateTime when, final BigDecimal discountPercentage) {
+    public boolean isInstallmentInDebt(final Installment installment, final Event event, final DateTime when,
+	    final BigDecimal discountPercentage) {
 
 	return calculateRemainingAmountFor(installment, event, when, discountPercentage).isPositive();
 
@@ -263,7 +219,32 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	}
 
 	return null;
-
     }
+
+    protected boolean isToApplyPenalty(final Event event, final Installment installment) {
+	return true;
+    }
+    
+    protected void removeParameters() {
+	super.setExecutionYear(null);
+    }
+    
+    public boolean isGratuityPaymentPlan() {
+	return false;
+    }
+
+    public boolean isCustomGratuityPaymentPlan() {
+	return false;
+    }
+
+    public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+	return false;
+    }
+
+    public boolean isFor(final ExecutionYear executionYear) {
+	return hasExecutionYear() && getExecutionYear().equals(executionYear);
+    }
+
+    abstract public ServiceAgreementTemplate getServiceAgreementTemplate();
 
 }

@@ -71,7 +71,7 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends
 	    }
 	}
 
-	return result == null ? (GratuityPaymentPlan) getDefaultPaymentPlan(executionYear) : result;
+	return result == null ? getDefaultPaymentPlan(executionYear) : result;
     }
 
     public List<GratuityPaymentPlan> getGratuityPaymentPlans() {

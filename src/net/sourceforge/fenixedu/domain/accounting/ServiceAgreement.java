@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlans.CustomGratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
@@ -16,8 +18,7 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
 	    public void beforeAdd(ServiceAgreement serviceAgreementToAdd, Person person) {
 		if (serviceAgreementToAdd != null && person != null) {
 		    for (final ServiceAgreement serviceAgreement : person.getServiceAgreements()) {
-			if (serviceAgreement.getServiceAgreementTemplate() == serviceAgreementToAdd
-				.getServiceAgreementTemplate()) {
+			if (serviceAgreement.getServiceAgreementTemplate() == serviceAgreementToAdd.getServiceAgreementTemplate()) {
 			    throw new DomainException(
 				    "error.accounting.ServiceAgreement.person.already.has.service.agreement.for.service.agreement.template");
 			}
@@ -41,19 +42,16 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
 
     private void checkParameters(Person person, ServiceAgreementTemplate serviceAgreementTemplate) {
 	if (person == null) {
-	    throw new DomainException(
-		    "error.accounting.agreement.serviceAgreement.person.cannot.be.null");
+	    throw new DomainException("error.accounting.agreement.serviceAgreement.person.cannot.be.null");
 	}
 	if (serviceAgreementTemplate == null) {
-	    throw new DomainException(
-		    "error.accounting.agreement.serviceAgreement.serviceAgreementTemplate.cannot.be.null");
+	    throw new DomainException("error.accounting.agreement.serviceAgreement.serviceAgreementTemplate.cannot.be.null");
 	}
     }
 
     @Override
     public void setCreationDate(DateTime creationDate) {
-	throw new DomainException(
-		"error.accounting.agreement.serviceAgreement.cannot.modify.creationDate");
+	throw new DomainException("error.accounting.agreement.serviceAgreement.cannot.modify.creationDate");
     }
 
     @Override
@@ -63,15 +61,35 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
 
     @Override
     public void setServiceAgreementTemplate(ServiceAgreementTemplate serviceAgreementTemplate) {
-	throw new DomainException(
-		"error.accounting.agreement.serviceAgreement.cannot.modify.serviceAgreementTemplate");
+	throw new DomainException("error.accounting.agreement.serviceAgreement.cannot.modify.serviceAgreementTemplate");
     }
 
     public void delete() {
-        super.setPerson(null);
-        super.setServiceAgreementTemplate(null);
-        removeRootDomainObject();
-        deleteDomainObject();
+	checkRulesToDelete();
+
+	super.setPerson(null);
+	super.setServiceAgreementTemplate(null);
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
+    private void checkRulesToDelete() {
+	if (hasAnyPaymentPlans()) {
+	    throw new DomainException("error.ServiceAgreement.cannot.delete");
+	}
+    }
+
+    public CustomGratuityPaymentPlan getCustomGratuityPaymentPlan(final ExecutionYear executionYear) {
+	for (final ServiceAgreementPaymentPlan paymentPlan : getPaymentPlans()) {
+	    if (paymentPlan instanceof CustomGratuityPaymentPlan && paymentPlan.isFor(executionYear)) {
+		return (CustomGratuityPaymentPlan) paymentPlan;
+	    }
+	}
+	return null;
+    }
+
+    public boolean hasCustomGratuityPaymentPlan(final ExecutionYear executionYear) {
+	return getCustomGratuityPaymentPlan(executionYear) != null;
     }
 
 }

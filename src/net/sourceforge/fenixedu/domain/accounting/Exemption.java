@@ -18,8 +18,7 @@ public abstract class Exemption extends Exemption_Base {
 	    @Override
 	    public void beforeAdd(Exemption exemption, Event event) {
 		if (event != null && !event.isExemptionAppliable()) {
-		    throw new DomainException(
-			    "error.accounting.Exemption.event.does.not.support.exemption");
+		    throw new DomainException("error.accounting.Exemption.event.does.not.support.exemption");
 		}
 	    }
 	});
@@ -32,26 +31,17 @@ public abstract class Exemption extends Exemption_Base {
 	super.setWhenCreated(new DateTime());
     }
 
-    protected void init(final Employee employee, final Event event,
-	    final ExemptionJustification exemptionJustification) {
-	checkParameters(employee, event, exemptionJustification);
-
+    protected void init(final Employee employee, final Event event, final ExemptionJustification exemptionJustification) {
+	checkParameters(event, exemptionJustification);
 	super.setEmployee(employee);
 	super.setEvent(event);
 	super.setExemptionJustification(exemptionJustification);
     }
 
-    private void checkParameters(Employee employee, Event event,
-	    ExemptionJustification exemptionJustification) {
-	if (employee == null) {
-	    throw new DomainException(
-		    "error.accounting.events.gratuity.GratuityExemption.field_name.cannot.be.null");
-	}
-
+    private void checkParameters(final Event event, final ExemptionJustification exemptionJustification) {
 	if (event == null) {
 	    throw new DomainException("error.accounting.Exemption.event.cannot.be.null");
 	}
-
 	if (exemptionJustification == null) {
 	    throw new DomainException("error.accounting.Exemption.exemptionJustification.cannot.be.null");
 	}
@@ -103,5 +93,4 @@ public abstract class Exemption extends Exemption_Base {
     public String getReason() {
 	return getExemptionJustification().getReason();
     }
-
 }

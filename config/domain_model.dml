@@ -1399,14 +1399,23 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Boolean defaultPlan;
 		DateTime whenCreated;
 	}
-
-		class net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.PaymentPlan {
+	
+		class net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplatePaymentPlan extends net.sourceforge.fenixedu.domain.accounting.PaymentPlan {
 		}
-
-			class net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan {
+			
+			class net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplatePaymentPlan {
 			}
 
-			class net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan {
+				class net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan {
+				}
+
+				class net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan {
+				}
+				
+		class net.sourceforge.fenixedu.domain.accounting.ServiceAgreementPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.PaymentPlan {
+		}
+		
+			class net.sourceforge.fenixedu.domain.accounting.paymentPlans.CustomGratuityPaymentPlan extends net.sourceforge.fenixedu.domain.accounting.ServiceAgreementPaymentPlan {
 			}
 
 	class net.sourceforge.fenixedu.domain.accounting.PostingRule extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -6685,10 +6694,10 @@ relation GratuityEventStudentCurricularPlan {
 }
 
 relation GratuityPaymentPlanGratuityEventWithPaymentPlan {
-	net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan playsRole gratuityPaymentPlan;
 	net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan playsRole gratuityEventsWithPaymentPlan {
 		multiplicity *;
 	}
+	net.sourceforge.fenixedu.domain.accounting.PaymentPlan playsRole gratuityPaymentPlan;
 }
 
 relation GratuitySituationEmployee {
@@ -10864,9 +10873,16 @@ relation ServiceAgreementServiceAgreementTemplate {
 	}
 }
 
-relation ServiceAgreementTemplatePaymentPlan {
+relation ServiceAgreementTemplateServiceAgreementTemplatePaymentPlan {
 	net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate playsRole serviceAgreementTemplate;
-	net.sourceforge.fenixedu.domain.accounting.PaymentPlan playsRole paymentPlans {
+	net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplatePaymentPlan playsRole paymentPlans {
+		multiplicity *;
+	}
+}
+
+relation ServiceAgreementServiceAgreementPaymentPlan {
+	net.sourceforge.fenixedu.domain.accounting.ServiceAgreement playsRole serviceAgreement;
+	net.sourceforge.fenixedu.domain.accounting.ServiceAgreementPaymentPlan playsRole paymentPlans {
 		multiplicity *;
 	}
 }

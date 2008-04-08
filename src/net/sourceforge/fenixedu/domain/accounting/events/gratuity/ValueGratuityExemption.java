@@ -15,15 +15,20 @@ import org.joda.time.YearMonthDay;
 public class ValueGratuityExemption extends ValueGratuityExemption_Base {
 
     public ValueGratuityExemption(final Employee employee, final GratuityEvent gratuityEvent,
-	    final GratuityExemptionJustificationType gratuityExemptionType, final String reason,
-	    final YearMonthDay dispatchDate, final Money value) {
+	    final GratuityExemptionJustificationType gratuityExemptionType, final String reason, final YearMonthDay dispatchDate,
+	    final Money value) {
 	super();
 	init(employee, gratuityEvent, gratuityExemptionType, reason, dispatchDate, value);
     }
 
-    protected void init(Employee employee, GratuityEvent gratuityEvent,
-	    GratuityExemptionJustificationType exemptionType, String reason, YearMonthDay dispatchDate,
-	    Money value) {
+    public ValueGratuityExemption(final GratuityEvent gratuityEvent,
+	    final GratuityExemptionJustificationType gratuityExemptionType, final String reason, final YearMonthDay dispatchDate,
+	    final Money value) {
+	this(null, gratuityEvent, gratuityExemptionType, reason, dispatchDate, value);
+    }
+
+    protected void init(Employee employee, GratuityEvent gratuityEvent, GratuityExemptionJustificationType exemptionType,
+	    String reason, YearMonthDay dispatchDate, Money value) {
 
 	checkParameters(value);
 	super.setValue(value);
@@ -33,8 +38,7 @@ public class ValueGratuityExemption extends ValueGratuityExemption_Base {
 
     private void checkParameters(Money value) {
 	if (value == null) {
-	    throw new DomainException(
-		    "error.accounting.events.gratuity.ValueGratuityExemption.value.cannot.be.null");
+	    throw new DomainException("error.accounting.events.gratuity.ValueGratuityExemption.value.cannot.be.null");
 	}
     }
 
@@ -52,7 +56,7 @@ public class ValueGratuityExemption extends ValueGratuityExemption_Base {
 	final BigDecimal amountToDiscount = new BigDecimal(getValue().toString());
 	return amountToDiscount.divide(amount.getAmount(), 10, RoundingMode.HALF_EVEN);
     }
-    
+
     @Override
     public boolean isValueExemption() {
 	return true;

@@ -153,13 +153,12 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 	deleteDomainObject();
     }
 
-    public PaymentPlan getDefaultPaymentPlan(final ExecutionYear executionYear) {
-	for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
+    public ServiceAgreementTemplatePaymentPlan getDefaultPaymentPlan(final ExecutionYear executionYear) {
+	for (final ServiceAgreementTemplatePaymentPlan paymentPlan : getPaymentPlansSet()) {
 	    if (paymentPlan.getExecutionYear() == executionYear && paymentPlan.isDefault()) {
 		return paymentPlan;
 	    }
 	}
-
 	return null;
     }
 
