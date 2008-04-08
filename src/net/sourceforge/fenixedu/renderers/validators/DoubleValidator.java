@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.renderers.validators;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class DoubleValidator extends HtmlValidator {
@@ -17,11 +19,13 @@ public class DoubleValidator extends HtmlValidator {
     public void performValidation() {
 	String numberText = getComponent().getValue().trim();
 
-	try {
-	    Double.parseDouble(numberText);
-	    setValid(true);
-	} catch (NumberFormatException e) {
-	    setValid(false);
+	if (!StringUtils.isEmpty(numberText)) {
+	    try {
+		Double.parseDouble(numberText);
+		setValid(true);
+	    } catch (NumberFormatException e) {
+		setValid(false);
+	    }
 	}
     }
 }
