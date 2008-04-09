@@ -52,7 +52,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
 	try {
 	    request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(request, getPerson(request), false));
-	    
+
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return showOperations(mapping, form, request, response);
@@ -209,6 +209,15 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	request.setAttribute("person", getPerson(request));
 
 	return mapping.findForward("showEventsWithPayments");
+    }
+
+    public ActionForward showPaymentsForEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("person", getPerson(request));
+	request.setAttribute("event", getEvent(request));
+
+	return mapping.findForward("showPaymentsForEvent");
     }
 
     protected Event getEvent(HttpServletRequest request) {

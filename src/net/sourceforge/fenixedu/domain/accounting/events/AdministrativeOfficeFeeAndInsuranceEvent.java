@@ -286,4 +286,15 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	return result;
     }
 
+    @Override
+    public Money calculateAmountToPay(DateTime whenRegistered) {
+	Money result = super.calculateAmountToPay(whenRegistered);
+	if (result.isZero()) {
+	    return result;
+	}
+
+	result = result.subtract(getPerson().hasInsuranceEventFor(getExecutionYear()) ? getInsuranceAmount() : Money.ZERO);
+
+	return result.isPositive() ? result : Money.ZERO;
+    }
 }

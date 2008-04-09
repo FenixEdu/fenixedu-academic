@@ -276,6 +276,10 @@
 		<put name="body" value="/academicAdminOffice/payments/showEventsWithPayments.jsp"/>
 	</definition>
 	
+	<definition name="payments.management.showPaymentsForEvent" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/showPaymentsForEvent.jsp"/>
+	</definition>
+	
 	<!-- Exemptions -->	
 	<definition name="payments.management.exemptions.showEventsToApplyExemption" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/exemptions/showEventsToApplyExemption.jsp"/>

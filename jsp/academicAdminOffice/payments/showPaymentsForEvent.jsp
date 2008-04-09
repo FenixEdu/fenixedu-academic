@@ -18,27 +18,21 @@
 	</fr:layout>
 </fr:view>
 
-<logic:notEmpty name="person" property="eventsWithPayments">
-	<fr:view name="person" property="eventsWithPayments" schema="AccountingEvent.view-with-extra-payed-amount">
+<logic:notEmpty name="event" property="positiveEntries">	
+	<fr:view name="event" property="positiveEntries" schema="entry.view-with-payment-mode">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 tdleftm mtop05" />
 			<fr:property name="columnClasses" value=",acenter,aright,aright" />
-			<fr:property name="sortBy" value="whenOccured=asc"/>
-			<fr:property name="linkFormat(detail)" value="/payments.do?method=showPaymentsForEvent&eventId=${idInternal}&personId=${person.idInternal}"/>
-			<fr:property name="key(detail)" value="label.details"/>
-			<fr:property name="bundle(detail)" value="APPLICATION_RESOURCES"/>
+			<fr:property name="sortBy" value="whenRegistered=desc"/>
 		</fr:layout>
 	</fr:view>	
+	
 </logic:notEmpty>
 
-<logic:empty name="person" property="eventsWithPayments">
-	<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.events.noEvents" />.</em>
-</logic:empty>
 	
 <bean:define id="personId" name="person" property="idInternal" />
-<fr:form action='<%= "/payments.do?personId=" + personId %>'>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />
-<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='backToShowOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
+<fr:form action='<%= "/payments.do?method=showEventsWithPayments&amp;personId=" + personId %>'>
+<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
 </fr:form>
 
 </logic:present>

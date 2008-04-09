@@ -418,6 +418,7 @@
 		 	    <forward name="showEvents" path="payments.management.showEvents"/>
 		 	    <forward name="showEventsWithInstallments" path="payments.management.showEventsWithInstallments"/>
 		 	    <forward name="showEventsWithPayments" path="payments.management.showEventsWithPayments" />
+		 	    <forward name="showPaymentsForEvent" path="payments.management.showPaymentsForEvent" />
 		 	    		 	    
 		 	    <forward name="preparePayment" path="payments.management.preparePayment"/>      
 		 	    <forward name="paymentConfirmed" path="payments.management.paymentConfirmed"/> 
