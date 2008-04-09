@@ -19,9 +19,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
-import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -350,8 +348,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private static final int COLUMNS_FROM_ECTS_AND_ENROLMENT_EVALUATION_DATE = 4;
 
-	private static final int COLUMNS_BETWEEN_ECTS_AND_ENROLMENT_EVALUATION_DATE = COLUMNS_FROM_ECTS_AND_ENROLMENT_EVALUATION_DATE - 1;
-
 	private static final int COLUMNS_BETWEEN_TEXT_AND_ENROLMENT_EVALUATION_DATE = COLUMNS_BETWEEN_TEXT_AND_ECTS
 		+ COLUMNS_FROM_ECTS_AND_ENROLMENT_EVALUATION_DATE;
 
@@ -497,7 +493,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	private StringBuilder createGroupName(final String text, final CurriculumGroup curriculumGroup) {
 	    final StringBuilder groupName = new StringBuilder(text);
 	    if (curriculumGroup != null && curriculumGroup.hasDegreeModule()) {
-		final CourseGroup courseGroup = curriculumGroup.getDegreeModule();
 
 		final CreditsLimit creditsLimit = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
 			CurricularRuleType.CREDITS_LIMIT, executionYearContext);
@@ -525,31 +520,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		}
 	    }
 	    return groupName;
-	}
-
-	private void generateRulesInfo(final HtmlTableRow groupRow, final CurriculumGroup curriculumGroup) {
-	    final CreditsLimit creditsLimitRule;
-	    final DegreeModulesSelectionLimit degreeModulesLimitRule;
-	    if (curriculumGroup == null) {
-		creditsLimitRule = null;
-		degreeModulesLimitRule = null;
-	    } else {
-		creditsLimitRule = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
-			CurricularRuleType.CREDITS_LIMIT, executionYearContext);
-		degreeModulesLimitRule = (DegreeModulesSelectionLimit) curriculumGroup.getMostRecentActiveCurricularRule(
-			CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT, executionYearContext);
-	    }
-
-	    final String creditsLimitText = creditsLimitRule == null ? "" : "Créditos: Min. "
-		    + creditsLimitRule.getMinimumCredits() + ", Total " + curriculumGroup.getCreditsConcluded();
-	    generateCellWithText(groupRow, creditsLimitText, getLabelCellClass(), 1);
-
-	    final String degreeModulesLimitText = degreeModulesLimitRule == null ? "" : "Módulos: Min. "
-		    + degreeModulesLimitRule.getMinimumLimit()
-		    + ", Total "
-		    + String.valueOf(curriculumGroup.getCurriculumModulesCount()
-			    - curriculumGroup.getNoCourseGroupCurriculumGroupsCount());
-	    generateCellWithText(groupRow, degreeModulesLimitText, getLabelCellClass(), 1);
 	}
 
 	private void generateCurriculumLineRows(HtmlTable mainTable, CurriculumGroup curriculumGroup, int level) {
