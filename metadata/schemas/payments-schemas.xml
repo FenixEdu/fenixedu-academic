@@ -135,11 +135,11 @@
 	<slot name="reimbursableAmount" key="label.net.sourceforge.fenixedu.domain.accounting.Event.reimbursableAmount" />
 </schema>
 
-<schema name="Entry.view" type="net.sourceforge.fenixedu.domain.accounting.Entry" bundle="APPLICATION_RESOURCES">
-	<slot name="accountingTransaction.event.description" key="label.net.sourceforge.fenixedu.domain.accounting.Event.description" />
-	<slot name="accountingTransaction.transactionDetail.whenRegistered" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.paymentDate" layout="no-time" />
-	<slot name="accountingTransaction.toAccountEntry.amountWithAdjustment" key="label.net.sourceforge.fenixedu.domain.accounting.Event.payedAmount" />	
-	<slot name="accountingTransaction.transactionDetail.paymentMode" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.paymentMode" />
+<schema name="entry.view-with-payment-mode" type="net.sourceforge.fenixedu.domain.accounting.Entry" bundle="APPLICATION_RESOURCES">
+	<slot name="description" />
+	<slot name="whenRegistered" layout="no-time" />
+	<slot name="amountWithAdjustment" />	
+	<slot name="paymentMode" />
 </schema>
 
 <schema name="CreateGratuityExemptionBean" type="net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean" bundle="APPLICATION_RESOURCES">

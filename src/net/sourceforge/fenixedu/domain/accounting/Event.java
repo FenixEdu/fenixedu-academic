@@ -911,4 +911,8 @@ public abstract class Event extends Event_Base {
 	return false;
     }
 
+    public boolean canApplyReimbursement(final Money amount) {
+	return getReimbursableAmount().greaterOrEqualThan(amount);
+    }
+
 }

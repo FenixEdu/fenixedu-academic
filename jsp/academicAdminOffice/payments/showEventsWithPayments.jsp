@@ -27,7 +27,7 @@
 		</fr:layout>
 	</fr:view> --%>
 	
-	<fr:view name="person" property="payments" schema="Entry.view">
+	<fr:view name="person" property="payments" schema="entry.view-with-payment-mode">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 tdleftm mtop05" />
 			<fr:property name="columnClasses" value=",acenter,aright,aright" />

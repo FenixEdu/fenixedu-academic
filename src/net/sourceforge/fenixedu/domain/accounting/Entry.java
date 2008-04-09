@@ -21,10 +21,8 @@ public class Entry extends Entry_Base {
 
     public static Comparator<Entry> COMPARATOR_BY_MOST_RECENT_WHEN_REGISTERED = new Comparator<Entry>() {
 	public int compare(Entry leftEntry, Entry rightEntry) {
-	    int comparationResult = leftEntry.getWhenRegistered().compareTo(
-		    rightEntry.getWhenRegistered());
-	    return (comparationResult == 0) ? leftEntry.getIdInternal().compareTo(
-		    rightEntry.getIdInternal()) : comparationResult;
+	    int comparationResult = leftEntry.getWhenRegistered().compareTo(rightEntry.getWhenRegistered());
+	    return (comparationResult == 0) ? leftEntry.getIdInternal().compareTo(rightEntry.getIdInternal()) : comparationResult;
 	}
     };
 
@@ -125,8 +123,7 @@ public class Entry extends Entry_Base {
 
     @Override
     public void removeReceipts(Receipt receipt) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.Entry.cannot.remove.receipt");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Entry.cannot.remove.receipt");
     }
 
     public void setActiveReceipt(Receipt receipt) {
@@ -158,14 +155,12 @@ public class Entry extends Entry_Base {
     }
 
     public Money getAmountWithAdjustment() {
-	return hasBeenAdjusted() ? getOriginalAmount().add(getTotalAdjustedAmount())
-		: getOriginalAmount();
+	return hasBeenAdjusted() ? getOriginalAmount().add(getTotalAdjustedAmount()) : getOriginalAmount();
     }
 
     private Money getTotalAdjustedAmount() {
 	Money result = Money.ZERO;
-	for (final AccountingTransaction transaction : getAccountingTransaction()
-		.getAdjustmentTransactionsSet()) {
+	for (final AccountingTransaction transaction : getAccountingTransaction().getAdjustmentTransactionsSet()) {
 	    result = result.add(transaction.getEntryFor(getAccount()).getOriginalAmount());
 	}
 
@@ -181,8 +176,7 @@ public class Entry extends Entry_Base {
     }
 
     private boolean canApplyAdjustment(final Money amountToAdjust) {
-	return isAdjustmentAppliable()
-		&& getAmountWithAdjustment().add(amountToAdjust).greaterOrEqualThan(Money.ZERO);
+	return isAdjustmentAppliable() && getAmountWithAdjustment().add(amountToAdjust).greaterOrEqualThan(Money.ZERO);
     }
 
     private boolean isAdjustmentAppliable() {
@@ -230,6 +224,10 @@ public class Entry extends Entry_Base {
 
     private boolean canBeDeleted() {
 	return !hasAnyReceipts();
+    }
+
+    public PaymentMode getPaymentMode() {
+	return getAccountingTransaction().getTransactionDetail().getPaymentMode();
     }
 
 }

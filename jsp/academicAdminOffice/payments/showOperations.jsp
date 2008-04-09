@@ -18,6 +18,16 @@
 
 		<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 		<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" /></h2>
+		
+		<logic:present name="person" property="student">
+			<ul class="mtop2 list5">
+				<li>
+					<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="person" paramProperty="student.idInternal">
+						<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</html:link>
+				</li>
+			</ul>
+		</logic:present>
 
 		<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
 		<fr:view name="person" 	schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">

@@ -71,6 +71,10 @@
 		<p>
 			<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.events.noEvents" />.</em>
 		</p>
+		<br/>
+		<p>
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='backToShowOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
+		</p>
 	</logic:empty>
 
 </fr:form>

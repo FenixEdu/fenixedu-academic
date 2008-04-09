@@ -18,7 +18,8 @@
 
 <body>
 <bean:define id="receipt" name="creditNote" property="receipt" />
-<table width="100%" height="100%" border="0">
+
+<table width="98%" height="100%" border="0">
 	<tr height="30">
 		<td>
 		<table width="100%" border="0" valign="top">
@@ -27,10 +28,10 @@
 				<table border="0" width="100%" height="104" align="center"
 					cellpadding="0" cellspacing="0">
 					<tr>
-						<td width="50" height="100"><img
+						<td><img
 							src="<%= request.getContextPath() %>/images/LogoIST.gif"
 							alt="<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="LogoIST" bundle="IMAGE_RESOURCES" />"
-							width="50" height="104" border="0" /></td>
+							 border="0" /></td>
 						<td>&nbsp;</td>
 						<td>
 						<table border="0" width="100%" height="100%">
@@ -54,7 +55,7 @@
 									</logic:notEqual>
 									<br/>
 									<logic:equal name="creditNote" property="annulled" value="true">
-										<strong><bean:message  key="label.payments.printTemplates.annulledDocument" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+										<strong><bean:message  key="label.payments.printTemplates.annulledDocument" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong>
 										<br/>
 									</logic:equal>
 									<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.printTemplates.creditNote.numberInformation" arg0="<%=creditNoteNumber.toString()%>" arg1="<%=creditNoteYear.toString()%>"/> </b>
@@ -96,12 +97,8 @@
 					  <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" name="receipt" property="person.idDocumentType.name" bundle="ENUMERATION_RESOURCES"/> </td>
 					</tr>
 					<tr>
-					  <td> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" bundle="APPLICATION_RESOURCES" /> </td>
+					  <td width="30%"> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.net.sourceforge.fenixedu.domain.Person.documentIdNumber" bundle="APPLICATION_RESOURCES" /> </td>
 					  <td> <bean:write name="receipt" property="person.documentIdNumber"/> </td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
 					</tr>
 				</table>
 			</tr>
@@ -111,13 +108,7 @@
 
 	<tr>
 		<td>
-		<table align="right">
-				<tr>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-				</tr>
+		<table align="right" style="width: 98%;">
 			<logic:iterate id="creditNoteEntry" name="creditNote" property="creditNoteEntries">
 				<tr>
 					<td>
@@ -127,10 +118,12 @@
 							<app:property name="default" value="APPLICATION_RESOURCES"/>
 						</app:labelFormatter>
 					</td>
-					<td>.........................................&nbsp;</td>
-					<td><bean:define id="amount" name="creditNoteEntry" property="amount"
-						type="Money" /> <%=amount.toPlainString()%> &nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" bundle="ACADEMIC_OFFICE_RESOURCES" 
-						key="label.currencySymbol" /></td>
+					<td>......................................&nbsp;</td>
+					<td style="width: 90px;">
+					<bean:define id="amount" name="creditNoteEntry" property="amount"
+						type="Money" /><%=amount.toPlainString()%><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" bundle="ACADEMIC_OFFICE_RESOURCES" 
+						key="label.currencySymbol" />
+					</td>
 				</tr>
 			</logic:iterate>
 			<tr>
@@ -140,16 +133,13 @@
 			</tr>
 			<tr>
 				<td><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.totalAmountToPay"/> </strong></td>
-				<td>_____________________&nbsp;</td>
+				<td>__________________&nbsp;</td>
 				<td><strong><bean:define id="totalAmount" name="creditNote"
-					property="totalAmount" type="Money" /><%=totalAmount.toPlainString()%>&nbsp;<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" bundle="ACADEMIC_OFFICE_RESOURCES" 
+					property="totalAmount" type="Money" /><%=totalAmount.toPlainString()%><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" bundle="ACADEMIC_OFFICE_RESOURCES" 
 					key="label.currencySymbol" /></strong></td>
 			</tr>
 		</table>
 		</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
@@ -167,7 +157,6 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2" valign="bottom">&nbsp;
-				<div align="center">&nbsp;</div>
 				<div align="center">&nbsp;</div>
 				<div align="center"><b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.theEmployee"/></b> <br/>
 				<br/>

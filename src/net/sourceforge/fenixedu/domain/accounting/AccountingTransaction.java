@@ -298,8 +298,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     private boolean canApplyReimbursement(final Money amount) {
-	final Money extraAmount = getEvent().getReimbursableAmount();
-	return extraAmount.greaterOrEqualThan(amount);
+	return getEvent().canApplyReimbursement(amount);
     }
 
     public boolean isSourceAccountFromParty(Party party) {

@@ -26,10 +26,9 @@ public class Receipt extends Receipt_Base {
 
     public static Comparator<Receipt> COMPARATOR_BY_NUMBER = new Comparator<Receipt>() {
 	public int compare(Receipt leftReceipt, Receipt rightReceipt) {
-	    int comparationResult = leftReceipt.getReceiptNumber().compareTo(
-		    rightReceipt.getReceiptNumber());
-	    return (comparationResult == 0) ? leftReceipt.getIdInternal().compareTo(
-		    rightReceipt.getIdInternal()) : comparationResult;
+	    int comparationResult = leftReceipt.getReceiptNumber().compareTo(rightReceipt.getReceiptNumber());
+	    return (comparationResult == 0) ? leftReceipt.getIdInternal().compareTo(rightReceipt.getIdInternal())
+		    : comparationResult;
 	}
     };
 
@@ -47,14 +46,12 @@ public class Receipt extends Receipt_Base {
 	super.setNumberSeries(numberSeries);
     }
 
-    public Receipt(Employee employee, Person person, Party contributor, Unit creatorUnit,
-	    Unit ownerUnit, List<Entry> entries) {
+    public Receipt(Employee employee, Person person, Party contributor, Unit creatorUnit, Unit ownerUnit, List<Entry> entries) {
 	this();
 	init(employee, person, contributor, creatorUnit, ownerUnit, entries);
     }
 
-    private void init(Employee employee, Person person, Party contributor, Unit creatorUnit,
-	    Unit ownerUnit, List<Entry> entries) {
+    private void init(Employee employee, Person person, Party contributor, Unit creatorUnit, Unit ownerUnit, List<Entry> entries) {
 	checkParameters(employee, person, contributor, creatorUnit, ownerUnit, entries);
 	checkRulesToCreate(person, entries);
 	super.setPerson(person);
@@ -69,34 +66,30 @@ public class Receipt extends Receipt_Base {
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public Receipt(final Employee employee, final Person person, final Party contributor,
-	    final Unit creatorUnit, final Unit ownerUnit, final List<Entry> entries, final Integer year,
-	    final String numberSeries, final DateTime whenCreated) {
+    public Receipt(final Employee employee, final Person person, final Party contributor, final Unit creatorUnit,
+	    final Unit ownerUnit, final List<Entry> entries, final Integer year, final String numberSeries,
+	    final DateTime whenCreated) {
 	this(year, whenCreated, numberSeries);
-	init(employee, person, contributor, creatorUnit, ownerUnit, entries, year, numberSeries,
-		whenCreated);
+	init(employee, person, contributor, creatorUnit, ownerUnit, entries, year, numberSeries, whenCreated);
     }
 
-    private void init(Employee employee, Person person, Party contributor, Unit creatorUnit,
-	    Unit ownerUnit, List<Entry> entries, Integer year, String numberSeries, DateTime whenCreated) {
+    private void init(Employee employee, Person person, Party contributor, Unit creatorUnit, Unit ownerUnit, List<Entry> entries,
+	    Integer year, String numberSeries, DateTime whenCreated) {
 	checkParameters(year, whenCreated, numberSeries);
 	init(employee, person, contributor, creatorUnit, ownerUnit, entries);
     }
 
     private void checkParameters(Integer year, DateTime whenCreated, String numberSeries) {
 	if (year == null) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.Receipt.year.cannot.be.null");
+	    throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Receipt.year.cannot.be.null");
 	}
 
 	if (whenCreated == null) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.Receipt.whenCreated.cannot.be.null");
+	    throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Receipt.whenCreated.cannot.be.null");
 	}
 
 	if (numberSeries == null) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.Receipt.numberSeries.cannot.be.null");
+	    throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Receipt.numberSeries.cannot.be.null");
 	}
     }
 
@@ -104,8 +97,7 @@ public class Receipt extends Receipt_Base {
 	final int year = getYear();
 	for (final Entry entry : entries) {
 	    if (entry.getWhenRegistered().getYear() != year) {
-		throw new DomainException(
-			"error.accounting.Receipt.entries.must.belong.to.receipt.civil.year");
+		throw new DomainException("error.accounting.Receipt.entries.must.belong.to.receipt.civil.year");
 	    }
 
 	    if (!entry.getAccountingTransaction().isSourceAccountFromParty(person)) {
@@ -114,8 +106,8 @@ public class Receipt extends Receipt_Base {
 	}
     }
 
-    private void checkParameters(Employee employee, Person person, Party contributor, Unit creatorUnit,
-	    Unit ownerUnit, List<Entry> entries) {
+    private void checkParameters(Employee employee, Person person, Party contributor, Unit creatorUnit, Unit ownerUnit,
+	    List<Entry> entries) {
 	if (person == null) {
 	    throw new DomainException("error.accouting.receipt.person.cannot.be.null");
 	}
@@ -238,20 +230,17 @@ public class Receipt extends Receipt_Base {
 
     @Override
     public void setOwnerUnit(Unit ownerUnit) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.Receipt.cannot.modify.ownerUnit");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Receipt.cannot.modify.ownerUnit");
     }
 
     @Override
     public void setCreatorUnit(Unit creatorUnit) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.Receipt.cannot.modify.creatorUnit");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Receipt.cannot.modify.creatorUnit");
     }
 
     private Integer generateReceiptNumber(int year) {
 	final List<Receipt> receipts = getReceiptsFor(year);
-	return receipts.isEmpty() ? 1 : Collections.max(receipts, Receipt.COMPARATOR_BY_NUMBER)
-		.getReceiptNumber() + 1;
+	return receipts.isEmpty() ? 1 : Collections.max(receipts, Receipt.COMPARATOR_BY_NUMBER).getReceiptNumber() + 1;
     }
 
     public static List<Receipt> getReceiptsFor(int year) {
@@ -292,8 +281,7 @@ public class Receipt extends Receipt_Base {
 
     public boolean isFromAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	for (final Entry entry : getEntries()) {
-	    if (!entry.getAccountingTransaction().getEvent().isPayableOnAdministrativeOffice(
-		    administrativeOffice)) {
+	    if (!entry.getAccountingTransaction().getEvent().isPayableOnAdministrativeOffice(administrativeOffice)) {
 		return false;
 	    }
 	}
@@ -374,15 +362,13 @@ public class Receipt extends Receipt_Base {
     }
 
     public String getNumberWithSeries() {
-	return !isNumberSeriesDefined() ? String.valueOf(super.getNumber()) : super.getNumber()
-		+ getNumberSeries();
+	return !isNumberSeriesDefined() ? String.valueOf(super.getNumber()) : super.getNumber() + getNumberSeries();
     }
 
     @Override
     @Deprecated
     public Integer getNumber() {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.Receipt.use.getNumberWithSeries.instead");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Receipt.use.getNumberWithSeries.instead");
     }
 
     private Integer getReceiptNumber() {
@@ -392,5 +378,17 @@ public class Receipt extends Receipt_Base {
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public void changeContributor(final Party contributor) {
 	super.setContributorParty(contributor);
+    }
+
+    public List<CreditNote> getEmittedCreditNotes() {
+	final List<CreditNote> result = new ArrayList<CreditNote>();
+	for (final CreditNote creditNote : super.getCreditNotes()) {
+	    if (creditNote.isEmitted()) {
+		result.add(creditNote);
+	    }
+	}
+
+	return result;
+
     }
 }
