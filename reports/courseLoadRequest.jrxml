@@ -68,7 +68,7 @@
 			</band>
 		</background>
 		<title>
-			<band height="368"  isSplitAllowed="true" >
+			<band height="355"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="219"
@@ -87,7 +87,7 @@
 						x="64"
 						y="196"
 						width="469"
-						height="166"
+						height="157"
 						key="textField-16"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
@@ -107,7 +107,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="64"  isSplitAllowed="true" >
+			<band height="52"  isSplitAllowed="true" >
 				<subreport  isUsingCache="true">
 					<reportElement
 						x="0"
@@ -121,7 +121,7 @@
 				<subreport  isUsingCache="true">
 					<reportElement
 						x="0"
-						y="35"
+						y="27"
 						width="595"
 						height="25"
 						key="subreport-2"
@@ -136,11 +136,11 @@
 			</band>
 		</columnFooter>
 		<pageFooter>
-			<band height="26"  isSplitAllowed="true" >
+			<band height="30"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="451"
-						y="4"
+						y="-1"
 						width="25"
 						height="19"
 						key="staticText-18"
@@ -154,7 +154,7 @@
 				<staticText>
 					<reportElement
 						x="489"
-						y="4"
+						y="-1"
 						width="14"
 						height="19"
 						key="staticText-19"
@@ -168,7 +168,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="476"
-						y="4"
+						y="-1"
 						width="13"
 						height="19"
 						key="textField-23"
@@ -182,7 +182,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="503"
-						y="4"
+						y="-1"
 						width="13"
 						height="19"
 						key="textField-24"
@@ -196,7 +196,8 @@
 			</band>
 		</pageFooter>
 		<lastPageFooter>
-			<band height="239"  isSplitAllowed="true" >
+			<band height="229"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.compareTo(1) == 0]]></printWhenExpression>
 				<staticText>
 					<reportElement
 						x="205"
@@ -330,7 +331,82 @@
 			</band>
 		</lastPageFooter>
 		<summary>
-			<band height="0"  isSplitAllowed="true" >
+			<band height="200"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.compareTo(1) > 0]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						x="205"
+						y="128"
+						width="160"
+						height="21"
+						key="staticText-25"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Times-Roman" size="12"/>
+					</textElement>
+				<text><![CDATA[A Técnica Superior]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="136"
+						y="173"
+						width="314"
+						height="0"
+						key="line-4"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="64"
+						y="14"
+						width="469"
+						height="37"
+						key="staticText-26"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified">
+						<font pdfFontName="Times-Roman" size="12"/>
+					</textElement>
+				<text><![CDATA[Por ser verdade e me haver sido pedido mandei passar o presente certificado que vou assinar e autenticar com o selo branco em uso nesta Secretaria.]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="64"
+						y="77"
+						width="469"
+						height="20"
+						key="textField-34"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle" isStyledText="true" lineSpacing="1_1_2">
+						<font pdfFontName="Times-Roman" size="12" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="64"
+						y="178"
+						width="469"
+						height="21"
+						key="textField-35"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Times-Roman" size="12"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="64"
+						y="59"
+						width="469"
+						height="17"
+						key="textField-36"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Times-Roman" size="12"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeName} + " do " +$P{institutionName}]]></textFieldExpression>
+				</textField>
 			</band>
 		</summary>
 </jasperReport>
