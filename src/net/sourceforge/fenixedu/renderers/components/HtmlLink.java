@@ -112,7 +112,8 @@ public class HtmlLink extends HtmlComponent {
             }
         }
         
-        this.url = realUrl != null ? realUrl : url;
+        this.url = HtmlText.escape(realUrl != null ? realUrl : url);
+        
     }
 
     private String[] getParameters(String parameters) {
