@@ -83,7 +83,9 @@
 			<bean:write name="tsdTeacher" property="category.code"/>
 		</td>
 		<td class="aright">
-			<bean:write name="tsdTeacher" property="department.acronym"/>
+			<logic:notEmpty name="tsdTeacher" property="department">
+				<bean:write name="tsdTeacher" property="department.acronym"/>
+			</logic:notEmpty>
 		</td>
 		<td class="acenter">
 			<html:link href="javascript:void(0)" onclick='<%= "document.forms[0].tsdTeacher.value=" + ((TSDTeacher) tsdTeacher).getIdInternal() + ";document.forms[0].method.value='removeTeacher'; document.forms[0].submit()" %>'>

@@ -49,6 +49,7 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
     
     public void delete(){
     	removeTSDCourse();
+    	 removeRootDomainObject();
     	super.deleteDomainObject();
     }
     

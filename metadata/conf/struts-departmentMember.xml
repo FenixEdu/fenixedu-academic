@@ -455,6 +455,7 @@
         	<forward name="courseValuationShifts" path="df.page.teacherServiceDistribution.courseValuationShifts"/>
         	<forward name="courseValuationWeights" path="df.page.teacherServiceDistribution.courseValuationWeights"/>
         	<forward name="courseValuationHours" path="df.page.teacherServiceDistribution.courseValuationHours"/>
+        	<forward name="defineSchoolClassCalculationMethod" path="df.page.teacherServiceDistribution.defineSchoolClassCalculationMethod"/>
         </action>
 
         <action path="/tsdCurricularCourseGroupCreation"

@@ -159,6 +159,10 @@
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionValuationByCharts.jsp" />
 	</definition>
 	
+	<definition name="df.page.teacherServiceDistribution.defineSchoolClassCalculationMethod" extends="departmentMember.masterPage"> 
+		<put name="body" value="/departmentMember/teacherServiceDistribution/editSchoolClassCalculationMethod.jsp"/>
+	</definition>
+	
 	<definition name="df.page.teacherServiceDistribution.list-valuation-teachers" extends="departmentMember.masterPage"> 
 		<put name="body" value="/departmentMember/teacherServiceDistribution/listValuationTeachers.jsp" />
 	</definition>
