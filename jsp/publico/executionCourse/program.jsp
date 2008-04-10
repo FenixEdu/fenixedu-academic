@@ -25,9 +25,9 @@
 				<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 				<bean:message key="label.in"/>
 				<fr:view name="degree" property="nameI18N">
-					<fr:layout>
+					<fr:layout name="html"> 
 						<fr:property name="escaped" value="false" />
-						<fr:property name="newlineAware" value="false" />
+						<fr:property name="newlineAware" value="true" />
 					</fr:layout>
 				</fr:view>
 			</logic:iterate>
@@ -37,7 +37,11 @@
 				<bean:message key="title.program"/>
 			</h4>
 			<div class="mtop05 coutput2" style="line-height: 1.5em;">
-				<fr:view name="competenceCourse" property="programI18N" layout="html"/>
+				<fr:view name="competenceCourse" property="programI18N">
+					<fr:layout name="html">
+						<fr:property name="newlineAware" value="true" />
+					</fr:layout>
+				</fr:view>
 			</div>
 	   </div>
 	</logic:equal>
@@ -72,3 +76,4 @@
 			</div>
 		</logic:notEqual>
 	</logic:iterate>
+	
