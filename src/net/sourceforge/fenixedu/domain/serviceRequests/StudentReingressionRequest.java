@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -49,9 +48,12 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     }
 
     private void checkRulesToCreate(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
-
 	if (!hasValidState(registration)) {
 	    throw new DomainException("error.StudentReingressionRequest.registration.with.invalid.state");
+	}
+
+	if (registration.isRegistrationConclusionProcessed()) {
+	    throw new DomainException("error.StudentReingressionRequest.registration.has.conclusion.processed");
 	}
 
 	if (hasInterruptedAtLeastThreeTimes(registration)) {
@@ -73,23 +75,9 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     private boolean isEnrolmentPeriodOpen(final Registration registration, final ExecutionYear executionYear,
 	    final DateTime requestDate) {
-
 	final DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
-	if (hasOpenEnrolmentPeriod(degreeCurricularPlan, executionYear, requestDate)) {
-	    return true;
-	}
-
-	if (!degreeCurricularPlan.isBolonhaDegree()
-		&& !(registration.hasConclusionProcessResponsible() || registration.isConcluded())) {
-
-	    for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : degreeCurricularPlan.getTargetEquivalencePlans()) {
-		if (hasOpenEnrolmentPeriod(equivalencePlan.getDegreeCurricularPlan(), executionYear, requestDate)) {
-		    return true;
-		}
-	    }
-	}
-
-	return false;
+	return !degreeCurricularPlan.isBolonhaDegree()
+		|| hasOpenEnrolmentPeriod(degreeCurricularPlan, executionYear, requestDate);
     }
 
     private boolean hasOpenEnrolmentPeriod(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear,
