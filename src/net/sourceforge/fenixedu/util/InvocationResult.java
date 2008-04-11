@@ -66,4 +66,7 @@ public class InvocationResult {
 
     }
 
+    static public InvocationResult createSuccess() {
+	return new InvocationResult().setSuccess(true);
+    }
 }
