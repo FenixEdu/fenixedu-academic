@@ -21,35 +21,36 @@ public class AccountingEventsManager {
 
     public InvocationResult createGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear) {
+	return createGratuityEvent(studentCurricularPlan, executionYear, true);
+    }
 
-	final InvocationResult result = verifyConditionsToCreateGratuityEvent(executionYear, studentCurricularPlan);
+    public InvocationResult createGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear, final boolean checkConditions) {
+
+	final InvocationResult result = checkConditions ? verifyConditionsToCreateGratuityEvent(executionYear,
+		studentCurricularPlan) : InvocationResult.createSuccess();
 
 	if (result.isSuccess()) {
 	    new GratuityEventWithPaymentPlan(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan.getPerson(),
 		    studentCurricularPlan, executionYear);
-
-	    return result;
-
 	}
-
 	return result;
-
     }
 
     public InvocationResult createAdministrativeOfficeFeeAndInsuranceEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear) {
-	final InvocationResult result = verifyConditionsToCreateAdministrativeOfficeFeeAndInsuranceEvent(studentCurricularPlan,
-		executionYear);
+	return createAdministrativeOfficeFeeAndInsuranceEvent(studentCurricularPlan, executionYear, true);
+    }
+
+    public InvocationResult createAdministrativeOfficeFeeAndInsuranceEvent(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear, final boolean checkConditions) {
+	final InvocationResult result = checkConditions ? verifyConditionsToCreateAdministrativeOfficeFeeAndInsuranceEvent(
+		studentCurricularPlan, executionYear) : InvocationResult.createSuccess();
 	if (result.isSuccess()) {
 	    new AdministrativeOfficeFeeAndInsuranceEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan
 		    .getPerson(), executionYear);
-
-	    return result;
-
 	}
-
 	return result;
-
     }
 
     public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
