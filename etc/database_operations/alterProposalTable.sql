@@ -1,0 +1,1 @@
+alter table PROPOSAL change column URL URL text default null;

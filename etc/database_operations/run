@@ -29,4 +29,4 @@ function executeWithTempFile() {
 }
 
 execute "Moving myISAM to InnoDB" fixTablesInDatabase.sql
-
+execute "Enlarge url column" alterProposalTable.sql
