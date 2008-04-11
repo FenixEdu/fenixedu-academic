@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.candidacy.MDCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
@@ -45,6 +46,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.studentCurriculum.TemporarySubstitution;
+import net.sourceforge.fenixedu.util.InvocationResult;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -56,7 +58,7 @@ public class SeparationCyclesManagement {
     private static final List<DegreeType> ACCEPTED_DEGREE_TYPES = Arrays.asList(DegreeType.BOLONHA_DEGREE,
 	    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-    private final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils
+    private final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
 	    .getLocale());
 
     public SeparationCyclesManagement() {
@@ -120,6 +122,7 @@ public class SeparationCyclesManagement {
 	tryRemoveOldSecondCycle(oldSecondCycle);
 	markOldRegistrationWithConcludedState(oldStudentCurricularPlan);
 	moveGratuityEventsInformation(oldStudentCurricularPlan, newStudentCurricularPlan);
+	createAdministrativeOfficeFeeAndInsurance(newStudentCurricularPlan);
 
 	return newRegistration;
     }
@@ -385,8 +388,10 @@ public class SeparationCyclesManagement {
     }
 
     private void createGratuityEvent(final StudentCurricularPlan newStudentCurricularPlan) {
-	if (!new AccountingEventsManager().createGratuityEvent(newStudentCurricularPlan, getExecutionYear()).isSuccess()) {
-	    throw new DomainException("error.SeparationCyclesManagement.could.not.create.gratuity.event");
+	final InvocationResult result = new AccountingEventsManager().createGratuityEvent(newStudentCurricularPlan,
+		getExecutionYear(), false);
+	if (!result.isSuccess()) {
+	    throw new DomainExceptionWithInvocationResult(result);
 	}
     }
 
@@ -474,6 +479,13 @@ public class SeparationCyclesManagement {
     private String getNoPaymentsReason(final GratuityEvent second) {
 	final String message = RESOURCE_BUNDLE.getString("label.SeparationCyclesManagement.noPayments.reason");
 	return MessageFormat.format(message, second.getStudentCurricularPlan().getName());
+    }
+
+    private void createAdministrativeOfficeFeeAndInsurance(final StudentCurricularPlan newStudentCurricularPlan) {
+	if (!newStudentCurricularPlan.getPerson().hasAdministrativeOfficeFeeInsuranceEventFor(getExecutionYear())) {
+	    new AccountingEventsManager().createAdministrativeOfficeFeeAndInsuranceEvent(newStudentCurricularPlan,
+		    getExecutionYear(), false);
+	}
     }
 
     protected ExecutionPeriod getExecutionPeriod() {
