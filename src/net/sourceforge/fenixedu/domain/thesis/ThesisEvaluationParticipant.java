@@ -108,12 +108,18 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
 		ThesisParticipationType type = this.getType();
 
 		if (type.equals(ThesisParticipationType.ORIENTATOR)) {
+		    if (thesis.getOrientatorCreditsDistribution() != null) {
 			return thesis.getOrientatorCreditsDistribution();
+		    }
 		}
-		
+
 		if (type.equals(ThesisParticipationType.COORIENTATOR)) {
+		    if (thesis.getCoorientatorCreditsDistribution() != null) {
 			return thesis.getCoorientatorCreditsDistribution();
+		    }
 		}
+
+		
 		
 		return (double) 0.0;
     }
