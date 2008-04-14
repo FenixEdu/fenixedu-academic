@@ -63,6 +63,19 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	if (!isEnrolmentPeriodOpen(registration, executionYear, requestDate)) {
 	    throw new DomainException("error.StudentReingressionRequest.out.of.enrolment.period");
 	}
+	
+	if (alreadyHasRequest(registration, executionYear)) {
+	    throw new DomainException("error.StudentReingressionRequest.already.has.request.to.same.executionYear");
+	}
+    }
+
+    private boolean alreadyHasRequest(final Registration registration, final ExecutionYear executionYear) {
+	for (final AcademicServiceRequest request : registration.getAcademicServiceRequests(getClass(), executionYear)) {
+	    if (!request.finishedUnsuccessfully()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean hasValidState(final Registration registration) {
