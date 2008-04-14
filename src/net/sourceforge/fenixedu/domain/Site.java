@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
+import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -37,6 +38,11 @@ public abstract class Site extends Site_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    @Override
+    public boolean isChildAccepted(Content child) {
+	return child instanceof Section || Forum.class.isAssignableFrom(child.getClass());
+    }
+    
     public Section createSection(MultiLanguageString sectionName, Container parentContainer, Integer sectionOrder) {
 	return new Section(parentContainer, sectionName, sectionOrder);
     }
