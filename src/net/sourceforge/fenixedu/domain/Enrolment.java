@@ -900,8 +900,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public Attends getAttendsByExecutionCourse(ExecutionCourse executionCourse) {
-	for (Attends attends : this.getAttendsSet()) {
-	    if (attends.getExecutionCourse() == executionCourse) {
+	for (final Attends attends : this.getAttendsSet()) {
+	    if (attends.isFor(executionCourse)) {
 		return attends;
 	    }
 	}
@@ -910,7 +910,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public boolean hasAttendsFor(ExecutionPeriod executionPeriod) {
 	for (final Attends attends : this.getAttendsSet()) {
-	    if (attends.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+	    if (attends.isFor(executionPeriod)) {
 		return true;
 	    }
 	}
