@@ -194,7 +194,7 @@ public enum DegreeType {
 
 	@Override
 	public Collection<CycleType> getSupportedCyclesToEnrol() {
-	    return Collections.emptyList();
+	    return THIRD_CYCLE_TYPE_SET;
 	}
 
     },
