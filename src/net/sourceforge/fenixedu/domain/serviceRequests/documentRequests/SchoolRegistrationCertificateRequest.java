@@ -56,7 +56,7 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
 
     @Override
     public boolean isAvailableForTransitedRegistrations() {
-	return false;
+	return true;
     }
 
     @Override
