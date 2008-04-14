@@ -153,6 +153,8 @@ import net.sourceforge.fenixedu.util.Season;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Interval;
+import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
 public class CreateTestData {
@@ -836,10 +838,10 @@ public class CreateTestData {
 			    final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(),
 				    curricularCourse.getCode(), executionPeriod, null);
 
-			    BigDecimal numberOfWeeks = BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS);
+			    BigDecimal numberOfWeeks = BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS * 2 - 2);
 			    new CourseLoad(executionCourse, ShiftType.TEORICA, BigDecimal.valueOf(1.5), BigDecimal.valueOf(1.5)
 				    .multiply(numberOfWeeks));
-			    new CourseLoad(executionCourse, ShiftType.TEORICA, BigDecimal.valueOf(2), BigDecimal.valueOf(2)
+			    new CourseLoad(executionCourse, ShiftType.PRATICA, BigDecimal.valueOf(2), BigDecimal.valueOf(2)
 				    .multiply(numberOfWeeks));
 
 			    curricularCourse.addAssociatedExecutionCourses(executionCourse);
@@ -928,7 +930,6 @@ public class CreateTestData {
 	    shiftTypes.add(ShiftType.TEORICA);
 
 	    final Shift shift1 = new Shift(executionCourse, shiftTypes, Integer.valueOf(50));
-	    createLesson(shift1, 90);
 	    createLesson(shift1, 90);
 
 	    shiftTypes.clear();
@@ -1029,7 +1030,7 @@ public class CreateTestData {
 		degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
 	    }
 	    final List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
-	    rooms.add(room);
+	    //rooms.add(room);
 	    final Exam exam = new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses,
 		    degreeModuleScopes, rooms, season);
 	    createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, exam, executionCourse);
