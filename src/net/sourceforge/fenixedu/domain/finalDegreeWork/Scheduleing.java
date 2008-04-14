@@ -153,4 +153,9 @@ public class Scheduleing extends Scheduleing_Base {
 	return !start.isAfterNow() && !end.isBeforeNow();
     }
 
+    public void delete() {
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
 }
