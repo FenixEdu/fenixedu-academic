@@ -135,10 +135,10 @@
 					</logic:greaterThan>
 					</div>
 					<div class="switchInline">
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='" + request.getContextPath() + "/publico/searchScormContent.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a>
 					<logic:greaterThan name="bean" property="searchElementsSize" value="1">
 					 , 
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='" + request.getContextPath() + "/publico/searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();" %>"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES"/></a>
 					</logic:greaterThan>
 					</div>
 				</logic:equal>
@@ -149,8 +149,8 @@
 					<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
 					</div>
 					<div class="switchInline">
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 
-					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></a>
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='" + request.getContextPath() + "/publico/searchScormContent.do?method=addNewSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;addIndex=" + (index+1) +  "'; getElementById('searchForm').submit();" %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></a> , 
+					<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='" + request.getContextPath() + "/publico/searchScormContent.do?method=removeSearchCriteria" + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></a>
 					</div>
 				</logic:notEqual>
 			</td>
