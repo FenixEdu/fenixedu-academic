@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
@@ -104,12 +105,12 @@ public class PrepareCreateGuide extends Service {
 
         if (requesterType.equals(GuideRequester.STUDENT.name())) {
 
-            Registration registration = null;
-            registration = Registration.readStudentByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE);
+            final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+            Registration registration = Registration.readByNumberAndDegreeCurricularPlan(number, degreeCurricularPlan);
             if (registration == null)
                 throw new NonExistingServiceException("O Aluno", null);
 
-            final Integer degreeCurricularPlanID = executionDegree.getDegreeCurricularPlan()
+	    final Integer degreeCurricularPlanID = degreeCurricularPlan
                     .getIdInternal();
             List studentCurricularPlanList = (List) CollectionUtils.select(registration
                     .getStudentCurricularPlans(), new Predicate() {
