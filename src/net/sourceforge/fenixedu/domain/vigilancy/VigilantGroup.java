@@ -258,11 +258,8 @@ public class VigilantGroup extends VigilantGroup_Base {
     public void delete() {
 	if (this.getBounds().isEmpty()) {
 	    removeExecutionYear();
-	    for (; this.hasAnyExecutionCourses(); this.getExecutionCourses().get(0).removeVigilantGroup())
-		;
-	    for (; this.hasAnyExamCoordinators(); this.getExamCoordinators().get(0)
-		    .removeVigilantGroups(this))
-		;
+	    getExecutionCourses().clear();
+	    getExamCoordinators().clear();
 	    removeUnit();
 	    removeRootDomainObject();
 	    super.deleteDomainObject();
