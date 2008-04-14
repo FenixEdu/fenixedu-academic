@@ -33,8 +33,10 @@ public class CreateReceiptBean implements Serializable {
     }
 
     public Party getContributorParty() {
-        return (this.contributorParty != null) ? this.contributorParty.getObject() : null;
+	return (this.contributorParty != null) ? this.contributorParty.getObject()
+		: StringUtils.isEmpty(this.contributorNumber) ? null : Party.readByContributorNumber(this.contributorNumber);
     }
+
 
     public void setContributorParty(Party contributorParty) {
         this.contributorParty = (contributorParty != null) ? new DomainReference<Party>(contributorParty) : null;
