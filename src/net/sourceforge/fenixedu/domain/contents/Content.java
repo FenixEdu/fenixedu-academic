@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.contents;
 
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
