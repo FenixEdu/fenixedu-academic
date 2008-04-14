@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Cleaning broken links in a few relations, please remove this afterwards" dataFix.sql
