@@ -105,8 +105,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setExecutionPeriod(executionPeriod);
 	setComment("");
 
+	createSite();
+
 	createExecutionCourseAnnouncementBoard(nome);
-	createForum(MultiLanguageString.i18n().add("pt", nome.replace('?', ' ')).finish(), new MultiLanguageString(""));
 
 	if (entryPhase == null) {
 	    entryPhase = EntryPhase.FIRST_PHASE_OBJ;

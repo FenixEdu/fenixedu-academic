@@ -51,6 +51,8 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	setEntryIdInternal(entry.getIdInternal());	
 	setEntryClassName(entry.getClass().getName());
 	setAcademicCalendarIdInternal(rootEntry.getIdInternal());
+	academicCalendarEntry = entry;
+	academicCalendarRootEntry = rootEntry;
     }
 
     public AcademicChronology getAcademicChronology() {

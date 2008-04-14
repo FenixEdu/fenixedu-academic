@@ -24,8 +24,7 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
         this();
         
         setSiteExecutionCourse(course);
-        MultiLanguageString forumName = new MultiLanguageString(course.getNome());
-        createForum(forumName, forumName);
+        createForum(MultiLanguageString.i18n().add("pt", course.getNome().replace('?', ' ')).finish(), new MultiLanguageString(""));
     }
 
     public void edit(final String initialStatement, final String introduction, final String mail,
