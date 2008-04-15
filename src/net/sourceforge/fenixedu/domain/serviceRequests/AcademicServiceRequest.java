@@ -339,7 +339,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     private void checkRulesToChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
 
-	final List<AcademicServiceRequestSituationType> acceptedTypes = getAcceptAcademicServiceRequestSituationTypeFor(getAcademicServiceRequestSituationType());
+	final List<AcademicServiceRequestSituationType> acceptedTypes = getAcceptedSituationTypes(getAcademicServiceRequestSituationType());
 
 	if (!acceptedTypes.contains(academicServiceRequestSituationType)) {
 	    final LabelFormatter sourceLabelFormatter = new LabelFormatter().appendLabel(getActiveSituation()
@@ -353,34 +353,54 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
     }
 
-    private List<AcademicServiceRequestSituationType> getAcceptAcademicServiceRequestSituationTypeFor(
-	    AcademicServiceRequestSituationType situationType) {
+    private List<AcademicServiceRequestSituationType> getAcceptedSituationTypes(AcademicServiceRequestSituationType situationType) {
 
 	switch (situationType) {
 
 	case NEW:
-	    return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
-		    AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.PROCESSING));
+	    return getNewSituationAcceptedSituationsTypes();
 
 	case PROCESSING:
-	    return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
-		    AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY,
-		    AcademicServiceRequestSituationType.CONCLUDED));
+	    return getProcessingSituationAcceptedSituationsTypes();
 
 	case SENT_TO_EXTERNAL_ENTITY:
-	    return Collections.unmodifiableList(Collections
-		    .singletonList(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY));
+	    return getSentToExternalEntitySituationAcceptedSituationsTypes();
 
 	case RECEIVED_FROM_EXTERNAL_ENTITY:
-	    return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CONCLUDED,
-		    AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.CANCELLED));
+	    return getReceivedFromExternalEntitySituationAcceptedSituationsTypes();
 
 	case CONCLUDED:
-	    return Collections.singletonList(AcademicServiceRequestSituationType.DELIVERED);
+	    return getConcludedSituationAcceptedSituationsTypes();
 
 	default:
 	    return Collections.EMPTY_LIST;
 	}
+    }
+
+    protected List<AcademicServiceRequestSituationType> getNewSituationAcceptedSituationsTypes() {
+	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
+		AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.PROCESSING));
+    }
+
+    protected List<AcademicServiceRequestSituationType> getProcessingSituationAcceptedSituationsTypes() {
+	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
+		AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY,
+		AcademicServiceRequestSituationType.CONCLUDED));
+    }
+
+    protected List<AcademicServiceRequestSituationType> getSentToExternalEntitySituationAcceptedSituationsTypes() {
+	return Collections.unmodifiableList(Collections
+		.singletonList(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY));
+    }
+
+    protected List<AcademicServiceRequestSituationType> getReceivedFromExternalEntitySituationAcceptedSituationsTypes() {
+	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
+		AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.CONCLUDED));
+    }
+
+    protected List<AcademicServiceRequestSituationType> getConcludedSituationAcceptedSituationsTypes() {
+	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
+		AcademicServiceRequestSituationType.DELIVERED));
     }
 
     /** This method is overwritten in the subclasses */
@@ -453,16 +473,27 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return this instanceof DocumentRequest;
     }
 
+    abstract public boolean isToPrint();
+
     public boolean isRequestAvailableToSendToExternalEntity() {
-	return isPossibleToSendToOtherEntity() && isProcessing();
+	return isPossibleToSendToOtherEntity()
+		&& getAcceptedSituationTypes(getAcademicServiceRequestSituationType()).contains(
+			AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
     }
+
+    /**
+     * Indicates if is possible to AdministrativeOffice send this request to
+     * another entity
+     */
+    abstract public boolean isPossibleToSendToOtherEntity();
 
     final public boolean createdByStudent() {
 	return !getCreationSituation().hasEmployee();
     }
 
     final public boolean getLoggedPersonCanCancel() {
-	return (isNewRequest() || isProcessing())
+	return !isDelivered()
+		&& (!isPayable() || !isPayed())
 		&& (createdByStudent() || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == getEmployee()
 			.getAdministrativeOffice()));
     }
@@ -498,12 +529,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     abstract public EventType getEventType();
 
     abstract public AcademicServiceRequestType getAcademicServiceRequestType();
-
-    /**
-     * Indicates if is possible to AdministrativeOffice send this request to
-     * another entity
-     */
-    abstract public boolean isPossibleToSendToOtherEntity();
 
     abstract public boolean hasPersonalInfo();
 
