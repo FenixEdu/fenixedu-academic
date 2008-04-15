@@ -35,8 +35,11 @@ public class NumberValidator extends HtmlValidator {
     @Override
     public void performValidation() {
 
-	String numberText = getComponent().getValue().trim();
-
+	String numberText = getComponent().getValue();
+	if (numberText != null) {
+	    numberText.trim();
+	}
+	
 	if (!StringUtils.isEmpty(numberText)) {
 	    try {
 		Integer.parseInt(numberText, getBase());
