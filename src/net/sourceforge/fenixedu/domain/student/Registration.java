@@ -2215,10 +2215,7 @@ public class Registration extends Registration_Base {
 	final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles());
 
 	if (concludedCycles.isEmpty()) {
-	    List<CycleCurriculumGroup> internalCycleCurriculumGrops = getLastStudentCurricularPlan()
-		    .getInternalCycleCurriculumGrops();
-	    return internalCycleCurriculumGrops.isEmpty() ? getDegreeType().getFirstCycleType() : internalCycleCurriculumGrops
-		    .get(0).getCycleType();
+	    return getLastStudentCurricularPlan().getFirstCycleCurriculumGroup().getCycleType();
 	} else {
 	    final CycleType lastConcludedCycle = concludedCycles.last();
 
