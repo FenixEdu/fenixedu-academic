@@ -165,6 +165,14 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return null;
     }
 
+    public CycleCurriculumGroup getFirstCycleCurriculumGroup() {
+	final SortedSet<CycleCurriculumGroup> cycleCurriculumGroups = new TreeSet<CycleCurriculumGroup>(
+		CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
+	cycleCurriculumGroups.addAll(getInternalCycleCurriculumGroups());
+
+	return cycleCurriculumGroups.isEmpty() ? null : cycleCurriculumGroups.first();
+    }
+
     public CycleCurriculumGroup getLastCycleCurriculumGroup() {
 	final SortedSet<CycleCurriculumGroup> cycleCurriculumGroups = new TreeSet<CycleCurriculumGroup>(
 		CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
