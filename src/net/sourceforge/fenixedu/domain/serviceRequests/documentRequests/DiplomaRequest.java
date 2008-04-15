@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
@@ -10,6 +11,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.Diploma
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
@@ -203,7 +205,24 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     public boolean isToPrint() {
-	return true;
+	return !isConcluded();
+    }
+
+    @Override
+    protected List<AcademicServiceRequestSituationType> getProcessingSituationAcceptedSituationsTypes() {
+	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
+		AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.CONCLUDED));
+    }
+
+    @Override
+    protected List<AcademicServiceRequestSituationType> getReceivedFromExternalEntitySituationAcceptedSituationsTypes() {
+	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.DELIVERED));
+    }
+
+    @Override
+    protected List<AcademicServiceRequestSituationType> getConcludedSituationAcceptedSituationsTypes() {
+	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.DELIVERED,
+		AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY));
     }
 
     @Override
