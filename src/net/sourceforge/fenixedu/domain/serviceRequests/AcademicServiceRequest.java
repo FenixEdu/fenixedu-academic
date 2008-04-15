@@ -337,20 +337,30 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     }
 
-    private void checkRulesToChangeState(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+    private void checkRulesToChangeState(final AcademicServiceRequestSituationType situationType) {
 
-	final List<AcademicServiceRequestSituationType> acceptedTypes = getAcceptedSituationTypes(getAcademicServiceRequestSituationType());
-
-	if (!acceptedTypes.contains(academicServiceRequestSituationType)) {
+	if (!isAcceptedSituationType(situationType)) {
 	    final LabelFormatter sourceLabelFormatter = new LabelFormatter().appendLabel(getActiveSituation()
 		    .getAcademicServiceRequestSituationType().getQualifiedName(), "enum");
-	    final LabelFormatter targetLabelFormatter = new LabelFormatter().appendLabel(academicServiceRequestSituationType
-		    .getQualifiedName(), "enum");
+	    final LabelFormatter targetLabelFormatter = new LabelFormatter()
+		    .appendLabel(situationType.getQualifiedName(), "enum");
 
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.serviceRequests.AcademicServiceRequest.cannot.change.from.source.state.to.target.state",
 		    sourceLabelFormatter, targetLabelFormatter);
 	}
+    }
+
+    final private boolean isAcceptedSituationType(final AcademicServiceRequestSituationType situationType) {
+	return getAcceptedSituationTypes(getAcademicServiceRequestSituationType()).contains(situationType);
+    }
+
+    final public boolean isCancelledSituationAccepted() {
+	return isAcceptedSituationType(AcademicServiceRequestSituationType.CANCELLED);
+    }
+
+    final public boolean isSendToExternalEntitySituationAccepted() {
+	return isAcceptedSituationType(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
     }
 
     private List<AcademicServiceRequestSituationType> getAcceptedSituationTypes(AcademicServiceRequestSituationType situationType) {
@@ -476,9 +486,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     abstract public boolean isToPrint();
 
     public boolean isRequestAvailableToSendToExternalEntity() {
-	return isPossibleToSendToOtherEntity()
-		&& getAcceptedSituationTypes(getAcademicServiceRequestSituationType()).contains(
-			AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
+	return isPossibleToSendToOtherEntity() && isSendToExternalEntitySituationAccepted();
     }
 
     /**
@@ -492,8 +500,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public boolean getLoggedPersonCanCancel() {
-	return !isDelivered()
-		&& (!isPayable() || !isPayed())
+	return isCancelledSituationAccepted()
+		&& (!isPayable() || !hasEvent() || !isPayed())
 		&& (createdByStudent() || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == getEmployee()
 			.getAdministrativeOffice()));
     }
