@@ -39,8 +39,6 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
     abstract public boolean isPagedDocument();
 
-    abstract public boolean isToPrint();
-
     final public boolean isCertificate() {
 	return getDocumentRequestType().isCertificate();
     }
