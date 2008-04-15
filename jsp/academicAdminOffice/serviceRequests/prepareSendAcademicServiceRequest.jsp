@@ -49,6 +49,6 @@
 
 <html:form action="<%="/student.do?method=visualizeRegistration&amp;registrationID=" + academicServiceRequest.getRegistration().getIdInternal().toString()%>" style="display: inline;">
 	<span>
-		<html:submit><bean:message key="cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
+		<html:submit><bean:message key="label.back" bundle="APPLICATION_RESOURCES"/></html:submit>
 	</span>
 </html:form>
