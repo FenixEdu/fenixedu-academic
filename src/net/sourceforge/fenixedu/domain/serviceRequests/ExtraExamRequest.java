@@ -132,6 +132,11 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     }
 
     @Override
+    public boolean isToPrint() {
+	return false;
+    }
+
+    @Override
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }

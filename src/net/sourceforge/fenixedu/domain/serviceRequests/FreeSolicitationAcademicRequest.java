@@ -67,6 +67,11 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
     }
 
     @Override
+    public boolean isToPrint() {
+	return false;
+    }
+
+    @Override
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }

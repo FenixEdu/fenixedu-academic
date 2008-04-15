@@ -72,6 +72,11 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
     }
 
     @Override
+    public boolean isToPrint() {
+	return false;
+    }
+
+    @Override
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }

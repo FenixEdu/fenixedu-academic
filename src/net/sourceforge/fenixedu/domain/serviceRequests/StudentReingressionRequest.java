@@ -48,6 +48,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     }
 
     private void checkRulesToCreate(final Registration registration, final ExecutionYear executionYear, final DateTime requestDate) {
+
 	if (!hasValidState(registration)) {
 	    throw new DomainException("error.StudentReingressionRequest.registration.with.invalid.state");
 	}
@@ -140,7 +141,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
 	}
-    }
+	}
 
     private DegreeCurricularPlan getDegreeCurricularPlan() {
 	return getRegistration().getLastDegreeCurricularPlan();
@@ -148,6 +149,11 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     private boolean hasExecutionDegree() {
 	return getDegreeCurricularPlan().hasExecutionDegreeFor(getExecutionYear());
+    }
+
+    @Override
+    public boolean isToPrint() {
+	return false;
     }
 
     @Override

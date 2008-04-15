@@ -111,6 +111,11 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     }
 
     @Override
+    public boolean isToPrint() {
+	return false;
+    }
+
+    @Override
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }
