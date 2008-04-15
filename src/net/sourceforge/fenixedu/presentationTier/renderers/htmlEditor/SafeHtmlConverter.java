@@ -174,8 +174,16 @@ public class SafeHtmlConverter extends TidyConverter {
             return false;
         }
 
+        
         if (name.equals("class")) { // don't allow to use application styles
-            return false;
+            String allowedClasses = filterAllowedClasses(value);
+            if(allowedClasses.length() > 0) {
+        	attribute.setValue(allowedClasses);
+        	return true;
+            }
+            else {
+        	return false;
+            }
         }
 
         if (name.equals("href")) {
@@ -205,6 +213,17 @@ public class SafeHtmlConverter extends TidyConverter {
         }
         
         return true;
+    }
+
+    private String filterAllowedClasses(String value) {
+	StringBuffer classes =  new StringBuffer("");
+	for(String cssClass : value.split(" ")) {
+	    if(cssClass.startsWith("pub-")) {
+		classes.append(cssClass);
+		classes.append( " ");
+	    }
+	}
+	return classes.toString();
     }
 
     private boolean isPrivateURL(URL url) {
