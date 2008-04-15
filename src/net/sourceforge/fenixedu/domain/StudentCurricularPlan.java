@@ -2146,7 +2146,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 	return enroledImprovements;
     }
-    
+
     public List<Enrolment> getEnroledImprovements(final ExecutionPeriod executionPeriod) {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
@@ -2788,6 +2788,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.THIRD_CYCLE) : null;
     }
 
+    public CycleCurriculumGroup getFirstCycleCurriculumGroup() {
+	return isBoxStructure() ? getRoot().getFirstCycleCurriculumGroup() : null;
+    }
+
     public CycleCurriculumGroup getLastCycleCurriculumGroup() {
 	return isBoxStructure() ? getRoot().getLastCycleCurriculumGroup() : null;
     }
@@ -2803,7 +2807,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Integer getInternalCycleCurriculumGroupsSize() {
 	return getInternalCycleCurriculumGrops().size();
     }
-    
+
     public List<CycleType> getSupportedCycleTypesToEnrol() {
 	final List<CycleType> result = new ArrayList<CycleType>();
 
