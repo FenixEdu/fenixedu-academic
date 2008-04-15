@@ -63,26 +63,27 @@ import bibtex.parser.ParseException;
 
 public class BibTexManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward exportPublicationToBibtex(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward exportPublicationToBibtex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	Integer publicationId = Integer.valueOf(request.getParameter("publicationId"));
 	ResearchResultPublication publication = (ResearchResultPublication) rootDomainObject
 		.readResearchResultByOID(publicationId);
 
-	BibtexEntry bibtexEntry = publication.exportToBibtexEntry();
-	String bibtex = bibtexEntry.toString();
-	request.setAttribute("bibtex", bibtex);
+	if (publication != null) {
+	    BibtexEntry bibtexEntry = publication.exportToBibtexEntry();
+	    String bibtex = bibtexEntry.toString();
+	    request.setAttribute("bibtex", bibtex);
+	}
 
 	return mapping.findForward("PublicationExportedToBibtex");
     }
 
-    public ActionForward exportAllPublicationsToBibtex(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward exportAllPublicationsToBibtex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	String personId = request.getParameter("personOID");
-	Person person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, Integer
-		.valueOf(personId));
+	Person person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, Integer.valueOf(personId));
 
 	List<ResearchResultPublication> publications = person.getResearchResultPublications();
 	List<String> entries = new ArrayList<String>();
@@ -99,8 +100,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("PublicationExportedToBibtex");
     }
 
-    public ActionForward prepareOpenBibtexFile(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareOpenBibtexFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	OpenFileBean openFileBean = new OpenFileBean();
 	RenderUtils.invalidateViewState();
 	request.setAttribute("openFileBean", openFileBean);
@@ -108,11 +109,10 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("OpenBibtexFile");
     }
 
-    public ActionForward prepareBibtexImport(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareBibtexImport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	OpenFileBean openFileBean = (OpenFileBean) RenderUtils.getViewState("openFileBean").getMetaObject()
-		.getObject();
+	OpenFileBean openFileBean = (OpenFileBean) RenderUtils.getViewState("openFileBean").getMetaObject().getObject();
 
 	BibtexFile bibtexFile = new BibtexFile();
 	BibtexParser parser = new BibtexParser(true);
@@ -197,9 +197,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	return otherParticipator;
     }
 
-    private List<BibtexParticipatorBean> getParticipators(HttpServletRequest request,
-	    BibtexPersonList bibtexPersons, ResultParticipationRole role) throws FenixFilterException,
-	    FenixServiceException {
+    private List<BibtexParticipatorBean> getParticipators(HttpServletRequest request, BibtexPersonList bibtexPersons,
+	    ResultParticipationRole role) throws FenixFilterException, FenixServiceException {
 	List<BibtexParticipatorBean> participators = new ArrayList<BibtexParticipatorBean>();
 	List<BibtexPerson> persons = bibtexPersons.getList();
 	for (BibtexPerson person : persons) {
@@ -236,15 +235,13 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	    publicationBean = new ManualBean(entry);
 	else if (type.equalsIgnoreCase("techreport"))
 	    publicationBean = new TechnicalReportBean(entry);
-	else if (type.equalsIgnoreCase("booklet") || type.equalsIgnoreCase("misc")
-		|| type.equalsIgnoreCase("unpublished"))
+	else if (type.equalsIgnoreCase("booklet") || type.equalsIgnoreCase("misc") || type.equalsIgnoreCase("unpublished"))
 	    publicationBean = new OtherPublicationBean(entry);
 
 	return publicationBean;
     }
 
-    private boolean participatorNeedsToBeCreated(BibtexParticipatorBean participator)
-	    throws FenixActionException {
+    private boolean participatorNeedsToBeCreated(BibtexParticipatorBean participator) throws FenixActionException {
 	if (participator == null)
 	    return false;
 
@@ -269,8 +266,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	return false;
     }
 
-    private boolean createExternalParticipators(BibtexParticipatorBean participator)
-	    throws FenixActionException {
+    private boolean createExternalParticipators(BibtexParticipatorBean participator) throws FenixActionException {
 
 	if (participator.getPersonName() == null || participator.getPersonName().length() == 0)
 	    throw new FenixActionException("error.importBibtex.needOtherPerson");
@@ -283,8 +279,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 		throw new FenixActionException("error.label.invalidNameForPersonInSelection");
 	    }
 	} else {
-	    if (participator.getOrganizationType().equals(ParticipationType.INTERNAL)
-		    && participator.getOrganization() == null) {
+	    if (participator.getOrganizationType().equals(ParticipationType.INTERNAL) && participator.getOrganization() == null) {
 		throw new FenixActionException("error.label.invalidNameForInternalUnit");
 	    } else {
 		participator.setParticipatorProcessed(true);
@@ -298,8 +293,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     public ActionForward invalidSubmit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-		.getMetaObject().getObject();
+	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject()
+		.getObject();
 	request.setAttribute("importBibtexBean", importBibtexBean);
 
 	return mapping.findForward("ImportBibtex");
@@ -309,8 +304,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     public ActionForward changeUnitType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-		.getMetaObject().getObject();
+	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
 
 	RenderUtils.invalidateViewState("externalPerson");
 	request.setAttribute("needsUnit", "true");
@@ -321,19 +315,16 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     public ActionForward changePersonType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-		.getMetaObject().getObject();
+	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
 
 	BibtexParticipatorBean bean = importBean.getNextAuthor();
 	if (bean != null)
-	    bean
-		    .setActiveSchema((bean.getPersonType().equals(ParticipationType.INTERNAL) ? "bibtex.participator.internal"
-			    : "bibtex.participator.external"));
+	    bean.setActiveSchema((bean.getPersonType().equals(ParticipationType.INTERNAL) ? "bibtex.participator.internal"
+		    : "bibtex.participator.external"));
 	bean = importBean.getNextEditor();
 	if (bean != null)
-	    bean
-		    .setActiveSchema((bean.getPersonType().equals(ParticipationType.INTERNAL) ? "bibtex.participator.internal"
-			    : "bibtex.participator.external"));
+	    bean.setActiveSchema((bean.getPersonType().equals(ParticipationType.INTERNAL) ? "bibtex.participator.internal"
+		    : "bibtex.participator.external"));
 	request.setAttribute("importBibtexBean", importBean);
 	RenderUtils.invalidateViewState("author");
 	RenderUtils.invalidateViewState("editor");
@@ -341,16 +332,14 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("ImportBibtex");
     }
 
-    public ActionForward createPublicationWrapper(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward createPublicationWrapper(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-		.getMetaObject().getObject();
+	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject()
+		.getObject();
 
 	ResultPublicationBean currentPublicationBean = importBibtexBean.getCurrentPublicationBean();
-	if (currentPublicationBean instanceof ArticleBean
-		&& ((ArticleBean) currentPublicationBean).getJournalIssue() == null) {
+	if (currentPublicationBean instanceof ArticleBean && ((ArticleBean) currentPublicationBean).getJournalIssue() == null) {
 	    return createJournalWorkFlow(mapping, form, request, response);
 	}
 	if ((currentPublicationBean instanceof ProceedingsBean || currentPublicationBean instanceof InproceedingsBean)
@@ -361,12 +350,10 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	return createPublication(mapping, form, request, response);
     }
 
-    public ActionForward createEventWorkFlow(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward createEventWorkFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-		.getMetaObject().getObject();
+	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
 	ConferenceArticlesBean bean = (ConferenceArticlesBean) importBean.getCurrentPublicationBean();
 	ResultEventAssociationBean eventBean = (ResultEventAssociationBean) getRenderedObject("createEvent");
 	if (eventBean != null) {
@@ -402,12 +389,10 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("ImportBibtex");
     }
 
-    public ActionForward createJournalWorkFlow(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward createJournalWorkFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-		.getMetaObject().getObject();
+	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
 	ArticleBean bean = (ArticleBean) importBean.getCurrentPublicationBean();
 	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
 
@@ -450,9 +435,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("ImportBibtex");
     }
 
-    public ActionForward changeSpecialIssueInImport(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward changeSpecialIssueInImport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final ImportBibtexBean bean = (ImportBibtexBean) getRenderedObject("importBibtexBean");
 	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
@@ -463,18 +447,17 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("ImportBibtex");
     }
 
-    public ActionForward createPublication(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward createPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-		.getMetaObject().getObject();
+	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject()
+		.getObject();
 
 	try {
-	    Object[] arguments = new Object[] { getUserView(request).getPerson(),
-		    importBibtexBean.getCurrentPublicationBean(),
+	    Object[] arguments = new Object[] { getUserView(request).getPerson(), importBibtexBean.getCurrentPublicationBean(),
 		    importBibtexBean.getCurrentBibtexPublication() };
-	    ResearchResultPublication result = (ResearchResultPublication) executeService(request,
-		    "ImportBibtexPublication", arguments);
+	    ResearchResultPublication result = (ResearchResultPublication) executeService(request, "ImportBibtexPublication",
+		    arguments);
 	    request.setAttribute("result", result);
 	    ResultDocumentFileSubmissionBean fileBean = new ResultDocumentFileSubmissionBean(result);
 	    request.setAttribute("fileBean", fileBean);
@@ -495,13 +478,13 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     public ActionForward showAssociations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-		.getMetaObject().getObject();
+	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject()
+		.getObject();
 
 	request.setAttribute("importBibtexBean", importBibtexBean);
 	String resultId = request.getParameter("resultId");
-	ResearchResultPublication result = (ResearchResultPublication) RootDomainObject
-		.readDomainObjectByOID(ResearchResultPublication.class, Integer.valueOf(resultId));
+	ResearchResultPublication result = (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(
+		ResearchResultPublication.class, Integer.valueOf(resultId));
 	request.setAttribute("fileBean", getResultDocumentFileBean(request, result));
 	request.setAttribute("unitBean", getResultUnitBean(request, result));
 	return mapping.findForward("dealWithAssociations");
@@ -511,8 +494,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     public ActionForward nextImport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-		.getMetaObject().getObject();
+	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject()
+		.getObject();
 
 	if (!importBibtexBean.moveToNextPublicaton())
 	    return mapping.findForward("PublicationsManagement");
@@ -526,25 +509,21 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	    ResearchResultPublication result) {
 	IViewState viewState = RenderUtils.getViewState("editBean");
 	ResultDocumentFileSubmissionBean fileBean = (viewState != null) ? (ResultDocumentFileSubmissionBean) viewState
-		.getMetaObject().getObject()
-		: new ResultDocumentFileSubmissionBean(result);
+		.getMetaObject().getObject() : new ResultDocumentFileSubmissionBean(result);
 	return fileBean;
     }
 
-    private ResultUnitAssociationCreationBean getResultUnitBean(HttpServletRequest request,
-	    ResearchResultPublication result) {
+    private ResultUnitAssociationCreationBean getResultUnitBean(HttpServletRequest request, ResearchResultPublication result) {
 	IViewState viewState = RenderUtils.getViewState("unitBean");
 	ResultUnitAssociationCreationBean unitBean = (viewState != null) ? (ResultUnitAssociationCreationBean) viewState
-		.getMetaObject().getObject()
-		: new ResultUnitAssociationCreationBean(result);
+		.getMetaObject().getObject() : new ResultUnitAssociationCreationBean(result);
 	return unitBean;
     }
 
-    public ActionForward ignorePublication(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward ignorePublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState().getMetaObject()
-		.getObject();
+	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState().getMetaObject().getObject();
 
 	if (!importBibtexBean.moveToNextPublicaton())
 	    return mapping.findForward("PublicationsManagement");
@@ -553,11 +532,10 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("ImportBibtex");
     }
 
-    public ActionForward resetParticipations(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward resetParticipations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState().getMetaObject()
-		.getObject();
+	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState().getMetaObject().getObject();
 
 	importBibtexBean.resetBeanCounters();
 	request.setAttribute("importBibtexBean", importBibtexBean);
@@ -565,24 +543,23 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 
     }
 
-    public ActionForward editParticipation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward editParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	String index = request.getParameter("index");
-	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState(
-		"importBibtexBean" + index).getMetaObject().getObject();
+	ImportBibtexBean importBibtexBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean" + index)
+		.getMetaObject().getObject();
 
 	importBibtexBean.resetParticipationBean(Integer.valueOf(index));
 	request.setAttribute("importBibtexBean", importBibtexBean);
 	return mapping.findForward("ImportBibtex");
     }
 
-    public ActionForward nextParticipation(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward nextParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException {
 
 	String participationType = request.getParameter("participationType");
-	ImportBibtexBean bean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean")
-		.getMetaObject().getObject();
+	ImportBibtexBean bean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
 
 	if (!participationType.equals("author") && !participationType.equals("editor")) {
 	    addActionMessage(request, "error.importBibtex.invalidParticipationType");
