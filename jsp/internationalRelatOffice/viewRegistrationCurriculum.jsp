@@ -88,14 +88,12 @@
 		final ICurriculum curriculum = registrationCurriculumBean.getCurriculum(executionYear);
 		request.setAttribute("curriculum", curriculum);	
 	
-		if (!curriculum.isEmpty()) {
-			request.setAttribute("sumPiCi", curriculum.getSumPiCi());
-			request.setAttribute("sumPi", curriculum.getSumPi());
-			request.setAttribute("weightedAverage", curriculum.getAverage());
-			request.setAttribute("sumEctsCredits", curriculum.getSumEctsCredits());
-			request.setAttribute("curricularYear", curriculum.getCurricularYear());
-			request.setAttribute("totalCurricularYears", curriculum.getTotalCurricularYears());
-		}
+		request.setAttribute("sumPiCi", curriculum.getSumPiCi());
+		request.setAttribute("sumPi", curriculum.getSumPi());
+		request.setAttribute("weightedAverage", curriculum.getAverage());
+		request.setAttribute("sumEctsCredits", curriculum.getSumEctsCredits());
+		request.setAttribute("curricularYear", curriculum.getCurricularYear());
+		request.setAttribute("totalCurricularYears", curriculum.getTotalCurricularYears());
 	%>
 	
 	<logic:equal name="curriculum" property="empty" value="true">

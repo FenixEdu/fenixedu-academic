@@ -20,28 +20,26 @@
 	// average
 	ICurriculum curriculum = registrationCurriculumBean.getCurriculum();
 	request.setAttribute("curriculum", curriculum);
-	if (!curriculum.isEmpty()) {
-		final BigDecimal sumPiCi = curriculum.getSumPiCi();
-		request.setAttribute("sumPiCi", sumPiCi);
 
-		final BigDecimal sumPi = curriculum.getSumPi();
-		request.setAttribute("sumPi", sumPi);
+	final BigDecimal sumPiCi = curriculum.getSumPiCi();
+	request.setAttribute("sumPiCi", sumPiCi);
 
-		final BigDecimal average = curriculum.getAverage();
-		request.setAttribute("weightedAverage", average);
-	}
+	final BigDecimal sumPi = curriculum.getSumPi();
+	request.setAttribute("sumPi", sumPi);
+
+	final BigDecimal average = curriculum.getAverage();
+	request.setAttribute("weightedAverage", average);
 	
 	// curricular year
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	request.setAttribute("currentExecutionYear", currentExecutionYear);
 	curriculum = registrationCurriculumBean.getCurriculum(currentExecutionYear);
-	if (!curriculum.isEmpty()) {
-		final BigDecimal sumEctsCredits = curriculum.getSumEctsCredits();
-		request.setAttribute("sumEctsCredits", sumEctsCredits);
+	
+	final BigDecimal sumEctsCredits = curriculum.getSumEctsCredits();
+	request.setAttribute("sumEctsCredits", sumEctsCredits);
 		
-		final Integer curricularYear = curriculum.getCurricularYear();
-		request.setAttribute("curricularYear", curricularYear);
-	}
+	final Integer curricularYear = curriculum.getCurricularYear();
+	request.setAttribute("curricularYear", curricularYear);
 %>
 
 <%-- Person and Student short info --%>
