@@ -273,7 +273,6 @@
 	
 					<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 					<fr:property name="key(reject)" value="reject"/>
-					<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>				
 	
 					<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 					<fr:property name="key(cancel)" value="cancel"/>
@@ -324,22 +323,40 @@
 					<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
 					<fr:property name="key(view)" value="view"/>
 	
-					<fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
-					<fr:property name="key(print)" value="print"/>
-					<fr:property name="visibleIf(print)" value="documentRequest"/>
-	
+					<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
+					<fr:property name="key(cancel)" value="cancel"/>
+					<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>				
+	 				
 					<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
 					<fr:property name="key(payments)" value="payments"/>
 					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
+<%--	
+					<fr:property name="linkFormat(send)" value="/academicServiceRequestsManagement.do?method=prepareSendAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
+					<fr:property name="key(send)" value="label.send"/>
+					<fr:property name="visibleIf(send)" value="requestAvailableToSendToExternalEntity"/>
+					
+					<fr:property name="linkFormat(receiveFrom)" value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
+					<fr:property name="key(receiveFrom)" value="label.receiveFrom"/>
+					<fr:property name="visibleIf(receiveFrom)" value="sentToExternalEntity"/>
+--%>	 				
+					<fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
+					<fr:property name="key(print)" value="print"/>
+					<fr:property name="visibleIf(print)" value="toPrint"/>
 	
 					<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(deliver)" value="deliver"/>
-					<%--<fr:property name="visibleIf(deliver)" value="availableForEmployeeToActUpon"/>--%>
-	
+<%--
+					<fr:property name="visibleIfNot(deliver)" value="sentToExternalEntity"/>
+--%>
 					<fr:property name="order(view)" value="1"/>
-					<fr:property name="order(print)" value="2"/>
+					<fr:property name="order(cancel)" value="2"/>
 					<fr:property name="order(payments)" value="3"/>
-					<fr:property name="order(deliver)" value="4"/>
+<%--
+					<fr:property name="order(send)" value="4"/>
+					<fr:property name="order(receiveFrom)" value="5"/>
+--%>
+					<fr:property name="order(print)" value="6"/>
+					<fr:property name="order(deliver)" value="7"/>
 					
 					<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
 				</fr:layout>
