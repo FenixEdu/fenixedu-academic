@@ -2212,6 +2212,10 @@ public class Registration extends Registration_Base {
     }
 
     final public CycleType getCurrentCycleType() {
+	if (!isBolonha()) {
+	    return null;
+	}
+
 	final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles());
 
 	if (concludedCycles.isEmpty()) {
