@@ -1951,6 +1951,9 @@ public class Person extends Person_Base {
 		return PartyClassification.TEACHER;
 	    }
 	}
+	if (isResearcher()) {
+	    return PartyClassification.RESEARCHER;
+	}	
 	final Employee employee = getEmployee();
 	if (employee != null && employee.getCurrentWorkingContract() != null
 		&& (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
@@ -1968,9 +1971,6 @@ public class Person extends Person_Base {
 		    return PartyClassification.getClassificationByDegreeType(degreeType);
 		}
 	    }
-	}
-	if (isResearcher()) {
-	    return PartyClassification.RESEARCHER;
 	}
 	return PartyClassification.PERSON;
     }
