@@ -1,32 +1,43 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.ExecutionDegree.ThesisCreationPeriodFactoryExecutor;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
+import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -410,6 +421,110 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	executeFactoryMethod(thesisCreationPeriodFactoryExecutor);
 	thesisCreationPeriodFactoryExecutor.setExecutionDegree(null);
 	return forwardToListThesisCreationPeriodsPage(mapping, request, thesisCreationPeriodFactoryExecutor);
+    }
+
+    public ActionForward downloadDissertationsList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final String executionYearIdString = request.getParameter("executionYearId");
+	final Integer executionYearId = executionYearIdString == null ? null : Integer.valueOf(executionYearIdString);
+	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+
+	response.setContentType("application/vnd.ms-excel");
+	response.setHeader("Content-disposition", "attachment; filename=dissertacoes" + executionYear.getYear().replace("/", "") + ".xls");
+	ServletOutputStream writer = response.getOutputStream();
+
+	exportDissertations(writer, executionYear);
+
+	writer.flush();
+	response.flushBuffer();
+	return null;
+    }
+
+    private void exportDissertations(final ServletOutputStream writer, final ExecutionYear executionYear) throws IOException {
+	final Spreadsheet spreadsheet = new Spreadsheet("Dissertacoes " + executionYear.getYear().replace("/", ""));
+	spreadsheet.setHeader("Numero aluno");
+	spreadsheet.setHeader("Nome aluno");
+	spreadsheet.setHeader("Tipo Curso");
+	spreadsheet.setHeader("Curso");
+	spreadsheet.setHeader("Sigla Curso");
+	spreadsheet.setHeader("Tese");
+	spreadsheet.setHeader("Estado da tese");
+	spreadsheet.setHeader("Numero Orientador");
+	spreadsheet.setHeader("Nome Orientador");
+	spreadsheet.setHeader("Affiliacao Orientador");
+	spreadsheet.setHeader("Distribuicao Creditos Orientador");
+	spreadsheet.setHeader("Numero Corientador");
+	spreadsheet.setHeader("Nome Corientador");
+	spreadsheet.setHeader("Affiliacao Corientador");
+	spreadsheet.setHeader("Distribuicao Creditos Corientador");
+
+	for (final Thesis thesis : rootDomainObject.getThesesSet()) {
+	    final Enrolment enrolment = thesis.getEnrolment();
+	    final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
+	    if (executionPeriod.getExecutionYear() == executionYear) {
+		final ThesisPresentationState thesisPresentationState = ThesisPresentationState
+			.getThesisPresentationState(thesis);
+
+		final Degree degree = enrolment.getStudentCurricularPlan().getDegree();
+		final DegreeType degreeType = degree.getDegreeType();
+
+		final Row row = spreadsheet.addRow();
+		row.setCell(thesis.getStudent().getNumber().toString());
+		row.setCell(thesis.getStudent().getPerson().getName());
+		row.setCell(degreeType.getLocalizedName());
+		row.setCell(degree.getPresentationName());
+		row.setCell(degree.getSigla());
+		row.setCell(thesis.getTitle().getContent());
+		row.setCell(thesisPresentationState.getName());
+
+		addTeacherRows(thesis, row, ThesisParticipationType.ORIENTATOR);
+		addTeacherRows(thesis, row, ThesisParticipationType.COORIENTATOR);
+	    }
+	}
+	spreadsheet.exportToXLSSheet(writer);
+    }
+
+    protected void addTeacherRows(final Thesis thesis, final Row row, final ThesisParticipationType thesisParticipationType) {
+	final StringBuilder numbers = new StringBuilder();
+	final StringBuilder names = new StringBuilder();
+	final StringBuilder oasb = new StringBuilder();
+	final StringBuilder odsb = new StringBuilder();
+	for (final ThesisEvaluationParticipant thesisEvaluationParticipant : thesis.getAllParticipants(thesisParticipationType)) {
+	    if (numbers.length() > 0) {
+		numbers.append(" ");
+	    }
+	    if (thesisEvaluationParticipant.hasPerson()) { 
+		final Person person = thesisEvaluationParticipant.getPerson();
+		if (person.hasTeacher()) {
+		    final Teacher teacher = person.getTeacher();
+		    numbers.append(teacher.getTeacherNumber().toString());
+		}
+	    }
+
+	    if (names.length() > 0) {
+		names.append(" ");
+	    }
+	    names.append(thesisEvaluationParticipant.getPersonName());
+
+	    if (oasb.length() > 0) {
+		oasb.append(" ");
+	    }
+	    final String affiliation = thesisEvaluationParticipant.getAffiliation();
+	    if (affiliation != null) {
+		oasb.append(affiliation);
+	    } else {
+		oasb.append("--");
+	    }
+
+	    if (odsb.length() > 0) {
+		odsb.append(" ");
+	    }
+	    final double credistDistribution = thesisEvaluationParticipant.getCreditsDistribution();
+	    odsb.append(Double.toString(credistDistribution));
+	}
+	row.setCell(numbers.toString());
+	row.setCell(names.toString());
+	row.setCell(oasb.toString());
+	row.setCell(odsb.toString());
     }
 
 }

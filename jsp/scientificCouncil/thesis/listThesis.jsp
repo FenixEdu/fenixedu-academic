@@ -36,6 +36,11 @@
  	</fr:form>
 </logic:present>
 
+<p>
+	<bean:define id="linkUrl">/scientificCouncilManageThesis.do?method=downloadDissertationsList&amp;executionYearId=<bean:write name="executionYearId"/></bean:define>
+	<html:link action="<%= linkUrl %>"><bean:message key="link.download.dissertation.list"/></html:link>
+</p>
+
 <logic:empty name="theses">
     <p>
         <em><bean:message key="label.scientificCouncil.thesis.list.empty"/></em>
