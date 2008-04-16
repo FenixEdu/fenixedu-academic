@@ -1953,7 +1953,7 @@ public class Person extends Person_Base {
 	}
 	if (isResearcher()) {
 	    return PartyClassification.RESEARCHER;
-	}	
+	}
 	final Employee employee = getEmployee();
 	if (employee != null && employee.getCurrentWorkingContract() != null
 		&& (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
@@ -2322,9 +2322,12 @@ public class Person extends Person_Base {
     private List<String> getImportantRoles(final List<String> mainRoles) {
 
 	if (getPersonRolesCount() != 0) {
-	    boolean teacher = false, employee = false;
+	    boolean teacher = false, employee = false, researcher = false;
 
-	    for (final Role personRole : getPersonRolesSet()) {
+	    List<Role> roles = new ArrayList<Role>(getPersonRolesSet());
+	    Collections.sort(roles, Role.COMPARATOR_BY_ROLE_TYPE);
+
+	    for (final Role personRole : roles) {
 
 		if (personRole.getRoleType() == RoleType.TEACHER) {
 		    mainRoles.add("Docente");
@@ -2337,9 +2340,12 @@ public class Person extends Person_Base {
 		    mainRoles.add("Bolseiro");
 		} else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
 		    employee = true;
+		} else if (personRole.getRoleType() == RoleType.RESEARCHER) {
+		    mainRoles.add("Investigador");
+		    researcher = true;
 		}
 	    }
-	    if (employee && !teacher) {
+	    if ((employee && !teacher && !researcher)) {
 		mainRoles.add("Funcionário");
 	    }
 	}

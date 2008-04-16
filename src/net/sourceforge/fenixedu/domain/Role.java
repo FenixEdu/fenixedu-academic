@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.lang.ref.SoftReference;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,12 @@ import org.apache.commons.lang.StringUtils;
  * @author jpvl
  */
 public class Role extends Role_Base implements Comparable {
+
+    static final protected Comparator<Role> COMPARATOR_BY_ROLE_TYPE = new Comparator<Role>() {
+        public int compare(Role r1, Role r2) {
+	    return r1.getRoleType().compareTo(r2.getRoleType());
+        }
+    };
 
     /**
      * This map is a temporary solution until DML provides indexed relations.
