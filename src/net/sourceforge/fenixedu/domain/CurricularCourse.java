@@ -161,9 +161,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     /**
-         * Temporary method, after all degrees migration this is no longer
-         * necessary
-         */
+     * Temporary method, after all degrees migration this is no longer necessary
+     */
     private boolean isBoxStructure() {
 	return !(getCurricularStage() == CurricularStage.OLD);
     }
@@ -194,9 +193,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     /**
-         * - This method is used to edit a 'special' curricular course that will
-         * represent any curricular course according to a rule
-         */
+     * - This method is used to edit a 'special' curricular course that will
+     * represent any curricular course according to a rule
+     */
     public void edit(String name, String nameEn, CurricularStage curricularStage) {
 	setName(name);
 	setNameEn(nameEn);
@@ -204,8 +203,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     /**
-         * - Edit Pre-Bolonha CurricularCourse
-         */
+     * - Edit Pre-Bolonha CurricularCourse
+     */
     public void edit(String name, String nameEn, String code, String acronym, Double weigth, Double credits, Double ectsCredits) {
 	checkForCurricularCourseWithSameAttributes(getDegreeCurricularPlan(), name, code, acronym);
 	setName(name);
@@ -1060,8 +1059,9 @@ public class CurricularCourse extends CurricularCourse_Base {
 		return Double.valueOf(0.0);
 	    }
 	} else {
-	    if (getDegreeType().isMasterDegree()) {
-		return getCredits();
+	    final Double credits = getCredits();
+	    if (getDegreeType().isMasterDegree() && credits != null) {
+		return credits;
 	    }
 
 	    final Double ectsCredits = super.getEctsCredits();
@@ -1424,11 +1424,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     /**
-         * Maintened for legacy code compatibility purposes only. Makes no sense
-         * to check an Enrolment concept in a CurricularCourse.
-         * 
-         * @return true if CurricularCourseType checks accordingly
-         */
+     * Maintened for legacy code compatibility purposes only. Makes no sense to
+     * check an Enrolment concept in a CurricularCourse.
+     * 
+     * @return true if CurricularCourseType checks accordingly
+     */
     @Deprecated
     final public boolean isPropaedeutic() {
 	if (isBolonhaDegree()) {
