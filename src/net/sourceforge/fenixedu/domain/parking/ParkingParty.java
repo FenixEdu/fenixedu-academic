@@ -229,7 +229,7 @@ public class ParkingParty extends ParkingParty_Base {
 	if (getParty().isPerson()) {
 	    Person person = (Person) getParty();
 	    Teacher teacher = person.getTeacher();
-	    if (teacher != null && person.getPersonRole(RoleType.TEACHER) != null) {
+	    if (teacher != null) {
 		String currentDepartment = "";
 		if (teacher.getCurrentWorkingDepartment() != null) {
 		    currentDepartment = teacher.getCurrentWorkingDepartment().getName();
