@@ -56,7 +56,7 @@ public class PersonInformationDTO {
 	this.workPhone = person.getWorkPhone();
 	this.mobile = person.getMobile();
 	this.webAddress = person.getWebAddress();
-	this.email = person.getEmail();
+	this.email = person.getDefaultEmailAddress().getValue();
 	this.gender = person.getGender() != null ? person.getGender().name() : null;
 	this.availableEmail = person.getAvailableEmail();
 	this.availableWebSite = person.getAvailableWebSite();
