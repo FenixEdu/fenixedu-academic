@@ -3,9 +3,18 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
+import com.sun.xml.xsom.impl.Ref.ContentType;
+
+import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -72,13 +81,27 @@ public class PersonInformationDTO {
 	    roles.add(role.getRoleType().name());
 	}
 
-	this.photo = person.getPersonalPhoto() != null ? person.getPersonalPhoto().getContent().getBytes() : null;
+	this.photo = person.getPersonalPhoto() != null ? getJpegPhoto(person.getPersonalPhoto()) : null;
 
 	this.alias = new ArrayList<String>();
 	for (LoginAlias loginAlias : person.getLoginAliasOrderByImportance()) {
 	    this.alias.add(loginAlias.getAlias());
 	}
 
+    }
+
+    private byte[] getJpegPhoto(final FileEntry personalPhoto) {
+	if (personalPhoto.getContentType() != net.sourceforge.fenixedu.util.ContentType.JPG) {
+	    try {
+		final BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(personalPhoto.getContents()));
+		final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, "jpg", byteArrayOutputStream);
+		return byteArrayOutputStream.toByteArray();
+	    } catch (IOException e) {
+		return null;
+	    }
+	}
+	return personalPhoto.getContents();
     }
 
     public String getName() {
