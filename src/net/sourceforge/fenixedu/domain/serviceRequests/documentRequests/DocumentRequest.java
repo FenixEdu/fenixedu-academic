@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -102,6 +103,22 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
 	if (getRegistration().hasAdministrativeOfficeFeeAndInsuranceDebtsCurrently(getAdministrativeOffice())) {
 	    throw new DomainException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
+	}
+    }
+
+    protected void assertPayedEvents(final ExecutionYear executionYear) {
+	if (executionYear != null) {
+	    if (getRegistration().hasGratuityDebts(executionYear)) {
+		throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+	    }
+
+	    if (getRegistration().hasInsuranceDebts(executionYear)) {
+		throw new DomainException("DocumentRequest.registration.has.not.payed.insurance.fees");
+	    }
+
+	    if (getRegistration().hasAdministrativeOfficeFeeAndInsuranceDebts(getAdministrativeOffice(), executionYear)) {
+		throw new DomainException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
+	    }
 	}
     }
 
