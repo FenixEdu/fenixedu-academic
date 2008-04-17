@@ -206,14 +206,12 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     private boolean oldCurricularCoursesAreApproved(final CurricularCourseEquivalence curricularCourseEquivalence,
 	    final ExecutionPeriod executionPeriod) {
-	boolean result = true;
 	for (final CurricularCourse curricularCourse : curricularCourseEquivalence.getOldCurricularCourses()) {
-	    result &= getStudentCurricularPlan().isApproved(curricularCourse, executionPeriod);
-	    if (!result) {
-		return result;
+	    if (!getStudentCurricularPlan().isApproved(curricularCourse, executionPeriod)) {
+		return false;
 	    }
 	}
-	return result;
+	return true;
     }
 
     @Override
