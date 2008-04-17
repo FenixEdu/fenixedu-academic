@@ -1768,6 +1768,32 @@ public class Person extends Person_Base {
 	return hasInsuranceEventFor(executionYear) || hasAdministrativeOfficeFeeInsuranceEventFor(executionYear);
     }
 
+    public Set<InsuranceEvent> getNotCancelledInsuranceEvents() {
+	final Set<InsuranceEvent> result = new HashSet<InsuranceEvent>();
+
+	for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
+	    final InsuranceEvent specificEvent = (InsuranceEvent) event;
+	    if (!specificEvent.isCancelled()) {
+		result.add(specificEvent);
+	    }
+	}
+
+	return result;
+    }
+
+    public Set<InsuranceEvent> getNotCancelledInsuranceEventsUntil(final ExecutionYear executionYear) {
+	final Set<InsuranceEvent> result = new HashSet<InsuranceEvent>();
+
+	for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
+	    final InsuranceEvent specificEvent = (InsuranceEvent) event;
+	    if (!specificEvent.isCancelled() && specificEvent.getExecutionYear().isBeforeOrEquals(executionYear)) {
+		result.add(specificEvent);
+	    }
+	}
+
+	return result;
+    }
+
     public InsuranceEvent getInsuranceEventFor(final ExecutionYear executionYear) {
 	for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
 	    final InsuranceEvent insuranceEvent = (InsuranceEvent) event;
@@ -1782,6 +1808,35 @@ public class Person extends Person_Base {
 
     public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
 	return getInsuranceEventFor(executionYear) != null;
+    }
+
+    public Set<AdministrativeOfficeFeeAndInsuranceEvent> getNotCancelledAdministrativeOfficeFeeAndInsuranceEvents(
+	    final AdministrativeOffice office) {
+	final Set<AdministrativeOfficeFeeAndInsuranceEvent> result = new HashSet<AdministrativeOfficeFeeAndInsuranceEvent>();
+
+	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
+	    final AdministrativeOfficeFeeAndInsuranceEvent specificEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
+	    if (!specificEvent.isCancelled() && specificEvent.getAdministrativeOffice() == office) {
+		result.add(specificEvent);
+	    }
+	}
+
+	return result;
+    }
+
+    public Set<AdministrativeOfficeFeeAndInsuranceEvent> getNotCancelledAdministrativeOfficeFeeAndInsuranceEventsUntil(
+	    final AdministrativeOffice office, final ExecutionYear executionYear) {
+	final Set<AdministrativeOfficeFeeAndInsuranceEvent> result = new HashSet<AdministrativeOfficeFeeAndInsuranceEvent>();
+
+	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
+	    final AdministrativeOfficeFeeAndInsuranceEvent specificEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
+	    if (!specificEvent.isCancelled() && specificEvent.getAdministrativeOffice() == office
+		    && specificEvent.getExecutionYear().isBeforeOrEquals(executionYear)) {
+		result.add(specificEvent);
+	    }
+	}
+
+	return result;
     }
 
     public AdministrativeOfficeFeeAndInsuranceEvent getAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
