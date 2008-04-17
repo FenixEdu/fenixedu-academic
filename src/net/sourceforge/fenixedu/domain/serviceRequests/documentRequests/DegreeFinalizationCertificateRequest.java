@@ -5,7 +5,6 @@ import java.util.HashSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -124,22 +123,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	    if (!isFree()) {
 		new CertificateRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
-	    }
-	}
-    }
-
-    protected void assertPayedEvents(final ExecutionYear executionYear) {
-	if (executionYear != null) {
-	    if (getRegistration().hasGratuityDebts(executionYear)) {
-		throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
-	    }
-
-	    if (getRegistration().hasInsuranceDebts(executionYear)) {
-		throw new DomainException("DocumentRequest.registration.has.not.payed.insurance.fees");
-	    }
-
-	    if (getRegistration().hasAdministrativeOfficeFeeAndInsuranceDebts(getAdministrativeOffice(), executionYear)) {
-		throw new DomainException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
 	    }
 	}
     }
