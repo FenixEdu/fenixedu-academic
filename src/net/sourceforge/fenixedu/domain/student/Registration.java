@@ -2194,13 +2194,17 @@ public class Registration extends Registration_Base {
     }
 
     final public Collection<CycleType> getConcludedCycles() {
-	return getConcludedCycles(null);
+	return getDegreeType().hasAnyCycleTypes() ? getConcludedCycles(null) : Collections.EMPTY_SET;
     }
 
     /**
      * Retrieve concluded cycles before or equal to the given cycle
      */
     final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
+	if (!getDegreeType().hasAnyCycleTypes()) {
+	    return Collections.EMPTY_SET;
+	}
+
 	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 
 	for (final CycleType cycleType : CycleType.getSortedValues()) {
