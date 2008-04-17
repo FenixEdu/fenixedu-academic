@@ -198,6 +198,9 @@
 					</logic:equal>
 					<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="true">
 						<td><bean:write name="registrationCurriculumBean" property="finalAverage"/></td>
+						<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType" value="WEIGHTED">
+							<th>-</th>
+						</logic:notEqual>
 						<td>-</td>
 					</logic:equal>			
 				</logic:empty>
