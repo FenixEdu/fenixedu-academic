@@ -12,13 +12,12 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import com.sun.xml.xsom.impl.Ref.ContentType;
-
 import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -58,6 +57,12 @@ public class PersonInformationDTO {
 
     private String citizenIdNumber;
 
+    private String teacherDepartment;
+
+    private String employeeDepartment;
+
+    private List<String> studentDegrees;
+
     public PersonInformationDTO(final Person person) {
 	this.name = person.getName();
 	this.displayName = person.getNickname();
@@ -79,6 +84,21 @@ public class PersonInformationDTO {
 	this.roles = new ArrayList<String>();
 	for (Role role : person.getPersonRoles()) {
 	    roles.add(role.getRoleType().name());
+	}
+
+	if (person.hasTeacher()) {
+	    this.teacherDepartment = person.getTeacher().getCurrentWorkingDepartment().getName();
+	}
+
+	if (person.hasEmployee()) {
+	    this.employeeDepartment = person.getEmployee().getCurrentDepartmentWorkingPlace().getName();
+	}
+
+	this.studentDegrees = new ArrayList<String>();
+	if (person.hasStudent()) {
+	    for (Registration registration : person.getStudent().getActiveRegistrations()) {
+		studentDegrees.add(registration.getDegree().getPresentationName());
+	    }
 	}
 
 	this.photo = person.getPersonalPhoto() != null ? getJpegPhoto(person.getPersonalPhoto()) : null;
@@ -230,6 +250,30 @@ public class PersonInformationDTO {
 
     public void setCitizenIdNumber(String citizenIdNumber) {
 	this.citizenIdNumber = citizenIdNumber;
+    }
+
+    public String getTeacherDepartment() {
+	return teacherDepartment;
+    }
+
+    public void setTeacherDepartment(String teacherDepartment) {
+	this.teacherDepartment = teacherDepartment;
+    }
+
+    public String getEmployeeDepartment() {
+	return employeeDepartment;
+    }
+
+    public void setEmployeeDepartment(String employeeDepartment) {
+	this.employeeDepartment = employeeDepartment;
+    }
+
+    public List<String> getStudentDegrees() {
+	return studentDegrees;
+    }
+
+    public void setStudentDegrees(List<String> studentDegrees) {
+	this.studentDegrees = studentDegrees;
     }
 
 }
