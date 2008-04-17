@@ -85,9 +85,23 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	super.internalChangeState(academicServiceRequestBean);
 
 	if (academicServiceRequestBean.isToProcess()) {
-	    if (!getFreeProcessed() && getRegistration().hasGratuityDebtsCurrently()) {
-		throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+	    if (!getFreeProcessed()) {
+		assertPayedEvents();
 	    }
+	}
+    }
+
+    protected void assertPayedEvents() {
+	if (getRegistration().hasGratuityDebtsCurrently()) {
+	    throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+	}
+
+	if (getRegistration().hasInsuranceDebtsCurrently()) {
+	    throw new DomainException("DocumentRequest.registration.has.not.payed.insurance.fees");
+	}
+
+	if (getRegistration().hasAdministrativeOfficeFeeAndInsuranceDebtsCurrently(getAdministrativeOffice())) {
+	    throw new DomainException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
 	}
     }
 

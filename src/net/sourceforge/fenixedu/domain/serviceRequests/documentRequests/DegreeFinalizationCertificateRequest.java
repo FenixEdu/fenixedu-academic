@@ -109,12 +109,9 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	    if (!getFreeProcessed()) {
 		if (hasCycleCurriculumGroup()) {
-		    final ExecutionYear executionYear = getCycleCurriculumGroup().getIEnrolmentsLastExecutionYear();
-		    if (executionYear != null && getRegistration().hasGratuityDebts(executionYear)) {
-			throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
-		    }
-		} else if (getRegistration().hasGratuityDebtsCurrently()) {
-		    throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+		    assertPayedEvents(getCycleCurriculumGroup().getIEnrolmentsLastExecutionYear());
+		} else {
+		    assertPayedEvents();
 		}
 	    }
 	}
@@ -127,6 +124,22 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
 	    if (!isFree()) {
 		new CertificateRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
+	    }
+	}
+    }
+
+    protected void assertPayedEvents(final ExecutionYear executionYear) {
+	if (executionYear != null) {
+	    if (getRegistration().hasGratuityDebts(executionYear)) {
+		throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
+	    }
+
+	    if (getRegistration().hasInsuranceDebts(executionYear)) {
+		throw new DomainException("DocumentRequest.registration.has.not.payed.insurance.fees");
+	    }
+
+	    if (getRegistration().hasAdministrativeOfficeFeeAndInsuranceDebts(getAdministrativeOffice(), executionYear)) {
+		throw new DomainException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
 	    }
 	}
     }
