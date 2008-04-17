@@ -46,7 +46,9 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
+import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
@@ -2072,7 +2074,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isQualifiedToRegistrationConclusionProcess() {
-	return getDegreeType() != DegreeType.MASTER_DEGREE && (isActive() || isConcluded());
+	return isActive() || isConcluded();
     }
 
     @Override
@@ -2433,6 +2435,28 @@ public class Registration extends Registration_Base {
 		return true;
 	    }
 	}
+
+	return false;
+    }
+
+    private boolean hasAnyNotPayedInsuranceEvents() {
+	for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEvents()) {
+	    if (event.isInDebt()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEvents(final AdministrativeOffice office) {
+	for (final AdministrativeOfficeFeeAndInsuranceEvent event : getPerson()
+		.getNotCancelledAdministrativeOfficeFeeAndInsuranceEvents(office)) {
+	    if (event.isInDebt()) {
+		return true;
+	    }
+	}
+
 	return false;
     }
 
@@ -2442,6 +2466,28 @@ public class Registration extends Registration_Base {
 		return true;
 	    }
 	}
+	return false;
+    }
+
+    private boolean hasAnyNotPayedInsuranceEventUntil(final ExecutionYear executionYear) {
+	for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEventsUntil(executionYear)) {
+	    if (event.isInDebt()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(final AdministrativeOffice office,
+	    final ExecutionYear executionYear) {
+	for (final AdministrativeOfficeFeeAndInsuranceEvent event : getPerson()
+		.getNotCancelledAdministrativeOfficeFeeAndInsuranceEventsUntil(office, executionYear)) {
+	    if (event.isInDebt()) {
+		return true;
+	    }
+	}
+
 	return false;
     }
 
@@ -2655,8 +2701,25 @@ public class Registration extends Registration_Base {
 	return !super.getPayedTuition() || hasAnyNotPayedGratuityEvents();
     }
 
+    final public boolean hasInsuranceDebtsCurrently() {
+	return hasAnyNotPayedInsuranceEvents();
+    }
+
+    final public boolean hasAdministrativeOfficeFeeAndInsuranceDebtsCurrently(final AdministrativeOffice administrativeOffice) {
+	return hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEvents(administrativeOffice);
+    }
+
     final public boolean hasGratuityDebts(final ExecutionYear executionYear) {
 	return !super.getPayedTuition() || hasAnyNotPayedGratuityEventUntil(executionYear);
+    }
+
+    final public boolean hasInsuranceDebts(final ExecutionYear executionYear) {
+	return hasAnyNotPayedInsuranceEventUntil(executionYear);
+    }
+
+    final public boolean hasAdministrativeOfficeFeeAndInsuranceDebts(final AdministrativeOffice office,
+	    final ExecutionYear executionYear) {
+	return hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(office, executionYear);
     }
 
     final public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
