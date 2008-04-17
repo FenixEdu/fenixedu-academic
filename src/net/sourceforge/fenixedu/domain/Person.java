@@ -2010,8 +2010,7 @@ public class Person extends Person_Base {
 	    return PartyClassification.RESEARCHER;
 	}
 	final Employee employee = getEmployee();
-	if (employee != null && employee.getCurrentWorkingContract() != null
-		&& (teacher == null || teacher.getCurrentWorkingDepartment() == null)) {
+	if (employee != null && employee.getCurrentWorkingContract() != null && teacher == null) {
 	    return PartyClassification.EMPLOYEE;
 	}
 	final GrantOwner grantOwner = getGrantOwner();
