@@ -290,7 +290,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public boolean hasConcludedCycle(CycleType cycleType) {
-	return getRoot().hasConcludedCycle(cycleType);
+	return hasRoot() ? getRoot().hasConcludedCycle(cycleType) : null;
     }
 
     public boolean hasConcludedAnyInternalCycle() {
