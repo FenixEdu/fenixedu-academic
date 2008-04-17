@@ -82,15 +82,15 @@
 				<h:outputText value="</td>" escape="false" />
 				<h:outputText value="<td class='aright'>#{degreeCourse.firstEnrolledCount}</td>" escape="false"/>
 				<h:outputText value="<td class='aright'>#{degreeCourse.firstApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class='aright'>#{degreeCourse.firstApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.firstApprovedAverage.grade}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.firstApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.firstApprovedAverage.gradeValue}</td>" escape="false"/>
 
 				<h:outputText value="<td class='aright'>#{degreeCourse.restEnrolledCount}</td>" escape="false"/>
 				<h:outputText value="<td class='aright'>#{degreeCourse.restApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class='aright'>#{degreeCourse.restApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.restApprovedAverage.grade}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.restApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.restApprovedAverage.gradeValue}</td>" escape="false"/>
 
 				<h:outputText value="<td class='aright'>#{degreeCourse.totalEnrolledCount}</td>" escape="false"/>
 				<h:outputText value="<td class='aright'>#{degreeCourse.totalApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class='aright'>#{degreeCourse.totalApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.totalApprovedAverage.grade}</td>" escape="false"/>
+				<h:outputText value="<td class='aright'>#{degreeCourse.totalApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.totalApprovedAverage.gradeValue}</td>" escape="false"/>
 				
 				<h:outputText value="<td class='aright'>" escape="false" />
 				<h:outputText value="#{(degreeCourse.totalEnrolledCount == 0)  ? bundle['label.common.notAvailable'] : (degreeCourse.totalApprovedCount / degreeCourse.totalEnrolledCount)}" escape="false">

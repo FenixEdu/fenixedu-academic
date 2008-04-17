@@ -80,15 +80,15 @@
 				<h:outputText value="<td class=\"courses\">#{executionCourse.executionPeriod} de #{executionCourse.executionYear}</td>" escape="false"/>
 				<h:outputText value="<td>#{executionCourse.firstEnrolledCount}</td>" escape="false"/>
 				<h:outputText value="<td>#{executionCourse.firstApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td>#{executionCourse.firstApprovedCount == 0 ? bundle['label.common.notAvailable'] : executionCourse.firstApprovedAverage.grade}</td>" escape="false"/>
+				<h:outputText value="<td>#{executionCourse.firstApprovedCount == 0 ? bundle['label.common.notAvailable'] : executionCourse.firstApprovedAverage.gradeValue}</td>" escape="false"/>
 
 				<h:outputText value="<td>#{executionCourse.restEnrolledCount}</td>" escape="false"/>
 				<h:outputText value="<td>#{executionCourse.restApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td>#{executionCourse.restApprovedCount == 0 ? bundle['label.common.notAvailable'] : executionCourse.restApprovedAverage.grade}</td>" escape="false"/>
+				<h:outputText value="<td>#{executionCourse.restApprovedCount == 0 ? bundle['label.common.notAvailable'] : executionCourse.restApprovedAverage.gradeValue}</td>" escape="false"/>
 
 				<h:outputText value="<td>#{executionCourse.totalEnrolledCount}</td>" escape="false"/>
 				<h:outputText value="<td>#{executionCourse.totalApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td>#{executionCourse.totalApprovedCount == 0 ? bundle['label.common.notAvailable'] : executionCourse.totalApprovedAverage.grade}</td>" escape="false"/>
+				<h:outputText value="<td>#{executionCourse.totalApprovedCount == 0 ? bundle['label.common.notAvailable'] : executionCourse.totalApprovedAverage.gradeValue}</td>" escape="false"/>
 				
 				<h:outputText value="<td>" escape="false" />
 				<h:outputText value="#{(executionCourse.totalEnrolledCount == 0)  ? bundle['label.common.notAvailable'] : (executionCourse.totalApprovedCount / executionCourse.totalEnrolledCount)}" escape="false">
