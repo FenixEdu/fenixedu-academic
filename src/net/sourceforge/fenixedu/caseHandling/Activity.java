@@ -1,47 +1,28 @@
 package net.sourceforge.fenixedu.caseHandling;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
+import net.sourceforge.fenixedu.domain.caseHandling.ProcessLog;
 
-public abstract class Activity {
+public abstract class Activity<P extends Process> {
 
-    private Collection<PreCondition> preConditions = new ArrayList<PreCondition>();
+    public abstract void checkPreConditions(P process, IUserView userView);
 
-    private Process process;
+    protected abstract P executeActivity(P process, IUserView userView, Object object);
 
-    public Activity(Process candidacyProcess) {
-	this.process = candidacyProcess;
+    protected void executePosConditions(P process, IUserView userView, Object object) {
+	new ProcessLog(process, userView, this);
     }
 
-    public PreConditionResult checkPreConditions(IUserView userView) {
-	Collection<String> errors = new HashSet<String>();
-
-	for (final PreCondition preCondition : preConditions) {
-	    PreConditionResult result = preCondition.check(userView, this);
-	    if (result.isChecked()) {
-		return result;
-	    } else if (result.isNotChecked()) {
-		errors.add(result.getResultMessage());
-	    }
-	}
-
-	if (!errors.isEmpty()) {
-	    return PreConditionResult.notChecked(this, errors);
-	}
-
-	return PreConditionResult.groupNotChecked(this);
+    final public P execute(P process, IUserView userView, Object object) {
+	checkPreConditions(process, userView);
+	P modifiedProcess = executeActivity(process, userView, object);
+	executePosConditions(modifiedProcess, userView, object);
+	return modifiedProcess;
     }
 
-    abstract public void execute();
-
-    protected void addPreCondition(PreCondition preCondition) {
-	this.preConditions.add(preCondition);
+    public String getId() {
+	return getClass().getSimpleName();
     }
 
-    public Process getProcess() {
-	return process;
-    }
 }

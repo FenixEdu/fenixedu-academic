@@ -48,6 +48,7 @@
     <!ENTITY cardGeneration SYSTEM "cardGeneration-schemas.xml">
     <!ENTITY facultyAdmOffice SYSTEM "facultyAdmOffice-schemas.xml">
 	<!ENTITY contentSchemas SYSTEM "content-schemas.xml">
+	<!ENTITY caseHandlingSchemas SYSTEM "caseHandling-schemas.xml">
 ]>
 
 <schemas>
@@ -705,4 +706,5 @@
     &cardGeneration;
     &facultyAdmOffice;
     &contentSchemas;    
+    &caseHandlingSchemas;
 </schemas>

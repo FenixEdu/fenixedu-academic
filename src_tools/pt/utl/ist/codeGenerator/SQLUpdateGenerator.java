@@ -312,6 +312,8 @@ public class SQLUpdateGenerator {
 		return true;
 	    } catch (final MySQLSyntaxErrorException mySQLSyntaxErrorException) {
 		return false;
+	    } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException ex) {
+		return false;
 	    }
     }
 

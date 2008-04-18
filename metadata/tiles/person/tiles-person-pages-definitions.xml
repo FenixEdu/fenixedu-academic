@@ -210,5 +210,16 @@
   	<put name="body" value="/person/portals/addToPool.jsp"/>
   </definition>  
   
+   <definition name="case.handling.list.processes" extends="definition.person.masterPage">
+  	<put name="body" value="/caseHandling/listProcesses.jsp"/>
+  </definition>  
 
+   <definition name="case.handling.list.allowed.activities" extends="definition.person.masterPage">
+  	<put name="body" value="/caseHandling/listActivities.jsp"/>
+  </definition>  
+
+  <definition name="case.handling.prepare.create.new.process" extends="definition.person.masterPage">
+  	<put name="body" value="/caseHandling/createTestProcess.jsp"/>
+  </definition>  
+  
 </tiles-definitions>

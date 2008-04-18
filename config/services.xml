@@ -12718,4 +12718,18 @@
 		</filterChains>
 	</service>
 	
+	<service>
+		<name>ExecuteProcessActivity</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
+	
+	<service>
+		<name>CreateNewProcess</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
+	
 </serviceDefinitions>

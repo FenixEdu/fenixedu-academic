@@ -4628,7 +4628,21 @@ class net.sourceforge.fenixedu.domain.log.requests.ErrorLog extends net.sourcefo
 
 class net.sourceforge.fenixedu.domain.log.requests.ExceptionType extends net.sourceforge.fenixedu.domain.DomainObject {
 	String type;
-}	
+}
+
+class net.sourceforge.fenixedu.domain.caseHandling.Process extends net.sourceforge.fenixedu.domain.DomainObject {
+	
+}
+
+	class net.sourceforge.fenixedu.domain.caseHandling.TestProcess extends net.sourceforge.fenixedu.domain.caseHandling.Process {
+		CycleType cycleType;
+	}
+
+class net.sourceforge.fenixedu.domain.caseHandling.ProcessLog extends net.sourceforge.fenixedu.domain.DomainObject {
+	String userName;
+	DateTime whenDateTime;
+	String activity;
+}
 
 
 /*
@@ -12488,3 +12502,32 @@ relation ExceptionTypeRootDomainObject {
 		multiplicity *;
 	}
 }
+
+relation ProcessRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.caseHandling.Process playsRole processes {
+		multiplicity *;
+	}
+}
+
+relation ProcessLogRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.caseHandling.ProcessLog playsRole processesLogs {
+		multiplicity *;
+	}
+}
+
+relation ProcessProcessLog {
+	net.sourceforge.fenixedu.domain.caseHandling.Process playsRole process;
+	net.sourceforge.fenixedu.domain.caseHandling.ProcessLog playsRole processLogs {
+		multiplicity *;
+	}
+}
+
+relation DegreeTestProcess {
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+	net.sourceforge.fenixedu.domain.caseHandling.TestProcess playsRole testProcesses {
+		multiplicity *;
+	}
+}
+
