@@ -167,11 +167,11 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 	final List<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegrees();
 
 	if (executionDegrees.isEmpty()) {
-	    for (final ExecutionYear executionYear : getDegreeCurricularPlan().getBeginContextExecutionYears()) {
+	    for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
 		result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
 	    }
 	    if (getExecutionYearID() == null) {
-		setExecutionYearID((Integer) result.get(0).getValue());
+		setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getIdInternal());
 	    }
 	    return result;
 	}
