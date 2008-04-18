@@ -4634,9 +4634,7 @@ class net.sourceforge.fenixedu.domain.caseHandling.Process extends net.sourcefor
 	
 }
 
-	class net.sourceforge.fenixedu.domain.caseHandling.TestProcess extends net.sourceforge.fenixedu.domain.caseHandling.Process {
-		CycleType cycleType;
-	}
+	
 
 class net.sourceforge.fenixedu.domain.caseHandling.ProcessLog extends net.sourceforge.fenixedu.domain.DomainObject {
 	String userName;
