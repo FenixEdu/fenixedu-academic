@@ -702,7 +702,7 @@
 <schema name="DismissalBean.chooseEquivalents" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean" >
 	<slot name="executionPeriod" layout="menu-select-postback" key="label.executionPeriod" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsForStudentCurricularPlanProvider" />
 		<property name="destination" value="dismissalTypePostBack"/>
 		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
 	</slot>		
