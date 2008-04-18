@@ -12522,10 +12522,3 @@ relation ProcessProcessLog {
 	}
 }
 
-relation DegreeTestProcess {
-	net.sourceforge.fenixedu.domain.Degree playsRole degree;
-	net.sourceforge.fenixedu.domain.caseHandling.TestProcess playsRole testProcesses {
-		multiplicity *;
-	}
-}
-
