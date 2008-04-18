@@ -137,9 +137,10 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     private void writeFile(final CardGenerationBatch cardGenerationBatch, final ServletOutputStream writer) throws IOException {
 	for (final CardGenerationEntry cardGenerationEntry : cardGenerationBatch.getCardGenerationEntriesSet()) {
 	    writer.print(cardGenerationEntry.getLine());
+	    writer.print("\r\n");
 	}
-	writer.print(fillLeftString("", ' ', 262));
-        writer.print("\r\n");
+//	writer.print(fillLeftString("", ' ', 262));
+//        writer.print("\r\n");
     }
 
     private String fillLeftString(final String uppered, final char c, final int fillTo) {
