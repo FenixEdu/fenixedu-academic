@@ -48,8 +48,14 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     }
 
     @Override
-    public boolean canApplyExemption() {
-	return !isCustomEnrolmentModel();
+    public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
+	if (isCustomEnrolmentModel()) {
+	    return justificationType == GratuityExemptionJustificationType.OTHER_INSTITUTION
+		    || justificationType == GratuityExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION;
+
+	}
+
+	return true;
     }
 
     @Override
@@ -57,8 +63,8 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
 	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
 	if (!getNonProcessedPaymentCodes().isEmpty()) {
-	    getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(),
-		    calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+	    getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
+		    entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
 	}
 
 	return getNonProcessedPaymentCodes();
@@ -69,9 +75,8 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
 	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
-	return Collections.singletonList(AccountingEventPaymentCode.create(
-		PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(), calculatePaymentCodeEndDate(), this,
-		entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getStudent()));
+	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
+		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getStudent()));
     }
 
     private Student getStudent() {
@@ -88,10 +93,10 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
-	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
-	return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(
-		EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+	    SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, Collections
+		.singletonList(new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);
     }
 
     @Override

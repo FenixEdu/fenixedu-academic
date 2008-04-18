@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.stm;
 
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -214,7 +215,15 @@ class DBChanges {
 	    stmt.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis()));
 	    stmt.setString(2, info.username);
 	    stmt.setString(3, info.serviceName);
-	    stmt.setString(4, info.getArgumentsAsString());
+	    StringReader reader = null;
+	    try {
+		reader = new StringReader(info.getArgumentsAsString());
+		stmt.setClob(4, reader);
+	    } finally {
+		if (reader != null) {
+		    reader.close();
+		}
+	    }
 	    time10 = System.currentTimeMillis();
 	    stmt.executeUpdate();
 	    time11 = System.currentTimeMillis();

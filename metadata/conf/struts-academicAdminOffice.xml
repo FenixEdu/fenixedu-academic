@@ -440,6 +440,7 @@
 		 	    <forward name="showPaymentsWithoutReceipt" path="payments.management.showPaymentsWithoutReceipt"/> 
    		 	    <forward name="confirmCreateReceipt" path="payments.management.confirmCreateReceipt"/> 
    		 	    <forward name="showOperations" path="/payments.do?method=showOperations"/>
+   		 	    <forward name="editReceipt" path="payments.management.editReceipt" />
 		 		
 		 </action>
 		 

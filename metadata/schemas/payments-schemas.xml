@@ -358,4 +358,19 @@
 	<slot name="reason" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 </schema>
 
-	
+
+<schema name="editReceiptBean.edit" type="net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments.ReceiptsManagementDA$EditReceiptBean" bundle="APPLICATION_RESOURCES">
+	<slot name="contributorParty" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.contributor">
+		<property name="size" value="70"/>
+		<property name="labelField" value="socialSecurityNumber"/>
+		<property name="format" value="${socialSecurityNumber} - ${name}"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=socialSecurityNumber"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
+		<property name="minChars" value="1"/>
+		<property name="maxCount" value="20"/>
+		<property name="rawSlotName" value="contributorNumber" />
+	</slot>
+</schema>
+

@@ -133,9 +133,13 @@ public class Receipt extends Receipt_Base {
     }
 
     private void changeState(final Employee employee, final ReceiptState state) {
-	super.setEmployee(employee);
+	markChange(employee);
 	super.setState(state);
+    }
+
+    private void markChange(final Employee employee) {
 	super.setWhenUpdated(new DateTime());
+	super.setEmployee(employee);
     }
 
     @Override
@@ -390,5 +394,11 @@ public class Receipt extends Receipt_Base {
 
 	return result;
 
+    }
+
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void edit(final Employee employee, final Party contributor) {
+	markChange(employee);
+	super.setContributorParty(contributor);
     }
 }

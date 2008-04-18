@@ -174,7 +174,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 	return !hasGratuityExemption();
     }
 
-    public boolean canApplyExemption() {
+    public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
 	return true;
     }
 
@@ -190,7 +190,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
 	super.delete();
     }
-    
+
     public boolean isGratuityEventWithPaymentPlan() {
 	return false;
     }

@@ -42,6 +42,9 @@
 			<fr:property name="linkFormat(view)" value="<%="/receipts.do?method=prepareShowReceipt&amp;receiptID=${idInternal}&amp;personId=" + personId %>"/>
 			<fr:property name="key(view)" value="label.payments.show"/>
 			<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			<fr:property name="linkFormat(edit)" value="<%="/receipts.do?method=prepareEditReceipt&amp;receiptID=${idInternal}&amp;personId=" + personId %>"/>
+			<fr:property name="key(edit)" value="label.payments.edit"/>
+			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

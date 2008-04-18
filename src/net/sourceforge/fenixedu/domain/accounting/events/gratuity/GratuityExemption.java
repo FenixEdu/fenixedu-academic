@@ -28,9 +28,10 @@ public abstract class GratuityExemption extends GratuityExemption_Base {
 				    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption.event.already.has.gratuity.exemption");
 			}
 
-			if (!gratuityEvent.canApplyExemption()) {
+			final GratuityExemption gratuityExemption = (GratuityExemption) exemption;
+			if (!gratuityEvent.canApplyExemption(gratuityExemption.getJustificationType())) {
 			    throw new DomainException(
-				    "error.accounting.events.gratuity.GratuityExemption.gratuity.exemption.cannot.applied.to.gratuity.event");
+				    "error.accounting.events.gratuity.GratuityExemption.gratuity.exemption.type.cannot.applied.to.gratuity.event");
 			}
 		    }
 		}

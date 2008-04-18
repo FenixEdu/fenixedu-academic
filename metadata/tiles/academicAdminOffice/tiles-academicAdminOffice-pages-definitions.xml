@@ -230,6 +230,10 @@
 	<definition name="payments.management.confirmCreateReceipt" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/receipts/confirmCreateReceipt.jsp"/>
 	</definition>
+	
+	<definition name="payments.management.editReceipt" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/payments/receipts/editReceipt.jsp"/>
+	</definition>
 		
 	<definition name="payments.management.preparePayment" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/payments/preparePayment.jsp"/>
