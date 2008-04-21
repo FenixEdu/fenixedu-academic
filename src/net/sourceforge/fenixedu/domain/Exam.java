@@ -160,7 +160,7 @@ public class Exam extends Exam_Base {
 
     @Override
     public boolean canBeAssociatedToRoom(AllocatableSpace room) {
-	return !room.isFree(getBeginningDateTime().toYearMonthDay(), getEndDateTime().toYearMonthDay(),
+	return room.isFree(getBeginningDateTime().toYearMonthDay(), getEndDateTime().toYearMonthDay(),
 		getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(), null, null, null);
     }
 }
