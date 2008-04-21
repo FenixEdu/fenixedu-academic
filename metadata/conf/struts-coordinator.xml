@@ -676,6 +676,7 @@
             <forward name="createSection" path="manage-degree-createSection"/>
             <forward name="sectionsManagement" path="manage-degree-sectionsManagement"/>
             <forward name="section" path="manage-degree-section"/>
+            <forward name="edit-fileItem-name" path="manage-degree-editFileItemName"/>
             <forward name="editSection" path="manage-degree-editSection"/>
             <forward name="createItem" path="manage-degree-createItem"/>
             <forward name="editItem" path="manage-degree-editItem"/>

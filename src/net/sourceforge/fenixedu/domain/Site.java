@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Element;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
+import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
@@ -40,7 +41,7 @@ public abstract class Site extends Site_Base {
 
     @Override
     public boolean isChildAccepted(Content child) {
-	return child instanceof Section || Forum.class.isAssignableFrom(child.getClass());
+	return child instanceof Section || child instanceof FunctionalityCall || Forum.class.isAssignableFrom(child.getClass());
     }
     
     public Section createSection(MultiLanguageString sectionName, Container parentContainer, Integer sectionOrder) {
@@ -310,11 +311,11 @@ public abstract class Site extends Site_Base {
 	return getTemplate();
     }
 
-    public Collection<Functionality> getAssociatedFunctionalities() {
-	List<Functionality> functionalities = new ArrayList<Functionality>();
+    public Collection<FunctionalityCall> getAssociatedFunctionalities() {
+	List<FunctionalityCall> functionalities = new ArrayList<FunctionalityCall>();
 	for (Content content : getDirectChildrenAsContent()) {
-	    if (content instanceof Functionality) {
-		functionalities.add((Functionality) content);
+	    if (content instanceof FunctionalityCall) {
+		functionalities.add((FunctionalityCall) content);
 	    }
 	}
 	return functionalities;

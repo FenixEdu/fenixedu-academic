@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
@@ -59,14 +60,16 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
     private boolean hasContext = false;
 
+    private boolean hasChecksum = true;
+
     public boolean isBlankTarget() {
 	return blankTarget;
     }
 
     /**
-     * This property allows you to specify if the link opens in a new
-     * window or not. Defaults to false.
-     *
+     * This property allows you to specify if the link opens in a new window or
+     * not. Defaults to false.
+     * 
      * @property
      */
     public void setBlankTarget(boolean blankTarget) {
@@ -105,9 +108,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     /**
-     * Indicates that the link specified should be relative to the context of the
-     * application and not to the current module. This also overrides the module
-     * if a destination is specified.
+     * Indicates that the link specified should be relative to the context of
+     * the application and not to the current module. This also overrides the
+     * module if a destination is specified.
      * 
      * @property
      */
@@ -120,8 +123,9 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     /**
-     * Allows you to choose if the generated link is relative to the current module. Note that
-     * if the link is not context relative then it also isn't module relative.
+     * Allows you to choose if the generated link is relative to the current
+     * module. Note that if the link is not context relative then it also isn't
+     * module relative.
      * 
      * @property
      */
@@ -242,7 +246,8 @@ public class ObjectLinkRenderer extends OutputRenderer {
     }
 
     /**
-     * Name of the property to use when determining if we should really do a link or not.
+     * Name of the property to use when determining if we should really do a
+     * link or not.
      * 
      * @property
      */
@@ -281,7 +286,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
 		    HtmlLink link = getLink(usedObject);
 		    link.setIndented(isIndentation());
 
-		    String text = getLinkText();
+ 		    String text = getLinkText();
 		    if (text != null) {
 			link.setText(text);
 		    } else {
@@ -334,8 +339,16 @@ public class ObjectLinkRenderer extends OutputRenderer {
 	    }
 
 	    private HtmlLink getLink(Object usedObject) {
-		HtmlLink link = getHasContext() ? new HtmlLinkWithPreprendedComment(
-			ContentInjectionRewriter.HAS_CONTEXT_PREFIX) : new HtmlLink();
+		HtmlLink link;
+
+		if (getHasContext()) {
+		    link = new HtmlLinkWithPreprendedComment(
+			    !getHasChecksum() ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
+				    : ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+		} else {
+		    link = !getHasChecksum() ? new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX)
+			    : new HtmlLink();
+		}
 
 		String url;
 
@@ -377,6 +390,14 @@ public class ObjectLinkRenderer extends OutputRenderer {
 	} else {
 	    return object;
 	}
+    }
+
+    public boolean getHasChecksum() {
+	return hasChecksum;
+    }
+
+    public void setHasChecksum(boolean hasChecksum) {
+	this.hasChecksum = hasChecksum;
     }
 
 }

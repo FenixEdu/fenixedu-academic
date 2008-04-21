@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
+import net.sourceforge.fenixedu.domain.functionalities.Functionality;
+import net.sourceforge.fenixedu.domain.functionalities.Module;
 
 /**
  * A <code>Container</code> is a composed content, that is, a grouping of
@@ -119,15 +121,15 @@ public abstract class Container extends Container_Base {
     }
 
     private List<Content> getPathTo(Content topContent, Content bottomContent) {
-	if(topContent == bottomContent) {
+	if (topContent == bottomContent) {
 	    List<Content> contents = new ArrayList<Content>();
 	    contents.add((Content) bottomContent);
 	    return contents;
 	}
-	for(Node node : bottomContent.getParents()) {
+	for (Node node : bottomContent.getParents()) {
 	    Container content = node.getParent();
-	    
-	    List<Content> result = content.getPathTo(topContent,content);
+
+	    List<Content> result = content.getPathTo(topContent, content);
 	    if (!result.isEmpty()) {
 		result.add(bottomContent);
 
@@ -135,10 +137,10 @@ public abstract class Container extends Container_Base {
 	    }
 
 	}
-	
+
 	return Collections.emptyList();
     }
-    
+
     public List<Content> getPathTo(Content target) {
 	return getPathTo(this, target);
     }
@@ -152,7 +154,7 @@ public abstract class Container extends Container_Base {
 	final Content content = getInitialContent();
 	if (content != null) {
 	    removeInitialContent();
-	    if(!content.hasAnyParents()) {
+	    if (!content.hasAnyParents()) {
 		content.delete();
 	    }
 	}
@@ -160,8 +162,7 @@ public abstract class Container extends Container_Base {
 
     @Override
     public Collection<MenuEntry> getMenu() {
-	return isContainerMaximizable() ? new ArrayList<MenuEntry>() : new ArrayList<MenuEntry>(
-		getOrderedChildrenNodes());
+	return isContainerMaximizable() ? new ArrayList<MenuEntry>() : new ArrayList<MenuEntry>(getOrderedChildrenNodes());
     }
 
     public Content getChildByContentId(String id) {
@@ -197,13 +198,13 @@ public abstract class Container extends Container_Base {
 	for (final Node node : getChildren()) {
 	    final Content content = node.getChild();
 	    content.addPathContents(contents, trailingPath);
-	    if(contentsSize < contents.size()) {
+	    if (contentsSize < contents.size()) {
 		return;
 	    }
 	}
-	if(getParentsSet().isEmpty() && !(trailingPath.length() == 0 || 
-			(trailingPath.length() == 1 && trailingPath.charAt(0) == '/'))) {
-	    throw new InvalidContentPathException(this,trailingPath);
+	if (getParentsSet().isEmpty()
+		&& !(trailingPath.length() == 0 || (trailingPath.length() == 1 && trailingPath.charAt(0) == '/'))) {
+	    throw new InvalidContentPathException(this, trailingPath);
 	}
     }
 
@@ -216,14 +217,14 @@ public abstract class Container extends Container_Base {
 		final String trailingPath = path.substring(subPath.length() + 1);
 		final int size = contents.size();
 		addPathContentsForTrailingPath(contents, trailingPath);
-		if (contents.size() == size && !(trailingPath.length() == 0 || 
-			(trailingPath.length() == 1 && trailingPath.charAt(0) == '/'))) {
-		    throw new InvalidContentPathException(this,trailingPath);
+		if (contents.size() == size
+			&& !(trailingPath.length() == 0 || (trailingPath.length() == 1 && trailingPath.charAt(0) == '/'))) {
+		    throw new InvalidContentPathException(this, trailingPath);
 		}
 	    }
 	}
     }
-   
+
     @Override
     public AvailabilityPolicy getAvailabilityPolicy() {
 	AvailabilityPolicy policy = super.getAvailabilityPolicy();
@@ -235,12 +236,11 @@ public abstract class Container extends Container_Base {
     }
 
     public void addChild(final Content content) {
-	createChildNode(content);
+	createChildNode(content instanceof Functionality ? new FunctionalityCall((Functionality) content) : content);
     }
-    
-    
-    protected abstract Node createChildNode(final Content childContent); 
-    
+
+    protected abstract Node createChildNode(final Content childContent);
+
     public void removeChild(final Content content) {
 	for (Node node : getChildrenSet()) {
 	    if (node.getChild() == content) {
@@ -256,14 +256,14 @@ public abstract class Container extends Container_Base {
 	    setInitialContent(null);
 	}
 	node.delete();
-	if(!content.hasAnyParents()) {
+	if (!content.hasAnyParents()) {
 	    content.delete();
-	}	
+	}
     }
 
     public Node getChildNode(Content content) {
 	for (Node node : getChildren()) {
-	    if(node.getChild() == content) {
+	    if (node.getChild() == content) {
 		return node;
 	    }
 	}
@@ -273,7 +273,7 @@ public abstract class Container extends Container_Base {
     @Override
     public Content getInitialContent() {
 	Content content = super.getInitialContent();
-	if(content != null)  {
+	if (content != null) {
 	    return content;
 	}
 	final Collection<Element> elements = (Collection<Element>) getOrderedChildren(Element.class);

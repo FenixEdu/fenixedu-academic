@@ -26,7 +26,9 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.person.ModifiedContentBean;
@@ -223,6 +225,23 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	selectSection(request);
 
 	return mapping.findForward("section");
+    }
+
+    public ActionForward functionality(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	Site site = getSite(request);
+	FunctionalityCall functionality = getFunctionalityCall(request);
+	
+	List<Content> contents = site.getPathTo(functionality);
+	Content selectedContent = contents.get(contents.size()-2);
+	
+	if(selectedContent instanceof Section) {
+	    selectSection(request,(Section)selectedContent);
+	    return mapping.findForward("section");
+	}
+	else {
+	    return sections(mapping, form, request, response);
+	}
     }
 
     protected Section selectSection(final HttpServletRequest request) {
@@ -555,6 +574,21 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	return mapping.findForward("section");
     }
 
+    
+    public ActionForward editDisplayName(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+	
+	selectItem(request);
+	FileItem fileItem = selectFileItem(request);
+	
+	if (fileItem == null) {
+	    return mapping.findForward("section");
+	}
+
+	return mapping.findForward("edit-fileItem-name");
+    }
+    
+    
     private FileItem selectFileItem(HttpServletRequest request) {
 	String fileItemIdString = request.getParameter("fileItemId");
 	if (fileItemIdString == null) {
@@ -570,6 +604,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward prepareEditItemFilePermissions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	selectItem(request);
+	selectSection(request);
 	FileItem fileItem = selectFileItem(request);
 
 	if (fileItem == null) {
@@ -613,7 +648,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	Site site = getSite(request);
 	Section parentSection = getSection(request);
 
-	List<ModifiedContentBean> modifiedContent = getModifiedContent(site, orderString,Collections.EMPTY_LIST);
+	List<ModifiedContentBean> modifiedContent = getModifiedContent(site, orderString, Collections.EMPTY_LIST);
 
 	try {
 	    executeService("ApplyStructureModifications", new Object[] { modifiedContent });
@@ -632,7 +667,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
     public List<ModifiedContentBean> getModifiedContent(Container container, String structure, List<Class> ignoreClasses) {
 
-	List<Content> flatContent = flatten(Collections.singletonList((Content) container),ignoreClasses);
+	List<Content> flatContent = flatten(Collections.singletonList((Content) container), ignoreClasses);
 
 	List<ModifiedContentBean> modifiedContent = new ArrayList<ModifiedContentBean>();
 
@@ -675,7 +710,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	    if (!shouldBeIgnored(content, ignoreClasses)) {
 		if (content instanceof Container) {
 		    flatContent.add(content);
-		    flatContent.addAll(flatten(((Container) content).getDirectChildrenAsContent(),ignoreClasses));
+		    flatContent.addAll(flatten(((Container) content).getDirectChildrenAsContent(), ignoreClasses));
 		} else {
 		    flatContent.add(content);
 		}
@@ -686,8 +721,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
     private boolean shouldBeIgnored(Content content, List<Class> ignoreClasses) {
 	Class contentClass = content.getClass();
-	for(Class clazz: ignoreClasses) {
-	    if(contentClass.equals(clazz)) {
+	for (Class clazz : ignoreClasses) {
+	    if (contentClass.equals(clazz)) {
 		return true;
 	    }
 	}
@@ -730,8 +765,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
 	List<Class> ignoreClasses = new ArrayList<Class>();
 	ignoreClasses.add(Attachment.class);
-	
-	List<ModifiedContentBean> modifiedContent = getModifiedContent(section, orderString,ignoreClasses);
+
+	List<ModifiedContentBean> modifiedContent = getModifiedContent(section, orderString, ignoreClasses);
 
 	executeService("ApplyStructureModifications", new Object[] { modifiedContent });
 
@@ -749,7 +784,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	String orderString = request.getParameter("filesOrder");
 	Item item = getItem(request);
 
-	List<ModifiedContentBean> modifiedContent = getModifiedContent(item, orderString,Collections.EMPTY_LIST);
+	List<ModifiedContentBean> modifiedContent = getModifiedContent(item, orderString, Collections.EMPTY_LIST);
 
 	executeService("ApplyStructureModifications", new Object[] { modifiedContent });
 
@@ -833,6 +868,16 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	}
 
 	return (Site) RootDomainObject.getInstance().readContentByOID(siteId);
+    }
+
+    protected FunctionalityCall getFunctionalityCall(HttpServletRequest request) {
+	Integer functionalityId = getId(request.getParameter("functionalityID"));
+
+	if (functionalityId == null) {
+	    return null;
+	}
+
+	return (FunctionalityCall) RootDomainObject.getInstance().readContentByOID(functionalityId);
     }
 
     protected abstract String getAuthorNameForFile(HttpServletRequest request, Item item);

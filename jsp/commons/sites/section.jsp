@@ -8,6 +8,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
@@ -17,6 +19,7 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
+<bean:define id="siteId" name="site" property="idInternal"/>
 <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 <bean:define id="sectionId" name="section" property="idInternal"/>
 
@@ -35,7 +38,10 @@
 	</html:messages>
 </logic:messagesPresent>
 
-<div class="mvert1">
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+<a href="#" onclick="javascript: switchDisplay('help_box')" style="float: right; border: none;"><img src="<%= request.getContextPath() %>/images/icon_help.gif"/></a>
+
+<div id="breadcrumbs" class="mvert1">
     <html:link page="<%= String.format("%s?method=sections&amp;%s", actionName, context) %>">
         <bean:message key="link.breadCrumbs.top" bundle="SITE_RESOURCES"/>
     </html:link> &gt;
@@ -49,10 +55,97 @@
     <fr:view name="section" property="name"/>
 </div>
 
+ <bean:define id="deleteSectionId" value="<%= "deleteSectionForm" + sectionId %>"/>
+
+<p class="mvert1">
+    <span class="error">
+        <html:errors property="section" bundle="SITE_RESOURCES"/>
+    </span>
+</p>
+
+
+<%--
+<logic:empty name="section" property="orderedSubSections">
+    <p class="mtop2">
+        <em>
+            <bean:message key="message.subSections.empty" bundle="SITE_RESOURCES"/>
+        </em>
+    </p>
+</logic:empty>
+--%>
+
+<logic:notEmpty name="site" property="directChildrenAsContent">
+    <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context + "&amp;sectionID=" + sectionId %>">
+        <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
+    </fr:form>
+    
+    <% String treeId = "subSectionTree" + site.getIdInternal(); %>
+
+	<div id="help_box" class="dnone">
+	    	<p class="mbottom05"><em><bean:message key="label.subtitle" bundle="SITE_RESOURCES"/>:</em></p>
+	    	<ul class="nobullet" style="padding-left: 0; margin-left: 1em;">
+	    	<li><img src="<%= request.getContextPath() %>/images/icon-section.gif"/> <em><bean:message key="label.section" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.section.description" bundle="SITE_RESOURCES"/></li>
+	    	<li><img src="<%= request.getContextPath() %>/images/icon-item.gif"/> <em><bean:message key="label.item" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.item.description" bundle="SITE_RESOURCES"/> </li>
+	    	<li><img src="<%= request.getContextPath() %>/images/icon-attachment.gif"/> <em><bean:message key="label.file" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.file.description" bundle="SITE_RESOURCES"/> </li>
+	    	<li><img src="<%= request.getContextPath() %>/images/icon-forum.gif"/> <em><bean:message key="label.foruns" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.foruns.description" bundle="SITE_RESOURCES"/></li>
+			<li><img src="<%= request.getContextPath() %>/images/icon-institutional.gif"/> <em><bean:message key="label.institutionalContent" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.institutionalContent.descripton" bundle="SITE_RESOURCES"/></li>
+	   		</ul>
+	</div>
+            
+    <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
+        <fr:view name="site" property="directChildrenAsContent">
+            <fr:layout name="tree">
+                <fr:property name="treeId" value="<%= treeId %>"/>
+                <fr:property name="fieldId" value="sections-order"/>
+                
+	             <fr:property name="eachLayout" value="values"/>
+                <fr:property name="childrenFor(Section)" value="childrenAsContent"/>
+                <fr:property name="schemaFor(Section)" value="site.section.name"/>
+
+				<fr:property name="schemaFor(Functionality)" value="site.functionality.name"/>
+
+				<fr:property name="schemaFor(Item)" value="site.item.name"/>
+                <fr:property name="childrenFor(Item)" value="childrenAsContent"/>
+
+				<fr:property name="schemaFor(Attachment)" value="content.in.tree"/>
+				
+				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>
+                <fr:property name="current" value="<%= sectionId.toString() %>"/>
+                <fr:property name="currentClasses" value="highlight1"/>
+                <fr:property name="movedClass" value="highlight3"/>
+            </fr:layout>
+            <fr:destination name="section.view" path="<%= actionName + "?method=section&sectionID=${idInternal}&" + context %>"/>
+            <fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.idInternal}&" + context  + "#item-${idInternal}"%>"/>
+        	<fr:destination name="functionality.view" path="<%= actionName + "?method=functionality&siteID=" + siteId + "&functionalityID=${idInternal}&" + context  + "#content-${idInternal}"%>"/>
+        </fr:view>
+
+		<p class="mtop15">
+		    <fr:form action="<%= actionName + "?method=section&amp;" + context + "&amp;sectionID=" + sectionId %>">
+		        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
+		            <bean:message key="button.sections.order.save" bundle="SITE_RESOURCES"/>
+		        </html:button>
+		        <html:submit>
+		            <bean:message key="button.sections.order.reset" bundle="SITE_RESOURCES"/>
+		        </html:submit>
+		    </fr:form>
+	    </p>
+    </div>
+    
+	<p style="color: #888;">
+		<em><bean:message key="message.section.reorder.tip" bundle="SITE_RESOURCES"/></em>
+	</p>
+    
+</logic:notEmpty>
+
+
 <div class="infoop2">
-    <p>
-        <span style="color: #888;">
-            <bean:message key="label.section.availableFor" bundle="SITE_RESOURCES"/>:
+	<p>
+         <span class="anchorcaaa">
+             <strong><bean:message key="label.section" bundle="SITE_RESOURCES"/>: <fr:view name="section" property="name"/></strong>
+         </span>
+		
+		<span style="color: rgb(136, 136, 136); padding-left: 0.75em;">
+            <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
             <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
                 <fr:layout>
                     <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
@@ -63,70 +156,13 @@
                 </fr:layout>
             </fr:view>    
         </span>
-    </p>
-     <p>
-         <span style="color: #888;" class="anchorcaaa">
-             <bean:message key="label.section.directLink" bundle="SITE_RESOURCES"/>:
-             
-			<app:contentLink name="section" scope="request" target="_blank" hrefInBody="true"/>
-         </span>
-     </p>
-</div>
+          </p>
 
-<p>
-	<span>
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= String.format("%s?method=editSection&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
-			<bean:message key="link.editSection" bundle="SITE_RESOURCES"/>
-		</html:link>
-	</span>
-
-    <bean:define id="deleteSectionId" value="<%= "deleteSectionForm" + sectionId %>"/>
-
-    <span class="switchNoneStyle">
-        	<span class="pleft1">	
-        		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-        		<html:link page="<%= String.format("%s?method=deleteSection&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
-        			<bean:message key="link.deleteSection" bundle="SITE_RESOURCES"/>
-        		</html:link>
-        	</span>
-    </span>
-
-
-    <span class="switchInline">
-        <span class="pleft1">
-            <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-            <html:link href="#" onclick="<%= String.format("showElement('%s');", deleteSectionId) %>">
-                <bean:message key="link.deleteSection" bundle="SITE_RESOURCES"/>
-            </html:link>
-        </span>
-    </span>
-
-    	<span class="pleft1">
-    		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-    		<html:link page="<%= String.format("%s?method=createSection&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
-    			<bean:message key="link.insertSubSection" bundle="SITE_RESOURCES"/>
-    		</html:link>
-    	</span>
-
-    	<span class="pleft1">
-    		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-    		<html:link page="<%= String.format("%s?method=editSectionPermissions&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
-    		    <bean:message key="link.section.group.edit" bundle="SITE_RESOURCES"/>
-    		</html:link>
-    	</span>
-</p>
-
-<p class="mvert1">
-    <span class="error">
-        <html:errors property="section" bundle="SITE_RESOURCES"/>
-    </span>
-</p>
 
 <div id="<%= deleteSectionId %>" class="dnone mvert05">
     <fr:form action="<%= String.format("%s?method=confirmSectionDelete&amp;%s&amp;sectionID=%s&amp;confirm=true", actionName, context, sectionId) %>">
-        <p class="warning0" style="padding: 0.5em;">
-        <span class="mright075">
+        <p class="" style="padding: 0.5em 0;">
+        <span>
             <logic:equal name="section" property="deletable" value="true">
                 <bean:message key="message.section.delete.confirm" bundle="SITE_RESOURCES"/>
             </logic:equal>
@@ -147,65 +183,72 @@
     </fr:form>
 </div>
 
-<%--
-<logic:empty name="section" property="orderedSubSections">
-    <p class="mtop2">
-        <em>
-            <bean:message key="message.subSections.empty" bundle="SITE_RESOURCES"/>
-        </em>
-    </p>
-</logic:empty>
---%>
 
-<logic:notEmpty name="site" property="directChildrenAsContent">
-    <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context + "&amp;sectionID=" + sectionId %>">
-        <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
-    </fr:form>
-    
-    <% String treeId = "subSectionTree" + site.getIdInternal(); %>
+
+    <p>
         
-    <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
-        <fr:view name="site" property="directChildrenAsContent">
-            <fr:layout name="tree">
-                <fr:property name="treeId" value="<%= treeId %>"/>
-                <fr:property name="fieldId" value="sections-order"/>
-                
-	             <fr:property name="eachLayout" value="values"/>
-                <fr:property name="childrenFor(Section)" value="childrenAsContent"/>
-                <fr:property name="schemaFor(Section)" value="site.section.name"/>
-                <fr:property name="imageFor(Section)" value="/images/site/section.gif"/>
+		<span>
+			<html:link page="<%= String.format("%s?method=editSection&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
+				<bean:message key="link.edit" bundle="SITE_RESOURCES"/>
+			</html:link>
+		</span>
+		|
+		  <span class="switchNoneStyle">
+        	<span>	
+        		<html:link page="<%= String.format("%s?method=deleteSection&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
+        			<bean:message key="link.delete" bundle="SITE_RESOURCES"/>
+        		</html:link>
+        	</span>
+	    </span>
 
-				<fr:property name="schemaFor(Functionality)" value="content.in.tree"/>
-				<fr:property name="imageFor(Functionality)" value="/images/site/institutionalSection.gif"/>
+	    <span class="switchInline">
+    	    <span>
+	            <html:link href="#" onclick="<%= String.format("showElement('%s');", deleteSectionId) %>">
+	                <bean:message key="link.delete" bundle="SITE_RESOURCES"/>
+	            </html:link>
+	        </span>
+    	</span>
+		|
 
-				<fr:property name="schemaFor(Item)" value="content.in.tree"/>
-				<fr:property name="imageFor(Item)" value="/images/site/section.gif"/>
-                <fr:property name="childrenFor(Item)" value="childrenAsContent"/>
+		<span>
+    		<html:link page="<%= String.format("%s?method=editSectionPermissions&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
+    		    <bean:message key="link.permissions" bundle="SITE_RESOURCES"/>
+    		</html:link>
+    	</span>
+		|
+		
+		<app:defineContentPath id="url" name="section"/>
+		<bean:define id="url" name="url" type="java.lang.String"/>
+		<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
+			<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
+		</a>
+        
+    </p>
+</div>
 
-				<fr:property name="schemaFor(Attachment)" value="content.in.tree"/>
-				<fr:property name="imageFor(Attachment)" value="/images/functionalities/sheet.gif"/>				
-				
-				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>
-                <fr:property name="current" value="<%= sectionId.toString() %>"/>
-                <fr:property name="currentClasses" value="highlight1"/>
-                <fr:property name="movedClass" value="highlight3"/>
-            </fr:layout>
-            <fr:destination name="section.view" path="<%= actionName + "?method=section&sectionID=${idInternal}&" + context %>"/>
-        </fr:view>
-
-		<p class="mtop15">
-		    <fr:form action="<%= actionName + "?method=section&amp;" + context + "&amp;sectionID=" + sectionId %>">
-		        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
-		            <bean:message key="button.sections.order.save" bundle="SITE_RESOURCES"/>
-		        </html:button>
-		        <html:submit>
-		            <bean:message key="button.sections.order.reset" bundle="SITE_RESOURCES"/>
-		        </html:submit>
-		    </fr:form>
-	    </p>
-    </div>
-</logic:notEmpty>
-
+<p>
+	<bean:message key="label.selectContentToInsert" bundle="SITE_RESOURCES"/>: 
+   	<logic:equal name="section" property="itemAllowed" value="true">    	
+    	<span>
+    		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			<html:link page="<%= String.format("%s?method=createItem&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
+                <bean:message key="label.item" bundle="SITE_RESOURCES"/>
+            </html:link>
+    	</span>
+   	</logic:equal>
+   	<span class="pleft05">
+   		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+   		<html:link page="<%= String.format("%s?method=createSection&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
+   			<bean:message key="label.subSection" bundle="SITE_RESOURCES"/>
+   		</html:link>
+   	</span>
+	<span class="pleft05">
+    		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			<html:link page="<%= String.format("%s?method=prepareAddFromPool&amp;sectionID=%s&amp;%s", actionName, sectionId, context) %>">
+				<bean:message key="label.institutionalContent" bundle="SITE_RESOURCES"/>
+			</html:link>
+    </span>
+</p>
 <%-------------
      Items
   -------------%>
@@ -218,26 +261,16 @@
 	</span>
 </p>
 
-<ul class="mbottom2">
-    <logic:equal name="section" property="itemAllowed" value="true">
-        <li>
-            <html:link page="<%= String.format("%s?method=createItem&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
-                <bean:message key="link.insertItem" bundle="SITE_RESOURCES"/>
-            </html:link>
-        </li>
-    </logic:equal>
-    <logic:notEmpty name="section" property="associatedItems">
-        <bean:size id="itemsCount" name="section" property="associatedItems"/>
-        
-        <logic:greaterThan name="itemsCount" value="1">
-            <li>
-                <html:link page="<%= actionName + "?method=organizeSectionItems&amp;" + context + "&amp;sectionID=" + sectionId %>">
-                    <bean:message key="link.section.items.organize" bundle="SITE_RESOURCES"/>
-                </html:link>
-            </li>
-        </logic:greaterThan>
-    </logic:notEmpty>
-</ul>
+<logic:equal name="section" property="itemAllowed" value="true">
+	<ul class="mbottom2 list5" style="list-style: none;">
+		<li>
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+			<html:link page="<%= String.format("%s?method=createItem&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
+	                <bean:message key="link.insertItem" bundle="SITE_RESOURCES"/>
+	           </html:link> 
+		</li>
+	</ul>
+</logic:equal>
 
 <logic:empty name="section" property="associatedItems">
     <p>
@@ -252,18 +285,15 @@
 
         <bean:define id="itemId" name="item" property="idInternal"/>
 		
-		<div>
-		<div class="mtop15 mbottom0" style="background: #fafafa; padding: 0.5em;">
+		<div id="item-<%= itemId %>">
+		<div class="mtop15 mbottom0" style="background: #f5f5f5; padding: 0.5em;">
 		
 			<p class="mtop0 mbottom05">
 				<%--<span style="color: #888;"><bean:message key="label.item"/></span><br/>--%>
+				<span style="float: right;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
 				<strong><fr:view name="item" property="name"/></strong>
-	            <logic:present name="directLinkContext">
-	                <bean:define id="directLinkContext" name="directLinkContext"/>
-	                (<a href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="label.item.directLink" bundle="SITE_RESOURCES"/></a>)
-	            </logic:present>
 	            
-	            <span style="color: #888; padding-left: 1em;">
+	            <span style="color: #888; padding-left: 0.75em;">
 	                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
 	                <fr:view name="item" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
 	                    <fr:layout>
@@ -278,47 +308,53 @@
 			</p>
 	        
 	        <span>
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 				<html:link page="<%= String.format("%s?method=editItem&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
-					<bean:message key="link.editItem" bundle="SITE_RESOURCES"/>
+					<bean:message key="link.edit" bundle="SITE_RESOURCES"/>
 				</html:link>
 			</span>
 	
+			|
 	        <bean:define id="deleteUrl" type="java.lang.String" value="<%= String.format("%s?method=deleteItem&amp;%s&amp;itemID=%s", actionName, context, itemId) %>"/>
 	        <bean:define id="deleteId" value="<%= "deleteForm" + item.getIdInternal() %>"/>
 	
 	        <span class="switchNoneStyle">
-	        	   <span class="pleft1">
-		       		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+	        	   <span> 
 		       		<html:link page="<%= deleteUrl %>">
-		       			<bean:message key="link.deleteItem" bundle="SITE_RESOURCES"/>
+		       			<bean:message key="link.delete" bundle="SITE_RESOURCES"/>
 		       		</html:link>
 		       	</span>
 	        </span>
 	
 	        <span class="switchInline">
-		     	<span class="pleft1">
-		            <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+		     	<span>
 		            <html:link href="#" onclick="<%= String.format("javascript:showElement('%s');", deleteId) %>">
-		                <bean:message key="link.deleteItem" bundle="SITE_RESOURCES"/>
+		                <bean:message key="link.delete" bundle="SITE_RESOURCES"/>
 		            </html:link>
 				</span>
 	        </span>
 	
-			<span class="pleft1">
-		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			|
+			<span>
 		        <html:link page="<%= String.format("%s?method=editItemPermissions&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
-		            <bean:message key="link.item.group.edit" bundle="SITE_RESOURCES"/>
+		            <bean:message key="link.permissions" bundle="SITE_RESOURCES"/>
 		        </html:link>
 	        </span>
 	
-			<span class="pleft1">
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			|
+			<span>
 				<html:link page="<%= String.format("%s?method=uploadFile&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
 					<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
 				</html:link>
 			</span>
-	
+							
+			<logic:present name="directLinkContext">
+			|
+	        		<span>
+	                <bean:define id="directLinkContext" name="directLinkContext"/>
+	               		<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a target="_blank" href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="link.view" bundle="SITE_RESOURCES"/> »</a>
+	               </span>
+	         </logic:present>
+
 	        <logic:notEmpty name="item" property="fileItems">
 	            <bean:size id="filesCount" name="item" property="fileItems"/>
 	        
@@ -335,8 +371,8 @@
 	        		        
 	        <div id="<%= deleteId %>" class="dnone mvert05">
 	            <fr:form action="<%= deleteUrl %>">
-	            	<p class="width550px">
-	                <span class="warning0 mright075">
+	            	<p class="mvert1">
+	                <span>
 	                    <logic:equal name="item" property="deletable" value="true">
 	                        <bean:message key="message.item.delete.confirm" bundle="SITE_RESOURCES"/>
 	                    </logic:equal>
@@ -399,7 +435,10 @@
            		                		(<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>"
            		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
            			                        <bean:message key="link.section.item.deleteItemFile" bundle="SITE_RESOURCES"/>
-           			                    </html:link>, 
+           			                    </html:link>,
+           			                    <html:link page="<%= String.format("%s?method=editDisplayName&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
+           			                        <bean:message key="link.section.item.editItemFileName" bundle="SITE_RESOURCES"/>
+           			                    </html:link>,  
            			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
            			 	                   <bean:message key="link.section.item.editItemFilePermissions" bundle="SITE_RESOURCES"/>
            			    	            </html:link>)
@@ -437,11 +476,13 @@
 <logic:equal name="site" property="templateAvailable" value="true">
 <logic:equal name="site" property="template.contentPoolAvailable" value="true">
 <h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
-	<ul>
+
+	<ul class="mbottom2 list5" style="list-style: none;">
 		<li>
-		<html:link page="<%= String.format("%s?method=prepareAddFromPool&amp;sectionID=%s&amp;%s", actionName, sectionId, context) %>">
-			<bean:message key="link.institutionSubSection.add" bundle="WEBSITEMANAGER_RESOURCES"/>
-		</html:link>
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			<html:link page="<%= String.format("%s?method=prepareAddFromPool&amp;sectionID=%s&amp;%s", actionName, sectionId, context) %>">
+				<bean:message key="link.insertInstitutionalContent" bundle="SITE_RESOURCES"/>
+			</html:link>
 		</li>
 	</ul>
 
@@ -454,9 +495,11 @@
 	<logic:iterate id="functionality" name="section" property="associatedFunctionalities">
 			<bean:define id="contentID" name="functionality" property="idInternal"/>
 
-			<div class="mtop15 mbottom0" style="background: #fafafa; padding: 0.5em;">
+			<div id="content-<%= contentID%>" class="mtop15 mbottom0" style="background: #f5f5f5; padding: 0.5em;">
+			<span style="float: right;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
 			<strong><fr:view name="functionality" property="name"/></strong>
-				<span style="color: #888; padding-left: 1em;">
+					
+				<span style="color: #888; padding-left: 0.75em;">
 	                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
 	                <fr:view name="functionality" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
 	                    <fr:layout>
@@ -468,13 +511,20 @@
 	                    </fr:layout>
 	                </fr:view>
 	            </span>
-
-				<p class="mtop05 mbottom0">
-		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 				
-			        <html:link action="<%=  actionName + "?method=removeFunctionalityFromContainer&amp;" + context + "&amp;contentID=" + contentID + "&amp;containerID=" + containerID + "&amp;sectionID=" + containerID%>">
-						<bean:message key="messaging.delete.label" bundle="WEBSITEMANAGER_RESOURCES"/>
-					 </html:link>
-				 </p>
+				<p>
+				<span>
+    					<html:link action="<%=  actionName + "?method=removeFunctionalityFromContainer&amp;" + context + "&amp;contentID=" + contentID + "&amp;containerID=" + containerID + "&amp;sectionID=" + containerID%>">
+								<bean:message key="link.delete" bundle="SITE_RESOURCES"/>
+			 			</html:link>
+				</span>
+				| 
+			
+				<app:defineContentPath id="url" name="functionality"/>
+					<bean:define id="url" name="url" type="java.lang.String"/>
+					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
+					<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
+					</a>
+				</p>
 			 </div>
 			
 	</logic:iterate>

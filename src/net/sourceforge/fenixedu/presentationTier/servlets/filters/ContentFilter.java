@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
@@ -72,15 +73,19 @@ public class ContentFilter implements Filter {
 		System.out.println(httpServletRequest.getRequestURI() + " ---> " + content.getClass().getName());
 	    }
 	}
-	
+
 	if (content instanceof Section) {
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, SECTION_PATH);
 
 	} else if (content instanceof Item) {
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, ITEM_PATH);
 
+	} else if (content instanceof FunctionalityCall) {
+	    Functionality functionality = ((FunctionalityCall) content).getFunctionality();
+	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
+
 	} else if (content instanceof Functionality) {
-	    Functionality functionality = (Functionality) content;
+	    Functionality functionality = ((Functionality) content);
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
 	}
     }

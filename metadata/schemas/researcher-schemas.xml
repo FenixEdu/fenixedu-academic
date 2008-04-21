@@ -300,6 +300,8 @@ extends="eventCreation">
 		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareEvent&amp;activityId=${idInternal}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
+		<property name="hasContext" value="false"/>
+		<property name="hasChecksum" value="false"/>
 	</slot>
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
@@ -318,6 +320,8 @@ extends="eventCreation">
 		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareEventEdition&amp;activityId=${idInternal}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
+		<property name="hasContext" value="false"/>
+		<property name="hasChecksum" value="false"/>
 	</slot>
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
@@ -339,6 +343,8 @@ extends="eventCreation">
 		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareScientificJournal&amp;activityId=${idInternal}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
+		<property name="hasContext" value="false"/>
+		<property name="hasChecksum" value="false"/>
 	</slot>
 	<slot name="publisher"/>
 	<slot name="participations" layout="show-participation-list">
@@ -358,6 +364,8 @@ extends="eventCreation">
 		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareJournalIssue&amp;activityId=${idInternal}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
+		<property name="hasContext" value="false"/>
+		<property name="hasChecksum" value="false"/>
 	</slot>
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
@@ -377,6 +385,8 @@ extends="eventCreation">
 		<property name="linkFormat" value="/activities/editResearchActivity.do?method=prepareCooperation&amp;activityId=${idInternal}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
+		<property name="hasContext" value="false"/>
+		<property name="hasChecksum" value="false"/>
 	</slot>
 	<slot name="participations" layout="show-participation-list">
 		<property name="subLayout" value="values"/>
@@ -2243,6 +2253,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	<property name="subSchema" value="showName"/>
 	<property name="blankTarget" value="false"/>
 	<property name="hasContext" value="true"/>
+	<property name="hasChecksum" value="no"/>
 	</slot>
 </schema>
 

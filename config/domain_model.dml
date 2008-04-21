@@ -4433,6 +4433,10 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 				//Boolean relative;
 				Boolean visible;
 	}
+	
+			class net.sourceforge.fenixedu.domain.contents.FunctionalityCall extends net.sourceforge.fenixedu.domain.contents.Element {
+				
+			}
 
 	class net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter extends net.sourceforge.fenixedu.domain.DomainObject {
 		String name;
@@ -12351,6 +12355,14 @@ relation ContentHasAvailabilityPolicy {
 relation ContentRootDomainObject {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.contents.Content playsRole contents {
+		multiplicity *;
+	}
+}
+
+
+relation FunctionalityFunctionalityCall {
+	net.sourceforge.fenixedu.domain.functionalities.Functionality playsRole functionality;
+	net.sourceforge.fenixedu.domain.contents.FunctionalityCall playsRole functionalityCalls {
 		multiplicity *;
 	}
 }

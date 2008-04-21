@@ -99,6 +99,9 @@
     <definition name="basicUnitSite-editSection" extends="definition.basicUnit.site.management" >
         <put name="body" value="/commons/sites/editSection.jsp"/>
     </definition>   
+    <definition name="basicUnitSite-editFileItemName" extends="definition.basicUnit.site.management" >
+        <put name="body" value="/commons/sites/editFileItemDisplayName.jsp"/>
+    </definition>   
     <definition name="basicUnitSite-createSection" extends="definition.basicUnit.site.management" >
         <put name="body" value="/commons/sites/createSection.jsp"/>
     </definition>   
@@ -238,6 +241,10 @@
 
 	<definition name="manage-researchSite-editSection" extends="definition.researchUnitSite.masterPage">
 		<put name="body" value="/commons/sites/editSection.jsp" />
+	</definition>
+
+	<definition name="manage-researchSite-editFileItemName" extends="definition.researchUnitSite.masterPage">
+		<put name="body" value="/commons/sites/editFileItemDisplayName.jsp" />
 	</definition>
 
 	<definition name="manage-researchSite-createItem" extends="definition.researchUnitSite.masterPage">
@@ -452,7 +459,10 @@
     </definition>
     <definition name="departmentSite-editSection" extends="definition.department.site.management" >
         <put name="body" value="/commons/sites/editSection.jsp"/>
-    </definition>   
+    </definition>
+     <definition name="departmentSite-editFileItemName" extends="definition.department.site.management" >
+        <put name="body" value="/commons/sites/editFileItemDisplayName.jsp"/>
+    </definition>
     <definition name="departmentSite-createSection" extends="definition.department.site.management" >
         <put name="body" value="/commons/sites/createSection.jsp"/>
     </definition>   
@@ -615,6 +625,9 @@
     <definition name="pedagogicalCouncil-editSection" extends="definition.pedagogicalCouncil.site.management" >
         <put name="body" value="/commons/sites/editSection.jsp"/>
     </definition>   
+     <definition name="pedagogicalCouncil-editFileItemName" extends="definition.pedagogicalCouncil.site.management" >
+        <put name="body" value="/commons/sites/editFileItemDisplayName.jsp"/>
+    </definition>   
     <definition name="pedagogicalCouncil-createSection" extends="definition.pedagogicalCouncil.site.management" >
         <put name="body" value="/commons/sites/createSection.jsp"/>
     </definition>   
@@ -776,6 +789,9 @@
     </definition>
     <definition name="scientificCouncil-editSection" extends="definition.scientificCouncil.site.management" >
         <put name="body" value="/commons/sites/editSection.jsp"/>
+    </definition>   
+        <definition name="scientificCouncil-editFileItemName" extends="definition.scientificCouncil.site.management" >
+        <put name="body" value="/commons/sites/editFileItemDisplayName.jsp"/>
     </definition>   
     <definition name="scientificCouncil-createSection" extends="definition.scientificCouncil.site.management" >
         <put name="body" value="/commons/sites/createSection.jsp"/>

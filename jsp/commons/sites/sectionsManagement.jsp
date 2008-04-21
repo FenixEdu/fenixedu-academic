@@ -3,10 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
+<bean:define id="siteId" name="site" property="idInternal"/>
 <bean:define id="actionName" name="siteActionName"/>
 <bean:define id="contextParam" name="siteContextParam"/>
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
@@ -17,6 +20,8 @@
 <h2>
     <bean:message key="link.sectionsManagement" bundle="SITE_RESOURCES"/>
 </h2>
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+<a href="#" onclick="javascript: switchDisplay('help_box')" style="float: right; border: none;"><img src="<%= request.getContextPath() %>/images/icon_help.gif"/></a>
 
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true" bundle="CONTENT_RESOURCES">
@@ -33,6 +38,17 @@
 			<bean:message key="link.createSection" bundle="SITE_RESOURCES"/>
 		</html:link>
 	</span>
+	
+	<logic:equal name="site" property="templateAvailable" value="true">
+		<logic:equal name="site" property="template.contentPoolAvailable" value="true">
+			<span class="pleft1">
+				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+				<html:link page="<%= actionName + "?method=prepareAddFromPool&amp;" + context %>">
+							<bean:message key="link.institutionSection.add" bundle="WEBSITEMANAGER_RESOURCES"/>
+				</html:link>
+			</span>
+		</logic:equal>
+	</logic:equal>
 </p>
 
 <logic:empty name="site" property="directChildrenAsContent">
@@ -50,6 +66,18 @@
     
     <% String treeId = "sectionsTree." + contextParam + "." + contextParamValue; %>
     
+    <div id="help_box" class="dblock">
+	    	<p class="mbottom05"><em><bean:message key="label.subtitle" bundle="SITE_RESOURCES"/>:</em></p>
+	    	<ul class="nobullet" style="padding-left: 0; margin-left: 1em;">
+	    	<li><img src="<%= request.getContextPath() %>/images/icon-section.gif"/> <em><bean:message key="label.section" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.section.description" bundle="SITE_RESOURCES"/></li>
+	    	<li><img src="<%= request.getContextPath() %>/images/icon-item.gif"/> <em><bean:message key="label.item" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.item.description" bundle="SITE_RESOURCES"/> </li>
+	    	<li><img src="<%= request.getContextPath() %>/images/icon-attachment.gif"/> <em><bean:message key="label.file" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.file.description" bundle="SITE_RESOURCES"/> </li>
+	    	<li><img src="<%= request.getContextPath() %>/images/icon-forum.gif"/> <em><bean:message key="label.foruns" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.foruns.description" bundle="SITE_RESOURCES"/></li>
+			<li><img src="<%= request.getContextPath() %>/images/icon-institutional.gif"/> <em><bean:message key="label.institutionalContent" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.institutionalContent.descripton" bundle="SITE_RESOURCES"/></li>
+	   		</ul>
+    </div>
+    <script type="text/javascript"> hideElement('help_box'); </script>
+    
     <div class="section1">
         <fr:view name="site" property="directChildrenAsContent">
             <fr:layout name="tree">
@@ -59,22 +87,20 @@
                 <fr:property name="eachLayout" value="values"/>
                 <fr:property name="childrenFor(Section)" value="childrenAsContent"/>
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
-                <fr:property name="imageFor(Section)" value="/images/site/section.gif"/>
 
-				<fr:property name="schemaFor(Functionality)" value="content.in.tree"/>
-				<fr:property name="imageFor(Functionality)" value="/images/site/institutionalSection.gif"/>
+				<fr:property name="schemaFor(Functionality)" value="site.functionality.name"/>
 
-				<fr:property name="schemaFor(Item)" value="content.in.tree"/>
-				<fr:property name="imageFor(Item)" value="/images/site/section.gif"/>
+				<fr:property name="schemaFor(Item)" value="site.item.name"/>
                 <fr:property name="childrenFor(Item)" value="childrenAsContent"/>
 
 				<fr:property name="schemaFor(Attachment)" value="content.in.tree"/>
-				<fr:property name="imageFor(Attachment)" value="/images/functionalities/sheet.gif"/>
 				
 				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>
                 <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
             <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${idInternal}&amp;" + context %>"/>
+			<fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.idInternal}&" + context  + "#item-${idInternal}"%>"/>
+			<fr:destination name="functionality.view" path="<%= actionName + "?method=functionality&siteID=" + siteId + "&functionalityID=${idInternal}&" + context  + "#content-${idInternal}"%>"/>
         </fr:view>
 	
 		<p class="mtop15">
@@ -96,22 +122,21 @@
 </logic:notEmpty>
 <!-- Functionalities -->
 
-<h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
-
 <logic:equal name="site" property="templateAvailable" value="true">
 <logic:equal name="site" property="template.contentPoolAvailable" value="true">
-	<ul>
+<h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
+
+	<ul class="mbottom2 list5" style="list-style: none;">
 		<li>
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 			<html:link page="<%= actionName + "?method=prepareAddFromPool&amp;" + context %>">
-				<bean:message key="link.institutionSection.add" bundle="WEBSITEMANAGER_RESOURCES"/>
+							<bean:message key="link.institutionSection.add" bundle="WEBSITEMANAGER_RESOURCES"/>
 			</html:link>
 		</li>
 	</ul>
-</logic:equal>
-</logic:equal>
-	
+
 <logic:empty name="site" property="associatedFunctionalities">
-	<p><em><bean:message key="label.noInstitutionalContents" bundle="SITE_RESOURCES"/>.</em></p>
+	<p><em><bean:message key="label.site.noInstitutionalContents" bundle="SITE_RESOURCES"/>.</em></p>
 </logic:empty>
 
 <logic:notEmpty name="site" property="associatedFunctionalities">
@@ -119,9 +144,10 @@
 	<logic:iterate id="functionality" name="site" property="associatedFunctionalities">
 			<bean:define id="contentID" name="functionality" property="idInternal"/>
 
-			<div class="mtop15 mbottom0" style="background: #fafafa; padding: 0.5em;">
-				<strong><fr:view name="functionality" property="name"/></strong>
-				<span style="color: #888; padding-left: 1em;">
+			<div id="content-<%= contentID%>" class="mtop15 mbottom0" style="background: #f5f5f5; padding: 0.5em;">
+			<strong><fr:view name="functionality" property="name"/></strong>
+					
+				<span style="color: #888; padding-left: 0.75em;">
 	                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
 	                <fr:view name="functionality" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
 	                    <fr:layout>
@@ -134,13 +160,23 @@
 	                </fr:view>
 	            </span>
 
-				<p class="mtop05 mbottom0">
-		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 				
-			        <html:link action="<%=  actionName + "?method=removeFunctionalityFromContainer&amp;" + context + "&amp;contentID=" + contentID + "&amp;containerID=" + containerID %>">
-						<bean:message key="messaging.delete.label" bundle="WEBSITEMANAGER_RESOURCES"/>
-					 </html:link>
-				 </p>
+				<p>
+				<span>
+    					<html:link action="<%=  actionName + "?method=removeFunctionalityFromContainer&amp;" + context + "&amp;contentID=" + contentID + "&amp;containerID=" + containerID %>">
+								<bean:message key="link.delete" bundle="SITE_RESOURCES"/>
+			 			</html:link>
+				</span>
+				| 
+			
+				<app:defineContentPath id="url" name="functionality"/>
+					<bean:define id="url" name="url" type="java.lang.String"/>
+					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
+					<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
+					</a>
+				</p>
 			 </div>
 			
 	</logic:iterate>
 </logic:notEmpty>
+</logic:equal>
+</logic:equal>

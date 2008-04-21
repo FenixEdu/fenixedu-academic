@@ -386,7 +386,14 @@ Documentation:
 		<property name="imageFor(Module)" value="/images/functionalities/folder.gif"/>
 	</renderer>
 	
-    <renderer type="java.util.Collection" layout="tree" class="net.sourceforge.fenixedu.presentationTier.renderers.TreeRenderer" />
+    <renderer type="java.util.Collection" layout="tree" class="net.sourceforge.fenixedu.presentationTier.renderers.TreeRenderer">
+    	<property name="imageFor(Section)" value="/images/icon-section.gif"/>
+    	<property name="imageFor(Item)" value="/images/icon-item.gif"/>
+    	<property name="imageFor(Forum)" value="/images/icon-forum.gif"/>
+    	<property name="imageFor(Attachment)" value="/images/icon-attachment.gif"/>
+    	<property name="imageFor(FunctionalityCall)" value="/images/icon-institutional.gif"/>
+    </renderer>
+    
     <renderer type="java.util.Collection" layout="functionalities-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.FunctionalitiesTreeRenderer">
         <property name="moduleEnabledImage" value="/images/functionalities/folder.gif"/>
         <property name="moduleDisabledImage" value="/images/functionalities/folder-disabled.gif"/>

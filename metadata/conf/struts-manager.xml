@@ -2242,33 +2242,6 @@
        			<forward name="prepareCreateNewLoginTimeInterval" path="prepare-create-new-login-time-interval"/>          			         			  			       			       			
        	</action>
        	
-		<!-- =================== Sites Management =================== -->
-       	<action path="/manageSites"
-                type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageSitesDA"
-                parameter="method">
-                <forward name="listSites" path="site.list"/>
-                <forward name="createSection" path="manage-execution-course-createSection"/>
-                <forward name="sectionsManagement" path="manage-execution-course-sectionsManagement"/>
-                <forward name="section" path="manage-execution-course-section"/>
-                <forward name="editSection" path="manage-execution-course-editSection"/>
-                <forward name="createItem" path="manage-execution-course-createItem"/>
-                <forward name="editItem" path="manage-execution-course-editItem"/>
-                <forward name="uploadFile" path="manage-execution-course-uploadFile"/>
-                <forward name="editFile" path="manage-execution-course-editFile"/>          
-                <forward name="organizeItems" path="manage-execution-course-organizeItems"/>
-                <forward name="organizeFiles" path="manage-execution-course-organizeFiles"/>
-                <forward name="confirmSectionDelete" path="manage-execution-course-confirmSectionDelete"/>
-                <forward name="editSectionPermissions" path="manage-execution-course-editSectionPermissions"/>
-                <forward name="editItemPermissions" path="manage-execution-course-editItemPermissions"/>
-                <forward name="editFile" path="manage-execution-course-editFile"/>
-                <forward name="createScorm" path="create-scorm"/>
-                <forward name="uploadScorm" path="upload-scorm"/>
-                <forward name="chooseFunctionality" path="manage-execution-course-chooseFunctionality"/>
-                <forward name="functionalitySection" path="manage-execution-course-functionalitySection"/>
-                <forward name="editFunctionalitySection" path="manage-execution-course-editFunctionalitySection"/>
-                <forward name="chooseBaseModule" path="manage-site-choose-base-module"/>
-        </action>
-
        	<!-- =================== Academic Calendar Management =================== -->
         <action path="/academicCalendarsManagement"
         		name="academicCalendarsManagementForm"

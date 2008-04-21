@@ -254,6 +254,7 @@
             <forward name="createSection" path="homepage-createSection"/>
             <forward name="sectionsManagement" path="homepage-sectionsManagement"/>
             <forward name="section" path="homepage-section"/>
+        	<forward name="edit-fileItem-name" path="homepage-editFileItemName"/>
             <forward name="editSection" path="homepage-editSection"/>
             <forward name="createItem" path="homepage-createItem"/>
             <forward name="editItem" path="homepage-editItem"/>

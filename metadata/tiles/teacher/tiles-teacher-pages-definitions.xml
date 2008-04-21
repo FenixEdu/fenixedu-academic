@@ -668,6 +668,10 @@
 		<put name="body" value="/commons/sites/editSection.jsp" />
 	</definition>
 
+	<definition name="manage-execution-course-editFileItemName" extends="manage-execution-course-site-createSection">
+		<put name="body" value="/commons/sites/editFileItemDisplayName.jsp" />
+	</definition>
+
 	<definition name="manage-execution-course-createItem" extends="manage-execution-course-site-createSection">
 		<put name="body" value="/commons/sites/createItem.jsp" />
 	</definition>

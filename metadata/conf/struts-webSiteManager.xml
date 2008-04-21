@@ -72,6 +72,7 @@
         <forward name="createSection" path="basicUnitSite-createSection"/>
         <forward name="sectionsManagement" path="basicUnitSite-sectionsManagement"/>
         <forward name="section" path="basicUnitSite-section"/>
+        <forward name="edit-fileItem-name" path="basicUnitSite-editFileItemName"/>
         <forward name="editSection" path="basicUnitSite-editSection"/>
         <forward name="createItem" path="basicUnitSite-createItem"/>
         <forward name="editItem" path="basicUnitSite-editItem"/>
@@ -116,6 +117,7 @@
         <forward name="createSection" path="basicUnitSite-createSection"/>
         <forward name="sectionsManagement" path="basicUnitSite-sectionsManagement"/>
         <forward name="section" path="basicUnitSite-section"/>
+        <forward name="edit-fileItem-name" path="basicUnitSite-editFileItemName"/>
         <forward name="editSection" path="basicUnitSite-editSection"/>
         <forward name="createItem" path="basicUnitSite-createItem"/>
         <forward name="editItem" path="basicUnitSite-editItem"/>
@@ -164,6 +166,7 @@
         <forward name="createSection" path="manage-researchSite-createSection"/>
         <forward name="sectionsManagement" path="manage-researchSite-sectionsManagement"/>
         <forward name="section" path="manage-researchSite-section"/>
+        <forward name="edit-fileItem-name" path="manage-researchSite-editFileItemName"/>
         <forward name="editSection" path="manage-researchSite-editSection"/>
         <forward name="createItem" path="manage-researchSite-createItem"/>
         <forward name="editItem" path="manage-researchSite-editItem"/>
@@ -243,6 +246,7 @@
         <forward name="createSection" path="departmentSite-createSection"/>
         <forward name="sectionsManagement" path="departmentSite-sectionsManagement"/>
         <forward name="section" path="departmentSite-section"/>
+        <forward name="edit-fileItem-name" path="departmentSite-editFileItemName"/>
         <forward name="editSection" path="departmentSite-editSection"/>
         <forward name="createItem" path="departmentSite-createItem"/>
         <forward name="editItem" path="departmentSite-editItem"/>
@@ -302,6 +306,7 @@
         <forward name="createSection" path="pedagogicalCouncil-createSection"/>
         <forward name="sectionsManagement" path="pedagogicalCouncil-sectionsManagement"/>
         <forward name="section" path="pedagogicalCouncil-section"/>
+        <forward name="edit-fileItem-name" path="pedagogicalCouncil-editFileItemName"/>
         <forward name="editSection" path="pedagogicalCouncil-editSection"/>
         <forward name="createItem" path="pedagogicalCouncil-createItem"/>
         <forward name="editItem" path="pedagogicalCouncil-editItem"/>
@@ -364,6 +369,7 @@
         <forward name="createSection" path="scientificCouncil-createSection"/>
         <forward name="sectionsManagement" path="scientificCouncil-sectionsManagement"/>
         <forward name="section" path="scientificCouncil-section"/>
+        <forward name="edit-fileItem-name" path="scientificCouncil-editFileItemName"/>
         <forward name="editSection" path="scientificCouncil-editSection"/>
         <forward name="createItem" path="scientificCouncil-createItem"/>
         <forward name="editItem" path="scientificCouncil-editItem"/>

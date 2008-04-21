@@ -28,3 +28,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Removing Manage Sites Functionality since it's not used anymore" removeManageSitesFunctionality.sql
+execute "Fixing node content IDs, which is missing in a few" fixNodeContentId.sql
+execute "Creating Functionality Calls and doing the data migration" createFunctionalityCalls.sql
+execute "Altering Initial Contents" alterInitialContents.sql

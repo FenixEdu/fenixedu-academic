@@ -15,9 +15,8 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
+import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.Node;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -106,9 +105,9 @@ public class Section extends Section_Base {
     }
 
     /**
-         * @return the section immediately after this section in the superior
-         *         section or <code>null</code> if the section is the last
-         */
+     * @return the section immediately after this section in the superior
+     *         section or <code>null</code> if the section is the last
+     */
     public Section getNextSection() {
 
 	Integer order = ((ExplicitOrderNode) getParents().get(0)).getNodeOrder() + 1;
@@ -119,14 +118,14 @@ public class Section extends Section_Base {
     }
 
     /**
-         * Changes the order of this section so that the given section is
-         * immediately after this section. If the given section is
-         * <code>null</code> then this section will be the last
-         * 
-         * @param section
-         *                the section that should appear after this section or
-         *                <code>null</code> if this section should be last
-         */
+     * Changes the order of this section so that the given section is
+     * immediately after this section. If the given section is <code>null</code>
+     * then this section will be the last
+     * 
+     * @param section
+     *                the section that should appear after this section or
+     *                <code>null</code> if this section should be last
+     */
     public void setNextSection(Section section) {
 	if (section != null) {
 	    setSectionOrder(((ExplicitOrderNode) section.getParents().get(0)).getNodeOrder());
@@ -171,10 +170,10 @@ public class Section extends Section_Base {
     }
 
     /**
-         * A section is always visible to the user as an entry in the menu. The
-         * content of the section may not be available and that will be checked
-         * when the user tries to access the section.
-         */
+     * A section is always visible to the user as an entry in the menu. The
+     * content of the section may not be available and that will be checked when
+     * the user tries to access the section.
+     */
 
     public boolean isVisible(FunctionalityContext context) {
 	return getVisible();
@@ -327,12 +326,13 @@ public class Section extends Section_Base {
 	return (isContainerMaximizable() && getInitialContent() != null) ? getInitialContent().getPath() : null;
     }
 
-    public Collection<Functionality> getAssociatedFunctionalities() {
-	return getChildren(Functionality.class);
+    public Collection<FunctionalityCall> getAssociatedFunctionalities() {
+	return getChildren(FunctionalityCall.class);
     }
 
     @Override
     protected Node createChildNode(Content childContent) {
 	return new ExplicitOrderNode(this, childContent);
     }
+
 }

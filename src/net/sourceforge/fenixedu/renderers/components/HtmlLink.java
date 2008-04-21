@@ -79,12 +79,17 @@ public class HtmlLink extends HtmlComponent {
         // parse parameters from url if the url has the form 'url?param=value&other=otherValue'
         if (url != null) {
             int indexOfQuestion = url.indexOf('?');
+            int indexOfAnchor = url.indexOf('#');
+            
+            if(indexOfAnchor != -1) {
+        	setAnchor(url.substring(indexOfAnchor + 1));
+            }
             
             if (indexOfQuestion != -1) {
                 realUrl = url.substring(0, indexOfQuestion);
                 
                 if (indexOfQuestion < url.length()) {
-                    String parameters = url.substring(indexOfQuestion + 1);
+                    String parameters = indexOfAnchor != -1 ? url.substring(indexOfQuestion + 1, indexOfAnchor) : url.substring(indexOfQuestion + 1);
                     String[] parameresParts = getParameters(parameters);                              
                     
                     for (int i = 0; i < parameresParts.length; i++) {

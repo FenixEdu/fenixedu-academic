@@ -83,6 +83,16 @@ padding-bottom: 2px;
 .breadcumbs span { border-bottom: 1px dotted #000;}
 .breadcumbs span.actual { background-color: #fff7bb;}
 
+div#help_box {
+margin: 0.5em 0;
+background-color: #faf5de;
+vertical-align: middle;
+padding: 0.5em 0.75em;
+border-bottom: 1px solid #f2e5a6;
+}
+div#help_box p { margin: 0.25em 0; }
+
+
 .infoop2, infoop5 { margin: 0.5em 0;}
 
 .first { margin-top: 0; margin-bottom: 1em;}

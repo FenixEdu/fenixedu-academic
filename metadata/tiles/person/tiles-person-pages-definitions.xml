@@ -76,6 +76,9 @@
     <definition name="homepage-editItem" extends="definition.person.homepage" >
         <put name="body" value="/commons/sites/editItem.jsp"/>
     </definition>   
+    <definition name="homepage-editFileItemName" extends="definition.person.homepage" >
+        <put name="body" value="/commons/sites/editFileItemDisplayName.jsp"/>
+    </definition>   
     <definition name="homepage-uploadFile" extends="definition.person.homepage" >
         <put name="body" value="/commons/sites/uploadFile.jsp"/>
     </definition>   

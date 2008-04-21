@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.contents;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
@@ -60,7 +61,13 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
     }
 
     public boolean isContentPoolAvailable() {
-	return getPoolCount() > 0;
+	Collection<Content> childrenAsContent = getChildrenAsContent();
+	for(Content content : getPool()) {
+	    if (!childrenAsContent.contains(content)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     @Override

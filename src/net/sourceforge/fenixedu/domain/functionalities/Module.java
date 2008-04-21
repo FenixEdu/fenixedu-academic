@@ -31,33 +31,33 @@ public class Module extends Module_Base implements IFunctionality {
      * Required default constructor.
      */
     protected Module() {
-        super();
+	super();
     }
 
     /**
      * @see Functionality#Functionality(MultiLanguageString, String)
      */
     public Module(MultiLanguageString name, String prefix) {
-        this();
+	this();
 
-        setName(name);
-        setPrefix(prefix);
+	setName(name);
+	setPrefix(prefix);
     }
 
     public Module getModule() {
-        for (Node node : getParents()) {
-            if (node.getParent() instanceof Module) {
-                return (Module) node.getParent();
-            }
-        }
-        
-        return null;
+	for (Node node : getParents()) {
+	    if (node.getParent() instanceof Module) {
+		return (Module) node.getParent();
+	    }
+	}
+
+	return null;
     }
 
     public void setModule(Module module) {
 	Module oldModule = getModule();
 	module.addChild(this);
-	if(oldModule != null) {
+	if (oldModule != null) {
 	    oldModule.removeChild(this);
 	}
 	invalidatePath();
@@ -78,12 +78,12 @@ public class Module extends Module_Base implements IFunctionality {
 
     @Override
     public void setPrefix(String prefix) {
-        if (prefix == null || prefix.length() == 0) {
-            throw new FieldIsRequiredException("prefix", "functionalities.module.required.prefix");
-        }
+	if (prefix == null || prefix.length() == 0) {
+	    throw new FieldIsRequiredException("prefix", "functionalities.module.required.prefix");
+	}
 
-        super.setPrefix(prefix);
-        //Functionality.checkMatchPath();
+	super.setPrefix(prefix);
+	// Functionality.checkMatchPath();
     }
 
     /**
@@ -95,26 +95,26 @@ public class Module extends Module_Base implements IFunctionality {
      * @return the prefix of this module as seen be the client
      */
     public String getPublicPrefix() {
-        Module parent = getParent(Module.class);
-        
-        String prefix = getNormalizedPrefix();
+	Module parent = getParent(Module.class);
+
+	String prefix = getNormalizedPrefix();
 	if (parent != null) {
-            return parent.getPublicPrefix().length() == 1 ? prefix : parent.getPublicPrefix() + prefix;
-        } else {
-            return prefix.length() == 0 ? "/" : prefix;
-        }
+	    return parent.getPublicPrefix().length() == 1 ? prefix : parent.getPublicPrefix() + prefix;
+	} else {
+	    return prefix.length() == 0 ? "/" : prefix;
+	}
     }
 
     public void appendPath(final StringBuilder stringBuilder) {
-        final Module parent = getParentModule();
-        final String prefix = getNormalizedPrefix();
-        if (parent != null) {
-            parent.appendPath(stringBuilder);
-        }
-        if (prefix.length() > 0 && prefix.charAt(0) != '/') {
-            stringBuilder.append('/');
-        }
-        stringBuilder.append(prefix);
+	final Module parent = getParentModule();
+	final String prefix = getNormalizedPrefix();
+	if (parent != null) {
+	    parent.appendPath(stringBuilder);
+	}
+	if (prefix.length() > 0 && prefix.charAt(0) != '/') {
+	    stringBuilder.append('/');
+	}
+	stringBuilder.append(prefix);
     }
 
     public Module getParentModule() {
@@ -132,10 +132,10 @@ public class Module extends Module_Base implements IFunctionality {
      *         but does not end with "/"
      */
     protected String getNormalizedPrefix() {
-        String prefix = getPrefix();
+	String prefix = getPrefix();
 
-        int end = prefix.endsWith("/") ? prefix.length() - 1 : prefix.length();
-        return (prefix.startsWith("/") ? "" : "/") + prefix.substring(0, end);
+	int end = prefix.endsWith("/") ? prefix.length() - 1 : prefix.length();
+	return (prefix.startsWith("/") ? "" : "/") + prefix.substring(0, end);
     }
 
     /**
@@ -143,7 +143,7 @@ public class Module extends Module_Base implements IFunctionality {
      * between sub functionalities and modules.
      */
     public Collection<Functionality> getFunctionalities() {
-        return getChildren(Functionality.class);
+	return getChildren(Functionality.class);
     }
 
     /**
@@ -155,7 +155,7 @@ public class Module extends Module_Base implements IFunctionality {
      * @see Functionality#getOrder()
      */
     public List<Content> getOrderedFunctionalities() {
-        return new ArrayList<Content>(getOrderedChildren(Content.class));
+	return new ArrayList<Content>(getOrderedChildren(Content.class));
     }
 
     /**
@@ -165,38 +165,37 @@ public class Module extends Module_Base implements IFunctionality {
      * 
      * <p>
      * A module is also visible when it has an accessible public path. So if the
-     * module has a public path but none of it's children is visible then it is still
-     * visible to the user.
+     * module has a public path but none of it's children is visible then it is
+     * still visible to the user.
      */
     public boolean isVisible(FunctionalityContext context) {
-        for (Node node : getChildren()) {
-            if (node.isNodeVisible()) {
-                return true;
-            }
-        }
-        
-        return false;
+	for (Node node : getChildren()) {
+	    if (node.isNodeVisible()) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     public static Module getRootModule() {
-        return RootDomainObject.getInstance().getRootModule();
+	return RootDomainObject.getInstance().getRootModule();
     }
 
     public Module findModule(UUID uuid) {
-        if (uuid.equals(getContentId())) {
-            return this;
-        }
-        else {
-            for (Module module : getChildren(Module.class)) {
-                Module found = module.findModule(uuid);
-                
-                if (found != null) {
-                    return found;
-                }
-            }
-        }
-        
-        return null;
+	if (uuid.equals(getContentId())) {
+	    return this;
+	} else {
+	    for (Module module : getChildren(Module.class)) {
+		Module found = module.findModule(uuid);
+
+		if (found != null) {
+		    return found;
+		}
+	    }
+	}
+
+	return null;
     }
 
     @Override
@@ -206,12 +205,16 @@ public class Module extends Module_Base implements IFunctionality {
 
     @Override
     public String getPath() {
-        return getPublicPrefix();
+	return getPublicPrefix();
     }
-    
+
     @Override
     protected Node createChildNode(Content childContent) {
-        return new ExplicitOrderNode(this, childContent);
+	return new ExplicitOrderNode(this, childContent);
     }
-    
+
+    @Override
+    public void addChild(Content content) {
+	createChildNode(content);
+    }
 }

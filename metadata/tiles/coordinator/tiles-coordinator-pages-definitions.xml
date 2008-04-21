@@ -254,7 +254,10 @@
     </definition>
     <definition name="manage-degree-editSection" extends="definition.coordinator.siteManagement" >
         <put name="body" value="/commons/sites/editSection.jsp"/>
-    </definition>   
+    </definition> 
+    <definition name="manage-degree-editFileItemName" extends="definition.coordinator.siteManagement" >
+        <put name="body" value="/commons/sites/editFileItemDisplayName.jsp"/>
+    </definition> 
     <definition name="manage-degree-createSection" extends="definition.coordinator.siteManagement" >
         <put name="body" value="/commons/sites/createSection.jsp"/>
     </definition>   
