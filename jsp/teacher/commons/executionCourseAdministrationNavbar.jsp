@@ -27,7 +27,7 @@
 		</li>
 		<logic:notEmpty name="executionCourse" property="site">
 			<li>							
-				<app:contentLink name="executionCourse" property="site" scope="request" target="_blanck">
+				<app:contentLink name="executionCourse" property="site" scope="request" target="_blank">
 					<bean:message key="link.executionCourseManagement.menu.view.course.page"/>	
 				</app:contentLink>					
 			</li>
