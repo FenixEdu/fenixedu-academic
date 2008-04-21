@@ -82,7 +82,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("homepage.not.found"));
 	    saveMessages(request, actionMessages);
 
-	    return list(mapping, actionForm, request, response);
+	    return notFound(mapping, actionForm, request, response);
 	} else {
 	    SortedSet<Attends> personAttendsSortedByExecutionCourseName = new TreeSet<Attends>(
 		    Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
@@ -96,38 +96,8 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     }
 
     public ActionForward notFound(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    HttpServletRequest request, HttpServletResponse response) {
 	return mapping.findForward("not-found-homepage");
-    }
-
-    public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final SortedMap<String, SortedSet<Homepage>> homepages = new TreeMap<String, SortedSet<Homepage>>();
-	for (int i = (int) 'A'; i <= (int) 'Z'; i++) {
-	    homepages.put("" + ((char) i), new TreeSet<Homepage>(Homepage.HOMEPAGE_COMPARATOR_BY_NAME));
-	}
-
-	for (final Homepage homepage : Homepage.getAllHomepages()) {
-	    if (homepage.getActivated().booleanValue()) {
-		final String key = homepage.getOwnersName().substring(0, 1);
-		final SortedSet<Homepage> sortedSet;
-		if (homepages.containsKey(key)) {
-		    sortedSet = homepages.get(key);
-		    sortedSet.add(homepage);
-		}
-	    }
-	}
-
-	request.setAttribute("homepages", homepages);
-
-	final String selectedPage = request.getParameter("selectedPage");
-	if (selectedPage != null) {
-	    request.setAttribute("selectedPage", selectedPage);
-	} else {
-	    request.setAttribute("selectedPage", "");
-	}
-
-	return mapping.findForward("list-homepages");
     }
 
     public ActionForward listTeachers(ActionMapping mapping, ActionForm actionForm,

@@ -223,9 +223,6 @@
     <definition name="view-homepage-item-adviseLogin" extends="definition.public.homepage">
         <put name="body" value="/commons/sites/public/item-adviseLogin.jsp"/>
     </definition>
-	<definition name="list-homepages" extends="definition.public.homepage">
-		<put name="body" value="/publico/homepage/list.jsp"/>
-	</definition>
 	<definition name="list-homepages-teachers" extends="definition.public.homepage">
 		<put name="body" value="/publico/homepage/listTeachers.jsp"/>
 	</definition>

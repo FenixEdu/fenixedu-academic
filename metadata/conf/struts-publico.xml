@@ -843,7 +843,6 @@
     			parameter="method"
     			>
     		<forward name="view-homepage" path="view-homepage"/>
-    		<forward name="list-homepages" path="list-homepages"/>
     		<forward name="list-homepages-teachers" path="list-homepages-teachers"/>
     		<forward name="list-homepages-employees" path="list-homepages-employees"/>
     		<forward name="list-homepages-students" path="list-homepages-students"/>
