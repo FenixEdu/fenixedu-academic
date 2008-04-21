@@ -43,6 +43,7 @@ ul li ul { font-size: 1em}
 	sitewide profile navigation
 ***********************************************************/
 
+#perfnav { height: 22px; }
 #perfnav ul { margin: 0; padding: 0 0 0 156px; white-space: nowrap; }
 #perfnav ul li { font: bold 1em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; list-style: none; float: left; margin: 0; padding: 0; line-height: normal; }
 #perfnav a:link, #perfnav a:visited { float: left; height: auto; color: #45556A; text-decoration: none; margin: 0; padding: 4px 10px 4px 10px; white-space: nowrap; }
