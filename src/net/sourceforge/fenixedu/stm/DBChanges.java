@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.stm;
 
-import java.io.StringReader;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import javax.sql.rowset.serial.SerialClob;
 
 import jvstm.CommitException;
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -215,15 +217,8 @@ class DBChanges {
 	    stmt.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis()));
 	    stmt.setString(2, info.username);
 	    stmt.setString(3, info.serviceName);
-	    StringReader reader = null;
-	    try {
-		reader = new StringReader(info.getArgumentsAsString());
-		stmt.setClob(4, reader);
-	    } finally {
-		if (reader != null) {
-		    reader.close();
-		}
-	    }
+	    Clob clob = new SerialClob(info.getArgumentsAsString().toCharArray());
+	    stmt.setClob(4, clob);
 	    time10 = System.currentTimeMillis();
 	    stmt.executeUpdate();
 	    time11 = System.currentTimeMillis();
