@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.YearMonthDay;
+
 public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBean {
 
     private DocumentRequestType chosenDocumentRequestType;
@@ -25,17 +27,21 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     private String otherPurpose;
 
-    private Boolean urgentRequest;
+    private Boolean urgentRequest = Boolean.FALSE;
 
-    private Boolean freeProcessed;
+    private Boolean freeProcessed = Boolean.FALSE;
 
-    private Boolean average;
+    private Boolean average = Boolean.FALSE;
 
-    private Boolean detailed;
+    private Boolean detailed = Boolean.FALSE;
 
-    private Boolean internship;
+    private Boolean internshipAbolished = Boolean.FALSE;
 
-    private Boolean studyPlan;
+    private Boolean internshipApproved = Boolean.FALSE;
+
+    private Boolean studyPlan = Boolean.FALSE;
+
+    private YearMonthDay exceptionalConclusionDate;
 
     private Boolean toBeCreated;
 
@@ -48,7 +54,7 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private CycleType requestedCycle;
 
     private MobilityProgram mobilityProgram;
-    
+
     private boolean toUseAll = false;
 
     private List<DomainReference<Enrolment>> enrolments;
@@ -119,12 +125,20 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 	this.detailed = detailed;
     }
 
-    public Boolean getInternship() {
-	return internship;
+    public Boolean getInternshipAbolished() {
+	return internshipAbolished;
     }
 
-    public void setInternship(Boolean internship) {
-	this.internship = internship;
+    public void setInternshipAbolished(Boolean internshipAbolished) {
+	this.internshipAbolished = internshipAbolished;
+    }
+
+    public Boolean getInternshipApproved() {
+	return internshipApproved;
+    }
+
+    public void setInternshipApproved(Boolean internshipApproved) {
+	this.internshipApproved = internshipApproved;
     }
 
     public Boolean getStudyPlan() {
@@ -133,6 +147,14 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     public void setStudyPlan(Boolean studyPlan) {
 	this.studyPlan = studyPlan;
+    }
+
+    public YearMonthDay getExceptionalConclusionDate() {
+	return exceptionalConclusionDate;
+    }
+
+    public void setExceptionalConclusionDate(YearMonthDay exceptionalConclusionDate) {
+	this.exceptionalConclusionDate = exceptionalConclusionDate;
     }
 
     public Integer getYear() {
@@ -233,13 +255,13 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     final public void setMobilityProgram(final MobilityProgram mobilityProgram) {
 	this.mobilityProgram = mobilityProgram;
     }
-    
+
     public boolean isToUseAll() {
-        return toUseAll;
+	return toUseAll;
     }
 
     public void setToUseAll(boolean toUseAll) {
-        this.toUseAll = toUseAll;
+	this.toUseAll = toUseAll;
     }
 
     public List<Enrolment> getEnrolments() {
@@ -259,7 +281,7 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
 	this.enrolments = enrolmentsToSet;
     }
-    
+
     public List<Exam> getExams() {
 	final List<Exam> result = new ArrayList<Exam>();
 	for (final DomainReference<Exam> each : this.exams) {

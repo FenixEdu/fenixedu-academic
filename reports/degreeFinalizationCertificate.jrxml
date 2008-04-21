@@ -39,6 +39,7 @@
 	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="birthLocale" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="nationality" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="exceptionalConclusionInfo" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="degreeFinalizationDate" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="degreeFinalizationGrade" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="degreeFinalizationEcts" isForPrompting="false" class="java.lang.String"/>
@@ -361,7 +362,7 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["concluiu o " + $P{degreeDescription} + " em " + $P{degreeFinalizationDate} + $P{degreeFinalizationGrade} + $P{degreeFinalizationEcts} + $P{graduateTitle} + "tendo requerido " + $P{diplomaDescription} +  ((((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest)$P{documentRequest}).getDetailed()) ? " com aproveitamento nas seguintes unidades curriculares:" : ".")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["concluiu o " + $P{degreeDescription} + " em " + $P{degreeFinalizationDate} + $P{exceptionalConclusionInfo} + $P{degreeFinalizationGrade} + $P{degreeFinalizationEcts} + $P{graduateTitle} + "tendo requerido " + $P{diplomaDescription} +  ((((net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest)$P{documentRequest}).getDetailed()) ? " com aproveitamento nas seguintes unidades curriculares:" : ".")]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

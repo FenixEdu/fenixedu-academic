@@ -105,10 +105,10 @@
 <schema name="DegreeFinalizationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average" />
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />	
-<!-- 
-	<slot name="internship" key="label.documentRequestsManagement.searchDocumentRequests.internship" />	
-	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan" />	
- -->
+	<slot name="internshipAbolished" key="label.documentRequestsManagement.searchDocumentRequests.internshipAbolished"></slot>
+	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
+	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
+	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
 </schema>
 
 <schema name="ApprovementCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -210,10 +210,10 @@
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed"></slot>
 	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average"></slot>
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
-<!--
-	<slot name="internship" key="label.documentRequestsManagement.searchDocumentRequests.internship"></slot>
-	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>	
- -->
+	<slot name="internshipAbolished" key="label.documentRequestsManagement.searchDocumentRequests.internshipAbolished"></slot>
+	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
+	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
+	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.COURSE_LOAD.AdditionalInformation"

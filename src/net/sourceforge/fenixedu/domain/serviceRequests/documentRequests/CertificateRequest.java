@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public abstract class CertificateRequest extends CertificateRequest_Base {
 
@@ -40,11 +41,13 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 	super.setOtherDocumentPurposeTypeDescription(otherDocumentPurposeTypeDescription);
     }
 
-    static final public CertificateRequest create(Registration registration, DateTime requestDate,
-	    DocumentRequestType chosenDocumentRequestType, DocumentPurposeType chosenDocumentPurposeType, String otherPurpose,
-	    Boolean urgentRequest, Boolean average, Boolean detailed, ExecutionYear executionYear,
-	    MobilityProgram mobilityProgram, CycleType requestedCycle, Boolean freeProcessed, Collection<Enrolment> enrolments,
-	    Collection<Exam> exams, ExecutionPeriod executionPeriod, Boolean internship, Boolean studyPlan) {
+    static final public CertificateRequest create(final Registration registration, final DateTime requestDate,
+	    final DocumentRequestType chosenDocumentRequestType, final DocumentPurposeType chosenDocumentPurposeType,
+	    final String otherPurpose, final Boolean urgentRequest, final Boolean average, final Boolean detailed,
+	    final ExecutionYear executionYear, final MobilityProgram mobilityProgram, final CycleType requestedCycle,
+	    final Boolean freeProcessed, final Collection<Enrolment> enrolments, final Collection<Exam> exams,
+	    final ExecutionPeriod executionPeriod, final Boolean internshipAbolished, final Boolean internshipApproved,
+	    final Boolean studyPlan, final YearMonthDay exceptionalConclusionDate) {
 
 	switch (chosenDocumentRequestType) {
 	case SCHOOL_REGISTRATION_CERTIFICATE:
@@ -61,7 +64,8 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 
 	case DEGREE_FINALIZATION_CERTIFICATE:
 	    return new DegreeFinalizationCertificateRequest(registration, requestDate, chosenDocumentPurposeType, otherPurpose,
-		    urgentRequest, average, detailed, mobilityProgram, requestedCycle, freeProcessed, internship, studyPlan);
+		    urgentRequest, average, detailed, mobilityProgram, requestedCycle, freeProcessed, internshipAbolished,
+		    internshipApproved, studyPlan, exceptionalConclusionDate);
 
 	case EXAM_DATE_CERTIFICATE:
 	    return new ExamDateCertificateRequest(registration, requestDate, chosenDocumentPurposeType, otherPurpose,

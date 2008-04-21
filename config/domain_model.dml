@@ -3428,8 +3428,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					class net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest {
 						Boolean average;
 						Boolean detailed;
-						Boolean internship;
+						Boolean internshipAbolished;
+						Boolean internshipApproved;
 						Boolean studyPlan;
+						YearMonthDay exceptionalConclusionDate;
 						MobilityProgram mobilityProgram;
 						CycleType requestedCycle;
 					}
@@ -4434,6 +4436,10 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 				Boolean visible;
 	}
 	
+			class net.sourceforge.fenixedu.domain.contents.FunctionalityCall extends net.sourceforge.fenixedu.domain.contents.Element {
+				
+			}
+
 			class net.sourceforge.fenixedu.domain.contents.FunctionalityCall extends net.sourceforge.fenixedu.domain.contents.Element {
 				
 			}
