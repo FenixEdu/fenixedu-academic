@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
+import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -578,13 +579,17 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward editDisplayName(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	
-	selectItem(request);
+	Item item = selectItem(request);
 	FileItem fileItem = selectFileItem(request);
 	
 	if (fileItem == null) {
 	    return mapping.findForward("section");
 	}
 
+	Attachment attachment = fileItem.getAttachment();
+	Node node = item.getChildNode(attachment);
+	request.setAttribute("node", node);
+	
 	return mapping.findForward("edit-fileItem-name");
     }
     

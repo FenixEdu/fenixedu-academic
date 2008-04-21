@@ -410,11 +410,12 @@
                 
                     <strong><bean:message key="label.files" bundle="SITE_RESOURCES"/>:</strong>
                     
-                    	<table class="tstyle2 thlight width100">
+                    	<table class="tstyle2 thlight tdcenter width100">
                     		<tr>
-	                    		<th><bean:message key="label.section.item.file.title" bundle="SITE_RESOURCES"/></th>
-	                    		<th><bean:message key="label.section.item.file.options" bundle="SITE_RESOURCES"/></th>
+	                    		<th><bean:message key="label.name" bundle="SITE_RESOURCES"/></th>
+	                    		<th><bean:message key="label.file" bundle="SITE_RESOURCES"/></th>
 	                    		<th><bean:message key="label.section.item.file.availability" bundle="SITE_RESOURCES"/></th>
+	                    		<th><bean:message key="label.section.item.file.options" bundle="SITE_RESOURCES"/></th>
                     		</tr>
                         	<logic:iterate id="fileItem" name="item" property="sortedFileItems" type="net.sourceforge.fenixedu.domain.FileItem">
 							<tr>
@@ -429,23 +430,10 @@
         	                            <bean:message key="message.item.file.delete.confirm" bundle="SITE_RESOURCES" arg0="<%= fileItem.getDisplayName() %>"/>
         	                        </bean:define>
            	                	</td>
-            	                	
-            					<td class="nowrap">	
-        							<span class="pleft1">
-           		                		(<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>"
-           		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
-           			                        <bean:message key="link.section.item.deleteItemFile" bundle="SITE_RESOURCES"/>
-           			                    </html:link>,
-           			                    <html:link page="<%= String.format("%s?method=editDisplayName&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
-           			                        <bean:message key="link.section.item.editItemFileName" bundle="SITE_RESOURCES"/>
-           			                    </html:link>,  
-           			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
-           			 	                   <bean:message key="link.section.item.editItemFilePermissions" bundle="SITE_RESOURCES"/>
-           			    	            </html:link>)
-									</span>
-								</td>
-								
-								<td>
+            	                <td> <bean:write name="fileItem" property="filename"/></td>	
+            					
+            					
+            					<td>
 	                                <span class="pleft1" style="color: #888;">
 	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
 	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
@@ -459,6 +447,22 @@
 	                                    </fr:view>
 	                                </span>
        	    	                </td>
+       	    	                
+            					<td class="nowrap">	
+        							<span class="pleft1">
+           		                		<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>"
+           		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
+           			                        <bean:message key="link.delete" bundle="SITE_RESOURCES"/>
+           			                    </html:link> |
+           			                    <html:link page="<%= String.format("%s?method=editDisplayName&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
+           			                        <bean:message key="link.edit" bundle="SITE_RESOURCES"/>
+           			                    </html:link> | 
+           			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;itemID=%s&amp;fileItemId=%s", actionName, context, sectionId, itemId, fileItem.getIdInternal()) %>">
+           			 	                   <bean:message key="link.permissions" bundle="SITE_RESOURCES"/>
+           			    	            </html:link>
+									</span>
+								</td>
+								
                         	</tr>
                        	</logic:iterate>
                    	</table>

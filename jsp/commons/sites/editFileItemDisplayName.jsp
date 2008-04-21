@@ -19,24 +19,42 @@
 	<fr:view name="item" property="name" />
 </h2>
 
-<fr:form
-	action="<%= actionName + "?method=section&sectionID=" + sectionID +"&" + context + "#item-" + itemID%>">
-	<table class="tstyle5">
-		<tr>
-			<td><bean:message key="label.displayName"
-				bundle="SITE_RESOURCES" />:</td>
-			<td><fr:edit name="fileItem" slot="displayName" >
-						<fr:layout>
-	                		<fr:property name="size" value="40"/>
-	            		</fr:layout>
-					</fr:edit>
-			</td>
-		</tr>
-		<tr>
-			<td><html:submit>
-				<bean:message key="button.site.functions.order.save"
-					bundle="SITE_RESOURCES" />
-			</html:submit></td>
-		</tr>
-	</table>
-</fr:form>
+
+<div class="dinline forminline">
+	<fr:form
+		action="<%= actionName + "?method=section&sectionID=" + sectionID +"&" + context + "#item-" + itemID%>">
+		<table class="tstyle5 thleft thlight thmiddle">
+			<tr>
+				<th><bean:message key="label.file" bundle="SITE_RESOURCES"/>:</th>
+				<td><fr:view name="fileItem" property="filename"/></td>	
+			</tr>
+			<tr>
+				<th><bean:message key="label.displayName"
+					bundle="SITE_RESOURCES" />:</th>
+				<td><fr:edit name="fileItem" slot="displayName" >
+							<fr:layout>
+		                		<fr:property name="size" value="40"/>
+		            		</fr:layout>
+						</fr:edit>
+				</td>
+			</tr>
+			<tr>
+			<tr>
+				<th><bean:message key="label.fileVisible.question" bundle="SITE_RESOURCES"/></th>
+				<td><fr:edit name="node" slot="visible"/></td>	
+			</tr>
+		</table>
+		
+		
+		<html:submit>
+			<bean:message key="button.submit" bundle="SITE_RESOURCES" />
+		</html:submit>
+	</fr:form>
+	<fr:form action="<%= actionName + "?method=section&sectionID=" + sectionID +"&" + context + "#item-" + itemID%>">
+		<html:submit>
+			<bean:message key="button.cancel" bundle="SITE_RESOURCES" />
+		</html:submit>
+	</fr:form>
+</div>
+
+        
