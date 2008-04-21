@@ -604,6 +604,10 @@ public class Registration extends Registration_Base {
 		.valueOf(getFinalAverage()) : getCurriculum(executionYear, cycleType).getAverage();
     }
 
+    final public BigDecimal calculateAverage() {
+	return getCurriculum().getAverage();
+    }
+
     public Integer calculateFinalAverage() {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.for.cannot.calculate.final.average.in.registration.for.bolonha");
