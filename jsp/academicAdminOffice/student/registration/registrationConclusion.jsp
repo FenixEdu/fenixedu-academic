@@ -90,21 +90,41 @@
 	</logic:equal>
 	
 	<logic:equal name="registrationConclusionBean" property="concluded" value="true">
-		<logic:equal name="registrationConclusionBean" property="byCycle" value="true" >
-			<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForCycle">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
-					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-				</fr:layout>
-			</fr:view>
+		<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="true">
+			<logic:equal name="registrationConclusionBean" property="byCycle" value="true" >
+				<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewForCycleWithConclusionProcessedInformation">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
+						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+					</fr:layout>
+				</fr:view>
+			</logic:equal>
+			<logic:equal name="registrationConclusionBean" property="byCycle" value="false" >
+				<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewForRegistrationWithConclusionProcessedInformation">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
+						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+					</fr:layout>
+				</fr:view>
+			</logic:equal>
 		</logic:equal>
-		<logic:equal name="registrationConclusionBean" property="byCycle" value="false" >
-			<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForRegistration">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
-					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-				</fr:layout>
-			</fr:view>
+		<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="false">
+			<logic:equal name="registrationConclusionBean" property="byCycle" value="true" >
+				<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForCycle">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
+						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+					</fr:layout>
+				</fr:view>
+			</logic:equal>
+			<logic:equal name="registrationConclusionBean" property="byCycle" value="false" >
+				<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForRegistration">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
+						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+					</fr:layout>
+				</fr:view>
+			</logic:equal>
 		</logic:equal>
 	
 		<p class="mtop05">
