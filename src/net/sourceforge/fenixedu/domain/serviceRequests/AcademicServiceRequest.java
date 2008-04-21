@@ -540,7 +540,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     abstract public boolean hasPersonalInfo();
 
-    private boolean hasMissingPersonalInfo() {
+    protected boolean hasMissingPersonalInfo() {
 	final List<String> toTest = new ArrayList<String>();
 
 	toTest.add(getPerson().getParishOfBirth());
