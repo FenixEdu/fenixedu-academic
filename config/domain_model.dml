@@ -4440,10 +4440,6 @@ class net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod ext
 				
 			}
 
-			class net.sourceforge.fenixedu.domain.contents.FunctionalityCall extends net.sourceforge.fenixedu.domain.contents.Element {
-				
-			}
-
 	class net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter extends net.sourceforge.fenixedu.domain.DomainObject {
 		String name;
 }
