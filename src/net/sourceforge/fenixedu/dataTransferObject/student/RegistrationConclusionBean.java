@@ -64,7 +64,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public BigDecimal getAverage() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateAverage() : getRegistration().getAverage();
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateAverage() : getRegistration().calculateAverage();
     }
 
     public YearMonthDay getConclusionDate() {

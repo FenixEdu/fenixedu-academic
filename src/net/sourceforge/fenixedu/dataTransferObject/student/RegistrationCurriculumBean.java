@@ -54,7 +54,7 @@ public class RegistrationCurriculumBean extends RegistrationSelectExecutionYearB
     }
 
     public BigDecimal getAverage() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateAverage() : getRegistration().getAverage();
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateAverage() : getRegistration().calculateAverage();
     }
 
     public YearMonthDay getConclusionDate() {
@@ -83,7 +83,7 @@ public class RegistrationCurriculumBean extends RegistrationSelectExecutionYearB
     public boolean isConcluded() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
     }
-    
+
     public boolean isConclusionProcessed() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConclusionProcessed() : getRegistration()
 		.isRegistrationConclusionProcessed();
