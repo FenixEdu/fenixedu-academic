@@ -6,8 +6,6 @@
 alter table ERROR_LOG add index (KEY_EXCEPTION);
 alter table ERROR_LOG add index (KEY_ROOT_DOMAIN_OBJECT);
 alter table EXCEPTION_TYPE add index (KEY_ROOT_DOMAIN_OBJECT);
-alter table PAYMENT_PLAN add column KEY_SERVICE_AGREEMENT int(11);
-alter table PAYMENT_PLAN add index (KEY_SERVICE_AGREEMENT);
 alter table REQUEST_LOG add index (KEY_ERROR_LOG);
 alter table REQUEST_LOG add index (KEY_MAPPING);
 alter table REQUEST_LOG add index (KEY_ROOT_DOMAIN_OBJECT);
