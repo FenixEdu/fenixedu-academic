@@ -109,18 +109,21 @@ public class BonusInstallment implements Serializable {
 		    + " does not have assidousness");
 	    return null;
 	}
-
-	AssiduousnessStatusHistory lastAssiduousnessStatusHistory = employeeBonusInstallment.getEmployee().getAssiduousness()
-		.getStatusBetween(day, day).get(0);
-	if (lastAssiduousnessStatusHistory == null) {
-	    for (AssiduousnessStatusHistory assiduousnessStatusHistory : employeeBonusInstallment.getEmployee()
-		    .getAssiduousness().getAssiduousnessStatusHistories()) {
-		if (assiduousnessStatusHistory.getEndDate() == null) {
-		    return assiduousnessStatusHistory;
-		}
-		if (lastAssiduousnessStatusHistory == null
-			|| assiduousnessStatusHistory.getEndDate().isAfter(lastAssiduousnessStatusHistory.getEndDate())) {
-		    lastAssiduousnessStatusHistory = assiduousnessStatusHistory;
+	AssiduousnessStatusHistory lastAssiduousnessStatusHistory = null;
+	List<AssiduousnessStatusHistory> assiduousnessStatusHistories = employeeBonusInstallment.getEmployee().getAssiduousness()
+		.getStatusBetween(day, day);
+	if (assiduousnessStatusHistories != null && assiduousnessStatusHistories.size() != 0) {
+	    lastAssiduousnessStatusHistory = assiduousnessStatusHistories.get(0);
+	    if (lastAssiduousnessStatusHistory == null) {
+		for (AssiduousnessStatusHistory assiduousnessStatusHistory : employeeBonusInstallment.getEmployee()
+			.getAssiduousness().getAssiduousnessStatusHistories()) {
+		    if (assiduousnessStatusHistory.getEndDate() == null) {
+			return assiduousnessStatusHistory;
+		    }
+		    if (lastAssiduousnessStatusHistory == null
+			    || assiduousnessStatusHistory.getEndDate().isAfter(lastAssiduousnessStatusHistory.getEndDate())) {
+			lastAssiduousnessStatusHistory = assiduousnessStatusHistory;
+		    }
 		}
 	    }
 	}

@@ -1137,9 +1137,7 @@
 </schema>
 
 <schema name="upload.bonusInstallmentFileBean" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallmentFileBean">
-	<slot name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
-		<property name="readOnly" value="true" />
-	</slot>
+	<slot read-only="true" name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	<slot name="installment" key="label.installment" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 	<!--  	<property name="format" value="${installment}ª prestação" />-->
 		<property name="destination" value="bonusInstallmentsNumberPostBack"/>

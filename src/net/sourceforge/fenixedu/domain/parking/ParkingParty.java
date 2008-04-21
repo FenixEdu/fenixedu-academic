@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
@@ -30,11 +31,15 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFact
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
@@ -230,29 +235,56 @@ public class ParkingParty extends ParkingParty_Base {
 	    Person person = (Person) getParty();
 	    Teacher teacher = person.getTeacher();
 	    if (teacher != null) {
+		StringBuilder stringBuilder = new StringBuilder();
 		String currentDepartment = "";
 		if (teacher.getCurrentWorkingDepartment() != null) {
 		    currentDepartment = teacher.getCurrentWorkingDepartment().getName();
 		}
 		if (teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
-		    occupations.add("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber() + "<br/>"
+		    stringBuilder.append("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber() + "<br/>"
 			    + currentDepartment);
 		} else {
-		    occupations.add("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber() + "<br/>"
+		    stringBuilder.append("<strong>Docente</strong><br/> Nº " + teacher.getTeacherNumber() + "<br/>"
 			    + currentDepartment);
 		}
+		TeacherProfessionalSituation teacherProfessionalSituation = teacher
+			.getCurrentLegalRegimenWithoutSpecialSitutions();
+		if (teacherProfessionalSituation == null) {
+		    teacherProfessionalSituation = teacher.getLastLegalRegimenWithoutSpecialSituations();
+		}
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
+		stringBuilder.append("\n (Data inicio: ").append(
+			fmt.print(teacherProfessionalSituation.getBeginDateYearMonthDay()));
+		if (teacherProfessionalSituation.getEndDateYearMonthDay() != null) {
+		    stringBuilder.append(" - Data fim: ")
+			    .append(fmt.print(teacherProfessionalSituation.getEndDateYearMonthDay()));
+		}
+		stringBuilder.append(")<br/>");
+		occupations.add(stringBuilder.toString());
 	    }
 	    Employee employee = person.getEmployee();
 	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
 		    && person.getPersonRole(RoleType.EMPLOYEE) != null
 		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null) {
+		StringBuilder stringBuilder = new StringBuilder();
 		Unit currentUnit = employee.getCurrentWorkingPlace();
 		if (currentUnit != null) {
-		    occupations.add("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber() + "<br/>"
+		    stringBuilder.append("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber() + "<br/>"
 			    + currentUnit.getName() + " - " + currentUnit.getCostCenterCode());
 		} else {
-		    occupations.add("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber());
+		    stringBuilder.append("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber());
 		}
+		AssiduousnessStatusHistory assiduousnessStatusHistory = employee.getAssiduousness()
+			.getCurrentOrLastAssiduousnessStatusHistory();
+		if (assiduousnessStatusHistory != null) {
+		    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
+		    stringBuilder.append("<br/> (Data inicio: ").append(fmt.print(assiduousnessStatusHistory.getBeginDate()));
+		    if (assiduousnessStatusHistory.getEndDate() != null) {
+			stringBuilder.append(" - Data fim: ").append(fmt.print(assiduousnessStatusHistory.getEndDate()));
+		    }
+		    stringBuilder.append(")<br/>");
+		}
+		occupations.add(stringBuilder.toString());
 	    }
 	    Student student = person.getStudent();
 	    if (student != null && person.getPersonRole(RoleType.STUDENT) != null) {

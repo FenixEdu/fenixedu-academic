@@ -7,13 +7,13 @@
 <em><bean:message key="title.payrollSectionStaff" /></em>
 <h2><bean:message key="label.uploadBonusFile" /></h2>
 
-<logic:messagesPresent message="true" property="message">
-	<html:messages id="message" message="true">
-		<p><span class="error0"><bean:write name="message" /></span></p>
+<logic:messagesPresent message="true" property="error">
+	<html:messages id="errorMessage" message="true" property="error">
+		<p><span class="error0"><bean:write name="errorMessage" /></span></p>
 	</html:messages>
 </logic:messagesPresent>
-<logic:messagesPresent message="true" property="successMessage">
-	<html:messages id="successMessage" message="true">
+<logic:messagesPresent message="true" property="success">
+	<html:messages id="successMessage" message="true" property="success">
 		<p><span class="success0"><bean:write name="successMessage" /></span></p>
 	</html:messages>
 </logic:messagesPresent>

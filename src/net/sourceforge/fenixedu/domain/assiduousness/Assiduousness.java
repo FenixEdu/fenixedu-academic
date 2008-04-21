@@ -459,6 +459,34 @@ public class Assiduousness extends Assiduousness_Base {
 	return lastActiveStatus == null ? null : lastActiveStatus;
     }
 
+    public AssiduousnessStatusHistory getCurrentOrLastAssiduousnessStatusHistory() {
+	YearMonthDay today = new YearMonthDay();
+	AssiduousnessStatusHistory lastActiveStatus = null;
+	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
+	    if (assiduousnessStatusHistory.getEndDate() != null
+		    && assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
+		Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate().toDateMidnight(),
+			assiduousnessStatusHistory.getEndDate().toDateMidnight().plusDays(1));
+		if (statusInterval.containsNow()) {
+		    return assiduousnessStatusHistory;
+		} else {
+		    if (lastActiveStatus == null
+			    || !lastActiveStatus.getEndDate().isAfter(assiduousnessStatusHistory.getEndDate())) {
+			lastActiveStatus = assiduousnessStatusHistory;
+		    }
+
+		}
+	    } else {
+		if ((!assiduousnessStatusHistory.getBeginDate().isAfter(today))
+			&& assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
+		    return assiduousnessStatusHistory;
+		}
+	    }
+
+	}
+	return lastActiveStatus;
+    }
+
     public List<AssiduousnessStatusHistory> getStatusBetween(YearMonthDay beginDate, YearMonthDay endDate) {
 	List<AssiduousnessStatusHistory> assiduousnessStatusList = new ArrayList<AssiduousnessStatusHistory>();
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
