@@ -1887,6 +1887,10 @@ public class Registration extends Registration_Base {
 	return getActiveStateType() == RegistrationStateType.REGISTERED;
     }
 
+    final public boolean isInternalAbandon() {
+	return getActiveStateType() == RegistrationStateType.INTERNAL_ABANDON;
+    }
+
     final public boolean getInterruptedStudies() {
 	return isInterrupted();
     }
