@@ -1700,6 +1700,14 @@ public class Registration extends Registration_Base {
 	return hasStudentCandidacy() ? getStudentCandidacy().getIngression() : null;
     }
 
+    public boolean isFirstCycleAtributionIngression() {
+	return getIngressionEnum() == Ingression.AG1C;
+    }
+
+    public boolean isSecondCycleInternalCandidacyIngression() {
+	return getIngressionEnum() == Ingression.CIA2C;
+    }
+
     final public Ingression getIngressionEnum() {
 	return getIngression() != null ? Ingression.valueOf(getIngression()) : null;
     }
@@ -2961,10 +2969,6 @@ public class Registration extends Registration_Base {
 		newRegistration.addShifts(shift);
 	    }
 	}
-    }
-
-    public boolean isSecondCycleInternalCandidacyIngression() {
-	return getIngressionEnum() == Ingression.CIA2C;
     }
 
     public boolean isEnrolmentByStudentAllowed() {
