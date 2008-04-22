@@ -364,8 +364,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	}
 
         final Employee employee = Employee.readByNumber(Integer.valueOf(number));
-        final Person person = employee.getPerson();
-	if (employee == null || !(person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
+        final Person person = employee == null ? null : employee.getPerson();
+	if (employee == null || person == null || !(person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
 	    		"finalWorkInformationForm.unexistingTeacher"));
