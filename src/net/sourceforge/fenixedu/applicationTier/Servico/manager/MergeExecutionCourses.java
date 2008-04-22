@@ -261,11 +261,13 @@ public class MergeExecutionCourses extends Service {
 	    if (otherAttends == null) {
 		attends.setDisciplinaExecucao(executionCourseTo);
 	    } else {
-		if (attends.hasEnrolment() && !otherAttends.hasAluno()) {
+		if (attends.hasEnrolment() && !otherAttends.hasEnrolment()) {
 		    otherAttends.setEnrolment(attends.getEnrolment());
-		} else if (otherAttends.hasEnrolment() && attends.hasAluno()) {
+		} else if (otherAttends.hasEnrolment() && !attends.hasEnrolment()) {
+		    // do nothing.
+		} else if (otherAttends.hasEnrolment() && attends.hasEnrolment()) {
 		    throw new FenixServiceException("Unable to merge execution courses. Registration "
-			    + attends.getRegistration().getNumber() + " has an enrolment in both.");
+			    + attends.getRegistration().getNumber() + " has an enrolment in both.");		    
 		}
 		for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks().get(
 			0)))
