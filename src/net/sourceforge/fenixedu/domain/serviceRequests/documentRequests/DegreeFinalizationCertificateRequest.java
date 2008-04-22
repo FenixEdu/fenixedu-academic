@@ -220,10 +220,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     }
 
     final public boolean mustHideConclusionDate() {
-	return getInternshipAbolished()
-		|| getInternshipApproved()
-		|| (getStudyPlan() && getRegistration().hasSourceRegistration() && getRegistration().getSourceRegistration()
-			.isInternalAbandon());
+	return getInternshipAbolished() || getInternshipApproved()
+		|| (getStudyPlan() && getRegistration().isFirstCycleAtributionIngression());
     }
 
     final public YearMonthDay getConclusionDate() {
