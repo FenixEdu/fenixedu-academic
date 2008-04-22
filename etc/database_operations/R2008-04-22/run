@@ -33,3 +33,5 @@ execute "Fixing node content IDs, which is missing in a few" fixNodeContentId.sq
 execute "Creating Functionality Calls and doing the data migration" createFunctionalityCalls.sql
 execute "Altering Initial Contents" alterInitialContents.sql
 execute "Alter AcademicServiceRequest table" AlterTableAcademicServiceRequest.sql
+
+execute "Clear OJB_HL_SEQ table because the above scripts inserted data manually thus occupying unregistered ids" clearOJBids.sql
