@@ -406,7 +406,7 @@ public abstract class Content extends Content_Base {
 
     private boolean isNameValid(MultiLanguageString name) {
 	for(String content : name.getAllContents()) {
-	    if(content.indexOf('?') >= 0) {
+	    if(content.indexOf('?') >= 0 || content.indexOf('/') > 0) {
 		return false;
 	    }
 	}
