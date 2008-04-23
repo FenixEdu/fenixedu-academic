@@ -43,7 +43,6 @@ ul li ul { font-size: 1em}
 	sitewide profile navigation
 ***********************************************************/
 
-#perfnav { height: 22px; }
 #perfnav ul { margin: 0; padding: 0 0 0 156px; white-space: nowrap; }
 #perfnav ul li { font: bold 1em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; list-style: none; float: left; margin: 0; padding: 0; line-height: normal; }
 #perfnav a:link, #perfnav a:visited { float: left; height: auto; color: #45556A; text-decoration: none; margin: 0; padding: 4px 10px 4px 10px; white-space: nowrap; }
@@ -230,3 +229,8 @@ h3.question a:link, h3.question a:visited { text-decoration: none; color: #333; 
 #version { float: right; padding-top: 0em; }
 #version img { padding: 1px; border: 1px solid #fff; }
 #version img.activeflag { border: 1px solid #A2AEBC; background-color: #ccc; }
+
+/***********************************************************
+	fenix
+***********************************************************/
+#perfnav { height: 22px; } /* resolve o problema de a perfnav desaparecer quando não tem items de navegação */
