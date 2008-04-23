@@ -40,26 +40,6 @@ public interface FunctionalityContext {
      */
     public User getLoggedUser();
 
-    /**
-     * This method allows you to obtain the current selected module. The current
-     * selected module is the most specific module currently being used, that
-     * is, it's not always the top level module. If a top level functionality
-     * was selected this method will return <code>null</code>.
-     * 
-     * @return the selected module
-     */
-    public Module getSelectedModule();
-
-    /**
-     * Allows you to get the last selected functionality. If the user just
-     * selected a module then this method returns the same as
-     * {@link #getSelectedModule()}.
-     * 
-     * @return the selected functionality
-     */
-    @Deprecated
-    public Functionality getSelectedFunctionality();
-    
     public Content getSelectedContent();
     
     public Container getSelectedContainer();

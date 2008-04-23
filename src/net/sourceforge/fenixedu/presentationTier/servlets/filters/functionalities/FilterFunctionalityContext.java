@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 /**
@@ -63,6 +62,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	    Portal.getRootPortal().addPathContentsForTrailingPath(contents, trailingPath);
 	    addInitialContent();
 	}
+
 	final Container selectedContainer = getSelectedContainer();
 	if (selectedContainer == null) {
 	    String queryString = request.getQueryString();
@@ -71,9 +71,8 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 		lookupPath = "/" + lookupPath;
 	    }
 
-	    final Functionality functionality = Functionality.findByExecutionPath(lookupPath);
-
 	    final String pathFromRequest = getCurrentContextPathFromRequest();
+
 	    if (pathFromRequest != null) {
 		hasBeenForwarded = true;
 		contents.clear();
@@ -82,15 +81,6 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 		if (lastContent != null && lastContent instanceof Functionality) {
 		    contents.remove(contents.size() - 1);
 		}
-		if (functionality != null) {
-		    // this is probably redundant, i.e.
-		    contents.add(functionality);
-		}
-	    } else if (functionality != null) {
-		hasBeenForwarded = true;
-		// this will probable never happen now... but just in case...
-		contents.clear();
-		functionality.addPathContentsForReversePath(contents);
 	    }
 	}
 
@@ -139,24 +129,11 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 		final Container container = (Container) content;
 		final Content initialContent = container.getInitialContent();
 		if (initialContent != null) {
-		    List<Content> contents = null;
-		    if (initialContent instanceof Functionality) {
-			List<Content> functionalityContents;
-			for (FunctionalityCall functionalityCall : ((Functionality)initialContent).getFunctionalityCalls()) {
-			    functionalityContents = container.getPathTo(functionalityCall);
-			    if  (functionalityContents.size() > 1) {
-				contents = functionalityContents;
-				break;
-			    }
-			}
-		    }
-		    if (contents == null) {
-			contents = container.getPathTo(initialContent);
-		    }
-		    if(contents.size()>1) {
-			this.contents.addAll(contents.subList(1,contents.size()));
-		    }
-		    else {
+		    List<Content> contents = (initialContent instanceof Functionality) ? findCorrectFunctionalityCall(container,
+			    (Functionality) initialContent) : container.getPathTo(initialContent);
+		    if (contents.size() > 1) {
+			this.contents.addAll(contents.subList(1, contents.size()));
+		    } else {
 			this.contents.add(initialContent);
 		    }
 		}
@@ -164,22 +141,15 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	}
     }
 
-    @Override
-    public Module getSelectedModule() {
-	if (contents.isEmpty()) {
-	    return null;
+    private List<Content> findCorrectFunctionalityCall(Container container, Functionality initialContent) {
+	List<Content> functionalityContents;
+	for (FunctionalityCall functionalityCall : ((Functionality) initialContent).getFunctionalityCalls()) {
+	    functionalityContents = container.getPathTo(functionalityCall);
+	    if (functionalityContents.size() > 1) {
+		return functionalityContents;
+	    }
 	}
-
-	final Module root = RootDomainObject.getInstance().getRootModule();
-
-	Content content = getSelectedContent();
-	Module parent = (content instanceof Functionality) ? ((Functionality) content).getModule() : null;
-	while (parent != null && parent.getModule() != root) {
-	    parent = parent.getModule();
-	}
-
-	return parent == null ? root : parent;
-
+	return Collections.emptyList();
     }
 
     public List<Content> getSelectedContents() {
@@ -218,12 +188,6 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	return contents.isEmpty() ? null : contents.get(contents.size() - 1);
     }
 
-    @Override
-    public Functionality getSelectedFunctionality() {
-	final Content content = contents.isEmpty() ? null : contents.get(contents.size() - 1);
-	return content instanceof Functionality ? (Functionality) content : null;
-    }
-
     public List<Content> getPathBetween(Container container, Content content) {
 	final int indexOfContainer = contents.indexOf(container);
 	final int indexOfContent = contents.indexOf(content);
@@ -246,9 +210,9 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 
     public String getCurrentContextPath() {
 	/*
-         * String currentContextPath = getCurrentContextPathFromRequest(); if
-         * (currentContextPath == null) {
-         */
+	 * String currentContextPath = getCurrentContextPathFromRequest(); if
+	 * (currentContextPath == null) {
+	 */
 	final StringBuilder stringBuilder = new StringBuilder();
 	for (final Content content : contents) {
 	    if (content != RootDomainObject.getInstance().getRootPortal()) {

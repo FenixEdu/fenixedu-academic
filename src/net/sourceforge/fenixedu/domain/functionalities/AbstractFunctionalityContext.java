@@ -86,8 +86,6 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
 	return null;
     }
     
-    public abstract Module getSelectedModule();
-    public abstract Functionality getSelectedFunctionality();
     public abstract Container getSelectedTopLevelContainer();
     
     public static FunctionalityContext getCurrentContext(HttpServletRequest request) {
