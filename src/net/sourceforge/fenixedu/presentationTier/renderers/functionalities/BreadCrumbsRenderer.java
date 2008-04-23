@@ -8,7 +8,6 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
@@ -51,11 +50,11 @@ public class BreadCrumbsRenderer extends OutputRenderer {
     }
 
     /**
-         * The text separator used when separating the different links. By
-         * default &gt; is used.
-         * 
-         * @param separator
-         */
+     * The text separator used when separating the different links. By default
+     * &gt; is used.
+     * 
+     * @param separator
+     */
     public void setSeparator(String separator) {
 	this.separator = separator;
     }
@@ -70,14 +69,13 @@ public class BreadCrumbsRenderer extends OutputRenderer {
 
 		Content content = (Content) object;
 
-		List<Content> contents = RootDomainObject.getInstance().getRootPortal().getPathTo(
-			content);
+		List<Content> contents = RootDomainObject.getInstance().getRootPortal().getPathTo(content);
 		Iterator<Content> contentIterator = contents.iterator();
 
 		while (contentIterator.hasNext()) {
 		    container.addChild(createLink(contentIterator.next()));
-		    if(contentIterator.hasNext()) {
-			container.addChild(new HtmlText(getSeparator(),false));
+		    if (contentIterator.hasNext()) {
+			container.addChild(new HtmlText(getSeparator(), false));
 		    }
 		}
 
@@ -87,8 +85,8 @@ public class BreadCrumbsRenderer extends OutputRenderer {
 	    private HtmlComponent createLink(Content content) {
 		String linkToFormat = getLinkFor(content.getClass().getSimpleName());
 		if (linkToFormat != null) {
-		    final String prefix = content.isPublic() ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
-		    HtmlLink link = new HtmlLinkWithPreprendedComment(prefix);
+		    HtmlLink link = content.isPublic() ? new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX)
+			    : new HtmlLink();
 		    link.setModuleRelative(true);
 		    link.setContextRelative(true);
 		    link.setText(content.getName().getContent());
