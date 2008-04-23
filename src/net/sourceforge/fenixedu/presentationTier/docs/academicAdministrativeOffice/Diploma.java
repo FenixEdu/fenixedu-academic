@@ -90,25 +90,28 @@ public class Diploma extends AdministrativeOfficeDocument {
 		.getLocale());
 
 	final DegreeType degreeType = registration.getDegreeType();
-	if (degreeType.isComposite()) {
-	    for (final Iterator<CycleType> iter = registration.getConcludedCycles(diplomaRequest.getRequestedCycle()).iterator(); iter
-		    .hasNext();) {
-		final CycleType cycleType = iter.next();
-		result.append(enumerationBundle.getString(cycleType.getQualifiedName()));
-		if (iter.hasNext()) {
-		    result.append(" ").append(applicationResources.getString("and"));
-		    result.append(" ").append(applicationResources.getString("the.masculine")).append(" ");
-		}
-	    }
-	    result.append(" ").append(applicationResources.getString("of.masculine")).append(" ");
-	}
+	// reportConcludedCycles(result, applicationResources,
+	// diplomaRequest, registration);
+
+	result.append(enumerationBundle.getString(diplomaRequest.getWhatShouldBeRequestedCycle().getQualifiedName()));
+	result.append(" ").append(applicationResources.getString("of.masculine")).append(" ");
 
 	result.append(degreeType.getPrefix()).append(degreeType.getFilteredName());
-	if (degreeType.hasExactlyOneCycleType()) {
-	    result.append(" (").append(enumerationBundle.getString(degreeType.getCycleType().getQualifiedName())).append(")");
-	}
 
 	return result.toString();
+    }
+
+    private void reportConcludedCycles(final StringBuilder result, final ResourceBundle applicationResources,
+	    final DiplomaRequest diplomaRequest, final Registration registration) {
+	for (final Iterator<CycleType> iter = registration.getConcludedCycles(diplomaRequest.getRequestedCycle()).iterator(); iter
+		.hasNext();) {
+	    final CycleType cycleType = iter.next();
+	    result.append(enumerationBundle.getString(cycleType.getQualifiedName()));
+	    if (iter.hasNext()) {
+		result.append(" ").append(applicationResources.getString("and"));
+		result.append(" ").append(applicationResources.getString("the.masculine")).append(" ");
+	    }
+	}
     }
 
 }
