@@ -89,7 +89,17 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	    super.setRequestedCycle(requestedCycle);
 	}
 
-	checkForDiplomaRequest(requestedCycle);
+	checkSpecificConditions();
+    }
+
+    private void checkSpecificConditions() {
+	if (getRegistration().getDegreeType().getQualifiesForGraduateTitle()) {
+	    checkForDiplomaRequest(getRequestedCycle());
+	} else {
+	    if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
+		throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
+	    }
+	}
     }
 
     private void checkForDiplomaRequest(final CycleType requestedCycle) {
@@ -104,7 +114,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequestBean.isToProcess()) {
-	    checkForDiplomaRequest(getRequestedCycle());
+	    checkSpecificConditions();
 
 	    if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
 		throw new DomainException("DegreeFinalizationCertificateRequest.registration.not.submited.to.conclusion.process");
