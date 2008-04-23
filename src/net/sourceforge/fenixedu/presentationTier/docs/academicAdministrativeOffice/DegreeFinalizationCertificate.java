@@ -104,12 +104,18 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     }
 
     final private String getDiplomaDescription() {
-	final StringBuilder result = new StringBuilder();
-
 	final Degree degree = getDocumentRequest().getDegree();
 	final DegreeType degreeType = degree.getDegreeType();
+	if (!degreeType.getQualifiesForGraduateTitle()) {
+	    return StringUtils.EMPTY;
+	}
+
+	final StringBuilder result = new StringBuilder();
+	result.append("tendo requerido ");
+
 	switch (degreeType) {
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+	    break;
 	case BOLONHA_SPECIALIZATION_DEGREE:
 	    result.append("o respectivo diploma");
 	    break;
