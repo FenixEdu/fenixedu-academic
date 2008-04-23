@@ -20,8 +20,9 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
     public AssiduousnessClosedMonth(AssiduousnessStatusHistory assiduousnessStatusHistory, ClosedMonth closedMonth,
 	    Duration balance, Duration totalComplementaryWeeklyRestBalance, Duration totalWeeklyRestBalance,
 	    Duration holidayRest, Duration balanceToDiscount, double vacations, double tolerance, double article17,
-	    double article66, Integer maximumWorkingDays, Integer workedDays, Duration finalBalance,
-	    Duration finalBalanceToCompensate, YearMonthDay beginDate, YearMonthDay endDate) {
+	    double article66, Integer maximumWorkingDays, Integer workedDaysWithBonusDaysDiscount,
+	    Integer workedDaysWithA17VacationsDaysDiscount, Duration finalBalance, Duration finalBalanceToCompensate,
+	    YearMonthDay beginDate, YearMonthDay endDate) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBalance(balance);
 	setBalanceToDiscount(balanceToDiscount);
@@ -38,7 +39,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setAccumulatedUnjustified(0.0);
 	setUnjustifiedDays(0);
 	setMaximumWorkingDays(maximumWorkingDays);
-	setWorkedDays(workedDays);
+	setWorkedDaysWithBonusDaysDiscount(workedDaysWithBonusDaysDiscount);
+	setWorkedDaysWithA17VacationsDaysDiscount(workedDaysWithA17VacationsDaysDiscount);
 	setFinalBalance(finalBalance);
 	setFinalBalanceToCompensate(finalBalanceToCompensate);
 	setBeginDate(beginDate);

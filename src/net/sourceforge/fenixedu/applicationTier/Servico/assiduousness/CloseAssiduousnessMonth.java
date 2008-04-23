@@ -101,9 +101,10 @@ public class CloseAssiduousnessMonth extends Service {
 	double article66 = 0;
 	int maximumWorkingDays = 0;
 	int workedDays = 0;
-
+	Integer workedDaysWithBonusDaysDiscount = 0;
+	Integer workedDaysWithA17VacationsDaysDiscount = 0;
 	for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
-	    int thisDayWorked = 0;
+	    int thisBonusDiscount = 0, thisA17Discount = 0;
 	    WorkDaySheet workDaySheet = new WorkDaySheet();
 	    workDaySheet.setDate(thisDay);
 	    final Schedule schedule = assiduousnessStatusHistory.getAssiduousness().getSchedule(thisDay);
@@ -173,12 +174,20 @@ public class CloseAssiduousnessMonth extends Service {
 
 			if (!leave.getJustificationMotive().getDiscountBonus()
 				|| !leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
-			    thisDayWorked = 1;
+			    thisBonusDiscount = 1;
+			}
+			if (!leave.getJustificationMotive().getDiscountA17Vacations()
+				|| !leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
+			    thisA17Discount = 1;
 			}
 		    }
 		    Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight());
-		    if (leavesList.isEmpty()) {
-			thisDayWorked = 1;
+		    if (leavesList.isEmpty()
+			    && ((workSchedule.getWorkScheduleType().getScheduleClockingType()
+				    .equals(ScheduleClockingType.NOT_MANDATORY_CLOCKING)) || (!workDaySheet
+				    .getAssiduousnessRecords().isEmpty()))) {
+			thisBonusDiscount = 1;
+			thisA17Discount = 1;
 		    }
 		    if (!workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
 			    ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
@@ -195,15 +204,17 @@ public class CloseAssiduousnessMonth extends Service {
 		    holidayRest = holidayRest.plus(workDaySheet.getHolidayRest());
 		}
 	    }
-	    workedDays += thisDayWorked;
+	    workedDaysWithBonusDaysDiscount += thisBonusDiscount;
+	    workedDaysWithA17VacationsDaysDiscount += thisA17Discount;
 	}
 
 	EmployeeBalanceResume employeeBalanceResume = new EmployeeBalanceResume(totalBalance, totalBalanceToDiscount, closedMonth
 		.getClosedYearMonth(), assiduousnessStatusHistory);
 	AssiduousnessClosedMonth assiduousnessClosedMonth = new AssiduousnessClosedMonth(assiduousnessStatusHistory, closedMonth,
 		totalBalance, totalComplementaryWeeklyRestBalance, totalWeeklyRestBalance, holidayRest, totalBalanceToDiscount,
-		vacations, tolerance, article17, article66, maximumWorkingDays, workedDays, employeeBalanceResume
-			.getFinalAnualBalance(), employeeBalanceResume.getFutureBalanceToCompensate(), beginDate, endDate);
+		vacations, tolerance, article17, article66, maximumWorkingDays, workedDaysWithBonusDaysDiscount,
+		workedDaysWithA17VacationsDaysDiscount, employeeBalanceResume.getFinalAnualBalance(), employeeBalanceResume
+			.getFutureBalanceToCompensate(), beginDate, endDate);
 
 	for (JustificationMotive justificationMotive : justificationsDuration.keySet()) {
 	    Duration duration = justificationsDuration.get(justificationMotive);
@@ -241,7 +252,12 @@ public class CloseAssiduousnessMonth extends Service {
 	    unjustifiedDays = (int) Math.floor(unjustified);
 	    article66Days = (int) Math.floor(accumulatedArticle66);
 	}
-	assiduousnessClosedMonth.setWorkedDays(workedDays - unjustifiedDays >= 0 ? workedDays - unjustifiedDays : 0);
+	assiduousnessClosedMonth
+		.setWorkedDaysWithBonusDaysDiscount(workedDaysWithBonusDaysDiscount - unjustifiedDays >= 0 ? workedDaysWithBonusDaysDiscount
+			- unjustifiedDays
+			: 0);
+	assiduousnessClosedMonth.setWorkedDaysWithA17VacationsDaysDiscount(workedDaysWithA17VacationsDaysDiscount
+		- unjustifiedDays >= 0 ? workedDaysWithA17VacationsDaysDiscount - unjustifiedDays : 0);
 
 	if (unjustifiedDays > 0 || article66Days > 0 || assiduousnessClosedMonth.getArticle66().doubleValue() > 0) {
 	    return assiduousnessClosedMonth;

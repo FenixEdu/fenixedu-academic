@@ -300,7 +300,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 			    if (assiduousnessClosedMonth != null) {
 				absences = new Integer(absences.intValue()
 					+ (new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
-						- assiduousnessClosedMonth.getWorkedDays()).intValue()));
+						- assiduousnessClosedMonth.getWorkedDaysWithBonusDaysDiscount()).intValue()));
 			    }
 			}
 		    }

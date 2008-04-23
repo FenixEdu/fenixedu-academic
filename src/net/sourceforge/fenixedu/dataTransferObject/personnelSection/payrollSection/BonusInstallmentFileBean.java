@@ -216,7 +216,7 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 			    .getAssiduousnessClosedMonths(thisEmployeeBonusInstallment.getEmployee().getAssiduousness());
 		    int workedDays = 0;
 		    for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonthList) {
-			workedDays += assiduousnessClosedMonth.getWorkedDays().intValue();
+			workedDays += assiduousnessClosedMonth.getWorkedDaysWithBonusDaysDiscount();
 		    }
 
 		    if (workedDays < miniumWorkedDays) {

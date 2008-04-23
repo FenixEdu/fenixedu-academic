@@ -160,9 +160,9 @@ public class BonusInstallment implements Serializable {
 			    .getAssiduousnessClosedMonths(assiduousness)) {
 			if (assiduousnessClosedMonth != null) {
 			    maximumWorkingDays += new Integer(assiduousnessClosedMonth.getMaximumWorkingDays());
-			    workedDays += new Integer(assiduousnessClosedMonth.getWorkedDays());
+			    workedDays += new Integer(assiduousnessClosedMonth.getWorkedDaysWithBonusDaysDiscount());
 			    absences += new Integer(assiduousnessClosedMonth.getMaximumWorkingDays()
-				    - assiduousnessClosedMonth.getWorkedDays());
+				    - (assiduousnessClosedMonth.getWorkedDaysWithBonusDaysDiscount()));
 			}
 		    }
 		}

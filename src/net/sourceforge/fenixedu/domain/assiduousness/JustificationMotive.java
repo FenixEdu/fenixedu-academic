@@ -17,18 +17,20 @@ public class JustificationMotive extends JustificationMotive_Base {
     public JustificationMotive(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
 	    DayType dayType, JustificationGroup justificationGroup, DateTime lastModifiedDate, Employee modifiedBy) {
 	super();
-	init(acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, null, null, lastModifiedDate,
-		modifiedBy);
+	init(acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, null, null, Boolean.FALSE,
+		Boolean.FALSE, lastModifiedDate, modifiedBy);
     }
 
     public JustificationMotive(String acronym, String description, DateTime lastModifiedDate, Employee modifiedBy) {
 	super();
-	init(acronym, description, false, null, null, null, null, null, lastModifiedDate, modifiedBy);
-    }
+	init(acronym, description, false, null, null, null, null, null, Boolean.FALSE, Boolean.FALSE, lastModifiedDate,
+		modifiedBy);
+    }//
 
     private void init(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
 	    DayType dayType, JustificationGroup justificationGroup, Integer giafCodeOtherStatus,
-	    Integer giafCodeContractedStatus, DateTime lastModifiedDate, Employee modifiedBy) {
+	    Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, DateTime lastModifiedDate,
+	    Employee modifiedBy) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAcronym(acronym);
 	setDescription(description);
@@ -39,36 +41,41 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setLastModifiedDate(lastModifiedDate);
 	setModifiedBy(modifiedBy);
 	setActive(Boolean.TRUE);
-	setDiscountBonus(Boolean.FALSE);
+	setDiscountBonus(discountBonus);
+	setDiscountA17Vacations(discountA17Vacations);
 	setGiafCodeContractedStatus(giafCodeContractedStatus);
 	setGiafCodeOtherStatus(giafCodeOtherStatus);
     }
 
     public JustificationMotive(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
 	    DayType dayType, JustificationGroup justificationGroup, Integer giafCodeOtherStatus,
-	    Integer giafCodeContractedStatus, Employee modifiedBy) {
+	    Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym)) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
 	init(acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, giafCodeOtherStatus,
-		giafCodeContractedStatus, new DateTime(), modifiedBy);
+		giafCodeContractedStatus, discountBonus, discountA17Vacations, new DateTime(), modifiedBy);
     }
 
     // in regularizations actualWorkTime is always false
-    public JustificationMotive(String acronym, String description, JustificationType justificationType, DayType dayType,
-	    JustificationGroup justificationGroup, Employee modifiedBy) {
-	if (alreadyExistsJustificationMotiveAcronym(acronym)) {
-	    throw new DomainException("error.acronymAlreadyExists");
-	}
-	init(acronym, description, false, justificationType, dayType, justificationGroup, null, null, new DateTime(), modifiedBy);
-    }
+    // public JustificationMotive(String acronym, String description,
+    // JustificationType justificationType, DayType dayType,
+    // JustificationGroup justificationGroup, Employee modifiedBy) {
+    // if (alreadyExistsJustificationMotiveAcronym(acronym)) {
+    // throw new DomainException("error.acronymAlreadyExists");
+    // }
+    // init(acronym, description, false, justificationType, dayType,
+    // justificationGroup, null, null, Boolean.FALSE,
+    // Boolean.FALSE, new DateTime(), modifiedBy);
+    // }
 
+    // construtor used for regularizations
     public JustificationMotive(String acronym, String description, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym)) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
-	init(acronym, description, false, null, null, null, null, null, new DateTime(), modifiedBy);
-    }
+	init(acronym, description, false, null, null, null, null, null, Boolean.FALSE, Boolean.FALSE, new DateTime(), modifiedBy);
+    }// 
 
     private boolean alreadyExistsJustificationMotiveAcronym(String acronym) {
 	return alreadyExistsJustificationMotiveAcronym(acronym, null);
@@ -94,7 +101,7 @@ public class JustificationMotive extends JustificationMotive_Base {
     }
 
     public void editJustificationMotive(String acronym, String description, Boolean active, Integer giafCodeOtherStatus,
-	    Integer giafCodeContractedStatus, Employee modifiedBy) {
+	    Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym, getIdInternal())) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
@@ -103,13 +110,16 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setActive(active);
 	setGiafCodeContractedStatus(giafCodeContractedStatus);
 	setGiafCodeOtherStatus(giafCodeOtherStatus);
+	setDiscountBonus(discountBonus);
+	setDiscountA17Vacations(discountA17Vacations);
 	setLastModifiedDate(new DateTime());
 	setModifiedBy(modifiedBy);
     }
 
     public void editJustificationMotive(String acronym, String description, Boolean actualWorkTime,
 	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup, Boolean active,
-	    Integer giafCodeOtherStatus, Integer giafCodeContractedStatus, Employee modifiedBy) {
+	    Integer giafCodeOtherStatus, Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations,
+	    Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym, getIdInternal())) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
@@ -122,6 +132,8 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setActive(active);
 	setGiafCodeContractedStatus(giafCodeContractedStatus);
 	setGiafCodeOtherStatus(giafCodeOtherStatus);
+	setDiscountBonus(discountBonus);
+	setDiscountA17Vacations(discountA17Vacations);
 	setLastModifiedDate(new DateTime());
 	setModifiedBy(modifiedBy);
     }

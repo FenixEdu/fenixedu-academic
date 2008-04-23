@@ -274,6 +274,8 @@
 	<slot name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeOtherStatus" key="label.permanentStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="discountBonus" key="label.discountBonus" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="discountA17Vacations" key="label.discountA17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="create.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
@@ -302,6 +304,8 @@
 	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES">
 		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
 	</slot>
+	<slot name="discountBonus" key="label.discountBonus" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="discountA17Vacations" key="label.discountA17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedBy" hidden="true"/>
 </schema>
 
@@ -327,8 +331,10 @@
 	<slot name="giafCodeOtherStatus" key="label.permanentStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="active" key="label.active" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="discountBonus" key="label.discountBonus" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="discountA17Vacations" key="label.discountA17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedBy" hidden="true"/>
-	<setter signature="editJustificationMotive(acronym,description,actualWorkTime,justificationType,dayType,justificationGroup,active,giafCodeOtherStatus, giafCodeContractedStatus, modifiedBy)"/>
+	<setter signature="editJustificationMotive(acronym,description,actualWorkTime,justificationType,dayType,justificationGroup,active,giafCodeOtherStatus,giafCodeContractedStatus,discountBonus,discountA17Vacations,modifiedBy)"/>
 </schema>
 
 <schema name="edit.usedJustificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
@@ -343,8 +349,10 @@
 	<slot name="giafCodeOtherStatus" key="label.permanentStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="active" key="label.active" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="discountBonus" key="label.discountBonus" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="discountA17Vacations" key="label.discountA17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedBy" hidden="true"/>
-	<setter signature="editJustificationMotive(acronym,description,active,giafCodeOtherStatus,giafCodeContractedStatus,modifiedBy)"/>
+	<setter signature="editJustificationMotive(acronym,description,active,giafCodeOtherStatus,giafCodeContractedStatus,discountBonus,discountA17Vacations,modifiedBy)"/>
 </schema>
 
 <schema name="show.regularizationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" 

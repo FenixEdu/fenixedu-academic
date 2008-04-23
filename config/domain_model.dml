@@ -1637,7 +1637,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Integer unjustifiedDays;
 		Double vacations;
 		Integer maximumWorkingDays;
-		Integer workedDays;
+		Integer workedDaysWithBonusDaysDiscount;
+		Integer workedDaysWithA17VacationsDaysDiscount;
 		Duration finalBalance;
 		Duration finalBalanceToCompensate;
 		YearMonthDay beginDate;
@@ -1793,6 +1794,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		JustificationType justificationType;
 		DateTime lastModifiedDate;
 		Boolean discountBonus;
+		Boolean discountA17Vacations;
 	}
 
 	class net.sourceforge.fenixedu.domain.assiduousness.Meal extends net.sourceforge.fenixedu.domain.DomainObject {
