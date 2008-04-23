@@ -181,7 +181,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	addParameter("documentIdNumber", StringUtils.multipleLineRightPad("portador" + (person.isMale() ? "" : "a") + " do "
 		+ person.getIdDocumentType().getLocalizedName() + " Nº " + documentIdNumber, LINE_LENGTH, '-'));
 
-	final String birthLocale = person.getParishOfBirth().toUpperCase() + ", " + person.getDistrictOfBirth().toUpperCase();
+	final String birthLocale = person.getParishOfBirth().toUpperCase() + ", "
+		+ person.getDistrictSubdivisionOfBirth().toUpperCase();
 	addParameter("birthLocale", StringUtils.multipleLineRightPad("natural de " + birthLocale, LINE_LENGTH, '-'));
 
 	final String nationality = person.getCountry().getFilteredNationality().toUpperCase();
