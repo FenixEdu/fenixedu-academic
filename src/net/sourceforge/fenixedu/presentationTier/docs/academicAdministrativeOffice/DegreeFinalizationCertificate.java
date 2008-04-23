@@ -84,7 +84,6 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	if (getDocumentRequest().isToShowCredits()) {
 	    result.append(" tendo obtido o total de ");
 	    result.append(String.valueOf(request.getEctsCredits())).append(getCreditsDescription());
-	    result.append(",");
 	}
 
 	return result.toString();
@@ -95,9 +94,8 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	final DegreeType degreeType = getDocumentRequest().getDegreeType();
 	if (degreeType.getQualifiesForGraduateTitle()) {
-	    result.append(" pelo que tem direito ao grau académico de ");
+	    result.append(", pelo que tem direito ao grau académico de ");
 	    result.append(registration.getGraduateTitle(requestedCycle));
-	    result.append(", ");
 	}
 
 	return result.toString();
@@ -111,7 +109,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	}
 
 	final StringBuilder result = new StringBuilder();
-	result.append("tendo requerido ");
+	result.append(", tendo requerido ");
 
 	switch (degreeType) {
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
