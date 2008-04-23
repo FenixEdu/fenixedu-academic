@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 /**
  * Two-ledged accounting transaction
@@ -328,5 +329,10 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
     public Money getAmountWithAdjustment() {
 	return getToAccountEntry().getAmountWithAdjustment();
+    }
+
+    public boolean isInsidePeriod(final YearMonthDay startDate, final YearMonthDay endDate) {
+	return !getWhenRegistered().toYearMonthDay().isBefore(startDate)
+		&& !getWhenRegistered().toYearMonthDay().isAfter(endDate);
     }
 }

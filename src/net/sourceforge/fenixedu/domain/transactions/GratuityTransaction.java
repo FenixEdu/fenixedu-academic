@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -21,10 +22,9 @@ public class GratuityTransaction extends GratuityTransaction_Base {
 	super();
     }
 
-    public GratuityTransaction(Double value, Timestamp transactionDate, String remarks,
-	    PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
-	    Person responsiblePerson, PersonAccount personAccount, GuideEntry guideEntry,
-	    GratuitySituation gratuitySituation) {
+    public GratuityTransaction(Double value, Timestamp transactionDate, String remarks, PaymentType paymentType,
+	    TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
+	    GuideEntry guideEntry, GratuitySituation gratuitySituation) {
 	this();
 	setValue(value);
 	setTransactionDate(transactionDate);
@@ -38,9 +38,8 @@ public class GratuityTransaction extends GratuityTransaction_Base {
 	setGratuitySituation(gratuitySituation);
     }
 
-    public GratuityTransaction(final BigDecimal value, final DateTime transactionDateTime,
-	    final PaymentType paymentType, final TransactionType transactionType,
-	    final Person responsiblePerson, final PersonAccount personAccount,
+    public GratuityTransaction(final BigDecimal value, final DateTime transactionDateTime, final PaymentType paymentType,
+	    final TransactionType transactionType, final Person responsiblePerson, final PersonAccount personAccount,
 	    final GratuitySituation gratuitySituation) {
 	this();
 	setValueBigDecimal(value);
@@ -53,6 +52,11 @@ public class GratuityTransaction extends GratuityTransaction_Base {
 	setPersonAccount(personAccount);
 	setGuideEntry(null);
 	setGratuitySituation(gratuitySituation);
+    }
+
+    public boolean isInsidePeriod(final YearMonthDay start, final YearMonthDay end) {
+	final YearMonthDay date = getTransactionDateDateTime().toYearMonthDay();
+	return !date.isBefore(start) && !date.isAfter(end);
     }
 
 }

@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventState;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -16,6 +19,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public abstract class AnnualEvent extends AnnualEvent_Base {
 
@@ -91,6 +95,24 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 
     public static List<AnnualEvent> readNotPayedBy(final ExecutionYear executionYear) {
 	return readBy(executionYear, EventState.OPEN);
+    }
+
+    static public Set<AccountingTransaction> readPaymentsFor(final Class<? extends AnnualEvent> eventClass,
+	    final YearMonthDay startDate, final YearMonthDay endDate) {
+	final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+	    for (final AnnualEvent each : executionYear.getAnnualEvents()) {
+		if (eventClass.equals(each.getClass()) && !each.isCancelled()) {
+		    for (final AccountingTransaction transaction : each.getNonAdjustingTransactions()) {
+			if (transaction.isInsidePeriod(startDate, endDate)) {
+			    result.add(transaction);
+			}
+		    }
+		}
+	    }
+	}
+
+	return result;
     }
 
     abstract protected ServiceAgreementTemplate getServiceAgreementTemplate();

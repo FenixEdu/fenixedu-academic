@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventState;
@@ -158,6 +159,11 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     @Override
     public boolean isOtherPartiesPaymentsSupported() {
 	return true;
+    }
+
+    static public Set<AccountingTransaction> readPaymentsFor(final YearMonthDay startDate, final YearMonthDay endDate) {
+	return readPaymentsFor(DfaGratuityEvent.class, startDate, endDate);
+
     }
 
 }

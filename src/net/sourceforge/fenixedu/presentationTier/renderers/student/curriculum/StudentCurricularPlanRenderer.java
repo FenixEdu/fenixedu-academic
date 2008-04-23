@@ -506,14 +506,22 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		}
 
 		groupName.append(" <span title=\"");
-		groupName.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
+		groupName.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
 		groupName.append(" \"> c(");
 		groupName.append(curriculumGroup.getCreditsConcluded(executionYearContext));
 		groupName.append(")</span>");
 
+		if (isToShowCreationInfoAndGroupApprovedCredits()) {
+		    groupName.append(" <span title=\"");
+		    groupName.append(applicationResources.getString("label.curriculum.credits.legend.approvedCredits"));
+		    groupName.append(" \">, ca(");
+		    groupName.append(curriculumGroup.getAprovedEctsCredits());
+		    groupName.append(")</span>");
+		}
+
 		if (creditsLimit != null) {
 		    groupName.append("<span title=\"");
-		    groupName.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
+		    groupName.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
 		    groupName.append("\">, M(");
 		    groupName.append(creditsLimit.getMaximumCredits());
 		    groupName.append(")</span>");
@@ -588,7 +596,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateCellsFromEvaluationDateToEnd(HtmlTableRow dismissalRow) {
-	    if (isToShowCreationInfo()) {
+	    if (isToShowCreationInfoAndGroupApprovedCredits()) {
 		generateCellsWithText(dismissalRow, LATEST_ENROLMENT_EVALUATION_COLUMNS, EMPTY_INFO, new String[] {
 			getLastEnrolmentEvaluationTypeCellClass(), getCreatorCellClass() });
 	    }
@@ -608,7 +616,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateCreationDateIfRequired(HtmlTableRow enrolmentRow, DateTime creationDate) {
-	    if (isToShowCreationInfo()) {
+	    if (isToShowCreationInfoAndGroupApprovedCredits()) {
 		if (creationDate != null) {
 		    generateCellWithSpan(enrolmentRow, creationDate.toString(DATE_FORMAT), applicationResources
 			    .getString("creationDate"), getCreationDateCellClass());
@@ -619,7 +627,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateCreatorIfRequired(HtmlTableRow enrolmentRow, String createdBy) {
-	    if (isToShowCreationInfo()) {
+	    if (isToShowCreationInfoAndGroupApprovedCredits()) {
 		if (!StringUtils.isEmpty(createdBy)) {
 		    generateCellWithSpan(enrolmentRow, createdBy, applicationResources.getString("creator"),
 			    getCreatorCellClass());
@@ -777,7 +785,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    generateEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
 	    generateExecutionYearCell(enrolmentRow, enrolment);
 	    generateSemesterCell(enrolmentRow, enrolment);
-	    if (isToShowCreationInfo()) {
+	    if (isToShowCreationInfoAndGroupApprovedCredits()) {
 		generateCellWithText(enrolmentRow, EMPTY_INFO, getCreationDateCellClass()); // enrolment
 		// evaluation
 		// date
@@ -788,7 +796,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateGradeResponsibleIfRequired(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-	    if (isToShowCreationInfo()) {
+	    if (isToShowCreationInfoAndGroupApprovedCredits()) {
 		final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
 		if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getPersonResponsibleForGrade() != null) {
 
@@ -815,7 +823,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateLastEnrolmentEvaluationExamDateCellIfRequired(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-	    if (isToShowCreationInfo()) {
+	    if (isToShowCreationInfoAndGroupApprovedCredits()) {
 		final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
 		if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getExamDateYearMonthDay() != null) {
 
@@ -838,7 +846,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private int calculateSpacerColspan() {
 	    return MAX_LINE_SIZE - MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - COLUMNS_BETWEEN_TEXT_AND_ENROLMENT_EVALUATION_DATE
-		    - (isToShowCreationInfo() ? LATEST_ENROLMENT_EVALUATION_COLUMNS : 0);
+		    - (isToShowCreationInfoAndGroupApprovedCredits() ? LATEST_ENROLMENT_EVALUATION_COLUMNS : 0);
 	}
 
 	private void generateSemesterCell(final HtmlTableRow row, final ICurriculumEntry entry) {
@@ -1096,7 +1104,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	cell.setBody(span);
     }
 
-    private boolean isToShowCreationInfo() {
+    private boolean isToShowCreationInfoAndGroupApprovedCredits() {
 	final Person person = AccessControl.getPerson();
 	return person.isAdministrativeOfficeEmployee() || person.hasRole(RoleType.MANAGER);
     }

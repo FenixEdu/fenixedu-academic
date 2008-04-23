@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -424,5 +427,20 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	    }
 	}
 	return null;
+    }
+
+    private Set<AccountingTransaction> getPaymentsFor(final Class<? extends AnnualEvent> eventClass) {
+	final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
+	for (final AnnualEvent each : getAnnualEvents()) {
+	    if (eventClass.equals(each.getClass()) && !each.isCancelled()) {
+		result.addAll(each.getNonAdjustingTransactions());
+	    }
+	}
+
+	return result;
+    }
+
+    public Set<AccountingTransaction> getDFAGratuityPayments() {
+	return getPaymentsFor(DfaGratuityEvent.class);
     }
 }
