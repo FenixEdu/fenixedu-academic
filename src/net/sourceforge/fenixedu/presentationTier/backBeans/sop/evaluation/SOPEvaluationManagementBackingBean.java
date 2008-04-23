@@ -48,6 +48,9 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -1148,6 +1151,18 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 		stringBuilder.append(DateFormatUtil.format("HH:mm", this.getEnd().getTime()));
 	    }
 	    stringBuilder.append("&executionPeriodOID=").append(getExecutionPeriod().getIdInternal());
+	    stringBuilder.append("&");
+	    stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+	    stringBuilder.append("=");
+	    stringBuilder.append(FilterFunctionalityContext.getCurrentContext(getRequest()).getCurrentContextPath());
+	    String url = stringBuilder.toString();
+	    
+	    String checksum = ChecksumRewriter.calculateChecksum(url);
+	    stringBuilder.append("&");
+	    stringBuilder.append(ChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
+	    stringBuilder.append("=");
+	    stringBuilder.append(checksum);
+	    
 	    FacesContext.getCurrentInstance().getExternalContext().redirect(stringBuilder.toString());
 	    return originPage;
 	} else {
