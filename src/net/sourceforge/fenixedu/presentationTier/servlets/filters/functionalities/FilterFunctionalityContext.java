@@ -49,13 +49,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 
 	this.encoding = encodingParam;
 
-	String path = getCurrentContextPathFromRequest();
-	if (path == null) {
-	    path = getPath(encoding);
-	    hasBeenForwarded = false;
-	} else {
-	    hasBeenForwarded = true;
-	}
+	String path = getRequestedPath();
 
 	if (!path.contains(".do") && !path.contains(".faces")) {
 	    final String trailingPath = getTrailingPath(path);
@@ -63,32 +57,41 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	    addInitialContent();
 	}
 
-	final Container selectedContainer = getSelectedContainer();
-	if (selectedContainer == null) {
-	    String queryString = request.getQueryString();
-	    String lookupPath = path + (queryString != null && queryString.length() > 0 ? "?" + queryString : "");
-	    if (lookupPath.length() > 0 && lookupPath.charAt(0) != '/') {
-		lookupPath = "/" + lookupPath;
+	if (contents.isEmpty()) {
+	    if (!ableToPopulateContentsUsingContextAttribute()) {
+		throw new InvalidContentPathException(null, null);
 	    }
-
-	    final String pathFromRequest = getCurrentContextPathFromRequest();
-
-	    if (pathFromRequest != null) {
-		hasBeenForwarded = true;
-		contents.clear();
-		Portal.getRootPortal().addPathContentsForTrailingPath(contents, getTrailingPath(pathFromRequest));
-		final Content lastContent = contents.isEmpty() ? null : contents.get(contents.size() - 1);
-		if (lastContent != null && lastContent instanceof Functionality) {
-		    contents.remove(contents.size() - 1);
-		}
-	    }
-	}
-
-	if ((path.contains(".do") || path.contains(".faces")) && contents.isEmpty()) {
-	    throw new InvalidContentPathException(null, null);
 	}
 
 	findSelectedContainerPath();
+    }
+
+    private String getRequestedPath() {
+	String path = getCurrentContextPathFromRequest();
+	if (path == null) {
+	    path = getPath(encoding);
+	    hasBeenForwarded = false;
+	} else {
+	    hasBeenForwarded = true;
+	}
+	
+	return path;
+    }
+
+    private boolean ableToPopulateContentsUsingContextAttribute() {
+	final String pathFromRequest = getCurrentContextPathFromRequest();
+
+	if (pathFromRequest != null) {
+	    hasBeenForwarded = true;
+	    contents.clear();
+	    Portal.getRootPortal().addPathContentsForTrailingPath(contents, getTrailingPath(pathFromRequest));
+	    final Content lastContent = contents.isEmpty() ? null : contents.get(contents.size() - 1);
+	    if (lastContent != null && lastContent instanceof FunctionalityCall) {
+		contents.remove(contents.size() - 1);
+	    }
+	}
+
+	return !contents.isEmpty();
     }
 
     private void findSelectedContainerPath() {
