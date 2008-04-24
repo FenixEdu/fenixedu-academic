@@ -32,14 +32,18 @@
 			<bean:message key="title.inquiries.reminder.sender.name" bundle="INQUIRIES_RESOURCES"/>
 		</font>
 		&nbsp;
-		<html:text bundle="HTMLALT_RESOURCES" altKey="text.fromName" property="fromName"/>
+		<bean:define id="gepName">
+			<bean:message key="label.gep.fullName" bundle="INQUIRIES_RESOURCES"/>
+		</bean:define>
+		
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.fromName" property="fromName" value="<%= gepName %>" readonly="true" size="50"/>
 		<br/>
 
 		<font class="underline italic">
 			<bean:message key="title.inquiries.reminder.sender.email" bundle="INQUIRIES_RESOURCES"/>
 		</font>
 		&nbsp;
-		<html:text bundle="HTMLALT_RESOURCES" altKey="text.fromAddress" property="fromAddress"/>
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.fromAddress" property="fromAddress" size="50"/>
 		<br/>
 
 		<p class="underline italic">

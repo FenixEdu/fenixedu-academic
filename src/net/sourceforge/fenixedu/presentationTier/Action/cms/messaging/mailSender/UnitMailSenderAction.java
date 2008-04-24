@@ -19,6 +19,7 @@ public class UnitMailSenderAction extends SimpleMailSenderAction {
 	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		request.setAttribute("unit", getUnit(request));
+	
 		return super.execute(mapping, actionForm, request, response);
 	}
 

@@ -43,7 +43,7 @@
 
 
 <fr:form action="<%= action + "?method=send&amp;degreeId=" + degreeID %>">
-	<fr:edit id="mailBean" name="mailBean" schema="MailBean.compose.option">
+	<fr:edit id="mailBean" name="mailBean" schema="MailBean.compose.option.fromReadOnly">
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>

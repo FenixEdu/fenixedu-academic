@@ -20,6 +20,8 @@ import org.apache.struts.action.ActionMapping;
 
 public class DegreeMailSenderAction extends SimpleMailSenderAction {
 
+    private static final String fromName = "Coordenação do curso";
+    
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -43,4 +45,11 @@ public class DegreeMailSenderAction extends SimpleMailSenderAction {
         return groups;
     }
     
+    @Override
+    protected String getFromName(HttpServletRequest request) {
+	StringBuffer buffer = new StringBuffer(fromName);
+	buffer.append(" " );
+	buffer.append(getDegree(request).getName());
+	return buffer.toString();
+    }
 }

@@ -28,6 +28,9 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 public class SendMailBackingBean extends FenixBackingBean {
 
     private String from = "no-reply@ist.utl.pt";
+    private String fromCD = "cd@ist.utl.pt";
+    private String fromName = "";
+    private String fromCDName = "Conselho Directivo";
     private String to = null;
     private String ccs = null;
     private String bccs = null;
@@ -457,6 +460,30 @@ public class SendMailBackingBean extends FenixBackingBean {
 
     public void setResearchers(Boolean researchers) {
         this.researchers = researchers;
+    }
+
+    public String getFromCD() {
+        return fromCD;
+    }
+
+    public void setFromCD(String fromCD) {
+        this.fromCD = fromCD;
+    }
+
+    public String getFromName() {
+        return fromName;
+    }
+
+    public void setFromName(String fromName) {
+        this.fromName = fromName;
+    }
+
+    public String getFromCDName() {
+        return fromCDName;
+    }
+
+    public void setFromCDName(String formCDName) {
+        this.fromCDName = formCDName;
     }
 
 }

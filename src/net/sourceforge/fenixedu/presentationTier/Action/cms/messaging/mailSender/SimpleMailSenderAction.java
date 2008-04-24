@@ -35,7 +35,7 @@ public class SimpleMailSenderAction extends FenixDispatchAction {
         MailBean bean = new MailBean();
         
         Person person = getLoggedPerson(request);
-        bean.setFromName(person.getName());
+        bean.setFromName(getFromName(request));
         bean.setFromAddress(person.getEmail());
      
         bean.setReceiversOptions(getPossibleReceivers(request));
@@ -43,6 +43,10 @@ public class SimpleMailSenderAction extends FenixDispatchAction {
         return bean;
     }
     
+    protected String getFromName(HttpServletRequest request) {
+	return getLoggedPerson(request).getName();
+    }
+
     public ActionForward sendInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("compose-mail");
     }

@@ -53,8 +53,19 @@
 </logic:messagesPresent>
 
 
+<bean:define id="schema" value="MailBean.compose.for.units"/>
+
+<logic:present name="unit" property="site">
+	<logic:equal name="unit" property="site.class.simpleName" value="PedagogicalCouncilSite">
+		<bean:define id="schema" value="MailBean.compose.for.units.fromReadOnly"/>
+	</logic:equal>
+	<logic:equal name="unit" property="site.class.simpleName" value="ScientificCouncilSite">
+		<bean:define id="schema" value="MailBean.compose.for.units.fromReadOnly"/>
+	</logic:equal>
+</logic:present>
+
 <fr:form action="<%= action + "?method=send&amp;unitId=" + unitID %>">
-	<fr:edit id="mailBean" name="mailBean" schema="MailBean.compose.for.researchUnits">
+	<fr:edit id="mailBean" name="mailBean" schema="<%= schema %>">
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
