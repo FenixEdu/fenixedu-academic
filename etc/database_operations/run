@@ -29,4 +29,7 @@ function executeWithTempFile() {
 }
 
 execute "Migrating FileItem to FileContent" modifyFileItemKeyToFile.sql
-execute "Changing table Transaction" AlterTableTransaction.sql
+execute "Transaction: Changing timestamp columns to datetime" AlterTableTransaction.sql
+execute "GratuitySituation: Changing timestamp columns to datetime" AlterTableGratuitySituation.sql
+execute "SibsPaymentFileEntry: Changing timestamp columns to datetime" AlterTableSibsPaymentFileEntry.sql
+execute "GratuityValues: Changing timestamp columns to datetime" AlterTableGratuityValues.sql
