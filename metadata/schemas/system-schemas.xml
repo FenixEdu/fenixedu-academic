@@ -1,8 +1,8 @@
-<schema name="net.sourceforge.fenixedu.stm.TransactionReport" type="net.sourceforge.fenixedu.stm.TransactionReport" bundle="MANAGER_RESOURCES">	
+<schema name="eu.ist.fenixframework.pstm.TransactionReport" type="eu.ist.fenixframework.pstm.TransactionReport" bundle="MANAGER_RESOURCES">	
 	<slot name="startOfReport"/>
 	<slot name="endOfReport"/>
 	<slot name="transactionAction" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.stm.TransactionAction"/>
+		<property name="choiceType" value="eu.ist.fenixframework.pstm.TransactionAction"/>
 	</slot>	
 	<slot name="server" layout="menu-select">
 		<property name="choiceType" value="java.lang.String"/>

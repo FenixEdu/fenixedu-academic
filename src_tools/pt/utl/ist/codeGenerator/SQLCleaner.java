@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.CollectionDescriptor;
@@ -19,7 +18,6 @@ public class SQLCleaner {
     public static void main(String[] args) {
 	try {
 	    MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
-	    SuportePersistenteOJB.fixDescriptors();
 	    generate(args[0]);
 	} catch (Exception ex) {
 	    ex.printStackTrace();

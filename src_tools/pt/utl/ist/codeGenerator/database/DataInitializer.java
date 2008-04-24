@@ -19,8 +19,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
-import net.sourceforge.fenixedu.stm.Transaction;
+import eu.ist.fenixframework.pstm.Transaction;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -29,7 +28,6 @@ public class DataInitializer {
     public static void main(String[] args) {
 
 	MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
-	SuportePersistenteOJB.fixDescriptors();
 	RootDomainObject.init();
 
 	try {

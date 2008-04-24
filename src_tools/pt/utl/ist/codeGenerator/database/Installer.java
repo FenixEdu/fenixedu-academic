@@ -25,10 +25,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -678,13 +674,11 @@ public class Installer extends Task implements TaskContainer {
 			String password = getFenixManagerUserPassword();
 			Gender gender=Gender.parseGender(getFenixManagerUserGender());
 			MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
-			SuportePersistenteOJB.fixDescriptors();
 			RootDomainObject.init();
 
-			ISuportePersistente persistentSupport = null;
+            boolean txFinished = false;
 			try {
-				persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-				persistentSupport.iniciarTransaccao();
+                Transaction.begin();
 
 				Person pUserAdmin = new Person(name, gender, null, null);
 				Login login = Login.readLoginByUsername(username);
@@ -702,19 +696,15 @@ public class Installer extends Task implements TaskContainer {
 				//so redefine it!!!
 				login.setPassword(PasswordEncryptor.encryptPassword(password));
 
-				persistentSupport.confirmarTransaccao();
+				Transaction.commit();
+                txFinished = true;
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
 
-				try {
-					if (persistentSupport != null) {
-						persistentSupport.cancelarTransaccao();
-					}
-				}
-				catch (ExcepcaoPersistencia e) {
-					throw new Error(e);
-				}
+                if (! txFinished) {
+                    Transaction.abort();
+                }
 			}
 
 			System.out.println("Initialization complete.");

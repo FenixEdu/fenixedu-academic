@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.servlets.filters.cache;
 
 import java.lang.ref.SoftReference;
 
-import net.sourceforge.fenixedu.stm.ReadSet;
+import eu.ist.fenixframework.pstm.ReadSet;
 
 import com.opensymphony.oscache.web.filter.ResponseContent;
 

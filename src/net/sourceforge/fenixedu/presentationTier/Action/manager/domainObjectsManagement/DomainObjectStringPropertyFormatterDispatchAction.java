@@ -12,7 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.MetadataManager;
+import eu.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -51,7 +51,7 @@ public class DomainObjectStringPropertyFormatterDispatchAction extends FenixDisp
         DynaActionForm actionForm = (DynaActionForm) form;
         String domainObjectClass = (String) actionForm.get("domainObjectClass");
 
-        DomainClass domainObjectToFormat = MetadataManager.getDomainModel().findClass(domainObjectClass);
+        DomainClass domainObjectToFormat = FenixFramework.getDomainModel().findClass(domainObjectClass);
 
         List<LabelValueBean> slots = new ArrayList<LabelValueBean>();
         Iterator<Slot> slotsIter = domainObjectToFormat.getSlots();
@@ -92,7 +92,7 @@ public class DomainObjectStringPropertyFormatterDispatchAction extends FenixDisp
 
     private List<LabelValueBean> getClasses() {
         List<LabelValueBean> classes = new ArrayList<LabelValueBean>();
-        for (Iterator<DomainClass> iter = MetadataManager.getDomainModel().getClasses(); iter.hasNext();) {
+        for (Iterator<DomainClass> iter = FenixFramework.getDomainModel().getClasses(); iter.hasNext();) {
             DomainClass domainClass = (DomainClass) iter.next();
             classes.add(new LabelValueBean(domainClass.getName(), domainClass.getFullName()));
         }

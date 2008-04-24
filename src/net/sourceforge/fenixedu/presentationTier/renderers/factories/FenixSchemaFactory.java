@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.MetadataManager;
+import eu.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.renderers.model.DefaultSchemaFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
@@ -92,7 +92,7 @@ public class FenixSchemaFactory extends DefaultSchemaFactory {
     }
 
     public static Schema getSchemaForDomainObject(String name) throws ClassNotFoundException {
-        DomainClass domainClass = MetadataManager.getDomainModel().findClass(name);
+        DomainClass domainClass = FenixFramework.getDomainModel().findClass(name);
 
         Schema schema = new Schema(Class.forName(domainClass.getFullName()));
         

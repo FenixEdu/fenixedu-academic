@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.stm.Transaction;
+import eu.ist.fenixframework.pstm.Transaction;
 
 import org.testng.annotations.Configuration;
 import org.testng.annotations.Test;

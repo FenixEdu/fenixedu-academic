@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+
+import eu.ist.fenixframework.pstm.Transaction;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
  */
 public class ReadNumberCachedItems extends Service {
 
-	public Integer run() throws FenixServiceException, ExcepcaoPersistencia {
+	public Integer run() throws FenixServiceException {
 		Integer numberCachedObjects = null;
 
-		numberCachedObjects = SuportePersistenteOJB.getInstance().getNumberCachedItems();
+		numberCachedObjects = Transaction.getCache().getNumberOfCachedItems();
 
 		return numberCachedObjects;
 	}

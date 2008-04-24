@@ -18,12 +18,12 @@ import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+
+import eu.ist.fenixframework.pstm.Transaction;
+
 
 /**
  * @author David Santos in Jan 29, 2004
@@ -32,8 +32,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class VerifyLEECCurricularPlan {
     public static void main(String args[]) {
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            persistentSuport.iniciarTransaccao();
+            Transaction.begin();
 
             DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(48);
             List branches = degreeCurricularPlan.getAreas();
@@ -54,7 +53,7 @@ public class VerifyLEECCurricularPlan {
 
             printItForPrecedences(degreeCurricularPlan);
 
-            persistentSuport.confirmarTransaccao();
+            Transaction.commit();
         } catch (Throwable e) {
             e.printStackTrace(System.out);
         }
@@ -63,10 +62,8 @@ public class VerifyLEECCurricularPlan {
     /**
      * @param branch
      * @param areaType
-     * @throws ExcepcaoPersistencia
      */
-    private static void printItForThisAreaWithScopes(Branch branch, AreaType areaType)
-            throws ExcepcaoPersistencia {
+    private static void printItForThisAreaWithScopes(Branch branch, AreaType areaType) {
         List<CurricularCourseGroup> groups = branch.readCurricularCourseGroupsByAreaType(areaType);
         Iterator iterator1 = groups.iterator();
         while (iterator1.hasNext()) {
@@ -158,10 +155,8 @@ public class VerifyLEECCurricularPlan {
 
     /**
      * @param degreeCurricularPlan
-     * @throws ExcepcaoPersistencia
      */
-    private static void printItForPrecedences(DegreeCurricularPlan degreeCurricularPlan)
-            throws ExcepcaoPersistencia {
+    private static void printItForPrecedences(DegreeCurricularPlan degreeCurricularPlan) {
         System.out.println("PRECED�NCIAS:");
         List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses(); 
         sortCurricularCourses(curricularCourses);

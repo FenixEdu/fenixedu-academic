@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.stm.Transaction;
+import eu.ist.fenixframework.pstm.Transaction;
 
 public class RootDomainObject extends RootDomainObject_Base {
 
@@ -17,10 +14,7 @@ public class RootDomainObject extends RootDomainObject_Base {
 	if (instance == null) {
 	    Transaction.withTransaction(new jvstm.TransactionalCommand() {
 		public void doIt() {
-		    final ISuportePersistente suportePersistente = PersistenceSupportFactory
-			    .getDefaultPersistenceSupport();
-		    final IPersistentObject persistentObject = suportePersistente.getIPersistentObject();
-		    instance = persistentObject.readRootDomainObject();
+		    instance = (RootDomainObject)Transaction.getDomainObject(RootDomainObject.class.getName(), 1);
 		    instance.initAccessClosures();
 		}
 	    });
@@ -39,5 +33,9 @@ public class RootDomainObject extends RootDomainObject_Base {
 
     public static void initTests() {
 	instance = new RootDomainObject();
+    }
+
+    protected RootDomainObject getRootDomainObject() {
+        return this;
     }
 }

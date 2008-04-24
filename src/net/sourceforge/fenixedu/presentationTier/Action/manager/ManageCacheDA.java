@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.Custodian;
-import net.sourceforge.fenixedu._development.MetadataManager;
+import eu.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -100,7 +100,7 @@ public class ManageCacheDA extends FenixDispatchAction {
     public ActionForward loadAllObjectsToCache(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final DomainModel domainModel = MetadataManager.getDomainModel();
+        final DomainModel domainModel = FenixFramework.getDomainModel();
 
         final long startTime = System.currentTimeMillis();
         long numberOfReadDomainObjects = 0;

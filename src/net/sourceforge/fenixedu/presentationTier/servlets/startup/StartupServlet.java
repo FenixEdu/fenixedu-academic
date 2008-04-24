@@ -10,8 +10,10 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+import eu.ist.fenixframework.Config;
+import eu.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu._development.Custodian;
-import net.sourceforge.fenixedu._development.MetadataManager;
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Login;
@@ -22,10 +24,9 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.stm.Transaction;
+import eu.ist.fenixframework.pstm.Transaction;
 
 /**
  * 17/Fev/2003
@@ -44,9 +45,13 @@ public class StartupServlet extends HttpServlet {
 
         super.init(config);
 
-        MetadataManager.init(getServletContext().getRealPath(getInitParameter("domainmodel")));
-
-        SuportePersistenteOJB.fixDescriptors();
+        String domainModelPath = getServletContext().getRealPath(getInitParameter("domainmodel"));
+        Config frameworkConfig = new Config() {{
+            appName = PropertiesManager.getProperty("app.name");
+            errorIfChangingDeletedObject = 
+                PropertiesManager.getBooleanProperty("error.if.changing.deleted.object");
+        }};
+        FenixFramework.initialize(domainModelPath, frameworkConfig);
 
         Service.init(RootDomainObject.getInstance());
 

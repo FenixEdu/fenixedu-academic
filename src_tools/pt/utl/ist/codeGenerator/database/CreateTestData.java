@@ -140,8 +140,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
-import net.sourceforge.fenixedu.stm.Transaction;
+import eu.ist.fenixframework.pstm.Transaction;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -1062,7 +1061,6 @@ public class CreateTestData {
     public static void main(String[] args) {
 	try {
 	    MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
-	    SuportePersistenteOJB.fixDescriptors();
 	    RootDomainObject.init();
 	    setPrivledges();
 	    createTestData();

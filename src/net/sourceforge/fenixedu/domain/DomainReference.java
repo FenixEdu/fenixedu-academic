@@ -3,9 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import eu.ist.fenixframework.pstm.Transaction;
 
 /**
  * A <code>DomainReference</code> allows a serializable object to refer to a domain object. 
@@ -93,10 +91,7 @@ public class DomainReference<T extends DomainObject> implements Serializable {
             return null;
         }
         
-        ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentObject persistentObject = persistenceSupport.getIPersistentObject();
-        
-        this.object = (T) persistentObject.readByOID(getType(), getOid());
+        this.object = (T) Transaction.getDomainObject(getClassName(), getOid());
 
         return this.object;
     }

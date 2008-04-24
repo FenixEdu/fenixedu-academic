@@ -89,8 +89,8 @@ webcontainer.manager.url=http://localhost:8080/manager
 # @message = Persistence support type
 # @type = menu
 # @options = {"OJB Persistence support","Versioned Objects Persistence Support","Delegate Persistence Support"}
-# @optionsValues = {"net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB","net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsPersistenceSupport","net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DelegatePersistenceSupport"}
-repository.default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB
+# @optionsValues = {"net.sourceforge.fenixedu.persistenceTier.SuportePersistenteOJB","net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsPersistenceSupport","net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DelegatePersistenceSupport"}
+repository.default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.SuportePersistenteOJB
 
 # @message = Fenix Database host
 # @type = hostname
@@ -701,46 +701,6 @@ dbinstaller.upgradesDirectory=etc/database_operations
 ftp.hostnames=IST,degree.grades
 
 #------------------------------------------------------------------------------
-# Cache Configuration
-#------------------------------------------------------------------------------
-#
-#   ObjectCacheClass: cache implementation to use. Possible values are:
-#                        - org.apache.ojb.broker.cache.ObjectCacheDefaultImpl
-#                        - org.apache.ojb.broker.cache.ObjectCacheEmptyImpl
-#                        - org.apache.ojb.broker.cache.ObjectCachePerBrokerImpl
-#                        - org.apache.ojb.broker.cache.ObjectCacheJCSPerClassImpl
-#                        - org.apache.ojb.broker.cache.ObjectCachePerClassImpl
-#                        - net.sourceforge.fenixedu.persistenceTier.cache.FenixObjectCacheDefaultImpl
-#                        - net.sourceforge.fenixedu.persistenceTier.cache.ObjectCacheOSCacheImpl
-#   cache.event.listeners: set this to:
-#       com.opensymphony.oscache.plugins.clustersupport.JavaGroupsBroadcastingListener
-#                          to use javagroups clustering. This must be set for use on 
-#                          distributed systems. Also, ObjectCacheOSCacheImpl must be
-#                          used for the distributed cache to work.
-#   cache.cluster.multicast.ip: multicast ip address to use with javagroups clustering.
-#
-#
-# @message = Object Caching implementation class
-# For clustering to work you need to select [Fenix Object Cache OS Impl]
-# @type = menu
-# @options = {"OJB Default Cache Impl","OJB Empty Cache Impl","OJB Cache per Broker Impl","OJB JCS Cache per Class Impl","OJB Cache per Class Impl","Fenix Default Cache Impl","Fenix Object Cache OS Impl"}
-# @optionsValues = {"org.apache.ojb.broker.cache.ObjectCacheDefaultImpl","org.apache.ojb.broker.cache.ObjectCacheEmptyImpl","org.apache.ojb.broker.cache.ObjectCachePerBrokerImpl","org.apache.ojb.broker.cache.ObjectCacheJCSPerClassImpl","org.apache.ojb.broker.cache.ObjectCachePerClassImpl","net.sourceforge.fenixedu.persistenceTier.cache.FenixObjectCacheDefaultImpl","net.sourceforge.fenixedu.persistenceTier.cache.ObjectCacheOSCacheImpl"}
-cache.objectcache.class=net.sourceforge.fenixedu.persistenceTier.cache.FenixCacheWrapper
-
-# @message = Object cache event listeners class type
-# For clustering to work you need to select [JavaGroups Broadcasting Listener Support]
-# @type = menu
-# @required = no
-# @options={"JavaGroups Broadcasting Listener Support"}
-# @optionsValues={"com.opensymphony.oscache.plugins.clustersupport.JavaGroupsBroadcastingListener"}
-cache.event.listeners=
-
-# @message = Multicast Clustering ip address
-# @type = string
-# @required = no
-cache.cluster.multicast.ip=231.12.21.132
-
-#------------------------------------------------------------------------------
 # HTTP Response Cache Configuration
 #------------------------------------------------------------------------------
 #
@@ -1209,59 +1169,6 @@ filemanager.dspace.rmi.stream.bytes.max=8192
 # @max = 65535
 # @dependency = filemanager.dspace.underlying.transport.class=pt.utl.ist.fenix.tools.file.dspace.DspaceRmiClient
 filemanager.dspace.rmi.stream.bytes.block=512
-
-
-#------------------------------------------------------------------------------
-# Testing Configuration
-#------------------------------------------------------------------------------
-#
-#   JdbcAccessClass: implementation to use for accessing the data repository.
-#                    the default value is
-#                         org.apache.ojb.broker.accesslayer.JdbcAccessImpl
-#                    For testing the application with ClickUnit the following
-#                    implementation should be used:
-#                         net.sourceforge.fenixedu.persistence.persistenceTiercAccessRollbackImpl
-#                    This latter implementation stores the inverse operations
-#                    performed on the database, so that the database state can
-#                    be roled back to the initial state. In production env's
-#                    the default implementation must be used!!! Using this 
-#                    latter implementation in production is a major security
-#                    hole!
-#   roleback.filename: The filename to where the 
-#                         net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
-#                      implementation will write the inverse sql operations. This
-#                      file is generated in cronilogical order. When reverting 
-#                      database state, the sql instructions should be executed
-#                      starting from the end of the file.
-#
-# @message = Implementation to use for accessing the data repository.
-#                    For testing the application with ClickUnit the [Fenix Jdbc Rollback Impl] 
-#                    should be selected.
-#                    This latter implementation stores the inverse operations
-#                    performed on the database, so that the database state can
-#                    be roled back to the initial state. In production env's
-#                    the default implementation must be used!!! Using this 
-#                    latter implementation in production is a major security
-#                    hole!
-# @type = menu
-# @options = {"Default OJB jdbc access class","Fenix Jdbc Rollback Impl"}
-# @optionsValues = {"org.apache.ojb.broker.accesslayer.JdbcAccessImpl","net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl"}
-test.jdbc.access.class=org.apache.ojb.broker.accesslayer.JdbcAccessImpl
-
-# @message = Implementation to use for accessing the data repository.
-#                    For testing the application with ClickUnit the [Fenix Jdbc Rollback Impl] 
-#                    should be selected.
-#                    This latter implementation stores the inverse operations
-#                    performed on the database, so that the database state can
-#                    be roled back to the initial state. In production env's
-#                    the default implementation must be used!!! Using this 
-#                    latter implementation in production is a major security
-#                    hole!
-# @type = file
-# @validateFile=false
-# @required=false
-# @depency=test.jdbc.access.class=net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
-test.rollback.filename=/tmp/roleback.sql
 
 
 #------------------------------------------------------------------------------

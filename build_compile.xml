@@ -277,24 +277,6 @@
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
-				<include name="OJB.properties"/>
-				<replacefilter token="@ObjectCacheClass@"
-			    			   property="ObjectCacheClass"/>
-				<replacefilter token="@JdbcAccessClass@"
-			    			   property="JdbcAccessClass"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="oscache.properties"/>
-				<replacefilter token="@cache.event.listeners@"
-			    			   property="cache.event.listeners"/>
-				<replacefilter token="@cache.cluster.multicast.ip@"
-			    			   property="cache.cluster.multicast.ip"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
 				<include name="SMSConfiguration.properties"/>
 				<replacefilter token="@sms.gateway.host@"
 			    			   property="sms.gateway.host"/>
@@ -339,8 +321,6 @@
 				    property="app.context"/>
 				<replacefilter token="@login.page@"
 						   value="${login.page}"/>
-				<replacefilter token="@roleback.filename@"
-		    			   property="roleback.filename"/>
 				<replacefilter token="@default.persistenceSupport@"
 		    			   property="default.persistenceSupport"/>
 				<replacefilter token="@cas.enabled@"
@@ -770,7 +750,7 @@
 			<!-- they are used as a lib and not directly -->
 			<exclude name="${renderers.package.dir}/**"/>
 		</javac>
-		<java classname="net.sourceforge.fenixedu.tools.AddOJBConstructors" 
+		<java classname="eu.ist.fenixframework.pstm.PostProcessDomainClasses" 
 			dir="${build.home.webinf.classes}"
 			fork="true">
 			<classpath>
@@ -779,8 +759,6 @@
 					<include name="**/*.jar"/>
 				</fileset>
 			</classpath>
-			<arg value="-cfn"/>
-			<arg value="net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator"/>
 			<arg value="-d"/>
 			<arg value="${dml.definition.file.completed}"/>
 		</java>
@@ -897,7 +875,6 @@
 				<include name="net/sourceforge/fenixedu/util/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/utilInsc/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/utilTests/**/*.class"/>
-				<include name="net/sourceforge/fenixedu/stm/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/tools/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/framework/**/*.class"/>
 				<include name="relations/*.class"/>

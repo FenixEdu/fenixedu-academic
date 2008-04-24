@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.renderers.model.CompositeSlotSetter;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.SimpleMetaObject;
-import net.sourceforge.fenixedu.stm.ServiceInfo;
+import eu.ist.fenixframework.pstm.ServiceInfo;
 
 public class DomainMetaObject extends SimpleMetaObject {
 

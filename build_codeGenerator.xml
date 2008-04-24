@@ -105,11 +105,7 @@
 			   nowarn="true">
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
-			<include name="net/sourceforge/fenixedu/persistenceTier/OJB/SuportePersistenteOJB.java"/>
-			<include name="net/sourceforge/fenixedu/persistenceTier/versionedObjects/VersionedObjectsBase.java"/>
-			<include name="net/sourceforge/fenixedu/persistenceTier/versionedObjects/VersionedObjectsPersistenceSupport.java"/>
-			<include name="net/sourceforge/fenixedu/persistenceTier/delegatedObjects/DAOResultComparator.java"/>
-			<include name="net/sourceforge/fenixedu/persistenceTier/delegatedObjects/DAOResultLogger.java"/>
+			<include name="net/sourceforge/fenixedu/persistenceTier/SuportePersistenteOJB.java"/>
 		</javac>
 	</target>
 

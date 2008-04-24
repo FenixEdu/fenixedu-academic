@@ -190,10 +190,6 @@
 		<url-pattern>/domainbrowser/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>ManagerFilter</filter-name>
-		<url-pattern>/setAcceptanceTestMode/@manager.filter.pattern@</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
 	    <filter-name>indexFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
@@ -303,11 +299,6 @@
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>SetAcceptanceTestMode</servlet-name>
-        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.SetAcceptanceTestModeServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet>
 		<display-name>DWR Servlet</display-name>
 		<servlet-name>dwr-invoker</servlet-name>
 		<servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
@@ -368,10 +359,6 @@
     <servlet-mapping>
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SetAcceptanceTestMode</servlet-name>
-        <url-pattern>/setAcceptanceTestMode/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DomainBrowser</servlet-name>

@@ -18,7 +18,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu._development.MetadataManager;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
@@ -225,7 +224,6 @@ public class SQLUpdateGenerator {
     public static void main(String[] args) {
 	try {
 	    MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
-	    SuportePersistenteOJB.fixDescriptors();
 	    final PersistenceBroker persistenceBroker = PersistenceBrokerFactory.defaultPersistenceBroker();
 	    connection = persistenceBroker.serviceConnectionManager().getConnection();
 	    generate();

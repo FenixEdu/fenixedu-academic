@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.material;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
@@ -57,5 +58,10 @@ public class PersonExtension extends PersonExtension_Base {
     private boolean checkIntersections(YearMonthDay begin, YearMonthDay end) {
         return ((end == null || !this.getBegin().isAfter(end))
                 && (this.getEnd() == null || !this.getEnd().isBefore(begin)));
-    }  
+    }
+
+    public RootDomainObject getRootDomainObject() {
+        Person person = getPerson();
+        return (person == null) ? null : person.getRootDomainObject();
+    }
 }

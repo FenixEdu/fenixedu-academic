@@ -53,7 +53,7 @@ manager.url=http://localhost:8080/manager
 #
 #   default.persistenceSupport: fully qualified classname of the default
 #                               persistence support class. Available values:
-#         net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB
+#         net.sourceforge.fenixedu.persistenceTier.SuportePersistenteOJB
 #         net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsPersistenceSupport
 #         net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DelegatePersistenceSupport
 #   db.name: name of the database used by the application
@@ -91,7 +91,7 @@ manager.url=http://localhost:8080/manager
 #   db.slide.pass: 
 #   slide.config: 
 #
-default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB
+default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.SuportePersistenteOJB
 
 db.name=ciapl
 db.user=root
@@ -207,30 +207,6 @@ ftp.degree.grades.server.address=address
 #
 #
 #------------------------------------------------------------------------------
-# Cache Configuration
-#------------------------------------------------------------------------------
-#
-#   ObjectCacheClass: cache implementation to use. Possible values are:
-#                        - org.apache.ojb.broker.cache.ObjectCacheDefaultImpl
-#                        - org.apache.ojb.broker.cache.ObjectCacheEmptyImpl
-#                        - org.apache.ojb.broker.cache.ObjectCachePerBrokerImpl
-#                        - org.apache.ojb.broker.cache.ObjectCacheJCSPerClassImpl
-#                        - org.apache.ojb.broker.cache.ObjectCachePerClassImpl
-#                        - net.sourceforge.fenixedu.persistenceTier.cache.FenixObjectCacheDefaultImpl
-#                        - net.sourceforge.fenixedu.persistenceTier.cache.ObjectCacheOSCacheImpl
-#   cache.event.listeners: set this to:
-#       com.opensymphony.oscache.plugins.clustersupport.JavaGroupsBroadcastingListener
-#                          to use javagroups clustering. This must be set for use on 
-#                          distributed systems. Also, ObjectCacheOSCacheImpl must be
-#                          used for the distributed cache to work.
-#   cache.cluster.multicast.ip: multicast ip address to use with javagroups clustering.
-#
-ObjectCacheClass=net.sourceforge.fenixedu.persistenceTier.cache.FenixCacheWrapper
-cache.event.listeners=
-cache.cluster.multicast.ip=231.12.21.132
-#
-#
-#------------------------------------------------------------------------------
 # HTTP Response Cache Configuration
 #------------------------------------------------------------------------------
 #
@@ -322,33 +298,6 @@ log4j.email.smtp.subject=Hello
 #								- net.sourceforge.fenixedu.applicationTier.Filtro.FenixFilterBroker
 #
 application.filterBroker=pt.utl.ist.berserk.logic.filterManager.FilterBroker
-#
-#
-#------------------------------------------------------------------------------
-# Testing Configuration
-#------------------------------------------------------------------------------
-#
-#   JdbcAccessClass: implementation to use for accessing the data repository.
-#                    the default value is
-#                         org.apache.ojb.broker.accesslayer.JdbcAccessImpl
-#                    For testing the application with ClickUnit the following
-#                    implementation should be used:
-#                         net.sourceforge.fenixedu.persistence.persistenceTiercAccessRollbackImpl
-#                    This latter implementation stores the inverse operations
-#                    performed on the database, so that the database state can
-#                    be roled back to the initial state. In production env's
-#                    the prior implementation must be used!!! Using this 
-#                    latter implementation in production is a major security
-#                    hole!
-#   roleback.filename: The filename to where the 
-#                         net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
-#                      implementation will write the inverse sql operations. This
-#                      file is generated in cronilogical order. When reverting 
-#                      database state, the sql instructions should be executed
-#                      starting from the end of the file.
-#
-JdbcAccessClass=org.apache.ojb.broker.accesslayer.JdbcAccessImpl
-roleback.filename=/tmp/roleback.sql
 #
 #
 #------------------------------------------------------------------------------

@@ -6,8 +6,7 @@ package net.sourceforge.fenixedu.domain;
 
 import junit.framework.TestCase;
 import net.sourceforge.fenixedu._development.MetadataManager;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
-import net.sourceforge.fenixedu.stm.Transaction;
+import eu.ist.fenixframework.pstm.Transaction;
 
 public class DomainTestBase extends TestCase {
 
@@ -15,7 +14,6 @@ public class DomainTestBase extends TestCase {
         super.setUp();    
         
         MetadataManager.init("domain_model.dml");
-        SuportePersistenteOJB.fixDescriptors();
         
         try {
         	Transaction.abort();

@@ -11,7 +11,7 @@
 <table class="tstyle5">
 	<tr>
 		<td>				
-			<fr:edit name="transactionReport" schema="net.sourceforge.fenixedu.stm.TransactionReport">
+			<fr:edit name="transactionReport" schema="eu.ist.fenixframework.pstm.TransactionReport">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstylenone vamiddle thlight" />
 				</fr:layout>		

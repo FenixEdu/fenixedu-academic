@@ -22,8 +22,8 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.presentationTier.mapping.MappingUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseCacheOSCacheImpl;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseContentEntry;
-import net.sourceforge.fenixedu.stm.CommitListener;
-import net.sourceforge.fenixedu.stm.TopLevelTransaction;
+import eu.ist.fenixframework.pstm.CommitListener;
+import eu.ist.fenixframework.pstm.TopLevelTransaction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;

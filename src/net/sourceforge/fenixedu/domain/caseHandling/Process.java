@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu._development.MetadataManager;
+import eu.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
@@ -21,7 +21,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
 
     private static void load() {
 	startActivities = new HashMap<String, Activity<? extends Process>>();
-	Collection<DomainClass> domainClasses = MetadataManager.getDomainModel().getDomainClasses();
+	Collection<DomainClass> domainClasses = FenixFramework.getDomainModel().getDomainClasses();
 
 	for (DomainClass domainClass : domainClasses) {
 	    try {

@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.tests.predicates.NumericLessThanOrEqualPr
 import net.sourceforge.fenixedu.domain.tests.predicates.NumericLessThanPredicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.OrPredicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
-import net.sourceforge.fenixedu.stm.Transaction;
+import eu.ist.fenixframework.pstm.Transaction;
 
 import org.jaxen.JaxenException;
 import org.jaxen.jdom.JDOMXPath;
@@ -379,7 +379,7 @@ public class Converter {
 
 		}
 		Transaction.begin();
-		DomainObject.turnOffLockMode();
+		//DomainObject.turnOffLockMode();
 		RootDomainObject.initTests();
 
 		String filePath = "/home/jpmsi/Desktop/ims/novos/caixaNumerica/caixaNumerica1.xml";

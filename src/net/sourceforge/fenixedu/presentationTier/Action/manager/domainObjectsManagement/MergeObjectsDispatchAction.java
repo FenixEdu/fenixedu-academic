@@ -14,7 +14,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.MetadataManager;
+import eu.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -71,7 +71,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("chooseObjects");
 	}
 
-	DomainClass domainClass = MetadataManager.getDomainModel().findClass(classToMerge);
+	DomainClass domainClass = FenixFramework.getDomainModel().findClass(classToMerge);
 
 	List<MergeSlotDTO> results = new ArrayList<MergeSlotDTO>();
 	DomainClass domainClassOrSuperClass = domainClass;
@@ -234,7 +234,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 
     private List<LabelValueBean> getClasses() {
 	List<LabelValueBean> classes = new ArrayList<LabelValueBean>();
-	for (Iterator<DomainClass> iter = MetadataManager.getDomainModel().getClasses(); iter.hasNext();) {
+	for (Iterator<DomainClass> iter = FenixFramework.getDomainModel().getClasses(); iter.hasNext();) {
 	    DomainClass domainClass = (DomainClass) iter.next();
 	    classes.add(new LabelValueBean(domainClass.getName(), domainClass.getFullName()));
 	}
