@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Migrating FileItem to FileContent" modifyFileItemKeyToFile.sql

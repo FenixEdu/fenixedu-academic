@@ -12,7 +12,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.FileItem;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Section;
@@ -45,11 +45,11 @@ public class CreateFileItemForItem extends FileItemService {
 
 	checkSiteQuota(site, fileDescriptor.getSize());
 	
-	FileItem fileItem = new FileItem(fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils.getFilenameOnly(displayName),
+	FileContent fileContent = new FileContent(fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils.getFilenameOnly(displayName),
 		fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
 			.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
 	
-	item.addFileItem(fileItem);
+	item.addFile(fileContent);
     }
 
     private void checkSiteQuota(Site site, int size) {

@@ -2691,16 +2691,6 @@
         </filterChains>
     </service>
     <service>
-        <name>RearrangeItemFiles</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.RearrangeItemFiles</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="SiteManagerAuthorization" />
-        </filterChains>
-    </service>
-    <service>
         <name>RearrangeSectionItems</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.RearrangeSectionItems</implementationClass>

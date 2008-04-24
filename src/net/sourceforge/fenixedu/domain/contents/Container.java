@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import net.sourceforge.fenixedu.domain.functionalities.Module;
 
 /**
  * A <code>Container</code> is a composed content, that is, a grouping of
@@ -280,4 +280,7 @@ public abstract class Container extends Container_Base {
 	return elements.isEmpty() ? null : elements.iterator().next();
     }
 
+    public void addFile(final FileContent fileContent) {
+	addChild(new Attachment(fileContent));
+    }
 }

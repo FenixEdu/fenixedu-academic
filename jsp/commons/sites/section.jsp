@@ -354,21 +354,7 @@
 	               		<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a target="_blank" href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="link.view" bundle="SITE_RESOURCES"/> »</a>
 	               </span>
 	         </logic:present>
-
-	        <logic:notEmpty name="item" property="fileItems">
-	            <bean:size id="filesCount" name="item" property="fileItems"/>
-	        
-	            <logic:greaterThan name="filesCount" value="1">
-	        			<span class="pleft1">
-	        		        <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-	        	            <html:link page="<%= String.format("%s?method=organizeItemFiles&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
-	        	                <bean:message key="link.item.files.organize" bundle="SITE_RESOURCES"/>
-	        	            </html:link>
-	                </span>
-	            </logic:greaterThan>
-	            
-	        </logic:notEmpty>
-	        		        
+       		        
 	        <div id="<%= deleteId %>" class="dnone mvert05">
 	            <fr:form action="<%= deleteUrl %>">
 	            	<p class="mvert1">
@@ -417,7 +403,7 @@
 	                    		<th><bean:message key="label.section.item.file.availability" bundle="SITE_RESOURCES"/></th>
 	                    		<th><bean:message key="label.section.item.file.options" bundle="SITE_RESOURCES"/></th>
                     		</tr>
-                        	<logic:iterate id="fileItem" name="item" property="sortedFileItems" type="net.sourceforge.fenixedu.domain.FileItem">
+                        	<logic:iterate id="fileItem" name="item" property="sortedFileItems" type="net.sourceforge.fenixedu.domain.FileContent">
 							<tr>
 								<td>
 	                        		<bean:define id="downloadUrl">

@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.FileItem;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Language;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.fileupload.FileItem;
 
 /**
  * @author Ivo Brandão
@@ -27,7 +28,7 @@ public class InfoItem extends InfoObject implements Comparable {
 
     private InfoSection infoSection;
 
-    private List<InfoFileItem> infoFileItems;
+    private List<InfoFileContent> infoFileItems;
 
     /**
      * Constructor
@@ -153,10 +154,10 @@ public class InfoItem extends InfoObject implements Comparable {
             setItemOrder(item.getItemOrder());
             setName(item.getName().getContent(Language.pt));
 
-            List<InfoFileItem> infoFileItems = new ArrayList<InfoFileItem>();
+            List<InfoFileContent> infoFileItems = new ArrayList<InfoFileContent>();
 
-            for (FileItem fileItem : item.getFileItems()) {
-                infoFileItems.add(InfoFileItem.newInfoFromDomain(fileItem));
+            for (FileContent fileItem : item.getFileItems()) {
+                infoFileItems.add(InfoFileContent.newInfoFromDomain(fileItem));
             }
 
             Collections.sort(infoFileItems, new BeanComparator("displayName"));
@@ -177,11 +178,11 @@ public class InfoItem extends InfoObject implements Comparable {
         return infoItem;
     }
 
-    public void setInfoFileItems(List<InfoFileItem> infoFileItems) {
+    public void setInfoFileItems(List<InfoFileContent> infoFileItems) {
         this.infoFileItems = infoFileItems;
     }
 
-    public List<InfoFileItem> getInfoFileItems() {
+    public List<InfoFileContent> getInfoFileItems() {
         return this.infoFileItems;
     }
 }

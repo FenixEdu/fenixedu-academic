@@ -615,7 +615,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		ContentType contentType;
 	}
 
-		class net.sourceforge.fenixedu.domain.FileItem extends net.sourceforge.fenixedu.domain.File {
+		class net.sourceforge.fenixedu.domain.FileContent extends net.sourceforge.fenixedu.domain.File {
 		}
 
 		class net.sourceforge.fenixedu.domain.ProjectSubmissionFile extends net.sourceforge.fenixedu.domain.File {
@@ -7069,9 +7069,9 @@ relation InvitationParty {
 	}
 }
 
-relation AttachmentFileItem {
+relation AttachmentFileContent {
 	net.sourceforge.fenixedu.domain.contents.Attachment playsRole attachment;
-	net.sourceforge.fenixedu.domain.FileItem playsRole fileItem;
+	net.sourceforge.fenixedu.domain.FileContent playsRole file;
 }
 
 relation JournalIssueArticleAssociation {

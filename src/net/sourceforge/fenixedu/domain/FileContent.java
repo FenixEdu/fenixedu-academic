@@ -6,15 +6,15 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 
-public class FileItem extends FileItem_Base {
-
-    protected FileItem(Attachment attachment) {
+public class FileContent extends FileContent_Base {
+    
+    protected FileContent(Attachment attachment) {
         super();
 
         setAttachment(attachment);
     }
 
-    public FileItem(Attachment attachment, String filename, String displayName, String mimeType, String checksum,
+    public FileContent(Attachment attachment, String filename, String displayName, String mimeType, String checksum,
             String checksumAlgorithm, Integer size, String externalStorageIdentification,
             Group permittedGroup) {
         this(attachment);
@@ -22,7 +22,7 @@ public class FileItem extends FileItem_Base {
                 externalStorageIdentification, permittedGroup);
     }
     
-    public FileItem(String filename, String displayName, String mimeType, String checksum,
+    public FileContent(String filename, String displayName, String mimeType, String checksum,
             String checksumAlgorithm, Integer size, String externalStorageIdentification,
             Group permittedGroup) {
         init(filename, displayName, mimeType, checksum, checksumAlgorithm, size,
@@ -40,23 +40,24 @@ public class FileItem extends FileItem_Base {
         super.deleteDomainObject();
     }
 
-    public static FileItem readByOID(Integer idInternal) {
-        return (FileItem) RootDomainObject.getInstance().readFileByOID(idInternal);
+    public static FileContent readByOID(Integer idInternal) {
+        return (FileContent) RootDomainObject.getInstance().readFileByOID(idInternal);
     }
 
-    public static List<FileItem> readAllFileItems() {
-        List<FileItem> fileItems = new ArrayList<FileItem>();
+    public static List<FileContent> readAllFileItems() {
+        List<FileContent> fileItems = new ArrayList<FileContent>();
         
         for (File file : RootDomainObject.getInstance().getFiles()) {
-            if (file instanceof FileItem) {
-                fileItems.add((FileItem) file);
+            if (file instanceof FileContent) {
+                fileItems.add((FileContent) file);
             }
         }
         
         return fileItems;
     }
     
-    public Item getItem() {
-	return (Item) getAttachment().getParents().get(0).getParent();
+    public Site getSite() {
+	return getAttachment().getSite();
     }
+    
 }

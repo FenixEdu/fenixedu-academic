@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.contents;
 
-import net.sourceforge.fenixedu.domain.FileItem;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class Attachment extends Attachment_Base {
@@ -10,22 +11,22 @@ public class Attachment extends Attachment_Base {
         super();
     }
     
-    public Attachment(FileItem fileItem) {
+    public Attachment(FileContent fileContent) {
 	this();
-	setFileItem(fileItem);
+	setFile(fileContent);
     }
 
     @Override
     protected void disconnect() {
-	if(hasFileItem()) {
-	    getFileItem().delete();
+	if(hasFile()) {
+	    getFile().delete();
 	}
         super.disconnect();
     }
     
     @Override
     public MultiLanguageString getName() {
-	return new MultiLanguageString(getFileItem().getDisplayName()); 
+	return new MultiLanguageString(getFile().getDisplayName()); 
     }
 
     @Override
@@ -38,5 +39,9 @@ public class Attachment extends Attachment_Base {
     public boolean isParentAccepted(Container parent) {
         return parent instanceof Item;
     }
-    
+
+    public Site getSite() {
+	Item item = getParent(Item.class);
+	return item.getSection().getSite();
+    }
 }

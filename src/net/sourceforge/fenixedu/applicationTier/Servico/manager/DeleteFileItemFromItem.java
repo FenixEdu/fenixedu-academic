@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
-import net.sourceforge.fenixedu.domain.FileItem;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -15,15 +15,13 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
  */
 public class DeleteFileItemFromItem extends Service {
 
-    public void run(Site site, FileItem fileItem) throws FenixServiceException,
-            ExcepcaoPersistencia, DomainException, FileManagerException {
+    public void run(Site site, FileContent fileContent) throws FenixServiceException, ExcepcaoPersistencia, DomainException,
+	    FileManagerException {
 
-        fileItem.delete();
+	fileContent.delete();
 
-        new DeleteFileRequest(AccessControl.getPerson(),fileItem.getExternalStorageIdentification());
+	new DeleteFileRequest(AccessControl.getPerson(), fileContent.getExternalStorageIdentification());
 
-//        final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-//        fileManager.deleteFile(fileItem.getExternalStorageIdentification());
     }
-    
+
 }

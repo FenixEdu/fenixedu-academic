@@ -559,7 +559,7 @@
 	<slot name="shift.classesPrettyPrint" key="label.classes"/>			
 	<slot name="writtenSummary" key="label.summary"/>
 </schema>
-<schema name="site.item.file.basic" type="net.sourceforge.fenixedu.domain.FileItem">
+<schema name="site.item.file.basic" type="net.sourceforge.fenixedu.domain.FileContent">
     <slot name="displayName" layout="link">
         <property name="useParent" value="true"/>
         <property name="contextRelative" value="false"/>
@@ -568,10 +568,10 @@
 </schema>
 <schema name="site.item.files.visible" type="net.sourceforge.fenixedu.domain.contents.Node" bundle="SITE_RESOURCES">
     <slot name="visible"/>
-    <slot name="child.fileItem.displayName" layout="link" read-only="true" key="label.displayName">
+    <slot name="child.file.displayName" layout="link" read-only="true" key="label.displayName">
         <property name="useParent" value="true"/>
         <property name="contextRelative" value="false"/>
-        <property name="linkFormat" value="${child.fileItem.downloadUrl}"/>
+        <property name="linkFormat" value="${child.file.downloadUrl}"/>
     </slot>
 </schema>
 
@@ -599,7 +599,7 @@
     </slot>
 </schema>
 
-<schema name="item.file.basic" type="net.sourceforge.fenixedu.domain.FileItem" bundle="SITE_RESOURCES">
+<schema name="item.file.basic" type="net.sourceforge.fenixedu.domain.FileContent" bundle="SITE_RESOURCES">
     <slot name="displayName"/>
     <slot name="filename"/>
 </schema>

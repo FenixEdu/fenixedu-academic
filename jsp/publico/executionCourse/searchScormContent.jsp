@@ -183,11 +183,12 @@
 
 	 	<logic:present name="file">
 		 <li class="mtop1">
-		 	<logic:equal name="file" property="class.simpleName" value="FileItem">
-		 	 <fr:view name="file" property="item.section.site.executionCourse.nome"/> (<fr:view name="file" property="item.section.site.executionCourse.executionPeriod.name"/> - <fr:view name="file" property="item.section.site.executionCourse.executionYear.year"/>) <br/> 
+		 	<logic:equal name="file" property="class.simpleName" value="FileContent">
+			<bean:define id="executionCourse" name="file" property="site.executionCourse"/>
+		 	 <fr:view name="executionCourse" property="nome"/> (<fr:view name="executionCourse" property="executionPeriod.name"/> - <fr:view name="executionCourse" property="executionYear.year"/>) <br/> 
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />  <fr:view name="file" property="displayName"></fr:view> (<a href="<fr:view name="file" property="downloadUrl"/>"><fr:view name="file" property="filename"/></a>)
 			</logic:equal>
-		 	<logic:notEqual name="file" property="class.simpleName" value="FileItem">
+		 	<logic:notEqual name="file" property="class.simpleName" value="FileContent">
 		 		<bean:write name="file" property="class.simpleName"/>
 		 	</logic:notEqual>
     	 </li>

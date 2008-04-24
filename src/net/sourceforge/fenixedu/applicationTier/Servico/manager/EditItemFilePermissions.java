@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.FileItem;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,12 +16,12 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
  */
 public class EditItemFilePermissions extends FileItemService {
 
-    public void run(Site site, FileItem fileItem, Group group)
-            throws FenixServiceException, ExcepcaoPersistencia, DomainException, FileManagerException {
+    public void run(Site site, FileContent fileContent, Group group) throws FenixServiceException, ExcepcaoPersistencia,
+	    DomainException, FileManagerException {
 
-        fileItem.setPermittedGroup(group);
-        FileManagerFactory.getFactoryInstance().getFileManager().changeFilePermissions(
-                fileItem.getExternalStorageIdentification(), !isPublic(group));
+	fileContent.setPermittedGroup(group);
+	FileManagerFactory.getFactoryInstance().getFileManager().changeFilePermissions(
+		fileContent.getExternalStorageIdentification(), !isPublic(group));
 
     }
 

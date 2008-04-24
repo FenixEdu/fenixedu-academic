@@ -197,7 +197,7 @@ public abstract class Site extends Site_Base {
 
 	for (Section section : getAssociatedSections()) {
 	    for (Item item : section.getAssociatedItems()) {
-		for (FileItem file : item.getFileItems()) {
+		for (FileContent file : item.getFileItems()) {
 		    size += file.getSize();
 		}
 	    }

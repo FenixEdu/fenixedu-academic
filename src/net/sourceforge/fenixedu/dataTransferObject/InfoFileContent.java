@@ -1,13 +1,15 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.FileItem;
+import net.sourceforge.fenixedu.domain.FileContent;
+
+import org.apache.commons.fileupload.FileItem;
 
 /**
  * 
  * @author naat
  * 
  */
-public class InfoFileItem extends InfoObject {
+public class InfoFileContent extends InfoObject {
 
     private String name;
 
@@ -23,11 +25,11 @@ public class InfoFileItem extends InfoObject {
 
     private String externalStorageIdentification;
     
-    public InfoFileItem() {
+    public InfoFileContent() {
 
     }
 
-    public void copyFromDomain(FileItem fileItem) {
+    public void copyFromDomain(FileContent fileItem) {
         super.copyFromDomain(fileItem);
         if (fileItem != null) {
             setName(fileItem.getFilename());
@@ -45,10 +47,10 @@ public class InfoFileItem extends InfoObject {
      * @param item
      * @return
      */
-    public static InfoFileItem newInfoFromDomain(FileItem item) {
-        InfoFileItem infoItem = null;
+    public static InfoFileContent newInfoFromDomain(FileContent item) {
+        InfoFileContent infoItem = null;
         if (item != null) {
-            infoItem = new InfoFileItem();
+            infoItem = new InfoFileContent();
             infoItem.copyFromDomain(item);
         }
         return infoItem;

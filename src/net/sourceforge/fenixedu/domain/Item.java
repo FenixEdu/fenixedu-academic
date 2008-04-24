@@ -104,26 +104,26 @@ public class Item extends Item_Base {
 	}
     }
 
-    public Collection<FileItem> getSortedVisibleFileItems() {
-	final List<FileItem> sortedFileItems = new ArrayList<FileItem>();
+    public Collection<FileContent> getSortedVisibleFileItems() {
+	final List<FileContent> sortedFiles = new ArrayList<FileContent>();
 
 	for (Node node : getOrderedChildrenNodes(Attachment.class)) {
 	    if (node.isNodeVisible()) {
-		sortedFileItems.add(((Attachment) node.getChild()).getFileItem());
+		sortedFiles.add(((Attachment) node.getChild()).getFile());
 	    }
 	}
 
-	return sortedFileItems;
+	return sortedFiles;
     }
 
-    public Collection<FileItem> getSortedFileItems() {
-	final List<FileItem> sortedFileItems = new ArrayList<FileItem>();
+    public Collection<FileContent> getSortedFileItems() {
+	final List<FileContent> sortedFiles = new ArrayList<FileContent>();
 
 	for (Attachment attachment : getOrderedChildren(Attachment.class)) {
-	    sortedFileItems.add(attachment.getFileItem());
+	    sortedFiles.add(attachment.getFile());
 	}
 
-	return sortedFileItems;
+	return sortedFiles;
     }
 
     public Collection<Node> getSortedAttachmentNodes() {
@@ -137,10 +137,6 @@ public class Item extends Item_Base {
 	}
 
 	return super.isAvailable(context);
-    }
-
-    public void setFileItemsOrder(List<FileItem> files) {
-
     }
 
     /**
@@ -198,14 +194,10 @@ public class Item extends Item_Base {
 	return new ExplicitOrderNode(this, childContent, Boolean.TRUE);
     }
 
-    public void addFileItem(final FileItem fileItem) {
-	addChild(new Attachment(fileItem));
-    }
-
-    public Collection<FileItem> getFileItems() {
-	Collection<FileItem> result = new ArrayList<FileItem>();
+    public Collection<FileContent> getFileItems() {
+	Collection<FileContent> result = new ArrayList<FileContent>();
 	for (Attachment attachment : getChildren(Attachment.class)) {
-	    result.add(attachment.getFileItem());
+	    result.add(attachment.getFile());
 	}
 	return result;
     }

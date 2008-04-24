@@ -12,7 +12,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<bean:define id="fileItem" type="net.sourceforge.fenixedu.domain.FileItem" name="fileItem"/>
+<bean:define id="fileItem" type="net.sourceforge.fenixedu.domain.FileContent" name="fileItem"/>
 <bean:define id="item" type="net.sourceforge.fenixedu.domain.Item" name="item"/>
 <bean:define id="siteId" name="site" property="idInternal"/>
 

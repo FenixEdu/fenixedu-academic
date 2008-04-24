@@ -53,7 +53,7 @@
 	            <fr:property name="columnClasses" value="acenter"/>
                 <fr:property name="customLink(add)">
                     <span class="switchInline">
-                        (<a href="#" onclick="insertLink('${child.fileItem.downloadUrl}', '${child.fileItem.displayName}');"><bean:message key="link.item.edit.add.file" bundle="SITE_RESOURCES"/></a>)
+                        (<a href="#" onclick="insertLink('${child.file.downloadUrl}', '${child.file.displayName}');"><bean:message key="link.item.edit.add.file" bundle="SITE_RESOURCES"/></a>)
                     </span>
                 </fr:property>
             </fr:layout>

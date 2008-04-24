@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFileItemForItem;
-import net.sourceforge.fenixedu.domain.FileItem;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.person.ModifiedContentBean;
@@ -37,6 +36,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
+import org.apache.commons.fileupload.FileItem;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -558,15 +558,15 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward deleteFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	selectItem(request);
-	FileItem fileItem = selectFileItem(request);
+	Item item = selectItem(request);
+	FileContent fileItem = selectFileContent(request);
 
 	if (fileItem == null) {
 	    return mapping.findForward("section");
 	}
 
 	try {
-	    Site site = fileItem.getItem().getSection().getSite();
+	    Site site = item.getSection().getSite();
 	    ServiceUtils.executeService(getUserView(request), "DeleteFileItemFromItem", site, fileItem);
 	} catch (FileManagerException e1) {
 	    addErrorMessage(request, "items", "errors.unableToDeleteFile");
@@ -580,7 +580,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	
 	Item item = selectItem(request);
-	FileItem fileItem = selectFileItem(request);
+	FileContent fileItem = selectFileContent(request);
 	
 	if (fileItem == null) {
 	    return mapping.findForward("section");
@@ -594,23 +594,23 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     }
     
     
-    private FileItem selectFileItem(HttpServletRequest request) {
+    private FileContent selectFileContent(HttpServletRequest request) {
 	String fileItemIdString = request.getParameter("fileItemId");
 	if (fileItemIdString == null) {
 	    return null;
 	}
 
-	FileItem fileItem = FileItem.readByOID(Integer.valueOf(fileItemIdString));
-	request.setAttribute("fileItem", fileItem);
+	FileContent fileContent = FileContent.readByOID(Integer.valueOf(fileItemIdString));
+	request.setAttribute("fileItem", fileContent);
 
-	return fileItem;
+	return fileContent;
     }
 
     public ActionForward prepareEditItemFilePermissions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	selectItem(request);
 	selectSection(request);
-	FileItem fileItem = selectFileItem(request);
+	FileContent fileItem = selectFileContent(request);
 
 	if (fileItem == null) {
 	    return section(mapping, form, request, response);
@@ -625,8 +625,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward editItemFilePermissions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	selectItem(request);
-	final FileItem fileItem = selectFileItem(request);
+	Item item = selectItem(request);
+	final FileContent fileItem = selectFileContent(request);
 
 	IViewState viewState = RenderUtils.getViewState();
 	if (viewState == null) {
@@ -635,7 +635,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
 	FileItemPermissionBean bean = (FileItemPermissionBean) viewState.getMetaObject().getObject();
 	try {
-	    Site site = fileItem.getItem().getSection().getSite();
+	    Site site = item.getSection().getSite();
 	    ServiceUtils
 		    .executeService(getUserView(request), "EditItemFilePermissions", site, fileItem, bean.getPermittedGroup());
 	    return mapping.findForward("section");
