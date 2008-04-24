@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
@@ -127,6 +128,7 @@
 <p style="color: #888;">
 	<em><bean:message key="message.section.reorder.tip" bundle="SITE_RESOURCES"/></em>
 </p>
+</logic:notEmpty>
 
 <!-- Functionalities -->
 
