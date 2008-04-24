@@ -234,3 +234,41 @@ h3.question a:link, h3.question a:visited { text-decoration: none; color: #333; 
 	fenix
 ***********************************************************/
 #perfnav { height: 22px; } /* resolve o problema de a perfnav desaparecer quando não tem items de navegação */
+
+
+.tab_lay th { font-size: 1.0em !important; }
+
+
+/* --- form    --- */
+.form1 fieldset {
+margin: 1em 0;
+padding: 1em;
+background: #f6f6f6;
+width: 80%;
+border: 1px solid #e2e2e2;
+}
+.form1 fieldset p { color: #666; margin-top: 0; margin-bottom: 1em; }
+.form1 legend {
+margin: 0;
+padding: 0 0.5em;
+font-size: 1.2em;
+font-weight: bold;
+/*
+	padding: 0 0.5em;
+	position:absolute; top: -0.5em; left: 0.5em;
+*/
+color: #000;
+}
+.form1 label { font-weight: normal; display: block; padding: 6px 0 3px;}
+.form1 input { display: block; }
+.form1 p.comment { font-size: 1em; color: #999; padding-top: 1em; }
+.form1 input#button { margin-top: 1em; }
+.form1 span.red { color: #bb1309 !important; }
+.form1 span.comment { font-size: 1em; color: #999; font-weight: normal; }
+span.red { color: #c30 !important; }
+
+ * html .form1 fieldset { padding-top: 1.75em; } /* ie6 only*/
+ *:first-child+html .form1 fieldset { padding-top: 1.75em; } /* ie7 only */
+ 
+/* novo */
+span.comment { font-size: 0.85em !important; color: #999; }
