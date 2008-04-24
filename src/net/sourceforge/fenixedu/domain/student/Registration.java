@@ -604,6 +604,10 @@ public class Registration extends Registration_Base {
 		.valueOf(getFinalAverage()) : getCurriculum(executionYear, cycleType).getAverage();
     }
 
+    final public BigDecimal getEctsCredits(final ExecutionYear executionYear, final CycleType cycleType) {
+	return getCurriculum(executionYear, cycleType).getSumEctsCredits();
+    }
+
     final public BigDecimal calculateAverage() {
 	return getCurriculum().getAverage();
     }
