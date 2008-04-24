@@ -29,3 +29,4 @@ function executeWithTempFile() {
 }
 
 execute "Migrating FileItem to FileContent" modifyFileItemKeyToFile.sql
+execute "Changing table Transaction" AlterTableTransaction.sql
