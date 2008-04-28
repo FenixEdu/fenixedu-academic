@@ -127,11 +127,11 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 			    createDFACandidacyBean.getContributorNumber(),
 			    createDFACandidacyBean.getCandidacyDate() });
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage(), null);
+	    addActionMessage(request, e.getMessage());
 	    RenderUtils.invalidateViewState();
 	    return prepareCreateCandidacy(mapping, actionForm, request, response);
 	} catch (NotAuthorizedFilterException e) {
-	    addActionMessage(request, "error.not.authorized", null);
+	    addActionMessage(request, "error.not.authorized");
 	    RenderUtils.invalidateViewState();
 	    return prepareCreateCandidacy(mapping, actionForm, request, response);
 	}
@@ -193,7 +193,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	    return prepareGenPass(mapping, actionForm, request, response);
 	}
 	if (!candidacy.getActiveCandidacySituation().getCanGeneratePass()) {
-	    addActionMessage(request, "error.enrolmentFee.to.pay", null);
+	    addActionMessage(request, "error.enrolmentFee.to.pay");
 	    request.setAttribute("payed", "false");
 	} else {
 	    request.setAttribute("payed", "true");
@@ -313,7 +313,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	try {
 	    ServiceUtils.executeService(getUserView(request), "StateMachineRunner", args);
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage(), null);
+	    addActionMessage(request, e.getMessage());
 	    request.setAttribute("candidacy", candidacy);
 	    // return mapping.findForward("showCandidacyValidateData");
 	}
