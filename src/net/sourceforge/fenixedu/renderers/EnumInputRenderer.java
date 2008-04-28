@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.renderers;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,9 +15,6 @@ import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-
-import org.apache.log4j.Logger;
-
 import pt.ist.utl.fenix.utils.Pair;
 
 /**
@@ -43,18 +39,22 @@ import pt.ist.utl.fenix.utils.Pair;
  */
 public class EnumInputRenderer extends InputRenderer {
 
-    private static Logger logger = Logger.getLogger(EnumInputRenderer.class);
-
     private String defaultText;
+
     private String bundle;
+
     private boolean key;
+
     private String excludedValues;
+
     private String includedValues;
+
     private boolean sort;
+
     private boolean disabled;
-    
+
     public String getBundle() {
-        return this.bundle;
+	return this.bundle;
     }
 
     /**
@@ -63,11 +63,11 @@ public class EnumInputRenderer extends InputRenderer {
      * @property
      */
     public void setBundle(String bundle) {
-        this.bundle = bundle;
+	this.bundle = bundle;
     }
 
     public String getDefaultText() {
-        return this.defaultText;
+	return this.defaultText;
     }
 
     /**
@@ -76,13 +76,12 @@ public class EnumInputRenderer extends InputRenderer {
      * @property
      */
     public void setDefaultText(String defaultText) {
-        this.defaultText = defaultText;
+	this.defaultText = defaultText;
     }
 
     public String getExcludedValues() {
-        return excludedValues;
+	return excludedValues;
     }
-
 
     /**
      * Excluded Values.
@@ -90,11 +89,11 @@ public class EnumInputRenderer extends InputRenderer {
      * @property
      */
     public void setExcludedValues(String excludedValues) {
-        this.excludedValues = excludedValues;
+	this.excludedValues = excludedValues;
     }
 
     public String getIncludedValues() {
-        return includedValues;
+	return includedValues;
     }
 
     /**
@@ -103,11 +102,11 @@ public class EnumInputRenderer extends InputRenderer {
      * @property
      */
     public void setIncludedValues(String includedValues) {
-        this.includedValues = includedValues;
+	this.includedValues = includedValues;
     }
 
     public boolean isKey() {
-        return this.key;
+	return this.key;
     }
 
     /**
@@ -116,72 +115,72 @@ public class EnumInputRenderer extends InputRenderer {
      * @property
      */
     public void setKey(boolean key) {
-        this.key = key;
+	this.key = key;
     }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
-        return new Layout() {
+	return new Layout() {
 
-            @Override
-            public HtmlComponent createComponent(Object targetObject, Class type) {
-                Enum enumerate = (Enum) targetObject;
-                
-                if (!type.isEnum() && Enum.class.isAssignableFrom(type)) {
-                    type = type.getEnclosingClass();
-                }
-                
-                Collection<Object> constants = getIncludedEnumValues(type);
-                Collection<Object> excludedValues = getExcludedEnumValues(type);
-                List<Pair<Enum,String>> pairList = new ArrayList<Pair<Enum,String>>();
-                
-                for(Object object : constants) {
-                	Enum oneEnum = (Enum) object;
-                	pairList.add(new Pair<Enum,String>(oneEnum,RenderUtils.getEnumString(oneEnum, getBundle())));
-                }
-                
-                if(isSort()) {
-	                Collections.sort(pairList, new Comparator<Pair<Enum,String>>() {
-						public int compare(Pair<Enum, String> o1, Pair<Enum, String> o2) {
-							return o1.getValue().compareTo(o2.getValue());
-						}
-	                });
-                }
-                
-                HtmlSimpleValueComponent holderComponent = createInputContainerComponent(enumerate);
-                
-                for (Pair<Enum,String> pair : pairList) {
-                    
-                	Enum oneEnum = pair.getKey();
-                	String description = pair.getValue();
+	    @Override
+	    public HtmlComponent createComponent(Object targetObject, Class type) {
+		Enum enumerate = (Enum) targetObject;
 
-                    if (excludedValues.contains(oneEnum)) {
-                    	continue;
-                    }
+		if (!type.isEnum() && Enum.class.isAssignableFrom(type)) {
+		    type = type.getEnclosingClass();
+		}
 
-                    addEnumElement(enumerate, holderComponent, oneEnum, description);
-                }
-                
-                holderComponent.setConverter(new EnumConverter());
-                holderComponent.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
-                
-                return holderComponent;
-            }
+		Collection<Object> constants = getIncludedEnumValues(type);
+		Collection<Object> excludedValues = getExcludedEnumValues(type);
+		List<Pair<Enum, String>> pairList = new ArrayList<Pair<Enum, String>>();
 
-            @Override
-            public void applyStyle(HtmlComponent component) {
-                super.applyStyle(component);
+		for (Object object : constants) {
+		    Enum oneEnum = (Enum) object;
+		    pairList.add(new Pair<Enum, String>(oneEnum, RenderUtils.getEnumString(oneEnum, getBundle())));
+		}
 
-                HtmlSimpleValueComponent holderComponent  = (HtmlSimpleValueComponent) component;
-                holderComponent.setDisabled(getDisabled());
-            }
-            
-        };
+		if (isSort()) {
+		    Collections.sort(pairList, new Comparator<Pair<Enum, String>>() {
+			public int compare(Pair<Enum, String> o1, Pair<Enum, String> o2) {
+			    return o1.getValue().compareTo(o2.getValue());
+			}
+		    });
+		}
+
+		HtmlSimpleValueComponent holderComponent = createInputContainerComponent(enumerate);
+
+		for (Pair<Enum, String> pair : pairList) {
+
+		    Enum oneEnum = pair.getKey();
+		    String description = pair.getValue();
+
+		    if (excludedValues.contains(oneEnum)) {
+			continue;
+		    }
+
+		    addEnumElement(enumerate, holderComponent, oneEnum, description);
+		}
+
+		holderComponent.setConverter(new EnumConverter());
+		holderComponent.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
+
+		return holderComponent;
+	    }
+
+	    @Override
+	    public void applyStyle(HtmlComponent component) {
+		super.applyStyle(component);
+
+		HtmlSimpleValueComponent holderComponent = (HtmlSimpleValueComponent) component;
+		holderComponent.setDisabled(getDisabled());
+	    }
+
+	};
     }
-    
+
     protected void addEnumElement(Enum enumerate, HtmlSimpleValueComponent holder, Enum oneEnum, String description) {
 	HtmlMenu menu = (HtmlMenu) holder;
-	
+
 	HtmlMenuOption option = menu.createOption(description);
 	option.setValue(oneEnum.toString());
 
@@ -192,55 +191,51 @@ public class EnumInputRenderer extends InputRenderer {
 
     protected HtmlSimpleValueComponent createInputContainerComponent(Enum enumerate) {
 	HtmlMenu menu = new HtmlMenu();
-        
-        String defaultOptionTitle = getDefaultTitle();
-        menu.createDefaultOption(defaultOptionTitle).setSelected(enumerate == null);
-        
+
+	String defaultOptionTitle = getDefaultTitle();
+	menu.createDefaultOption(defaultOptionTitle).setSelected(enumerate == null);
+
 	return menu;
     }
-    
+
     // TODO: refactor this, probably mode to HtmlMenu, duplicate id=menu.getDefaultTitle
     private String getDefaultTitle() {
-        if (getDefaultText() == null) {
-            return RenderUtils.getResourceString("renderers.menu.default.title");
-        }
-        else {
-            if (isKey()) {
-                return RenderUtils.getResourceString(getBundle(), getDefaultText());
-            }
-            else {
-                return getDefaultText();
-            }
-        }
+	if (getDefaultText() == null) {
+	    return RenderUtils.getResourceString("renderers.menu.default.title");
+	} else {
+	    if (isKey()) {
+		return RenderUtils.getResourceString(getBundle(), getDefaultText());
+	    } else {
+		return getDefaultText();
+	    }
+	}
     }
-    
+
     private Collection<Object> getIncludedEnumValues(Class type) {
 	final String valuesString = getIncludedValues();
-	
+
 	if (valuesString == null || valuesString.length() == 0) {
 	    Object[] constants = type.getEnumConstants();
 	    if (constants == null) {
-                constants = type.getDeclaringClass().getEnumConstants();
-            }
-	    
+		constants = type.getDeclaringClass().getEnumConstants();
+	    }
+
 	    return Arrays.asList(constants);
-	}
-	else {
+	} else {
 	    return getEnumValues(type, valuesString);
 	}
     }
-    
+
     private Collection<Object> getExcludedEnumValues(Class type) {
 	final String valuesString = getExcludedValues();
-	
+
 	if (valuesString == null || valuesString.length() == 0) {
 	    return Collections.emptyList();
-	}
-	else {
+	} else {
 	    return getEnumValues(type, valuesString);
 	}
     }
-    
+
     private Collection<Object> getEnumValues(Class type, String valuesString) {
 	ArrayList<Object> result = new ArrayList<Object>();
 	for (String part : valuesString.split(",")) {
@@ -250,19 +245,19 @@ public class EnumInputRenderer extends InputRenderer {
 	return result;
     }
 
-	public boolean isSort() {
-		return sort;
-	}
+    public boolean isSort() {
+	return sort;
+    }
 
-	public void setSort(boolean sort) {
-		this.sort = sort;
-	}
+    public void setSort(boolean sort) {
+	this.sort = sort;
+    }
 
-	public boolean getDisabled() {
-	    return disabled;
-	}
+    public boolean getDisabled() {
+	return disabled;
+    }
 
-	public void setDisabled(boolean disabled) {
-	    this.disabled = disabled;
-	}
+    public void setDisabled(boolean disabled) {
+	this.disabled = disabled;
+    }
 }
