@@ -1,8 +1,5 @@
 package pt.utl.ist.codeGenerator.database;
 
-import org.joda.time.YearMonthDay;
-
-import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Login;
@@ -19,9 +16,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import eu.ist.fenixframework.pstm.Transaction;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
+
+import org.joda.time.YearMonthDay;
+
+import eu.ist.fenixframework.pstm.MetadataManager;
+import eu.ist.fenixframework.pstm.Transaction;
 
 public class DataInitializer {
 
@@ -62,7 +63,7 @@ public class DataInitializer {
     private static void createRoles() {
 	new Role(RoleType.PERSON, "/person", "/index.do", "portal.person");
 	new Role(RoleType.STUDENT, "/student", "/index.do", "portal.student");
-	new Role(RoleType.TEACHER, "/teacher", "/index.do", "portal.teacher");	
+	new Role(RoleType.TEACHER, "/teacher", "/index.do", "portal.teacher");
 	new Role(RoleType.MASTER_DEGREE_CANDIDATE, "/candidato", "/index.do", "portal.candidate");
 	new Role(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE, "/posGraduacao", "/index.do", "portal.masterDegree");
 	new Role(RoleType.TREASURY, "/treasury", "/index.do", "portal.treasury");
@@ -80,11 +81,14 @@ public class DataInitializer {
 	new Role(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE, "/departmentAdmOffice", "/index.do", "portal.departmentAdmOffice");
 	new Role(RoleType.GEP, "/gep", "/index.do", "portal.gep");
 	new Role(RoleType.DIRECTIVE_COUNCIL, "/directiveCouncil", "/index.do", "portal.directiveCouncil");
-	new Role(RoleType.DEGREE_ADMINISTRATIVE_OFFICE, "/degreeAdministrativeOffice", "/index.do", "portal.degreeAdministrativeOffice");
-	new Role(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, "/degreeAdministrativeOffice", "/index.do", "portal.degreeAdministrativeOfficeSuperUser");
+	new Role(RoleType.DEGREE_ADMINISTRATIVE_OFFICE, "/degreeAdministrativeOffice", "/index.do",
+		"portal.degreeAdministrativeOffice");
+	new Role(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, "/degreeAdministrativeOffice", "/index.do",
+		"portal.degreeAdministrativeOfficeSuperUser");
 	new Role(RoleType.DELEGATE, "/delegate", "/index.do", "portal.delegate");
 	new Role(RoleType.PROJECTS_MANAGER, "/projectsManagement", "/index.do", "portal.projectsManager");
-	new Role(RoleType.INSTITUCIONAL_PROJECTS_MANAGER, "/institucionalProjectsManagement", "/institucionalProjectIndex.do", "portal.institucionalProjectsManager");
+	new Role(RoleType.INSTITUCIONAL_PROJECTS_MANAGER, "/institucionalProjectsManagement", "/institucionalProjectIndex.do",
+		"portal.institucionalProjectsManager");
 	new Role(RoleType.DEPARTMENT_MEMBER, "/departmentMember", "/index.do", "portal.departmentMember");
 	new Role(RoleType.BOLONHA_MANAGER, "/bolonhaManager", "/index.do", "portal.bolonhaManager");
 	new Role(RoleType.SCIENTIFIC_COUNCIL, "/scientificCouncil", "/index.do", "portal.scientificCouncil");
@@ -98,10 +102,11 @@ public class DataInitializer {
 	new Role(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, "/academicAdminOffice", "/index.do", "portal.academicAdminOffice");
 	new Role(RoleType.MESSAGING, "/messaging", "/index.do", "portal.messaging");
 	new Role(RoleType.SPACE_MANAGER_SUPER_USER, "/spaceManagerSuperUser", "/index.do", "portal.spaceManagerSuperUser");
-	new Role(RoleType.INTERNATIONAL_RELATION_OFFICE, "/internationalRelatOffice", "/index.do", "portal.internRelationOffice");	
+	new Role(RoleType.INTERNATIONAL_RELATION_OFFICE, "/internationalRelatOffice", "/index.do", "portal.internRelationOffice");
 	new ResourceAllocationRole("/resourceAllocationManager", "/paginaPrincipal.jsp", "portal.resourceAllocationManager");
 	new Role(RoleType.RESOURCE_MANAGER, "/resourceManager", "/index.do", "portal.resourceManager");
-	new Role(RoleType.IDENTIFICATION_CARD_MANAGER, "/identificationCardManager", "/index.do", "portal.identificationCardManager");
+	new Role(RoleType.IDENTIFICATION_CARD_MANAGER, "/identificationCardManager", "/index.do",
+		"portal.identificationCardManager");
     }
 
     private static void createCurricularYearsAndSemesters() {
@@ -228,17 +233,19 @@ public class DataInitializer {
     }
 
     private static void createOrganizationalStructure() {
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-        final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), "Earth"), null, "E", new YearMonthDay(), null, null, null, null, false, null);
-        rootDomainObject.setEarthUnit(planetUnit);
+	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+	final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(),
+		"Earth"), null, "E", new YearMonthDay(), null, null, null, null, false, null);
+	rootDomainObject.setEarthUnit(planetUnit);
 
-        createCountryUnits(rootDomainObject, planetUnit);
+	createCountryUnits(rootDomainObject, planetUnit);
     }
 
     private static void createCountryUnits(final RootDomainObject rootDomainObject, final PlanetUnit planetUnit) {
-        for (final Country country : rootDomainObject.getCountrysSet()) {
-            CountryUnit.createNewCountryUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), country.getName()), null, country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
-        }
+	for (final Country country : rootDomainObject.getCountrysSet()) {
+	    CountryUnit.createNewCountryUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), country.getName()), null,
+		    country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
+	}
     }
 
 }

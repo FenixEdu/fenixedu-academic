@@ -17,8 +17,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu._development.MetadataManager;
-
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
@@ -32,6 +30,8 @@ import pt.utl.ist.codeGenerator.database.SqlTable;
 
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 
+import eu.ist.fenixframework.pstm.MetadataManager;
+
 public class SQLUpdateGenerator {
 
     private static Connection connection = null;
@@ -41,20 +41,20 @@ public class SQLUpdateGenerator {
 
     private static final Map<String, String> mySqlTypeTranslation = new HashMap<String, String>();
     static {
-        mySqlTypeTranslation.put("BIT", "tinyint(1)");
-        mySqlTypeTranslation.put("CHAR", "varchar(20)");
-        mySqlTypeTranslation.put("DATE", "date");
-        mySqlTypeTranslation.put("DOUBLE", "double");
-        mySqlTypeTranslation.put("FLOAT", "float(10,2)");
-        mySqlTypeTranslation.put("INTEGER", "int(11)");
-        mySqlTypeTranslation.put("LONGVARCHAR", "text");
-        mySqlTypeTranslation.put("TIME", "time");
-        mySqlTypeTranslation.put("TIMESTAMP", "timestamp NULL default NULL");
-        mySqlTypeTranslation.put("VARCHAR", "text");
-        mySqlTypeTranslation.put("BLOB", "blob");
-        mySqlTypeTranslation.put("BIGINT", "bigint(20)");
+	mySqlTypeTranslation.put("BIT", "tinyint(1)");
+	mySqlTypeTranslation.put("CHAR", "varchar(20)");
+	mySqlTypeTranslation.put("DATE", "date");
+	mySqlTypeTranslation.put("DOUBLE", "double");
+	mySqlTypeTranslation.put("FLOAT", "float(10,2)");
+	mySqlTypeTranslation.put("INTEGER", "int(11)");
+	mySqlTypeTranslation.put("LONGVARCHAR", "text");
+	mySqlTypeTranslation.put("TIME", "time");
+	mySqlTypeTranslation.put("TIMESTAMP", "timestamp NULL default NULL");
+	mySqlTypeTranslation.put("VARCHAR", "text");
+	mySqlTypeTranslation.put("BLOB", "blob");
+	mySqlTypeTranslation.put("BIGINT", "bigint(20)");
 
-        mySqlTypeTranslation.put(null, "tinyint(1)");
+	mySqlTypeTranslation.put(null, "tinyint(1)");
     }
 
     private static class TableInfo {
@@ -72,37 +72,37 @@ public class SQLUpdateGenerator {
 
 	    final Statement statement = connection.createStatement();
 
-		final ResultSet resultSet = statement.executeQuery("show create table " + tablename);
-		resultSet.next();
-		final String[] tableParts = extractParts(normalize(resultSet.getString(2)));
-		for (final String part : tableParts) {
-		    final String tablePart = part.trim();
-		    if (tablePart.startsWith("PRIMARY KEY")) {
-			if (!primaryKey.isEmpty()) {
-			    throw new Error("More than one primary key for: " + tablename);
-			}
-			getSet(primaryKey, tablePart);
-		    } else if (tablePart.startsWith("UNIQUE KEY")) {
-			final TreeSet<String> uniqueKey = new TreeSet<String>();
-			try {
-			    getSet(uniqueKey, tablePart);
-			} catch (StringIndexOutOfBoundsException stringIndexOutOfBoundsException) {
-			    System.out.println(tablename);
-			    System.out.println(tablePart);
-			    throw stringIndexOutOfBoundsException;
-			}
-			uniqyeKeys.add(uniqueKey);
-			indexes.add(uniqueKey);
-		    } else if (tablePart.startsWith("KEY ")) {
-			final TreeSet<String> index = new TreeSet<String>();
-			getSet(index, tablePart);
-			indexes.add(index);
-		    } else {
-			final int indexOfFirstSpace = tablePart.indexOf(' ');
-			final String columnName = tablePart.substring(0, indexOfFirstSpace);
-			columns.add(columnName);
+	    final ResultSet resultSet = statement.executeQuery("show create table " + tablename);
+	    resultSet.next();
+	    final String[] tableParts = extractParts(normalize(resultSet.getString(2)));
+	    for (final String part : tableParts) {
+		final String tablePart = part.trim();
+		if (tablePart.startsWith("PRIMARY KEY")) {
+		    if (!primaryKey.isEmpty()) {
+			throw new Error("More than one primary key for: " + tablename);
 		    }
+		    getSet(primaryKey, tablePart);
+		} else if (tablePart.startsWith("UNIQUE KEY")) {
+		    final TreeSet<String> uniqueKey = new TreeSet<String>();
+		    try {
+			getSet(uniqueKey, tablePart);
+		    } catch (StringIndexOutOfBoundsException stringIndexOutOfBoundsException) {
+			System.out.println(tablename);
+			System.out.println(tablePart);
+			throw stringIndexOutOfBoundsException;
+		    }
+		    uniqyeKeys.add(uniqueKey);
+		    indexes.add(uniqueKey);
+		} else if (tablePart.startsWith("KEY ")) {
+		    final TreeSet<String> index = new TreeSet<String>();
+		    getSet(index, tablePart);
+		    indexes.add(index);
+		} else {
+		    final int indexOfFirstSpace = tablePart.indexOf(' ');
+		    final String columnName = tablePart.substring(0, indexOfFirstSpace);
+		    columns.add(columnName);
 		}
+	    }
 
 	}
 
@@ -141,7 +141,8 @@ public class SQLUpdateGenerator {
 		}
 	    }
 	    final String[] result = new String[strings.size()];
-	    for (int i = 0; i < strings.size(); result[i] = strings.get(i++));
+	    for (int i = 0; i < strings.size(); result[i] = strings.get(i++))
+		;
 	    return result;
 	}
 
@@ -206,7 +207,7 @@ public class SQLUpdateGenerator {
 		    stringBuilder.append(tablename);
 		    stringBuilder.append(" add index (");
 		    stringBuilder.append(fieldDescriptor.getColumnName());
-		    stringBuilder.append(");\n");		    
+		    stringBuilder.append(");\n");
 		}
 	    }
 	}
@@ -251,33 +252,34 @@ public class SQLUpdateGenerator {
 
 	final Set<String> processedIndirectionTables = new HashSet<String>();
 
-        final Map<String, ClassDescriptor> classDescriptorMap = DatabaseDescriptorFactory.getDescriptorTable();
-        for (final ClassDescriptor classDescriptor : classDescriptorMap.values()) {
+	final Map<String, ClassDescriptor> classDescriptorMap = DatabaseDescriptorFactory.getDescriptorTable();
+	for (final ClassDescriptor classDescriptor : classDescriptorMap.values()) {
 
-            final String tableName = classDescriptor.getFullTableName();
-            if (tableName != null && !tableName.startsWith("OJB")) {
-        	if (exists(tableName)) {        	    
-        	    final TableInfo tableInfo = new TableInfo(tableName);
-        	    tableInfo.appendAlterTables(stringBuilderForSingleLineInstructions, classDescriptor);
-        	} else {
-        	    createTable(classDescriptor);
-        	}
-            }
+	    final String tableName = classDescriptor.getFullTableName();
+	    if (tableName != null && !tableName.startsWith("OJB")) {
+		if (exists(tableName)) {
+		    final TableInfo tableInfo = new TableInfo(tableName);
+		    tableInfo.appendAlterTables(stringBuilderForSingleLineInstructions, classDescriptor);
+		} else {
+		    createTable(classDescriptor);
+		}
+	    }
 
-            for (final Iterator iterator = classDescriptor.getCollectionDescriptors().iterator(); iterator.hasNext();) {
-                final CollectionDescriptor collectionDescriptor = (CollectionDescriptor) iterator.next();
-                final String indirectionTablename = collectionDescriptor.getIndirectionTable();
-                if (indirectionTablename != null && !processedIndirectionTables.contains(indirectionTablename) && !exists(indirectionTablename)) {
-                    processedIndirectionTables.add(indirectionTablename);
-            	    appendIndirectionTable(stringBuilderForMultiLineInstructions, collectionDescriptor, indirectionTablename);
-                }
-            }
-        }
+	    for (final Iterator iterator = classDescriptor.getCollectionDescriptors().iterator(); iterator.hasNext();) {
+		final CollectionDescriptor collectionDescriptor = (CollectionDescriptor) iterator.next();
+		final String indirectionTablename = collectionDescriptor.getIndirectionTable();
+		if (indirectionTablename != null && !processedIndirectionTables.contains(indirectionTablename)
+			&& !exists(indirectionTablename)) {
+		    processedIndirectionTables.add(indirectionTablename);
+		    appendIndirectionTable(stringBuilderForMultiLineInstructions, collectionDescriptor, indirectionTablename);
+		}
+	    }
+	}
 
-        appendCreateTables(stringBuilderForMultiLineInstructions);
+	appendCreateTables(stringBuilderForMultiLineInstructions);
 
-	writeFile(destinationFilename, getOutputStringForSingleLineInstructions(stringBuilderForSingleLineInstructions)
-		+ "\n\n" + stringBuilderForMultiLineInstructions.toString());
+	writeFile(destinationFilename, getOutputStringForSingleLineInstructions(stringBuilderForSingleLineInstructions) + "\n\n"
+		+ stringBuilderForMultiLineInstructions.toString());
     }
 
     private static void appendIndirectionTable(final StringBuilder stringBuilder,
@@ -302,20 +304,21 @@ public class SQLUpdateGenerator {
     }
 
     private static boolean exists(final String indirectionTablename) throws SQLException {
-	    final Statement statement = connection.createStatement();
-	    try {
-		final ResultSet resultSet = statement.executeQuery("show create table " + indirectionTablename);
-		resultSet.next();
-		resultSet.close();
-		return true;
-	    } catch (final MySQLSyntaxErrorException mySQLSyntaxErrorException) {
-		return false;
-	    } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException ex) {
-		return false;
-	    }
+	final Statement statement = connection.createStatement();
+	try {
+	    final ResultSet resultSet = statement.executeQuery("show create table " + indirectionTablename);
+	    resultSet.next();
+	    resultSet.close();
+	    return true;
+	} catch (final MySQLSyntaxErrorException mySQLSyntaxErrorException) {
+	    return false;
+	} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException ex) {
+	    return false;
+	}
     }
 
     private static Map<String, SqlTable> sqlTables = new TreeMap<String, SqlTable>();
+
     private static void createTable(final ClassDescriptor classDescriptor) {
 	final String tablename = classDescriptor.getFullTableName();
 	final SqlTable sqlTable;
@@ -337,29 +340,29 @@ public class SQLUpdateGenerator {
     }
 
     private static void addColumns(final SqlTable sqlTable, final FieldDescriptor[] fieldDescriptions) {
-        if (fieldDescriptions != null) {
-            for (final FieldDescriptor fieldDescriptor : fieldDescriptions) {
-                sqlTable.addColumn(fieldDescriptor.getColumnName(), fieldDescriptor.getColumnType());
-            }
-        }
+	if (fieldDescriptions != null) {
+	    for (final FieldDescriptor fieldDescriptor : fieldDescriptions) {
+		sqlTable.addColumn(fieldDescriptor.getColumnName(), fieldDescriptor.getColumnType());
+	    }
+	}
     }
 
     private static void setPrimaryKey(final SqlTable sqlTable, final FieldDescriptor[] pkFields) {
-        final String[] primaryKey = new String[pkFields.length];
-        for (int i = 0; i < pkFields.length; i++) {
-            primaryKey[i] = pkFields[i].getColumnName();
-        }
-        sqlTable.primaryKey(primaryKey);
+	final String[] primaryKey = new String[pkFields.length];
+	for (int i = 0; i < pkFields.length; i++) {
+	    primaryKey[i] = pkFields[i].getColumnName();
+	}
+	sqlTable.primaryKey(primaryKey);
     }
 
     private static void addIndexes(final SqlTable sqlTable, final ClassDescriptor classDescriptor) {
-        for (final Iterator iterator = classDescriptor.getObjectReferenceDescriptors().iterator(); iterator.hasNext();) {
-            final ObjectReferenceDescriptor objectReferenceDescriptor = (ObjectReferenceDescriptor) iterator.next();
-            final String foreignKeyField = (String) objectReferenceDescriptor.getForeignKeyFields().get(0);
-            final FieldDescriptor fieldDescriptor = classDescriptor.getFieldDescriptorByName(foreignKeyField);
+	for (final Iterator iterator = classDescriptor.getObjectReferenceDescriptors().iterator(); iterator.hasNext();) {
+	    final ObjectReferenceDescriptor objectReferenceDescriptor = (ObjectReferenceDescriptor) iterator.next();
+	    final String foreignKeyField = (String) objectReferenceDescriptor.getForeignKeyFields().get(0);
+	    final FieldDescriptor fieldDescriptor = classDescriptor.getFieldDescriptorByName(foreignKeyField);
 
-            sqlTable.index(fieldDescriptor.getColumnName());
-        }
+	    sqlTable.index(fieldDescriptor.getColumnName());
+	}
     }
 
     private static String getOutputStringForSingleLineInstructions(final StringBuilder stringBuilder) {

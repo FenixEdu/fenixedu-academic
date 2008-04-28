@@ -11,8 +11,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu._development.MetadataManager;
-
 import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.codeGenerator.DmlCleaner.DomainModelWriter.DomainEntityWrapper;
@@ -24,6 +22,7 @@ import dml.DomainRelation;
 import dml.Role;
 import dml.Slot;
 import dml.Slot.Option;
+import eu.ist.fenixframework.pstm.MetadataManager;
 
 public class DmlCleaner {
 
@@ -83,7 +82,7 @@ public class DmlCleaner {
 		int i = type.lastIndexOf('.');
 		this.name = type.substring(i + 1);
 	    }
-	    
+
 	    @Override
 	    public boolean isValueType() {
 		return true;
@@ -115,7 +114,7 @@ public class DmlCleaner {
 	    }
 
 	    public void setName(String name) {
-	        this.name = name;
+		this.name = name;
 	    }
 	}
 
@@ -127,7 +126,7 @@ public class DmlCleaner {
 		public int compare(final Slot s1, final Slot s2) {
 		    return s1.getName().compareTo(s2.getName());
 		}
-		
+
 	    });
 
 	    @Override
@@ -211,10 +210,13 @@ public class DmlCleaner {
 		}
 		if (domainClass.getInterfaceNamesIterator().hasNext()) {
 		    throw new Error("Interfaces not implemented...");
-//		    for (final Iterator iterator = domainClass.getInterfaceNamesIterator(); iterator.hasNext(); ) {
-//			final Object object = iterator.next();
-//			System.out.println("object: " + object.getClass().getName() + " " + object);
-//		    }
+		    // for (final Iterator iterator =
+		    // domainClass.getInterfaceNamesIterator();
+		    // iterator.hasNext(); ) {
+		    // final Object object = iterator.next();
+		    // System.out.println("object: " +
+		    // object.getClass().getName() + " " + object);
+		    // }
 		}
 		fileWriter.append(" {\n");
 
@@ -256,7 +258,8 @@ public class DmlCleaner {
 
 	    @Override
 	    public int compareTo(final DomainEntityWrapper o) {
-		return o.isRelation() ? getDomainRelation().getFullName().compareTo(((RelationWrapper) o).getDomainRelation().getFullName()) : 1;
+		return o.isRelation() ? getDomainRelation().getFullName().compareTo(
+			((RelationWrapper) o).getDomainRelation().getFullName()) : 1;
 	    }
 
 	    @Override
@@ -304,13 +307,12 @@ public class DmlCleaner {
 		}
 	    }
 
-	    private void appendLowerAndUpperLimits(final FileWriter fileWriter, final Role role)
-		    throws IOException {
+	    private void appendLowerAndUpperLimits(final FileWriter fileWriter, final Role role) throws IOException {
 		fileWriter.append(Integer.toString(role.getMultiplicityLower()));
 		fileWriter.append("..");
 		fileWriter.append(Integer.toString(role.getMultiplicityUpper()));
 	    }
-	    
+
 	}
 
 	public DomainModelWriter(final DomainModel domainModel) {
@@ -319,7 +321,7 @@ public class DmlCleaner {
 		domainEntities.add(domainClassWrapper);
 		domainEntityMap.put(domainClass, domainClassWrapper);
 	    }
-	    for (final Iterator<DomainRelation> iterator = domainModel.getRelations(); iterator.hasNext(); ) {
+	    for (final Iterator<DomainRelation> iterator = domainModel.getRelations(); iterator.hasNext();) {
 		final DomainRelation domainRelation = iterator.next();
 		final RelationWrapper relationWrapper = new RelationWrapper(domainRelation);
 		domainEntities.add(relationWrapper);

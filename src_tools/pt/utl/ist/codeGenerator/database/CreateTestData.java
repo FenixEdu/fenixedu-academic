@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
@@ -140,7 +139,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import eu.ist.fenixframework.pstm.Transaction;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.LanguageUtils;
@@ -152,9 +150,10 @@ import net.sourceforge.fenixedu.util.Season;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
-import org.joda.time.Interval;
-import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
+
+import eu.ist.fenixframework.pstm.MetadataManager;
+import eu.ist.fenixframework.pstm.Transaction;
 
 public class CreateTestData {
 
@@ -1029,7 +1028,7 @@ public class CreateTestData {
 		degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
 	    }
 	    final List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
-	    //rooms.add(room);
+	    // rooms.add(room);
 	    final Exam exam = new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses,
 		    degreeModuleScopes, rooms, season);
 	    createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, exam, executionCourse);

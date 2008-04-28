@@ -9,8 +9,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu._development.MetadataManager;
-
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
 
@@ -19,6 +17,7 @@ import dml.DomainEntity;
 import dml.DomainModel;
 import dml.Role;
 import dml.Slot;
+import eu.ist.fenixframework.pstm.MetadataManager;
 
 public class DmlChecker {
 
@@ -46,7 +45,7 @@ public class DmlChecker {
 	fileWriter = new FileWriter("/tmp/renameTables.sql");
 	MetadataManager.init(dmlFilePath);
 	final DomainModel domainModel = MetadataManager.getDomainModel();
-        final DescriptorRepository descriptorRepository = MetadataManager.getOjbMetadataManager().getGlobalRepository();
+	final DescriptorRepository descriptorRepository = MetadataManager.getOjbMetadataManager().getGlobalRepository();
 	for (final DomainClass domainClass : domainModel.getDomainClasses()) {
 	    final DomainEntity domainEntity = domainClass.getSuperclass();
 	    for (final Slot slot : domainClass.getSlotsList()) {
@@ -67,25 +66,31 @@ public class DmlChecker {
 
 	for (final Entry<String, Set<String>> entry : tableMap.entrySet()) {
 	    if (entry.getValue().size() != 1) {
-		System.out.println("Table " + entry.getKey() + " is mapped to " + entry.getValue().size() + " top level classes!");
+		System.out
+			.println("Table " + entry.getKey() + " is mapped to " + entry.getValue().size() + " top level classes!");
 	    }
 	}
 	fileWriter.close();
     }
 
-    private static void checkTableName(final DescriptorRepository descriptorRepository, final DomainClass domainClass) throws IOException {
+    private static void checkTableName(final DescriptorRepository descriptorRepository, final DomainClass domainClass)
+	    throws IOException {
 	final String expectedTableName = getExpectedTableName(domainClass);
 	final String currentTableName = getCurrentTableName(descriptorRepository, domainClass);
 	final ClassDescriptor topLevelClassDescriptor = getTopLevelClassDescriptor(descriptorRepository, domainClass);
 	if (expectedTableName == null || !expectedTableName.equals(currentTableName)) {
 	    incorrectTables++;
-	    //System.out.println("For class " + StringUtils.substringAfter(domainClass.getFullName(), "net.sourceforge.fenixedu.domain.") + " expected table " + expectedTableName + " but has table " + currentTableName);
+	    // System.out.println("For class " +
+	    // StringUtils.substringAfter(domainClass.getFullName(),
+	    // "net.sourceforge.fenixedu.domain.") + " expected table " +
+	    // expectedTableName + " but has table " + currentTableName);
 	    renameTable(expectedTableName, currentTableName);
 
 	    if (currentTableName != null && currentTableName.equals(topLevelClassDescriptor.getFullTableName())) {
 		fixableWithTableRename++;
 	    } else {
-		System.out.println("Unable to fix table name for class " + domainClass.getName() + " expected table " + expectedTableName + " but has table " + currentTableName);
+		System.out.println("Unable to fix table name for class " + domainClass.getName() + " expected table "
+			+ expectedTableName + " but has table " + currentTableName);
 	    }
 	} else {
 	    correctTables++;
@@ -110,9 +115,11 @@ public class DmlChecker {
 	}
     }
 
-    private static ClassDescriptor getTopLevelClassDescriptor(final DescriptorRepository descriptorRepository, final DomainClass domainClass) {
-	if (domainClass.getSuperclass() == null ||
-		(domainClass.getSuperclass() instanceof DomainClass && domainClass.getSuperclass().getFullName().equals("net.sourceforge.fenixedu.domain.DomainObject"))) {
+    private static ClassDescriptor getTopLevelClassDescriptor(final DescriptorRepository descriptorRepository,
+	    final DomainClass domainClass) {
+	if (domainClass.getSuperclass() == null
+		|| (domainClass.getSuperclass() instanceof DomainClass && domainClass.getSuperclass().getFullName().equals(
+			"net.sourceforge.fenixedu.domain.DomainObject"))) {
 	    return descriptorRepository.getDescriptorFor(domainClass.getFullName());
 	}
 	return getTopLevelClassDescriptor(descriptorRepository, (DomainClass) domainClass.getSuperclass());
@@ -127,11 +134,13 @@ public class DmlChecker {
 	if (domainClass.getFullName().equals("net.sourceforge.fenixedu.domain.DomainObject")) {
 	    return null;
 	}
-	if (domainClass.getSuperclass() == null ||
-		(domainClass.getSuperclass() instanceof DomainClass && domainClass.getSuperclass().getFullName().equals("net.sourceforge.fenixedu.domain.DomainObject"))) {
+	if (domainClass.getSuperclass() == null
+		|| (domainClass.getSuperclass() instanceof DomainClass && domainClass.getSuperclass().getFullName().equals(
+			"net.sourceforge.fenixedu.domain.DomainObject"))) {
 	    return getTableName(domainClass.getName());
 	}
-	return domainClass.getSuperclass() instanceof DomainClass ? getExpectedTableName((DomainClass) domainClass.getSuperclass()) : null;
+	return domainClass.getSuperclass() instanceof DomainClass ? getExpectedTableName((DomainClass) domainClass
+		.getSuperclass()) : null;
     }
 
     private static String getTableName(final String name) {
@@ -158,7 +167,8 @@ public class DmlChecker {
 	    final DomainClass domainClass = (DomainClass) domainEntity;
 	    for (final Slot otherSlot : domainClass.getSlotsList()) {
 		if (slot.getName().equals(otherSlot.getName())) {
-		    System.out.println(domainClassname + " redefines slot " + slot.getName() + " from its parent " + domainClass.getName());
+		    System.out.println(domainClassname + " redefines slot " + slot.getName() + " from its parent "
+			    + domainClass.getName());
 		}
 	    }
 	    checkSuperClassSlot(domainClassname, domainClass.getSuperclass(), slot);
@@ -170,7 +180,8 @@ public class DmlChecker {
 	    final DomainClass domainClass = (DomainClass) domainEntity;
 	    for (final Role otherRole : domainClass.getRoleSlotsList()) {
 		if (role.getName().equals(otherRole.getName())) {
-		    System.out.println(domainClassname + " redefines role slot " + role.getName() + " from its parent " + domainClass.getName());
+		    System.out.println(domainClassname + " redefines role slot " + role.getName() + " from its parent "
+			    + domainClass.getName());
 		}
 	    }
 	    checkSuperClassRole(domainClassname, domainClass.getSuperclass(), role);
