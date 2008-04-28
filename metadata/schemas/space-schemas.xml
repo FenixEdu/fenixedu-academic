@@ -514,7 +514,7 @@
 <schema name="PublicFindSpaces" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean" bundle="DEFAULT">
 	<slot name="searchType" key="label.find.space.search.type" layout="radio">
 		<property name="bundle" value="DEFAULT" />
-		<property name="classes" value="list2 liinline" />
+		<property name="classes" value="liinline" />
 	</slot>
 	<slot name="labelToSearch" key="label.find.spaces.label">
 		<property name="size" value="30"/>

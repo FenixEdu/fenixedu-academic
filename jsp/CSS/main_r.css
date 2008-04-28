@@ -272,3 +272,12 @@ span.red { color: #c30 !important; }
  
 /* novo */
 span.comment { font-size: 0.85em !important; color: #999; }
+
+
+
+.dinline {
+display: inline !important;
+}
+.tab_lay {
+border-collapse: collapse;
+}
