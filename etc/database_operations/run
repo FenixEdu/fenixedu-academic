@@ -33,3 +33,6 @@ execute "Transaction: Changing timestamp columns to datetime" AlterTableTransact
 execute "GratuitySituation: Changing timestamp columns to datetime" AlterTableGratuitySituation.sql
 execute "SibsPaymentFileEntry: Changing timestamp columns to datetime" AlterTableSibsPaymentFileEntry.sql
 execute "GratuityValues: Changing timestamp columns to datetime" AlterTableGratuityValues.sql
+execute "Changing timestamp columns to datetime in VigilantGroup" alterTableVigilantGroup.sql
+execute "Changing timestamp columns to datetime in Unavailable Period" alterTableUnavailablePeriod.sql
+execute "Changing timestamp coulumns to datetime in Deploy Notifier" alterTableDeployNotifier.sql
