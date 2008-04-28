@@ -6,8 +6,6 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-
 public class RootDomainObjectDefiner extends BodyTagSupport {
 
     private String scope;
