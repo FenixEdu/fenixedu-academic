@@ -48,7 +48,9 @@ public enum EntryType {
 
     IMPROVEMENT_OF_APPROVED_ENROLMENT_FEE,
 
-    ENROLMENT_OUT_OF_PERIOD_PENALTY;
+    ENROLMENT_OUT_OF_PERIOD_PENALTY, 
+    
+    OVER23_INDIVIDUAL_CANDIDACY_FEE;
 
     public String getName() {
 	return name();

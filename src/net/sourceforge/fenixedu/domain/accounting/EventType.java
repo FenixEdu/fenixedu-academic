@@ -74,7 +74,9 @@ public enum EventType {
 
     IMPROVEMENT_OF_APPROVED_ENROLMENT,
 
-    ENROLMENT_OUT_OF_PERIOD;
+    ENROLMENT_OUT_OF_PERIOD, 
+    
+    OVER23_INDIVIDUAL_CANDIDACY;
 
     public String getName() {
 	return name();
