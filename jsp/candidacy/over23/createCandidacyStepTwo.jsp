@@ -33,20 +33,31 @@
 		<br/>
 		
 		<logic:notEmpty name="over23IndividualCandidacyProcessBean" property="selectedDegrees">
-		<h3 class="mtop15 mbottom025"><bean:message key="label.degrees" bundle="APPLICATION_RESOURCES"/>:</h3>
-		<fr:view name="over23IndividualCandidacyProcessBean" property="selectedDegrees" schema="Degree.name.and.sigla">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight"/>
-				<fr:property name="checkable" value="true" />
-				<fr:property name="checkboxName" value="degreesToDelete" />
-				<fr:property name="checkboxValue" value="idInternal" />	
-			</fr:layout>
-		</fr:view>
-		<html:submit onclick="this.form.method.value='removeDegreeFromCandidacy';return true;"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES" /></html:submit>
-		<br/>
-		<br/>
-		<br/>
+			<h3 class="mtop15 mbottom025"><bean:message key="label.degrees" bundle="APPLICATION_RESOURCES"/>:</h3>
+			<fr:view name="over23IndividualCandidacyProcessBean" property="selectedDegrees" schema="Degree.name.and.sigla">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thlight"/>
+					<fr:property name="checkable" value="true" />
+					<fr:property name="checkboxName" value="degreesToDelete" />
+					<fr:property name="checkboxValue" value="idInternal" />	
+				</fr:layout>
+			</fr:view>
+			<html:submit onclick="this.form.method.value='removeDegreeFromCandidacy';return true;"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES" /></html:submit>
+			<br/>
+			<br/>
+			<br/>
 		</logic:notEmpty>
+		
+		<fr:edit id="Over23IndividualCandidacyProcessBean.optionalInformation"
+			name="over23IndividualCandidacyProcessBean"
+			schema="Over23IndividualCandidacyProcessBean.optionalInformation">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="invalid" path="/caseHandlingOver23IndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid" />
+		</fr:edit>
+		<br/>
 	</logic:notEmpty>
 	
 	<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES" /></html:submit>

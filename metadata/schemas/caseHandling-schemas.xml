@@ -95,3 +95,28 @@
         <property name="sortBy" value="name"/>
     </slot>
 </schema>
+
+<schema name="Over23IndividualCandidacyProcessBean.optionalInformation" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="disabilities" layout="longText" key="label.over23Candidacy.disabilities">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="10" />
+    </slot>
+    <slot name="education" layout="longText" key="label.over23Candidacy.education">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="10" />
+    </slot>
+    <slot name="languages" layout="longText" key="label.over23Candidacy.languages">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="10" />
+    </slot>
+</schema>
+
+<schema name="Over23IndividualCandidacyResultBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="state" key="label.candidacy.state" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="STAND_BY, CANCELLED" />
+	</slot>
+	<slot name="acceptedDegree" layout="menu-select" key="label.degree.name">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.Over23IndividualCandidacySelectedDegreesProvider" />
+        <property name="format" value="${name}" />
+    </slot>
+</schema>

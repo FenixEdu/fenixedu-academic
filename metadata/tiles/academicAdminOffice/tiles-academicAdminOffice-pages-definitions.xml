@@ -615,5 +615,13 @@
     <definition name="over32IndividualCandidacyProcess.edit-candidacy-information" extends="academicAdminOffice.masterPage">
         <put name="body" value="/candidacy/over23/editCandidacyInformation.jsp"/>
     </definition>
-        
+
+	<definition name="over32IndividualCandidacyProcess.introduce-candidacy-result" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/candidacy/over23/introduceCandidacyResult.jsp"/>
+    </definition>
+
+	<definition name="over32IndividualCandidacyProcess.cancel-candidacy" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/candidacy/over23/cancelCandidacy.jsp"/>
+    </definition>
+
 </tiles-definitions>

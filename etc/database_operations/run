@@ -37,3 +37,4 @@ execute "Changing timestamp columns to datetime in VigilantGroup" alterTableVigi
 execute "Changing timestamp columns to datetime in Unavailable Period" alterTableUnavailablePeriod.sql
 execute "Changing timestamp coulumns to datetime in Deploy Notifier" alterTableDeployNotifier.sql
 execute "Create candidacy tables" createCandidacyTables.sql
+execute "Alter candidacy tables" alterCandidacyTables.sql

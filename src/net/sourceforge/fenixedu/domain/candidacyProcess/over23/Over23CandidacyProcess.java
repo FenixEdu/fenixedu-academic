@@ -108,6 +108,10 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     boolean isInStandBy() {
 	return getState() == CandidacyProcessState.STAND_BY;
     }
+    
+    boolean isSentToJury() {
+	return getState() == CandidacyProcessState.SENT_TO_JURY;
+    }
 
     @StartActivity
     static public class CreateCandidacyPeriod extends Activity<Over23CandidacyProcess> {

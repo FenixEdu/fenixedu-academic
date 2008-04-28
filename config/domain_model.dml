@@ -4676,9 +4676,13 @@ class net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess extends 
 
 class net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy extends net.sourceforge.fenixedu.domain.DomainObject {
 	IndividualCandidacyState state;
+	String responsible;
 }
 
 	class net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy extends net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy {
+		String disabilities;
+		String education;
+		String languages;
 	}
 
 class net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry extends net.sourceforge.fenixedu.domain.DomainObject {

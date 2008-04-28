@@ -22,6 +22,12 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
 
     private List<DomainReference<Degree>> selectedDegrees;
 
+    private String disabilities;
+
+    private String education;
+
+    private String languages;
+
     public Over23IndividualCandidacyProcessBean() {
 	setSelectedDegrees(new ArrayList<Degree>());
     }
@@ -119,4 +125,28 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
 	selectedDegrees.clear();
     }
 
+    public String getDisabilities() {
+        return disabilities;
+    }
+
+    public void setDisabilities(String disabilities) {
+        this.disabilities = disabilities;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(String languages) {
+        this.languages = languages;
+    }
+    
 }

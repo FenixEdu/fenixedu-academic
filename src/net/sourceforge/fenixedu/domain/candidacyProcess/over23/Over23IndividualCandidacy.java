@@ -18,12 +18,18 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	super();
     }
 
-    Over23IndividualCandidacy(final Over23IndividualCandidacyProcess process, final Person person, final List<Degree> degrees) {
+    Over23IndividualCandidacy(final Over23IndividualCandidacyProcess process, final Person person, final List<Degree> degrees,
+	    final String disabilities, final String education, final String languages) {
 	this();
 	checkParameters(person, process, degrees);
+
 	setPerson(person);
 	setCandidacyProcess(process);
+	setDisabilities(disabilities);
+	setEducation(education);
+	setLanguages(languages);
 	setState(IndividualCandidacyState.STAND_BY);
+
 	createDegreeEntries(degrees);
 	createDebt(person);
     }
@@ -67,17 +73,23 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     boolean isDebtPayed() {
 	return getEvent().isClosed();
     }
+    
+    boolean isInStandBy() {
+	return getState() == IndividualCandidacyState.STAND_BY;
+    }
 
     boolean isAccepted() {
 	return getState() == IndividualCandidacyState.ACCEPTED;
     }
 
-    void cancel() {
+    boolean isCancelled() {
+	return getState() == IndividualCandidacyState.CANCELLED;
+    }
+
+    void cancel(final Person person) {
 	checkRulesToCancel();
 	setState(IndividualCandidacyState.CANCELLED);
-
-	//TODO: check this
-	throw new DomainException("error.must.add.responsible.person");
+	setResponsible(person.getUsername());
     }
 
     private void checkRulesToCancel() {
@@ -86,23 +98,58 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	}
     }
 
-    void modifyChoosenDegrees(final List<Degree> degrees) {
-	if (degrees == null || degrees.isEmpty()) {
-	    throw new DomainException("error.Over23IndividualCandidacy.invalid.degrees");
+    void saveChoosedDegrees(final List<Degree> degrees) {
+	if (!degrees.isEmpty()) {
+	    removeExistingDegreeEntries();
+	    createDegreeEntries(degrees);
 	}
-	removeExistingDegreeEntries();
-	createDegreeEntries(degrees);
     }
 
-    public List<Degree> getSelectedDegreesSortedByOrder() {
+    void editCandidacyInformation(final List<Degree> degrees, final String disabilities, final String education,
+	    final String languages) {
+	saveChoosedDegrees(degrees);
+	setDisabilities(disabilities);
+	setEducation(education);
+	setLanguages(languages);
+    }
+
+    List<Degree> getSelectedDegrees() {
+	final List<Degree> result = new ArrayList<Degree>(getOver23IndividualCandidacyDegreeEntriesCount());
+	for (final Over23IndividualCandidacyDegreeEntry entry : getOver23IndividualCandidacyDegreeEntries()) {
+	    result.add(entry.getDegree());
+	}
+	return result;
+    }
+
+    List<Degree> getSelectedDegreesSortedByOrder() {
 	final Set<Over23IndividualCandidacyDegreeEntry> entries = new TreeSet<Over23IndividualCandidacyDegreeEntry>(
 		Over23IndividualCandidacyDegreeEntry.COMPARATOR_BY_ORDER);
 	entries.addAll(getOver23IndividualCandidacyDegreeEntries());
 
-	final List<Degree> result = new ArrayList<Degree>();
-	for (Over23IndividualCandidacyDegreeEntry entry : entries) {
+	final List<Degree> result = new ArrayList<Degree>(entries.size());
+	for (final Over23IndividualCandidacyDegreeEntry entry : entries) {
 	    result.add(entry.getDegree());
 	}
 	return result;
+    }
+
+    Person getResponsiblePerson() {
+	return Person.readPersonByUsername(getResponsible());
+    }
+
+    void setCandidacyResult(final IndividualCandidacyState state, final Degree acceptedDegree) {
+	checkParameters(state, acceptedDegree);
+	setState(state);
+	setAcceptedDegree(acceptedDegree);
+    }
+
+    private void checkParameters(final IndividualCandidacyState state, final Degree acceptedDegree) {
+	if (state == null) {
+	    throw new DomainException("error.Over23IndividualCandidacy.invalid.state");
+	}
+	if (state == IndividualCandidacyState.ACCEPTED
+		&& (acceptedDegree == null || !getSelectedDegrees().contains(acceptedDegree))) {
+	    throw new DomainException("error.Over23IndividualCandidacy.invalid.acceptedDegree");
+	}
     }
 }

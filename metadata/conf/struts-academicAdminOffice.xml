@@ -928,6 +928,8 @@
             <forward name="prepare-candidacy-payment" path="over32IndividualCandidacyProcess.prepare-candidacy-payment"/>
             <forward name="edit-candidacy-personal-information" path="over32IndividualCandidacyProcess.edit-candidacy-personal-information"/>
             <forward name="edit-candidacy-information" path="over32IndividualCandidacyProcess.edit-candidacy-information"/>
+			<forward name="introduce-candidacy-result" path="over32IndividualCandidacyProcess.introduce-candidacy-result"/>
+            <forward name="cancel-candidacy" path="over32IndividualCandidacyProcess.cancel-candidacy"/>
         </action>
 
     </action-mappings>

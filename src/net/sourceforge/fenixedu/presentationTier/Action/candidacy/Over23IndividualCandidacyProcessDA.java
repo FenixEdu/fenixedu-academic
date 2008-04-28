@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -134,7 +135,7 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	    HttpServletResponse response, String forward) {
 
 	final Over23IndividualCandidacyProcessBean bean = getCandidacyBean();
-	request.setAttribute("over23IndividualCandidacyProcessBean", getCandidacyBean());
+	request.setAttribute("over23IndividualCandidacyProcessBean", bean);
 	if (bean.hasDegreeToAdd() && !bean.containsDegree(bean.getDegreeToAdd())) {
 	    bean.addDegree(bean.getDegreeToAdd());
 	    bean.removeDegreeToAdd();
@@ -241,8 +242,12 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final Over23IndividualCandidacyProcess process = getProcess(request);
-	request.setAttribute("over23IndividualCandidacyProcessBean", new Over23IndividualCandidacyProcessBean(process
-		.getCandidacy().getSelectedDegreesSortedByOrder()));
+	final Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean(process
+		.getSelectedDegreesSortedByOrder());
+	bean.setDisabilities(process.getDisabilities());
+	bean.setEducation(process.getEducation());
+	bean.setLanguages(process.getLanguages());
+	request.setAttribute("over23IndividualCandidacyProcessBean", bean);
 	return mapping.findForward("edit-candidacy-information");
     }
 
@@ -273,5 +278,47 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	}
 	return listProcessAllowedActivities(mapping, form, request, response);
     }
+    
+    public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("over23IndividualCandidacyResultBean", new Over23IndividualCandidacyResultBean(getProcess(request)));
+	return mapping.findForward("introduce-candidacy-result");
+    }
+    
+    public ActionForward executeIntroduceCandidacyResultInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("over23IndividualCandidacyResultBean", getCandidacyResultBean());
+	return mapping.findForward("introduce-candidacy-result");
+    }
+    
+    public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "IntroduceCandidacyResult", getCandidacyResultBean());
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return mapping.findForward("introduce-candidacy-result"); 
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+    
+    private Over23IndividualCandidacyResultBean getCandidacyResultBean() {
+	return (Over23IndividualCandidacyResultBean) getRenderedObject("over23IndividualCandidacyResultBean");
+    }
 
+    public ActionForward prepareExecuteCancelCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("cancel-candidacy");
+    }
+
+    public ActionForward executeCancelCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "CancelCandidacy", null);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return mapping.findForward("cancel-candidacy");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
 }

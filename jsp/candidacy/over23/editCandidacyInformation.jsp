@@ -50,6 +50,17 @@
 			<br/>
 		</logic:notEmpty>
 		
+		<fr:edit id="Over23IndividualCandidacyProcessBean.optionalInformation"
+			name="over23IndividualCandidacyProcessBean"
+			schema="Over23IndividualCandidacyProcessBean.optionalInformation">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="invalid" path="/caseHandlingOver23IndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid" />
+		</fr:edit>
+		<br/>
+		
 	</logic:notEmpty>
 	
 	<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES" /></html:submit>
