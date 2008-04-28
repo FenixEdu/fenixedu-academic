@@ -169,6 +169,11 @@
 	     <form-property name="method" type="java.lang.String" />
       </form-bean>
 
+	  <form-bean name="candidacyForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	     <form-property name="method" type="java.lang.String" />
+	     <form-property name="degreesToDelete" type="java.lang.String[]" />
+      </form-bean>
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -901,7 +906,29 @@
             <forward name="createAdministrativeOfficeFeeAndInsuranceEvent" path="accountingEventsManagement.createAdministrativeOfficeFeeAndInsuranceEvent" />
             <forward name="createEnrolmentOutOfPeriodEvent" path="accountingEventsManagement.createEnrolmentOutOfPeriodEvent" />
         </action>
-        
+
+		<!-- Candidacies -->
+		
+		<action path="/caseHandlingOver23CandidacyProcess"
+            type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.Over23CandidacyProcessDA"
+            parameter="method">
+            <forward name="list-processes" path="candidacyProcess.list-processes"/>
+            <forward name="list-allowed-activities" path="candidacyProcess.list-allowed-activities"/>
+            <forward name="prepare-edit-candidacy-period" path="over32CandidacyProcess.prepare-edit-candidacy-period"/>
+        </action>
+		
+        <action path="/caseHandlingOver23IndividualCandidacyProcess"
+            name="candidacyForm"
+            type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.Over23IndividualCandidacyProcessDA"
+            parameter="method">
+            <forward name="list-processes" path="candidacyProcess.list-processes"/>
+            <forward name="list-allowed-activities" path="candidacyProcess.list-allowed-activities"/>
+            <forward name="prepare-create-new-process" path="over32IndividualCandidacyProcess.prepare-create-new-process"/>
+            <forward name="fill-candidacy-information" path="over32IndividualCandidacyProcess.fill-candidacy-information"/>
+            <forward name="prepare-candidacy-payment" path="over32IndividualCandidacyProcess.prepare-candidacy-payment"/>
+            <forward name="edit-candidacy-personal-information" path="over32IndividualCandidacyProcess.edit-candidacy-personal-information"/>
+            <forward name="edit-candidacy-information" path="over32IndividualCandidacyProcess.edit-candidacy-information"/>
+        </action>
 
     </action-mappings>
 

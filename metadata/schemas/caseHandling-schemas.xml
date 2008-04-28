@@ -1,10 +1,97 @@
-  <schema name="caseHandling.list.processes" type="net.sourceforge.fenixedu.domain.caseHandling.Process">
-    <slot name="displayName"/>
-  </schema>
+<schema name="caseHandling.list.processes" type="net.sourceforge.fenixedu.domain.caseHandling.Process" bundle="CASE_HANDLING_RESOURCES">
+	<slot name="displayName" key="label.name" />
+</schema>
 
-  <schema name="caseHandling.list.activities" type="net.sourceforge.fenixedu.caseHandling.Activity">
-    <slot name="class.name" layout="slot-as-label">
-    	<property name="bundle" value="CASE_HANDLING_RESOURCES" />
+<schema name="caseHandling.list.activities" type="net.sourceforge.fenixedu.caseHandling.Activity">
+	<slot name="class.name" layout="slot-as-label" key="label.activities" bundle="CASE_HANDLING_RESOURCES">
+		<property name="bundle" value="CASE_HANDLING_RESOURCES" />
+	</slot>
+</schema>
+
+<!-- Candidacies -->
+<schema name="Over23CandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="academicPeriod.name" key="label.academicPeriod" read-only="true" />
+	<slot name="start" key="label.begin" />
+	<slot name="end" key="label.end" />
+</schema>
+
+<schema name="Over23IndividualCandidacyProcessBean.choosePersonBean" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="choosePersonBean.name" key="label.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50" />
+	</slot>
+	<slot name="choosePersonBean.identificationNumber" key="label.identificationNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="maxLength" value="20" />
+	</slot>
+	<slot name="choosePersonBean.documentType" key="label.idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="choosePersonBean.dateOfBirth" key="label.dateOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="choosePersonBean.person" layout="radio-select" key="label.person.similarResults" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.person.SearchSimilarPersonsForOver23CandidacyProvider" />
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="person.name.id.dateOfBirth" />		
+	</slot>	
+</schema>
+
+<schema name="Over23IndividualCandidacyProcessBean.personalData" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="personBean.name" read-only="true" key="label.name" />
+	<slot name="personBean.documentIdNumber" key="label.identificationNumber" read-only="true" />
+	<slot name="personBean.idDocumentType" key="label.idDocumentType" read-only="true" />
+	<slot name="personBean.documentIdEmissionDate" key="label.documentIdEmissionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="personBean.documentIdExpirationDate" key="label.documentIdExpirationDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="personBean.documentIdEmissionLocation" key="label.documentIdEmissionLocation" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="personBean.dateOfBirth" key="label.dateOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="personBean.gender" key="label.gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="personBean.maritalStatus" key="label.maritalStatus" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="personBean.nationality" layout="menu-select" key="label.nationality" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="format" value="${nationality}" />
+		<property name="sortBy" value="nationality"/>
+	</slot>
+	
+	<slot name="personBean.address" key="label.address" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="personBean.areaCode" key="label.areaCode" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="10"/>
+		 <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{4}-\d{3}"/>
+            <property name="message" value="error.areaCode.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+	<slot name="personBean.areaOfAreaCode" key="label.areaOfAreaCode" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+	</slot>
+	<slot name="personBean.area" key="label.area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+	</slot>
+	
+	<slot name="personBean.phone" key="label.phone">
+		<property name="size" value="12"/>
+	</slot>
+	<slot name="personBean.mobile" key="label.mobile">
+		<property name="size" value="12"/>
+	</slot>
+	<slot name="personBean.email" key="label.email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
+		<property name="size" value="40"/>
+	</slot>
+</schema>
+
+<schema name="Over23IndividualCandidacyProcessBean.degrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+   	<slot name="degreeToAdd" layout="menu-select" key="label.degree.name">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.Over23IndividualCandidacyDegreesProvider" />
+        <property name="format" value="${name}" />
+        <property name="sortBy" value="name"/>
     </slot>
-  </schema>
-  
+</schema>

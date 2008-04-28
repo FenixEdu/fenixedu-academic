@@ -169,6 +169,12 @@
 				<bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/>
 			</html:link>
 		</li>
-		
+		<%-- 
+		<li>
+			<html:link page="/caseHandlingOver23CandidacyProcess.do?method=listProcesses">
+				<bean:message key="label.processes" bundle="RESEARCHER_RESOURCES"/>
+			</html:link>
+		</li>
+		--%>
 	</ul> 
 </logic:present>

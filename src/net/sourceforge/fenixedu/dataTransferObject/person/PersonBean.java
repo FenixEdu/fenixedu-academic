@@ -107,8 +107,7 @@ public class PersonBean implements Serializable {
 	super();
     }
 
-    public PersonBean(String name, String identificationNumber, IDDocumentType idDocumentType,
-	    YearMonthDay dateOfBirth) {
+    public PersonBean(String name, String identificationNumber, IDDocumentType idDocumentType, YearMonthDay dateOfBirth) {
 	setName(name);
 	setDocumentIdNumber(identificationNumber);
 	setIdDocumentType(idDocumentType);
@@ -116,7 +115,7 @@ public class PersonBean implements Serializable {
     }
 
     public PersonBean(Person person) {
-	
+
 	setName(person.getName());
 	setUsername(person.getUsername());
 	setGender(person.getGender());
@@ -138,7 +137,7 @@ public class PersonBean implements Serializable {
 	setDocumentIdNumber(person.getDocumentIdNumber());
 	setIdDocumentType(person.getIdDocumentType());
 	setSocialSecurityNumber(person.getSocialSecurityNumber());
-	
+
 	if (person.hasDefaultPhysicalAddress()) {
 	    final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
 	    setAddress(physicalAddress.getAddress());
@@ -150,13 +149,13 @@ public class PersonBean implements Serializable {
 	    setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
 	    setCountryOfResidence(physicalAddress.getCountryOfResidence());
 	}
-	
+
 	setPhone(person.hasDefaultPhone() ? person.getDefaultPhone().getNumber() : null);
 	setMobile(person.hasDefaultMobilePhone() ? person.getDefaultMobilePhone().getNumber() : null);
 	setWebAddress(person.hasDefaultWebAddress() ? person.getDefaultWebAddress().getUrl() : null);
-	
+
 	setEmail(person.getEmail());
-	
+
 	setEmailAvailable(person.getAvailableEmail());
 	setHomepageAvailable(person.getAvailableWebSite());
 	setPhotoAvailable(person.getAvailablePhoto());
@@ -169,7 +168,7 @@ public class PersonBean implements Serializable {
 	setName(name);
 	setUsername(username);
     }
-    
+
     public String getAddress() {
 	return address;
     }
@@ -207,8 +206,7 @@ public class PersonBean implements Serializable {
     }
 
     public void setCountryOfBirth(Country countryOfBirth) {
-	this.countryOfBirth = countryOfBirth == null ? null : new DomainReference<Country>(
-		countryOfBirth);
+	this.countryOfBirth = countryOfBirth == null ? null : new DomainReference<Country>(countryOfBirth);
     }
 
     public Country getCountryOfResidence() {
@@ -216,8 +214,7 @@ public class PersonBean implements Serializable {
     }
 
     public void setCountryOfResidence(Country countryOfResidence) {
-	this.countryOfResidence = countryOfResidence == null ? null : new DomainReference<Country>(
-		countryOfResidence);
+	this.countryOfResidence = countryOfResidence == null ? null : new DomainReference<Country>(countryOfResidence);
     }
 
     public YearMonthDay getDateOfBirth() {
@@ -451,7 +448,7 @@ public class PersonBean implements Serializable {
     public void setPerson(Person person) {
 	this.person = person == null ? null : new DomainReference<Person>(person);
     }
-    
+
     public List<PhysicalAddress> getSortedPhysicalAdresses() {
 	final List<PhysicalAddress> result = getPerson().getPhysicalAddresses();
 	Collections.sort(result, PhysicalAddress.COMPARATOR_BY_ADDRESS);
@@ -459,31 +456,35 @@ public class PersonBean implements Serializable {
     }
 
     public PhysicalAddressData getPhysicalAddressData() {
-	return new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(), getArea(), getParishOfResidence(), getDistrictSubdivisionOfResidence(), getDistrictOfResidence(), getCountryOfResidence());
+	return new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(), getArea(), getParishOfResidence(),
+		getDistrictSubdivisionOfResidence(), getDistrictOfResidence(), getCountryOfResidence());
     }
-    
+
     public List<Phone> getSortedPhones() {
 	final List<Phone> result = getPerson().getPhones();
 	Collections.sort(result, Phone.COMPARATOR_BY_NUMBER);
 	return result;
     }
-    
+
     public List<MobilePhone> getSortedMobilePhones() {
 	final List<MobilePhone> result = getPerson().getMobilePhones();
 	Collections.sort(result, MobilePhone.COMPARATOR_BY_NUMBER);
 	return result;
     }
-    
+
     public List<EmailAddress> getSortedEmailAddresses() {
 	final List<EmailAddress> result = getPerson().getEmailAddresses();
 	Collections.sort(result, EmailAddress.COMPARATOR_BY_EMAIL);
 	return result;
     }
-    
+
     public List<WebAddress> getSortedWebAddresses() {
 	final List<WebAddress> result = getPerson().getWebAddresses();
 	Collections.sort(result, WebAddress.COMPARATOR_BY_URL);
 	return result;
     }
-    
+
+    public boolean hasPerson() {
+	return getPerson() != null;
+    }
 }

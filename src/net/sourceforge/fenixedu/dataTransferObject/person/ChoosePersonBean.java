@@ -12,13 +12,13 @@ public class ChoosePersonBean implements Serializable {
 
     private DomainReference<Person> person;
 
+    private String name;
+
     private String identificationNumber;
 
     private IDDocumentType documentType;
 
     private YearMonthDay dateOfBirth;
-
-    private String name;
 
     private boolean firstTimeSearch = true;
 
@@ -37,6 +37,10 @@ public class ChoosePersonBean implements Serializable {
 
     public void setPerson(Person person) {
 	this.person = (person != null) ? new DomainReference<Person>(person) : null;
+    }
+    
+    public boolean hasPerson() {
+	return getPerson() != null;
     }
 
     public IDDocumentType getDocumentType() {

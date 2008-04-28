@@ -187,4 +187,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	}
     }
 
+    public boolean isDegree() {
+	return getAdministrativeOfficeType().equals(AdministrativeOfficeType.DEGREE);
+    }
 }

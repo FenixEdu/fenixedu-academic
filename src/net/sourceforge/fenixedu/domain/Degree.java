@@ -18,6 +18,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -668,6 +669,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	List<Degree> result = new ArrayList<Degree>();
 	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
 	    if (degree.isBolonhaDegree()) {
+		result.add(degree);
+	    }
+	}
+	return result;
+    }
+    
+    public static List<Degree> readBolonhaDegrees(final AdministrativeOfficeType type) {
+	final List<Degree> result = new ArrayList<Degree>();
+	for (final Degree degree : RootDomainObject.getInstance().getDegrees()) {
+	    if (degree.isBolonhaDegree() && degree.getDegreeType().getAdministrativeOfficeType().equals(type)) {
 		result.add(degree);
 	    }
 	}

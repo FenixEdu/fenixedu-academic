@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.caseHandling;
 
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 import eu.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
+import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import dml.DomainClass;
@@ -96,6 +98,18 @@ public abstract class Process extends Process_Base implements Comparable<Process
 
     public int compareTo(Process process) {
 	return getIdInternal().compareTo(process.getIdInternal());
+    }
+    
+    public List<Activity> getAllowedActivities(final IUserView userView) {
+	final List<Activity> result = new ArrayList<Activity>();
+	for (final Activity activity : getActivities()) {
+	    try {
+		activity.checkPreConditions(this, userView);
+		result.add(activity);
+	    } catch (PreConditionNotValidException e) {
+	    }
+	}
+	return result;
     }
 
     public abstract boolean canExecuteActivity(IUserView userView);

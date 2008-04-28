@@ -241,9 +241,10 @@ public class Person extends Person_Base {
 	super();
 
 	setProperties(personBean);
-	setIsPassInKerberos(Boolean.FALSE);
 
 	createUserAndLoginEntity();
+	setIsPassInKerberos(Boolean.FALSE);
+	
 	createDefaultPhysicalAddress(personBean.getPhysicalAddressData());
 	createDefaultPhone(personBean.getPhone());
 	createDefaultMobilePhone(personBean.getMobile());
@@ -299,13 +300,14 @@ public class Person extends Person_Base {
     }
 
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    public void edit(PersonBean personBean) {
+    public Person edit(PersonBean personBean) {
 	setProperties(personBean);
 	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
 	updateDefaultPhone(personBean.getPhone());
 	updateDefaultMobilePhone(personBean.getMobile());
 	updateDefaultWebAddress(personBean.getWebAddress());
 	updateDefaultEmailAddress(personBean.getEmail());
+	return this;
     }
 
     public void edit(String name, String address, String phone, String mobile, String homepage, String email) {

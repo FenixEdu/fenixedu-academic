@@ -36,3 +36,4 @@ execute "GratuityValues: Changing timestamp columns to datetime" AlterTableGratu
 execute "Changing timestamp columns to datetime in VigilantGroup" alterTableVigilantGroup.sql
 execute "Changing timestamp columns to datetime in Unavailable Period" alterTableUnavailablePeriod.sql
 execute "Changing timestamp coulumns to datetime in Deploy Notifier" alterTableDeployNotifier.sql
+execute "Create candidacy tables" createCandidacyTables.sql

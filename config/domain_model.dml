@@ -192,6 +192,9 @@ valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterva
 enum      net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType                                 as ClosedMonthDocumentType;
 enum      net.sourceforge.fenixedu.domain.teacher.CategoryType                                                       as CategoryType;
 enum      net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad.SchoolClassCalculationMethod  as SchoolClassCalculationMethod;
+enum	  net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState 									 as CandidacyProcessState;
+enum	  net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState 								 as IndividualCandidacyState;
+
 /*
 *
 * Class definitions
@@ -1325,6 +1328,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		class net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
 			Integer numberOfDelayDays;
 		}
+		
+		class net.sourceforge.fenixedu.domain.accounting.events.candidacy.IndividualCandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.Event {
+		}
+		
+			class net.sourceforge.fenixedu.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent extends net.sourceforge.fenixedu.domain.accounting.events.candidacy.IndividualCandidacyEvent {
+			}
 
 	class net.sourceforge.fenixedu.domain.accounting.Exemption extends net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime whenCreated;
@@ -4642,14 +4651,39 @@ class net.sourceforge.fenixedu.domain.caseHandling.Process extends net.sourcefor
 	
 }
 
-	
-
 class net.sourceforge.fenixedu.domain.caseHandling.ProcessLog extends net.sourceforge.fenixedu.domain.DomainObject {
 	String userName;
 	DateTime whenDateTime;
 	String activity;
 }
 
+/* Candidacies */
+
+class net.sourceforge.fenixedu.domain.period.CandidacyPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+	DateTime start;
+	DateTime end;
+}
+
+class net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess extends net.sourceforge.fenixedu.domain.caseHandling.Process {
+	CandidacyProcessState state;
+}
+
+	class net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess extends net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess {
+	}
+	
+	class net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess extends net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess {
+	}
+
+class net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy extends net.sourceforge.fenixedu.domain.DomainObject {
+	IndividualCandidacyState state;
+}
+
+	class net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy extends net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy {
+	}
+
+class net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer degreeOrder;
+}
 
 /*
  * Relations definitions
@@ -12538,3 +12572,88 @@ relation ProcessProcessLog {
 	}
 }
 
+relation CandidacyPeriodRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.period.CandidacyPeriod playsRole candidacyPeriods {
+		multiplicity *;
+	}
+}
+
+relation CandidacyPeriodAcademicPeriod {
+	net.sourceforge.fenixedu.domain.AcademicPeriod playsRole academicPeriod;
+	net.sourceforge.fenixedu.domain.period.CandidacyPeriod playsRole candidacyPeriods {
+		multiplicity *;
+	}
+}
+
+relation CandidacyPeriodCandidacyProcess {
+	net.sourceforge.fenixedu.domain.period.CandidacyPeriod playsRole candidacyPeriod;
+	net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess playsRole candidacyProcesses {
+		multiplicity *;
+	}
+}
+
+relation IndividualCandidacyRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy playsRole individualCandidacies {
+		multiplicity *;
+	}
+}
+
+relation IndividualCandidacyPerson {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy playsRole individualCandidacies {
+		multiplicity *;
+	}
+}
+
+relation IndividualCandidacyRegistration {
+	net.sourceforge.fenixedu.domain.student.Registration playsRole registration;
+	net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
+}
+
+relation CandidacyEventIndividualCandidacy {
+	net.sourceforge.fenixedu.domain.accounting.events.candidacy.IndividualCandidacyEvent playsRole event;
+	net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
+}
+
+relation Over23CandidacyProcessOver23IndividualCandidacyProcess {
+	net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess playsRole candidacyProcess;
+	net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess playsRole childProcesses {
+		multiplicity *;
+	}
+}
+
+relation Over23IndividualCandidacyProcessOver23IndividualCandidacy {
+	net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess playsRole candidacyProcess;
+	net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy playsRole candidacy;
+}
+
+
+relation Over23IndividualCandidacyDegreeEntryRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry playsRole over23IndividualCandidacyDegreeEntries {
+		multiplicity *;
+	}
+}
+
+relation DegreeOver23IndividualCandidacyDegreeEntry {
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+	net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry playsRole over23IndividualCandidacyDegreeEntries {
+		multiplicity *;
+	}
+}
+
+relation Over23IndividualCandidacyOver23IndividualCandidacyDegreeEntry {
+	net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy playsRole over23IndividualCandidacy;
+	net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry playsRole over23IndividualCandidacyDegreeEntries {
+		multiplicity *;
+	}
+}
+
+relation Over23IndividualCandidacyAcceptedDegree {
+	net.sourceforge.fenixedu.domain.Degree playsRole acceptedDegree;
+	net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy playsRole acceptedOver23IndividualCandidacies {
+		multiplicity *;
+	}
+}

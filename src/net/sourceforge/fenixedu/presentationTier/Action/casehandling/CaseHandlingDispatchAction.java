@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.casehandling;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.caseHandling.Activity;
+import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -23,24 +22,30 @@ import org.apache.struts.action.ActionMapping;
 
 public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
-    protected abstract Class getProcessType();
+    abstract protected Class getProcessType();
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("processName", getProcessType().getSimpleName());
-
-	Integer processId = getIntegerFromRequest(request, "processId");
-	if (processId != null) {
-	    request.setAttribute("process", rootDomainObject.readProcessByOID(Integer.valueOf(processId)));
-	}
-
+	setProcessName(request);
+	setProcessId(request);
 	return super.execute(mapping, actionForm, request, response);
     }
 
-    protected Collection<Process> getAllowedProcessInstances(IUserView userView) {
-	Set<Process> result = new TreeSet<Process>();
-	for (Process process : rootDomainObject.getProcesses()) {
+    protected void setProcessName(final HttpServletRequest request) {
+	request.setAttribute("processName", getProcessType().getSimpleName());
+    }
+
+    protected void setProcessId(final HttpServletRequest request) {
+	final Integer processId = getIntegerFromRequest(request, "processId");
+	if (processId != null) {
+	    request.setAttribute("process", rootDomainObject.readProcessByOID(Integer.valueOf(processId)));
+	}
+    }
+
+    protected Collection<Process> getAllowedProcessInstances(final IUserView userView) {
+	final Set<Process> result = new TreeSet<Process>();
+	for (final Process process : rootDomainObject.getProcesses()) {
 	    if (process.getClass().equals(getProcessType()) && process.canExecuteActivity(userView)) {
 		result.add(process);
 	    }
@@ -48,45 +53,31 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 	return result;
     }
 
-    protected List<Activity> getAllowedActivities(IUserView userView, Process process) {
-	List<Activity> result = new ArrayList<Activity>();
-	for (Activity activity : process.getActivities()) {
-	    try {
-		activity.checkPreConditions(process, userView);
-		result.add(activity);
-	    } catch (Exception e) {
-	    }
-	}
-	return result;
-    }
-
-    protected Process getProcess(HttpServletRequest request) {
+    protected Process getProcess(final HttpServletRequest request) {
 	return (Process) request.getAttribute("process");
     }
 
     public ActionForward listProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
-	Activity startActivity = Process.getStartActivity(getProcessType().getName());
+	final Activity startActivity = Process.getStartActivity(getProcessType().getName());
 	try {
 	    startActivity.checkPreConditions(null, AccessControl.getUserView());
 	    request.setAttribute("canCreateProcess", true);
-	} catch (Exception e) {
+	} catch (PreConditionNotValidException e) {
 	    request.setAttribute("canCreateProcess", false);
 	}
-
 	request.setAttribute("processes", getAllowedProcessInstances(AccessControl.getUserView()));
 	return mapping.findForward("list-processes");
     }
 
     public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Process process = getProcess(request);
-	request.setAttribute("activities", getAllowedActivities(AccessControl.getUserView(), process));
+	final Process process = getProcess(request);
+	request.setAttribute("activities", process.getAllowedActivities(AccessControl.getUserView()));
 	return mapping.findForward("list-allowed-activities");
     }
 
-    public abstract ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    abstract public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response);
 
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,

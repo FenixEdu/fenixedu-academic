@@ -661,6 +661,11 @@
     		<property name="size" value="32"/>
     	</slot>
     </schema>
+    
+    <schema name="Degree.name.and.sigla" type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+		<slot name="name" key="label.degree.name" />
+		<slot name="sigla" key="label.sigla" />
+	</schema>
 
  	&researcher;
 	&markSheet;

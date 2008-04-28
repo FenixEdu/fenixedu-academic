@@ -13,16 +13,15 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class CountryProvider implements DataProvider {
 
-	public Object provide(Object source, Object currentValue) {
-		
-		Set<Country> countrySet = new TreeSet<Country>(new BeanComparator("name"));
-		countrySet.addAll(RootDomainObject.readAllDomainObjects(Country.class));
-		return countrySet;
-	}
+    public Object provide(Object source, Object currentValue) {
+	final Set<Country> countrySet = new TreeSet<Country>(new BeanComparator("name"));
+	countrySet.addAll(RootDomainObject.readAllDomainObjects(Country.class));
+	return countrySet;
+    }
 
-	public Converter getConverter() {
-		
-		return new DomainObjectKeyConverter();
-	}
-	
+    public Converter getConverter() {
+
+	return new DomainObjectKeyConverter();
+    }
+
 }

@@ -581,5 +581,39 @@
     <definition name="accountingEventsManagement.createEnrolmentOutOfPeriodEvent" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp"></put>
     </definition>
-
+    
+     <!-- candidacies -->
+     
+    <definition name="candidacyProcess.list-processes" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/caseHandling/listProcesses.jsp"/>
+    </definition>
+    
+    <definition name="candidacyProcess.list-allowed-activities" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/caseHandling/listActivities.jsp"/>
+    </definition>
+    
+    <definition name="over32CandidacyProcess.prepare-edit-candidacy-period" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/candidacy/over23/editCandidacyPeriod.jsp"/>
+    </definition>
+     
+    <definition name="over32IndividualCandidacyProcess.prepare-create-new-process" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/candidacy/over23/createCandidacyStepOne.jsp"/>
+    </definition>
+    
+    <definition name="over32IndividualCandidacyProcess.fill-candidacy-information" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/candidacy/over23/createCandidacyStepTwo.jsp"/>
+    </definition>
+    
+    <definition name="over32IndividualCandidacyProcess.prepare-candidacy-payment" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/candidacy/over23/candidacyPayment.jsp"/>
+    </definition>
+    
+    <definition name="over32IndividualCandidacyProcess.edit-candidacy-personal-information" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/candidacy/over23/editCandidacyPersonalInformation.jsp"/>
+    </definition>
+    
+    <definition name="over32IndividualCandidacyProcess.edit-candidacy-information" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/candidacy/over23/editCandidacyInformation.jsp"/>
+    </definition>
+        
 </tiles-definitions>
