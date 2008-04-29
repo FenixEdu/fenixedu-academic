@@ -595,6 +595,10 @@
     <definition name="over32CandidacyProcess.prepare-edit-candidacy-period" extends="academicAdminOffice.masterPage">
         <put name="body" value="/candidacy/over23/editCandidacyPeriod.jsp"/>
     </definition>
+    
+    <definition name="over32CandidacyProcess.insert-candidacy-results-from-jury" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/candidacy/over23/insertCandidacyResultsFromJury.jsp"/>
+    </definition>
      
     <definition name="over32IndividualCandidacyProcess.prepare-create-new-process" extends="academicAdminOffice.masterPage">
         <put name="body" value="/candidacy/over23/createCandidacyStepOne.jsp"/>

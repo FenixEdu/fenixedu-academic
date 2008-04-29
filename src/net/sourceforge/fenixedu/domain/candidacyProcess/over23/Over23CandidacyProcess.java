@@ -9,14 +9,35 @@ import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicPeriod;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
 
+import dml.runtime.RelationAdapter;
+
 public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
+
+    static {
+	CandidacyPeriodCandidacyProcess.addListener(new RelationAdapter<CandidacyProcess, CandidacyPeriod>() {
+	    @Override
+	    public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyPeriod candidacyPeriod) {
+		super.beforeAdd(candidacyProcess, candidacyPeriod);
+
+		if (candidacyProcess != null && candidacyPeriod != null && candidacyPeriod instanceof Over23CandidacyPeriod) {
+		    if (candidacyPeriod.hasAnyCandidacyProcesses()) {
+			throw new DomainException("error.Over23CandidacyProcess.candidacy.period.already.has.process");
+		    }
+		}
+	    }
+	});
+    }
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
@@ -26,7 +47,6 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	activities.add(new PrintCandidacies());
 	activities.add(new InsertResultsFromJury());
 	activities.add(new PublishCandidacyResults());
-	activities.add(new ModifyCandidacyState());
 	activities.add(new CreateRegistrations());
     }
 
@@ -37,9 +57,8 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     protected Over23CandidacyProcess(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
 	this();
 	checkParameters(academicPeriod, start, end);
-	checkRules(academicPeriod);
-	setCandidacyPeriod(new CandidacyPeriod(academicPeriod, start, end));
 	setState(CandidacyProcessState.STAND_BY);
+	new Over23CandidacyPeriod(this, academicPeriod, start, end);
     }
 
     private void checkParameters(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
@@ -52,14 +71,6 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
     }
 
-    private void checkRules(final AcademicPeriod academicPeriod) {
-	for (final CandidacyPeriod period : academicPeriod.getCandidacyPeriods()) {
-	    if (period.containsCandidacyProcess(getClass())) {
-		throw new DomainException("error.Over23CandidacyProcess.period.already.exists");
-	    }
-	}
-    }
-
     private void edit(final DateTime start, final DateTime end) {
 	checkParameters(getCandidacyPeriod().getAcademicPeriod(), start, end);
 	getCandidacyPeriod().edit(start, end);
@@ -68,11 +79,6 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     @Override
     public boolean canExecuteActivity(IUserView userView) {
 	return isDegreeAdministrativeOfficeEmployee(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL);
-    }
-
-    private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
     }
 
     @Override
@@ -108,9 +114,28 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     boolean isInStandBy() {
 	return getState() == CandidacyProcessState.STAND_BY;
     }
-    
+
     boolean isSentToJury() {
 	return getState() == CandidacyProcessState.SENT_TO_JURY;
+    }
+
+    boolean isPublished() {
+	return getState() == CandidacyProcessState.PUBLISHED;
+    }
+
+    public List<Over23IndividualCandidacyProcess> getOver23IndividualCandidaciesThatCanBeSendToJury() {
+	final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
+	for (final Over23IndividualCandidacyProcess child : getChildProcesses()) {
+	    if (child.canBeSendToJury()) {
+		result.add(child);
+	    }
+	}
+	return result;
+    }
+
+    static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
+	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
     }
 
     @StartActivity
@@ -139,8 +164,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    // TODO Auto-generated method stub
-	    return null;
+	    return process;
 	}
     }
 
@@ -165,13 +189,22 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    throw new PreConditionNotValidException();
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    if (!process.hasCandidacyPeriod() || process.hasOpenCandidacyPeriod()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    // TODO Auto-generated method stub
-	    return null;
+	    process.setState(CandidacyProcessState.SENT_TO_JURY);
+	    return process;
 	}
     }
 
@@ -179,28 +212,40 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    throw new PreConditionNotValidException();
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    if (process.isInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    // TODO Auto-generated method stub
-	    return null;
+	    return process; // for now, nothing to be done
 	}
-
     }
 
     static public class InsertResultsFromJury extends Activity<Over23CandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    throw new PreConditionNotValidException();
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    // TODO Auto-generated method stub
-	    return null;
+	    final List<Over23IndividualCandidacyResultBean> beans = (List<Over23IndividualCandidacyResultBean>) object;
+	    for (final Over23IndividualCandidacyResultBean bean : beans) {
+		bean.getCandidacyProcess().executeActivity(userView, "IntroduceCandidacyResult", bean);
+	    }
+	    return process;
 	}
     }
 
@@ -208,43 +253,55 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    throw new PreConditionNotValidException();
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isSentToJury()) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    // TODO Auto-generated method stub
-	    return null;
+	    process.setState(CandidacyProcessState.PUBLISHED);
+	    return process;
 	}
-    }
-
-    static public class ModifyCandidacyState extends Activity<Over23CandidacyProcess> {
-
-	@Override
-	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    throw new PreConditionNotValidException();
-	}
-
-	@Override
-	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
     }
 
     static public class CreateRegistrations extends Activity<Over23CandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+
+	    //TODO: remove this and remove comment
 	    throw new PreConditionNotValidException();
+
+	    //	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    //		throw new PreConditionNotValidException();
+	    //	    }
+	    //	    
+	    //	    if (!process.isPublished()) {
+	    //		throw new PreConditionNotValidException();
+	    //	    }
 	}
 
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    // TODO Auto-generated method stub
-	    return null;
+	    for (final Over23IndividualCandidacyProcess candidacyProcess : process.getChildProcesses()) {
+		if (candidacyProcess.isCandidacyAccepted() && !candidacyProcess.hasRegistrationForCandidacy()) {
+		    createRegistration(candidacyProcess);
+		}
+	    }
+	    return process;
+	}
+
+	private void createRegistration(final Over23IndividualCandidacyProcess candidacyProcess) {
+	    new Registration(candidacyProcess.getCandidacyPerson(), getDegreeCurricularPlan(candidacyProcess));
+	}
+
+	private DegreeCurricularPlan getDegreeCurricularPlan(final Over23IndividualCandidacyProcess candidacyProcess) {
+	    return candidacyProcess.getAcceptedDegree().getMostRecentDegreeCurricularPlan();
 	}
     }
-
 }

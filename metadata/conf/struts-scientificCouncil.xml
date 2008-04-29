@@ -583,7 +583,7 @@
         </action>
         
         <action path="/caseHandlingOver23CandidacyProcess"
-            type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.Over32CandidacyProcessDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.Over23CandidacyProcessDA"
             parameter="method">
             <forward name="list-processes" path="over32CandidacyProcess.list-processes"/>
             <forward name="list-allowed-activities" path="over32CandidacyProcess.list-allowed-activities"/>

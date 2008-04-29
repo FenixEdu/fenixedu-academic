@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
-<h2><bean:message key="label.candidacy.edit" bundle="APPLICATION_RESOURCES"/></h2>
+<h2><bean:message key="label.candidacy.introduce.result" bundle="APPLICATION_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>

@@ -910,11 +910,13 @@
 		<!-- Candidacies -->
 		
 		<action path="/caseHandlingOver23CandidacyProcess"
+			name="candidacyForm"
             type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.Over23CandidacyProcessDA"
             parameter="method">
             <forward name="list-processes" path="candidacyProcess.list-processes"/>
             <forward name="list-allowed-activities" path="candidacyProcess.list-allowed-activities"/>
             <forward name="prepare-edit-candidacy-period" path="over32CandidacyProcess.prepare-edit-candidacy-period"/>
+            <forward name="insert-candidacy-results-from-jury" path="over32CandidacyProcess.insert-candidacy-results-from-jury"/>
         </action>
 		
         <action path="/caseHandlingOver23IndividualCandidacyProcess"

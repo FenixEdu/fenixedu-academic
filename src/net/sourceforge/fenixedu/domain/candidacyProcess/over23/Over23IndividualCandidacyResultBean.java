@@ -16,6 +16,10 @@ public class Over23IndividualCandidacyResultBean implements Serializable {
 
     public Over23IndividualCandidacyResultBean(final Over23IndividualCandidacyProcess candidacyProcess) {
 	setCandidacyProcess(candidacyProcess);
+	if (candidacyProcess.getCandidacy().hasAcceptedDegree()) {
+	    setState(candidacyProcess.getCandidacy().getState());
+	    setAcceptedDegree(candidacyProcess.getCandidacy().getAcceptedDegree());
+	}
     }
 
     public Over23IndividualCandidacyProcess getCandidacyProcess() {

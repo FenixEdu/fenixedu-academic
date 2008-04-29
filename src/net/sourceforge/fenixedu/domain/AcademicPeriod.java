@@ -3,13 +3,12 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.PeriodState;
 
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class AcademicPeriod extends AcademicPeriod_Base {
@@ -43,13 +42,18 @@ public class AcademicPeriod extends AcademicPeriod_Base {
 	return start != null && end != null && start.isBefore(end);
     }
 
-    public List<CandidacyProcess> getCandidacyProcesses(final Class<? extends CandidacyProcess> clazz, final DateTime when) {
-	final List<CandidacyProcess> result = new ArrayList<CandidacyProcess>();
+    public List<? extends CandidacyPeriod> getCandidacyPeriod(final Class<? extends CandidacyPeriod> clazz) {
+	final List<CandidacyPeriod> result = new ArrayList<CandidacyPeriod>();
 	for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriods()) {
-	    if (candidacyPeriod.isOpen(when)) {
-		result.addAll(candidacyPeriod.getCandidacyProcesses(clazz));
+	    if (candidacyPeriod.getClass().equals(clazz)) {
+		result.add(candidacyPeriod);
 	    }
 	}
 	return result;
+    }
+
+    public Over23CandidacyPeriod getOver23CandidacyPeriod() {
+	final List<Over23CandidacyPeriod> candidacyPeriods = (List<Over23CandidacyPeriod>) getCandidacyPeriod(Over23CandidacyPeriod.class);
+	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
     }
 }

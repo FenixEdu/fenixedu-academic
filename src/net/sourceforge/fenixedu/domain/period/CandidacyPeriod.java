@@ -10,15 +10,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-public class CandidacyPeriod extends CandidacyPeriod_Base {
+abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
 
     protected CandidacyPeriod() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public CandidacyPeriod(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
-	this();
+    protected void init(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
 	checkParameters(academicPeriod, start, end);
 	setAcademicPeriod(academicPeriod);
 	setStart(start);
@@ -82,5 +81,4 @@ public class CandidacyPeriod extends CandidacyPeriod_Base {
 	}
 	return result;
     }
-
 }

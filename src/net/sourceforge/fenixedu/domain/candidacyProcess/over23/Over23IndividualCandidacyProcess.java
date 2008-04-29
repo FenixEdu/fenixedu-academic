@@ -55,7 +55,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	getCandidacy().editPersonalCandidacyInformation(personBean);
     }
 
-    private boolean hasAnyPaymentForCandidacy() {
+    boolean hasAnyPaymentForCandidacy() {
 	return getCandidacy().hasAnyPayment();
     }
 
@@ -63,24 +63,32 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	getCandidacy().cancel(person);
     }
 
-    private boolean isCandidacyProcessInStandBy() {
+    boolean isCandidacyProcessInStandBy() {
 	return getCandidacyProcess().isInStandBy();
     }
 
-    private boolean isCandidacyProcessSentToJury() {
+    boolean isCandidacyProcessSentToJury() {
 	return getCandidacyProcess().isSentToJury();
     }
-    
-    private boolean isCandidacyInStandBy() {
+
+    boolean isCandidacyProcessPublished() {
+	return getCandidacyProcess().isPublished();
+    }
+
+    boolean isCandidacyInStandBy() {
 	return getCandidacy().isInStandBy();
     }
 
-    private boolean isCandidacyAccepted() {
+    boolean isCandidacyAccepted() {
 	return getCandidacy().isAccepted();
     }
 
-    private boolean isCandidacyCancelled() {
+    boolean isCandidacyCancelled() {
 	return getCandidacy().isCancelled();
+    }
+
+    boolean isCandidacyDebtPayed() {
+	return getCandidacy().isDebtPayed();
     }
 
     @Override
@@ -116,6 +124,22 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     public String getLanguages() {
 	return getCandidacy().getLanguages();
+    }
+
+    boolean canBeSendToJury() {
+	return isCandidacyInStandBy() && isCandidacyDebtPayed();
+    }
+
+    public Person getCandidacyPerson() {
+	return getCandidacy().getPerson();
+    }
+
+    boolean hasRegistrationForCandidacy() {
+	return getCandidacy().hasRegistration();
+    }
+
+    Degree getAcceptedDegree() {
+	return getCandidacy().getAcceptedDegree();
     }
 
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
@@ -209,8 +233,9 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    
-	    if (!process.isCandidacyInStandBy() || !process.isCandidacyProcessSentToJury()) {
+
+	    if (!process.isCandidacyInStandBy() || !process.isCandidacyProcessSentToJury()
+		    || !process.isCandidacyProcessPublished()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -244,5 +269,4 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    return process;
 	}
     }
-
 }

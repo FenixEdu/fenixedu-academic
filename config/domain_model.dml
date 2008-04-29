@@ -4664,6 +4664,9 @@ class net.sourceforge.fenixedu.domain.period.CandidacyPeriod extends net.sourcef
 	DateTime end;
 }
 
+	class net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod extends net.sourceforge.fenixedu.domain.period.CandidacyPeriod {
+	}
+
 class net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess extends net.sourceforge.fenixedu.domain.caseHandling.Process {
 	CandidacyProcessState state;
 }

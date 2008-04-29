@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -28,7 +28,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.joda.time.DateTime;
 
 public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchAction {
 
@@ -55,9 +54,8 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
     }
 
     private Over23CandidacyProcess getCandidacyProcess() {
-	final List<CandidacyProcess> candidacyProcesses = ExecutionYear.readCurrentExecutionYear().getCandidacyProcesses(
-		Over23CandidacyProcess.class, new DateTime());
-	return (Over23CandidacyProcess) (candidacyProcesses.size() != 1 ? null : candidacyProcesses.get(0));
+	final Over23CandidacyPeriod candidacyPeriod = ExecutionYear.readCurrentExecutionYear().getOver23CandidacyPeriod();
+	return (candidacyPeriod == null) ? null : candidacyPeriod.getOver23CandidacyProcess();
     }
 
     public ActionForward prepareCreateNewProcessInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

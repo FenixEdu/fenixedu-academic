@@ -11,8 +11,8 @@
 <!-- Candidacies -->
 <schema name="Over23CandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="academicPeriod.name" key="label.academicPeriod" read-only="true" />
-	<slot name="start" key="label.begin" />
-	<slot name="end" key="label.end" />
+	<slot name="start" key="label.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema name="Over23IndividualCandidacyProcessBean.choosePersonBean" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
@@ -112,6 +112,18 @@
 </schema>
 
 <schema name="Over23IndividualCandidacyResultBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="state" key="label.candidacy.state" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="STAND_BY, CANCELLED" />
+	</slot>
+	<slot name="acceptedDegree" layout="menu-select" key="label.degree.name">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.Over23IndividualCandidacySelectedDegreesProvider" />
+        <property name="format" value="${name}" />
+    </slot>
+</schema>
+
+<schema name="Over23IndividualCandidacyResultBean.manage.all.students" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyProcess.candidacyPerson.documentIdNumber" read-only="true" key="label.identificationNumber" />
+	<slot name="candidacyProcess.candidacyPerson.name" read-only="true" key="label.name" />
 	<slot name="state" key="label.candidacy.state" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
