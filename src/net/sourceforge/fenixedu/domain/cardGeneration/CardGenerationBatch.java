@@ -176,4 +176,15 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	return cardGenerationEntry;
     }
 
+    public CardGenerationBatch getCardGenerationBatchProblems() {
+	final ExecutionYear executionYear = getExecutionYear();
+	final String description = "Com Problemas";
+	for (final CardGenerationBatch cardGenerationBatch : executionYear.getCardGenerationBatchesSet()) {
+	    if (description.equals(cardGenerationBatch.getDescription())) {
+		return cardGenerationBatch;
+	    }
+	}
+	return new CardGenerationBatch(description, executionYear, true);
+    }
+
 }

@@ -82,7 +82,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(fillString(normalizeStudentNumber(student), ' ', 8));
 	stringBuilder.append("        ");
 	stringBuilder.append(normalizeDegreeType12(degreeType));
-	stringBuilder.append("07/08");
+	stringBuilder.append("     "); // Academic year - no longer specified because the cards last for more than one year.
 	stringBuilder.append("        ");
 	stringBuilder.append("                       ");
 	stringBuilder.append(fillString(normalizeDegreeName(degree), ' ', 42));
@@ -91,6 +91,40 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append("\r\n");
 
 	setLine(stringBuilder.toString());
+    }
+
+    @Override
+    public void setLine(final String line) {
+	final String name = line.substring(178);
+	for (int i = 0; i < name.length(); i++) {
+	    char c = name.charAt(i);
+	    if (c != '\r' && c != '\n' && c != ' ' && !Character.isLetter(c) && c != '-' && c != '\'') {
+		registerProblem("person.has.unallowed.char.in.name");
+	    }
+	}
+
+	final StringBuilder sb = new StringBuilder();
+	sb.append(line.substring(0, 108));
+
+	final String subCategory = line.substring(108, 131).replace('.', ' ').replace('-', ' ').replace('/', ' ');
+	sb.append(subCategory);
+	
+	final String workPlace = line.substring(131, 178).replace('&', ' ').replace('_', ' ').replace('/', ' ').replace(':', ' ');
+	sb.append(workPlace);
+
+	sb.append(line.substring(178));
+
+	if (line.length() != 264 || sb.length() != 264) {
+	    registerProblem("line.has.incorrect.length");
+	}
+
+	super.setLine(sb.toString());
+    }
+
+    protected void registerProblem(final String message) {
+	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch().getCardGenerationBatchProblems();
+	setCardGenerationBatch(cardGenerationBatch);
+	new CardGenerationProblem(cardGenerationBatch, message, "", getPerson());
     }
 
     protected String getCampus(final DegreeCurricularPlan degreeCurricularPlan) {
