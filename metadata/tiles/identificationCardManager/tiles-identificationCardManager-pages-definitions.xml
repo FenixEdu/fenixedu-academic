@@ -23,4 +23,7 @@
      <definition name="df.page.card.generation.showCardGenerationProblem" extends="definition.identificationCardManager.masterPage">
         <put name="body" value="/identificationCardManager/cardGeneration/showCardGenerationProblem.jsp"/>
     </definition>
+     <definition name="df.page.card.generation.showSearchPage" extends="definition.identificationCardManager.masterPage">
+        <put name="body" value="/identificationCardManager/searchPeople.jsp"/>
+    </definition>
 </tiles-definitions>

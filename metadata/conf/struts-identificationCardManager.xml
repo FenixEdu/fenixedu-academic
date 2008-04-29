@@ -41,6 +41,12 @@
 			<forward name="manageCardGenerationBatchProblems" path="df.page.card.generation.manageCardGenerationBatchProblems"/>
 			<forward name="showCardGenerationProblem" path="df.page.card.generation.showCardGenerationProblem"/>
 		</action>
+
+		<action path="/searchPeople"
+				type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.CardGenerationSearchDA"
+				parameter="method">
+			<forward name="showSearchPage" path="df.page.card.generation.showSearchPage"/>
+		</action>
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

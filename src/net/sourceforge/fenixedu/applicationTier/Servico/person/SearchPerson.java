@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,7 +31,7 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchPerson extends Service {
 
-    public static class SearchParameters {
+    public static class SearchParameters implements Serializable {
 
 	private String email, username, documentIdNumber;
 
@@ -54,9 +55,13 @@ public class SearchPerson extends Service {
 
 	private Integer studentNumber;
 
+	public SearchParameters() {
+	}
+
 	public SearchParameters(String name, String email, String username, String documentIdNumber,
 		String idDocumentType, String roleType, String degreeTypeString, Integer degreeId,
 		Integer departmentId, Boolean activePersons, Integer studentNumber, Boolean externalPersons){
+	    this();
 
 	    this.activePersons = activePersons;
 	    this.name = (name != null && !name.equals("")) ? name : null;
@@ -319,4 +324,5 @@ public class SearchPerson extends Service {
 	    return searchParameters;
 	}
     }
+
 }
