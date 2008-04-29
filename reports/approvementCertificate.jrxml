@@ -39,7 +39,6 @@
 	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="birthLocale" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="nationality" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="curricularYear" isForPrompting="false" class="java.lang.Integer"/>
 	<parameter name="degreeDescription" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="approvementsInfo" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
