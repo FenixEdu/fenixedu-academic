@@ -26,36 +26,43 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setCreationDate(new DateTime());
     }
-    
-    private AcademicServiceRequestSituation(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
+
+    private AcademicServiceRequestSituation(final AcademicServiceRequest academicServiceRequest,
+	    final AcademicServiceRequestBean academicServiceRequestBean) {
 	this();
 	init(academicServiceRequest, academicServiceRequestBean);
     }
 
-    protected void init(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
+    protected void init(final AcademicServiceRequest academicServiceRequest,
+	    final AcademicServiceRequestBean academicServiceRequestBean) {
 	checkParameters(academicServiceRequest, academicServiceRequestBean);
-	
+
 	super.setAcademicServiceRequest(academicServiceRequest);
 	super.setAcademicServiceRequestSituationType(academicServiceRequestBean.getAcademicServiceRequestSituationType());
 	super.setEmployee(academicServiceRequestBean.getEmployee());
-	super.setJustification(academicServiceRequestBean.hasJustification() ? academicServiceRequestBean.getJustification() : null);
+	super.setJustification(academicServiceRequestBean.hasJustification() ? academicServiceRequestBean.getJustification()
+		: null);
 	super.setSituationDate(academicServiceRequestBean.getFinalSituationDate());
     }
-    
-    protected void checkParameters(final AcademicServiceRequest academicServiceRequest, final AcademicServiceRequestBean academicServiceRequestBean) {
+
+    protected void checkParameters(final AcademicServiceRequest academicServiceRequest,
+	    final AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequest == null) {
-	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequest.cannot.be.null");
+	    throw new DomainException(
+		    "error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequest.cannot.be.null");
 	}
-	
+
 	if (!academicServiceRequestBean.hasAcademicServiceRequestSituationType()) {
-	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType.cannot.be.null");
+	    throw new DomainException(
+		    "error.serviceRequests.AcademicServiceRequestSituation.academicServiceRequestSituationType.cannot.be.null");
 	}
-	
+
 	final AcademicServiceRequestSituation activeSituation = academicServiceRequest.getActiveSituation();
-	if (activeSituation != null && academicServiceRequestBean.getFinalSituationDate().isBefore(activeSituation.getSituationDate())) {
-	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.situation.date.is.before");	    
+	if (activeSituation != null
+		&& academicServiceRequestBean.getFinalSituationDate().isBefore(activeSituation.getSituationDate())) {
+	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.situation.date.is.before");
 	}
-	
+
 	if (academicServiceRequestBean.getFinalSituationDate().isAfterNow()) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.situation.date.is.after");
 	}
@@ -70,35 +77,30 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 
     @Override
     public void setAcademicServiceRequest(AcademicServiceRequest academicServiceRequest) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.academicServiceRequest");
+	throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.academicServiceRequest");
     }
 
     @Override
     public void setEmployee(Employee employee) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.employee");
+	throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.employee");
     }
 
     @Override
-    public void setAcademicServiceRequestSituationType(
-	    AcademicServiceRequestSituationType academicServiceRequestSituationType) {
+    public void setAcademicServiceRequestSituationType(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
 	throw new DomainException(
 		"error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.academicServiceRequestSituationType");
     }
 
     @Override
     public void setCreationDate(DateTime creationDate) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.creationDate");
+	throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.creationDate");
     }
 
     @Override
     public void setJustification(String justification) {
-	throw new DomainException(
-		"error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.justification");
+	throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.justification");
     }
-    
+
     public boolean isDelivered() {
 	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.DELIVERED;
     }
@@ -107,14 +109,14 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	super.setEmployee(academicServiceRequestBean.getEmployee());
 	super.setJustification(academicServiceRequestBean.getJustification());
     }
-    
+
     public void delete() {
 	checkRulesToDelete();
-	
+
 	super.setRootDomainObject(null);
 	super.setEmployee(null);
 	super.setAcademicServiceRequest(null);
-	
+
 	super.deleteDomainObject();
     }
 
@@ -123,15 +125,16 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	    throw new DomainException("AcademicServiceRequestSituation.already.delivered");
 	}
     }
-    
+
     static AcademicServiceRequestSituation create(final AcademicServiceRequest academicServiceRequest,
 	    final AcademicServiceRequestBean academicServiceRequestBean) {
-	
+
 	switch (academicServiceRequestBean.getAcademicServiceRequestSituationType()) {
 	case SENT_TO_EXTERNAL_ENTITY:
 	    return new SentToExternalEntityAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
 	case RECEIVED_FROM_EXTERNAL_ENTITY:
-	    return new ReceivedFromExternalEntityAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
+	    return new ReceivedFromExternalEntityAcademicServiceRequestSituation(academicServiceRequest,
+		    academicServiceRequestBean);
 	default:
 	    return new AcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
 	}
