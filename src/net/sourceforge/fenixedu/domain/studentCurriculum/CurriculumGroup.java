@@ -736,14 +736,15 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    return modulesConcluded >= degreeModulesSelectionLimit.getMinimumLimit();
 	}
     }
-    
+
     private boolean hasAnyNotConcludedChilds(final ExecutionYear executionYear) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    if (!curriculumModule.isConcluded(executionYear).isValid()) {
-		return false;
+		return true;
 	    }
 	}
-	return true;
+
+	return false;
     }
 
     @Override
