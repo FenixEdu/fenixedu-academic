@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
@@ -48,7 +49,7 @@ public class Spreadsheet {
 	}
 
 	protected List<Object> getCells() {
-	    return cells;
+	    return Collections.unmodifiableList(cells);
 	}
     }
 
@@ -67,8 +68,16 @@ public class Spreadsheet {
 	this.header = header;
     }
 
+    protected String getName() {
+	return name;
+    }
+
     public void setName(final String name) {
 	this.name = name.substring(0, Math.min(31, name.length())).replace('(', '_').replace(')', '_');
+    }
+
+    protected List<Object> getHeader() {
+	return header;
     }
 
     public void setHeader(final int columnNumber, final String columnHeader) {
@@ -104,18 +113,21 @@ public class Spreadsheet {
     public Row getRow(final int rowNumber) {
 	return rows.get(rowNumber);
     }
+    
+    protected List<Row> getRows() {
+	return rows;
+    }
 
     public void setRows(List<Row> rows) {
 	this.rows = rows;
     }
 
-    public void exportToCSV(final OutputStream outputStream, final String columnSeperator)
-	    throws IOException {
+    public void exportToCSV(final OutputStream outputStream, final String columnSeperator) throws IOException {
 	exportToCSV(outputStream, columnSeperator, "\n");
     }
 
-    public void exportToCSV(final OutputStream outputStream, final String columnSeperator,
-	    final String lineSepeator) throws IOException {
+    public void exportToCSV(final OutputStream outputStream, final String columnSeperator, final String lineSepeator)
+	    throws IOException {
 	exportCSVLine(outputStream, columnSeperator, lineSepeator, header);
 	for (final Row row : rows) {
 	    exportCSVLine(outputStream, columnSeperator, lineSepeator, row.getCells());
@@ -142,8 +154,7 @@ public class Spreadsheet {
 	}
     }
 
-    public void exportToCSV(final File file, final String columnSeperator, final String lineSepeator)
-	    throws IOException {
+    public void exportToCSV(final File file, final String columnSeperator, final String lineSepeator) throws IOException {
 	BufferedOutputStream outputStream = null;
 	try {
 	    outputStream = new BufferedOutputStream(new FileOutputStream(file));
@@ -163,8 +174,8 @@ public class Spreadsheet {
 	}
     }
 
-    private void exportCSVLine(final OutputStream outputStream, final String columnSeperator,
-	    final String lineSepeator, final List<Object> cells) throws IOException {
+    private void exportCSVLine(final OutputStream outputStream, final String columnSeperator, final String lineSepeator,
+	    final List<Object> cells) throws IOException {
 	final byte[] columnSeperatorAsBytes = columnSeperator.getBytes();
 
 	for (int i = 0; i < cells.size(); i++) {
@@ -173,8 +184,8 @@ public class Spreadsheet {
 	    if (i > 0) {
 		outputStream.write(columnSeperatorAsBytes);
 	    }
-	    
-	    if(cellValue == null) {
+
+	    if (cellValue == null) {
 		outputStream.write(StringUtils.EMPTY.getBytes());
 	    } else {
 		outputStream.write(cellValue.toString().replace(columnSeperator, "").getBytes());
@@ -210,8 +221,7 @@ public class Spreadsheet {
 	}
     }
 
-    public void exportToXLSSheet(final HSSFWorkbook workbook, final HSSFCellStyle headerCellStyle,
-	    final HSSFCellStyle cellStyle) {
+    public void exportToXLSSheet(final HSSFWorkbook workbook, final HSSFCellStyle headerCellStyle, final HSSFCellStyle cellStyle) {
 	final HSSFSheet sheet = workbook.createSheet(name);
 	sheet.setDefaultColumnWidth((short) 20);
 
@@ -222,21 +232,18 @@ public class Spreadsheet {
 	}
     }
 
-    private void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle,
-	    final List<Object> cells) {
+    protected void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<Object> cells) {
 	exportXLSLine(sheet, cellStyle, cells, 1);
     }
 
-    private void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle,
-	    final List<Object> cells, final int offset) {
+    protected void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<Object> cells, final int offset) {
 	final HSSFRow row = sheet.createRow(sheet.getLastRowNum() + offset);
 	for (final Object cellValue : cells) {
 	    addColumn(cellStyle, row, cellValue);
 	}
     }
 
-    protected static HSSFCell addColumn(final HSSFCellStyle cellStyle, final HSSFRow row,
-	    final Object cellValue) {
+    protected static HSSFCell addColumn(final HSSFCellStyle cellStyle, final HSSFRow row, final Object cellValue) {
 	final HSSFCell cell = row.createCell((short) (row.getLastCellNum() + 1));
 	cell.setCellStyle(cellStyle);
 	if (cellValue != null) {
