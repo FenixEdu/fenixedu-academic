@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
@@ -526,8 +527,50 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    groupName.append(creditsLimit.getMaximumCredits());
 		    groupName.append(")</span>");
 		}
+
+		if (isToShowCreationInfoAndGroupApprovedCredits()) {
+		    final ConclusionValue value = curriculumGroup.isConcluded(executionYearContext);
+		    groupName.append(" <em style=\"background-color:" + getBackgroundColor(value) + "; color:" + getColor(value)
+			    + "\"");
+		    groupName.append(" \">");
+		    groupName.append(value.getLocalizedName());
+		    groupName.append("</em>");
+		}
+
 	    }
 	    return groupName;
+	}
+
+	private String getBackgroundColor(ConclusionValue value) {
+	    switch (value) {
+	    case CONCLUDED:
+		return "#dfb";
+
+	    case UNKNOWN:
+		return "#fff7bb";
+
+	    case NOT_CONCLUDED:
+		return "#ffeadd";
+
+	    default:
+		return "";
+	    }
+	}
+
+	private String getColor(ConclusionValue value) {
+	    switch (value) {
+	    case CONCLUDED:
+		return "rgb(85, 85, 85)";
+
+	    case UNKNOWN:
+		return "rgb(85, 85, 85)";
+
+	    case NOT_CONCLUDED:
+		return "#c00";
+
+	    default:
+		return "";
+	    }
 	}
 
 	private void generateCurriculumLineRows(HtmlTable mainTable, CurriculumGroup curriculumGroup, int level) {

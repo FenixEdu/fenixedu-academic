@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -26,10 +27,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.injectionCode.Checked;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.StringAppender;
 
 abstract public class CurriculumModule extends CurriculumModule_Base {
 
@@ -278,7 +282,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     abstract public Set<CurriculumLine> getAllCurriculumLines();
 
-    abstract protected ConclusionValue isConcluded(ExecutionYear executionYear);
+    abstract public ConclusionValue isConcluded(ExecutionYear executionYear);
 
     abstract public boolean hasConcluded(DegreeModule degreeModule, ExecutionYear executionYear);
 
@@ -296,7 +300,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
      * calculate it's value, for instance, doesn't have any curricular rules
      * 
      */
-    static protected enum ConclusionValue {
+    static public enum ConclusionValue {
 	CONCLUDED(true) {
 	    @Override
 	    public boolean isValid() {
@@ -332,6 +336,11 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
 	static public ConclusionValue create(final boolean value) {
 	    return value ? CONCLUDED : NOT_CONCLUDED;
+	}
+
+	public String getLocalizedName() {
+	    return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(
+		    StringAppender.append(ConclusionValue.class.getSimpleName(), ".", name()));
 	}
     }
 }

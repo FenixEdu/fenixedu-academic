@@ -236,7 +236,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    protected ConclusionValue isConcluded(final ExecutionYear executionYear) {
+    public ConclusionValue isConcluded(final ExecutionYear executionYear) {
 	return ConclusionValue.create(executionYear == null || !hasExecutionPeriod()
 		|| getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear));
     }

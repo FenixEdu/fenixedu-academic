@@ -168,7 +168,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     @Override
-    protected ConclusionValue isConcluded(final ExecutionYear executionYear) {
+    public ConclusionValue isConcluded(final ExecutionYear executionYear) {
 	return hasFinalAverage() ? ConclusionValue.CONCLUDED : super.isConcluded(executionYear);
     }
 

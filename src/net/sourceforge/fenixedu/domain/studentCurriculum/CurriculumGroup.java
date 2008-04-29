@@ -661,7 +661,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
-    protected ConclusionValue isConcluded(ExecutionYear executionYear) {
+    public ConclusionValue isConcluded(final ExecutionYear executionYear) {
 	if (isToCheckCreditsLimits(executionYear)) {
 	    return ConclusionValue.create(checkCreditsLimits(executionYear));
 	} else if (isToCheckDegreeModulesSelectionLimit(executionYear)) {

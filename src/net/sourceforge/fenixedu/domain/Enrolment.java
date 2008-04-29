@@ -712,7 +712,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    protected final ConclusionValue isConcluded(ExecutionYear executionYear) {
+    public final ConclusionValue isConcluded(ExecutionYear executionYear) {
 	return ConclusionValue.create(isAproved(executionYear));
     }
 
@@ -1174,10 +1174,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     /**
-         * Just for Master Degrees legacy code
-         * 
-         * @return
-         */
+     * Just for Master Degrees legacy code
+     * 
+     * @return
+     */
     @Deprecated
     final public double getCredits() {
 	return getEctsCredits();
@@ -1282,12 +1282,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     /**
-         * {@inheritDoc}
-         * 
-         * <p>
-         * This method assumes that each Student has at most one non evaluated
-         * Thesis and no more that two Thesis.
-         */
+     * {@inheritDoc}
+     * 
+     * <p>
+     * This method assumes that each Student has at most one non evaluated
+     * Thesis and no more that two Thesis.
+     */
     final public Thesis getThesis() {
 	List<Thesis> theses = getTheses();
 

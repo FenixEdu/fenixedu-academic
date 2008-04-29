@@ -132,14 +132,14 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
 	return Collections.EMPTY_SET;
     }
-    
+
     @Override
     public Set<ICurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
-        return Collections.emptySet();
+	return Collections.emptySet();
     }
 
     @Override
-    protected ConclusionValue isConcluded(ExecutionYear executionYear) {
+    public ConclusionValue isConcluded(ExecutionYear executionYear) {
 	return ConclusionValue.CONCLUDED;
     }
 
@@ -147,7 +147,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public Curriculum getCurriculum(final ExecutionYear executionYear) {
 	return Curriculum.createEmpty(this, executionYear);
     }
-    
+
     @Override
     public Double getCreditsConcluded(ExecutionYear executionYear) {
 	return Double.valueOf(0d);
@@ -167,15 +167,15 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public Double getAprovedEctsCredits() {
 	return Double.valueOf(0d);
     }
-    
+
     @Override
     public Collection<NoCourseGroupCurriculumGroup> getNoCourseGroupCurriculumGroups() {
-        Collection<NoCourseGroupCurriculumGroup> res = new HashSet<NoCourseGroupCurriculumGroup>();
-        res.add(this);
-        res.addAll(super.getNoCourseGroupCurriculumGroups());
-        return res;
+	Collection<NoCourseGroupCurriculumGroup> res = new HashSet<NoCourseGroupCurriculumGroup>();
+	res.add(this);
+	res.addAll(super.getNoCourseGroupCurriculumGroups());
+	return res;
     }
-    
+
     @Override
     public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
 	return null;
