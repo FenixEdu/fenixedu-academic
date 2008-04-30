@@ -29,3 +29,4 @@ function executeWithTempFile() {
 }
 
 execute "Add Search Interface to Identification Card Portal" addSearchInterfaceToIdentificationCardsPortal.sql
+execute "Data fix please delete this script after running" dataFix.sql
