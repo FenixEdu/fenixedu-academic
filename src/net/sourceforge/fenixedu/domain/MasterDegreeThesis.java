@@ -30,11 +30,14 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 	return null;
     }
 
+    public String getDissertationTitle() {
+	return getActiveMasterDegreeThesisDataVersion().getDissertationTitle();
+    }
+
     public MasterDegreeProofVersion getActiveMasterDegreeProofVersion() {
 	MasterDegreeProofVersion activeMasterDegreeProofVersion = null;
 
-	for (MasterDegreeProofVersion candidateMasterDegreeProofVersion : this
-		.getMasterDegreeProofVersions()) {
+	for (MasterDegreeProofVersion candidateMasterDegreeProofVersion : this.getMasterDegreeProofVersions()) {
 	    if (candidateMasterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
 		activeMasterDegreeProofVersion = candidateMasterDegreeProofVersion;
 		break;
@@ -50,8 +53,7 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
     }
 
     public boolean isConcluded(Integer year) {
-	return isConcluded()
-		&& getActiveMasterDegreeProofVersion().getProofDateYearMonthDay().getYear() == year;
+	return isConcluded() && getActiveMasterDegreeProofVersion().getProofDateYearMonthDay().getYear() == year;
     }
 
     public MasterDegreeThesisState getState() {
@@ -71,12 +73,12 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 	return MasterDegreeThesisState.NOT_DELIVERED;
     }
 
-    public void delete(){
-        getMasterDegreeThesisDataVersions().clear();
-        getMasterDegreeProofVersions().clear();
-        removeStudentCurricularPlan();
-        removeRootDomainObject();
-        super.deleteDomainObject();
+    public void delete() {
+	getMasterDegreeThesisDataVersions().clear();
+	getMasterDegreeProofVersions().clear();
+	removeStudentCurricularPlan();
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
-    
+
 }
