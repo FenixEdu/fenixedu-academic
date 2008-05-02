@@ -44,8 +44,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
     private String getDegreeFinalizationDate(final DegreeFinalizationCertificateRequest request) {
 	return request.mustHideConclusionDate() ? StringUtils.EMPTY : request.getConclusionDate().toString(DATE_FORMAT,
-		LanguageUtils.getLocale())
-		+ ",";
+		LanguageUtils.getLocale());
     }
 
     private String getExceptionalConclusionInfo(final DegreeFinalizationCertificateRequest request) {
@@ -55,11 +54,11 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	final String date = request.getExceptionalConclusionDate().toString(DATE_FORMAT, LanguageUtils.getLocale());
 	if (request.getInternshipAbolished()) {
-	    return date + ", data em que a Comissão Directiva decidiu abolir o sistema de estágios,";
+	    return date + ", data em que a Comissão Directiva decidiu abolir o sistema de estágios";
 	} else if (request.getInternshipApproved()) {
-	    return date + ", data em que foi aprovado o estágio regulamentar,";
+	    return date + ", data em que foi aprovado o estágio regulamentar";
 	} else if (request.getStudyPlan()) {
-	    return " por força do Plano de Estudos homologado em " + date + " pelo Conselho Científico,";
+	    return " por força do Plano de Estudos homologado em " + date + " pelo Conselho Científico";
 	} else {
 	    return StringUtils.EMPTY;
 	}
@@ -70,7 +69,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
 
-	result.append(" ").append(resourceBundle.getString("documents.registration.final.arithmetic.mean"));
+	result.append(", ").append(resourceBundle.getString("documents.registration.final.arithmetic.mean"));
 	result.append(" de ").append(finalAverage);
 	result.append(" (").append(enumerationBundle.getString(finalAverage.toString()));
 	result.append(") ").append(resourceBundle.getString("values"));
