@@ -2777,7 +2777,19 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasDissertationThesis() {
-	return getDissertationEnrolment() != null && getDissertationEnrolment().getThesis() != null;
+	if (getDegreeType() == DegreeType.MASTER_DEGREE) {
+	    return getLastStudentCurricularPlan().hasMasterDegreeThesis();
+	} else {
+	    return getDissertationEnrolment() != null && getDissertationEnrolment().getThesis() != null;
+	}
+    }
+
+    final public String getDissertationThesisTitle() {
+	if (getDegreeType() == DegreeType.MASTER_DEGREE) {
+	    return getLastStudentCurricularPlan().getMasterDegreeThesis().getDissertationTitle();
+	} else {
+	    return getDissertationEnrolment().getThesis().getFinalFullTitle().getContent();
+	}
     }
 
     final public Enrolment getDissertationEnrolment() {
