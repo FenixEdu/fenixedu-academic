@@ -57,8 +57,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	    addParameter("finalAverageQualified", registration.getDegreeType().getGradeScale().getQualifiedName(
 		    registrationConclusionBean.getFinalAverage().toString()));
 	} else if (diplomaRequest.hasDissertationTitle()) {
-	    addParameter("dissertationTitle", registration.getDissertationEnrolment().getThesis().getFinalFullTitle()
-		    .getContent());
+	    addParameter("dissertationTitle", registration.getDissertationThesisTitle());
 	}
 
 	addParameter("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, registration));
@@ -79,10 +78,6 @@ public class Diploma extends AdministrativeOfficeDocument {
 	return result.toString();
     }
 
-    private Registration getRegistration() {
-	return getDocumentRequest().getRegistration();
-    }
-
     final private String getConclusionStatusAndDegreeType(final DiplomaRequest diplomaRequest, final Registration registration) {
 	final StringBuilder result = new StringBuilder();
 
@@ -93,8 +88,10 @@ public class Diploma extends AdministrativeOfficeDocument {
 	// reportConcludedCycles(result, applicationResources,
 	// diplomaRequest, registration);
 
-	result.append(enumerationBundle.getString(diplomaRequest.getWhatShouldBeRequestedCycle().getQualifiedName()));
-	result.append(" ").append(applicationResources.getString("of.masculine")).append(" ");
+	if (degreeType.hasAnyCycleTypes()) {
+	    result.append(enumerationBundle.getString(diplomaRequest.getWhatShouldBeRequestedCycle().getQualifiedName()));
+	    result.append(" ").append(applicationResources.getString("of.masculine")).append(" ");
+	}
 
 	result.append(degreeType.getPrefix()).append(degreeType.getFilteredName());
 
