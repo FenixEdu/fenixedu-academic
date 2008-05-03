@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Search Interface to Identification Card Portal" addSearchInterfaceToIdentificationCardsPortal.sql
