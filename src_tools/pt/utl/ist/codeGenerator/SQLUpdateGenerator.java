@@ -17,6 +17,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
@@ -30,6 +32,8 @@ import pt.utl.ist.codeGenerator.database.SqlTable;
 
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 
+import eu.ist.fenixframework.Config;
+import eu.ist.fenixframework.FenixFramework;
 import eu.ist.fenixframework.pstm.MetadataManager;
 
 public class SQLUpdateGenerator {
@@ -224,7 +228,12 @@ public class SQLUpdateGenerator {
 
     public static void main(String[] args) {
 	try {
-	    MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
+	    Config frameworkConfig = new Config() {{
+		appName = PropertiesManager.getProperty("app.name");
+		errorIfChangingDeletedObject = 
+		    PropertiesManager.getBooleanProperty("error.if.changing.deleted.object");
+	    }};
+	    FenixFramework.initialize("build/WEB-INF/classes/domain_model.dml", frameworkConfig);
 	    final PersistenceBroker persistenceBroker = PersistenceBrokerFactory.defaultPersistenceBroker();
 	    connection = persistenceBroker.serviceConnectionManager().getConnection();
 	    generate();
