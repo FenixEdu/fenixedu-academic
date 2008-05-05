@@ -307,6 +307,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                     finalDegreeWorkCandidacyRequirementsForm.set("minimumNumberOfCompletedCourses",
                             infoScheduleing.getMinimumNumberOfCompletedCourses().toString());
                 }
+                if (infoScheduleing.getMinimumCompletedCreditsSecondCycle() != null) {
+                    finalDegreeWorkCandidacyRequirementsForm.set("minimumCompletedCreditsSecondCycle",
+                            infoScheduleing.getMinimumCompletedCreditsSecondCycle().toString());
+                }
                 if (infoScheduleing.getMaximumCurricularYearToCountCompletedCourses() != null) {
                     finalDegreeWorkCandidacyRequirementsForm.set("maximumCurricularYearToCountCompletedCourses",
                             infoScheduleing.getMaximumCurricularYearToCountCompletedCourses().toString());
@@ -1007,6 +1011,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         String minimumNumberOfCompletedCoursesString = (String) finalDegreeWorkScheduleingForm
                 .get("minimumNumberOfCompletedCourses");
+        String minimumCompletedCreditsSecondCycleString = (String) finalDegreeWorkScheduleingForm
+        	.get("minimumCompletedCreditsSecondCycle");
+        
         String maximumCurricularYearToCountCompletedCoursesString = (String) finalDegreeWorkScheduleingForm
         		.get("maximumCurricularYearToCountCompletedCourses");
         String minimumCompletedCurricularYearString = (String) finalDegreeWorkScheduleingForm
@@ -1022,6 +1029,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         if (minimumNumberOfCompletedCoursesString != null
                 && !minimumNumberOfCompletedCoursesString.equals("")) {
             minimumNumberOfCompletedCourses = Integer.valueOf(minimumNumberOfCompletedCoursesString);
+        }
+
+        Integer minimumCompletedCreditsSecondCycle = null;
+        if (minimumCompletedCreditsSecondCycleString != null
+                && !minimumCompletedCreditsSecondCycleString.equals("")) {
+            minimumCompletedCreditsSecondCycle = Integer.valueOf(minimumCompletedCreditsSecondCycleString);
         }
 
         Integer maximumCurricularYearToCountCompletedCourses = null;
@@ -1061,7 +1074,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             		maximumCurricularYearToCountCompletedCourses,
             		minimumCompletedCurricularYear,
                     minimumNumberOfStudents, maximumNumberOfStudents,
-                    maximumNumberOfProposalCandidaciesPerGroup, attributionByTeachers, allowSimultaneousCoorientationAndCompanion };
+                    maximumNumberOfProposalCandidaciesPerGroup, attributionByTeachers, allowSimultaneousCoorientationAndCompanion, minimumCompletedCreditsSecondCycle };
             ServiceUtils.executeService(userView, "DefineFinalDegreeWorkCandidacyRequirements", args);
         } catch (NotAuthorizedFilterException e) {
             ActionErrors actionErrors = new ActionErrors();

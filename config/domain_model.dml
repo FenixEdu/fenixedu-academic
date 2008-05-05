@@ -2259,6 +2259,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Integer minimumCompletedCurricularYear;
 		Integer minimumNumberOfCompletedCourses;
 		Integer minimumNumberOfStudents;
+		Integer minimumCompletedCreditsSecondCycle;
 		YearMonthDay startOfCandidacyPeriodDateYearMonthDay;
 		HourMinuteSecond startOfCandidacyPeriodTimeHourMinuteSecond;
 		YearMonthDay startOfProposalPeriodDateYearMonthDay;

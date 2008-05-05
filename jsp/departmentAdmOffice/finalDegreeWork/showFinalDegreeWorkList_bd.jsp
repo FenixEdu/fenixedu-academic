@@ -198,6 +198,7 @@
 	<strong><bean:message key="finalDegreeWorkCandidacy.setRequirements.header"/>:</strong>
 	<br />
 	<table>
+<!--
 		<tr>
 			<th class="listClasses-header">
 				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumNumberOfCompletedCourses"/>
@@ -212,6 +213,15 @@
 			</th>
 			<td class="listClasses">
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumCurricularYearToCountCompletedCourses" property="maximumCurricularYearToCountCompletedCourses" size="2"/>
+			</td>
+		</tr>
+-->
+		<tr>
+			<th class="listClasses-header">
+				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsSecondCycle"/>
+			</th>
+			<td class="listClasses">
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCompletedCreditsSecondCycle" property="minimumCompletedCreditsSecondCycle" size="2"/>
 			</td>
 		</tr>
 		<tr>

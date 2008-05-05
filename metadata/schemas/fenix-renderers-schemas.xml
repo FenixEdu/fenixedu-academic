@@ -348,6 +348,7 @@
 		<slot name="minimumNumberOfStudents"/>
 		<slot name="maximumNumberOfProposalCandidaciesPerGroup"/>
 		<slot name="minimumNumberOfCompletedCourses"/>
+		<slot name="minimumCompletedCreditsSecondCycle"/>
 	</schema>
 
 	<schema name="final.degree.work.proposal.short" type="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal">

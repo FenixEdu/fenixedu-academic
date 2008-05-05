@@ -62,12 +62,16 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
             throw new NoDegreeStudentCurricularPlanFoundException();
         }
 
-        if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
-            throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
+//        if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
+//            throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
+//        }        
+        if (scheduleing.getMinimumCompletedCreditsSecondCycle() == null) {
+            throw new NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException();
         }
     	final Integer maximumCurricularYearToCountCompletedCourses = scheduleing.getMaximumCurricularYearToCountCompletedCourses();
     	final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
-    	final Integer minimumNumberOfCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
+//    	final Integer minimumNumberOfCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
+    	final Integer minimumCompletedCreditsSecondCycle = scheduleing.getMinimumCompletedCreditsSecondCycle();
 
     	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
     	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
@@ -115,13 +119,19 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 			throw new NotCompletedCurricularYearException(null, args);
 		}
 
-		int numberCompletedCurricularCourses = completedCurricularCourses.size();
-		if (numberCompletedCurricularCourses < minimumNumberOfCompletedCourses) {
-			final int numberMissingCurricularCourses = minimumNumberOfCompletedCourses - numberCompletedCurricularCourses;
-			final String[] args = { Integer.toString(numberMissingCurricularCourses), notCompletedCurricularCourses.toString()};
-			throw new InsufficientCompletedCoursesException(null, args);
-		}
+//		int numberCompletedCurricularCourses = completedCurricularCourses.size();
+//		if (numberCompletedCurricularCourses < minimumNumberOfCompletedCourses) {
+//			final int numberMissingCurricularCourses = minimumNumberOfCompletedCourses - numberCompletedCurricularCourses;
+//			final String[] args = { Integer.toString(numberMissingCurricularCourses), notCompletedCurricularCourses.toString()};
+//			throw new InsufficientCompletedCoursesException(null, args);
+//		}
 
+
+		final Double completedCredits = studentCurricularPlan.getSecondCycle().getAprovedEctsCredits();
+		if (minimumCompletedCreditsSecondCycle > completedCredits) {
+		    final String[] args = { completedCredits.toString(), minimumCompletedCreditsSecondCycle.toString()};
+		    throw new InsufficientCompletedCreditsInSecondCycleException(null, args);
+		}
         return true;
     }
 
@@ -212,10 +222,40 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
         }
     }
 
+    public class InsufficientCompletedCreditsInSecondCycleException extends FenixServiceException {
+        public InsufficientCompletedCreditsInSecondCycleException(String s, String[] args) {
+            super(s, args);
+        }
+    }
+
     public class InsufficientCompletedCoursesException extends FenixServiceException {
         public InsufficientCompletedCoursesException(String s, String[] args) {
             super(s, args);
         }
+    }
+
+    public class NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException extends FenixServiceException {
+
+        public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException() {
+            super();
+        }
+
+        public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(int errorType) {
+            super(errorType);
+        }
+
+        public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(String s) {
+            super(s);
+        }
+
+        public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(Throwable cause) {
+            super(cause);
+        }
+
+        public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
     }
 
     public class NumberOfNecessaryCompletedCoursesNotSpecifiedException extends FenixServiceException {

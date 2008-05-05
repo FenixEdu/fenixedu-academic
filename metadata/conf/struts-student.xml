@@ -714,8 +714,14 @@
 			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$InsufficientCompletedCoursesException"
 						key="error.message.InsufficientCompletedCoursesException"
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$InsufficientCompletedCreditsInSecondCycleException"
+						key="error.message.InsufficientCompletedCreditsInSecondCycleException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$NumberOfNecessaryCompletedCoursesNotSpecifiedException"
 						key="error.message.NumberOfNecessaryCompletedCoursesNotSpecifiedException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException"
+						key="error.message.NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException"
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MaximumNumberOfProposalCandidaciesPerGroupUndefinedException"
 						key="error.message.MaximumNumberOfProposalCandidaciesPerGroupUndefinedException"
@@ -767,6 +773,12 @@
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$NoDegreeStudentCurricularPlanFoundException"
 						key="error.message.NoDegreeStudentCurricularPlanFoundException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MinimumCompletedCreditsSecondCycleUndefinedException"
+						key="error.message.InsufficientCompletedCreditsInSecondCycleException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MinimumCompletedCreditsSecondCycleNotReachedException"
+						key="error.message.InsufficientCompletedCreditsInSecondCycleException"
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="showCandidacyForm" path="df.page.finalDegreeWork.candidacy"/>
 			<forward name="showSelectProposalsForm" path="df.page.finalDegreeWork.selectProposals"/>

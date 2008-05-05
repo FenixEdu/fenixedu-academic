@@ -44,8 +44,10 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
 
         if (scheduleing == null || scheduleing.getMaximumNumberOfStudents() == null) {
             throw new MaximumNumberOfStudentsUndefinedException();
-        } else if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
-            throw new MinimumNumberOfCompletedCoursesUndefinedException();
+        } else if (scheduleing.getMinimumCompletedCreditsSecondCycle() == null) {
+            throw new MinimumCompletedCreditsSecondCycleUndefinedException();
+//        } else if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
+//            throw new MinimumNumberOfCompletedCoursesUndefinedException();
         } else if (scheduleing.getMaximumNumberOfStudents().intValue() <= group.getGroupStudents()
                 .size()) {
             throw new MaximumNumberOfStudentsReachedException(scheduleing.getMaximumNumberOfStudents()
@@ -53,7 +55,8 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
         } else {
         	final Integer maximumCurricularYearToCountCompletedCourses = scheduleing.getMaximumCurricularYearToCountCompletedCourses();
         	final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
-        	final Integer minimumNumberOfCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
+//        	final Integer minimumNumberOfCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
+        	final Integer minimumCompletedCreditsSecondCycle = scheduleing.getMinimumCompletedCreditsSecondCycle();
 
         	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
         	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
@@ -100,11 +103,21 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
     			throw new NotCompletedCurricularYearException(null, args);
     		}
 
-    		int numberCompletedCurricularCourses = completedCurricularCourses.size();
-    		if (numberCompletedCurricularCourses < minimumNumberOfCompletedCourses) {
-    			final int numberMissingCurricularCourses = minimumNumberOfCompletedCourses - numberCompletedCurricularCourses;
-    			final String[] args = { Integer.toString(numberMissingCurricularCourses), notCompletedCurricularCourses.toString()};
-    			throw new MinimumNumberOfCompletedCoursesNotReachedException(null, args);
+//    		if (minimumNumberOfCompletedCourses != null) {
+//    		    int numberCompletedCurricularCourses = completedCurricularCourses.size();
+//    		    if (numberCompletedCurricularCourses < minimumNumberOfCompletedCourses) {
+//    			final int numberMissingCurricularCourses = minimumNumberOfCompletedCourses - numberCompletedCurricularCourses;
+//    			final String[] args = { Integer.toString(numberMissingCurricularCourses), notCompletedCurricularCourses.toString()};
+//    			throw new MinimumNumberOfCompletedCoursesNotReachedException(null, args);
+//    		    }
+//    		}
+
+    		if (minimumCompletedCreditsSecondCycle != null) {
+    		    final Double completedCredits = studentCurricularPlan.getSecondCycle().getAprovedEctsCredits();
+    		    if (minimumCompletedCreditsSecondCycle > completedCredits) {
+    			final String[] args = { completedCredits.toString(), minimumCompletedCreditsSecondCycle.toString()};
+    			throw new MinimumCompletedCreditsSecondCycleNotReachedException(null, args);
+    		    }
     		}
         }
 
@@ -180,6 +193,28 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
         }
     }
 
+    public class MinimumCompletedCreditsSecondCycleUndefinedException extends FenixServiceException {
+        public MinimumCompletedCreditsSecondCycleUndefinedException() {
+            super();
+        }
+
+        public MinimumCompletedCreditsSecondCycleUndefinedException(int errorType) {
+            super(errorType);
+        }
+
+        public MinimumCompletedCreditsSecondCycleUndefinedException(String s) {
+            super(s);
+        }
+
+        public MinimumCompletedCreditsSecondCycleUndefinedException(Throwable cause) {
+            super(cause);
+        }
+
+        public MinimumCompletedCreditsSecondCycleUndefinedException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
     public class NotCompletedCurricularYearException extends FenixServiceException {
         public NotCompletedCurricularYearException(String s, String[] args) {
             super(s, args);
@@ -188,6 +223,12 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
 
     public class MinimumNumberOfCompletedCoursesNotReachedException extends FenixServiceException {
         public MinimumNumberOfCompletedCoursesNotReachedException(String s, String[] args) {
+            super(s, args);
+        }
+    }
+
+    public class MinimumCompletedCreditsSecondCycleNotReachedException extends FenixServiceException {
+        public MinimumCompletedCreditsSecondCycleNotReachedException(String s, String[] args) {
             super(s, args);
         }
     }

@@ -18,7 +18,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
     		Integer minimumCompletedCurricularYear,
     		Integer minimumNumberOfStudents, Integer maximumNumberOfStudents,
     		Integer maximumNumberOfProposalCandidaciesPerGroup, Boolean attributionByTeachers,
-    		Boolean allowSimultaneousCoorientationAndCompanion)
+    		Boolean allowSimultaneousCoorientationAndCompanion, Integer minimumCompletedCreditsSecondCycle)
     		throws ExcepcaoPersistencia {
 
         if (executionDegreeOID != null) {
@@ -42,6 +42,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
                 scheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(maximumNumberOfProposalCandidaciesPerGroup);
                 scheduleing.setAttributionByTeachers(Boolean.valueOf(attributionByTeachers != null && attributionByTeachers.booleanValue()));
                 scheduleing.setAllowSimultaneousCoorientationAndCompanion(allowSimultaneousCoorientationAndCompanion != null && allowSimultaneousCoorientationAndCompanion.booleanValue());
+                scheduleing.setMinimumCompletedCreditsSecondCycle(minimumCompletedCreditsSecondCycle);
             }
 
         }

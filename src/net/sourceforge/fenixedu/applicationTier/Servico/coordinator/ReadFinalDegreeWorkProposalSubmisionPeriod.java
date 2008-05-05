@@ -44,6 +44,7 @@ public class ReadFinalDegreeWorkProposalSubmisionPeriod extends Service {
                             .getMaximumNumberOfProposalCandidaciesPerGroup());
                     infoScheduleing.setAttributionByTeachers(scheduleing.getAttributionByTeachers());
                     infoScheduleing.setAllowSimultaneousCoorientationAndCompanion(scheduleing.getAllowSimultaneousCoorientationAndCompanion());
+                    infoScheduleing.setMinimumCompletedCreditsSecondCycle(scheduleing.getMinimumCompletedCreditsSecondCycle());
                 }
             }
         }

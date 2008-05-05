@@ -245,6 +245,9 @@
 		<field property="maximumNumberOfProposalCandidaciesPerGroup" depends="integer" page="1">
 			<arg0 key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalCandidaciesPerGroup" resource="true"/>
 		</field>
+		<field property="minimumCompletedCreditsSecondCycle" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsSecondCycle" resource="true"/>
+		</field>
 	</form>
 
   </formset>

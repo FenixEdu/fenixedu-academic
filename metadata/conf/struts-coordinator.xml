@@ -235,6 +235,7 @@
 			<form-property name="minimumNumberOfStudents" type="java.lang.String"/>
 			<form-property name="maximumNumberOfStudents" type="java.lang.String"/>
 			<form-property name="maximumNumberOfProposalCandidaciesPerGroup" type="java.lang.String"/>
+			<form-property name="minimumCompletedCreditsSecondCycle" type="java.lang.String"/>
 			<form-property name="attributionByTeachers" type="java.lang.Boolean"/>
 			<form-property name="allowSimultaneousCoorientationAndCompanion" type="java.lang.Boolean"/>
 		</form-bean>
