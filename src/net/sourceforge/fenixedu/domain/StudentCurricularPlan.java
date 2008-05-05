@@ -2495,20 +2495,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		cycleType);
     }
 
-    public Collection<ExternalCurriculumGroup> getExternalCurriculumGroups() {
-	if (!hasRoot()) {
-	    return Collections.emptyList();
-	}
-
-	final Collection<ExternalCurriculumGroup> result = new ArrayList<ExternalCurriculumGroup>();
-	for (final CycleCurriculumGroup cycleCurriculumGroup : getRoot().getCycleCurriculumGroups()) {
-	    if (cycleCurriculumGroup.isExternal()) {
-		result.add((ExternalCurriculumGroup) cycleCurriculumGroup);
-	    }
-	}
-	return result;
-    }
-
     final public Credits createNewCreditsDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    ExecutionPeriod executionPeriod) {
@@ -2802,6 +2788,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List<CycleCurriculumGroup> getInternalCycleCurriculumGrops() {
 	return hasRoot() ? getRoot().getInternalCycleCurriculumGroups() : Collections.EMPTY_LIST;
+    }
+
+    public Collection<ExternalCurriculumGroup> getExternalCurriculumGroups() {
+	return hasRoot() ? getRoot().getExternalCycleCurriculumGroups() : Collections.EMPTY_LIST;
     }
 
     public Integer getInternalCycleCurriculumGroupsSize() {
