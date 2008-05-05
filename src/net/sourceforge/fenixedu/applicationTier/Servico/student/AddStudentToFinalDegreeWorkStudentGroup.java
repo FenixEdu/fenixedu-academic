@@ -4,8 +4,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -14,11 +16,15 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Login;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -32,7 +38,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
     public boolean run(Integer groupOID, String username) throws ExcepcaoPersistencia,
             FenixServiceException {
         FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
-        Registration registration = Registration.readByUsername(username);
+        Registration registration = findSomeRegistration(username);
         if (group == null
                 || registration == null
                 || group.getGroupStudents() == null
@@ -125,6 +131,42 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
         groupStudent.setRegistration(registration);
         groupStudent.setFinalDegreeDegreeWorkGroup(group);
         return true;
+    }
+
+    private Registration findSomeRegistration(final String username) {
+	final Login login = Login.readLoginByUsername(username);
+	if (login != null) {
+	    final Person person = login.getUser().getPerson();
+	    if (person != null) {
+		final Student student = person.getStudent();
+		final TreeSet<Registration> registrations = new TreeSet<Registration>(new Comparator<Registration>() {
+
+		    public int compare(final Registration r1, final Registration r2) {
+			final DegreeType dt1 = r1.getDegreeType();
+			final DegreeType dt2 = r2.getDegreeType();
+			return 0 - dt1.compareTo(dt2);
+		    }
+		    
+		}) {
+
+		    @Override
+		    public boolean add(final Registration r) {
+			final DegreeType degreeType = r.getDegreeType();
+			return isValidDegreeType(degreeType) && super.add(r);
+		    }
+
+		    private boolean isValidDegreeType(DegreeType degreeType) {
+			return degreeType == DegreeType.BOLONHA_MASTER_DEGREE
+				|| degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
+				|| degreeType == DegreeType.BOLONHA_DEGREE;
+		    }
+		    
+		};
+		registrations.addAll(student.getRegistrationsSet());
+		return registrations.isEmpty() ? null : registrations.first();
+	    }
+	}
+	return null;
     }
 
     public class MaximumNumberOfStudentsUndefinedException extends FenixServiceException {
