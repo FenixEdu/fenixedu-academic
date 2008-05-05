@@ -14,6 +14,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateDeleter;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -23,43 +26,43 @@ import org.apache.struts.action.ActionMapping;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@Mapping(path = "/manageRegistrationState", module = "academicAdminOffice")
+@Forwards( {
+	@Forward(name = "showRegistrationStates", path = "/academicAdminOffice/student/registration/manageRegistrationState.jsp"),
+	@Forward(name = "deleteActualInfoConfirm", path = "student.deleteActualInfoConfirm") })
 public class ManageRegistrationStateDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	final Registration registration = getAndTransportRegistration(request);
 	request.setAttribute("registrationStateBean", new RegistrationStateCreator(registration));
 	return mapping.findForward("showRegistrationStates");
     }
 
-    public ActionForward createNewState(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward createNewState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-            try {
-        	executeFactoryMethod();
-        	addActionMessage(request, "message.success.state.edit");
-            } catch (DomainExceptionWithLabelFormatter e) {
-        	addActionMessage(request, e.getKey(), solveLabelFormatterArgs(request, e.getLabelFormatterArgs()));
-            } catch (DomainException e) {
-        	addActionMessage(request, e.getMessage());
-            }
-	
-	final Registration registration = ((RegistrationStateBean) getRenderedObject())
-		.getRegistration();
+	try {
+	    executeFactoryMethod();
+	    addActionMessage(request, "message.success.state.edit");
+	} catch (DomainExceptionWithLabelFormatter e) {
+	    addActionMessage(request, e.getKey(), solveLabelFormatterArgs(request, e.getLabelFormatterArgs()));
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	}
+
+	final Registration registration = ((RegistrationStateBean) getRenderedObject()).getRegistration();
 	request.setAttribute("registration", registration);
 	request.setAttribute("registrationStateBean", new RegistrationStateCreator(registration));
 	return mapping.findForward("showRegistrationStates");
     }
 
-    public ActionForward deleteState(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward deleteState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    executeFactoryMethod(new RegistrationStateDeleter(Integer.valueOf(request
-		    .getParameter("registrationStateId"))));
+	    executeFactoryMethod(new RegistrationStateDeleter(Integer.valueOf(request.getParameter("registrationStateId"))));
 	    addActionMessage(request, "message.success.state.delete");
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -67,35 +70,33 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 
 	return prepare(mapping, actionForm, request, response);
     }
-    
-    public ActionForward deleteActualInfoConfirm(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+
+    public ActionForward deleteActualInfoConfirm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	getAndTransportRegistration(request);
 	request.setAttribute("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
 	return mapping.findForward("deleteActualInfoConfirm");
     }
-    
-    public ActionForward deleteActualInfo(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+
+    public ActionForward deleteActualInfo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	Registration registration = getAndTransportRegistration(request);
-	
+
 	try {
 	    executeFactoryMethod(new DeleteRegistrationActualInfoFactoryExecutor(registration));
 	    addActionMessage(request, "message.success.deleteActualInfo");
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
-	
+
 	return prepare(mapping, actionForm, request, response);
     }
 
     private Registration getAndTransportRegistration(final HttpServletRequest request) {
-	final Registration registration = rootDomainObject.readRegistrationByOID(getIntegerFromRequest(
-		request, "registrationId"));
+	final Registration registration = rootDomainObject
+		.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
 	request.setAttribute("registration", registration);
 	return registration;
     }

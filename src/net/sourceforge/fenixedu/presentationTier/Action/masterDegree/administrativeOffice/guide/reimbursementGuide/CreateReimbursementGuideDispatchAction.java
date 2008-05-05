@@ -21,10 +21,16 @@ import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideSituationActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Exceptions;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Input;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,8 +42,14 @@ import org.apache.struts.action.DynaActionForm;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
+@Mapping(path = "/createReimbursementGuide", module = "posGraduacao", formBean = "createReimbursementGuideForm")
+@Forwards( { @Forward(name = "start", path = "df.page.createReimbursementGuide"),
+	@Forward(name = "error", path = "df.page.reimbursementGuide_Error"),
+	@Forward(name = "success", path = "df.page.createReimbursementGuide_Success") })
+@Exceptions( { FenixActionException.class, NoEntryChosenActionException.class, InvalidSituationActionException.class })	
 public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction {
 
+    @Input
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
