@@ -20,21 +20,30 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
 	super.fillReport();
-	
+
 	addParameter("curricularYear", getCurricularYear());
-	
-	final List<Enrolment> enrolments = (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(getDocumentRequest().getExecutionYear());
+
+	final List<Enrolment> enrolments = (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(
+		getDocumentRequest().getExecutionYear());
 	addParameter("numberEnrolments", Integer.valueOf(enrolments.size()));
 	addParameter("approvementInfo", getApprovementInfo());
 	addParameter("documentPurpose", getDocumentPurpose());
     }
 
+    @Override
+    protected String getDegreeDescription() {
+	final Registration registration = getDocumentRequest().getRegistration();
+	return registration.getDegreeType().isComposite() ? registration.getDegreeDescription(null) : super
+		.getDegreeDescription();
+    }
+
     final private String getCurricularYear() {
 	final StringBuilder result = new StringBuilder();
-	
+
 	if (!getDocumentRequest().getDegreeType().hasExactlyOneCurricularYear()) {
-	    final Integer curricularYear = Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(getDocumentRequest().getExecutionYear()));
-	    
+	    final Integer curricularYear = Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(
+		    getDocumentRequest().getExecutionYear()));
+
 	    result.append(enumerationBundle.getString(curricularYear.toString() + ".ordinal").toUpperCase());
 	    result.append(" ano curricular, do ");
 	}
@@ -44,14 +53,14 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
     final private String getApprovementInfo() {
 	final StringBuilder result = new StringBuilder();
-	
+
 	final EnrolmentDeclarationRequest enrolmentDeclarationRequest = (EnrolmentDeclarationRequest) getDocumentRequest();
 	final Registration registration = enrolmentDeclarationRequest.getRegistration();
 	final ExecutionYear executionYear = enrolmentDeclarationRequest.getExecutionYear();
-	
+
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.PPRE) {
 	    final boolean transition = registration.isTransition(executionYear);
-	    
+
 	    if (registration.isFirstTime(executionYear) && !transition) {
 		result.append(", pela 1ª vez");
 	    } else {
@@ -59,7 +68,8 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 		if (registrationToInspect.hasApprovement(executionYear.getPreviousExecutionYear())) {
 		    result.append(" e teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
 		} else {
-		    result.append(" e não teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
+		    result.append(" e não teve aproveitamento no ano lectivo "
+			    + executionYear.getPreviousExecutionYear().getYear());
 		}
 	    }
 	}
@@ -68,20 +78,21 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
     final private String getDocumentPurpose() {
 	final StringBuilder result = new StringBuilder();
-	
+
 	final EnrolmentDeclarationRequest enrolmentDeclarationRequest = (EnrolmentDeclarationRequest) getDocumentRequest();
-	
+
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() != null) {
 	    result.append(resourceBundle.getString("documents.declaration.valid.purpose")).append(" ");
 	    if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.OTHER
 		    && !StringUtils.isEmpty(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription())) {
-		result.append(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription().toUpperCase());		
+		result.append(enrolmentDeclarationRequest.getOtherDocumentPurposeTypeDescription().toUpperCase());
 	    } else {
-		result.append(enumerationBundle.getString(enrolmentDeclarationRequest.getDocumentPurposeType().name()).toUpperCase());
+		result.append(enumerationBundle.getString(enrolmentDeclarationRequest.getDocumentPurposeType().name())
+			.toUpperCase());
 	    }
 	    result.append(".");
 	}
-	
+
 	return result.toString();
     }
 
