@@ -30,7 +30,7 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.TaskContainer;
 import org.joda.time.DateTime;
 
-import eu.ist.fenixframework.pstm.MetadataManager;
+import eu.ist.fenixframework.FenixFramework;
 import eu.ist.fenixframework.pstm.Transaction;
 
 /**
@@ -615,7 +615,7 @@ public class Installer extends Task implements TaskContainer {
 	    String username = getFenixManagerUser();
 	    String password = getFenixManagerUserPassword();
 	    Gender gender = Gender.parseGender(getFenixManagerUserGender());
-	    MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
+	    FenixFramework.initialize("build/WEB-INF/classes/domain_model.dml", null);
 	    RootDomainObject.init();
 
 	    boolean txFinished = false;

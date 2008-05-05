@@ -21,14 +21,14 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
-import eu.ist.fenixframework.pstm.MetadataManager;
+import eu.ist.fenixframework.FenixFramework;
 import eu.ist.fenixframework.pstm.Transaction;
 
 public class DataInitializer {
 
     public static void main(String[] args) {
 
-	MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
+	FenixFramework.initialize("build/WEB-INF/classes/domain_model.dml", null);
 	RootDomainObject.init();
 
 	try {
