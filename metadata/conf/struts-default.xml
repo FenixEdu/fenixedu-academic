@@ -210,4 +210,6 @@
       <set-property property="schemaFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory"/>
     </plug-in>
 
+    <plug-in className="net.sourceforge.fenixedu.presentationTier.struts.plugin.StrutsAnnotationsPlugIn" />
+
 </struts-config>

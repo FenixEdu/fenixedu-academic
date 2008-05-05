@@ -739,14 +739,7 @@
 			<form-property name="method" type="java.lang.String" />
       </form-bean> 
 	  
-	  
-	<form-bean name="fixSibsPaymentFileEntriesForm" 
-      	type="org.apache.struts.validator.DynaValidatorForm"
-        dynamic="true">
-      		<form-property name="page" type="java.lang.Integer" initial="0" />
-   	        <form-property name="sibsPaymentFileEntryId" type="java.lang.Integer" />     
-      </form-bean>
-	  
+  
 	  <!-- VIEW STUDENT CURRICULUM FORMS -->
 <!--		<form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -2195,26 +2188,25 @@
 	<forward name="viewGuide" path="/chooseGuideDispatchAction.do?method=choose"/>  
 	</action>
 	
-	<!-- create reimbursement guide -->
-	<action	name="createReimbursementGuideForm"
-			type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.CreateReimbursementGuideDispatchAction"
-			path="/createReimbursementGuide"
-			input="/createReimbursementGuide.do?page=0&amp;method=prepare"
-			parameter="method"
-			scope="request">
-		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
-					key="resources.Action.exceptions.FenixActionException"
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>					
-		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException"
-					key="resources.Action.exceptions.NoEntryChosenActionException"
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>														
-		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException"
-					key="resources.Action.exceptions.InvalidSituationActionException"
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>																								
-		<forward name="start" path="df.page.createReimbursementGuide"/>
-		<forward name="error" path="df.page.reimbursementGuide_Error"/>
-		<forward name="success" path="df.page.createReimbursementGuide_Success"/>			
-	</action>	
+<!--	<action	name="createReimbursementGuideForm"-->
+<!--			type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.CreateReimbursementGuideDispatchAction"-->
+<!--			path="/createReimbursementGuide"-->
+<!--			input="/createReimbursementGuide.do?page=0&amp;method=prepare"-->
+<!--			parameter="method"-->
+<!--			scope="request">-->
+<!--		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"-->
+<!--					key="resources.Action.exceptions.FenixActionException"-->
+<!--					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>					-->
+<!--		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException"-->
+<!--					key="resources.Action.exceptions.NoEntryChosenActionException"-->
+<!--					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>														-->
+<!--		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException"-->
+<!--					key="resources.Action.exceptions.InvalidSituationActionException"-->
+<!--					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>																								-->
+<!--		<forward name="start" path="df.page.createReimbursementGuide"/>-->
+<!--		<forward name="error" path="df.page.reimbursementGuide_Error"/>-->
+<!--		<forward name="success" path="df.page.createReimbursementGuide_Success"/>			-->
+<!--	</action>	-->
 	
 	<!-- view reimbursement guides -->
 	<action	type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuidesDispatchAction"
@@ -2365,21 +2357,6 @@
 		<forward name="studentsGratuityList" path="studentsGratuityList" />
 	</action>
 
-	<action path="/studentSituation"
-		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.StudentSituationDispatchAction"
-		parameter="method"
-		name="studentSituationForm"
-		scope="request"
-		validate="true"
-		input="/studentSituation.do?method=chooseStudent&amp;page=0"
-	>
-		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
-						key="resources.Action.exceptions.NonExistingActionException"
-						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-		<forward name="chooseStudent" path="chooseStudentForStudentSituation" />
-		<forward name="success" path="studentSituation"/>
-	</action>
-	
 	<action path="/payGratuity"
 		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.PayGratuityDispatchAction"
 		parameter="method"
@@ -2455,22 +2432,8 @@
 		input="/listPayedInsurances.do?method=prepare"
 	>
 		<forward name="chooseDates" path="listPayedInsurances,chooseDates" />
-	</action>
-	
-	<action path="/fixSibsPaymentFileEntries"
-		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.FixSibsConflictsDispatchAction"
-		parameter="method"
-		name="fixSibsPaymentFileEntriesForm"
-		scope="request"
-		validate="true"
-		input="/fixSibsPaymentFileEntries.do?method=prepare&amp;page=0"
-	>
-		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
-						key="resources.Action.exceptions.NonExistingActionException"
-						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-		<forward name="show" path="showSibsPaymentFileEntries" />
-	</action>
-	
+	</action>	
+
 	<!-- Choose Master Degree to create guide -->
 	  <action path="/chooseDataToCreateGuide"
 		      parameter="method"
@@ -2584,14 +2547,17 @@
       <set-property property="pathnames" 
              value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-masterDegreeAdministrativeOffice.xml"/>
     </plug-in>
-    <plug-in className="org.apache.struts.tiles.TilesPlugin">
+    
+    <plug-in className="net.sourceforge.fenixedu.presentationTier.tiles.plugin.FenixTilesPlugin" >
 		<set-property property="definitions-config" 
 		     value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-pages-definitions.xml"/>
-		<set-property property="moduleAware"
-   			value="true"/>
-		<set-property property="definitions-parser-validate" 
-			value="true"/>
-	</plug-in>
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
+        <set-property property="factoryClassname" value="net.sourceforge.fenixedu.presentationTier.tiles.definition.FenixDefinitionsFactory" />
+        <set-property property="defaultTileDefinition" value="definition.masterDegreeAdministrativeOffice.masterPage" />
+    </plug-in>
+    
+    <plug-in className="net.sourceforge.fenixedu.presentationTier.struts.plugin.StrutsAnnotationsPlugIn" />    
     
 </struts-config>
 
