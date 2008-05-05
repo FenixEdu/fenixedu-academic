@@ -232,6 +232,7 @@
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCompletedCreditsSecondCycle" property="minimumCompletedCreditsSecondCycle" size="2"/>
 			</td>
 		</tr>
+<!--
 		<tr>
 			<th>
 				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCurricularYear"/>:
@@ -240,6 +241,7 @@
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCompletedCurricularYear" property="minimumCompletedCurricularYear" size="2"/>
 			</td>
 		</tr>
+-->
 <!--
 		<tr>
 			<th>
