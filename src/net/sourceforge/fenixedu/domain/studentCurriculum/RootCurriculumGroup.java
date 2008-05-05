@@ -291,4 +291,16 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return result;
     }
 
+    public List<CycleCurriculumGroup> getExternalCycleCurriculumGroups() {
+	final List<CycleCurriculumGroup> result = new ArrayList<CycleCurriculumGroup>();
+
+	for (final CycleCurriculumGroup cycleCurriculumGroup : getCycleCurriculumGroups()) {
+	    if (cycleCurriculumGroup.isExternal()) {
+		result.add(cycleCurriculumGroup);
+	    }
+	}
+
+	return result;
+    }
+
 }
