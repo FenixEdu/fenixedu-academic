@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGrat
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.candidacy.MDCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -138,7 +138,7 @@ public class SeparationCyclesManagement {
 
 	registration = new Registration(student.getPerson(), student.getNumber());
 	registration.setDegree(oldSecondCycle.getDegreeCurricularPlanOfDegreeModule().getDegree());
-	registration.setStudentCandidacy(createMDCandidacy(student, oldSecondCycle));
+	registration.setStudentCandidacy(createStudentCandidacy(student, oldSecondCycle));
 	registration.setStartDate(getExecutionPeriod().getBeginDateYearMonthDay());
 	registration.getActiveState().setStateDate(getExecutionPeriod().getBeginDateYearMonthDay());
 	registration.setSourceRegistration(sourceStudentCurricularPlan.getRegistration());
@@ -148,9 +148,9 @@ public class SeparationCyclesManagement {
 	return registration;
     }
 
-    private MDCandidacy createMDCandidacy(final Student student, final CycleCurriculumGroup oldSecondCycle) {
-	final DegreeCurricularPlan degreeCurricularPlan = oldSecondCycle.getDegreeCurricularPlanOfDegreeModule();
-	return new MDCandidacy(student.getPerson(), degreeCurricularPlan.getExecutionDegreeByYear(getExecutionYear()));
+    private StudentCandidacy createStudentCandidacy(final Student student, final CycleCurriculumGroup oldSecondCycle) {
+	final DegreeCurricularPlan dcp = oldSecondCycle.getDegreeCurricularPlanOfDegreeModule();
+	return StudentCandidacy.createStudentCandidacy(dcp.getExecutionDegreeByYear(getExecutionYear()), student.getPerson());
     }
 
     private StudentCurricularPlan createStudentCurricularPlan(final Registration registration,
