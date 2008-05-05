@@ -109,16 +109,20 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     public Curriculum getCurriculum(final ExecutionYear executionYear) {
 	return Curriculum.createEmpty(this, executionYear);
     }
-    
+
+    public Curriculum getCurriculumInAdvance() {
+	return super.getCurriculum(null);
+    }
+
     @Override
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void conclude() {
-        throw new DomainException("error.ExternalCurriculumGroup.cannot.conclude.external.curriculumGroups");
+	throw new DomainException("error.ExternalCurriculumGroup.cannot.conclude.external.curriculumGroups");
     }
-    
+
     @Override
     public boolean isConclusionProcessed() {
 	return false;
     }
-    
+
 }
