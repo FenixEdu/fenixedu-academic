@@ -1777,13 +1777,13 @@ public class Registration extends Registration_Base {
 	final Degree degree = getDegree();
 	final DegreeType degreeType = degree.getDegreeType();
 
+	if (cycleType != null) {
+	    result.append(cycleType.getDescription()).append(" do ");
+	}
+
 	result.append(degreeType.getPrefix());
 	result.append(degreeType.getFilteredName().toUpperCase());
 	result.append(" em ").append(degree.getFilteredName().toUpperCase());
-
-	if (cycleType != null) {
-	    result.append(" (").append(cycleType.getDescription()).append(")");
-	}
 
 	return result.toString();
     }
