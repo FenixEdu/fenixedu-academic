@@ -33,7 +33,7 @@ import org.apache.struts.action.DynaActionForm;
  * 
  */
 
-@Mapping(path = "/fixSibsPaymentFileEntries", module = "posGraduacao", formBeanClass = FixSibsPaymentFileEntriesForm.class)
+@Mapping(path = "/fixSibsPaymentFileEntries", module = "masterDegreeAdministrativeOffice", formBeanClass = FixSibsPaymentFileEntriesForm.class)
 @Forwards(@Forward(name = "show", path = "showSibsPaymentFileEntries"))
 @Exceptions(NonExistingActionException.class)
 public class FixSibsConflictsDispatchAction extends FenixDispatchAction {

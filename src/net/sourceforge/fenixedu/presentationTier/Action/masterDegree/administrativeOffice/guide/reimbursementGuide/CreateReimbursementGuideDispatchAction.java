@@ -42,7 +42,7 @@ import org.apache.struts.action.DynaActionForm;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-@Mapping(path = "/createReimbursementGuide", module = "posGraduacao", formBean = "createReimbursementGuideForm")
+@Mapping(path = "/createReimbursementGuide", module = "masterDegreeAdministrativeOffice", formBean = "createReimbursementGuideForm")
 @Forwards( { @Forward(name = "start", path = "df.page.createReimbursementGuide"),
 	@Forward(name = "error", path = "df.page.reimbursementGuide_Error"),
 	@Forward(name = "success", path = "df.page.createReimbursementGuide_Success") })

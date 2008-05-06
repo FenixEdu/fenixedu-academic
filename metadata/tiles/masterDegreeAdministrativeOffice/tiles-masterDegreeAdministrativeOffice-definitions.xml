@@ -5,8 +5,8 @@
 	<definition name="definition.masterDegreeAdministrativeOffice.masterPage" extends="df.layout.two-column.posGrad">
 		<put name="title" value="Secretaria de Pós-Graduação"/>
 		<put name="serviceName" value="Secretaria de Pós-Graduação"/>
-		<put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp"/>
-		<put name="navLocal" value="/posGraduacao/pgMainMenu.jsp"/>
+		<put name="navGeral" value="/masterDegreeAdministrativeOffice/commonNavGeralPosGraduacao.jsp"/>
+		<put name="navLocal" value="/masterDegreeAdministrativeOffice/pgMainMenu.jsp"/>
 		<put name="body-context" value="/commons/blank.jsp"/>
 		<put name="body" value="/commons/blank.jsp"/>
 		<put name="footer" value="/copyright.jsp"/>
@@ -15,33 +15,33 @@
 <!-- **************************************************************************************************************************** -->
 
 	<definition name="definition.masterDegreeAdministrativeOffice.studentOperations" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="navLocal" value="/posGraduacao/student/studentMenu.jsp"/>
+		<put name="navLocal" value="/masterDegreeAdministrativeOffice/student/studentMenu.jsp"/>
 	</definition>
 
 
 	<definition name="definition.masterDegreeAdministrativeOffice.guideListing" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="navLocal" value="/posGraduacao/guide/guideListingMenu.jsp"/>
+		<put name="navLocal" value="/masterDegreeAdministrativeOffice/guide/guideListingMenu.jsp"/>
 	</definition>
 
 
 	<definition name="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan" extends="definition.masterDegreeAdministrativeOffice.studentOperations">	
-		<put name="body-context" value="/posGraduacao/student/studentCurricularPlan/studentContext.jsp"/>
+		<put name="body-context" value="/masterDegreeAdministrativeOffice/student/studentCurricularPlan/studentContext.jsp"/>
 	</definition>
 	
 	<definition name="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations" extends="definition.masterDegreeAdministrativeOffice.guideListing">
-		<put name="navLocal" value="/posGraduacao/guide/guideMenu.jsp"/>		
+		<put name="navLocal" value="/masterDegreeAdministrativeOffice/guide/guideMenu.jsp"/>		
 	</definition>
 	
 	<definition name="definition.masterDegreeAdministrativeOffice.externalPerson" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="navLocal" value="/posGraduacao/externalPerson/externalPersonMenu.jsp"/>
+		<put name="navLocal" value="/masterDegreeAdministrativeOffice/externalPerson/externalPersonMenu.jsp"/>
 	</definition>
 	
 	<definition name="definition.masterDegreeAdministrativeOffice.gratuity" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="navLocal" value="/posGraduacao/gratuity/gratuityMenu.jsp"/>
+		<put name="navLocal" value="/masterDegreeAdministrativeOffice/gratuity/gratuityMenu.jsp"/>
 	</definition>
 	
 	<definition name="definition.masterDegreeAdministrativeOffice.dfaCandidacy" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="navLocal" value="/posGraduacao/candidacy/dfaCandidacyMenu.jsp"/>
+		<put name="navLocal" value="/masterDegreeAdministrativeOffice/candidacy/dfaCandidacyMenu.jsp"/>
 	</definition>
 	
 	

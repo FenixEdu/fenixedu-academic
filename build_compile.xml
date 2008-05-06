@@ -121,6 +121,7 @@
 
 			<!-- Replace tokens in configuration files with local config -->
 			<antcall target="replace-property-values"/>
+			<ant antfile="build_generateStrutsMapping.xml" target="generate-struts-mapping" inheritall="false" />
 		</sequential>
 
 		<echo file="${build.home.webinf.classes}/checkIsAlive.properties" append="false">

@@ -6,10 +6,10 @@
 		<put name="body" value="/commons/blank.jsp"/>
 	</definition>
 	<definition name="chooseStudentsGratuityList" extends="definition.directiveCouncil.gratuity">
-		<put name="body" value="/posGraduacao/gratuity/chooseStudentsGratuityList.jsp"/>
+		<put name="body" value="/masterDegreeAdministrativeOffice/gratuity/chooseStudentsGratuityList.jsp"/>
 	</definition>
 	<definition name="studentsGratuityList" extends="definition.directiveCouncil.gratuity">
-		<put name="body" value="/posGraduacao/gratuity/studentsGratuityList.jsp"/>
+		<put name="body" value="/masterDegreeAdministrativeOffice/gratuity/studentsGratuityList.jsp"/>
 	</definition>
 	<definition name="teacherSummariesControlList" extends="definition.directiveCouncil.masterPage">
 		<put name="body" value="/directiveCouncil/summariesControl/listTeacherSummariesControl.jsp"/>

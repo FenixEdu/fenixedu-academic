@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project basedir="." default="generate-struts-mapping" name="Generate Struts properties file">
+
+	<!-- Source code directories -->
+	<property name="src" location="src_tools/pt/utl/ist/struts" />
+
+	<!-- Directories for compiled code -->
+	<property name="build.home" location="build" />
+	<property name="build.home.webinf" value="${build.home}/WEB-INF" />
+	<property name="build.home.webinf.classes" value="${build.home}/WEB-INF/classes" />
+	
+	<target name="compile-struts-mapping-generator">
+		<javac destdir="${build.home.webinf.classes}">
+			<src path="${src}" />
+			<include name="StrutsMappingGenerator.java"/>
+		</javac>
+	</target>
+
+	<target name="generate-struts-mapping" depends="compile-struts-mapping-generator" description="Generates property file for struts mapping auto-loading ">
+		<java classname="pt.utl.ist.struts.StrutsMappingGenerator" classpath="${build.home.webinf.classes}">
+			<arg value="metadata/conf" />
+			<arg value="${build.home.webinf.classes}/struts-auto-mapping.properties"/>
+		</java>
+	</target>
+
+</project>

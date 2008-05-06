@@ -19,7 +19,7 @@
           <table border="0" width="100%" height="100" align="center" cellpadding="0" cellspacing="0">
             <tr> 
               <td width="50" height="100">
-               <img src="<%= request.getContextPath() %>/posGraduacao/guide/images/istlogo.gif" alt="<bean:message key="istlogo" bundle="IMAGE_RESOURCES" />" width="50" height="104" border="0"/> 
+               <img src="<%= request.getContextPath() %>/masterDegreeAdministrativeOffice/guide/images/istlogo.gif" alt="<bean:message key="istlogo" bundle="IMAGE_RESOURCES" />" width="50" height="104" border="0"/> 
               </td>
               <td>
                 &nbsp;

@@ -5,6 +5,6 @@
   <tiles:put name="navGeral" value="/commons/blank.jsp" />
   <tiles:put name="navLocal" value="/commons/blank.jsp" />
   <tiles:put name="body-context" value="/commons/blank.jsp"/>  
-  <tiles:put name="body" value="/candidato/error_bd.jsp" />
+  <tiles:put name="body" value="/masterDegreeCandidate/error_bd.jsp" />
   <tiles:put name="footer" value="/copyright.jsp" />
 </tiles:insert>

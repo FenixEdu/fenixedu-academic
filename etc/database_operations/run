@@ -27,3 +27,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+
+execute "Modifying mappings regarding structs modifications" modified-mappings.sql
