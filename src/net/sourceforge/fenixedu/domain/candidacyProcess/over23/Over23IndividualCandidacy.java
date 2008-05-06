@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent;
@@ -62,31 +61,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	new Over23IndividualCandidacyEvent(this, person);
     }
 
-    void editPersonalCandidacyInformation(final PersonBean personBean) {
-	getPerson().edit(personBean);
-    }
-
-    boolean hasAnyPayment() {
-	return getEvent().hasAnyPayments();
-    }
-
-    boolean isDebtPayed() {
-	return getEvent().isClosed();
-    }
-    
-    boolean isInStandBy() {
-	return getState() == IndividualCandidacyState.STAND_BY;
-    }
-
-    boolean isAccepted() {
-	return getState() == IndividualCandidacyState.ACCEPTED;
-    }
-
-    boolean isCancelled() {
-	return getState() == IndividualCandidacyState.CANCELLED;
-    }
-
-    void cancel(final Person person) {
+    public void cancel(final Person person) {
 	checkRulesToCancel();
 	setState(IndividualCandidacyState.CANCELLED);
 	setResponsible(person.getUsername());

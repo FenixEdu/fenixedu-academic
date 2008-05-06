@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
+package net.sourceforge.fenixedu.presentationTier.Action.candidacy.over23;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +19,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualC
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -31,11 +34,25 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
+@Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBean = "candidacyForm")
+@Forwards( { @Forward(name = "intro", path = "/candidacy/over23/intro.jsp"),
+	@Forward(name = "list-processes", path = "/academicAdminOffice/caseHandling/listProcesses.jsp"),
+	@Forward(name = "list-allowed-activities", path = "/academicAdminOffice/caseHandling/listActivities.jsp"),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/over23/createCandidacyPeriod.jsp"),
+	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/over23/editCandidacyPeriod.jsp"),
+	@Forward(name = "insert-candidacy-results-from-jury", path = "/candidacy/over23/insertCandidacyResultsFromJury.jsp")
+
+})
 public class Over23CandidacyProcessDA extends CaseHandlingDispatchAction {
 
     @Override
     protected Class getProcessType() {
 	return Over23CandidacyProcess.class;
+    }
+
+    public ActionForward intro(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("intro");
     }
 
     @Override

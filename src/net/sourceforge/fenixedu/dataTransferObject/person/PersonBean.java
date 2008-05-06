@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.dataTransferObject.person;
 
 import java.io.Serializable;

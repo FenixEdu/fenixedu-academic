@@ -314,6 +314,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return getCycle(cycleType).getConclusionDate();
     }
+    
+    public Integer getFinalAverage(final CycleType cycleType) {
+	if (getDegreeType().getCycleTypes().isEmpty()) {
+	    throw new DomainException("StudentCurricularPlan.has.no.cycle.type");
+	}
+
+	if (!getDegreeType().hasCycleTypes(cycleType)) {
+	    throw new DomainException("StudentCurricularPlan.doesnt.have.such.cycle.type");
+	}
+
+	return getCycle(cycleType).getFinalAverage();
+    }
 
     public YearMonthDay calculateConclusionDate(final CycleType cycleType) {
 	if (cycleType == null) {

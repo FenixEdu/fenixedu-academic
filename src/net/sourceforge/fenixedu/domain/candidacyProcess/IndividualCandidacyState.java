@@ -1,14 +1,13 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
-
 public enum IndividualCandidacyState {
 
     STAND_BY,
 
     ACCEPTED,
-    
+
     REJECTED,
-    
+
     CANCELLED;
 
     public String getName() {

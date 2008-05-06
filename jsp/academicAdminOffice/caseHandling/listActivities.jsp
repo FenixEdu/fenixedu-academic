@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
-<h2 class="mtop15 mbottom025"><bean:message key="label.candidacy" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><bean:message key="label.candidacy" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 <br/>
 <jsp:include flush="true" page="/caseHandling/listActivities.jsp" />

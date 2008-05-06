@@ -582,15 +582,6 @@
             <forward name="listRequests" path="list-versions-requests"/>		
         </action>
         
-        <action path="/caseHandlingOver23CandidacyProcess"
-            type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.Over23CandidacyProcessDA"
-            parameter="method">
-            <forward name="list-processes" path="over32CandidacyProcess.list-processes"/>
-            <forward name="list-allowed-activities" path="over32CandidacyProcess.list-allowed-activities"/>
-            <forward name="prepare-create-new-process" path="over32CandidacyProcess.prepare-create-new-process"/>
-            <forward name="prepare-edit-candidacy-period" path="over32CandidacyProcess.prepare-edit-candidacy-period"/>
-        </action>
-
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

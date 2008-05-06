@@ -886,7 +886,6 @@
         </action>
         <!-- End: StudentDataByExecutionYear -->
         
-        
         <action path="/accountingEventsManagement"
             type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.AccountingEventsManagementDA"
             parameter="method">
@@ -895,34 +894,7 @@
             <forward name="createAdministrativeOfficeFeeAndInsuranceEvent" path="accountingEventsManagement.createAdministrativeOfficeFeeAndInsuranceEvent" />
             <forward name="createEnrolmentOutOfPeriodEvent" path="accountingEventsManagement.createEnrolmentOutOfPeriodEvent" />
         </action>
-
-		<!-- Candidacies -->
-		
-		<action path="/caseHandlingOver23CandidacyProcess"
-			name="candidacyForm"
-            type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.Over23CandidacyProcessDA"
-            parameter="method">
-            <forward name="list-processes" path="candidacyProcess.list-processes"/>
-            <forward name="list-allowed-activities" path="candidacyProcess.list-allowed-activities"/>
-            <forward name="prepare-edit-candidacy-period" path="over32CandidacyProcess.prepare-edit-candidacy-period"/>
-            <forward name="insert-candidacy-results-from-jury" path="over32CandidacyProcess.insert-candidacy-results-from-jury"/>
-        </action>
         
-        <action path="/caseHandlingOver23IndividualCandidacyProcess"
-            name="candidacyForm"
-            type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.Over23IndividualCandidacyProcessDA"
-            parameter="method">
-            <forward name="list-processes" path="candidacyProcess.list-processes"/>
-            <forward name="list-allowed-activities" path="candidacyProcess.list-allowed-activities"/>
-            <forward name="prepare-create-new-process" path="over32IndividualCandidacyProcess.prepare-create-new-process"/>
-            <forward name="fill-candidacy-information" path="over32IndividualCandidacyProcess.fill-candidacy-information"/>
-            <forward name="prepare-candidacy-payment" path="over32IndividualCandidacyProcess.prepare-candidacy-payment"/>
-            <forward name="edit-candidacy-personal-information" path="over32IndividualCandidacyProcess.edit-candidacy-personal-information"/>
-            <forward name="edit-candidacy-information" path="over32IndividualCandidacyProcess.edit-candidacy-information"/>
-			<forward name="introduce-candidacy-result" path="over32IndividualCandidacyProcess.introduce-candidacy-result"/>
-            <forward name="cancel-candidacy" path="over32IndividualCandidacyProcess.cancel-candidacy"/>
-        </action>
-
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

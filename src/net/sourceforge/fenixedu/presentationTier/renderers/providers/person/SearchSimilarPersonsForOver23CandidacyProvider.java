@@ -7,7 +7,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -19,8 +18,7 @@ public class SearchSimilarPersonsForOver23CandidacyProvider implements DataProvi
     }
 
     public Object provide(Object source, Object currentValue) {
-	final Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) source;
-	final ChoosePersonBean choosePersonBean = bean.getChoosePersonBean();
+	final ChoosePersonBean choosePersonBean = (ChoosePersonBean) source;
 	Set<Person> result = new HashSet<Person>(Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber()));
 	result.addAll(Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(), Person
 		.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())));

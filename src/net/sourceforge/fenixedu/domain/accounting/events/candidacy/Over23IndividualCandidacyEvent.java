@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.accounting.events.candidacy;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Account;
-import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
@@ -50,7 +49,7 @@ public class Over23IndividualCandidacyEvent extends Over23IndividualCandidacyEve
 
     @Override
     protected Account getFromAccount() {
-	return getPerson().getAccountBy(AccountType.EXTERNAL);
+	return getPerson().getExternalAccount();
     }
 
     @Override
@@ -61,6 +60,6 @@ public class Over23IndividualCandidacyEvent extends Over23IndividualCandidacyEve
 
     @Override
     public Account getToAccount() {
-	return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
+	return getAdministrativeOffice().getUnit().getInternalAccount();
     }
 }

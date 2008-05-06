@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -54,6 +55,11 @@ public class AcademicPeriod extends AcademicPeriod_Base {
 
     public Over23CandidacyPeriod getOver23CandidacyPeriod() {
 	final List<Over23CandidacyPeriod> candidacyPeriods = (List<Over23CandidacyPeriod>) getCandidacyPeriod(Over23CandidacyPeriod.class);
+	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    }
+
+    public SecondCycleCandidacyPeriod getSecondCycleCandidacyPeriod() {
+	final List<SecondCycleCandidacyPeriod> candidacyPeriods = (List<SecondCycleCandidacyPeriod>) getCandidacyPeriod(SecondCycleCandidacyPeriod.class);
 	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
     }
 }

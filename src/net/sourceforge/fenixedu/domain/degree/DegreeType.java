@@ -39,7 +39,7 @@ public enum DegreeType {
 	    false, // isSecondCycle
 	    false, // isThirdCycle
 	    true // qualifiesForGraduateTitle
-	    ) {
+    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -50,7 +50,7 @@ public enum DegreeType {
 	public Collection<CycleType> getSupportedCyclesToEnrol() {
 	    return Collections.emptyList();
 	}
-	
+
     },
 
     MASTER_DEGREE(GradeScale.TYPE5, CurricularPeriodType.TWO_YEAR, false, // canCreateStudent
@@ -59,7 +59,7 @@ public enum DegreeType {
 	    false, // isSecondCycle
 	    false, // isThirdCycle
 	    true // qualifiesForGraduateTitle
-	    ) {
+    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -79,7 +79,7 @@ public enum DegreeType {
 	    false, // isSecondCycle
 	    false, // isThirdCycle
 	    true // qualifiesForGraduateTitle
-	    ) {
+    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -104,7 +104,7 @@ public enum DegreeType {
 	    true, // isSecondCycle
 	    false, // isThirdCycle
 	    true // qualifiesForGraduateTitle
-	    ) {
+    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -115,7 +115,7 @@ public enum DegreeType {
 	public Collection<CycleType> getSupportedCyclesToEnrol() {
 	    return SECOND_CYCLE_TYPE_SET;
 	}
-	
+
     },
 
     BOLONHA_INTEGRATED_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, true, // canCreateStudent
@@ -124,7 +124,7 @@ public enum DegreeType {
 	    true, // isSecondCycle
 	    false, // isThirdCycle
 	    true // qualifiesForGraduateTitle
-	    ) {
+    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -135,7 +135,7 @@ public enum DegreeType {
 	public Collection<CycleType> getSupportedCyclesToEnrol() {
 	    return FIRST_AND_SECOND_CYCLE_TYPE_LIST;
 	}
-	
+
 	@Override
 	public boolean canRemoveEnrolmentIn(CycleType cycleType) {
 	    return cycleType == CycleType.SECOND_CYCLE;
@@ -146,14 +146,14 @@ public enum DegreeType {
 	    if (cycleType == null) {
 		return getYears();
 	    }
-		
+
 	    switch (cycleType) {
 	    case FIRST_CYCLE:
 		return BOLONHA_DEGREE.getYears(cycleType);
 	    case SECOND_CYCLE:
 		return BOLONHA_MASTER_DEGREE.getYears(cycleType);
 	    }
-	    
+
 	    return null;
 	}
 
@@ -165,7 +165,7 @@ public enum DegreeType {
 	    false, // isSecondCycle
 	    true, // isThirdCycle
 	    true // qualifiesForGraduateTitle
-	    ) {
+    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -185,7 +185,7 @@ public enum DegreeType {
 	    false, // isSecondCycle
 	    true, // isThirdCycle
 	    false // qualifiesForGraduateTitle
-	) {
+    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -205,7 +205,7 @@ public enum DegreeType {
 	    false, // isSecondCycle
 	    false, // isThirdCycle
 	    false // qualifiesForGraduateTitle
-	    ) {
+    ) {
 
 	@Override
 	public Collection<CycleType> getCycleTypes() {
@@ -225,7 +225,8 @@ public enum DegreeType {
 
     private static final Set<CycleType> THIRD_CYCLE_TYPE_SET = Collections.singleton(CycleType.THIRD_CYCLE);
 
-    private static final List<CycleType> FIRST_AND_SECOND_CYCLE_TYPE_LIST = Arrays.asList(new CycleType[] { CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE });
+    private static final List<CycleType> FIRST_AND_SECOND_CYCLE_TYPE_LIST = Arrays.asList(new CycleType[] {
+	    CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE });
 
     private GradeScale gradeScale;
 
@@ -280,12 +281,12 @@ public enum DegreeType {
     public int getYears() {
 	return Float.valueOf(this.curricularPeriodType.getWeight()).intValue();
     }
-    
+
     public Integer getYears(final CycleType cycleType) {
 	if (cycleType == null) {
 	    return getYears();
 	}
-	
+
 	return hasCycleTypes(cycleType) ? Float.valueOf(getCurricularPeriodType().getWeight()).intValue() : null;
     }
 
@@ -311,7 +312,7 @@ public enum DegreeType {
     final public String getCreditsDescription() {
 	return this == DegreeType.MASTER_DEGREE ? " Créd." : " ECTS";
     }
-    
+
     public boolean isBolonhaType() {
 	return this != DegreeType.DEGREE && this != DegreeType.MASTER_DEGREE;
     }
@@ -355,7 +356,7 @@ public enum DegreeType {
 	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
 		.getString(getQualifiedName());
     }
-    
+
     public String getQualifiedName() {
 	return StringAppender.append(DegreeType.class.getSimpleName(), ".", name());
     }
@@ -369,7 +370,8 @@ public enum DegreeType {
 	} else if (this == DegreeType.DEGREE) {
 	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
 		    .getLocale());
-	    toRemove = StringAppender.append(" (", Integer.toString(getYears()), " ", applicationResources.getString("years"), ")");
+	    toRemove = StringAppender.append(" (", Integer.toString(getYears()), " ", applicationResources.getString("years"),
+		    ")");
 	} else {
 	    toRemove = "";
 	}
@@ -426,16 +428,17 @@ public enum DegreeType {
 
     private static final List<DegreeType> BOLONHA_DEGREE_TYPES;
     static {
-        final List<DegreeType> result = new ArrayList<DegreeType>();
-        for (final DegreeType degreeType : values()) {
-            if (degreeType.isBolonhaType()) {
-                result.add(degreeType);
-            }
-        }
-        BOLONHA_DEGREE_TYPES = Collections.unmodifiableList(result);
+	final List<DegreeType> result = new ArrayList<DegreeType>();
+	for (final DegreeType degreeType : values()) {
+	    if (degreeType.isBolonhaType()) {
+		result.add(degreeType);
+	    }
+	}
+	BOLONHA_DEGREE_TYPES = Collections.unmodifiableList(result);
     }
+
     public static List<DegreeType> getBolonhaDegreeTypes() {
-        return BOLONHA_DEGREE_TYPES;
+	return BOLONHA_DEGREE_TYPES;
     }
 
     public boolean isFirstCycle() {
@@ -487,7 +490,7 @@ public enum DegreeType {
 	final Collection<CycleType> cycleTypes = getCycleTypes();
 	return cycleTypes.isEmpty() ? null : Collections.max(cycleTypes, CycleType.COMPARATOR_BY_LESS_WEIGHT);
     }
-    
+
     public Collection<CycleType> getOrderedCycleTypes() {
 	TreeSet<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 	result.addAll(getCycleTypes());

@@ -72,6 +72,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
     @Override
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
-        return Collections.singletonList(this);
+	return Collections.singletonList(this);
     }
+
 }

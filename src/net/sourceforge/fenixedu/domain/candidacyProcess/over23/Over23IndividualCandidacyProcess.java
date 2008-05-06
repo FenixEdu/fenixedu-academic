@@ -21,7 +21,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
 	activities.add(new EditCandidacyInformation());
-	activities.add(new IntroduceCandidacyResult());
+	//TODO:	activities.add(new IntroduceCandidacyResult());
 	activities.add(new CancelCandidacy());
     }
 
@@ -51,44 +51,9 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	}
     }
 
-    private void editPersonalCandidacyInformation(final PersonBean personBean) {
-	getCandidacy().editPersonalCandidacyInformation(personBean);
-    }
-
-    boolean hasAnyPaymentForCandidacy() {
-	return getCandidacy().hasAnyPayment();
-    }
-
-    private void cancelCandidacy(final Person person) {
-	getCandidacy().cancel(person);
-    }
-
-    boolean isCandidacyProcessInStandBy() {
-	return getCandidacyProcess().isInStandBy();
-    }
-
-    boolean isCandidacyProcessSentToJury() {
-	return getCandidacyProcess().isSentToJury();
-    }
-
-    boolean isCandidacyProcessPublished() {
-	return getCandidacyProcess().isPublished();
-    }
-
-    boolean isCandidacyInStandBy() {
-	return getCandidacy().isInStandBy();
-    }
-
-    boolean isCandidacyAccepted() {
-	return getCandidacy().isAccepted();
-    }
-
-    boolean isCandidacyCancelled() {
-	return getCandidacy().isCancelled();
-    }
-
-    boolean isCandidacyDebtPayed() {
-	return getCandidacy().isDebtPayed();
+    @Override
+    public Over23IndividualCandidacy getCandidacy() {
+	return (Over23IndividualCandidacy) super.getCandidacy();
     }
 
     @Override
@@ -110,6 +75,17 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	return name;
     }
 
+    private Over23IndividualCandidacyProcess editPersonalCandidacyInformation(final PersonBean personBean) {
+	getCandidacy().editPersonalCandidacyInformation(personBean);
+	return this;
+    }
+
+    private Over23IndividualCandidacyProcess editCandidacyInformation(final Over23IndividualCandidacyProcessBean bean) {
+	getCandidacy().editCandidacyInformation(bean.getSelectedDegrees(), bean.getDisabilities(), bean.getEducation(),
+		bean.getLanguages());
+	return this;
+    }
+
     public List<Degree> getSelectedDegreesSortedByOrder() {
 	return getCandidacy().getSelectedDegreesSortedByOrder();
     }
@@ -128,14 +104,6 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     boolean canBeSendToJury() {
 	return isCandidacyInStandBy() && isCandidacyDebtPayed();
-    }
-
-    public Person getCandidacyPerson() {
-	return getCandidacy().getPerson();
-    }
-
-    boolean hasRegistrationForCandidacy() {
-	return getCandidacy().hasRegistration();
     }
 
     Degree getAcceptedDegree() {
@@ -164,7 +132,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	}
     }
 
-    static public class CandidacyPayment extends Activity<Over23IndividualCandidacyProcess> {
+    static private class CandidacyPayment extends Activity<Over23IndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
@@ -183,7 +151,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	}
     }
 
-    static public class EditCandidacyPersonalInformation extends Activity<Over23IndividualCandidacyProcess> {
+    static private class EditCandidacyPersonalInformation extends Activity<Over23IndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
@@ -199,19 +167,18 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
 	    final Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) object;
-	    process.editPersonalCandidacyInformation(bean.getPersonBean());
-	    return process;
+	    return process.editPersonalCandidacyInformation(bean.getPersonBean());
 	}
     }
 
-    static public class EditCandidacyInformation extends Activity<Over23IndividualCandidacyProcess> {
+    static private class EditCandidacyInformation extends Activity<Over23IndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    if (!process.isCandidacyProcessInStandBy() || process.isCandidacyCancelled() || process.isCandidacyAccepted()) {
+	    if (!process.isInStandBy() || process.isCandidacyCancelled() || process.isCandidacyAccepted()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -219,14 +186,11 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	@Override
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
-	    final Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) object;
-	    process.getCandidacy().editCandidacyInformation(bean.getSelectedDegrees(), bean.getDisabilities(),
-		    bean.getEducation(), bean.getLanguages());
-	    return process;
+	    return process.editCandidacyInformation((Over23IndividualCandidacyProcessBean) object);
 	}
     }
 
-    static public class IntroduceCandidacyResult extends Activity<Over23IndividualCandidacyProcess> {
+    static private class IntroduceCandidacyResult extends Activity<Over23IndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
@@ -234,8 +198,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isCandidacyInStandBy() || !process.isCandidacyProcessSentToJury()
-		    || !process.isCandidacyProcessPublished()) {
+	    if (!process.isCandidacyInStandBy() || !process.isSentToJury() || !process.isPublished()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -249,7 +212,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	}
     }
 
-    static public class CancelCandidacy extends Activity<Over23IndividualCandidacyProcess> {
+    static private class CancelCandidacy extends Activity<Over23IndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
@@ -257,7 +220,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (process.isCandidacyCancelled() || process.hasAnyPaymentForCandidacy() || !process.isCandidacyProcessInStandBy()) {
+	    if (process.isCandidacyCancelled() || process.hasAnyPaymentForCandidacy() || !process.isInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}

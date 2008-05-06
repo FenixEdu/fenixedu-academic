@@ -816,6 +816,10 @@ public class Student extends Student_Base {
 	}
 	return null;
     }
+    
+    public boolean hasRegistrationFor(final Degree degree) {
+	return getRegistrationFor(degree) != null;
+    }
 
     public Registration getActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
 	for (final Registration registration : getActiveRegistrations()) {

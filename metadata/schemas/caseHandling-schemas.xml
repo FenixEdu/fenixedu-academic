@@ -9,60 +9,72 @@
 </schema>
 
 <!-- Candidacies -->
-<schema name="Over23CandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+<schema name="CandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="academicPeriod.name" key="label.academicPeriod" read-only="true" />
 	<slot name="start" key="label.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
-<schema name="Over23IndividualCandidacyProcessBean.choosePersonBean" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="choosePersonBean.name" key="label.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+<schema name="Over23CandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcessBean"
+		extends="CandidacyProcessBean.manage" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="SecondCycleCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcessBean"
+		extends="CandidacyProcessBean.manage" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="CandidacyProcess.choosePersonBean" type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean" bundle="APPLICATION_RESOURCES">
+	<slot name="name" key="label.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50" />
 	</slot>
-	<slot name="choosePersonBean.identificationNumber" key="label.identificationNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="identificationNumber" key="label.identificationNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="maxLength" value="20" />
 	</slot>
-	<slot name="choosePersonBean.documentType" key="label.idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="choosePersonBean.dateOfBirth" key="label.dateOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="documentType" key="label.idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="dateOfBirth" key="label.dateOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="choosePersonBean.person" layout="radio-select" key="label.person.similarResults" >
+</schema>
+
+<schema name="Over23IndividualCandidacyProcess.choosePersonBean" type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean" 
+		bundle="APPLICATION_RESOURCES" extends="CandidacyProcess.choosePersonBean">
+	<slot name="person" layout="radio-select" key="label.person.similarResults">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.person.SearchSimilarPersonsForOver23CandidacyProvider" />
 		<property name="eachLayout" value="values" />
 		<property name="eachSchema" value="person.name.id.dateOfBirth" />		
 	</slot>	
 </schema>
 
-<schema name="Over23IndividualCandidacyProcessBean.personalData" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="personBean.name" read-only="true" key="label.name" />
-	<slot name="personBean.documentIdNumber" key="label.identificationNumber" read-only="true" />
-	<slot name="personBean.idDocumentType" key="label.idDocumentType" read-only="true" />
-	<slot name="personBean.documentIdEmissionDate" key="label.documentIdEmissionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+<schema name="CandidacyProcess.personalData" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES">
+	<slot name="name" read-only="true" key="label.name" />
+	<slot name="documentIdNumber" key="label.identificationNumber" read-only="true" />
+	<slot name="idDocumentType" key="label.idDocumentType" read-only="true" />
+	<slot name="documentIdEmissionDate" key="label.documentIdEmissionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="personBean.documentIdExpirationDate" key="label.documentIdExpirationDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="documentIdExpirationDate" key="label.documentIdExpirationDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="personBean.documentIdEmissionLocation" key="label.documentIdEmissionLocation" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="personBean.dateOfBirth" key="label.dateOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="documentIdEmissionLocation" key="label.documentIdEmissionLocation" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="dateOfBirth" key="label.dateOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="personBean.gender" key="label.gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="personBean.maritalStatus" key="label.maritalStatus" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="personBean.nationality" layout="menu-select" key="label.nationality" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="gender" key="label.gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="maritalStatus" key="label.maritalStatus" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="nationality" layout="menu-select" key="label.nationality" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${nationality}" />
 		<property name="sortBy" value="nationality"/>
 	</slot>
 	
-	<slot name="personBean.address" key="label.address" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="address" key="label.address" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="personBean.areaCode" key="label.areaCode" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="areaCode" key="label.areaCode" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="10"/>
 		 <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
             <property name="regexp" value="\d{4}-\d{3}"/>
@@ -70,20 +82,20 @@
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="personBean.areaOfAreaCode" key="label.areaOfAreaCode" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="areaOfAreaCode" key="label.areaOfAreaCode" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 	</slot>
-	<slot name="personBean.area" key="label.area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="area" key="label.area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 	</slot>
 	
-	<slot name="personBean.phone" key="label.phone">
+	<slot name="phone" key="label.phone">
 		<property name="size" value="12"/>
 	</slot>
-	<slot name="personBean.mobile" key="label.mobile">
+	<slot name="mobile" key="label.mobile">
 		<property name="size" value="12"/>
 	</slot>
-	<slot name="personBean.email" key="label.email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
+	<slot name="email" key="label.email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
 		<property name="size" value="40"/>
 	</slot>
 </schema>
@@ -131,4 +143,135 @@
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.Over23IndividualCandidacySelectedDegreesProvider" />
         <property name="format" value="${name}" />
     </slot>
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcess.choosePersonBean" type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean" bundle="APPLICATION_RESOURCES"
+		extends="CandidacyProcess.choosePersonBean">
+	<slot name="person" layout="radio-select" key="label.person.similarResults">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.person.SearchSimilarNamesPersonsProvider" />
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="person.name.id.dateOfBirth" />		
+	</slot>	
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcessBean.selectDegree.create" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+   	<slot name="selectedDegree" layout="menu-select-postback" key="label.degree.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCycleIndividualCandidacyDegreesProvider" />
+        <property name="destination" value="selectedDegreePostback"/>
+        <property name="format" value="${name}" />
+        <property name="sortBy" value="name"/>
+    </slot>
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcessBean.selectDegree.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+   	<slot name="selectedDegree" layout="menu-select" key="label.degree.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCycleIndividualCandidacyDegreesProvider" />
+        <property name="format" value="${name}" />
+        <property name="sortBy" value="name"/>
+    </slot>
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcessBean.precedentDegreeInformation.chooseType" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="bundle" value="APPLICATION_RESOURCES"/>
+		<property name="destination" value="precedentDegreeTypePostback"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.create" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="bundle" value="APPLICATION_RESOURCES"/>
+		<property name="destination" value="precedentDegreeTypePostback"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="precedentDegreeInformation.degreeDesignation" key="label.Degree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="maxLength" value="255"/>
+	</slot>
+	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="precedentDegreeInformation.institutionUnitName" layout="autoComplete" key="label.candidacy.institution" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+		<property name="size" value="40"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="2"/>
+		<property name="rawSlotName" value="precedentDegreeInformation.institutionName"/>
+	</slot>
+	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{2}"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.create" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="bundle" value="APPLICATION_RESOURCES"/>
+		<property name="destination" value="precedentDegreeTypePostback"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="precedentDegreeInformation.degreeDesignation" key="label.Degree" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
+	<slot name="precedentDegreeInformation.institutionUnitName.name" key="label.candidacy.institution" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" read-only="true" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="bundle" value="APPLICATION_RESOURCES"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="precedentDegreeInformation.degreeDesignation" key="label.Degree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="maxLength" value="255"/>
+	</slot>
+	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="precedentDegreeInformation.institutionUnitName" layout="autoComplete" key="label.candidacy.institution" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+		<property name="size" value="40"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="2"/>
+		<property name="rawSlotName" value="precedentDegreeInformation.institutionName"/>
+	</slot>
+	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\d{2}"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" read-only="true" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="bundle" value="APPLICATION_RESOURCES"/>
+		<property name="classes" value="nobullet liinline"/>
+	</slot>
+	<slot name="precedentDegreeInformation.degreeDesignation" key="label.Degree" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
+	<slot name="precedentDegreeInformation.institutionUnitName.name" key="label.candidacy.institution" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcessBean.optionalInformation" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="professionalStatus" layout="longText" key="label.candidacy.professionalStatus">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="5" />
+	</slot>
+	<slot name="otherEducation" layout="longText" key="label.candidacy.otherEducation">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="5" />
+	</slot>
 </schema>

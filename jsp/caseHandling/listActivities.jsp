@@ -19,3 +19,8 @@
 <logic:empty name="activities">
 	<bean:message key="label.no.activities" bundle="APPLICATION_RESOURCES" />
 </logic:empty>
+
+<br/>
+<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcesses"%>'>
+	<html:cancel><bean:message key='label.back' bundle="APPLICATION_RESOURCES"/></html:cancel>			
+</html:form>

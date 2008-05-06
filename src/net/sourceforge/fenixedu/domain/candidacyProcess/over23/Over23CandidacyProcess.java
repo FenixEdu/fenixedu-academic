@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
@@ -12,6 +11,7 @@ import net.sourceforge.fenixedu.domain.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
@@ -41,20 +41,20 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
-	activities.add(new SetJury());
+	//TODO: activities.add(new SetJury());
 	activities.add(new EditCandidacyPeriod());
-	activities.add(new SendInformationToJury());
-	activities.add(new PrintCandidacies());
-	activities.add(new InsertResultsFromJury());
-	activities.add(new PublishCandidacyResults());
-	activities.add(new CreateRegistrations());
+	//TODO: activities.add(new SendInformationToJury());
+	//TODO: activities.add(new PrintCandidacies());
+	//TODO: activities.add(new InsertResultsFromJury());
+	//TODO: activities.add(new PublishCandidacyResults());
+	//TODO: activities.add(new CreateRegistrations());
     }
 
-    protected Over23CandidacyProcess() {
+    private Over23CandidacyProcess() {
 	super();
     }
 
-    protected Over23CandidacyProcess(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
+    private Over23CandidacyProcess(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
 	this();
 	checkParameters(academicPeriod, start, end);
 	setState(CandidacyProcessState.STAND_BY);
@@ -86,48 +86,12 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	return activities;
     }
 
-    @Override
-    public String getDisplayName() {
-	return ResourceBundle.getBundle("resources/CaseHandlingResources").getString("label." + getClass().getName());
-    }
-
-    public AcademicPeriod getCandidacyAcademicPeriod() {
-	return getCandidacyPeriod().getAcademicPeriod();
-    }
-
-    public DateTime getCandidacyStart() {
-	return getCandidacyPeriod().getStart();
-    }
-
-    public DateTime getCandidacyEnd() {
-	return getCandidacyPeriod().getEnd();
-    }
-
-    public boolean hasOpenCandidacyPeriod() {
-	return hasCandidacyPeriod() && getCandidacyPeriod().isOpen();
-    }
-
-    public boolean hasOpenCandidacyPeriod(final DateTime date) {
-	return hasCandidacyPeriod() && getCandidacyPeriod().isOpen(date);
-    }
-
-    boolean isInStandBy() {
-	return getState() == CandidacyProcessState.STAND_BY;
-    }
-
-    boolean isSentToJury() {
-	return getState() == CandidacyProcessState.SENT_TO_JURY;
-    }
-
-    boolean isPublished() {
-	return getState() == CandidacyProcessState.PUBLISHED;
-    }
-
     public List<Over23IndividualCandidacyProcess> getOver23IndividualCandidaciesThatCanBeSendToJury() {
 	final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
-	for (final Over23IndividualCandidacyProcess child : getChildProcesses()) {
-	    if (child.canBeSendToJury()) {
-		result.add(child);
+	for (final IndividualCandidacyProcess child : getChildProcesses()) {
+	    final Over23IndividualCandidacyProcess over23CP = (Over23IndividualCandidacyProcess) child;
+	    if (over23CP.canBeSendToJury()) {
+		result.add(over23CP);
 	    }
 	}
 	return result;
@@ -143,7 +107,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -155,7 +119,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
     }
 
-    static public class SetJury extends Activity<Over23CandidacyProcess> {
+    static private class SetJury extends Activity<Over23CandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
@@ -168,11 +132,11 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
     }
 
-    static public class EditCandidacyPeriod extends Activity<Over23CandidacyProcess> {
+    static private class EditCandidacyPeriod extends Activity<Over23CandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -185,7 +149,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
     }
 
-    static public class SendInformationToJury extends Activity<Over23CandidacyProcess> {
+    static private class SendInformationToJury extends Activity<Over23CandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
@@ -208,7 +172,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
     }
 
-    static public class PrintCandidacies extends Activity<Over23CandidacyProcess> {
+    static private class PrintCandidacies extends Activity<Over23CandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
@@ -226,7 +190,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
     }
 
-    static public class InsertResultsFromJury extends Activity<Over23CandidacyProcess> {
+    static private class InsertResultsFromJury extends Activity<Over23CandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
@@ -249,7 +213,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
     }
 
-    static public class PublishCandidacyResults extends Activity<Over23CandidacyProcess> {
+    static private class PublishCandidacyResults extends Activity<Over23CandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
@@ -269,7 +233,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
     }
 
-    static public class CreateRegistrations extends Activity<Over23CandidacyProcess> {
+    static private class CreateRegistrations extends Activity<Over23CandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
@@ -288,9 +252,10 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    for (final Over23IndividualCandidacyProcess candidacyProcess : process.getChildProcesses()) {
-		if (candidacyProcess.isCandidacyAccepted() && !candidacyProcess.hasRegistrationForCandidacy()) {
-		    createRegistration(candidacyProcess);
+	    for (final IndividualCandidacyProcess candidacyProcess : process.getChildProcesses()) {
+		final Over23IndividualCandidacyProcess over23CP = (Over23IndividualCandidacyProcess) candidacyProcess;
+		if (over23CP.isCandidacyAccepted() && !over23CP.hasRegistrationForCandidacy()) {
+		    createRegistration(over23CP);
 		}
 	    }
 	    return process;

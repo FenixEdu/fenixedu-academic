@@ -4,6 +4,13 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<h2 class="mtop15 mbottom025"><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <jsp:include flush="true" page="/caseHandling/listProcesses.jsp" />
+
+<br/>
+<bean:define id="processName" name="processName"/>
+<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro"%>'>
+	<html:cancel><bean:message key='label.back' bundle="APPLICATION_RESOURCES"/></html:cancel>			
+</html:form>

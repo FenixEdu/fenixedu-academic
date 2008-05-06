@@ -21,9 +21,9 @@
 	<logic:notEmpty name="over23IndividualCandidacyProcessBean" property="personBean">
 		
 		<h3 class="mtop15 mbottom025"><bean:message key="label.person.title.personal.info" bundle="APPLICATION_RESOURCES"/>:</h3>
-		<fr:edit id="Over23IndividualCandidacyProcessBean.personalData"
-			name="over23IndividualCandidacyProcessBean"
-			schema="Over23IndividualCandidacyProcessBean.personalData">
+		<fr:edit id="CandidacyProcess.personalData"
+			name="over23IndividualCandidacyProcessBean" property="personBean"
+			schema="CandidacyProcess.personalData">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

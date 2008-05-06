@@ -282,7 +282,6 @@
        <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
     </definition>      
 
-
 	<!--  bolonha -->
 
     <definition name="manage-competence-course-information-versions" extends="scientificCouncil.masterPage">
@@ -296,23 +295,5 @@
     <definition name="list-versions-requests" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/bolonha/listVersions.jsp"/>
     </definition>     
-    
-    <!-- candidacies -->
-    
-    <definition name="over32CandidacyProcess.list-processes" extends="scientificCouncil.masterPage">
-        <put name="body" value="/caseHandling/listProcesses.jsp"/>
-    </definition>
-    
-    <definition name="over32CandidacyProcess.list-allowed-activities" extends="scientificCouncil.masterPage">
-        <put name="body" value="/caseHandling/listActivities.jsp"/>
-    </definition>
-    
-    <definition name="over32CandidacyProcess.prepare-create-new-process" extends="scientificCouncil.masterPage">
-        <put name="body" value="/candidacy/over23/createCandidacyPeriod.jsp"/>
-    </definition>
-    
-    <definition name="over32CandidacyProcess.prepare-edit-candidacy-period" extends="scientificCouncil.masterPage">
-        <put name="body" value="/candidacy/over23/editCandidacyPeriod.jsp"/>
-    </definition>
     
 </tiles-definitions>

@@ -12,14 +12,14 @@
 </html:messages>
 
 <bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processName" name="processName"/>
 
-<fr:form action='<%="/caseHandlingOver23IndividualCandidacyProcess.do?processId=" + processId.toString() %>'>
+<fr:form action='<%= "/caseHandling" + processName.toString() + ".do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeCancelCandidacy" />
-	
+
 	<strong><bean:message key="label.candidacy.cancel.confirm.message" bundle="APPLICATION_RESOURCES" />&nbsp;<bean:write name="process" property="displayName" />?</strong>
 	<br/>
 	<br/>
 	<html:submit><bean:message key="label.yes.capitalized" bundle="APPLICATION_RESOURCES" /></html:submit>
 	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.no.capitalized" bundle="APPLICATION_RESOURCES" /></html:cancel>
-
 </fr:form>

@@ -76,7 +76,9 @@ public enum EventType {
 
     ENROLMENT_OUT_OF_PERIOD, 
     
-    OVER23_INDIVIDUAL_CANDIDACY;
+    OVER23_INDIVIDUAL_CANDIDACY, 
+    
+    SECOND_CYCLE_INDIVIDUAL_CANDIDACY;
 
     public String getName() {
 	return name();
