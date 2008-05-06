@@ -954,4 +954,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>DeleteFileContentAuthorizationFilter</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.DeleteFileContentFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

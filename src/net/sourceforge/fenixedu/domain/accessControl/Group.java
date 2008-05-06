@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.ArgumentLis
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilderRegistry;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.collections.set.UnmodifiableSet;
@@ -55,12 +56,12 @@ public abstract class Group implements Serializable, IGroup {
     private Date creationDate;
 
     protected Group() {
-        super();
-        this.creationDate = new Date();
+	super();
+	this.creationDate = new Date();
     }
 
     public Date getCreationDate() {
-        return this.creationDate;
+	return this.creationDate;
     }
 
     public abstract java.util.Set<Person> getElements();
@@ -72,7 +73,7 @@ public abstract class Group implements Serializable, IGroup {
      * calculating its size, then override this method
      */
     public int getElementsCount() {
-        return this.getElements().size();
+	return this.getElements().size();
     }
 
     /**
@@ -83,27 +84,27 @@ public abstract class Group implements Serializable, IGroup {
      * override this method
      */
     public boolean isMember(Person person) {
-        return (person == null) ? false : getElements().contains(person);
+	return (person == null) ? false : getElements().contains(person);
     }
 
     public boolean allows(IUserView userView) {
-        return isMember(userView == null ? null : userView.getPerson());
+	return isMember(userView == null ? null : userView.getPerson());
     }
 
     protected Set<Person> freezeSet(Set<Person> elements) {
-        return UnmodifiableSet.decorate(elements);
+	return UnmodifiableSet.decorate(elements);
     }
 
     protected Set<Person> buildSet() {
-        // todo externalize this
-        return new HashSet<Person>();
+	// todo externalize this
+	return new HashSet<Person>();
     }
-    
+
     /**
      * Generates an group expression in the group expression language that
      * represents this group. If the group no longer can be represented as an
-     * expression then this method returns <code>null</code>. This may happen 
-     * when a group depend on elements that are no longer available. 
+     * expression then this method returns <code>null</code>. This may happen
+     * when a group depend on elements that are no longer available.
      * 
      * @return the string representation of this groups in a form understandable
      *         by the groups language parse or <code>null</code> when this
@@ -112,7 +113,7 @@ public abstract class Group implements Serializable, IGroup {
      * TODO: move this default implementation to LeafGroup
      */
     public String getExpression() {
-        return getGroupExpressionName() + getExpressionArgumentsList();
+	return getGroupExpressionName() + getExpressionArgumentsList();
     }
 
     public String getExpressionInHex() {
@@ -120,34 +121,35 @@ public abstract class Group implements Serializable, IGroup {
 	char[] encodeHex = Hex.encodeHex(expression.getBytes());
 	return new String(encodeHex);
     }
-    
+
     protected String getGroupExpressionName() {
-        String name = GroupBuilderRegistry.getNameOfBuilder(this.getClass());
-        
-        if (name == null) {
-            throw new DomainException("accessControl.group.expression.noName");
-        }
-        
-        return name;
+	String name = GroupBuilderRegistry.getNameOfBuilder(this.getClass());
+
+	if (name == null) {
+	    throw new DomainException("accessControl.group.expression.noName");
+	}
+
+	return name;
     }
 
     protected ArgumentList getExpressionArgumentsList() {
-        ArgumentList argumentList = new ArgumentList();
-        
-        Argument[] expressionArguments = getExpressionArguments();
-        if (expressionArguments != null) {
-            for (Argument argument : expressionArguments) {
-                argumentList.add(argument);
-            }
-        }
-        
-        return argumentList;
+	ArgumentList argumentList = new ArgumentList();
+
+	Argument[] expressionArguments = getExpressionArguments();
+	if (expressionArguments != null) {
+	    for (Argument argument : expressionArguments) {
+		argumentList.add(argument);
+	    }
+	}
+
+	return argumentList;
     }
 
     public String getName() {
-    	return getExpression();
+	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName());
+	return name != null ? name : getExpression();
     }
-    
+
     /**
      * @return the arguments required to define this group in the group
      *         expression

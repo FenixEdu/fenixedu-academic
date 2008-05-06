@@ -153,7 +153,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
     }
 
     @Override
-    protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
+    protected String getAuthorNameForFile(HttpServletRequest request) {
         Unit unit = getUnit(request);
         if (unit == null) {
             return null;
@@ -165,32 +165,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
 
     @Override
     protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
-        return getDirectLinkContext(request);
-    }
-
-    @Override
-    protected String getDirectLinkContext(HttpServletRequest request) {
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-        
-        if (degreeCurricularPlan == null) {
-            return null;
-        }
-        
-        Degree degree = degreeCurricularPlan.getDegree();
-        
-        if (degree == null) {
-            return null;
-        }
-
-        if (degree.getSigla() == null) {
-            return null;
-        }
-        
-        try {
-            return org.apache.struts.util.RequestUtils.absoluteURL(request, "/" + degree.getSigla().toLowerCase()).toString();
-        } catch (MalformedURLException e) {
-            return null;
-        }
+        return getSite(request).getReversePath();
     }
 
 }

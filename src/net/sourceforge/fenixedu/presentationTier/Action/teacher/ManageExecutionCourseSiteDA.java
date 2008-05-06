@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import java.net.MalformedURLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,12 +14,10 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCourseProcessor;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.util.RequestUtils;
 
 public class ManageExecutionCourseSiteDA extends SiteManagementDA {
     
@@ -30,22 +26,6 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
         propageContextIds(request);
         
         return super.execute(mapping, actionForm, request, response);
-    }
-    
-    @Override
-    protected String getDirectLinkContext(HttpServletRequest request) {
-        ExecutionCourse executionCourse = getExecutionCourse(request);
-        try {
-            String path = ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse);
-            
-            if (path == null) {
-            	return null;
-            }
-            
-			return RequestUtils.absoluteURL(request, path).toString();
-        } catch (MalformedURLException e) {
-            return null;
-        }
     }
     
     public ExecutionCourse getExecutionCourse(HttpServletRequest request) {
@@ -89,8 +69,8 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
     }
     
     @Override
-    protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
-        return ((ExecutionCourseSite)item.getSection().getSite()).getExecutionCourse().getNome();
+    protected String getAuthorNameForFile(HttpServletRequest request) {
+	return getExecutionCourse(request).getNome();
     }
 
     
@@ -113,7 +93,7 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
         	return null;
         }
         
-		String resourceLocation = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + path + ItemProcessor.getItemPath(item);
+		String resourceLocation = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + path + item.getReversePath();
         return resourceLocation;
     }
 

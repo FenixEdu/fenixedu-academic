@@ -14,7 +14,7 @@ import pt.utl.ist.fenix.tools.file.FileManagerFactory;
  * 
  * @author naat
  */
-public class EditItemFilePermissions extends FileItemService {
+public class EditFilePermissions extends FileContentService {
 
     public void run(Site site, FileContent fileContent, Group group) throws FenixServiceException, ExcepcaoPersistencia,
 	    DomainException, FileManagerException {

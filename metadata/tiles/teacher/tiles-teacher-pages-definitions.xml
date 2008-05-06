@@ -929,6 +929,12 @@
 	<definition name="teacher-list-announcements" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/announcements/listBoardAnnouncements.jsp" />
 	</definition>	
+	<definition name="teacher-announcement-uploadFile" extends="execution-course-administration">
+		<put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+	</definition>	
+	<definition name="teacher-announcement-editFile" extends="execution-course-administration">
+		<put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+	</definition>	
 	<definition name="teacher-add-announcement" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/announcements/addAnnouncement.jsp" />
 	</definition>		

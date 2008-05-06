@@ -30,6 +30,7 @@ public class AnnoucementBoardsRenderer extends OutputRenderer {
     private String rssImage;
     private String removeFavouriteUrl;
     private String addFavouriteUrl;
+    private boolean configurationVisible;
 
     public String getRemoveFavouriteUrl() {
 	return removeFavouriteUrl;
@@ -191,7 +192,7 @@ public class AnnoucementBoardsRenderer extends OutputRenderer {
 	    }
 	    if (canReadAtLeastOneBoard) {
 		HtmlComponent component = null;
-		if (board.isCurrentUserReader()) {
+		if (board.isCurrentUserReader() && board.getReaders() == null) {
 		    HtmlLink link = generateLinkForRss(board);
 		    HtmlImage image = new HtmlImage();
 		    image.setSource(getContext().getViewState().getRequest().getContextPath() + getRssImage());
@@ -278,13 +279,23 @@ public class AnnoucementBoardsRenderer extends OutputRenderer {
 	}
 
 	private boolean canManageAtLeastOneBoard() {
-	    for (AnnouncementBoard announcementBoard : boards) {
-		if (announcementBoard.isCurrentUserManager() || announcementBoard.isCurrentUserWriter()) {
-		    return true;
+	    if (isConfigurationVisible()) {
+		for (AnnouncementBoard announcementBoard : boards) {
+		    if (announcementBoard.isCurrentUserManager() || announcementBoard.isCurrentUserWriter()) {
+			return true;
+		    }
 		}
 	    }
 	    return false;
 	}
 
+    }
+
+    public boolean isConfigurationVisible() {
+	return configurationVisible;
+    }
+
+    public void setConfigurationVisible(boolean configurationVisible) {
+	this.configurationVisible = configurationVisible;
     }
 }

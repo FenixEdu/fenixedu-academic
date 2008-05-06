@@ -212,6 +212,7 @@ Documentation:
 	<renderer type="java.util.List" layout="announcements-board-table" class="net.sourceforge.fenixedu.presentationTier.renderers.AnnoucementBoardsRenderer">
 		<property name="sortBy" value="name"/>
 		<property name="rssImage" value="/images/rss_ico.png"/>
+		<property name="configurationVisible" value="true"/>
 	</renderer>
 	
 	<renderer type="net.sourceforge.fenixedu.domain.messaging.Announcement" layout="view-announcement" class="net.sourceforge.fenixedu.presentationTier.renderers.AnnouncementRenderer">

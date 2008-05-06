@@ -2185,6 +2185,8 @@
 		  <forward name="add" path="teacher-add-announcement"/>
 		  <forward name="edit" path="teacher-edit-announcement"/>
 		  <forward name="viewAnnouncement" path="teacher-view-announcement"/>
+		  <forward name="uploadFile" path="teacher-announcement-uploadFile"/>
+		  <forward name="editFile" path="teacher-announcement-editFile"/>
       </action>
         
         <!-- ===== Project Submissions Management === -->

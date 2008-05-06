@@ -366,4 +366,11 @@ public class UnitSite extends UnitSite_Base {
 	return true;
     }
 
+    @Override
+    public List<IGroup> getContextualPermissionGroups() {
+	List<IGroup> groups = super.getContextualPermissionGroups();
+	groups.addAll(getUnit().getGroups());
+	
+	return groups;
+    }
 }

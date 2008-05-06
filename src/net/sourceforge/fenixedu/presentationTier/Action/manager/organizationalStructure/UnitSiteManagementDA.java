@@ -49,7 +49,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
     }
 
 	@Override
-	protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
+	protected String getAuthorNameForFile(HttpServletRequest request) {
 		return null;
 	}
 

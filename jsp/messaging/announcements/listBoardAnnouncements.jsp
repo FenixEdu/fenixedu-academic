@@ -32,12 +32,16 @@
 	
 	</h2>
 
-
 	<ul>
 			<logic:equal name="announcementBoard" property="currentUserWriter" value="true">
 			<li>
 				<html:link action="<%= contextPrefix + "method=addAnnouncement&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
 					<bean:message key="label.createAnnouncement" bundle="MESSAGING_RESOURCES"/>
+				</html:link>
+			</li>
+			<li>
+				<html:link action="<%= contextPrefix + "method=prepareAddFile&amp;announcementBoardId="+announcementBoardId+"&amp;"+extraParameters%>">
+					<bean:message key="label.files.management" bundle="MESSAGING_RESOURCES"/>
 				</html:link>
 			</li>
 			</logic:equal>

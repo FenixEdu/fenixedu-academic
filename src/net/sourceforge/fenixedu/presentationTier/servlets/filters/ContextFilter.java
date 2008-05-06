@@ -51,7 +51,8 @@ public class ContextFilter implements Filter {
     }
 
     private boolean shouldBeSkipped(String path) {
-	return path.contains(".css") || path.contains(".gif") || path.contains(".jpg") || path.contains(".js")
+	return path.contains("/CSS/") || path.contains("/javaScript/") || path.contains("/loginPage.jsp")
+		|| path.contains("images/") || path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do")
 		|| path.contains("/ajax/") || path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do")
 		|| path.contains("/home.do") || path.contains("/logoff.do") || path.contains("/siteMap.do")
 		|| path.contains("/login.do") || path.startsWith("/external/") || path.startsWith("/isAlive.do")

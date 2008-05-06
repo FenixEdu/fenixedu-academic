@@ -12,17 +12,28 @@
 <bean:define id="context"
 	value="<%= contextParam + "=" + contextParamValue %>" />
 <bean:define id="sectionID" name="section" property="idInternal" />
-<bean:define id="itemID" name="item" property="idInternal" />
+
 
 <h2>
 	<bean:message key="label.item" bundle="SITE_RESOURCES" /> 
-	<fr:view name="item" property="name" />
+	<logic:present name="item">
+		<fr:view name="item" property="name" />
+	</logic:present>
+	<logic:notPresent name="item">
+		<fr:view name="section" property="name" />
+	</logic:notPresent>
 </h2>
 
 
+<bean:define id="url" value="<%=  actionName + "?method=section&sectionID=" + sectionID +"&" + context %>"/>
+<logic:present name="item">
+	<bean:define id="itemID" name="item" property="idInternal" />
+	<bean:define id="url" value="<%= url +  "#item-" + itemID %>"/>
+</logic:present>
+
 <div class="dinline forminline">
 	<fr:form
-		action="<%= actionName + "?method=section&sectionID=" + sectionID +"&" + context + "#item-" + itemID%>">
+		action="<%=  url %>">
 		<table class="tstyle5 thleft thlight thmiddle">
 			<tr>
 				<th><bean:message key="label.file" bundle="SITE_RESOURCES"/>:</th>
@@ -50,7 +61,7 @@
 			<bean:message key="button.submit" bundle="SITE_RESOURCES" />
 		</html:submit>
 	</fr:form>
-	<fr:form action="<%= actionName + "?method=section&sectionID=" + sectionID +"&" + context + "#item-" + itemID%>">
+	<fr:form action="<%= url %>">
 		<html:submit>
 			<bean:message key="button.cancel" bundle="SITE_RESOURCES" />
 		</html:submit>

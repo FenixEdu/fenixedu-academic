@@ -3,20 +3,25 @@ package net.sourceforge.fenixedu.domain.messaging;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -151,8 +156,8 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     public List<Announcement> getActiveAnnouncements() {
 	final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
-	for (final Node node : getChildrenSet()) {
-	    final Announcement announcement = (Announcement) node.getChild();
+
+	for (Announcement announcement : getChildren(Announcement.class)) {
 	    if (announcement.isActive() && announcement.getVisible() && announcement.getApproved()) {
 		activeAnnouncements.add(announcement);
 	    }
@@ -164,8 +169,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     public List<Announcement> getApprovedAnnouncements() {
 	final Person person = AccessControl.getPerson();
 	final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
-	for (final Node node : getChildrenSet()) {
-	    final Announcement announcement = (Announcement) node.getChild();
+	for (Announcement announcement : getChildren(Announcement.class)) {
 	    if (announcement.isActive()
 		    && announcement.getVisible()
 		    && (announcement.getApproved() || (person != null && (announcement.getCreator().equals(person) || announcement
@@ -184,8 +188,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     public Collection<Announcement> getVisibleAnnouncements() {
 	final Collection<Announcement> activeAnnouncements = new ArrayList<Announcement>();
-	for (final Node node : getChildrenSet()) {
-	    final Announcement announcement = (Announcement) node.getChild();
+	for (Announcement announcement : getChildren(Announcement.class)) {
 	    if (announcement.getVisible()) {
 		activeAnnouncements.add(announcement);
 	    }
@@ -194,8 +197,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public void addVisibleAnnouncements(final AnnouncementPresentationBean announcementPresentationBean) {
-	for (final Node node : getChildrenSet()) {
-	    final Announcement announcement = (Announcement) node.getChild();
+	for (Announcement announcement : getChildren(Announcement.class)) {
 	    if (announcement.getVisible()) {
 		announcementPresentationBean.add(announcement);
 	    }
@@ -374,9 +376,29 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	return new ArrayList<Announcement>(getChildren(Announcement.class));
     }
 
+    public List<FileContent> getFiles() {
+	List<FileContent> files = new ArrayList<FileContent>();
+	for (Attachment attachment : getChildren(Attachment.class)) {
+	    files.add(attachment.getFile());
+	}
+	return files;
+    }
+
+    public List<FileContent> getFilesSortedByDate() {
+	List<FileContent> files = getFiles();
+	Collections.sort(files, new ReverseComparator(new Comparator<FileContent>() {
+	    public int compare(FileContent f1, FileContent f2) {
+		return f1.getUploadTime().compareTo(f2.getUploadTime());
+	    }
+
+	}));
+
+	return files;
+    }
+
     @Override
     protected Node createChildNode(Content childContent) {
-	return new AnnouncementNode(this, (Announcement) childContent);
+	return new AnnouncementNode(this, childContent);
     }
 
     public String getKeywords() {

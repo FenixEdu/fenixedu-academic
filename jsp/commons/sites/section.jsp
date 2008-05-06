@@ -1,6 +1,4 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.SectionProcessor"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor"%>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -248,6 +246,12 @@
 				<bean:message key="label.institutionalContent" bundle="SITE_RESOURCES"/>
 			</html:link>
     </span>
+    <span class="pleft05">
+    		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			<html:link page="<%= String.format("%s?method=uploadFile&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
+				<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
+			</html:link>
+	</span>
 </p>
 <%-------------
      Items
@@ -347,13 +351,11 @@
 				</html:link>
 			</span>
 							
-			<logic:present name="directLinkContext">
 			|
 	        		<span>
-	                <bean:define id="directLinkContext" name="directLinkContext"/>
-	               		<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a target="_blank" href="<%= directLinkContext + ItemProcessor.getItemPath(item) %>"><bean:message key="link.view" bundle="SITE_RESOURCES"/> »</a>
+		               <app:contentLink name="item"><bean:message key="link.view" bundle="SITE_RESOURCES"/> »</app:contentLink>
 	               </span>
-	         </logic:present>
+				
        		        
 	        <div id="<%= deleteId %>" class="dnone mvert05">
 	            <fr:form action="<%= deleteUrl %>">
@@ -521,6 +523,86 @@
 </logic:notEmpty>
 </logic:equal>
 </logic:equal>
+
+
+<%-------------
+	Files
+  -------------%>
+
+<h3 class="mtop15 separator2"><bean:message key="title.item.files" bundle="SITE_RESOURCES"/></h3>
+
+	<ul class="mbottom2 list5" style="list-style: none;">
+		<li>
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
+			<html:link page="<%= String.format("%s?method=uploadFile&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
+					<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
+				</html:link>
+		</li>
+	</ul>
+
+<logic:notEmpty name="section" property="associatedFiles">
+
+                    <strong><bean:message key="label.files" bundle="SITE_RESOURCES"/>:</strong>
+                    
+                    	<table class="tstyle2 thlight tdcenter width100">
+                    		<tr>
+	                    		<th><bean:message key="label.name" bundle="SITE_RESOURCES"/></th>
+	                    		<th><bean:message key="label.file" bundle="SITE_RESOURCES"/></th>
+	                    		<th><bean:message key="label.section.item.file.availability" bundle="SITE_RESOURCES"/></th>
+	                    		<th><bean:message key="label.section.item.file.options" bundle="SITE_RESOURCES"/></th>
+                    		</tr>
+                        	<logic:iterate id="fileItem" name="section" property="associatedFiles" type="net.sourceforge.fenixedu.domain.FileContent">
+							<tr>
+								<td>
+	                        		<bean:define id="downloadUrl">
+	                        			<bean:write name="fileItem" property="downloadUrl"/>
+	                        		</bean:define>
+           	                		<html:link href="<%= downloadUrl %>">
+           	                			<fr:view name="fileItem" property="displayName"/>
+           	                		</html:link>
+            	    		        <bean:define id="message">
+        	                            <bean:message key="message.item.file.delete.confirm" bundle="SITE_RESOURCES" arg0="<%= fileItem.getDisplayName() %>"/>
+        	                        </bean:define>
+           	                	</td>
+            	                <td> <bean:write name="fileItem" property="filename"/></td>	
+            					
+            					
+            					<td>
+	                                <span class="pleft1" style="color: #888;">
+	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
+	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                                        <fr:layout>
+	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="key" value="true"/>
+	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
+	                                            <fr:property name="subLayout" value="values"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                        </fr:layout>
+	                                    </fr:view>
+	                                </span>
+       	    	                </td>
+       	    	                
+            					<td class="nowrap">	
+        							<span class="pleft1">
+           		                		<html:link page="<%= String.format("%s?method=deleteFile&amp;%s&amp;sectionID=%s&amp;fileItemId=%s", actionName, context, sectionId, fileItem.getIdInternal()) %>"
+           		                                   onclick="<%= String.format("return confirm('%s')", message) %>">
+           			                        <bean:message key="link.delete" bundle="SITE_RESOURCES"/>
+           			                    </html:link> |
+           			                    <html:link page="<%= String.format("%s?method=editDisplayName&amp;%s&amp;sectionID=%s&amp;fileItemId=%s", actionName, context, sectionId, fileItem.getIdInternal()) %>">
+           			                        <bean:message key="link.edit" bundle="SITE_RESOURCES"/>
+           			                    </html:link> | 
+           			                    <html:link page="<%= String.format("%s?method=prepareEditItemFilePermissions&amp;%s&amp;sectionID=%s&amp;fileItemId=%s", actionName, context, sectionId, fileItem.getIdInternal()) %>">
+           			 	                   <bean:message key="link.permissions" bundle="SITE_RESOURCES"/>
+           			    	            </html:link>
+									</span>
+								</td>
+								
+                        	</tr>
+                       	</logic:iterate>
+                   	</table>
+                   	
+</logic:notEmpty>
+
 <!-- Change item delete operation if possible -->
 <script type="text/javascript">
     switchGlobal();

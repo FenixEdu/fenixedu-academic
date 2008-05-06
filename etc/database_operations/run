@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Public Relations Office" createPublicRelationsOffice.sql

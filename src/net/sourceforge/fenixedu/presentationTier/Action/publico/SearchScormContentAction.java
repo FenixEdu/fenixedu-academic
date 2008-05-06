@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.SearchDSpaceGeneralAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean.EducationalResourceType;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;

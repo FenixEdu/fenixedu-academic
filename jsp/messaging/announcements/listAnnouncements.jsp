@@ -133,7 +133,7 @@
 									<bean:define id="showWritePermission" value="false"/>
 							    </logic:equal>
 						    </logic:equal>
-						    
+						   
 							<logic:equal name="showWritePermission" value="true">
 			                	<logic:equal name="contentContext" property="selectedContainer.publicAvailable" value="false">
 				                	<logic:equal name="announcement" property="announcementBoard.currentUserWriter" value="true">

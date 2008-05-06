@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFileItemForItem.CreateScormFileItemForItemArgs;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFile.CreateScormFileItemForItemArgs;
 import net.sourceforge.fenixedu.domain.Site;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;

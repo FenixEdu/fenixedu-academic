@@ -71,7 +71,53 @@
 			<span class="error0"><fr:message for="announcement-body-validated"/></span>
 		</td>
 	</tr>
+	<logic:notEmpty name="announcementBoard" property="files">
+		<tr>
+		<th>
+			<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
+		</th>
+		<td>
+				<div style="height: 80px; overflow: auto; border: 1px solid #aaa; padding: 0.25em; background: #fafafa;">
+				<logic:iterate id="file" name="announcementBoard" property="filesSortedByDate">
+				
+				
+				<p><fr:view name="file" property="displayName"/>
+				   <span class="color888">(<fr:view name="file" property="filename"/>)
+				   <fr:view name="file" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                                        <fr:layout>
+	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="key" value="true"/>
+	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
+	                                            <fr:property name="subLayout" value="values"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                        </fr:layout>
+	                                    </fr:view>
+	                </span> - <bean:define id="downloadUrl" name="file" property="downloadUrl"/>
+					<bean:define id="displayName" name="file" property="displayName"/>
+                    <a href="#" onclick="<%= "insertLink('" + downloadUrl + "', '"+ displayName + "');"%>"><bean:message key="link.insert.file.in.editor" bundle="SITE_RESOURCES"/></a>
+                    </p>
+			</logic:iterate>
+			</div>
+		</td>
+		</tr>
+	</logic:notEmpty>
 </table>
+
+<script type="text/javascript">
+            function hasTinyMCE() {
+                return tinyMCE.configs.length > 0;
+            }
+            
+            function insertLink(url, name) {
+                if (hasTinyMCE()) {
+                    tinyMCE.execCommand('mceInsertContent', false, '<a href="' + url + '">' + name + '</a> ');
+                }
+            }
+    
+            if (hasTinyMCE()) {
+                switchGlobal();
+            }
+            </script>
 
 
 

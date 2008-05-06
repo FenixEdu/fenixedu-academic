@@ -702,6 +702,9 @@
             <forward name="add" path="coordinator-announcements-add-announcement"/>
             <forward name="viewAnnouncement" path="coordinator-announcements-view-announcement"/>
             <forward name="edit" path="coordinator-announcements-edit-announcement"/>
+            <forward name="uploadFile" path="coordinator-announcements-uploadFile"/>
+            <forward name="editFile" path="coordinator-announcements-editFile"/>
+            
         </action>
 
         <action path="/announcements/manageUnitAnnouncementBoard"

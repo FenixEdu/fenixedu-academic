@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -15,13 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.AnnouncementArchive;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.AnnouncementArchiveAnnouncementsVisibility;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -29,6 +34,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.file.FileManagerException;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created
@@ -75,11 +83,13 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     }
 
     protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-	return (AnnouncementBoard) rootDomainObject.readContentByOID(this.getAnnouncementBoardId(request));
+	Integer id = this.getAnnouncementBoardId(request);
+	return id != null ? (AnnouncementBoard) rootDomainObject.readContentByOID(id) : null;
     }
 
     protected Announcement getRequestedAnnouncement(HttpServletRequest request) {
-	return (Announcement) rootDomainObject.readContentByOID(this.getAnnouncementId(request));
+	Integer id = this.getAnnouncementId(request);
+	return id != null ? (Announcement) rootDomainObject.readContentByOID(id) : null;
     }
 
     public ActionForward addBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -276,6 +286,80 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 		(selectedArchiveMonth)).getAnnouncements());
 
 	return mapping.findForward("listAnnouncements");
+    }
+
+    public ActionForward prepareAddFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	AnnouncementBoard board = getRequestedAnnouncementBoard(request);
+	FileContentCreationBean bean = new FileContentCreationBean(board, null);
+
+	bean.setAuthorsName(getLoggedPerson(request).getName());
+	request.setAttribute("bean", bean);
+
+	return mapping.findForward("uploadFile");
+    }
+
+    public ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	FileContentCreationBean bean = (FileContentCreationBean) RenderUtils.getViewState("creator").getMetaObject().getObject();
+	RenderUtils.invalidateViewState();
+
+	InputStream formFileInputStream = null;
+	File file = null;
+	try {
+	    formFileInputStream = bean.getFile();
+	    file = FileUtils.copyToTemporaryFile(formFileInputStream);
+
+	    executeService(request, "CreateFileContentForBoard", new Object[] { (AnnouncementBoard) bean.getFileHolder(), file,
+		    bean.getFileName(), bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request) });
+	} catch (FileManagerException e) {
+	    addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
+	} finally {
+	    if (formFileInputStream != null) {
+		formFileInputStream.close();
+	    }
+	    if (file != null) {
+		file.delete();
+	    }
+	}
+
+	return prepareAddFile(mapping, form, request, response);
+    }
+
+    public ActionForward deleteFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	FileContent fileContent = getFileContent(request);
+	
+	executeService("DeleteFileContent",  fileContent);
+	return prepareAddFile(mapping, form, request, response);
+    }
+
+    public ActionForward editFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	AnnouncementBoard board = getRequestedAnnouncementBoard(request);
+	FileContent fileContent = getFileContent(request);
+	
+	request.setAttribute("board", board);
+	request.setAttribute("fileContent", fileContent);
+	
+	return mapping.findForward("editFile");
+    }
+    
+    private FileContent getFileContent(HttpServletRequest request) {
+	Integer fileContentId = Integer.valueOf(request.getParameter("fileId"));
+	FileContent fileContent = (FileContent) rootDomainObject.readFileByOID(fileContentId);
+	return fileContent;
+    }
+
+    private void addErrorMessage(HttpServletRequest request, String property, String key, Object... args) {
+	ActionMessages messages = getErrors(request);
+	messages.add(property, new ActionMessage(key, args));
+
+	saveErrors(request, messages);
     }
 
     /**

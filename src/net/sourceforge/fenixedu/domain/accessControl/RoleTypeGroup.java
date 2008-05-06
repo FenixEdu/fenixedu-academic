@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class RoleTypeGroup extends Group {
 

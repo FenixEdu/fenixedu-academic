@@ -98,19 +98,18 @@
                 <fr:property name="fieldId" value="sections-order"/>
                 
                 <fr:property name="eachLayout" value="values"/>
-
-                <fr:property name="childrenFor(Section)" value="childrenAsContent"/>
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
-
-				<fr:property name="schemaFor(Functionality)" value="site.functionality.name"/>
-
+                <fr:property name="childrenFor(Section)" value="directChildrenAsContent"/>
 				<fr:property name="schemaFor(Item)" value="site.item.name"/>
-				
-                <fr:property name="movedClass" value="highlight3"/>
+                <fr:property name="childrenFor(Item)" value="directChildrenAsContent"/>
+				<fr:property name="schemaFor(Attachment)" value="content.in.tree"/>
+				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>
+				<fr:property name="schemaFor(Functionality)" value="site.functionality.name"/>
+      		    <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
             <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${idInternal}&amp;" + context %>"/>
-			<fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.idInternal}&" + context  + "#item-${idInternal}"%>"/>
-			<fr:destination name="functionality.view" path="<%= actionName + "?method=functionality&siteID=" + siteId + "&functionalityID=${idInternal}&" + context  + "#content-${idInternal}"%>"/>
+            <fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.idInternal}&" + context  + "#item-${idInternal}"%>"/>
+            <fr:destination name="functionality.view" path="<%= actionName + "?method=functionality&siteID=" + siteId + "&functionalityID=${idInternal}&" + context  + "#content-${idInternal}"%>"/>
         </fr:view>
 	
 		<p class="mtop15">

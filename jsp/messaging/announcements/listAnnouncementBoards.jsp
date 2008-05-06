@@ -16,7 +16,7 @@
 			int indexOfLastSlash = contextPrefix.lastIndexOf("/");
 			String prefix = contextPrefix.substring(0,indexOfLastSlash+1);
 		%>
-	
+
 	   <fr:view name="announcementBoards">
 			<fr:layout name="announcements-board-table">
 				<fr:property name="classes" value="tstyle2 tdcenter mtop05"/>

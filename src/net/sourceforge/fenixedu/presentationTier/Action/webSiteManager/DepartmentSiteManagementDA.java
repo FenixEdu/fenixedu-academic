@@ -14,7 +14,7 @@ public class DepartmentSiteManagementDA extends CustomUnitSiteManagementDA {
     }
     
     @Override
-    protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
+    protected String getAuthorNameForFile(HttpServletRequest request) {
         return getDepartment(request).getRealName();
     }
 

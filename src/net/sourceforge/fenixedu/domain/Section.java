@@ -12,6 +12,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
@@ -188,14 +189,6 @@ public class Section extends Section_Base {
 	return super.isAvailable(context);
     }
 
-    public void setItemsOrder(List<Item> items) {
-	// ITEM_ORDER_ADAPTER.updateOrder(this, items);
-    }
-
-    public void setSectionsOrder(List<Section> sections) {
-	// SECTION_ORDER_ADAPTER.updateOrder(this, sections);
-    }
-
     public boolean isSubSectionAllowed() {
 	return true;
     }
@@ -210,6 +203,14 @@ public class Section extends Section_Base {
 
     public List<Section> getAssociatedSections() {
 	return (List<Section>) getChildren(Section.class);
+    }
+
+    public List<FileContent> getAssociatedFiles() {
+	List<FileContent> contents = new ArrayList<FileContent>();
+	for (Attachment attachment : getChildren(Attachment.class)) {
+	    contents.add(attachment.getFile());
+	}
+	return contents;
     }
 
     public boolean hasAnyAssociatedSections() {
@@ -247,6 +248,14 @@ public class Section extends Section_Base {
 	}
     }
 
+    public List<Section> getChildrenSections() {
+	return (List<Section>) getChildren(Section.class);
+    }
+    
+    public List<Attachment> getChildrenFiles() {
+	return (List<Attachment>) getChildren(Attachment.class);
+    }
+    
     public List<Section> getSubSections() {
 	List<Section> sections = new ArrayList<Section>();
 	for (Section section : getChildren(Section.class)) {

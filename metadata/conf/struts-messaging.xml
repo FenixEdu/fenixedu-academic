@@ -69,6 +69,8 @@
 		  <forward name="listAnnouncements" path="list-announcements"/>
 		  <forward name="boardListingWithCriteria" path="board-listing-with-criteria"/>
 		  <forward name="viewAnnouncement" path="view-announcement"/>
+		  <forward name="uploadFile" path="announcement-uploadFile"/>
+		  <forward name="editFile" path="announcement-editFile"/>
       </action>               
   
   	  <action path="/announcements/manageExecutionCourseAnnouncementBoard"

@@ -559,13 +559,37 @@
 	<slot name="shift.classesPrettyPrint" key="label.classes"/>			
 	<slot name="writtenSummary" key="label.summary"/>
 </schema>
-<schema name="site.item.file.basic" type="net.sourceforge.fenixedu.domain.FileContent">
+
+<schema name="edit.file.title.and.permissions" type="net.sourceforge.fenixedu.domain.FileContent" bundle="SITE_RESOURCES">
+	<slot name="displayName"/>
+	<slot name="filename" read-only="true"/>
+	<slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.class.text"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="true"/>
+    </slot>
+</schema>
+
+<schema name="site.item.file.basic" type="net.sourceforge.fenixedu.domain.FileContent" bundle="SITE_RESOURCES">
     <slot name="displayName" layout="link">
         <property name="useParent" value="true"/>
         <property name="contextRelative" value="false"/>
         <property name="linkFormat" value="${downloadUrl}"/>
     </slot>
 </schema>
+
+<schema name="site.item.file.advanced" type="net.sourceforge.fenixedu.domain.FileContent" bundle="SITE_RESOURCES">
+    <slot name="displayName" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="contextRelative" value="false"/>
+        <property name="linkFormat" value="${downloadUrl}"/>
+    </slot>
+    <slot name="filename"/>
+    <slot name="uploadTime"/>
+    <slot name="permittedGroup"  layout="values" schema="permittedGroup.class.text"/>
+</schema>
+
 <schema name="site.item.files.visible" type="net.sourceforge.fenixedu.domain.contents.Node" bundle="SITE_RESOURCES">
     <slot name="visible"/>
     <slot name="child.file.displayName" layout="link" read-only="true" key="label.displayName">
@@ -599,6 +623,11 @@
     </slot>
 </schema>
 
+<schema name="permittedGroup.name" type="net.sourceforge.fenixedu.injectionCode.IGroup">
+    <slot name="name"/>
+</schema>
+
+
 <schema name="item.file.basic" type="net.sourceforge.fenixedu.domain.FileContent" bundle="SITE_RESOURCES">
     <slot name="displayName"/>
     <slot name="filename"/>
@@ -613,7 +642,7 @@
     </slot>
 </schema>
 
-<schema name="item.file.create" type="net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean" bundle="SITE_RESOURCES">
+<schema name="item.file.create" type="net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean" bundle="SITE_RESOURCES">
     <slot name="permittedGroup" layout="radio-select" >
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
@@ -621,6 +650,16 @@
         <property name="saveOptions" value="false"/>
     </slot>
 </schema>
+
+<schema name="fileContent.permissions" type="net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean" bundle="SITE_RESOURCES">
+    <slot name="permittedGroup" layout="radio-select" >
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />
+        <property name="eachSchema" value="permittedGroup.name"/>
+        <property name="eachLayout" value="values"/>
+        <property name="saveOptions" value="false"/>
+    </slot>
+</schema>
+
 
 <schema name="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean" type="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionPeriod" key="label.executionPeriod" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">

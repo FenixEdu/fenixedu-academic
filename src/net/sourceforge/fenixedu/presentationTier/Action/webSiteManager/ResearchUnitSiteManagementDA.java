@@ -151,7 +151,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
 	}
 
 	@Override
-	protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
+	protected String getAuthorNameForFile(HttpServletRequest request) {
 		return getSite(request).getUnit().getName();
 	}
 

@@ -642,6 +642,12 @@
 	<definition name="manager-list-announcements" extends="definition.manager.masterPage" >
 		<put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
 	</definition>	
+	<definition name="manager-announcements-uploadFile" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+	</definition>	
+	<definition name="manager-announcements-editFile" extends="definition.manager.masterPage" >
+		<put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+	</definition>	
 	<definition name="manager-edit-announcement" extends="definition.manager.masterPage" >
 		<put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
 	</definition>

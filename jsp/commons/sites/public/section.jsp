@@ -1,5 +1,4 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ItemProcessor" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -19,12 +18,14 @@
 <logic:present name="section">
     <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 
+
     <h2>
         <fr:view name="section" property="name" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
 		<app:defineContentPath id="sectionURL" name="section" toScope="request"/>
 		<bean:define id="url" name="sectionURL" type="java.lang.String"/>
   		<span class="permalink1">(<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h2>
+
 
     <logic:present name="hasRestrictedItems">
         <p>
@@ -34,14 +35,46 @@
            </html:link>.
         </p>
     </logic:present>
- 
 
-	<fr:view name="section" type="net.sourceforge.fenixedu.domain.Section" layout="section-sub-menu">
-		<fr:layout>
-			<fr:property name="sectionUrl" value="<%= String.format("%s?method=section&amp;%s", actionName, context) %>"/>
-		</fr:layout>
-	</fr:view>
 
+	<logic:notEmpty name="section" property="childrenFiles">
+			<table class="box" style="float: right;" cellspacing="0">   
+				<tr>
+					<td class="box_header">
+						<strong>
+							<bean:message key="label.files" bundle="SITE_RESOURCES"/>
+						</strong>
+					</td>
+				</tr>						
+				<tr>
+					<td class="box_cell">
+						<ul>
+								<logic:iterate id="file" name="section" property="childrenFiles" type="net.sourceforge.fenixedu.domain.contents.Attachment">		
+									<li>
+									<app:contentLink name="file">
+									<fr:view name="file" property="name"/> 
+									</app:contentLink>
+									 <span class="color888">(<fr:view name="file" property="file.filename"/>, <fr:view name="file" property="file.size" layout="fileSize"/>)</span></li>
+								</logic:iterate>
+						</ul>
+					</td>						
+				</tr>
+			</table>       	
+		</logic:notEmpty>
+
+		<logic:notEmpty name="section" property="childrenSections">
+				<ul>
+					<logic:iterate id="section" name="section" property="childrenSections" type="net.sourceforge.fenixedu.domain.Section">		
+							<li>
+							<app:contentLink name="section">
+							<fr:view name="section" property="name"/>
+							</app:contentLink>
+							</li>
+						</logic:iterate>
+				</ul>
+		</logic:notEmpty>
+			
+			
     <logic:notEmpty name="protectedItems">
        	
        	<logic:iterate id="protectedItem" name="protectedItems">

@@ -157,6 +157,8 @@
         <forward name="add" path="basicUnit-announcements-add-announcement"/>
         <forward name="viewAnnouncement" path="basicUnit-announcements-view-announcement"/>
         <forward name="edit" path="basicUnit-announcements-edit-announcement"/>
+        <forward name="uploadFile" path="basicUnit-announcements-uploadFile"/>
+        <forward name="editFile" path="basicUnit-announcements-editFile"/>
     </action>
 
 	  <action path="/manageResearchUnitSite" 
@@ -214,6 +216,8 @@
             <forward name="add" path="research-announcements-add-announcement"/>
             <forward name="edit" path="research-announcements-edit-announcement"/>
             <forward name="viewAnnouncement" path="research-announcements-view-announcement"/>
+            <forward name="uploadFile" path="research-announcements-uploadFile"/>
+            <forward name="editFile" path="research-announcements-editFile"/>
       </action>
 		
 	<action path="/announcementsManagement"
@@ -229,6 +233,8 @@
           <forward name="unitStructuredBoards" path="unit-structured-boards"/>
           <forward name="viewAnnouncementBoard" path="websiteManager-view-announcementBoard"/>
    		  <forward name="viewAnnouncement" path="websiteManager-view-announcement"/>
+      	  <forward name="uploadFile" path="websiteManager-uploadFile"/>
+      	  <forward name="editFile" path="websiteManager-editFile"/>
       </action>
 
 
@@ -286,6 +292,8 @@
         <forward name="add" path="department-announcements-add-announcement"/>
         <forward name="viewAnnouncement" path="department-announcements-view-announcement"/>
         <forward name="edit" path="department-announcements-edit-announcement"/>
+        <forward name="uploadFile" path="department-announcements-uploadFile"/>
+        <forward name="editFile" path="department-announcements-editFile"/>
     </action>
     
      <action path="/manageUnitAnnouncementBoard"
@@ -353,6 +361,8 @@
         <forward name="add" path="pedagogicalCouncil-announcements-add-announcement"/>
         <forward name="viewAnnouncement" path="pedagogicalCouncil-announcements-view-announcement"/>
         <forward name="edit" path="pedagogicalCouncil-announcements-edit-announcement"/>
+        <forward name="uploadFile" path="pedagogicalCouncil-announcements-uploadFile"/>
+        <forward name="editFile" path="pedagogicalCouncil-announcements-editFile"/>
     </action>
 
     <action path="/manageScientificCouncilSite" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ScientificCouncilSiteManagementDA">
@@ -409,6 +419,8 @@
         <forward name="add" path="scientificCouncil-announcements-add-announcement"/>
         <forward name="viewAnnouncement" path="scientificCouncil-announcements-view-announcement"/>
         <forward name="edit" path="scientificCouncil-announcements-edit-announcement"/>
+    	<forward name="uploadFile" path="scientificCouncil-announcements-uploadFile"/>
+    	<forward name="editFile" path="scientificCouncil-announcements-editFile"/>
     </action>
 
     </action-mappings>

@@ -17,6 +17,12 @@
 	<definition name="add-announcement" extends="definition.messaging.masterPage" >
 		<put name="body" value="/messaging/announcements/addAnnouncement.jsp" />
 	</definition>	
+	<definition name="announcement-uploadFile" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+	</definition>	
+	<definition name="announcement-editFile" extends="definition.messaging.masterPage" >
+		<put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+	</definition>	
 	<definition name="list-announcement-boards" extends="definition.messaging.masterPage" >
 		<put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />
 	</definition>

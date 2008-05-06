@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.UnitSiteProcessor;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
@@ -48,8 +50,21 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 
     @Override
     public MultiLanguageString getName() {
-	String path = UnitSiteProcessor.getUnitSitePath(this.getUnit(), "");
-	return MultiLanguageString.i18n().add("pt",  path.substring(2)).finish();
+	Unit unit = this.getUnit();
+	List<Unit> units = unit.getParentUnitsPath(false);
+	units.add(unit);
+	StringBuffer buffer = new StringBuffer("");
+	
+	for (Unit unitInPath : units) {
+	    if (unitInPath.getType() != PartyTypeEnum.AGGREGATE_UNIT) {
+		if (buffer.length() > 0) {
+		    buffer.append("/");
+		}
+		buffer.append(unitInPath.getAcronym());
+	    }
+	}
+	
+	return MultiLanguageString.i18n().add("pt",  buffer.toString()).finish();
     }
 
     @Override

@@ -13,11 +13,16 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
 <bean:define id="fileItem" type="net.sourceforge.fenixedu.domain.FileContent" name="fileItem"/>
-<bean:define id="item" type="net.sourceforge.fenixedu.domain.Item" name="item"/>
+<bean:define id="section" type="net.sourceforge.fenixedu.domain.Section" name="section"/>
 <bean:define id="siteId" name="site" property="idInternal"/>
 
 <h2>
-    <fr:view name="item" property="name" />
+	<logic:present name="item">
+    	<fr:view name="item" property="name" />
+    </logic:present>
+    <logic:notPresent name="item">
+    	<fr:view name="section" property="name"/>
+    </logic:notPresent> 
 </h2>
 
 <p class="mbottom05">
@@ -37,12 +42,12 @@
 </fr:view>
 
 <fr:edit name="fileItemBean" schema="item.file.permittedGroup" 
-         action="<%= String.format("%s?method=editItemFilePermissions&%s&itemID=%s&fileItemId=%s", actionName, context, item.getIdInternal(), fileItem.getIdInternal()) %>">
+         action="<%= String.format("%s?method=editItemFilePermissions&%s&fileItemId=%s&sectionID=%s", actionName, context, fileItem.getIdInternal(), section.getIdInternal()) %>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
     
-    <fr:destination name="cancel" path="<%= String.format("%s?method=section&%s&sectionID=%s", actionName, context, item.getSection().getIdInternal()) %>"/>
+    <fr:destination name="cancel" path="<%= String.format("%s?method=section&%s&sectionID=%s", actionName, context, section.getIdInternal()) %>"/>
 </fr:edit>
 

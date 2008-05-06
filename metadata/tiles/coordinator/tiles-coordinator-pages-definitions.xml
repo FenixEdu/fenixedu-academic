@@ -44,6 +44,14 @@
         <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
         <put name="body" value="/coordinator/degreeSite/announcements/noBoards.jsp" />
     </definition>
+    <definition name="coordinator-announcements-uploadFile" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+    </definition>    
+    <definition name="coordinator-announcements-editFile" extends="definition.coordinator.two-column.extra-menu">
+        <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+        <put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+    </definition>        
     <definition name="coordinator-announcements-list-boards" extends="definition.coordinator.two-column.extra-menu">
         <put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
         <put name="body" value="/messaging/announcements/listAnnouncementBoards.jsp" />

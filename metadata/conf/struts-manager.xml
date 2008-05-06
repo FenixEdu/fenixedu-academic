@@ -1493,6 +1493,8 @@
           <forward name="listAnnouncementBoards" path="manager-list-announcement-boards"/>
           <forward name="success" path="/advisoriesManagement/listCurrentAdvisories.faces"/>
 		  <forward name="listAnnouncements" path="manager-list-announcements" />
+		  <forward name="uploadFile" path="manager-announcements-uploadFile" />
+		  <forward name="editFile" path="manager-announcements-editFile" />
       </action>
       
       

@@ -7,17 +7,30 @@
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
+<bean:define id="siteId" name="site" property="idInternal"/>
 <bean:define id="actionName" name="siteActionName"/>
 <bean:define id="contextParam" name="siteContextParam"/>
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
-<bean:define id="siteId" name="site" property="idInternal"/>
-<bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
+<bean:define id="container" name="bean" property="fileHolder"/>
+<bean:define id="containerId" name="container" property="idInternal"/>
+
+<bean:define id="topContainerString" value="<%= "sectionID=" %>"/>
+<bean:define id="selectContainerString" value="<%= "itemID=" + containerId %>"/>
+
+<logic:equal name="container" property="class.simpleName" value="Section">
+	<bean:define id="selectContainerString" value="<%= "sectionID=" + containerId %>"/>
+	<bean:define id="topContainerString" value="<%= "sectionID=" + containerId %>"/>
+</logic:equal>
+ <logic:equal name="container" property="class.simpleName" value="Item">
+	<bean:define id="sectionID" name="container" property="section.idInternal"/>
+	<bean:define id="topContainerString" value="<%= "sectionID=" + sectionID%>"/> 
+ </logic:equal>
+
 
 <h2>
-	<fr:view name="item" property="name" />
+	<fr:view name="container" property="name" />
 </h2>
 
 <h3>
@@ -26,7 +39,7 @@
 
 <ul>
 <li>
-<html:link page="<%= actionName + "?method=section&amp;sectionID=" + section.getIdInternal() + "&amp;" + context %>">
+<html:link page="<%= actionName + "?method=section&amp;" + topContainerString + "&amp;" + context %>">
 <bean:message key="link.goBack"/>
 </html:link>
 </li>
@@ -37,7 +50,7 @@
     <span>
     	<span class="pleft1">
     		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-    		<html:link page="<%= actionName + "?method=uploadFile&amp;itemID=" + item.getIdInternal() + "&amp;" + context %>">			
+    		<html:link page="<%= actionName + "?method=uploadFile&amp;" + selectContainerString + "&amp;" + context %>">			
     			<bean:message key="label.teacher.siteAdministration.uploadFile.insertFile"/>
     		</html:link>
     	</span>
@@ -47,7 +60,7 @@
         	</span>
         	<span class="pleft1">
         		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-        		<html:link page="<%= actionName + "?method=prepareCreateScormFile&amp;itemID=" + item.getIdInternal() + "&amp;" + context %>">			
+        		<html:link page="<%= actionName + "?method=prepareCreateScormFile&amp;" + selectContainerString + "&amp;" + context %>">			
         			<bean:message key="link.scorm.createScormFile" bundle="SITE_RESOURCES"/>
         		</html:link>
         	</span>
@@ -69,7 +82,7 @@
 
 
 <div class="dinline forminline">
-<fr:form action="<%= actionName + "?method=scormFileUpload&amp;" + context + "&amp;itemID=" + item.getIdInternal() %>" encoding="multipart/form-data">
+<fr:form action="<%= actionName + "?method=scormFileUpload&amp;" + context + "&amp;" + selectContainerString %>" encoding="multipart/form-data">
     <fr:edit id="creator" name="bean" visible="false"/>
 <table class="tstyle5 thright thlight mtop025">
 	<tr>
@@ -137,7 +150,7 @@
 </div>
 
 <div class="dinline forminline">
-	<fr:form action="<%=String.format("%s?method=section&amp;%s&amp;sectionID=%s", actionName, context, item.getSection().getIdInternal()) %>" encoding="multipart/form-data">
+	<fr:form action="<%=String.format("%s?method=section&amp;%s&amp;%s", actionName, context, topContainerString) %>" encoding="multipart/form-data">
 		<html:cancel styleClass="inputbutton dinline">
 			<bean:message key="button.cancel"/>
 		</html:cancel>

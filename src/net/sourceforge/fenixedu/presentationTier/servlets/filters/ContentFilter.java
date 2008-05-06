@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
@@ -80,10 +81,13 @@ public class ContentFilter implements Filter {
 	} else if (content instanceof Item) {
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, ITEM_PATH);
 
-	} else if (content instanceof FunctionalityCall) {
+	} else if (content instanceof Attachment) {
+	    Attachment attachment = (Attachment) content;
+	    httpServletResponse.sendRedirect(attachment.getFile().getDownloadUrl());
+	}else if (content instanceof FunctionalityCall) {
 	    Functionality functionality = ((FunctionalityCall) content).getFunctionality();
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
-
+	    
 	} else if (content instanceof Functionality) {
 	    Functionality functionality = ((Functionality) content);
 	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());

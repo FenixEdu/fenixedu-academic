@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,31 +10,29 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FileContent;
-import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean.EducationalResourceType;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 /**
  * @author naat
  */
-public class CreateFileItemForItem extends FileItemService {
+public class CreateFileContent extends FileContentService {
 
-    public void run(Site site, Item item, File file, String originalFilename, String displayName, Group permittedGroup,
+    public void run(Site site, Container container, File file, String originalFilename, String displayName, Group permittedGroup,
 	    Person person, EducationalResourceType type) throws FenixServiceException, ExcepcaoPersistencia, DomainException,
 	    IOException {
 
-	final VirtualPath filePath = getVirtualPath(item);
+	final VirtualPath filePath = getVirtualPath(site,container);
 
 	Collection<FileSetMetaData> metaData = createMetaData(person.getName(), displayName, site.getAuthorName(), type);
 
@@ -49,29 +44,13 @@ public class CreateFileItemForItem extends FileItemService {
 		fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
 			.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
 	
-	item.addFile(fileContent);
+	container.addFile(fileContent);
     }
 
     private void checkSiteQuota(Site site, int size) {
 	if (site.hasQuota()) {
 	    if (site.getUsedQuota() + size > site.getQuota()) {
 		throw new SiteFileQuotaExceededException(site, size);
-	    }
-	}
-    }
-
-    protected FileDescriptor saveFile(VirtualPath filePath, String originalFilename, boolean permission,
-	    Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
-	final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-	InputStream is = null;
-	try {
-	    is = new FileInputStream(file);
-	    return fileManager.saveFile(filePath, originalFilename, permission, metaData, is);
-	} catch (FileNotFoundException e) {
-	    throw new FenixServiceException(e.getMessage());
-	} finally {
-	    if (is != null) {
-		is.close();
 	    }
 	}
     }
@@ -92,26 +71,18 @@ public class CreateFileItemForItem extends FileItemService {
 	return metaData;
     }
 
-    private VirtualPath getVirtualPath(Item item) {
+    private VirtualPath getVirtualPath(Site site, Container container) {
+	
+	List<Content> contents = site.getPathTo(container);
+	
 	final VirtualPath filePath = new VirtualPath();
-	filePath.addNode(new VirtualPathNode("I" + item.getIdInternal(), item.getName().getContent()));
 
-	final Section section = item.getSection();
-	filePath.addNode(0, new VirtualPathNode("S" + section.getIdInternal(), section.getName().getContent()));
-
-	if (section.getSuperiorSection() != null) {
-	    Section superiorSection = section.getSuperiorSection();
-	    while (superiorSection != null) {
-		filePath.addNode(0, new VirtualPathNode("S" + superiorSection.getIdInternal(), superiorSection.getName()
-			.getContent()));
-
-		superiorSection = superiorSection.getSuperiorSection();
-	    }
+	for (Content content : contents.subList(1, contents.size())) {
+	    filePath.addNode(0,new VirtualPathNode(content.getClass().getSimpleName().substring(0, 1) + content.getIdInternal(), content.getName().getContent()));
 	}
 
-	Site site = section.getSite();
 	String authorName = site.getAuthorName();
-	filePath.addNode(0, new VirtualPathNode("Site" + site.getIdInternal(), authorName == null ? "Site" + site.getIdInternal()
+	filePath.addNode(0,new VirtualPathNode("Site" + site.getIdInternal(), authorName == null ? "Site" + site.getIdInternal()
 		: authorName));
 
 	ExecutionPeriod executionPeriod = site.getExecutionPeriod();

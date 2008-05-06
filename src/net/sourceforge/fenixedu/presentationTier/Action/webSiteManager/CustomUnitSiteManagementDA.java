@@ -61,17 +61,6 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     @Override
-    protected String getDirectLinkContext(HttpServletRequest request) {
-
-	Site site = getSite(request);
-	try {
-	    return site == null ? null : RequestUtils.absoluteURL(request, site.getReversePath()).toString();
-	} catch (MalformedURLException e) {
-	    return null;
-	}
-    }
-
-    @Override
     protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
 	return null;
     }
@@ -783,7 +772,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     @Override
-    protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
+    protected String getAuthorNameForFile(HttpServletRequest request) {
 	Unit unit = getUnit(request);
 
 	if (unit != null) {

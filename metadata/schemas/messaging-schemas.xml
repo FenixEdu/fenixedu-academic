@@ -336,3 +336,4 @@
 	<slot name="person.mostImportantAlias" read-only="true" key="label.username"/>
 	<slot name="person.name" read-only="true" key="messaging.name.label"/>
 </schema>
+

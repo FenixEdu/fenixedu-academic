@@ -2680,26 +2680,6 @@
 			<chain name="TeacherAuthorization" />
 		</filterChains>
 	</service>
-    <service>
-        <name>RearrangeSiteSections</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.RearrangeSiteSections</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="SiteManagerAuthorization" />
-        </filterChains>
-    </service>
-    <service>
-        <name>RearrangeSectionItems</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.RearrangeSectionItems</implementationClass>
-        <description />
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="SiteManagerAuthorization" />
-        </filterChains>
-    </service>
 	<service>
 		<name>ReadTeacherByUsername</name>
 		<implementationClass> 
@@ -9075,8 +9055,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateFileItemForItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateFileItemForItem</implementationClass>
+		<name>CreateFileContent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateFileContent</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9084,8 +9064,14 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateScormPackageForItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormPackageForItem</implementationClass>
+		<name>CreateFileContentForBoard</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.messaging.CreateFileContentForBoard</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+	</service>	
+	<service>
+		<name>CreateScormPackage</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormPackage</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9093,8 +9079,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>CreateScormFileItemForItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFileItemForItem</implementationClass>
+		<name>CreateScormFile</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFile</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9102,12 +9088,12 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>DeleteFileItemFromItem</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFileItemFromItem</implementationClass>
+		<name>DeleteFileContent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFileContent</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
-			<chain name="SiteManagerAuthorization" />
+			<chain name="DeleteFileContentAuthorizationFilter" />
 		</filterChains>
 	</service>
 	<service>
@@ -9144,8 +9130,8 @@
 		</filterChains>
 	</service>	
 	<service>
-		<name>EditItemFilePermissions</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.EditItemFilePermissions</implementationClass>
+		<name>EditFilePermissions</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.EditFilePermissions</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

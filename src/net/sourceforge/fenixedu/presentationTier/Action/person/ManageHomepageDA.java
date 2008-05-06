@@ -38,20 +38,6 @@ public class ManageHomepageDA extends SiteManagementDA {
         return super.execute(mapping, actionForm, request, response);
     }
 
-    @Override
-    protected String getDirectLinkContext(HttpServletRequest request) {
-        Homepage homepage = (Homepage) request.getAttribute("homepage");
-        if (homepage == null) {
-            return null;
-        }
-        
-        try {
-            return RequestUtils.absoluteURL(request, "/homepage/" + homepage.getPerson().getUser().getUserUId()).toString();
-        } catch (MalformedURLException e) {
-            return null;
-        }
-    }
-    
     public ActionForward options(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
     	final Person person = getUserView(request).getPerson();
@@ -175,7 +161,7 @@ public class ManageHomepageDA extends SiteManagementDA {
     }
 
     @Override
-    protected String getAuthorNameForFile(HttpServletRequest request, Item item) {
+    protected String getAuthorNameForFile(HttpServletRequest request) {
         return getUserView(request).getPerson().getName();
     }
 

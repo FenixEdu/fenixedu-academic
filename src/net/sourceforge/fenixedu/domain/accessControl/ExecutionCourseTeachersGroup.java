@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.collections.Transformer;
 
@@ -29,6 +30,13 @@ public class ExecutionCourseTeachersGroup extends ExecutionCourseGroup {
 
     public ExecutionCourseTeachersGroup(ExecutionCourse executionCourse) {
 	super(executionCourse);
+    }
+
+    @Override
+    public String getName() {
+	return RenderUtils.getResourceString("SITE_RESOURCES",
+		"label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroupWithName",
+		new Object[] { getExecutionCourse().getNome() });
     }
 
     @Override
@@ -59,32 +67,30 @@ public class ExecutionCourseTeachersGroup extends ExecutionCourseGroup {
 	}
 	return false;
     }
-    
+
     @Override
     protected Argument[] getExpressionArguments() {
-        return new Argument[] {
-                new IdOperator(getObject())
-        };
+	return new Argument[] { new IdOperator(getObject()) };
     }
 
     public static class Builder implements GroupBuilder {
 
-        public Group build(Object[] arguments) {
-            try {
-                return new ExecutionCourseTeachersGroup((ExecutionCourse) arguments[0]);
-            }
-            catch (ClassCastException e) {
-                throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse", arguments[0].toString());
-            }
-        }
+	public Group build(Object[] arguments) {
+	    try {
+		return new ExecutionCourseTeachersGroup((ExecutionCourse) arguments[0]);
+	    } catch (ClassCastException e) {
+		throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
+			arguments[0].toString());
+	    }
+	}
 
-        public int getMinArguments() {
-            return 0;
-        }
+	public int getMinArguments() {
+	    return 0;
+	}
 
-        public int getMaxArguments() {
-            return 1;
-        }
-        
+	public int getMaxArguments() {
+	    return 1;
+	}
+
     }
 }

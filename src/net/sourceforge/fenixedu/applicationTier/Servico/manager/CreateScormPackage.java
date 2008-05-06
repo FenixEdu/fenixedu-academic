@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean.EducationalResourceType;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -22,7 +22,7 @@ import pt.utl.ist.fenix.tools.file.FileSetType;
 import pt.utl.ist.fenix.tools.file.IScormFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
-public class CreateScormPackageForItem extends CreateFileItemForItem {
+public class CreateScormPackage extends CreateFileContent {
 
 	public void run(Site site, Item item, File file, String originalFilename, String displayName,
 			Group permittedGroup, Person person, EducationalResourceType type) throws DomainException,

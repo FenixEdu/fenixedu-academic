@@ -50,6 +50,14 @@
 	    <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
 	</definition>					
 
+	<definition name="websiteManager-uploadFile" extends="definition.websiteManager.masterPage" >
+	    <put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+	</definition>					
+
+	<definition name="websiteManager-editFile" extends="definition.websiteManager.masterPage" >
+	    <put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+	</definition>				
+
    <!-- ==== Basic Unit Site === -->
     <definition name="definition.basicUnit.site.management" extends="definition.websiteManager.masterPage">
         <put name="body-context" value="/webSiteManager/commons/siteContext.jsp"/>
@@ -197,6 +205,12 @@
     <definition name="basicUnit-announcements-no-boards" extends="definition.basicUnit.site.announcements.management">
         <put name="body" value="/webSiteManager/commons/noBoards.jsp" />
     </definition>
+    <definition name="basicUnit-announcements-uploadFile" extends="definition.basicUnit.site.announcements.management">
+        <put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+    </definition>
+    <definition name="basicUnit-announcements-editFile" extends="definition.basicUnit.site.announcements.management">
+        <put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+    </definition>
     <definition name="basicUnit-announcements-list-boards" extends="definition.basicUnit.site.announcements.management">
         <put name="body" value="/webSiteManager/commons/listAnnouncementBoards.jsp" />
     </definition>
@@ -293,6 +307,14 @@
 	<definition name="research-announcements-list-boards" extends="definition.researchUnitSite.announcements">
 		<put name="body" value="/webSiteManager/commons/listAnnouncementBoards.jsp" />
 	</definition>
+
+	<definition name="research-announcements-uploadFile" extends="definition.researchUnitSite.announcements">
+		<put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+	</definition>	
+	
+	<definition name="research-announcements-editFile" extends="definition.researchUnitSite.announcements">
+		<put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+	</definition>	
 	
 	<definition name="research-site-no-boards" extends="definition.researchUnitSite.announcements">
 		<put name="body" value="/webSiteManager/commons/noBoards.jsp"/>
@@ -560,6 +582,12 @@
     <definition name="department-announcements-no-boards" extends="definition.department.site.announcements.management">
         <put name="body" value="/webSiteManager/commons/noBoards.jsp" />
     </definition>
+	<definition name="department-announcements-uploadFile" extends="definition.department.site.announcements.management">
+        <put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+    </definition>
+	<definition name="department-announcements-editFile" extends="definition.department.site.announcements.management">
+        <put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+    </definition>
     <definition name="department-announcements-list-boards" extends="definition.department.site.announcements.management">
         <put name="body" value="/webSiteManager/commons/listAnnouncementBoards.jsp" />
     </definition>
@@ -725,6 +753,12 @@
     <definition name="pedagogicalCouncil-announcements-no-boards" extends="definition.pedagogicalCouncil.site.announcements.management">
         <put name="body" value="/webSiteManager/commons/noBoards.jsp" />
     </definition>
+    <definition name="pedagogicalCouncil-announcements-uploadFile" extends="definition.pedagogicalCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+    </definition>
+    <definition name="pedagogicalCouncil-announcements-editFile" extends="definition.pedagogicalCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+    </definition>
     <definition name="pedagogicalCouncil-announcements-list-boards" extends="definition.pedagogicalCouncil.site.announcements.management">
         <put name="body" value="/webSiteManager/commons/listAnnouncementBoards.jsp" />
     </definition>
@@ -889,6 +923,12 @@
         
     <definition name="scientificCouncil-announcements-no-boards" extends="definition.scientificCouncil.site.announcements.management">
         <put name="body" value="/webSiteManager/commons/noBoards.jsp" />
+    </definition>
+    <definition name="scientificCouncil-announcements-uploadFile" extends="definition.scientificCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+    </definition>
+    <definition name="scientificCouncil-announcements-editFile" extends="definition.scientificCouncil.site.announcements.management">
+        <put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
     </definition>
     <definition name="scientificCouncil-announcements-list-boards" extends="definition.scientificCouncil.site.announcements.management">
         <put name="body" value="/webSiteManager/commons/listAnnouncementBoards.jsp" />

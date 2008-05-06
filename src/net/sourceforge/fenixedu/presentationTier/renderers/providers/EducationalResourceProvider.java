@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemCreationBean.EducationalResourceType;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;

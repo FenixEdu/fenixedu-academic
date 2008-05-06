@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
@@ -178,7 +179,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 		    }
 
 		    Content content = entry.getReferingContent();
-		    if (!(content instanceof Item || content instanceof Forum)) {
+		    if (!(content instanceof Item || content instanceof Forum || content instanceof Attachment)) {
 			HtmlListItem item = list.createItem();
 			item.addChild(generateComponent(context, content, true));
 			if(depth>0) {

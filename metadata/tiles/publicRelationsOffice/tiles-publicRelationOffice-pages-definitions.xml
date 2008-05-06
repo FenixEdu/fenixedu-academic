@@ -1,0 +1,49 @@
+<!DOCTYPE tiles-definitions 
+	PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+	
+<!-- Tiles definitions -->
+
+<tiles-definitions>
+	<definition name="publicRelations-index" extends="definition.publicRelationOffice.master">
+		<put name="body" value="/publicRelations/index.jsp"/>
+	</definition>	
+	
+	
+	 <!--   =============== Announcements ============ -->
+	 <definition name="publicRelationsOffice-list-announcement-boards" extends="definition.publicRelationOffice.master" >
+		<put name="body" value="/publicRelations/announcements/listAnnouncementBoards.jsp" />
+	</definition>			
+
+  	<definition name="publicRelationsOffice-list-announcements" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/messaging/announcements/listBoardAnnouncements.jsp" />
+	</definition>					
+
+  	<definition name="publicRelationsOffice-add-announcement" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/announcements/addAnnouncement.jsp" />
+	</definition>					
+	
+	<definition name="publicRelationsOffice-edit-announcement" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/announcements/editAnnouncement.jsp" />
+	</definition>					
+
+  	<definition name="publicRelationsOffice-view-announcement" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
+	</definition>					
+
+	<definition name="publicRelationsOffice-uploadFile" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
+	</definition>					
+
+	<definition name="publicRelationsOffice-editFile" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
+	</definition>				
+	
+	
+	<!-- ==================== Email ================== -->
+
+	<definition name="publicRelationsOffice-sendMail" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/email/sendEmail.jsp" />
+	</definition>	
+	
+</tiles-definitions>

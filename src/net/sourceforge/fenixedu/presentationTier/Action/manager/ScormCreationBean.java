@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.InputStream;
 
-import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Language;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.contents.Container;
 
 import org.joda.time.YearMonthDay;
 
@@ -19,7 +20,7 @@ import pt.linkare.scorm.utils.ScormMetaDataHash;
  * "Manual de Apoio para a utilização de Meta-dados na catalogação de conteúdos
  * com próposito educativo"
  */
-public class ScormCreationBean extends FileItemCreationBean {
+public class ScormCreationBean extends FileContentCreationBean {
 
 	private static final String metaMetadataSchema = "ADL SCORM";
 	private String generalTitle="";
@@ -51,8 +52,8 @@ public class ScormCreationBean extends FileItemCreationBean {
     
     private String technicalLocation="";
     
-	public ScormCreationBean(Item item) {
-		super(item);
+	public ScormCreationBean(Container container, Site site) {
+		super(container,site);
 	}
 
     public ScormMetaDataHash getMetaInformation() {
@@ -136,7 +137,7 @@ public class ScormCreationBean extends FileItemCreationBean {
     
 
     private String getAuthorName() {
-        return this.getItem().getSection().getSite().getAuthorName();
+        return this.getSite().getAuthorName();
     }
     
     public enum ScormContributionRecommendedRoles {
