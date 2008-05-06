@@ -48,11 +48,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import eu.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import eu.ist.fenixframework.pstm.MissingObjectException;
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.MissingObjectException;
+import pt.ist.fenixframework.pstm.Transaction;
 import dml.DomainClass;
 import dml.DomainEntity;
 import dml.DomainModel;

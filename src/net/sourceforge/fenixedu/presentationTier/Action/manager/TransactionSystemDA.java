@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import eu.ist.fenixframework.pstm.TransactionAction;
-import eu.ist.fenixframework.pstm.TransactionReport;
+import pt.ist.fenixframework.pstm.TransactionAction;
+import pt.ist.fenixframework.pstm.TransactionReport;
 import net.sourceforge.fenixedu.util.date.SerializationTool;
 
 import org.apache.struts.action.ActionForm;

@@ -32,9 +32,9 @@ import pt.utl.ist.codeGenerator.database.SqlTable;
 
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 
-import eu.ist.fenixframework.Config;
-import eu.ist.fenixframework.FenixFramework;
-import eu.ist.fenixframework.pstm.MetadataManager;
+import pt.ist.fenixframework.Config;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.pstm.MetadataManager;
 
 public class SQLUpdateGenerator {
 

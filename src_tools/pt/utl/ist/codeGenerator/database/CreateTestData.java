@@ -152,8 +152,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
 
-import eu.ist.fenixframework.FenixFramework;
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.pstm.Transaction;
 
 public class CreateTestData {
 

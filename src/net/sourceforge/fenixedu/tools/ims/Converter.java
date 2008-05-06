@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.tests.predicates.NumericLessThanOrEqualPr
 import net.sourceforge.fenixedu.domain.tests.predicates.NumericLessThanPredicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.OrPredicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.Transaction;
 
 import org.jaxen.JaxenException;
 import org.jaxen.jdom.JDOMXPath;

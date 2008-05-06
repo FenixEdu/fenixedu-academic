@@ -10,8 +10,8 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import eu.ist.fenixframework.Config;
-import eu.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.Config;
+import pt.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.Transaction;
 
 /**
  * 17/Fev/2003

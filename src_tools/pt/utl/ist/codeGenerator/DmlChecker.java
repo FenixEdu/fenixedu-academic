@@ -17,7 +17,7 @@ import dml.DomainEntity;
 import dml.DomainModel;
 import dml.Role;
 import dml.Slot;
-import eu.ist.fenixframework.pstm.MetadataManager;
+import pt.ist.fenixframework.pstm.MetadataManager;
 
 public class DmlChecker {
 

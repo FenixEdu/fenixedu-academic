@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.Transaction;
 
 import pt.utl.ist.berserk.storage.ITransactionBroker;
 import pt.utl.ist.berserk.storage.exceptions.StorageException;

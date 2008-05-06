@@ -16,7 +16,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import eu.ist.fenixframework.pstm.MetadataManager;
+import pt.ist.fenixframework.pstm.MetadataManager;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;

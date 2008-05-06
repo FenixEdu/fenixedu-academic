@@ -30,8 +30,8 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.TaskContainer;
 import org.joda.time.DateTime;
 
-import eu.ist.fenixframework.FenixFramework;
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.pstm.Transaction;
 
 /**
  * This ant task enables the administrator to install or upgrade the fenix

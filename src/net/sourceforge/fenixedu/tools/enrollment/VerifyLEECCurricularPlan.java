@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.Transaction;
 
 
 /**

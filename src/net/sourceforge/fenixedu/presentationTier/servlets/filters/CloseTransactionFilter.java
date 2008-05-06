@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import eu.ist.fenixframework.pstm.RequestInfo;
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.RequestInfo;
+import pt.ist.fenixframework.pstm.Transaction;
 
 import org.joda.time.DateTime;
 

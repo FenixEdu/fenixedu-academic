@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import eu.ist.fenixframework.pstm.IllegalWriteException;
-import eu.ist.fenixframework.pstm.ServiceInfo;
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.IllegalWriteException;
+import pt.ist.fenixframework.pstm.ServiceInfo;
+import pt.ist.fenixframework.pstm.Transaction;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;

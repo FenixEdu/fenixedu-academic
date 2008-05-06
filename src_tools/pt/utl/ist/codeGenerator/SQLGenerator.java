@@ -7,7 +7,7 @@ import java.util.Map;
 
 import pt.utl.ist.codeGenerator.database.DatabaseDescriptorFactory;
 import pt.utl.ist.codeGenerator.database.SqlTable;
-import eu.ist.fenixframework.pstm.MetadataManager;
+import pt.ist.fenixframework.pstm.MetadataManager;
 
 public class SQLGenerator {
 

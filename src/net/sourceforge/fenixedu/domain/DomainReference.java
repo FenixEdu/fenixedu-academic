@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.Transaction;
 
 /**
  * A <code>DomainReference</code> allows a serializable object to refer to a domain object. 

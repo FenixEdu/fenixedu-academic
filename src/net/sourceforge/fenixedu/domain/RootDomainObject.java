@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.Transaction;
 
 public class RootDomainObject extends RootDomainObject_Base {
 

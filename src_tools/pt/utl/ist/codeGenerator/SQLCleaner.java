@@ -10,7 +10,7 @@ import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.CollectionDescriptor;
 
 import pt.utl.ist.codeGenerator.database.DatabaseDescriptorFactory;
-import eu.ist.fenixframework.pstm.MetadataManager;
+import pt.ist.fenixframework.pstm.MetadataManager;
 
 public class SQLCleaner {
 

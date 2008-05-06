@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import eu.ist.fenixframework.pstm.IllegalWriteException;
+import pt.ist.fenixframework.pstm.IllegalWriteException;
 
 /**
  * @author lmac1

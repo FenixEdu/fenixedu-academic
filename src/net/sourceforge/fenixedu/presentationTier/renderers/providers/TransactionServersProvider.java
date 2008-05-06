@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import eu.ist.fenixframework.pstm.TransactionReport;
+import pt.ist.fenixframework.pstm.TransactionReport;
 
 public class TransactionServersProvider implements DataProvider {
 

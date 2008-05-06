@@ -750,7 +750,7 @@
 			<!-- they are used as a lib and not directly -->
 			<exclude name="${renderers.package.dir}/**"/>
 		</javac>
-		<java classname="eu.ist.fenixframework.pstm.PostProcessDomainClasses" 
+		<java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" 
 			dir="${build.home.webinf.classes}"
 			fork="true">
 			<classpath>

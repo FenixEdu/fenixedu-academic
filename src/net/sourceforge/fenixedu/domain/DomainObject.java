@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import eu.ist.fenixframework.pstm.Transaction;
-import eu.ist.fenixframework.pstm.VersionedSubject;
+import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.VersionedSubject;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
@@ -22,7 +22,7 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 /**
  * @author jpvl
  */
-public abstract class DomainObject extends DomainObject_Base implements dml.runtime.FenixDomainObject,eu.ist.fenixframework.DomainObject {
+public abstract class DomainObject extends DomainObject_Base implements dml.runtime.FenixDomainObject,pt.ist.fenixframework.DomainObject {
 
     static final protected Comparator<DomainObject> COMPARATOR_BY_ID = new Comparator<DomainObject>() {
         public int compare(DomainObject o1, DomainObject o2) {

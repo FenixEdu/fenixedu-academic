@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain;
 
 import junit.framework.TestCase;
 import net.sourceforge.fenixedu._development.MetadataManager;
-import eu.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.Transaction;
 
 public class DomainTestBase extends TestCase {
 
