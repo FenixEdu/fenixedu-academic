@@ -10,7 +10,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
@@ -29,13 +31,18 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	final StringBuilder result = new StringBuilder();
 
 	final ApprovementCertificateRequest approvementCertificateRequest = (ApprovementCertificateRequest) getDocumentRequest();
+	final Registration registration = approvementCertificateRequest.getRegistration();
 
 	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(
 		ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
-	entries.addAll(approvementCertificateRequest.getEntriesToReport());
 
 	final Map<Unit, String> academicUnitIdentifiers = new HashMap<Unit, String>();
-	reportEntries(result, entries, academicUnitIdentifiers);
+	if (registration.isBolonha()) {
+	    reportCycles(result, entries, academicUnitIdentifiers, registration);
+	} else {
+	    reportEntries(result, ApprovementCertificateRequest.filterEntries(entries, registration.getCurriculum()
+		    .getCurriculumEntries()), academicUnitIdentifiers);
+	}
 
 	entries.clear();
 	entries.addAll(approvementCertificateRequest.getExtraCurricularEntriesToReport());
@@ -64,7 +71,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	return result.toString();
     }
 
-    final private void reportEntries(final StringBuilder result, final SortedSet<ICurriculumEntry> entries,
+    final private void reportEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,
 	    final Map<Unit, String> academicUnitIdentifiers) {
 	ExecutionYear lastReportedExecutionYear = null;
 	for (final ICurriculumEntry entry : entries) {
@@ -79,6 +86,31 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	    }
 
 	    reportEntry(result, entry, academicUnitIdentifiers, executionYear);
+	}
+    }
+
+    final private void reportCycles(final StringBuilder result, final SortedSet<ICurriculumEntry> entries,
+	    final Map<Unit, String> academicUnitIdentifiers, final Registration registration) {
+	final Collection<CycleCurriculumGroup> cycles = new TreeSet<CycleCurriculumGroup>(
+		CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
+	cycles.addAll(registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
+
+	CycleCurriculumGroup lastReported = null;
+	for (final CycleCurriculumGroup cycle : cycles) {
+	    if (!cycle.isConclusionProcessed()) {
+		if (lastReported == null) {
+		    lastReported = cycle;
+		} else {
+		    result.append(generateEndLine()).append("\n");
+		}
+
+		result.append(cycle.getName().getContent()).append(":\n");
+
+		reportEntries(result, ApprovementCertificateRequest.filterEntries(entries, cycle.getCurriculum()
+			.getCurriculumEntries()), academicUnitIdentifiers);
+
+		entries.clear();
+	    }
 	}
     }
 
