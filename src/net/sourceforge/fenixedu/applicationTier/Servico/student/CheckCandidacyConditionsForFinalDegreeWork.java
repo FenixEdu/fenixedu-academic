@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -23,6 +24,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -144,6 +146,11 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
                 for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                     if (studentCurricularPlan.getDegree() == degree) {
                         return true;
+                    } else {
+                	final CurriculumGroup curriculumGroup = studentCurricularPlan.getSecondCycle();
+                	if (curriculumGroup != null && curriculumGroup.getDegreeCurricularPlanOfDegreeModule().getDegree() == degree) {
+                	    return true;
+                	}
                     }
                 }
             }
