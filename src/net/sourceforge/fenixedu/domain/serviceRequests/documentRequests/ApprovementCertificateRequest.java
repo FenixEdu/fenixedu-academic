@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
+import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 import org.joda.time.DateTime;
@@ -104,10 +105,14 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	return getRegistration().getCurriculum();
     }
 
-    final public Collection<ICurriculumEntry> getEntriesToReport() {
-	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
+    final private Collection<ICurriculumEntry> getEntriesToReport() {
+	return filterEntries(new HashSet<ICurriculumEntry>(), getCurriculum().getCurriculumEntries());
+    }
 
-	for (final ICurriculumEntry entry : getCurriculum().getCurriculumEntries()) {
+    static final public Collection<ICurriculumEntry> filterEntries(final Collection<ICurriculumEntry> result,
+	    final Collection<ICurriculumEntry> entries) {
+
+	for (final ICurriculumEntry entry : entries) {
 	    if (entry instanceof Dismissal) {
 		final Dismissal dismissal = (Dismissal) entry;
 		if (dismissal.getCredits().isEquivalence()
@@ -138,6 +143,10 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 		    result.addAll(((Dismissal) curriculumLine).getSourceIEnrolments());
 		}
 	    }
+	}
+
+	for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan().getExternalCurriculumGroups()) {
+	    result.addAll(filterEntries(result, group.getCurriculumInAdvance().getCurriculumEntries()));
 	}
 
 	return result;
