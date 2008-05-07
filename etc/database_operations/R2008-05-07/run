@@ -29,3 +29,4 @@ function executeWithTempFile() {
 }
 
 
+execute "Modifying mappings regarding structs modifications" modified-mappings.sql
