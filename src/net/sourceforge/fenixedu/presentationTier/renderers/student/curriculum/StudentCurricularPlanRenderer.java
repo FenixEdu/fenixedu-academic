@@ -532,7 +532,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    final ConclusionValue value = curriculumGroup.isConcluded(executionYearContext);
 		    groupName.append(" <em style=\"background-color:" + getBackgroundColor(value) + "; color:" + getColor(value)
 			    + "\"");
-		    groupName.append(" \">");
+		    groupName.append(">");
 		    groupName.append(value.getLocalizedName());
 		    groupName.append("</em>");
 		}
