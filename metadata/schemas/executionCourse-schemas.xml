@@ -618,9 +618,7 @@
 </schema>
 
 <schema name="permittedGroup.class.text" type="java.lang.Object">
-    <slot name="class" layout="label">
-        <property name="bundle" value="SITE_RESOURCES"/>
-    </slot>
+    <slot name="name"/>
 </schema>
 
 <schema name="permittedGroup.name" type="net.sourceforge.fenixedu.injectionCode.IGroup">
