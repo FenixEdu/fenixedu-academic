@@ -172,7 +172,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     final public YearMonthDay getApprovementDate() {
-	return getEvaluationDate();
+	return getEvaluationDate() == null && hasExecutionPeriod() ? getExecutionPeriod().getEndDateYearMonthDay()
+		: getEvaluationDate();
     }
 
     public Unit getAcademicUnit() {
