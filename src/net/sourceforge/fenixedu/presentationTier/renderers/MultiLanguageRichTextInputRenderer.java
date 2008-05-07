@@ -111,7 +111,9 @@ public class MultiLanguageRichTextInputRenderer extends MultiLanguageTextInputRe
 	    			"		var editorId = tinyMCE.getEditorId(id);\n" +
 	    			"		if (editorId) continue;\n"+
 	    			"		var element = document.getElementById(id);\n" +
-	    			"		tinyMCE.addMCEControl(element, id);\n"+
+	    			"		if (element) {\n" +
+	    			"			tinyMCE.addMCEControl(element, id);\n"+
+	    			"               }\n"+
 	    			"	}\n" +
 	    			"}\n"
 				);
