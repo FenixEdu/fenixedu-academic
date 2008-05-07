@@ -50,11 +50,11 @@
 		<li><html:link page="/studentsListByDegree.do?method=prepareByDegree"><bean:message key="link.studentsListByDegree" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 		<li><html:link page="/studentsListByCurricularCourse.do?method=prepareByCurricularCourse"><bean:message key="link.studentsListByCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 	</ul>
-<%-- 
+
 	<ul>
 		<li class="navheader"><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/caseHandlingOver23CandidacyProcess.do?method=intro"><bean:message key="label.candidacy.over23" bundle="APPLICATION_RESOURCES"/></html:link></li>
 		<li><html:link page="/caseHandlingSecondCycleCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.secondCycle" bundle="APPLICATION_RESOURCES"/></html:link></li>
 	</ul>
---%>
+
 </logic:present>
