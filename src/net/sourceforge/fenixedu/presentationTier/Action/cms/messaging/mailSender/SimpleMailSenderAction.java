@@ -94,7 +94,7 @@ public class SimpleMailSenderAction extends FenixDispatchAction {
 
                 Collection<Person> persons = report.getPersonReport(status);
                 if (persons != null) {
-                    sentCount = persons.size();
+                    sentCount += persons.size();
                 }
                 
                 break;

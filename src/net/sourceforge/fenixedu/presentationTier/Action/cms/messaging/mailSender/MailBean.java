@@ -163,6 +163,10 @@ public class MailBean implements Serializable {
 		EMailAddress[] receiversOfCopy = parseEmailAddresses(getReceiversOfCopy());
 		count += receiversOfCopy.length;
 
+		if (copyToSenderRequested) {
+		    count++;
+		}
+		
 		return count;
 	}
 
