@@ -251,6 +251,7 @@
 			<forward name="registrationConclusion" path="registrationConclusion"/>
 			<forward name="registrationConclusionDocument" path="registrationConclusionDocument"/>
 			<forward name="viewRegistrationDetails" path="/student.do?method=visualizeRegistration"/>
+			<forward name="viewAttends" path="viewAttends"/>
 		</action>	
 
 		<action path="/viewCurriculum"

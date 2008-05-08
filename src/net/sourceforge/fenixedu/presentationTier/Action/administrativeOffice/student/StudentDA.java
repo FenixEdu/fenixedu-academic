@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
 import java.util.List;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationCurriculumBean;
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -234,6 +240,29 @@ public class StudentDA extends FenixDispatchAction {
 	request.setAttribute("registrationConclusionBean", registrationConclusionBean);
 
 	return mapping.findForward("registrationConclusionDocument");
+    }
+
+    public ActionForward viewAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	RenderUtils.invalidateViewState();
+
+	final Registration registration = getRegistration(request);
+	request.setAttribute("registration", registration);
+
+	if (registration != null) {
+	    final SortedMap<ExecutionPeriod, SortedSet<Attends>> attendsMap = new TreeMap<ExecutionPeriod, SortedSet<Attends>>();
+	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
+		final ExecutionPeriod executionPeriod = attends.getExecutionPeriod();
+		SortedSet<Attends> attendsSet = attendsMap.get(executionPeriod);
+		if (attendsSet == null) {
+		    attendsSet = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR);
+		    attendsMap.put(executionPeriod, attendsSet);
+		}
+		attendsSet.add(attends);
+	    }
+	    request.setAttribute("attendsMap", attendsMap);
+	}
+
+	return mapping.findForward("viewAttends");
     }
 
 }
