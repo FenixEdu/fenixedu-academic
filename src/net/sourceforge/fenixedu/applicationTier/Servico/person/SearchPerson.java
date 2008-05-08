@@ -63,15 +63,13 @@ public class SearchPerson extends Service {
 		Integer departmentId, Boolean activePersons, Integer studentNumber, Boolean externalPersons){
 	    this();
 
-	    this.activePersons = activePersons;
-	    this.name = (name != null && !name.equals("")) ? name : null;
-	    this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
-	    this.email = (email != null && !email.equals("")) ? StringNormalizer.normalize(email.trim()) : null;
-	    this.username = (username != null && !username.equals("")) ? StringNormalizer.normalize(username.trim()) : null;
-	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? documentIdNumber.trim() : null;
-	    this.idDocumentType = StringUtils.isEmpty(idDocumentType) ? null : IDDocumentType.valueOf(idDocumentType);
-	    this.studentNumber = studentNumber;
-	    this.externalPersons = externalPersons;
+	    setActivePersons(activePersons);
+	    setName(name);
+	    setEmail(email);
+	    setUsername(username);
+	    setDocumentIdNumber(documentIdNumber);
+	    setStudentNumber(studentNumber);
+	    setExternalPersons(externalPersons);
 
 	    if (roleType != null && roleType.length() > 0) {
 		role = (Role) Role.getRoleByRoleType(RoleType.valueOf(roleType));
@@ -90,7 +88,7 @@ public class SearchPerson extends Service {
 	    }
 	}
 
-	private boolean emptyParameters() {
+	public boolean emptyParameters() {
 	    return StringUtils.isEmpty(this.email) && StringUtils.isEmpty(this.username)
 		    && StringUtils.isEmpty(this.documentIdNumber) && this.role == null
 		    && this.degree == null && this.department == null && this.degreeType == null
@@ -157,6 +155,55 @@ public class SearchPerson extends Service {
 
 	public Boolean getExternalPersons() {
 	    return externalPersons;
+	}
+
+	public void setEmail(String email) {
+	    this.email = (email != null && !email.equals("")) ? StringNormalizer.normalize(email.trim()) : null;
+	}
+
+	public void setUsername(String username) {
+	    this.username = (username != null && !username.equals("")) ? StringNormalizer.normalize(username.trim()) : null;
+	}
+
+	public void setDocumentIdNumber(String documentIdNumber) {
+	    this.documentIdNumber = (documentIdNumber != null && !documentIdNumber.equals("")) ? documentIdNumber.trim() : null;
+	}
+
+	public void setIdDocumentType(IDDocumentType idDocumentType) {
+	    this.idDocumentType = idDocumentType;
+	}
+
+	public void setName(String name) {
+	    this.name = (name != null && !name.equals("")) ? name : null;
+	    this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
+	}
+
+	public void setRole(Role role) {
+	    this.role = role;
+	}
+
+	public void setDegree(Degree degree) {
+	    this.degree = degree;
+	}
+
+	public void setDepartment(Department department) {
+	    this.department = department;
+	}
+
+	public void setDegreeType(DegreeType degreeType) {
+	    this.degreeType = degreeType;
+	}
+
+	public void setActivePersons(Boolean activePersons) {
+	    this.activePersons = activePersons;
+	}
+
+	public void setExternalPersons(Boolean externalPersons) {
+	    this.externalPersons = externalPersons;
+	}
+
+	public void setStudentNumber(Integer studentNumber) {
+	    this.studentNumber = studentNumber;
 	}
     }
 

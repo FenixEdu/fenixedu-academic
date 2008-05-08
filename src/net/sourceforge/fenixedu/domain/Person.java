@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
@@ -2805,4 +2806,13 @@ public class Person extends Person_Base {
 	}
 	return cardGenerationProblems;
     }
+
+    public int getNumberOfCardGenerationEntries() {
+	int result = 0;
+	for (final CardGenerationEntry cardGenerationEntry : getCardGenerationEntriesSet()) {
+	    result++;
+	}
+	return result;
+    }
+
 }

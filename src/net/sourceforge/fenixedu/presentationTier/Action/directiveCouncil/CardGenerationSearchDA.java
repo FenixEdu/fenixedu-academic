@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,14 +21,40 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
 
     public ActionForward search(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 
-	final SearchParameters searchParameters = (SearchParameters) getRenderedObject();
+	SearchParameters searchParameters = (SearchParameters) getRenderedObject();
 	if (searchParameters == null) {
-	    request.setAttribute("searchParameters", new SearchPerson.SearchParameters());
-	} else {
+	    searchParameters = new SearchPerson.SearchParameters();
+	    final String name = request.getParameter("name");
+	    if (name != null && name.length() > 0) {
+		searchParameters.setName(name);
+	    }
+	    final String email = request.getParameter("email");
+	    if (email != null && email.length() > 0) {
+		searchParameters.setEmail(email);
+	    }
+	    final String username = request.getParameter("username");
+	    if (username != null && username.length() > 0) {
+		searchParameters.setUsername(username);
+	    }
+	    final String documentIdNumber = request.getParameter("documentIdNumber");
+	    if (documentIdNumber != null && documentIdNumber.length() > 0) {
+		searchParameters.setDocumentIdNumber(documentIdNumber);
+	    }
+	}
+	request.setAttribute("searchParameters", searchParameters);
+
+	if (!searchParameters.emptyParameters()) {
 	    final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 	    final Object[] args = { searchParameters, predicate };
 	    final CollectionPager<Person> searchPersonCollectionPager = (CollectionPager<Person>) executeService(request, "SearchPerson", args);
 	    request.setAttribute("searchPersonCollectionPager", searchPersonCollectionPager);
+	    request.setAttribute("numberOfPages", searchPersonCollectionPager.getNumberOfPages());
+	    final String pageNumberString = request.getParameter("pageNumber");
+	    final Integer pageNumber = pageNumberString != null && pageNumberString.length() > 0 ? 
+		    Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+	    request.setAttribute("pageNumber", pageNumber);
+	    final Collection<Person> people = searchPersonCollectionPager.getPage(pageNumber.intValue());
+	    request.setAttribute("people", people);
 	}
 
 	return mapping.findForward("showSearchPage");

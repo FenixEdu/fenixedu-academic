@@ -391,8 +391,11 @@
 	</slot>	
 </schema>
 <schema name="LisPossibleDatesToCreateSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
-	<slot name="summaryDate" key="label.date" layout="menu-select-postback" 
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="summaryDate" key="label.date" layout="menu-select-postback">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+        </validator>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+        </validator>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PossibleDatesToSummariesManagementProvider" />				
 		<property name="destination" value="postBack"/>
 	</slot>	
@@ -510,7 +513,7 @@
 	</slot>	
 </schema>
 <schema name="PossibleNextSummaryLessonAndDate" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean" bundle="DEFAULT">
-	<slot name="date" />
+	<slot name="date" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
 	<slot name="lessonInstancePrettyPrint" key="label.lesson" />
 	<slot name="lesson.shift.shiftTypesPrettyPrint" key="label.type"/>
 	<slot name="lesson.shift" key="label.shift" layout="shift-plain"/>

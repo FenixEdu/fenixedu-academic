@@ -15,3 +15,16 @@
 		<property name="size" value="42" />
 	</slot>
 </schema>
+<schema name="card.generation.search.person.form" type="net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson$SearchParameters">
+	<slot name="name"/>
+	<slot name="email"/>
+	<slot name="username"/>
+	<slot name="documentIdNumber"/>
+</schema>
+<schema name="card.generation.search.person.list" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name"/>
+	<slot name="email"/>
+	<slot name="username"/>
+	<slot name="documentIdNumber"/>
+	<slot name="numberOfCardGenerationEntries"/>
+</schema>
