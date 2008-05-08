@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add new columns to candidacy tables" updates.sql
