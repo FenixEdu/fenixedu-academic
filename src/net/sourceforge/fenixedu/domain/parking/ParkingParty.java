@@ -252,14 +252,18 @@ public class ParkingParty extends ParkingParty_Base {
 		if (teacherProfessionalSituation == null) {
 		    teacherProfessionalSituation = teacher.getLastLegalRegimenWithoutSpecialSituations();
 		}
-		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
-		stringBuilder.append("\n (Data inicio: ").append(
-			fmt.print(teacherProfessionalSituation.getBeginDateYearMonthDay()));
-		if (teacherProfessionalSituation.getEndDateYearMonthDay() != null) {
-		    stringBuilder.append(" - Data fim: ")
-			    .append(fmt.print(teacherProfessionalSituation.getEndDateYearMonthDay()));
+		if (teacherProfessionalSituation != null) {
+		    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
+		    stringBuilder.append("\n (Data inicio: ").append(
+			    fmt.print(teacherProfessionalSituation.getBeginDateYearMonthDay()));
+		    if (teacherProfessionalSituation.getEndDateYearMonthDay() != null) {
+			stringBuilder.append(" - Data fim: ").append(
+				fmt.print(teacherProfessionalSituation.getEndDateYearMonthDay()));
+		    }
+		    stringBuilder.append(")<br/>");
+		}else {
+		    stringBuilder.append("(inactivo)<br/>");
 		}
-		stringBuilder.append(")<br/>");
 		occupations.add(stringBuilder.toString());
 	    }
 	    Employee employee = person.getEmployee();
