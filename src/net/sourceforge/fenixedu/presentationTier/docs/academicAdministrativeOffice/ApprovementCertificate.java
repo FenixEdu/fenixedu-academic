@@ -97,7 +97,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
 	CycleCurriculumGroup lastReported = null;
 	for (final CycleCurriculumGroup cycle : cycles) {
-	    if (!cycle.isConclusionProcessed()) {
+	    if (cycle.hasAnyApprovedCurriculumLines() && !cycle.isConclusionProcessed()) {
 		if (lastReported == null) {
 		    lastReported = cycle;
 		} else {
