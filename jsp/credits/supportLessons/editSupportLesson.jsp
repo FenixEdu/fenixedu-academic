@@ -64,7 +64,7 @@
 				<bean:message key="label.support-lesson.start-time"/>:
 			</td>
 			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startTimeHour" property="startTimeHour" maxlength="2" size="1" /> : <html:text bundle="HTMLALT_RESOURCES" altKey="text.startTimeMinutes" property="startTimeMinutes" maxlength="2" size="1"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startTimeHour" property="startTimeHour" maxlength="2" size="2" /> : <html:text bundle="HTMLALT_RESOURCES" altKey="text.startTimeMinutes" property="startTimeMinutes" maxlength="2" size="1"/>
 			</td>
 		</tr>
 		<tr>
@@ -72,7 +72,7 @@
 				<bean:message key="label.support-lesson.end-time"/>:
 			</td>
 			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.endTimeHour" property="endTimeHour" maxlength="2" size="1"/> : <html:text bundle="HTMLALT_RESOURCES" altKey="text.endTimeMinutes" property="endTimeMinutes" maxlength="2" size="1"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.endTimeHour" property="endTimeHour" maxlength="2" size="2"/> : <html:text bundle="HTMLALT_RESOURCES" altKey="text.endTimeMinutes" property="endTimeMinutes" maxlength="2" size="1"/>
 			</td>
 		</tr>
 		<tr>
