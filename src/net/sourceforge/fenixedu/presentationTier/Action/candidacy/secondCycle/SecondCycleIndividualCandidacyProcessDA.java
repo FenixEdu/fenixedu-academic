@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegree
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
@@ -39,6 +40,7 @@ import org.apache.struts.action.ActionMapping;
 	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/secondCycle/editCandidacyPersonalInformation.jsp"),
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/secondCycle/editCandidacyInformation.jsp"),
+	@Forward(name = "introduce-candidacy-result", path = "/candidacy/secondCycle/introduceCandidacyResult.jsp"),
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp")
 
 })
@@ -67,12 +69,12 @@ public class SecondCycleIndividualCandidacyProcessDA extends CaseHandlingDispatc
     public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean();
 	final SecondCycleCandidacyProcess candidacyProcess = getCandidacyProcess();
 	if (candidacyProcess == null) {
 	    addActionMessage(request, "error.SecondCycleCandidacyPeriod.invalid.candidacyProcess");
 	    return listProcesses(mapping, form, request, response);
 	} else {
+	    final SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean();
 	    bean.setCandidacyProcess(candidacyProcess);
 	    bean.setChoosePersonBean(new ChoosePersonBean());
 	    request.setAttribute("secondCycleIndividualCandidacyProcessBean", bean);
@@ -251,6 +253,37 @@ public class SecondCycleIndividualCandidacyProcessDA extends CaseHandlingDispatc
 	    return mapping.findForward("edit-candidacy-information");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("secondCycleIndividualCandidacyResultBean", new SecondCycleIndividualCandidacyResultBean(
+		getProcess(request)));
+	return mapping.findForward("introduce-candidacy-result");
+    }
+
+    public ActionForward executeIntroduceCandidacyResultInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("secondCycleIndividualCandidacyResultBean", getCandidacyResultBean());
+	return mapping.findForward("introduce-candidacy-result");
+    }
+
+    public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    executeActivity(getProcess(request), "IntroduceCandidacyResult", getCandidacyResultBean());
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("secondCycleIndividualCandidacyResultBean", getCandidacyResultBean());
+	    return mapping.findForward("introduce-candidacy-result");
+	}
+
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    private SecondCycleIndividualCandidacyResultBean getCandidacyResultBean() {
+	return (SecondCycleIndividualCandidacyResultBean) getRenderedObject("secondCycleIndividualCandidacyResultBean");
     }
 
     public ActionForward prepareExecuteCancelCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

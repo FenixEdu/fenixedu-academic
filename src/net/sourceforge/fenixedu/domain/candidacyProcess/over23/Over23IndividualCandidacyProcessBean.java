@@ -2,8 +2,11 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -17,6 +20,8 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
     private ChoosePersonBean choosePersonBean;
 
     private PersonBean personBean;
+
+    private YearMonthDay candidacyDate;
 
     private DomainReference<Degree> degreeToAdd;
 
@@ -32,11 +37,13 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
 	setSelectedDegrees(new ArrayList<Degree>());
     }
 
-    public Over23IndividualCandidacyProcessBean(final List<Degree> degrees) {
+    public Over23IndividualCandidacyProcessBean(Over23IndividualCandidacyProcess process) {
 	this();
-	for (final Degree degree : degrees) {
-	    addDegree(degree);
-	}
+	setCandidacyDate(process.getCandidacyDate());
+	addDegrees(process.getSelectedDegreesSortedByOrder());
+	setDisabilities(process.getDisabilities());
+	setEducation(process.getEducation());
+	setLanguages(process.getLanguages());
     }
 
     public Over23CandidacyProcess getCandidacyProcess() {
@@ -65,6 +72,14 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
 
     public void setPersonBean(PersonBean personBean) {
 	this.personBean = personBean;
+    }
+
+    public YearMonthDay getCandidacyDate() {
+	return candidacyDate;
+    }
+
+    public void setCandidacyDate(final YearMonthDay candidacyDate) {
+	this.candidacyDate = candidacyDate;
     }
 
     public Degree getDegreeToAdd() {
@@ -102,6 +117,12 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
 	selectedDegrees.add(new DomainReference<Degree>(degree));
     }
 
+    public void addDegrees(final Collection<Degree> degrees) {
+	for (final Degree degree : degrees) {
+	    addDegree(degree);
+	}
+    }
+
     public void removeDegree(final Degree degree) {
 	final Iterator<DomainReference<Degree>> iter = selectedDegrees.iterator();
 	while (iter.hasNext()) {
@@ -126,27 +147,26 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
     }
 
     public String getDisabilities() {
-        return disabilities;
+	return disabilities;
     }
 
     public void setDisabilities(String disabilities) {
-        this.disabilities = disabilities;
+	this.disabilities = disabilities;
     }
 
     public String getEducation() {
-        return education;
+	return education;
     }
 
     public void setEducation(String education) {
-        this.education = education;
+	this.education = education;
     }
 
     public String getLanguages() {
-        return languages;
+	return languages;
     }
 
     public void setLanguages(String languages) {
-        this.languages = languages;
+	this.languages = languages;
     }
-    
 }

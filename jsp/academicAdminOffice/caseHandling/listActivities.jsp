@@ -7,4 +7,9 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.candidacy" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 <br/>
+<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+	<span class="error0"> <bean:write name="message" /> </span>
+	<br />
+</html:messages>
+
 <jsp:include flush="true" page="/caseHandling/listActivities.jsp" />

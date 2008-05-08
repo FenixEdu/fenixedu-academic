@@ -17,11 +17,21 @@
  	<html:hidden property="method" value="executeEditCandidacyInformation" />
 
 	<fr:edit id="secondCycleIndividualCandidacyProcessBean" name="secondCycleIndividualCandidacyProcessBean" visible="false" />
+	
+	<fr:edit id="secondCycleIndividualCandidacyProcessBean.candidacyDate" 
+		 name="secondCycleIndividualCandidacyProcessBean"
+		 schema="SecondCycleIndividualCandidacyProcessBean.candidacyDate">
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		</fr:layout>
+		<fr:destination name="invalid" path="<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
+	</fr:edit>
 
 	<h3 class="mtop15 mbottom025"><bean:message key="label.selectDegree" bundle="APPLICATION_RESOURCES"/>:</h3>
 	<fr:edit id="secondCycleIndividualCandidacyProcessBean.degree"
 		name="secondCycleIndividualCandidacyProcessBean"
-		schema="SecondCycleIndividualCandidacyProcessBean.selectDegree.edit">
+		schema="SecondCycleIndividualCandidacyProcessBean.selectDegree.manage">
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
@@ -53,6 +63,6 @@
 	</fr:edit>
 		
 	<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
 
 </fr:form>

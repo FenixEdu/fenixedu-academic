@@ -245,7 +245,7 @@ public class Person extends Person_Base {
 
 	createUserAndLoginEntity();
 	setIsPassInKerberos(Boolean.FALSE);
-	
+
 	createDefaultPhysicalAddress(personBean.getPhysicalAddressData());
 	createDefaultPhone(personBean.getPhone());
 	createDefaultMobilePhone(personBean.getMobile());

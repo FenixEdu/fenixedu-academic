@@ -10,6 +10,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState
 import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
+
+import org.joda.time.YearMonthDay;
 
 public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandidacy_Base {
 
@@ -22,7 +25,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	this();
 
 	final Person person = getPersonFromBean(bean);
-	checkParameters(person, process, bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
+	checkParameters(person, process, bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
 
 	setCandidacyProcess(process);
 	setPerson(person);
@@ -30,12 +33,14 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	setProfessionalStatus(bean.getProfessionalStatus());
 	setOtherEducation(bean.getOtherEducation());
 	setState(IndividualCandidacyState.STAND_BY);
+	setCandidacyDate(bean.getCandidacyDate());
 
 	createPrecendentDegreeInformation(person, bean);
 	createDebt(person);
     }
 
-    private void checkParameters(final Person person, final SecondCycleIndividualCandidacyProcess process, final Degree degree,
+    private void checkParameters(final Person person, final SecondCycleIndividualCandidacyProcess process,
+	    final YearMonthDay candidacyDate, final Degree degree,
 	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	if (person == null) {
@@ -44,11 +49,11 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	if (process == null) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.process");
 	}
-	checkParameters(person, degree, precedentDegreeInformation);
-    }
-
-    private void checkParameters(final Person person, final Degree degree,
-	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+	if (candidacyDate == null || !process.hasOpenCandidacyPeriod(candidacyDate.toDateTimeAtMidnight())) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.candidacyDate", process.getCandidacyStart()
+		    .toString(DateFormatUtil.DEFAULT_DATE_FORMAT), process.getCandidacyEnd().toString(
+		    DateFormatUtil.DEFAULT_DATE_FORMAT));
+	}
 	if (degree == null || personHasDegree(person, degree)) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degrees");
 	}
@@ -109,16 +114,58 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	return Person.readPersonByUsername(getResponsible());
     }
 
-    void editCandidacyInformation(final Degree selectedDegree,
+    @Override
+    public SecondCycleIndividualCandidacyProcess getCandidacyProcess() {
+	return (SecondCycleIndividualCandidacyProcess) super.getCandidacyProcess();
+    }
+
+    void editCandidacyInformation(final YearMonthDay candidacyDate, final Degree selectedDegree,
 	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation, final String professionalStatus,
 	    final String otherEducation) {
 
-	checkParameters(getPerson(), selectedDegree, precedentDegreeInformation);
+	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate, selectedDegree, precedentDegreeInformation);
+	setCandidacyDate(candidacyDate);
 	setSelectedDegree(selectedDegree);
 	setProfessionalStatus(professionalStatus);
 	setOtherEducation(otherEducation);
 	if (getPrecedentDegreeInformation().isExternal()) {
 	    getPrecedentDegreeInformation().edit(precedentDegreeInformation);
+	}
+    }
+
+    void editCandidacyResult(final SecondCycleIndividualCandidacyResultBean bean) {
+	checkEditParameters(bean);
+	setProfessionalExperience(bean.getProfessionalExperience());
+	setAffinity(bean.getAffinity());
+	setDegreeNature(bean.getDegreeNature());
+	setCandidacyGrade(bean.getGrade());
+	setInterviewGrade(bean.getInterviewGrade());
+	setSeriesCandidacyGrade(bean.getSeriesGrade());
+	setState(bean.getState());
+	setNotes(bean.getNotes());
+    }
+
+    private void checkEditParameters(final SecondCycleIndividualCandidacyResultBean bean) {
+	if (bean.getProfessionalExperience() == null) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.profissionalExperience");
+	}
+	if (bean.getAffinity() == null) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.affinity");
+	}
+	if (bean.getDegreeNature() == null) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degreeNature");
+	}
+	if (bean.getGrade() == null) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.grade");
+	}
+	if (bean.getInterviewGrade() == null || bean.getInterviewGrade().length() == 0) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.interview.value");
+	}
+	if (bean.getSeriesGrade() == null) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.series.grade");
+	}
+	if (bean.getState() == null) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.state");
 	}
     }
 }

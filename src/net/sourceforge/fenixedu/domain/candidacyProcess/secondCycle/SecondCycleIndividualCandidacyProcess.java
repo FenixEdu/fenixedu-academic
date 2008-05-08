@@ -21,7 +21,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
 	activities.add(new EditCandidacyInformation());
-	//TODO: activities.add(new IntroduceCandidacyResult());
+	//activities.add(new IntroduceCandidacyResult());
 	activities.add(new CancelCandidacy());
     }
 
@@ -73,25 +73,53 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     }
 
     private SecondCycleIndividualCandidacyProcess editCandidacyInformation(final SecondCycleIndividualCandidacyProcessBean bean) {
-	getCandidacy().editCandidacyInformation(bean.getSelectedDegree(), bean.getPrecedentDegreeInformation(),
-		bean.getProfessionalStatus(), bean.getOtherEducation());
+	getCandidacy().editCandidacyInformation(bean.getCandidacyDate(), bean.getSelectedDegree(),
+		bean.getPrecedentDegreeInformation(), bean.getProfessionalStatus(), bean.getOtherEducation());
 	return this;
     }
 
-    Degree getCandidacySelectedDegree() {
+    public Degree getCandidacySelectedDegree() {
 	return getCandidacy().getSelectedDegree();
     }
 
-    String getCandidacyProfessionalStatus() {
+    public String getCandidacyProfessionalStatus() {
 	return getCandidacy().getProfessionalStatus();
     }
 
-    String getCandidacyOhterEducation() {
+    public String getCandidacyOhterEducation() {
 	return getCandidacy().getOtherEducation();
     }
 
-    CandidacyPrecedentDegreeInformation getCandidacyPrecedentDegreeInformation() {
+    public CandidacyPrecedentDegreeInformation getCandidacyPrecedentDegreeInformation() {
 	return getCandidacy().getPrecedentDegreeInformation();
+    }
+
+    public Integer getCandidacyProfessionalExperience() {
+	return getCandidacy().getProfessionalExperience();
+    }
+
+    public Double getCandidacyAffinity() {
+	return getCandidacy().getAffinity();
+    }
+
+    public Integer getCandidacyDegreeNature() {
+	return getCandidacy().getDegreeNature();
+    }
+
+    public Double getCandidacyGrade() {
+	return getCandidacy().getCandidacyGrade();
+    }
+
+    public String getCandidacyInterviewGrade() {
+	return getCandidacy().getInterviewGrade();
+    }
+
+    public Double getCandidacySeriesGrade() {
+	return getCandidacy().getSeriesCandidacyGrade();
+    }
+
+    public String getCandidacyNotes() {
+	return getCandidacy().getNotes();
     }
 
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
@@ -178,14 +206,29 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    throw new PreConditionNotValidException();
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    //TODO:
+	    /*
+	     
+	     if (process.isCandidacyCancelled() || process.isCandidacyInStandBy()) {
+	     throw new PreConditionNotValidException();
+	     }
+
+	     // add missing conditions
+	     if (!process.isSentToCoordinator())) {
+	     throw new PreConditionNotValidException();
+	     }
+	     */
+
 	}
 
 	@Override
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    // TODO Auto-generated method stub
-	    return null;
+	    process.getCandidacy().editCandidacyResult((SecondCycleIndividualCandidacyResultBean) object);
+	    return process;
 	}
     }
 

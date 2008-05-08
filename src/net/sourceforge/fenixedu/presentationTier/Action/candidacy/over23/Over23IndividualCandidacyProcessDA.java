@@ -158,6 +158,7 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	if (bean.hasDegreeToAdd() && !bean.containsDegree(bean.getDegreeToAdd())) {
 	    bean.addDegree(bean.getDegreeToAdd());
 	    bean.removeDegreeToAdd();
+	    RenderUtils.invalidateViewState();
 	}
 	return mapping.findForward(forward);
     }
@@ -259,14 +260,8 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 
     public ActionForward prepareExecuteEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-
-	final Over23IndividualCandidacyProcess process = getProcess(request);
-	final Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean(process
-		.getSelectedDegreesSortedByOrder());
-	bean.setDisabilities(process.getDisabilities());
-	bean.setEducation(process.getEducation());
-	bean.setLanguages(process.getLanguages());
-	request.setAttribute("over23IndividualCandidacyProcessBean", bean);
+	request.setAttribute("over23IndividualCandidacyProcessBean",
+		new Over23IndividualCandidacyProcessBean(getProcess(request)));
 	return mapping.findForward("edit-candidacy-information");
     }
 

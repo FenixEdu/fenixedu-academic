@@ -3,12 +3,21 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
 
 abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     protected IndividualCandidacy() {
 	super();
+	super.setWhenCreated(new DateTime());
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    @Override
+    public void setWhenCreated(DateTime whenCreated) {
+	throw new DomainException("error.IndividualCandidacy.cannot.modify.when.created");
     }
 
     public boolean hasAnyPayment() {
@@ -31,6 +40,10 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     public boolean isCancelled() {
 	return getState() == IndividualCandidacyState.CANCELLED;
+    }
+
+    public boolean isRejected() {
+	return getState() == IndividualCandidacyState.REJECTED;
     }
 
     public boolean isDebtPayed() {

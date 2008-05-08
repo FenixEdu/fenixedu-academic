@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 abstract public class IndividualCandidacyProcess extends IndividualCandidacyProcess_Base {
 
@@ -21,6 +22,10 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public DateTime getCandidacyEnd() {
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyEnd() : null;
+    }
+    
+    public YearMonthDay getCandidacyDate() {
+	return getCandidacy().getCandidacyDate();
     }
 
     public boolean hasOpenCandidacyPeriod() {
@@ -59,7 +64,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	getCandidacy().cancel(person);
     }
 
-    protected boolean isCandidacyInStandBy() {
+    public IndividualCandidacyState getCandidacyState() {
+	return getCandidacy().getState();
+    }
+
+    public boolean isCandidacyInStandBy() {
 	return getCandidacy().isInStandBy();
     }
 
@@ -67,7 +76,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return getCandidacy().isAccepted();
     }
 
-    protected boolean isCandidacyCancelled() {
+    public boolean isCandidacyRejected() {
+	return getCandidacy().isRejected();
+    }
+
+    public boolean isCandidacyCancelled() {
 	return getCandidacy().isCancelled();
     }
 

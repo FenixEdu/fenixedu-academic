@@ -33,8 +33,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	this();
 	checkParameters(bean.getCandidacyProcess());
 	setCandidacyProcess(bean.getCandidacyProcess());
-	new Over23IndividualCandidacy(this, getPersonFromBean(bean), bean.getSelectedDegrees(), bean.getDisabilities(), bean
-		.getEducation(), bean.getLanguages());
+	new Over23IndividualCandidacy(this, getPersonFromBean(bean), bean.getCandidacyDate(), bean.getSelectedDegrees(), bean
+		.getDisabilities(), bean.getEducation(), bean.getLanguages());
     }
 
     private Person getPersonFromBean(final Over23IndividualCandidacyProcessBean bean) {
@@ -68,10 +68,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     @Override
     public String getDisplayName() {
-	String name = ResourceBundle.getBundle("resources/CaseHandlingResources").getString("label." + getClass().getName());
-	name += " - " + getCandidacy().getPerson().getName() + " (" + getCandidacy().getPerson().getDocumentIdNumber() + "), ";
-	name += ResourceBundle.getBundle("resources/EnumerationResources")
-		.getString(getCandidacy().getState().getQualifiedName());
+	String name = getCandidacy().getPerson().getName() + " (" + getCandidacy().getPerson().getDocumentIdNumber() + "), ";
+	name += ResourceBundle.getBundle("resources/EnumerationResources").getString(getCandidacyState().getQualifiedName());
 	return name;
     }
 
@@ -81,8 +79,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     }
 
     private Over23IndividualCandidacyProcess editCandidacyInformation(final Over23IndividualCandidacyProcessBean bean) {
-	getCandidacy().editCandidacyInformation(bean.getSelectedDegrees(), bean.getDisabilities(), bean.getEducation(),
-		bean.getLanguages());
+	getCandidacy().editCandidacyInformation(bean.getCandidacyDate(), bean.getSelectedDegrees(), bean.getDisabilities(),
+		bean.getEducation(), bean.getLanguages());
 	return this;
     }
 
@@ -198,7 +196,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isCandidacyInStandBy() || !process.isSentToJury() || !process.isPublished()) {
+	    //TODO: check conditions
+	    if (!process.isSentToJury() && !process.isPublished()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -207,7 +206,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
 	    final Over23IndividualCandidacyResultBean bean = (Over23IndividualCandidacyResultBean) object;
-	    process.getCandidacy().setCandidacyResult(bean.getState(), bean.getAcceptedDegree());
+	    process.getCandidacy().editCandidacyResult(bean.getState(), bean.getAcceptedDegree());
 	    return process;
 	}
     }

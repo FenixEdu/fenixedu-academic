@@ -19,6 +19,17 @@
 	<fr:edit id="over23IndividualCandidacyProcessBean" name="over23IndividualCandidacyProcessBean" visible="false" />
 
 	<logic:notEmpty name="process">
+	
+		<fr:edit id="over23IndividualCandidacyProcessBean.candidacyDate" 
+			 name="over23IndividualCandidacyProcessBean"
+			 schema="Over23IndividualCandidacyProcessBean.candidacyDate">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="invalid" path="/caseHandlingOver23IndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid" />
+		</fr:edit>
+	
 		<h3 class="mtop15 mbottom025"><bean:message key="label.add.degree" bundle="APPLICATION_RESOURCES"/>:</h3>
 		<fr:edit id="Over23IndividualCandidacyProcessBean.degrees"
 			name="over23IndividualCandidacyProcessBean"
@@ -64,6 +75,6 @@
 	</logic:notEmpty>
 	
 	<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
 
 </fr:form>

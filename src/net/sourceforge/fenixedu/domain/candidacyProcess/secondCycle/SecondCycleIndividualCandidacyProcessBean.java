@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -18,11 +20,13 @@ import net.sourceforge.fenixedu.domain.student.Student;
 public class SecondCycleIndividualCandidacyProcessBean implements Serializable {
 
     private DomainReference<SecondCycleCandidacyProcess> candidacyProcess;
-
+    
     private ChoosePersonBean choosePersonBean;
 
     private PersonBean personBean;
 
+    private YearMonthDay candidacyDate;
+    
     private DomainReference<Degree> selectedDegree;
 
     private String professionalStatus;
@@ -34,6 +38,7 @@ public class SecondCycleIndividualCandidacyProcessBean implements Serializable {
     private String otherEducation;
 
     public SecondCycleIndividualCandidacyProcessBean() {
+	setCandidacyDate(new YearMonthDay());
     }
 
     public SecondCycleIndividualCandidacyProcessBean(final SecondCycleIndividualCandidacyProcess process) {
@@ -43,6 +48,7 @@ public class SecondCycleIndividualCandidacyProcessBean implements Serializable {
 	setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(process
 		.getCandidacyPrecedentDegreeInformation()));
 	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
+	setCandidacyDate(process.getCandidacyDate());
     }
 
     public SecondCycleCandidacyProcess getCandidacyProcess() {
@@ -52,6 +58,14 @@ public class SecondCycleIndividualCandidacyProcessBean implements Serializable {
     public void setCandidacyProcess(SecondCycleCandidacyProcess candidacyProcess) {
 	this.candidacyProcess = (candidacyProcess != null) ? new DomainReference<SecondCycleCandidacyProcess>(candidacyProcess)
 		: null;
+    }
+
+    public YearMonthDay getCandidacyDate() {
+        return candidacyDate;
+    }
+
+    public void setCandidacyDate(YearMonthDay candidacyDate) {
+        this.candidacyDate = candidacyDate;
     }
 
     public ChoosePersonBean getChoosePersonBean() {

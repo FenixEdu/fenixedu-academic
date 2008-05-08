@@ -350,6 +350,10 @@ public abstract class Party extends Party_Base {
 	for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules())
 	    ;
 
+	if (hasPartySocialSecurityNumber()) {
+	    getPartySocialSecurityNumber().delete();
+	}
+
 	removeNationality();
 	removePartyType();
 	removeRootDomainObject();
@@ -362,57 +366,46 @@ public abstract class Party extends Party_Base {
     }
 
     public static Set<Party> readContributors() {
-	ComparatorChain chain = new ComparatorChain();
-	Comparator<Party> caseInsensitiveName = new Comparator<Party>() {
-	    public int compare(Party party, Party otherParty) {
-		Collator collator = Collator.getInstance();
-		return collator.compare(party.getName().toLowerCase(), otherParty.getName().toLowerCase());
-	    }
-	};
-
-	chain.addComparator(caseInsensitiveName);
+	final ComparatorChain chain = new ComparatorChain();
+	chain.addComparator(COMPARATOR_BY_NAME);
 	chain.addComparator(new BeanComparator("socialSecurityNumber"));
 
-	Set<Party> result = new TreeSet<Party>(chain);
-	for (final Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party.getSocialSecurityNumber() != null && !party.getSocialSecurityNumber().equals("")) {
-		result.add(party);
-	    }
+	final Set<Party> result = new TreeSet<Party>(chain);
+	for (final PartySocialSecurityNumber socialSecurityNumber : RootDomainObject.getInstance()
+		.getPartySocialSecurityNumbers()) {
+	    result.add(socialSecurityNumber.getParty());
 	}
 
 	return result;
     }
 
     public static Party readByContributorNumber(String contributorNumber) {
-	if (contributorNumber != null) {
-	    for (final Party party : RootDomainObject.getInstance().getPartys()) {
-		if (party.getSocialSecurityNumber() != null
-			&& party.getSocialSecurityNumber().equalsIgnoreCase(contributorNumber)) {
-		    return party;
-		}
-	    }
-	}
-	return null;
+	return PartySocialSecurityNumber.readPartyBySocialSecurityNumber(contributorNumber);
     }
 
-    @Override
+    public String getSocialSecurityNumber() {
+	return hasPartySocialSecurityNumber() ? getPartySocialSecurityNumber().getSocialSecurityNumber() : null;
+    }
+
     public void setSocialSecurityNumber(String socialSecurityNumber) {
 
-	if (!StringUtils.isEmpty(socialSecurityNumber)) {
-
-	    String existingSocialSecurityNumber = getSocialSecurityNumber();
-	    if (existingSocialSecurityNumber != null && socialSecurityNumber != null
-		    && existingSocialSecurityNumber.equalsIgnoreCase(socialSecurityNumber)) {
+	if (socialSecurityNumber != null && socialSecurityNumber.length() != 0) {
+	    if (hasPartySocialSecurityNumber()
+		    && socialSecurityNumber.equals(getPartySocialSecurityNumber().getSocialSecurityNumber())) {
 		return;
 	    }
 
-	    final Party existingContributor = Party.readByContributorNumber(socialSecurityNumber);
-	    if (existingContributor != null && existingContributor != this) {
-		throw new DomainException("PARTY.existing.contributor.number");
+	    final Party party = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(socialSecurityNumber);
+	    if (party != null && party != this) {
+		throw new DomainException("error.party.existing.contributor.number");
+	    } else {
+		if (hasPartySocialSecurityNumber()) {
+		    getPartySocialSecurityNumber().setSocialSecurityNumber(socialSecurityNumber);
+		} else {
+		    new PartySocialSecurityNumber(this, socialSecurityNumber);
+		}
 	    }
 	}
-
-	super.setSocialSecurityNumber(socialSecurityNumber);
     }
 
     public void editContributor(String contributorName, String contributorNumber, String contributorAddress, String areaCode,

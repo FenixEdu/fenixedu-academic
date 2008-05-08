@@ -2744,8 +2744,11 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		PartyTypeEnum type;		
 	}
 	
-	class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.sourceforge.fenixedu.domain.DomainObject {				
+	class net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber extends net.sourceforge.fenixedu.domain.DomainObject {
 		String socialSecurityNumber;
+	}
+	
+	class net.sourceforge.fenixedu.domain.organizationalStructure.Party extends net.sourceforge.fenixedu.domain.DomainObject {				
 		MultiLanguageString partyName;
 	}
 
@@ -4694,8 +4697,11 @@ class net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProces
 	}
 	
 class net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy extends net.sourceforge.fenixedu.domain.DomainObject {
+	DateTime whenCreated;
+	YearMonthDay candidacyDate;
 	IndividualCandidacyState state;
 	String responsible;
+	String notes;
 }
 
 	class net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy extends net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy {
@@ -4707,6 +4713,12 @@ class net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy exten
 	class net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy extends net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy {
 		String professionalStatus;
 		String otherEducation;
+		Integer professionalExperience;
+		Double affinity;
+		Integer degreeNature;
+		Double candidacyGrade;
+		String interviewGrade;
+		Double seriesCandidacyGrade;
 	}
 
 class net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -7590,6 +7602,18 @@ relation ParticipationsInJournalIssue {
 relation ParticipationsInScientificJournal {
 	net.sourceforge.fenixedu.domain.research.activity.ScientificJournal playsRole scientificJournal;
 	net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation playsRole participations {
+		multiplicity *;
+	}
+}
+
+relation PartyPartySocialSecurityNumber {
+	net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber playsRole partySocialSecurityNumber;
+}
+
+relation RootDomainObjectPartySocialSecurityNumber {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber playsRole partySocialSecurityNumbers {
 		multiplicity *;
 	}
 }

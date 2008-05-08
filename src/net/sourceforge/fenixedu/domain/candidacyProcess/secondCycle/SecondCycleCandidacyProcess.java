@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
@@ -87,12 +86,12 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 
     @Override
     public String getDisplayName() {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources/CaseHandlingResources");
-	String message = bundle.getString("label." + getClass().getName());
+	String message = super.getDisplayName();
 	message += " - " + getCandidacyAcademicPeriod().getName();
 	message += " (" + getCandidacyStart().toString("dd/MM/yyyy") + " : " + getCandidacyEnd().toString("dd/MM/yyyy") + ")";
 	return message;
     }
+
 
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)

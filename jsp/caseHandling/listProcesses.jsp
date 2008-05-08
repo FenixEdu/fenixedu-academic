@@ -11,14 +11,15 @@
 	</html:link>
 </logic:equal>
 
-<br/>
-<br/>
-
-<fr:view schema="caseHandling.list.processes" name="processes">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 mtop15" />
-		<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}"%>' />
-		<fr:property name="key(viewProcess)" value="link.list.processes"/>
-		<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
-	</fr:layout>	
-</fr:view>
+<logic:notEmpty name="processes">
+	<br/>
+	<br/>
+	<fr:view name="processes" schema="caseHandling.list.processes">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 mtop15" />
+			<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}"%>' />
+			<fr:property name="key(viewProcess)" value="link.list.processes"/>
+			<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
+		</fr:layout>	
+	</fr:view>
+</logic:notEmpty>

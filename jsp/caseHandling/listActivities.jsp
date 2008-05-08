@@ -6,6 +6,8 @@
 <bean:define id="processName" name="processName" />
 <bean:define id="processId" name="process" property="idInternal" />
 
+<strong><bean:write name="process" property="displayName" /></strong>
+
 <logic:notEmpty name="activities">
 	<fr:view schema="caseHandling.list.activities" name="activities">
 		<fr:layout name="tabular">
@@ -17,7 +19,8 @@
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="activities">
-	<bean:message key="label.no.activities" bundle="APPLICATION_RESOURCES" />
+	<em><strong><bean:message key="label.no.activities" bundle="APPLICATION_RESOURCES" /></strong></em>
+	<br/>
 </logic:empty>
 
 <br/>

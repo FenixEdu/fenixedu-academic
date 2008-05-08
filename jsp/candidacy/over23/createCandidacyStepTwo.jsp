@@ -17,6 +17,17 @@
 	<fr:edit id="over23IndividualCandidacyProcessBean" name="over23IndividualCandidacyProcessBean" visible="false" />
 
 	<logic:notEmpty name="over23IndividualCandidacyProcessBean" property="candidacyProcess">
+	
+		<fr:edit id="over23IndividualCandidacyProcessBean.candidacyDate" 
+			 name="over23IndividualCandidacyProcessBean"
+			 schema="Over23IndividualCandidacyProcessBean.candidacyDate">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="invalid" path="/caseHandlingOver23IndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid" />
+		</fr:edit>
+	
 		<h3 class="mtop15 mbottom025"><bean:message key="label.add.degree" bundle="APPLICATION_RESOURCES"/>:</h3>
 		<fr:edit id="Over23IndividualCandidacyProcessBean.degrees"
 			name="over23IndividualCandidacyProcessBean"

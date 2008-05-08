@@ -10,6 +10,13 @@
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />
 </html:messages>
+<fr:hasMessages for="Over23IndividualCandidacyProcess.choosePersonBean" type="conversion">
+	<ul class="nobullet list6">
+		<fr:messages>
+			<li><span class="error0"><fr:message/></span></li>
+		</fr:messages>
+	</ul>
+</fr:hasMessages>
 
 <fr:form action="/caseHandlingOver23IndividualCandidacyProcess.do">
  	<html:hidden name="candidacyForm" property="method" value="fillPersonalInformation" />

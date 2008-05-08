@@ -13,26 +13,25 @@
 
 <bean:define id="processId" name="process" property="idInternal" />
 
-<fr:form action='<%="/caseHandlingOver23IndividualCandidacyProcess.do?processId=" + processId.toString() %>'>
+<fr:form action='<%="/caseHandlingSecondCycleIndividualCandidacyProcess.do?processId=" + processId.toString() %>'>
+ 	<html:hidden property="method" value="executeIntroduceCandidacyResult" />
 
- 	<html:hidden name="candidacyForm" property="method" value="executeIntroduceCandidacyResult" />
-	<fr:edit id="over23IndividualCandidacyResultBean" name="over23IndividualCandidacyResultBean" visible="false" />
+	<fr:edit id="secondCycleIndividualCandidacyResultBean" name="secondCycleIndividualCandidacyResultBean" visible="false" />
 
-	<logic:notEmpty name="over23IndividualCandidacyResultBean" property="candidacyProcess">
-		
+	<logic:notEmpty name="secondCycleIndividualCandidacyResultBean" property="candidacyProcess">
 		<h3 class="mtop15 mbottom025"><bean:message key="label.information" bundle="APPLICATION_RESOURCES"/></h3>
-		<fr:edit id="over23IndividualCandidacyResultBean.manage"
-			name="over23IndividualCandidacyResultBean"
-			schema="Over23IndividualCandidacyResultBean.manage">
+		<fr:edit id="secondCycleIndividualCandidacyResultBean"
+			name="secondCycleIndividualCandidacyResultBean"
+			schema="SecondCycleIndividualCandidacyResultBean.manage">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?method=executeIntroduceCandidacyResultInvalid&amp;processId=" + processId.toString() %>' />
+			<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=executeIntroduceCandidacyResultInvalid&amp;processId=" + processId.toString() %>' />
 		</fr:edit>
 		
 		<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES" /></html:submit>
 	</logic:notEmpty>
 	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities';return true;"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
-
+	
 </fr:form>

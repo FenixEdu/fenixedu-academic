@@ -97,6 +97,14 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	return result;
     }
 
+    @Override
+    public String getDisplayName() {
+	String message = super.getDisplayName();
+	message += " - " + getCandidacyAcademicPeriod().getName();
+	message += " (" + getCandidacyStart().toString("dd/MM/yyyy") + " : " + getCandidacyEnd().toString("dd/MM/yyyy") + ")";
+	return message;
+    }
+
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
