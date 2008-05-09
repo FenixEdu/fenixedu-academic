@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.accessControl.AllStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsiblesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsFromDegreeTypeGroup;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SimpleMailSenderAction;
 
@@ -25,6 +27,14 @@ public class SendEmailInPublicRelationsOffice extends SimpleMailSenderAction {
 	groups.add(new AllResearchersGroup());
 	groups.add(new ExecutionCourseResponsiblesGroup());
 	groups.add(new InternalPersonGroup());
+	
+	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
+	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_DEGREE));
+	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_MASTER_DEGREE));
+	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_PHD_PROGRAM));
+	groups.add(new StudentsFromDegreeTypeGroup(DegreeType.BOLONHA_SPECIALIZATION_DEGREE));
+	
 	return groups;
     }
 }
