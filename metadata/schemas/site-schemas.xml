@@ -503,6 +503,7 @@
 		<property name="linkFormat" value="/homepage/${istUsername}"/>	
 		<property name="blankTarget" value="true"/>
 		<property name="hasContext" value="true"/>
+		<property name="hasChecksum" value="true"/>
 	</slot>
 	<slot name="personWorkPhone" layout="null-as-label">
 		<property name="label" value="label.person.telephone"/>

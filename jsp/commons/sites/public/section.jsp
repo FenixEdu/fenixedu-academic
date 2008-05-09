@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
@@ -23,7 +24,7 @@
         <fr:view name="section" property="name" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
 		<app:defineContentPath id="sectionURL" name="section" toScope="request"/>
 		<bean:define id="url" name="sectionURL" type="java.lang.String"/>
-  		<span class="permalink1">(<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+  		<span class="permalink1">(<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h2>
 
 
@@ -62,9 +63,9 @@
 			</table>       	
 		</logic:notEmpty>
 
-		<logic:notEmpty name="section" property="childrenSections">
+		<logic:notEmpty name="section" property="orderedSubSections">
 				<ul>
-					<logic:iterate id="section" name="section" property="childrenSections" type="net.sourceforge.fenixedu.domain.Section">		
+					<logic:iterate id="section" name="section" property="orderedSubSections" type="net.sourceforge.fenixedu.domain.Section">		
 							<li>
 							<app:contentLink name="section">
 							<fr:view name="section" property="name"/>
@@ -89,7 +90,7 @@
 		            <logic:equal name="item" property="publicAvailable" value="true">
 	 				    <app:defineContentPath id="itemURL" name="item" toScope="request"/>
 						<bean:define id="url" name="itemURL" type="java.lang.String"/>
-		                  <span class="permalink1">(<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+		                  <span class="permalink1">(<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
 	    			</logic:equal>
 	            </h3>
             </logic:equal>
