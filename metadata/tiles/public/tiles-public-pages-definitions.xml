@@ -678,7 +678,7 @@
         <put name="body" value="/commons/sites/public/section-deny.jsp"/>
     </definition>
     
-    <definition name="view-researchUnit-section-adviseLogin" extends="definition.public.researchUnit">
+    <definition name="researchUnit-section-adviseLogin" extends="definition.public.researchUnit">
 		<put name="body-context" value="/publico/researchUnitSite/siteContextWithName.jsp"/>
         <put name="body" value="/commons/sites/public/section-adviseLogin.jsp"/>
     </definition>
