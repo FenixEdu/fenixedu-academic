@@ -43,8 +43,8 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     }
 
     private String getDegreeFinalizationDate(final DegreeFinalizationCertificateRequest request) {
-	return request.mustHideConclusionDate() ? StringUtils.EMPTY : request.getConclusionDate().toString(DATE_FORMAT,
-		LanguageUtils.getLocale());
+	return request.mustHideConclusionDate() ? StringUtils.EMPTY : " em "
+		+ request.getConclusionDate().toString(DATE_FORMAT, LanguageUtils.getLocale());
     }
 
     private String getExceptionalConclusionInfo(final DegreeFinalizationCertificateRequest request) {
@@ -58,7 +58,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	} else if (request.getInternshipApproved()) {
 	    return date + ", data em que foi aprovado o estágio regulamentar";
 	} else if (request.getStudyPlan()) {
-	    return " por força do Plano de Estudos homologado em " + date + " pelo Conselho Científico";
+	    return " com Plano de Estudos homologado em " + date + " pelo Conselho Científico";
 	} else {
 	    return StringUtils.EMPTY;
 	}
