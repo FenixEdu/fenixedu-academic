@@ -365,6 +365,12 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		DegreeCurricularPlanState state;
 		Boolean applyPreviousYearsEnrolmentRule;
 	}
+	
+	class net.sourceforge.fenixedu.domain.DegreeContext extends net.sourceforge.fenixedu.domain.DomainObject {
+		AcademicInterval beginInterval (REQUIRED);
+		AcademicInterval endInterval;
+		CurricularPeriodType periodType (REQUIRED);
+	} 
 
 	class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
 		Integer driftsFirst;
@@ -12755,3 +12761,18 @@ relation IndividualCandidacyCandidacyPrecedentDegreeInformation {
 	net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy playsRole candidacy;
 	net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation playsRole precedentDegreeInformation;
 }
+
+relation DegreeContextRootDomainObject {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.DegreeContext playsRole degreeContexts {
+		multiplicity *;
+	}
+}
+
+relation DegreeContextDegreeCurricularPlan {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+	net.sourceforge.fenixedu.domain.DegreeContext playsRole degreeContexts {
+		multiplicity *;
+	}
+}
+

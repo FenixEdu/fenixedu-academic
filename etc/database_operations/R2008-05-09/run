@@ -29,3 +29,4 @@ function executeWithTempFile() {
 }
 
 executeWithTempFile "Fix party social security number key in party table" FixPartySocialSecurityNumber.sql
+execute "Update JustificationMotive" updateJustificationMotive.sql

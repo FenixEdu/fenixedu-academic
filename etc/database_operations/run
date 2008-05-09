@@ -28,4 +28,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Update JustificationMotive" updateJustificationMotive.sql
