@@ -156,6 +156,7 @@ public class Project extends Project_Base {
             throw new DomainException("error.project.cannotDeleteBecauseHasSubmissionsAssociated");
         }
 
+        removeGrouping();
         super.delete();
     }
 
