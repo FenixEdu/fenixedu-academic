@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+executeWithTempFile "Fix party social security number key in party table" FixPartySocialSecurityNumber.sql
