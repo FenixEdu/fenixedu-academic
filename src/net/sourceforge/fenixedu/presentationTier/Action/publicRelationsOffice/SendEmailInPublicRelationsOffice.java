@@ -15,7 +15,15 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsFromDegreeTy
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SimpleMailSenderAction;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
 
+@Mapping(path = "/sendEmail", module = "publicRelations")
+@Forwards( {
+	@Forward(name = "compose-mail", path = "publicRelationsOffice-sendMail"),
+	@Forward(name = "success", path = "publicRelationsOffice-sendMail"),
+	@Forward(name = "problem", path = "publicRelationsOffice-sendMail") })
 public class SendEmailInPublicRelationsOffice extends SimpleMailSenderAction {
 
     @Override
