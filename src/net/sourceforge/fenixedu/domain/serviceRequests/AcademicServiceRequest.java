@@ -451,6 +451,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING);
     }
 
+    final public boolean hasProcessed() {
+	return (getSituationByType(AcademicServiceRequestSituationType.CONCLUDED) != null);
+    }
+
     final public boolean isSentToExternalEntity() {
 	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
     }
