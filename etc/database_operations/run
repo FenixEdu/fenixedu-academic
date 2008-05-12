@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create DegreeContext Table" createDegreeContextTable.sql
