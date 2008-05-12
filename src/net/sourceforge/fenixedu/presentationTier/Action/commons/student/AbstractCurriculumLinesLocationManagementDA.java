@@ -23,7 +23,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class AbstractCurriculumLinesLocationManagementDA extends FenixDispatchAction {
+abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
