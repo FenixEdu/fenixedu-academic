@@ -2659,10 +2659,20 @@ public class Registration extends Registration_Base {
 
     public Collection<AcademicServiceRequest> getToConcludeAcademicServiceRequests() {
 	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
-	final Collection<AcademicServiceRequestSituationType> validSituationTypesToConclude = AcademicServiceRequestSituationType
-		.getValidSituationTypesToConclude();
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if (validSituationTypesToConclude.contains(academicServiceRequest.getAcademicServiceRequestSituationType())) {
+	    if (academicServiceRequest.isConcludedSituationAccepted()
+		    || (academicServiceRequest.isSentToExternalEntity() && academicServiceRequest.hasProcessed())) {
+		result.add(academicServiceRequest);
+	    }
+	}
+	return result;
+    }
+
+    public Collection<AcademicServiceRequest> getToDeliverAcademicServiceRequests() {
+	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
+	    if (academicServiceRequest.isDeliveredSituationAccepted()
+		    || (academicServiceRequest.isSentToExternalEntity() && academicServiceRequest.hasConcluded())) {
 		result.add(academicServiceRequest);
 	    }
 	}
