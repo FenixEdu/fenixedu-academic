@@ -33,7 +33,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
-public class MarkSheetDispatchAction extends FenixDispatchAction {
+abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 
     protected ActionMessages createActionMessages() {
 	return new ActionMessages();
