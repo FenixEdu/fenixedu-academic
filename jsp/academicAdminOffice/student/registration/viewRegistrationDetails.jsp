@@ -296,7 +296,7 @@
 	 				
 					<fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(conclude)" value="conclude"/>
-					<fr:property name="visibleIfNot(conclude)" value="sentToExternalEntity"/>
+					<fr:property name="visibleIf(conclude)" value="concludedSituationAccepted"/>
 	
 					<fr:property name="order(view)" 		value="1" />
 					<fr:property name="order(reject)" 		value="2" />
@@ -320,8 +320,8 @@
 	
 	
 	<p class="mtop15">
-		<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests"/></b>
-		<bean:define id="concludedAcademicServiceRequests" name="registration" property="concludedAcademicServiceRequests"/>
+		<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="notDelivered.requests"/></b>
+		<bean:define id="concludedAcademicServiceRequests" name="registration" property="toDeliverAcademicServiceRequests"/>
 		<logic:notEmpty name="concludedAcademicServiceRequests">
 			<fr:view name="concludedAcademicServiceRequests" schema="AcademicServiceRequest.view">
 				<fr:layout name="tabular">
@@ -338,7 +338,7 @@
 					<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
 					<fr:property name="key(payments)" value="payments"/>
 					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
-<%--	
+
 					<fr:property name="linkFormat(send)" value="/academicServiceRequestsManagement.do?method=prepareSendAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(send)" value="label.send"/>
 					<fr:property name="visibleIf(send)" value="requestAvailableToSendToExternalEntity"/>
@@ -346,23 +346,20 @@
 					<fr:property name="linkFormat(receiveFrom)" value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(receiveFrom)" value="label.receiveFrom"/>
 					<fr:property name="visibleIf(receiveFrom)" value="sentToExternalEntity"/>
---%>	 				
+
 					<fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
 					<fr:property name="key(print)" value="print"/>
 					<fr:property name="visibleIf(print)" value="toPrint"/>
 	
 					<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(deliver)" value="deliver"/>
-<%--
-					<fr:property name="visibleIfNot(deliver)" value="sentToExternalEntity"/>
---%>
+					<fr:property name="visibleIf(deliver)" value="deliveredSituationAccepted"/>
+
 					<fr:property name="order(view)" value="1"/>
 					<fr:property name="order(cancel)" value="2"/>
 					<fr:property name="order(payments)" value="3"/>
-<%--
 					<fr:property name="order(send)" value="4"/>
 					<fr:property name="order(receiveFrom)" value="5"/>
---%>
 					<fr:property name="order(print)" value="6"/>
 					<fr:property name="order(deliver)" value="7"/>
 					
