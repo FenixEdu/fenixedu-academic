@@ -452,7 +452,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public boolean hasProcessed() {
-	return (getSituationByType(AcademicServiceRequestSituationType.CONCLUDED) != null);
+	return (getSituationByType(AcademicServiceRequestSituationType.PROCESSING) != null);
     }
 
     final public boolean isSentToExternalEntity() {
