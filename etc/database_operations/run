@@ -29,3 +29,4 @@ function executeWithTempFile() {
 }
 
 execute "Create DegreeContext Table" createDegreeContextTable.sql
+execute "Institutional Deppend modification" editPermissionsForInstitutionBoards.sql
