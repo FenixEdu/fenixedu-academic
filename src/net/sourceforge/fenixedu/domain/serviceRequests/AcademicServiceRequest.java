@@ -363,6 +363,14 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return isAcceptedSituationType(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
     }
 
+    final public boolean isConcludedSituationAccepted() {
+	return isAcceptedSituationType(AcademicServiceRequestSituationType.CONCLUDED);
+    }
+
+    final public boolean isDeliveredSituationAccepted() {
+	return isAcceptedSituationType(AcademicServiceRequestSituationType.DELIVERED);
+    }
+
     private List<AcademicServiceRequestSituationType> getAcceptedSituationTypes(AcademicServiceRequestSituationType situationType) {
 
 	switch (situationType) {
@@ -449,6 +457,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public boolean isConcluded() {
 	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CONCLUDED);
+    }
+
+    final public boolean hasConcluded() {
+	return (getSituationByType(AcademicServiceRequestSituationType.CONCLUDED) != null);
     }
 
     final public boolean isDelivered() {
