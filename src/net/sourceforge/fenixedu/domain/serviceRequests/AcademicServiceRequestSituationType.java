@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
-import java.util.Arrays;
-import java.util.Collection;
 
 public enum AcademicServiceRequestSituationType {
 
@@ -33,8 +31,4 @@ public enum AcademicServiceRequestSituationType {
 	return AcademicServiceRequestSituationType.class.getName() + "." + name();
     }
 
-    
-    static public Collection<AcademicServiceRequestSituationType> getValidSituationTypesToConclude() {
-	return Arrays.asList(PROCESSING, SENT_TO_EXTERNAL_ENTITY, RECEIVED_FROM_EXTERNAL_ENTITY);
-    }
 }
