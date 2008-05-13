@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.Map.Entry;
@@ -21,6 +23,7 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -54,6 +57,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.Season;
+import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -1194,5 +1199,71 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public void setCanManageRoomsMap(Map<Integer, Boolean> canManageRoomsMap) {
 	this.canManageRoomsMap = canManageRoomsMap;
     }
+    
+    public void exportStudentsEnroledToExcel() throws FenixFilterException, FenixServiceException {
+	exportToExcel();
+    } 
 
+    private String getFileName(Date date) throws FenixFilterException, FenixServiceException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minutes = calendar.get(Calendar.MINUTE);
+        return (day + "_" + month + "_" + year + "-" + hour + ":" + minutes);
+    }
+    
+    public void exportToExcel() throws FenixFilterException, FenixServiceException {
+	String filename = getResourceBundle("resources/ApplicationResources").getString("title.enrolments") + "-" + getFileName(Calendar.getInstance().getTime());
+	try {
+	    exportToXls(filename.replace(" ","_"));
+	} catch (IOException e) {
+	    throw new FenixServiceException();
+	}
+    }
+
+    private void exportToXls(String filename) throws IOException, FenixFilterException, FenixServiceException {
+        this.getResponse().setContentType("application/vnd.ms-excel");
+        this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+        ServletOutputStream outputStream = this.getResponse().getOutputStream();
+        
+        String spreadSheetName = getResourceBundle("resources/ApplicationResources").getString("title.enrolments");
+        List<Object> headers = getStudentsEnroledListHeaders();
+        Spreadsheet spreadsheet = new Spreadsheet(spreadSheetName, headers);
+
+        reportInfo(spreadsheet);
+
+        spreadsheet.exportToXLSSheet(outputStream);
+	outputStream.flush();
+	this.getResponse().flushBuffer();
+	FacesContext.getCurrentInstance().responseComplete();
+    }
+
+    private List<Object> getStudentsEnroledListHeaders() {
+	final List<Object> headers = new ArrayList<Object>();
+	ResourceBundle bundle = getResourceBundle("resources/ApplicationResources");
+	headers.add(bundle.getString("label.number"));
+	headers.add(bundle.getString("label.name"));
+	headers.add(bundle.getString("label.room"));
+	headers.add(bundle.getString("label.degree.name"));
+	return headers;
+    }
+
+    private void reportInfo(Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
+	fillStudentsEnroled(spreadsheet);
+    }
+
+    private void fillStudentsEnroled(Spreadsheet spreadsheet) throws FenixFilterException, FenixServiceException {
+	
+	for (WrittenEvaluationEnrolment enrolment : getWrittenEvaluationEnrolments()) {
+            final Row newRow = spreadsheet.addRow();
+            newRow.setCell(enrolment.getStudent().getNumber().toString());
+            newRow.setCell(enrolment.getStudent().getPerson().getName());
+            newRow.setCell(enrolment.hasRoom() ? enrolment.getRoom().getIdentification() : "-");
+            newRow.setCell(enrolment.getStudent().getDegree().getName());
+	}
+    }
+    
 }

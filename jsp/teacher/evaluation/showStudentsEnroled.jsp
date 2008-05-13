@@ -5,9 +5,8 @@
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
-
-
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
+
 	<h:form>
 	
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
@@ -63,8 +62,11 @@
 			
 		<h:outputText value="</table>" escape="false" />
 		
-		
 		<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.writtenEvaluationEnrolments}">
+
+			<h:graphicImage id="image" alt="Excel" url="/images/excel.gif" />
+			<h:outputText value="&nbsp;" escape="false" />
+			<fc:commandLink value="#{bundle['link.exportToExcel']}" action="#{evaluationManagementBackingBean.exportStudentsEnroledToExcel}"/>
 
 			<h:outputText value="<table class='tstyle4'>" escape="false" />
 				<h:outputText value="<tr>" escape="false" />
