@@ -56,18 +56,59 @@
 
 	<h3 class="mbottom05"><bean:message key="label.registrationAttends" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
+	<span class="pleft1">	
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="/registration.do?method=prepareAddAttends" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+			<bean:message key="label.add.attends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</span>
+
 	<logic:present name="attendsMap">
-		<logic:iterate id="attendsEntry" name="attendsMap">
-			<bean:define id="executionPeriod" name="attendsEntry" property="key"/>
-			<bean:define id="attendsSet" name="attendsEntry" property="value"/>
-			<bean:write name="executionPeriod" property="semester"/> - <bean:write name="executionPeriod" property="executionYear.name"/>
-			<br/>
-			<logic:iterate id="attends" name="attendsSet">
-				<bean:define id="executionCourse" name="attends" property="executionCourse"/>
-				<bean:write name="executionCourse" property="nome"/>
-				<br/>
+		<table class="tstyle4 thlight mtop05">
+			<logic:iterate id="attendsEntry" name="attendsMap">
+				<bean:define id="executionPeriod" name="attendsEntry" property="key"/>
+				<bean:define id="attendsSet" name="attendsEntry" property="value"/>
+				<tr>
+					<th colspan="3">
+						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.year"/>:
+						<bean:write name="executionPeriod" property="executionYear.name"/>
+						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.semester"/>:
+						<bean:write name="executionPeriod" property="semester"/>
+					</th>
+				</tr>
+				<logic:iterate id="attends" name="attendsSet">
+					<tr>
+						<td>
+							<bean:define id="executionCourse" name="attends" property="executionCourse"/>
+							<bean:write name="executionCourse" property="nome"/>
+						</td>
+						<td>
+							<logic:present name="attends" property="enrolment">
+								<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.attends.with.enrolment"/>
+							</logic:present>
+							<logic:notPresent name="attends" property="enrolment">
+								<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.attends.without.enrolment"/>
+							</logic:notPresent>
+						</td>
+						<td>
+							<logic:notPresent name="attends" property="enrolment">
+								<bean:define id="url" type="java.lang.String">/registration.do?method=deleteAttends&amp;attendsId=<bean:write name="attends" property="idInternal"/></bean:define>
+								<html:link page="<%= url %>" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+									<bean:message key="label.delete.attends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+								</html:link>
+							</logic:notPresent>
+						</td>
+					</tr>
+				</logic:iterate>
 			</logic:iterate>
-		</logic:iterate>
+		</table>
 	</logic:present>
 
+	<span class="pleft1">	
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="/registration.do?method=prepareAddAttends" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+			<bean:message key="label.add.attends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</span>
+	
 </logic:present>

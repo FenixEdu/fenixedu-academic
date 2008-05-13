@@ -1469,4 +1469,19 @@
 	</slot>
 </schema>
 
-
+<schema name="AddAttendsBean" type="net.sourceforge.fenixedu.dataTransferObject.AddAttendsBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionPeriod" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
+		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
+		<property name="destination" value="showForm"/>
+	</slot>
+	<slot name="executionDegree" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionPeriodProvider" />
+		<property name="format" value="${presentationName}" />
+		<property name="destination" value="showForm"/>
+	</slot>
+	<slot name="executionCourse" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCourseForExecutionDegreeAndExecutionPeriodProvider" />
+		<property name="format" value="${nome}" />
+	</slot>
+</schema>

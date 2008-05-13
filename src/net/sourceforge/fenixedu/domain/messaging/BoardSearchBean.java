@@ -10,9 +10,10 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.interfaces.HasExecutionPeriod;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
-public class BoardSearchBean implements Serializable {
+public class BoardSearchBean implements Serializable, HasExecutionPeriod {
 
     private Boolean searchExecutionCourseBoards;
 

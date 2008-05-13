@@ -768,7 +768,7 @@
 	</filterChain>		
 	<filterChain>
 		<name>ClassEnrollmentAuthorization</name>
-		<expression>ClassEnrollmentAuthorizationFilter</expression>
+		<expression>ClassEnrollmentAuthorizationFilter || AcademicAdministrativeOfficeAuthorization</expression>
 		<description />
 		<invocationTiming>1</invocationTiming>
 		<filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

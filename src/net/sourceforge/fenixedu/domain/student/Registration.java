@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -66,6 +67,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -1648,9 +1650,12 @@ public class Registration extends Registration_Base {
     private static final int MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD = 10;
 
     private void checkIfReachedAttendsLimit() {
-	if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
-	    throw new DomainException("error.student.reached.attends.limit", String
-		    .valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
+	final IUserView userView = AccessControl.getUserView();
+	if (userView == null || !userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
+	    if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
+		throw new DomainException("error.student.reached.attends.limit", String
+			.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
+	    }
 	}
     }
 

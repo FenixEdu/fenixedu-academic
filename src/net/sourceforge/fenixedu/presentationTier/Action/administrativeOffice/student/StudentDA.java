@@ -11,10 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.AddAttendsBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationCurriculumBean;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
@@ -263,6 +268,65 @@ public class StudentDA extends FenixDispatchAction {
 	}
 
 	return mapping.findForward("viewAttends");
+    }
+
+    public ActionForward prepareAddAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	final Registration registration = getRegistration(request);
+	request.setAttribute("registration", registration);
+
+	AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
+	if (addAttendsBean == null) {
+	    addAttendsBean = new AddAttendsBean();
+	    final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	    final Degree degree = registration.getDegree();
+	    final ExecutionDegree executionDegree = getExecutionDegree(executionYear, degree);
+
+	    addAttendsBean.setExecutionPeriod(executionPeriod);
+	    addAttendsBean.setExecutionYear(executionYear);
+	    addAttendsBean.setExecutionDegree(executionDegree);
+	}
+	request.setAttribute("addAttendsBean", addAttendsBean);
+
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("addAttends");
+    }
+
+    protected ExecutionDegree getExecutionDegree(final ExecutionYear executionYear, final Degree degree) {
+	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+		if (executionDegree.getExecutionYear() == executionYear) {
+		    return executionDegree;
+		}
+	    }
+	}
+	return null;
+    }
+
+    public ActionForward addAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final Registration registration = getRegistration(request);
+	request.setAttribute("registration", registration);
+
+	final AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
+	final ExecutionCourse executionCourse = addAttendsBean.getExecutionCourse();
+
+	executeService("WriteStudentAttendingCourse", registration, executionCourse.getIdInternal());
+
+	return viewAttends(mapping, actionForm, request, response);
+    }
+
+    public ActionForward deleteAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	final Registration registration = getRegistration(request);
+	request.setAttribute("registration", registration);
+
+	final String attendsIdString = request.getParameter("attendsId");
+	final Integer attendsId = attendsIdString != null && attendsIdString.length() > 0 ? Integer.valueOf(attendsIdString) : null;
+	final Attends attends = attendsId == null ? null : rootDomainObject.readAttendsByOID(attendsId);
+
+	executeService("DeleteStudentAttendingCourse", registration, attends.getExecutionCourse().getIdInternal());
+
+	return viewAttends(mapping, actionForm, request, response);
     }
 
 }

@@ -52,6 +52,9 @@
     <definition name="viewAttends" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/registration/viewAttends.jsp"></put>
     </definition>
+    <definition name="addAttends" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/addAttends.jsp"></put>
+    </definition>
 	<definition name="student.showStudentCurriculum" extends="academicAdminOffice.masterPage" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>    

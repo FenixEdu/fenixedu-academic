@@ -252,6 +252,7 @@
 			<forward name="registrationConclusionDocument" path="registrationConclusionDocument"/>
 			<forward name="viewRegistrationDetails" path="/student.do?method=visualizeRegistration"/>
 			<forward name="viewAttends" path="viewAttends"/>
+			<forward name="addAttends" path="addAttends"/>
 		</action>	
 
 		<action path="/viewCurriculum"
