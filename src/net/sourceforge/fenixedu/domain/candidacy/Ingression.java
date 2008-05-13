@@ -82,7 +82,9 @@ public enum Ingression {
 
     DA1C("Acesso directo do 1º Ciclo"),
 
-    AG1C("Atribuição de Grau de 1º Ciclo");
+    AG1C("Atribuição de Grau de 1º Ciclo"),
+    
+    CM23("Maiores de 23");
 
     String description;
 
