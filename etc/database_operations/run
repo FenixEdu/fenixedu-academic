@@ -28,14 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create DegreeContext Table" createDegreeContextTable.sql
-execute "Institutional Deppend modification" editPermissionsForInstitutionBoards.sql
-execute "Add AssiduousnessStatus functionality" addAssiduousnessStatusFunctionality.sql
-execute "Add export vacations functionality.sql" addExportVacationsFunctionality.sql
-execute "Alter Table AssiduousnessVacations" alterTableAssiduousnessVacations.sql
-execute "Alter Table AssiduousnessClosedMonth" alterTableAssiduousnessClosedMonth.sql
-execute "Create Table AssiduousnessExemption" createTableAssiduousnessExemption.sql
-execute "Alter Table AnualBonusInstallment" alterTableAnualBonusInstallment.sql
-execute "Add AssiduousnessExemptionsFunctionality" addAssiduousnessExemptionsFunctionality.sql
-execute "Add vacations functionalities" addVacationsFunctionalities.sql
 
