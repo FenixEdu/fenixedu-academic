@@ -16,6 +16,10 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyAcademicPeriod() : null;
     }
 
+    public boolean isFor(final AcademicPeriod academicPeriod) {
+	return getCandidacyAcademicPeriod() == academicPeriod;
+    }
+
     public DateTime getCandidacyStart() {
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyStart() : null;
     }
@@ -23,7 +27,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public DateTime getCandidacyEnd() {
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyEnd() : null;
     }
-    
+
     public YearMonthDay getCandidacyDate() {
 	return getCandidacy().getCandidacyDate();
     }

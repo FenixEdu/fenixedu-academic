@@ -37,6 +37,9 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
+import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy;
+import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
@@ -2813,6 +2816,23 @@ public class Person extends Person_Base {
 	    result++;
 	}
 	return result;
+    }
+    
+    private boolean hasValidIndividualCandidacy(final Class<? extends IndividualCandidacy> clazz, final AcademicPeriod academicPeriod) {
+	for (final IndividualCandidacy candidacy : getIndividualCandidacies()) {
+	    if (!candidacy.isCancelled() && candidacy.getClass().equals(clazz) && candidacy.isFor(academicPeriod)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
+    public boolean hasValidOver23IndividualCandidacy(final AcademicPeriod academicPeriod) {
+	return hasValidIndividualCandidacy(Over23IndividualCandidacy.class, academicPeriod);
+    }
+
+    public boolean hasValidSecondCycleIndividualCandidacy(final AcademicPeriod academicPeriod) {
+	return hasValidIndividualCandidacy(SecondCycleIndividualCandidacy.class, academicPeriod);
     }
 
 }

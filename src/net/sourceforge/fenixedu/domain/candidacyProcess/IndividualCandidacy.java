@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -48,5 +49,9 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     public boolean isDebtPayed() {
 	return hasEvent() && getEvent().isClosed();
+    }
+
+    public boolean isFor(final AcademicPeriod academicPeriod) {
+	return hasCandidacyProcess() && getCandidacyProcess().isFor(academicPeriod);
     }
 }

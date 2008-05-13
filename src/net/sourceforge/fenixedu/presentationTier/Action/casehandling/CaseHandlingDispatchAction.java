@@ -87,6 +87,10 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 	return listProcessAllowedActivities(mapping, form, request, response);
     }
 
+    protected void executeActivity(Process process, String activityId) throws FenixFilterException, FenixServiceException {
+	executeActivity(process, activityId, null);
+    }
+
     protected void executeActivity(Process process, String activityId, Object object) throws FenixFilterException,
 	    FenixServiceException {
 	executeService("ExecuteProcessActivity", process, activityId, object);

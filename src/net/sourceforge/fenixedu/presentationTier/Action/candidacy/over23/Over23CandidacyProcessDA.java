@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.over23;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,6 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import net.sourceforge.fenixedu.util.report.SpreadsheetXLSExporter;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -205,11 +207,7 @@ public class Over23CandidacyProcessDA extends CaseHandlingDispatchAction {
 	return (Over23CandidacyProcess) super.getProcess(request);
     }
 
-    private class CandidacyReport extends Spreadsheet {
-
-	public CandidacyReport(final String name) {
-	    super(name);
-	}
+    private class CandidacyXLSExporter extends SpreadsheetXLSExporter {
 
 	@Override
 	protected void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<Object> cells,
@@ -228,5 +226,27 @@ public class Over23CandidacyProcessDA extends CaseHandlingDispatchAction {
 		addColumn(cellStyle, row, cellValue);
 	    }
 	}
+    }
+
+    private class CandidacyReport extends Spreadsheet {
+
+	public CandidacyReport(final String name) {
+	    super(name);
+	}
+
+	@Override
+	public void exportToXLSSheet(final OutputStream outputStream) throws IOException {
+	    new CandidacyXLSExporter().exportToXLSSheet(this, outputStream);
+	}
+    }
+
+    public ActionForward prepareExecuteCreateRegistrations(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "CreateRegistrations");
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 }

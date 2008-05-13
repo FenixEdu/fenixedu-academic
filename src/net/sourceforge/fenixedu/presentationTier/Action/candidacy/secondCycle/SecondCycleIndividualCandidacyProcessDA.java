@@ -301,4 +301,14 @@ public class SecondCycleIndividualCandidacyProcessDA extends CaseHandlingDispatc
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
+
+    public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "CreateRegistration");
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
 }

@@ -10,9 +10,12 @@ import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividualCandidacyProcess_Base {
 
@@ -21,8 +24,9 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
 	activities.add(new EditCandidacyInformation());
-	//activities.add(new IntroduceCandidacyResult());
+	//TODO: activities.add(new IntroduceCandidacyResult());
 	activities.add(new CancelCandidacy());
+	//TODO: activities.add(new CreateRegistration());
     }
 
     private SecondCycleIndividualCandidacyProcess() {
@@ -122,6 +126,10 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	return getCandidacy().getNotes();
     }
 
+    boolean isValid() {
+	return isCandidacyInStandBy() && isCandidacyDebtPayed();
+    }
+
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
@@ -209,19 +217,14 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    //TODO:
-	    /*
-	     
-	     if (process.isCandidacyCancelled() || process.isCandidacyInStandBy()) {
-	     throw new PreConditionNotValidException();
-	     }
 
-	     // add missing conditions
-	     if (!process.isSentToCoordinator())) {
-	     throw new PreConditionNotValidException();
-	     }
-	     */
+	    if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
 
+	    if (!process.isSentToCoordinator()) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
@@ -250,5 +253,45 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    process.cancelCandidacy(userView.getPerson());
 	    return process;
 	}
+    }
+
+    static private class CreateRegistration extends Activity<SecondCycleIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isCandidacyAccepted()) {
+		throw new PreConditionNotValidException();
+	    }
+	    
+	    if (process.hasRegistrationForCandidacy()) {
+		throw new PreConditionNotValidException();
+	    }
+	    
+	    if (!process.isPublished()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    createRegistration(process);
+	    return process;
+	}
+
+	private void createRegistration(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
+	    final Registration registration = new Registration(candidacyProcess.getCandidacyPerson(),
+		    getDegreeCurricularPlan(candidacyProcess));
+	    registration.setIngression(Ingression.CIA2C); //TODO: change ingression
+	}
+
+	private DegreeCurricularPlan getDegreeCurricularPlan(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
+	    return candidacyProcess.getCandidacySelectedDegree().getMostRecentDegreeCurricularPlan();
+	}
+
     }
 }

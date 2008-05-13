@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicPeriod;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
 
@@ -43,8 +41,8 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     static {
 	//TODO: activities.add(new SetJury());
 	activities.add(new EditCandidacyPeriod());
-	//TODO: activities.add(new SendInformationToJury());
-	//TODO: activities.add(new PrintCandidacies());
+	activities.add(new SendInformationToJury());
+	activities.add(new PrintCandidacies());
 	//TODO: activities.add(new InsertResultsFromJury());
 	//TODO: activities.add(new PublishCandidacyResults());
 	//TODO: activities.add(new CreateRegistrations());
@@ -245,17 +243,13 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 
-	    //TODO: remove this and remove comment
-	    throw new PreConditionNotValidException();
-
-	    //	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
-	    //		throw new PreConditionNotValidException();
-	    //	    }
-	    //	    
-	    //	    if (!process.isPublished()) {
-	    //		throw new PreConditionNotValidException();
-	    //	    }
+	    if (!process.isPublished()) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
@@ -263,18 +257,10 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	    for (final IndividualCandidacyProcess candidacyProcess : process.getChildProcesses()) {
 		final Over23IndividualCandidacyProcess over23CP = (Over23IndividualCandidacyProcess) candidacyProcess;
 		if (over23CP.isCandidacyAccepted() && !over23CP.hasRegistrationForCandidacy()) {
-		    createRegistration(over23CP);
+		    over23CP.executeActivity(userView, "CreateRegistration", null);
 		}
 	    }
 	    return process;
-	}
-
-	private void createRegistration(final Over23IndividualCandidacyProcess candidacyProcess) {
-	    new Registration(candidacyProcess.getCandidacyPerson(), getDegreeCurricularPlan(candidacyProcess));
-	}
-
-	private DegreeCurricularPlan getDegreeCurricularPlan(final Over23IndividualCandidacyProcess candidacyProcess) {
-	    return candidacyProcess.getAcceptedDegree().getMostRecentDegreeCurricularPlan();
 	}
     }
 }

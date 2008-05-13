@@ -54,6 +54,9 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 		    .toString(DateFormatUtil.DEFAULT_DATE_FORMAT), process.getCandidacyEnd().toString(
 		    DateFormatUtil.DEFAULT_DATE_FORMAT));
 	}
+	if (person.hasValidSecondCycleIndividualCandidacy(process.getCandidacyAcademicPeriod())) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.person.already.has.candidacy");
+	}
 	if (degree == null || personHasDegree(person, degree)) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degrees");
 	}

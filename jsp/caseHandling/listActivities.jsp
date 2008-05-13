@@ -19,6 +19,7 @@
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="activities">
+	<br/>
 	<em><strong><bean:message key="label.no.activities" bundle="APPLICATION_RESOURCES" /></strong></em>
 	<br/>
 </logic:empty>
