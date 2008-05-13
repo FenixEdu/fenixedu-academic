@@ -14,13 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
-
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class Spreadsheet {
@@ -113,9 +108,9 @@ public class Spreadsheet {
     public Row getRow(final int rowNumber) {
 	return rows.get(rowNumber);
     }
-    
-    protected List<Row> getRows() {
-	return rows;
+
+    public List<Row> getRows() {
+	return Collections.unmodifiableList(rows);
     }
 
     public void setRows(List<Row> rows) {
@@ -195,63 +190,15 @@ public class Spreadsheet {
     }
 
     public void exportToXLSSheet(final OutputStream outputStream) throws IOException {
-	final HSSFWorkbook workbook = new HSSFWorkbook();
-	final ExcelStyle excelStyle = new ExcelStyle(workbook);
-	exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
-	workbook.write(outputStream);
+	new SpreadsheetXLSExporter().exportToXLSSheet(this, outputStream);
     }
 
     public void exportToXLSSheet(final File file) throws IOException {
-	BufferedOutputStream outputStream = null;
-	try {
-	    outputStream = new BufferedOutputStream(new FileOutputStream(file));
-	    exportToXLSSheet(outputStream);
-	} catch (FileNotFoundException e) {
-	    throw new RuntimeException(e);
-	} catch (IOException e) {
-	    throw new RuntimeException(e);
-	} finally {
-	    if (outputStream != null) {
-		try {
-		    outputStream.close();
-		} catch (IOException e) {
-		    throw new RuntimeException(e);
-		}
-	    }
-	}
+	new SpreadsheetXLSExporter().exportToXLSSheet(this, file);
     }
 
     public void exportToXLSSheet(final HSSFWorkbook workbook, final HSSFCellStyle headerCellStyle, final HSSFCellStyle cellStyle) {
-	final HSSFSheet sheet = workbook.createSheet(name);
-	sheet.setDefaultColumnWidth((short) 20);
-
-	exportXLSLine(sheet, headerCellStyle, header, 0);
-
-	for (final Row row : rows) {
-	    exportXLSLine(sheet, cellStyle, row.getCells());
-	}
-    }
-
-    protected void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<Object> cells) {
-	exportXLSLine(sheet, cellStyle, cells, 1);
-    }
-
-    protected void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<Object> cells, final int offset) {
-	final HSSFRow row = sheet.createRow(sheet.getLastRowNum() + offset);
-	for (final Object cellValue : cells) {
-	    addColumn(cellStyle, row, cellValue);
-	}
-    }
-
-    protected static HSSFCell addColumn(final HSSFCellStyle cellStyle, final HSSFRow row, final Object cellValue) {
-	final HSSFCell cell = row.createCell((short) (row.getLastCellNum() + 1));
-	cell.setCellStyle(cellStyle);
-	if (cellValue != null) {
-	    cell.setCellValue(cellValue.toString());
-	} else {
-	    cell.setCellValue("");
-	}
-	return cell;
+	new SpreadsheetXLSExporter().exportToXLSSheet(workbook, this, headerCellStyle, cellStyle);
     }
 
 }
