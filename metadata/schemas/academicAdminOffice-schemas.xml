@@ -1367,7 +1367,7 @@
 	<slot name="cycleCurriculumGroup.name" />
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
-	<slot name="average" />
+	<slot name="average"/>
 	<slot name="finalAverage" />
 	<slot name="conclusionDate" />
 </schema>
@@ -1375,7 +1375,8 @@
 <schema name="RegistrationConclusionBean.confirmConclusionForRegistration" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
-	<slot name="average" />
+	<slot name="average"/>
+	<slot name="registration.averageType"/>
 	<slot name="finalAverage" />
 	<slot name="conclusionDate" />
 </schema>
@@ -1420,6 +1421,7 @@
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
 	<slot name="average" />
+	<slot name="registration.averageType"/>	
 	<slot name="finalAverage" />
 	<slot name="conclusionDate" />
 	<slot name="conclusionProcessNotes"/>	
@@ -1438,6 +1440,7 @@
 	<slot name="curriculumEntriesSize" />
 	<slot name="ectsCredits" />
 	<slot name="average" />
+	<slot name="registration.averageType"/>	
 </schema>
 
 <schema name="AccountingEventCreateBean.editExecutionYear" type="net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean" bundle="APPLICATION_RESOURCES">
