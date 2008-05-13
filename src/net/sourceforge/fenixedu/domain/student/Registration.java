@@ -74,6 +74,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState;
@@ -608,8 +609,26 @@ public class Registration extends Registration_Base {
 	return getCurriculum(executionYear, cycleType).getSumEctsCredits();
     }
 
+    final public AverageType getAverageType() {
+	return getLastStudentCurricularPlan().getAverageType();
+    }
+
     final public BigDecimal calculateAverage() {
-	return getCurriculum().getAverage();
+	final ICurriculum curriculum = getCurriculum();
+	final BigDecimal weighted = curriculum.getAverage();
+
+	switch (getAverageType()) {
+	case SIMPLE:
+	    curriculum.setAverageType(AverageType.SIMPLE);
+	    return curriculum.getAverage();
+	case BEST:
+	    curriculum.setAverageType(AverageType.SIMPLE);
+	    final BigDecimal simple = curriculum.getAverage();
+
+	    return weighted.max(simple);
+	default:
+	    return weighted;
+	}
     }
 
     public Integer calculateFinalAverage() {
@@ -617,7 +636,7 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("error.Registration.for.cannot.calculate.final.average.in.registration.for.bolonha");
 	}
 
-	return getCurriculum().getRoundedAverage();
+	return Curriculum.getRoundedAverage(calculateAverage());
     }
 
     @Override
