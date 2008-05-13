@@ -193,7 +193,11 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     public Integer getRoundedAverage() {
-	return getAverage().setScale(0, RoundingMode.HALF_UP).intValue();
+	return getRoundedAverage(getAverage());
+    }
+
+    static public Integer getRoundedAverage(final BigDecimal average) {
+	return average.setScale(0, RoundingMode.HALF_UP).intValue();
     }
 
     public BigDecimal getSumEctsCredits() {
