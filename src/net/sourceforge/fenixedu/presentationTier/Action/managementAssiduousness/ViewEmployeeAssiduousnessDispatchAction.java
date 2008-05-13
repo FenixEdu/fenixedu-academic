@@ -222,6 +222,30 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	return mapping.findForward("show-vacations");
     }
 
+    public ActionForward showStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	final Employee employee = getEmployee(request, (DynaActionForm) form);
+	ActionForward actionForward = validateEmployee(mapping, request, employee);
+	if (actionForward != null) {
+	    return actionForward;
+	}
+	YearMonth yearMonth = getYearMonth(request, employee);
+	if (yearMonth == null) {
+	    return mapping.findForward("show-status");
+	}
+
+	if (employee.getAssiduousness() != null) {
+	    List<AssiduousnessStatusHistory> employeeStatusList = new ArrayList<AssiduousnessStatusHistory>(employee
+		    .getAssiduousness().getAssiduousnessStatusHistories());
+	    Collections.sort(employeeStatusList, new BeanComparator("beginDate"));
+	    request.setAttribute("statusList", employeeStatusList);
+	    // setEmployeeStatus(request, employee, beginDate, endDate);
+	}
+	request.setAttribute("yearMonth", yearMonth);
+	request.setAttribute("employee", employee);
+	return mapping.findForward("show-status");
+    }
+
     public ActionForward showPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Integer personID = new Integer(request.getParameter("personID"));
@@ -259,7 +283,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
 	if (employee.getAssiduousness() != null) {
 	    List<EmployeeBalanceResume> employeeBalanceResumeList = new ArrayList<EmployeeBalanceResume>();
-	    
+
 	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
 	    YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
 		    .dayOfMonth().getMaximumValue());
@@ -295,9 +319,14 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
     }
 
     private ActionForward validateEmployee(ActionMapping mapping, HttpServletRequest request, final Employee employee) {
-	if (employee == null || employee.getAssiduousness() == null) {
+	if (employee == null) {
 	    ActionMessages actionMessages = new ActionMessages();
 	    actionMessages.add("message", new ActionMessage("error.invalidEmployee"));
+	    saveMessages(request, actionMessages);
+	    return mapping.getInputForward();
+	} else if (employee.getAssiduousness() == null) {
+	    ActionMessages actionMessages = new ActionMessages();
+	    actionMessages.add("message", new ActionMessage("error.invalidEmployeeAssiduousness"));
 	    saveMessages(request, actionMessages);
 	    return mapping.getInputForward();
 	}

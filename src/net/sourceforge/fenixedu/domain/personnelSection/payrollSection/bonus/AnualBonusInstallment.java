@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.assiduousness.util.YearMonthList;
+import net.sourceforge.fenixedu.domain.assiduousness.util.PartialList;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType;
 
@@ -15,20 +15,18 @@ import org.joda.time.Partial;
 
 public class AnualBonusInstallment extends AnualBonusInstallment_Base {
 
-    public AnualBonusInstallment(Integer year, Partial paymentPartialDate,
-	    YearMonthList assiudousnessYearMonths) {
+    public AnualBonusInstallment(Integer year, Partial paymentPartialDate, PartialList assiudousnessYearMonths) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setYear(year);
 	setPaymentPartialDate(paymentPartialDate);
-	setAssiduousnessYearMonths(assiudousnessYearMonths);
+	setAssiduousnessPartials(assiudousnessYearMonths);
     }
 
     public static List<AnualBonusInstallment> readByYear(Integer year) {
 	List<AnualBonusInstallment> result = new ArrayList<AnualBonusInstallment>();
 	if (year != null) {
-	    for (AnualBonusInstallment anualBonusInstallment : RootDomainObject.getInstance()
-		    .getAnualBonusInstallments()) {
+	    for (AnualBonusInstallment anualBonusInstallment : RootDomainObject.getInstance().getAnualBonusInstallments()) {
 		if (anualBonusInstallment.getYear().equals(year)) {
 		    result.add(anualBonusInstallment);
 		}
@@ -61,8 +59,7 @@ public class AnualBonusInstallment extends AnualBonusInstallment_Base {
 
     public EmployeeBonusInstallment getEmployeeBonusInstallment(Employee employee, BonusType type) {
 	for (EmployeeBonusInstallment employeeBonusInstallment : getEmployeeBonusInstallments()) {
-	    if (employeeBonusInstallment.getEmployee().equals(employee)
-		    && employeeBonusInstallment.getBonusType().equals(type)) {
+	    if (employeeBonusInstallment.getEmployee().equals(employee) && employeeBonusInstallment.getBonusType().equals(type)) {
 		return employeeBonusInstallment;
 	    }
 	}

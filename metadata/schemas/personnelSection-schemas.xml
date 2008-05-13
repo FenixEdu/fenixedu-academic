@@ -19,6 +19,45 @@
 	</slot>
 </schema>
 
+<schema name="edit.employeeStatus" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory">
+	<slot read-only="true" name="assiduousnessStatus.description" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot read-only="true" name="beginDate"/>
+	<slot name="endDate"> 
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+			<property name="format" value="dd/MM/yyyy"/>
+			<property name="size" value="10"/>
+		</validator>
+	</slot>
+	<slot name="modifiedBy" hidden="true"/>
+	<setter signature="editAssiduousnessStatusHistory(endDate,modifiedBy)"/>
+</schema>
+
+<schema name="create.employeeStatus" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory"
+constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy">
+	<slot name="assiduousnessStatus" layout="menu-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.AssiduousnessStatusAsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" />
+		<property name="format" value="${description}"/>
+	</slot>
+	<slot read-only="true" name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate"/>
+	<slot name="modifiedBy" hidden="true"/>
+	<slot name="assiduousness" hidden="true"/>
+</schema>
+
+<schema name="create.employeeStatus.beginDate" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory"
+constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy">
+	<slot name="assiduousnessStatus" layout="menu-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.AssiduousnessStatusAsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" />
+		<property name="format" value="${description}"/>
+	</slot>
+	<slot name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="endDate"/>
+	<slot name="modifiedBy" hidden="true"/>
+	<slot name="assiduousness" hidden="true"/>
+</schema>
+
 <schema name="show.status" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus">
 	<slot name="description" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
@@ -160,12 +199,21 @@
 	<slot name="accumulatedDays" key="label.accumulatedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="bonusDays" key="label.bonusVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="lowTimeVacationsDays" key="label.lowTimeVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="article17Days" key="label.article17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="accumulatedArticle17Days" key="label.article17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="extraWorkDays" key="label.extraWorkVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="lastYearExtraWorkDays" key="label.lastYearExtraWorkVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="totalDays" key="label.total" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="usedVacations" key="label.totalUsedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="unusedVacations" key="label.totalUnusedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="usedVacations" key="label.usedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="unusedVacations" key="label.unusedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
+<schema name="show.a17AndA18Calcule"
+	type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations">
+	<slot name="efectiveWorkDays" key="label.lastYearEfectiveWorkDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="art17And18MaximumLimitDays" key="label.art17And18MaximumLimitDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="art17And18LimitDays" key="label.art17And18LimitDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="numberOfArt17" key="label.art17Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="numberOfArt18" key="label.art18Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="choose.date" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth">
@@ -221,6 +269,16 @@
 	</slot>
 </schema>
 
+<schema name="choose.assiduousnessExportChoicesDates.year"
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices">
+	<slot name="yearMonth.year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	</slot>
+</schema>
+
 <schema name="choose.assiduosunessExportChoice.dates"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices">
 	<slot name="beginDate"  bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
@@ -264,9 +322,7 @@
 	</slot>	
 </schema>
 
-
-<schema name="show.justificationMotives"
-	type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
+<schema name="show.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
 	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="justificationType" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES"/>
@@ -662,7 +718,7 @@
 
 <schema name="edit.severalEmployeeJustificationFactoryCreator" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory$SeveralEmployeeJustificationFactoryCreator">
 	<slot name="assiduousnessStatus" layout="option-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.AssiduousnessStatusAsProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.ActiveAssiduousnessStatusAsProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" />
 		<property name="eachSchema" value="show.status" />
 		<property name="eachLayout" value="values" />
@@ -1199,3 +1255,41 @@
 	<slot name="article66" key="label.a66"/>
 	<slot name="thisMonthUnjustifiedDays" key="label.totalUnjustified"/>
 </schema>
+
+
+<schema name="show.assiduousnessExemptions" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption">
+	<slot name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES"/>	
+	<slot name="assiduousnessExemptionShifts" key="label.shifts" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="eachSchema" value="edit.assiduousnessExemptionShifts" />
+		<property name="eachLayout" value="values" />
+		<property name="htmlSeparator" value="/" />
+	</slot>
+</schema>
+
+<schema name="edit.assiduousnessExemptionShifts" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemptionShift">
+	<slot name="partialShift.partials" bundle="ASSIDUOUSNESS_RESOURCES" layout="flowLayout">
+		<property name="htmlSeparator" value="-" />
+	</slot>
+</schema>
+
+
+<schema name="edit.assiduousnessExemption" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExemptionBean">
+	<slot name="year" bundle="ASSIDUOUSNESS_RESOURCES">
+		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<property name="maxLength" value="4" />
+		<property name="size" value="4" />
+	</slot>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="size" value="50"/>
+	</slot>
+</schema>
+
+<schema name="edit.assiduousnessExemption.shifts" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExemptionBean$AssiduousnessExemptionShiftBean">
+	<slot name="firstShiftYearMonthDay" key="label.firstShift" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="secondShiftYearMonthDay" key="label.secondShift" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
+
+
+

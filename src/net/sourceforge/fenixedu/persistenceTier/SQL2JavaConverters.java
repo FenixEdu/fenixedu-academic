@@ -49,6 +49,6 @@ public class SQL2JavaConverters {
     public static FieldConversion EmailAddressList2SqlEmailAddressListConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.EmailAddressList2SqlEmailAddressListConversion();
     public static FieldConversion ProtocolAction2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.ProtocolAction2SqlVarcharConverter();
     public static FieldConversion Grade2SqlGradeStringConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.Grade2SqlGradeStringConversion();
-    public static FieldConversion YearMonthList2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.YearMonthList2SqlVarcharConverter();
+    public static FieldConversion PartialList2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.PartialList2SqlVarcharConverter();
     public static FieldConversion AcademicInterval2SqlAcademicIntervalConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicInterval2SqlAcademicIntervalConversion();
 }

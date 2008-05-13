@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -18,13 +19,16 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessMo
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeAnualInfo;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.LanguageUtils;
+import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
@@ -49,6 +53,12 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	if (chooseBetweenDates != null && chooseBetweenDates.length() != 0 && new Boolean(chooseBetweenDates) == true) {
 	    assiduousnessExportChoices.setCanChooseDateType(true);
 	}
+
+	String chooseYear = request.getParameter("chooseYear");
+	if (chooseYear != null && chooseYear.length() != 0 && new Boolean(chooseYear) == true) {
+	    assiduousnessExportChoices.setChooseYear(true);
+	}
+
 	request.setAttribute("assiduousnessExportChoices", assiduousnessExportChoices);
 	return mapping.findForward("choose-year-month");
     }
@@ -206,6 +216,47 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
 	response.flushBuffer();
 	return null;
+    }
+
+    public ActionForward exportVacations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
+
+	List<AssiduousnessVacations> assiduousnessVacationsList = new ArrayList<AssiduousnessVacations>();
+	for (Assiduousness assiduousness : assiduousnessExportChoices.getAssiduousnesses()) {
+	    AssiduousnessVacations assiduousnessVacations = assiduousness
+		    .getAssiduousnessVacationsByYear(assiduousnessExportChoices.getYearMonth().getYear());
+	    if (assiduousnessVacations != null) {
+		assiduousnessVacationsList.add(assiduousnessVacations);
+	    }
+	}
+
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+
+	Map<String, String> parameters = new HashMap<String, String>();
+	YearMonthDay now = new YearMonthDay();
+	final String dateSeparator = new String(" de ");
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	String month = bundleEnumeration.getString(Month.values()[now.getMonthOfYear() - 1].toString());
+	StringBuilder stringBuilder = new StringBuilder().append(now.getDayOfMonth()).append(dateSeparator).append(month).append(
+		dateSeparator).append(now.getYear());
+	parameters.put("date", stringBuilder.toString());
+
+	ComparatorChain comparatorChain = new ComparatorChain();
+	comparatorChain.addComparator(new BeanComparator("lastMailingUnitCodeInYear"));
+	comparatorChain.addComparator(new BeanComparator("assiduousness.employee.employeeNumber"));
+	Collections.sort(assiduousnessVacationsList, comparatorChain);
+	response.setContentType("application/pdf");
+	response.addHeader("Content-Disposition", "attachment; filename=ferias.pdf");
+	byte[] data = ReportsUtils.exportToPdf("assiduousness.vacations", parameters, bundle, assiduousnessVacationsList);
+	response.setContentLength(data.length);
+	ServletOutputStream writer = response.getOutputStream();
+	writer.write(data);
+	writer.flush();
+	writer.close();
+	response.flushBuffer();
+	return mapping.findForward("");
     }
 
     private boolean isMonthClosed(YearMonth yearMonth) {

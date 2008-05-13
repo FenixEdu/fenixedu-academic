@@ -54,14 +54,13 @@
 				<bean:message key="button.openMonth" />
 			</html:submit>
 		</fr:form>
-		<%--
+	
 		<fr:form action="/monthClosure.do?method=exportClosedMonthFile">
 			<fr:edit id="yearMonthToOpen2" name="yearMonthToExport" schema="show.date" visible="false"/>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.open" styleClass="invisible">
 				<bean:message key="button.export" />
 			</html:submit>
 		</fr:form>
-		--%>
 	</p>
 	
 	<logic:notEmpty name="closedMonthDocuments">

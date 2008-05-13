@@ -24,6 +24,9 @@
 	<definition name="show-vacations" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/showVacations.jsp"/>
 	</definition>
+	<definition name="show-status" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/showStatus.jsp"/>
+	</definition>
 	<definition name="show-balance-resume" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/showBalanceResume.jsp"/>
 	</definition>
@@ -43,6 +46,12 @@
 	</definition>
 	<definition name="show-regularization-motives" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/showRegularizationMotives.jsp"/>
+	</definition>
+	<definition name="show-assiduousness-exemptions" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/showAssiduousnessExemptions.jsp"/>
+	</definition>
+	<definition name="edit-assiduousness-exemption" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/editAssiduousnessExemption.jsp"/>
 	</definition>
 	<!-- Export -->
 	<definition name="choose-year-month" extends="definition.managementAssiduousness.masterPage">
@@ -92,7 +101,9 @@
 	<definition name="associate-exception-schedule" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/associateExceptionSchedule.jsp"/>
 	</definition>
-	
+	<definition name="edit-status" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/editStatus.jsp"/>
+	</definition>
 	<!-- Month Closure-->
 	<definition name="close-month" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/closeMonth.jsp"/>

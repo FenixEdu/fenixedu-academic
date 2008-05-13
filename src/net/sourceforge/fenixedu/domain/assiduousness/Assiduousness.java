@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
@@ -487,6 +489,20 @@ public class Assiduousness extends Assiduousness_Base {
 	return lastActiveStatus;
     }
 
+    public AssiduousnessStatusHistory getLastAssiduousnessStatusHistory() {
+	AssiduousnessStatusHistory lastActiveStatus = null;
+	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
+	    if (assiduousnessStatusHistory.getEndDate() != null) {
+		if (lastActiveStatus == null || !lastActiveStatus.getEndDate().isAfter(assiduousnessStatusHistory.getEndDate())) {
+		    lastActiveStatus = assiduousnessStatusHistory;
+		}
+	    } else {
+		return assiduousnessStatusHistory;
+	    }
+	}
+	return lastActiveStatus;
+    }
+
     public List<AssiduousnessStatusHistory> getStatusBetween(YearMonthDay beginDate, YearMonthDay endDate) {
 	List<AssiduousnessStatusHistory> assiduousnessStatusList = new ArrayList<AssiduousnessStatusHistory>();
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
@@ -643,6 +659,16 @@ public class Assiduousness extends Assiduousness_Base {
 	    }
 	}
 	return result;
+    }
+
+    public Unit getLastMailingUnitInDate(YearMonthDay beginDate, YearMonthDay endDate) {
+	Unit unit = getEmployee().getLastWorkingPlace(beginDate, endDate);
+	EmployeeContract lastMailingContract = (EmployeeContract) getEmployee().getLastContractByContractType(
+		AccountabilityTypeEnum.MAILING_CONTRACT);
+	if (lastMailingContract != null && lastMailingContract.getMailingUnit() != null) {
+	    unit = lastMailingContract.getMailingUnit();
+	}
+	return unit;
     }
 
 }

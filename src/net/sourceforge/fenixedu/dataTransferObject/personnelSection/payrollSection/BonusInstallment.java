@@ -14,10 +14,12 @@ import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment;
+import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 public class BonusInstallment implements Serializable {
@@ -75,14 +77,14 @@ public class BonusInstallment implements Serializable {
 	int nextFirstRow = spreadsheet.getRow().getLastCellNum() + 1;
 	AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment.readByYearAndInstallment(getYear(), getInstallment());
 
-	List<YearMonth> sortedYearMonths = anualBonusInstallment.getAssiduousnessYearMonths().getSortedYearsMonths();
+	List<Partial> sortedPartials = anualBonusInstallment.getAssiduousnessPartials().getSortedPartials();
 
-	for (YearMonth yearMonth : sortedYearMonths) {
-	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
-	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
-	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
-	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
-	    spreadsheet.addHeader(enumBundle.getString(yearMonth.getMonth().name()));
+	for (Partial partial : sortedPartials) {
+	    spreadsheet.addHeader(enumBundle.getString(Month.values()[partial.get(DateTimeFieldType.monthOfYear()) - 1].name()));
+	    spreadsheet.addHeader(enumBundle.getString(Month.values()[partial.get(DateTimeFieldType.monthOfYear()) - 1].name()));
+	    spreadsheet.addHeader(enumBundle.getString(Month.values()[partial.get(DateTimeFieldType.monthOfYear()) - 1].name()));
+	    spreadsheet.addHeader(enumBundle.getString(Month.values()[partial.get(DateTimeFieldType.monthOfYear()) - 1].name()));
+	    spreadsheet.addHeader(enumBundle.getString(Month.values()[partial.get(DateTimeFieldType.monthOfYear()) - 1].name()));
 	}
 
 	for (int columnIndex = 0; columnIndex < nextFirstRow; columnIndex++) {
@@ -90,7 +92,7 @@ public class BonusInstallment implements Serializable {
 	}
 	spreadsheet.newHeaderRow();
 	int rowNumber = spreadsheet.getSheet().getLastRowNum() - 1;
-	for (int index = nextFirstRow, monthIndex = 0; monthIndex < sortedYearMonths.size(); monthIndex++, index += 5) {
+	for (int index = nextFirstRow, monthIndex = 0; monthIndex < sortedPartials.size(); monthIndex++, index += 5) {
 	    spreadsheet.addHeader(bundle.getString("label.maximumWorkingDays"), 2000, index);
 	    spreadsheet.addHeader(bundle.getString("label.workedDays"), 2000, index + 1);
 	    spreadsheet.addHeader(bundle.getString("label.absences"), 2000, index + 2);

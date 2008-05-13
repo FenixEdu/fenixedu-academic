@@ -45,6 +45,7 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setDiscountA17Vacations(discountA17Vacations);
 	setGiafCodeContractedStatus(giafCodeContractedStatus);
 	setGiafCodeOtherStatus(giafCodeOtherStatus);
+	setAccumulate(Boolean.FALSE);
     }
 
     public JustificationMotive(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,

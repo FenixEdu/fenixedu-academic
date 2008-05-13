@@ -29,6 +29,9 @@
 	</html:link>, <html:link
 		page="<%="/viewEmployeeAssiduousness.do?method=showVacations&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 		<bean:message key="link.vacations" />
+	</html:link>, <html:link
+		page="<%="/viewEmployeeAssiduousness.do?method=showStatus&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
+		<bean:message key="title.showStatus" />
 	</html:link></p>
 	
 	<logic:present name="showJustificationsLinks">

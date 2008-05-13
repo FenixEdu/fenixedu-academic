@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.Partial;
 
 public class EmployeeBonusInstallment extends EmployeeBonusInstallment_Base {
 
-    public EmployeeBonusInstallment(AnualBonusInstallment anualBonusInstallment, Employee employee,
-	    Double installmentValue, BonusType bonusType, Integer costCenterCode,
-	    String subCostCenterCode, Integer explorationUnit) {
+    public EmployeeBonusInstallment(AnualBonusInstallment anualBonusInstallment, Employee employee, Double installmentValue,
+	    BonusType bonusType, Integer costCenterCode, String subCostCenterCode, Integer explorationUnit) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAnualBonusInstallment(anualBonusInstallment);
@@ -27,8 +26,8 @@ public class EmployeeBonusInstallment extends EmployeeBonusInstallment_Base {
 	setExplorationUnit(explorationUnit);
     }
 
-    public void edit(Double installmentValue, BonusType bonusType, Integer costCenterCode,
-	    String subCostCenterCode, Integer explorationUnit) {
+    public void edit(Double installmentValue, BonusType bonusType, Integer costCenterCode, String subCostCenterCode,
+	    Integer explorationUnit) {
 	setValue(installmentValue);
 	setBonusType(bonusType);
 	setCostCenterCode(costCenterCode);
@@ -36,9 +35,9 @@ public class EmployeeBonusInstallment extends EmployeeBonusInstallment_Base {
 	setExplorationUnit(explorationUnit);
     }
 
-    public EmployeeMonthlyBonusInstallment getEmployeeMonthlyBonusInstallment(YearMonth yearMonth) {
+    public EmployeeMonthlyBonusInstallment getEmployeeMonthlyBonusInstallment(Partial partial) {
 	for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : getEmployeeMonthlyBonusInstallments()) {
-	    if (new YearMonth(employeeMonthlyBonusInstallment.getPartialYearMonth()).equals(yearMonth)) {
+	    if (employeeMonthlyBonusInstallment.getPartialYearMonth().equals(partial)) {
 		return employeeMonthlyBonusInstallment;
 	    }
 	}

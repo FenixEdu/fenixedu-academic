@@ -100,17 +100,18 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 	    Map<Integer, ClosedMonth> closedMonthMap = new HashMap<Integer, ClosedMonth>();
 	    YearMonthDay begin = new YearMonthDay();
 	    YearMonthDay end = begin;
-	    for (YearMonth yearMonth : choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths()) {
-		ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
+	    for (Partial partial : choosenAnualBonusInstallment.getAssiduousnessPartials().getPartials()) {
+		ClosedMonth closedMonth = ClosedMonth.getClosedMonth(partial);
 		if (closedMonth == null) {
 		    errorMessages.add(new ActionMessage("error.notAllInstallmentMonthsAreClosed"));
-		}
-		closedMonthMap.put(yearMonth.getNumberOfMonth(), closedMonth);
-		if (begin.isAfter(closedMonth.getClosedMonthFirstDay())) {
-		    begin = closedMonth.getClosedMonthFirstDay();
-		}
-		if (end.isBefore(closedMonth.getClosedMonthLastDay())) {
-		    end = closedMonth.getClosedMonthLastDay();
+		} else {
+		    closedMonthMap.put(partial.get(DateTimeFieldType.monthOfYear()), closedMonth);
+		    if (begin.isAfter(closedMonth.getClosedMonthFirstDay())) {
+			begin = closedMonth.getClosedMonthFirstDay();
+		    }
+		    if (end.isBefore(closedMonth.getClosedMonthLastDay())) {
+			end = closedMonth.getClosedMonthLastDay();
+		    }
 		}
 	    }
 
@@ -196,22 +197,21 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 		}
 
 		double value = formatDouble(thisEmployeeBonusInstallment.getValue()
-			/ choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths().size());
+			/ choosenAnualBonusInstallment.getAssiduousnessPartials().getPartials().size());
 		double lastValue = formatDouble(thisEmployeeBonusInstallment.getValue()
-			- (value * (choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths().size() - 1)));
+			- (value * (choosenAnualBonusInstallment.getAssiduousnessPartials().getPartials().size() - 1)));
 
-		for (int yearMonthIndex = 0; yearMonthIndex < choosenAnualBonusInstallment.getAssiduousnessYearMonths()
-			.getYearsMonths().size(); yearMonthIndex++) {
-		    YearMonth yearMonth = choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths().get(
-			    yearMonthIndex);
+		for (int partialIndex = 0; partialIndex < choosenAnualBonusInstallment.getAssiduousnessPartials().getPartials()
+			.size(); partialIndex++) {
+		    Partial partial = choosenAnualBonusInstallment.getAssiduousnessPartials().getPartials().get(partialIndex);
 
 		    double thisValue = value;
-		    if (yearMonthIndex == choosenAnualBonusInstallment.getAssiduousnessYearMonths().getYearsMonths().size() - 1) {
+		    if (partialIndex == choosenAnualBonusInstallment.getAssiduousnessPartials().getPartials().size() - 1) {
 			thisValue = lastValue;
 		    }
 		    EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment = thisEmployeeBonusInstallment
-			    .getEmployeeMonthlyBonusInstallment(yearMonth);
-		    ClosedMonth closedMonth = closedMonthMap.get(yearMonth.getNumberOfMonth());
+			    .getEmployeeMonthlyBonusInstallment(partial);
+		    ClosedMonth closedMonth = closedMonthMap.get(partial.get(DateTimeFieldType.monthOfYear()));
 		    List<AssiduousnessClosedMonth> assiduousnessClosedMonthList = closedMonth
 			    .getAssiduousnessClosedMonths(thisEmployeeBonusInstallment.getEmployee().getAssiduousness());
 		    int workedDays = 0;
@@ -224,7 +224,7 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 		    }
 		    if (employeeMonthlyBonusInstallment == null) {
 			DateTimeFieldType[] dateTimeFields = { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() };
-			int[] fieldValues = { yearMonth.getYear(), yearMonth.getNumberOfMonth() };
+			int[] fieldValues = { partial.get(DateTimeFieldType.year()), partial.get(DateTimeFieldType.monthOfYear()) };
 			employeeMonthlyBonusInstallment = new EmployeeMonthlyBonusInstallment(thisEmployeeBonusInstallment,
 				new Partial(dateTimeFields, fieldValues), thisValue);
 		    } else {

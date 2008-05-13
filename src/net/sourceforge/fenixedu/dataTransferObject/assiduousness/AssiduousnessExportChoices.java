@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
@@ -17,6 +18,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.MissingClocking;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.lang.StringUtils;
@@ -32,6 +34,8 @@ public class AssiduousnessExportChoices implements Serializable {
     private AssiduousnessExportChoicesDatesType assiduousnessExportChoicesDatesType;
 
     private Boolean canChooseDateType;
+
+    private Boolean chooseYear;
 
     private YearMonth yearMonth;
 
@@ -61,6 +65,7 @@ public class AssiduousnessExportChoices implements Serializable {
 	this.beginDate = new YearMonthDay(endDate.getYear(), endDate.getMonthOfYear(), 01);
 	this.yearMonth = new YearMonth(endDate);
 	setCanChooseDateType(false);
+	setChooseYear(false);
     }
 
     public List<Assiduousness> getAssiduousnesses() {
@@ -69,8 +74,7 @@ public class AssiduousnessExportChoices implements Serializable {
 	List<Assiduousness> result = new ArrayList<Assiduousness>();
 	for (Assiduousness assiduousness : RootDomainObject.getInstance().getAssiduousnesss()) {
 	    if (assiduousness.isStatusActive(beginDate, endDate) && satisfiedCostCenter(assiduousness)
-		    && satisfiedScheduleAcronym(assiduousness)
-		    && satisfiedJustification(justificationsMap, assiduousness)
+		    && satisfiedScheduleAcronym(assiduousness) && satisfiedJustification(justificationsMap, assiduousness)
 		    && satisfiedStatus(assiduousness)) {
 		result.add(assiduousness);
 	    }
@@ -85,8 +89,8 @@ public class AssiduousnessExportChoices implements Serializable {
 
     }
 
-    private boolean satisfiedJustification(
-	    HashMap<Assiduousness, List<Justification>> justificationsMap, Assiduousness assiduousness) {
+    private boolean satisfiedJustification(HashMap<Assiduousness, List<Justification>> justificationsMap,
+	    Assiduousness assiduousness) {
 	if (!StringUtils.isEmpty(getJustificationMotiveAcronym())) {
 	    if (justificationsMap.values().isEmpty()) {
 		return false;
@@ -98,11 +102,10 @@ public class AssiduousnessExportChoices implements Serializable {
 
     private boolean satisfiedStatus(Assiduousness assiduousness) {
 	if (!StringUtils.isEmpty(getAssiduousnessStatusDescription())) {
-	    List<AssiduousnessStatusHistory> assiduousnessStatusList = assiduousness.getStatusBetween(
-		    getBeginDate(), getEndDate());
+	    List<AssiduousnessStatusHistory> assiduousnessStatusList = assiduousness.getStatusBetween(getBeginDate(),
+		    getEndDate());
 	    for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusList) {
-		if ((getAssiduousnessStatus() != null && assiduousnessStatusHistory
-			.getAssiduousnessStatus() == getAssiduousnessStatus())
+		if ((getAssiduousnessStatus() != null && assiduousnessStatusHistory.getAssiduousnessStatus() == getAssiduousnessStatus())
 			|| getAssiduousnessStatusDescription().equalsIgnoreCase(
 				assiduousnessStatusHistory.getAssiduousnessStatus().getDescription())) {
 		    return true;
@@ -115,12 +118,10 @@ public class AssiduousnessExportChoices implements Serializable {
 
     private boolean satisfiedScheduleAcronym(Assiduousness assiduousness) {
 	if (getScheduleAcronym() != null && getScheduleAcronym().length() != 0) {
-	    HashMap<YearMonthDay, WorkSchedule> workSchedulesMap = assiduousness
-		    .getWorkSchedulesBetweenDates(beginDate, endDate);
+	    HashMap<YearMonthDay, WorkSchedule> workSchedulesMap = assiduousness.getWorkSchedulesBetweenDates(beginDate, endDate);
 	    for (WorkSchedule workSchedule : workSchedulesMap.values()) {
 		if (workSchedule != null
-			&& workSchedule.getWorkScheduleType().getAcronym().equalsIgnoreCase(
-				getScheduleAcronym())) {
+			&& workSchedule.getWorkScheduleType().getAcronym().equalsIgnoreCase(getScheduleAcronym())) {
 		    return true;
 		}
 	    }
@@ -143,33 +144,28 @@ public class AssiduousnessExportChoices implements Serializable {
     public HashMap<Assiduousness, List<Justification>> setJustificationMap() {
 	HashMap<Assiduousness, List<Justification>> justificationsMap = new HashMap<Assiduousness, List<Justification>>();
 	if (!StringUtils.isEmpty(getJustificationMotiveAcronym())) {
-	    Interval interval = new Interval(beginDate.toDateTimeAtMidnight(),
-		    Assiduousness.defaultEndWorkDay.toDateTime(endDate.toDateMidnight()));
-	    for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance()
-		    .getAssiduousnessRecords()) {
+	    Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
+		    .toDateMidnight()));
+	    for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance().getAssiduousnessRecords()) {
 		if (assiduousnessRecord.isLeave()
 			&& !assiduousnessRecord.isAnulated()
 			&& ((Leave) assiduousnessRecord).getJustificationMotive().getAcronym().equals(
 				getJustificationMotiveAcronym())) {
-		    Interval leaveInterval = new Interval(assiduousnessRecord.getDate(),
-			    ((Leave) assiduousnessRecord).getEndDate().plusSeconds(1));
+		    Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord)
+			    .getEndDate().plusSeconds(1));
 		    if (leaveInterval.overlaps(interval)) {
-			List<Justification> justificationsList = justificationsMap
-				.get(assiduousnessRecord.getAssiduousness());
+			List<Justification> justificationsList = justificationsMap.get(assiduousnessRecord.getAssiduousness());
 			if (justificationsList == null) {
 			    justificationsList = new ArrayList<Justification>();
 			}
 			justificationsList.add((Justification) assiduousnessRecord);
-			justificationsMap
-				.put(assiduousnessRecord.getAssiduousness(), justificationsList);
+			justificationsMap.put(assiduousnessRecord.getAssiduousness(), justificationsList);
 		    }
 		} else if (assiduousnessRecord.isMissingClocking()
 			&& !assiduousnessRecord.isAnulated()
-			&& ((MissingClocking) assiduousnessRecord).getJustificationMotive().getAcronym()
-				.equals(getJustificationMotiveAcronym())
-			&& interval.contains(assiduousnessRecord.getDate())) {
-		    List<Justification> justificationsList = justificationsMap.get(assiduousnessRecord
-			    .getAssiduousness());
+			&& ((MissingClocking) assiduousnessRecord).getJustificationMotive().getAcronym().equals(
+				getJustificationMotiveAcronym()) && interval.contains(assiduousnessRecord.getDate())) {
+		    List<Justification> justificationsList = justificationsMap.get(assiduousnessRecord.getAssiduousness());
 		    if (justificationsList == null) {
 			justificationsList = new ArrayList<Justification>();
 		    }
@@ -183,20 +179,17 @@ public class AssiduousnessExportChoices implements Serializable {
 
     public HashMap<Assiduousness, List<Justification>> getAllJustificationMap() {
 	HashMap<Assiduousness, List<Justification>> justificationsMap = new HashMap<Assiduousness, List<Justification>>();
-	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(),
-		Assiduousness.defaultEndWorkDay.toDateTime(endDate.toDateMidnight()));
-	for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance()
-		.getAssiduousnessRecords()) {
+	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
+		.toDateMidnight()));
+	for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance().getAssiduousnessRecords()) {
 	    if (assiduousnessRecord.isLeave()
 		    && !assiduousnessRecord.isAnulated()
 		    && (StringUtils.isEmpty(getJustificationMotiveAcronym()) || ((Leave) assiduousnessRecord)
-			    .getJustificationMotive().getAcronym().equals(
-				    getJustificationMotiveAcronym()))) {
-		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(),
-			((Leave) assiduousnessRecord).getEndDate().plusSeconds(1));
+			    .getJustificationMotive().getAcronym().equals(getJustificationMotiveAcronym()))) {
+		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord).getEndDate()
+			.plusSeconds(1));
 		if (leaveInterval.overlaps(interval)) {
-		    List<Justification> justificationsList = justificationsMap.get(assiduousnessRecord
-			    .getAssiduousness());
+		    List<Justification> justificationsList = justificationsMap.get(assiduousnessRecord.getAssiduousness());
 		    if (justificationsList == null) {
 			justificationsList = new ArrayList<Justification>();
 		    }
@@ -206,11 +199,9 @@ public class AssiduousnessExportChoices implements Serializable {
 	    } else if (assiduousnessRecord.isMissingClocking()
 		    && !assiduousnessRecord.isAnulated()
 		    && (StringUtils.isEmpty(getJustificationMotiveAcronym()) || ((MissingClocking) assiduousnessRecord)
-			    .getJustificationMotive().getAcronym().equals(
-				    getJustificationMotiveAcronym()))
+			    .getJustificationMotive().getAcronym().equals(getJustificationMotiveAcronym()))
 		    && interval.contains(assiduousnessRecord.getDate())) {
-		List<Justification> justificationsList = justificationsMap.get(assiduousnessRecord
-			.getAssiduousness());
+		List<Justification> justificationsList = justificationsMap.get(assiduousnessRecord.getAssiduousness());
 		if (justificationsList == null) {
 		    justificationsList = new ArrayList<Justification>();
 		}
@@ -311,26 +302,29 @@ public class AssiduousnessExportChoices implements Serializable {
 
     public void setYearMonth() {
 	if (assiduousnessExportChoicesDatesType.equals(AssiduousnessExportChoicesDatesType.MONTHS)) {
-	    this.beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1,
-		    01);
-	    int endDay = beginDate.dayOfMonth().getMaximumValue();
-	    if (yearMonth.getYear() == new YearMonthDay().getYear()
-		    && yearMonth.getMonth().getNumberOfMonth() == new YearMonthDay().getMonthOfYear()) {
-		endDay = new YearMonthDay().getDayOfMonth();
+	    if (getChooseYear()) {
+		this.beginDate = new YearMonthDay(yearMonth.getYear(), 1, 1);
+		this.endDate = new YearMonthDay(yearMonth.getYear(), 12, 31);
+	    } else {
+		this.beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+		int endDay = beginDate.dayOfMonth().getMaximumValue();
+		if (yearMonth.getYear() == new YearMonthDay().getYear()
+			&& yearMonth.getMonth().getNumberOfMonth() == new YearMonthDay().getMonthOfYear()) {
+		    endDay = new YearMonthDay().getDayOfMonth();
+		}
+		this.endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().getNumberOfMonth(), endDay);
 	    }
-	    this.endDate = new YearMonthDay(yearMonth.getYear(),
-		    yearMonth.getMonth().getNumberOfMonth(), endDay);
 	} else {
 	    yearMonth = new YearMonth(beginDate);
 	}
+
     }
 
     public AssiduousnessExportChoicesDatesType getAssiduousnessExportChoicesDatesType() {
 	return assiduousnessExportChoicesDatesType;
     }
 
-    public void setAssiduousnessExportChoicesDatesType(
-	    AssiduousnessExportChoicesDatesType assiduousnessExportChoicesDatesType) {
+    public void setAssiduousnessExportChoicesDatesType(AssiduousnessExportChoicesDatesType assiduousnessExportChoicesDatesType) {
 	this.assiduousnessExportChoicesDatesType = assiduousnessExportChoicesDatesType;
     }
 
@@ -351,6 +345,14 @@ public class AssiduousnessExportChoices implements Serializable {
 	if (!canChooseDateType) {
 	    setAssiduousnessExportChoicesDatesType(AssiduousnessExportChoicesDatesType.MONTHS);
 	}
+    }
+
+    public Boolean getChooseYear() {
+	return chooseYear;
+    }
+
+    public void setChooseYear(Boolean chooseYear) {
+	this.chooseYear = chooseYear;
     }
 
 }

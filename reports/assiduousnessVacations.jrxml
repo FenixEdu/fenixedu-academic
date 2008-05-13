@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="workSheet"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="AllSectionsNoDetail"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
+
+	<field name="assiduousness.employee.employeeNumber" class="java.lang.Integer"/>
+	<field name="assiduousness.employee.person.name" class="java.lang.String"/>
+	<field name="lastMailingUnitInYear.name" class="java.lang.String"/>
+	<field name="lastMailingUnitCodeInYear" class="java.lang.String"/>
+	<field name="year" class="java.lang.Integer"/>
+	<field name="normalDays" class="java.lang.Double"/>
+	<field name="lowTimeVacationsDays" class="java.lang.Double"/>
+	<field name="accumulatedDays" class="java.lang.Double"/>
+	<field name="antiquityDays" class="java.lang.Double"/>
+	<field name="extraWorkDays" class="java.lang.Double"/>
+	<field name="accumulatedArticle17Days" class="java.lang.Double"/>
+	<field name="ageDays" class="java.lang.Double"/>
+	<field name="bonusDays" class="java.lang.Double"/>
+	<field name="lastYearExtraWorkDays" class="java.lang.Double"/>
+	<field name="art17And18LimitDays" class="java.lang.Integer"/>
+	<field name="numberOfArt17" class="java.lang.Integer"/>
+	<field name="numberOfArt18" class="java.lang.Integer"/>
+
+
+		<group  name="pageBreak" isStartNewPage="true" >
+			<groupExpression><![CDATA[$F{assiduousness.employee.employeeNumber}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="457"  isSplitAllowed="true" >
+				<elementGroup><!--  Start: 1 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="249"
+						y="144"
+						width="114"
+						height="15"
+						forecolor="#000000"
+						key="textField-1"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Verdana" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Nº Mec. " +($F{assiduousness.employee.employeeNumber}).toString()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="249"
+						y="86"
+						width="243"
+						height="26"
+						forecolor="#000000"
+						key="textField-2"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Verdana" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{assiduousness.employee.person.name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="249"
+						y="115"
+						width="243"
+						height="26"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Verdana" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lastMailingUnitInYear.name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="378"
+						y="144"
+						width="114"
+						height="15"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Verdana" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" C.C. "+($F{lastMailingUnitCodeInYear})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="249"
+						y="70"
+						width="99"
+						height="14"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Exmo(a) Sr(a)]]></text>
+				</staticText>
+				</elementGroup><!-- End 1 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="10"
+						y="6"
+						width="515"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="Verdana" pdfFontName="Helvetica-Bold" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{date}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="7"
+						y="178"
+						width="51"
+						height="19"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Assunto: ]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="58"
+						y="178"
+						width="474"
+						height="19"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Direito a férias no ano de "+$F{year}+"."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="58"
+						y="197"
+						width="474"
+						height="19"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Direito a Artº 17 e 18 do Regulamento de assiduidade no ano de "+$F{year}+"."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="237"
+						width="525"
+						height="25"
+						key="textField-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Informamos V. Exa. que no ano de "+$F{year}+" tem direito a gozar os seguintes dias de férias:"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="46"
+						y="271"
+						width="111"
+						height="16"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Dias de férias normais]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="157"
+						y="271"
+						width="338"
+						height="16"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[(Artº 2º D.L.100/99, alterado pelo D.L.157/2001 art.2º alineas a,b,c,d)]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="0.##" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="271"
+						width="30"
+						height="16"
+						key="textField-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{normalDays}==null?new Double(0):$F{normalDays}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="0.##" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="351"
+						width="30"
+						height="16"
+						key="textField-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{lowTimeVacationsDays}==null?new Double(0):$F{lowTimeVacationsDays}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="46"
+						y="351"
+						width="215"
+						height="16"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Dias de férias em periodo de época baixa]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="261"
+						y="351"
+						width="234"
+						height="16"
+						key="staticText-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[(Artº 7º, D.L.100/99)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="46"
+						y="319"
+						width="144"
+						height="16"
+						key="staticText-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Dias de acumulação de férias]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="190"
+						y="319"
+						width="305"
+						height="16"
+						key="staticText-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[(Artº 9º, D.L.100/99, alterado pelo D.L.157/2001 art.2º nº8)]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="0.##" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="303"
+						width="30"
+						height="16"
+						key="textField-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{ageDays}==null?new Double(0):$F{ageDays}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="46"
+						y="303"
+						width="449"
+						height="16"
+						key="staticText-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Dias de férias por idade]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="0.##" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="383"
+						width="30"
+						height="16"
+						key="textField-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{extraWorkDays}==null?new Double(0):$F{extraWorkDays}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="46"
+						y="383"
+						width="215"
+						height="16"
+						key="staticText-11"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Dias de acréscimo por horas extraordinárias]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="261"
+						y="383"
+						width="234"
+						height="16"
+						key="staticText-12"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[(Artº 29, nº 1 alinea b D.L.259/98)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="46"
+						y="287"
+						width="111"
+						height="16"
+						key="staticText-13"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Dias por antiguidade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="157"
+						y="287"
+						width="338"
+						height="16"
+						key="staticText-14"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[(Artº 2º , nº 3 do Dec.Lei 100/99, alterado pelo D.L.157/2001)]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="0.##" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="367"
+						width="30"
+						height="16"
+						key="textField-12"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{accumulatedArticle17Days}==null?new Double(0):$F{accumulatedArticle17Days}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="46"
+						y="367"
+						width="215"
+						height="16"
+						key="staticText-15"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Dias de acumulação de dispensa de serviço]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="261"
+						y="367"
+						width="234"
+						height="16"
+						key="staticText-16"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[(Artº 17, do Regulamento da Assiduidade)]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="415"
+						width="30"
+						height="16"
+						key="textField-13"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{art17And18LimitDays}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="46"
+						y="415"
+						width="215"
+						height="16"
+						key="staticText-17"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Dias por aplicação dos Artº 17º e 18º]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="261"
+						y="415"
+						width="234"
+						height="16"
+						key="staticText-18"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[(Regulamento da Assiduidade)]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="0.##" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="287"
+						width="30"
+						height="16"
+						key="textField-14"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{antiquityDays}==null?new Double(0):$F{antiquityDays}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="95"
+						y="431"
+						width="16"
+						height="16"
+						key="textField-15"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{numberOfArt17}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="163"
+						y="431"
+						width="16"
+						height="16"
+						key="textField-16"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{numberOfArt18}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="0.##" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="319"
+						width="30"
+						height="16"
+						key="textField-19"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{accumulatedDays}==null?new Double(0):$F{accumulatedDays}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="0.##" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="335"
+						width="30"
+						height="16"
+						key="textField-20"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{bonusDays}==null?new Double(0):$F{bonusDays}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="46"
+						y="335"
+						width="449"
+						height="16"
+						key="staticText-20"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Dias de férias por bónus]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="0.##" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="7"
+						y="399"
+						width="30"
+						height="16"
+						key="textField-21"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{lastYearExtraWorkDays}==null?new Double(0):$F{lastYearExtraWorkDays}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="46"
+						y="399"
+						width="449"
+						height="16"
+						key="staticText-21"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[Dias de acréscimo por horas extraordinárias do ano anterior]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="81"
+						y="431"
+						width="14"
+						height="16"
+						key="textField-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["( "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="111"
+						y="431"
+						width="52"
+						height="16"
+						key="textField-23"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" Art 17 + "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="179"
+						y="431"
+						width="111"
+						height="16"
+						key="textField-24"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" Art 18 )"]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="200"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

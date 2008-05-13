@@ -22,7 +22,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    Duration holidayRest, Duration balanceToDiscount, double vacations, double tolerance, double article17,
 	    double article66, Integer maximumWorkingDays, Integer workedDaysWithBonusDaysDiscount,
 	    Integer workedDaysWithA17VacationsDaysDiscount, Duration finalBalance, Duration finalBalanceToCompensate,
-	    YearMonthDay beginDate, YearMonthDay endDate) {
+	    YearMonthDay beginDate, YearMonthDay endDate, Duration totalWorkedTime) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBalance(balance);
 	setBalanceToDiscount(balanceToDiscount);
@@ -45,6 +45,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setFinalBalanceToCompensate(finalBalanceToCompensate);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
+	setTotalWorkedTime(totalWorkedTime);
     }
 
     public HashMap<Integer, Duration> getPastJustificationsDurations() {
