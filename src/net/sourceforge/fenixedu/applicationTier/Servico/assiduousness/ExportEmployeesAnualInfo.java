@@ -33,7 +33,7 @@ public class ExportEmployeesAnualInfo extends Service {
     public List<EmployeeAnualInfo> run(YearMonth yearMonth, AssiduousnessStatus assiduousnessStatus) {
 
 	ClosedMonth closedMonth;
-	List<Assiduousness> employeesAssiduousness = getEmployeesAssiduousnessByStatus(assiduousnessStatus, yearMonth.getYear());
+	List<Assiduousness> employeesAssiduousness = getEmployeesAssiduousnessByStatus(assiduousnessStatus, yearMonth);
 
 	List<EmployeeAnualInfo> employeeAnualInfoList = new ArrayList<EmployeeAnualInfo>();
 	for (Assiduousness assiduousness : employeesAssiduousness) {
@@ -377,9 +377,10 @@ public class ExportEmployeesAnualInfo extends Service {
 	return countWorkDays != 0 ? countWorkDays : null;
     }
 
-    private List<Assiduousness> getEmployeesAssiduousnessByStatus(AssiduousnessStatus assiduousnessStatus, int year) {
-	YearMonthDay beginDate = new YearMonthDay(year, 1, 01);
-	YearMonthDay endDate = new YearMonthDay(year, 12, 31);
+    private List<Assiduousness> getEmployeesAssiduousnessByStatus(AssiduousnessStatus assiduousnessStatus, YearMonth yearMonth) {
+	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getNumberOfMonth(), 01);
+	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getNumberOfMonth(), beginDate.dayOfMonth()
+		.getMaximumValue());
 	List<Assiduousness> employeesAssiduousness = new ArrayList<Assiduousness>();
 	for (Assiduousness assiduousness : RootDomainObject.getInstance().getAssiduousnesss()) {
 	    if (isAnyStatusHistoryActiveAndHasStatus(assiduousnessStatus, assiduousness.getAssiduousnessStatusHistories(),
