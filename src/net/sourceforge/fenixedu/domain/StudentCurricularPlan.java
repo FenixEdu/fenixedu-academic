@@ -314,7 +314,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return getCycle(cycleType).getConclusionDate();
     }
-    
+
     public Integer getFinalAverage(final CycleType cycleType) {
 	if (getDegreeType().getCycleTypes().isEmpty()) {
 	    throw new DomainException("StudentCurricularPlan.has.no.cycle.type");
@@ -2728,6 +2728,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     @Checked("StudentCurricularPlanPredicates.moveCurriculumLines")
     public void moveCurriculumLines(final Person responsiblePerson, final MoveCurriculumLinesBean moveCurriculumLinesBean) {
 	boolean runRules = false;
+
 	for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
 	    final CurriculumGroup curriculumGroup = curriculumLineLocationBean.getCurriculumGroup();
 	    final CurriculumLine curriculumLine = curriculumLineLocationBean.getCurriculumLine();
@@ -2737,7 +2738,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		    throw new DomainException("error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group",
 			    curriculumLine.getFullPath(), curriculumGroup.getFullPath());
 		}
-		runRules = true;
+		if (!curriculumGroup.isExtraCurriculum()) {
+		    runRules = true;
+		}
 	    }
 	    curriculumLine.setCurriculumGroup(curriculumGroup);
 	}
