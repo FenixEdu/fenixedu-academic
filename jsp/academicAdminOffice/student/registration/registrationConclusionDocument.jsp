@@ -341,14 +341,22 @@
 	
 	<table class="apura-final" width="90%" cellspacing="0" border="0">
 		<tr>
-			<td colspan="3" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Atribuição da Média</td>
+			<td colspan="6" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Atribuição da Média</td>
 		</tr>
 		<tr>
-			<td style="padding: 5px;">Média Ponderada</td>
+			<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.average"/></td>
 			<td style="padding: 5px;"><bean:write name="registrationConclusionBean" property="average"/></td>		
-			<logic:equal name="registration" property="degreeType.administrativeOfficeType" value="AdministrativeOfficeType.MASTER_DEGREE">
+			
+			<logic:equal name="registration" property="degreeType.administrativeOfficeType" value="MASTER_DEGREE">
 				<td width="50%" style="padding: 5px; padding-left: 15em;">O coordenador do curso,</td>
 			</logic:equal>
+		</tr>
+		<tr>
+			<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.registration.averageType"/></td>
+			<bean:define id="averageType">
+				AverageType.<bean:write name="registrationConclusionBean" property="registration.averageType"/>
+			</bean:define>	
+			<td style="padding: 5px;"><bean:message bundle="ENUMERATION_RESOURCES" key="<%=averageType%>"/></td>
 		</tr>
 		<tr>
 			<td style="padding: 5px;">Média Final</td>
@@ -357,7 +365,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" style="padding: 5px;"></td>
-			<logic:equal name="registration" property="degreeType.administrativeOfficeType" value="AdministrativeOfficeType.MASTER_DEGREE">
+			<logic:equal name="registration" property="degreeType.administrativeOfficeType" value="MASTER_DEGREE">
 				<td width="50%" style="padding: 5px; padding-left: 15em;">_____________________________</td>
 			</logic:equal>
 		</tr>
