@@ -9627,6 +9627,24 @@
 		</filterChains>		
 	</service>
 	<service>
+		<name>DeleteAssiduousnessStatusHistory</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteAssiduousnessStatusHistory</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
+		<name>DeleteAssiduousnessExemption</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteAssiduousnessExemption</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization" />
+		</filterChains>		
+	</service>
+	<service>
 		<name>RestoreClocking</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.RestoreClocking</implementationClass>
 		<description />
@@ -9768,7 +9786,7 @@
 			<chain name="AssiduousnessManagementAuthorization"/>
 		</filterChains>
     </service>
-    	<service>
+    <service>
 		<name>ExportEmployeesAnualInfo</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportEmployeesAnualInfo</implementationClass>
 		<description />
@@ -9777,6 +9795,15 @@
 			<chain name="ManagementAssiduousnessAuthorization" />
 		</filterChains>		
 	</service>  
+	<service>
+		<name>CalculateArticles17And18</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.CalculateArticles17And18</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization" />
+		</filterChains>		
+	</service>
 	<service>
 		<name>DeletePersonSpaceOccupation</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeletePersonSpaceOccupation</implementationClass>

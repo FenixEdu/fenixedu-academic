@@ -185,7 +185,7 @@ valueType org.joda.time.Partial                                                 
 valueType org.joda.time.Period                                                                                       as Period;
 valueType org.joda.time.TimeOfDay                                                                                    as TimeOfDay;
 valueType org.joda.time.YearMonthDay                                                                                 as YearMonthDay;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.YearMonthList                                           as YearMonthList;
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.PartialList                                           	 as PartialList;
 enum      net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType                       as BonusType;
 enum      net.sourceforge.fenixedu.domain.PartyClassification                                                        as PartyClassification;
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval                                    as AcademicInterval;
@@ -1657,10 +1657,20 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Integer maximumWorkingDays;
 		Integer workedDaysWithBonusDaysDiscount;
 		Integer workedDaysWithA17VacationsDaysDiscount;
+		Duration totalWorkedTime;
 		Duration finalBalance;
 		Duration finalBalanceToCompensate;
 		YearMonthDay beginDate;
 		YearMonthDay endDate;
+	}
+
+	class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption extends net.sourceforge.fenixedu.domain.DomainObject {
+		Integer year;
+		String description;
+	}
+	
+	class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemptionShift extends net.sourceforge.fenixedu.domain.DomainObject {
+		PartialList partialShift;
 	}
 
 	class net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1711,7 +1721,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Double accumulatedDays;
 		Double ageDays;
 		Double antiquityDays;
-		Double article17Days;
+		Double accumulatedArticle17Days;
 		Double bonusDays;
 		Double extraWorkDays;
 		DateTime lastModifiedDate;
@@ -1720,6 +1730,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Double normalDays;
 		Double normalWithLeavesDiscount;
 		Integer year;
+		Integer efectiveWorkDays;
 	}
 
 	class net.sourceforge.fenixedu.domain.assiduousness.Card extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4361,7 +4372,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer year;
 	Partial paymentPartialDate;
-  	YearMonthList assiduousnessYearMonths;
+  	PartialList assiduousnessPartials;
 }
 
 class net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5113,6 +5124,13 @@ relation AssiduousnessCampusHistoryCampus {
 relation AssiduousnessClosedMonthAssiduousnessStatusHistory {
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistory;
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
+		multiplicity *;
+	}
+}
+
+relation AssiduousnessExemptionAssiduousnessExemptionShift {
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption playsRole assiduousnessExemption;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemptionShift playsRole assiduousnessExemptionShifts {
 		multiplicity *;
 	}
 }
@@ -8697,6 +8715,20 @@ relation RootDomainObjectAssiduousnessClosedMonth {
 relation RootDomainObjectAssiduousnessExtraWork {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExtraWork playsRole assiduousnessExtraWorks {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAssiduousnessExemption {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption playsRole assiduousnessExemptions {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAssiduousnessExemptionShift {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemptionShift playsRole assiduousnessExemptionShifts {
 		multiplicity *;
 	}
 }
