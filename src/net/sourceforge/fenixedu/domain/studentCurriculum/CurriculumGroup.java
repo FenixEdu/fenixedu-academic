@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -813,8 +814,15 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     public boolean canAdd(final CurriculumLine curriculumLine) {
-	return !curriculumLine.hasCurricularCourse() || !curriculumLine.isBolonhaDegree()
-		|| getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
+	if (!curriculumLine.hasCurricularCourse() || !curriculumLine.isBolonhaDegree()) {
+	    return true;
+	}
+
+	if (curriculumLine.isEnrolment() && ((Enrolment) curriculumLine).isOptional()) {
+	    return getDegreeModule().hasDegreeModuleOnChilds(((OptionalEnrolment) curriculumLine).getOptionalCurricularCourse());
+	}
+
+	return getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
     }
 
     public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(final CurricularCourse curricularCourse) {
