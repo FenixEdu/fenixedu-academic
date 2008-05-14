@@ -17,7 +17,7 @@
 
 		<h:panelGrid columns="2" styleClass="tstyle5" columnClasses="aright,,"  rowClasses=",,,valigntop">
 			<h:outputText value="Name: " escape="false"/>
-			<h:inputText alt="#{htmlAltBundle['inputText.from']}" id="fromName" value="#{SendMailBackingBean.fromCDName}" size="60" readonly="true"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.fromName']}" id="fromName" value="#{SendMailBackingBean.fromCDName}" size="60" readonly="true"/>
 			
 			<h:outputText value="From: " escape="false"/>
 			<h:inputText alt="#{htmlAltBundle['inputText.from']}" id="from" value="#{SendMailBackingBean.fromCD}" size="60" readonly="true"/>

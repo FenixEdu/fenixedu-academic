@@ -1,5 +1,6 @@
-package net.sourceforge.fenixedu.presentationTier.backBeans.manager;
+package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,14 +24,11 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
-public class SendMailBackingBean extends FenixBackingBean {
+public class SendEmailBean implements Serializable {
 
-    private String from = "no-reply@ist.utl.pt";
-    private String fromCD = "cd@ist.utl.pt";
+    private String from = "fenix-noreply@ist.utl.pt";
     private String fromName = "";
-    private String fromCDName = "Conselho Directivo";
     private String to = null;
     private String ccs = null;
     private String bccs = null;
@@ -63,6 +61,8 @@ public class SendMailBackingBean extends FenixBackingBean {
     private Boolean executionCourseResponsibles = null;
 
     private Boolean sent = Boolean.FALSE;
+
+    private Boolean allowChangeSender = Boolean.TRUE;
 
     public void send() throws FenixFilterException, FenixServiceException {
 	final Object[] args = { getToList(), getCCList(), getBCCList(), getFromName(), getFrom(), getSubject(), getMessage() };
@@ -188,7 +188,7 @@ public class SendMailBackingBean extends FenixBackingBean {
 
 	final Boolean executionCourseResponsibles = getExecutionCourseResponsibles();
 	if (executionCourseResponsibles.booleanValue()) {
-	    final Collection<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
+	    final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYearsSet();
 	    for (final ExecutionYear executionYear : executionYears) {
 		if (executionYear.isCurrent()) {
 		    for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
@@ -221,7 +221,7 @@ public class SendMailBackingBean extends FenixBackingBean {
 
     private void addEmailsForCoordinatorsByDegreeType(final List<String> emails, final DegreeType degreeType) throws FenixServiceException,
 	    FenixFilterException {
-	for (final ExecutionYear executionYear : rootDomainObject.getExecutionYearsSet()) {
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
 	    if (executionYear.isCurrent()) {
 		for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
 		    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
@@ -462,14 +462,6 @@ public class SendMailBackingBean extends FenixBackingBean {
         this.researchers = researchers;
     }
 
-    public String getFromCD() {
-        return fromCD;
-    }
-
-    public void setFromCD(String fromCD) {
-        this.fromCD = fromCD;
-    }
-
     public String getFromName() {
         return fromName;
     }
@@ -478,12 +470,16 @@ public class SendMailBackingBean extends FenixBackingBean {
         this.fromName = fromName;
     }
 
-    public String getFromCDName() {
-        return fromCDName;
+    public Boolean isAllowChangeSender() {
+        return allowChangeSender;
     }
 
-    public void setFromCDName(String formCDName) {
-        this.fromCDName = formCDName;
+    public Boolean getAllowChangeSender() {
+        return allowChangeSender;
+    }
+
+    public void setAllowChangeSender(Boolean allowChangeSender) {
+        this.allowChangeSender = allowChangeSender;
     }
 
 }

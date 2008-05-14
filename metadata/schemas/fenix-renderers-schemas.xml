@@ -49,6 +49,7 @@
     <!ENTITY facultyAdmOffice SYSTEM "facultyAdmOffice-schemas.xml">
 	<!ENTITY contentSchemas SYSTEM "content-schemas.xml">
 	<!ENTITY caseHandlingSchemas SYSTEM "caseHandling-schemas.xml">
+	<!ENTITY email SYSTEM "email-schemas.xml">
 ]>
 
 <schemas>
@@ -713,4 +714,5 @@
     &facultyAdmOffice;
     &contentSchemas;    
     &caseHandlingSchemas;
+    &email;
 </schemas>

@@ -15,6 +15,9 @@
 		<h:outputText rendered="#{SendMailBackingBean.sent}" value="<p>E-mail enviado com sucesso.</p><br/>" escape="false"/>
 
 		<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
+			<h:outputText value="From Name: " escape="false"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.fromName']}" id="fromName" value="#{SendMailBackingBean.fromName}"/>
+
 			<h:outputText value="From: " escape="false"/>
 			<h:inputText alt="#{htmlAltBundle['inputText.from']}" id="from" value="#{SendMailBackingBean.from}"/>
 

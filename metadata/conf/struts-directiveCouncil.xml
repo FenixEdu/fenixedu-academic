@@ -108,7 +108,12 @@
 		<forward name="showCardGenerationProblem" path="df.page.card.generation.showCardGenerationProblem"/>
 	</action>
 
-
+	<action path="/sendEmail"
+			type="net.sourceforge.fenixedu.presentationTier.Action.email.SendEmailDA"
+			parameter="method">
+		<forward name="showSendEmailForm" path="df.page.send.email.form"/>
+		<forward name="showSendEmailResult" path="df.page.send.email.result"/>
+	</action>
 
  	</action-mappings>
 

@@ -1,0 +1,73 @@
+<schema name="net.sourceforge.fenixedu.dataTransferObject.SendEmailBean.common" type="net.sourceforge.fenixedu.dataTransferObject.SendEmailBean" bundle="MANAGER_RESOURCES">
+	<slot name="fromName" bundle="MANAGER_RESOURCES" key="label.email.fromName">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="from" bundle="MANAGER_RESOURCES" key="label.email.from">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="to" bundle="MANAGER_RESOURCES" key="label.email.to">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="ccs" bundle="MANAGER_RESOURCES" key="label.email.ccs">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="bccs" bundle="MANAGER_RESOURCES" key="label.email.bccs">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="subject" bundle="MANAGER_RESOURCES" key="label.email.subject">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="message" bundle="MANAGER_RESOURCES" key="label.email.message" layout="longText">
+		<property name="columns" value="80"/>
+		<property name="rows" value="10"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.dataTransferObject.SendEmailBean.common.hidden.sender" type="net.sourceforge.fenixedu.dataTransferObject.SendEmailBean" bundle="MANAGER_RESOURCES">
+	<slot name="fromName" bundle="MANAGER_RESOURCES" key="label.email.fromName">
+		<property name="size" value="60" />
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="from" bundle="MANAGER_RESOURCES" key="label.email.from">
+		<property name="size" value="60" />
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="to" bundle="MANAGER_RESOURCES" key="label.email.to">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="ccs" bundle="MANAGER_RESOURCES" key="label.email.ccs">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="bccs" bundle="MANAGER_RESOURCES" key="label.email.bccs">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="subject" bundle="MANAGER_RESOURCES" key="label.email.subject">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="message" bundle="MANAGER_RESOURCES" key="label.email.message" layout="longText">
+		<property name="columns" value="80"/>
+		<property name="rows" value="10"/>
+	</slot>
+</schema>
+<schema name="net.sourceforge.fenixedu.dataTransferObject.SendEmailBean.recipients" type="net.sourceforge.fenixedu.dataTransferObject.SendEmailBean" bundle="MANAGER_RESOURCES">
+	<slot name="teachers" bundle="MANAGER_RESOURCES" key="label.email.teachers"/>
+	<slot name="employees" bundle="MANAGER_RESOURCES" key="label.email.employees"/>
+	<slot name="students" bundle="MANAGER_RESOURCES" key="label.email.students"/>
+	<slot name="researchers" bundle="MANAGER_RESOURCES" key="label.email.researchers"/>
+	<slot name="bolonhaAdvancedFormationDiplomaStudents" bundle="MANAGER_RESOURCES" key="label.email.bolonhaAdvancedFormationDiplomaStudents"/>
+	<slot name="bolonhaDegreeStudents" bundle="MANAGER_RESOURCES" key="label.email.bolonhaDegreeStudents"/>
+	<slot name="bolonhaIntegratedMasterDegreeStudents" bundle="MANAGER_RESOURCES" key="label.email.bolonhaIntegratedMasterDegreeStudents"/>
+	<slot name="bolonhaMasterDegreeStudents" bundle="MANAGER_RESOURCES" key="label.email.bolonhaMasterDegreeStudents"/>
+	<slot name="bolonhaPhdProgramStudents" bundle="MANAGER_RESOURCES" key="label.email.bolonhaPhdProgramStudents"/>
+	<slot name="bolonhaSpecializationDegreeStudents" bundle="MANAGER_RESOURCES" key="label.email.bolonhaSpecializationDegreeStudents"/>
+	<slot name="degreeStudents" bundle="MANAGER_RESOURCES" key="label.email.degreeStudents"/>
+	<slot name="masterDegreeStudents" bundle="MANAGER_RESOURCES" key="label.email.masterDegreeStudents"/>
+	<slot name="bolonhaAdvancedFormationDiplomaCoordinators" bundle="MANAGER_RESOURCES" key="label.email.bolonhaAdvancedFormationDiplomaCoordinators"/>
+	<slot name="bolonhaDegreeCoordinators" bundle="MANAGER_RESOURCES" key="label.email.bolonhaDegreeCoordinators"/>
+	<slot name="bolonhaIntegratedMasterDegreeCoordinators" bundle="MANAGER_RESOURCES" key="label.email.bolonhaIntegratedMasterDegreeCoordinators"/>
+	<slot name="bolonhaMasterDegreeCoordinators" bundle="MANAGER_RESOURCES" key="label.email.bolonhaMasterDegreeCoordinators"/>
+	<slot name="bolonhaPhdProgramCoordinators" bundle="MANAGER_RESOURCES" key="label.email.bolonhaPhdProgramCoordinators"/>
+	<slot name="bolonhaSpecializationDegreeCoordinators" bundle="MANAGER_RESOURCES" key="label.email.bolonhaSpecializationDegreeCoordinators"/>
+	<slot name="degreeCoordinators" bundle="MANAGER_RESOURCES" key="label.email.degreeCoordinators"/>
+	<slot name="masterDegreeCoordinators" bundle="MANAGER_RESOURCES" key="label.email.masterDegreeCoordinators"/>
+	<slot name="executionCourseResponsibles" bundle="MANAGER_RESOURCES" key="label.email.executionCourseResponsibles"/>
+</schema>
