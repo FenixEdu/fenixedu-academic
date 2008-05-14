@@ -31,92 +31,91 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
-import org.joda.time.DateTime;
-
 public class ChangeStudentTestQuestionMark extends Service {
-    public void run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId,
-            Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
-        path = path.replace('\\', '/');
+    public void run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId, Integer studentId,
+	    TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
+	path = path.replace('\\', '/');
 
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-        Question question = distributedTest.findQuestionByOID(questionId);
+	DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+	Question question = distributedTest.findQuestionByOID(questionId);
 
-        List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
-        if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-        	final Registration registration = rootDomainObject.readRegistrationByOID(studentId);
-        	studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest));
-        } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST_VARIATION) {
-            studentsTestQuestionList.addAll(StudentTestQuestion.findStudentTestQuestions(question, distributedTest));
-        } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-        	final Registration registration = rootDomainObject.readRegistrationByOID(studentId);
-        	final StudentTestQuestion studentTestQuestion = StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest);
-            studentsTestQuestionList.addAll(distributedTest.findStudentTestQuestionsByTestQuestionOrder(studentTestQuestion.getTestQuestionOrder()));
-        } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS) {
-            studentsTestQuestionList.addAll(question.getStudentTestsQuestionsSet());
-        }
-        for (StudentTestQuestion studentTestQuestion : studentsTestQuestionList) {
-            List<InfoStudent> group = new ArrayList<InfoStudent>();
+	List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
+	if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
+	    final Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+	    studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest));
+	} else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST_VARIATION) {
+	    studentsTestQuestionList.addAll(StudentTestQuestion.findStudentTestQuestions(question, distributedTest));
+	} else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
+	    final Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+	    final StudentTestQuestion studentTestQuestion = StudentTestQuestion.findStudentTestQuestion(question, registration,
+		    distributedTest);
+	    studentsTestQuestionList.addAll(distributedTest.findStudentTestQuestionsByTestQuestionOrder(studentTestQuestion
+		    .getTestQuestionOrder()));
+	} else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS) {
+	    studentsTestQuestionList.addAll(question.getStudentTestsQuestionsSet());
+	}
+	for (StudentTestQuestion studentTestQuestion : studentsTestQuestionList) {
+	    List<InfoStudent> group = new ArrayList<InfoStudent>();
 
-            studentTestQuestion.setTestQuestionMark(newMark);
-            if (!group.contains(studentTestQuestion.getStudent().getPerson()))
-                group.add(InfoStudent.newInfoFromDomain(studentTestQuestion.getStudent()));
+	    studentTestQuestion.setTestQuestionMark(newMark);
+	    if (!group.contains(studentTestQuestion.getStudent().getPerson()))
+		group.add(InfoStudent.newInfoFromDomain(studentTestQuestion.getStudent()));
 
-            if (studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
-                if (studentTestQuestion.getResponse() == null) {
-                    Response response = null;
-                    try {
-                        ParseSubQuestion parse = new ParseSubQuestion();
-                        studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, path);
-                    } catch (Exception e) {
-                        throw new FenixServiceException(e);
-                    }
+	    if (studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
+		if (studentTestQuestion.getResponse() == null) {
+		    Response response = null;
+		    try {
+			ParseSubQuestion parse = new ParseSubQuestion();
+			studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, path);
+		    } catch (Exception e) {
+			throw new FenixServiceException(e);
+		    }
 
-                    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR) {
-                        response = new ResponseSTR("");
-                    } else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.NUM) {
-                        response = new ResponseNUM("");
-                    } else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID) {
-                        response = new ResponseLID(new String[] { null });
-                    }
-                    response.setResponsed();
-                    studentTestQuestion.setResponse(response);
-                } else {
-                    OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
-                    ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-                    Attends attend = studentTestQuestion.getStudent().readAttendByExecutionCourse(executionCourse);
-                    Mark mark = onlineTest.getMarkByAttend(attend);
-                    final String markValue = getNewStudentMark(studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent());
-                    if (mark == null) {
-                        mark = new Mark(attend, onlineTest, markValue);
-                    } else {
-                        mark.setMark(markValue);
-                    }
-                    if (mark.getPublishedMark() != null) {
-                        mark.setPublishedMark(markValue);
-                    }
-                }
-            }
-            StudentTestLog studentTestLog = new StudentTestLog();
-            studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
-            studentTestLog.setStudent(studentTestQuestion.getStudent());
-            studentTestLog.setDateDateTime(new DateTime());
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
-            studentTestLog.setEvent(MessageFormat.format(bundle
-                    .getString("message.changeStudentMarkLogMessage"), new Object[] { newMark }));
-        }
+		    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR) {
+			response = new ResponseSTR("");
+		    } else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.NUM) {
+			response = new ResponseNUM("");
+		    } else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID) {
+			response = new ResponseLID(new String[] { null });
+		    }
+		    response.setResponsed();
+		    studentTestQuestion.setResponse(response);
+		} else {
+		    OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
+		    ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+		    Attends attend = studentTestQuestion.getStudent().readAttendByExecutionCourse(executionCourse);
+		    Mark mark = onlineTest.getMarkByAttend(attend);
+		    final String markValue = getNewStudentMark(studentTestQuestion.getDistributedTest(), studentTestQuestion
+			    .getStudent());
+		    if (mark == null) {
+			mark = new Mark(attend, onlineTest, markValue);
+		    } else {
+			mark.setMark(markValue);
+		    }
+		    if (mark.getPublishedMark() != null) {
+			mark.setPublishedMark(markValue);
+		    }
+		}
+	    }
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+	    String event = MessageFormat
+		    .format(bundle.getString("message.changeStudentMarkLogMessage"), new Object[] { newMark });
+
+	    new StudentTestLog(studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent(), event);
+	}
     }
 
     private String getNewStudentMark(DistributedTest dt, Registration s) throws ExcepcaoPersistencia {
-        double totalMark = 0;
-        Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(s, dt);
-        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-            totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
-        }
-        DecimalFormat df = new DecimalFormat("#0.##");
-        DecimalFormatSymbols decimalFormatSymbols = df.getDecimalFormatSymbols();
-        decimalFormatSymbols.setDecimalSeparator('.');
-        df.setDecimalFormatSymbols(decimalFormatSymbols);
-        return (df.format(Math.max(0, totalMark)));
+	double totalMark = 0;
+	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(s, dt);
+	for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+	    totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
+	}
+	DecimalFormat df = new DecimalFormat("#0.##");
+	DecimalFormatSymbols decimalFormatSymbols = df.getDecimalFormatSymbols();
+	decimalFormatSymbols.setDecimalSeparator('.');
+	df.setDecimalFormatSymbols(decimalFormatSymbols);
+	return (df.format(Math.max(0, totalMark)));
     }
 
 }

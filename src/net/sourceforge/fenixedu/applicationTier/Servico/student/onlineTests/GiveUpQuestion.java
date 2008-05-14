@@ -23,8 +23,6 @@ import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 
-import org.joda.time.DateTime;
-
 /**
  * @author Susana Fernandes
  */
@@ -91,11 +89,8 @@ public class GiveUpQuestion extends Service {
 		    path.replace('\\', '/')));
 	}
 
-	StudentTestLog studentTestLog = new StudentTestLog();
-	studentTestLog.setDistributedTest(distributedTest);
-	studentTestLog.setStudent(registration);
-	studentTestLog.setDateDateTime(new DateTime());
-	studentTestLog.setEvent("Desistiu da pergunta/alínea: " + thisStudentTestQuestion.getTestQuestionOrder());
+	new StudentTestLog(distributedTest, registration, "Desistiu da pergunta/alínea: "
+		+ thisStudentTestQuestion.getTestQuestionOrder());
 	return;
     }
 

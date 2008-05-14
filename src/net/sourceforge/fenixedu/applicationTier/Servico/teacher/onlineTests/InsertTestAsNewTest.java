@@ -21,16 +21,10 @@ public class InsertTestAsNewTest extends Service {
         if (oldTest == null) {
             throw new InvalidArgumentsServiceException();
         }
-
-        Test test = new Test();
+        
         ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
-        test.setTitle(MessageFormat.format(bundle.getString("label.testTitle.duplicated"), new Object[] { oldTest.getTitle() }));
-        test.setInformation(oldTest.getInformation());
-        Date date = Calendar.getInstance().getTime();
-        test.setCreationDate(date);
-        test.setLastModifiedDate(date);
-        // test.setTestScope(oldTest.getTestScope());
-        oldTest.getTestScope().addTests(test);
+        String title=MessageFormat.format(bundle.getString("label.testTitle.duplicated"), new Object[] { oldTest.getTitle() });
+        Test test =new Test(title, oldTest.getInformation(), oldTest.getTestScope());
 
         List<TestQuestion> testQuestionList = oldTest.getTestQuestions();
 

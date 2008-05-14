@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -16,9 +15,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
-
-import org.joda.time.DateTime;
 
 /**
  * @author Susana Fernandes
@@ -49,11 +45,7 @@ public class CleanSubQuestions extends Service {
 		}
 	    }
 	}
-	StudentTestLog studentTestLog = new StudentTestLog();
-	studentTestLog.setDistributedTest(distributedTest);
-	studentTestLog.setStudent(registration);
-	studentTestLog.setDateDateTime(new DateTime());
-	studentTestLog.setEvent("Apagou resposta da pergunta/alínea: " + itemCode);
+	new StudentTestLog(distributedTest, registration, "Apagou resposta da pergunta/alínea: " + itemCode);
 	return;
     }
 

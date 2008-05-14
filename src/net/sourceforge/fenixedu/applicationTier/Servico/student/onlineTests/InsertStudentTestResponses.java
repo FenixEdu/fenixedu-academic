@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
@@ -46,12 +45,11 @@ public class InsertStudentTestResponses extends Service {
 
     private String path;
 
-    public InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber,
-	    final Integer distributedTestId, Response[] response, String path)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber, final Integer distributedTestId,
+	    Response[] response, String path) throws FenixServiceException, ExcepcaoPersistencia {
 
-	String logIdString = StringAppender.append("student num", studentNumber.toString(), " testId ",
-		distributedTestId.toString());
+	String logIdString = StringAppender.append("student num", studentNumber.toString(), " testId ", distributedTestId
+		.toString());
 	InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
 	this.path = path.replace('\\', '/');
 	if (registration == null) {
@@ -61,8 +59,7 @@ public class InsertStudentTestResponses extends Service {
 	    throw new NotAuthorizedStudentToDoTestException();
 	}
 
-	final DistributedTest distributedTest = rootDomainObject
-		.readDistributedTestByOID(distributedTestId);
+	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 	if (distributedTest == null)
 	    throw new FenixServiceException();
 	String event = getLogString(response);
@@ -73,8 +70,8 @@ public class InsertStudentTestResponses extends Service {
 	List<String> errors = new ArrayList<String>();
 
 	if (compareDates(distributedTest.getEndDate(), distributedTest.getEndHour())) {
-	    Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion
-		    .findStudentTestQuestions(registration, distributedTest);
+	    Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration,
+		    distributedTest);
 	    if (studentTestQuestionList.size() == 0)
 		throw new FenixServiceException();
 	    ParseSubQuestion parse = new ParseSubQuestion();
@@ -84,8 +81,7 @@ public class InsertStudentTestResponses extends Service {
 
 		if (LogLevel.DEBUG) {
 		    if (logger.isDebugEnabled())
-			logger.debug(StringAppender.append(logIdString,
-				" infoStudentTestQuestion.getResonse()= ",
+			logger.debug(StringAppender.append(logIdString, " infoStudentTestQuestion.getResonse()= ",
 				getLogString(new Response[] { thisResponse })));
 		}
 
@@ -97,11 +93,10 @@ public class InsertStudentTestResponses extends Service {
 			// n�o pode aceitar nova resposta
 		    } else {
 			try {
-			    studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion,
-				    this.path);
-			    studentTestQuestion.setSubQuestionByItem(correctQuestionValues(
-				    studentTestQuestion.getSubQuestionByItem(), new Double(
-					    studentTestQuestion.getTestQuestionValue().doubleValue())));
+			    studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, this.path);
+			    studentTestQuestion
+				    .setSubQuestionByItem(correctQuestionValues(studentTestQuestion.getSubQuestionByItem(),
+					    new Double(studentTestQuestion.getTestQuestionValue().doubleValue())));
 			} catch (Exception e) {
 			    throw new FenixServiceException(e);
 			}
@@ -111,16 +106,13 @@ public class InsertStudentTestResponses extends Service {
 			IQuestionCorrectionStrategy questionCorrectionStrategy = questionCorrectionStrategyFactory
 				.getQuestionCorrectionStrategy(studentTestQuestion);
 
-			String error = questionCorrectionStrategy.validResponse(studentTestQuestion,
-				thisResponse);
+			String error = questionCorrectionStrategy.validResponse(studentTestQuestion, thisResponse);
 			if (error == null) {
 			    studentTestQuestion.setResponse(thisResponse);
 			    if ((!distributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
-				    && studentTestQuestion.getSubQuestionByItem()
-					    .getResponseProcessingInstructions().size() != 0) {
+				    && studentTestQuestion.getSubQuestionByItem().getResponseProcessingInstructions().size() != 0) {
 
-				studentTestQuestion = questionCorrectionStrategy
-					.getMark(studentTestQuestion);
+				studentTestQuestion = questionCorrectionStrategy.getMark(studentTestQuestion);
 
 				if (studentTestQuestion.getSubQuestionByItem().getNextItemId() != null) {
 				    Integer newOrder = studentTestQuestion.getTestQuestionOrder() + 1;
@@ -129,16 +121,13 @@ public class InsertStudentTestResponses extends Service {
 				    nextStudentTestQuestion.setDistributedTest(distributedTest);
 				    nextStudentTestQuestion.setTestQuestionOrder(newOrder);
 				    nextStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
-				    nextStudentTestQuestion.setCorrectionFormula(studentTestQuestion
-					    .getCorrectionFormula());
+				    nextStudentTestQuestion.setCorrectionFormula(studentTestQuestion.getCorrectionFormula());
 				    nextStudentTestQuestion.setResponse(null);
-				    nextStudentTestQuestion.setItemId(studentTestQuestion
-					    .getSubQuestionByItem().getNextItemId());
-				    nextStudentTestQuestion.setQuestion(studentTestQuestion
-					    .getQuestion());
+				    nextStudentTestQuestion.setItemId(studentTestQuestion.getSubQuestionByItem().getNextItemId());
+				    nextStudentTestQuestion.setQuestion(studentTestQuestion.getQuestion());
 				    newTestQuestions.add(nextStudentTestQuestion);
-				    nextStudentTestQuestion.setTestQuestionValue(getNextQuestionValue(
-					    studentTestQuestion, nextStudentTestQuestion));
+				    nextStudentTestQuestion.setTestQuestionValue(getNextQuestionValue(studentTestQuestion,
+					    nextStudentTestQuestion));
 				}
 			    }
 			    totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
@@ -161,8 +150,7 @@ public class InsertStudentTestResponses extends Service {
 		}
 	    }
 
-	    studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration,
-		    distributedTest);
+	    studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
 	    for (StudentTestQuestion stq : newTestQuestions) {
 		for (StudentTestQuestion question : studentTestQuestionList) {
 		    if (!question.getIdInternal().equals(stq.getIdInternal())
@@ -190,17 +178,12 @@ public class InsertStudentTestResponses extends Service {
 		df.setDecimalFormatSymbols(decimalFormatSymbols);
 		String grade = df.format(Math.max(0, totalMark));
 		if (LogLevel.INFO) {
-		    System.out.println("GRADE ----------------------> " + registration.getNumber() + " "
-			    + grade);
+		    System.out.println("GRADE ----------------------> " + registration.getNumber() + " " + grade);
 		}
 		mark.setMark(grade);
 	    }
 
-	    StudentTestLog studentTestLog = new StudentTestLog();
-	    studentTestLog.setDistributedTest(distributedTest);
-	    studentTestLog.setStudent(registration);
-	    studentTestLog.setDateDateTime(new DateTime());
-	    studentTestLog.setEvent(event);
+	    new StudentTestLog(distributedTest, registration, event);
 	} else
 	    throw new NotAuthorizedException();
 	infoSiteStudentTestFeedback.setResponseNumber(new Integer(responseNumber));
@@ -231,16 +214,15 @@ public class InsertStudentTestResponses extends Service {
 	if (maxValue.compareTo(questionValue) != 0) {
 	    double difValue = questionValue.doubleValue() * Math.pow(maxValue.doubleValue(), -1);
 	    for (ResponseProcessing responseProcessing : subQuestion.getResponseProcessingInstructions()) {
-		responseProcessing.setResponseValue(Double.valueOf(responseProcessing.getResponseValue()
-			* difValue));
+		responseProcessing.setResponseValue(Double.valueOf(responseProcessing.getResponseValue() * difValue));
 	    }
 	}
 
 	return subQuestion;
     }
 
-    private Double getNextQuestionValue(StudentTestQuestion thisStudentTestQuestion,
-	    StudentTestQuestion nextStudentTestQuestion) throws FenixServiceException {
+    private Double getNextQuestionValue(StudentTestQuestion thisStudentTestQuestion, StudentTestQuestion nextStudentTestQuestion)
+	    throws FenixServiceException {
 	ParseSubQuestion parse = new ParseSubQuestion();
 	try {
 	    parse.parseStudentTestQuestion(nextStudentTestQuestion, path.replace('\\', '/'));
@@ -253,8 +235,7 @@ public class InsertStudentTestResponses extends Service {
 
 	if (thisStudentTestQuestion.getTestQuestionValue().doubleValue() != 0) {
 	    if (oldValue.doubleValue() != 0) {
-		diff = thisStudentTestQuestion.getTestQuestionValue().doubleValue()
-			* Math.pow(oldValue.doubleValue(), -1);
+		diff = thisStudentTestQuestion.getTestQuestionValue().doubleValue() * Math.pow(oldValue.doubleValue(), -1);
 	    } else {
 		diff = 1;
 	    }
@@ -272,12 +253,10 @@ public class InsertStudentTestResponses extends Service {
 	for (int questionNumber = 0; questionNumber < response.length; questionNumber++) {
 	    if (response[questionNumber] instanceof ResponseLID) {
 		if (((ResponseLID) response[questionNumber]).getResponse() != null) {
-		    for (int responseNumber = 0; responseNumber < ((ResponseLID) response[questionNumber])
-			    .getResponse().length; responseNumber++) {
+		    for (int responseNumber = 0; responseNumber < ((ResponseLID) response[questionNumber]).getResponse().length; responseNumber++) {
 			if (responseNumber != 0)
 			    event.append(",");
-			event
-				.append(((ResponseLID) response[questionNumber]).getResponse()[responseNumber]);
+			event.append(((ResponseLID) response[questionNumber]).getResponse()[responseNumber]);
 		    }
 		}
 	    } else if (response[questionNumber] instanceof ResponseSTR) {
