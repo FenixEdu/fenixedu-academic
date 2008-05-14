@@ -109,6 +109,12 @@
 			</logic:equal>
 		</logic:equal>
 		<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="false">
+			<logic:iterate id="curriculumModule" name="registrationConclusionBean" property="curriculumModulesWithNoConlusionDate">
+				<p>
+					<span class="error0"><bean:write name="curriculumModule" property="fullPath"/> não tem data de conclusão, assegure-se que está concluído e todas as datas de avaliação estão inseridas no sistema.</span>
+				</p>
+			</logic:iterate>
+			
 			<logic:equal name="registrationConclusionBean" property="byCycle" value="true" >
 				<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForCycle">
 					<fr:layout name="tabular">

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.joda.time.YearMonthDay;
@@ -98,6 +99,16 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
     }
 
+    public Collection<CurriculumModule> getCurriculumModulesWithNoConlusionDate() {
+	final Collection<CurriculumModule> result = new HashSet<CurriculumModule>();
+	if (hasCycleCurriculumGroup()) {
+	    getCycleCurriculumGroup().assertConclusionDate(result);
+	} else {
+	    getRegistration().assertConclusionDate(result);
+	}
+	return result;
+    }
+
     public Collection<CurriculumGroup> getCurriculumGroupsNotVerifyingStructure() {
 	if (hasCycleCurriculumGroup()) {
 	    final Collection<CurriculumGroup> result = new HashSet<CurriculumGroup>();
@@ -114,7 +125,8 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public boolean getCanBeConclusionProcessed() {
-	return !isConclusionProcessed() && isConcluded() && (getRegistration().getWasTransition() || groupStructureIsValid());
+	return !isConclusionProcessed() && isConcluded() && (getRegistration().getWasTransition() || groupStructureIsValid())
+		&& getCurriculumModulesWithNoConlusionDate().isEmpty();
     }
 
     private boolean groupStructureIsValid() {
