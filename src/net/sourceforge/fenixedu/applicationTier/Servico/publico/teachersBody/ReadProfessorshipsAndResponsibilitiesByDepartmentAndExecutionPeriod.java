@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.Detaile
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -33,8 +33,8 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
         }
         
-        final ExecutionPeriod executionPeriod = executionYear.readExecutionPeriodForSemester(semester);
-        if (semester.intValue() != 0 && executionPeriod == null) {
+        final ExecutionSemester executionSemester = executionYear.readExecutionPeriodForSemester(semester);
+        if (semester.intValue() != 0 && executionSemester == null) {
             throw new FenixServiceException("error.noExecutionPeriod");
         }
 
@@ -58,7 +58,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
                 if (semester.intValue() == 0) {
                     teacherProfessorships = teacher.getProfessorships(executionYear);
                 } else {                                      
-                    teacherProfessorships = teacher.getProfessorships(executionPeriod);
+                    teacherProfessorships = teacher.getProfessorships(executionSemester);
                 }
             }
             if (teacherProfessorships != null) {

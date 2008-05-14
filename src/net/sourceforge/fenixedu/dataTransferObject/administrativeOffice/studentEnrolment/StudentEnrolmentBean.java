@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.IStudentCurricularPlanBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public class StudentEnrolmentBean implements Serializable, IStudentCurricularPlanBean {
 
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
     private List<DomainReference<CurriculumModule>> curriculumModules;
     private List<DegreeModuleToEnrol> degreeModulesToEnrol;
     private CurriculumModuleBean curriculumModuleBean;
@@ -30,12 +30,12 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
 		studentCurricularPlan) : null;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return (this.executionPeriod == null) ? null : this.executionPeriod.getObject();
+    public ExecutionSemester getExecutionPeriod() {
+	return (this.executionSemester == null) ? null : this.executionSemester.getObject();
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
     public List<CurriculumModule> getCurriculumModules() {

@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.RestrictionDoneDegreeModuleVerifier;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -26,7 +26,7 @@ public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Bas
     }
 
     public RestrictionDoneDegreeModule(CurricularCourse toApply, CurricularCourse done, CourseGroup contextCourseGroup,
-	    CurricularPeriodInfoDTO curricularPeriodInfoDTO, ExecutionPeriod begin, ExecutionPeriod end) {
+	    CurricularPeriodInfoDTO curricularPeriodInfoDTO, ExecutionSemester begin, ExecutionSemester end) {
 
 	this(done);
 	init(toApply, contextCourseGroup, begin, end);

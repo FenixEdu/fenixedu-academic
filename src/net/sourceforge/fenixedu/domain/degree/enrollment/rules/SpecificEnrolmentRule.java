@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
@@ -31,7 +31,7 @@ public abstract class SpecificEnrolmentRule {
     
     protected StudentCurricularPlan studentCurricularPlan;
 
-    protected ExecutionPeriod executionPeriod;
+    protected ExecutionSemester executionSemester;
 
     protected Integer creditsInSecundaryArea;
 
@@ -71,7 +71,7 @@ public abstract class SpecificEnrolmentRule {
                 studentCurricularPlan.setCreditsInSpecializationArea(this
                         .getCreditsInSpecializationArea());
                 studentCurricularPlan.setCreditsInSecundaryArea(this.getCreditsInSecundaryArea());
-                return filter(this.studentCurricularPlan, this.executionPeriod,
+                return filter(this.studentCurricularPlan, this.executionSemester,
                         curricularCoursesToBeEnrolledIn, result);
             } catch (ExcepcaoPersistencia e) {
                 e.printStackTrace();
@@ -100,7 +100,7 @@ public abstract class SpecificEnrolmentRule {
     }
     protected abstract List specificAlgorithm(StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia ;
     
-    protected abstract List filter(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod,
+    protected abstract List filter(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
             List curricularCoursesToBeEnrolledIn,
             final List selectedCurricularCoursesFromSpecializationAndSecundaryAreas);
     
@@ -133,10 +133,10 @@ public abstract class SpecificEnrolmentRule {
     }
         
     protected boolean thereIsAnyTemporaryCurricularCourse(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod, final List areaCurricularCourses) {
+            ExecutionSemester executionSemester, final List areaCurricularCourses) {
 
         List enrolledEnrollments = studentCurricularPlan
-                .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod
+                .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionSemester
                         .getPreviousExecutionPeriod());
 
         List result = (List) CollectionUtils.select(enrolledEnrollments, new Predicate() {
@@ -182,7 +182,7 @@ public abstract class SpecificEnrolmentRule {
             public boolean evaluate(Object obj) {
                 CurricularCourse curricularCourse = (CurricularCourse) obj;
                 return (studentCurricularPlan.isCurricularCourseApproved(curricularCourse) || studentCurricularPlan
-                        .isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod));
+                        .isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionSemester));
             }
         });
     }

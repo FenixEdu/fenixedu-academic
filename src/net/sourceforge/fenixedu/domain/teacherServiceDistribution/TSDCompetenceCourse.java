@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -18,18 +18,18 @@ public class TSDCompetenceCourse extends TSDCompetenceCourse_Base {
         super();
     }
         
-    protected TSDCompetenceCourse(CompetenceCourse competenceCourse, ExecutionPeriod executionPeriod) {
+    protected TSDCompetenceCourse(CompetenceCourse competenceCourse, ExecutionSemester executionSemester) {
     	this();
     	
     	this.setCompetenceCourse(competenceCourse);
-    	this.setExecutionPeriod(executionPeriod);
+    	this.setExecutionPeriod(executionSemester);
     	
-    	buildTSDCourseLoads(competenceCourse, executionPeriod);
+    	buildTSDCourseLoads(competenceCourse, executionSemester);
     }
     
     
-	public TSDCompetenceCourse(TeacherServiceDistribution tsd, CompetenceCourse competenceCourse, ExecutionPeriod executionPeriod) {
-    	this(competenceCourse, executionPeriod);
+	public TSDCompetenceCourse(TeacherServiceDistribution tsd, CompetenceCourse competenceCourse, ExecutionSemester executionSemester) {
+    	this(competenceCourse, executionSemester);
     	
     	this.addTeacherServiceDistributions(tsd);
     	
@@ -61,32 +61,32 @@ public class TSDCompetenceCourse extends TSDCompetenceCourse_Base {
 		}
 	}
 	
-	private void buildTSDCourseLoads(CompetenceCourse competenceCourse, ExecutionPeriod executionPeriod) {
+	private void buildTSDCourseLoads(CompetenceCourse competenceCourse, ExecutionSemester executionSemester) {
     	Double shiftHours = null;
 		Set<ShiftType> lecturedShiftTypes = new HashSet<ShiftType>();
 		
 		for(ShiftType shiftType : ShiftType.values()){
 		    switch(shiftType) {	    
 			    case TEORICA:
-			    shiftHours = competenceCourse.getTheoreticalHours(executionPeriod);		
+			    shiftHours = competenceCourse.getTheoreticalHours(executionSemester);		
 				break;
 			    case PROBLEMS:
-				shiftHours = competenceCourse.getProblemsHours(executionPeriod);		
+				shiftHours = competenceCourse.getProblemsHours(executionSemester);		
 				break;
 			    case LABORATORIAL:
-				shiftHours = competenceCourse.getLaboratorialHours(executionPeriod);		
+				shiftHours = competenceCourse.getLaboratorialHours(executionSemester);		
 				break;
 			    case TRAINING_PERIOD:
-				shiftHours = competenceCourse.getTrainingPeriodHours(executionPeriod);		
+				shiftHours = competenceCourse.getTrainingPeriodHours(executionSemester);		
 				break;
 			    case SEMINARY:
-				shiftHours = competenceCourse.getSeminaryHours(executionPeriod);		
+				shiftHours = competenceCourse.getSeminaryHours(executionSemester);		
 				break;
 			    case TUTORIAL_ORIENTATION:
-				shiftHours = competenceCourse.getTutorialOrientationHours(executionPeriod);		
+				shiftHours = competenceCourse.getTutorialOrientationHours(executionSemester);		
 				break;
 			    case FIELD_WORK:
-				shiftHours = competenceCourse.getFieldWorkHours(executionPeriod);		
+				shiftHours = competenceCourse.getFieldWorkHours(executionSemester);		
 				break;	    
 			    default:
 			    shiftHours = null;

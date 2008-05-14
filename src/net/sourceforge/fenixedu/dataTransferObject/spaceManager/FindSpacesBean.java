@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.LinkObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -32,24 +32,24 @@ public class FindSpacesBean implements Serializable {
 
     private SpacesSearchCriteriaType searchType;
 
-    private DomainReference<ExecutionPeriod> executionPeriodReference;
+    private DomainReference<ExecutionSemester> executionPeriodReference;
 
     public FindSpacesBean() {
 	setExtraOptions(false);
 	setSearchType(SpacesSearchCriteriaType.SPACE);
     }
 
-    public FindSpacesBean(Space space, ExecutionPeriod executionPeriod) {
+    public FindSpacesBean(Space space, ExecutionSemester executionSemester) {
 	this();
 	setSpace(space);	
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
     }
     
-    public FindSpacesBean(Space space, SpacesSearchCriteriaType criteriaType, ExecutionPeriod executionPeriod) {
+    public FindSpacesBean(Space space, SpacesSearchCriteriaType criteriaType, ExecutionSemester executionSemester) {
 	setSpace(space);
 	setExtraOptions(false);
 	setSearchType(criteriaType);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
     }
 
     public List<LinkObject> getSuroundingSpacePath() {
@@ -94,11 +94,11 @@ public class FindSpacesBean implements Serializable {
 	return this.selectedSpaceReference != null ? this.selectedSpaceReference.getObject() : null;
     }  
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriodReference = executionPeriod != null ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionPeriodReference = executionSemester != null ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
 	return this.executionPeriodReference != null ? this.executionPeriodReference.getObject() : null;
     }  
     

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.degree.finalProject;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
@@ -13,16 +13,16 @@ public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectS
     	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public TeacherDegreeFinalProjectStudent(ExecutionPeriod executionPeriod, Teacher teacher,
+    public TeacherDegreeFinalProjectStudent(ExecutionSemester executionSemester, Teacher teacher,
             Registration registration) {
     	this();
-        setExecutionPeriod(executionPeriod);
+        setExecutionPeriod(executionSemester);
         setTeacher(teacher);
         setStudent(registration);
     }
 
-    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
-        return this.getExecutionPeriod().equals(executionPeriod);
+    public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
+        return this.getExecutionPeriod().equals(executionSemester);
     }
     
     public void delete() {

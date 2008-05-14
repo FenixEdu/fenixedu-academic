@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribut
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCompetenceCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -17,7 +17,7 @@ public class AddCourseToTeacherServiceDistribution extends Service {
 		CompetenceCourse course = rootDomainObject.readCompetenceCourseByOID(courseId);
 				
 		if(!rootTSD.getCompetenceCourses().contains(course)){
-			for(ExecutionPeriod period :  rootTSD.getTSDProcessPhase().getTSDProcess().getExecutionPeriods()){
+			for(ExecutionSemester period :  rootTSD.getTSDProcessPhase().getTSDProcess().getExecutionPeriods()){
 				if(course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).size() > 0){
 					new TSDCompetenceCourse(rootTSD, course, period);
 				}

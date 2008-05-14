@@ -10,7 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -23,10 +23,10 @@ public class SearchStudentByCriteria extends Service {
 
     public List<Enrolment> run(final ExecutionYear executionYear, final CurricularCourse curricularCourse, final Integer semester) {
 
-	final ExecutionPeriod executionPeriod = executionYear.readExecutionPeriodForSemester(semester);
+	final ExecutionSemester executionSemester = executionYear.readExecutionPeriodForSemester(semester);
 
 	final List<Enrolment> enrolments = new ArrayList<Enrolment>();
-	for (final Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod)) {
+	for (final Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester)) {
 	    enrolments.add(enrolment);
 	}
 

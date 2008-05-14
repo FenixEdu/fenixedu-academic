@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExe
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
@@ -59,7 +59,7 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     private List<DomainReference<Enrolment>> enrolments;
 
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
     private List<DomainReference<Exam>> exams;
 
@@ -300,12 +300,12 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 	this.exams = result;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    public ExecutionSemester getExecutionPeriod() {
+	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
 }

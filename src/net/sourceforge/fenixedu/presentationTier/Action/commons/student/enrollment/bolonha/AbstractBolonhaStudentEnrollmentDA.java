@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
@@ -33,10 +33,10 @@ import org.apache.struts.action.DynaActionForm;
 public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAction {
 
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response, final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
+	    HttpServletResponse response, final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 
 	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(studentCurricularPlan,
-		executionPeriod, getCurricularYearForCurricularCourses(), getCurricularRuleLevel((DynaActionForm) form)));
+		executionSemester, getCurricularYearForCurricularCourses(), getCurricularRuleLevel((DynaActionForm) form)));
 
 	return mapping.findForward("showDegreeModulesToEnrol");
 
@@ -183,10 +183,10 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     protected ActionForward prepareChooseCycleCourseGroupToEnrol(final ActionMapping mapping, final HttpServletRequest request,
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod,
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
 	    final CycleType sourceCycle, final CycleType cycleToEnrol) {
 
-	request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionPeriod, sourceCycle,
+	request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionSemester, sourceCycle,
 		cycleToEnrol));
 	return mapping.findForward("chooseCycleCourseGroupToEnrol");
     }

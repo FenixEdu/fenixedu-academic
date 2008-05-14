@@ -5,7 +5,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -14,7 +14,7 @@ public class ReadStudentCurricularPlanWithRulesForEnrollments extends ReadStuden
 	@Override
 	public StudentCurricularPlan run(Integer executionDegreeId, Registration registration) throws FenixServiceException {
 
-		final ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+		final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
 		final StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(registration);
 
 		if (studentCurricularPlan.hasSpecialSeasonFor(actualExecutionPeriod)) {

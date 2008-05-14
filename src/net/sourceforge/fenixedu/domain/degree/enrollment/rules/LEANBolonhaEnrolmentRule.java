@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
@@ -41,8 +41,8 @@ public class LEANBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     
 
     public LEANBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
-	    ExecutionPeriod executionPeriod) {
-	super(studentCurricularPlan, executionPeriod);
+	    ExecutionSemester executionSemester) {
+	super(studentCurricularPlan, executionSemester);
     }
 
     public List<CurricularCourse2Enroll> apply(

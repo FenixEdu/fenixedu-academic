@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -82,7 +82,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    final Registration registration) {
 
 	final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
 
 	// -------------------------------------------------------------------------------------------------------------------
 	//TODO: refactor this code, should be more generic
@@ -108,7 +108,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    } else {
 		final CycleCurriculumGroup secondCycle = studentCurricularPlan.getSecondCycle();
 		if (secondCycle == null) {
-		    return prepareSelectAffinityToEnrol(mapping, request, studentCurricularPlan, executionPeriod);
+		    return prepareSelectAffinityToEnrol(mapping, request, studentCurricularPlan, executionSemester);
 
 		} else if (secondCycle.isExternal()) {
 		    final Student student = studentCurricularPlan.getRegistration().getStudent();
@@ -120,7 +120,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 			return mapping.findForward("proceedToEnrolment");
 		    }
 
-		    return showAffinityToEnrol(mapping, request, studentCurricularPlan, executionPeriod, secondCycle);
+		    return showAffinityToEnrol(mapping, request, studentCurricularPlan, executionSemester, secondCycle);
 
 		} else {
 		    request.setAttribute("registration", registration);
@@ -136,27 +136,27 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     }
 
     private ActionForward prepareSelectAffinityToEnrol(final ActionMapping mapping, final HttpServletRequest request,
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 
-	if (!canContinueToEnrolment(request, studentCurricularPlan, executionPeriod)) {
+	if (!canContinueToEnrolment(request, studentCurricularPlan, executionSemester)) {
 	    return mapping.findForward("enrollmentCannotProceed");
 	}
 
-	request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionPeriod,
+	request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionSemester,
 		CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE));
 
 	return mapping.findForward("selectAffinityToEnrol");
     }
 
     private ActionForward showAffinityToEnrol(final ActionMapping mapping, final HttpServletRequest request,
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod,
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
 	    final CycleCurriculumGroup curriculumGroup) {
 
-	if (!canContinueToEnrolment(request, studentCurricularPlan, executionPeriod)) {
+	if (!canContinueToEnrolment(request, studentCurricularPlan, executionSemester)) {
 	    return mapping.findForward("enrollmentCannotProceed");
 	}
 
-	request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionPeriod, curriculumGroup
+	request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionSemester, curriculumGroup
 		.getCycleCourseGroup()));
 
 	return mapping.findForward("showAffinityToEnrol");
@@ -176,9 +176,9 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     }
 
     private boolean canContinueToEnrolment(final HttpServletRequest request, final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 
-	if (isFromSpecialSeason(studentCurricularPlan, executionPeriod)) {
+	if (isFromSpecialSeason(studentCurricularPlan, executionSemester)) {
 	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
 		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan()
 			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
@@ -200,8 +200,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     }
 
     private boolean isFromSpecialSeason(final StudentCurricularPlan activeStudentCurricularPlan,
-	    final ExecutionPeriod executionPeriod) {
-	return activeStudentCurricularPlan.hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionPeriod);
+	    final ExecutionSemester executionSemester) {
+	return activeStudentCurricularPlan.hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionSemester);
     }
 
     private void addOutOfPeriodMessage(HttpServletRequest request, final EnrolmentPeriod nextEnrollmentPeriod) {

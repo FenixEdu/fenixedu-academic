@@ -43,7 +43,7 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GradeScale;
@@ -237,7 +237,7 @@ public class CreateTestData {
 		    getPeriodString(semester)), null, start.toDateTimeAtMidnight(), end.toDateTimeAtMidnight(), academicYear
 		    .getRootEntry());
 
-	    ExecutionPeriod executionPeriod = ExecutionPeriod.getExecutionPeriod(academicSemester);
+	    ExecutionSemester executionPeriod = ExecutionSemester.getExecutionPeriod(academicSemester);
 
 	    final YearMonthDay now = new YearMonthDay();
 	    if (start.isAfter(now) || end.isBefore(now)) {
@@ -249,7 +249,7 @@ public class CreateTestData {
 	    createInquiryResponsePeriods(executionPeriod);
 	}
 
-	private void createInquiryResponsePeriods(final ExecutionPeriod executionPeriod) {
+	private void createInquiryResponsePeriods(final ExecutionSemester executionPeriod) {
 	    new InquiryResponsePeriod(executionPeriod, executionPeriod.getBeginDate(), executionPeriod.getEndDate());
 	}
 
@@ -504,7 +504,7 @@ public class CreateTestData {
 	    for (final ExecutionYear executionYear : getRootDomainObject().getExecutionYearsSet()) {
 		final ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus,
 			Boolean.FALSE);
-		for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+		for (final ExecutionSemester executionPeriod : executionYear.getExecutionPeriodsSet()) {
 		    final Degree degree = executionDegree.getDegree();
 		    for (int y = 1; y <= degree.getDegreeType().getYears(); y++) {
 			for (int i = 0; i < 1; i++) {
@@ -520,8 +520,8 @@ public class CreateTestData {
 
 	private static void createPeriodsForExecutionDegree(ExecutionDegree executionDegree) {
 	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
-	    final ExecutionPeriod executionPeriod1 = executionYear.getFirstExecutionPeriod();
-	    final ExecutionPeriod executionPeriod2 = executionYear.getLastExecutionPeriod();
+	    final ExecutionSemester executionPeriod1 = executionYear.getFirstExecutionPeriod();
+	    final ExecutionSemester executionPeriod2 = executionYear.getLastExecutionPeriod();
 
 	    final OccupationPeriod occupationPeriod1 = readOccupationPeriod(executionPeriod1.getBeginDateYearMonthDay(),
 		    executionPeriod1.getEndDateYearMonthDay().minusDays(32));
@@ -548,7 +548,7 @@ public class CreateTestData {
 
 	private static void createEnrolmentPeriods(final DegreeCurricularPlan degreeCurricularPlan,
 		final ExecutionYear executionYear) {
-	    for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+	    for (final ExecutionSemester executionPeriod : executionYear.getExecutionPeriodsSet()) {
 		final Date start = executionPeriod.getBeginDateYearMonthDay().toDateMidnight().toDate();
 		final Date end = executionPeriod.getEndDateYearMonthDay().toDateMidnight().toDate();
 
@@ -781,7 +781,7 @@ public class CreateTestData {
 	    final CompetenceCourse competenceCourse = new CompetenceCourse(curricularCourse.getName(),
 		    curricularCourse.getName(), Boolean.TRUE, RegimeType.SEMESTRIAL, competenceCourseLevel,
 		    CompetenceCourseType.REGULAR, CurricularStage.APPROVED, competenceCourseGroupUnit);
-	    final ExecutionPeriod executionPeriod = firstExecutionPeriod();
+	    final ExecutionSemester executionPeriod = firstExecutionPeriod();
 	    competenceCourse.setCreationDateYearMonthDay(executionPeriod.getBeginDateYearMonthDay());
 	    final CompetenceCourseInformation competenceCourseInformation = competenceCourse
 		    .findCompetenceCourseInformationForExecutionPeriod(null);
@@ -794,7 +794,7 @@ public class CreateTestData {
 	    curricularCourse.setCompetenceCourse(competenceCourse);
 	}
 
-	private ExecutionPeriod firstExecutionPeriod() {
+	private ExecutionSemester firstExecutionPeriod() {
 	    return Collections.min(RootDomainObject.getInstance().getExecutionPeriodsSet());
 	}
 
@@ -831,7 +831,7 @@ public class CreateTestData {
 	    for (final DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModulesSet()) {
 		if (degreeModule.isCurricularCourse()) {
 		    final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-		    for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+		    for (final ExecutionSemester executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
 			if (curricularCourse.hasActiveScopesInExecutionPeriod(executionPeriod)) {
 			    final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(),
 				    curricularCourse.getCode(), executionPeriod, null);
@@ -859,7 +859,7 @@ public class CreateTestData {
 
 	private static void createAnnouncementsAndPlanning(final ExecutionCourse executionCourse) {
 	    final AnnouncementBoard announcementBoard = executionCourse.getBoard();
-	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+	    final ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
 	    final YearMonthDay start = executionPeriod.getBeginDateYearMonthDay();
 	    final YearMonthDay end = executionPeriod.getEndDateYearMonthDay();
 	    for (YearMonthDay day = start; day.compareTo(end) < 0; day = day.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK)) {
@@ -964,7 +964,7 @@ public class CreateTestData {
 	    final Calendar cEnd = toCalendar(end);
 	    final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
 	    final Room room = lessonRoomManager.getNextOldRoom();
-	    final ExecutionPeriod executionPeriod = shift.getExecutionCourse().getExecutionPeriod();
+	    final ExecutionSemester executionPeriod = shift.getExecutionCourse().getExecutionPeriod();
 	    GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 	    new Lesson(diaSemana, cStart, cEnd, shift, FrequencyType.WEEKLY, executionPeriod, maxLessonsPeriod.getLeft(),
 		    maxLessonsPeriod.getRight(), room);
@@ -974,7 +974,7 @@ public class CreateTestData {
     public static class CreateEvaluations extends AtomicAction {
 	public void doIt() {
 	    final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-	    for (final ExecutionPeriod executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
+	    for (final ExecutionSemester executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
 		createWrittenEvaluations(executionPeriod, new Season(Season.SEASON1), "Teste1");
 		for (int i = 0; i++ < 500; writtenTestsRoomManager.getNextDateTime(executionPeriod))
 		    ;
@@ -982,7 +982,7 @@ public class CreateTestData {
 	    }
 	}
 
-	private static void createWrittenEvaluations(final ExecutionPeriod executionPeriod, final Season season,
+	private static void createWrittenEvaluations(final ExecutionSemester executionPeriod, final Season season,
 		final String writtenTestName) {
 	    for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
 		createWrittenEvaluation(executionPeriod, executionCourse, writtenTestName);
@@ -990,8 +990,8 @@ public class CreateTestData {
 	    }
 	}
 
-	private static void createWrittenEvaluation(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse,
-		final String name) {
+	private static void createWrittenEvaluation(final ExecutionSemester executionPeriod,
+		final ExecutionCourse executionCourse, final String name) {
 	    DateTime startDateTime = writtenTestsRoomManager.getNextDateTime(executionPeriod);
 	    DateTime endDateTime = startDateTime.plusMinutes(120);
 	    if (startDateTime.getDayOfMonth() != endDateTime.getDayOfMonth()) {
@@ -1012,7 +1012,7 @@ public class CreateTestData {
 	    createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, writtenTest, executionCourse);
 	}
 
-	private static void createExam(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse,
+	private static void createExam(final ExecutionSemester executionPeriod, final ExecutionCourse executionCourse,
 		final Season season) {
 	    DateTime startDateTime = examRoomManager.getNextDateTime(executionPeriod);
 	    DateTime endDateTime = startDateTime.plusMinutes(180);
@@ -1161,8 +1161,8 @@ public class CreateTestData {
 	// new InsuranceEvent(student.getPerson(), executionYear);
     }
 
-    private static ExecutionPeriod findFirstExecutionPeriod() {
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+    private static ExecutionSemester findFirstExecutionPeriod() {
+	for (final ExecutionSemester executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
 	    if (executionPeriod.getPreviousExecutionPeriod() == null) {
 		return executionPeriod;
 	    }
@@ -1255,7 +1255,7 @@ public class CreateTestData {
 	final ExecutionYear executionYear = executionDegree.getExecutionYear();
 	final Degree degree = executionDegree.getDegree();
 	final DegreeType degreeType = degree.getTipoCurso();
-	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
+	for (final ExecutionSemester executionPeriod : executionYear.getExecutionPeriodsSet()) {
 	    for (int y = 1; y <= degreeType.getYears(); y++) {
 		for (int i = 1; i <= 3; i++) {
 		    final String name = degreeType.isBolonhaType() ? Integer.toString(i) : degree.getSigla() + y + i;
@@ -1269,7 +1269,7 @@ public class CreateTestData {
 	for (final DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModulesSet()) {
 	    if (degreeModule instanceof CurricularCourse) {
 		final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-		for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+		for (final ExecutionSemester executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
 		    if (!curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod).isEmpty()) {
 			createExecutionCourse(executionPeriod, curricularCourse);
 		    }
@@ -1278,7 +1278,7 @@ public class CreateTestData {
 	}
     }
 
-    private static void createExecutionCourse(final ExecutionPeriod executionPeriod, final CurricularCourse curricularCourse) {
+    private static void createExecutionCourse(final ExecutionSemester executionPeriod, final CurricularCourse curricularCourse) {
 	final ExecutionCourse executionCourse = new ExecutionCourse(curricularCourse.getName(), curricularCourse.getAcronym(),
 		executionPeriod, null);
 	executionCourse.addAssociatedCurricularCourses(curricularCourse);
@@ -1300,7 +1300,7 @@ public class CreateTestData {
     }
 
     private static void createShiftProfessorhips(final ExecutionCourse executionCourse) {
-	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionPeriod();
 	for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
 	    final Teacher teacher = professorship.getTeacher();
 	    for (final Shift shift : executionCourse.getAssociatedShifts()) {
@@ -1406,7 +1406,7 @@ public class CreateTestData {
 
     private static void createWrittenEvaluations() {
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-	for (final ExecutionPeriod executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
+	for (final ExecutionSemester executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
 	    createWrittenEvaluations(executionPeriod, new Season(Season.SEASON1), "Teste1");
 	    for (int i = 0; i++ < 500; writtenTestsRoomManager.getNextDateTime(executionPeriod))
 		;
@@ -1414,7 +1414,7 @@ public class CreateTestData {
 	}
     }
 
-    private static void createWrittenEvaluations(final ExecutionPeriod executionPeriod, final Season season,
+    private static void createWrittenEvaluations(final ExecutionSemester executionPeriod, final Season season,
 	    final String writtenTestName) {
 	for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
 	    createWrittenEvaluation(executionPeriod, executionCourse, writtenTestName);
@@ -1422,7 +1422,7 @@ public class CreateTestData {
 	}
     }
 
-    private static void createWrittenEvaluation(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse,
+    private static void createWrittenEvaluation(final ExecutionSemester executionPeriod, final ExecutionCourse executionCourse,
 	    final String name) {
 	final DateTime startDateTime = writtenTestsRoomManager.getNextDateTime(executionPeriod);
 	final DateTime endDateTime = startDateTime.plusMinutes(120);
@@ -1446,7 +1446,7 @@ public class CreateTestData {
 	// writtenTest, executionCourse);
     }
 
-    private static void createExam(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse,
+    private static void createExam(final ExecutionSemester executionPeriod, final ExecutionCourse executionCourse,
 	    final Season season) {
 	final DateTime startDateTime = examRoomManager.getNextDateTime(executionPeriod);
 	final DateTime endDateTime = startDateTime.plusMinutes(180);
@@ -1469,7 +1469,7 @@ public class CreateTestData {
 	// exam, executionCourse);
     }
 
-    private static void createWrittenEvaluationEnrolmentPeriodAndVigilancies(final ExecutionPeriod executionPeriod,
+    private static void createWrittenEvaluationEnrolmentPeriodAndVigilancies(final ExecutionSemester executionPeriod,
 	    final WrittenEvaluation writtenEvaluation, final ExecutionCourse executionCourse) {
 	writtenEvaluation.setEnrollmentBeginDayDateYearMonthDay(executionPeriod.getBeginDateYearMonthDay());
 	writtenEvaluation.setEnrollmentBeginTimeDateHourMinuteSecond(new HourMinuteSecond(0, 0, 0));
@@ -1498,7 +1498,7 @@ public class CreateTestData {
     }
 
     private static void createStudentEnrolments(final StudentCurricularPlan studentCurricularPlan) {
-	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionPeriod();
 	if (studentCurricularPlan.isBolonhaDegree()) {
 
 	} else {
@@ -1517,7 +1517,7 @@ public class CreateTestData {
 	}
     }
 
-    private static Attends getAttendsFor(final Enrolment enrolment, final ExecutionPeriod executionPeriod) {
+    private static Attends getAttendsFor(final Enrolment enrolment, final ExecutionSemester executionPeriod) {
 	for (final Attends attends : enrolment.getAttendsSet()) {
 	    if (attends.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
 		return attends;

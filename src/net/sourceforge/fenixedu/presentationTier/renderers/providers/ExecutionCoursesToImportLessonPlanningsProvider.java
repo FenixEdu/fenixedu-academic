@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.Impor
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -17,11 +17,11 @@ public class ExecutionCoursesToImportLessonPlanningsProvider implements DataProv
 
     public Object provide(Object source, Object currentValue) {
         ImportContentBean bean = (ImportContentBean) source;                
-        ExecutionPeriod executionPeriod = bean.getExecutionPeriod();
+        ExecutionSemester executionSemester = bean.getExecutionPeriod();
         CurricularYear curricularYear = bean.getCurricularYear();
         DegreeCurricularPlan degreeCurricularPlan = bean.getExecutionDegree().getDegreeCurricularPlan();        
-        if(degreeCurricularPlan != null && executionPeriod != null && curricularYear != null) {
-            List<ExecutionCourse> executionCourses = degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionPeriod, curricularYear.getYear(), executionPeriod.getSemester());
+        if(degreeCurricularPlan != null && executionSemester != null && curricularYear != null) {
+            List<ExecutionCourse> executionCourses = degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester, curricularYear.getYear(), executionSemester.getSemester());
             Collections.sort(executionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
             return executionCourses;
         }        

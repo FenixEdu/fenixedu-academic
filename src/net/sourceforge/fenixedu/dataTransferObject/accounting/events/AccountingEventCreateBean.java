@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting.events;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
@@ -18,7 +18,7 @@ public class AccountingEventCreateBean implements Serializable {
 
     private DomainReference<ExecutionYear> executionYear;
 
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
     public AccountingEventCreateBean(final StudentCurricularPlan studentCurricularPlan) {
 	setStudentCurricularPlan(studentCurricularPlan);
@@ -41,12 +41,12 @@ public class AccountingEventCreateBean implements Serializable {
 	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    public ExecutionSemester getExecutionPeriod() {
+	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
 }

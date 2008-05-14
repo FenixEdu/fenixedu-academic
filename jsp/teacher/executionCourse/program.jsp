@@ -25,7 +25,7 @@
 
 	<bean:define id="showNote" value="false" toScope="request"/>
 	
-	<bean:define id="executionPeriod" type="net.sourceforge.fenixedu.domain.ExecutionPeriod"
+	<bean:define id="executionPeriod" type="net.sourceforge.fenixedu.domain.ExecutionSemester"
 			name="executionCourse" property="executionPeriod"/>
 
 	<logic:iterate id="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"

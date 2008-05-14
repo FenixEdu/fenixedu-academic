@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
 
@@ -11,10 +11,10 @@ public class InquiriesStudentExecutionPeriod extends InquiriesStudentExecutionPe
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public InquiriesStudentExecutionPeriod(final Student student, final ExecutionPeriod executionPeriod) {
+    public InquiriesStudentExecutionPeriod(final Student student, final ExecutionSemester executionSemester) {
 	this();
 	setStudent(student);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
     }
     
 }

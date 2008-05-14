@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -33,15 +33,14 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 
     public List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia {
 
-	Department department =  rootDomainObject.readDepartmentByOID(departmentId); 
+	Department department = rootDomainObject.readDepartmentByOID(departmentId);
 
 	List<CompetenceCourse> competenceCourseList = department.getCompetenceCourses();
 
-	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
-	for(Integer executionPeriodID : executionPeriodsIDs){
-	    executionPeriodList.add(rootDomainObject.readExecutionPeriodByOID(executionPeriodID));
+	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
+	for (Integer executionPeriodID : executionPeriodsIDs) {
+	    executionPeriodList.add(rootDomainObject.readExecutionSemesterByOID(executionPeriodID));
 	}
-
 
 	DistributionTeacherServicesByCourseDTO returnDTO = new DistributionTeacherServicesByCourseDTO();
 
@@ -50,7 +49,7 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 	for (CompetenceCourse cc : competenceCourseList) {
 	    for (CurricularCourse curricularCourseEntry : cc.getAssociatedCurricularCourses()) {
 
-		for (ExecutionPeriod executionPeriodEntry : executionPeriodList) {
+		for (ExecutionSemester executionPeriodEntry : executionPeriodList) {
 
 		    Set<String> curricularYearsSet = buildCurricularYearsSet(curricularCourseEntry, executionPeriodEntry);
 
@@ -58,48 +57,47 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 			    .getExecutionCoursesByExecutionPeriod(executionPeriodEntry)) {
 
 			if (executionCoursesMap.containsKey(executionCourseEntry.getIdInternal())) {
-			    returnDTO.addDegreeNameToExecutionCourse(executionCourseEntry
-				    .getIdInternal(), curricularCourseEntry.getDegreeCurricularPlan().getDegree()
-				    .getSigla());
+			    returnDTO.addDegreeNameToExecutionCourse(executionCourseEntry.getIdInternal(), curricularCourseEntry
+				    .getDegreeCurricularPlan().getDegree().getSigla());
 			    returnDTO.addCurricularYearsToExecutionCourse(executionCourseEntry.getIdInternal(),
 				    curricularYearsSet);
 			    continue;
 			}
 
-//			performance enhancement
-			int executionCourseFirstTimeEnrollementStudentNumber = executionCourseEntry.getFirstTimeEnrolmentStudentNumber();
-			int totalStudentsNumber = executionCourseEntry.getTotalEnrolmentStudentNumber();						
-			int executionCourseSecondTimeEnrollementStudentNumber = totalStudentsNumber - executionCourseFirstTimeEnrollementStudentNumber;
+			// performance enhancement
+			int executionCourseFirstTimeEnrollementStudentNumber = executionCourseEntry
+				.getFirstTimeEnrolmentStudentNumber();
+			int totalStudentsNumber = executionCourseEntry.getTotalEnrolmentStudentNumber();
+			int executionCourseSecondTimeEnrollementStudentNumber = totalStudentsNumber
+				- executionCourseFirstTimeEnrollementStudentNumber;
 
 			int theoreticalShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.TEORICA);
 			int praticalShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.PRATICA);
 			int theoPratShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.TEORICO_PRATICA);
 			int laboratorialShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.LABORATORIAL);
 
-			double theoreticalStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber / theoreticalShiftsNumber;
-			double praticalStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber / praticalShiftsNumber;
-			double theoPratStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber / theoPratShiftsNumber;
-			double laboratorialStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber / laboratorialShiftsNumber;
+			double theoreticalStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0
+				: (double) totalStudentsNumber / theoreticalShiftsNumber;
+			double praticalStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber
+				/ praticalShiftsNumber;
+			double theoPratStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber
+				/ theoPratShiftsNumber;
+			double laboratorialStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0
+				: (double) totalStudentsNumber / laboratorialShiftsNumber;
 
-			String campus = getCampusForCurricularCourseAndExecutionPeriod(curricularCourseEntry, executionPeriodEntry);
+			String campus = getCampusForCurricularCourseAndExecutionPeriod(curricularCourseEntry,
+				executionPeriodEntry);
 
-			returnDTO
-			.addExecutionCourse(
-				executionCourseEntry.getIdInternal(),
-				executionCourseEntry.getNome(),
-				campus,
-				curricularCourseEntry.getDegreeCurricularPlan().getDegree().getSigla(),
-				curricularYearsSet,
-				executionCourseEntry.getExecutionPeriod().getSemester(),
+			returnDTO.addExecutionCourse(executionCourseEntry.getIdInternal(), executionCourseEntry.getNome(),
+				campus, curricularCourseEntry.getDegreeCurricularPlan().getDegree().getSigla(),
+				curricularYearsSet, executionCourseEntry.getExecutionPeriod().getSemester(),
 				executionCourseFirstTimeEnrollementStudentNumber,
-				executionCourseSecondTimeEnrollementStudentNumber,
-				executionCourseEntry.getAllShiftUnitHours(ShiftType.TEORICA).doubleValue(),
-				executionCourseEntry.getAllShiftUnitHours(ShiftType.PRATICA).doubleValue(),
-				executionCourseEntry.getAllShiftUnitHours(ShiftType.LABORATORIAL).doubleValue(),
-				executionCourseEntry.getAllShiftUnitHours(ShiftType.TEORICO_PRATICA).doubleValue(),
-				theoreticalStudentsNumberPerShift,
-				praticalStudentsNumberPerShift,
-				laboratorialStudentsNumberPerShift,
+				executionCourseSecondTimeEnrollementStudentNumber, executionCourseEntry.getAllShiftUnitHours(
+					ShiftType.TEORICA).doubleValue(), executionCourseEntry.getAllShiftUnitHours(
+					ShiftType.PRATICA).doubleValue(), executionCourseEntry.getAllShiftUnitHours(
+					ShiftType.LABORATORIAL).doubleValue(), executionCourseEntry.getAllShiftUnitHours(
+					ShiftType.TEORICO_PRATICA).doubleValue(), theoreticalStudentsNumberPerShift,
+				praticalStudentsNumberPerShift, laboratorialStudentsNumberPerShift,
 				theoPratStudentsNumberPerShift);
 
 			fillExecutionCourseDTOWithTeachers(returnDTO, executionCourseEntry, department);
@@ -113,8 +111,7 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 
 	ArrayList<ExecutionCourseDistributionServiceEntryDTO> returnArraylist = new ArrayList<ExecutionCourseDistributionServiceEntryDTO>();
 
-	for (ExecutionCourseDistributionServiceEntryDTO teacherDTO : returnDTO.getExecutionCourseMap()
-		.values()) {
+	for (ExecutionCourseDistributionServiceEntryDTO teacherDTO : returnDTO.getExecutionCourseMap().values()) {
 	    returnArraylist.add(teacherDTO);
 	}
 
@@ -123,12 +120,11 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 	return returnArraylist;
     }
 
-    private Set<String> buildCurricularYearsSet(CurricularCourse curricularCourseEntry, ExecutionPeriod executionPeriodEntry) {
+    private Set<String> buildCurricularYearsSet(CurricularCourse curricularCourseEntry, ExecutionSemester executionPeriodEntry) {
 
-	List<CurricularCourseScope> scopesList = curricularCourseEntry
-	.getActiveScopesInExecutionPeriod(executionPeriodEntry);
+	List<CurricularCourseScope> scopesList = curricularCourseEntry.getActiveScopesInExecutionPeriod(executionPeriodEntry);
 
-	if(scopesList.isEmpty()){
+	if (scopesList.isEmpty()) {
 	    scopesList = curricularCourseEntry.getActiveScopesIntersectedByExecutionPeriod(executionPeriodEntry);
 	}
 
@@ -136,23 +132,22 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 	for (CurricularCourseScope scopeEntry : scopesList) {
 	    CurricularYear curricularYear = curricularCourseEntry.getCurricularYearByBranchAndSemester(scopeEntry.getBranch(),
 		    scopeEntry.getCurricularSemester().getSemester());
-	    if(curricularYear != null){
+	    if (curricularYear != null) {
 		curricularYearsSet.add(curricularYear.getYear().toString());
 	    }
 	}
 	return curricularYearsSet;
     }
 
-    private void fillExecutionCourseDTOWithTeachers(DistributionTeacherServicesByCourseDTO dto,
-	    ExecutionCourse executionCourse, Department department) {
+    private void fillExecutionCourseDTOWithTeachers(DistributionTeacherServicesByCourseDTO dto, ExecutionCourse executionCourse,
+	    Department department) {
 
 	for (Professorship professorShipEntry : executionCourse.getProfessorships()) {
 	    Teacher teacher = professorShipEntry.getTeacher();
 
 	    Integer teacherIdInternal = teacher.getIdInternal();
 	    String teacherName = teacher.getPerson().getName();
-	    Double teacherRequiredHours = StrictMath.ceil(teacher
-		    .getHoursLecturedOnExecutionCourse(executionCourse));
+	    Double teacherRequiredHours = StrictMath.ceil(teacher.getHoursLecturedOnExecutionCourse(executionCourse));
 
 	    boolean teacherBelongsToDepartment = false;
 
@@ -160,19 +155,18 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 		teacherBelongsToDepartment = true;
 	    }
 
-	    dto.addTeacherToExecutionCourse(executionCourse.getIdInternal(), teacherIdInternal,
-		    teacherName, teacherRequiredHours.intValue(), teacherBelongsToDepartment);
+	    dto.addTeacherToExecutionCourse(executionCourse.getIdInternal(), teacherIdInternal, teacherName, teacherRequiredHours
+		    .intValue(), teacherBelongsToDepartment);
 	}
 
     }
 
     private String getCampusForCurricularCourseAndExecutionPeriod(CurricularCourse curricularCourse,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 	String campus = "";
 
-	for (ExecutionDegree executionDegreeEntry : curricularCourse.getDegreeCurricularPlan()
-		.getExecutionDegrees()) {
-	    if (executionDegreeEntry.getExecutionYear() == executionPeriod.getExecutionYear()) {
+	for (ExecutionDegree executionDegreeEntry : curricularCourse.getDegreeCurricularPlan().getExecutionDegrees()) {
+	    if (executionDegreeEntry.getExecutionYear() == executionSemester.getExecutionYear()) {
 		campus = executionDegreeEntry.getCampus().getName();
 		break;
 	    }

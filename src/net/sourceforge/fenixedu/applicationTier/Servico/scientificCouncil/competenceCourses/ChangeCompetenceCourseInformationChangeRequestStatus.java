@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.compe
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
@@ -25,10 +25,10 @@ public class ChangeCompetenceCourseInformationChangeRequestStatus extends Servic
 
 	    CompetenceCourse course = changeRequest.getCompetenceCourse();
 
-	    ExecutionPeriod executionPeriod = changeRequest.getExecutionPeriod();
+	    ExecutionSemester executionSemester = changeRequest.getExecutionPeriod();
 	    CompetenceCourseInformation information = null;
-	    if (course.isCompetenceCourseInformationDefinedAtExecutionPeriod(executionPeriod)) {
-		information = course.findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
+	    if (course.isCompetenceCourseInformationDefinedAtExecutionPeriod(executionSemester)) {
+		information = course.findCompetenceCourseInformationForExecutionPeriod(executionSemester);
 		information.edit(changeRequest.getName(), changeRequest.getNameEn(), information.getBasic(),
 			changeRequest.getCompetenceCourseLevel());
 		information.setRegime(changeRequest.getRegime());

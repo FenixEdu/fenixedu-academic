@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
@@ -24,17 +24,17 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
 
     @Override
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+	    HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
 	request.setAttribute("action", getAction());
-	return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan, executionPeriod);
+	return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan, executionSemester);
     }
 
     protected StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
 	return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request, "scpID"));
     }
 
-    protected ExecutionPeriod getExecutionPeriod(final HttpServletRequest request) {
-	return rootDomainObject.readExecutionPeriodByOID(getRequestParameterAsInteger(request, "executionPeriodID"));
+    protected ExecutionSemester getExecutionPeriod(final HttpServletRequest request) {
+	return rootDomainObject.readExecutionSemesterByOID(getRequestParameterAsInteger(request, "executionPeriodID"));
     }
 
     private Boolean getWithRules(final ActionForm form) {
@@ -59,8 +59,7 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
 
     @Override
     protected CurricularRuleLevel getCurricularRuleLevel(final ActionForm form) {
-	return getWithRules(form) ? CurricularRuleLevel.ENROLMENT_WITH_RULES
-		: CurricularRuleLevel.ENROLMENT_NO_RULES;
+	return getWithRules(form) ? CurricularRuleLevel.ENROLMENT_WITH_RULES : CurricularRuleLevel.ENROLMENT_NO_RULES;
     }
 
     @Override

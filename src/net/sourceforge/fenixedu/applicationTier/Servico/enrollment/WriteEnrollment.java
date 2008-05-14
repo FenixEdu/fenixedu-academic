@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -19,39 +19,33 @@ public class WriteEnrollment extends Service {
 
     // some of these arguments may be null. they are only needed for filter
     public Integer run(Integer executionDegreeId, Registration registration, Integer curricularCourseID,
-	    Integer executionPeriodID, CurricularCourseEnrollmentType enrollmentType,
-	    Integer enrollmentClass, IUserView userView) {
+	    Integer executionPeriodID, CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView) {
 
-	final StudentCurricularPlan studentCurricularPlan = registration
-		.getActiveStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 
-	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
-		.readDegreeModuleByOID(curricularCourseID);
+	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 
-	ExecutionPeriod executionPeriod = null;
+	ExecutionSemester executionSemester = null;
 	if (executionPeriodID == null) {
-	    executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	    executionSemester = ExecutionSemester.readActualExecutionPeriod();
 	} else {
-	    executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 	}
 
-	final Enrolment enrollment = studentCurricularPlan
-		.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+	final Enrolment enrollment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,
+		executionSemester);
 
 	if (enrollment == null) {
 
-	    if (enrollmentClass == null || enrollmentClass.intValue() == 1
-		    || enrollmentClass.intValue() == 0) {
-		new Enrolment(studentCurricularPlan, curricularCourse, executionPeriod,
-			getEnrollmentCondition(enrollmentType), userView.getUtilizador());
+	    if (enrollmentClass == null || enrollmentClass.intValue() == 1 || enrollmentClass.intValue() == 0) {
+		new Enrolment(studentCurricularPlan, curricularCourse, executionSemester, getEnrollmentCondition(enrollmentType),
+			userView.getUtilizador());
 	    } else if (enrollmentClass.intValue() == 2) {
-		new EnrolmentInOptionalCurricularCourse(studentCurricularPlan, curricularCourse,
-			executionPeriod, getEnrollmentCondition(enrollmentType), userView
-				.getUtilizador());
+		new EnrolmentInOptionalCurricularCourse(studentCurricularPlan, curricularCourse, executionSemester,
+			getEnrollmentCondition(enrollmentType), userView.getUtilizador());
 	    } else {
-		new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse,
-			executionPeriod, getEnrollmentCondition(enrollmentType), userView
-				.getUtilizador()).markAsExtraCurricular();
+		new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse, executionSemester,
+			getEnrollmentCondition(enrollmentType), userView.getUtilizador()).markAsExtraCurricular();
 	    }
 
 	} else {

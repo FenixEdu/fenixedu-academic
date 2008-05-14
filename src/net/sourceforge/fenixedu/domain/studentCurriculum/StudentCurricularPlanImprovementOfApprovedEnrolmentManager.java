@@ -41,7 +41,7 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
     private boolean hasRegistrationInValidState() {
 	final Registration registration = studentCurricularPlan.getRegistration();
-	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	return registration.isInRegisteredState(executionYear)
 		|| registration.isInRegisteredState(executionYear.getPreviousExecutionYear());
     }

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
@@ -51,7 +51,8 @@ public class TSDProcessAction extends FenixDispatchAction {
 	Collections.sort(executionYearList, new BeanComparator("year"));
 
 	ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, executionYearList);
-	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>(selectedExecutionYear.getExecutionPeriods());
+	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>(selectedExecutionYear
+		.getExecutionPeriods());
 	setCurrentExecutionYearInDynamicForm(userView, dynaForm, selectedExecutionYear);
 
 	Collections.sort(executionPeriodList, new BeanComparator("semester"));
@@ -76,8 +77,8 @@ public class TSDProcessAction extends FenixDispatchAction {
 	if (selectedExecutionPeriodId.equals(NOT_SELECTED_EXECUTION_PERIOD)) {
 	    ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
 
-	    for (ExecutionPeriod executionPeriod : selectedExecutionYear.getExecutionPeriods()) {
-		selectedExecutionPeriodIdList.add(executionPeriod.getIdInternal());
+	    for (ExecutionSemester executionSemester : selectedExecutionYear.getExecutionPeriods()) {
+		selectedExecutionPeriodIdList.add(executionSemester.getIdInternal());
 	    }
 	} else {
 	    selectedExecutionPeriodIdList.add(selectedExecutionPeriodId);
@@ -105,7 +106,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 
 	ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
 
-	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
+	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 	if (selectedExecutionYear != null) {
 	    executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
 	}
@@ -116,7 +117,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 
 	List<TSDProcess> tsdProcessList;
 
-	ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
+	ExecutionSemester selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
 
 	if (selectedExecutionPeriod != null) {
 	    tsdProcessList = selectedDepartment.getTSDProcessesByExecutionPeriod(selectedExecutionPeriod);
@@ -212,14 +213,14 @@ public class TSDProcessAction extends FenixDispatchAction {
 
 	ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
 
-	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
+	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 	if (selectedExecutionYear != null) {
 	    executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
 	}
 
 	ExecutionYear selectedExecutionYearForCopy = getSelectedExecutionYearForCopy(userView, dynaForm, executionYearList);
 
-	List<ExecutionPeriod> executionPeriodListForCopy = new ArrayList<ExecutionPeriod>();
+	List<ExecutionSemester> executionPeriodListForCopy = new ArrayList<ExecutionSemester>();
 	if (selectedExecutionYearForCopy != null) {
 	    executionPeriodListForCopy.addAll(selectedExecutionYearForCopy.getExecutionPeriods());
 	}
@@ -231,7 +232,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 
 	List<TSDProcess> tsdProcessList;
 
-	ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
+	ExecutionSemester selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm);
 
 	if (selectedExecutionPeriod != null) {
 	    tsdProcessList = selectedDepartment.getTSDProcessesByExecutionPeriod(selectedExecutionPeriod);
@@ -263,7 +264,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
 	ExecutionYear selectedExecutionYear = getSelectedExecutionYearForCopy(userView, dynaForm, null);
-	ExecutionPeriod selectedExecutionPeriodForCopy = getSelectedExecutionPeriodForCopy(userView, dynaForm);
+	ExecutionSemester selectedExecutionPeriodForCopy = getSelectedExecutionPeriodForCopy(userView, dynaForm);
 	String name = (String) dynaForm.get("name");
 	TSDProcess selectedTSDProcess = getSelectedTSDProcess(userView, dynaForm);
 
@@ -271,8 +272,8 @@ public class TSDProcessAction extends FenixDispatchAction {
 	if (selectedExecutionPeriodForCopy != null) {
 	    selectedExecutionPeriodListForCopyId.add(selectedExecutionPeriodForCopy.getIdInternal());
 	} else {
-	    for (ExecutionPeriod executionPeriod : selectedExecutionYear.getExecutionPeriods())
-		selectedExecutionPeriodListForCopyId.add(executionPeriod.getIdInternal());
+	    for (ExecutionSemester executionSemester : selectedExecutionYear.getExecutionPeriods())
+		selectedExecutionPeriodListForCopyId.add(executionSemester.getIdInternal());
 	}
 
 	Object[] parameters = new Object[] { selectedExecutionPeriodListForCopyId, selectedTSDProcess.getIdInternal(),
@@ -311,15 +312,15 @@ public class TSDProcessAction extends FenixDispatchAction {
 	return selectedExecutionYear;
     }
 
-    private ExecutionPeriod getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException,
-	    FenixFilterException {
+    private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm)
+	    throws FenixServiceException, FenixFilterException {
 	Integer selectedExeuctionPeriodId = (Integer) dynaForm.get("executionPeriod");
 
 	if (selectedExeuctionPeriodId == NOT_SELECTED_EXECUTION_PERIOD) {
 	    return null;
 	}
 
-	ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExeuctionPeriodId);
+	ExecutionSemester selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(selectedExeuctionPeriodId);
 
 	return selectedExecutionPeriod;
     }
@@ -355,11 +356,11 @@ public class TSDProcessAction extends FenixDispatchAction {
 	return selectedExecutionYear;
     }
 
-    private ExecutionPeriod getSelectedExecutionPeriodForCopy(IUserView userView, DynaActionForm dynaForm)
+    private ExecutionSemester getSelectedExecutionPeriodForCopy(IUserView userView, DynaActionForm dynaForm)
 	    throws FenixFilterException, FenixServiceException {
 	Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriodForCopy");
 
-	ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExecutionPeriodId);
+	ExecutionSemester selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(selectedExecutionPeriodId);
 
 	return selectedExecutionPeriod;
     }

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -29,7 +29,7 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 
 	if (degreeModule.isLeaf()) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-	    final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
+	    final ExecutionSemester previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
 
 	    if (isApproved(enrolmentContext, curricularCourse)
 		    || hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
@@ -84,7 +84,7 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
 		return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
 	    }
 
-	    final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
+	    final ExecutionSemester previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
 	    if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, previousExecutionPeriod)) {
 		return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule());
 	    }

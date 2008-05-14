@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ExecutionCourseSearchBean implements Serializable {
 
-    private DomainReference<ExecutionPeriod> executionPeriodDomainReference;
+    private DomainReference<ExecutionSemester> executionPeriodDomainReference;
     private DomainReference<ExecutionDegree> executionDegreeDomainReference;
 
     public ExecutionCourseSearchBean() {
@@ -31,24 +31,24 @@ public class ExecutionCourseSearchBean implements Serializable {
                 null : new DomainReference<ExecutionDegree>(executionDegree);
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
         return executionPeriodDomainReference == null ?
                 null : executionPeriodDomainReference.getObject();
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-        this.executionPeriodDomainReference = executionPeriod == null ?
-                null : new DomainReference<ExecutionPeriod>(executionPeriod);
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+        this.executionPeriodDomainReference = executionSemester == null ?
+                null : new DomainReference<ExecutionSemester>(executionSemester);
     }
 
     public Collection<ExecutionCourse> search(final Collection<ExecutionCourse> result) {
-        final ExecutionPeriod executionPeriod = getExecutionPeriod();
+        final ExecutionSemester executionSemester = getExecutionPeriod();
         final ExecutionDegree executionDegree = getExecutionDegree();
-        if (executionPeriod == null || executionDegree == null) {
+        if (executionSemester == null || executionDegree == null) {
             return null;
         }
-        for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
-            if (matchesCriteria(executionPeriod, executionDegree, executionCourse)) {
+        for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+            if (matchesCriteria(executionSemester, executionDegree, executionCourse)) {
                 result.add(executionCourse);
             }
         }
@@ -61,13 +61,13 @@ public class ExecutionCourseSearchBean implements Serializable {
         
     }
 
-    private boolean matchesCriteria(final ExecutionPeriod executionPeriod, final ExecutionDegree executionDegree,
+    private boolean matchesCriteria(final ExecutionSemester executionSemester, final ExecutionDegree executionDegree,
             final ExecutionCourse executionCourse) {
-        return matchExecutionPeriod(executionPeriod, executionCourse) && matchExecutionDegree(executionDegree, executionCourse);
+        return matchExecutionPeriod(executionSemester, executionCourse) && matchExecutionDegree(executionDegree, executionCourse);
     }
 
-    private boolean matchExecutionPeriod(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse) {
-        return executionPeriod == executionCourse.getExecutionPeriod();
+    private boolean matchExecutionPeriod(final ExecutionSemester executionSemester, final ExecutionCourse executionCourse) {
+        return executionSemester == executionCourse.getExecutionPeriod();
     }
 
     private boolean matchExecutionDegree(final ExecutionDegree executionDegree, final ExecutionCourse executionCourse) {

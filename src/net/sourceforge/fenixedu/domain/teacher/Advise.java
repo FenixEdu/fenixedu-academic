@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -18,8 +18,8 @@ public class Advise extends Advise_Base {
                 .addListener(new AdviseTeacherAdviseServiceListener());
     }
 
-    public Advise(Teacher teacher, Registration registration, AdviseType adviseType, ExecutionPeriod startPeriod,
-            ExecutionPeriod endPeriod) {
+    public Advise(Teacher teacher, Registration registration, AdviseType adviseType, ExecutionSemester startPeriod,
+            ExecutionSemester endPeriod) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         if (teacher == null || registration == null || adviseType == null || startPeriod == null
@@ -47,26 +47,26 @@ public class Advise extends Advise_Base {
     }
 
     public TeacherAdviseService getTeacherAdviseServiceByExecutionPeriod(
-            final ExecutionPeriod executionPeriod) {
+            final ExecutionSemester executionSemester) {
         return (TeacherAdviseService) CollectionUtils.find(getTeacherAdviseServices(), new Predicate() {
             public boolean evaluate(Object arg0) {
                 TeacherAdviseService teacherAdviseService = (TeacherAdviseService) arg0;
-                return teacherAdviseService.getTeacherService().getExecutionPeriod() == executionPeriod;
+                return teacherAdviseService.getTeacherService().getExecutionPeriod() == executionSemester;
             }
         });
     }
 
-    public void checkPercentageCoherenceWithOtherAdvises(ExecutionPeriod executionPeriod,
+    public void checkPercentageCoherenceWithOtherAdvises(ExecutionSemester executionSemester,
             double percentage) throws AdvisePercentageException {
         for (Advise advise : getStudent().getAdvises()) {
             if (advise != this && advise.getAdviseType().equals(getAdviseType())) {
                 TeacherAdviseService teacherAdviseService = advise
-                        .getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
+                        .getTeacherAdviseServiceByExecutionPeriod(executionSemester);
                 if (teacherAdviseService != null) {
                     percentage += teacherAdviseService.getPercentage().doubleValue();
                     if (percentage > 100) {
                         throw new AdvisePercentageException("message.invalid.advise.percentage",
-                                getStudent().getAdvises(), executionPeriod, getAdviseType());
+                                getStudent().getAdvises(), executionSemester, getAdviseType());
                     }
                 }
             }
@@ -74,27 +74,27 @@ public class Advise extends Advise_Base {
     }
 
     public void updateEndExecutionPeriod() {
-        ExecutionPeriod executionPeriod = getStartExecutionPeriod();
+        ExecutionSemester executionSemester = getStartExecutionPeriod();
         for (TeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
-            ExecutionPeriod adviseServiceEP = teacherAdviseService.getTeacherService()
+            ExecutionSemester adviseServiceEP = teacherAdviseService.getTeacherService()
                     .getExecutionPeriod();
-            if (adviseServiceEP.getEndDate().after(executionPeriod.getEndDate())) {
-                executionPeriod = adviseServiceEP;
+            if (adviseServiceEP.getEndDate().after(executionSemester.getEndDate())) {
+                executionSemester = adviseServiceEP;
             }
         }
-        setEndExecutionPeriod(executionPeriod);
+        setEndExecutionPeriod(executionSemester);
     }
 
     public void updateStartExecutionPeriod() {
-        ExecutionPeriod executionPeriod = getEndExecutionPeriod();
+        ExecutionSemester executionSemester = getEndExecutionPeriod();
         for (TeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
-            ExecutionPeriod adviseServiceEP = teacherAdviseService.getTeacherService()
+            ExecutionSemester adviseServiceEP = teacherAdviseService.getTeacherService()
                     .getExecutionPeriod();
-            if (adviseServiceEP.getBeginDate().before(executionPeriod.getBeginDate())) {
-                executionPeriod = adviseServiceEP;
+            if (adviseServiceEP.getBeginDate().before(executionSemester.getBeginDate())) {
+                executionSemester = adviseServiceEP;
             }
         }
-        setStartExecutionPeriod(executionPeriod);
+        setStartExecutionPeriod(executionSemester);
     }
 
     public class AdvisePercentageException extends DomainException {
@@ -103,16 +103,16 @@ public class Advise extends Advise_Base {
 
         private final List<Advise> advises;
 
-        private final ExecutionPeriod executionPeriod;
+        private final ExecutionSemester executionSemester;
 
         private final AdviseType adviseType;
 
         public AdvisePercentageException(String key, List<Advise> advises,
-                ExecutionPeriod executionPeriod, AdviseType adviseType) {
+                ExecutionSemester executionSemester, AdviseType adviseType) {
             super(key);
             this.key = key;
             this.advises = advises;
-            this.executionPeriod = executionPeriod;
+            this.executionSemester = executionSemester;
             this.adviseType = adviseType;
         }
 
@@ -124,8 +124,8 @@ public class Advise extends Advise_Base {
             return key;
         }
 
-        public ExecutionPeriod getExecutionPeriod() {
-            return executionPeriod;
+        public ExecutionSemester getExecutionPeriod() {
+            return executionSemester;
         }
 
         public AdviseType getAdviseType() {
@@ -138,14 +138,14 @@ public class Advise extends Advise_Base {
         @Override
         public void afterAdd(TeacherAdviseService teacherAdviseServices, Advise advise) {
             if (advise != null) {
-                ExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService()
+                ExecutionSemester executionSemester = teacherAdviseServices.getTeacherService()
                         .getExecutionPeriod();
-                if (executionPeriod.getEndDate().after(advise.getEndExecutionPeriod().getEndDate())) {
-                    advise.setEndExecutionPeriod(executionPeriod);
+                if (executionSemester.getEndDate().after(advise.getEndExecutionPeriod().getEndDate())) {
+                    advise.setEndExecutionPeriod(executionSemester);
                 }
-                if (executionPeriod.getBeginDate().before(
+                if (executionSemester.getBeginDate().before(
                         advise.getStartExecutionPeriod().getBeginDate())) {
-                    advise.setStartExecutionPeriod(executionPeriod);
+                    advise.setStartExecutionPeriod(executionSemester);
                 }
             }
         }
@@ -157,11 +157,11 @@ public class Advise extends Advise_Base {
                         || advise.getTeacherAdviseServices().isEmpty()) {
                     advise.delete();
                 } else if (teacherAdviseServices != null) {
-                    ExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService()
+                    ExecutionSemester executionSemester = teacherAdviseServices.getTeacherService()
                             .getExecutionPeriod();
-                    if (executionPeriod == advise.getEndExecutionPeriod()) {
+                    if (executionSemester == advise.getEndExecutionPeriod()) {
                         advise.updateEndExecutionPeriod();
-                    } else if (executionPeriod == advise.getStartExecutionPeriod()) {
+                    } else if (executionSemester == advise.getStartExecutionPeriod()) {
                         advise.updateStartExecutionPeriod();
                     }
                 }

@@ -49,7 +49,7 @@ public abstract class DegreeModuleScope {
 
     public abstract CurricularCourse getCurricularCourse();
 
-    public abstract boolean isActiveForExecutionPeriod(ExecutionPeriod executionPeriod);
+    public abstract boolean isActiveForExecutionPeriod(ExecutionSemester executionSemester);
 
     public static List<DegreeModuleScope> getDegreeModuleScopes(WrittenEvaluation writtenEvaluation) {
 	return getDegreeModuleScopes(writtenEvaluation.getAssociatedCurricularCourseScope(), writtenEvaluation
@@ -73,8 +73,8 @@ public abstract class DegreeModuleScope {
     }
 
     public boolean isActiveForExecutionYear(ExecutionYear executionYear) {
-	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
-	    if (isActiveForExecutionPeriod(executionPeriod)) {
+	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+	    if (isActiveForExecutionPeriod(executionSemester)) {
 		return true;
 	    }
 	}
@@ -82,7 +82,7 @@ public abstract class DegreeModuleScope {
     }
 
     public boolean isActive() {
-	return isActiveForExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
+	return isActiveForExecutionPeriod(ExecutionSemester.readActualExecutionPeriod());
     }
 
     public boolean isActive(int year, int semester) {

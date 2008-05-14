@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -73,14 +73,14 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
     }
 
     private Teacher getTeacherOfManageableDepartments(Integer teacherNumber,
-            ExecutionPeriod executionPeriod, HttpServletRequest request) {
+            ExecutionSemester executionSemester, HttpServletRequest request) {
 
         IUserView userView = SessionUtils.getUserView(request);
         List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
         Teacher teacher = null;
         for (Department department : manageableDepartments) {
-            teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDateYearMonthDay(),
-                    executionPeriod.getEndDateYearMonthDay());
+            teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
+                    executionSemester.getEndDateYearMonthDay());
             if (teacher != null) {
                 break;
             }

@@ -9,7 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
@@ -74,7 +74,7 @@ public class ExecutionCoursesForUnit implements DataProvider {
     private List<ExecutionCourse> getExecutionCoursesFromCompetenceCourses(
             List<CompetenceCourse> competenceCourses) {
         List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
-        ExecutionPeriod period = ExecutionPeriod.readActualExecutionPeriod();
+        ExecutionSemester period = ExecutionSemester.readActualExecutionPeriod();
         for (CompetenceCourse course : competenceCourses) {
             courses.addAll(course.getExecutionCoursesByExecutionPeriod(period));
         }

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -45,12 +45,12 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 		ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 
 	public CurricularYearWeeklyWorkLoadView(final DegreeCurricularPlan degreeCurricularPlan,
-		final ExecutionPeriod executionPeriod, final Set<ExecutionCourse> executionCourses) {
-	    final ExecutionDegree executionDegree = findExecutionDegree(executionPeriod, degreeCurricularPlan);
+		final ExecutionSemester executionSemester, final Set<ExecutionCourse> executionCourses) {
+	    final ExecutionDegree executionDegree = findExecutionDegree(executionSemester, degreeCurricularPlan);
 
 	    if (executionDegree != null) {
-		this.interval = new Interval(new DateMidnight(getBegginingOfLessonPeriod(executionPeriod, executionDegree)),
-			new DateMidnight(getEndOfExamsPeriod(executionPeriod, executionDegree)));
+		this.interval = new Interval(new DateMidnight(getBegginingOfLessonPeriod(executionSemester, executionDegree)),
+			new DateMidnight(getEndOfExamsPeriod(executionSemester, executionDegree)));
 		final Period period = interval.toPeriod();
 		int extraWeek = period.getDays() > 0 ? 1 : 0;
 		numberOfWeeks = (period.getYears() * 12 + period.getMonths()) * 4 + period.getWeeks() + extraWeek + 1;
@@ -64,25 +64,25 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 	    }
 	}
 
-	private ExecutionDegree findExecutionDegree(final ExecutionPeriod executionPeriod,
+	private ExecutionDegree findExecutionDegree(final ExecutionSemester executionSemester,
 		final DegreeCurricularPlan degreeCurricularPlan) {
-	    return degreeCurricularPlan.getExecutionDegreeByYear(executionPeriod.getExecutionYear());
+	    return degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
 	}
 
-	public Date getBegginingOfLessonPeriod(final ExecutionPeriod executionPeriod, final ExecutionDegree executionDegree) {
-	    if (executionPeriod.getSemester().intValue() == 1) {
+	public Date getBegginingOfLessonPeriod(final ExecutionSemester executionSemester, final ExecutionDegree executionDegree) {
+	    if (executionSemester.getSemester().intValue() == 1) {
 		return executionDegree.getPeriodLessonsFirstSemester().getStart();
-	    } else if (executionPeriod.getSemester().intValue() == 2) {
+	    } else if (executionSemester.getSemester().intValue() == 2) {
 		return executionDegree.getPeriodLessonsSecondSemester().getStart();
 	    } else {
 		throw new DomainException("unsupported.execution.period.semester");
 	    }
 	}
 
-	public Date getEndOfExamsPeriod(final ExecutionPeriod executionPeriod, final ExecutionDegree executionDegree) {
-	    if (executionPeriod.getSemester().intValue() == 1) {
+	public Date getEndOfExamsPeriod(final ExecutionSemester executionSemester, final ExecutionDegree executionDegree) {
+	    if (executionSemester.getSemester().intValue() == 1) {
 		return executionDegree.getPeriodExamsFirstSemester().getEnd();
-	    } else if (executionPeriod.getSemester().intValue() == 2) {
+	    } else if (executionSemester.getSemester().intValue() == 2) {
 		return executionDegree.getPeriodExamsSecondSemester().getEnd();
 	    } else {
 		throw new DomainException("unsupported.execution.period.semester");
@@ -104,14 +104,14 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixFilterException, FenixServiceException {
-	final Collection<ExecutionPeriod> executionPeriods = rootDomainObject.getExecutionPeriodsSet();
-	final Set<ExecutionPeriod> sortedExecutionPeriods = new TreeSet<ExecutionPeriod>(executionPeriods);
+	final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
+	final Set<ExecutionSemester> sortedExecutionPeriods = new TreeSet<ExecutionSemester>(executionSemesters);
 	request.setAttribute("executionPeriods", sortedExecutionPeriods);
 
 	final DynaActionForm dynaActionForm = (DynaActionForm) form;
 
 	final Integer executionPeriodID = getExecutionPeriodID(dynaActionForm);
-	final ExecutionPeriod selectedExecutionPeriod = findExecutionPeriod(executionPeriods, executionPeriodID);
+	final ExecutionSemester selectedExecutionPeriod = findExecutionPeriod(executionSemesters, executionPeriodID);
 	dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
 
 	final Collection<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
@@ -188,14 +188,14 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 		.valueOf(exeutionPeriodIDString);
     }
 
-    private ExecutionPeriod findExecutionPeriod(final Collection<ExecutionPeriod> executionPeriods,
+    private ExecutionSemester findExecutionPeriod(final Collection<ExecutionSemester> executionSemesters,
 	    final Integer executionPeriodID) {
-	for (final ExecutionPeriod executionPeriod : executionPeriods) {
-	    if (executionPeriodID == null && executionPeriod.getState().equals(PeriodState.CURRENT)) {
-		return executionPeriod;
+	for (final ExecutionSemester executionSemester : executionSemesters) {
+	    if (executionPeriodID == null && executionSemester.getState().equals(PeriodState.CURRENT)) {
+		return executionSemester;
 	    }
-	    if (executionPeriodID != null && executionPeriod.getIdInternal().equals(executionPeriodID)) {
-		return executionPeriod;
+	    if (executionPeriodID != null && executionSemester.getIdInternal().equals(executionPeriodID)) {
+		return executionSemester;
 	    }
 	}
 	return null;

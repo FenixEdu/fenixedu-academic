@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -431,7 +431,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 	return (getExecutionYearID() != null) ? rootDomainObject.readExecutionYearByOID(getExecutionYearID()) : null; 
     }
     
-    public ExecutionPeriod getAssociatedExecutionPeriod() {
+    public ExecutionSemester getAssociatedExecutionPeriod() {
 	return (getExecutionYear() != null) ? getExecutionYear().getLastExecutionPeriod() : null;
     }
     

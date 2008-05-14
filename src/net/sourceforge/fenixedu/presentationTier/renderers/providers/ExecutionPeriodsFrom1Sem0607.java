@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -19,12 +19,12 @@ public class ExecutionPeriodsFrom1Sem0607 implements DataProvider {
          * get executionPeriods after '1 Semestre 2006/2007'
          * 
          */ 
-        final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readBySemesterAndExecutionYear(1, "2006/2007");
+        final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readBySemesterAndExecutionYear(1, "2006/2007");
 
-        final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-        for (final ExecutionPeriod executionPeriod : ExecutionPeriod.readNotClosedPublicExecutionPeriods()) {
-            if (executionPeriod.isAfterOrEquals(currentExecutionPeriod)) {
-                result.add(executionPeriod);
+        final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+        for (final ExecutionSemester executionSemester : ExecutionSemester.readNotClosedPublicExecutionPeriods()) {
+            if (executionSemester.isAfterOrEquals(currentExecutionPeriod)) {
+                result.add(executionSemester);
             }
         }
         Collections.sort(result, new ReverseComparator());

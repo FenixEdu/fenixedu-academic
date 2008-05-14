@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.converters;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
@@ -32,8 +32,8 @@ public class CurriculumModuleEnroledWrapperConverter extends Converter {
 	    }
 
 	    final CurriculumModule curriculumModule = (CurriculumModule) converter.convert(type, parts[0]);
-	    final ExecutionPeriod executionPeriod = (ExecutionPeriod) converter.convert(type, parts[1]);
-	    result.add(new EnroledCurriculumModuleWrapper(curriculumModule, executionPeriod));
+	    final ExecutionSemester executionSemester = (ExecutionSemester) converter.convert(type, parts[1]);
+	    result.add(new EnroledCurriculumModuleWrapper(curriculumModule, executionSemester));
 	}
 
 	return result;

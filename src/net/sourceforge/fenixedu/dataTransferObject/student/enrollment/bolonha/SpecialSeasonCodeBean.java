@@ -3,19 +3,19 @@ package net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class SpecialSeasonCodeBean implements Serializable{
     
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
     private DomainReference<SpecialSeasonCode> specialSeasonCode;
     
-    public SpecialSeasonCodeBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
+    public SpecialSeasonCodeBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 	setStudentCurricularPlan(studentCurricularPlan);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
     }
     
     public StudentCurricularPlan getStudentCurricularPlan() {
@@ -26,12 +26,12 @@ public class SpecialSeasonCodeBean implements Serializable{
 	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(studentCurricularPlan) : null;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    public ExecutionSemester getExecutionPeriod() {
+	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
     public SpecialSeasonCode getSpecialSeasonCode() {

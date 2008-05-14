@@ -12,7 +12,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
@@ -30,7 +30,7 @@ public class LEAOptionalGroupsEnrollmentRule implements IEnrollmentRule {
 
     private StudentCurricularPlan studentCurricularPlan;
 
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
 
     private final static String options1FirstSemester = "Opções 5ºano 1ºsem 1";
 
@@ -41,9 +41,9 @@ public class LEAOptionalGroupsEnrollmentRule implements IEnrollmentRule {
     private final static String options2SecondSemester = "Opções 5ºano 2ºsem 2";
 
     public LEAOptionalGroupsEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
         this.studentCurricularPlan = studentCurricularPlan;
-        this.executionPeriod = executionPeriod;
+        this.executionSemester = executionSemester;
     }
 
     public List apply(List curricularCoursesToBeEnrolledIn) throws EnrolmentRuleDomainException {
@@ -73,11 +73,11 @@ public class LEAOptionalGroupsEnrollmentRule implements IEnrollmentRule {
                         CurricularCourseGroup ccg = (CurricularCourseGroup) arg0;
                         if ((ccg.getName().equalsIgnoreCase(options1FirstSemester) || ccg.getName()
                                 .equalsIgnoreCase(options2FirstSemester))
-                                && executionPeriod.getSemester() == 1) {
+                                && executionSemester.getSemester() == 1) {
                             return true;
                         } else if ((ccg.getName().equalsIgnoreCase(options1SecondSemester) || ccg
                                 .getName().equalsIgnoreCase(options2SecondSemester))
-                                && executionPeriod.getSemester() == 2) {
+                                && executionSemester.getSemester() == 2) {
                             return true;
                         }
                         return false;

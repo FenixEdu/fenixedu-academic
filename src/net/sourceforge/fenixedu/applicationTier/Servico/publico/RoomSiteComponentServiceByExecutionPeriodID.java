@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 import org.joda.time.DateTime;
@@ -26,10 +26,12 @@ import org.joda.time.DateTimeFieldType;
  */
 public class RoomSiteComponentServiceByExecutionPeriodID extends Service {
 
-    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, Integer executionPeriodID) throws Exception {
+    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, Integer executionPeriodID)
+	    throws Exception {
 	final Calendar day = findMonday(someDay);
-        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
-        return (executionPeriod != null) ? runService(bodyComponent, roomKey, day, executionPeriod) : RoomSiteComponentService.run(bodyComponent, roomKey, day);
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+	return (executionSemester != null) ? runService(bodyComponent, roomKey, day, executionSemester)
+		: RoomSiteComponentService.run(bodyComponent, roomKey, day);
     }
 
     private static Calendar findMonday(final Calendar someDay) {
@@ -38,15 +40,15 @@ public class RoomSiteComponentServiceByExecutionPeriodID extends Service {
     }
 
     public static Object runService(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day,
-            ExecutionPeriod executionPeriod) throws Exception {
-        SiteView siteView = null;
+	    ExecutionSemester executionSemester) throws Exception {
+	SiteView siteView = null;
 
-        AllocatableSpace room = AllocatableSpace.findAllocatableSpaceForEducationByName(roomKey.getNomeSala());                
-        RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
-        bodyComponent = componentBuilder.getComponent(bodyComponent, day, room, executionPeriod);
+	AllocatableSpace room = AllocatableSpace.findAllocatableSpaceForEducationByName(roomKey.getNomeSala());
+	RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
+	bodyComponent = componentBuilder.getComponent(bodyComponent, day, room, executionSemester);
 
-        siteView = new SiteView(bodyComponent);
+	siteView = new SiteView(bodyComponent);
 
-        return siteView;
+	return siteView;
     }
 }

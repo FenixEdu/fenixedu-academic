@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
@@ -22,15 +22,15 @@ import org.apache.commons.collections.Predicate;
 public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 
 	private StudentCurricularPlan studentCurricularPlan = null;
-	private ExecutionPeriod executionPeriod = null;
+	private ExecutionSemester executionSemester = null;
 	
 	private CurricularCourse fgesCourse = null;
 	private CurricularCourse projectoCourse = null;
 	private boolean isFGESaproved = false;
 	private boolean projectoEnrolmentAllowed = false;
 	
-	public SpecificLEFTEnrolmentRule(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
-		setExecutionPeriod(executionPeriod);
+	public SpecificLEFTEnrolmentRule(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
+		setExecutionPeriod(executionSemester);
 		setStudentCurricularPlan(studentCurricularPlan);
 	}
 	
@@ -117,7 +117,7 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 		for (CurricularCourse course : curricularCourses) {
 			List<CurricularCourseScope> scopes = course.getScopes();
 			for (CurricularCourseScope curricularCourseScope : scopes) {
-				if(curricularCourseScope.getBranch().getBranchType().equals(BranchType.COMNBR) && curricularCourseScope.isActive(executionPeriod.getBeginDate())) {
+				if(curricularCourseScope.getBranch().getBranchType().equals(BranchType.COMNBR) && curricularCourseScope.isActive(executionSemester.getBeginDate())) {
 					result.add(course);
 					break;
 				}
@@ -129,12 +129,12 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 
 
 	private List<CurricularCourse> getGroupBCurricularCourses() {
-		CurricularCourseGroup curricularCourseGroup = getOptionalCurricularCoursesGroupBySemesterAndCode(executionPeriod.getSemester(), "B");
+		CurricularCourseGroup curricularCourseGroup = getOptionalCurricularCoursesGroupBySemesterAndCode(executionSemester.getSemester(), "B");
 		return curricularCourseGroup.getCurricularCourses();
 	}
 	
 	private List<CurricularCourse> getGroupACurricularCourses() {
-		CurricularCourseGroup curricularCourseGroup = getOptionalCurricularCoursesGroupBySemesterAndCode(executionPeriod.getSemester(), "A");
+		CurricularCourseGroup curricularCourseGroup = getOptionalCurricularCoursesGroupBySemesterAndCode(executionSemester.getSemester(), "A");
 		return curricularCourseGroup.getCurricularCourses();
 	}
 
@@ -234,7 +234,7 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 
 
 	private List removeOptionalCourses(List curricularCoursesToBeEnrolledIn) {
-		final List<CurricularCourse> curricularCourses = getAllOptionalCurricularCoursesBySemester(executionPeriod.getSemester());
+		final List<CurricularCourse> curricularCourses = getAllOptionalCurricularCoursesBySemester(executionSemester.getSemester());
         List result = (List) CollectionUtils.select(curricularCoursesToBeEnrolledIn, new Predicate() {
 
             public boolean evaluate(Object arg0) {
@@ -270,13 +270,13 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 	}
 
 
-	private ExecutionPeriod getExecutionPeriod() {
-		return executionPeriod;
+	private ExecutionSemester getExecutionPeriod() {
+		return executionSemester;
 	}
 
 
-	private void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-		this.executionPeriod = executionPeriod;
+	private void setExecutionPeriod(ExecutionSemester executionSemester) {
+		this.executionSemester = executionSemester;
 	}
 
 

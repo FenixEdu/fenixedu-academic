@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.enrolment;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -21,7 +21,7 @@ public interface IDegreeModuleToEvaluate {
     
     public boolean isFor(final DegreeModule degreeModule);
     
-    public ExecutionPeriod getExecutionPeriod();
+    public ExecutionSemester getExecutionPeriod();
 
     public boolean isLeaf();
 
@@ -43,13 +43,13 @@ public interface IDegreeModuleToEvaluate {
     
     public Double getEctsCredits();
 
-    public Double getEctsCredits(final ExecutionPeriod executionPeriod);
+    public Double getEctsCredits(final ExecutionSemester executionSemester);
 
-    public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod);
+    public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester);
     
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionPeriod executionPeriod);
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionSemester executionSemester);
 
-    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionPeriod executionPeriod);
+    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionSemester executionSemester);
     
     public boolean isAnnualCurricularCourse(final ExecutionYear executionYear);
         

@@ -12,26 +12,26 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.joda.time.YearMonthDay;
 
-public class AcademicPeriod extends AcademicPeriod_Base {
+public class ExecutionInterval extends ExecutionInterval_Base {
 
-    public AcademicPeriod() {
+    public ExecutionInterval() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setState(PeriodState.NOT_OPEN);
     }
 
     @Override
-    public void setExecutionInterval(AcademicInterval executionInterval) {
-	if (executionInterval == null) {
-	    throw new DomainException("error.AcademicPeriod.empty.executionInterval");
+    public void setAcademicInterval(AcademicInterval academicInterval) {
+	if (academicInterval == null) {
+	    throw new DomainException("error.executionInterval.empty.executionInterval");
 	}
-	super.setExecutionInterval(executionInterval);
+	super.setAcademicInterval(academicInterval);
     }
 
     @Override
     public void setState(PeriodState state) {
 	if (state == null) {
-	    throw new DomainException("error.AcademicPeriod.empty.state");
+	    throw new DomainException("error.executionInterval.empty.state");
 	}
 	super.setState(state);
     }

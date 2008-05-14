@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonBolonhaStudentEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonCodeBean;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -27,10 +27,10 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends
     }
 
     @Override
-    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+    protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
 	request.setAttribute("action", getAction());
 	request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(
-		studentCurricularPlan, executionPeriod));
+		studentCurricularPlan, executionSemester));
 
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
@@ -65,10 +65,10 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends
     public ActionForward changeSpecialSeasonCode(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
-	ExecutionPeriod executionPeriod = getExecutionPeriod(request);
-	SpecialSeasonCodeBean specialSeasonCodeBean = new SpecialSeasonCodeBean(studentCurricularPlan, executionPeriod);
+	ExecutionSemester executionSemester = getExecutionPeriod(request);
+	SpecialSeasonCodeBean specialSeasonCodeBean = new SpecialSeasonCodeBean(studentCurricularPlan, executionSemester);
 	specialSeasonCodeBean.
-	setSpecialSeasonCode(studentCurricularPlan.getRegistration().getSpecialSeasonCodeByExecutionYear(executionPeriod.getExecutionYear()));
+	setSpecialSeasonCode(studentCurricularPlan.getRegistration().getSpecialSeasonCodeByExecutionYear(executionSemester.getExecutionYear()));
 	return prepareChangeSpecialSeasonCode(mapping, form, request, response, specialSeasonCodeBean);
     }
     

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -20,10 +20,10 @@ public class UpdateDegreeTeachingServices extends Service {
         
         Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);        
         Teacher teacher = professorship.getTeacher();
-        ExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
         if (teacherService == null) {
-            teacherService = new TeacherService(teacher, executionPeriod);
+            teacherService = new TeacherService(teacher, executionSemester);
         }
         
         for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {

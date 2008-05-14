@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializable {
 
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
     private List<DegreeType> degreeTypes;
 
@@ -34,13 +34,13 @@ public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializ
 	withoutEvaluationMethod = 0;
 	total = 0;
 
-	final ExecutionPeriod executionPeriod = getExecutionPeriod();
+	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final List<DegreeType> degreeTypes = getDegreeTypes();
-	if (executionPeriod == null || degreeTypes == null) {
+	if (executionSemester == null || degreeTypes == null) {
 	    return null;
 	}
 	final Set<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-	for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
+	for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
 	    if (isLecturedIn(executionCourse, degreeTypes)) {
 		total++;
 		if (hasNoEvaluationMethod(executionCourse)) {
@@ -80,12 +80,12 @@ public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializ
         this.degreeTypes = degreeTypes;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-        return executionPeriod == null ? null : executionPeriod.getObject();
+    public ExecutionSemester getExecutionPeriod() {
+        return executionSemester == null ? null : executionSemester.getObject();
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod == null ? null : new DomainReference<ExecutionPeriod>(executionPeriod);
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+        this.executionSemester = executionSemester == null ? null : new DomainReference<ExecutionSemester>(executionSemester);
     }
 
     public int getTotal() {

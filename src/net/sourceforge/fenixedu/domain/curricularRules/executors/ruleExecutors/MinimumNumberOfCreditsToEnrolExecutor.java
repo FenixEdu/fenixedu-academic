@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
@@ -80,7 +80,7 @@ public class MinimumNumberOfCreditsToEnrolExecutor extends CurricularRuleExecuto
 	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	final ExecutionPeriod previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
+	final ExecutionSemester previousExecutionPeriod = enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod();
 	totalEctsCredits = Double.valueOf(totalEctsCredits.doubleValue()
 		+ curriculumGroup.getEnroledEctsCredits(previousExecutionPeriod).doubleValue());
 

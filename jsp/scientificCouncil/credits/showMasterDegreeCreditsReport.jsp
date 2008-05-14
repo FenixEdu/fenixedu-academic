@@ -88,7 +88,7 @@
 						<tr>					
 					</logic:greaterThan>
 					
-					<bean:define id="executionPeriod" name="mapElement" property="key" type="net.sourceforge.fenixedu.domain.ExecutionPeriod"/>								
+					<bean:define id="executionPeriod" name="mapElement" property="key" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/>								
 					<bean:define id="executionCourses" name="mapElement" property="value"/>									
 					
 					<%

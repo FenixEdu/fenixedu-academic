@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
@@ -14,8 +14,8 @@ public class LEQBolonhaEnrolmentRule extends BolonhaEnrolmentRule {
     private static final String DISSERTACAO_CODE = "B8T";
 
     public LEQBolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
-	    ExecutionPeriod executionPeriod) {
-	super(studentCurricularPlan, executionPeriod);    
+	    ExecutionSemester executionSemester) {
+	super(studentCurricularPlan, executionSemester);    
     }
 
     public List<CurricularCourse2Enroll> apply(

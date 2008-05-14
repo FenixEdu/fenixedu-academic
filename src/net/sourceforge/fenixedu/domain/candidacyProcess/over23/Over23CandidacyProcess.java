@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.domain.AcademicPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -39,29 +39,29 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
-	//TODO: activities.add(new SetJury());
+	// TODO: activities.add(new SetJury());
 	activities.add(new EditCandidacyPeriod());
 	activities.add(new SendInformationToJury());
 	activities.add(new PrintCandidacies());
-	//TODO: activities.add(new InsertResultsFromJury());
-	//TODO: activities.add(new PublishCandidacyResults());
-	//TODO: activities.add(new CreateRegistrations());
+	// TODO: activities.add(new InsertResultsFromJury());
+	// TODO: activities.add(new PublishCandidacyResults());
+	// TODO: activities.add(new CreateRegistrations());
     }
 
     private Over23CandidacyProcess() {
 	super();
     }
 
-    private Over23CandidacyProcess(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
+    private Over23CandidacyProcess(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
 	this();
-	checkParameters(academicPeriod, start, end);
+	checkParameters(executionInterval, start, end);
 	setState(CandidacyProcessState.STAND_BY);
-	new Over23CandidacyPeriod(this, academicPeriod, start, end);
+	new Over23CandidacyPeriod(this, executionInterval, start, end);
     }
 
-    private void checkParameters(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
-	if (academicPeriod == null) {
-	    throw new DomainException("error.Over23CandidacyProcess.invalid.academicPeriod");
+    private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+	if (executionInterval == null) {
+	    throw new DomainException("error.Over23CandidacyProcess.invalid.executionInterval");
 	}
 
 	if (start == null || end == null || start.isAfter(end)) {
@@ -70,7 +70,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     }
 
     private void edit(final DateTime start, final DateTime end) {
-	checkParameters(getCandidacyPeriod().getAcademicPeriod(), start, end);
+	checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
 	getCandidacyPeriod().edit(start, end);
     }
 
@@ -98,7 +98,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
     @Override
     public String getDisplayName() {
 	String message = super.getDisplayName();
-	message += " - " + getCandidacyAcademicPeriod().getName();
+	message += " - " + getCandidacyExecutionInterval().getName();
 	message += " (" + getCandidacyStart().toString("dd/MM/yyyy") + " : " + getCandidacyEnd().toString("dd/MM/yyyy") + ")";
 	return message;
     }
@@ -121,7 +121,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
 	    final Over23CandidacyProcessBean bean = (Over23CandidacyProcessBean) object;
-	    return new Over23CandidacyProcess(bean.getAcademicPeriod(), bean.getStart(), bean.getEnd());
+	    return new Over23CandidacyProcess(bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
 	}
     }
 

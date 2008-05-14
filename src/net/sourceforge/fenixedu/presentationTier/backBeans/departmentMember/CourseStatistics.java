@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.department.DegreeCourseStatis
 import net.sourceforge.fenixedu.dataTransferObject.department.ExecutionCourseStatisticsDTO;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -112,9 +112,9 @@ public class CourseStatistics extends FenixBackingBean {
                     .executeService(getUserView(), "ReadNotClosedExecutionYears", args);
             List<SelectItem> result = new ArrayList<SelectItem>();
             for (InfoExecutionYear executionYear : executionYearsList) {
-            	List<ExecutionPeriod> executionPeriods = rootDomainObject.readExecutionYearByOID(executionYear.getIdInternal()).getExecutionPeriods();
-            	for(ExecutionPeriod executionPeriod : executionPeriods) {
-            		result.add(new SelectItem(executionPeriod.getIdInternal(), executionPeriod.getExecutionYear().getYear() + " - " + executionPeriod.getName()));
+            	List<ExecutionSemester> executionSemesters = rootDomainObject.readExecutionYearByOID(executionYear.getIdInternal()).getExecutionPeriods();
+            	for(ExecutionSemester executionSemester : executionSemesters) {
+            		result.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getExecutionYear().getYear() + " - " + executionSemester.getName()));
             	}
             }
             this.executionPeriods = result;

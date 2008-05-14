@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadDomainExecutionPeriodByOID extends Service {
 
-    public ExecutionPeriod run(final Integer executionPeriodID) throws ExcepcaoPersistencia {
-        return rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+    public ExecutionSemester run(final Integer executionPeriodID) throws ExcepcaoPersistencia {
+	return rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
     }
-    
+
 }

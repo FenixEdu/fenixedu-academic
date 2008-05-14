@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -20,7 +20,7 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
     }
 
     protected DegreeModulesSelectionLimit(final CourseGroup degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
-	    final ExecutionPeriod begin, final ExecutionPeriod end, final Integer minimum, final Integer maximum) {
+	    final ExecutionSemester begin, final ExecutionSemester end, final Integer minimum, final Integer maximum) {
 
 	this(minimum, maximum);
 	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);

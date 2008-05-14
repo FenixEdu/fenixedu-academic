@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -90,8 +90,8 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
 		}
 	    }
 
-	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-	    total += curriculumGroup.getNumberOfEnrolments(executionPeriod.getPreviousExecutionPeriod());
+	    final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+	    total += curriculumGroup.getNumberOfEnrolments(executionSemester.getPreviousExecutionPeriod());
 
 	    return rule.numberOfDegreeModulesExceedMaximum(total) ? RuleResult.createTrue(EnrolmentResultType.TEMPORARY,
 		    sourceDegreeModuleToEvaluate.getDegreeModule()) : RuleResult.createTrue(sourceDegreeModuleToEvaluate

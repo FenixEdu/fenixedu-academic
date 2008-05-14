@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowAllTeacherCreditsResumeAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -36,8 +36,8 @@ public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAl
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         Integer teacherNumber = Integer.valueOf(dynaActionForm.getString("teacherNumber"));
 
-        ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        Teacher teacher = getTeacherOfManageableDepartments(teacherNumber, executionPeriod, request);
+        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+        Teacher teacher = getTeacherOfManageableDepartments(teacherNumber, executionSemester, request);
         if (teacher == null) {
             request.setAttribute("teacherNotFound", "teacherNotFound");
             dynaActionForm.set("method", "showTeacherCreditsResume");
@@ -49,14 +49,14 @@ public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAl
     }
     
     private Teacher getTeacherOfManageableDepartments(Integer teacherNumber,
-            ExecutionPeriod executionPeriod, HttpServletRequest request) {
+            ExecutionSemester executionSemester, HttpServletRequest request) {
 
         IUserView userView = SessionUtils.getUserView(request);
         List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
         Teacher teacher = null;
         for (Department department : manageableDepartments) {
-            teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDateYearMonthDay(),
-                    executionPeriod.getEndDateYearMonthDay());
+            teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
+                    executionSemester.getEndDateYearMonthDay());
             if (teacher != null) {
                 break;
             }

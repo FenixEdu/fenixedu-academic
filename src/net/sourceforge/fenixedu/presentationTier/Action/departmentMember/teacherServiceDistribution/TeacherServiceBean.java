@@ -6,14 +6,14 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 
 public class TeacherServiceBean implements Serializable {
 
 	private DomainReference<ExecutionYear> executionYear;
-	private DomainReference<ExecutionPeriod> executionPeriod;
+	private DomainReference<ExecutionSemester> executionSemester;
 	private DomainReference<Department> department;
 	private List<DomainReference<TSDProcess>> tsdProcesss;
 	private DomainReference<TSDProcess> copyFromtsdProcess;
@@ -44,12 +44,12 @@ public class TeacherServiceBean implements Serializable {
 		return this.executionYear.getObject();
 	}
 	
-	public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-		this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
+	public void setExecutionPeriod(ExecutionSemester executionSemester) {
+		this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
 	}
 	
-	public ExecutionPeriod getExecutionPeriod() {
-		return this.executionPeriod.getObject();
+	public ExecutionSemester getExecutionPeriod() {
+		return this.executionSemester.getObject();
 	}
 	
 	public void setTSDProcess(List<TSDProcess> serviceDistributions) {

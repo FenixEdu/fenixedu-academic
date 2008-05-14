@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -51,16 +51,16 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 
 	CompetenceCourse course = getCompetenceCourse(request);
 
-	ExecutionPeriod period = getExecutionPeriod(request);
+	ExecutionSemester period = getExecutionPeriod(request);
 
 	CompetenceCourseInformationRequestBean bean = null;
 	IViewState viewState = RenderUtils.getViewState("editVersion");
 	CompetenceCourseInformation information = null;
 	if (viewState != null) {
 	    bean = (CompetenceCourseInformationRequestBean) viewState.getMetaObject().getObject();
-	    ExecutionPeriod beanPeriod = bean.getExecutionPeriod();
+	    ExecutionSemester beanPeriod = bean.getExecutionPeriod();
 	    if (beanPeriod == null) {
-		beanPeriod = ExecutionPeriod.readActualExecutionPeriod();
+		beanPeriod = ExecutionSemester.readActualExecutionPeriod();
 		bean.setExecutionPeriod(beanPeriod);
 	    }
 	    information = bean.getCompetenceCourse().findCompetenceCourseInformationForExecutionPeriod(
@@ -70,7 +70,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	if (bean == null) {
 	    bean = new CompetenceCourseInformationRequestBean(course
 		    .findCompetenceCourseInformationForExecutionPeriod((period != null) ? period
-			    : ExecutionPeriod.readActualExecutionPeriod()));
+			    : ExecutionSemester.readActualExecutionPeriod()));
 	} else {
 	    if (information == null) {
 		bean.reset();
@@ -102,11 +102,11 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	return mapping.findForward("createVersions");
     }
 
-    private ExecutionPeriod getExecutionPeriod(HttpServletRequest request) {
+    private ExecutionSemester getExecutionPeriod(HttpServletRequest request) {
 	String executionPeriodID = request.getParameter("executionPeriodID");
-	ExecutionPeriod period = null;
+	ExecutionSemester period = null;
 	if (executionPeriodID != null) {
-	    period = (ExecutionPeriod) RootDomainObject.readDomainObjectByOID(ExecutionPeriod.class,
+	    period = (ExecutionSemester) RootDomainObject.readDomainObjectByOID(ExecutionSemester.class,
 		    Integer.valueOf(executionPeriodID));
 	}
 	return period;

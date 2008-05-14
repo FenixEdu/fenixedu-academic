@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -29,18 +29,18 @@ public class TeacherService extends TeacherService_Base {
         TeacherServiceTeacherServiceItem.addListener(new TeacherServiceTeacherServiceItemListener());
     }
 
-    public TeacherService(Teacher teacher, ExecutionPeriod executionPeriod) {
+    public TeacherService(Teacher teacher, ExecutionSemester executionSemester) {
         super();        
-        if (teacher == null || executionPeriod == null) {
+        if (teacher == null || executionSemester == null) {
             throw new DomainException("arguments can't be null");
         }
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
         if(teacherService != null) {
             throw new DomainException("error.teacherService.already.exists.one.teacherService.in.executionPeriod");
         }
         setRootDomainObject(RootDomainObject.getInstance());
         setTeacher(teacher);
-        setExecutionPeriod(executionPeriod);
+        setExecutionPeriod(executionSemester);
     }
 
     public void delete() {
@@ -99,11 +99,11 @@ public class TeacherService extends TeacherService_Base {
         ExecutionYear executionYear20062007 = getStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments();
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
             ExecutionCourse executionCourse = degreeTeachingService.getProfessorship().getExecutionCourse();
-            ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            if (!executionCourse.isMasterDegreeDFAOrDEAOnly() && (executionPeriod.getExecutionYear().isBefore(executionYear20062007) ||
+            ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+            if (!executionCourse.isMasterDegreeDFAOrDEAOnly() && (executionSemester.getExecutionYear().isBefore(executionYear20062007) ||
                     !executionCourse.areAllOptionalCurricularCoursesWithLessTenEnrolments())) {                
                 Teacher teacher = degreeTeachingService.getProfessorship().getTeacher();                
-                Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionPeriod);
+                Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionSemester);
                 if (teacherCategory != null 
                         && ((teacherCategory.getCode().equals("AST") && teacherCategory.getLongName().equals("ASSISTENTE")) ||
                                 (teacherCategory.getCode().equals("ASC") && teacherCategory.getLongName().equals("ASSISTENTE CONVIDADO")))
@@ -284,12 +284,12 @@ public class TeacherService extends TeacherService_Base {
         });
     }
 
-    public static ExecutionPeriod getStartExecutionPeriodForCredits() throws ParseException {
+    public static ExecutionSemester getStartExecutionPeriodForCredits() throws ParseException {
         final String year = PropertiesManager.getProperty("startYearForCredits");
         final Integer semester = Integer.valueOf(PropertiesManager.getProperty("startSemesterForCredits"));        
-        for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriods()) {
-            if(executionPeriod.getExecutionYear().getYear().equals(year) && executionPeriod.getSemester().equals(semester)) {
-                return executionPeriod;
+        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriods()) {
+            if(executionSemester.getExecutionYear().getYear().equals(year) && executionSemester.getSemester().equals(semester)) {
+                return executionSemester;
             }
         }
         return null;               

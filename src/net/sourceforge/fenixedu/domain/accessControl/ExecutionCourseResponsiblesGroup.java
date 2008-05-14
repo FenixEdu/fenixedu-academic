@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -32,8 +32,8 @@ public class ExecutionCourseResponsiblesGroup extends Group {
 	final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
 	for (final ExecutionYear executionYear : executionYears) {
 	    if (executionYear.isCurrent()) {
-		for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-		    for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
+		for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+		    for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
 			for (final Professorship professorship : executionCourse.getProfessorships()) {
 			    if (professorship.getResponsibleFor().booleanValue()) {
 				final Teacher teacher = professorship.getTeacher();

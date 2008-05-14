@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.domain.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -45,26 +45,26 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	activities.add(new EditCandidacyPeriod());
 	activities.add(new SendToCoordinator());
 	activities.add(new PrintCandidacies());
-	//TODO: activities.add(new IntroduceCandidacyResults());
-	//TODO: activities.add(new SendToScientificCouncil());
-	//TODO: activities.add(new PublishCandidacyResults());
-	//TODO: activities.add(new CreateRegistrations());
+	// TODO: activities.add(new IntroduceCandidacyResults());
+	// TODO: activities.add(new SendToScientificCouncil());
+	// TODO: activities.add(new PublishCandidacyResults());
+	// TODO: activities.add(new CreateRegistrations());
     }
 
     private SecondCycleCandidacyProcess() {
 	super();
     }
 
-    private SecondCycleCandidacyProcess(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
+    private SecondCycleCandidacyProcess(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
 	this();
-	checkParameters(academicPeriod, start, end);
+	checkParameters(executionInterval, start, end);
 	setState(CandidacyProcessState.STAND_BY);
-	new SecondCycleCandidacyPeriod(this, academicPeriod, start, end);
+	new SecondCycleCandidacyPeriod(this, executionInterval, start, end);
     }
 
-    private void checkParameters(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
-	if (academicPeriod == null) {
-	    throw new DomainException("error.SecondCycleCandidacyProcess.invalid.academicPeriod");
+    private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+	if (executionInterval == null) {
+	    throw new DomainException("error.SecondCycleCandidacyProcess.invalid.executionInterval");
 	}
 
 	if (start == null || end == null || start.isAfter(end)) {
@@ -73,7 +73,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
     }
 
     private void edit(final DateTime start, final DateTime end) {
-	checkParameters(getCandidacyPeriod().getAcademicPeriod(), start, end);
+	checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
 	getCandidacyPeriod().edit(start, end);
     }
 
@@ -91,7 +91,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
     @Override
     public String getDisplayName() {
 	String message = super.getDisplayName();
-	message += " - " + getCandidacyAcademicPeriod().getName();
+	message += " - " + getCandidacyExecutionInterval().getName();
 	message += " (" + getCandidacyStart().toString("dd/MM/yyyy") + " : " + getCandidacyEnd().toString("dd/MM/yyyy") + ")";
 	return message;
     }
@@ -146,7 +146,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
 		Object object) {
 	    final SecondCycleCandidacyProcessBean bean = (SecondCycleCandidacyProcessBean) object;
-	    return new SecondCycleCandidacyProcess(bean.getAcademicPeriod(), bean.getStart(), bean.getEnd());
+	    return new SecondCycleCandidacyProcess(bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
 	}
     }
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.EnrolmentToBeApprovedByCoordinatorVerifier;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -18,7 +18,7 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
     }
 
     protected EnrolmentToBeApprovedByCoordinator(final CurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
-	    final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final ExecutionSemester begin, final ExecutionSemester end) {
 
 	this();
 	init(toApplyRule, contextCourseGroup, begin, end);

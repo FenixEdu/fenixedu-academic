@@ -8,7 +8,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadDepartmentTotalCreditsByPeriod extends Service {
 
-    public Map<ExecutionYear, PeriodCreditsReportDTO>  run(Unit department, ExecutionPeriod fromExecutionPeriod,
-            ExecutionPeriod untilExecutionPeriod) throws ExcepcaoPersistencia, ParseException {
+    public Map<ExecutionYear, PeriodCreditsReportDTO>  run(Unit department, ExecutionSemester fromExecutionPeriod,
+            ExecutionSemester untilExecutionPeriod) throws ExcepcaoPersistencia, ParseException {
 
-        List<ExecutionPeriod> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
+        List<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
                 untilExecutionPeriod);
         
         List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
@@ -28,7 +28,7 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
         
         SortedMap<ExecutionYear, PeriodCreditsReportDTO> departmentGlobalCredits = new TreeMap<ExecutionYear, PeriodCreditsReportDTO>(ExecutionYear.COMPARATOR_BY_YEAR);
                 
-        ExecutionPeriod lasExecutionPeriod = (!executionPeriodsBetween.isEmpty()) ? executionPeriodsBetween.get(executionPeriodsBetween.size() - 1) : null;
+        ExecutionSemester lasExecutionPeriod = (!executionPeriodsBetween.isEmpty()) ? executionPeriodsBetween.get(executionPeriodsBetween.size() - 1) : null;
         for (Teacher teacher : teachers) {            
             if (!teacher.isMonitor(lasExecutionPeriod)
                     && !teacher.isInactive(lasExecutionPeriod) 
@@ -37,9 +37,9 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
                 Unit workingUnit = teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(), untilExecutionPeriod.getEndDateYearMonthDay());
                 Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
                 if(workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {                                                       
-                    for (ExecutionPeriod executionPeriod : executionPeriodsBetween) {
-                        if(executionPeriod.getSemester().intValue() == 2) {
-                            updateCredits(teacher, executionPeriod, departmentGlobalCredits, untilExecutionPeriod);
+                    for (ExecutionSemester executionSemester : executionPeriodsBetween) {
+                        if(executionSemester.getSemester().intValue() == 2) {
+                            updateCredits(teacher, executionSemester, departmentGlobalCredits, untilExecutionPeriod);
                         }                        
                     }                    
                 }
@@ -48,19 +48,19 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
         return departmentGlobalCredits;
     }
     
-    private void updateCredits(Teacher teacher, ExecutionPeriod executionPeriod,
-            Map<ExecutionYear, PeriodCreditsReportDTO> departmentCredits, ExecutionPeriod untilExecutionPeriod) throws ParseException {
+    private void updateCredits(Teacher teacher, ExecutionSemester executionSemester,
+            Map<ExecutionYear, PeriodCreditsReportDTO> departmentCredits, ExecutionSemester untilExecutionPeriod) throws ParseException {
 
-        double teacherPeriodTotalCredits = teacher.getBalanceOfCreditsUntil(executionPeriod);
+        double teacherPeriodTotalCredits = teacher.getBalanceOfCreditsUntil(executionSemester);
         
-        if(!departmentCredits.containsKey(executionPeriod.getExecutionYear())) {
-            departmentCredits.put(executionPeriod.getExecutionYear(), new PeriodCreditsReportDTO());
+        if(!departmentCredits.containsKey(executionSemester.getExecutionYear())) {
+            departmentCredits.put(executionSemester.getExecutionYear(), new PeriodCreditsReportDTO());
         }
         
-        PeriodCreditsReportDTO reportDTO = departmentCredits.get(executionPeriod.getExecutionYear());
+        PeriodCreditsReportDTO reportDTO = departmentCredits.get(executionSemester.getExecutionYear());
         reportDTO.setCredits(round(reportDTO.getCredits() + teacherPeriodTotalCredits));
         
-        Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
+        Category category = teacher.getCategoryForCreditsByPeriod(executionSemester);
         boolean careerTeacher = (category != null && category.isTeacherCareerCategory());
         if(careerTeacher) {
             reportDTO.setCareerCategoryTeacherCredits(round(reportDTO.getCareerCategoryTeacherCredits() + teacherPeriodTotalCredits));
@@ -68,7 +68,7 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
             reportDTO.setNotCareerCategoryTeacherCredits(round(reportDTO.getNotCareerCategoryTeacherCredits() + teacherPeriodTotalCredits));
         }
         
-        if(executionPeriod.equals(untilExecutionPeriod)) {
+        if(executionSemester.equals(untilExecutionPeriod)) {
             if(careerTeacher) {
                 reportDTO.setCareerTeachersSize(reportDTO.getCareerTeachersSize() + 1);
                 reportDTO.setCareerTeachersBalance(round(reportDTO.getCareerCategoryTeacherCredits() / reportDTO.getCareerTeachersSize()));
@@ -81,12 +81,12 @@ public class ReadDepartmentTotalCreditsByPeriod extends Service {
         }
     }
 
-    private List<ExecutionPeriod> getExecutionPeriodsBetween(ExecutionPeriod fromExecutionPeriod,
-            ExecutionPeriod untilExecutionPeriod) {
+    private List<ExecutionSemester> getExecutionPeriodsBetween(ExecutionSemester fromExecutionPeriod,
+            ExecutionSemester untilExecutionPeriod) {
         
-        List<ExecutionPeriod> executionPeriodsBetween = new ArrayList<ExecutionPeriod>();
+        List<ExecutionSemester> executionPeriodsBetween = new ArrayList<ExecutionSemester>();
         
-        ExecutionPeriod tempExecutionPeriod = fromExecutionPeriod;
+        ExecutionSemester tempExecutionPeriod = fromExecutionPeriod;
         while (tempExecutionPeriod != untilExecutionPeriod) {
             executionPeriodsBetween.add(tempExecutionPeriod);
             tempExecutionPeriod = tempExecutionPeriod.getNextExecutionPeriod();

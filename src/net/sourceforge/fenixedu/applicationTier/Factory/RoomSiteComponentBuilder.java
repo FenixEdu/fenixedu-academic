@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -53,17 +53,17 @@ public class RoomSiteComponentBuilder {
     }
 
     public ISiteComponent getComponent(ISiteComponent component, Calendar day, AllocatableSpace room,
-	    ExecutionPeriod executionPeriod) throws Exception {
+	    ExecutionSemester executionSemester) throws Exception {
 
 	if (component instanceof InfoSiteRoomTimeTable) {
-	    return getInfoSiteRoomTimeTable((InfoSiteRoomTimeTable) component, day, room, executionPeriod);
+	    return getInfoSiteRoomTimeTable((InfoSiteRoomTimeTable) component, day, room, executionSemester);
 	}
 
 	return null;
     }
 
     private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day,
-	    AllocatableSpace room, ExecutionPeriod executionPeriod) throws Exception {
+	    AllocatableSpace room, ExecutionSemester executionSemester) throws Exception {
 
 	List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 

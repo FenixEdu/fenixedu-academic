@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -31,13 +31,16 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear exte
     public List<InfoShift> run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
 	    InfoCurricularYear infoCurricularYear) throws ExcepcaoPersistencia {
 
-	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
+		.getIdInternal());
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(infoCurricularYear.getIdInternal());
 
 	final List<InfoShift> infoShifts = new ArrayList<InfoShift>();
-	final List<ExecutionCourse> executionCourses = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan, curricularYear, "%");
+	final List<ExecutionCourse> executionCourses = executionSemester
+		.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan,
+			curricularYear, "%");
 	for (final ExecutionCourse executionCourse : executionCourses) {
 	    for (final Shift shift : executionCourse.getAssociatedShifts()) {
 		final InfoShift infoShift = new InfoShift(shift);

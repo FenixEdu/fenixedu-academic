@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
@@ -28,7 +28,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public CompetenceCourseInformation(String name, String nameEn, Boolean basic, RegimeType regimeType,
-	    CompetenceCourseLevel competenceCourseLevel, ExecutionPeriod period) {
+	    CompetenceCourseLevel competenceCourseLevel, ExecutionSemester period) {
 
 	this();
 	checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel);

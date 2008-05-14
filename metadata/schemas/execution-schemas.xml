@@ -1,4 +1,4 @@
-<schema name="net.sourceforge.fenixedu.domain.ExecutionPeriod.edit" type="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+<schema name="net.sourceforge.fenixedu.domain.ExecutionSemester.edit" type="net.sourceforge.fenixedu.domain.ExecutionSemester">
 	<slot name="name"/>
 	<slot name="semester" bundle="MANAGER_RESOURCES" key="label.semester"/>
 	<slot name="beginDateYearMonthDay" bundle="MANAGER_RESOURCES" key="label.date.begin"/>

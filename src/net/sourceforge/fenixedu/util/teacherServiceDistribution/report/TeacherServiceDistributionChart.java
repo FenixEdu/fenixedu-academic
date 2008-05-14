@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -22,7 +22,7 @@ import org.jfree.data.DefaultPieDataset;
 public abstract class TeacherServiceDistributionChart {
 	protected TeacherServiceDistribution tsd = null;
 
-	protected List<ExecutionPeriod> executionPeriodList = null;
+	protected List<ExecutionSemester> executionPeriodList = null;
 
 	protected ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
 
@@ -216,7 +216,7 @@ public abstract class TeacherServiceDistributionChart {
 		};
 	}	
 
-	public void setExecutionPeriodList(List<ExecutionPeriod> executionPeriodList) {
+	public void setExecutionPeriodList(List<ExecutionSemester> executionPeriodList) {
 		this.executionPeriodList = executionPeriodList;
 	}
 

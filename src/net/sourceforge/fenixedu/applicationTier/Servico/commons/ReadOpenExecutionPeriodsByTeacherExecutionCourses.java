@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -27,20 +27,20 @@ public class ReadOpenExecutionPeriodsByTeacherExecutionCourses extends Service {
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
         final Person person = userView.getPerson();
         final Teacher teacher = person != null ? person.getTeacher() : null;
-        final List<ExecutionPeriod> executionPeriods = new ArrayList<ExecutionPeriod>();
+        final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
 
         for (final Professorship professorship : teacher.getProfessorshipsSet()) {
-            final ExecutionPeriod executionPeriod = professorship.getExecutionCourse()
+            final ExecutionSemester executionSemester = professorship.getExecutionCourse()
                     .getExecutionPeriod();
-            final PeriodState periodState = executionPeriod.getState();
-            if (!executionPeriods.contains(executionPeriod)
+            final PeriodState periodState = executionSemester.getState();
+            if (!executionSemesters.contains(executionSemester)
                     && (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))) {
-                executionPeriods.add(executionPeriod);
+                executionSemesters.add(executionSemester);
             }
         }
 
-        for (final ExecutionPeriod executionPeriod : executionPeriods) {
-            result.add(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
+        for (final ExecutionSemester executionSemester : executionSemesters) {
+            result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
         }
         return result;
     }

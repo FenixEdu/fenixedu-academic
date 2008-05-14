@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class TSDCurricularCourse extends TSDCurricularCourse_Base {
@@ -15,25 +15,25 @@ public class TSDCurricularCourse extends TSDCurricularCourse_Base {
         super();
     }
 
-	public TSDCurricularCourse(TeacherServiceDistribution tsd, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+	public TSDCurricularCourse(TeacherServiceDistribution tsd, CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
 		this();
 		
 		this.setCurricularCourse(curricularCourse);
-		this.setExecutionPeriod(executionPeriod);
+		this.setExecutionPeriod(executionSemester);
 		this.addTeacherServiceDistributions(tsd);
 		
 		tsd.addTSDCourseToTSDTree(this);
 		
-		buildTSDCourseLoads(curricularCourse, executionPeriod);
+		buildTSDCourseLoads(curricularCourse, executionSemester);
 	}
 
-	private void buildTSDCourseLoads(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+	private void buildTSDCourseLoads(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
 		BigDecimal shiftHours = null;
 		TSDCurricularLoad tsdLoad = null;
 		List<ShiftType> lecturedShiftTypes = new ArrayList<ShiftType>();
 				
 		for(ShiftType shiftType : ShiftType.values()){
-			shiftHours = curricularCourse.getTotalHoursByShiftType(shiftType, executionPeriod);
+			shiftHours = curricularCourse.getTotalHoursByShiftType(shiftType, executionSemester);
 						
 			if(shiftHours != null && shiftHours.doubleValue() > 0d){
 				lecturedShiftTypes.add(shiftType);

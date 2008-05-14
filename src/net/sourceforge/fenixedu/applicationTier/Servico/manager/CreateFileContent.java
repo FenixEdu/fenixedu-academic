@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
@@ -85,13 +85,13 @@ public class CreateFileContent extends FileContentService {
 	filePath.addNode(0,new VirtualPathNode("Site" + site.getIdInternal(), authorName == null ? "Site" + site.getIdInternal()
 		: authorName));
 
-	ExecutionPeriod executionPeriod = site.getExecutionPeriod();
-	if (executionPeriod == null) {
+	ExecutionSemester executionSemester = site.getExecutionPeriod();
+	if (executionSemester == null) {
 	    filePath.addNode(0, new VirtualPathNode("Intemporal", "Intemporal"));
 	} else {
-	    filePath.addNode(0, new VirtualPathNode("EP" + executionPeriod.getIdInternal(), executionPeriod.getName()));
+	    filePath.addNode(0, new VirtualPathNode("EP" + executionSemester.getIdInternal(), executionSemester.getName()));
 
-	    ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	    ExecutionYear executionYear = executionSemester.getExecutionYear();
 	    filePath.addNode(0, new VirtualPathNode("EY" + executionYear.getIdInternal(), executionYear.getYear()));
 	}
 

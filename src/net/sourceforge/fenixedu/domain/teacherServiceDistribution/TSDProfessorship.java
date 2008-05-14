@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
@@ -31,7 +31,7 @@ public class TSDProfessorship extends TSDProfessorship_Base {
     	return 0d;
     }
     	
-	public ExecutionPeriod getExecutionPeriod() {
+	public ExecutionSemester getExecutionPeriod() {
 		return getTSDCourse().getExecutionPeriod();
 	}
 	

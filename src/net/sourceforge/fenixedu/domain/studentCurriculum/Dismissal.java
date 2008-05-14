@@ -10,7 +10,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -157,12 +157,12 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	return isValid(executionPeriod) && hasCurricularCourse(getCurricularCourse(), curricularCourse, executionPeriod);
+    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+	return isValid(executionSemester) && hasCurricularCourse(getCurricularCourse(), curricularCourse, executionSemester);
     }
 
-    protected boolean isValid(final ExecutionPeriod executionPeriod) {
-	return (executionPeriod == null || !hasExecutionPeriod() || getExecutionPeriod().isBeforeOrEquals(executionPeriod));
+    protected boolean isValid(final ExecutionSemester executionSemester) {
+	return (executionSemester == null || !hasExecutionPeriod() || getExecutionPeriod().isBeforeOrEquals(executionSemester));
     }
 
     protected boolean isValid(final ExecutionYear executionYear) {
@@ -192,7 +192,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod) {
+    public Double getEnroledEctsCredits(final ExecutionSemester executionSemester) {
 	return Double.valueOf(0d);
     }
 
@@ -298,18 +298,18 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
 	return getCredits().getExecutionPeriod();
     }
 
     @Override
-    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
-	if (executionPeriod != null && executionPeriod != getExecutionPeriod()) {
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
+	if (executionSemester != null && executionSemester != getExecutionPeriod()) {
 	    return Collections.EMPTY_SET;
 	}
 
 	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>(1);
-	result.add(new DismissalCurriculumModuleWrapper(this, executionPeriod));
+	result.add(new DismissalCurriculumModuleWrapper(this, executionSemester));
 	return result;
     }
 

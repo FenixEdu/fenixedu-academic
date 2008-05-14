@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -37,175 +37,180 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ListExecutionCoursesDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final Collection<ExecutionPeriod> executionPeriods = rootDomainObject.getExecutionPeriodsSet();
-        final List<ExecutionPeriod> sortedExecutionPeriods = new ArrayList<ExecutionPeriod>(executionPeriods);
-        Collections.sort(sortedExecutionPeriods);
-        Collections.reverse(sortedExecutionPeriods);
-        request.setAttribute("executionPeriods", sortedExecutionPeriods);
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
+	final List<ExecutionSemester> sortedExecutionPeriods = new ArrayList<ExecutionSemester>(executionSemesters);
+	Collections.sort(sortedExecutionPeriods);
+	Collections.reverse(sortedExecutionPeriods);
+	request.setAttribute("executionPeriods", sortedExecutionPeriods);
 
-        return mapping.findForward("show-choose-execution-period-page");
+	return mapping.findForward("show-choose-execution-period-page");
     }
 
     public ActionForward selectExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final ExecutionPeriod executionPeriod = retrieveDomainObject(form, request);
-        request.setAttribute("executionPeriod", executionPeriod);
-        return prepare(mapping, form, request, response);
+	    HttpServletResponse response) throws Exception {
+	final ExecutionSemester executionSemester = retrieveDomainObject(form, request);
+	request.setAttribute("executionPeriod", executionSemester);
+	return prepare(mapping, form, request, response);
     }
 
     public ActionForward downloadExecutionCourseGroupings(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final ExecutionPeriod executionPeriod = retrieveDomainObject(form, request);
+	    HttpServletResponse response) throws Exception {
+	final ExecutionSemester executionSemester = retrieveDomainObject(form, request);
 
-        response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment; filename=executionCourseGroupings_" + executionPeriod.getQualifiedName().replace(' ', '_') + "_.xls");
+	response.setContentType("application/vnd.ms-excel");
+	response.setHeader("Content-disposition", "attachment; filename=executionCourseGroupings_"
+		+ executionSemester.getQualifiedName().replace(' ', '_') + "_.xls");
 
-        final ServletOutputStream servletOutputStream = response.getOutputStream();
-        exportToXls(servletOutputStream, executionPeriod);
-        servletOutputStream.flush();
-        response.flushBuffer();
+	final ServletOutputStream servletOutputStream = response.getOutputStream();
+	exportToXls(servletOutputStream, executionSemester);
+	servletOutputStream.flush();
+	response.flushBuffer();
 
-        return null;
+	return null;
     }
 
-    private ExecutionPeriod retrieveDomainObject(ActionForm form, HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String executionPeriodIDString = (String) dynaActionForm.get("executionPeriodID");
-        final Integer executionPeriodID = executionPeriodIDString != null && executionPeriodIDString.length() > 0
-                ? Integer.valueOf(executionPeriodIDString) : null;
+    private ExecutionSemester retrieveDomainObject(ActionForm form, HttpServletRequest request) throws FenixFilterException,
+	    FenixServiceException {
+	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+	final String executionPeriodIDString = (String) dynaActionForm.get("executionPeriodID");
+	final Integer executionPeriodID = executionPeriodIDString != null && executionPeriodIDString.length() > 0 ? Integer
+		.valueOf(executionPeriodIDString) : null;
 
-        return rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+	return rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
     }
 
-    private void exportToXls(final ServletOutputStream servletOutputStream, final ExecutionPeriod executionPeriod) throws IOException {
-        final List<Object> headers = getHeaders();
-        final Spreadsheet spreadsheet = new Spreadsheet("Execution Course Groupings", headers);
-        fillSpreadSheet(spreadsheet, executionPeriod);
-        spreadsheet.exportToXLSSheet(servletOutputStream);
+    private void exportToXls(final ServletOutputStream servletOutputStream, final ExecutionSemester executionSemester)
+	    throws IOException {
+	final List<Object> headers = getHeaders();
+	final Spreadsheet spreadsheet = new Spreadsheet("Execution Course Groupings", headers);
+	fillSpreadSheet(spreadsheet, executionSemester);
+	spreadsheet.exportToXLSSheet(servletOutputStream);
     }
 
     private List<Object> getHeaders() {
-        final List<Object> headers = new ArrayList<Object>();
-        headers.add("Execution Course");
-        headers.add("Responsible Fors");
-        headers.add("Number of Degrees");
-        headers.add("Degrees");
-        headers.add("Curricular Years");
-        headers.add("Degree Types");
-        headers.add("Emails");
-        return headers;
+	final List<Object> headers = new ArrayList<Object>();
+	headers.add("Execution Course");
+	headers.add("Responsible Fors");
+	headers.add("Number of Degrees");
+	headers.add("Degrees");
+	headers.add("Curricular Years");
+	headers.add("Degree Types");
+	headers.add("Emails");
+	return headers;
     }
 
-    private void fillSpreadSheet(final Spreadsheet spreadsheet, final ExecutionPeriod executionPeriod) {
-        for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
-            final Row row = spreadsheet.addRow();
+    private void fillSpreadSheet(final Spreadsheet spreadsheet, final ExecutionSemester executionSemester) {
+	for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+	    final Row row = spreadsheet.addRow();
 
-            row.setCell(executionCourse.getNome());
+	    row.setCell(executionCourse.getNome());
 
-            final StringBuilder responsibleForStringBuilder = new StringBuilder();
-            final StringBuilder responsibleForEmailsStringBuilder = new StringBuilder();
-            boolean isFirstResp = true;
-            for (final Professorship professorship : executionCourse.getProfessorships()) {
-                if (professorship.getResponsibleFor().booleanValue()) {
-                    if (isFirstResp) {
-                        isFirstResp = false;
-                    } else {
-                        responsibleForStringBuilder.append("; ");
-                        responsibleForEmailsStringBuilder.append("; ");
-                    }
+	    final StringBuilder responsibleForStringBuilder = new StringBuilder();
+	    final StringBuilder responsibleForEmailsStringBuilder = new StringBuilder();
+	    boolean isFirstResp = true;
+	    for (final Professorship professorship : executionCourse.getProfessorships()) {
+		if (professorship.getResponsibleFor().booleanValue()) {
+		    if (isFirstResp) {
+			isFirstResp = false;
+		    } else {
+			responsibleForStringBuilder.append("; ");
+			responsibleForEmailsStringBuilder.append("; ");
+		    }
 
-                    final Teacher teacher = professorship.getTeacher();
-                    responsibleForStringBuilder.append(teacher.getTeacherNumber().toString());
+		    final Teacher teacher = professorship.getTeacher();
+		    responsibleForStringBuilder.append(teacher.getTeacherNumber().toString());
 
-                    responsibleForStringBuilder.append(" ");
+		    responsibleForStringBuilder.append(" ");
 
-                    final Person person = teacher.getPerson();
-                    responsibleForStringBuilder.append(person.getName());
-                    responsibleForEmailsStringBuilder.append(person.getEmail());
-                }
-            }
-            row.setCell(responsibleForStringBuilder.toString());
+		    final Person person = teacher.getPerson();
+		    responsibleForStringBuilder.append(person.getName());
+		    responsibleForEmailsStringBuilder.append(person.getEmail());
+		}
+	    }
+	    row.setCell(responsibleForStringBuilder.toString());
 
-            final Map<Degree, Set<Integer>> degreeOccurenceMap = constructDegreeOccurenceMap(executionPeriod, executionCourse);
+	    final Map<Degree, Set<Integer>> degreeOccurenceMap = constructDegreeOccurenceMap(executionSemester, executionCourse);
 
-            row.setCell(Integer.toString(degreeOccurenceMap.size()));
+	    row.setCell(Integer.toString(degreeOccurenceMap.size()));
 
-            final StringBuilder degreeStringBuilder = new StringBuilder();
-            boolean isFirst = true;
-            for (final Degree degree : degreeOccurenceMap.keySet()) {
-                if (isFirst) {
-                    isFirst = false;
-                } else {
-                    degreeStringBuilder.append("; ");
-                }
+	    final StringBuilder degreeStringBuilder = new StringBuilder();
+	    boolean isFirst = true;
+	    for (final Degree degree : degreeOccurenceMap.keySet()) {
+		if (isFirst) {
+		    isFirst = false;
+		} else {
+		    degreeStringBuilder.append("; ");
+		}
 
-                degreeStringBuilder.append(degree.getSigla());
-            }
-            row.setCell(degreeStringBuilder.toString());
+		degreeStringBuilder.append(degree.getSigla());
+	    }
+	    row.setCell(degreeStringBuilder.toString());
 
-            final StringBuilder degreeCurricularYearStringBuilder = new StringBuilder();
-            isFirst = true;
-            for (final Entry<Degree, Set<Integer>> entry : degreeOccurenceMap.entrySet()) {
-                if (isFirst) {
-                    isFirst = false;
-                } else {
-                    degreeCurricularYearStringBuilder.append("; ");
-                }
+	    final StringBuilder degreeCurricularYearStringBuilder = new StringBuilder();
+	    isFirst = true;
+	    for (final Entry<Degree, Set<Integer>> entry : degreeOccurenceMap.entrySet()) {
+		if (isFirst) {
+		    isFirst = false;
+		} else {
+		    degreeCurricularYearStringBuilder.append("; ");
+		}
 
-                final Degree degree = entry.getKey();
-                degreeCurricularYearStringBuilder.append(degree.getSigla());
-                degreeCurricularYearStringBuilder.append('(');
-                boolean isFirstYear = true;
-                for (final Integer curricularYearInteger : entry.getValue()) {
-                    if (isFirstYear) {
-                        isFirstYear = false;
-                    } else {
-                        degreeCurricularYearStringBuilder.append(", ");
-                    }
-                    degreeCurricularYearStringBuilder.append(curricularYearInteger.toString());
-                }
-                degreeCurricularYearStringBuilder.append(')');
-            }
-            row.setCell(degreeCurricularYearStringBuilder.toString());
+		final Degree degree = entry.getKey();
+		degreeCurricularYearStringBuilder.append(degree.getSigla());
+		degreeCurricularYearStringBuilder.append('(');
+		boolean isFirstYear = true;
+		for (final Integer curricularYearInteger : entry.getValue()) {
+		    if (isFirstYear) {
+			isFirstYear = false;
+		    } else {
+			degreeCurricularYearStringBuilder.append(", ");
+		    }
+		    degreeCurricularYearStringBuilder.append(curricularYearInteger.toString());
+		}
+		degreeCurricularYearStringBuilder.append(')');
+	    }
+	    row.setCell(degreeCurricularYearStringBuilder.toString());
 
-            final StringBuilder degreeTypeStringBuilder = new StringBuilder();
-            final Set<DegreeType> degreeTypes = new TreeSet<DegreeType>();
-            for (final Degree degree : degreeOccurenceMap.keySet()) {
-                degreeTypes.add(degree.getDegreeType());
-            }
-            for (final DegreeType degreeType : degreeTypes) {
-                if (degreeTypeStringBuilder.length() > 0) {
-                    degreeStringBuilder.append(", ");
-                }
-                degreeTypeStringBuilder.append(degreeType);
-            }
-            row.setCell(degreeTypeStringBuilder.toString());
+	    final StringBuilder degreeTypeStringBuilder = new StringBuilder();
+	    final Set<DegreeType> degreeTypes = new TreeSet<DegreeType>();
+	    for (final Degree degree : degreeOccurenceMap.keySet()) {
+		degreeTypes.add(degree.getDegreeType());
+	    }
+	    for (final DegreeType degreeType : degreeTypes) {
+		if (degreeTypeStringBuilder.length() > 0) {
+		    degreeStringBuilder.append(", ");
+		}
+		degreeTypeStringBuilder.append(degreeType);
+	    }
+	    row.setCell(degreeTypeStringBuilder.toString());
 
-            row.setCell(responsibleForEmailsStringBuilder.toString());
-        }
+	    row.setCell(responsibleForEmailsStringBuilder.toString());
+	}
     }
 
-    private Map<Degree, Set<Integer>> constructDegreeOccurenceMap(final ExecutionPeriod executionPeriod, final ExecutionCourse executionCourse) {
-        final Map<Degree, Set<Integer>> degreeOccurenceMap = new HashMap<Degree, Set<Integer>>();
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-            final List<DegreeModuleScope> degreeModuleScopes = curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod);
-            for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
-                final Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
+    private Map<Degree, Set<Integer>> constructDegreeOccurenceMap(final ExecutionSemester executionSemester,
+	    final ExecutionCourse executionCourse) {
+	final Map<Degree, Set<Integer>> degreeOccurenceMap = new HashMap<Degree, Set<Integer>>();
+	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+	    final List<DegreeModuleScope> degreeModuleScopes = curricularCourse
+		    .getActiveDegreeModuleScopesInExecutionPeriod(executionSemester);
+	    for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
+		final Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
 
-                final Set<Integer> curricularYears;
-                if (degreeOccurenceMap.containsKey(degree)) {
-                    curricularYears = degreeOccurenceMap.get(degree);
-                } else {
-                    curricularYears = new TreeSet<Integer>();
-                    degreeOccurenceMap.put(degree, curricularYears);
-                }
+		final Set<Integer> curricularYears;
+		if (degreeOccurenceMap.containsKey(degree)) {
+		    curricularYears = degreeOccurenceMap.get(degree);
+		} else {
+		    curricularYears = new TreeSet<Integer>();
+		    degreeOccurenceMap.put(degree, curricularYears);
+		}
 
-                curricularYears.add(degreeModuleScope.getCurricularYear());
-            }
-        }
-        return degreeOccurenceMap;
+		curricularYears.add(degreeModuleScope.getCurricularYear());
+	    }
+	}
+	return degreeOccurenceMap;
     }
 
 }

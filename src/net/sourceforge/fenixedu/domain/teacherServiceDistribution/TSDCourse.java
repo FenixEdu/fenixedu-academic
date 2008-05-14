@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -277,22 +277,22 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	return getTotalHoursLecturedByShiftType(null);
     }
 
-    private Integer getRealFirstTimeEnrolledStudentsNumberByExecutionPeriod(ExecutionPeriod executionPeriod) {
+    private Integer getRealFirstTimeEnrolledStudentsNumberByExecutionPeriod(ExecutionSemester executionSemester) {
 	int firstTimeEnrolledStudents = 0;
 
 	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-	    firstTimeEnrolledStudents += curricularCourse.getFirstTimeEnrolmentStudentNumber(executionPeriod);
+	    firstTimeEnrolledStudents += curricularCourse.getFirstTimeEnrolmentStudentNumber(executionSemester);
 	}
 
 	return firstTimeEnrolledStudents;
     }
 
-    private Integer getRealSecondTimeEnrolledStudentsNumberByExecutionPeriod(ExecutionPeriod executionPeriod) {
+    private Integer getRealSecondTimeEnrolledStudentsNumberByExecutionPeriod(ExecutionSemester executionSemester) {
 	Integer secondTimeEnrolledStudentsNumber = 0;
 
-	if (executionPeriod != null) {
+	if (executionSemester != null) {
 	    for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-		secondTimeEnrolledStudentsNumber += curricularCourse.getSecondTimeEnrolmentStudentNumber(executionPeriod);
+		secondTimeEnrolledStudentsNumber += curricularCourse.getSecondTimeEnrolmentStudentNumber(executionSemester);
 	    }
 	}
 
@@ -354,27 +354,27 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	return getFirstTimeEnrolledStudents() + getSecondTimeEnrolledStudents();
     }
 
-    private Double getRealHoursByShiftAndExecutionPeriod(ShiftType shiftType, ExecutionPeriod executionPeriod) {
+    private Double getRealHoursByShiftAndExecutionPeriod(ShiftType shiftType, ExecutionSemester executionSemester) {
 	Double hours = 0d;
-	for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesByExecutionPeriod(executionPeriod)) {
+	for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesByExecutionPeriod(executionSemester)) {
 	    hours += executionCourse.getAllShiftUnitHours(shiftType).doubleValue();
 	}
 	return hours;
     }
 
-    private Integer getRealStudentsByShiftAndExecutionPeriod(ShiftType shiftType, ExecutionPeriod executionPeriod) {
+    private Integer getRealStudentsByShiftAndExecutionPeriod(ShiftType shiftType, ExecutionSemester executionSemester) {
 	Double numberOfShifts = 0.0;
 	Double totalNumberOfStudents = 0d;
 
 	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-	    List<ExecutionCourse> executionCourseList = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
+	    List<ExecutionCourse> executionCourseList = curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester);
 
 	    for (ExecutionCourse executionCourse : executionCourseList) {
 		numberOfShifts += executionCourse.getNumberOfShifts(shiftType)
 			* executionCourse.getCurricularCourseEnrolmentsWeight(curricularCourse);
 	    }
 
-	    totalNumberOfStudents += curricularCourse.getTotalEnrolmentStudentNumber(executionPeriod);
+	    totalNumberOfStudents += curricularCourse.getTotalEnrolmentStudentNumber(executionSemester);
 	}
 
 	numberOfShifts = StrictMath.ceil(numberOfShifts);
@@ -408,11 +408,11 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	});
     }
 
-    public List<ExecutionCourse> getAssociatedExecutionCoursesByExecutionPeriod(ExecutionPeriod executionPeriod) {
+    public List<ExecutionCourse> getAssociatedExecutionCoursesByExecutionPeriod(ExecutionSemester executionSemester) {
 	Set<ExecutionCourse> executionCourseSet = new HashSet<ExecutionCourse>();
 
 	for (CurricularCourse valuationCurricularcourse : getAssociatedCurricularCourses()) {
-	    executionCourseSet.addAll(valuationCurricularcourse.getExecutionCoursesByExecutionPeriod(executionPeriod));
+	    executionCourseSet.addAll(valuationCurricularcourse.getExecutionCoursesByExecutionPeriod(executionSemester));
 	}
 
 	List<ExecutionCourse> executionCourseList = new ArrayList<ExecutionCourse>();
@@ -429,15 +429,15 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	return getAssociatedExecutionCoursesByExecutionPeriod(getExecutionPeriod());
     }
 
-    public ExecutionPeriod getLastYearExecutionPeriod() {
+    public ExecutionSemester getLastYearExecutionPeriod() {
 	ExecutionYear executionYear = getExecutionPeriod().getExecutionYear();
 
 	ExecutionYear lastExecutionYear = executionYear.getPreviousExecutionYear();
 
 	if (lastExecutionYear != null) {
-	    for (ExecutionPeriod executionPeriod : lastExecutionYear.getExecutionPeriods()) {
-		if (executionPeriod.getSemester().equals(getExecutionPeriod().getSemester())) {
-		    return executionPeriod;
+	    for (ExecutionSemester executionSemester : lastExecutionYear.getExecutionPeriods()) {
+		if (executionSemester.getSemester().equals(getExecutionPeriod().getSemester())) {
+		    return executionSemester;
 		}
 	    }
 	}
@@ -455,7 +455,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
 
     public List<String> getCampus() {
 	Set<String> campusSet = new LinkedHashSet<String>();
-	ExecutionPeriod executionPeriod = getExecutionPeriod();
+	ExecutionSemester executionPeriod = getExecutionPeriod();
 
 	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    // if(!curricularCourse.getIsRealCurricularCourse()) continue;
@@ -517,12 +517,12 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	}
     }
 
-    private Integer getTotalEnrolledStudentsNumberByExecutionPeriod(ExecutionPeriod executionPeriod) {
+    private Integer getTotalEnrolledStudentsNumberByExecutionPeriod(ExecutionSemester executionSemester) {
 	Integer totalEnrolledStudentsNumber = 0;
 
-	if (executionPeriod != null) {
+	if (executionSemester != null) {
 	    for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-		totalEnrolledStudentsNumber += curricularCourse.getTotalEnrolmentStudentNumber(executionPeriod);
+		totalEnrolledStudentsNumber += curricularCourse.getTotalEnrolmentStudentNumber(executionSemester);
 	    }
 	}
 

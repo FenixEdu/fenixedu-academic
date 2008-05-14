@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -34,8 +34,8 @@ public class ReadAvailableClassesForShift extends Service {
 
         final Shift shift = rootDomainObject.readShiftByOID(shiftOID);
         final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-        final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-        final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+        final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+        final ExecutionYear executionYear = executionSemester.getExecutionYear();
 
         final Set<SchoolClass> availableSchoolClasses = new HashSet<SchoolClass>();
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
@@ -43,7 +43,7 @@ public class ReadAvailableClassesForShift extends Service {
         	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
         		if (executionDegree.getExecutionYear() == executionYear) {
         			for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
-        				if (schoolClass.getExecutionPeriod() == executionPeriod) {
+        				if (schoolClass.getExecutionPeriod() == executionSemester) {
         					if (!shift.getAssociatedClassesSet().contains(schoolClass)) {
         						availableSchoolClasses.add(schoolClass);
         					}

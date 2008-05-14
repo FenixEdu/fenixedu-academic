@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -32,10 +32,10 @@ public class CopyLastYearRealDataService {
     
     public void copyLastYearRealDataToTSDProcessPhase(TSDProcessPhase tsdProcessPhase) {
     	
-    	List<ExecutionPeriod> executionPeriods = tsdProcessPhase.getTSDProcess().getExecutionPeriods();
+    	List<ExecutionSemester> executionSemesters = tsdProcessPhase.getTSDProcess().getExecutionPeriods();
     	TeacherServiceDistribution rootTSD = tsdProcessPhase.getRootTSD(); 
 		Set<ExecutionCourse> executionCourses = null;
-		ExecutionPeriod lastYearPeriod = null;
+		ExecutionSemester lastYearPeriod = null;
 		TSDCurricularCourseGroup tsdCurricularCourseGroup = null;
     	
     	for (TSDCourse tsdCourse : rootTSD.getTSDCourses()) {
@@ -46,16 +46,16 @@ public class CopyLastYearRealDataService {
 			}
 		}    	
     	
-		for(ExecutionPeriod executionPeriod : executionPeriods){
+		for(ExecutionSemester executionSemester : executionSemesters){
 			executionCourses = new HashSet<ExecutionCourse>();
-			lastYearPeriod = executionPeriod.getPreviousExecutionPeriod().getPreviousExecutionPeriod();
+			lastYearPeriod = executionSemester.getPreviousExecutionPeriod().getPreviousExecutionPeriod();
 			
-			for (CompetenceCourse competenceCourse : rootTSD.getCompetenceCoursesByExecutionPeriod(executionPeriod)) {
+			for (CompetenceCourse competenceCourse : rootTSD.getCompetenceCoursesByExecutionPeriod(executionSemester)) {
 				executionCourses.addAll(competenceCourse.getExecutionCoursesByExecutionPeriod(lastYearPeriod));
 			}	
 		
 			for (ExecutionCourse executionCourse : executionCourses) {
-				tsdCurricularCourseGroup = createTSDCurricularCourseGroupByExecutionCourse(executionCourse, executionPeriod, tsdProcessPhase);	
+				tsdCurricularCourseGroup = createTSDCurricularCourseGroupByExecutionCourse(executionCourse, executionSemester, tsdProcessPhase);	
 				fillTSDProfessorships(tsdCurricularCourseGroup, executionCourse, tsdProcessPhase);
 			}		
 		}
@@ -63,7 +63,7 @@ public class CopyLastYearRealDataService {
 
 
 	@SuppressWarnings("unchecked")
-	private TSDCurricularCourseGroup createTSDCurricularCourseGroupByExecutionCourse(ExecutionCourse executionCourse, final ExecutionPeriod executionPeriod, TSDProcessPhase tsdProcessPhase) {
+	private TSDCurricularCourseGroup createTSDCurricularCourseGroupByExecutionCourse(ExecutionCourse executionCourse, final ExecutionSemester executionSemester, TSDProcessPhase tsdProcessPhase) {
 		
 		final Department tsdDepartment = tsdProcessPhase.getTSDProcess().getDepartment();
 		List<CurricularCourse> curricularCourseList = (List<CurricularCourse>) CollectionUtils.select(executionCourse.getAssociatedCurricularCourses(), new Predicate(){
@@ -73,14 +73,14 @@ public class CopyLastYearRealDataService {
 				if(curricularCourse.getCompetenceCourse() == null || !curricularCourse.getCompetenceCourse().hasDepartments(tsdDepartment)) {
 					return false;
 				}
-				if(!curricularCourse.hasActiveScopesInExecutionPeriod(executionPeriod)){
+				if(!curricularCourse.hasActiveScopesInExecutionPeriod(executionSemester)){
 					return false;
 				}
 				return true;
 			}
 		});
 		
-		List<TSDCurricularCourse> tsdCurricularCourseList = createTSDCurricularCoursesByCurricularCourses(curricularCourseList, executionPeriod, tsdProcessPhase);
+		List<TSDCurricularCourse> tsdCurricularCourseList = createTSDCurricularCoursesByCurricularCourses(curricularCourseList, executionSemester, tsdProcessPhase);
 				
 		if(!tsdCurricularCourseList.isEmpty()){
 			TeacherServiceDistribution rootTSD = tsdProcessPhase.getRootTSD(); 
@@ -95,11 +95,11 @@ public class CopyLastYearRealDataService {
 		return null;
 	}
 	
-	private List<TSDCurricularCourse> createTSDCurricularCoursesByCurricularCourses(List<CurricularCourse> curricularCourseList, ExecutionPeriod executionPeriod, TSDProcessPhase tsdProcessPhase) {
+	private List<TSDCurricularCourse> createTSDCurricularCoursesByCurricularCourses(List<CurricularCourse> curricularCourseList, ExecutionSemester executionSemester, TSDProcessPhase tsdProcessPhase) {
 		List<TSDCurricularCourse> tsdCurricularCourseList = new ArrayList<TSDCurricularCourse>();
 		
 		for(CurricularCourse curricularCourse : curricularCourseList) {
-			TSDCurricularCourse tsdCurricularCourse = createTSDCurricularCourseByCurricularCourse(tsdProcessPhase, curricularCourse, executionPeriod);
+			TSDCurricularCourse tsdCurricularCourse = createTSDCurricularCourseByCurricularCourse(tsdProcessPhase, curricularCourse, executionSemester);
 			
 			if(tsdCurricularCourse != null) 
 				tsdCurricularCourseList.add(tsdCurricularCourse);
@@ -108,10 +108,10 @@ public class CopyLastYearRealDataService {
 		return tsdCurricularCourseList;
 	}
 
-	private TSDCurricularCourse createTSDCurricularCourseByCurricularCourse(TSDProcessPhase tsdProcessPhase, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+	private TSDCurricularCourse createTSDCurricularCourseByCurricularCourse(TSDProcessPhase tsdProcessPhase, CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
 		TeacherServiceDistribution rootTSD = tsdProcessPhase.getRootTSD();
 		
-		TSDCurricularCourse tsdCurricularCourse = new TSDCurricularCourse(rootTSD, curricularCourse, executionPeriod);
+		TSDCurricularCourse tsdCurricularCourse = new TSDCurricularCourse(rootTSD, curricularCourse, executionSemester);
 				
 		fillTSDCourseData(tsdCurricularCourse, Boolean.FALSE);
 		

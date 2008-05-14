@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -24,7 +24,7 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
     private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
 
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
     private DomainReference<CurricularCourse> selectedOptionalCurricularCourse;
 
@@ -33,10 +33,10 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
     private IDegreeModuleToEvaluate selectedDegreeModuleToEnrol;
 
     public BolonhaStudentOptionalEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final IDegreeModuleToEvaluate degreeModuleToEnrol) {
+	    final ExecutionSemester executionSemester, final IDegreeModuleToEvaluate degreeModuleToEnrol) {
 	super();
 
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
 	setSelectedDegreeModuleToEnrol(degreeModuleToEnrol);
 	setStudentCurricularPlan(studentCurricularPlan);
 
@@ -76,13 +76,13 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 		: null;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    public ExecutionSemester getExecutionPeriod() {
+	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(
-		executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(
+		executionSemester) : null;
     }
 
     public CurricularCourse getSelectedOptionalCurricularCourse() {

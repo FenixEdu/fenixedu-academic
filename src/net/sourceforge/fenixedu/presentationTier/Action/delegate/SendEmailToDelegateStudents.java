@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.DelegateCurricularCourseStudentsGroup;
@@ -221,10 +221,10 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
 		List<DelegateCurricularCourseBean> result = new ArrayList<DelegateCurricularCourseBean>();
 
 		for (CurricularCourse curricularCourse : curricularCourses) {
-			for(ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-				if(curricularCourse.hasAnyExecutionCourseIn(executionPeriod)) {
+			for(ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+				if(curricularCourse.hasAnyExecutionCourseIn(executionSemester)) {
 					for(DegreeModuleScope scope : curricularCourse.getDegreeModuleScopes()) {
-						if(!scope.getCurricularSemester().equals(executionPeriod.getSemester())) {
+						if(!scope.getCurricularSemester().equals(executionSemester.getSemester())) {
 							continue;
 						}
 						
@@ -233,7 +233,7 @@ public class SendEmailToDelegateStudents extends SimpleMailSenderAction {
 							continue;
 						}
 						DelegateCurricularCourseBean bean = new DelegateCurricularCourseBean(curricularCourse, executionYear,
-								scope.getCurricularYear(), executionPeriod);
+								scope.getCurricularYear(), executionSemester);
 						bean.calculateEnrolledStudents();
 						result.add(bean);
 					}

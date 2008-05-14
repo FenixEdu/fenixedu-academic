@@ -16,8 +16,8 @@ public class ShiftProfessorship extends ShiftProfessorship_Base implements ICred
         super.deleteDomainObject();
     }
 
-    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
-        return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
+    public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
+        return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionSemester);
     }
 
 }

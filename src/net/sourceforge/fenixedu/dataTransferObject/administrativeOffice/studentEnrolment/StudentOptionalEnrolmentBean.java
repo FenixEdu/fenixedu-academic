@@ -5,7 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 public class StudentOptionalEnrolmentBean implements Serializable{
 
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
     private DomainReference<CurriculumGroup> curriculumGroup;
     private DomainReference<Context> context;
     private DegreeType degreeType;
@@ -26,9 +26,9 @@ public class StudentOptionalEnrolmentBean implements Serializable{
     }
     
     public StudentOptionalEnrolmentBean(StudentCurricularPlan studentCurricularPlan, 
-	    ExecutionPeriod executionPeriod, CurriculumGroup curriculumGroup, Context context) {
+	    ExecutionSemester executionSemester, CurriculumGroup curriculumGroup, Context context) {
 	setStudentCurricularPlan(studentCurricularPlan);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
 	setCurriculumGroup(curriculumGroup);
 	setContext(context);
     }
@@ -41,12 +41,12 @@ public class StudentOptionalEnrolmentBean implements Serializable{
         this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(studentCurricularPlan) : null; 
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-    	return (this.executionPeriod == null) ? null : this.executionPeriod.getObject();
+    public ExecutionSemester getExecutionPeriod() {
+    	return (this.executionSemester == null) ? null : this.executionSemester.getObject();
     }
     
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-    	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+    	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
     
     public CurriculumGroup getCurriculumGroup() {

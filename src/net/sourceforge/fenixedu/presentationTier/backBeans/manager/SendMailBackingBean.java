@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -191,8 +191,8 @@ public class SendMailBackingBean extends FenixBackingBean {
 	    final Collection<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
 	    for (final ExecutionYear executionYear : executionYears) {
 		if (executionYear.isCurrent()) {
-		    for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-			for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
+		    for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+			for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
 			    for (final Professorship professorship : executionCourse.getProfessorships()) {
 				if (professorship.isResponsibleFor()) {
 				    final Teacher teacher = professorship.getTeacher();

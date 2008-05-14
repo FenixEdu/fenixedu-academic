@@ -267,14 +267,14 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return firstExecutionDegree.equals(this);
     }
 
-    public Set<Shift> findAvailableShifts(final CurricularYear curricularYear, final ExecutionPeriod executionPeriod) {
+    public Set<Shift> findAvailableShifts(final CurricularYear curricularYear, final ExecutionSemester executionSemester) {
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	final Set<Shift> shifts = new HashSet<Shift>();
 	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
 	    if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
-		    executionPeriod)) {
+		    executionSemester)) {
 		for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-		    if (executionCourse.getExecutionPeriod() == executionPeriod) {
+		    if (executionCourse.getExecutionPeriod() == executionSemester) {
 			shifts.addAll(executionCourse.getAssociatedShifts());
 		    }
 		}
@@ -283,30 +283,30 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return shifts;
     }
 
-    public Set<SchoolClass> findSchoolClassesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public Set<SchoolClass> findSchoolClassesByExecutionPeriod(final ExecutionSemester executionSemester) {
 	final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
 	for (final SchoolClass schoolClass : getSchoolClasses()) {
-	    if (schoolClass.getExecutionPeriod() == executionPeriod) {
+	    if (schoolClass.getExecutionPeriod() == executionSemester) {
 		schoolClasses.add(schoolClass);
 	    }
 	}
 	return schoolClasses;
     }
 
-    public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(final ExecutionPeriod executionPeriod,
+    public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(final ExecutionSemester executionSemester,
 	    final Integer curricularYear) {
 	final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
 	for (final SchoolClass schoolClass : getSchoolClasses()) {
-	    if (schoolClass.getExecutionPeriod() == executionPeriod && schoolClass.getAnoCurricular().equals(curricularYear)) {
+	    if (schoolClass.getExecutionPeriod() == executionSemester && schoolClass.getAnoCurricular().equals(curricularYear)) {
 		schoolClasses.add(schoolClass);
 	    }
 	}
 	return schoolClasses;
     }
 
-    public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionPeriod executionPeriod, final String name) {
+    public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionSemester executionSemester, final String name) {
 	for (final SchoolClass schoolClass : getSchoolClasses()) {
-	    if (schoolClass.getExecutionPeriod() == executionPeriod && schoolClass.getNome().equalsIgnoreCase(name)) {
+	    if (schoolClass.getExecutionPeriod() == executionSemester && schoolClass.getNome().equalsIgnoreCase(name)) {
 		return schoolClass;
 	    }
 	}
@@ -623,27 +623,27 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return null;
     }
 
-    public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
-	return isSpecialAuthorization(markSheetType, executionPeriod, evaluationDate)
-		|| checkOccupationPeriod(evaluationDate, executionPeriod, markSheetType);
+    public boolean isEvaluationDateInExamPeriod(Date evaluationDate, ExecutionSemester executionSemester, MarkSheetType markSheetType) {
+	return isSpecialAuthorization(markSheetType, executionSemester, evaluationDate)
+		|| checkOccupationPeriod(evaluationDate, executionSemester, markSheetType);
     }
 
-    private boolean isSpecialAuthorization(MarkSheetType markSheetType, ExecutionPeriod executionPeriod, Date evaluationDate) {
+    private boolean isSpecialAuthorization(MarkSheetType markSheetType, ExecutionSemester executionSemester, Date evaluationDate) {
 	return (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION);
     }
 
-    private boolean checkOccupationPeriod(Date evaluationDate, ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
-	OccupationPeriod occupationPeriod = getOccupationPeriodFor(executionPeriod, markSheetType);
+    private boolean checkOccupationPeriod(Date evaluationDate, ExecutionSemester executionSemester, MarkSheetType markSheetType) {
+	OccupationPeriod occupationPeriod = getOccupationPeriodFor(executionSemester, markSheetType);
 	return (evaluationDate != null && occupationPeriod != null && occupationPeriod
 		.nestedOccupationPeriodsContainsDay(YearMonthDay.fromDateFields(evaluationDate)));
     }
 
-    public OccupationPeriod getOccupationPeriodFor(ExecutionPeriod executionPeriod, MarkSheetType markSheetType) {
+    public OccupationPeriod getOccupationPeriodFor(ExecutionSemester executionSemester, MarkSheetType markSheetType) {
 	OccupationPeriod occupationPeriod = null;
 	switch (markSheetType) {
 	case NORMAL:
 	case IMPROVEMENT:
-	    if (executionPeriod.getSemester().equals(Integer.valueOf(1))) {
+	    if (executionSemester.getSemester().equals(Integer.valueOf(1))) {
 		occupationPeriod = this.getPeriodExamsFirstSemester();
 	    } else {
 		occupationPeriod = this.getPeriodExamsSecondSemester();

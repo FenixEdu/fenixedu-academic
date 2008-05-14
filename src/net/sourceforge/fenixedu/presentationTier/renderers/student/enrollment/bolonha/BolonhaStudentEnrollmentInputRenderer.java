@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.Bo
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.StudentCurriculumEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.StudentCurriculumGroupBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
@@ -258,11 +258,11 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	private void generateGroup(final HtmlBlockContainer blockContainer, final StudentCurricularPlan studentCurricularPlan,
-		final StudentCurriculumGroupBean studentCurriculumGroupBean, final ExecutionPeriod executionPeriod,
+		final StudentCurriculumGroupBean studentCurriculumGroupBean, final ExecutionSemester executionSemester,
 		final int depth) {
 
 	    final HtmlTable groupTable = createGroupTable(blockContainer, depth);
-	    addGroupHeaderRow(groupTable, studentCurriculumGroupBean, executionPeriod);
+	    addGroupHeaderRow(groupTable, studentCurriculumGroupBean, executionSemester);
 
 	    // TODO: Uncomment when isConcluded is implemented using credits
 	    // if (!hasManagerOrAcademicOfficeRole() &&
@@ -277,7 +277,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    generateEnrolments(studentCurriculumGroupBean, coursesTable);
 	    generateCurricularCoursesToEnrol(coursesTable, studentCurriculumGroupBean);
 
-	    generateGroups(blockContainer, studentCurriculumGroupBean, studentCurricularPlan, executionPeriod, depth);
+	    generateGroups(blockContainer, studentCurriculumGroupBean, studentCurricularPlan, executionSemester, depth);
 
 	    if (studentCurriculumGroupBean.isRoot()) {
 		generateCycleCourseGroupsToEnrol(blockContainer, studentCurricularPlan, depth);
@@ -295,7 +295,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	private void addGroupHeaderRow(final HtmlTable groupTable, final StudentCurriculumGroupBean studentCurriculumGroupBean,
-		final ExecutionPeriod executionPeriod) {
+		final ExecutionSemester executionSemester) {
 	    final HtmlTableRow groupHeaderRow = groupTable.createRow();
 	    groupHeaderRow.setClasses(getGroupRowClasses());
 
@@ -304,7 +304,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		titleCell.setBody(createDegreeCurricularPlanLink(studentCurriculumGroupBean));
 	    } else {
 		titleCell.setBody(new HtmlText(buildCurriculumGroupLabel(studentCurriculumGroupBean.getCurriculumModule(),
-			executionPeriod), false));
+			executionSemester), false));
 	    }
 
 	    final HtmlTableCell checkBoxCell = groupHeaderRow.createCell();
@@ -335,7 +335,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	}
 
-	private String buildCurriculumGroupLabel(final CurriculumGroup curriculumGroup, final ExecutionPeriod executionPeriod) {
+	private String buildCurriculumGroupLabel(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
 	    if (curriculumGroup.isNoCourseGroupCurriculumGroup()) {
 		return curriculumGroup.getName().getContent();
 	    }
@@ -343,7 +343,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    final StringBuilder result = new StringBuilder(curriculumGroup.getName().getContent());
 
 	    final CreditsLimit creditsLimit = (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(
-		    CurricularRuleType.CREDITS_LIMIT, executionPeriod);
+		    CurricularRuleType.CREDITS_LIMIT, executionSemester);
 
 	    if (creditsLimit != null) {
 		result.append(" <span title=\"");
@@ -356,7 +356,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    result.append(" <span title=\"");
 	    result.append(applicationResources.getString("label.curriculum.credits.legend.maxCredits"));
 	    result.append(" \"> c(");
-	    result.append(curriculumGroup.getCreditsConcluded(executionPeriod.getExecutionYear()));
+	    result.append(curriculumGroup.getCreditsConcluded(executionSemester.getExecutionYear()));
 	    result.append(")</span>");
 
 	    if (creditsLimit != null) {
@@ -539,16 +539,16 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	private void generateGroups(HtmlBlockContainer blockContainer, StudentCurriculumGroupBean studentCurriculumGroupBean,
-		StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod, int depth) {
+		StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester, int depth) {
 	    final List<IDegreeModuleToEvaluate> courseGroupsToEnrol = studentCurriculumGroupBean
 		    .getCourseGroupsToEnrolSortedByContext();
 	    final List<StudentCurriculumGroupBean> curriculumGroups = studentCurriculumGroupBean
-		    .getEnrolledCurriculumGroupsSortedByOrder(executionPeriod);
+		    .getEnrolledCurriculumGroupsSortedByOrder(executionSemester);
 
 	    while (!courseGroupsToEnrol.isEmpty() || !curriculumGroups.isEmpty()) {
 
 		if (!curriculumGroups.isEmpty() && courseGroupsToEnrol.isEmpty()) {
-		    generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionPeriod, depth
+		    generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionSemester, depth
 			    + getWidthDecreasePerLevel());
 		    curriculumGroups.remove(0);
 		} else if (curriculumGroups.isEmpty() && !courseGroupsToEnrol.isEmpty()) {
@@ -558,8 +558,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		} else {
 		    Context context = courseGroupsToEnrol.get(0).getContext();
 		    CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumGroups.get(0).getCurriculumModule();
-		    if (curriculumGroup.getChildOrder(executionPeriod) <= context.getChildOrder()) {
-			generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionPeriod, depth
+		    if (curriculumGroup.getChildOrder(executionSemester) <= context.getChildOrder()) {
+			generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionSemester, depth
 				+ getWidthDecreasePerLevel());
 			curriculumGroups.remove(0);
 		    } else {

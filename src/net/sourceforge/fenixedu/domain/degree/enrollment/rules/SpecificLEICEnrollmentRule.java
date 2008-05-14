@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
@@ -50,9 +50,9 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
     protected List specializationAndSecundaryAreaCurricularCoursesToCountForCredits = null;
 
     public SpecificLEICEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 	this.studentCurricularPlan = studentCurricularPlan;
-	this.executionPeriod = executionPeriod;
+	this.executionSemester = executionSemester;
     }
 
     protected Integer getOptionalCourses() {
@@ -109,7 +109,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	return new Integer(credits);
     }
 
-    protected List filter(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod,
+    protected List filter(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
 	    List curricularCoursesToBeEnrolledIn,
 	    final List selectedCurricularCoursesFromSpecializationAndSecundaryAreas) {
 
@@ -138,13 +138,13 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	List specializationAreaCurricularCourses = getSpecializationAreaCurricularCourses(studentCurricularPlan);
 	List secundaryAreaCurricularCourses = getSecundaryAreaCurricularCourses(studentCurricularPlan);
 
-	if (thereIsAnyTemporaryCurricularCourse(studentCurricularPlan, executionPeriod,
+	if (thereIsAnyTemporaryCurricularCourse(studentCurricularPlan, executionSemester,
 		specializationAreaCurricularCourses)) {
 	    markCurricularCourses(curricularCoursesFromOtherAreasToMantain,
 		    specializationAreaCurricularCourses);
 	}
 
-	if (thereIsAnyTemporaryCurricularCourse(studentCurricularPlan, executionPeriod,
+	if (thereIsAnyTemporaryCurricularCourse(studentCurricularPlan, executionSemester,
 		secundaryAreaCurricularCourses)) {
 	    markCurricularCourses(curricularCoursesFromOtherAreasToMantain,
 		    secundaryAreaCurricularCourses);
@@ -161,7 +161,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	    }*/
 	} else {
 	    IEnrollmentRule enrollmentRule = new PreviousYearsCurricularCourseEnrollmentRule(
-		    studentCurricularPlan, executionPeriod);
+		    studentCurricularPlan, executionSemester);
 	    try {
 		result = enrollmentRule.apply(result);
 	    } catch (EnrolmentRuleDomainException e) {
@@ -289,7 +289,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	    curricularCoursesToEnroll = studentCurricularPlan
 		    .initAcumulatedEnrollments(curricularCoursesToEnroll);
 	}
-	studentCurricularPlan.initEctsCreditsToEnrol(curricularCoursesToEnroll, executionPeriod);
+	studentCurricularPlan.initEctsCreditsToEnrol(curricularCoursesToEnroll, executionSemester);
 	
 	return curricularCoursesToEnroll;
     }
@@ -321,7 +321,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	    course2Enroll.setCurricularCourse(curricularCourse);
 	    course2Enroll.setOptionalCurricularCourse(Boolean.TRUE);
 	    course2Enroll.setCurricularYear(curricularCourse.getCurricularYearByBranchAndSemester(null,
-		    executionPeriod.getSemester()));
+		    executionSemester.getSemester()));
 	    if (temporary) {
 		course2Enroll.setEnrollmentType(CurricularCourseEnrollmentType.TEMPORARY);
 	    } else {
@@ -356,7 +356,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	for (CurricularCourse course : allCurricularCourses) {
 	    if (!studentCurricularPlan.isCurricularCourseApproved(course)
 		    && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course,
-			    executionPeriod)) {
+			    executionSemester)) {
 		if (isAnyScopeActive(course.getScopes())) {
 		    areaCourses.add(course);
 		}
@@ -374,7 +374,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	for (CurricularCourseScope curricularCourseScope : scopes) {
 	    if (curricularCourseScope.isActive()
 		    && curricularCourseScope.getCurricularSemester().getSemester().equals(
-			    executionPeriod.getSemester())) {
+			    executionSemester.getSemester())) {
 		return true;
 	    }
 	}
@@ -399,7 +399,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 	for (CurricularCourse course : allCurricularCourses) {
 	    if (!isApproved(course)
 		    && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course,
-			    executionPeriod)) {
+			    executionSemester)) {
 		if (!studentCurricularPlan.isCurricularCourseApproved(course)
 			&& isAnyScopeActive(course.getScopes())) {
 		    areaCourses.add(course);
@@ -431,7 +431,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
 		    && years.contains(curricularCourseScope.getCurricularSemester().getCurricularYear()
 			    .getYear())
 		    && curricularCourseScope.getCurricularSemester().getSemester().equals(
-			    executionPeriod.getSemester())) {
+			    executionSemester.getSemester())) {
 		return true;
 	    }
 	}

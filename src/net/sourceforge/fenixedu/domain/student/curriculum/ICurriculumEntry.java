@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.student.curriculum;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -20,8 +20,8 @@ public interface ICurriculumEntry {
 
     static final Comparator<ICurriculumEntry> COMPARATOR_BY_EXECUTION_PERIOD = new Comparator<ICurriculumEntry>() {
         public int compare(ICurriculumEntry o1, ICurriculumEntry o2) {
-    	final ExecutionPeriod e1 = o1.getExecutionPeriod();
-    	final ExecutionPeriod e2 = o2.getExecutionPeriod();
+    	final ExecutionSemester e1 = o1.getExecutionPeriod();
+    	final ExecutionSemester e2 = o2.getExecutionPeriod();
     	
     	if (e1 == null && e2 == null) {
     	    return 0;
@@ -112,7 +112,7 @@ public interface ICurriculumEntry {
 
     BigDecimal getEctsCreditsForCurriculum();
 
-    ExecutionPeriod getExecutionPeriod();
+    ExecutionSemester getExecutionPeriod();
 
     boolean hasExecutionPeriod();
 

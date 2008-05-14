@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -289,15 +289,15 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 	return getContextsWithCurricularCourses(null);
     }
     
-    public List<Context> getContextsWithCurricularCourses(final ExecutionPeriod executionPeriod) {
-	return getChildContexts(CurricularCourse.class, executionPeriod);
+    public List<Context> getContextsWithCurricularCourses(final ExecutionSemester executionSemester) {
+	return getChildContexts(CurricularCourse.class, executionSemester);
     }
 
-    public List<Context> getChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
+    public List<Context> getChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionSemester executionSemester) {
         final List<Context> result = new ArrayList<Context>();
         for (final Context context : super.getContextsSet()) {
             if ((clazz == null || clazz.isAssignableFrom(context.getChildDegreeModule().getClass())) 
-        	    && (executionPeriod == null || context.isValid(executionPeriod))) {
+        	    && (executionSemester == null || context.isValid(executionSemester))) {
         	result.add(context);
             }
         }

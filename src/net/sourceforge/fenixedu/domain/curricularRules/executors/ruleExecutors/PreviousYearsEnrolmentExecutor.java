@@ -12,7 +12,7 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
@@ -326,18 +326,18 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
     }
 
-    private int getMinModules(final CourseGroup courseGroup, final ExecutionPeriod executionPeriod) {
+    private int getMinModules(final CourseGroup courseGroup, final ExecutionSemester executionSemester) {
 	final DegreeModulesSelectionLimit degreeModulesSelectionLimit = courseGroup
-		.getDegreeModulesSelectionLimitRule(executionPeriod);
+		.getDegreeModulesSelectionLimitRule(executionSemester);
 	if (degreeModulesSelectionLimit != null) {
 	    return degreeModulesSelectionLimit.getMinimumLimit();
 	}
 
-	final CreditsLimit creditsLimit = courseGroup.getCreditsLimitRule(executionPeriod);
+	final CreditsLimit creditsLimit = courseGroup.getCreditsLimitRule(executionSemester);
 	if (creditsLimit != null) {
 	    final SortedSet<DegreeModule> sortedChilds = new TreeSet<DegreeModule>(new DegreeModule.ComparatorByMinEcts(
-		    executionPeriod));
-	    sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionPeriod));
+		    executionSemester));
+	    sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionSemester));
 	    int counter = 0;
 	    double total = 0d;
 	    for (final DegreeModule degreeModule : sortedChilds) {
@@ -352,21 +352,21 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	    return counter;
 	}
 
-	return courseGroup.getChildDegreeModulesValidOn(executionPeriod).size();
+	return courseGroup.getChildDegreeModulesValidOn(executionSemester).size();
     }
 
-    private int getMaxModules(final CourseGroup courseGroup, final ExecutionPeriod executionPeriod) {
+    private int getMaxModules(final CourseGroup courseGroup, final ExecutionSemester executionSemester) {
 	final DegreeModulesSelectionLimit degreeModulesSelectionLimit = courseGroup
-		.getDegreeModulesSelectionLimitRule(executionPeriod);
+		.getDegreeModulesSelectionLimitRule(executionSemester);
 	if (degreeModulesSelectionLimit != null) {
 	    return degreeModulesSelectionLimit.getMaximumLimit();
 	}
 
-	final CreditsLimit creditsLimit = courseGroup.getCreditsLimitRule(executionPeriod);
+	final CreditsLimit creditsLimit = courseGroup.getCreditsLimitRule(executionSemester);
 	if (creditsLimit != null) {
 	    final SortedSet<DegreeModule> sortedChilds = new TreeSet<DegreeModule>(new DegreeModule.ComparatorByMinEcts(
-		    executionPeriod));
-	    sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionPeriod));
+		    executionSemester));
+	    sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionSemester));
 	    int counter = 0;
 	    double total = 0d;
 	    for (final DegreeModule degreeModule : sortedChilds) {
@@ -382,7 +382,7 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
 	}
 
-	return courseGroup.getChildDegreeModulesValidOn(executionPeriod).size();
+	return courseGroup.getChildDegreeModulesValidOn(executionSemester).size();
     }
 
     private void collectCurricularCoursesToEnrol(final Map<Integer, Set<CurricularCourse>> result, final CourseGroup courseGroup,
@@ -587,12 +587,12 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 
     private SortedSet<Context> getChildCurricularCoursesContextsToEvaluate(final CourseGroup courseGroup,
 	    final EnrolmentContext enrolmentContext) {
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
 	final SortedSet<Context> result = new TreeSet<Context>(Context.COMPARATOR_BY_CURRICULAR_YEAR);
 
-	final int minModules = getMinModules(courseGroup, executionPeriod);
-	final int maxModules = getMaxModules(courseGroup, executionPeriod);
+	final int minModules = getMinModules(courseGroup, executionSemester);
+	final int maxModules = getMaxModules(courseGroup, executionSemester);
 	final int childDegreeModulesCount = courseGroup.getActiveChildContextsWithMax(enrolmentContext.getExecutionPeriod())
 		.size();
 
@@ -652,9 +652,9 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
     }
 
     private void addValidCurricularCourses(final Map<Integer, Set<CurricularCourse>> result,
-	    final Set<Context> curricularCoursesContexts, final CourseGroup courseGroup, final ExecutionPeriod executionPeriod) {
+	    final Set<Context> curricularCoursesContexts, final CourseGroup courseGroup, final ExecutionSemester executionSemester) {
 	for (final Context context : curricularCoursesContexts) {
-	    if (context.isValid(executionPeriod)) {
+	    if (context.isValid(executionSemester)) {
 		addCurricularCourse(result, context.getCurricularYear(), (CurricularCourse) context.getChildDegreeModule());
 	    }
 	}

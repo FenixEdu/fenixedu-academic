@@ -10,7 +10,7 @@
 	<bean:message key="link.objectives"/>
 </h2>
 
-<bean:define id="executionPeriod" name="executionCourse" property="executionPeriod" type="net.sourceforge.fenixedu.domain.ExecutionPeriod"/>
+<bean:define id="executionPeriod" name="executionCourse" property="executionPeriod" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 
 <logic:iterate id="entry" name="executionCourse" property="curricularCoursesIndexedByCompetenceCourse">
 	<bean:define id="competenceCourse" name="entry" property="key"/>

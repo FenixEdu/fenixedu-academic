@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -148,8 +148,8 @@ public class SeperateExecutionCourse extends Service {
     }
 
     private String getUniqueExecutionCourseCode(final String executionCourseName,
-            final ExecutionPeriod executionPeriod, final String originalExecutionCourseCode) {
-	Set<String> executionCourseCodes = getExecutionCourseCodes(executionPeriod);
+            final ExecutionSemester executionSemester, final String originalExecutionCourseCode) {
+	Set<String> executionCourseCodes = getExecutionCourseCodes(executionSemester);
 	return CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.getUniqueSigla(executionCourseCodes, originalExecutionCourseCode);
 //
 //        StringBuilder executionCourseCode = new StringBuilder(originalExecutionCourseCode);
@@ -165,8 +165,8 @@ public class SeperateExecutionCourse extends Service {
 //        return destinationExecutionCourseCode;
     }
 
-    private Set<String> getExecutionCourseCodes(ExecutionPeriod executionPeriod) {
-        List<ExecutionCourse> executionCourses = executionPeriod.getAssociatedExecutionCourses();
+    private Set<String> getExecutionCourseCodes(ExecutionSemester executionSemester) {
+        List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
         return new HashSet<String>(CollectionUtils.collect(executionCourses, new Transformer() {
             public Object transform(Object arg0) {
                 ExecutionCourse executionCourse = (ExecutionCourse) arg0;

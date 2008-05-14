@@ -4,7 +4,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
@@ -12,12 +12,12 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class InfoExecutionPeriod extends InfoObject {
 
-    private DomainReference<ExecutionPeriod> executionPeriodDomainReference;
+    private DomainReference<ExecutionSemester> executionPeriodDomainReference;
 
     private String qualifiedName;
 
-    public InfoExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	executionPeriodDomainReference = new DomainReference<ExecutionPeriod>(executionPeriod);
+    public InfoExecutionPeriod(final ExecutionSemester executionSemester) {
+	executionPeriodDomainReference = new DomainReference<ExecutionSemester>(executionSemester);
     }
 
 
@@ -93,12 +93,12 @@ public class InfoExecutionPeriod extends InfoObject {
      }
 
      public InfoExecutionPeriod getPreviousInfoExecutionPeriod() {
-	 final ExecutionPeriod previousInfoExecutionPeriod = getExecutionPeriod().getPreviousExecutionPeriod();
+	 final ExecutionSemester previousInfoExecutionPeriod = getExecutionPeriod().getPreviousExecutionPeriod();
 	 return previousInfoExecutionPeriod == null ? null : new InfoExecutionPeriod(previousInfoExecutionPeriod);
      }
 
-     public static InfoExecutionPeriod newInfoFromDomain(ExecutionPeriod executionPeriod) {
-	 return executionPeriod == null ? null : new InfoExecutionPeriod(executionPeriod);
+     public static InfoExecutionPeriod newInfoFromDomain(ExecutionSemester executionSemester) {
+	 return executionSemester == null ? null : new InfoExecutionPeriod(executionSemester);
      }
 
      public String getQualifiedName() {
@@ -133,12 +133,12 @@ public class InfoExecutionPeriod extends InfoObject {
 	 throw new Error("Method should not be called!");
      }
 
-     public ExecutionPeriod getExecutionPeriod() {
+     public ExecutionSemester getExecutionPeriod() {
 	 return executionPeriodDomainReference == null ? null : executionPeriodDomainReference.getObject();
      }
 
-     public void setExecutionPeriod(ExecutionPeriod executionPeriod){
-	 executionPeriodDomainReference = new DomainReference<ExecutionPeriod>(executionPeriod);
+     public void setExecutionPeriod(ExecutionSemester executionSemester){
+	 executionPeriodDomainReference = new DomainReference<ExecutionSemester>(executionSemester);
      }
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -112,8 +112,8 @@ abstract public class CurricularRuleExecutor {
     }
 
     protected boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
-	    final ExecutionPeriod executionPeriod) {
-	return enrolmentContext.getStudentCurricularPlan().isApproved(curricularCourse, executionPeriod);
+	    final ExecutionSemester executionSemester) {
+	return enrolmentContext.getStudentCurricularPlan().isApproved(curricularCourse, executionSemester);
     }
 
     protected boolean isEnroled(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
@@ -122,8 +122,8 @@ abstract public class CurricularRuleExecutor {
     }
 
     private boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse) {
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-	return enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionPeriod);
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+	return enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionSemester);
     }
 
     private boolean isEnroled(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup) {
@@ -131,14 +131,14 @@ abstract public class CurricularRuleExecutor {
     }
 
     protected boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
-	    final ExecutionPeriod executionPeriod) {
-	return enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionPeriod);
+	    final ExecutionSemester executionSemester) {
+	return enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionSemester);
     }
 
     protected boolean hasEnrolmentWithEnroledState(final EnrolmentContext enrolmentContext,
-	    final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	    final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
 	return enrolmentContext.getStudentCurricularPlan().getRoot().hasEnrolmentWithEnroledState(curricularCourse,
-		executionPeriod);
+		executionSemester);
     }
 
     protected boolean isEnrolling(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {

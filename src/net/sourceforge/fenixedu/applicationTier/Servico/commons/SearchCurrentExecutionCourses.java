@@ -10,7 +10,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -24,7 +24,7 @@ public class SearchCurrentExecutionCourses extends Service implements AutoComple
 	List<DomainObject> result = new ArrayList<DomainObject>();
 
 	String slotName = arguments.get("slot");
-	Collection<ExecutionCourse> objects = ExecutionPeriod.readActualExecutionPeriod()
+	Collection<ExecutionCourse> objects = ExecutionSemester.readActualExecutionPeriod()
 		.getAssociatedExecutionCourses();
 
 	if (value == null) {

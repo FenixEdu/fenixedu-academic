@@ -12,7 +12,7 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -82,7 +82,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     }
     
     @Override
-    protected ExecutionPeriod getMinimumExecutionPeriod() {
+    protected ExecutionSemester getMinimumExecutionPeriod() {
 	CourseGroup courseGroup = getCourseGroup(getParentCourseGroupID());;
 	if (courseGroup == null) {
 	    final Context context = getContext(getContextID());

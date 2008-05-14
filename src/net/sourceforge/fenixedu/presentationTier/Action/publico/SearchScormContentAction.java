@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
@@ -128,9 +128,9 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
 		ExecutionYear executionYear =bean.getExecutionYear(); 
 		if(executionYear!=null) {
 			searchPath.addNode(new VirtualPathNode("EY" + executionYear.getIdInternal(), executionYear.getYear()));
-			ExecutionPeriod executionPeriod = bean.getExecutionPeriod();
-			if(executionPeriod!=null) {
-				searchPath.addNode(new VirtualPathNode("EP" + executionPeriod.getIdInternal(), executionPeriod
+			ExecutionSemester executionSemester = bean.getExecutionPeriod();
+			if(executionSemester!=null) {
+				searchPath.addNode(new VirtualPathNode("EP" + executionSemester.getIdInternal(), executionSemester
 						.getName()));
 			}
 		}
@@ -160,7 +160,7 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
 			bean.setExecutionYear((ExecutionYear)RootDomainObject.readDomainObjectByOID(ExecutionYear.class, Integer.valueOf(executionYearId)));
 		}
 		if(executionPeriodId!=null && executionPeriodId.length()>0) {
-			bean.setExecutionPeriod((ExecutionPeriod)RootDomainObject.readDomainObjectByOID(ExecutionPeriod.class, Integer.valueOf(executionPeriodId)));
+			bean.setExecutionPeriod((ExecutionSemester)RootDomainObject.readDomainObjectByOID(ExecutionSemester.class, Integer.valueOf(executionPeriodId)));
 		}
 		
 		return bean;

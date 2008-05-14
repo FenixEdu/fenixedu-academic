@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.dto.SchoolClassDTO;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -23,8 +23,8 @@ import org.apache.commons.collections.Predicate;
 public class ReadSchoolClassByNameInCurrentExecutionPeriod extends Service {
 
 	public SchoolClassDTO run(final String schoolClassName) throws FenixServiceException, ExcepcaoPersistencia {
-		final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-		SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(executionPeriod
+		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+		SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(executionSemester
 				.getSchoolClasses(), new Predicate() {
 
 			public boolean evaluate(Object arg0) {
@@ -37,7 +37,7 @@ public class ReadSchoolClassByNameInCurrentExecutionPeriod extends Service {
 					.getDegreeCurricularPlan();
 			Degree degree = degreeCurricularPlan.getDegree();
 			SchoolClassDTO schoolClassDTO = new SchoolClassDTO();
-			schoolClassDTO.setExecutionPeriodId(executionPeriod.getIdInternal());
+			schoolClassDTO.setExecutionPeriodId(executionSemester.getIdInternal());
 			schoolClassDTO.setSchoolClassId(schoolClass.getIdInternal());
 			schoolClassDTO.setSchoolClassName(schoolClass.getNome());
 			schoolClassDTO.setDegreeCurricularPlanId(degreeCurricularPlan.getIdInternal());

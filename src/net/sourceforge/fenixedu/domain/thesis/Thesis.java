@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
@@ -856,7 +856,7 @@ public class Thesis extends Thesis_Base {
 
     protected MarkSheet createMarkSheet() {
 	CurricularCourse curricularCourse = getEnrolment().getCurricularCourse();
-	ExecutionPeriod executionPeriod = getEnrolment().getExecutionPeriod();
+	ExecutionSemester executionSemester = getEnrolment().getExecutionPeriod();
 	Teacher responsible = getExecutionCourseTeacher();
 	Date evaluationDate = getDiscussed().toDate();
 	MarkSheetType type = MarkSheetType.SPECIAL_AUTHORIZATION;
@@ -869,7 +869,7 @@ public class Thesis extends Thesis_Base {
 
 	List<MarkSheetEnrolmentEvaluationBean> evaluations = getStudentEvalutionBean();
 
-	return curricularCourse.createNormalMarkSheet(executionPeriod, responsible, evaluationDate, type, true, evaluations, employee);
+	return curricularCourse.createNormalMarkSheet(executionSemester, responsible, evaluationDate, type, true, evaluations, employee);
     }
 
     private List<MarkSheetEnrolmentEvaluationBean> getStudentEvalutionBean() {
@@ -1481,11 +1481,11 @@ public class Thesis extends Thesis_Base {
     protected boolean hasFutureEnrolment() {
 	final Enrolment enrolment = getEnrolment();
 	if (enrolment != null) {
-	    final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
+	    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
 	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
 	    final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
 	    for (final Enrolment otherEnrolment : studentCurricularPlan.getEnrolments(curricularCourse)) {
-		if (otherEnrolment.getExecutionPeriod().isAfter(executionPeriod)) {
+		if (otherEnrolment.getExecutionPeriod().isAfter(executionSemester)) {
 		    return true;
 		}
 	    }

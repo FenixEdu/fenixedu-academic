@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -71,13 +71,13 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
 
     // Read all curricular course scope of this year and curricular year
     protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
-	    final ExecutionPeriod executionPeriod, final ExecutionDegree executionDegree,
+	    final ExecutionSemester executionSemester, final ExecutionDegree executionDegree,
 	    final Integer curricularYear) {
 	final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
 
-	if (executionPeriod != null) {
+	if (executionSemester != null) {
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	    final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	    final Set<CurricularCourseScope> curricularCourseScopes = degreeCurricularPlan
 		    .findCurricularCourseScopesIntersectingPeriod(executionYear.getBeginDate(),
 			    executionYear.getEndDate());

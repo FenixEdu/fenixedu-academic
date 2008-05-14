@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.commons.student.StudentNumberBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -89,7 +89,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	((DynaActionForm) form).set("scpId", getStudentCurricularPlan(request).getIdInternal());
-	request.setAttribute("infoExecutionPeriod", new InfoExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod()));
+	request.setAttribute("infoExecutionPeriod", new InfoExecutionPeriod(ExecutionSemester.readActualExecutionPeriod()));
 	return mapping.findForward("showExecutionPeriodToEnrol");
     }
 

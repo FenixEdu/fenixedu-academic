@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -18,30 +18,34 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCoursesByDegreeAndExecutionPeriod extends Service {
 
-	public Object run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod)
-			throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod)
+	    throws FenixServiceException, ExcepcaoPersistencia {
 
-		List infoExecutionCourseList = new ArrayList();
+	List infoExecutionCourseList = new ArrayList();
 
-		List executionCourseList = new ArrayList();
-		DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree.getInfoDegreeCurricularPlan().getName(), infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
-		if(degreeCurricularPlan != null) {
-			ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
-			List temp = null;
-			for (int i = 1; i < 6; i++) {
-				temp = degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionPeriod, i, infoExecutionPeriod.getSemester());
-				executionCourseList.addAll(temp);
-			}
-		}
-		
-		for (int i = 0; i < executionCourseList.size(); i++) {
-			ExecutionCourse aux = (ExecutionCourse) executionCourseList.get(i);
-			InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(aux);
-			infoExecutionCourseList.add(infoExecutionCourse);
-		}
-
-		return infoExecutionCourseList;
-
+	List executionCourseList = new ArrayList();
+	DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree
+		.getInfoDegreeCurricularPlan().getName(), infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+		.getSigla());
+	if (degreeCurricularPlan != null) {
+	    ExecutionSemester executionSemester = rootDomainObject
+		    .readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+	    List temp = null;
+	    for (int i = 1; i < 6; i++) {
+		temp = degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester, i,
+			infoExecutionPeriod.getSemester());
+		executionCourseList.addAll(temp);
+	    }
 	}
+
+	for (int i = 0; i < executionCourseList.size(); i++) {
+	    ExecutionCourse aux = (ExecutionCourse) executionCourseList.get(i);
+	    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(aux);
+	    infoExecutionCourseList.add(infoExecutionCourse);
+	}
+
+	return infoExecutionCourseList;
+
+    }
 
 }

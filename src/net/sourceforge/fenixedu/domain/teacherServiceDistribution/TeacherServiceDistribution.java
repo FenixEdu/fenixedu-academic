@@ -8,7 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -112,18 +112,18 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 		return getTSDCompetenceAndVirtualCoursesByExecutionPeriod(getTSDProcessPhase().getTSDProcess().getExecutionPeriods());	
 	}
 	
-	public List<TSDCourse> getTSDCompetenceAndVirtualCoursesByExecutionPeriod(ExecutionPeriod period) {
-		List<ExecutionPeriod> periods = new ArrayList<ExecutionPeriod>();
+	public List<TSDCourse> getTSDCompetenceAndVirtualCoursesByExecutionPeriod(ExecutionSemester period) {
+		List<ExecutionSemester> periods = new ArrayList<ExecutionSemester>();
 		periods.add(period);
 		
 		return getTSDCompetenceAndVirtualCoursesByExecutionPeriod(periods);
 	}
 	
-	private List<TSDCourse> getTSDCompetenceAndVirtualCoursesByExecutionPeriod(List<ExecutionPeriod> periods) {
+	private List<TSDCourse> getTSDCompetenceAndVirtualCoursesByExecutionPeriod(List<ExecutionSemester> periods) {
 		Set<TSDCourse> courseList = new HashSet<TSDCourse>();
 		Set<CompetenceCourse> competenceCourseSet = new HashSet<CompetenceCourse>();
 		
-		for(ExecutionPeriod period : periods){	
+		for(ExecutionSemester period : periods){	
 			for (TSDCourse tsdCourse : getTSDCoursesByExecutionPeriod(period)) {
 				if(tsdCourse instanceof TSDCompetenceCourse && tsdCourse.getCompetenceCourse().isBolonha()){ 
 						courseList.add(tsdCourse);
@@ -151,7 +151,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 		return courseList;
     }
 	
-	public List<TSDCourse> getTSDCoursesByExecutionPeriod(ExecutionPeriod period) {
+	public List<TSDCourse> getTSDCoursesByExecutionPeriod(ExecutionSemester period) {
 		List<TSDCourse> courseList = new ArrayList<TSDCourse>();
 
 		for (TSDCourse tsdCourse : getTSDCourses()) {
@@ -165,14 +165,14 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 
 	@SuppressWarnings("unchecked")
 	public List<CompetenceCourse> getCompetenceCoursesByExecutionPeriod(
-			final ExecutionPeriod executionPeriod) {
+			final ExecutionSemester executionSemester) {
 		List<CompetenceCourse> competenceCourseList = new ArrayList<CompetenceCourse>();
 
 		competenceCourseList.addAll(CollectionUtils.select(getCompetenceCourses(), new Predicate() {
 			public boolean evaluate(Object arg0) {
 				CompetenceCourse competenceCourse = (CompetenceCourse) arg0;
 
-				return competenceCourse.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionPeriod).size() > 0;
+				return competenceCourse.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionSemester).size() > 0;
 			}
 		}));
 
@@ -288,12 +288,12 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 	
 	@SuppressWarnings("unchecked")
 	public List<TSDCourse> getCompetenceCoursesWithoutActiveTSDCourses(
-			List<ExecutionPeriod> executionPeriodList) {
+			List<ExecutionSemester> executionPeriodList) {
 		Set<CompetenceCourse> tsdCoursesList = getCompetenceCourses();
 		Set<CompetenceCourse> activeCoursesSet = new HashSet<CompetenceCourse>();
 		List<TSDCourse> returnList = new ArrayList<TSDCourse>();
 		
-		for (ExecutionPeriod period : executionPeriodList) {
+		for (ExecutionSemester period : executionPeriodList) {
 			for (CompetenceCourse course : tsdCoursesList){
 				for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course)){
 					if (tsdCourse.getExecutionPeriod().equals(period) && tsdCourse.getIsActive()){
@@ -303,7 +303,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 			}
 		}
 		
-		for(ExecutionPeriod period : executionPeriodList){	
+		for(ExecutionSemester period : executionPeriodList){	
 			for (TSDCourse tsdCourse : getTSDCoursesByExecutionPeriod(period)) {
 				if(tsdCourse instanceof TSDCompetenceCourse){ 
 					if(!activeCoursesSet.contains(tsdCourse.getCompetenceCourse())){
@@ -400,7 +400,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 	    setTeachersManagementGroup(removePersonFromGroup(getTeachersManagementGroup(), person));
 	}
 	
-	public Double getAllActiveTSDCourseTotalHoursByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+	public Double getAllActiveTSDCourseTotalHoursByExecutionPeriods(List<ExecutionSemester> executionPeriodList) {
 		double totalHours = 0d; 
 		
 		for(TSDCourse tsdCourse : getActiveTSDCourseByExecutionPeriods(executionPeriodList)) {
@@ -423,11 +423,11 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 	}
 
 	
-	public List<TSDCourse> getActiveTSDCourseByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+	public List<TSDCourse> getActiveTSDCourseByExecutionPeriods(List<ExecutionSemester> executionPeriodList) {
 		List<TSDCourse> tsdCourseList = new ArrayList<TSDCourse>();
-		for(ExecutionPeriod executionPeriod : executionPeriodList) {
+		for(ExecutionSemester executionSemester : executionPeriodList) {
 			for(TSDCourse course : getTSDCourses()) {
-				if(course.getExecutionPeriod().equals(executionPeriod) && course.getIsActive()){
+				if(course.getExecutionPeriod().equals(executionSemester) && course.getIsActive()){
 					tsdCourseList.add(course);
 				}
 			}
@@ -436,7 +436,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 		return tsdCourseList;
 	}
 
-	public Double getAllActiveTSDCourseTotalStudentsByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+	public Double getAllActiveTSDCourseTotalStudentsByExecutionPeriods(List<ExecutionSemester> executionPeriodList) {
 		double totalStudents = 0d; 
 		
 		for(TSDCourse tsdCourse : getActiveTSDCourseByExecutionPeriods(executionPeriodList)) {
@@ -446,7 +446,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 		return totalStudents;
 	}
 
-	public Integer getAllActiveTSDCourseFirstTimeEnrolledStudentsByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+	public Integer getAllActiveTSDCourseFirstTimeEnrolledStudentsByExecutionPeriods(List<ExecutionSemester> executionPeriodList) {
 		int totalStudents = 0; 
 		
 		for(TSDCourse tsdCourse : getActiveTSDCourseByExecutionPeriods(executionPeriodList)) {
@@ -456,7 +456,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 		return totalStudents;
 	}
 
-	public Integer getAllActiveTSDCourseSecondTimeEnrolledStudentsByExecutionPeriods(List<ExecutionPeriod> executionPeriodList) {
+	public Integer getAllActiveTSDCourseSecondTimeEnrolledStudentsByExecutionPeriods(List<ExecutionSemester> executionPeriodList) {
 		int totalStudents = 0; 
 		
 		for(TSDCourse tsdCourse : getActiveTSDCourseByExecutionPeriods(executionPeriodList)) {
@@ -468,13 +468,13 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 	
 	public List<TSDCurricularCourse> getTSDCurricularCoursesWithoutTSDCourseGroup(
 			CompetenceCourse course,
-			ExecutionPeriod executionPeriod) {
+			ExecutionSemester executionSemester) {
 		List<TSDCurricularCourse> tsdCurricularCourseList = new ArrayList<TSDCurricularCourse>();
 
 		for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course)){
 			if (tsdCourse instanceof TSDCurricularCourse 
 					&& ((TSDCurricularCourse) tsdCourse).getTSDCurricularCourseGroup() == null
-					&& tsdCourse.getExecutionPeriod().equals(executionPeriod))
+					&& tsdCourse.getExecutionPeriod().equals(executionSemester))
 				tsdCurricularCourseList.add((TSDCurricularCourse) tsdCourse);
 		}
 
@@ -483,7 +483,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 	
 	public TSDCourseType getTSDCourseType(
 			TSDCourse course,
-			ExecutionPeriod executionPeriod) {
+			ExecutionSemester executionSemester) {
 		
 		if(course instanceof TSDVirtualCourseGroup){ 
 			return TSDCourseType.COMPETENCE_COURSE_VALUATION;
@@ -509,7 +509,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 	
 	public void setTSDCourseType(
 			CompetenceCourse course,
-			ExecutionPeriod executionPeriod,
+			ExecutionSemester executionSemester,
 			TSDCourseType courseType) {
 		
 		List<TSDCourse> tsdCoursesList = getTSDCoursesByCompetenceCourse(course);
@@ -533,9 +533,9 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 
 	public TSDCompetenceCourse getTSDCompetenceCourse(
 			CompetenceCourse course,
-			ExecutionPeriod executionPeriod) {
+			ExecutionSemester executionSemester) {
 		for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course)){
-			if (tsdCourse instanceof TSDCompetenceCourse && tsdCourse.getExecutionPeriod().equals(executionPeriod))
+			if (tsdCourse instanceof TSDCompetenceCourse && tsdCourse.getExecutionPeriod().equals(executionSemester))
 				return (TSDCompetenceCourse) tsdCourse;
 		}
 
@@ -544,12 +544,12 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 	
 	public List<TSDCurricularCourse> getTSDCurricularCourses(
 			CompetenceCourse course,
-			ExecutionPeriod executionPeriod) {
+			ExecutionSemester executionSemester) {
 		List<TSDCurricularCourse> tsdCoursesList = new ArrayList<TSDCurricularCourse>();
 		
 		for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course)){
 			if (tsdCourse instanceof TSDCurricularCourse 
-					&& tsdCourse.getExecutionPeriod().equals(executionPeriod))
+					&& tsdCourse.getExecutionPeriod().equals(executionSemester))
 				tsdCoursesList.add((TSDCurricularCourse) tsdCourse);
 		}
 
@@ -559,12 +559,12 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 	
 	public List<TSDCurricularCourseGroup>  getTSDCurricularCourseGroups(
 			CompetenceCourse course,
-			ExecutionPeriod executionPeriod) {
+			ExecutionSemester executionSemester) {
 		List<TSDCurricularCourseGroup> tsdCoursesList = new ArrayList<TSDCurricularCourseGroup>();
 		
 		for(TSDCourse tsdCourse : getTSDCoursesByCompetenceCourse(course)){
 			if (tsdCourse instanceof TSDCurricularCourseGroup 
-					&& tsdCourse.getExecutionPeriod().equals(executionPeriod))
+					&& tsdCourse.getExecutionPeriod().equals(executionSemester))
 				tsdCoursesList.add((TSDCurricularCourseGroup) tsdCourse);
 		}
 

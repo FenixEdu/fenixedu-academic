@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.curricularRules;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleExecutorFactory;
@@ -59,13 +59,13 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
 	return getCurricularRuleType() == null;
     }
 
-    public boolean isValid(ExecutionPeriod executionPeriod) {
-	return (getBegin().isBeforeOrEquals(executionPeriod) && (getEnd() == null || getEnd().isAfterOrEquals(executionPeriod)));
+    public boolean isValid(ExecutionSemester executionSemester) {
+	return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd().isAfterOrEquals(executionSemester)));
     }
 
     public boolean isValid(ExecutionYear executionYear) {
-	for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-	    if (isValid(executionPeriod)) {
+	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+	    if (isValid(executionSemester)) {
 		return true;
 	    }
 	}

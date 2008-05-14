@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -23,13 +23,13 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
 		setRootDomainObject(RootDomainObject.getInstance());
 	}
 	
-	public InquiriesRegistry(ExecutionCourse executionCourse, ExecutionPeriod executionPeriod, Registration registration) {
+	public InquiriesRegistry(ExecutionCourse executionCourse, ExecutionSemester executionSemester, Registration registration) {
 		this();
-		if((executionCourse == null) || (executionPeriod == null) || (registration == null)) {
+		if((executionCourse == null) || (executionSemester == null) || (registration == null)) {
 			throw new NullArgumentException("The executionCourse, executionPeriod and student should not be null!");
 		}
 		this.setExecutionCourse(executionCourse);
-		this.setExecutionPeriod(executionPeriod);
+		this.setExecutionPeriod(executionSemester);
 		this.setStudent(registration);
 		
 	}

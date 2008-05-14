@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
@@ -18,11 +18,11 @@ public class CineticaQuimicaLQRule implements IEnrollmentRule {
     private static final String QUIMICA_CODE = "BBK";
     
     private StudentCurricularPlan studentCurricularPlan;
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
     
-    public CineticaQuimicaLQRule(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+    public CineticaQuimicaLQRule(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
 	this.studentCurricularPlan = studentCurricularPlan;
-	this.executionPeriod = executionPeriod;
+	this.executionSemester = executionSemester;
     }
 
     public List<CurricularCourse2Enroll> apply(
@@ -30,7 +30,7 @@ public class CineticaQuimicaLQRule implements IEnrollmentRule {
 	    throws EnrolmentRuleDomainException {
 	
 	final CurricularCourse quimicaCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(CINETICA_CODE);
-	if(hasEverBeenEnrolled(studentCurricularPlan, quimicaCourse, executionPeriod)) {
+	if(hasEverBeenEnrolled(studentCurricularPlan, quimicaCourse, executionSemester)) {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, QUIMICA_CODE);
 	} else {
 	    removeCurricularCourse(curricularCoursesToBeEnrolledIn, CINETICA_CODE);
@@ -39,9 +39,9 @@ public class CineticaQuimicaLQRule implements IEnrollmentRule {
 	return curricularCoursesToBeEnrolledIn;
     }
 
-    private boolean hasEverBeenEnrolled(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    private boolean hasEverBeenEnrolled(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
 	for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-	    if(enrolment.getCurricularCourse().equals(curricularCourse) && enrolment.getExecutionPeriod().isBefore(executionPeriod)) {
+	    if(enrolment.getCurricularCourse().equals(curricularCourse) && enrolment.getExecutionPeriod().isBefore(executionSemester)) {
 		return true;
 	    }
 	}

@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadClassesForCurrentAndPreviousPeriodByDegree extends Service {
 
     public Object run(Integer degreeOID) throws ExcepcaoPersistencia {
-        ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        ExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod
+        ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+        ExecutionSemester previouseExecutionPeriod = currentExecutionPeriod
                 .getPreviousExecutionPeriod();
 
         Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
@@ -29,7 +29,7 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree extends Service {
         return constructViews(classes, degree, currentExecutionPeriod, previouseExecutionPeriod);
     }
 
-    private Object constructViews(List classes, final Degree degree, final ExecutionPeriod currentExecutionPeriod, final ExecutionPeriod previouseExecutionPeriod) {
+    private Object constructViews(List classes, final Degree degree, final ExecutionSemester currentExecutionPeriod, final ExecutionSemester previouseExecutionPeriod) {
         List classViews = new ArrayList();
         for (Iterator iterator = classes.iterator(); iterator.hasNext();) {
             SchoolClass klass = (SchoolClass) iterator.next();
@@ -43,7 +43,7 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree extends Service {
     }
 
     private boolean isInPeriodsAndForDegree(SchoolClass klass, Degree degree,
-            ExecutionPeriod currentExecutionPeriod, ExecutionPeriod previouseExecutionPeriod) {
+            ExecutionSemester currentExecutionPeriod, ExecutionSemester previouseExecutionPeriod) {
         return (klass.getExecutionPeriod().getIdInternal()
                 .equals(currentExecutionPeriod.getIdInternal()) || klass.getExecutionPeriod()
                 .getIdInternal().equals(previouseExecutionPeriod.getIdInternal()))

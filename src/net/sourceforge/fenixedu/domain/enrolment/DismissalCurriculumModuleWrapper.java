@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.enrolment;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 
@@ -11,8 +11,8 @@ public class DismissalCurriculumModuleWrapper extends EnroledCurriculumModuleWra
     private static final long serialVersionUID = 12L;
     private DomainReference<Dismissal> dismissal;
 
-    public DismissalCurriculumModuleWrapper(final Dismissal dismissal, final ExecutionPeriod executionPeriod) {
-	super(dismissal.getCurriculumGroup(), executionPeriod);
+    public DismissalCurriculumModuleWrapper(final Dismissal dismissal, final ExecutionSemester executionSemester) {
+	super(dismissal.getCurriculumGroup(), executionSemester);
 	setDismissal(dismissal);
     }
 

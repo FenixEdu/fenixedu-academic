@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -37,10 +37,10 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	}
     
     public Department getDepartment() {
-	    List<ExecutionPeriod> executionPeriods = getTeacherServiceDistributions().get(0).getTSDProcessPhase()
+	    List<ExecutionSemester> executionSemesters = getTeacherServiceDistributions().get(0).getTSDProcessPhase()
 		    .getTSDProcess().getExecutionPeriods();
 	    
-	    for (ExecutionPeriod period : executionPeriods) {
+	    for (ExecutionSemester period : executionSemesters) {
 	    	Department department = getTeacher().getLastWorkingDepartment(
 			period.getBeginDateYearMonthDay(), period.getEndDateYearMonthDay());
 			if (department != null) {
@@ -64,11 +64,11 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
     }
 
     
-    public Integer getRequiredHours(final List<ExecutionPeriod> executionPeriodList) {
+    public Integer getRequiredHours(final List<ExecutionSemester> executionPeriodList) {
     	Integer requiredHours = 0;
 
-	    for (ExecutionPeriod executionPeriod : executionPeriodList) {
-	    	requiredHours += getTeacher().getLessonHours(executionPeriod);
+	    for (ExecutionSemester executionSemester : executionPeriodList) {
+	    	requiredHours += getTeacher().getLessonHours(executionSemester);
 	    }
 	
 	    return requiredHours;
@@ -79,23 +79,23 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
     	super.delete();
     }
 
-    public Double getServiceExemptionCredits(List<ExecutionPeriod> executionPeriodList) {
+    public Double getServiceExemptionCredits(List<ExecutionSemester> executionPeriodList) {
 		Double serviceExemptionCredits = 0d;
 	
-	    for (ExecutionPeriod executionPeriod : executionPeriodList) {
+	    for (ExecutionSemester executionSemester : executionPeriodList) {
 			serviceExemptionCredits += new Double(getTeacher().getServiceExemptionCredits(
-				executionPeriod));
+				executionSemester));
 		}
 	
 		return serviceExemptionCredits;
     }
 
-    public Double getManagementFunctionsCredits(List<ExecutionPeriod> executionPeriodList) {
+    public Double getManagementFunctionsCredits(List<ExecutionSemester> executionPeriodList) {
     	Double managementFunctionsCredits = 0d;
 	
-	    for (ExecutionPeriod executionPeriod : executionPeriodList) {
+	    for (ExecutionSemester executionSemester : executionPeriodList) {
 	    	managementFunctionsCredits += getTeacher()
-				.getManagementFunctionsCredits(executionPeriod);
+				.getManagementFunctionsCredits(executionSemester);
 	    }
 		return managementFunctionsCredits;
     }
@@ -104,28 +104,28 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	    return getTeacher().getTeacherNumber();
 	}
 
-    public List<TeacherServiceExemption> getServiceExemptions(List<ExecutionPeriod> executionPeriodList) {
+    public List<TeacherServiceExemption> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
     	List<TeacherServiceExemption> teacherServiceExemptionList = new ArrayList<TeacherServiceExemption>();
 
-	    for (ExecutionPeriod executionPeriod : executionPeriodList) {		
+	    for (ExecutionSemester executionSemester : executionPeriodList) {		
 	    	teacherServiceExemptionList.addAll(getTeacher().
-	    			getValidTeacherServiceExemptionsToCountInCredits(executionPeriod));
+	    			getValidTeacherServiceExemptionsToCountInCredits(executionSemester));
 		}
 	
 		return teacherServiceExemptionList;
     }
 
-    public List<PersonFunction> getManagementFunctions(List<ExecutionPeriod> executionPeriodList) {
+    public List<PersonFunction> getManagementFunctions(List<ExecutionSemester> executionPeriodList) {
     	List<PersonFunction> personFunctionList = new ArrayList<PersonFunction>();
 
-	    for (ExecutionPeriod executionPeriod : executionPeriodList) {
-	    	List<PersonFunction> teacherFunctionList = getTeacher().getManagementFunctions(executionPeriod);
+	    for (ExecutionSemester executionSemester : executionPeriodList) {
+	    	List<PersonFunction> teacherFunctionList = getTeacher().getManagementFunctions(executionSemester);
 	    	personFunctionList.addAll(teacherFunctionList);
 	    }
 		return personFunctionList;
     }
 
-    public Double getTotalHoursLecturedPlusExtraCredits(List<ExecutionPeriod> executionPeriodList) {
+    public Double getTotalHoursLecturedPlusExtraCredits(List<ExecutionSemester> executionPeriodList) {
     	return getTotalHoursLectured(executionPeriodList)
 			+ (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0d);
     }

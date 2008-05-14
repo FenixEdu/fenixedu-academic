@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -28,18 +28,18 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 
     private void createCycleCourseGroups(DegreeType courseGroupType) {
 	if (courseGroupType.isBolonhaType()) {
-	    ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	    ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
 	    if (courseGroupType.isFirstCycle()) {
 		new CycleCourseGroup(this, "1º Ciclo", "First Cycle", CycleType.FIRST_CYCLE,
-			executionPeriod, null);
+			executionSemester, null);
 	    }
 	    if (courseGroupType.isSecondCycle()) {
 		new CycleCourseGroup(this, "2º Ciclo", "Second Cycle", CycleType.SECOND_CYCLE,
-			executionPeriod, null);
+			executionSemester, null);
 	    }
 	    if (courseGroupType.isThirdCycle()) {
 		new CycleCourseGroup(this, "3º Ciclo", "Third Cycle", CycleType.THIRD_CYCLE,
-			executionPeriod, null);
+			executionSemester, null);
 	    }
 	}
     }

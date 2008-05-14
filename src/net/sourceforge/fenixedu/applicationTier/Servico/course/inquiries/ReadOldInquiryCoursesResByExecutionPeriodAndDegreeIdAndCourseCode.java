@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -21,27 +21,29 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode extends Service {
 
     public InfoOldInquiriesCoursesRes run(Integer executionPeriodId, Integer degreeId, String courseCode)
-            throws FenixServiceException, ExcepcaoPersistencia, NoSuchMethodException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        InfoOldInquiriesCoursesRes oldInquiriesCoursesRes = null;
-        
-        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
+	    throws FenixServiceException, ExcepcaoPersistencia, NoSuchMethodException, InvocationTargetException,
+	    NoSuchMethodException, IllegalAccessException {
+	InfoOldInquiriesCoursesRes oldInquiriesCoursesRes = null;
 
-        if (executionPeriod == null) {
-            throw new FenixServiceException("nullExecutionPeriodId");
-        }
-        if (degree == null) {
-            throw new FenixServiceException("nullDegreeId");
-        }
-        if (courseCode == null) {
-            throw new FenixServiceException("nullCourseCode");
-        }
+	Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
-        OldInquiriesCoursesRes oics = degree.getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(courseCode, executionPeriod);
+	if (executionSemester == null) {
+	    throw new FenixServiceException("nullExecutionPeriodId");
+	}
+	if (degree == null) {
+	    throw new FenixServiceException("nullDegreeId");
+	}
+	if (courseCode == null) {
+	    throw new FenixServiceException("nullCourseCode");
+	}
 
-        oldInquiriesCoursesRes = new InfoOldInquiriesCoursesRes();
-        oldInquiriesCoursesRes.copyFromDomain(oics);
+	OldInquiriesCoursesRes oics = degree.getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(courseCode,
+		executionSemester);
 
-        return oldInquiriesCoursesRes;
+	oldInquiriesCoursesRes = new InfoOldInquiriesCoursesRes();
+	oldInquiriesCoursesRes.copyFromDomain(oics);
+
+	return oldInquiriesCoursesRes;
     }
 }

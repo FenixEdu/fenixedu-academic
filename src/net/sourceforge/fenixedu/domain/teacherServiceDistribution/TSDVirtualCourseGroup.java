@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class TSDVirtualCourseGroup extends TSDVirtualCourseGroup_Base {
@@ -15,26 +15,26 @@ public class TSDVirtualCourseGroup extends TSDVirtualCourseGroup_Base {
         this.setIsActive(true);
     }
 
-	private TSDVirtualCourseGroup(TeacherServiceDistribution tsd, String name, ExecutionPeriod executionPeriod) {
+	private TSDVirtualCourseGroup(TeacherServiceDistribution tsd, String name, ExecutionSemester executionSemester) {
 		this();
 		
 		this.setName(name);
-		this.setExecutionPeriod(executionPeriod);
+		this.setExecutionPeriod(executionSemester);
 		this.addTeacherServiceDistributions(tsd);
 	}
 	
-	public TSDVirtualCourseGroup(TeacherServiceDistribution tsd, String name, ExecutionPeriod executionPeriod, 
+	public TSDVirtualCourseGroup(TeacherServiceDistribution tsd, String name, ExecutionSemester executionSemester, 
 			List<ShiftType> lecturedShiftTypes, List<DegreeCurricularPlan> plansList) {
-		this(tsd, name, executionPeriod);
+		this(tsd, name, executionSemester);
 		
 		if(plansList != null){
 			this.getDegreeCurricularPlans().addAll(plansList);
 		}
 		
-		buildTSDCourseLoads(lecturedShiftTypes, executionPeriod);
+		buildTSDCourseLoads(lecturedShiftTypes, executionSemester);
 	}
 
-	private void buildTSDCourseLoads(List<ShiftType> lecturedShiftTypes, ExecutionPeriod executionPeriod) {
+	private void buildTSDCourseLoads(List<ShiftType> lecturedShiftTypes, ExecutionSemester executionSemester) {
 		for(ShiftType shiftType : lecturedShiftTypes){
 			TSDValueType valueType = shiftType.equals(ShiftType.TEORICA) || shiftType.equals(ShiftType.PRATICA) || shiftType.equals(ShiftType.TEORICO_PRATICA)
 				|| shiftType.equals(ShiftType.LABORATORIAL) ? TSDValueType.OMISSION_VALUE : TSDValueType.MANUAL_VALUE;

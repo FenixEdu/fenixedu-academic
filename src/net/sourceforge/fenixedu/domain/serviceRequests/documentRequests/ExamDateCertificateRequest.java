@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -22,32 +22,32 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 
     public ExamDateCertificateRequest(Registration registration, DateTime requestDate, DocumentPurposeType documentPurposeType,
 	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, ExecutionYear executionYear,
-	    Collection<Enrolment> enrolments, Collection<Exam> exams, ExecutionPeriod executionPeriod) {
+	    Collection<Enrolment> enrolments, Collection<Exam> exams, ExecutionSemester executionSemester) {
 
 	this();
 	init(registration, requestDate, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
-		enrolments, exams, executionPeriod);
+		enrolments, exams, executionSemester);
     }
 
     protected void init(Registration registration, DateTime requestDate, ExecutionYear executionYear,
 	    DocumentPurposeType documentPurposeType, String otherDocumentPurposeTypeDescription, Boolean urgentRequest,
-	    Collection<Enrolment> enrolments, Collection<Exam> exams, ExecutionPeriod executionPeriod) {
+	    Collection<Enrolment> enrolments, Collection<Exam> exams, ExecutionSemester executionSemester) {
 
-	checkParameters(executionYear, enrolments, executionPeriod);
-	checkRulesToCreate(enrolments, exams, executionPeriod);
+	checkParameters(executionYear, enrolments, executionSemester);
+	checkRulesToCreate(enrolments, exams, executionSemester);
 	super.init(registration, requestDate, executionYear, Boolean.FALSE, documentPurposeType,
 		otherDocumentPurposeTypeDescription, urgentRequest);
 	super.getEnrolments().addAll(enrolments);
 	super.getExams().addAll(exams);
-	super.setExecutionPeriod(executionPeriod);
+	super.setExecutionPeriod(executionSemester);
 
     }
 
-    private void checkRulesToCreate(Collection<Enrolment> enrolments, Collection<Exam> exams, ExecutionPeriod executionPeriod) {
+    private void checkRulesToCreate(Collection<Enrolment> enrolments, Collection<Exam> exams, ExecutionSemester executionSemester) {
 
 	for (final Exam exam : exams) {
 	    if (exam.isForSeason(Season.SPECIAL_SEASON_OBJ)
-		    && !getEnrolmentFor(enrolments, exam).isSpecialSeasonEnroled(executionPeriod.getExecutionYear())) {
+		    && !getEnrolmentFor(enrolments, exam).isSpecialSeasonEnroled(executionSemester.getExecutionYear())) {
 
 		throw new DomainExceptionWithLabelFormatter(
 			"error.serviceRequests.documentRequests.ExamDateCertificateRequest.special.season.exam.requires.student.to.be.enroled",
@@ -70,7 +70,7 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 
     }
 
-    private void checkParameters(ExecutionYear executionYear, Collection<Enrolment> enrolments, ExecutionPeriod executionPeriod) {
+    private void checkParameters(ExecutionYear executionYear, Collection<Enrolment> enrolments, ExecutionSemester executionSemester) {
 	if (executionYear == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.ExamDateCertificateRequest.executionYear.cannot.be.null");
@@ -81,7 +81,7 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 		    "error.serviceRequests.documentRequests.ExamDateCertificateRequest.enrolments.cannot.be.null.and.must.have.size.greater.than.zero");
 	}
 
-	if (executionPeriod == null) {
+	if (executionSemester == null) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest.executionPeriod.cannot.be.null");
 	}

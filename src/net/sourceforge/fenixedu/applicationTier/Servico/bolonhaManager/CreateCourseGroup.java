@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 
 public class CreateCourseGroup extends Service {
@@ -21,15 +21,15 @@ public class CreateCourseGroup extends Service {
 	    throw new FenixServiceException("error.noCourseGroup");
 	}
 
-	final ExecutionPeriod beginExecutionPeriod;
+	final ExecutionSemester beginExecutionPeriod;
 	if (beginExecutionPeriodID == null) {
-	    beginExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	    beginExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
 	} else {
-	    beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
+	    beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
 	}
 
-	final ExecutionPeriod endExecutionPeriod = (endExecutionPeriodID == null) ? null : rootDomainObject
-		.readExecutionPeriodByOID(endExecutionPeriodID);
+	final ExecutionSemester endExecutionPeriod = (endExecutionPeriodID == null) ? null : rootDomainObject
+		.readExecutionSemesterByOID(endExecutionPeriodID);
 
 	degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, beginExecutionPeriod, endExecutionPeriod);
     }

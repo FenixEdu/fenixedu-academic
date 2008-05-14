@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherAdviseServiceDispatchAction;
@@ -23,44 +23,39 @@ import org.apache.struts.action.DynaActionForm;
  * 
  */
 
-public class ScientificCouncilManageTeacherAdviseServiceDispatchAction extends
-        ManageTeacherAdviseServiceDispatchAction {
+public class ScientificCouncilManageTeacherAdviseServiceDispatchAction extends ManageTeacherAdviseServiceDispatchAction {
 
-    public ActionForward showTeacherAdvises(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+    public ActionForward showTeacherAdvises(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-        DynaActionForm dynaForm = (DynaActionForm) form;
-       
-        final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
-        final ExecutionPeriod executionPeriod = rootDomainObject
-                .readExecutionPeriodByOID(executionPeriodID);
+	DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
-        Teacher teacher = Teacher.readByNumber(teacherNumber);
+	final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-        if (teacher == null) {
-            request.setAttribute("teacherNotFound", "teacherNotFound");
-            return mapping.findForward("teacher-not-found");
-        }
+	Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
+	Teacher teacher = Teacher.readByNumber(teacherNumber);
 
-        getAdviseServices(request, dynaForm, executionPeriod, teacher);
-        return mapping.findForward("list-teacher-advise-services");
+	if (teacher == null) {
+	    request.setAttribute("teacherNotFound", "teacherNotFound");
+	    return mapping.findForward("teacher-not-found");
+	}
+
+	getAdviseServices(request, dynaForm, executionSemester, teacher);
+	return mapping.findForward("list-teacher-advise-services");
     }
-    
-    public ActionForward editAdviseService(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
-                       
-        return editAdviseService(form, request, mapping, RoleType.SCIENTIFIC_COUNCIL);
+
+    public ActionForward editAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+
+	return editAdviseService(form, request, mapping, RoleType.SCIENTIFIC_COUNCIL);
     }
-    
-    public ActionForward deleteAdviseService(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
-        
-        deleteAdviseService(request, RoleType.SCIENTIFIC_COUNCIL);
-        return mapping.findForward("successfull-delete");
-        
-    }              
+
+    public ActionForward deleteAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+
+	deleteAdviseService(request, RoleType.SCIENTIFIC_COUNCIL);
+	return mapping.findForward("successfull-delete");
+
+    }
 }

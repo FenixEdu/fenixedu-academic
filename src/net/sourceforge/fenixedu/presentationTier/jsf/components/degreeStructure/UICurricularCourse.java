@@ -7,7 +7,7 @@ import javax.faces.context.FacesContext;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
@@ -137,8 +137,8 @@ public class UICurricularCourse extends UIDegreeModule {
 
 	final Map<String, String> requestParameterMap = this.facesContext.getExternalContext().getRequestParameterMap();
 	if (this.executionYear != null) {
-	    final ExecutionPeriod executionPeriod = this.executionYear.getLastExecutionPeriod();
-	    href.append("&executionPeriodOID=").append(executionPeriod.getIdInternal());
+	    final ExecutionSemester executionSemester = this.executionYear.getLastExecutionPeriod();
+	    href.append("&executionPeriodOID=").append(executionSemester.getIdInternal());
 	} else if (requestParameterMap.get("executionPeriodOID") != null) {
 	    href.append("&executionPeriodOID=").append(requestParameterMap.get("executionPeriodOID"));
 	}

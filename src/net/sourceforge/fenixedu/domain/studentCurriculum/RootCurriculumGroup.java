@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -34,25 +34,25 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     }
 
     public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup,
-	    ExecutionPeriod executionPeriod, CycleType cycleType) {
+	    ExecutionSemester executionSemester, CycleType cycleType) {
 	this();
-	init(studentCurricularPlan, rootCourseGroup, executionPeriod, cycleType);
+	init(studentCurricularPlan, rootCourseGroup, executionSemester, cycleType);
     }
 
-    private void init(StudentCurricularPlan studentCurricularPlan, RootCourseGroup courseGroup, ExecutionPeriod executionPeriod,
+    private void init(StudentCurricularPlan studentCurricularPlan, RootCourseGroup courseGroup, ExecutionSemester executionSemester,
 	    CycleType cycleType) {
-	checkParameters(studentCurricularPlan, courseGroup, executionPeriod);
+	checkParameters(studentCurricularPlan, courseGroup, executionSemester);
 	checkInitConstraints(studentCurricularPlan, courseGroup);
 
 	setParentStudentCurricularPlan(studentCurricularPlan);
 	setDegreeModule(courseGroup);
-	addChildCurriculumGroups(courseGroup, executionPeriod, cycleType);
+	addChildCurriculumGroups(courseGroup, executionSemester, cycleType);
     }
 
     private void checkParameters(final StudentCurricularPlan studentCurricularPlan, final RootCourseGroup courseGroup,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	checkParameters(studentCurricularPlan, courseGroup);
-	if (executionPeriod == null) {
+	if (executionSemester == null) {
 	    throw new DomainException("error.studentCurriculum.executionPeriod.cannot.be.null");
 	}
     }
@@ -81,12 +81,12 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	}
     }
 
-    private void addChildCurriculumGroups(final RootCourseGroup rootCourseGroup, final ExecutionPeriod executionPeriod,
+    private void addChildCurriculumGroups(final RootCourseGroup rootCourseGroup, final ExecutionSemester executionSemester,
 	    CycleType cycle) {
 	if (rootCourseGroup.hasCycleGroups()) {
-	    createCycle(rootCourseGroup, executionPeriod, cycle);
+	    createCycle(rootCourseGroup, executionSemester, cycle);
 	} else {
-	    super.addChildCurriculumGroups(rootCourseGroup, executionPeriod);
+	    super.addChildCurriculumGroups(rootCourseGroup, executionSemester);
 	}
     }
 
@@ -96,13 +96,13 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	}
     }
 
-    private void createCycle(final RootCourseGroup rootCourseGroup, final ExecutionPeriod executionPeriod, CycleType cycle) {
+    private void createCycle(final RootCourseGroup rootCourseGroup, final ExecutionSemester executionSemester, CycleType cycle) {
 	if (cycle == null) {
 	    cycle = rootCourseGroup.getDegree().getDegreeType().getFirstCycleType();
 	}
 	if (cycle != null) {
-	    if (executionPeriod != null) {
-		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle), executionPeriod);
+	    if (executionSemester != null) {
+		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle), executionSemester);
 	    } else {
 		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle));
 	    }

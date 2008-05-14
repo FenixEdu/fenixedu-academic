@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.events;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
@@ -54,9 +54,9 @@ public class AccountingEventsManager {
     }
 
     public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final Integer numberOfDelayDays) {
+	    final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
 	new EnrolmentOutOfPeriodEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan.getPerson(),
-		studentCurricularPlan, executionPeriod, numberOfDelayDays);
+		studentCurricularPlan, executionSemester, numberOfDelayDays);
     }
 
     private AdministrativeOffice getAdministrativeOffice(final StudentCurricularPlan studentCurricularPlan) {

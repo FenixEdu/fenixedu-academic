@@ -6,7 +6,7 @@
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsNotClosedPublicProvider" />
 		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionPeriod" />
+			value="net.sourceforge.fenixedu.domain.ExecutionSemester" />
 		<property name="format"
 			value="${executionYear.year} - ${semester}º Sem" />
 	</slot>
@@ -50,7 +50,7 @@
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
 		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionPeriod" />
+			value="net.sourceforge.fenixedu.domain.ExecutionSemester" />
 		<property name="format"
 			value="${executionYear.year} - ${semester}º Sem" />
 	</slot>
@@ -358,7 +358,7 @@
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsNotClosedPublicProvider" />
 		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionPeriod" />
+			value="net.sourceforge.fenixedu.domain.ExecutionSemester" />
 		<property name="format"
 			value="${executionYear.year} - ${semester}º Sem" />
 	</slot>

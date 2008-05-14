@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.enrolment;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -16,9 +16,9 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
 
     private DomainReference<CurricularCourse> curricularCourse;
 
-    public OptionalDegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context, ExecutionPeriod executionPeriod,
+    public OptionalDegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context, ExecutionSemester executionSemester,
 	    CurricularCourse curricularCourse) {
-	super(curriculumGroup, context, executionPeriod);
+	super(curriculumGroup, context, executionSemester);
 	setCurricularCourse(curricularCourse);
 
     }
@@ -59,8 +59,8 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
     }
 
     @Override
-    public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
-	return getCurricularCourse().getEctsCredits(executionPeriod);
+    public Double getEctsCredits(final ExecutionSemester executionSemester) {
+	return getCurricularCourse().getEctsCredits(executionSemester);
     }
 
     @Override

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -139,9 +139,9 @@ public class RegisterCandidate extends Service {
     private void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
 	    StudentCurricularPlan studentCurricularPlan) {
 	List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
-	ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
 	for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
-	    new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(), executionPeriod,
+	    new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(), executionSemester,
 		    EnrollmentCondition.FINAL, userView.getUtilizador());
 	}
     }

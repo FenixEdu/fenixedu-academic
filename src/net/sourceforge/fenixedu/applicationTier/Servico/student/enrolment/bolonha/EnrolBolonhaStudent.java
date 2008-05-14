@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public class EnrolBolonhaStudent extends Service {
 
     public RuleResult run(final Person person, final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final List<IDegreeModuleToEvaluate> degreeModulesToEnrol,
+	    final ExecutionSemester executionSemester, final List<IDegreeModuleToEvaluate> degreeModulesToEnrol,
 	    final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
-	return studentCurricularPlan.enrol(person, executionPeriod, new HashSet<IDegreeModuleToEvaluate>(
+	return studentCurricularPlan.enrol(person, executionSemester, new HashSet<IDegreeModuleToEvaluate>(
 		degreeModulesToEnrol), curriculumModulesToRemove, curricularRuleLevel);
     }
 }

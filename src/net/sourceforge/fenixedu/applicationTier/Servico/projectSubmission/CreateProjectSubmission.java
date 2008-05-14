@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
@@ -126,10 +126,10 @@ public class CreateProjectSubmission extends Service {
         filePath.addNode(0, new VirtualPathNode("PRJ" + project.getIdInternal(), project.getName()));
         filePath.addNode(0, new VirtualPathNode("EC" + executionCourse.getIdInternal(), executionCourse.getNome()));
 
-        final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-        filePath.addNode(0, new VirtualPathNode("EP" + executionPeriod.getIdInternal(), executionPeriod.getName()));
+        final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+        filePath.addNode(0, new VirtualPathNode("EP" + executionSemester.getIdInternal(), executionSemester.getName()));
 
-        final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+        final ExecutionYear executionYear = executionSemester.getExecutionYear();
         filePath.addNode(0, new VirtualPathNode("EY" + executionYear.getIdInternal(), executionYear.getYear()));
 
         filePath.addNode(0, new VirtualPathNode("Courses","Courses"));

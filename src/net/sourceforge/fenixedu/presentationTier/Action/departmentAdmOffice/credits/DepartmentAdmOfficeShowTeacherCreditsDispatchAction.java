@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowTeacherCreditsDispatchAction;
@@ -21,38 +21,40 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {    
-    
-    public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
-            FenixFilterException, FenixServiceException, ParseException {
+public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
 
-        DynaActionForm teacherCreditsForm = (DynaActionForm) form;
-        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
-        Teacher teacher = rootDomainObject.readTeacherByOID((Integer) teacherCreditsForm.get("teacherId"));
+    public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
+	    ParseException {
 
-        if (teacher == null || getTeacherOfManageableDepartments(teacher.getTeacherNumber(), executionPeriod, request) == null) {            
-            request.setAttribute("teacherNotFound", "teacherNotFound");            
-            return mapping.findForward("teacher-not-found");
-        }
+	DynaActionForm teacherCreditsForm = (DynaActionForm) form;
+	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm
+		.get("executionPeriodId"));
+	Teacher teacher = rootDomainObject.readTeacherByOID((Integer) teacherCreditsForm.get("teacherId"));
 
-        showLinks(request, executionPeriod, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
-        getAllTeacherCredits(request, executionPeriod, teacher);
-        return mapping.findForward("show-teacher-credits");
+	if (teacher == null || getTeacherOfManageableDepartments(teacher.getTeacherNumber(), executionSemester, request) == null) {
+	    request.setAttribute("teacherNotFound", "teacherNotFound");
+	    return mapping.findForward("teacher-not-found");
+	}
+
+	showLinks(request, executionSemester, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+	getAllTeacherCredits(request, executionSemester, teacher);
+	return mapping.findForward("show-teacher-credits");
     }
-    
-    private Teacher getTeacherOfManageableDepartments(Integer teacherNumber,
-            ExecutionPeriod executionPeriod, HttpServletRequest request) {
 
-        IUserView userView = SessionUtils.getUserView(request);
-        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-        Teacher teacher = null;
-        for (Department department : manageableDepartments) {
-            teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay());
-            if (teacher != null) {
-                break;
-            }
-        }
-        return teacher;
+    private Teacher getTeacherOfManageableDepartments(Integer teacherNumber, ExecutionSemester executionSemester,
+	    HttpServletRequest request) {
+
+	IUserView userView = SessionUtils.getUserView(request);
+	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+	Teacher teacher = null;
+	for (Department department : manageableDepartments) {
+	    teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
+		    executionSemester.getEndDateYearMonthDay());
+	    if (teacher != null) {
+		break;
+	    }
+	}
+	return teacher;
     }
 }

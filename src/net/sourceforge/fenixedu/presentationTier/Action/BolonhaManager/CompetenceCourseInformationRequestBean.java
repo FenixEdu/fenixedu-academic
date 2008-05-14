@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
@@ -15,7 +15,7 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 
     private DomainReference<CompetenceCourse> competenceCourse;
 
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
     private String justification;
 
@@ -73,7 +73,7 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 	setNameEn(information.getNameEn());
     }
 
-    public CompetenceCourseInformationRequestBean(CompetenceCourse course, ExecutionPeriod period) {
+    public CompetenceCourseInformationRequestBean(CompetenceCourse course, ExecutionSemester period) {
 	setExecutionPeriod(period);
 	setCompetenceCourse(course);	
     }
@@ -89,12 +89,12 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 	return false;
     }
     
-    public ExecutionPeriod getExecutionPeriod() {
-	return executionPeriod.getObject();
+    public ExecutionSemester getExecutionPeriod() {
+	return executionSemester.getObject();
     }
 
-    public void setExecutionPeriod(ExecutionPeriod period) {
-	executionPeriod = new DomainReference<ExecutionPeriod>(period);
+    public void setExecutionPeriod(ExecutionSemester period) {
+	executionSemester = new DomainReference<ExecutionSemester>(period);
     }
 
     public CompetenceCourse getCompetenceCourse() {

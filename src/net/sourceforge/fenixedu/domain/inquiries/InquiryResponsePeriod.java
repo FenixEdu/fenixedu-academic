@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
@@ -14,9 +14,9 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public InquiryResponsePeriod(final ExecutionPeriod executionPeriod, final Date inquiryResponseBegin, final Date inquiryResponseEnd) {
+    public InquiryResponsePeriod(final ExecutionSemester executionSemester, final Date inquiryResponseBegin, final Date inquiryResponseEnd) {
 	this();
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
 	setPeriod(inquiryResponseBegin, inquiryResponseEnd);
     }
 

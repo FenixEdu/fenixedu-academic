@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -34,7 +34,7 @@ public class InquiriesCourse extends InquiriesCourse_Base {
      * @param executionCourse
      * @param executionDegreeCourse
      * @param executionDegreeStudent
-     * @param executionPeriod
+     * @param executionSemester
      * @param schoolClass
      * @param infoInquiriesCourse
      * 
@@ -44,20 +44,20 @@ public class InquiriesCourse extends InquiriesCourse_Base {
      * domainObjects and its basic properties are initialized Invariants: - None
      */
     public InquiriesCourse(ExecutionCourse executionCourse, ExecutionDegree executionDegreeCourse,
-	    ExecutionDegree executionDegreeStudent, ExecutionPeriod executionPeriod,
+	    ExecutionDegree executionDegreeStudent, ExecutionSemester executionSemester,
 	    SchoolClass schoolClass, InfoInquiriesCourse infoInquiriesCourse,
 	    Character entryGradeClassification, Character approvationRatioClassification,
 	    Character arithmeticMeanClassification) {
 	this();
 	if ((executionCourse == null) || (executionDegreeCourse == null)
-		|| (executionDegreeStudent == null) || (executionPeriod == null)) {
+		|| (executionDegreeStudent == null) || (executionSemester == null)) {
 	    throw new DomainException(
 		    "Neither the executionCourse, executionDegreeCourse, executionDegreeStudent nor executionPeriod should not be null!");
 	}
 	this.setExecutionCourse(executionCourse);
 	this.setExecutionDegreeCourse(executionDegreeCourse);
 	this.setExecutionDegreeStudent(executionDegreeStudent);
-	this.setExecutionPeriod(executionPeriod);
+	this.setExecutionPeriod(executionSemester);
 	this.setStudentSchoolClass(schoolClass);
 	this.setEntryGradeClassification(entryGradeClassification);
 	this.setApprovationRatioClassification(approvationRatioClassification);

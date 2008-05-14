@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -79,8 +79,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 //		if (student.doesNotWantToRespondToInquiries()) {
 //		    return false;
 //		}
-		final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-		if (executionPeriod != null && executionPeriod.getInquiryResponsePeriod() != null && executionPeriod.getInquiryResponsePeriod().insidePeriod()) {
+		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+		if (executionSemester != null && executionSemester.getInquiryResponsePeriod() != null && executionSemester.getInquiryResponsePeriod().insidePeriod()) {
 		    for (final Registration reistration : student.getRegistrationsSet()) {
 			if (reistration.isAvailableDegreeTypeForInquiries() && reistration.hasInquiriesToRespond()) {
 			    return true;

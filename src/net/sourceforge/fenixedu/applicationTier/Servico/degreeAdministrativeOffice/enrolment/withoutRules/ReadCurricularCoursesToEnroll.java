@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
@@ -24,14 +24,14 @@ public class ReadCurricularCoursesToEnroll extends Service {
 
     protected List<CurricularCourse> findCurricularCourses(
 	    final List<CurricularCourse> curricularCourses,
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : curricularCourses) {
 	    if (!studentCurricularPlan.isCurricularCourseNotExtraApprovedInCurrentOrPreviousPeriod(
-		    curricularCourse, executionPeriod)
+		    curricularCourse, executionSemester)
 		    && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(
-			    curricularCourse, executionPeriod)) {
+			    curricularCourse, executionSemester)) {
 		result.add(curricularCourse);
 	    }
 	}
@@ -39,7 +39,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
     }
 
     public List<CurricularCourse2Enroll> run(final StudentCurricularPlan studentCurricularPlan,
-	    final DegreeType degreeType, final ExecutionPeriod executionPeriod,
+	    final DegreeType degreeType, final ExecutionSemester executionSemester,
 	    final Integer executionDegreeID, final List<Integer> curricularYearsList,
 	    final List<Integer> curricularSemestersList) throws FenixServiceException {
 
@@ -59,7 +59,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
 
 	final List<CurricularCourse> possibleStudentCurricularCoursesToEnrol = findCurricularCourses(
 		executionDegree.getDegreeCurricularPlan().getCurricularCourses(), studentCurricularPlan,
-		executionPeriod);
+		executionSemester);
 
 	final List<CurricularCourse> searchedCurricularCourses;
 
@@ -67,20 +67,20 @@ public class ReadCurricularCoursesToEnroll extends Service {
 	    if (studentCurricularPlan.getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 		searchedCurricularCourses = getActiveAndFilteredCurricularCoursesForBolonhaDegrees(
 			possibleStudentCurricularCoursesToEnrol, verifyYears(curricularYearsList),
-			verifySemesters(curricularSemestersList), executionPeriod);
+			verifySemesters(curricularSemestersList), executionSemester);
 	    } else {
 		searchedCurricularCourses = getActiveAndFilteredCurricularCourses(
 			possibleStudentCurricularCoursesToEnrol, verifyYears(curricularYearsList),
-			verifySemesters(curricularSemestersList), executionPeriod);
+			verifySemesters(curricularSemestersList), executionSemester);
 	    }
 
 	} else {
 	    if (studentCurricularPlan.getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 		searchedCurricularCourses = getActiveCurricularCoursesForBolonha(
-			possibleStudentCurricularCoursesToEnrol, executionPeriod);
+			possibleStudentCurricularCoursesToEnrol, executionSemester);
 	    } else {
 		searchedCurricularCourses = getActiveCurricularCourses(
-			possibleStudentCurricularCoursesToEnrol, executionPeriod);
+			possibleStudentCurricularCoursesToEnrol, executionSemester);
 	    }
 	}
 
@@ -89,10 +89,10 @@ public class ReadCurricularCoursesToEnroll extends Service {
 
     private List<CurricularCourse> getActiveCurricularCoursesForBolonha(
 	    List<CurricularCourse> possibleStudentCurricularCoursesToEnrol,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : possibleStudentCurricularCoursesToEnrol) {
-	    if (!curricularCourse.getParentContextsByExecutionPeriod(executionPeriod).isEmpty()) {
+	    if (!curricularCourse.getParentContextsByExecutionPeriod(executionSemester).isEmpty()) {
 		result.add(curricularCourse);
 	    }
 	}
@@ -102,13 +102,13 @@ public class ReadCurricularCoursesToEnroll extends Service {
     private List<CurricularCourse> getActiveAndFilteredCurricularCoursesForBolonhaDegrees(
 	    List<CurricularCourse> possibleStudentCurricularCoursesToEnrol,
 	    List<Integer> curricularYears, List<Integer> curricularSemesters,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 
 	for (final CurricularCourse curricularCourse : possibleStudentCurricularCoursesToEnrol) {
 
 	    List<Context> contexts = curricularCourse
-		    .getParentContextsByExecutionPeriod(executionPeriod);
+		    .getParentContextsByExecutionPeriod(executionSemester);
 	    for (Context context : contexts) {
 		Integer year = context.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR);
 		Integer semester = context.getCurricularPeriod().getOrderByType(
@@ -137,13 +137,13 @@ public class ReadCurricularCoursesToEnroll extends Service {
     private List<CurricularCourse> getActiveAndFilteredCurricularCourses(
 	    List<CurricularCourse> possibleStudentCurricularCoursesToEnrol,
 	    List<Integer> curricularYears, List<Integer> curricularSemesters,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 
 	for (final CurricularCourse curricularCourse : possibleStudentCurricularCoursesToEnrol) {
 	    for (final CurricularCourseScope scope : curricularCourse
-		    .getActiveScopesInExecutionPeriod(executionPeriod)) {
+		    .getActiveScopesInExecutionPeriod(executionSemester)) {
 
 		if (curricularYears
 			.contains(scope.getCurricularSemester().getCurricularYear().getYear())
@@ -159,11 +159,11 @@ public class ReadCurricularCoursesToEnroll extends Service {
 
     private List<CurricularCourse> getActiveCurricularCourses(
 	    List<CurricularCourse> possibleStudentCurricularCoursesToEnrol,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : possibleStudentCurricularCoursesToEnrol) {
-	    if (curricularCourse.hasActiveScopesInExecutionPeriod(executionPeriod)) {
+	    if (curricularCourse.hasActiveScopesInExecutionPeriod(executionSemester)) {
 		result.add(curricularCourse);
 	    }
 	}

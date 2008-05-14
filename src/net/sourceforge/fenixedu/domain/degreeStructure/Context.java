@@ -7,7 +7,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -85,7 +85,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public Context(final CourseGroup courseGroup, final DegreeModule degreeModule, final CurricularPeriod curricularPeriod,
-	    final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final ExecutionSemester begin, final ExecutionSemester end) {
 
 	this();
 
@@ -123,14 +123,14 @@ public class Context extends Context_Base implements Comparable<Context> {
 	parent.checkDuplicateChildNames(courseGroup.getName(), courseGroup.getNameEn());
     }
 
-    private void checkParameters(CourseGroup courseGroup, DegreeModule degreeModule, ExecutionPeriod beginExecutionPeriod) {
+    private void checkParameters(CourseGroup courseGroup, DegreeModule degreeModule, ExecutionSemester beginExecutionPeriod) {
 	if (courseGroup == null || degreeModule == null || beginExecutionPeriod == null) {
 	    throw new DomainException("error.incorrectContextValues");
 	}
     }
 
     private void checkExistingCourseGroupContexts(final CourseGroup courseGroup, final DegreeModule degreeModule,
-	    final CurricularPeriod curricularPeriod, final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final CurricularPeriod curricularPeriod, final ExecutionSemester begin, final ExecutionSemester end) {
 
 	for (final Context context : courseGroup.getChildContexts()) {
 	    if (context != this && context.hasChildDegreeModule(degreeModule) && context.hasCurricularPeriod(curricularPeriod)
@@ -140,15 +140,15 @@ public class Context extends Context_Base implements Comparable<Context> {
 	}
     }
 
-    public void edit(final CourseGroup parent, final CurricularPeriod curricularPeriod, final ExecutionPeriod begin,
-	    final ExecutionPeriod end) {
+    public void edit(final CourseGroup parent, final CurricularPeriod curricularPeriod, final ExecutionSemester begin,
+	    final ExecutionSemester end) {
 
 	setParentCourseGroup(parent);
 	setCurricularPeriod(curricularPeriod);
 	edit(begin, end);
     }
 
-    protected void edit(final ExecutionPeriod begin, final ExecutionPeriod end) {
+    protected void edit(final ExecutionSemester begin, final ExecutionSemester end) {
 	checkExecutionPeriods(begin, end);
 	checkExistingCourseGroupContexts(getParentCourseGroup(), getChildDegreeModule(), getCurricularPeriod(), begin, end);
 	setBeginExecutionPeriod(begin);
@@ -201,12 +201,12 @@ public class Context extends Context_Base implements Comparable<Context> {
 	super.setChildDegreeModule(degreeModule);
     }
 
-    public boolean isValid(final ExecutionPeriod executionPeriod) {
-	if (isOpen(executionPeriod)) {
+    public boolean isValid(final ExecutionSemester executionSemester) {
+	if (isOpen(executionSemester)) {
 	    if (getChildDegreeModule().isCurricularCourse()) {
 		CurricularCourse curricularCourse = (CurricularCourse) getChildDegreeModule();
-		if (!curricularCourse.isAnual(executionPeriod.getExecutionYear())) {
-		    return containsSemester(executionPeriod.getSemester());
+		if (!curricularCourse.isAnual(executionSemester.getExecutionYear())) {
+		    return containsSemester(executionSemester.getSemester());
 		}
 	    }
 	    return true;
@@ -215,15 +215,15 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public boolean isValid(final ExecutionYear executionYear) {
-	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-	    if (isValid(executionPeriod)) {
+	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+	    if (isValid(executionSemester)) {
 		return true;
 	    }
 	}
 	return false;
     }
 
-    protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+    protected void checkExecutionPeriods(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
 	if (beginExecutionPeriod == null) {
 	    throw new DomainException("context.begin.execution.period.cannot.be.null");
 	}
@@ -232,14 +232,14 @@ public class Context extends Context_Base implements Comparable<Context> {
 	}
     }
 
-    public boolean isOpen(final ExecutionPeriod executionPeriod) {
-	return getBeginExecutionPeriod().isBeforeOrEquals(executionPeriod)
-		&& (!hasEndExecutionPeriod() || getEndExecutionPeriod().isAfterOrEquals(executionPeriod));
+    public boolean isOpen(final ExecutionSemester executionSemester) {
+	return getBeginExecutionPeriod().isBeforeOrEquals(executionSemester)
+		&& (!hasEndExecutionPeriod() || getEndExecutionPeriod().isAfterOrEquals(executionSemester));
     }
 
     public boolean isOpen(final ExecutionYear executionYear) {
-	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-	    if (isOpen(executionPeriod)) {
+	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+	    if (isOpen(executionSemester)) {
 		return true;
 	    }
 	}
@@ -247,10 +247,10 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public boolean isOpen() {
-	return isOpen(ExecutionPeriod.readActualExecutionPeriod());
+	return isOpen(ExecutionSemester.readActualExecutionPeriod());
     }
 
-    public boolean contains(final ExecutionPeriod begin, final ExecutionPeriod end) {
+    public boolean contains(final ExecutionSemester begin, final ExecutionSemester end) {
 	if (end != null && begin.isAfter(end)) {
 	    throw new DomainException("context.begin.is.after.end.execution.period");
 	}
@@ -318,7 +318,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     @Override
-    public void setBeginExecutionPeriod(ExecutionPeriod beginExecutionPeriod) {
+    public void setBeginExecutionPeriod(ExecutionSemester beginExecutionPeriod) {
 	if (beginExecutionPeriod == null) {
 	    throw new DomainException("curricular.rule.begin.execution.period.cannot.be.null");
 	}
@@ -388,10 +388,10 @@ public class Context extends Context_Base implements Comparable<Context> {
 	}
 
 	@Override
-	public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	public boolean isActiveForExecutionPeriod(final ExecutionSemester executionSemester) {
+	    final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	    return getCurricularCourse().isAnual(executionYear) ? getContext().isValid(executionYear) : getContext().isValid(
-		    executionPeriod);
+		    executionSemester);
 	}
 
 	@Override

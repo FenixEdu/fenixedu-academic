@@ -7,13 +7,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
 public class ExecutionPeriodStatisticsBean implements Serializable {
 	
-	private DomainReference<ExecutionPeriod> executionPeriod;
+	private DomainReference<ExecutionSemester> executionSemester;
 	private List<Enrolment> enrolmentsWithinExecutionPeriod;
 	private Integer totalEnrolmentsNumber;
 	private Integer approvedEnrolmentsNumber;
@@ -29,17 +29,17 @@ public class ExecutionPeriodStatisticsBean implements Serializable {
 		this.aritmeticAverage = 0.0;
 	}
 	
-	public ExecutionPeriodStatisticsBean(ExecutionPeriod executionPeriod) {
-		setExecutionPeriod(executionPeriod);
+	public ExecutionPeriodStatisticsBean(ExecutionSemester executionSemester) {
+		setExecutionPeriod(executionSemester);
 		this.enrolmentsWithinExecutionPeriod = new ArrayList<Enrolment>();
 	}
 	
-	public ExecutionPeriod getExecutionPeriod() {
-		return (executionPeriod == null ? null : executionPeriod.getObject());
+	public ExecutionSemester getExecutionPeriod() {
+		return (executionSemester == null ? null : executionSemester.getObject());
 	}
 
-	public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-		this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
+	public void setExecutionPeriod(ExecutionSemester executionSemester) {
+		this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
 	}
 	
 	public List<Enrolment> getEnrolmentsWithinExecutionPeriod() {

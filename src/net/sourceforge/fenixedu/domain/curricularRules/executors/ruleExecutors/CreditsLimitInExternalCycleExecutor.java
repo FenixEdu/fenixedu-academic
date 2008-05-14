@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimitInExternalCycle;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -94,13 +94,13 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
 
     }
 
-    private boolean isEnroledIn(IDegreeModuleToEvaluate degreeModuleToEvaluate, ExecutionPeriod executionPeriod) {
+    private boolean isEnroledIn(IDegreeModuleToEvaluate degreeModuleToEvaluate, ExecutionSemester executionSemester) {
 	if (degreeModuleToEvaluate.isLeaf()) {
 	    final EnroledCurriculumModuleWrapper curriculumModuleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
 	    final CurriculumLine curriculumLine = (CurriculumLine) (curriculumModuleEnroledWrapper).getCurriculumModule();
 
 	    if (curriculumLine.isEnrolment()) {
-		return curriculumLine.getExecutionPeriod() == executionPeriod;
+		return curriculumLine.getExecutionPeriod() == executionSemester;
 	    }
 
 	    return false;
@@ -112,11 +112,11 @@ public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor 
     private Double calculateApprovedAndEnrollingTotalCredits(final EnrolmentContext enrolmentContext,
 	    final ExternalCurriculumGroup externalCurriculumGroup) {
 	double result = 0;
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    if (degreeModuleToEvaluate.isLeaf()
 		    && externalCurriculumGroup.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())) {
-		result += degreeModuleToEvaluate.getEctsCredits(executionPeriod);
+		result += degreeModuleToEvaluate.getEctsCredits(executionSemester);
 	    }
 	}
 

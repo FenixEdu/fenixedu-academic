@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -25,8 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class WriteInquiry extends Service {
 
-    public void run(final InfoInquiry inquiry, final InfoStudent infoStudent)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(final InfoInquiry inquiry, final InfoStudent infoStudent) throws FenixServiceException, ExcepcaoPersistencia {
 	if (inquiry == null) {
 	    throw new FenixServiceException("nullInquiry");
 	}
@@ -62,44 +61,38 @@ public class WriteInquiry extends Service {
     private InquiriesCourse writeInquiriesCourse(final InfoInquiry ii, final InfoInquiriesCourse iic,
 	    final InfoStudent infoStudent) throws ExcepcaoPersistencia {
 
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(ii
-		.getExecutionCourse().getIdInternal());
-	ExecutionDegree executionDegreeCourse = rootDomainObject.readExecutionDegreeByOID(iic
-		.getExecutionDegreeCourse().getIdInternal());
-	ExecutionDegree executionDegreeStudent = rootDomainObject.readExecutionDegreeByOID(ii
-		.getExecutionDegreeStudent().getIdInternal());
-	ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(ii
-		.getExecutionPeriod().getIdInternal());
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(ii.getExecutionCourse().getIdInternal());
+	ExecutionDegree executionDegreeCourse = rootDomainObject.readExecutionDegreeByOID(iic.getExecutionDegreeCourse()
+		.getIdInternal());
+	ExecutionDegree executionDegreeStudent = rootDomainObject.readExecutionDegreeByOID(ii.getExecutionDegreeStudent()
+		.getIdInternal());
+	ExecutionSemester executionSemester = rootDomainObject
+		.readExecutionSemesterByOID(ii.getExecutionPeriod().getIdInternal());
 	Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
 
 	SchoolClass schoolClass = null;
 	if (iic.getStudentSchoolClass() != null) {
-	    schoolClass = rootDomainObject.readSchoolClassByOID(iic.getStudentSchoolClass()
-		    .getIdInternal());
+	    schoolClass = rootDomainObject.readSchoolClassByOID(iic.getStudentSchoolClass().getIdInternal());
 	}
 
-	return new InquiriesCourse(executionCourse, executionDegreeCourse, executionDegreeStudent,
-		executionPeriod, schoolClass, iic, registration.getEntryGradeClassification(),
-		registration.getApprovationRatioClassification(), registration
-			.getArithmeticMeanClassification());
+	return new InquiriesCourse(executionCourse, executionDegreeCourse, executionDegreeStudent, executionSemester,
+		schoolClass, iic, registration.getEntryGradeClassification(), registration.getApprovationRatioClassification(),
+		registration.getArithmeticMeanClassification());
     }
 
-    private void writeInquiriesTeacher(final InfoInquiriesTeacher iit,
-	    final InquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {
+    private void writeInquiriesTeacher(final InfoInquiriesTeacher iit, final InquiriesCourse inquiriesCourse)
+	    throws ExcepcaoPersistencia {
 	for (ShiftType shiftType : iit.getClassTypes()) {
 
 	    InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes = iit
 		    .getTeacherOrNonAffiliatedTeacher();
 	    if (infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getTeacher() != null) {
-		Teacher teacher = rootDomainObject
-			.readTeacherByOID(infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes
-				.getIdInternal());
+		Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes
+			.getIdInternal());
 		inquiriesCourse.createInquiriesTeacher(teacher, shiftType, iit);
-	    } else if (infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes
-		    .getNonAffiliatedTeacher() != null) {
+	    } else if (infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getNonAffiliatedTeacher() != null) {
 		NonAffiliatedTeacher nonAffiliatedTeacher = rootDomainObject
-			.readNonAffiliatedTeacherByOID(infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes
-				.getIdInternal());
+			.readNonAffiliatedTeacherByOID(infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getIdInternal());
 		inquiriesCourse.createInquiriesTeacher(nonAffiliatedTeacher, shiftType, iit);
 	    }
 	}
@@ -111,11 +104,10 @@ public class WriteInquiry extends Service {
 	inquiriesCourse.createInquiriesRoom(room, iir);
     }
 
-    private InquiriesRegistry writeInquiriesRegistry(final InquiriesCourse inquiriesCourse,
-	    final InfoStudent infoStudent) throws ExcepcaoPersistencia {
+    private InquiriesRegistry writeInquiriesRegistry(final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent)
+	    throws ExcepcaoPersistencia {
 	Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
-	return new InquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse
-		.getExecutionPeriod(), registration);
+	return new InquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse.getExecutionPeriod(), registration);
     }
 
 }

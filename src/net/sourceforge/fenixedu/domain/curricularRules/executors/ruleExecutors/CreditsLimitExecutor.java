@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -67,8 +67,8 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	    curricularCourse = ((OptionalDegreeModuleToEnrol) sourceDegreeModuleToEvaluate).getCurricularCourse();
 	}
 
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
-	Double ectsCredits = curricularCourse.getEctsCredits(executionPeriod);
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+	Double ectsCredits = curricularCourse.getEctsCredits(executionSemester);
 	return rule.allowCredits(ectsCredits) ? RuleResult
 		.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule()) : createFalseRuleResult(rule,
 		sourceDegreeModuleToEvaluate, ectsCredits);
@@ -76,13 +76,13 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 
     private Double calculateEctsCreditsFromToEnrolCurricularCourses(final EnrolmentContext enrolmentContext,
 	    final CurriculumModule parentCurriculumModule) {
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
 	BigDecimal result = BigDecimal.ZERO;
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    if (degreeModuleToEvaluate.isEnroling()
 		    && parentCurriculumModule.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())) {
-		result = result.add(BigDecimal.valueOf(degreeModuleToEvaluate.getEctsCredits(executionPeriod)));
+		result = result.add(BigDecimal.valueOf(degreeModuleToEvaluate.getEctsCredits(executionSemester)));
 	    }
 	}
 
@@ -121,10 +121,10 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 	    if (degreeModuleToEvaluate.isEnroled()) {
 		final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
 		final CurriculumModule curriculumModule = moduleEnroledWrapper.getCurriculumModule();
-		final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+		final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
 		Double ectsCredits = curriculumModule.getAprovedEctsCredits()
-			+ curriculumModule.getEnroledEctsCredits(executionPeriod)
+			+ curriculumModule.getEnroledEctsCredits(executionSemester)
 			+ calculateEctsCreditsFromToEnrolCurricularCourses(enrolmentContext, curriculumModule);
 
 		if (rule.creditsExceedMaximum(ectsCredits)) {
@@ -136,7 +136,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 		}
 
 		ectsCredits = Double.valueOf(ectsCredits.doubleValue()
-			+ curriculumModule.getEnroledEctsCredits(executionPeriod.getPreviousExecutionPeriod()).doubleValue());
+			+ curriculumModule.getEnroledEctsCredits(executionSemester.getPreviousExecutionPeriod()).doubleValue());
 
 		//TODO: remove duplicated ects from anual CurricularCourses
 		

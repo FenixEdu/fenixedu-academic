@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -196,10 +196,10 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
                 i++;
             }
 
-            final Collection<ExecutionPeriod> executionPeriods = rootDomainObject
+            final Collection<ExecutionSemester> executionSemesters = rootDomainObject
                     .getExecutionPeriodsSet();
             final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
-            for (final ExecutionPeriod ep : executionPeriods) {
+            for (final ExecutionSemester ep : executionSemesters) {
                 if (ep.getState().equals(PeriodState.OPEN) || ep.getState().equals(PeriodState.CURRENT)) {
                     executionPeriodLabelValueBeans.add(new LabelValueBean(ep.getName() + " "
                             + ep.getExecutionYear().getYear(), ep.getIdInternal().toString()));

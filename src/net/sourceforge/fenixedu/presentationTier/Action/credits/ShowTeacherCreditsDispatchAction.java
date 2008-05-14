@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipDTO;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -42,16 +42,16 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
-    protected void getAllTeacherCredits(HttpServletRequest request, ExecutionPeriod executionPeriod,
+    protected void getAllTeacherCredits(HttpServletRequest request, ExecutionSemester executionSemester,
             Teacher teacher) throws ParseException {
 
         request.setAttribute("teacher", teacher);
-        request.setAttribute("teacherCategory", teacher.getCategoryForCreditsByPeriod(executionPeriod));
-        request.setAttribute("executionPeriod", executionPeriod);        
+        request.setAttribute("teacherCategory", teacher.getCategoryForCreditsByPeriod(executionSemester));
+        request.setAttribute("executionPeriod", executionSemester);        
 
-        setTeachingServicesAndSupportLessons(request, teacher, executionPeriod);
+        setTeachingServicesAndSupportLessons(request, teacher, executionSemester);
 
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);        
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);        
         if (teacherService != null) {            
             setMasterDegreeServices(request, teacherService);
             setAdviseServices(request, teacherService);
@@ -61,8 +61,8 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
         }
 
         List<TeacherServiceExemption> serviceExemptions = teacher
-                .getServiceExemptionsWithoutMedicalSituations(executionPeriod.getBeginDateYearMonthDay(),
-                        executionPeriod.getEndDateYearMonthDay());
+                .getServiceExemptionsWithoutMedicalSituations(executionSemester.getBeginDateYearMonthDay(),
+                        executionSemester.getEndDateYearMonthDay());
 
         if (!serviceExemptions.isEmpty()) {
             Iterator<TeacherServiceExemption> orderedServiceExemptions = new OrderedIterator<TeacherServiceExemption>(serviceExemptions.iterator(),
@@ -70,15 +70,15 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
             request.setAttribute("serviceExemptions", orderedServiceExemptions);
         }
 
-        List<PersonFunction> personFuntions = teacher.getPersonFuntions(executionPeriod.getBeginDateYearMonthDay(),
-                executionPeriod.getEndDateYearMonthDay());
+        List<PersonFunction> personFuntions = teacher.getPersonFuntions(executionSemester.getBeginDateYearMonthDay(),
+                executionSemester.getEndDateYearMonthDay());
 
         if (!personFuntions.isEmpty()) {
             Iterator<PersonFunction> orderedPersonFuntions = new OrderedIterator<PersonFunction>(personFuntions.iterator(), new BeanComparator("beginDate"));
             request.setAttribute("personFunctions", orderedPersonFuntions);
         }
         
-        Collection<ThesisEvaluationParticipant> thesisEvaluationParticipants = teacher.getPerson().getThesisEvaluationParticipants(executionPeriod);
+        Collection<ThesisEvaluationParticipant> thesisEvaluationParticipants = teacher.getPerson().getThesisEvaluationParticipants(executionSemester);
         Collection<ThesisEvaluationParticipant> teacherThesisEvaluationParticipants = new ArrayList<ThesisEvaluationParticipant>();
         for (ThesisEvaluationParticipant participant : thesisEvaluationParticipants) {
         	if (participant.getCreditsDistribution() > 0) {
@@ -90,12 +90,12 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
         	request.setAttribute("teacherThesisEvaluationParticipants", teacherThesisEvaluationParticipants);
         }
         
-        double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
-        double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionPeriod); 
-        double thesesCredits = teacher.getThesesCredits(executionPeriod);
-        int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);
+        double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
+        double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionSemester); 
+        double thesesCredits = teacher.getThesesCredits(executionSemester);
+        int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
         
-        CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,
+        CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherService,
                 managementCredits, serviceExemptionCredits, mandatoryLessonHours, teacher, thesesCredits);
 
         request.setAttribute("creditLineDTO", creditLineDTO);
@@ -108,9 +108,9 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
     }
 
     private void setTeachingServicesAndSupportLessons(HttpServletRequest request, Teacher teacher,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
 
-        List<Professorship> professorships = teacher.getDegreeProfessorshipsByExecutionPeriod(executionPeriod);
+        List<Professorship> professorships = teacher.getDegreeProfessorshipsByExecutionPeriod(executionSemester);
 
         List<ProfessorshipDTO> professorshipDTOs = (List<ProfessorshipDTO>) CollectionUtils.collect(
                 professorships, new Transformer() {
@@ -158,10 +158,10 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
         }
     }
     
-    protected void showLinks(HttpServletRequest request, ExecutionPeriod executionPeriod, RoleType roleType) {
+    protected void showLinks(HttpServletRequest request, ExecutionSemester executionSemester, RoleType roleType) {
         boolean showLinks = true;
         try {            
-            executionPeriod.checkValidCreditsPeriod(roleType);   
+            executionSemester.checkValidCreditsPeriod(roleType);   
         } catch (DomainException e) {
             showLinks = false;
         }

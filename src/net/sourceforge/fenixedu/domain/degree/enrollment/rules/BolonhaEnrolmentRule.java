@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
@@ -15,11 +15,11 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 
     protected final StudentCurricularPlan studentCurricularPlan;
 
-    protected final ExecutionPeriod executionPeriod;
+    protected final ExecutionSemester executionSemester;
     
-    protected BolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+    protected BolonhaEnrolmentRule(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
 	this.studentCurricularPlan = studentCurricularPlan;
-	this.executionPeriod = executionPeriod;
+	this.executionSemester = executionSemester;
     }
     
     protected int countEnrolments(String[] group) {
@@ -58,7 +58,7 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 	
 	int count = 0;
 	for (CurricularCourse curricularCourse : optionalCurricularCourse.getCurricularCoursesSet()) {
-	    if (isEnrolledInExecutionPeriodOrAproved(curricularCourse, executionPeriod)) {
+	    if (isEnrolledInExecutionPeriodOrAproved(curricularCourse, executionSemester)) {
 		count++;
 	    }
 	}
@@ -84,14 +84,14 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 	});
     }
 
-    protected boolean isEnrolledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    protected boolean isEnrolledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
 	
-	return studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse,executionPeriod);
+	return studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse,executionSemester);
     }
     
-    private boolean isEnrolledInExecutionPeriodOrAproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    private boolean isEnrolledInExecutionPeriodOrAproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
 	
-	return studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse,executionPeriod)
+	return studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse,executionSemester)
 		|| studentCurricularPlan.isCurricularCourseApproved(curricularCourse);
 
     }
@@ -100,7 +100,7 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 
 	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
 	
-	return isEnrolledInExecutionPeriod(curricularCourse, executionPeriod.getPreviousExecutionPeriod());
+	return isEnrolledInExecutionPeriod(curricularCourse, executionSemester.getPreviousExecutionPeriod());
 
     }
     
@@ -108,7 +108,7 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 
 	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
 	
-	return isEnrolledInExecutionPeriod(curricularCourse, executionPeriod);
+	return isEnrolledInExecutionPeriod(curricularCourse, executionSemester);
 
     }
     
@@ -116,14 +116,14 @@ public abstract class BolonhaEnrolmentRule implements IEnrollmentRule {
 
 	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
 	
-	return isEnrolledInExecutionPeriodOrAproved(curricularCourse, executionPeriod);
+	return isEnrolledInExecutionPeriodOrAproved(curricularCourse, executionSemester);
 
     }
     
     protected boolean isEnrolledInPreviousExecutionPeriodOrAproved(final String code) {
 	final CurricularCourse curricularCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(code);
 	
-	return isEnrolledInExecutionPeriodOrAproved(curricularCourse, executionPeriod.getPreviousExecutionPeriod());
+	return isEnrolledInExecutionPeriodOrAproved(curricularCourse, executionSemester.getPreviousExecutionPeriod());
     }
 
 

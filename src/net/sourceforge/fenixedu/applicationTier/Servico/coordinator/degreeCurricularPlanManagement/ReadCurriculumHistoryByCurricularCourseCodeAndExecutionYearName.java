@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -55,9 +55,9 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
             List executionPeriods = executionYear.getExecutionPeriods();
             Iterator iterExecutionPeriods = executionPeriods.iterator();
             while (iterExecutionPeriods.hasNext()) {
-                ExecutionPeriod executionPeriod = (ExecutionPeriod) iterExecutionPeriods.next();
+                ExecutionSemester executionSemester = (ExecutionSemester) iterExecutionPeriods.next();
                 Set<CurricularCourseScope> curricularCourseScopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
-                        executionPeriod.getBeginDate(),executionPeriod.getEndDate());
+                        executionSemester.getBeginDate(),executionSemester.getEndDate());
                 if (curricularCourseScopes != null) {
                     List disjunctionCurricularCourseScopes = (List) CollectionUtils.disjunction(
                             allCurricularCourseScopes, curricularCourseScopes);
@@ -70,7 +70,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
                 List associatedExecutionCourses = new ArrayList();
                 List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
                 for(ExecutionCourse executionCourse : executionCourses){
-                    if(executionCourse.getExecutionPeriod().equals(executionPeriod))
+                    if(executionCourse.getExecutionPeriod().equals(executionSemester))
                         associatedExecutionCourses.add(executionCourse);
                 }
          

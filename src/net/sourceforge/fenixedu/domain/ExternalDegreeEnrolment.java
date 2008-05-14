@@ -14,22 +14,22 @@ public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
     }
     
     public ExternalDegreeEnrolment(final StudentCurricularPlan studentCurricularPlan, final CurriculumGroup curriculumGroup,
-	    final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod,
+	    final CurricularCourse curricularCourse, final ExecutionSemester executionSemester,
 	    final EnrollmentCondition enrolmentCondition, final String createdBy) {
 	
 	this();
-	checkParameters(studentCurricularPlan, curriculumGroup, curricularCourse, executionPeriod, enrolmentCondition, createdBy);
-	checkInitConstraints(studentCurricularPlan, curricularCourse, executionPeriod);
-	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionPeriod, enrolmentCondition, createdBy);
+	checkParameters(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition, createdBy);
+	checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester);
+	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition, createdBy);
     }
 
     private void checkParameters(final StudentCurricularPlan studentCurricularPlan,
 	    final CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse,
-	    final ExecutionPeriod executionPeriod, final EnrollmentCondition enrolmentCondition,
+	    final ExecutionSemester executionSemester, final EnrollmentCondition enrolmentCondition,
 	    final String createdBy) {
 	
 	if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null
-		|| executionPeriod == null || enrolmentCondition == null || createdBy == null) {
+		|| executionSemester == null || enrolmentCondition == null || createdBy == null) {
 	    throw new DomainException("error.ExternalDegreeEnrolment.invalid.parameters");
 	}
     }

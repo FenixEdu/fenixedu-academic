@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -34,9 +34,9 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     public ExternalCurriculumGroup(final RootCurriculumGroup rootCurriculumGroup, final CycleCourseGroup cycleCourseGroup,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	this();
-	init(rootCurriculumGroup, cycleCourseGroup, executionPeriod);
+	init(rootCurriculumGroup, cycleCourseGroup, executionSemester);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     @Override
-    public Integer getChildOrder(ExecutionPeriod executionPeriod) {
+    public Integer getChildOrder(ExecutionSemester executionSemester) {
 	return getChildOrder();
     }
 
@@ -92,8 +92,8 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     @Override
-    public Set<ICurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
-	final Set<ICurricularRule> result = super.getCurricularRules(executionPeriod);
+    public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
+	final Set<ICurricularRule> result = super.getCurricularRules(executionSemester);
 	result.add(new CreditsLimitInExternalCycle(getRootCurriculumGroup().getCycleCurriculumGroup(
 		getCycleType().getSourceCycleAffinity()), this));
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -89,13 +89,13 @@ public class TSDCurricularCourseGroup extends TSDCurricularCourseGroup_Base {
 	}
 	
 	
-	private void buildTSDCourseLoads(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+	private void buildTSDCourseLoads(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
 		BigDecimal shiftHours = null;
 		TSDCurricularLoad tsdLoad = null;
 		List<ShiftType> lecturedShiftTypes = new ArrayList<ShiftType>();
 				
 		for(ShiftType shiftType : ShiftType.values()){
-			shiftHours = curricularCourse.getTotalHoursByShiftType(shiftType, executionPeriod);
+			shiftHours = curricularCourse.getTotalHoursByShiftType(shiftType, executionSemester);
 			
 			if(shiftHours != null && shiftHours.doubleValue() > 0d){
 				lecturedShiftTypes.add(shiftType);

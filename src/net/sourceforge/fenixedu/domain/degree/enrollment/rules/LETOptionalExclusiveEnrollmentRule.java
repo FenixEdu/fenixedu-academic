@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
@@ -24,17 +24,17 @@ public class LETOptionalExclusiveEnrollmentRule implements IEnrollmentRule {
     private static final String AVALIACAO_PROJECTOS_DECISAO_PUBLICA_CODE = "ON";
     
     private final StudentCurricularPlan studentCurricularPlan;
-    private final ExecutionPeriod executionPeriod;
+    private final ExecutionSemester executionSemester;
 
     public LETOptionalExclusiveEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
         this.studentCurricularPlan = studentCurricularPlan;
-        this.executionPeriod = executionPeriod;
+        this.executionSemester = executionSemester;
     }
 
     public List apply(List curricularCoursesToBeEnrolledIn) {
     	
-    	List<Enrolment> enrolments = studentCurricularPlan.getAllStudentEnrollmentsInExecutionPeriod(executionPeriod);
+    	List<Enrolment> enrolments = studentCurricularPlan.getAllStudentEnrollmentsInExecutionPeriod(executionSemester);
         
         if(isEnrolledInExecutionPeriod(COMPLEMENTOS_INVESTIGACAO_OPERACIONAL_CODE, enrolments)){
             removeCurricularCourse(curricularCoursesToBeEnrolledIn,AVALIACAO_PROJECTOS_DECISAO_PUBLICA_CODE);

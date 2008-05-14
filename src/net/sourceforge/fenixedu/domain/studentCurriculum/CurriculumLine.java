@@ -9,7 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -37,8 +37,8 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     final public ExecutionYear getExecutionYear() {
-	final ExecutionPeriod executionPeriod = getExecutionPeriod();
-	return executionPeriod == null ? null : executionPeriod.getExecutionYear();
+	final ExecutionSemester executionSemester = getExecutionPeriod();
+	return executionSemester == null ? null : executionSemester.getExecutionYear();
     }
 
     public YearMonthDay getApprovementDate() {
@@ -56,12 +56,12 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public boolean isApproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    public boolean isApproved(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
 	return false;
     }
 
     @Override
-    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
 	return false;
     }
 
@@ -113,7 +113,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
 	return false;
     }
 
@@ -143,12 +143,12 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
 	return null;
     }
 
     @Override
-    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
 	return Collections.emptySet();
     }
 
@@ -179,7 +179,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     @Override
     public MultiLanguageString getName() {
-	ExecutionPeriod period = getExecutionPeriod();
+	ExecutionSemester period = getExecutionPeriod();
 	CurricularCourse course = getCurricularCourse();
 	return MultiLanguageString.i18n().nadd("pt", course.getName(period)).nadd("en", course.getNameEn(period)).finish();
     }
@@ -189,15 +189,15 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     protected boolean hasCurricularCourse(final CurricularCourse own, final CurricularCourse other,
-	    final ExecutionPeriod executionPeriod) {
-	return own.isEquivalent(other) || hasCurricularCourseEquivalence(own, other, executionPeriod);
+	    final ExecutionSemester executionSemester) {
+	return own.isEquivalent(other) || hasCurricularCourseEquivalence(own, other, executionSemester);
     }
 
     private boolean hasCurricularCourseEquivalence(final CurricularCourse sourceCurricularCourse,
-	    final CurricularCourse equivalentCurricularCourse, final ExecutionPeriod executionPeriod) {
+	    final CurricularCourse equivalentCurricularCourse, final ExecutionSemester executionSemester) {
 	for (final CurricularCourseEquivalence curricularCourseEquivalence : sourceCurricularCourse
 		.getCurricularCourseEquivalencesFor(equivalentCurricularCourse)) {
-	    if (oldCurricularCoursesAreApproved(curricularCourseEquivalence, executionPeriod)) {
+	    if (oldCurricularCoursesAreApproved(curricularCourseEquivalence, executionSemester)) {
 		return true;
 	    }
 	}
@@ -205,9 +205,9 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     private boolean oldCurricularCoursesAreApproved(final CurricularCourseEquivalence curricularCourseEquivalence,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	for (final CurricularCourse curricularCourse : curricularCourseEquivalence.getOldCurricularCourses()) {
-	    if (!getStudentCurricularPlan().isApproved(curricularCourse, executionPeriod)) {
+	    if (!getStudentCurricularPlan().isApproved(curricularCourse, executionSemester)) {
 		return false;
 	    }
 	}
@@ -231,6 +231,6 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     abstract public boolean isApproved();
 
-    abstract public ExecutionPeriod getExecutionPeriod();
+    abstract public ExecutionSemester getExecutionPeriod();
 
 }

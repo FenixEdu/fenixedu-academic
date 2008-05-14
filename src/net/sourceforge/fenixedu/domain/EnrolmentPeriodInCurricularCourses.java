@@ -12,9 +12,9 @@ import java.util.Date;
 public class EnrolmentPeriodInCurricularCourses extends EnrolmentPeriodInCurricularCourses_Base {
 
     public EnrolmentPeriodInCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final Date startDate, final Date endDate) {
+	    final ExecutionSemester executionSemester, final Date startDate, final Date endDate) {
 	super();
-	init(degreeCurricularPlan, executionPeriod, startDate, endDate);
+	init(degreeCurricularPlan, executionSemester, startDate, endDate);
     }
 
 }

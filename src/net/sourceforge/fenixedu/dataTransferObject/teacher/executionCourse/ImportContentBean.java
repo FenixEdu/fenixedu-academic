@@ -6,11 +6,11 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ImportContentBean implements Serializable {
 
-    private DomainReference<ExecutionPeriod> executionPeriodReference;
+    private DomainReference<ExecutionSemester> executionPeriodReference;
     
     private DomainReference<ExecutionDegree> executionDegreeReference;
     
@@ -26,12 +26,12 @@ public class ImportContentBean implements Serializable {
         this.executionCourseReference = (executionCourse != null) ? new DomainReference<ExecutionCourse>(executionCourse) : null;
     }
     
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
         return (this.executionPeriodReference != null) ? this.executionPeriodReference.getObject() : null;
     }
     
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-        this.executionPeriodReference = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+        this.executionPeriodReference = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
     
     public ExecutionDegree getExecutionDegree() {

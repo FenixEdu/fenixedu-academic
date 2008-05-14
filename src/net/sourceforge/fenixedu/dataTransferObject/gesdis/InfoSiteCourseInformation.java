@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -354,20 +354,20 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     public List<InfoSiteEvaluationInformation> getInfoSiteEvaluationInformations() {
         final List<InfoSiteEvaluationInformation> result = new ArrayList<InfoSiteEvaluationInformation>();
         
-        final ExecutionPeriod executionPeriod = getExecutionCourse().getExecutionPeriod();
+        final ExecutionSemester executionSemester = getExecutionCourse().getExecutionPeriod();
         for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
             final InfoSiteEvaluationInformation infoSiteEvaluationInformation = new InfoSiteEvaluationInformation();
             
             final InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-            final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
+            final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester);
             infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
             infoSiteEvaluationStatistics.setEvaluated(Enrolment.countEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(Enrolment.countApproved(enrolled));
-            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
 
             infoSiteEvaluationInformation.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
             infoSiteEvaluationInformation.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
-            infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(executionPeriod, curricularCourse));
+            infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(executionSemester, curricularCourse));
             
             result.add(infoSiteEvaluationInformation);
         }
@@ -375,27 +375,27 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
         return result;
     }
 
-    private List<InfoSiteEvaluationStatistics> getInfoSiteEvaluationsHistory(final ExecutionPeriod executionPeriodToTest, final CurricularCourse curricularCourse) {
+    private List<InfoSiteEvaluationStatistics> getInfoSiteEvaluationsHistory(final ExecutionSemester executionPeriodToTest, final CurricularCourse curricularCourse) {
         final List<InfoSiteEvaluationStatistics> result = new ArrayList<InfoSiteEvaluationStatistics>();
 
-        final Set<ExecutionPeriod> executionPeriods = new HashSet<ExecutionPeriod>();
+        final Set<ExecutionSemester> executionSemesters = new HashSet<ExecutionSemester>();
         for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 
             // filter the executionPeriods by semester;
             // also, information regarding execution years after the course's
             // execution year must not be shown
-            if (executionPeriod.getSemester().equals(executionPeriodToTest.getSemester())
-        	    && executionPeriod.getExecutionYear().isBefore(executionPeriodToTest.getExecutionYear())) {
-        	executionPeriods.add(executionPeriod);
+            if (executionSemester.getSemester().equals(executionPeriodToTest.getSemester())
+        	    && executionSemester.getExecutionYear().isBefore(executionPeriodToTest.getExecutionYear())) {
+        	executionSemesters.add(executionSemester);
             }
         }
 
-        for (final ExecutionPeriod executionPeriod : executionPeriods) {
+        for (final ExecutionSemester executionSemester : executionSemesters) {
             final InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
             
-            final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
+            final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester);
             infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
             infoSiteEvaluationStatistics.setEvaluated(Enrolment.countEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(Enrolment.countApproved(enrolled));
@@ -411,11 +411,11 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     public String getEvaluationMethod() {
 	final ExecutionCourse executionCourse = getExecutionCourse();
 	if (executionCourse != null) {
-	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+	    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 	    for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
 		final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
-		if (curricularCourse.isActive(executionPeriod) && competenceCourse != null) {
-		    final CompetenceCourseInformation competenceCourseInformation = competenceCourse.findCompetenceCourseInformationForExecutionPeriod(executionPeriod);
+		if (curricularCourse.isActive(executionSemester) && competenceCourse != null) {
+		    final CompetenceCourseInformation competenceCourseInformation = competenceCourse.findCompetenceCourseInformationForExecutionPeriod(executionSemester);
 		    if (competenceCourseInformation != null) {
 			competenceCourseInformation.getEvaluationMethod();
 		    }

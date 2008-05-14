@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -19,14 +19,14 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
 	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
 	final CurricularCourse curricularCourse = rule.getPrecedenceDegreeModule();
-	if (isEnrolling(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse, executionPeriod)) {
+	if (isEnrolling(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse, executionSemester)) {
 	    return RuleResult
 		    .createFalse(
 			    sourceDegreeModuleToEvaluate.getDegreeModule(),
@@ -54,7 +54,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
 	final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
 	if (!canApplyRule(enrolmentContext, rule)) {
 	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
@@ -62,7 +62,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 
 	final CurricularCourse curricularCourse = rule.getPrecedenceDegreeModule();
 
-	if (isEnrolling(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse, executionPeriod)) {
+	if (isEnrolling(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse, executionSemester)) {
 	    return RuleResult
 		    .createFalse(
 			    sourceDegreeModuleToEvaluate.getDegreeModule(),
@@ -74,7 +74,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
+	if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, executionSemester.getPreviousExecutionPeriod())) {
 	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
@@ -83,7 +83,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	 * semester If DegreeModule is Enroled in current semester then
 	 * Enrolment must be impossible
 	 */
-	if (isEnroled(enrolmentContext, rule.getDegreeModuleToApplyRule(), executionPeriod)) {
+	if (isEnroled(enrolmentContext, rule.getDegreeModuleToApplyRule(), executionSemester)) {
 	    return createImpossibleRuleResult(rule, sourceDegreeModuleToEvaluate);
 	}
 

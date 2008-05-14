@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -34,19 +34,19 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 	final Integer executionPeriodID = validInteger(executionPeriodIDString) ? Integer
 		.valueOf(executionPeriodIDString) : null;
 
-	final Collection<ExecutionPeriod> executionPeriods = rootDomainObject.getExecutionPeriodsSet();
+	final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
 
-	ExecutionPeriod selectedExecutionPeriod = null;
+	ExecutionSemester selectedExecutionPeriod = null;
 	final List<LabelValueBean> executionPeriodLVBs = new ArrayList<LabelValueBean>();
-	for (final ExecutionPeriod executionPeriod : executionPeriods) {
-	    final String label = executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear(); executionPeriodLVBs
-		    .add(new LabelValueBean(label, executionPeriod.getIdInternal().toString()));
+	for (final ExecutionSemester executionSemester : executionSemesters) {
+	    final String label = executionSemester.getName() + " " + executionSemester.getExecutionYear().getYear(); executionPeriodLVBs
+		    .add(new LabelValueBean(label, executionSemester.getIdInternal().toString()));
 
-	    if (executionPeriodID == null && executionPeriod.getState().equals(PeriodState.CURRENT)) {
-		selectedExecutionPeriod = executionPeriod;
+	    if (executionPeriodID == null && executionSemester.getState().equals(PeriodState.CURRENT)) {
+		selectedExecutionPeriod = executionSemester;
 		dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
-	    } else if (executionPeriodID != null && executionPeriod.getIdInternal().equals(executionPeriodID)) {
-		selectedExecutionPeriod = executionPeriod;
+	    } else if (executionPeriodID != null && executionSemester.getIdInternal().equals(executionPeriodID)) {
+		selectedExecutionPeriod = executionSemester;
 	    }
 	}
 

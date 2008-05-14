@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -51,16 +51,16 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     public ExternalEnrolment(final Registration registration, final ExternalCurricularCourse externalCurricularCourse,
-	    final Grade grade, final ExecutionPeriod executionPeriod, final YearMonthDay evaluationDate, final Double ectsCredits) {
+	    final Grade grade, final ExecutionSemester executionSemester, final YearMonthDay evaluationDate, final Double ectsCredits) {
 	this();
 
-	checkConstraints(registration, externalCurricularCourse, executionPeriod, grade, ectsCredits);
+	checkConstraints(registration, externalCurricularCourse, executionSemester, grade, ectsCredits);
 	checkIfCanCreateExternalEnrolment(registration, externalCurricularCourse);
 
 	setRegistration(registration);
 	setExternalCurricularCourse(externalCurricularCourse);
 	setGrade(grade);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
 	setEvaluationDate(evaluationDate);
 	setEctsCredits(ectsCredits);
     }
@@ -77,14 +77,14 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     private void checkConstraints(final Registration registration, final ExternalCurricularCourse externalCurricularCourse,
-	    final ExecutionPeriod executionPeriod, final Grade grade, final Double ectsCredits) {
+	    final ExecutionSemester executionSemester, final Grade grade, final Double ectsCredits) {
 	if (registration == null) {
 	    throw new DomainException("error.externalEnrolment.student.cannot.be.null");
 	}
 	if (externalCurricularCourse == null) {
 	    throw new DomainException("error.externalEnrolment.externalCurricularCourse.cannot.be.null");
 	}
-	if (executionPeriod == null) {
+	if (executionSemester == null) {
 	    throw new DomainException("error.externalEnrolment.executionPeriod.cannot.be.null");
 	}
 	if (grade == null || grade.isEmpty()) {
@@ -95,18 +95,18 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	}
     }
 
-    public void edit(final Registration registration, final Grade grade, final ExecutionPeriod executionPeriod,
+    public void edit(final Registration registration, final Grade grade, final ExecutionSemester executionSemester,
 	    final YearMonthDay evaluationDate, final Double ectsCredits) {
 
 	if (registration != getRegistration()) {
 	    checkIfCanCreateExternalEnrolment(registration, getExternalCurricularCourse());
 	}
 
-	checkConstraints(registration, getExternalCurricularCourse(), executionPeriod, grade, ectsCredits);
+	checkConstraints(registration, getExternalCurricularCourse(), executionSemester, grade, ectsCredits);
 
 	setRegistration(registration);
 	setGrade(grade);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
 	setEvaluationDate(evaluationDate);
 	setEctsCredits(ectsCredits);
     }

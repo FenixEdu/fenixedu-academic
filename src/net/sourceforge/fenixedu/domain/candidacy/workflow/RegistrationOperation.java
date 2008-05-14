@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -60,10 +60,10 @@ public class RegistrationOperation extends CandidacyOperation {
 	for (final CurricularCourse curricularCourse : finalExecutionCourse.getAssociatedCurricularCoursesSet()) {
 
 	    final Enrolment enrolment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,
-		    ExecutionPeriod.readActualExecutionPeriod());
+		    ExecutionSemester.readActualExecutionPeriod());
 	    if (enrolment != null) {
 
-		final Attends attends = enrolment.getAttendsFor(ExecutionPeriod.readActualExecutionPeriod());
+		final Attends attends = enrolment.getAttendsFor(ExecutionSemester.readActualExecutionPeriod());
 		if (attends != null && !attends.isFor(finalExecutionCourse)) {
 		    attends.setDisciplinaExecucao(finalExecutionCourse);
 		}
@@ -81,11 +81,11 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     protected void enrolStudentInCurricularCourses(final ExecutionDegree executionDegree, final Registration registration) {
-	final ExecutionPeriod executionPeriod = getExecutionPeriod();
+	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final StudentCurricularPlan studentCurricularPlan = StudentCurricularPlan.createBolonhaStudentCurricularPlan(
-		registration, executionDegree.getDegreeCurricularPlan(), new YearMonthDay(), executionPeriod);
+		registration, executionDegree.getDegreeCurricularPlan(), new YearMonthDay(), executionSemester);
 
-	studentCurricularPlan.createFirstTimeStudentEnrolmentsFor(executionPeriod, getCurrentUsername());
+	studentCurricularPlan.createFirstTimeStudentEnrolmentsFor(executionSemester, getCurrentUsername());
     }
 
     private String getCurrentUsername() {
@@ -95,7 +95,7 @@ public class RegistrationOperation extends CandidacyOperation {
 	return getStudentCandidacy().getPerson().getUsername();
     }
 
-    private ExecutionPeriod getExecutionPeriod() {
+    private ExecutionSemester getExecutionPeriod() {
 	return getExecutionYear().readExecutionPeriodForSemester(1);
     }
 

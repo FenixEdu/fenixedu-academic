@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.period;
 
-import net.sourceforge.fenixedu.domain.AcademicPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -12,17 +12,17 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
 	super();
     }
 
-    public SecondCycleCandidacyPeriod(final SecondCycleCandidacyProcess candidacyProcess, final AcademicPeriod academicPeriod,
-	    final DateTime start, final DateTime end) {
+    public SecondCycleCandidacyPeriod(final SecondCycleCandidacyProcess candidacyProcess,
+	    final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
 	this();
-	init(candidacyProcess, academicPeriod, start, end);
+	init(candidacyProcess, executionInterval, start, end);
     }
 
-    private void init(final SecondCycleCandidacyProcess candidacyProcess, final AcademicPeriod academicPeriod, final DateTime start,
-	    final DateTime end) {
+    private void init(final SecondCycleCandidacyProcess candidacyProcess, final ExecutionInterval executionInterval,
+	    final DateTime start, final DateTime end) {
 	checkParameters(candidacyProcess);
-	checkIfCanCreate(academicPeriod);
-	super.init(academicPeriod, start, end);
+	checkIfCanCreate(executionInterval);
+	super.init(executionInterval, start, end);
 	addCandidacyProcesses(candidacyProcess);
     }
 
@@ -32,10 +32,10 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
 	}
     }
 
-    private void checkIfCanCreate(final AcademicPeriod academicPeriod) {
-	if (academicPeriod.getSecondCycleCandidacyPeriod() != null) {
-	    throw new DomainException("error.SecondCycleCandidacyPeriod.academicPeriod.already.contains.candidacyPeriod.type",
-		    academicPeriod.getName());
+    private void checkIfCanCreate(final ExecutionInterval executionInterval) {
+	if (executionInterval.getSecondCycleCandidacyPeriod() != null) {
+	    throw new DomainException("error.SecondCycleCandidacyPeriod.executionInterval.already.contains.candidacyPeriod.type",
+		    executionInterval.getName());
 	}
     }
 

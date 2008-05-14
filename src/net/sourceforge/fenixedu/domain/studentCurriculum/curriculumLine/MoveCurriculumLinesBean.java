@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleMoveWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -49,10 +49,10 @@ public class MoveCurriculumLinesBean implements Serializable {
 		studentCurricularPlan) : null;
     }
 
-    public Set<IDegreeModuleToEvaluate> getIDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
+    public Set<IDegreeModuleToEvaluate> getIDegreeModulesToEvaluate(final ExecutionSemester executionSemester) {
 	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>();
 	for (final CurriculumLineLocationBean bean : this.curriculumLineLocations) {
-	    result.add(CurriculumModuleMoveWrapper.create(bean.getCurriculumGroup(), executionPeriod));
+	    result.add(CurriculumModuleMoveWrapper.create(bean.getCurriculumGroup(), executionSemester));
 	}
 	return result;
     }

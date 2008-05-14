@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -29,7 +29,7 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
 
     protected RestrictionBetweenDegreeModules(final CourseGroup degreeModuleToApplyRule,
 	    final CourseGroup precedenceDegreeModule, final Double minimumCredits, final CourseGroup contextCourseGroup,
-	    final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final ExecutionSemester begin, final ExecutionSemester end) {
 
 	this(precedenceDegreeModule, minimumCredits);
 	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);

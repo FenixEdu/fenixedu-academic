@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean.S
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainObjectActionLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -1098,7 +1098,7 @@ public abstract class Space extends Space_Base {
 	Set<ExecutionCourse> executionCoursesToTest = null;
 	if(labelWords != null && (searchType.equals(SpacesSearchCriteriaType.EXECUTION_COURSE) || searchType.equals(SpacesSearchCriteriaType.WRITTEN_EVALUATION))) {
 	    executionCoursesToTest = new HashSet<ExecutionCourse>();
-	    for (ExecutionCourse executionCourse : ExecutionPeriod.readActualExecutionPeriod().getAssociatedExecutionCoursesSet()) {
+	    for (ExecutionCourse executionCourse : ExecutionSemester.readActualExecutionPeriod().getAssociatedExecutionCoursesSet()) {
 		if(executionCourse.verifyNameEquality(labelWords)) {
 		    executionCoursesToTest.add(executionCourse);
 		}

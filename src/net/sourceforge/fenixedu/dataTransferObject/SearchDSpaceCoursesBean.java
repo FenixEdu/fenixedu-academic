@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
 import pt.utl.ist.fenix.tools.file.FileSearchCriteria;
@@ -15,7 +15,7 @@ public class SearchDSpaceCoursesBean extends SearchDSpaceBean{
 	
 	
 	DomainReference<ExecutionYear> executionYear;
-	DomainReference<ExecutionPeriod> executionPeriod;
+	DomainReference<ExecutionSemester> executionSemester;
 	List<EducationalResourceType> educationalResourceTypes;
 	
 	public SearchDSpaceCoursesBean() {
@@ -41,12 +41,12 @@ public class SearchDSpaceCoursesBean extends SearchDSpaceBean{
 		this.executionYear = new DomainReference<ExecutionYear>(executionYear);
 	}
 	
-	public ExecutionPeriod getExecutionPeriod() {
-		return executionPeriod.getObject();
+	public ExecutionSemester getExecutionPeriod() {
+		return executionSemester.getObject();
 	}
 
-	public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-		this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
+	public void setExecutionPeriod(ExecutionSemester executionSemester) {
+		this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
 	}
 	
 	
@@ -57,7 +57,7 @@ public class SearchDSpaceCoursesBean extends SearchDSpaceBean{
 			parameters += "&amp;type=" + type.toString();
 		}
 		ExecutionYear executionYear = getExecutionYear();
-		ExecutionPeriod period = getExecutionPeriod();
+		ExecutionSemester period = getExecutionPeriod();
 		if(executionYear!=null) {
 			parameters += "&amp;executionYearId=" + getExecutionYear().getIdInternal();
 		}

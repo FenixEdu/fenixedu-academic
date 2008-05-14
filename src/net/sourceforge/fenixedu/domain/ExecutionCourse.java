@@ -92,7 +92,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	ExecutionCourseBibliographicReference.addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
     }
 
-    public ExecutionCourse(final String nome, final String sigla, final ExecutionPeriod executionPeriod, EntryPhase entryPhase) {
+    public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester, EntryPhase entryPhase) {
 	super();
 
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -102,7 +102,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	setNome(nome);
 	setSigla(sigla);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
 	setComment("");
 
 	createSite();
@@ -416,7 +416,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     private int countAssociatedStudentsByEnrolmentNumber(int enrolmentNumber) {
 	int executionCourseAssociatedStudents = 0;
-	ExecutionPeriod courseExecutionPeriod = getExecutionPeriod();
+	ExecutionSemester courseExecutionPeriod = getExecutionPeriod();
 
 	for (CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCourses()) {
 	    for (Enrolment enrolment : curricularCourseFromExecutionCourseEntry.getEnrolments()) {
@@ -491,13 +491,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public Set<LessonInstance> getAssociatedLessonInstances() {
 	Set<LessonInstance> result = new HashSet<LessonInstance>();
-	for(CourseLoad courseLoad : getCourseLoadsSet()) {
+	for (CourseLoad courseLoad : getCourseLoadsSet()) {
 	    result.addAll(courseLoad.getLessonInstances());
 	}
-	
+
 	return result;
     }
-    
+
     public Double getStudentsNumberByShift(ShiftType shiftType) {
 	int numShifts = getNumberOfShifts(shiftType);
 
@@ -622,9 +622,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 
-	private static boolean alreadyHasAttend(Enrolment enrolment, ExecutionPeriod executionPeriod) {
+	private static boolean alreadyHasAttend(Enrolment enrolment, ExecutionSemester executionSemester) {
 	    for (Attends attends : enrolment.getAttends()) {
-		if (attends.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)) {
+		if (attends.getExecutionCourse().getExecutionPeriod().equals(executionSemester)) {
 		    return true;
 		}
 	    }
@@ -837,10 +837,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public Interval getInterval() {
-	final ExecutionPeriod executionPeriod = getExecutionPeriod();
-	final DateTime beginningOfSemester = new DateTime(executionPeriod.getBeginDateYearMonthDay());
+	final ExecutionSemester executionSemester = getExecutionPeriod();
+	final DateTime beginningOfSemester = new DateTime(executionSemester.getBeginDateYearMonthDay());
 	final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-	final DateTime endOfSemester = new DateTime(executionPeriod.getEndDateYearMonthDay());
+	final DateTime endOfSemester = new DateTime(executionSemester.getEndDateYearMonthDay());
 	final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1).plusWeeks(1);
 	return new Interval(firstMonday, nextLastMonday);
     }
@@ -1045,7 +1045,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return result;
     }
 
-    public boolean hasAnyDegreeGradeToSubmit(final ExecutionPeriod period, final DegreeCurricularPlan degreeCurricularPlan) {
+    public boolean hasAnyDegreeGradeToSubmit(final ExecutionSemester period, final DegreeCurricularPlan degreeCurricularPlan) {
 	for (final CurricularCourse curricularCourse : getCurricularCoursesWithDegreeType()) {
 	    if (degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
 		if (curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
@@ -1056,7 +1056,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return false;
     }
 
-    public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionPeriod period, DegreeCurricularPlan degreeCurricularPlan) {
+    public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionSemester period, DegreeCurricularPlan degreeCurricularPlan) {
 	for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
 	    if (degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
 		if (curricularCourse.hasAnyDegreeMarkSheetToConfirm(period)) {
@@ -1142,8 +1142,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return getExecutionPeriod().getExecutionYear() == executionYear;
     }
 
-    public boolean isLecturedIn(final ExecutionPeriod executionPeriod) {
-	return getExecutionPeriod() == executionPeriod;
+    public boolean isLecturedIn(final ExecutionSemester executionSemester) {
+	return getExecutionPeriod() == executionSemester;
     }
 
     public SortedSet<Professorship> getProfessorshipsSortedAlphabetically() {
@@ -1602,15 +1602,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public boolean isInExamPeriod() {
 	final YearMonthDay yearMonthDay = new YearMonthDay();
-	final ExecutionPeriod executionPeriod = getExecutionPeriod();
+	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final ExecutionYear executionYear = getExecutionPeriod().getExecutionYear();
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
 	    final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
 	    final YearMonthDay startExamsPeriod;
-	    if (executionPeriod.getSemester().intValue() == 1) {
+	    if (executionSemester.getSemester().intValue() == 1) {
 		startExamsPeriod = executionDegree.getPeriodExamsFirstSemester().getStartYearMonthDay();
-	    } else if (executionPeriod.getSemester().intValue() == 2) {
+	    } else if (executionSemester.getSemester().intValue() == 2) {
 		startExamsPeriod = executionDegree.getPeriodExamsSecondSemester().getStartYearMonthDay();
 	    } else {
 		throw new DomainException("unsupported.execution.period.semester");
@@ -1692,7 +1692,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    minBeginDate = executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay();
 		}
 		if (maxEndDate == null
-			|| maxEndDate.isBefore(executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDayWithNextPeriods())) {
+			|| maxEndDate.isBefore(executionDegree.getPeriodLessonsFirstSemester()
+				.getEndYearMonthDayWithNextPeriods())) {
 		    maxEndDate = executionDegree.getPeriodLessonsFirstSemester().getEndYearMonthDayWithNextPeriods();
 		}
 	    } else {
@@ -1701,7 +1702,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		    minBeginDate = executionDegree.getPeriodLessonsSecondSemester().getStartYearMonthDay();
 		}
 		if (maxEndDate == null
-			|| maxEndDate.isBefore(executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDayWithNextPeriods())) {
+			|| maxEndDate.isBefore(executionDegree.getPeriodLessonsSecondSemester()
+				.getEndYearMonthDayWithNextPeriods())) {
 		    maxEndDate = executionDegree.getPeriodLessonsSecondSemester().getEndYearMonthDayWithNextPeriods();
 		}
 	    }
@@ -1810,13 +1812,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
     }
 
-    public AcademicInterval getExecutionInterval() {
-	return getExecutionPeriod().getExecutionInterval();
+    public AcademicInterval getAcademicInterval() {
+	return getExecutionPeriod().getAcademicInterval();
     }
 
-    public static ExecutionCourse readBySiglaAndExecutionPeriod(final String sigla, ExecutionPeriod executionPeriod) {
+    public static ExecutionCourse readBySiglaAndExecutionPeriod(final String sigla, ExecutionSemester executionSemester) {
 	for (ExecutionCourse executionCourse : RootDomainObject.getInstance().getExecutionCourses()) {
-	    if (executionCourse.getExecutionPeriod() == executionPeriod && sigla.equalsIgnoreCase(executionCourse.getSigla())) {
+	    if (executionCourse.getExecutionPeriod() == executionSemester && sigla.equalsIgnoreCase(executionCourse.getSigla())) {
 		return executionCourse;
 	    }
 	}
@@ -1843,9 +1845,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return result.isEmpty() ? null : result.last();
     }
 
-    public static ExecutionCourse readLastByAcademicPeriodAndSigla(final String sigla, AcademicPeriod academicPeriod) {
-	return academicPeriod instanceof ExecutionPeriod ? readBySiglaAndExecutionPeriod(sigla, (ExecutionPeriod) academicPeriod)
-		: readLastByExecutionYearAndSigla(sigla, (ExecutionYear) academicPeriod);
+    public static ExecutionCourse readLastByExecutionIntervalAndSigla(final String sigla, ExecutionInterval executionInterval) {
+	return executionInterval instanceof ExecutionSemester ? readBySiglaAndExecutionPeriod(sigla,
+		(ExecutionSemester) executionInterval)
+		: readLastByExecutionYearAndSigla(sigla, (ExecutionYear) executionInterval);
     }
 
     @Override

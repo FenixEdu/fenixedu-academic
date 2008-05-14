@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.student.OptionalCurricularCoursesLocationBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.OptionalCurricularCoursesLocationBean.EnrolmentLocationBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.OptionalCurricularCoursesLocationBean.OptionalEnrolmentLocationBean;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -24,7 +24,7 @@ public class MoveCurriculumLines extends Service {
     public void run(final OptionalCurricularCoursesLocationBean bean) throws FenixServiceException {
 	moveEnrolments(bean);
 	moveOptionalEnrolments(bean);
-	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionPeriod();
 	bean.getStudentCurricularPlan().enrol(AccessControl.getPerson(), executionPeriod,
 		bean.getIDegreeModulesToEvaluate(executionPeriod), Collections.EMPTY_LIST,
 		CurricularRuleLevel.ENROLMENT_WITH_RULES);

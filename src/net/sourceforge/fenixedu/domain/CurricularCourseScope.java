@@ -138,14 +138,14 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	return !getBeginYearMonthDay().isAfter(end) && (getEndYearMonthDay() == null || !getEndYearMonthDay().isBefore(begin));
     }
 
-    public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	return intersects(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay())
-		&& executionPeriod.getSemester().equals(getCurricularSemester().getSemester());
+    public boolean isActiveForExecutionPeriod(final ExecutionSemester executionSemester) {
+	return intersects(executionSemester.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay())
+		&& executionSemester.getSemester().equals(getCurricularSemester().getSemester());
     }
 
     public boolean isActiveForExecutionYear(final ExecutionYear executionYear) {
-	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriodsSet()) {
-	    if (isActiveForExecutionPeriod(executionPeriod)) {
+	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+	    if (isActiveForExecutionPeriod(executionSemester)) {
 		return true;
 	    }
 	}
@@ -204,8 +204,8 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	}
 
 	@Override
-	public boolean isActiveForExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	    return curricularCourseScope.isActiveForExecutionPeriod(executionPeriod);
+	public boolean isActiveForExecutionPeriod(final ExecutionSemester executionSemester) {
+	    return curricularCourseScope.isActiveForExecutionPeriod(executionSemester);
 	}
 
 	@Override

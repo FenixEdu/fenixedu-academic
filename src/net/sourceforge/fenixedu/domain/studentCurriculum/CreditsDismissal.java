@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -57,8 +57,8 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     }
 
     @Override
-    public boolean isApproved(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
-	return (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod))
+    public boolean isApproved(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
+	return (executionSemester == null || getExecutionPeriod().isBeforeOrEquals(executionSemester))
 		&& hasEquivalentNoEnrolCurricularCourse(curricularCourse);
     }
 

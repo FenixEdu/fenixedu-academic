@@ -95,15 +95,15 @@ public class WrittenTest extends WrittenTest_Base {
     private boolean allowedPeriod(final Date date) {
 	final YearMonthDay yearMonthDay = new YearMonthDay(date.getTime());
 	for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
-	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+	    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 	    final ExecutionYear executionYear = executionCourse.getExecutionPeriod().getExecutionYear();
 	    for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
 		final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
 		final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
 		final Date startExamsPeriod;
-		if (executionPeriod.getSemester().intValue() == 1) {
+		if (executionSemester.getSemester().intValue() == 1) {
 		    startExamsPeriod = executionDegree.getPeriodExamsFirstSemester().getStart();
-		} else if (executionPeriod.getSemester().intValue() == 2) {
+		} else if (executionSemester.getSemester().intValue() == 2) {
 		    startExamsPeriod = executionDegree.getPeriodExamsSecondSemester().getStart();
 		} else {
 		    throw new DomainException("unsupported.execution.period.semester");
@@ -183,7 +183,7 @@ public class WrittenTest extends WrittenTest_Base {
 	return rooms;
     }
 
-    public void teacherEditRooms(Teacher teacher, ExecutionPeriod executionPeriod, List<AllocatableSpace> rooms) {
+    public void teacherEditRooms(Teacher teacher, ExecutionSemester executionSemester, List<AllocatableSpace> rooms) {
 	Collection<AllocatableSpace> teacherAvailableRooms = getTeacherAvailableRooms(teacher);
 	List<AllocatableSpace> associatedRooms = getAssociatedRooms();
 
@@ -197,7 +197,7 @@ public class WrittenTest extends WrittenTest_Base {
 	}
 
 	for (AllocatableSpace room : associatedRooms) {
-	    if (!rooms.contains(room) && canTeacherRemoveRoom(executionPeriod, teacher, room)) {
+	    if (!rooms.contains(room) && canTeacherRemoveRoom(executionSemester, teacher, room)) {
 		removeRoomOccupation(room);
 	    }
 	}
@@ -220,8 +220,8 @@ public class WrittenTest extends WrittenTest_Base {
 	return true;
     }
 
-    public boolean canTeacherRemoveRoom(ExecutionPeriod executionPeriod, Teacher teacher, AllocatableSpace room) {
-	for (Lesson lesson : room.getAssociatedLessons(executionPeriod)) {
+    public boolean canTeacherRemoveRoom(ExecutionSemester executionSemester, Teacher teacher, AllocatableSpace room) {
+	for (Lesson lesson : room.getAssociatedLessons(executionSemester)) {
 	    if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
 		if (lesson.getExecutionCourse().teacherLecturesExecutionCourse(teacher)) {
 		    return true;

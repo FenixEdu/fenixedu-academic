@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -62,11 +62,11 @@ public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
 	return CurricularRuleType.CREDITS_LIMIT_IN_EXTERNAL_CYCLE;
     }
 
-    public ExecutionPeriod getBegin() {
-	return ExecutionPeriod.readActualExecutionPeriod();
+    public ExecutionSemester getBegin() {
+	return ExecutionSemester.readActualExecutionPeriod();
     }
 
-    public ExecutionPeriod getEnd() {
+    public ExecutionSemester getEnd() {
 	return null;
     }
 

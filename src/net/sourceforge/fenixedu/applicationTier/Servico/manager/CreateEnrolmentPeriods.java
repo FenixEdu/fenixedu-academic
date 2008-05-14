@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -18,25 +18,26 @@ public class CreateEnrolmentPeriods extends Service {
 
     public void run(final Integer executionPeriodID, final DegreeType degreeType, final String enrolmentPeriodClassName,
 	    final Date startDate, final Date endDate) throws ExcepcaoPersistencia, FenixServiceException {
-	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
-	for (final ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+	for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	    if (degreeType == null || degreeType == degreeCurricularPlan.getDegree().getDegreeType()) {
-		createPeriod(enrolmentPeriodClassName, startDate, endDate, executionPeriod, degreeCurricularPlan);
+		createPeriod(enrolmentPeriodClassName, startDate, endDate, executionSemester, degreeCurricularPlan);
 	    }
 	}
     }
 
     private void createPeriod(final String enrolmentPeriodClassName, final Date startDate, final Date endDate,
-	    final ExecutionPeriod executionPeriod, final DegreeCurricularPlan degreeCurricularPlan) throws FenixServiceException {
+	    final ExecutionSemester executionSemester, final DegreeCurricularPlan degreeCurricularPlan)
+	    throws FenixServiceException {
 	if (EnrolmentPeriodInClasses.class.getName().equals(enrolmentPeriodClassName)) {
-	    new EnrolmentPeriodInClasses(degreeCurricularPlan, executionPeriod, startDate, endDate);
+	    new EnrolmentPeriodInClasses(degreeCurricularPlan, executionSemester, startDate, endDate);
 	} else if (EnrolmentPeriodInCurricularCourses.class.getName().equals(enrolmentPeriodClassName)) {
-	    new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, executionPeriod, startDate, endDate);
+	    new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, executionSemester, startDate, endDate);
 	} else if (EnrolmentPeriodInCurricularCoursesSpecialSeason.class.getName().equals(enrolmentPeriodClassName)) {
-	    new EnrolmentPeriodInCurricularCoursesSpecialSeason(degreeCurricularPlan, executionPeriod, startDate, endDate);
+	    new EnrolmentPeriodInCurricularCoursesSpecialSeason(degreeCurricularPlan, executionSemester, startDate, endDate);
 	} else if (EnrolmentPeriodInImprovementOfApprovedEnrolment.class.getName().equals(enrolmentPeriodClassName)) {
-	    new EnrolmentPeriodInImprovementOfApprovedEnrolment(degreeCurricularPlan, executionPeriod, startDate, endDate);
+	    new EnrolmentPeriodInImprovementOfApprovedEnrolment(degreeCurricularPlan, executionSemester, startDate, endDate);
 	} else {
 	    throw new FenixServiceException("error.invalid.enrolment.period.class.name");
 	}

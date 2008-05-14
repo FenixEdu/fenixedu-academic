@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchResultBean;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
@@ -40,7 +40,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
         MarkSheetManagementSearchBean markSheetManagementSearchBean = new MarkSheetManagementSearchBean();
-        markSheetManagementSearchBean.setExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
+        markSheetManagementSearchBean.setExecutionPeriod(ExecutionSemester.readActualExecutionPeriod());
         request.setAttribute("edit", markSheetManagementSearchBean);
         
         return mapping.findForward("searchMarkSheet");

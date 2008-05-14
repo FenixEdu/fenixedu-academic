@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FinalMark;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
@@ -175,12 +175,12 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     private boolean checkIfCanSubmitMarksToAnyCurricularCourse(List<CurricularCourse> curricularCourses,
-	    ExecutionPeriod executionPeriod, HttpServletRequest request, ActionMessages actionMessages) {
+	    ExecutionSemester executionSemester, HttpServletRequest request, ActionMessages actionMessages) {
 	boolean result = true;
 	String dateFormat = "dd/MM/yyyy";
 	for (CurricularCourse curricularCourse : curricularCourses) {
-	    if (!curricularCourse.isGradeSubmissionAvailableFor(executionPeriod)) {
-		ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(executionPeriod.getExecutionYear());
+	    if (!curricularCourse.isGradeSubmissionAvailableFor(executionSemester)) {
+		ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(executionSemester.getExecutionYear());
 		addMessage(request, actionMessages, "error.teacher.gradeSubmission.invalid.date.for.curricularCourse",
 			curricularCourse.getDegreeCurricularPlan().getName() + " > " + curricularCourse.getName());
 		addMessageGradeSubmissionNormalSeasonFirstSemester(request, actionMessages, dateFormat, executionDegree);

@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -28,7 +28,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
     protected EnrolmentContext enrolmentContext;
 
-    protected ExecutionPeriod executionPeriod;
+    protected ExecutionSemester executionSemester;
 
     protected CurricularRuleLevel curricularRuleLevel;
 
@@ -39,7 +39,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
 	this.studentCurricularPlan = studentCurricularPlan;
 	this.enrolmentContext = enrolmentContext;
-	this.executionPeriod = enrolmentContext.getExecutionPeriod();
+	this.executionSemester = enrolmentContext.getExecutionPeriod();
 	this.curricularRuleLevel = enrolmentContext.getCurricularRuleLevel();
 	this.responsiblePerson = responsiblePerson;
     }
@@ -95,8 +95,8 @@ abstract public class StudentCurricularPlanEnrolment {
 		throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
 	    }
 
-	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionPeriod)
-		    && !studentCurricularPlan.hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionPeriod)) {
+	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesFor(executionSemester)
+		    && !studentCurricularPlan.hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionSemester)) {
 		throw new DomainException(
 			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 	    }

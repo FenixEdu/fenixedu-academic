@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.Detaile
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -33,9 +33,9 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
             professorships = Professorship.readByDegreeCurricularPlanAndExecutionYear(executionDegree
                     .getDegreeCurricularPlan(), executionDegree.getExecutionYear());
         else {
-            ExecutionPeriod executionPeriod = executionDegree.getExecutionYear().readExecutionPeriodForSemester(semester);
+            ExecutionSemester executionSemester = executionDegree.getExecutionYear().readExecutionPeriodForSemester(semester);
             professorships = Professorship.readByDegreeCurricularPlanAndExecutionPeriod(executionDegree
-                    .getDegreeCurricularPlan(), executionPeriod);
+                    .getDegreeCurricularPlan(), executionSemester);
         }
 
         List responsibleFors = getResponsibleForsByDegree(executionDegree);
@@ -103,11 +103,11 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
         List responsibleFors = new ArrayList();
 
         List<ExecutionCourse> executionCourses = new ArrayList();
-        List<ExecutionPeriod> executionPeriods = executionDegree.getExecutionYear()
+        List<ExecutionSemester> executionSemesters = executionDegree.getExecutionYear()
                 .getExecutionPeriods();
 
-        for (ExecutionPeriod executionPeriod : executionPeriods) {
-            executionCourses = executionPeriod.getAssociatedExecutionCourses();
+        for (ExecutionSemester executionSemester : executionSemesters) {
+            executionCourses = executionSemester.getAssociatedExecutionCourses();
             for (ExecutionCourse executionCourse : executionCourses) {
                 responsibleFors.add(executionCourse.responsibleFors());
             }

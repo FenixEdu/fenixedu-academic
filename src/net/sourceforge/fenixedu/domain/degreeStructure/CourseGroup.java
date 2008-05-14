@@ -13,7 +13,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -53,12 +53,12 @@ public class CourseGroup extends CourseGroup_Base {
 	super.setNameEn(StringFormatter.prettyPrint(nameEn));
     }
 
-    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn, final ExecutionPeriod begin,
-	    final ExecutionPeriod end) {
+    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn, final ExecutionSemester begin,
+	    final ExecutionSemester end) {
 	init(parentCourseGroup, name, nameEn, begin, end);
     }
 
-    protected void init(CourseGroup parentCourseGroup, String name, String nameEn, ExecutionPeriod begin, ExecutionPeriod end) {
+    protected void init(CourseGroup parentCourseGroup, String name, String nameEn, ExecutionSemester begin, ExecutionSemester end) {
 	init(name, nameEn);
 	if (parentCourseGroup == null) {
 	    throw new DomainException("error.degreeStructure.CourseGroup.parentCourseGroup.cannot.be.null");
@@ -71,8 +71,8 @@ public class CourseGroup extends CourseGroup_Base {
 	return false;
     }
 
-    public void edit(String name, String nameEn, Context context, ExecutionPeriod beginExecutionPeriod,
-	    ExecutionPeriod endExecutionPeriod) {
+    public void edit(String name, String nameEn, Context context, ExecutionSemester beginExecutionPeriod,
+	    ExecutionSemester endExecutionPeriod) {
 	// override, assure that root's name equals degree curricular plan name
 	if (this.isRoot()) {
 	    setName(getParentDegreeCurricularPlan().getName());
@@ -136,8 +136,8 @@ public class CourseGroup extends CourseGroup_Base {
 	return getValidChildContexts(null, executionYear);
     }
 
-    public List<Context> getValidChildContexts(final ExecutionPeriod executionPeriod) {
-	return getValidChildContexts(null, executionPeriod);
+    public List<Context> getValidChildContexts(final ExecutionSemester executionSemester) {
+	return getValidChildContexts(null, executionSemester);
     }
 
     // Valid means that is open to execution year, and if is
@@ -157,11 +157,11 @@ public class CourseGroup extends CourseGroup_Base {
     // Valid means that is open to execution period, and if is
     // CurricularCourse
     // the context must have same semester than executionPeriod
-    public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
+    public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionSemester executionSemester) {
 	final List<Context> result = new ArrayList<Context>();
 	for (Context context : this.getChildContexts()) {
 	    if (hasClass(clazz, context.getChildDegreeModule())
-		    && ((executionPeriod == null || context.isValid(executionPeriod)))) {
+		    && ((executionSemester == null || context.isValid(executionSemester)))) {
 		result.add(context);
 	    }
 	}
@@ -181,16 +181,16 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    public List<Context> getSortedOpenChildContextsWithCourseGroups(final ExecutionPeriod executionPeriod) {
-	final List<Context> result = this.getOpenChildContexts(CourseGroup.class, executionPeriod);
+    public List<Context> getSortedOpenChildContextsWithCourseGroups(final ExecutionSemester executionSemester) {
+	final List<Context> result = this.getOpenChildContexts(CourseGroup.class, executionSemester);
 	Collections.sort(result);
 	return result;
     }
 
-    public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionPeriod executionPeriod) {
+    public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionSemester executionSemester) {
 	final List<Context> result = new ArrayList<Context>();
 	for (final Context context : getChildContexts()) {
-	    if (hasClass(clazz, context.getChildDegreeModule()) && ((executionPeriod == null || context.isOpen(executionPeriod)))) {
+	    if (hasClass(clazz, context.getChildDegreeModule()) && ((executionSemester == null || context.isOpen(executionSemester)))) {
 		result.add(context);
 	    }
 	}
@@ -336,16 +336,16 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	final Set<DegreeModule> result = new HashSet<DegreeModule>();
-	for (final Context context : getValidChildContexts(executionPeriod)) {
+	for (final Context context : getValidChildContexts(executionSemester)) {
 	    final DegreeModule degreeModule = context.getChildDegreeModule();
 	    if (clazz.isAssignableFrom(degreeModule.getClass())) {
 		result.add(degreeModule);
 	    }
 	    if (!degreeModule.isLeaf()) {
 		final CourseGroup courseGroup = (CourseGroup) degreeModule;
-		result.addAll(courseGroup.collectAllChildDegreeModules(clazz, executionPeriod));
+		result.addAll(courseGroup.collectAllChildDegreeModules(clazz, executionSemester));
 	    }
 	}
 	return result;
@@ -379,10 +379,10 @@ public class CourseGroup extends CourseGroup_Base {
 	return newDegreeModulesPath;
     }
 
-    public Collection<CourseGroup> getNotOptionalChildCourseGroups(final ExecutionPeriod executionPeriod) {
+    public Collection<CourseGroup> getNotOptionalChildCourseGroups(final ExecutionSemester executionSemester) {
 
-	final Collection<DegreeModule> degreeModules = getDegreeModulesByExecutionPeriod(executionPeriod);
-	final Collection<CurricularRule> curricularRules = getCurricularRulesByExecutionPeriod(executionPeriod);
+	final Collection<DegreeModule> degreeModules = getDegreeModulesByExecutionPeriod(executionSemester);
+	final Collection<CurricularRule> curricularRules = getCurricularRulesByExecutionPeriod(executionSemester);
 	final DegreeModulesSelectionLimit degreeModulesSelectionLimit = getDegreeModulesSelectionLimitRule(curricularRules);
 
 	if (degreeModulesSelectionLimit != null) {
@@ -418,20 +418,20 @@ public class CourseGroup extends CourseGroup_Base {
 	return null;
     }
 
-    private Collection<CurricularRule> getCurricularRulesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    private Collection<CurricularRule> getCurricularRulesByExecutionPeriod(final ExecutionSemester executionSemester) {
 	final Collection<CurricularRule> result = new HashSet<CurricularRule>();
 	for (final CurricularRule curricularRule : this.getCurricularRulesSet()) {
-	    if (curricularRule.isValid(executionPeriod)) {
+	    if (curricularRule.isValid(executionSemester)) {
 		result.add(curricularRule);
 	    }
 	}
 	return result;
     }
 
-    private Collection<DegreeModule> getDegreeModulesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    private Collection<DegreeModule> getDegreeModulesByExecutionPeriod(final ExecutionSemester executionSemester) {
 	final Collection<DegreeModule> result = new HashSet<DegreeModule>();
 	for (final Context context : this.getChildContexts()) {
-	    if (context.isValid(executionPeriod)) {
+	    if (context.isValid(executionSemester)) {
 		result.add(context.getChildDegreeModule());
 	    }
 	}
@@ -451,14 +451,14 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Collection<Context> getContextsWithCurricularCourseByCurricularPeriod(final CurricularPeriod curricularPeriod,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 
 	final Collection<Context> result = new HashSet<Context>();
 
 	for (final Context context : this.getChildContextsSet()) {
 
 	    if (context.getChildDegreeModule().isLeaf() && context.hasCurricularPeriod()
-		    && context.getCurricularPeriod().equals(curricularPeriod) && context.isValid(executionPeriod)) {
+		    && context.getCurricularPeriod().equals(curricularPeriod) && context.isValid(executionSemester)) {
 
 		result.add(context);
 	    }
@@ -466,10 +466,10 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    public Set<DegreeModule> getOpenChildDegreeModulesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public Set<DegreeModule> getOpenChildDegreeModulesByExecutionPeriod(final ExecutionSemester executionSemester) {
 	final Set<DegreeModule> result = new HashSet<DegreeModule>();
 	for (final Context context : getChildContexts()) {
-	    if (context.isOpen(executionPeriod)) {
+	    if (context.isOpen(executionSemester)) {
 		result.add(context.getChildDegreeModule());
 	    }
 	}
@@ -485,9 +485,9 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     @Override
-    public Double getMaxEctsCredits(final ExecutionPeriod executionPeriod) {
+    public Double getMaxEctsCredits(final ExecutionSemester executionSemester) {
 	final List<CreditsLimit> creditsLimitRules = (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT,
-		executionPeriod);
+		executionSemester);
 	if (!creditsLimitRules.isEmpty()) {
 	    for (final CreditsLimit creditsLimit : creditsLimitRules) {
 		if (getParentCourseGroups().contains(creditsLimit.getContextCourseGroup())) {
@@ -497,30 +497,30 @@ public class CourseGroup extends CourseGroup_Base {
 	    return creditsLimitRules.get(0).getMaximumCredits();
 	}
 
-	final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
-	final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionPeriod);
+	final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionSemester);
+	final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionSemester);
 	if (modulesSelectionLimit != null) {
-	    return countMaxEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMaximumLimit());
+	    return countMaxEctsCredits(modulesByExecutionPeriod, executionSemester, modulesSelectionLimit.getMaximumLimit());
 	}
 
-	return countMaxEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesByExecutionPeriod.size());
+	return countMaxEctsCredits(modulesByExecutionPeriod, executionSemester, modulesByExecutionPeriod.size());
     }
 
     private Double countMaxEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
-	    final ExecutionPeriod executionPeriod, final Integer maximumLimit) {
+	    final ExecutionSemester executionSemester, final Integer maximumLimit) {
 
 	final List<Double> ectsCredits = new ArrayList<Double>();
 	for (final DegreeModule degreeModule : modulesByExecutionPeriod) {
-	    ectsCredits.add(degreeModule.getMaxEctsCredits(executionPeriod));
+	    ectsCredits.add(degreeModule.getMaxEctsCredits(executionSemester));
 	}
 	Collections.sort(ectsCredits, new ReverseComparator());
 	return sumEctsCredits(ectsCredits, maximumLimit.intValue());
     }
 
     @Override
-    public Double getMinEctsCredits(final ExecutionPeriod executionPeriod) {
+    public Double getMinEctsCredits(final ExecutionSemester executionSemester) {
 	final List<CreditsLimit> creditsLimitRules = (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT,
-		executionPeriod);
+		executionSemester);
 	if (!creditsLimitRules.isEmpty()) {
 	    for (final CreditsLimit creditsLimit : creditsLimitRules) {
 		if (getParentCourseGroups().contains(creditsLimit.getContextCourseGroup())) {
@@ -530,21 +530,21 @@ public class CourseGroup extends CourseGroup_Base {
 	    return creditsLimitRules.get(0).getMinimumCredits();
 	}
 
-	final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionPeriod);
-	final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionPeriod);
+	final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionSemester);
+	final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionSemester);
 	if (modulesSelectionLimit != null) {
-	    return countMinEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesSelectionLimit.getMinimumLimit());
+	    return countMinEctsCredits(modulesByExecutionPeriod, executionSemester, modulesSelectionLimit.getMinimumLimit());
 	}
 
-	return countMinEctsCredits(modulesByExecutionPeriod, executionPeriod, modulesByExecutionPeriod.size());
+	return countMinEctsCredits(modulesByExecutionPeriod, executionSemester, modulesByExecutionPeriod.size());
     }
 
     private Double countMinEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
-	    final ExecutionPeriod executionPeriod, final Integer minimumLimit) {
+	    final ExecutionSemester executionSemester, final Integer minimumLimit) {
 
 	final List<Double> ectsCredits = new ArrayList<Double>();
 	for (final DegreeModule degreeModule : modulesByExecutionPeriod) {
-	    ectsCredits.add(degreeModule.getMinEctsCredits(executionPeriod));
+	    ectsCredits.add(degreeModule.getMinEctsCredits(executionSemester));
 	}
 	Collections.sort(ectsCredits);
 	return sumEctsCredits(ectsCredits, minimumLimit.intValue());
@@ -573,12 +573,12 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Context addCurricularCourse(final CurricularCourse curricularCourse, final CurricularPeriod curricularPeriod,
-	    final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final ExecutionSemester begin, final ExecutionSemester end) {
 	return addContext(curricularCourse, curricularPeriod, begin, end);
     }
 
     public Context addContext(final DegreeModule degreeModule, final CurricularPeriod curricularPeriod,
-	    final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final ExecutionSemester begin, final ExecutionSemester end) {
 
 	if (!allowChildWith(begin)) {
 	    throw new DomainException("degreeModule.cannot.add.context.with.begin.execution.period", getName(), begin.getName(),
@@ -601,8 +601,8 @@ public class CourseGroup extends CourseGroup_Base {
 	}
     }
 
-    public boolean allowChildWith(final ExecutionPeriod executionPeriod) {
-	return getMinimumExecutionPeriod().isBeforeOrEquals(executionPeriod);
+    public boolean allowChildWith(final ExecutionSemester executionSemester) {
+	return getMinimumExecutionPeriod().isBeforeOrEquals(executionSemester);
     }
 
     public Set<Context> getChildContextsSortedByDegreeModuleName() {
@@ -619,9 +619,9 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    public Set<DegreeModule> getChildDegreeModulesValidOn(final ExecutionPeriod executionPeriod) {
+    public Set<DegreeModule> getChildDegreeModulesValidOn(final ExecutionSemester executionSemester) {
 	final Set<DegreeModule> result = new HashSet<DegreeModule>();
-	for (final Context context : getValidChildContexts(executionPeriod)) {
+	for (final Context context : getValidChildContexts(executionSemester)) {
 	    result.add(context.getChildDegreeModule());
 	}
 
@@ -649,14 +649,14 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    public Set<Context> getActiveChildContextsWithMax(final ExecutionPeriod executionPeriod) {
+    public Set<Context> getActiveChildContextsWithMax(final ExecutionSemester executionSemester) {
 	final Map<DegreeModule, Context> maxContextsByDegreeModule = new HashMap<DegreeModule, Context>();
 
 	for (final Context context : getActiveChildContexts()) {
 	    if (maxContextsByDegreeModule.containsKey(context.getChildDegreeModule())) {
 		final Context existingContext = maxContextsByDegreeModule.get(context.getChildDegreeModule());
-		if (existingContext.getCurricularPeriod().getChildOrder().intValue() != executionPeriod.getSemester().intValue()
-			&& context.getCurricularPeriod().getChildOrder().intValue() == executionPeriod.getSemester().intValue()) {
+		if (existingContext.getCurricularPeriod().getChildOrder().intValue() != executionSemester.getSemester().intValue()
+			&& context.getCurricularPeriod().getChildOrder().intValue() == executionSemester.getSemester().intValue()) {
 		    maxContextsByDegreeModule.put(context.getChildDegreeModule(), context);
 		}
 
@@ -669,10 +669,10 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Map<CurricularPeriod, Set<Context>> getActiveChildCurricularContextsWithMaxByCurricularPeriod(
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	final Map<CurricularPeriod, Set<Context>> result = new HashMap<CurricularPeriod, Set<Context>>();
 
-	for (final Context context : getActiveChildContextsWithMax(executionPeriod)) {
+	for (final Context context : getActiveChildContextsWithMax(executionSemester)) {
 	    if (context.getChildDegreeModule().isCurricularCourse()) {
 		if (!result.containsKey(context.getCurricularPeriod())) {
 		    result.put(context.getCurricularPeriod(), new HashSet<Context>());
@@ -685,10 +685,10 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    public Set<CurricularCourse> getChildCurricularCoursesValidOn(final ExecutionPeriod executionPeriod) {
+    public Set<CurricularCourse> getChildCurricularCoursesValidOn(final ExecutionSemester executionSemester) {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 
-	for (final Context context : getValidChildContexts(executionPeriod)) {
+	for (final Context context : getValidChildContexts(executionSemester)) {
 	    if (context.getChildDegreeModule().isCurricularCourse()) {
 		result.add((CurricularCourse) context.getChildDegreeModule());
 	    }
@@ -697,10 +697,10 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    public List<Context> getChildContextsForCurricularCourses(final ExecutionPeriod executionPeriod) {
+    public List<Context> getChildContextsForCurricularCourses(final ExecutionSemester executionSemester) {
 	final List<Context> result = new ArrayList<Context>();
 	for (final Context context : getChildContexts(CurricularCourse.class)) {
-	    if (context.isValid(executionPeriod)) {
+	    if (context.isValid(executionSemester)) {
 		result.add(context);
 	    }
 	}
@@ -708,9 +708,9 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    public Set<Context> getActiveChildContextsWithMaxCurricularPeriodForCurricularCourses(final ExecutionPeriod executionPeriod) {
+    public Set<Context> getActiveChildContextsWithMaxCurricularPeriodForCurricularCourses(final ExecutionSemester executionSemester) {
 	final Set<Context> result = new HashSet<Context>();
-	for (final Context context : getActiveChildContextsWithMax(executionPeriod)) {
+	for (final Context context : getActiveChildContextsWithMax(executionSemester)) {
 	    if (context.getChildDegreeModule().isCurricularCourse()) {
 		result.add(context);
 	    }
@@ -734,11 +734,11 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     @Override
-    public Set<CurricularCourse> getAllCurricularCourses(final ExecutionPeriod executionPeriod) {
+    public Set<CurricularCourse> getAllCurricularCourses(final ExecutionSemester executionSemester) {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 	for (final Context context : getChildContexts()) {
-	    if (executionPeriod == null || context.isOpen(executionPeriod)) {
-		result.addAll(context.getChildDegreeModule().getAllCurricularCourses(executionPeriod));
+	    if (executionSemester == null || context.isOpen(executionSemester)) {
+		result.addAll(context.getChildDegreeModule().getAllCurricularCourses(executionSemester));
 	    }
 	}
 	return result;
@@ -750,7 +750,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Set<CurricularCourse> getAllOpenCurricularCourses() {
-	return getAllCurricularCourses(ExecutionPeriod.readActualExecutionPeriod());
+	return getAllCurricularCourses(ExecutionSemester.readActualExecutionPeriod());
     }
     
     public Set<ExecutionYear> getBeginContextExecutionYears() {

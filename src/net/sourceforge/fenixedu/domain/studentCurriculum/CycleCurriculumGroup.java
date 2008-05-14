@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -47,9 +47,9 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     public CycleCurriculumGroup(RootCurriculumGroup rootCurriculumGroup, CycleCourseGroup cycleCourseGroup,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 	this();
-	init(rootCurriculumGroup, cycleCourseGroup, executionPeriod);
+	init(rootCurriculumGroup, cycleCourseGroup, executionSemester);
     }
 
     public CycleCurriculumGroup(RootCurriculumGroup rootCurriculumGroup, CycleCourseGroup cycleCourseGroup) {
@@ -64,9 +64,9 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     @Override
-    protected void init(CurriculumGroup curriculumGroup, CourseGroup courseGroup, ExecutionPeriod executionPeriod) {
+    protected void init(CurriculumGroup curriculumGroup, CourseGroup courseGroup, ExecutionSemester executionSemester) {
 	checkInitConstraints((RootCurriculumGroup) curriculumGroup, (CycleCourseGroup) courseGroup);
-	super.init(curriculumGroup, courseGroup, executionPeriod);
+	super.init(curriculumGroup, courseGroup, executionSemester);
     }
 
     private void checkInitConstraints(final RootCurriculumGroup rootCurriculumGroup, final CycleCourseGroup cycleCourseGroup) {
@@ -204,7 +204,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	YearMonthDay result = super.calculateConclusionDate();
 
 	if (getRegistration().getWasTransition()) {
-	    final ExecutionPeriod firstBolonhaTransitionExecutionPeriod = ExecutionPeriod
+	    final ExecutionSemester firstBolonhaTransitionExecutionPeriod = ExecutionSemester
 		    .readFirstBolonhaTransitionExecutionPeriod();
 	    final YearMonthDay begin = firstBolonhaTransitionExecutionPeriod.getBeginDateYearMonthDay();
 

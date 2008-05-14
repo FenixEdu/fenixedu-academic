@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
@@ -20,12 +20,12 @@ public class LECEvenAndOddNumbersEnrollmentRule implements IEnrollmentRule {
 
     private Integer evenCourseId = new Integer(2720);
 
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
 
     public LECEvenAndOddNumbersEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
         studentNumber = studentCurricularPlan.getRegistration().getNumber().floatValue();
-        this.executionPeriod = executionPeriod;
+        this.executionSemester = executionSemester;
     }
 
     public List apply(List curricularCoursesToBeEnrolledIn) {
@@ -34,13 +34,13 @@ public class LECEvenAndOddNumbersEnrollmentRule implements IEnrollmentRule {
         CurricularCourse2Enroll evenCourse = (CurricularCourse2Enroll) CollectionUtils.find(
                 curricularCoursesToBeEnrolledIn, curricularCoursePredicate(evenCourseId));
         if ((studentNumber / 2) - Math.floor(studentNumber / 2) > 0) {
-            if (executionPeriod.getSemester().intValue() == 1) {
+            if (executionSemester.getSemester().intValue() == 1) {
                 curricularCoursesToBeEnrolledIn.remove(oddCourse);
             } else {
                 curricularCoursesToBeEnrolledIn.remove(evenCourse);
             }
         } else {
-            if (executionPeriod.getSemester().intValue() == 1) {
+            if (executionSemester.getSemester().intValue() == 1) {
                 curricularCoursesToBeEnrolledIn.remove(evenCourse);
             } else {
                 curricularCoursesToBeEnrolledIn.remove(oddCourse);

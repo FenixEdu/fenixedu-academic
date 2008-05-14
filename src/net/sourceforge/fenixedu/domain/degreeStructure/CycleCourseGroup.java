@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
@@ -17,7 +17,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     }
 
     public CycleCourseGroup(final RootCourseGroup parentCourseGroup, final String name, final String nameEn,
-	    final CycleType cycleType, final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final CycleType cycleType, final ExecutionSemester begin, final ExecutionSemester end) {
 	if (cycleType == null) {
 	    throw new DomainException("error.degreeStructure.CycleCourseGroup.cycle.type.cannot.be.null");
 	}

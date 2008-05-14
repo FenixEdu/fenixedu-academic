@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -68,7 +68,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 	if (executionPeriodID == null || !contains(getExecutionPeriodSelectItems(), executionPeriodID)) {
 	    executionPeriodID = getAndHoldIntegerParameter("executionPeriodID");
 	    if (executionPeriodID == null) {
-		ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+		ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
 		ExecutionDegree currentExecutionDegree = getDegreeCurricularPlan().getExecutionDegreeByYear(currentExecutionPeriod.getExecutionYear());
 
 		executionPeriodID = (currentExecutionDegree != null) ? currentExecutionPeriod.getIdInternal() : getMostRecentExecutionPeriod().getIdInternal(); 
@@ -105,15 +105,15 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 	return getDegree().getMostRecentDegreeCurricularPlan();
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	final Integer executionPeriodID = getExecutionPeriodID();
 	if (degreeCurricularPlan != null && executionPeriodID != null) {
 	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
 		final ExecutionYear executionYear = executionDegree.getExecutionYear();
-		for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-		    if (executionPeriod.getIdInternal().equals(executionPeriodID)) {
-			return executionPeriod;
+		for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+		    if (executionSemester.getIdInternal().equals(executionPeriodID)) {
+			return executionSemester;
 		    }
 		}
 	    }
@@ -139,22 +139,22 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 	}
     }
 
-    public ExecutionPeriod getMostRecentExecutionPeriod() {
-	ExecutionPeriod mostRecentExecutionPeriod = null;
+    public ExecutionSemester getMostRecentExecutionPeriod() {
+	ExecutionSemester mostRecentExecutionPeriod = null;
 
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	if (degreeCurricularPlan != null) {
 	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
 		final ExecutionYear executionYear = executionDegree.getExecutionYear();
-		for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-		    if (executionPeriod.getState() != PeriodState.CLOSED) {
+		for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+		    if (executionSemester.getState() != PeriodState.CLOSED) {
 			if (mostRecentExecutionPeriod == null) {
-			    mostRecentExecutionPeriod = executionPeriod;
+			    mostRecentExecutionPeriod = executionSemester;
 			} else {
 			    final ExecutionYear mostRecentExecutionYear = mostRecentExecutionPeriod.getExecutionYear();
 			    if (executionYear.getYear().compareTo(mostRecentExecutionYear.getYear()) > 0
-				    || (executionYear == mostRecentExecutionYear && executionPeriod.getSemester().compareTo(mostRecentExecutionPeriod.getSemester()) > 0)) {
-				mostRecentExecutionPeriod = executionPeriod;
+				    || (executionYear == mostRecentExecutionYear && executionSemester.getSemester().compareTo(mostRecentExecutionPeriod.getSemester()) > 0)) {
+				mostRecentExecutionPeriod = executionSemester;
 			    }
 			}
 		    }
@@ -188,9 +188,9 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
 	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
-	    for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-		if (executionPeriod.getState() != PeriodState.CLOSED) {
-		    executionPeriodSelectItems.add(new SelectItem(executionPeriod.getIdInternal(), executionPeriod.getName() + " " + executionYear.getYear()));
+	    for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+		if (executionSemester.getState() != PeriodState.CLOSED) {
+		    executionPeriodSelectItems.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getName() + " " + executionYear.getYear()));
 		}
 	    }
 	}
@@ -213,11 +213,11 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	final CurricularYear curricularYear = getCurricularYear();
-	final ExecutionPeriod executionPeriod = getExecutionPeriod();
+	final ExecutionSemester executionSemester = getExecutionPeriod();
 	for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-	    if (curricularYear == null || curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan, executionPeriod)) {                
+	    if (curricularYear == null || curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan, executionSemester)) {                
 		for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-		    if (executionCourse.getExecutionPeriod() == executionPeriod) {
+		    if (executionCourse.getExecutionPeriod() == executionSemester) {
 			for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
 
 			    if (evaluation instanceof WrittenEvaluation) {
@@ -309,17 +309,17 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     }
 
     public Date getBeginDate() {
-	final ExecutionPeriod executionPeriod = getExecutionPeriod();
+	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
 	    if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
-		if (executionPeriod.getSemester().intValue() == 1 && executionDegree.getPeriodLessonsFirstSemester() != null) {
+		if (executionSemester.getSemester().intValue() == 1 && executionDegree.getPeriodLessonsFirstSemester() != null) {
 		    return executionDegree.getPeriodLessonsFirstSemester().getStart();
-		} else if (executionPeriod.getSemester().intValue() == 2 && executionDegree.getPeriodLessonsSecondSemester() != null) {
+		} else if (executionSemester.getSemester().intValue() == 2 && executionDegree.getPeriodLessonsSecondSemester() != null) {
 		    return executionDegree.getPeriodLessonsSecondSemester().getStart();
 		} else {
-		    return executionPeriod.getBeginDate();
+		    return executionSemester.getBeginDate();
 		}
 	    }
 	}
@@ -327,17 +327,17 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     }
 
     public Date getEndDate() {
-	final ExecutionPeriod executionPeriod = getExecutionPeriod();
+	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+	final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
 	    if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
-		if (executionPeriod.getSemester().intValue() == 1 && executionDegree.getPeriodExamsFirstSemester() != null) {
+		if (executionSemester.getSemester().intValue() == 1 && executionDegree.getPeriodExamsFirstSemester() != null) {
 		    return executionDegree.getPeriodExamsFirstSemester().getEnd();
-		} else if (executionPeriod.getSemester().intValue() == 2 && executionDegree.getPeriodExamsSecondSemester() != null) {
+		} else if (executionSemester.getSemester().intValue() == 2 && executionDegree.getPeriodExamsSecondSemester() != null) {
 		    return executionDegree.getPeriodExamsSecondSemester().getEnd();
 		} else {
-		    return executionPeriod.getEndDate();
+		    return executionSemester.getEndDate();
 		}
 	    }
 	}

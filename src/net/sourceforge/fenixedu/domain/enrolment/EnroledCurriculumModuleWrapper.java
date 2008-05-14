@@ -8,7 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -26,11 +26,11 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 
     protected DomainReference<Context> context;
 
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
-    public EnroledCurriculumModuleWrapper(final CurriculumModule curriculumModule, final ExecutionPeriod executionPeriod) {
+    public EnroledCurriculumModuleWrapper(final CurriculumModule curriculumModule, final ExecutionSemester executionSemester) {
 	setCurriculumModule(curriculumModule);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
     }
 
     public CurriculumModule getCurriculumModule() {
@@ -61,12 +61,12 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 	this.context = (context != null) ? new DomainReference<Context>(context) : null;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    public ExecutionSemester getExecutionPeriod() {
+	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
     public CurriculumGroup getCurriculumGroup() {
@@ -102,7 +102,7 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 	}
     }
 
-    public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
+    public Double getEctsCredits(final ExecutionSemester executionSemester) {
 	return getCurriculumModule().getEctsCredits();
     }
 
@@ -120,17 +120,17 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 	return getCurriculumModule().hashCode();
     }
 
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionPeriod executionPeriod) {
-	return getDegreeModule() != null ? getDegreeModule().getCurricularRules(executionPeriod) : Collections.EMPTY_LIST;
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
+	return getDegreeModule() != null ? getDegreeModule().getCurricularRules(executionSemester) : Collections.EMPTY_LIST;
     }
 
-    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionPeriod executionPeriod) {
-	return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup().getCurricularRules(executionPeriod);
+    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionSemester executionSemester) {
+	return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup().getCurricularRules(executionSemester);
     }
 
-    public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
+    public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
 	if (getCurriculumModule().isEnrolment()) {
-	    return ((Enrolment) getCurriculumModule()).getAccumulatedEctsCredits(executionPeriod);
+	    return ((Enrolment) getCurriculumModule()).getAccumulatedEctsCredits(executionSemester);
 	} else {
 	    return 0d;
 	}

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionCourseOIDByCodeInLatestPeriod extends Service {
 
     public Integer run(String executionCourseCode) throws ExcepcaoPersistencia {
-        final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        ExecutionCourse executionCourse = executionPeriod.getExecutionCourseByInitials(executionCourseCode);
+        final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+        ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseCode);
 
         if (executionCourse != null) {
             return executionCourse.getIdInternal();

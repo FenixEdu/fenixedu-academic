@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -100,14 +100,15 @@ public class StudentDA extends FenixDispatchAction {
 	final Registration registration = getRegistration(request);
 	final RegistrationCurriculumBean registrationCurriculumBean = new RegistrationCurriculumBean(registration);
 	request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
-	
+
 	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
 	if (degreeCurricularPlanID != null) {
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
 
 	if (!registrationCurriculumBean.hasCycleCurriculumGroup()) {
-	    final List<CycleCurriculumGroup> internalCycleCurriculumGrops = registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
+	    final List<CycleCurriculumGroup> internalCycleCurriculumGrops = registration.getLastStudentCurricularPlan()
+		    .getInternalCycleCurriculumGrops();
 	    if (internalCycleCurriculumGrops.size() > 1) {
 		return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
 	    }
@@ -127,7 +128,7 @@ public class StudentDA extends FenixDispatchAction {
 
 	return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
     }
-    
+
     private RegistrationCurriculumBean getRegistrationCurriculumBeanFromViewState() {
 	return (RegistrationCurriculumBean) getObjectFromViewState("registrationCurriculumBean");
     }
@@ -139,7 +140,8 @@ public class StudentDA extends FenixDispatchAction {
 	request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
 	request.setAttribute("registration", registrationCurriculumBean.getRegistration());
 
-	request.setAttribute("degreeCurricularPlanID", registrationCurriculumBean.getCycleCurriculumGroup().getStudentCurricularPlan().getDegreeCurricularPlan().getIdInternal());
+	request.setAttribute("degreeCurricularPlanID", registrationCurriculumBean.getCycleCurriculumGroup()
+		.getStudentCurricularPlan().getDegreeCurricularPlan().getIdInternal());
 
 	return mapping.findForward("view-registration-curriculum");
     }
@@ -147,9 +149,10 @@ public class StudentDA extends FenixDispatchAction {
     public ActionForward viewRegistrationCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final RegistrationCurriculumBean registrationCurriculumBean = getRegistrationCurriculumBeanFromViewState();
-	
+
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	if (registrationCurriculumBean.getExecutionYear() == null && registrationCurriculumBean.getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
+	if (registrationCurriculumBean.getExecutionYear() == null
+		&& registrationCurriculumBean.getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
 	    registrationCurriculumBean.setExecutionYear(currentExecutionYear);
 	}
 
@@ -247,20 +250,21 @@ public class StudentDA extends FenixDispatchAction {
 	return mapping.findForward("registrationConclusionDocument");
     }
 
-    public ActionForward viewAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	RenderUtils.invalidateViewState();
 
 	final Registration registration = getRegistration(request);
 	request.setAttribute("registration", registration);
 
 	if (registration != null) {
-	    final SortedMap<ExecutionPeriod, SortedSet<Attends>> attendsMap = new TreeMap<ExecutionPeriod, SortedSet<Attends>>();
+	    final SortedMap<ExecutionSemester, SortedSet<Attends>> attendsMap = new TreeMap<ExecutionSemester, SortedSet<Attends>>();
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
-		final ExecutionPeriod executionPeriod = attends.getExecutionPeriod();
-		SortedSet<Attends> attendsSet = attendsMap.get(executionPeriod);
+		final ExecutionSemester executionSemester = attends.getExecutionPeriod();
+		SortedSet<Attends> attendsSet = attendsMap.get(executionSemester);
 		if (attendsSet == null) {
 		    attendsSet = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR);
-		    attendsMap.put(executionPeriod, attendsSet);
+		    attendsMap.put(executionSemester, attendsSet);
 		}
 		attendsSet.add(attends);
 	    }
@@ -270,14 +274,15 @@ public class StudentDA extends FenixDispatchAction {
 	return mapping.findForward("viewAttends");
     }
 
-    public ActionForward prepareAddAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareAddAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final Registration registration = getRegistration(request);
 	request.setAttribute("registration", registration);
 
 	AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
 	if (addAttendsBean == null) {
 	    addAttendsBean = new AddAttendsBean();
-	    final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	    final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionPeriod();
 	    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
 	    final Degree degree = registration.getDegree();
 	    final ExecutionDegree executionDegree = getExecutionDegree(executionYear, degree);
@@ -304,7 +309,8 @@ public class StudentDA extends FenixDispatchAction {
 	return null;
     }
 
-    public ActionForward addAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward addAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final Registration registration = getRegistration(request);
 	request.setAttribute("registration", registration);
 
@@ -316,12 +322,14 @@ public class StudentDA extends FenixDispatchAction {
 	return viewAttends(mapping, actionForm, request, response);
     }
 
-    public ActionForward deleteAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward deleteAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final Registration registration = getRegistration(request);
 	request.setAttribute("registration", registration);
 
 	final String attendsIdString = request.getParameter("attendsId");
-	final Integer attendsId = attendsIdString != null && attendsIdString.length() > 0 ? Integer.valueOf(attendsIdString) : null;
+	final Integer attendsId = attendsIdString != null && attendsIdString.length() > 0 ? Integer.valueOf(attendsIdString)
+		: null;
 	final Attends attends = attendsId == null ? null : rootDomainObject.readAttendsByOID(attendsId);
 
 	executeService("DeleteStudentAttendingCourse", registration, attends.getExecutionCourse().getIdInternal());

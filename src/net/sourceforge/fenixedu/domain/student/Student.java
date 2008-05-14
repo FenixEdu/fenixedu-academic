@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -113,11 +113,11 @@ public class Student extends Student_Base {
     }
 
     public Collection<Registration> getRegistrationsByDegreeTypeAndExecutionPeriod(DegreeType degreeType,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 	List<Registration> result = new ArrayList<Registration>();
 	for (Registration registration : getRegistrations()) {
 	    if (registration.getDegreeType().equals(degreeType)
-		    && registration.hasStudentCurricularPlanInExecutionPeriod(executionPeriod)) {
+		    && registration.hasStudentCurricularPlanInExecutionPeriod(executionSemester)) {
 		result.add(registration);
 	    }
 	}
@@ -484,9 +484,9 @@ public class Student extends Student_Base {
 	return true;
     }
 
-    public Set<ExecutionPeriod> getEnroledExecutionPeriods() {
-	Set<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(
-		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+    public Set<ExecutionSemester> getEnroledExecutionPeriods() {
+	Set<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
+		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
 	for (Registration registration : getRegistrations()) {
 	    result.addAll(registration.getEnrolmentsExecutionPeriods());
 	}
@@ -494,19 +494,19 @@ public class Student extends Student_Base {
     }
 
     public Collection<StudentStatuteBean> getCurrentStatutes() {
-	return getStatutes(ExecutionPeriod.readActualExecutionPeriod());
+	return getStatutes(ExecutionSemester.readActualExecutionPeriod());
     }
 
-    public Collection<StudentStatuteBean> getStatutes(ExecutionPeriod executionPeriod) {
+    public Collection<StudentStatuteBean> getStatutes(ExecutionSemester executionSemester) {
 	List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
 	for (final StudentStatute statute : getStudentStatutesSet()) {
-	    if (statute.isValidInExecutionPeriod(executionPeriod)) {
-		result.add(new StudentStatuteBean(statute, executionPeriod));
+	    if (statute.isValidInExecutionPeriod(executionSemester)) {
+		result.add(new StudentStatuteBean(statute, executionSemester));
 	    }
 	}
 
 	if (isHandicapped()) {
-	    result.add(new StudentStatuteBean(StudentStatuteType.HANDICAPPED, executionPeriod));
+	    result.add(new StudentStatuteBean(StudentStatuteType.HANDICAPPED, executionSemester));
 	}
 
 	return result;
@@ -527,8 +527,8 @@ public class Student extends Student_Base {
 
     public Collection<StudentStatuteBean> getAllStatutesSplittedByExecutionPeriod() {
 	List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
-	for (ExecutionPeriod executionPeriod : getEnroledExecutionPeriods()) {
-	    result.addAll(getStatutes(executionPeriod));
+	for (ExecutionSemester executionSemester : getEnroledExecutionPeriods()) {
+	    result.addAll(getStatutes(executionSemester));
 	}
 	return result;
     }
@@ -1022,11 +1022,11 @@ public class Student extends Student_Base {
 	return result;
     }
 
-    public Collection<? extends Forum> getForuns(ExecutionPeriod executionPeriod) {
+    public Collection<? extends Forum> getForuns(ExecutionSemester executionSemester) {
 	final Collection<Forum> res = new HashSet<Forum>();
 	for (Registration registration : getRegistrationsSet()) {
 	    for (Attends attends : registration.getAssociatedAttendsSet()) {
-		if (attends.getExecutionPeriod() == executionPeriod) {
+		if (attends.getExecutionPeriod() == executionSemester) {
 		    res.addAll(attends.getExecutionCourse().getForuns());
 		}
 	    }
@@ -1056,21 +1056,21 @@ public class Student extends Student_Base {
     }
 
     public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final Integer numberOfDelayDays) {
-	new AccountingEventsManager().createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionPeriod, numberOfDelayDays);
+	    final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
+	new AccountingEventsManager().createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
     }
 
-    public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionPeriod executionPeriod) {
+    public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionSemester executionSemester) {
 	Collection<EnrolmentLog> res = new HashSet<EnrolmentLog>();
 	for (Registration registration : getRegistrationsSet()) {
-	    res.addAll(registration.getEnrolmentLogsByPeriod(executionPeriod));
+	    res.addAll(registration.getEnrolmentLogsByPeriod(executionSemester));
 	}
 	return res;
     }
 
-    public boolean hasActiveStatuteInPeriod(StudentStatuteType studentStatuteType, ExecutionPeriod executionPeriod) {
+    public boolean hasActiveStatuteInPeriod(StudentStatuteType studentStatuteType, ExecutionSemester executionSemester) {
 	for (StudentStatute studentStatute : getStudentStatutesSet()) {
-	    if (studentStatute.getStatuteType() == studentStatuteType && studentStatute.isValidInExecutionPeriod(executionPeriod)) {
+	    if (studentStatute.getStatuteType() == studentStatuteType && studentStatute.isValidInExecutionPeriod(executionSemester)) {
 		return true;
 	    }
 	}

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -20,9 +20,9 @@ public class CreateCurricularCourse extends Service {
 
     private CurricularPeriod curricularPeriod = null;
 
-    private ExecutionPeriod beginExecutionPeriod = null;
+    private ExecutionSemester beginExecutionPeriod = null;
 
-    private ExecutionPeriod endExecutionPeriod = null;
+    private ExecutionSemester endExecutionPeriod = null;
 
     public void run(CreateCurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
 
@@ -35,7 +35,7 @@ public class CreateCurricularCourse extends Service {
 	}
 
 	// TODO this is not generic thinking... must find a way to abstract from
-        // years/semesters
+	// years/semesters
 	if (competenceCourse.isAnual()) {
 	    degreeCurricularPlan
 		    .createCurricularPeriodFor(curricularCourseArgs.getYear(), curricularCourseArgs.getSemester() + 1);
@@ -47,11 +47,11 @@ public class CreateCurricularCourse extends Service {
     }
 
     /**
-         * For Optional Curricular Courses
-         * 
-         * @param createOptionalCurricularCourseArgs
-         * @throws FenixServiceException
-         */
+     * For Optional Curricular Courses
+     * 
+     * @param createOptionalCurricularCourseArgs
+     * @throws FenixServiceException
+     */
     public void run(CreateOptionalCurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
 
 	readDomainObjects(curricularCourseArgs);
@@ -74,7 +74,7 @@ public class CreateCurricularCourse extends Service {
 	}
 
 	// TODO this is not generic thinking... must find a way to abstract from
-        // years/semesters
+	// years/semesters
 	curricularPeriod = degreeCurricularPlan.getCurricularPeriodFor(curricularCourseArgs.getYear(), curricularCourseArgs
 		.getSemester());
 	if (curricularPeriod == null) {
@@ -84,14 +84,14 @@ public class CreateCurricularCourse extends Service {
 
 	beginExecutionPeriod = getBeginExecutionPeriod(curricularCourseArgs);
 	endExecutionPeriod = (curricularCourseArgs.getEndExecutionPeriodID() == null) ? null : rootDomainObject
-		.readExecutionPeriodByOID(curricularCourseArgs.getEndExecutionPeriodID());
+		.readExecutionSemesterByOID(curricularCourseArgs.getEndExecutionPeriodID());
     }
 
-    private ExecutionPeriod getBeginExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
+    private ExecutionSemester getBeginExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
 	if (curricularCourseArgs.getBeginExecutionPeriodID() == null) {
-	    return ExecutionPeriod.readActualExecutionPeriod();
+	    return ExecutionSemester.readActualExecutionPeriod();
 	} else {
-	    return rootDomainObject.readExecutionPeriodByOID(curricularCourseArgs.getBeginExecutionPeriodID());
+	    return rootDomainObject.readExecutionSemesterByOID(curricularCourseArgs.getBeginExecutionPeriodID());
 	}
     }
 

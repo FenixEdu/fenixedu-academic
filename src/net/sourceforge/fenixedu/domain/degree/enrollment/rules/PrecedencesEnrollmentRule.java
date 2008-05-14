@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
@@ -21,10 +21,10 @@ public class PrecedencesEnrollmentRule implements IEnrollmentRule {
     protected PrecedenceContext precedenceContext;
 
     public PrecedencesEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
         this.precedenceContext = new PrecedenceContext();
         this.precedenceContext.setStudentCurricularPlan(studentCurricularPlan);
-        this.precedenceContext.setExecutionPeriod(executionPeriod);
+        this.precedenceContext.setExecutionPeriod(executionSemester);
     }
 
     public List apply(List curricularCoursesWhereToApply) {

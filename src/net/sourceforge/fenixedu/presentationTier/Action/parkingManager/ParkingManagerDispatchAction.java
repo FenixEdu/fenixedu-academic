@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
@@ -124,7 +124,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	if (parkingRequest.getParkingParty().getParty().isPerson()) {
 	    Person person = (Person) parkingRequest.getParkingParty().getParty();
 	    if (person.getTeacher() != null
-		    && person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+		    && person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
 		request.setAttribute("monitor", "true");
 	    }
 	}
@@ -336,7 +336,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    return "Nº: " + p.getParkingParty().getPhdNumber();
 	}
 	if (p.getTeacher() != null && p.getTeacher().getCurrentWorkingDepartment() != null
-		&& !p.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+		&& !p.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
 	    return "Nº Mec: " + p.getTeacher().getTeacherNumber();
 	}
 	if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null
@@ -358,7 +358,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    return "Nº: " + p.getGrantOwner().getNumber();
 	}
 	if (p.getTeacher() != null && p.getTeacher().getCurrentWorkingDepartment() != null
-		&& p.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+		&& p.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
 	    return "Nº Mec: " + p.getTeacher().getTeacherNumber();
 	}
 	return "";

@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.converters;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -34,8 +34,8 @@ public class DegreeModuleToEnrolKeyConverter extends Converter {
 
 	    final Context context = (Context) converter.convert(type, parts[0]);
 	    final CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[1]);
-	    final ExecutionPeriod executionPeriod = (ExecutionPeriod) converter.convert(type, parts[2]);
-	    result.add(new DegreeModuleToEnrol(curriculumGroup, context, executionPeriod));
+	    final ExecutionSemester executionSemester = (ExecutionSemester) converter.convert(type, parts[2]);
+	    result.add(new DegreeModuleToEnrol(curriculumGroup, context, executionSemester));
 	}
 
 	return result;

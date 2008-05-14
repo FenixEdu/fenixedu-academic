@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -20,8 +20,8 @@ public class ReadClassesForCurrentAndNextPeriodByDegree extends Service {
 
     public Object run(final Integer degreeOID) throws ExcepcaoPersistencia {
 
-        final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        final ExecutionPeriod nextExecutionPeriod = currentExecutionPeriod.getNextExecutionPeriod();
+        final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+        final ExecutionSemester nextExecutionPeriod = currentExecutionPeriod.getNextExecutionPeriod();
 
         final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
 
@@ -36,8 +36,8 @@ public class ReadClassesForCurrentAndNextPeriodByDegree extends Service {
     }
 
     private void constructViews(final List classViews, final Degree degree,
-            final ExecutionPeriod executionPeriod) {
-        for (final SchoolClass schoolClass : executionPeriod.getSchoolClasses()) {
+            final ExecutionSemester executionSemester) {
+        for (final SchoolClass schoolClass : executionSemester.getSchoolClasses()) {
             if (isForDegree(schoolClass, degree)) {
                 ClassView classView = new ClassView(schoolClass);
                 classViews.add(classView);

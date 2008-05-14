@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.domain.credits;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 /**
  * @author jpvl
@@ -14,8 +14,8 @@ public abstract class DatePeriodBaseCreditLine extends DatePeriodBaseCreditLine_
 		super();
 	}
 
-	public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
-        return (getEnd().after(executionPeriod.getBeginDate()) && getStart().before(executionPeriod
+	public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
+        return (getEnd().after(executionSemester.getBeginDate()) && getStart().before(executionSemester
                 .getEndDate()));
     }
 

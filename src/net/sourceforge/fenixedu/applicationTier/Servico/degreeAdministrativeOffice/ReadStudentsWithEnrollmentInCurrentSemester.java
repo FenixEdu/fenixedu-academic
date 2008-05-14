@@ -10,7 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -51,10 +51,10 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
 
     private boolean studentHasEnrollments(Registration registration) throws ExcepcaoPersistencia {
 
-        ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
 
         List<Enrolment> enrollments = registration.getActiveStudentCurricularPlan()
-                .getEnrolmentsByExecutionPeriod(executionPeriod);
+                .getEnrolmentsByExecutionPeriod(executionSemester);
 
         for (int iter = 0; iter < enrollments.size(); iter++) {
             Enrolment enrollment = (Enrolment) enrollments.get(iter);

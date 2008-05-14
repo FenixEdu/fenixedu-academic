@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 
@@ -68,7 +68,7 @@ public class ReadExamsByDate extends Service {
         final Set<Integer> curricularCourseIDs = new HashSet<Integer>();
 
         // Select an ExecutionPeriod from any ExecutionCourses
-        final ExecutionPeriod executionPeriod = exam.getAssociatedExecutionCourses().get(0)
+        final ExecutionSemester executionSemester = exam.getAssociatedExecutionCourses().get(0)
                 .getExecutionPeriod();
         int numberStudentes = 0;
 
@@ -78,7 +78,7 @@ public class ReadExamsByDate extends Service {
                 curricularCourseIDs.add(curricularCourse.getIdInternal());
                 result.add(InfoDegree.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()
                         .getDegree()));
-                numberStudentes += calculateNumberOfEnrolmentStudents(curricularCourse, executionPeriod);
+                numberStudentes += calculateNumberOfEnrolmentStudents(curricularCourse, executionSemester);
             }
         }
         viewExamByDayAndShift.setNumberStudentesAttendingCourse(Integer.valueOf(numberStudentes));
@@ -87,10 +87,10 @@ public class ReadExamsByDate extends Service {
     }
 
     private Integer calculateNumberOfEnrolmentStudents(final CurricularCourse curricularCourse,
-            final ExecutionPeriod executionPeriod) {
+            final ExecutionSemester executionSemester) {
         int numberOfStudents = 0;
         for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
-            if (enrolment.getExecutionPeriod() == executionPeriod) {
+            if (enrolment.getExecutionPeriod() == executionSemester) {
                 numberOfStudents++;
             }
         }

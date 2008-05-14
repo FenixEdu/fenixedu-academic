@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 
@@ -19,13 +19,13 @@ public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base {
 	}
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-        ExecutionPeriod executionPeriod = precedenceContext.getExecutionPeriod();
+        ExecutionSemester executionSemester = precedenceContext.getExecutionPeriod();
 
         boolean isValid = false;
 
         if (this.getPeriodToApplyRestriction().equals(PeriodToApplyRestriction.BOTH_SEMESTERS)) {
             isValid = true;
-        } else if (executionPeriod.getSemester().equals(
+        } else if (executionSemester.getSemester().equals(
                 new Integer(this.getPeriodToApplyRestriction().getValue()))) {
             isValid = true;
         }

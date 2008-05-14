@@ -9,7 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -22,7 +22,7 @@ public class DelegateCurricularCourseBean implements Serializable {
 	
 	private DomainReference<ExecutionYear> executionYear;
 	
-	private DomainReference<ExecutionPeriod> executionPeriod;
+	private DomainReference<ExecutionSemester> executionSemester;
 	
 	private List<DomainReference<Student>> enrolledStudents;
 	
@@ -37,11 +37,11 @@ public class DelegateCurricularCourseBean implements Serializable {
     }
 
 	public DelegateCurricularCourseBean(CurricularCourse curricularCourse, ExecutionYear executionYear,
-			Integer curricularYear, ExecutionPeriod executionPeriod) {
+			Integer curricularYear, ExecutionSemester executionSemester) {
 		setCurricularCourse(curricularCourse);
 		setExecutionYear(executionYear);
 		setCurricularYear(curricularYear);
-		setExecutionPeriod(executionPeriod);
+		setExecutionPeriod(executionSemester);
 	}
 	
 	public CurricularCourse getCurricularCourse() {
@@ -60,12 +60,12 @@ public class DelegateCurricularCourseBean implements Serializable {
 		this.executionYear = new DomainReference<ExecutionYear>(executionYear);
 	}
 	
-	public ExecutionPeriod getExecutionPeriod() {
-		return (executionPeriod == null ? null : executionPeriod.getObject());
+	public ExecutionSemester getExecutionPeriod() {
+		return (executionSemester == null ? null : executionSemester.getObject());
 	}
 
-	public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-		this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
+	public void setExecutionPeriod(ExecutionSemester executionSemester) {
+		this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
 	}
 	
 	public List<Student> getEnrolledStudents() {

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -27,9 +27,9 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
 
     public SpecificLEECEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
         this.studentCurricularPlan = studentCurricularPlan;
-        this.executionPeriod = executionPeriod;
+        this.executionSemester = executionSemester;
     }
 
     protected List specificAlgorithm(StudentCurricularPlan studentCurricularPlan)
@@ -573,7 +573,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
     }
 
-    protected List filter(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod,
+    protected List filter(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
             List curricularCoursesToBeEnrolledIn,
             final List selectedCurricularCoursesFromSpecializationAndSecundaryAreas) {
 
@@ -603,12 +603,12 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         List secundaryAreaCurricularCourses = getSecundaryAreaCurricularCourses(studentCurricularPlan);
 
         if (thereIsAnyTemporaryCurricularCourse(studentCurricularPlan,
-                executionPeriod, specializationAreaCurricularCourses)) {
+                executionSemester, specializationAreaCurricularCourses)) {
             markCurricularCourses(curricularCoursesFromOtherAreasToMantain,
                     specializationAreaCurricularCourses);
         }
 
-        if (thereIsAnyTemporaryCurricularCourse(studentCurricularPlan, executionPeriod,
+        if (thereIsAnyTemporaryCurricularCourse(studentCurricularPlan, executionSemester,
                 secundaryAreaCurricularCourses)) {
             markCurricularCourses(curricularCoursesFromOtherAreasToMantain,
                     secundaryAreaCurricularCourses);

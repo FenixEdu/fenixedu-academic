@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseSt
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -31,14 +31,14 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
 	final Department department = rootDomainObject.readDepartmentByOID(departementID);
 
-	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
 	final Set<CompetenceCourse> competenceCourses = new HashSet<CompetenceCourse>();
-	department.addAllCompetenceCoursesByExecutionPeriod(competenceCourses, executionPeriod);
-	department.addAllBolonhaCompetenceCourses(competenceCourses, executionPeriod);
+	department.addAllCompetenceCoursesByExecutionPeriod(competenceCourses, executionSemester);
+	department.addAllBolonhaCompetenceCourses(competenceCourses, executionSemester);
 
 	for (CompetenceCourse competenceCourse : competenceCourses) {
-	    final List<Enrolment> enrollments = competenceCourse.getActiveEnrollments(executionPeriod);
+	    final List<Enrolment> enrollments = competenceCourse.getActiveEnrollments(executionSemester);
 	    if (enrollments.size() > 0) {
 		CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();
 		competenceCourseStatistics.setIdInternal(competenceCourse.getIdInternal());

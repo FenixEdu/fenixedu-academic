@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -48,9 +48,9 @@ public class ReadCurriculumByCurricularCourseCode extends Service {
     private List buildExecutionCourses(final CurricularCourse curricularCourse) {
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
         for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            if (executionPeriod.getState().equals(PeriodState.OPEN)
-                    || executionPeriod.getState().equals(PeriodState.CURRENT)) {
+            final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+            if (executionSemester.getState().equals(PeriodState.OPEN)
+                    || executionSemester.getState().equals(PeriodState.CURRENT)) {
                 infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
         }

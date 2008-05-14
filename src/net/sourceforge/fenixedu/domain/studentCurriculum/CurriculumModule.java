@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -145,10 +145,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	return hasCurriculumGroup() && getCurriculumGroup().isNoCourseGroupCurriculumGroup();
     }
 
-    public Set<ICurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
-	final Set<ICurricularRule> result = hasCurriculumGroup() ? getCurriculumGroup().getCurricularRules(executionPeriod)
+    public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
+	final Set<ICurricularRule> result = hasCurriculumGroup() ? getCurriculumGroup().getCurricularRules(executionSemester)
 		: new HashSet<ICurricularRule>();
-	result.addAll(getDegreeModule().getCurricularRules(executionPeriod));
+	result.addAll(getDegreeModule().getCurricularRules(executionSemester));
 
 	return result;
     }
@@ -159,9 +159,9 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, getCurriculumGroup().getDegreeModule(),
-		executionPeriod);
+		executionSemester);
     }
 
     public String getFullPath() {
@@ -246,12 +246,12 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     abstract public Double getAprovedEctsCredits();
 
-    abstract public Double getEnroledEctsCredits(final ExecutionPeriod executionPeriod);
+    abstract public Double getEnroledEctsCredits(final ExecutionSemester executionSemester);
 
-    abstract public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
+    abstract public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester);
 
     abstract public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse,
-	    final ExecutionPeriod executionPeriod);
+	    final ExecutionSemester executionSemester);
 
     abstract public boolean hasAnyEnrolments();
 
@@ -260,13 +260,13 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     abstract public boolean hasAnyApprovedCurriculumLines();
 
     abstract public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse,
-	    final ExecutionPeriod executionPeriod);
+	    final ExecutionSemester executionSemester);
 
     abstract public ExecutionYear getIEnrolmentsLastExecutionYear();
 
-    abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod);
+    abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester);
 
-    abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod);
+    abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionSemester executionSemester);
 
     abstract public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse);
 

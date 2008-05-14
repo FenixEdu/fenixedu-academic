@@ -6,7 +6,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -25,12 +25,12 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 
     private DomainReference<Context> context;
 
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
-    public DegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context, ExecutionPeriod executionPeriod) {
+    public DegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context, ExecutionSemester executionSemester) {
 	this.curriculumGroup = new DomainReference<CurriculumGroup>(curriculumGroup);
 	this.context = new DomainReference<Context>(context);
-	this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
+	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
     }
 
     public CurriculumGroup getCurriculumGroup() {
@@ -49,12 +49,12 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 	this.context = (context != null) ? new DomainReference<Context>(context) : null;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    public ExecutionSemester getExecutionPeriod() {
+	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
     public String getKey() {
@@ -87,8 +87,8 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 	return getContext().getChildDegreeModule();
     }
 
-    public Double getEctsCredits(final ExecutionPeriod executionPeriod) {
-	return isLeaf() ? ((CurricularCourse) getDegreeModule()).getEctsCredits(executionPeriod) : Double.valueOf(0d);
+    public Double getEctsCredits(final ExecutionSemester executionSemester) {
+	return isLeaf() ? ((CurricularCourse) getDegreeModule()).getEctsCredits(executionSemester) : Double.valueOf(0d);
     }
 
     @Override
@@ -106,17 +106,17 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 	return getContext().hashCode() + getCurriculumGroup().hashCode();
     }
 
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionPeriod executionPeriod) {
-	return getDegreeModule().getCurricularRules(executionPeriod);
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionSemester executionSemester) {
+	return getDegreeModule().getCurricularRules(executionSemester);
     }
 
-    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionPeriod executionPeriod) {
-	return getCurriculumGroup().getCurricularRules(executionPeriod);
+    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionSemester executionSemester) {
+	return getCurriculumGroup().getCurricularRules(executionSemester);
     }
 
-    public double getAccumulatedEctsCredits(final ExecutionPeriod executionPeriod) {
+    public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
 	if (isLeaf()) {
-	    return getCurriculumGroup().getStudentCurricularPlan().getAccumulatedEctsCredits(executionPeriod,
+	    return getCurriculumGroup().getStudentCurricularPlan().getAccumulatedEctsCredits(executionSemester,
 		    (CurricularCourse) getDegreeModule());
 	} else {
 	    return 0d;

@@ -10,7 +10,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -29,7 +29,7 @@ public class InfoCurriculumHistoricReport implements Serializable {
     
     DomainReference<CurricularCourse> curricularCourse;
 
-    DomainReference<ExecutionPeriod> executionPeriod;
+    DomainReference<ExecutionSemester> executionSemester;
 
     public Integer getApproved() {
         return approved;
@@ -64,12 +64,12 @@ public class InfoCurriculumHistoricReport implements Serializable {
 
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return this.executionPeriod == null ?  null : this.executionPeriod.getObject();
+    public ExecutionSemester getExecutionPeriod() {
+	return this.executionSemester == null ?  null : this.executionSemester.getObject();
     }
 
-    private void setExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod == null) ? null : new DomainReference<ExecutionPeriod>(executionPeriod);
+    private void setExecutionPeriod(final ExecutionSemester executionSemester) {
+	this.executionSemester = (executionSemester == null) ? null : new DomainReference<ExecutionSemester>(executionSemester);
 
     }
 
@@ -81,8 +81,8 @@ public class InfoCurriculumHistoricReport implements Serializable {
 	return getExecutionPeriod().getExecutionYear();
     }
     
-    public InfoCurriculumHistoricReport(final ExecutionPeriod executionPeriod, final CurricularCourse curricularCourse) {
-	setExecutionPeriod(executionPeriod);
+    public InfoCurriculumHistoricReport(final ExecutionSemester executionSemester, final CurricularCourse curricularCourse) {
+	setExecutionPeriod(executionSemester);
 	setCurricularCourse(curricularCourse);
 	
 	init();

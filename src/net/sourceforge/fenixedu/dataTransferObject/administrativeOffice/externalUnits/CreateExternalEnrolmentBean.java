@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externa
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.Grade;
 
@@ -12,7 +12,7 @@ import org.joda.time.YearMonthDay;
 public class CreateExternalEnrolmentBean implements Serializable {
 
     private DomainReference<ExternalCurricularCourse> externalCurricularCourse;
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
     private Integer studentNumber;
     private Grade grade;
@@ -42,12 +42,12 @@ public class CreateExternalEnrolmentBean implements Serializable {
         this.studentNumber = studentNumber;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    public ExecutionSemester getExecutionPeriod() {
+	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
     public YearMonthDay getEvaluationDate() {

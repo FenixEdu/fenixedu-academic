@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -39,12 +39,12 @@ import org.apache.struts.action.DynaActionForm;
 public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchAction {
 
     protected void getAdviseServices(HttpServletRequest request, DynaActionForm dynaForm,
-            final ExecutionPeriod executionPeriod, Teacher teacher) {
+            final ExecutionSemester executionSemester, Teacher teacher) {
 
-        dynaForm.set("executionPeriodId", executionPeriod.getIdInternal());
+        dynaForm.set("executionPeriodId", executionSemester.getIdInternal());
         dynaForm.set("teacherId", teacher.getIdInternal());
 
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
         if (teacherService != null && !teacherService.getTeacherAdviseServices().isEmpty()) {
             BeanComparator comparator = new BeanComparator("advise.student.number");
             Iterator orderedAdviseServicesIter = new OrderedIterator(teacherService
@@ -52,7 +52,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
             request.setAttribute("adviseServices", orderedAdviseServicesIter);
         }
 
-        request.setAttribute("executionPeriod", executionPeriod);
+        request.setAttribute("executionPeriod", executionSemester);
         request.setAttribute("teacher", teacher);
     }
 
@@ -104,11 +104,11 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     }
 
     private void addMessages(AdvisePercentageException ape, ActionMessages actionMessages, AdviseType adviseType) {
-        ExecutionPeriod executionPeriod = ape.getExecutionPeriod();
+        ExecutionSemester executionSemester = ape.getExecutionPeriod();
         ActionMessage initialActionMessage = new ActionMessage("message.teacherAdvise.percentageExceed");
         actionMessages.add("", initialActionMessage);
         for (Advise advise : ape.getAdvises()) {
-            TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
+            TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionSemester);
             if (adviseType.equals(ape.getAdviseType()) && teacherAdviseService != null) {
                 Integer teacherNumber = advise.getTeacher().getTeacherNumber();
                 String teacherName = advise.getTeacher().getPerson().getName();

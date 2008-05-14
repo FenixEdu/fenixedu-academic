@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -16,8 +16,8 @@ public class ExecutionDegreeProviderForExecutionCourseSearchBean implements Data
 
     public Object provide(Object source, Object currentValue) {
         final ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) source;
-        final ExecutionPeriod executionPeriod = executionCourseSearchBean.getExecutionPeriod();
-        final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+        final ExecutionSemester executionSemester = executionCourseSearchBean.getExecutionPeriod();
+        final ExecutionYear executionYear = executionSemester.getExecutionYear();
         final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(executionYear.getExecutionDegreesSet());
         Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
         return executionDegrees; 

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gr
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetRectifyBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -43,7 +43,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
 
         MarkSheetManagementCreateBean markSheetManagementCreateBean = new MarkSheetManagementCreateBean();
-        markSheetManagementCreateBean.setExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
+        markSheetManagementCreateBean.setExecutionPeriod(ExecutionSemester.readActualExecutionPeriod());
         markSheetManagementCreateBean.setUrl("");
         
         request.setAttribute("edit", markSheetManagementCreateBean);

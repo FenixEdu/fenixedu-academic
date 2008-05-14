@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
@@ -39,15 +39,15 @@ public class ComputeCurricularCourseStatistics extends Service {
 
 	for (CurricularCourse curricularCourse : curricularCourses) {
 
-	    List<ExecutionPeriod> executionPeriods = executionYear.getExecutionPeriods();
-	    for (ExecutionPeriod executionPeriod : executionPeriods) {
+	    List<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriods();
+	    for (ExecutionSemester executionSemester : executionSemesters) {
 
 		// Get Scopes
 		// List<CurricularCourseScope> scopes = curricularCourse
 		// .getActiveScopesInExecutionPeriod(executionPeriod);
 
 		List<DegreeModuleScope> scopes = curricularCourse
-			.getActiveDegreeModuleScopesInExecutionPeriod(executionPeriod);
+			.getActiveDegreeModuleScopesInExecutionPeriod(executionSemester);
 
 		if (scopes.isEmpty()) {
 		    continue;
@@ -75,7 +75,7 @@ public class ComputeCurricularCourseStatistics extends Service {
 
 		// Get Execution Course
 		List<ExecutionCourse> executionCourses = curricularCourse
-			.getExecutionCoursesByExecutionPeriod(executionPeriod);
+			.getExecutionCoursesByExecutionPeriod(executionSemester);
 		// if (executionCourses.isEmpty() || executionCourses.size() >
 		// 1) {
 		// // Houston, we have a problem...!!
@@ -86,17 +86,17 @@ public class ComputeCurricularCourseStatistics extends Service {
 		if (executionCourses.size() == 1) {
 		    // Organize enrolments by DegreeCurricularPlans
 		    Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap = organizeEnrolmentsByDCP(
-			    curricularCourse, executionPeriod, agreement, null);
+			    curricularCourse, executionSemester, agreement, null);
 
-		    calculateEnrolmentsForDCP(result, curricularCourse, executionPeriod, year, semester,
+		    calculateEnrolmentsForDCP(result, curricularCourse, executionSemester, year, semester,
 			    executionCourses.iterator().next(), enrolmentsMap);
 		} else {
 		    for (ExecutionCourse executionCourse : executionCourses) {
 			// Organize enrolments by DegreeCurricularPlans
 			Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap = organizeEnrolmentsByDCP(
-				curricularCourse, executionPeriod, agreement, executionCourse);
+				curricularCourse, executionSemester, agreement, executionCourse);
 
-			calculateEnrolmentsForDCP(result, curricularCourse, executionPeriod, year,
+			calculateEnrolmentsForDCP(result, curricularCourse, executionSemester, year,
 				semester, executionCourse, enrolmentsMap);
 		    }
 		}
@@ -108,7 +108,7 @@ public class ComputeCurricularCourseStatistics extends Service {
     }
 
     private void calculateEnrolmentsForDCP(Formatter result, CurricularCourse curricularCourse,
-	    ExecutionPeriod executionPeriod, int year, int semester, ExecutionCourse executionCourse,
+	    ExecutionSemester executionSemester, int year, int semester, ExecutionCourse executionCourse,
 	    Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap) {
 	// Calculate enrolments for each DegreeCurricularPlan
 	for (DegreeCurricularPlan enrolmentDCP : enrolmentsMap.keySet()) {
@@ -118,7 +118,7 @@ public class ComputeCurricularCourseStatistics extends Service {
 
 	    Collection<Enrolment> dcpEnrolments = enrolmentsMap.get(enrolmentDCP);
 	    for (Enrolment enrolment : dcpEnrolments) {
-		switch (enrolment.getNumberOfTotalEnrolmentsInThisCourse(executionPeriod)) {
+		switch (enrolment.getNumberOfTotalEnrolmentsInThisCourse(executionSemester)) {
 
 		case 1:
 		    firstEnrolledCount++;
@@ -140,11 +140,11 @@ public class ComputeCurricularCourseStatistics extends Service {
     }
 
     private Map<DegreeCurricularPlan, Collection<Enrolment>> organizeEnrolmentsByDCP(
-	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+	    CurricularCourse curricularCourse, ExecutionSemester executionSemester,
 	    RegistrationAgreement agreement, ExecutionCourse executionCourse) {
 	Map<DegreeCurricularPlan, Collection<Enrolment>> enrolmentsMap = new HashMap<DegreeCurricularPlan, Collection<Enrolment>>();
 
-	List<Enrolment> enrolments = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
+	List<Enrolment> enrolments = curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester);
 	for (Enrolment enrolment : enrolments) {
 
 	    if (executionCourse != null

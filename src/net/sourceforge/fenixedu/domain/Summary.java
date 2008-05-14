@@ -193,7 +193,7 @@ public class Summary extends Summary_Base {
 	super.setShift(shift);
     }
 
-    private void checkIfSummaryDateIsValid(YearMonthDay date, ExecutionPeriod executionPeriod, Lesson lesson, Boolean isExtraLesson) {
+    private void checkIfSummaryDateIsValid(YearMonthDay date, ExecutionSemester executionSemester, Lesson lesson, Boolean isExtraLesson) {
 	if (!isExtraLesson) {	 	   	    	    
 	    Summary summary = lesson.getSummaryByDate(date);
 	    if (summary != null && !summary.equals(this)) {

@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.EvenOddRuleVerifier;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 public class EvenOddRule extends EvenOddRule_Base {
     
     public EvenOddRule(final DegreeModule toApplyRule, final CourseGroup contextCourseGroup, final Integer semester, final CurricularPeriodType curricularPeriodType,
-	    final Boolean even, final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final Boolean even, final ExecutionSemester begin, final ExecutionSemester end) {
 	super();
 	checkParameters(toApplyRule, semester, curricularPeriodType, even);
 	init(toApplyRule, contextCourseGroup, begin, end, CurricularRuleType.EVEN_ODD);

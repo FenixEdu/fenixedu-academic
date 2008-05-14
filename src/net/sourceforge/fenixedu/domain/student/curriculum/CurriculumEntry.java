@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
@@ -69,7 +69,7 @@ abstract public class CurriculumEntry implements Serializable, ICurriculumEntry 
 	return getGrade() == null ? null :getGrade().getValue();
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
 	return null;
     }
 

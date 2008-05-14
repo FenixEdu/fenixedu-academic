@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -78,9 +78,9 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	    }
 
-	    final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	    final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 	    ectsCredits = Double.valueOf(ectsCredits.doubleValue()
-		    + curriculumModule.getEnroledEctsCredits(executionPeriod.getPreviousExecutionPeriod()).doubleValue());
+		    + curriculumModule.getEnroledEctsCredits(executionSemester.getPreviousExecutionPeriod()).doubleValue());
 
 	    if (rule.allowCredits(ectsCredits)) {
 		return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule());

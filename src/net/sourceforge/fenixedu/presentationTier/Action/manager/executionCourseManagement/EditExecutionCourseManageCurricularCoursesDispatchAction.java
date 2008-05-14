@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -163,14 +163,14 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 
         final Integer executionCourseID = Integer.valueOf((String) request.getAttribute("executionCourseId"));
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-        final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+        final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
         for (final DegreeModule degreeModule : rootDomainObject.getDegreeModulesSet()) {
         	if (degreeModule instanceof CurricularCourse) {
         		final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
         		if (!executionCourse.getAssociatedCurricularCoursesSet().contains(curricularCourse)) { 
-        			if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(null, degreeCurricularPlan, executionPeriod)) {
+        			if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(null, degreeCurricularPlan, executionSemester)) {
         				infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         			}
         		}

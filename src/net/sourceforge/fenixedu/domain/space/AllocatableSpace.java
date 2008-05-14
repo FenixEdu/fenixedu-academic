@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -267,13 +267,13 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	return true;
     }
                  
-    public List<Lesson> getAssociatedLessons(final ExecutionPeriod executionPeriod) {
+    public List<Lesson> getAssociatedLessons(final ExecutionSemester executionSemester) {
 	final List<Lesson> lessons = new ArrayList<Lesson>();
 	for (ResourceAllocation spaceOccupation : getResourceAllocations()) {
 	    if(spaceOccupation.isLessonSpaceOccupation()) {
 		LessonSpaceOccupation roomOccupation = (LessonSpaceOccupation) spaceOccupation;	    
 		final Lesson lesson = roomOccupation.getLesson();
-		if (lesson.getExecutionPeriod() == executionPeriod) {
+		if (lesson.getExecutionPeriod() == executionSemester) {
 		    lessons.add(lesson);
 		}
 	    }

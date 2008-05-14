@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.AcademicPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 
 import org.joda.time.DateTime;
 
@@ -12,8 +12,8 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
 	super();
     }
 
-    public AcademicPeriod getCandidacyAcademicPeriod() {
-	return hasCandidacyPeriod() ? getCandidacyPeriod().getAcademicPeriod() : null;
+    public ExecutionInterval getCandidacyExecutionInterval() {
+	return hasCandidacyPeriod() ? getCandidacyPeriod().getExecutionInterval() : null;
     }
 
     public DateTime getCandidacyStart() {

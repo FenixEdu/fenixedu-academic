@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
@@ -24,15 +24,15 @@ import org.apache.commons.collections.Predicate;
 public class LEMOptionalPairGroupsEnrollmentRule implements IEnrollmentRule {
 
     private StudentCurricularPlan studentCurricularPlan;
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
 
-    public LEMOptionalPairGroupsEnrollmentRule(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+    public LEMOptionalPairGroupsEnrollmentRule(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
         this.studentCurricularPlan = studentCurricularPlan;
-        this.executionPeriod = executionPeriod;
+        this.executionSemester = executionSemester;
     }
 
     public List apply(List curricularCoursesToBeEnrolledIn) {
-        if(executionPeriod.getSemester().equals(1)) {
+        if(executionSemester.getSemester().equals(1)) {
 	    	List allOptionalCurricularCourseGroups = studentCurricularPlan.getDegreeCurricularPlan()
 	                .getAllOptionalCurricularCourseGroups();
 	

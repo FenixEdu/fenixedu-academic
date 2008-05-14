@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ImprovmentEnrollService extends Service {
 
-    public void run(Registration registration, ExecutionPeriod executionPeriod, String employeeUserName, List<Integer> enrolmentsIds)
+    public void run(Registration registration, ExecutionSemester executionSemester, String employeeUserName, List<Integer> enrolmentsIds)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        if (executionPeriod == null) {
+        if (executionSemester == null) {
             throw new InvalidArgumentsServiceException();
         }
 
@@ -41,7 +41,7 @@ public class ImprovmentEnrollService extends Service {
                 throw new InvalidArgumentsServiceException();
             }
 
-            enrollment.createEnrolmentEvaluationForImprovement(employee, executionPeriod);
+            enrollment.createEnrolmentEvaluationForImprovement(employee, executionSemester);
         }
     }
 

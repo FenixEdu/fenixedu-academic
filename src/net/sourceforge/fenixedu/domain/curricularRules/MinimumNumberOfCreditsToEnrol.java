@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -26,7 +26,7 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
     }
 
     protected MinimumNumberOfCreditsToEnrol(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
-	    final ExecutionPeriod begin, final ExecutionPeriod end, final Double minimumNumberOfCredits) {
+	    final ExecutionSemester begin, final ExecutionSemester end, final Double minimumNumberOfCredits) {
 
 	this(minimumNumberOfCredits);
 	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);

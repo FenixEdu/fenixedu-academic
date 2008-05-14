@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,24 +26,24 @@ public class ReadAllTeacherCredits extends Service {
 	List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
         final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         
-        ExecutionPeriod executionPeriod = TeacherService.getStartExecutionPeriodForCredits();                              
+        ExecutionSemester executionSemester = TeacherService.getStartExecutionPeriodForCredits();                              
                 
-        while (executionPeriod != null) {
+        while (executionSemester != null) {
                         
-            double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
-            double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionPeriod);
-            double thesesCredits = teacher.getThesesCredits(executionPeriod);
-            int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);                               
-            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+            double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
+            double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
+            double thesesCredits = teacher.getThesesCredits(executionSemester);
+            int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);                               
+            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
             
-            CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService, managementCredits, serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
+            CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherService, managementCredits, serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
             creditLines.add(creditLineDTO);
             
-            if (executionPeriod.isCurrent()) {
+            if (executionSemester.isCurrent()) {
                 break;
             }
                         
-            executionPeriod = executionPeriod.getNextExecutionPeriod();
+            executionSemester = executionSemester.getNextExecutionPeriod();
         }
         
         return creditLines;

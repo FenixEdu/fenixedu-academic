@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -26,102 +26,100 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlanBaseService {
 
-    public List run(Integer degreeCurricularPlanId, Integer executionPeriodId, Locale locale, String arg) throws FenixServiceException, ExcepcaoPersistencia {
-        if (degreeCurricularPlanId == null) {
-            throw new FenixServiceException("null degreeCurricularPlanId");
-        }
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+    public List run(Integer degreeCurricularPlanId, Integer executionPeriodId, Locale locale, String arg)
+	    throws FenixServiceException, ExcepcaoPersistencia {
+	if (degreeCurricularPlanId == null) {
+	    throw new FenixServiceException("null degreeCurricularPlanId");
+	}
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
-        if (executionPeriodId == null) {
-            return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
-                    .readActiveCurricularCourseScopes(degreeCurricularPlanId), locale);
-        }
+	if (executionPeriodId == null) {
+	    return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
+		    .readActiveCurricularCourseScopes(degreeCurricularPlanId), locale);
+	}
 
-        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
-        if (executionPeriod == null || executionPeriod.getExecutionYear() == null) {
-            throw new FenixServiceException("null executionPeriod");
-        }
+	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+	if (executionSemester == null || executionSemester.getExecutionYear() == null) {
+	    throw new FenixServiceException("null executionPeriod");
+	}
 
-        return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
-                .readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlan, executionPeriod .getExecutionYear()), locale);
+	return groupScopesByCurricularYearAndCurricularCourseAndBranch(super.readActiveCurricularCourseScopesInExecutionYear(
+		degreeCurricularPlan, executionSemester.getExecutionYear()), locale);
     }
 
+    public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer curricularYear,
+	    Locale locale) throws FenixServiceException, ExcepcaoPersistencia {
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+	if (degreeCurricularPlan == null) {
+	    throw new FenixServiceException("null degreeCurricularPlan");
+	}
 
-    public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
-            Integer curricularYear, Locale locale) throws FenixServiceException, ExcepcaoPersistencia {
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
-        final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-        if (degreeCurricularPlan == null) {
-            throw new FenixServiceException("null degreeCurricularPlan");
-        }
+	if (infoExecutionPeriod == null) {
+	    return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
+		    .readActiveCurricularCourseScopes(degreeCurricularPlan.getIdInternal()), locale);
+	}
+	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+	if (executionSemester == null || executionSemester.getExecutionYear() == null) {
+	    throw new FenixServiceException("nullDegree");
+	}
 
-        if (infoExecutionPeriod == null) {
-            return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
-                    .readActiveCurricularCourseScopes(degreeCurricularPlan.getIdInternal()), locale);
-        }
-        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
-        if (executionPeriod == null || executionPeriod.getExecutionYear() == null) {
-            throw new FenixServiceException("nullDegree");
-        }
-
-        return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
-                .readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
-                        executionPeriod, executionDegree, curricularYear), locale);
+	return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
+		.readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(executionSemester,
+			executionDegree, curricularYear), locale);
     }
 
-    
     private List groupScopesByCurricularYearAndCurricularCourseAndBranch(List<InfoCurricularCourseScope> scopes, Locale locale) {
-        List result = new ArrayList();
-        List<InfoCurricularCourseScope> temp = new ArrayList<InfoCurricularCourseScope>();
+	List result = new ArrayList();
+	List<InfoCurricularCourseScope> temp = new ArrayList<InfoCurricularCourseScope>();
 
-        List<InfoCurricularCourseScope> scopesAux = new ArrayList<InfoCurricularCourseScope>(scopes);
-        Collections.sort(scopesAux, InfoCurricularCourseScope.COMPARATOR_BY_YEAR_SEMESTER_BRANCH_AND_NAME);
+	List<InfoCurricularCourseScope> scopesAux = new ArrayList<InfoCurricularCourseScope>(scopes);
+	Collections.sort(scopesAux, InfoCurricularCourseScope.COMPARATOR_BY_YEAR_SEMESTER_BRANCH_AND_NAME);
 
-        if (scopesAux != null && scopesAux.size() > 0) {
-            ListIterator iter = scopesAux.listIterator();
-            InfoCurricularYear year = null;
-            InfoCurricularCourse curricularCourse = null;
+	if (scopesAux != null && scopesAux.size() > 0) {
+	    ListIterator iter = scopesAux.listIterator();
+	    InfoCurricularYear year = null;
+	    InfoCurricularCourse curricularCourse = null;
 
-            while (iter.hasNext()) {
-                InfoCurricularCourseScope scope = (InfoCurricularCourseScope) iter.next();
-                InfoCurricularYear scopeYear = scope.getInfoCurricularSemester().getInfoCurricularYear();
-                InfoCurricularCourse scopeCurricularCourse = scope.getInfoCurricularCourse();
-                InfoBranch infoBranch = scope.getInfoBranch();
-                if (year == null) {
-                    year = scopeYear;
-                }
-                if (curricularCourse == null) {
-                    curricularCourse = scopeCurricularCourse;
-                }
+	    while (iter.hasNext()) {
+		InfoCurricularCourseScope scope = (InfoCurricularCourseScope) iter.next();
+		InfoCurricularYear scopeYear = scope.getInfoCurricularSemester().getInfoCurricularYear();
+		InfoCurricularCourse scopeCurricularCourse = scope.getInfoCurricularCourse();
+		InfoBranch infoBranch = scope.getInfoBranch();
+		if (year == null) {
+		    year = scopeYear;
+		}
+		if (curricularCourse == null) {
+		    curricularCourse = scopeCurricularCourse;
+		}
 
-                if (scopeYear.equals(year) && scopeCurricularCourse.equals(curricularCourse)) {
-                    temp.add(scope);
-                } else {
-                    result.add(temp);
-                    temp = new ArrayList<InfoCurricularCourseScope>();
-                    year = scopeYear;
-                    curricularCourse = scopeCurricularCourse;
-                    temp.add(scope);
-                }
+		if (scopeYear.equals(year) && scopeCurricularCourse.equals(curricularCourse)) {
+		    temp.add(scope);
+		} else {
+		    result.add(temp);
+		    temp = new ArrayList<InfoCurricularCourseScope>();
+		    year = scopeYear;
+		    curricularCourse = scopeCurricularCourse;
+		    temp.add(scope);
+		}
 
-                if (!iter.hasNext()) {
-                    result.add(temp);
-                }
-            }
-        }
+		if (!iter.hasNext()) {
+		    result.add(temp);
+		}
+	    }
+	}
 
-        return result;
+	return result;
     }
 
-    
     public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanId, Integer executionYear, String arg)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-        if (degreeCurricularPlan == null) {
-        	throw new FenixServiceException("nullDegree");
-        } else {
-        	return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-        }
+	    throws FenixServiceException, ExcepcaoPersistencia {
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+	if (degreeCurricularPlan == null) {
+	    throw new FenixServiceException("nullDegree");
+	} else {
+	    return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+	}
     }
 
 }

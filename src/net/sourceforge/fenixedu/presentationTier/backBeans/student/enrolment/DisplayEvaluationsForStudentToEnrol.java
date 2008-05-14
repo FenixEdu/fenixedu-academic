@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -33,8 +33,8 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     private final ResourceBundle messages = getResourceBundle("resources/StudentResources");
     private static final ComparatorChain comparatorChain = new ComparatorChain();
     static {
-        comparatorChain.addComparator(new ReverseComparator(new BeanComparator("isInEnrolmentPeriod")));
-        comparatorChain.addComparator(new BeanComparator("dayDate"));
+	comparatorChain.addComparator(new ReverseComparator(new BeanComparator("isInEnrolmentPeriod")));
+	comparatorChain.addComparator(new BeanComparator("dayDate"));
     }
 
     protected static final Integer ALL = Integer.valueOf(0);
@@ -43,7 +43,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
     private Integer executionPeriodID;
     protected Integer evaluationType;
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
     private List<SelectItem> executionPeriodsLabels;
     private List<SelectItem> evaluationTypes;
     private Registration student;
@@ -53,242 +53,236 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     private Map<Integer, List<ExecutionCourse>> executionCourses;
 
     public List<SelectItem> getExecutionPeriodsLabels() {
-        if (this.executionPeriodsLabels == null) {
-            this.executionPeriodsLabels = new ArrayList();
+	if (this.executionPeriodsLabels == null) {
+	    this.executionPeriodsLabels = new ArrayList();
 
-            final List<InfoExecutionPeriod> infoExecutionPeriods = getExecutionPeriods();
-            final ComparatorChain comparatorChain = new ComparatorChain();
-            comparatorChain.addComparator(new ReverseComparator(new BeanComparator(
-                    "infoExecutionYear.year")));
-            comparatorChain.addComparator(new ReverseComparator(new BeanComparator("semester")));
-            Collections.sort(infoExecutionPeriods, comparatorChain);
-            for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
-                final SelectItem selectItem = new SelectItem();
-                selectItem.setValue(infoExecutionPeriod.getIdInternal());
-                selectItem.setLabel(infoExecutionPeriod.getName() + " - "
-                        + infoExecutionPeriod.getInfoExecutionYear().getYear());
-                this.executionPeriodsLabels.add(selectItem);
-            }
-        }
-        return this.executionPeriodsLabels;
+	    final List<InfoExecutionPeriod> infoExecutionPeriods = getExecutionPeriods();
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(new ReverseComparator(new BeanComparator("infoExecutionYear.year")));
+	    comparatorChain.addComparator(new ReverseComparator(new BeanComparator("semester")));
+	    Collections.sort(infoExecutionPeriods, comparatorChain);
+	    for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
+		final SelectItem selectItem = new SelectItem();
+		selectItem.setValue(infoExecutionPeriod.getIdInternal());
+		selectItem.setLabel(infoExecutionPeriod.getName() + " - " + infoExecutionPeriod.getInfoExecutionYear().getYear());
+		this.executionPeriodsLabels.add(selectItem);
+	    }
+	}
+	return this.executionPeriodsLabels;
     }
 
     public List<SelectItem> getEvaluationTypes() {
-        if (this.evaluationTypes == null) {
-            this.evaluationTypes = new ArrayList(4);
-            final String allEvaluations = messages.getString("link.all");
-            evaluationTypes.add(new SelectItem(ALL, allEvaluations));
-            final String exams = messages.getString("link.exams.enrolment");
-            evaluationTypes.add(new SelectItem(EXAMS, exams));
-            final String writtenTests = messages.getString("link.writtenTests.enrolment");
-            evaluationTypes.add(new SelectItem(WRITTENTESTS, writtenTests));
-        }
-        return this.evaluationTypes;
+	if (this.evaluationTypes == null) {
+	    this.evaluationTypes = new ArrayList(4);
+	    final String allEvaluations = messages.getString("link.all");
+	    evaluationTypes.add(new SelectItem(ALL, allEvaluations));
+	    final String exams = messages.getString("link.exams.enrolment");
+	    evaluationTypes.add(new SelectItem(EXAMS, exams));
+	    final String writtenTests = messages.getString("link.writtenTests.enrolment");
+	    evaluationTypes.add(new SelectItem(WRITTENTESTS, writtenTests));
+	}
+	return this.evaluationTypes;
     }
 
     public List<Evaluation> getNotEnroledEvaluations() {
-        if (this.notEnroledEvaluations == null) {
-            this.notEnroledEvaluations = new ArrayList();
+	if (this.notEnroledEvaluations == null) {
+	    this.notEnroledEvaluations = new ArrayList();
 
-            processNotEnroledEvaluations();
-        }
-        return this.notEnroledEvaluations;
+	    processNotEnroledEvaluations();
+	}
+	return this.notEnroledEvaluations;
     }
 
     public void setNotEnroledEvaluations(List<Evaluation> notEnroledEvaluations) {
-        this.notEnroledEvaluations = notEnroledEvaluations;
+	this.notEnroledEvaluations = notEnroledEvaluations;
     }
 
     public List<Evaluation> getEnroledEvaluations() {
-        if (this.enroledEvaluations == null) {
-            this.enroledEvaluations = new ArrayList();
-            processEnroledEvaluations();
-        }
-        return this.enroledEvaluations;
+	if (this.enroledEvaluations == null) {
+	    this.enroledEvaluations = new ArrayList();
+	    processEnroledEvaluations();
+	}
+	return this.enroledEvaluations;
     }
 
     public void setEnroledEvaluations(List<Evaluation> enroledEvaluations) {
-        this.enroledEvaluations = enroledEvaluations;
+	this.enroledEvaluations = enroledEvaluations;
     }
 
     public List<Evaluation> getEvaluationsWithoutEnrolmentPeriod() {
-        if (this.evaluationsWithoutEnrolmentPeriod == null) {
-            this.evaluationsWithoutEnrolmentPeriod = new ArrayList();
-        }
-        return this.evaluationsWithoutEnrolmentPeriod;
+	if (this.evaluationsWithoutEnrolmentPeriod == null) {
+	    this.evaluationsWithoutEnrolmentPeriod = new ArrayList();
+	}
+	return this.evaluationsWithoutEnrolmentPeriod;
     }
 
     public void setEvaluationsWithoutEnrolmentPeriod(List<Evaluation> evaluationsWithoutEnrolmentPeriod) {
-        this.evaluationsWithoutEnrolmentPeriod = evaluationsWithoutEnrolmentPeriod;
+	this.evaluationsWithoutEnrolmentPeriod = evaluationsWithoutEnrolmentPeriod;
     }
 
     private void processEnroledEvaluations() {
-        if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
-            for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
-        	for (final Exam exam : registration.getEnroledExams(getExecutionPeriod())) {
-        	    try {
-        		exam.isInEnrolmentPeriod();
-        		this.enroledEvaluations.add(exam);
-        	    } catch (final DomainException e) {
-        		getEvaluationsWithoutEnrolmentPeriod().add(exam);
-        	    } finally {
-        		getExecutionCourses().put(exam.getIdInternal(),
-        			exam.getAttendingExecutionCoursesFor(registration));
-        	    }
-        	}
-            }
-        }
-        if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
-            for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
-        	for (final WrittenTest writtenTest : registration.getEnroledWrittenTests(
-        		getExecutionPeriod())) {
-        	    try {
-        		writtenTest.isInEnrolmentPeriod();
-        		this.enroledEvaluations.add(writtenTest);
-        	    } catch (final DomainException e) {
-        		getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
-        	    } finally {
-        		getExecutionCourses().put(writtenTest.getIdInternal(),
-        			writtenTest.getAttendingExecutionCoursesFor(registration));
-        	    }
-        	}
-            }
-        }
-        Collections.sort(this.enroledEvaluations, comparatorChain);
+	if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
+	    for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+		for (final Exam exam : registration.getEnroledExams(getExecutionPeriod())) {
+		    try {
+			exam.isInEnrolmentPeriod();
+			this.enroledEvaluations.add(exam);
+		    } catch (final DomainException e) {
+			getEvaluationsWithoutEnrolmentPeriod().add(exam);
+		    } finally {
+			getExecutionCourses().put(exam.getIdInternal(), exam.getAttendingExecutionCoursesFor(registration));
+		    }
+		}
+	    }
+	}
+	if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
+	    for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+		for (final WrittenTest writtenTest : registration.getEnroledWrittenTests(getExecutionPeriod())) {
+		    try {
+			writtenTest.isInEnrolmentPeriod();
+			this.enroledEvaluations.add(writtenTest);
+		    } catch (final DomainException e) {
+			getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
+		    } finally {
+			getExecutionCourses().put(writtenTest.getIdInternal(),
+				writtenTest.getAttendingExecutionCoursesFor(registration));
+		    }
+		}
+	    }
+	}
+	Collections.sort(this.enroledEvaluations, comparatorChain);
     }
 
     private void processNotEnroledEvaluations() {
-        if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
-            for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
-        	for (final Exam exam : registration.getUnenroledExams(getExecutionPeriod())) {
-            		if (exam.isExamsMapPublished()) {
-            		    try {
-            				exam.isInEnrolmentPeriod();
-            				this.notEnroledEvaluations.add(exam);
-            		    } catch (final DomainException e) {
-            				getEvaluationsWithoutEnrolmentPeriod().add(exam);
-            		    } finally {
-            				getExecutionCourses().put(exam.getIdInternal(),
-            					exam.getAttendingExecutionCoursesFor(registration));
-            		    }
-            		}
-        	}
-            }
-        }
-        if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
-            for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
-        	for (final WrittenTest writtenTest : registration.getUnenroledWrittenTests(
-        		getExecutionPeriod())) {
-        	    try {
-        		writtenTest.isInEnrolmentPeriod();
-        		this.notEnroledEvaluations.add(writtenTest);
-        	    } catch (final DomainException e) {
-        		getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
-        	    } finally {
-        		getExecutionCourses().put(writtenTest.getIdInternal(),
-        			writtenTest.getAttendingExecutionCoursesFor(registration));
-        	    }
-        	}
-            }
-        }
-        Collections.sort(this.notEnroledEvaluations, comparatorChain);
+	if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
+	    for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+		for (final Exam exam : registration.getUnenroledExams(getExecutionPeriod())) {
+		    if (exam.isExamsMapPublished()) {
+			try {
+			    exam.isInEnrolmentPeriod();
+			    this.notEnroledEvaluations.add(exam);
+			} catch (final DomainException e) {
+			    getEvaluationsWithoutEnrolmentPeriod().add(exam);
+			} finally {
+			    getExecutionCourses().put(exam.getIdInternal(), exam.getAttendingExecutionCoursesFor(registration));
+			}
+		    }
+		}
+	    }
+	}
+	if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
+	    for (final Registration registration : getStudent().getStudent().getRegistrationsSet()) {
+		for (final WrittenTest writtenTest : registration.getUnenroledWrittenTests(getExecutionPeriod())) {
+		    try {
+			writtenTest.isInEnrolmentPeriod();
+			this.notEnroledEvaluations.add(writtenTest);
+		    } catch (final DomainException e) {
+			getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
+		    } finally {
+			getExecutionCourses().put(writtenTest.getIdInternal(),
+				writtenTest.getAttendingExecutionCoursesFor(registration));
+		    }
+		}
+	    }
+	}
+	Collections.sort(this.notEnroledEvaluations, comparatorChain);
     }
 
     public void changeExecutionPeriod(ValueChangeEvent event) {
-        clearAttributes();
+	clearAttributes();
     }
 
     public void changeEvaluationType(ValueChangeEvent event) {
-        clearAttributes();
+	clearAttributes();
     }
 
     protected void clearAttributes() {
-        setNotEnroledEvaluations(null);
-        setEnroledEvaluations(null);
-        setEvaluationsWithoutEnrolmentPeriod(null);
-        setExecutionCourses(null);
+	setNotEnroledEvaluations(null);
+	setEnroledEvaluations(null);
+	setEvaluationsWithoutEnrolmentPeriod(null);
+	setExecutionCourses(null);
     }
 
     private List<InfoExecutionPeriod> getExecutionPeriods() {
-        try {
-            final Object args[] = {};
-            return (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
-                    getUserView(), "ReadNotClosedExecutionPeriods", args);
-        } catch (FenixFilterException e) {
-        } catch (FenixServiceException e) {
-        }
-        return new ArrayList();
+	try {
+	    final Object args[] = {};
+	    return (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(getUserView(),
+		    "ReadNotClosedExecutionPeriods", args);
+	} catch (FenixFilterException e) {
+	} catch (FenixServiceException e) {
+	}
+	return new ArrayList();
     }
 
     private InfoExecutionPeriod getCurrentExecutionPeriod() {
-        try {
-            final Object args[] = {};
-            return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(getUserView(),
-                    "ReadCurrentExecutionPeriod", args);
-        } catch (FenixFilterException e) {
-        } catch (FenixServiceException e) {
-        }
-        return null;
+	try {
+	    final Object args[] = {};
+	    return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(getUserView(), "ReadCurrentExecutionPeriod",
+		    args);
+	} catch (FenixFilterException e) {
+	} catch (FenixServiceException e) {
+	}
+	return null;
     }
 
-    protected ExecutionPeriod getExecutionPeriod() {
-        return executionPeriod == null && getExecutionPeriodID() != null ?
-            rootDomainObject.readExecutionPeriodByOID(getExecutionPeriodID()) : executionPeriod;
+    protected ExecutionSemester getExecutionPeriod() {
+	return executionSemester == null && getExecutionPeriodID() != null ? rootDomainObject
+		.readExecutionSemesterByOID(getExecutionPeriodID()) : executionSemester;
     }
 
     protected Registration getStudent() {
-        if (this.student == null) {
-            try {
-                final Object args[] = { getUserView().getUtilizador() };
-                this.student = (Registration) ServiceUtils.executeService(getUserView(),
-                        "ReadStudentByUsernameForEvaluationEnrolment", args);
-            } catch (FenixFilterException e) {
-            } catch (FenixServiceException e) {
-            }
-        }
-        return this.student;
+	if (this.student == null) {
+	    try {
+		final Object args[] = { getUserView().getUtilizador() };
+		this.student = (Registration) ServiceUtils.executeService(getUserView(),
+			"ReadStudentByUsernameForEvaluationEnrolment", args);
+	    } catch (FenixFilterException e) {
+	    } catch (FenixServiceException e) {
+	    }
+	}
+	return this.student;
     }
 
     public Integer getExecutionPeriodID() {
-        if (this.executionPeriodID == null) {
-            this.executionPeriodID = getCurrentExecutionPeriod().getIdInternal();
-        }
-        return executionPeriodID;
+	if (this.executionPeriodID == null) {
+	    this.executionPeriodID = getCurrentExecutionPeriod().getIdInternal();
+	}
+	return executionPeriodID;
     }
 
     public void setExecutionPeriodID(Integer executionPeriodID) {
-        this.executionPeriodID = executionPeriodID;
+	this.executionPeriodID = executionPeriodID;
     }
 
     public Integer getEvaluationType() {
-        if (this.evaluationType == null) {
-            this.evaluationType = ALL;
-        }
-        return this.evaluationType;
+	if (this.evaluationType == null) {
+	    this.evaluationType = ALL;
+	}
+	return this.evaluationType;
     }
 
     public String getEvaluationTypeString() {
-        final Integer type = getEvaluationType();
-        if (type != null && type.equals(EXAMS)) {
-            return "net.sourceforge.fenixedu.domain.Exam";
-        } else if (type != null && type.equals(WRITTENTESTS)) {
-            return "net.sourceforge.fenixedu.domain.WrittenTest";
-        }
-        return "";
+	final Integer type = getEvaluationType();
+	if (type != null && type.equals(EXAMS)) {
+	    return "net.sourceforge.fenixedu.domain.Exam";
+	} else if (type != null && type.equals(WRITTENTESTS)) {
+	    return "net.sourceforge.fenixedu.domain.WrittenTest";
+	}
+	return "";
     }
 
     public void setEvaluationType(Integer evaluationType) {
-        this.evaluationType = evaluationType;
+	this.evaluationType = evaluationType;
     }
 
     public Map<Integer, List<ExecutionCourse>> getExecutionCourses() {
-        if (this.executionCourses == null) {
-            this.executionCourses = new HashMap<Integer, List<ExecutionCourse>>();
-        }
-        return this.executionCourses;
+	if (this.executionCourses == null) {
+	    this.executionCourses = new HashMap<Integer, List<ExecutionCourse>>();
+	}
+	return this.executionCourses;
     }
 
     public void setExecutionCourses(Map<Integer, List<ExecutionCourse>> executionCourses) {
-        this.executionCourses = executionCourses;
+	this.executionCourses = executionCourses;
     }
 }

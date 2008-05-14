@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -91,26 +91,26 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	    return mapping.findForward("showEnrollmentPage");
 	}
 
-	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
 	if (readAndSetSelectCoursesParameter(request) == null) {
 	    return prepareShiftEnrolmentInformation(mapping, request, registration,
-		    executionPeriod);
+		    executionSemester);
 	} else {
 	    return prepareSelectCoursesInformation(mapping, actionForm, request, registration,
-		    executionPeriod);
+		    executionSemester);
 	}
     }
 
     private ActionForward prepareSelectCoursesInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, final Registration registration,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 
 	final DynaActionForm form = (DynaActionForm) actionForm;
 
-	final List<ExecutionDegree> executionDegrees = executionPeriod.getExecutionYear().getExecutionDegreesFor(DegreeType.DEGREE);
-	executionDegrees.addAll(executionPeriod.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_DEGREE));
-	executionDegrees.addAll(executionPeriod.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-	executionDegrees.addAll(executionPeriod.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_MASTER_DEGREE));
+	final List<ExecutionDegree> executionDegrees = executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType.DEGREE);
+	executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_DEGREE));
+	executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_MASTER_DEGREE));
 
 	if (executionDegrees.isEmpty()) {
 	    addActionMessage(request, "errors.impossible.operation");
@@ -118,7 +118,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	}
 
 	final ExecutionDegree selectedExecutionDegree = getSelectedExecutionDegree(form, registration,
-		executionPeriod, executionDegrees);
+		executionSemester, executionDegrees);
 	if (selectedExecutionDegree == null) {
 	    addActionMessage(request, "errors.impossible.operation");
 	    return mapping.getInputForward();
@@ -133,9 +133,9 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 			"ENUMERATION_RESOURCES"), request));
 
 	request.setAttribute("attendingExecutionCourses", registration
-		.getAttendingExecutionCoursesFor(executionPeriod));
+		.getAttendingExecutionCoursesFor(executionSemester));
 	request.setAttribute("executionCoursesFromExecutionDegree", selectedExecutionDegree
-		.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(executionPeriod));
+		.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(executionSemester));
 
 	return mapping.findForward("selectCourses");
     }
@@ -146,7 +146,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
     private ActionForward prepareShiftEnrolmentInformation(ActionMapping mapping,
 	    HttpServletRequest request, final Registration registration,
-	    final ExecutionPeriod executionPeriod) throws FenixFilterException {
+	    final ExecutionSemester executionSemester) throws FenixFilterException {
 
 	try {
 
@@ -154,14 +154,14 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 		    .executeService(getUserView(request), "ReadShiftsToEnroll", new Object[] { registration });
 
 	    request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts", registration
-		    .getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionPeriod));
+		    .getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionSemester));
 
 	    request.setAttribute("shiftsToEnrolFromEnroledExecutionCourses",
 		    getShiftsToEnrolByEnroledState(shiftsToEnrol, true));
 	    request.setAttribute("shiftsToEnrolFromUnenroledExecutionCourses",
 		    getShiftsToEnrolByEnroledState(shiftsToEnrol, false));
 
-	    final List<Shift> studentShifts = registration.getShiftsFor(executionPeriod);
+	    final List<Shift> studentShifts = registration.getShiftsFor(executionSemester);
 	    request.setAttribute("studentShifts", studentShifts);
 	    sortStudentShifts(studentShifts);
 
@@ -189,22 +189,22 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private ExecutionDegree getSelectedExecutionDegree(final DynaActionForm form,
-	    final Registration registration, final ExecutionPeriod executionPeriod,
+	    final Registration registration, final ExecutionSemester executionSemester,
 	    final List<ExecutionDegree> executionDegrees) {
 
 	final Integer executionDegreeIdChosen = (Integer) form.get("degree");
 	final ExecutionDegree executionDegreeChosen = rootDomainObject
 		.readExecutionDegreeByOID(executionDegreeIdChosen);
 	if (executionDegreeChosen != null
-		&& executionDegreeChosen.getExecutionYear() == executionPeriod.getExecutionYear()) {
+		&& executionDegreeChosen.getExecutionYear() == executionSemester.getExecutionYear()) {
 	    return executionDegreeChosen;
 	} else {
-	    return searchForExecutionDegreeInStudent(registration, executionPeriod);
+	    return searchForExecutionDegreeInStudent(registration, executionSemester);
 	}
     }
 
     private ExecutionDegree searchForExecutionDegreeInStudent(final Registration registration,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	final StudentCurricularPlan studentCurricularPlan = registration
 		.getActiveStudentCurricularPlan();
 	if (studentCurricularPlan == null) {
@@ -212,14 +212,14 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	}
 	for (final ExecutionDegree executionDegree : studentCurricularPlan.getDegreeCurricularPlan()
 		.getExecutionDegreesSet()) {
-	    if (executionDegree.getExecutionYear() == executionPeriod.getExecutionYear()) {
+	    if (executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
 		return executionDegree;
 	    }
 	}
 	for (final DegreeCurricularPlan degreeCurricularPlan : studentCurricularPlan.getDegree()
 		.getDegreeCurricularPlansSet()) {
 	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-		if (executionDegree.getExecutionYear() == executionPeriod.getExecutionYear()) {
+		if (executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
 		    return executionDegree;
 		}
 	    }
@@ -227,7 +227,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : studentCurricularPlan.getDegreeCurricularPlan().getTargetEquivalencePlansSet()) {
             final DegreeCurricularPlan otherDegreeCurricularPlan = equivalencePlan.getDegreeCurricularPlan();
             for (final ExecutionDegree executionDegree : otherDegreeCurricularPlan.getExecutionDegreesSet()) {
-                if (executionDegree.getExecutionYear() == executionPeriod.getExecutionYear()) {
+                if (executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
                     return executionDegree;
                 }
             }

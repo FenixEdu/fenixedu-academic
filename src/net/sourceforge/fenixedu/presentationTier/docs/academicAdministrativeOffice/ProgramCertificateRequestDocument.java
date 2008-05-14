@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -146,23 +146,23 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	public BolonhaProgramInformation(final Enrolment enrolment) {
 	    super(enrolment);
 
-	    final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
+	    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
 	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
 
-	    this.program = HtmlToTextConverterUtil.convertToText(curricularCourse.getProgram(executionPeriod));
+	    this.program = HtmlToTextConverterUtil.convertToText(curricularCourse.getProgram(executionSemester));
 	    this.weigth = curricularCourse.getWeigth().toString();
 	    this.prerequisites = curricularCourse.getPrerequisites();
-	    this.objectives = HtmlToTextConverterUtil.convertToText(curricularCourse.getObjectives(executionPeriod));
-	    this.evaluationMethod = HtmlToTextConverterUtil.convertToText(curricularCourse.getEvaluationMethod(executionPeriod));
+	    this.objectives = HtmlToTextConverterUtil.convertToText(curricularCourse.getObjectives(executionSemester));
+	    this.evaluationMethod = HtmlToTextConverterUtil.convertToText(curricularCourse.getEvaluationMethod(executionSemester));
 
-	    this.bibliographics = buildBibliographicInformation(curricularCourse, executionPeriod);
+	    this.bibliographics = buildBibliographicInformation(curricularCourse, executionSemester);
 	}
 
 	private List<BibliographicInformation> buildBibliographicInformation(final CurricularCourse curricularCourse,
-		final ExecutionPeriod executionPeriod) {
+		final ExecutionSemester executionSemester) {
 	    final List<BibliographicInformation> result = new ArrayList<BibliographicInformation>();
 	    for (final BibliographicReferences.BibliographicReference reference : curricularCourse.getCompetenceCourse()
-		    .getAllBibliographicReferences(executionPeriod)) {
+		    .getAllBibliographicReferences(executionSemester)) {
 		result.add(new BibliographicInformation(reference.getAuthors(), reference.getTitle(), reference.getReference(),
 			reference.getYear()));
 	    }

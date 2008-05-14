@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -21,16 +21,16 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     private static class ComparatorByCurriculumGroupOrder implements
 	    Comparator<StudentCurriculumGroupBean> {
 
-	private ExecutionPeriod executionPeriod;
+	private ExecutionSemester executionSemester;
 
-	public ComparatorByCurriculumGroupOrder(ExecutionPeriod executionPeriod) {
-	    this.executionPeriod = executionPeriod;
+	public ComparatorByCurriculumGroupOrder(ExecutionSemester executionSemester) {
+	    this.executionSemester = executionSemester;
 	}
 
 	public int compare(StudentCurriculumGroupBean o1, StudentCurriculumGroupBean o2) {
 	    CurriculumGroup c1 = (CurriculumGroup) o1.getCurriculumModule();
 	    CurriculumGroup c2 = (CurriculumGroup) o2.getCurriculumModule();
-	    return c1.getChildOrder(executionPeriod).compareTo(c2.getChildOrder(executionPeriod));
+	    return c1.getChildOrder(executionSemester).compareTo(c2.getChildOrder(executionSemester));
 	}
 
     }
@@ -45,33 +45,33 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
     private List<IDegreeModuleToEvaluate> curricularCoursesToEnrol;
 
-    public StudentCurriculumGroupBean(final CurriculumGroup curriculumGroup, final ExecutionPeriod executionPeriod, int[] curricularYears) {
+    public StudentCurriculumGroupBean(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester, int[] curricularYears) {
 	super(curriculumGroup);
 	
 	setCourseGroupsToEnrol(buildCourseGroupsToEnrol(curriculumGroup,
-		executionPeriod));
+		executionSemester));
 	
 	if (curricularYears != null) {
 	    setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(curriculumGroup,
-		    executionPeriod, curricularYears));
+		    executionSemester, curricularYears));
 	} else {
 	    setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(curriculumGroup,
-		    executionPeriod));
+		    executionSemester));
 	}
 	
 	setEnrolledCurriculumGroups(buildCurriculumGroupsEnroled(curriculumGroup,
-		executionPeriod, curricularYears));
+		executionSemester, curricularYears));
 	setEnrolledCurriculumCourses(buildCurricularCoursesEnroled(curriculumGroup,
-		executionPeriod));
+		executionSemester));
 	
     }
 
 
     protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(
-	    CurriculumGroup parentGroup, ExecutionPeriod executionPeriod, int[] curricularYears) {
+	    CurriculumGroup parentGroup, ExecutionSemester executionSemester, int[] curricularYears) {
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroups()) {
-	    result.add(new StudentCurriculumGroupBean(curriculumGroup, executionPeriod,
+	    result.add(new StudentCurriculumGroupBean(curriculumGroup, executionSemester,
 		    curricularYears));
 	}
 
@@ -79,13 +79,13 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     }
 
     protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	final List<Context> courseGroupContextsToEnrol = group
-		.getCourseGroupContextsToEnrol(executionPeriod);
+		.getCourseGroupContextsToEnrol(executionSemester);
 
 	for (final Context context : courseGroupContextsToEnrol) {
-	    result.add(new DegreeModuleToEnrol(group, context, executionPeriod));
+	    result.add(new DegreeModuleToEnrol(group, context, executionSemester));
 
 	}
 
@@ -93,18 +93,18 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     }
 
     protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
-	    ExecutionPeriod executionPeriod, int[] curricularYears) {
+	    ExecutionSemester executionSemester, int[] curricularYears) {
 	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	final List<Context> curricularCoursesToEnrol = group
-		.getCurricularCourseContextsToEnrol(executionPeriod);
+		.getCurricularCourseContextsToEnrol(executionSemester);
 
 	for (final Context context : curricularCoursesToEnrol) {
 	    // NOTE: Temporary solution until first degree completes
 	    final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
 	    for (final int curricularYear : curricularYears) {
-		if (context.containsSemesterAndCurricularYear(executionPeriod.getSemester(),
+		if (context.containsSemesterAndCurricularYear(executionSemester.getSemester(),
 			curricularYear, curricularCourse.getRegime())) {
-		    result.add(new DegreeModuleToEnrol(group, context, executionPeriod));
+		    result.add(new DegreeModuleToEnrol(group, context, executionSemester));
 		    break;
 		}
 	    }
@@ -114,11 +114,11 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     }
 
     protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 
 	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
-	for (final Context context : group.getCurricularCourseContextsToEnrol(executionPeriod)) {
-	    result.add(new DegreeModuleToEnrol(group, context, executionPeriod));
+	for (final Context context : group.getCurricularCourseContextsToEnrol(executionSemester)) {
+	    result.add(new DegreeModuleToEnrol(group, context, executionSemester));
 	}
 
 	return result;
@@ -126,13 +126,13 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     }
 
     protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(
-	    CurriculumGroup group, ExecutionPeriod executionPeriod) {
+	    CurriculumGroup group, ExecutionSemester executionSemester) {
 	final List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
 
 	for (final CurriculumLine curriculumLine : group.getCurriculumLines()) {
 	    if (curriculumLine.isEnrolment()) {
 		Enrolment enrolment = (Enrolment) curriculumLine;
-		if (enrolment.getExecutionPeriod().equals(executionPeriod) && enrolment.isEnroled()) {
+		if (enrolment.getExecutionPeriod().equals(executionSemester) && enrolment.isEnroled()) {
 		    result.add(new StudentCurriculumEnrolmentBean((Enrolment) curriculumLine));
 		}
 	    }
@@ -182,10 +182,10 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
     }
 
     public List<StudentCurriculumGroupBean> getEnrolledCurriculumGroupsSortedByOrder(
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>(
 		enrolledCurriculumGroups);
-	Collections.sort(result, new ComparatorByCurriculumGroupOrder(executionPeriod));
+	Collections.sort(result, new ComparatorByCurriculumGroupOrder(executionSemester));
 
 	return result;
     }

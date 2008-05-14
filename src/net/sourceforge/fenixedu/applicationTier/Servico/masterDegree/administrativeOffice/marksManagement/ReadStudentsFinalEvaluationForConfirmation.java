@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 
@@ -64,8 +64,8 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 	if (infoEnrolmentEvaluations.size() == 0) {
 	    throw new NonExistingServiceException();
 	}
-	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-	InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionSemester);
 
 	InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
 	infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);

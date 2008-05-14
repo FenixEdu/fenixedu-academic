@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.dataTransferObject.credits;
 
 import java.text.ParseException;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
@@ -40,13 +40,13 @@ public class CreditLineDTO {
 
     private int mandatoryLessonHours = 0;       
 
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
 
-    public CreditLineDTO(ExecutionPeriod executionPeriod, TeacherService teacherService,
+    public CreditLineDTO(ExecutionSemester executionSemester, TeacherService teacherService,
 	    double managementCredits, double exemptionCredits, int lessonHours, Teacher teacher,
 	    double thesesCredits) throws ParseException {
 
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
 	if (teacherService != null) {
 	    setTeachingDegreeCredits(teacherService.getTeachingDegreeCredits());
 	    setSupportLessonHours(teacherService.getSupportLessonHours());
@@ -57,7 +57,7 @@ public class CreditLineDTO {
 	    setInstitutionWorkingHours(teacherService.getInstitutionWorkingHours());
 	    setPastServiceCredits(teacherService.getPastServiceCredits());            
 	}       
-	setBalanceOfCredits(teacher.getBalanceOfCreditsUntil(executionPeriod.getPreviousExecutionPeriod()));
+	setBalanceOfCredits(teacher.getBalanceOfCreditsUntil(executionSemester.getPreviousExecutionPeriod()));
 	setMandatoryLessonHours(lessonHours);
 	setManagementCredits(managementCredits);
 	setServiceExemptionCredits(exemptionCredits);
@@ -138,12 +138,12 @@ public class CreditLineDTO {
 	this.pastServiceCredits = pastServiceCredits;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return executionPeriod;
+    public ExecutionSemester getExecutionPeriod() {
+	return executionSemester;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = executionPeriod;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = executionSemester;
     }
 
     public int getMandatoryLessonHours() {

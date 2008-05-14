@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissa
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -252,17 +252,17 @@ public class StudentDismissalRenderer extends InputRenderer {
 	}
 
 	private void generateCourseGroupCycles(final HtmlBlockContainer blockContainer,
-		final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
+		final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 	    if (studentCurricularPlan.isBolonhaDegree()) {
 		for (final CycleType cycleType : studentCurricularPlan.getDegreeType().getSupportedCyclesToEnrol()) {
 		    final CourseGroup courseGroup = getCourseGroupWithCycleType(studentCurricularPlan, cycleType);
 		    if (courseGroup != null) {
-			generateCourseGroups(blockContainer, studentCurricularPlan, courseGroup, executionPeriod, 0);
+			generateCourseGroups(blockContainer, studentCurricularPlan, courseGroup, executionSemester, 0);
 		    }
 		}
 	    } else {
 		generateCourseGroups(blockContainer, studentCurricularPlan, studentCurricularPlan.getRoot().getDegreeModule(),
-			executionPeriod, 0);
+			executionSemester, 0);
 	    }
 	}
 
@@ -274,14 +274,14 @@ public class StudentDismissalRenderer extends InputRenderer {
 	}
 
 	private void generateCurricularCourses(final HtmlBlockContainer blockContainer,
-		final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
+		final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 	    final HtmlTable groupTable = new HtmlTable();
 	    blockContainer.addChild(groupTable);
 	    groupTable.setClasses(getTablesClasses());
 	    groupTable.setStyle("width: " + getInitialWidth() + "em; margin-left: 0em;");
 
 	    final List<CurricularCourse> orderedCurricularCourses = new ArrayList<CurricularCourse>(studentCurricularPlan
-		    .getAllCurricularCoursesToDismissal(executionPeriod));
+		    .getAllCurricularCoursesToDismissal(executionSemester));
 	    Collections.sort(orderedCurricularCourses, new BeanComparator("name", Collator.getInstance()));
 
 	    for (final CurricularCourse curricularCourse : orderedCurricularCourses) {
@@ -291,7 +291,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 		final HtmlTableCell nameCell = htmlTableRow.createCell();
 
 		final String code = curricularCourse.getCode();
-		final String oneFullName = curricularCourse.getOneFullName(executionPeriod);
+		final String oneFullName = curricularCourse.getOneFullName(executionSemester);
 		final String name = " <span class='bold'>" + curricularCourse.getName() + "</span> ("
 			+ oneFullName.substring(0, oneFullName.lastIndexOf(">")) + ")";
 		final String codeAndname = StringUtils.isEmpty(code) ? name : code + " - " + name;
@@ -322,7 +322,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 
 	private void generateCourseGroups(final HtmlBlockContainer blockContainer,
 		final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
-		final ExecutionPeriod executionPeriod, int depth) {
+		final ExecutionSemester executionSemester, int depth) {
 	    final HtmlTable groupTable = new HtmlTable();
 	    blockContainer.addChild(groupTable);
 	    groupTable.setClasses(getTablesClasses());
@@ -347,12 +347,12 @@ public class StudentDismissalRenderer extends InputRenderer {
 	    currentCreditsCell.setStyle("width: 6em;");
 
 	    final HtmlTableCell creditsMinCell = htmlTableRow.createCell();
-	    creditsMinCell.setBody(new HtmlText("Min: " + courseGroup.getMinEctsCredits(executionPeriod)));
+	    creditsMinCell.setBody(new HtmlText("Min: " + courseGroup.getMinEctsCredits(executionSemester)));
 	    creditsMinCell.setClasses("smalltxt");
 	    creditsMinCell.setStyle("width: 6em;");
 
 	    final HtmlTableCell creditsMaxCell = htmlTableRow.createCell();
-	    creditsMaxCell.setBody(new HtmlText("Max: " + courseGroup.getMaxEctsCredits(executionPeriod)));
+	    creditsMaxCell.setBody(new HtmlText("Max: " + courseGroup.getMaxEctsCredits(executionSemester)));
 	    creditsMaxCell.setClasses("smalltxt");
 	    creditsMaxCell.setStyle("width: 6em;");
 
@@ -365,9 +365,9 @@ public class StudentDismissalRenderer extends InputRenderer {
 	    radioButtonCell.setClasses(getGroupRadioClasses());
 	    radioButtonCell.setStyle("width: 2em;");
 
-	    for (final Context context : courseGroup.getSortedOpenChildContextsWithCourseGroups(executionPeriod)) {
+	    for (final Context context : courseGroup.getSortedOpenChildContextsWithCourseGroups(executionSemester)) {
 		generateCourseGroups(blockContainer, studentCurricularPlan, (CourseGroup) context.getChildDegreeModule(),
-			executionPeriod, depth + getWidthDecreasePerLevel());
+			executionSemester, depth + getWidthDecreasePerLevel());
 	    }
 	}
     }

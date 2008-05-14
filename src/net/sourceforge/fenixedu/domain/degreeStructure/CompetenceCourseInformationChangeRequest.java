@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,7 +16,7 @@ public class CompetenceCourseInformationChangeRequest extends
     public CompetenceCourseInformationChangeRequest(String name, String nameEn, String justification, RegimeType regime,
 	    String objectives, String objectivesEn, String program, String programEn,
 	    String evaluationMethod, String evaluationMethodEn, CompetenceCourse course,
-	    CompetenceCourseLevel level, ExecutionPeriod period, Person requester,
+	    CompetenceCourseLevel level, ExecutionSemester period, Person requester,
 	    Double theoreticalHours, Double problemsHours, Double laboratorialHours,
 	    Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours,
 	    Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits,

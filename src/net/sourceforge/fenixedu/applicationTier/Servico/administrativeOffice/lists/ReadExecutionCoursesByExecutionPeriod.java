@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionCoursesByExecutionPeriod extends Service {
@@ -18,19 +18,17 @@ public class ReadExecutionCoursesByExecutionPeriod extends Service {
 	List allExecutionCoursesFromExecutionPeriod = null;
 	List<InfoExecutionCourse> allExecutionCourses = null;
 
-	ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
+	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
-	if (executionPeriod == null) {
+	if (executionSemester == null) {
 	    throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 	}
-	allExecutionCoursesFromExecutionPeriod = executionPeriod.getAssociatedExecutionCourses();
+	allExecutionCoursesFromExecutionPeriod = executionSemester.getAssociatedExecutionCourses();
 
-	if (allExecutionCoursesFromExecutionPeriod == null
-		|| allExecutionCoursesFromExecutionPeriod.isEmpty()) {
+	if (allExecutionCoursesFromExecutionPeriod == null || allExecutionCoursesFromExecutionPeriod.isEmpty()) {
 	    return allExecutionCoursesFromExecutionPeriod;
 	}
-	allExecutionCourses = new ArrayList<InfoExecutionCourse>(allExecutionCoursesFromExecutionPeriod
-		.size());
+	allExecutionCourses = new ArrayList<InfoExecutionCourse>(allExecutionCoursesFromExecutionPeriod.size());
 	Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
 	while (iter.hasNext()) {
 	    ExecutionCourse executionCourse = (ExecutionCourse) iter.next();

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -19,8 +19,8 @@ public class StudentStatute extends StudentStatute_Base {
 	super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public StudentStatute(Student student, StudentStatuteType statuteType, ExecutionPeriod beginExecutionPeriod,
-	    ExecutionPeriod endExecutionPeriod) {
+    public StudentStatute(Student student, StudentStatuteType statuteType, ExecutionSemester beginExecutionPeriod,
+	    ExecutionSemester endExecutionPeriod) {
 	this();
 	setBeginExecutionPeriod(beginExecutionPeriod);
 	setEndExecutionPeriod(endExecutionPeriod);
@@ -35,13 +35,13 @@ public class StudentStatute extends StudentStatute_Base {
 	setStudent(student);
     }
 
-    public boolean isValidInExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public boolean isValidInExecutionPeriod(final ExecutionSemester executionSemester) {
 
-	if (getBeginExecutionPeriod() != null && getBeginExecutionPeriod().isAfter(executionPeriod)) {
+	if (getBeginExecutionPeriod() != null && getBeginExecutionPeriod().isAfter(executionSemester)) {
 	    return false;
 	}
 
-	if (getEndExecutionPeriod() != null && getEndExecutionPeriod().isBefore(executionPeriod)) {
+	if (getEndExecutionPeriod() != null && getEndExecutionPeriod().isBefore(executionSemester)) {
 	    return false;
 	}
 
@@ -49,8 +49,8 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public boolean isValidOn(final ExecutionYear executionYear) {
-	for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-	    if (!isValidInExecutionPeriod(executionPeriod)) {
+	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+	    if (!isValidInExecutionPeriod(executionSemester)) {
 		return false;
 	    }
 	}
@@ -59,7 +59,7 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public boolean isValidInCurrentExecutionPeriod() {
-	return this.isValidInExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
+	return this.isValidInExecutionPeriod(ExecutionSemester.readActualExecutionPeriod());
     }
 
     public void delete() {
@@ -83,24 +83,24 @@ public class StudentStatute extends StudentStatute_Base {
 
     public boolean overlapsWith(StudentStatute statute) {
 
-	ExecutionPeriod statuteBegin = statute.getBeginExecutionPeriod() != null ? statute.getBeginExecutionPeriod()
-		: ExecutionPeriod.readFirstExecutionPeriod();
-	ExecutionPeriod statuteEnd = statute.getEndExecutionPeriod() != null ? statute.getEndExecutionPeriod() : ExecutionPeriod
+	ExecutionSemester statuteBegin = statute.getBeginExecutionPeriod() != null ? statute.getBeginExecutionPeriod()
+		: ExecutionSemester.readFirstExecutionPeriod();
+	ExecutionSemester statuteEnd = statute.getEndExecutionPeriod() != null ? statute.getEndExecutionPeriod() : ExecutionSemester
 		.readLastExecutionPeriod();
 
 	return overlapsWith(statute.getStatuteType(), statuteBegin, statuteEnd);
 
     }
 
-    public boolean overlapsWith(StudentStatuteType statuteType, ExecutionPeriod statuteBegin, ExecutionPeriod statuteEnd) {
+    public boolean overlapsWith(StudentStatuteType statuteType, ExecutionSemester statuteBegin, ExecutionSemester statuteEnd) {
 
 	if (statuteType != getStatuteType()) {
 	    return false;
 	}
 
-	ExecutionPeriod thisStatuteBegin = getBeginExecutionPeriod() != null ? getBeginExecutionPeriod() : ExecutionPeriod
+	ExecutionSemester thisStatuteBegin = getBeginExecutionPeriod() != null ? getBeginExecutionPeriod() : ExecutionSemester
 		.readFirstExecutionPeriod();
-	ExecutionPeriod thisStatuteEnd = getEndExecutionPeriod() != null ? getEndExecutionPeriod() : ExecutionPeriod
+	ExecutionSemester thisStatuteEnd = getEndExecutionPeriod() != null ? getEndExecutionPeriod() : ExecutionSemester
 		.readLastExecutionPeriod();
 
 	return statuteBegin.isAfterOrEquals(thisStatuteBegin) && statuteBegin.isBeforeOrEquals(thisStatuteEnd)

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.TeacherDegreeFinalProjectStudentsDTO;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -25,40 +25,40 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadTeacherDFPStudentsService extends Service {
 
     public TeacherDegreeFinalProjectStudentsDTO run(InfoTeacher infoTeacher, Integer executionPeriodId)
-            throws ExcepcaoPersistencia {
-        TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
+	    throws ExcepcaoPersistencia {
+	TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
 
-        ExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId);
+	ExecutionSemester executionSemester = getExecutionPeriod(executionPeriodId);
 
-        Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
-        InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
+	Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
+	InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
 
-        final Set<TeacherDegreeFinalProjectStudent> teacherDegreeFinalProjectStudents =
-                teacher.findTeacherDegreeFinalProjectStudentsByExecutionPeriod(executionPeriod);
-        final List infoteacherDFPStudentList = new ArrayList();
-        for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : teacherDegreeFinalProjectStudents) {
-            final InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent =
-                InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain(teacherDegreeFinalProjectStudent);
-            infoteacherDFPStudentList.add(infoTeacherDegreeFinalProjectStudent);
-        }
+	final Set<TeacherDegreeFinalProjectStudent> teacherDegreeFinalProjectStudents = teacher
+		.findTeacherDegreeFinalProjectStudentsByExecutionPeriod(executionSemester);
+	final List infoteacherDFPStudentList = new ArrayList();
+	for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : teacherDegreeFinalProjectStudents) {
+	    final InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson
+		    .newInfoFromDomain(teacherDegreeFinalProjectStudent);
+	    infoteacherDFPStudentList.add(infoTeacherDegreeFinalProjectStudent);
+	}
 
-        teacherDfpStudentsDTO.setInfoTeacher(infoTeacher2);
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
-        teacherDfpStudentsDTO.setInfoExecutionPeriod(infoExecutionPeriod);
-        teacherDfpStudentsDTO.setInfoTeacherDegreeFinalProjectStudentList(infoteacherDFPStudentList);
+	teacherDfpStudentsDTO.setInfoTeacher(infoTeacher2);
+	InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionSemester);
+	teacherDfpStudentsDTO.setInfoExecutionPeriod(infoExecutionPeriod);
+	teacherDfpStudentsDTO.setInfoTeacherDegreeFinalProjectStudentList(infoteacherDFPStudentList);
 
-        return teacherDfpStudentsDTO;
+	return teacherDfpStudentsDTO;
 
     }
 
-    private ExecutionPeriod getExecutionPeriod(Integer executionPeriodId) throws ExcepcaoPersistencia {
-        
-        final ExecutionPeriod executionPeriod;
-        if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
-            executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        } else {
-            executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
-        }
-        return executionPeriod;
+    private ExecutionSemester getExecutionPeriod(Integer executionPeriodId) throws ExcepcaoPersistencia {
+
+	final ExecutionSemester executionSemester;
+	if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
+	    executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	} else {
+	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+	}
+	return executionSemester;
     }
 }

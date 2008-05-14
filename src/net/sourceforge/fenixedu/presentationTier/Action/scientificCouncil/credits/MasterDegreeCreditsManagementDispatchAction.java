@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -204,7 +204,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
 	int totalRowSpan = 0;
 
-	Map<ExecutionPeriod, List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>> executionCoursesMap = new TreeMap<ExecutionPeriod, List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>>();
+	Map<ExecutionSemester, List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>> executionCoursesMap = new TreeMap<ExecutionSemester, List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>>();
 
 	public MasterDegreeCreditsDTO(CurricularCourse curricularCourse, ExecutionYear executionYear) {
 	    
@@ -237,14 +237,14 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 		this.semesters.append("0");
 	    }
 	       
-	    for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+	    for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
 		
-		List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);			
+		List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester);			
 		for (ExecutionCourse executionCourse : executionCourses) {		    	                		                   
             				                       
                     dcpNames.put(executionCourse, getExecutionCourseDCPNames(executionCourse).toString());
 		   		    
-                    List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>> executionPeriodMap = executionCoursesMap.get(executionPeriod);
+                    List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>> executionPeriodMap = executionCoursesMap.get(executionSemester);
                     executionPeriodMap = executionPeriodMap == null ? new ArrayList<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>() : executionPeriodMap;
                     
                     GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer> executionCourseMap = new GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>(
@@ -254,7 +254,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
                     
                     executionPeriodMap.add(executionCourseMap);		 
                     
-                    executionCoursesMap.put(executionPeriod, executionPeriodMap);
+                    executionCoursesMap.put(executionSemester, executionPeriodMap);
 		    
 		    int profCounter = executionCourse.getProfessorshipsCount();
 		    if (profCounter == 0) {
@@ -282,7 +282,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	    this.totalRowSpan = totalRowSpan;
 	}		
 
-	public Map<ExecutionPeriod, List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>> getExecutionCoursesMap() {
+	public Map<ExecutionSemester, List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>> getExecutionCoursesMap() {
 	    return executionCoursesMap;
 	}
 
@@ -324,9 +324,9 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
     private void fillSpreadSheet(ExecutionDegree executionDegree, List<MasterDegreeCreditsDTO> listing, Spreadsheet spreadsheet) {
 	for (MasterDegreeCreditsDTO masterDegreeCreditsDTO : listing) {
-	    Map<ExecutionPeriod, List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>> executionCoursesMap = masterDegreeCreditsDTO.getExecutionCoursesMap();
-	    for (ExecutionPeriod executionPeriod : executionCoursesMap.keySet()) {
-		for (GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer> executionCourseMap : executionCoursesMap.get(executionPeriod)) {
+	    Map<ExecutionSemester, List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>> executionCoursesMap = masterDegreeCreditsDTO.getExecutionCoursesMap();
+	    for (ExecutionSemester executionSemester : executionCoursesMap.keySet()) {
+		for (GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer> executionCourseMap : executionCoursesMap.get(executionSemester)) {
 		    ExecutionCourse executionCourse = executionCourseMap.getFirst().getKey();		    		    
 		    final Row row = spreadsheet.addRow();		  
 		    row.setCell(masterDegreeCreditsDTO.getCurricularCourse().getName());
@@ -384,8 +384,8 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     private StringBuilder getTeachersDepartaments(ExecutionCourse executionCourse) {
 	StringBuilder teachers = new StringBuilder();
 	for (Professorship professorship : executionCourse.getProfessorships()) {
-	    ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-	    Department department = professorship.getTeacher().getLastWorkingDepartment(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay());
+	    ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+	    Department department = professorship.getTeacher().getLastWorkingDepartment(executionSemester.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay());
 	    teachers.append(department != null ? department.getRealName() : "").append(LINE_BRAKE);
 	}
 	return teachers;

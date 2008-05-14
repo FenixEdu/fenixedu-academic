@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -24,7 +24,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
 	if (studentCurricularPlan != null) {
 	    studentEnrolmentBean.setStudentCurricularPlan(studentCurricularPlan);
-	    studentEnrolmentBean.setExecutionPeriod(ExecutionPeriod.readActualExecutionPeriod());
+	    studentEnrolmentBean.setExecutionPeriod(ExecutionSemester.readActualExecutionPeriod());
 	    return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, actionForm, request, response);
 	} else {
 	    throw new FenixActionException();
@@ -40,7 +40,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
     public ActionForward prepareFromStudentEnrollmentWithRules(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	final StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
-	studentEnrolmentBean.setExecutionPeriod((ExecutionPeriod) request.getAttribute("executionPeriod"));
+	studentEnrolmentBean.setExecutionPeriod((ExecutionSemester) request.getAttribute("executionPeriod"));
 	studentEnrolmentBean.setStudentCurricularPlan((StudentCurricularPlan) request.getAttribute("studentCurricularPlan"));
 
 	return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, form, request, response);

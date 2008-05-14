@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
@@ -200,7 +200,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    Person person = (Person) getParty();
 	    Teacher teacher = person.getTeacher();
 	    if (teacher != null && person.getPersonRole(RoleType.TEACHER) != null
-		    && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+		    && !teacher.isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
 		roles.add(RoleType.TEACHER);
 	    }
 	    Employee employee = person.getEmployee();
@@ -240,7 +240,7 @@ public class ParkingParty extends ParkingParty_Base {
 		if (teacher.getCurrentWorkingDepartment() != null) {
 		    currentDepartment = teacher.getCurrentWorkingDepartment().getName();
 		}
-		if (teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+		if (teacher.isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
 		    stringBuilder.append("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber() + "<br/>"
 			    + currentDepartment);
 		} else {
@@ -440,7 +440,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    }
 	    Person person = (Person) getParty();
 	    if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
-		    && !person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+		    && !person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
 		return person.getTeacher().getTeacherNumber();
 	    }
 	    if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null
@@ -464,7 +464,7 @@ public class ParkingParty extends ParkingParty_Base {
 		return person.getGrantOwner().getNumber();
 	    }
 	    if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
-		    && person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+		    && person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
 		return person.getTeacher().getTeacherNumber();
 	    }
 	}

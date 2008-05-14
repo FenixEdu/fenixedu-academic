@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -16,7 +16,7 @@ public class RespondToInquiriesQuestion extends FenixDispatchAction {
 
     public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
-	request.setAttribute("executionPeriod", ExecutionPeriod.readActualExecutionPeriod());
+	request.setAttribute("executionPeriod", ExecutionSemester.readActualExecutionPeriod());
 	return mapping.findForward("respondToInquiriesQuestion");
     }
 

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -65,12 +65,12 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 		    "error.curricularRules.executors.ruleExecutors.AnyCurricularCourseExecutor.unexpected.degree.module.to.evaluate");
 	}
 
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 	final Degree degree = curricularCourseToEnrol.getDegree();
 
 	boolean result = true;
 
-	result &= rule.hasCredits() ? rule.getCredits().equals(curricularCourseToEnrol.getEctsCredits(executionPeriod)) : true;
+	result &= rule.hasCredits() ? rule.getCredits().equals(curricularCourseToEnrol.getEctsCredits(executionSemester)) : true;
 
 	result &= rule.hasDegree() ? rule.getDegree() == degree : rule.hasBolonhaDegreeType() ? degree.getDegreeType() == rule
 		.getBolonhaDegreeType() : true;

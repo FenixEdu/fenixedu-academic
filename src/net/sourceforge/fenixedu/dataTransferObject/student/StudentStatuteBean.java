@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 
@@ -19,21 +19,21 @@ public class StudentStatuteBean implements Serializable {
 
     private StudentStatuteType statuteType;
 
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
     private DomainReference<StudentStatute> studentStatute;
 
-    public StudentStatuteBean(StudentStatuteType statuteType, ExecutionPeriod executionPeriod) {
+    public StudentStatuteBean(StudentStatuteType statuteType, ExecutionSemester executionSemester) {
 	this.statuteType = statuteType;
-	this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
+	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
     }
 
     public StudentStatuteBean(StudentStatuteType statuteType) {
 	this.statuteType = statuteType;
     }
 
-    public StudentStatuteBean(StudentStatute studentStatute, ExecutionPeriod executionPeriod) {
-	this.executionPeriod = new DomainReference<ExecutionPeriod>(executionPeriod);
+    public StudentStatuteBean(StudentStatute studentStatute, ExecutionSemester executionSemester) {
+	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
 	this.studentStatute = new DomainReference<StudentStatute>(studentStatute);
     }
 
@@ -41,8 +41,8 @@ public class StudentStatuteBean implements Serializable {
 	this.studentStatute = new DomainReference<StudentStatute>(studentStatute);
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return executionPeriod.getObject();
+    public ExecutionSemester getExecutionPeriod() {
+	return executionSemester.getObject();
     }
 
     public StudentStatuteType getStatuteType() {

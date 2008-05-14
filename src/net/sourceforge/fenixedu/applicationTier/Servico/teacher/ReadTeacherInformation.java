@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInform
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -67,8 +67,8 @@ public class ReadTeacherInformation extends Service {
         // should refer to the previous execution year
         ExecutionYear executionYear = null;
         if (argExecutionYear == null || argExecutionYear.equals("")) {
-            ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-            ExecutionPeriod previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
+            ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+            ExecutionSemester previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
             if (previousExecutionPeriod != null) {
                 while (previousExecutionPeriod.getExecutionYear().equals(
                         actualExecutionPeriod.getExecutionYear())) {

@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credit
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -96,8 +96,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         ExecutionYear fromExecutionYear = rootDomainObject.readExecutionYearByOID(fromExecutionYearID);
         ExecutionYear untilExecutionYear = rootDomainObject.readExecutionYearByOID(untilExecutionYearID);
 
-        ExecutionPeriod fromExecutionPeriod = fromExecutionYear.readExecutionPeriodForSemester(1);
-        ExecutionPeriod untilExecutionPeriod = untilExecutionYear.readExecutionPeriodForSemester(2);
+        ExecutionSemester fromExecutionPeriod = fromExecutionYear.readExecutionPeriodForSemester(1);
+        ExecutionSemester untilExecutionPeriod = untilExecutionYear.readExecutionPeriodForSemester(2);
 
         if (!validExecutionPeriodsChoice(fromExecutionPeriod, untilExecutionPeriod)) {
             throw new InvalidPeriodException();
@@ -207,8 +207,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         request.setAttribute("executionYearTotals", executionYearTotals);
     }
     
-    private boolean validExecutionPeriodsChoice(ExecutionPeriod fromExecutionPeriod, ExecutionPeriod untilExecutionPeriod) {        
-        ExecutionPeriod tempExecutionPeriod = fromExecutionPeriod;
+    private boolean validExecutionPeriodsChoice(ExecutionSemester fromExecutionPeriod, ExecutionSemester untilExecutionPeriod) {        
+        ExecutionSemester tempExecutionPeriod = fromExecutionPeriod;
         if (fromExecutionPeriod == untilExecutionPeriod) {
             return true;
         }
@@ -354,14 +354,14 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         ExecutionYear fromExecutionYear = rootDomainObject.readExecutionYearByOID(fromExecutionYearID);
         ExecutionYear untilExecutionYear = rootDomainObject.readExecutionYearByOID(untilExecutionYearID);
     
-        ExecutionPeriod fromExecutionPeriod = null;
+        ExecutionSemester fromExecutionPeriod = null;
         if(fromExecutionYear.getPreviousExecutionYear().equals(TeacherService.getStartExecutionPeriodForCredits().getExecutionYear())) {
             fromExecutionPeriod = TeacherService.getStartExecutionPeriodForCredits();
         } else {
             fromExecutionPeriod = fromExecutionYear.getPreviousExecutionYear().readExecutionPeriodForSemester(1);
         }
         
-        ExecutionPeriod untilExecutionPeriod = untilExecutionYear.readExecutionPeriodForSemester(2);
+        ExecutionSemester untilExecutionPeriod = untilExecutionYear.readExecutionPeriodForSemester(2);
     
         if (!validExecutionPeriodsChoice(fromExecutionPeriod, untilExecutionPeriod)) {
             throw new InvalidPeriodException();
@@ -437,7 +437,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         final ExcelStyle excelStyle = new ExcelStyle(workbook);
 
         for (Department department : teachersCreditsByDepartment.keySet()) {
-            Set<ExecutionPeriod> executionPeriods = null;
+            Set<ExecutionSemester> executionSemesters = null;
             String deptName = department.getName();
             deptName = deptName.replaceAll("DEPARTAMENTO", "DEP. ");
             deptName = deptName.replaceAll("ENGENHARIA", "ENG. ");
@@ -449,13 +449,13 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             Double unitTotalCredits = 0.0;
             for (Unit unit : creditsByUnit.keySet()) {
                 List<TeacherCreditsReportDTO> teachersCreditReportDTOs = creditsByUnit.get(unit);
-                if (executionPeriods == null) {
-                    executionPeriods = teachersCreditReportDTOs.get(0).getCreditsByExecutionPeriod().keySet();
+                if (executionSemesters == null) {
+                    executionSemesters = teachersCreditReportDTOs.get(0).getCreditsByExecutionPeriod().keySet();
                 }
                 spreadsheet.addRow();
                 final Row row = spreadsheet.addRow();
                 row.setCell(unit.getName());
-                setHeaders(executionPeriods, spreadsheet);
+                setHeaders(executionSemesters, spreadsheet);
                 unitTotalCredits += fillSpreadSheet(teachersCreditReportDTOs, spreadsheet);
             }
             spreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle
@@ -477,19 +477,19 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             Double pastCredits = NumberUtils.formatNumber((Double) teacherCreditsReportDTO
                     .getPastCredits(), 2);
             row.setCell(pastCredits.toString().replace('.', ','));
-            Set<ExecutionPeriod> executionPeriods = teacherCreditsReportDTO
+            Set<ExecutionSemester> executionSemesters = teacherCreditsReportDTO
                     .getCreditsByExecutionPeriod().keySet();
             Double totalCredits = 0.0;
             totalCredits += teacherCreditsReportDTO.getPastCredits();
             numberOfCells = 2;
-            for (ExecutionPeriod executionPeriod : executionPeriods) {
+            for (ExecutionSemester executionSemester : executionSemesters) {
                 numberOfCells += 1;
                 Double credits = teacherCreditsReportDTO.getCreditsByExecutionPeriod().get(
-                        executionPeriod);
+                        executionSemester);
                 credits = NumberUtils.formatNumber(credits, 2);
                 row.setCell(credits.toString().replace('.', ','));
                 totalCredits += credits;
-                if (executionPeriod.getSemester() == 2) {
+                if (executionSemester.getSemester() == 2) {
                     numberOfCells += 1;                    
                     totalCredits = NumberUtils.formatNumber(totalCredits, 2);
                     row.setCell(totalCredits.toString().replace('.', ','));
@@ -503,23 +503,23 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         return listTotalCredits;
     }
 
-    private void setHeaders(Set<ExecutionPeriod> executionPeriods, Spreadsheet spreadsheet) {
+    private void setHeaders(Set<ExecutionSemester> executionSemesters, Spreadsheet spreadsheet) {
         final Row row = spreadsheet.addRow();
         row.setCell("Número");
         row.setCell("Nome");
-        row.setCell("Saldo até " + executionPeriods.iterator().next().getPreviousExecutionPeriod().getExecutionYear().getYear());
-        for (ExecutionPeriod executionPeriod : executionPeriods) {
+        row.setCell("Saldo até " + executionSemesters.iterator().next().getPreviousExecutionPeriod().getExecutionYear().getYear());
+        for (ExecutionSemester executionSemester : executionSemesters) {
             String semester = null;
-            if (executionPeriod.getName().equalsIgnoreCase("1 Semestre")) {
+            if (executionSemester.getName().equalsIgnoreCase("1 Semestre")) {
                 semester = "1º Sem - ";
             } else {
                 semester = "2º Sem - ";
             }
             StringBuilder stringBuilder = new StringBuilder(semester);
-            stringBuilder.append(executionPeriod.getExecutionYear().getYear());
+            stringBuilder.append(executionSemester.getExecutionYear().getYear());
             row.setCell(stringBuilder.toString());
-            if (executionPeriod.getSemester() == 2) {
-                row.setCell("Saldo Final " + executionPeriod.getExecutionYear().getYear());
+            if (executionSemester.getSemester() == 2) {
+                row.setCell("Saldo Final " + executionSemester.getExecutionYear().getYear());
             }
         }
     }

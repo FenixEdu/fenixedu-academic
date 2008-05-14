@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.credits;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 
@@ -17,8 +17,8 @@ public class OtherTypeCreditLine extends OtherTypeCreditLine_Base {
         return CreditsEvent.OTHER_CREDIT;
     }
     
-    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
-        return this.getExecutionPeriod().equals(executionPeriod);
+    public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
+        return this.getExecutionPeriod().equals(executionSemester);
     }
 
     public void delete() {
@@ -26,11 +26,11 @@ public class OtherTypeCreditLine extends OtherTypeCreditLine_Base {
         super.deleteDomainObject();
     }
 
-    public static List<OtherTypeCreditLine> readByTeacherAndExecutionPeriod(Teacher teacher, ExecutionPeriod executionPeriod) {
+    public static List<OtherTypeCreditLine> readByTeacherAndExecutionPeriod(Teacher teacher, ExecutionSemester executionSemester) {
         List<OtherTypeCreditLine> result = new ArrayList<OtherTypeCreditLine>();
         
         for (OtherTypeCreditLine otherTypeCreditLine : teacher.getOtherTypeCreditLines()) {
-            if (otherTypeCreditLine.getExecutionPeriod().equals(executionPeriod)) {
+            if (otherTypeCreditLine.getExecutionPeriod().equals(executionSemester)) {
                 result.add(otherTypeCreditLine);
             }
         }

@@ -20,11 +20,11 @@ public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurr
     }
     
     public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan,
-            CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+            CurricularCourse curricularCourse, ExecutionSemester executionSemester,
             EnrollmentCondition enrolmentCondition, String createdBy) {
     	this();
     	initializeAsNew(studentCurricularPlan, curricularCourse,
-                executionPeriod, enrolmentCondition, createdBy);
+                executionSemester, enrolmentCondition, createdBy);
     	createEnrolmentLog(EnrolmentAction.ENROL);
     }
     
@@ -35,16 +35,16 @@ public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurr
 
     // new student structure methods
     public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+	    CurricularCourse curricularCourse, ExecutionSemester executionSemester,
 	    EnrollmentCondition enrolmentCondition, String createdBy) {
 	this();
 	if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null
-		|| executionPeriod == null || enrolmentCondition == null || createdBy == null) {
+		|| executionSemester == null || enrolmentCondition == null || createdBy == null) {
 	    throw new DomainException("invalid arguments");
 	}
 	//TODO: check this
 	//validateDegreeModuleLink(curriculumGroup, curricularCourse);
-	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionPeriod,
+	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester,
 		enrolmentCondition, createdBy);
     }
 }

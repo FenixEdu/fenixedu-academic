@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionPeriod extends Service {
 
-	public InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
-        ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
-		if (executionPeriod == null) {
-			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-		}
-
-        return InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+    public InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
+	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+	if (executionSemester == null) {
+	    throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 	}
-    
+
+	return InfoExecutionPeriod.newInfoFromDomain(executionSemester);
+    }
+
 }

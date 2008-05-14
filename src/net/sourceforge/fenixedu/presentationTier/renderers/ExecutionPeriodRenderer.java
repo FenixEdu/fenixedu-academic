@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.renderers.OutputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
@@ -15,10 +15,10 @@ public class ExecutionPeriodRenderer extends OutputRenderer {
 
 			@Override
 			public HtmlComponent createComponent(Object object, Class type) {
-				ExecutionPeriod executionPeriod = (ExecutionPeriod) object;
+				ExecutionSemester executionSemester = (ExecutionSemester) object;
 				StringBuilder text = new StringBuilder();
-				text.append(executionPeriod.getExecutionYear().getYear()).append(", "); 
-				text.append(executionPeriod.getSemester()).append(RenderUtils.getResourceString("label.semester.short"));
+				text.append(executionSemester.getExecutionYear().getYear()).append(", "); 
+				text.append(executionSemester.getSemester()).append(RenderUtils.getResourceString("label.semester.short"));
 				return new HtmlText(text.toString());
 			}
 		};

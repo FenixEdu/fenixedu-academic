@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -46,23 +46,23 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
     }
 
     public EnrolmentOutOfPeriodEvent(final AdministrativeOffice administrativeOffice, final Person person,
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod,
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
 	    final Integer numberOfDelayDays) {
 	this();
-	init(administrativeOffice, person, studentCurricularPlan, executionPeriod, numberOfDelayDays);
+	init(administrativeOffice, person, studentCurricularPlan, executionSemester, numberOfDelayDays);
     }
 
     private void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
-	    ExecutionPeriod executionPeriod, Integer numberOfDelayDays) {
-	checkParameters(administrativeOffice, studentCurricularPlan, executionPeriod, numberOfDelayDays);
+	    ExecutionSemester executionSemester, Integer numberOfDelayDays) {
+	checkParameters(administrativeOffice, studentCurricularPlan, executionSemester, numberOfDelayDays);
 	super.init(administrativeOffice, EventType.ENROLMENT_OUT_OF_PERIOD, person);
-	super.setExecutionPeriod(executionPeriod);
+	super.setExecutionPeriod(executionSemester);
 	super.setStudentCurricularPlan(studentCurricularPlan);
 	super.setNumberOfDelayDays(numberOfDelayDays);
     }
 
     private void checkParameters(AdministrativeOffice administrativeOffice, StudentCurricularPlan studentCurricularPlan,
-	    ExecutionPeriod executionPeriod, Integer numberOfDelayDays) {
+	    ExecutionSemester executionSemester, Integer numberOfDelayDays) {
 
 	if (administrativeOffice == null) {
 	    throw new DomainException(
@@ -74,7 +74,7 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
 		    "error.net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent.studentCurricularPlan.cannot.be.null");
 	}
 
-	if (executionPeriod == null) {
+	if (executionSemester == null) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent.executionPeriod.cannot.be.null");
 	}

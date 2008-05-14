@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.period;
 
-import net.sourceforge.fenixedu.domain.AcademicPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -12,17 +12,17 @@ public class Over23CandidacyPeriod extends Over23CandidacyPeriod_Base {
 	super();
     }
 
-    public Over23CandidacyPeriod(final Over23CandidacyProcess candidacyProcess, final AcademicPeriod academicPeriod,
+    public Over23CandidacyPeriod(final Over23CandidacyProcess candidacyProcess, final ExecutionInterval executionInterval,
 	    final DateTime start, final DateTime end) {
 	this();
-	init(candidacyProcess, academicPeriod, start, end);
+	init(candidacyProcess, executionInterval, start, end);
     }
 
-    private void init(final Over23CandidacyProcess candidacyProcess, final AcademicPeriod academicPeriod, final DateTime start,
-	    final DateTime end) {
+    private void init(final Over23CandidacyProcess candidacyProcess, final ExecutionInterval executionInterval,
+	    final DateTime start, final DateTime end) {
 	checkParameters(candidacyProcess);
-	checkIfCanCreate(academicPeriod);
-	super.init(academicPeriod, start, end);
+	checkIfCanCreate(executionInterval);
+	super.init(executionInterval, start, end);
 	addCandidacyProcesses(candidacyProcess);
     }
 
@@ -32,10 +32,10 @@ public class Over23CandidacyPeriod extends Over23CandidacyPeriod_Base {
 	}
     }
 
-    private void checkIfCanCreate(final AcademicPeriod academicPeriod) {
-	if (academicPeriod.getOver23CandidacyPeriod() != null) {
-	    throw new DomainException("error.Over23CandidacyPeriod.academicPeriod.already.contains.candidacyPeriod.type",
-		    academicPeriod.getName());
+    private void checkIfCanCreate(final ExecutionInterval executionInterval) {
+	if (executionInterval.getOver23CandidacyPeriod() != null) {
+	    throw new DomainException("error.Over23CandidacyPeriod.executionInterval.already.contains.candidacyPeriod.type",
+		    executionInterval.getName());
 	}
     }
 

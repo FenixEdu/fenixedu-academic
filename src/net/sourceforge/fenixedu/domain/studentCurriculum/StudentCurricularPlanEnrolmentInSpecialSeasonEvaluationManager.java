@@ -32,7 +32,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     protected void assertEnrolmentPreConditions() {
 	final Registration registration = studentCurricularPlan.getRegistration();
 
-	if (!responsiblePerson.hasRole(RoleType.MANAGER) && !registration.isInRegisteredState(executionPeriod)) {
+	if (!responsiblePerson.hasRole(RoleType.MANAGER) && !registration.isInRegisteredState(executionSemester)) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
 
@@ -54,8 +54,8 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
     @Override
     protected void addEnroled() {
-	for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionPeriod.getExecutionYear())) {
-	    enrolmentContext.addDegreeModuleToEvaluate(new EnroledCurriculumModuleWrapper(enrolment, executionPeriod));
+	for (final Enrolment enrolment : studentCurricularPlan.getSpecialSeasonEnrolments(executionSemester.getExecutionYear())) {
+	    enrolmentContext.addDegreeModuleToEvaluate(new EnroledCurriculumModuleWrapper(enrolment, executionSemester));
 	}
     }
 

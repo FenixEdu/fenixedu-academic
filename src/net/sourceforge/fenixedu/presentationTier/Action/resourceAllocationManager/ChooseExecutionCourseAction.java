@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -31,11 +31,10 @@ import org.apache.struts.validator.DynaValidatorForm;
  * 
  * 
  */
-public class ChooseExecutionCourseAction extends
-	FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction {
+public class ChooseExecutionCourseAction extends FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
 	super.execute(mapping, form, request, response);
 
@@ -48,12 +47,10 @@ public class ChooseExecutionCourseAction extends
 	Integer page = (Integer) chooseCourseForm.get("page");
 
 	if (courseInitials != null && !courseInitials.equals("")) {
-	    final ExecutionPeriod executionPeriod = RootDomainObject.getInstance()
-		    .readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
-	    final ExecutionCourse executionCourse = executionPeriod
-		    .getExecutionCourseByInitials(courseInitials);
-	    final InfoExecutionCourse infoCourse = InfoExecutionCourse
-		    .newInfoFromDomain(executionCourse);
+	    final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(
+		    infoExecutionPeriod.getIdInternal());
+	    final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(courseInitials);
+	    final InfoExecutionCourse infoCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 
 	    request.setAttribute(SessionConstants.EXECUTION_COURSE, infoCourse);
 	    return mapping.findForward("forwardChoose");
@@ -61,8 +58,7 @@ public class ChooseExecutionCourseAction extends
 	if (page != null && page.intValue() > 1) {
 	    request.removeAttribute(SessionConstants.EXECUTION_COURSE);
 	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("label.choose.executionCourse", new ActionError(
-		    "label.choose.executionCourse"));
+	    actionErrors.add("label.choose.executionCourse", new ActionError("label.choose.executionCourse"));
 	    saveErrors(request, actionErrors);
 	}
 	return mapping.findForward("showForm");

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainListReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -82,7 +82,7 @@ public class ParkingRequestSearch implements Serializable {
 		|| request.getParkingParty().getParty().getPartyClassification() == getPartyClassification()) {
 	    if (getPartyClassification() == PartyClassification.TEACHER) {
 		Person person = (Person) request.getParkingParty().getParty();
-		if (person.getTeacher().isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+		if (person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
 		    return false;
 		}
 	    }

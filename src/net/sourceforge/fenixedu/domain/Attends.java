@@ -46,8 +46,8 @@ public class Attends extends Attends_Base {
 		final Registration registration2 = attends2.getRegistration();
 		return registration1.getNumber().compareTo(registration2.getNumber());
 	    } else {
-		final ExecutionPeriod executionPeriod1 = executionCourse1.getExecutionPeriod();
-		final ExecutionPeriod executionPeriod2 = executionCourse2.getExecutionPeriod();
+		final ExecutionSemester executionPeriod1 = executionCourse1.getExecutionPeriod();
+		final ExecutionSemester executionPeriod2 = executionCourse2.getExecutionPeriod();
 		if (executionPeriod1 == executionPeriod2) {
 		    return executionCourse1.getNome().compareTo(executionCourse2.getNome());
 		} else {
@@ -268,13 +268,13 @@ public class Attends extends Attends_Base {
     }
 
     public Date getBegginingOfLessonPeriod() {
-	final ExecutionPeriod executionPeriod = getExecutionCourse().getExecutionPeriod();
+	final ExecutionSemester executionSemester = getExecutionCourse().getExecutionPeriod();
 	final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
 	final ExecutionDegree executionDegree = studentCurricularPlan.getDegreeCurricularPlan()
-		.getExecutionDegreeByYear(executionPeriod.getExecutionYear());
-	if (executionPeriod.getSemester().intValue() == 1) {
+		.getExecutionDegreeByYear(executionSemester.getExecutionYear());
+	if (executionSemester.getSemester().intValue() == 1) {
 	    return executionDegree.getPeriodLessonsFirstSemester().getStart();
-	} else if (executionPeriod.getSemester().intValue() == 2) {
+	} else if (executionSemester.getSemester().intValue() == 2) {
 	    return executionDegree.getPeriodLessonsSecondSemester().getStart();
 	} else {
 	    throw new DomainException("unsupported.execution.period.semester");
@@ -282,13 +282,13 @@ public class Attends extends Attends_Base {
     }
 
     public Date getEndOfExamsPeriod() {
-	final ExecutionPeriod executionPeriod = getExecutionCourse().getExecutionPeriod();
+	final ExecutionSemester executionSemester = getExecutionCourse().getExecutionPeriod();
 	final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
 	final ExecutionDegree executionDegree = studentCurricularPlan.getDegreeCurricularPlan()
-		.getExecutionDegreeByYear(executionPeriod.getExecutionYear());
-	if (executionPeriod.getSemester().intValue() == 1) {
+		.getExecutionDegreeByYear(executionSemester.getExecutionYear());
+	if (executionSemester.getSemester().intValue() == 1) {
 	    return executionDegree.getPeriodExamsFirstSemester().getEnd();
-	} else if (executionPeriod.getSemester().intValue() == 2) {
+	} else if (executionSemester.getSemester().intValue() == 2) {
 	    return executionDegree.getPeriodExamsSecondSemester().getEnd();
 	} else {
 	    throw new DomainException("unsupported.execution.period.semester");
@@ -306,8 +306,8 @@ public class Attends extends Attends_Base {
 	}
     }
 
-    public boolean isFor(final ExecutionPeriod executionPeriod) {
-	return getExecutionCourse().getExecutionPeriod() == executionPeriod;
+    public boolean isFor(final ExecutionSemester executionSemester) {
+	return getExecutionCourse().getExecutionPeriod() == executionSemester;
     }
 
     public boolean isFor(final ExecutionCourse executionCourse) {
@@ -342,7 +342,7 @@ public class Attends extends Attends_Base {
 	return super.getDisciplinaExecucao();
     }
     
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
 	return getExecutionCourse().getExecutionPeriod();
     }
 

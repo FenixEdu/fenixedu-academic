@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
@@ -18,7 +18,7 @@ public class EnrolmentContext {
 
     private StudentCurricularPlan studentCurricularPlan;
 
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
 
     private Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate;
 
@@ -29,7 +29,7 @@ public class EnrolmentContext {
     private Person responsiblePerson;
 
     public EnrolmentContext(final Person responsiblePerson, final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod, final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol,
+	    final ExecutionSemester executionSemester, final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol,
 	    final List<CurriculumModule> curriculumModulesToRemove, final CurricularRuleLevel curricularRuleLevel) {
 
 	this.responsiblePerson = responsiblePerson;
@@ -47,7 +47,7 @@ public class EnrolmentContext {
 	    this.addDegreeModuleToEvaluate(moduleToEnrol);
 	}
 
-	this.executionPeriod = executionPeriod;
+	this.executionSemester = executionSemester;
 	this.curriculumModulesToRemove = curriculumModulesToRemove;
 	this.curricularRuleLevel = curricularRuleLevel;
     }
@@ -71,12 +71,12 @@ public class EnrolmentContext {
 	getDegreeModulesToEvaluate().add(degreeModuleToEvaluate);
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return executionPeriod;
+    public ExecutionSemester getExecutionPeriod() {
+	return executionSemester;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = executionPeriod;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = executionSemester;
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
@@ -113,15 +113,15 @@ public class EnrolmentContext {
 
     @SuppressWarnings("unchecked")
     public static EnrolmentContext createForVerifyWithRules(final Person person,
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod) {
-	return createForVerifyWithRules(person, studentCurricularPlan, executionPeriod, Collections.EMPTY_SET);
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+	return createForVerifyWithRules(person, studentCurricularPlan, executionSemester, Collections.EMPTY_SET);
     }
 
     @SuppressWarnings("unchecked")
     public static EnrolmentContext createForVerifyWithRules(final Person person,
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod,
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
 	    final Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate) {
-	return new EnrolmentContext(person, studentCurricularPlan, executionPeriod, degreeModulesToEvaluate,
+	return new EnrolmentContext(person, studentCurricularPlan, executionSemester, degreeModulesToEvaluate,
 		Collections.EMPTY_LIST, CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
 

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
@@ -13,15 +13,15 @@ public class AMIIICDIIRule implements IEnrollmentRule{
     
     private StudentCurricularPlan studentCurricularPlan;
     
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
     
     private static final String AMII_CODE = "P5";
     
     private static final String CDII_CODE = "B71";
     
-    public AMIIICDIIRule(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
+    public AMIIICDIIRule(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
 	this.studentCurricularPlan = studentCurricularPlan;
-	this.executionPeriod = executionPeriod;
+	this.executionSemester = executionSemester;
     }
 
     public List<CurricularCourse2Enroll> apply(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) throws EnrolmentRuleDomainException {
@@ -29,7 +29,7 @@ public class AMIIICDIIRule implements IEnrollmentRule{
 	CurricularCourse2Enroll curricularCourse2Enroll = getCourseToEnroll(curricularCoursesToBeEnrolledIn, cdII); 
 	if(curricularCourse2Enroll != null) {
 	    CurricularCourse amII = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode(AMII_CODE);
-	    if(studentCurricularPlan.isCurricularCourseApproved(amII) || studentCurricularPlan.isEnroledInExecutionPeriod(amII, executionPeriod.getPreviousExecutionPeriod())) {
+	    if(studentCurricularPlan.isCurricularCourseApproved(amII) || studentCurricularPlan.isEnroledInExecutionPeriod(amII, executionSemester.getPreviousExecutionPeriod())) {
 		curricularCourse2Enroll.setEnrollmentType(CurricularCourseEnrollmentType.TEMPORARY);
 	    }
 	}

@@ -9,7 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ExamDateCertificateExamSelectionBean implements Serializable {
 
@@ -37,11 +37,11 @@ public class ExamDateCertificateExamSelectionBean implements Serializable {
     }
 
     public static ExamDateCertificateExamSelectionBean buildFor(final Collection<Enrolment> enrolments,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	final ExamDateCertificateExamSelectionBean result = new ExamDateCertificateExamSelectionBean();
 
 	for (final Enrolment enrolment : enrolments) {
-	    for (final Exam exam : enrolment.getAttendsFor(executionPeriod).getExecutionCourse().getPublishedExamsFor(
+	    for (final Exam exam : enrolment.getAttendsFor(executionSemester).getExecutionCourse().getPublishedExamsFor(
 		    enrolment.getCurricularCourse())) {
 		result.addEntry(new ExamDateCertificateExamSelectionEntryBean(enrolment, exam));
 	    }

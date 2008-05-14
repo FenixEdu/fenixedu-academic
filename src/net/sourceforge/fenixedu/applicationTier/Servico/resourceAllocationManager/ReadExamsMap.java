@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExamsMap extends Service {
 
-    public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears,
-	    InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
+    public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears, InfoExecutionPeriod infoExecutionPeriod)
+	    throws ExcepcaoPersistencia {
 
 	// Object to be returned
 	InfoExamsMap infoExamsMap = new InfoExamsMap();
@@ -64,25 +64,27 @@ public class ReadExamsMap extends Service {
 	// List of execution courses
 	List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
 
-	DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(
-		infoExecutionDegree.getInfoDegreeCurricularPlan().getName(), infoExecutionDegree
-			.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
+	DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree
+		.getInfoDegreeCurricularPlan().getName(), infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+		.getSigla());
 
 	if (degreeCurricularPlan != null) {
-	    ExecutionPeriod executionPeriod = rootDomainObject
-		    .readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+	    ExecutionSemester executionSemester = rootDomainObject
+		    .readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
 	    // Obtain execution courses and associated information
-	    // of the given execution degree for each curricular year persistentSupportecified
+	    // of the given execution degree for each curricular year
+	    // persistentSupportecified
 	    for (int i = 0; i < curricularYears.size(); i++) {
 		// Obtain list os execution courses
 		List<ExecutionCourse> executionCourses = degreeCurricularPlan
-			.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionPeriod,
-				(Integer) curricularYears.get(i), infoExecutionPeriod.getSemester());
+			.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester, (Integer) curricularYears
+				.get(i), infoExecutionPeriod.getSemester());
 
 		// For each execution course obtain curricular courses and
 		// exams
 		for (int j = 0; j < executionCourses.size(); j++) {
-		    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) executionCourses.get(j));
+		    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+			    .newInfoFromDomain((ExecutionCourse) executionCourses.get(j));
 		    infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 
 		    infoExecutionCourses.add(infoExecutionCourse);

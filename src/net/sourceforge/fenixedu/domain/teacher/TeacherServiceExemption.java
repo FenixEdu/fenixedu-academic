@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
 import net.sourceforge.fenixedu.domain.Teacher;
 
@@ -49,7 +49,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL);
     }
 
-    public boolean isForCountInCreditsButDontIsSabbatical(Teacher teacher, ExecutionPeriod executionPeriod) {
+    public boolean isForCountInCreditsButDontIsSabbatical(Teacher teacher, ExecutionSemester executionSemester) {
 
 	if (isLongDuration() && !isForCountInCreditsBecauseIsSabbaticalOrEquivalent()) {
 
@@ -60,7 +60,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 	    }
 
 	    if (getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)) {
-		Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionPeriod);
+		Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionSemester);
 		Category pax_category = Category.readCategoryByCodeAndNameInPT("PAX", "Professor Auxiliar");
 		return (teacherCategory != null && pax_category != null && !teacherCategory.equals(pax_category) && !teacherCategory
 			.isTeacherCategoryMostImportantThan(pax_category));

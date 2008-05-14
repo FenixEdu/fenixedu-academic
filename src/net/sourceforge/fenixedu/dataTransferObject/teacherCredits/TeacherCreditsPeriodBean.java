@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.teacherCredits;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
 
@@ -17,27 +17,27 @@ public class TeacherCreditsPeriodBean implements Serializable {
     private DateTime beginForDepartmentAdmOffice;    
     private DateTime endForDepartmentAdmOffice;
 
-    private DomainReference<ExecutionPeriod> executionPeriodReference;
+    private DomainReference<ExecutionSemester> executionPeriodReference;
 
     private boolean teacher;
 
-    public TeacherCreditsPeriodBean(ExecutionPeriod executionPeriod) {
-	setExecutionPeriod(executionPeriod);	
+    public TeacherCreditsPeriodBean(ExecutionSemester executionSemester) {
+	setExecutionPeriod(executionSemester);	
 	refreshDates();	
     }
 
-    public TeacherCreditsPeriodBean(ExecutionPeriod executionPeriod, boolean teacher) {
-	setExecutionPeriod(executionPeriod);
+    public TeacherCreditsPeriodBean(ExecutionSemester executionSemester, boolean teacher) {
+	setExecutionPeriod(executionSemester);
 	setTeacher(teacher);
 	refreshDates();	
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
 	return executionPeriodReference != null ? executionPeriodReference.getObject() : null;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	executionPeriodReference = executionPeriod != null ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	executionPeriodReference = executionSemester != null ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
     public DateTime getBeginForTeacher() {
@@ -74,13 +74,13 @@ public class TeacherCreditsPeriodBean implements Serializable {
 
     public void refreshDates() {
 
-	ExecutionPeriod executionPeriod = getExecutionPeriod();
+	ExecutionSemester executionSemester = getExecutionPeriod();
 
-	TeacherCreditsFillingForDepartmentAdmOfficeCE departmentAdmOffice = executionPeriod.getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
+	TeacherCreditsFillingForDepartmentAdmOfficeCE departmentAdmOffice = executionSemester.getTeacherCreditsFillingForDepartmentAdmOfficePeriod();
 	setBeginForDepartmentAdmOffice(departmentAdmOffice != null ? departmentAdmOffice.getBegin() : null);
 	setEndForDepartmentAdmOffice(departmentAdmOffice != null ? departmentAdmOffice.getEnd() : null);
 
-	TeacherCreditsFillingForTeacherCE teacherCE = executionPeriod.getTeacherCreditsFillingForTeacherPeriod();
+	TeacherCreditsFillingForTeacherCE teacherCE = executionSemester.getTeacherCreditsFillingForTeacherPeriod();
 	setBeginForTeacher(teacherCE != null ? teacherCE.getBegin() : null);
 	setEndForTeacher(teacherCE != null ? teacherCE.getEnd() : null);
     }

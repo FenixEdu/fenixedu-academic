@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -42,18 +42,18 @@ public class ImprovementOfApprovedEnrolmentExecutor extends CurricularRuleExecut
 		    degreeModule.getName());
 	}
 
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
-	if (!executionPeriod.isOneYearAfter(enrolment.getExecutionPeriod())) {
-	    if (!degreeModule.hasAnyParentContexts(executionPeriod)) {
+	if (!executionSemester.isOneYearAfter(enrolment.getExecutionPeriod())) {
+	    if (!degreeModule.hasAnyParentContexts(executionSemester)) {
 		return RuleResult
 			.createFalse(
 				sourceDegreeModuleToEvaluate.getDegreeModule(),
 				"curricularRules.ruleExecutors.ImprovementOfApprovedEnrolmentExecutor.degree.module.has.no.context.in.present.execution.period",
-				degreeModule.getName(), executionPeriod.getQualifiedName());
+				degreeModule.getName(), executionSemester.getQualifiedName());
 	    }
 
-	    if (!enrolment.isImprovingInExecutionPeriodFollowingApproval(executionPeriod)) {
+	    if (!enrolment.isImprovingInExecutionPeriodFollowingApproval(executionSemester)) {
 		return RuleResult
 			.createFalse(
 				sourceDegreeModuleToEvaluate.getDegreeModule(),

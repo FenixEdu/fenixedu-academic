@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
@@ -13,13 +13,13 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
     protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 	final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
 	if (!curricularCourse.hasAnyActiveContext(enrolmentContext.getExecutionPeriod())) {
 	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	if (isApproved(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
+	if (isApproved(enrolmentContext, curricularCourse, executionSemester.getPreviousExecutionPeriod())) {
 	    if (sourceDegreeModuleToEvaluate.isEnroled()) {
 		return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
 			"curricularRules.ruleExecutors.AssertUniqueApprovalInCurricularCourseContextsExecutor.already.approved",
@@ -39,13 +39,13 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
     protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
 	if (!curricularCourse.hasAnyActiveContext(enrolmentContext.getExecutionPeriod())) {
 	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	if (isApproved(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
+	if (isApproved(enrolmentContext, curricularCourse, executionSemester.getPreviousExecutionPeriod())) {
 	    if (sourceDegreeModuleToEvaluate.isEnroled()) {
 		return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
 			"curricularRules.ruleExecutors.AssertUniqueApprovalInCurricularCourseContextsExecutor.already.approved",
@@ -56,7 +56,7 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
 			curricularCourse.getName());
 	    }
 
-	} else if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, executionPeriod.getPreviousExecutionPeriod())) {
+	} else if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, executionSemester.getPreviousExecutionPeriod())) {
 	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule());
 
 	} else {

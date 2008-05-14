@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
@@ -33,9 +33,9 @@ public interface ICurricularRule {
 
     public CurricularRuleType getCurricularRuleType();
 
-    public ExecutionPeriod getBegin();
+    public ExecutionSemester getBegin();
 
-    public ExecutionPeriod getEnd();
+    public ExecutionSemester getEnd();
 
     public boolean appliesToContext(final Context context);
 
@@ -45,7 +45,7 @@ public interface ICurricularRule {
 
     public boolean isCompositeRule();
 
-    public boolean isValid(ExecutionPeriod executionPeriod);
+    public boolean isValid(ExecutionSemester executionSemester);
 
     public boolean isValid(ExecutionYear executionYear);
 

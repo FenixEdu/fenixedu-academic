@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.RestrictionEnroledDegreeModuleVerifier;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -27,7 +27,7 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
 
     protected RestrictionEnroledDegreeModule(final CurricularCourse toApplyRule, final CurricularCourse toBeEnroled,
 	    final CourseGroup contextCourseGroup, final CurricularPeriodInfoDTO curricularPeriodInfoDTO,
-	    final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final ExecutionSemester begin, final ExecutionSemester end) {
 
 	this(toBeEnroled);
 	init(toApplyRule, contextCourseGroup, begin, end);

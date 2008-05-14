@@ -1585,8 +1585,8 @@ public class Person extends Person_Base {
 	for (final Registration registration : getStudentsSet()) {
 	    for (final Attends attend : registration.getAssociatedAttendsSet()) {
 		final ExecutionCourse executionCourse = attend.getExecutionCourse();
-		final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-		if (executionPeriod.getState().equals(PeriodState.CURRENT)) {
+		final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+		if (executionSemester.getState().equals(PeriodState.CURRENT)) {
 		    attends.add(attend);
 		}
 	    }
@@ -1943,7 +1943,7 @@ public class Person extends Person_Base {
 	}
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Professorship professorship : getTeacher().getProfessorships()) {
-	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionPeriod.readActualExecutionPeriod()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionSemester.readActualExecutionPeriod()) {
 		final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
 		if (board != null && board.hasReaderOrWriter(this)) {
 		    result.add(board);
@@ -1960,7 +1960,7 @@ public class Person extends Person_Base {
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Registration registration : getStudent().getRegistrationsSet()) {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
-		if (attends.getExecutionCourse().isLecturedIn(ExecutionPeriod.readActualExecutionPeriod())) {
+		if (attends.getExecutionCourse().isLecturedIn(ExecutionSemester.readActualExecutionPeriod())) {
 		    final AnnouncementBoard board = attends.getExecutionCourse().getBoard();
 		    if (board != null && board.hasReaderOrWriter(this)) {
 			result.add(board);
@@ -2008,7 +2008,8 @@ public class Person extends Person_Base {
     public PartyClassification getPartyClassification() {
 	final Teacher teacher = getTeacher();
 	if (teacher != null) {
-	    if (teacher.getCurrentWorkingDepartment() != null && !teacher.isMonitor(ExecutionPeriod.readActualExecutionPeriod())) {
+	    if (teacher.getCurrentWorkingDepartment() != null
+		    && !teacher.isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
 		return PartyClassification.TEACHER;
 	    }
 	}
@@ -2284,10 +2285,10 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public boolean isResponsibleOrCoordinatorFor(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
+    public boolean isResponsibleOrCoordinatorFor(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
 	final Teacher teacher = getTeacher();
-	return (teacher != null && teacher.isResponsibleFor(curricularCourse, executionPeriod))
-		|| isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionPeriod.getExecutionYear());
+	return (teacher != null && teacher.isResponsibleFor(curricularCourse, executionSemester))
+		|| isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionSemester.getExecutionYear());
     }
 
     private final static List<DegreeType> degreeTypesForIsMasterDegreeOrBolonhaMasterDegreeCoordinator = Arrays
@@ -2542,11 +2543,11 @@ public class Person extends Person_Base {
 	return "";
     }
 
-    public List<ThesisEvaluationParticipant> getThesisEvaluationParticipants(ExecutionPeriod executionPeriod) {
+    public List<ThesisEvaluationParticipant> getThesisEvaluationParticipants(ExecutionSemester executionSemester) {
 	ArrayList<ThesisEvaluationParticipant> participants = new ArrayList<ThesisEvaluationParticipant>();
 
 	for (ThesisEvaluationParticipant participant : this.getThesisEvaluationParticipants()) {
-	    if (participant.getThesis().getEnrolment().getExecutionYear().equals(executionPeriod.getExecutionYear())) {
+	    if (participant.getThesis().getEnrolment().getExecutionYear().equals(executionSemester.getExecutionYear())) {
 		participants.add(participant);
 	    }
 	}
@@ -2572,7 +2573,7 @@ public class Person extends Person_Base {
 	});
     }
 
-    public List<TSDProcess> getTSDProcesses(ExecutionPeriod period) {
+    public List<TSDProcess> getTSDProcesses(ExecutionSemester period) {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
 	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(department
 		.getTSDProcessesByExecutionPeriod(period), new Predicate() {
@@ -2783,14 +2784,14 @@ public class Person extends Person_Base {
 	return hasEmployee() ? getEmployee().getAdministrativeOffice() : null;
     }
 
-    public Collection<Forum> getForuns(final ExecutionPeriod executionPeriod) {
+    public Collection<Forum> getForuns(final ExecutionSemester executionSemester) {
 	Collection<Forum> foruns = new HashSet<Forum>();
 	if (getTeacher() != null) {
-	    foruns.addAll(getTeacher().getForuns(executionPeriod));
+	    foruns.addAll(getTeacher().getForuns(executionSemester));
 	}
 
 	if (getStudent() != null) {
-	    foruns.addAll(getStudent().getForuns(executionPeriod));
+	    foruns.addAll(getStudent().getForuns(executionSemester));
 	}
 
 	for (ForumSubscription forumSubscription : getForumSubscriptionsSet()) {
@@ -2817,22 +2818,23 @@ public class Person extends Person_Base {
 	}
 	return result;
     }
-    
-    private boolean hasValidIndividualCandidacy(final Class<? extends IndividualCandidacy> clazz, final AcademicPeriod academicPeriod) {
+
+    private boolean hasValidIndividualCandidacy(final Class<? extends IndividualCandidacy> clazz,
+	    final ExecutionInterval executionInterval) {
 	for (final IndividualCandidacy candidacy : getIndividualCandidacies()) {
-	    if (!candidacy.isCancelled() && candidacy.getClass().equals(clazz) && candidacy.isFor(academicPeriod)) {
+	    if (!candidacy.isCancelled() && candidacy.getClass().equals(clazz) && candidacy.isFor(executionInterval)) {
 		return true;
 	    }
 	}
 	return false;
     }
-    
-    public boolean hasValidOver23IndividualCandidacy(final AcademicPeriod academicPeriod) {
-	return hasValidIndividualCandidacy(Over23IndividualCandidacy.class, academicPeriod);
+
+    public boolean hasValidOver23IndividualCandidacy(final ExecutionInterval executionInterval) {
+	return hasValidIndividualCandidacy(Over23IndividualCandidacy.class, executionInterval);
     }
 
-    public boolean hasValidSecondCycleIndividualCandidacy(final AcademicPeriod academicPeriod) {
-	return hasValidIndividualCandidacy(SecondCycleIndividualCandidacy.class, academicPeriod);
+    public boolean hasValidSecondCycleIndividualCandidacy(final ExecutionInterval executionInterval) {
+	return hasValidIndividualCandidacy(SecondCycleIndividualCandidacy.class, executionInterval);
     }
 
 }

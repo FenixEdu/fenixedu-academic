@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -34,7 +34,7 @@ public class ClassSiteComponentService extends Service {
    
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
-        ExecutionPeriod executionPeriod = ExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear.getYear());
+        ExecutionSemester executionSemester = ExecutionSemester.readByNameAndExecutionYear(executionPeriodName, executionYear.getYear());
 
         DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan, degreeInitials);
         ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,
@@ -42,7 +42,7 @@ public class ClassSiteComponentService extends Service {
         PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
         SchoolClass domainClass;
         if (classId == null) {
-            domainClass = getDomainClass(className, curricularYear, executionPeriod, executionDegree);
+            domainClass = getDomainClass(className, curricularYear, executionSemester, executionDegree);
             if (domainClass == null) {
                 throw new NonExistingServiceException();
             }
@@ -57,15 +57,15 @@ public class ClassSiteComponentService extends Service {
     }
 
     private SchoolClass getDomainClass(String className, Integer curricularYear,
-            ExecutionPeriod executionPeriod, ExecutionDegree executionDegree)
+            ExecutionSemester executionSemester, ExecutionDegree executionDegree)
             throws ExcepcaoPersistencia {
 
         SchoolClass domainClass = null;
         if (curricularYear == null) {
-        	domainClass = executionDegree.findSchoolClassesByExecutionPeriodAndName(executionPeriod, className);
+        	domainClass = executionDegree.findSchoolClassesByExecutionPeriodAndName(executionSemester, className);
         } else {
             if (className == null && curricularYear == null) {
-            	Set<SchoolClass> domainList = executionDegree.findSchoolClassesByExecutionPeriod(executionPeriod);
+            	Set<SchoolClass> domainList = executionDegree.findSchoolClassesByExecutionPeriod(executionSemester);
                 if (domainList.size() != 0) {
                     domainClass = (SchoolClass) domainList.iterator().next();
                 }

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -147,7 +147,7 @@ public class GroupCheckService extends Service {
 	Degree degree = getDegree(unitAcronyms);
 	for (DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
 
-	    ExecutionPeriod executionPeriod = getExecutionPeriod(groupCheckQuery.year,
+	    ExecutionSemester executionSemester = getExecutionPeriod(groupCheckQuery.year,
 		    groupCheckQuery.semester);
 
 	    CurricularCourse curricularCourse = degreeCurricularPlan
@@ -155,7 +155,7 @@ public class GroupCheckService extends Service {
 
 	    if (curricularCourse != null) {
 		List<ExecutionCourse> executionCourses = curricularCourse
-			.getExecutionCoursesByExecutionPeriod(executionPeriod);
+			.getExecutionCoursesByExecutionPeriod(executionSemester);
 
 		for (ExecutionCourse executionCourse : executionCourses) {
 		    Group group;
@@ -324,13 +324,13 @@ public class GroupCheckService extends Service {
 
     }
 
-    private ExecutionPeriod getExecutionPeriod(String year, Integer semester)
+    private ExecutionSemester getExecutionPeriod(String year, Integer semester)
 	    throws NonExistingServiceException {
 
 	if (year != null && semester != null) {
-	    return ExecutionPeriod.readBySemesterAndExecutionYear(semester, year);
+	    return ExecutionSemester.readBySemesterAndExecutionYear(semester, year);
 	} else if (year == null && semester == null) {
-	    return ExecutionPeriod.readActualExecutionPeriod();
+	    return ExecutionSemester.readActualExecutionPeriod();
 	} else {
 	    throw new NonExistingServiceException();
 	}

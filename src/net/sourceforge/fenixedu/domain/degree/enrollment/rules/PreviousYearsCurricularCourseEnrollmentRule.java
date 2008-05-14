@@ -8,7 +8,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
@@ -19,15 +19,15 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 
 public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentRule {
 
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
 
     private Branch studentBranch;
 
     private int degreeDuration;
 
     public PreviousYearsCurricularCourseEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod;
+            ExecutionSemester executionSemester) {
+        this.executionSemester = executionSemester;
         this.studentBranch = studentCurricularPlan.getBranch();
         this.degreeDuration = studentCurricularPlan.getDegreeCurricularPlan().getDegreeDuration()
                 .intValue();
@@ -108,7 +108,7 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
 
     private boolean isCurricularCourseFromYear(int i, CurricularCourse curricularCourse) {
 	CurricularYear curricularYear = curricularCourse.getCurricularYearByBranchAndSemester(this.studentBranch,
-                this.executionPeriod.getSemester());
+                this.executionSemester.getSemester());
         return (curricularYear != null && curricularYear.getYear().intValue() == i);
     }
 

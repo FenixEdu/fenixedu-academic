@@ -123,12 +123,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType,
-	    EnrolmentEvaluationState evaluationState, Employee employee, ExecutionPeriod executionPeriod) {
+	    EnrolmentEvaluationState evaluationState, Employee employee, ExecutionSemester executionSemester) {
 	this(enrolment, enrolmentEvaluationType, evaluationState, employee);
-	if (executionPeriod == null) {
+	if (executionSemester == null) {
 	    throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
 	}
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
     }
 
     public int compareTo(Object o) {
@@ -540,7 +540,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     @Override
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
 	if (getEnrolmentEvaluationType() == EnrolmentEvaluationType.IMPROVEMENT) {
 	    return super.getExecutionPeriod();
 	}

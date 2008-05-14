@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
@@ -23,12 +23,12 @@ public class LEMOptionalGroupsEnrollmentRule implements IEnrollmentRule {
 
     private StudentCurricularPlan studentCurricularPlan;
 
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
 
     public LEMOptionalGroupsEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
         this.studentCurricularPlan = studentCurricularPlan;
-        this.executionPeriod = executionPeriod;
+        this.executionSemester = executionSemester;
     }
 
     /*
@@ -55,20 +55,20 @@ public class LEMOptionalGroupsEnrollmentRule implements IEnrollmentRule {
     	if (studentCurricularPlan.isCurricularCourseEnrolled(firstOptionalCurricularCourse)
     			|| studentCurricularPlan.isCurricularCourseApproved(firstOptionalCurricularCourse)) {
     		curricularCoursesToBeEnrolledIn.add(transformToCurricularCourse2Enroll(
-    				secondOptionalCurricularCourse, executionPeriod));
+    				secondOptionalCurricularCourse, executionSemester));
     	}
     	
     	else if (studentCurricularPlan.isCurricularCourseEnrolled(secondOptionalCurricularCourse)
     			|| studentCurricularPlan.isCurricularCourseApproved(secondOptionalCurricularCourse)) {
     		curricularCoursesToBeEnrolledIn.add(transformToCurricularCourse2Enroll(
-    				firstOptionalCurricularCourse, executionPeriod));
+    				firstOptionalCurricularCourse, executionSemester));
     	}
 
         return curricularCoursesToBeEnrolledIn;
     }
 
     protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(
-            CurricularCourse curricularCourse, ExecutionPeriod currentExecutionPeriod) {
+            CurricularCourse curricularCourse, ExecutionSemester currentExecutionPeriod) {
         return new CurricularCourse2Enroll(curricularCourse, studentCurricularPlan
                 .getCurricularCourseEnrollmentType(curricularCourse, currentExecutionPeriod),
                 new Boolean(true));

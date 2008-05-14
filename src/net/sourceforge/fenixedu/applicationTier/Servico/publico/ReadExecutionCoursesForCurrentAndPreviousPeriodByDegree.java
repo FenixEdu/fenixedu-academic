@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends Service {
 
     public Set<ExecutionCourseView> run(final Degree degree) {
-	final ExecutionPeriod currentExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-	final ExecutionPeriod previousExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
+	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester previousExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
 
 	final Set<ExecutionCourseView> result = new HashSet<ExecutionCourseView>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {

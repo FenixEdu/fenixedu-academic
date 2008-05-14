@@ -15,14 +15,14 @@ import org.apache.commons.lang.StringUtils;
 public class SchoolClass extends SchoolClass_Base {
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")
-    public SchoolClass(final ExecutionDegree executionDegree, final ExecutionPeriod executionPeriod, final String name, final Integer curricularYear) {
+    public SchoolClass(final ExecutionDegree executionDegree, final ExecutionSemester executionSemester, final String name, final Integer curricularYear) {
 	super();
 
-	checkIfExistsSchoolClassWithSameName(executionDegree, executionPeriod, curricularYear, name);
+	checkIfExistsSchoolClassWithSameName(executionDegree, executionSemester, curricularYear, name);
 
 	setRootDomainObject(RootDomainObject.getInstance());
 	setExecutionDegree(executionDegree);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
 	setAnoCurricular(curricularYear);
 	setNome(name);
     }
@@ -56,11 +56,11 @@ public class SchoolClass extends SchoolClass_Base {
     }
 
     @Override
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	if(executionPeriod == null) {
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	if(executionSemester == null) {
 	    throw new DomainException("error.SchoolClass.empty.executionPeriod");
 	}
-	super.setExecutionPeriod(executionPeriod);
+	super.setExecutionPeriod(executionSemester);
     }
 
     @Override
@@ -81,13 +81,13 @@ public class SchoolClass extends SchoolClass_Base {
 	super.setNome(constructName(degree, name.trim(), getAnoCurricular()));
     }
 
-    private void checkIfExistsSchoolClassWithSameName(ExecutionDegree executionDegree, ExecutionPeriod executionPeriod, 
+    private void checkIfExistsSchoolClassWithSameName(ExecutionDegree executionDegree, ExecutionSemester executionSemester, 
 	    Integer curricularYear, String className) {
 
-	if(executionDegree != null && executionPeriod != null && curricularYear != null && className != null) {
+	if(executionDegree != null && executionSemester != null && curricularYear != null && className != null) {
 
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	    final Set<SchoolClass> classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionPeriod, curricularYear);
+	    final Set<SchoolClass> classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionSemester, curricularYear);
 	    final Degree degree = degreeCurricularPlan.getDegree();
 	    final String schoolClassName = degree.constructSchoolClassPrefix(curricularYear) + className;
 

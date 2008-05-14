@@ -5,7 +5,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -19,7 +19,7 @@ public class ForunsManagementDA extends FenixDispatchAction {
     
     public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	Person person = AccessControl.getPerson();
-	Collection<Forum> foruns = person.getForuns(ExecutionPeriod.readActualExecutionPeriod());
+	Collection<Forum> foruns = person.getForuns(ExecutionSemester.readActualExecutionPeriod());
 	request.setAttribute("foruns", foruns);
 	return mapping.findForward("listForuns");
     }

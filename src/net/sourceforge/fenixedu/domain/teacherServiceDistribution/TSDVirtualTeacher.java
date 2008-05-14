@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -41,7 +41,7 @@ public class TSDVirtualTeacher extends TSDVirtualTeacher_Base {
     	return theoreticalHoursLastYear;
     }
   
-    public Integer getRequiredHours(final List<ExecutionPeriod> executionPeriodList) {
+    public Integer getRequiredHours(final List<ExecutionSemester> executionPeriodList) {
     	return super.getRequiredHours();
     }
 
@@ -49,17 +49,17 @@ public class TSDVirtualTeacher extends TSDVirtualTeacher_Base {
 		super.delete();
     }
 
-    public Double getServiceExemptionCredits(List<ExecutionPeriod> executionPeriodList) {
+    public Double getServiceExemptionCredits(List<ExecutionSemester> executionPeriodList) {
     	Double serviceExemptionCredits = 0d;
 		return serviceExemptionCredits;
     }
 
-    public Double getManagementFunctionsCredits(List<ExecutionPeriod> executionPeriodList) {
+    public Double getManagementFunctionsCredits(List<ExecutionSemester> executionPeriodList) {
     	Double managementFunctionsCredits = 0d;
 		return managementFunctionsCredits;
     }
 
-    public Double getRequiredTeachingHours(List<ExecutionPeriod> executionPeriodList) {
+    public Double getRequiredTeachingHours(List<ExecutionSemester> executionPeriodList) {
     	return getRequiredHours(executionPeriodList) - (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0.0);
     }
 
@@ -67,12 +67,12 @@ public class TSDVirtualTeacher extends TSDVirtualTeacher_Base {
 		return null;
     }
 
-    public List<TeacherServiceExemption> getServiceExemptions(List<ExecutionPeriod> executionPeriodList) {
+    public List<TeacherServiceExemption> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
     	List<TeacherServiceExemption> teacherServiceExemptionList = new ArrayList<TeacherServiceExemption>();
 		return teacherServiceExemptionList;
     }
 
-    public List<PersonFunction> getManagementFunctions(List<ExecutionPeriod> executionPeriodList) {
+    public List<PersonFunction> getManagementFunctions(List<ExecutionSemester> executionPeriodList) {
     	List<PersonFunction> personFunctionList = new ArrayList<PersonFunction>();
 		return personFunctionList;
     }

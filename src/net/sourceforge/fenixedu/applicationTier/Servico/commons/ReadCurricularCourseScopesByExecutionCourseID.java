@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -26,11 +26,11 @@ public class ReadCurricularCourseScopesByExecutionCourseID extends Service {
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
 
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseID);
-        final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+        final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             final Set<CurricularCourseScope> curricularCourseScopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
-                    executionPeriod.getBeginDate(), executionPeriod.getEndDate());
+                    executionSemester.getBeginDate(), executionSemester.getEndDate());
 
             final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(
                     curricularCourse);

@@ -45,28 +45,28 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
  * @author jpvl
  * 
  */
-public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<ExecutionPeriod> {
+public class ExecutionSemester extends ExecutionSemester_Base implements Comparable<ExecutionSemester> {
 
     private static final ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources",
 	    new Locale("pt"));
     private transient OccupationPeriod lessonsPeriod;
 
-    public static final Comparator<ExecutionPeriod> EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR = new ComparatorChain();
+    public static final Comparator<ExecutionSemester> EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR = new ComparatorChain();
     static {
 	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR).addComparator(new BeanComparator(
-		"executionInterval.startDateTimeWithoutChronology"));
+		"academicInterval.startDateTimeWithoutChronology"));
 	((ComparatorChain) EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR).addComparator(DomainObject.COMPARATOR_BY_ID);
     }
 
-    private ExecutionPeriod() {
+    private ExecutionSemester() {
 	super();
 	setRootDomainObjectForExecutionPeriod(RootDomainObject.getInstance());
     }
 
-    public ExecutionPeriod(ExecutionYear executionYear, AcademicInterval academicInterval, String name) {
+    public ExecutionSemester(ExecutionYear executionYear, AcademicInterval academicInterval, String name) {
 	this();
 	setExecutionYear(executionYear);
-	setExecutionInterval(academicInterval);
+	setAcademicInterval(academicInterval);
 	setBeginDateYearMonthDay(academicInterval.getBeginYearMonthDayWithoutChronology());
 	setEndDateYearMonthDay(academicInterval.getEndYearMonthDayWithoutChronology());
 	setName(name);
@@ -90,17 +90,17 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
     }
 
     public Integer getSemester() {
-	return getExecutionInterval().getAcademicSemesterOfAcademicYear();
+	return getAcademicInterval().getAcademicSemesterOfAcademicYear();
     }
 
-    public ExecutionPeriod getNextExecutionPeriod() {
-	AcademicSemesterCE semester = getExecutionInterval().plusSemester(1);
-	return semester != null ? ExecutionPeriod.getExecutionPeriod(semester) : null;
+    public ExecutionSemester getNextExecutionPeriod() {
+	AcademicSemesterCE semester = getAcademicInterval().plusSemester(1);
+	return semester != null ? ExecutionSemester.getExecutionPeriod(semester) : null;
     }
 
-    public ExecutionPeriod getPreviousExecutionPeriod() {
-	AcademicSemesterCE semester = getExecutionInterval().minusSemester(1);
-	return semester != null ? ExecutionPeriod.getExecutionPeriod(semester) : null;
+    public ExecutionSemester getPreviousExecutionPeriod() {
+	AcademicSemesterCE semester = getAcademicInterval().minusSemester(1);
+	return semester != null ? ExecutionSemester.getExecutionPeriod(semester) : null;
     }
 
     public boolean hasPreviousExecutionPeriod() {
@@ -112,11 +112,11 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
     }
 
     public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacherPeriod() {
-	return getExecutionInterval().getTeacherCreditsFillingForTeacher();
+	return getAcademicInterval().getTeacherCreditsFillingForTeacher();
     }
 
     public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOfficePeriod() {
-	return getExecutionInterval().getTeacherCreditsFillingForDepartmentAdmOffice();
+	return getAcademicInterval().getTeacherCreditsFillingForDepartmentAdmOffice();
     }
 
     public void editDepartmentOfficeCreditsPeriod(DateTime begin, DateTime end) {
@@ -125,8 +125,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 
 	if (creditsFillingCE == null) {
 
-	    AcademicCalendarEntry parentEntry = getExecutionInterval().getAcademicCalendarEntry();
-	    AcademicCalendarRootEntry rootEntry = getExecutionInterval().getAcademicCalendar();
+	    AcademicCalendarEntry parentEntry = getAcademicInterval().getAcademicCalendarEntry();
+	    AcademicCalendarRootEntry rootEntry = getAcademicInterval().getAcademicCalendar();
 
 	    new TeacherCreditsFillingForDepartmentAdmOfficeCE(parentEntry, new MultiLanguageString(applicationResourcesBundle
 		    .getString("label.TeacherCreditsFillingCE.entry.title")), null, begin, end, rootEntry);
@@ -142,8 +142,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 
 	if (creditsFillingCE == null) {
 
-	    AcademicCalendarEntry parentEntry = getExecutionInterval().getAcademicCalendarEntry();
-	    AcademicCalendarRootEntry rootEntry = getExecutionInterval().getAcademicCalendar();
+	    AcademicCalendarEntry parentEntry = getAcademicInterval().getAcademicCalendarEntry();
+	    AcademicCalendarRootEntry rootEntry = getAcademicInterval().getAcademicCalendar();
 
 	    new TeacherCreditsFillingForTeacherCE(parentEntry, new MultiLanguageString(applicationResourcesBundle
 		    .getString("label.TeacherCreditsFillingCE.entry.title")), null, begin, end, rootEntry);
@@ -153,7 +153,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	}
     }
 
-    public int compareTo(ExecutionPeriod object) {
+    public int compareTo(ExecutionSemester object) {
 	if (object == null) {
 	    return 1;
 	}
@@ -198,24 +198,24 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	return thisMonday == null ? null : new Interval(thisMonday.minusWeeks(1), thisMonday);
     }
 
-    public boolean isAfter(ExecutionPeriod executionPeriod) {
-	return this.compareTo(executionPeriod) > 0;
+    public boolean isAfter(ExecutionSemester executionSemester) {
+	return this.compareTo(executionSemester) > 0;
     }
 
-    public boolean isAfterOrEquals(ExecutionPeriod executionPeriod) {
-	return this.compareTo(executionPeriod) >= 0;
+    public boolean isAfterOrEquals(ExecutionSemester executionSemester) {
+	return this.compareTo(executionSemester) >= 0;
     }
 
-    public boolean isBefore(ExecutionPeriod executionPeriod) {
-	return this.compareTo(executionPeriod) < 0;
+    public boolean isBefore(ExecutionSemester executionSemester) {
+	return this.compareTo(executionSemester) < 0;
     }
 
-    public boolean isBeforeOrEquals(ExecutionPeriod executionPeriod) {
-	return this.compareTo(executionPeriod) <= 0;
+    public boolean isBeforeOrEquals(ExecutionSemester executionSemester) {
+	return this.compareTo(executionSemester) <= 0;
     }
 
-    public boolean isOneYearAfter(final ExecutionPeriod executionPeriod) {
-	final ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
+    public boolean isOneYearAfter(final ExecutionSemester executionSemester) {
+	final ExecutionSemester nextExecutionPeriod = executionSemester.getNextExecutionPeriod();
 	return (nextExecutionPeriod == null) ? false : this == nextExecutionPeriod.getNextExecutionPeriod();
     }
 
@@ -442,34 +442,34 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
     // read static methods
     // -------------------------------------------------------------
 
-    public static ExecutionPeriod getExecutionPeriod(AcademicSemesterCE entry) {
+    public static ExecutionSemester getExecutionPeriod(AcademicSemesterCE entry) {
 	if (entry != null) {
 	    entry = (AcademicSemesterCE) entry.getOriginalTemplateEntry();
-	    for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-		if (executionPeriod.getExecutionInterval().getAcademicCalendarEntry().equals(entry)) {
-		    return executionPeriod;
+	    for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+		if (executionSemester.getAcademicInterval().getAcademicCalendarEntry().equals(entry)) {
+		    return executionSemester;
 		}
 	    }
 	}
 	return null;
     }
 
-    private static transient ExecutionPeriod currentExecutionPeriod = null;
+    private static transient ExecutionSemester currentExecutionPeriod = null;
 
-    private static transient ExecutionPeriod markSheetManagmentExecutionPeriod = null;
+    private static transient ExecutionSemester markSheetManagmentExecutionPeriod = null;
 
-    static transient private ExecutionPeriod firstBolonhaExecutionPeriod = null;
+    static transient private ExecutionSemester firstBolonhaExecutionPeriod = null;
 
-    static transient private ExecutionPeriod firstBolonhaTransitionExecutionPeriod = null;
+    static transient private ExecutionSemester firstBolonhaTransitionExecutionPeriod = null;
 
-    static transient private ExecutionPeriod firstEnrolmentsExecutionPeriod = null;
+    static transient private ExecutionSemester firstEnrolmentsExecutionPeriod = null;
 
-    public static ExecutionPeriod readActualExecutionPeriod() {
+    public static ExecutionSemester readActualExecutionPeriod() {
 	if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()
 		|| !currentExecutionPeriod.isCurrent()) {
-	    for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-		if (executionPeriod.isCurrent()) {
-		    currentExecutionPeriod = executionPeriod;
+	    for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+		if (executionSemester.isCurrent()) {
+		    currentExecutionPeriod = executionSemester;
 		    break;
 		}
 	    }
@@ -477,135 +477,135 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements Comparable<
 	return currentExecutionPeriod;
     }
 
-    static private ExecutionPeriod readFromProperties(ExecutionPeriod executionPeriod, String yearKey, String semesterKey) {
-	if (executionPeriod == null || executionPeriod.getRootDomainObject() != RootDomainObject.getInstance()) {
+    static private ExecutionSemester readFromProperties(ExecutionSemester executionSemester, String yearKey, String semesterKey) {
+	if (executionSemester == null || executionSemester.getRootDomainObject() != RootDomainObject.getInstance()) {
 
 	    final String yearString = PropertiesManager.getProperty(yearKey);
 	    final String semesterString = PropertiesManager.getProperty(semesterKey);
 
 	    if (yearString == null || yearString.length() == 0 || semesterString == null || semesterString.length() == 0) {
-		executionPeriod = null;
+		executionSemester = null;
 	    } else {
-		executionPeriod = readBySemesterAndExecutionYear(Integer.valueOf(semesterString), yearString);
+		executionSemester = readBySemesterAndExecutionYear(Integer.valueOf(semesterString), yearString);
 	    }
 	}
 
-	return executionPeriod;
+	return executionSemester;
     }
 
-    public static ExecutionPeriod readMarkSheetManagmentExecutionPeriod() {
+    public static ExecutionSemester readMarkSheetManagmentExecutionPeriod() {
 	markSheetManagmentExecutionPeriod = readFromProperties(markSheetManagmentExecutionPeriod,
 		"year.for.from.mark.sheet.managment", "semester.for.from.mark.sheet.managment");
 	return markSheetManagmentExecutionPeriod;
     }
 
-    static public ExecutionPeriod readFirstBolonhaExecutionPeriod() {
+    static public ExecutionSemester readFirstBolonhaExecutionPeriod() {
 	firstBolonhaExecutionPeriod = readFromProperties(firstBolonhaExecutionPeriod, "start.year.for.bolonha.degrees",
 		"start.semester.for.bolonha.degrees");
 	return firstBolonhaExecutionPeriod;
     }
 
-    static public ExecutionPeriod readFirstBolonhaTransitionExecutionPeriod() {
+    static public ExecutionSemester readFirstBolonhaTransitionExecutionPeriod() {
 	firstBolonhaTransitionExecutionPeriod = readFromProperties(firstBolonhaTransitionExecutionPeriod,
 		"start.year.for.bolonha.transition", "start.semester.for.bolonha.transition");
 	return firstBolonhaTransitionExecutionPeriod;
     }
 
-    static public ExecutionPeriod readFirstEnrolmentsExecutionPeriod() {
+    static public ExecutionSemester readFirstEnrolmentsExecutionPeriod() {
 	firstEnrolmentsExecutionPeriod = readFromProperties(firstEnrolmentsExecutionPeriod, "year.for.from.enrolments",
 		"semester.for.from.enrolments");
 	return firstEnrolmentsExecutionPeriod;
     }
 
-    public static ExecutionPeriod readFirstExecutionPeriod() {
-	final Set<ExecutionPeriod> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
+    public static ExecutionSemester readFirstExecutionPeriod() {
+	final Set<ExecutionSemester> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
 	return exeutionPeriods.isEmpty() ? null : Collections.min(exeutionPeriods);
     }
 
-    public static ExecutionPeriod readLastExecutionPeriod() {
-	final Set<ExecutionPeriod> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
+    public static ExecutionSemester readLastExecutionPeriod() {
+	final Set<ExecutionSemester> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
 	final int size = exeutionPeriods.size();
 	return size == 0 ? null : size == 1 ? exeutionPeriods.iterator().next() : Collections.max(exeutionPeriods);
     }
 
-    public static List<ExecutionPeriod> readNotClosedExecutionPeriods() {
-	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-	    if (!executionPeriod.isClosed()) {
-		result.add(executionPeriod);
+    public static List<ExecutionSemester> readNotClosedExecutionPeriods() {
+	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (!executionSemester.isClosed()) {
+		result.add(executionSemester);
 	    }
 	}
 	return result;
     }
 
-    public static List<ExecutionPeriod> readPublicExecutionPeriods() {
-	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-	    if (!executionPeriod.isNotOpen()) {
-		result.add(executionPeriod);
+    public static List<ExecutionSemester> readPublicExecutionPeriods() {
+	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (!executionSemester.isNotOpen()) {
+		result.add(executionSemester);
 	    }
 	}
 	return result;
     }
 
-    public static List<ExecutionPeriod> readNotClosedPublicExecutionPeriods() {
-	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-	    if (!executionPeriod.isClosed() && !executionPeriod.isNotOpen()) {
-		result.add(executionPeriod);
+    public static List<ExecutionSemester> readNotClosedPublicExecutionPeriods() {
+	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (!executionSemester.isClosed() && !executionSemester.isNotOpen()) {
+		result.add(executionSemester);
 	    }
 	}
 	return result;
     }
 
-    public static List<ExecutionPeriod> readExecutionPeriodsInTimePeriod(final Date beginDate, final Date endDate) {
-	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-	    if (executionPeriod.isInTimePeriod(beginDate, endDate)) {
-		result.add(executionPeriod);
+    public static List<ExecutionSemester> readExecutionPeriodsInTimePeriod(final Date beginDate, final Date endDate) {
+	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (executionSemester.isInTimePeriod(beginDate, endDate)) {
+		result.add(executionSemester);
 	    }
 	}
 	return result;
     }
 
-    public static List<ExecutionPeriod> readExecutionPeriod(final YearMonthDay beginDate, final YearMonthDay endDate) {
-	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-	    if (executionPeriod.getBeginDateYearMonthDay().isEqual(beginDate)
-		    && executionPeriod.getEndDateYearMonthDay().isEqual(endDate)) {
-		result.add(executionPeriod);
+    public static List<ExecutionSemester> readExecutionPeriod(final YearMonthDay beginDate, final YearMonthDay endDate) {
+	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (executionSemester.getBeginDateYearMonthDay().isEqual(beginDate)
+		    && executionSemester.getEndDateYearMonthDay().isEqual(endDate)) {
+		result.add(executionSemester);
 	    }
 	}
 	return result;
     }
 
-    public static ExecutionPeriod readByNameAndExecutionYear(final String name, final String year) {
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-	    if (executionPeriod.getName().equals(name) && executionPeriod.isFor(year)) {
-		return executionPeriod;
+    public static ExecutionSemester readByNameAndExecutionYear(final String name, final String year) {
+	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (executionSemester.getName().equals(name) && executionSemester.isFor(year)) {
+		return executionSemester;
 	    }
 	}
 	return null;
     }
 
-    public static ExecutionPeriod readBySemesterAndExecutionYear(final Integer semester, final String year) {
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-	    if (executionPeriod.isForSemesterAndYear(semester, year)) {
-		return executionPeriod;
+    public static ExecutionSemester readBySemesterAndExecutionYear(final Integer semester, final String year) {
+	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (executionSemester.isForSemesterAndYear(semester, year)) {
+		return executionSemester;
 	    }
 	}
 	return null;
     }
 
-    public static ExecutionPeriod readByDateTime(final DateTime dateTime) {
+    public static ExecutionSemester readByDateTime(final DateTime dateTime) {
 	final YearMonthDay yearMonthDay = dateTime.toYearMonthDay();
 	return readByYearMonthDay(yearMonthDay);
     }
 
-    public static ExecutionPeriod readByYearMonthDay(final YearMonthDay yearMonthDay) {
-	for (final ExecutionPeriod executionPeriod : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-	    if (executionPeriod.containsDay(yearMonthDay)) {
-		return executionPeriod;
+    public static ExecutionSemester readByYearMonthDay(final YearMonthDay yearMonthDay) {
+	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (executionSemester.containsDay(yearMonthDay)) {
+		return executionSemester;
 	    }
 	}
 	return null;

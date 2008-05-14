@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
@@ -495,14 +495,14 @@ public class ContextUtils {
         Collections.sort(infoExecutionDegrees, InfoExecutionDegree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME);
         request.setAttribute("executionDegrees", infoExecutionDegrees);
 
-        final List<ExecutionPeriod> executionPeriods = ExecutionPeriod.readNotClosedExecutionPeriods();
-        Collections.sort(executionPeriods);
+        final List<ExecutionSemester> executionSemesters = ExecutionSemester.readNotClosedExecutionPeriods();
+        Collections.sort(executionSemesters);
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
         final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
-        for (final ExecutionPeriod executionPeriod : executionPeriods) {
-        	infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
-        	final String name = StringAppender.append(executionPeriod.getName(), " - ", executionPeriod.getExecutionYear().getYear());
-        	final LabelValueBean labelValueBean = new LabelValueBean(name, executionPeriod.getIdInternal().toString());
+        for (final ExecutionSemester executionSemester : executionSemesters) {
+        	infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+        	final String name = StringAppender.append(executionSemester.getName(), " - ", executionSemester.getExecutionYear().getYear());
+        	final LabelValueBean labelValueBean = new LabelValueBean(name, executionSemester.getIdInternal().toString());
         	executionPeriodLabelValueBeans.add(labelValueBean);
         }
         request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, infoExecutionPeriods);

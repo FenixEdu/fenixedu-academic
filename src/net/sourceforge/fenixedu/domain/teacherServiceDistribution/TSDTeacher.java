@@ -8,7 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -37,17 +37,17 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
     
     public abstract Double getRealHoursByShiftTypeAndExecutionCourses(ShiftType shiftType, List<ExecutionCourse> executionCourseList);
     
-    public abstract Integer getRequiredHours(final List<ExecutionPeriod> executionPeriodList);
+    public abstract Integer getRequiredHours(final List<ExecutionSemester> executionPeriodList);
     
-    public abstract Double getServiceExemptionCredits(List<ExecutionPeriod> executionPeriodList);
+    public abstract Double getServiceExemptionCredits(List<ExecutionSemester> executionPeriodList);
     
-    public abstract Double getManagementFunctionsCredits(List<ExecutionPeriod> executionPeriodList);
+    public abstract Double getManagementFunctionsCredits(List<ExecutionSemester> executionPeriodList);
     
     public abstract Integer getTeacherNumber();
     
-    public abstract List<TeacherServiceExemption> getServiceExemptions(List<ExecutionPeriod> executionPeriodList);
+    public abstract List<TeacherServiceExemption> getServiceExemptions(List<ExecutionSemester> executionPeriodList);
     
-    public abstract List<PersonFunction> getManagementFunctions(List<ExecutionPeriod> executionPeriodList);
+    public abstract List<PersonFunction> getManagementFunctions(List<ExecutionSemester> executionPeriodList);
     
     public abstract String getEmailUserId();
     
@@ -111,7 +111,7 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 			});
     }
     
-    public Double getTotalHoursLecturedByShiftType(ShiftType shiftType, List<ExecutionPeriod> executionPeriodList) {
+    public Double getTotalHoursLecturedByShiftType(ShiftType shiftType, List<ExecutionSemester> executionPeriodList) {
 		Double totalHours = 0d;
 	
 		if(executionPeriodList == null){
@@ -119,9 +119,9 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 				totalHours +=  tsdProfessorship.getHours();
 		    }
 		} else {
-			for (ExecutionPeriod executionPeriod : executionPeriodList) {
+			for (ExecutionSemester executionSemester : executionPeriodList) {
 			    for (TSDProfessorship tsdProfessorship : getTSDProfessorshipsByShiftType(shiftType)) {
-					totalHours += (tsdProfessorship.getExecutionPeriod() == executionPeriod) ? tsdProfessorship.getHours() : 0d;
+					totalHours += (tsdProfessorship.getExecutionPeriod() == executionSemester) ? tsdProfessorship.getHours() : 0d;
 			    }
 			}
 		}
@@ -149,7 +149,7 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
     	return getTeacherServiceDistributions().get(0).getTSDProcessPhase().getTSDProcess().getDepartment();
     }
     
-    public Double getTotalHoursLectured(List<ExecutionPeriod> executionPeriodList) {
+    public Double getTotalHoursLectured(List<ExecutionSemester> executionPeriodList) {
 		Double totalHours = 0d;
 	
 		if(executionPeriodList == null){
@@ -157,9 +157,9 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 				totalHours +=  tsdProfessorship.getHours();
 		    }
 		} else {
-			for (ExecutionPeriod executionPeriod : executionPeriodList) {
+			for (ExecutionSemester executionSemester : executionPeriodList) {
 			    for (TSDProfessorship tsdProfessorship : getActiveTSDProfessorships()) {
-					totalHours += (tsdProfessorship.getExecutionPeriod() == executionPeriod) ? tsdProfessorship.getHours() : 0d;
+					totalHours += (tsdProfessorship.getExecutionPeriod() == executionSemester) ? tsdProfessorship.getHours() : 0d;
 			    }
 			}
 		}
@@ -167,7 +167,7 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 		return totalHours;
     }
         
-    public Double getAvailability(List<ExecutionPeriod> executionPeriodList) {
+    public Double getAvailability(List<ExecutionSemester> executionPeriodList) {
     	return getRequiredHours(executionPeriodList) - getTotalHoursLectured(executionPeriodList)
 		- (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0.0);
     }
@@ -201,18 +201,18 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 		return sb.toString();
     }
 
-    public Double getRequiredTeachingHours(List<ExecutionPeriod> executionPeriodList) {
+    public Double getRequiredTeachingHours(List<ExecutionSemester> executionPeriodList) {
     	return getRequiredHours(executionPeriodList)
 			- (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0.0);
     }
     
-    public Double getExtraCreditsValue(List<ExecutionPeriod> executionPeriodList) {
+    public Double getExtraCreditsValue(List<ExecutionSemester> executionPeriodList) {
     	return getExtraCreditsValue() * (executionPeriodList.size() 
     			/ getTeacherServiceDistributions().get(0).getTSDProcessPhase()
     			.getTSDProcess().getExecutionPeriodsCount());
     }
     
-    public Double getTotalHoursLecturedPlusExtraCredits(List<ExecutionPeriod> executionPeriodList) {
+    public Double getTotalHoursLecturedPlusExtraCredits(List<ExecutionSemester> executionPeriodList) {
     	return getTotalHoursLectured(executionPeriodList)
     		+ (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0d);
     }

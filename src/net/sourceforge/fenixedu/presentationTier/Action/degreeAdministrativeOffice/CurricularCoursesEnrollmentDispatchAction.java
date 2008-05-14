@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -166,7 +166,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
     private void prepareEnrollmentChooseCurricularCoursesInformation(HttpServletRequest request,
 	    final StudentCurricularPlan studentCurricularPlan) throws FenixDomainException {
 
-	final ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
 
 	request.setAttribute("studentNumber", studentCurricularPlan.getRegistration().getNumber());
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
@@ -444,7 +444,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 				args);
 	    }
 
-	    final ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	    final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
 
 	    request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 	    request.setAttribute("executionPeriod", actualExecutionPeriod);

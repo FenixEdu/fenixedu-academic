@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.period;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.AcademicPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -17,15 +17,15 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    protected void init(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
-	checkParameters(academicPeriod, start, end);
-	setAcademicPeriod(academicPeriod);
+    protected void init(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+	checkParameters(executionInterval, start, end);
+	setExecutionInterval(executionInterval);
 	setStart(start);
 	setEnd(end);
     }
 
-    protected void checkParameters(final AcademicPeriod academicPeriod, final DateTime start, final DateTime end) {
-	if (academicPeriod == null) {
+    protected void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+	if (executionInterval == null) {
 	    throw new DomainException("error.CandidacyPeriod.invalid.academic.period");
 	}
 	checkDates(start, end);
@@ -36,7 +36,7 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
 	    throw new DomainException("error.CandidacyPeriod.invalid.dates");
 	}
     }
-    
+
     public void edit(final DateTime start, final DateTime end) {
 	checkDates(start, end);
 	super.setStart(start);
@@ -55,12 +55,12 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
 	return !(getStart().isAfter(date) || getEnd().isBefore(date));
     }
 
-    public boolean hasCandidacyProcesses(final Class<? extends CandidacyProcess> clazz, final AcademicPeriod academicPeriod) {
-	return hasAcademicPeriod(academicPeriod) && containsCandidacyProcess(clazz);
+    public boolean hasCandidacyProcesses(final Class<? extends CandidacyProcess> clazz, final ExecutionInterval executionInterval) {
+	return hasExecutionInterval(executionInterval) && containsCandidacyProcess(clazz);
     }
 
-    public boolean hasAcademicPeriod(final AcademicPeriod academicPeriod) {
-	return getAcademicPeriod() == academicPeriod;
+    public boolean hasExecutionInterval(final ExecutionInterval executionInterval) {
+	return getExecutionInterval() == executionInterval;
     }
 
     public boolean containsCandidacyProcess(final Class<? extends CandidacyProcess> clazz) {

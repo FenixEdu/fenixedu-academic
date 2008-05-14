@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -21,8 +21,8 @@ public class RegisterStudentInquiryResponseIntention extends Service {
 		return inquiriesStudentExecutionPeriod;
 	    }
 	}
-	final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-	return new InquiriesStudentExecutionPeriod(student, executionPeriod);
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	return new InquiriesStudentExecutionPeriod(student, executionSemester);
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -30,7 +30,7 @@ public class TSDProcess extends TSDProcess_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public TSDProcess(Department department, List<ExecutionPeriod> executionPeriodList, Person creator, String name,
+    public TSDProcess(Department department, List<ExecutionSemester> executionPeriodList, Person creator, String name,
 	    String initialTSDProcessPhaseName) {
 	this();
 
@@ -38,11 +38,11 @@ public class TSDProcess extends TSDProcess_Base {
 	    throw new DomainException("Parameters.required");
 	}
 
-	for (ExecutionPeriod executionPeriod : executionPeriodList) {
-	    if (executionPeriod == null) {
+	for (ExecutionSemester executionSemester : executionPeriodList) {
+	    if (executionSemester == null) {
 		throw new DomainException("ExecutionPeriod.required");
 	    } else {
-		this.addExecutionPeriods(executionPeriod);
+		this.addExecutionPeriods(executionSemester);
 	    }
 	}
 
@@ -60,7 +60,7 @@ public class TSDProcess extends TSDProcess_Base {
 	return new TSDProcessPhase(this, tsdProcessPhaseName, getLastTSDProcessPhase(), null, TSDProcessPhaseStatus.OPEN);
     }
 
-    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriodsAndDepartment(List<ExecutionPeriod> executionPeriods,
+    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriodsAndDepartment(List<ExecutionSemester> executionSemesters,
 	    Department department) {
 	Set<CompetenceCourse> returnCompetenceCourseSet = new HashSet<CompetenceCourse>();
 	Set<CompetenceCourse> competenceCourseSet = new HashSet<CompetenceCourse>(department.getCompetenceCourses());
@@ -68,9 +68,9 @@ public class TSDProcess extends TSDProcess_Base {
 	// add Bolonha Courses
 	competenceCourseSet.addAll(department.getDepartmentUnit().getCompetenceCourses(CurricularStage.APPROVED));
 
-	for (ExecutionPeriod executionPeriod : executionPeriods) {
+	for (ExecutionSemester executionSemester : executionSemesters) {
 	    for (CompetenceCourse competenceCourse : competenceCourseSet) {
-		if (competenceCourse.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionPeriod).size() > 0) {
+		if (competenceCourse.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionSemester).size() > 0) {
 		    returnCompetenceCourseSet.add(competenceCourse);
 		}
 	    }
@@ -79,8 +79,8 @@ public class TSDProcess extends TSDProcess_Base {
 	return returnCompetenceCourseSet;
     }
 
-    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriods(List<ExecutionPeriod> executionPeriods) {
-	return getCompetenceCoursesByExecutionPeriodsAndDepartment(executionPeriods, getDepartment());
+    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriods(List<ExecutionSemester> executionSemesters) {
+	return getCompetenceCoursesByExecutionPeriodsAndDepartment(executionSemesters, getDepartment());
     }
 
     public Set<CompetenceCourse> getCompetenceCoursesByDepartment(Department department) {
@@ -141,31 +141,31 @@ public class TSDProcess extends TSDProcess_Base {
 	});
     }
 
-    public List<ExecutionPeriod> getOrderedExecutionPeriods() {
-	List<ExecutionPeriod> orderedExecutionPeriods = new ArrayList<ExecutionPeriod>(getExecutionPeriods());
+    public List<ExecutionSemester> getOrderedExecutionPeriods() {
+	List<ExecutionSemester> orderedExecutionPeriods = new ArrayList<ExecutionSemester>(getExecutionPeriods());
 	Collections.sort(orderedExecutionPeriods);
 
 	return orderedExecutionPeriods;
     }
 
-    public ExecutionPeriod getFirstExecutionPeriod() {
-	ExecutionPeriod firstExecutionPeriod = getExecutionPeriods().get(0);
+    public ExecutionSemester getFirstExecutionPeriod() {
+	ExecutionSemester firstExecutionPeriod = getExecutionPeriods().get(0);
 
-	for (ExecutionPeriod executionPeriod : getExecutionPeriods()) {
-	    if (executionPeriod.isBefore(firstExecutionPeriod)) {
-		firstExecutionPeriod = executionPeriod;
+	for (ExecutionSemester executionSemester : getExecutionPeriods()) {
+	    if (executionSemester.isBefore(firstExecutionPeriod)) {
+		firstExecutionPeriod = executionSemester;
 	    }
 	}
 
 	return firstExecutionPeriod;
     }
 
-    public ExecutionPeriod getLastExecutionPeriod() {
-	ExecutionPeriod lastExecutionPeriod = getExecutionPeriods().get(0);
+    public ExecutionSemester getLastExecutionPeriod() {
+	ExecutionSemester lastExecutionPeriod = getExecutionPeriods().get(0);
 
-	for (ExecutionPeriod executionPeriod : getExecutionPeriods()) {
-	    if (executionPeriod.isAfter(lastExecutionPeriod)) {
-		lastExecutionPeriod = executionPeriod;
+	for (ExecutionSemester executionSemester : getExecutionPeriods()) {
+	    if (executionSemester.isAfter(lastExecutionPeriod)) {
+		lastExecutionPeriod = executionSemester;
 	    }
 	}
 
@@ -379,8 +379,8 @@ public class TSDProcess extends TSDProcess_Base {
 	for (TSDProcessPhase phase : getTSDProcessPhases()) {
 	    phase.deleteDataAndPhase();
 	}
-	for (ExecutionPeriod executionPeriod : getExecutionPeriods()) {
-	    removeExecutionPeriods(executionPeriod);
+	for (ExecutionSemester executionSemester : getExecutionPeriods()) {
+	    removeExecutionPeriods(executionSemester);
 	}
 
 	removeCreator();

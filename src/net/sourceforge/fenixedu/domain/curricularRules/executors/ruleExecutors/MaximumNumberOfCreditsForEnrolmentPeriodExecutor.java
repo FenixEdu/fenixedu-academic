@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -13,11 +13,11 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
     protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
-	final ExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
+	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
 	double accumulated = 0d;
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-	    accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(executionPeriod);
+	    accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(executionSemester);
 	}
 
 	if (accumulated > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS) {

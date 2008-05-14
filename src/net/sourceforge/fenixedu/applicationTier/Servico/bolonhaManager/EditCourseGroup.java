@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -29,15 +29,15 @@ public class EditCourseGroup extends Service {
 		getEndExecutionPeriod(endExecutionPeriodID));
     }
 
-    private ExecutionPeriod getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
+    private ExecutionSemester getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
 	if (beginExecutionPeriodID == null) {
-	    return ExecutionPeriod.readActualExecutionPeriod();
+	    return ExecutionSemester.readActualExecutionPeriod();
 	} else {
-	    return rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodID);
+	    return rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
 	}
     }
 
-    private ExecutionPeriod getEndExecutionPeriod(Integer endExecutionPeriodID) {
-	return (endExecutionPeriodID == null) ? null : rootDomainObject.readExecutionPeriodByOID(endExecutionPeriodID);
+    private ExecutionSemester getEndExecutionPeriod(Integer endExecutionPeriodID) {
+	return (endExecutionPeriodID == null) ? null : rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodID);
     }
 }

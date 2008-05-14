@@ -117,7 +117,7 @@ public abstract class Site extends Site_Base {
 	return null;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
 	return null;
     }
 

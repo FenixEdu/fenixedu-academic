@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -21,42 +21,42 @@ public class Substitution extends Substitution_Base {
 
     public Substitution(final StudentCurricularPlan studentCurricularPlan,
 	    final Collection<SelectedCurricularCourse> dismissals,
-	    final Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
+	    final Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
 	this();
-	init(studentCurricularPlan, dismissals, enrolments, executionPeriod);
+	init(studentCurricularPlan, dismissals, enrolments, executionSemester);
     }
     
     public Substitution(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
 	    Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, 
-	    Double credits, ExecutionPeriod executionPeriod) {
+	    Double credits, ExecutionSemester executionSemester) {
 	this();
-	init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionPeriod);
+	init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
     }
 
     public Substitution(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-	    Collection<IEnrolment> enrolments, Double credits, ExecutionPeriod executionPeriod) {
+	    Collection<IEnrolment> enrolments, Double credits, ExecutionSemester executionSemester) {
 	this();
-	init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionPeriod);
+	init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionSemester);
     }
 
     @Override
     protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
-	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionPeriod executionPeriod) {
+	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
 	if (enrolments == null || enrolments.isEmpty()) {
 	    throw new DomainException("error.substitution.wrong.arguments");
 	}
-        super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionPeriod);
+        super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
     }
 
     @Override
     protected void init(final StudentCurricularPlan studentCurricularPlan,
 	    final Collection<SelectedCurricularCourse> dismissals,
-	    final Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
+	    final Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
 
 	if (enrolments == null || enrolments.isEmpty()) {
 	    throw new DomainException("error.substitution.wrong.arguments");
 	}
-	super.init(studentCurricularPlan, dismissals, enrolments, executionPeriod);
+	super.init(studentCurricularPlan, dismissals, enrolments, executionSemester);
     }
 
     @Override

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissa
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedExternalEnrolment;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -85,7 +85,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	dismissalBean.setDismissalType(DismissalType.CURRICULAR_COURSE_CREDITS);
 	
 	final DegreeCurricularPlan dcp = dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan();
-	final ExecutionPeriod actualEP = ExecutionPeriod.readActualExecutionPeriod();
+	final ExecutionSemester actualEP = ExecutionSemester.readActualExecutionPeriod();
 	dismissalBean.setExecutionPeriod(dcp.hasExecutionDegreeFor(actualEP.getExecutionYear()) ? actualEP : dcp.getMostRecentExecutionYear().getFirstExecutionPeriod());
 	
 	request.setAttribute("dismissalBean", dismissalBean);

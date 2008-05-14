@@ -36,9 +36,9 @@ public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base 
         super.deleteDomainObject();
     }
 
-    public boolean isForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public boolean isForExecutionPeriod(final ExecutionSemester executionSemester) {
         for (final ExecutionCourse executionCourse : getWrittenEvaluation().getAssociatedExecutionCourses()) {
-            if (executionCourse.getExecutionPeriod() == executionPeriod) {
+            if (executionCourse.getExecutionPeriod() == executionSemester) {
                 return true;
             }
         }

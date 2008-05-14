@@ -10,7 +10,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
@@ -71,7 +71,7 @@ public class OptionalCurricularCoursesLocationBean implements Serializable {
 	}
     }
 
-    public Set<IDegreeModuleToEvaluate> getIDegreeModulesToEvaluate(final ExecutionPeriod executionPeriod) {
+    public Set<IDegreeModuleToEvaluate> getIDegreeModulesToEvaluate(final ExecutionSemester executionPeriod) {
 	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>();
 	for (final EnrolmentLocationBean bean : this.enrolmentBeans) {
 	    result.add(CurriculumModuleMoveWrapper.create(bean.getCurriculumGroup(getStudentCurricularPlan()), executionPeriod));

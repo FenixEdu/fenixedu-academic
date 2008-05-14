@@ -46,7 +46,7 @@ public class Lesson extends Lesson_Base {
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
-	    ExecutionPeriod executionPeriod, YearMonthDay beginDate, YearMonthDay endDate, AllocatableSpace room) {
+	    ExecutionSemester executionSemester, YearMonthDay beginDate, YearMonthDay endDate, AllocatableSpace room) {
 
 	super();
 
@@ -218,7 +218,7 @@ public class Lesson extends Lesson_Base {
 	return getShift().getExecutionCourse();
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
 	return getShift().getExecutionPeriod();
     }
 

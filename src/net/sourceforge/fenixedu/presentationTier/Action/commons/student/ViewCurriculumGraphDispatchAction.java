@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.ExecutionPeriodStatisticsBean;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -115,19 +115,19 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
     private List<ExecutionPeriodStatisticsBean> getStudentStatistics(Registration registration) {
     	List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
     	
-    	Map<ExecutionPeriod, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod = new HashMap<ExecutionPeriod, ExecutionPeriodStatisticsBean>();
+    	Map<ExecutionSemester, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod = new HashMap<ExecutionSemester, ExecutionPeriodStatisticsBean>();
     	
 		for(StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {	
-			for(ExecutionPeriod executionPeriod : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
-				if (enrolmentsByExecutionPeriod.containsKey(executionPeriod)) {
-					ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = enrolmentsByExecutionPeriod.get(executionPeriod);
-					executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
-					enrolmentsByExecutionPeriod.put(executionPeriod, executionPeriodStatisticsBean);
+			for(ExecutionSemester executionSemester : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
+				if (enrolmentsByExecutionPeriod.containsKey(executionSemester)) {
+					ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = enrolmentsByExecutionPeriod.get(executionSemester);
+					executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester));
+					enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
 				}
 				else {
-					ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = new ExecutionPeriodStatisticsBean(executionPeriod);
-					executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod));
-					enrolmentsByExecutionPeriod.put(executionPeriod, executionPeriodStatisticsBean);
+					ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = new ExecutionPeriodStatisticsBean(executionSemester);
+					executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester));
+					enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
 				}
 			}
 		}

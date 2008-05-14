@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.contents.pathProcessors;
 
-import net.sourceforge.fenixedu.domain.AcademicPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.contents.Content;
@@ -17,9 +17,9 @@ public class ExecutionCoursePathProcessor extends AbstractPathProcessor {
 	String[] pathElements = path.split("/");
 	if (pathElements.length > 0) {
 
-	    AcademicPeriod academicPeriod = getAcademicPeriod(pathElements);
-	    ExecutionCourse executionCourse = academicPeriod == null ? ExecutionCourse.readLastBySigla(pathElements[0])
-		    : ExecutionCourse.readLastByAcademicPeriodAndSigla(pathElements[0], academicPeriod);
+	    ExecutionInterval executionInterval = getExecutionInterval(pathElements);
+	    ExecutionCourse executionCourse = executionInterval == null ? ExecutionCourse.readLastBySigla(pathElements[0])
+		    : ExecutionCourse.readLastByExecutionIntervalAndSigla(pathElements[0], executionInterval);
 	    return executionCourse == null ? null : executionCourse.getSite();
 	}
 	return null;
@@ -38,7 +38,7 @@ public class ExecutionCoursePathProcessor extends AbstractPathProcessor {
 	return pathWithoutCourse;
     }
 
-    private AcademicPeriod getAcademicPeriod(String[] pathElements) {
+    private ExecutionInterval getExecutionInterval(String[] pathElements) {
 	if (pathElements.length > 1 && pathElements[1].matches("[1-9][0-9]{3}-[1-9][0-9]{3}")) {
 	    ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(pathElements[1].replace('-', '/'));
 	    if (executionYear != null) {

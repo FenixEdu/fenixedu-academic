@@ -57,8 +57,8 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
         return timePeriod.hours().doubleValue();
     }
 
-    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
-        return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
+    public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
+        return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionSemester);
     }
 
     public void verifyOverlappings() {

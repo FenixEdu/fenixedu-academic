@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -32,11 +32,11 @@ public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation extends Curricul
 	return CurricularRuleType.MAXIMUM_NUMBER_OF_ENROLMENTS_IN_SPECIAL_SEASON_EVALUATION;
     }
 
-    public ExecutionPeriod getBegin() {
-	return ExecutionPeriod.readActualExecutionPeriod();
+    public ExecutionSemester getBegin() {
+	return ExecutionSemester.readActualExecutionPeriod();
     }
 
-    public ExecutionPeriod getEnd() {
+    public ExecutionSemester getEnd() {
 	return null;
     }
 

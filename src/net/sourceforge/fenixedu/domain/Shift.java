@@ -114,7 +114,7 @@ public class Shift extends Shift_Base {
 	return getCourseLoads().get(0).getExecutionCourse();
     }
     
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
 	return getExecutionCourse().getExecutionPeriod();
     }
     

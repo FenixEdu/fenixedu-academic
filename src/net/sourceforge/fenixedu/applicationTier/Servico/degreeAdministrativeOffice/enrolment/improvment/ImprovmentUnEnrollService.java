@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,7 +28,7 @@ public class ImprovmentUnEnrollService extends Service {
             if (enrolment == null) {
                 throw new InvalidArgumentsServiceException();
             }
-			enrolment.unEnrollImprovement(ExecutionPeriod.readActualExecutionPeriod());
+			enrolment.unEnrollImprovement(ExecutionSemester.readActualExecutionPeriod());
         }
     }
 }

@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.SummariesCon
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -52,351 +52,357 @@ import org.apache.struts.util.LabelValueBean;
 public class SummariesControlAction extends FenixDispatchAction {
 
     private BigDecimal EMPTY = BigDecimal.ZERO;
-        
-    public ActionForward prepareSummariesControl(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        readAndSaveAllDepartments(request);
-        return mapping.findForward("success");
+    public ActionForward prepareSummariesControl(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	readAndSaveAllDepartments(request);
+	return mapping.findForward("success");
     }
 
-    public ActionForward listExecutionPeriods(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward listExecutionPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        readAndSaveAllExecutionPeriods(request);
+	readAndSaveAllExecutionPeriods(request);
 
-        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        String departmentID = (String) dynaActionForm.get("department");
-        String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
+	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	String departmentID = (String) dynaActionForm.get("department");
+	String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
 
-        if (departmentID != null && !departmentID.equals("") && executionPeriodID != null
-                && !executionPeriodID.equals("")) {
+	if (departmentID != null && !departmentID.equals("") && executionPeriodID != null && !executionPeriodID.equals("")) {
 
-            getListing(request, departmentID, executionPeriodID);
-            saveDepartmentAndExecutionPeriod(request, departmentID, executionPeriodID);
+	    getListing(request, departmentID, executionPeriodID);
+	    saveDepartmentAndExecutionPeriod(request, departmentID, executionPeriodID);
 
-        } else if (departmentID == null || departmentID.equals("")) {
-            ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("", new ActionMessage("error.no.deparment"));
-            saveMessages(request, actionMessages);
-        } else if (executionPeriodID == null || executionPeriodID.equals("")) {
-            ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("", new ActionMessage("error.no.execution.period"));
-            saveMessages(request, actionMessages);
-        }
+	} else if (departmentID == null || departmentID.equals("")) {
+	    ActionMessages actionMessages = new ActionMessages();
+	    actionMessages.add("", new ActionMessage("error.no.deparment"));
+	    saveMessages(request, actionMessages);
+	} else if (executionPeriodID == null || executionPeriodID.equals("")) {
+	    ActionMessages actionMessages = new ActionMessages();
+	    actionMessages.add("", new ActionMessage("error.no.execution.period"));
+	    saveMessages(request, actionMessages);
+	}
 
-        return prepareSummariesControl(mapping, actionForm, request, response);
+	return prepareSummariesControl(mapping, actionForm, request, response);
     }
 
-    public ActionForward listSummariesControl(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward listSummariesControl(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        String departmentID = (String) dynaActionForm.get("department");
-        String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
-        boolean runProcess = true;
+	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	String departmentID = (String) dynaActionForm.get("department");
+	String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
+	boolean runProcess = true;
 
-        if (departmentID == null || departmentID.equals("")) {
-            ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("", new ActionMessage("error.no.deparment"));
-            saveMessages(request, actionMessages);
-            dynaActionForm.set("executionPeriod", "");
-            runProcess = false;
-        }
-        if (executionPeriodID == null || executionPeriodID.equals("")) {
-            ActionMessages actionMessages = new ActionMessages();
-            actionMessages.add("", new ActionMessage("error.no.execution.period"));
-            saveMessages(request, actionMessages);
-            runProcess = false;
-        }
+	if (departmentID == null || departmentID.equals("")) {
+	    ActionMessages actionMessages = new ActionMessages();
+	    actionMessages.add("", new ActionMessage("error.no.deparment"));
+	    saveMessages(request, actionMessages);
+	    dynaActionForm.set("executionPeriod", "");
+	    runProcess = false;
+	}
+	if (executionPeriodID == null || executionPeriodID.equals("")) {
+	    ActionMessages actionMessages = new ActionMessages();
+	    actionMessages.add("", new ActionMessage("error.no.execution.period"));
+	    saveMessages(request, actionMessages);
+	    runProcess = false;
+	}
 
-        if (runProcess) {
-            getListing(request, departmentID, executionPeriodID);
-            saveDepartmentAndExecutionPeriod(request, departmentID, executionPeriodID);
-        }
+	if (runProcess) {
+	    getListing(request, departmentID, executionPeriodID);
+	    saveDepartmentAndExecutionPeriod(request, departmentID, executionPeriodID);
+	}
 
-        readAndSaveAllDepartments(request);
-        readAndSaveAllExecutionPeriods(request);
+	readAndSaveAllDepartments(request);
+	readAndSaveAllExecutionPeriods(request);
 
-        return mapping.findForward("success");
+	return mapping.findForward("success");
     }
 
     private void saveDepartmentAndExecutionPeriod(HttpServletRequest request, String departmentID, String executionPeriodID) {
-        request.setAttribute("department", departmentID);
-        request.setAttribute("executionPeriod", executionPeriodID);
+	request.setAttribute("department", departmentID);
+	request.setAttribute("executionPeriod", executionPeriodID);
     }
 
-    private List<SummariesControlElementDTO> getListing(HttpServletRequest request, String departmentID,
-            String executionPeriodID) throws FenixFilterException, FenixServiceException {
+    private List<SummariesControlElementDTO> getListing(HttpServletRequest request, String departmentID, String executionPeriodID)
+	    throws FenixFilterException, FenixServiceException {
 
-        final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentID));       
-        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(Integer.valueOf(executionPeriodID));
-       
-        List<Teacher> allDepartmentTeachers = (department != null && executionPeriod != null) ? department
-                .getAllTeachers(executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay())
-                : new ArrayList<Teacher>();
+	final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentID));
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer
+		.valueOf(executionPeriodID));
 
-        List<SummariesControlElementDTO> allListElements = new ArrayList<SummariesControlElementDTO>();
-             
-        for (Teacher teacher : allDepartmentTeachers) {
-                       
-            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-            for (Professorship professorship : teacher.getProfessorships()) {       	
-        	
-                BigDecimal lessonHours = EMPTY, shiftHours = EMPTY, courseDifference = EMPTY;
-                BigDecimal shiftDifference = EMPTY, courseHours = EMPTY;
+	List<Teacher> allDepartmentTeachers = (department != null && executionSemester != null) ? department.getAllTeachers(
+		executionSemester.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay())
+		: new ArrayList<Teacher>();
 
-                if (professorship.belongsToExecutionPeriod(executionPeriod) && !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
+	List<SummariesControlElementDTO> allListElements = new ArrayList<SummariesControlElementDTO>();
 
-                    for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
+	for (Teacher teacher : allDepartmentTeachers) {
 
-                        DegreeTeachingService degreeTeachingService = readDegreeTeachingService(teacherService, shift, professorship);                                                
-                        if (degreeTeachingService != null) {                           
-                            // GET LESSON HOURS
-                            lessonHours = readDeclaredLessonHours(degreeTeachingService.getPercentage(), shift, lessonHours);
-                            
-                            // GET SHIFT SUMMARIES HOURS
-                            shiftHours = readSummaryHours(professorship, shift, shiftHours);                            
-                        }
-                        // GET COURSE SUMMARY HOURS
-                        courseHours = readSummaryHours(professorship, shift, courseHours);
-                    }                  
-                    
-                    shiftHours = shiftHours.setScale(2, RoundingMode.HALF_UP);
-                    lessonHours = lessonHours.setScale(2, RoundingMode.HALF_UP);
-                    courseHours = courseHours.setScale(2, RoundingMode.HALF_UP);
+	    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+	    for (Professorship professorship : teacher.getProfessorships()) {
 
-                    shiftDifference = getDifference(lessonHours, shiftHours);
-                    courseDifference = getDifference(lessonHours, courseHours);
+		BigDecimal lessonHours = EMPTY, shiftHours = EMPTY, courseDifference = EMPTY;
+		BigDecimal shiftDifference = EMPTY, courseHours = EMPTY;
 
-                    Category category = teacher.getCategory();
-                    String categoryName = (category != null) ? category.getCode() : "";
-                    String siglas = getSiglas(professorship);
+		if (professorship.belongsToExecutionPeriod(executionSemester)
+			&& !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
 
-                    SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher
-                            .getPerson().getName(), professorship.getExecutionCourse().getNome(),
-                            teacher.getTeacherNumber(), categoryName, lessonHours, shiftHours,
-                            courseHours, shiftDifference, courseDifference, siglas);
+		    for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
 
-                    allListElements.add(listElementDTO);
-                }
-            }
-        }
+			DegreeTeachingService degreeTeachingService = readDegreeTeachingService(teacherService, shift,
+				professorship);
+			if (degreeTeachingService != null) {
+			    // GET LESSON HOURS
+			    lessonHours = readDeclaredLessonHours(degreeTeachingService.getPercentage(), shift, lessonHours);
 
-        Collections.sort(allListElements, new BeanComparator("teacherNumber"));
-        request.setAttribute("listElements", allListElements);
+			    // GET SHIFT SUMMARIES HOURS
+			    shiftHours = readSummaryHours(professorship, shift, shiftHours);
+			}
+			// GET COURSE SUMMARY HOURS
+			courseHours = readSummaryHours(professorship, shift, courseHours);
+		    }
 
-        return allListElements;
-    }
+		    shiftHours = shiftHours.setScale(2, RoundingMode.HALF_UP);
+		    lessonHours = lessonHours.setScale(2, RoundingMode.HALF_UP);
+		    courseHours = courseHours.setScale(2, RoundingMode.HALF_UP);
 
-    private DegreeTeachingService readDegreeTeachingService(TeacherService teacherService, Shift shift, Professorship professorship) {
-        DegreeTeachingService degreeTeachingService = null;
-        if (teacherService != null) {
-            degreeTeachingService = teacherService.getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
-        }
-        return degreeTeachingService;
-    }
+		    shiftDifference = getDifference(lessonHours, shiftHours);
+		    courseDifference = getDifference(lessonHours, courseHours);
 
-    private BigDecimal readDeclaredLessonHours(Double percentage, Shift shift, BigDecimal lessonHours) {                                     
-        BigDecimal shiftLessonHoursSum = EMPTY;
-	for (Lesson lesson : shift.getAssociatedLessons()) {
-	    shiftLessonHoursSum = shiftLessonHoursSum.add(lesson.getUnitHours().multiply(BigDecimal.valueOf(lesson.getAllLessonDates().size())));
-	}
-	return lessonHours.add(BigDecimal.valueOf((percentage / 100)).multiply(shiftLessonHoursSum));                
-    }
+		    Category category = teacher.getCategory();
+		    String categoryName = (category != null) ? category.getCode() : "";
+		    String siglas = getSiglas(professorship);
 
-    private BigDecimal readSummaryHours(Professorship professorship, Shift shift, BigDecimal summaryHours) {	
-	for (Summary summary : shift.getAssociatedSummaries()) {
-	    if(summary.getProfessorship() != null && summary.getProfessorship().equals(professorship)) {
-                BigDecimal lessonHours = EMPTY;
-                if(summary.getLesson() != null) {
-                    lessonHours = summary.getLesson().getUnitHours();		
-                } else if(!shift.getAssociatedLessons().isEmpty()) {	
-                    lessonHours = shift.getAssociatedLessons().get(0).getUnitHours();		
-                }	
-                summaryHours = summaryHours.add(lessonHours);
+		    SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher.getPerson().getName(),
+			    professorship.getExecutionCourse().getNome(), teacher.getTeacherNumber(), categoryName, lessonHours,
+			    shiftHours, courseHours, shiftDifference, courseDifference, siglas);
+
+		    allListElements.add(listElementDTO);
+		}
 	    }
-	}		
+	}
+
+	Collections.sort(allListElements, new BeanComparator("teacherNumber"));
+	request.setAttribute("listElements", allListElements);
+
+	return allListElements;
+    }
+
+    private DegreeTeachingService readDegreeTeachingService(TeacherService teacherService, Shift shift,
+	    Professorship professorship) {
+	DegreeTeachingService degreeTeachingService = null;
+	if (teacherService != null) {
+	    degreeTeachingService = teacherService.getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
+	}
+	return degreeTeachingService;
+    }
+
+    private BigDecimal readDeclaredLessonHours(Double percentage, Shift shift, BigDecimal lessonHours) {
+	BigDecimal shiftLessonHoursSum = EMPTY;
+	for (Lesson lesson : shift.getAssociatedLessons()) {
+	    shiftLessonHoursSum = shiftLessonHoursSum.add(lesson.getUnitHours().multiply(
+		    BigDecimal.valueOf(lesson.getAllLessonDates().size())));
+	}
+	return lessonHours.add(BigDecimal.valueOf((percentage / 100)).multiply(shiftLessonHoursSum));
+    }
+
+    private BigDecimal readSummaryHours(Professorship professorship, Shift shift, BigDecimal summaryHours) {
+	for (Summary summary : shift.getAssociatedSummaries()) {
+	    if (summary.getProfessorship() != null && summary.getProfessorship().equals(professorship)) {
+		BigDecimal lessonHours = EMPTY;
+		if (summary.getLesson() != null) {
+		    lessonHours = summary.getLesson().getUnitHours();
+		} else if (!shift.getAssociatedLessons().isEmpty()) {
+		    lessonHours = shift.getAssociatedLessons().get(0).getUnitHours();
+		}
+		summaryHours = summaryHours.add(lessonHours);
+	    }
+	}
 	return summaryHours;
     }
-    
-    private BigDecimal getDifference(BigDecimal lessonHours, BigDecimal summaryHours) {		 
-        Double difference;
-        difference = (1 - ((lessonHours.doubleValue() - summaryHours.doubleValue()) / lessonHours.doubleValue())) * 100;
-        if (difference.isNaN() || difference.isInfinite()) {
-            difference = 0.0;
-        }        
-        return BigDecimal.valueOf(difference).setScale(2, RoundingMode.HALF_UP);
+
+    private BigDecimal getDifference(BigDecimal lessonHours, BigDecimal summaryHours) {
+	Double difference;
+	difference = (1 - ((lessonHours.doubleValue() - summaryHours.doubleValue()) / lessonHours.doubleValue())) * 100;
+	if (difference.isNaN() || difference.isInfinite()) {
+	    difference = 0.0;
+	}
+	return BigDecimal.valueOf(difference).setScale(2, RoundingMode.HALF_UP);
     }
-      
+
     private String getSiglas(Professorship professorship) {
-        ExecutionCourse executionCourse = professorship.getExecutionCourse();
-        int numberOfCurricularCourse = executionCourse.getAssociatedCurricularCourses().size();
+	ExecutionCourse executionCourse = professorship.getExecutionCourse();
+	int numberOfCurricularCourse = executionCourse.getAssociatedCurricularCourses().size();
 
-        List<String> siglas = new ArrayList<String>();
-        StringBuffer buffer = new StringBuffer();
+	List<String> siglas = new ArrayList<String>();
+	StringBuffer buffer = new StringBuffer();
 
-        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-            String sigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
-            if (!siglas.contains(sigla)) {
-                if (numberOfCurricularCourse < executionCourse.getAssociatedCurricularCourses().size()) {
-                    buffer.append(",");
-                }
-                buffer.append(sigla);
-                siglas.add(sigla);
-            }
-            numberOfCurricularCourse--;
-        }
-        return buffer.toString();
-    }
-    
-    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-            FenixFilterException {
-
-        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        String departmentID = (String) dynaActionForm.get("department");
-        String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
-
-        List<SummariesControlElementDTO> list = getListing(request, departmentID, executionPeriodID);
-        try {
-            String filename = "ControloSumarios:" + getFileName(Calendar.getInstance().getTime());
-            response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
-
-            ServletOutputStream writer = response.getOutputStream();
-            exportToXls(list, writer);
-
-            writer.flush();
-            response.flushBuffer();
-
-        } catch (IOException e) {
-            throw new FenixServiceException();
-        }
-        return null;
+	for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+	    String sigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+	    if (!siglas.contains(sigla)) {
+		if (numberOfCurricularCourse < executionCourse.getAssociatedCurricularCourses().size()) {
+		    buffer.append(",");
+		}
+		buffer.append(sigla);
+		siglas.add(sigla);
+	    }
+	    numberOfCurricularCourse--;
+	}
+	return buffer.toString();
     }
 
-    public ActionForward exportToCSV(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
-            FenixFilterException {
+    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        String departmentID = (String) dynaActionForm.get("department");
-        String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
+	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	String departmentID = (String) dynaActionForm.get("department");
+	String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
 
-        List<SummariesControlElementDTO> list = getListing(request, departmentID, executionPeriodID);
+	List<SummariesControlElementDTO> list = getListing(request, departmentID, executionPeriodID);
+	try {
+	    String filename = "ControloSumarios:" + getFileName(Calendar.getInstance().getTime());
+	    response.setContentType("application/vnd.ms-excel");
+	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
 
-        try {
-            String filename = "ControloSumarios:" + getFileName(Calendar.getInstance().getTime());
-            response.setContentType("text/plain");
-            response.setHeader("Content-disposition", "attachment; filename=" + filename + ".csv");
+	    ServletOutputStream writer = response.getOutputStream();
+	    exportToXls(list, writer);
 
-            ServletOutputStream writer = response.getOutputStream();
-            exportToCSV(list, writer);
+	    writer.flush();
+	    response.flushBuffer();
 
-            writer.flush();
-            response.flushBuffer();
-
-        } catch (IOException e) {
-            throw new FenixServiceException();
-        }
-        return null;
+	} catch (IOException e) {
+	    throw new FenixServiceException();
+	}
+	return null;
     }
 
-    private void exportToXls(final List<SummariesControlElementDTO> allListElements, OutputStream outputStream) throws IOException {
-        final List<Object> headers = getHeaders();
-        final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários", headers);
-        fillSpreadSheet(allListElements, spreadsheet);
-        spreadsheet.exportToXLSSheet(outputStream);
+    public ActionForward exportToCSV(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+
+	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	String departmentID = (String) dynaActionForm.get("department");
+	String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
+
+	List<SummariesControlElementDTO> list = getListing(request, departmentID, executionPeriodID);
+
+	try {
+	    String filename = "ControloSumarios:" + getFileName(Calendar.getInstance().getTime());
+	    response.setContentType("text/plain");
+	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".csv");
+
+	    ServletOutputStream writer = response.getOutputStream();
+	    exportToCSV(list, writer);
+
+	    writer.flush();
+	    response.flushBuffer();
+
+	} catch (IOException e) {
+	    throw new FenixServiceException();
+	}
+	return null;
     }
 
-    private void exportToCSV(final List<SummariesControlElementDTO> allListElements, OutputStream outputStream) throws IOException {
-        final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários");
-        fillSpreadSheet(allListElements, spreadsheet);
-        spreadsheet.exportToCSV(outputStream, ";");
+    private void exportToXls(final List<SummariesControlElementDTO> allListElements, OutputStream outputStream)
+	    throws IOException {
+	final List<Object> headers = getHeaders();
+	final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários", headers);
+	fillSpreadSheet(allListElements, spreadsheet);
+	spreadsheet.exportToXLSSheet(outputStream);
+    }
+
+    private void exportToCSV(final List<SummariesControlElementDTO> allListElements, OutputStream outputStream)
+	    throws IOException {
+	final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários");
+	fillSpreadSheet(allListElements, spreadsheet);
+	spreadsheet.exportToCSV(outputStream, ";");
     }
 
     private void fillSpreadSheet(final List<SummariesControlElementDTO> allListElements, final Spreadsheet spreadsheet) {
-        for (final SummariesControlElementDTO summariesControlElementDTO : allListElements) {
-            final Row row = spreadsheet.addRow();
-            row.setCell(summariesControlElementDTO.getTeacherName());
-            row.setCell(summariesControlElementDTO.getTeacherNumber().toString());
-            row.setCell(summariesControlElementDTO.getCategoryName());
-            row.setCell(summariesControlElementDTO.getExecutionCourseName());
-            row.setCell(summariesControlElementDTO.getSiglas());
-            row.setCell(summariesControlElementDTO.getLessonHours().toString());
-            row.setCell(summariesControlElementDTO.getSummaryHours().toString());
-            row.setCell(summariesControlElementDTO.getShiftDifference() == null ? "" : summariesControlElementDTO.getShiftDifference().toString());
-            row.setCell(summariesControlElementDTO.getCourseSummaryHours().toString());
-            row.setCell(summariesControlElementDTO.getCourseDifference() == null ? "" : summariesControlElementDTO.getCourseDifference().toString());
-        }
+	for (final SummariesControlElementDTO summariesControlElementDTO : allListElements) {
+	    final Row row = spreadsheet.addRow();
+	    row.setCell(summariesControlElementDTO.getTeacherName());
+	    row.setCell(summariesControlElementDTO.getTeacherNumber().toString());
+	    row.setCell(summariesControlElementDTO.getCategoryName());
+	    row.setCell(summariesControlElementDTO.getExecutionCourseName());
+	    row.setCell(summariesControlElementDTO.getSiglas());
+	    row.setCell(summariesControlElementDTO.getLessonHours().toString());
+	    row.setCell(summariesControlElementDTO.getSummaryHours().toString());
+	    row.setCell(summariesControlElementDTO.getShiftDifference() == null ? "" : summariesControlElementDTO
+		    .getShiftDifference().toString());
+	    row.setCell(summariesControlElementDTO.getCourseSummaryHours().toString());
+	    row.setCell(summariesControlElementDTO.getCourseDifference() == null ? "" : summariesControlElementDTO
+		    .getCourseDifference().toString());
+	}
     }
 
     private List<Object> getHeaders() {
-        final List<Object> headers = new ArrayList<Object>();
-        headers.add("Nome");
-        headers.add("Número");
-        headers.add("Categoria");
-        headers.add("Disciplina");
-        headers.add("Licenciatura(s)");
-        headers.add("Horas Declaradas");
-        headers.add("Sumários nos Turnos");
-        headers.add("Percentagem nos Turnos");
-        headers.add("Sumários na Disciplina");
-        headers.add("Percentagem na Disciplina");
-        return headers;
-    }   
-    
+	final List<Object> headers = new ArrayList<Object>();
+	headers.add("Nome");
+	headers.add("Número");
+	headers.add("Categoria");
+	headers.add("Disciplina");
+	headers.add("Licenciatura(s)");
+	headers.add("Horas Declaradas");
+	headers.add("Sumários nos Turnos");
+	headers.add("Percentagem nos Turnos");
+	headers.add("Sumários na Disciplina");
+	headers.add("Percentagem na Disciplina");
+	return headers;
+    }
+
     private List<LabelValueBean> getNotClosedExecutionPeriods(List<InfoExecutionPeriod> allExecutionPeriods) {
-        List<LabelValueBean> executionPeriods = new ArrayList<LabelValueBean>();
-        for (InfoExecutionPeriod infoExecutionPeriod : allExecutionPeriods) {
-            LabelValueBean labelValueBean = new LabelValueBean();
-            labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - " + infoExecutionPeriod.getSemester() + "º Semestre");
-            labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
-            executionPeriods.add(labelValueBean);
-        }
-        Collections.sort(executionPeriods, new BeanComparator("label"));
-        return executionPeriods;
+	List<LabelValueBean> executionPeriods = new ArrayList<LabelValueBean>();
+	for (InfoExecutionPeriod infoExecutionPeriod : allExecutionPeriods) {
+	    LabelValueBean labelValueBean = new LabelValueBean();
+	    labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - "
+		    + infoExecutionPeriod.getSemester() + "º Semestre");
+	    labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
+	    executionPeriods.add(labelValueBean);
+	}
+	Collections.sort(executionPeriods, new BeanComparator("label"));
+	return executionPeriods;
     }
 
     private List<LabelValueBean> getAllDepartments(Collection<Department> allDepartments) {
-        List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
-        for (Department department : allDepartments) {
-            LabelValueBean labelValueBean = new LabelValueBean();
-            labelValueBean.setValue(department.getIdInternal().toString());
-            labelValueBean.setLabel(department.getRealName());
-            departments.add(labelValueBean);
-        }
-        Collections.sort(departments, new BeanComparator("label"));
-        return departments;
+	List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
+	for (Department department : allDepartments) {
+	    LabelValueBean labelValueBean = new LabelValueBean();
+	    labelValueBean.setValue(department.getIdInternal().toString());
+	    labelValueBean.setLabel(department.getRealName());
+	    departments.add(labelValueBean);
+	}
+	Collections.sort(departments, new BeanComparator("label"));
+	return departments;
     }
 
     protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-        Collection<Department> allDepartments = rootDomainObject.getDepartments();
-        List<LabelValueBean> departments = getAllDepartments(allDepartments);
-        request.setAttribute("departments", departments);
+	Collection<Department> allDepartments = rootDomainObject.getDepartments();
+	List<LabelValueBean> departments = getAllDepartments(allDepartments);
+	request.setAttribute("departments", departments);
     }
 
-    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixFilterException,FenixServiceException {
-      
+    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+
 	List<InfoExecutionPeriod> allExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
-        Object[] args = {};
+	Object[] args = {};
 
-        allExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
-                null, "ReadNotClosedExecutionPeriods", args);
+	allExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(null,
+		"ReadNotClosedExecutionPeriods", args);
 
-        List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(allExecutionPeriods);
-        request.setAttribute("executionPeriods", executionPeriods);
+	List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(allExecutionPeriods);
+	request.setAttribute("executionPeriods", executionPeriods);
     }
 
     private String getFileName(Date date) throws FenixFilterException, FenixServiceException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minutes = calendar.get(Calendar.MINUTE);
-        return (day + "-" + month + "-" + year + "_" + hour + ":" + minutes);
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(date);
+	int day = calendar.get(Calendar.DAY_OF_MONTH);
+	int month = calendar.get(Calendar.MONTH) + 1;
+	int year = calendar.get(Calendar.YEAR);
+	int hour = calendar.get(Calendar.HOUR_OF_DAY);
+	int minutes = calendar.get(Calendar.MINUTE);
+	return (day + "-" + month + "-" + year + "_" + hour + ":" + minutes);
     }
 }

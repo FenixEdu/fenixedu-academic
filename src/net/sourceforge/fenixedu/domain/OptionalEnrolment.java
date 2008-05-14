@@ -22,49 +22,48 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     public OptionalEnrolment(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-	    CurricularCourse curricularCourse, ExecutionPeriod executionPeriod, EnrollmentCondition enrolmentCondition,
+	    CurricularCourse curricularCourse, ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition,
 	    String createdBy, OptionalCurricularCourse optionalCurricularCourse) {
-	if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionPeriod == null
+	if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionSemester == null
 		|| enrolmentCondition == null || createdBy == null || optionalCurricularCourse == null) {
 	    throw new DomainException("invalid arguments");
 	}
-	checkInitConstraints(studentCurricularPlan, curricularCourse, executionPeriod, optionalCurricularCourse);
+	checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester, optionalCurricularCourse);
 	// TODO: check this
 	// validateDegreeModuleLink(curriculumGroup, curricularCourse);
-	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionPeriod, enrolmentCondition, createdBy);
+	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition, createdBy);
 	setOptionalCurricularCourse(optionalCurricularCourse);
     }
 
     protected void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
-	    ExecutionPeriod executionPeriod, OptionalCurricularCourse optionalCurricularCourse) {
-	super.checkInitConstraints(studentCurricularPlan, curricularCourse, executionPeriod);
+	    ExecutionSemester executionSemester, OptionalCurricularCourse optionalCurricularCourse) {
+	super.checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester);
 
 	final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) studentCurricularPlan.findEnrolmentFor(
-		optionalCurricularCourse, executionPeriod);
-	if (optionalEnrolment != null && optionalEnrolment.isValid(executionPeriod)) {
+		optionalCurricularCourse, executionSemester);
+	if (optionalEnrolment != null && optionalEnrolment.isValid(executionSemester)) {
 	    throw new DomainException("error.OptionalEnrolment.duplicate.enrolment", optionalCurricularCourse.getName());
 
 	}
     }
 
     @Override
-    final public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	if (executionPeriod == null || getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
-	    return isApproved() && hasCurricularCourseOrOptionalCurricularCourse(curricularCourse, executionPeriod);
+    final public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+	if (executionSemester == null || getExecutionPeriod().isBeforeOrEquals(executionSemester)) {
+	    return isApproved() && hasCurricularCourseOrOptionalCurricularCourse(curricularCourse, executionSemester);
 	} else {
 	    return false;
 	}
     }
 
-    private boolean hasCurricularCourseOrOptionalCurricularCourse(final CurricularCourse curricularCourse,
-	    final ExecutionPeriod executionPeriod) {
-	return hasCurricularCourse(getCurricularCourse(), curricularCourse, executionPeriod)
-		|| hasCurricularCourse(getOptionalCurricularCourse(), curricularCourse, executionPeriod);
+    private boolean hasCurricularCourseOrOptionalCurricularCourse(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+	return hasCurricularCourse(getCurricularCourse(), curricularCourse, executionSemester) 
+		|| hasCurricularCourse(getOptionalCurricularCourse(), curricularCourse, executionSemester);
     }
 
     @Override
-    final public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionPeriod executionPeriod) {
-	return this.getExecutionPeriod().equals(executionPeriod)
+    final public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
+	return this.getExecutionPeriod().equals(executionSemester)
 		&& (this.getCurricularCourse().equals(curricularCourse) || this.getOptionalCurricularCourse().equals(
 			curricularCourse));
     }
@@ -76,9 +75,9 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 
     @Override
     public MultiLanguageString getName() {
-	ExecutionPeriod executionPeriod = getExecutionPeriod();
-	return MultiLanguageString.i18n().add("pt", this.getOptionalCurricularCourse().getName(executionPeriod)).add("en",
-		this.getOptionalCurricularCourse().getNameEn(executionPeriod)).finish();
+	ExecutionSemester executionSemester = getExecutionPeriod();
+	return MultiLanguageString.i18n().add("pt", this.getOptionalCurricularCourse().getName(executionSemester)).add("en",
+		this.getOptionalCurricularCourse().getNameEn(executionSemester)).finish();
     }
 
     @Override
@@ -97,10 +96,10 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     @Override
-    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
-	if (isValid(executionPeriod) && isEnroled()) {
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
+	if (isValid(executionSemester) && isEnroled()) {
 	    final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>(1);
-	    result.add(new EnroledOptionalEnrolment(this, getOptionalCurricularCourse(), executionPeriod));
+	    result.add(new EnroledOptionalEnrolment(this, getOptionalCurricularCourse(), executionSemester));
 	    return result;
 	}
 	return Collections.emptySet();

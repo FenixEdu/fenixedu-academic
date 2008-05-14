@@ -3,15 +3,15 @@ package net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship;
 
 public class TSDProfessorshipDTOEntry extends DataTranferObject {
 	private List<TSDProfessorship> tsdProfessorshipList;
-	private List<ExecutionPeriod> executionPeriodList = null;
+	private List<ExecutionSemester> executionPeriodList = null;
 	
-	public TSDProfessorshipDTOEntry(List<TSDProfessorship> tsdProfessorshipList, List<ExecutionPeriod> executionPeriodList) {
+	public TSDProfessorshipDTOEntry(List<TSDProfessorship> tsdProfessorshipList, List<ExecutionSemester> executionPeriodList) {
 		this.tsdProfessorshipList = tsdProfessorshipList;
 		this.executionPeriodList = executionPeriodList;
 	}

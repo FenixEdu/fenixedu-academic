@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.joda.time.YearMonthDay;
@@ -23,7 +23,7 @@ public class CopyTSDProcessPhaseService {
 	return instance;
     }
 
-    public TSDProcess copyTSDProcess(TSDProcess tsdProcessCopied, List<ExecutionPeriod> executionPeriodList, String name,
+    public TSDProcess copyTSDProcess(TSDProcess tsdProcessCopied, List<ExecutionSemester> executionPeriodList, String name,
 	    Person creator) {
 	TSDProcess tsdProcess = new TSDProcess();
 
@@ -32,7 +32,7 @@ public class CopyTSDProcessPhaseService {
 	tsdProcess.setName(name);
 	tsdProcess.getExecutionPeriods().addAll(executionPeriodList);
 
-	Map<ExecutionPeriod, ExecutionPeriod> oldAndNewExecutionPeriodMap = getExecutionPeriodTranslationMap(tsdProcessCopied
+	Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap = getExecutionPeriodTranslationMap(tsdProcessCopied
 		.getExecutionPeriods(), executionPeriodList);
 
 	for (TSDProcessPhase oldTSDProcessPhase : tsdProcessCopied.getOrderedTSDProcessPhases()) {
@@ -44,7 +44,7 @@ public class CopyTSDProcessPhaseService {
     }
 
     private TSDProcessPhase createAndCopyProcessPhase(TSDProcess newTSDProcess, TSDProcessPhase oldTSDProcessPhase,
-	    Map<ExecutionPeriod, ExecutionPeriod> oldAndNewExecutionPeriodMap, TSDProcessPhase lastTSDProcessPhase) {
+	    Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap, TSDProcessPhase lastTSDProcessPhase) {
 	TSDProcessPhase newTSDProcessPhase = new TSDProcessPhase();
 	newTSDProcessPhase.setTSDProcess(newTSDProcess);
 	newTSDProcessPhase.setPreviousTSDProcessPhase(lastTSDProcessPhase);
@@ -63,18 +63,18 @@ public class CopyTSDProcessPhaseService {
     }
 
     public void copyDataFromTSDProcessPhase(TSDProcessPhase newProcessPhase, TSDProcessPhase oldTSDProcessPhase) {
-	Map<ExecutionPeriod, ExecutionPeriod> oldAndNewExecutionPeriodMap = getExecutionPeriodTranslationMap(oldTSDProcessPhase
+	Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap = getExecutionPeriodTranslationMap(oldTSDProcessPhase
 		.getTSDProcess().getExecutionPeriods(), newProcessPhase.getTSDProcess().getExecutionPeriods());
 
 	copyDataFromTSDProcessPhase(newProcessPhase, oldTSDProcessPhase, oldAndNewExecutionPeriodMap);
     }
 
-    private Map<ExecutionPeriod, ExecutionPeriod> getExecutionPeriodTranslationMap(List<ExecutionPeriod> oldExecutionPeriodList,
-	    List<ExecutionPeriod> newExecutionPeriodList) {
-	Map<ExecutionPeriod, ExecutionPeriod> translationMap = new HashMap<ExecutionPeriod, ExecutionPeriod>();
+    private Map<ExecutionSemester, ExecutionSemester> getExecutionPeriodTranslationMap(List<ExecutionSemester> oldExecutionPeriodList,
+	    List<ExecutionSemester> newExecutionPeriodList) {
+	Map<ExecutionSemester, ExecutionSemester> translationMap = new HashMap<ExecutionSemester, ExecutionSemester>();
 
-	for (ExecutionPeriod oldExecutionPeriod : oldExecutionPeriodList) {
-	    for (ExecutionPeriod newExecutionPeriod : newExecutionPeriodList) {
+	for (ExecutionSemester oldExecutionPeriod : oldExecutionPeriodList) {
+	    for (ExecutionSemester newExecutionPeriod : newExecutionPeriodList) {
 		if (oldExecutionPeriod.getSemester() == newExecutionPeriod.getSemester()) {
 		    translationMap.put(oldExecutionPeriod, newExecutionPeriod);
 		}
@@ -85,7 +85,7 @@ public class CopyTSDProcessPhaseService {
     }
 
     private void copyDataFromTSDProcessPhase(TSDProcessPhase newProcessPhase, TSDProcessPhase oldTSDProcessPhase,
-	    Map<ExecutionPeriod, ExecutionPeriod> oldAndNewExecutionPeriodMap) {
+	    Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap) {
 
 	newProcessPhase.deleteTSDProcessPhaseData();
 
@@ -141,13 +141,13 @@ public class CopyTSDProcessPhaseService {
 
     private void createAndCopyTSDCoursesAndTSDProfessorships(TSDProcessPhase oldTSDProcessPhase,
 	    Map<TeacherServiceDistribution, TeacherServiceDistribution> oldAndNewTSDMap,
-	    Map<TSDTeacher, TSDTeacher> oldAndNewTSDTeacherMap, Map<ExecutionPeriod, ExecutionPeriod> oldAndNewExecutionPeriodMap) {
+	    Map<TSDTeacher, TSDTeacher> oldAndNewTSDTeacherMap, Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap) {
 
 	Map<TSDCourse, TSDCourse> processedTSDCourses = new HashMap<TSDCourse, TSDCourse>();
 
 	for (TeacherServiceDistribution oldTSD : oldAndNewTSDMap.keySet()) {
-	    for (ExecutionPeriod oldExecutionPeriod : oldAndNewExecutionPeriodMap.keySet()) {
-		ExecutionPeriod newExecutionPeriod = oldAndNewExecutionPeriodMap.get(oldExecutionPeriod);
+	    for (ExecutionSemester oldExecutionPeriod : oldAndNewExecutionPeriodMap.keySet()) {
+		ExecutionSemester newExecutionPeriod = oldAndNewExecutionPeriodMap.get(oldExecutionPeriod);
 		TeacherServiceDistribution newTSD = oldAndNewTSDMap.get(oldTSD);
 		TSDCourse newTSDCourse = null;
 
@@ -239,7 +239,7 @@ public class CopyTSDProcessPhaseService {
 	Map<TSDTeacher, TSDTeacher> oldAndNewTSDTeacherMap = new HashMap<TSDTeacher, TSDTeacher>();
 
 	Department thisDepartment = processPhase.getTSDProcess().getDepartment();
-	ExecutionPeriod firstPeriod = processPhase.getTSDProcess().getFirstExecutionPeriod();
+	ExecutionSemester firstPeriod = processPhase.getTSDProcess().getFirstExecutionPeriod();
 	YearMonthDay beginYMD = firstPeriod.getBeginDateYearMonthDay();
 	YearMonthDay endYMD = firstPeriod.getEndDateYearMonthDay();
 

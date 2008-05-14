@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ScheduleProcessor.ScheduleContext;
 
@@ -83,8 +83,8 @@ public class SchoolClassProcessor extends PathProcessor {
                 return null;
             }
             
-            ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-            for (SchoolClass schoolClass : executionPeriod.getSchoolClasses()) {
+            ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+            for (SchoolClass schoolClass : executionSemester.getSchoolClasses()) {
                 if (schoolClass.getNome().equalsIgnoreCase(schoolClassName)) {
                     return this.schoolClass = schoolClass;
                 }

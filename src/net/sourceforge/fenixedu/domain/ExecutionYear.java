@@ -62,7 +62,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public ExecutionYear(AcademicInterval academicInterval, String year) {
 	this();
-	setExecutionInterval(academicInterval);
+	setAcademicInterval(academicInterval);
 	setBeginDateYearMonthDay(academicInterval.getBeginYearMonthDayWithoutChronology());
 	setEndDateYearMonthDay(academicInterval.getEndYearMonthDayWithoutChronology());
 	setYear(year);
@@ -89,18 +89,18 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public ExecutionYear getNextExecutionYear() {
-	AcademicYearCE year = getExecutionInterval().plusYear(1);
+	AcademicYearCE year = getAcademicInterval().plusYear(1);
 	return getExecutionYear(year);
     }
 
     public ExecutionYear getPreviousExecutionYear() {
-	AcademicYearCE year = getExecutionInterval().minusYear(1);
+	AcademicYearCE year = getAcademicInterval().minusYear(1);
 	return getExecutionYear(year);
     }
 
     public ExecutionYear getPreviousExecutionYear(final Integer previousCivilYears) {
 	if (previousCivilYears >= 0) {
-	    AcademicYearCE year = getExecutionInterval().minusYear(previousCivilYears);
+	    AcademicYearCE year = getAcademicInterval().minusYear(previousCivilYears);
 	    return getExecutionYear(year);
 	}
 	return null;
@@ -118,8 +118,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	if (object == null) {
 	    return 1;
 	}
-	return getExecutionInterval().getStartDateTimeWithoutChronology().compareTo(
-		object.getExecutionInterval().getStartDateTimeWithoutChronology());
+	return getAcademicInterval().getStartDateTimeWithoutChronology().compareTo(
+		object.getAcademicInterval().getStartDateTimeWithoutChronology());
     }
 
     public boolean isAfter(final ExecutionYear executionYear) {
@@ -144,39 +144,39 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return executionDegrees;
     }
 
-    public ExecutionPeriod readExecutionPeriodForSemester(final Integer semester) {
-	for (final ExecutionPeriod executionPeriod : getExecutionPeriods()) {
-	    if (executionPeriod.isFor(semester)) {
-		return executionPeriod;
+    public ExecutionSemester readExecutionPeriodForSemester(final Integer semester) {
+	for (final ExecutionSemester executionSemester : getExecutionPeriods()) {
+	    if (executionSemester.isFor(semester)) {
+		return executionSemester;
 	    }
 	}
 	return null;
     }
 
-    public ExecutionPeriod getFirstExecutionPeriod() {
-	return (ExecutionPeriod) Collections.min(this.getExecutionPeriods(),
-		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+    public ExecutionSemester getFirstExecutionPeriod() {
+	return (ExecutionSemester) Collections.min(this.getExecutionPeriods(),
+		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
-    public ExecutionPeriod getLastExecutionPeriod() {
-	return (ExecutionPeriod) Collections.max(this.getExecutionPeriods(),
-		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+    public ExecutionSemester getLastExecutionPeriod() {
+	return (ExecutionSemester) Collections.max(this.getExecutionPeriods(),
+		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
-    public List<ExecutionPeriod> readNotClosedPublicExecutionPeriods() {
-	final List<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
-	for (final ExecutionPeriod executionPeriod : getExecutionPeriodsSet()) {
-	    if (!executionPeriod.isClosed() && !executionPeriod.isNotOpen()) {
-		result.add(executionPeriod);
+    public List<ExecutionSemester> readNotClosedPublicExecutionPeriods() {
+	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+	for (final ExecutionSemester executionSemester : getExecutionPeriodsSet()) {
+	    if (!executionSemester.isClosed() && !executionSemester.isNotOpen()) {
+		result.add(executionSemester);
 	    }
 	}
 	return result;
     }
 
-    public ExecutionPeriod readExecutionPeriodByName(final String name) {
-	for (final ExecutionPeriod executionPeriod : getExecutionPeriodsSet()) {
-	    if (executionPeriod.getName().equals(name)) {
-		return executionPeriod;
+    public ExecutionSemester readExecutionPeriodByName(final String name) {
+	for (final ExecutionSemester executionSemester : getExecutionPeriodsSet()) {
+	    if (executionSemester.getName().equals(name)) {
+		return executionSemester;
 	    }
 	}
 	return null;
@@ -274,10 +274,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return result;
     }
 
-    private static class ExecutionPeriodExecutionYearListener extends RelationAdapter<ExecutionYear, ExecutionPeriod> {
+    private static class ExecutionPeriodExecutionYearListener extends RelationAdapter<ExecutionYear, ExecutionSemester> {
 	@Override
-	public void beforeAdd(ExecutionYear executionYear, ExecutionPeriod executionPeriod) {
-	    if (executionYear != null && executionPeriod != null && executionYear.getExecutionPeriodsCount() == 2) {
+	public void beforeAdd(ExecutionYear executionYear, ExecutionSemester executionSemester) {
+	    if (executionYear != null && executionSemester != null && executionYear.getExecutionPeriodsCount() == 2) {
 		throw new DomainException("error.ExecutionYear.exceeded.number.of.executionPeriods", executionYear.getYear());
 	    }
 	}
@@ -291,7 +291,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	if (entry != null) {
 	    entry = (AcademicYearCE) entry.getOriginalTemplateEntry();
 	    for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-		if (executionYear.getExecutionInterval().getAcademicCalendarEntry().equals(entry)) {
+		if (executionYear.getAcademicInterval().getAcademicCalendarEntry().equals(entry)) {
 		    return executionYear;
 		}
 	    }
@@ -338,7 +338,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     static public ExecutionYear readFirstBolonhaExecutionYear() {
-	return ExecutionPeriod.readFirstBolonhaExecutionPeriod().getExecutionYear();
+	return ExecutionSemester.readFirstBolonhaExecutionPeriod().getExecutionYear();
     }
 
     public static class ExecutionYearSearchCache {

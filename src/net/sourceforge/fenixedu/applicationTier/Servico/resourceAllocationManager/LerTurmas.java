@@ -16,33 +16,34 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerTurmas extends Service {
 
     public List<InfoClass> run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
-            Integer curricularYear) throws ExcepcaoPersistencia {
-	
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
-        final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+	    Integer curricularYear) throws ExcepcaoPersistencia {
 
-        final Set<SchoolClass> classes;
-        if (curricularYear != null) {
-        	classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionPeriod, curricularYear);
-        } else {
-        	classes = executionDegree.findSchoolClassesByExecutionPeriod(executionPeriod);
-        }
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
+		.getIdInternal());
 
-        final List<InfoClass> infoClassesList = new ArrayList<InfoClass>();
-        
-        for (final SchoolClass schoolClass : classes) {
-            InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
-            infoClassesList.add(infoClass);
-        }
+	final Set<SchoolClass> classes;
+	if (curricularYear != null) {
+	    classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionSemester, curricularYear);
+	} else {
+	    classes = executionDegree.findSchoolClassesByExecutionPeriod(executionSemester);
+	}
 
-        return infoClassesList;
+	final List<InfoClass> infoClassesList = new ArrayList<InfoClass>();
+
+	for (final SchoolClass schoolClass : classes) {
+	    InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
+	    infoClassesList.add(infoClass);
+	}
+
+	return infoClassesList;
     }
 
 }

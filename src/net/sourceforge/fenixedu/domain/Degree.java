@@ -445,13 +445,13 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
-    public List<ExecutionCourse> getExecutionCourses(String curricularCourseAcronym, ExecutionPeriod executionPeriod) {
+    public List<ExecutionCourse> getExecutionCourses(String curricularCourseAcronym, ExecutionSemester executionSemester) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
 	    for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
 		if (course.getAcronym() != null && course.getAcronym().equalsIgnoreCase(curricularCourseAcronym)) {
 		    for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
-			if(executionPeriod == executionCourse.getExecutionPeriod()){
+			if(executionSemester == executionCourse.getExecutionPeriod()){
 			    result.add(executionCourse);
 			}
 		    }
@@ -497,10 +497,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public OldInquiriesCoursesRes getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(String code,
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 	for (OldInquiriesCoursesRes oldInquiriesCoursesRes : this.getAssociatedOldInquiriesCoursesRes()) {
 	    if (oldInquiriesCoursesRes.getCourseCode().equalsIgnoreCase(code)
-		    && oldInquiriesCoursesRes.getExecutionPeriod().equals(executionPeriod)) {
+		    && oldInquiriesCoursesRes.getExecutionPeriod().equals(executionSemester)) {
 		return oldInquiriesCoursesRes;
 	    }
 	}
@@ -508,10 +508,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public List<OldInquiriesSummary> getOldInquiriesSummariesByExecutionPeriod(
-	    ExecutionPeriod executionPeriod) {
+	    ExecutionSemester executionSemester) {
 	List<OldInquiriesSummary> result = new ArrayList<OldInquiriesSummary>();
 	for (OldInquiriesSummary oldInquiriesSummary : this.getAssociatedOldInquiriesSummaries()) {
-	    if (oldInquiriesSummary.getExecutionPeriod().equals(executionPeriod)) {
+	    if (oldInquiriesSummary.getExecutionPeriod().equals(executionSemester)) {
 		result.add(oldInquiriesSummary);
 	    }
 	}
@@ -519,11 +519,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public List<OldInquiriesTeachersRes> getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCode(
-	    ExecutionPeriod executionPeriod, Integer curricularYear, String courseCode) {
+	    ExecutionSemester executionSemester, Integer curricularYear, String courseCode) {
 	List<OldInquiriesTeachersRes> result = new ArrayList<OldInquiriesTeachersRes>();
 	for (OldInquiriesTeachersRes oldInquiriesTeachersRes : this
 		.getAssociatedOldInquiriesTeachersRes()) {
-	    if (oldInquiriesTeachersRes.getExecutionPeriod().equals(executionPeriod)
+	    if (oldInquiriesTeachersRes.getExecutionPeriod().equals(executionSemester)
 		    && oldInquiriesTeachersRes.getCurricularYear().equals(curricularYear)
 		    && oldInquiriesTeachersRes.getCourseCode().equalsIgnoreCase(courseCode)) {
 		result.add(oldInquiriesTeachersRes);
@@ -533,11 +533,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public List<OldInquiriesTeachersRes> getOldInquiriesTeachersResByExecutionPeriodAndCurricularYearAndCourseCodeAndTeacher(
-	    ExecutionPeriod executionPeriod, Integer curricularYear, String courseCode, Teacher teacher) {
+	    ExecutionSemester executionSemester, Integer curricularYear, String courseCode, Teacher teacher) {
 	List<OldInquiriesTeachersRes> result = new ArrayList<OldInquiriesTeachersRes>();
 	for (OldInquiriesTeachersRes oldInquiriesTeachersRes : this
 		.getAssociatedOldInquiriesTeachersRes()) {
-	    if (oldInquiriesTeachersRes.getExecutionPeriod().equals(executionPeriod)
+	    if (oldInquiriesTeachersRes.getExecutionPeriod().equals(executionSemester)
 		    && oldInquiriesTeachersRes.getCurricularYear().equals(curricularYear)
 		    && oldInquiriesTeachersRes.getCourseCode().equalsIgnoreCase(courseCode)
 		    && oldInquiriesTeachersRes.getTeacher().equals(teacher)) {

@@ -6,7 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
@@ -18,19 +18,19 @@ public class CurricularCourseStudentsByExecutionPeriodGroup extends LeafGroup {
 
     private DomainReference<CurricularCourse> curricularCourseReference;
 
-    private DomainReference<ExecutionPeriod> executionPeriodReference;
+    private DomainReference<ExecutionSemester> executionPeriodReference;
 
     public CurricularCourseStudentsByExecutionPeriodGroup(CurricularCourse curricularCourse,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
         this.curricularCourseReference = new DomainReference<CurricularCourse>(curricularCourse);
-        this.executionPeriodReference = new DomainReference<ExecutionPeriod>(executionPeriod);
+        this.executionPeriodReference = new DomainReference<ExecutionSemester>(executionSemester);
     }
 
     public CurricularCourse getCurricularCourse() {
         return this.curricularCourseReference.getObject();
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
         return this.executionPeriodReference.getObject();
     }
 
@@ -59,7 +59,7 @@ public class CurricularCourseStudentsByExecutionPeriodGroup extends LeafGroup {
 
         public Group build(Object[] arguments) {
             CurricularCourse course;
-            ExecutionPeriod period;
+            ExecutionSemester period;
 
             try {
                 course = (CurricularCourse) arguments[0];
@@ -68,9 +68,9 @@ public class CurricularCourseStudentsByExecutionPeriodGroup extends LeafGroup {
             }
             
             try {
-                period = (ExecutionPeriod) arguments[1];
+                period = (ExecutionSemester) arguments[1];
             } catch (ClassCastException e) {
-                throw new WrongTypeOfArgumentException(1, ExecutionPeriod.class, arguments[1].getClass());
+                throw new WrongTypeOfArgumentException(1, ExecutionSemester.class, arguments[1].getClass());
             }
             
             return new CurricularCourseStudentsByExecutionPeriodGroup(course, period);

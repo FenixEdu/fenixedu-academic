@@ -9,17 +9,17 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.interfaces.HasExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.interfaces.HasExecutionSemester;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
-public class BoardSearchBean implements Serializable, HasExecutionPeriod {
+public class BoardSearchBean implements Serializable, HasExecutionSemester {
 
     private Boolean searchExecutionCourseBoards;
 
     private DomainReference<Unit> unit;
 
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
     private DomainReference<ExecutionDegree> executionDegree;
 
@@ -43,16 +43,16 @@ public class BoardSearchBean implements Serializable, HasExecutionPeriod {
         this.executionDegree = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	if (executionPeriod == null) {
-	    final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-	    setExecutionPeriod(executionPeriod);
+    public ExecutionSemester getExecutionPeriod() {
+	if (executionSemester == null) {
+	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	    setExecutionPeriod(executionSemester);
 	}
-        return executionPeriod.getObject();
+        return executionSemester.getObject();
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod == null ? null : new DomainReference<ExecutionPeriod>(executionPeriod);
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+        this.executionSemester = executionSemester == null ? null : new DomainReference<ExecutionSemester>(executionSemester);
     }
 
     public void setUnit(Unit unit) {
@@ -70,9 +70,9 @@ public class BoardSearchBean implements Serializable, HasExecutionPeriod {
 	final Set<AnnouncementBoard> boards = new TreeSet<AnnouncementBoard>(AnnouncementBoard.BY_NAME);
 	if (getSearchExecutionCourseBoards().booleanValue()) {
 	    final ExecutionDegree executionDegree = getExecutionDegree();
-	    final ExecutionPeriod executionPeriod = getExecutionPeriod();
-	    if (executionDegree != null && executionPeriod != null) {
-		for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
+	    final ExecutionSemester executionSemester = getExecutionPeriod();
+	    if (executionDegree != null && executionSemester != null) {
+		for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
 		    if (isExecutionCourseForExecutionDegree(executionCourse, executionDegree)) {
 			boards.add(executionCourse.getBoard());
 		    }

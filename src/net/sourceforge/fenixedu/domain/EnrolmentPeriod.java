@@ -20,12 +20,12 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    protected void init(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionPeriod executionPeriod,
+    protected void init(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester,
 	    final Date startDate, final Date endDate) {
-	init(degreeCurricularPlan, executionPeriod, new DateTime(startDate), new DateTime(endDate));
+	init(degreeCurricularPlan, executionSemester, new DateTime(startDate), new DateTime(endDate));
     }
     
-    protected void init(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionPeriod executionPeriod,
+    protected void init(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester,
 	    final DateTime startDate, final DateTime endDate) {
 
 	if (!endDate.isAfter(startDate)) {
@@ -33,7 +33,7 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 	}
 	
 	setDegreeCurricularPlan(degreeCurricularPlan);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
 	setStartDateDateTime(startDate);
 	setEndDateDateTime(endDate);
     }

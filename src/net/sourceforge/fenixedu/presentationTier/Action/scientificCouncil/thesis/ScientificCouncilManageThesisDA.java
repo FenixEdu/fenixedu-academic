@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -145,7 +145,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	request.setAttribute("degree", degree);
 
 	final Integer executionYearId = getIntegerParameter(request, "executionYearId");
-	final ExecutionYear executionYear = (ExecutionYear) (executionYearId == null ? null : rootDomainObject.readAcademicPeriodByOID(executionYearId));
+	final ExecutionYear executionYear = (ExecutionYear) (executionYearId == null ? null : rootDomainObject.readExecutionIntervalByOID(executionYearId));
 	request.setAttribute("executionYear", executionYear);
 
 	if (degree != null || executionYear != null) {
@@ -459,8 +459,8 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
 	for (final Thesis thesis : rootDomainObject.getThesesSet()) {
 	    final Enrolment enrolment = thesis.getEnrolment();
-	    final ExecutionPeriod executionPeriod = enrolment.getExecutionPeriod();
-	    if (executionPeriod.getExecutionYear() == executionYear) {
+	    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
+	    if (executionSemester.getExecutionYear() == executionYear) {
 		final ThesisPresentationState thesisPresentationState = ThesisPresentationState
 			.getThesisPresentationState(thesis);
 

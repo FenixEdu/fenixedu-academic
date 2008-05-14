@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -24,8 +24,8 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
     private DomainReference<OptionalCurricularCourse> optionalCurricularCourse;
 
     public EnroledOptionalEnrolment(CurriculumModule curriculumModule, OptionalCurricularCourse optionalCurricularCourse,
-	    ExecutionPeriod executionPeriod) {
-	super(curriculumModule, executionPeriod);
+	    ExecutionSemester executionSemester) {
+	super(curriculumModule, executionSemester);
 	setOptionalCurricularCourse(optionalCurricularCourse);
 
     }
@@ -40,11 +40,11 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
     }
 
     @Override
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionPeriod executionPeriod) {
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
 	final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) getCurriculumModule();
 
 	return optionalEnrolment.isApproved() ? Collections.EMPTY_LIST : getOptionalCurricularCourse().getCurricularRules(
-		executionPeriod);
+		executionSemester);
     }
 
     public Context getContext() {

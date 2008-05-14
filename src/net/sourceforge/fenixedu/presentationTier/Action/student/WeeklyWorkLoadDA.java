@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -97,15 +97,15 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final Collection<ExecutionPeriod> executionPeriods = rootDomainObject.getExecutionPeriodsSet();
-	final Set<ExecutionPeriod> sortedExecutionPeriods = new TreeSet<ExecutionPeriod>(
-		executionPeriods);
+	final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
+	final Set<ExecutionSemester> sortedExecutionPeriods = new TreeSet<ExecutionSemester>(
+		executionSemesters);
 	request.setAttribute("executionPeriods", sortedExecutionPeriods);
 
 	final DynaActionForm dynaActionForm = (DynaActionForm) form;
 
 	final Integer executionPeriodID = getExecutionPeriodID(dynaActionForm);
-	final ExecutionPeriod selectedExecutionPeriod = findExecutionPeriod(executionPeriods,
+	final ExecutionSemester selectedExecutionPeriod = findExecutionPeriod(executionSemesters,
 		executionPeriodID);
 	request.setAttribute("selectedExecutionPeriod", selectedExecutionPeriod);
 
@@ -166,12 +166,12 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
     }
 
-    private SortedSet<Week> getWeeks(final ExecutionPeriod executionPeriod) {
+    private SortedSet<Week> getWeeks(final ExecutionSemester executionSemester) {
 	return null;
     }
 
     private Attends findFirstAttends(final HttpServletRequest request,
-	    final ExecutionPeriod selectedExecutionPeriod) throws FenixFilterException,
+	    final ExecutionSemester selectedExecutionPeriod) throws FenixFilterException,
 	    FenixServiceException {
 	for (final Registration registration : getUserView(request).getPerson().getStudents()) {
 	    for (final Attends attend : registration.getOrderedAttends()) {
@@ -236,14 +236,14 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 		.valueOf(exeutionPeriodIDString);
     }
 
-    private ExecutionPeriod findExecutionPeriod(final Collection<ExecutionPeriod> executionPeriods,
+    private ExecutionSemester findExecutionPeriod(final Collection<ExecutionSemester> executionSemesters,
 	    final Integer executionPeriodID) {
-	for (final ExecutionPeriod executionPeriod : executionPeriods) {
-	    if (executionPeriodID == null && executionPeriod.getState().equals(PeriodState.CURRENT)) {
-		return executionPeriod;
+	for (final ExecutionSemester executionSemester : executionSemesters) {
+	    if (executionPeriodID == null && executionSemester.getState().equals(PeriodState.CURRENT)) {
+		return executionSemester;
 	    }
-	    if (executionPeriodID != null && executionPeriod.getIdInternal().equals(executionPeriodID)) {
-		return executionPeriod;
+	    if (executionPeriodID != null && executionSemester.getIdInternal().equals(executionPeriodID)) {
+		return executionSemester;
 	    }
 	}
 	return null;

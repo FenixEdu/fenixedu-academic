@@ -11,7 +11,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
@@ -488,8 +488,8 @@ public class SeparationCyclesManagement {
 	}
     }
 
-    protected ExecutionPeriod getExecutionPeriod() {
-	return ExecutionPeriod.readActualExecutionPeriod();
+    protected ExecutionSemester getExecutionPeriod() {
+	return ExecutionSemester.readActualExecutionPeriod();
     }
 
     private ExecutionYear getExecutionYear() {

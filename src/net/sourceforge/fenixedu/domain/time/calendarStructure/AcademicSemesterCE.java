@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
@@ -28,8 +28,8 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
     @Override
     public void delete(AcademicCalendarRootEntry rootEntry) {		
 	if(!isVirtual()) {
-	    ExecutionPeriod executionPeriod = ExecutionPeriod.getExecutionPeriod(this);
-	    executionPeriod.delete();
+	    ExecutionSemester executionSemester = ExecutionSemester.getExecutionPeriod(this);
+	    executionSemester.delete();
 	}
 	super.delete(rootEntry);
     }
@@ -85,7 +85,7 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 
     private void createNewExecutionPeriod() {				
 	ExecutionYear executionYear = ExecutionYear.getExecutionYear((AcademicYearCE) getParentEntry());	    
-	new ExecutionPeriod(executionYear, new AcademicInterval(this, getRootEntry()), getTitle().getContent());
+	new ExecutionSemester(executionYear, new AcademicInterval(this, getRootEntry()), getTitle().getContent());
     }
 
     @Override

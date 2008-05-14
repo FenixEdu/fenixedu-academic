@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -360,7 +360,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private ExecutionYear executionYearContext;
 
-	private ExecutionPeriod executionPeriodContext;
+	private ExecutionSemester executionPeriodContext;
 
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
@@ -418,11 +418,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	private void generateRowsForExecutionYearsOrganization(HtmlTable mainTable) {
 
 	    if (isToShowEnrolments()) {
-		final Set<ExecutionPeriod> enrolmentExecutionPeriods = new TreeSet<ExecutionPeriod>(
-			ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+		final Set<ExecutionSemester> enrolmentExecutionPeriods = new TreeSet<ExecutionSemester>(
+			ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
 		enrolmentExecutionPeriods.addAll(this.studentCurricularPlan.getEnrolmentsExecutionPeriods());
 
-		for (final ExecutionPeriod enrolmentsExecutionPeriod : enrolmentExecutionPeriods) {
+		for (final ExecutionSemester enrolmentsExecutionPeriod : enrolmentExecutionPeriods) {
 		    generateGroupRowWithText(mainTable, enrolmentsExecutionPeriod.getYear() + ", "
 			    + enrolmentsExecutionPeriod.getName(), true, 0, (CurriculumGroup) null);
 		    generateEnrolmentRows(mainTable, this.studentCurricularPlan
@@ -984,7 +984,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private HtmlComponent createDegreeCurricularPlanNameLink(final DegreeCurricularPlan degreeCurricularPlan,
-		ExecutionPeriod executionPeriod) {
+		ExecutionSemester executionSemester) {
 	    if (degreeCurricularPlan.isPast()) {
 		return new HtmlText(degreeCurricularPlan.getName());
 	    }
@@ -1013,7 +1013,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    result.setParameter("degreeID", degreeCurricularPlan.getDegree().getIdInternal());
 	    result.setParameter("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
 
-	    result.setParameter("executionPeriodOID", executionPeriod.getIdInternal());
+	    result.setParameter("executionPeriodOID", executionSemester.getIdInternal());
 
 	    return result;
 	}

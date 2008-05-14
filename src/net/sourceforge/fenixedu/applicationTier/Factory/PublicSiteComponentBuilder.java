@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteClasses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -66,10 +66,10 @@ public class PublicSiteComponentBuilder {
      */
     private ISiteComponent getInfoSiteClasses(InfoSiteClasses component, SchoolClass domainClass)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
+        ExecutionSemester executionSemester = domainClass.getExecutionPeriod();
         ExecutionDegree executionDegree = domainClass.getExecutionDegree();
 
-        Set<SchoolClass> classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionPeriod, domainClass.getAnoCurricular());
+        Set<SchoolClass> classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionSemester, domainClass.getAnoCurricular());
         List infoClasses = new ArrayList();
         for (final SchoolClass schoolClass : classes) {
         	infoClasses.add(copyClass2InfoClass(schoolClass));
@@ -91,8 +91,8 @@ public class PublicSiteComponentBuilder {
         List<Shift> shiftList = domainClass.getAssociatedShifts();
         infoLessonList = new ArrayList();
 
-        ExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+        ExecutionSemester executionSemester = domainClass.getExecutionPeriod();
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionSemester);
 
         for (final Iterator classIterator = shiftList.iterator(); classIterator.hasNext();) {
             Shift shift = (Shift) classIterator.next();
@@ -150,8 +150,8 @@ public class PublicSiteComponentBuilder {
      * @param period
      * @return
      */
-    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(ExecutionPeriod executionPeriod) {
-        return InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(ExecutionSemester executionSemester) {
+        return InfoExecutionPeriod.newInfoFromDomain(executionSemester);
     }
 
 }

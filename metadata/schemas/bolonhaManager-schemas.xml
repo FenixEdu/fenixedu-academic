@@ -7,7 +7,7 @@
 		<property name="size" value="60"/>
 	</slot>
 	<slot name="executionPeriod" layout="menu-select-postback">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionPeriod"/>
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 		<property name="format" value="${name} ${executionYear.year}"/>
 		<property name="sortBy" value="executionYear.year=desc, semester=desc"/>
 	</slot>
@@ -31,7 +31,7 @@
 <schema name="editCompetenceCourseInformation.common.simple" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean" bundle="BOLONHA_MANAGER_RESOURCES">
 	<slot name="competenceCourse.name" read-only="true"/>
 	<slot name="executionPeriod" layout="menu-select-postback">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionPeriod"/>
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 		<property name="format" value="${name} ${executionYear.year}"/>
 		<property name="sortBy" value="executionYear.year=desc, semester=desc"/>
 	</slot>

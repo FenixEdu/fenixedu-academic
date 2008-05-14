@@ -12,7 +12,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -23,7 +23,7 @@ import pt.utl.ist.berserk.logic.serviceManager.ServiceParameters;
  */
 public class ExecutionPeriodsEnrollmentFenix extends Filtro {
     
-    private static final DomainReference<ExecutionPeriod> since = new DomainReference<ExecutionPeriod>(ExecutionPeriod.class, 81);
+    private static final DomainReference<ExecutionSemester> since = new DomainReference<ExecutionSemester>(ExecutionSemester.class, 81);
 
 
     private Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER,
@@ -47,11 +47,11 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
 	List newRes = new ArrayList();
 	for (Iterator iter = serviceResult.iterator(); iter.hasNext();) {
 	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) iter.next();
-	    ExecutionPeriod executionPeriod = infoExecutionPeriod.getExecutionPeriod();
+	    ExecutionSemester executionSemester = infoExecutionPeriod.getExecutionPeriod();
 
-	    if (executionPeriod.isAfterOrEquals(since.getObject())) {
+	    if (executionSemester.isAfterOrEquals(since.getObject())) {
 		newRes.add(infoExecutionPeriod);
-	    } else if (executionPeriod.getBeginDate().after(this.masterDegreeFirstExecutionPeriodDate)
+	    } else if (executionSemester.getBeginDate().after(this.masterDegreeFirstExecutionPeriodDate)
 		    && degreeType != null
 		    && (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType
 			    .equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA))) {

@@ -581,18 +581,18 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		YearMonthDay endThesisCreationPeriod;
 	}
 
-	class net.sourceforge.fenixedu.domain.AcademicPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
-		AcademicInterval executionInterval;							
+	class net.sourceforge.fenixedu.domain.ExecutionInterval extends net.sourceforge.fenixedu.domain.DomainObject {
+		AcademicInterval academicInterval;							
 		PeriodState state;
 		String name;		
 		YearMonthDay beginDateYearMonthDay;
 		YearMonthDay endDateYearMonthDay;
 	}
 		
-		class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.AcademicPeriod {																													
+		class net.sourceforge.fenixedu.domain.ExecutionSemester extends net.sourceforge.fenixedu.domain.ExecutionInterval {																													
 	}
 
-		class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.AcademicPeriod {											
+		class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.ExecutionInterval {											
 	}
 
 	class net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -4845,7 +4845,7 @@ relation ExamDateCertificateRequestExecutionPeriod {
 		multiplicity *;
 	}
 	
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation CourseGroupChangeRequestOldCourseGroup {
@@ -4988,14 +4988,14 @@ relation AdviseEndPeriod {
 	net.sourceforge.fenixedu.domain.teacher.Advise playsRole associatedEndadvises {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole endExecutionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole endExecutionPeriod;
 }
 
 relation AdviseStartPeriod {
 	net.sourceforge.fenixedu.domain.teacher.Advise playsRole associatedStartadvises {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole startExecutionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole startExecutionPeriod;
 }
 
 relation AdviseStudent {
@@ -5522,7 +5522,7 @@ relation CreditsDismissalEquivalence {
 }
 
 relation CreditsExecutionPeriod {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod {
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod {
 		multiplicity 1..1;
 	}
 	net.sourceforge.fenixedu.domain.studentCurriculum.Credits playsRole credits {
@@ -5686,7 +5686,7 @@ relation CurricularRuleBeginExecutionPeriod {
 	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole participatingBeginCurricularRules {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole begin;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole begin;
 }
 
 relation CurricularRuleCompositeRule {
@@ -5707,7 +5707,7 @@ relation CurricularRuleEndExecutionPeriod {
 	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole participatingEndCurricularRules {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole end;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole end;
 }
 
 relation CurricularRuleNotRule {
@@ -6127,7 +6127,7 @@ relation EnrolmentEvaluationExecutionPeriod {
 	net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole enrolmentEvaluations {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation EnrolmentEvaluationImprovementOfApprovedEnrolmentEvent {
@@ -6148,7 +6148,7 @@ relation EnrolmentExecutionPeriod {
 	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation EnrolmentNotNeedToEnrollInCurricularCourse {
@@ -6164,7 +6164,7 @@ relation EnrolmentPeriodExecutionPeriod {
 	net.sourceforge.fenixedu.domain.EnrolmentPeriod playsRole enrolmentPeriod {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation EnrolmentWrapperCredits {
@@ -6187,7 +6187,7 @@ relation EnrolmentOutOfPeriodEventExecutionPeriod {
  		multiplicity *;
  	}
  	
- 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+ 	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation InternalEnrolmentWrapperEnrolment {
@@ -6464,14 +6464,14 @@ relation ExecutionDegreeShiftDistributionEntry {
 }
 
 relation ExecutionPeriodContextBegin {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole beginExecutionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole beginExecutionPeriod;
 	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole beginExecutionPeriodContexts {
 		multiplicity *;
 	}
 }
 
 relation ExecutionPeriodContextEnd {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole endExecutionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole endExecutionPeriod;
 	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole endExecutionPeriodContexts {
 		multiplicity *;
 	}
@@ -6481,25 +6481,25 @@ relation ExecutionPeriodEnrolmentLog {
 	net.sourceforge.fenixedu.domain.log.EnrolmentLog playsRole enrolmentLogs {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation ExecutionPeriodExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation ExecutionPeriodExecutionYear {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriods {
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriods {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation ExecutionPeriodSchoolClass {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 	net.sourceforge.fenixedu.domain.SchoolClass playsRole schoolClasses {
 		multiplicity *;
 	}
@@ -6596,7 +6596,7 @@ relation ExternalEnrolmentExecutionPeriod {
 	net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation ExternalEnrolmentNotNeedToEnrollInCurricularCourse {
@@ -7041,7 +7041,7 @@ relation InquiriesCourseExecutionPeriod {
 	net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse playsRole associatedInquiriesCourses {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation InquiriesCourseSchoolClass {
@@ -7062,7 +7062,7 @@ relation InquiriesRegistryExecutionPeriod {
 	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole associatedInquiriesRegistries {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation InquiriesRegistryStudent {
@@ -7090,7 +7090,7 @@ relation InquiriesStudentExecutionPeriodExecutionPeriod {
 	net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod playsRole inquiriesStudentExecutionPeriods {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation InquiriesStudentExecutionPeriodStudent {
@@ -7123,7 +7123,7 @@ relation InquiriesTeacherNonAffiliatedTeacher {
 
 relation InquiryResponsePeriodExecutionPeriod {
 	net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod playsRole inquiryResponsePeriod;
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation InstallmentAccountingTransactionInstallment {
@@ -7289,7 +7289,7 @@ relation MarkSheetEnrolmentEvaluation {
 }
 
 relation MarkSheetExecutionPeriod {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 	net.sourceforge.fenixedu.domain.MarkSheet playsRole markSheets {
 		multiplicity *;
 	}
@@ -7474,7 +7474,7 @@ relation OldInquiriesCoursesResExecutionPeriod {
 	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole associatedOldInquiriesCoursesRes {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation OldInquiriesSummaryDegree {
@@ -7488,7 +7488,7 @@ relation OldInquiriesSummaryExecutionPeriod {
 	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole associatedOldInquiriesSummaries {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation OldInquiriesTeachersResDegree {
@@ -7502,7 +7502,7 @@ relation OldInquiriesTeachersResExecutionPeriod {
 	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole associatedOldInquiriesTeachersRes {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation OldInquiriesTeachersResTeacher {
@@ -7535,7 +7535,7 @@ relation OtherTypeCreditLineExecutionPeriod {
 	net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine playsRole associatedOtherTypeCreditLines {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation ParentFAQSectionChildFAQEntry {
@@ -9328,7 +9328,7 @@ relation RootDomainObjectExecutionDegree {
 
 relation RootDomainObjectExecutionPeriod {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObjectForExecutionPeriod;
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriods {
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriods {
 		multiplicity *;
 	}
 }
@@ -9340,9 +9340,9 @@ relation RootDomainObjectExecutionYear {
 	}
 }
 
-relation RootDomainObjectAcademicPeriod {
+relation RootDomainObjectExecutionInterval {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.AcademicPeriod playsRole academicPeriods {
+	net.sourceforge.fenixedu.domain.ExecutionInterval playsRole executionIntervals {
 		multiplicity *;
 	}
 }
@@ -11349,14 +11349,14 @@ relation StudentSecretaryEnrolmentStudent {
 }
 
 relation StudentStatuteBeginPeriod {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole beginExecutionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole beginExecutionPeriod;
 	net.sourceforge.fenixedu.domain.student.StudentStatute playsRole beginningStudentStatutes {
 		multiplicity *;
 	}
 }
 
 relation StudentStatuteEndPeriod {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole endExecutionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole endExecutionPeriod;
 	net.sourceforge.fenixedu.domain.student.StudentStatute playsRole endingStudentStatutes {
 		multiplicity *;
 	}
@@ -11394,7 +11394,7 @@ relation TeacherDegreeFinalProjectStudentExecutionPeriod {
 	net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole associatedTeacherDegreeFinalProjectStudents {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation TeacherDegreeFinalProjectStudentStudent {
@@ -11415,7 +11415,7 @@ relation TeacherInstitutionWorkTimeExecutionPeriod {
 	net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime playsRole associatedTeacherInstitutionWorkTime {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation TeacherInstitutionWorkTimeTeacher {
@@ -11499,7 +11499,7 @@ relation TeacherServiceExecutionPeriod {
 	net.sourceforge.fenixedu.domain.teacher.TeacherService playsRole teacherServices {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation TeacherServiceTeacher {
@@ -11678,7 +11678,7 @@ relation TSDCourseExecutionPeriod {
 	net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse playsRole TSDCourses {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation TSDCourseTSDCurricularLoad {
@@ -11728,7 +11728,7 @@ relation TSDProcessExecutionPeriod {
 	net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess playsRole TSDProcesses {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriods {
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriods {
 		multiplicity *;
 	}
 }
@@ -12224,7 +12224,7 @@ relation CompetenceCourseInformationChangeRequestExecutionPeriod {
 	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 }
 
 relation CompetenceCourseInformationChangeRequestCompetenceCourse {
@@ -12242,7 +12242,7 @@ relation CompetenceCourseInformationChangeRequestRootDomainObject {
 }
 
 relation CompetenceCourseInformationExecutionPeriod {
-	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionSemester playsRole executionPeriod;
 	net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
 		multiplicity *;
 	}
@@ -12682,8 +12682,8 @@ relation CandidacyPeriodRootDomainObject {
 	}
 }
 
-relation CandidacyPeriodAcademicPeriod {
-	net.sourceforge.fenixedu.domain.AcademicPeriod playsRole academicPeriod;
+relation CandidacyPeriodExecutionInterval {
+	net.sourceforge.fenixedu.domain.ExecutionInterval playsRole executionInterval;
 	net.sourceforge.fenixedu.domain.period.CandidacyPeriod playsRole candidacyPeriods {
 		multiplicity *;
 	}

@@ -28,5 +28,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "ExecutionPeriod refactoring" executioPeriodRefactoring.sql
+
 
 execute "Change timestamps columns to datetime" alterTimestamps.sql

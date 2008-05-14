@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.curricularRules;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRuleParametersDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class CurricularRulesManager {
 
-    public static CurricularRule createCurricularRule(DegreeModule toApplyRule, ExecutionPeriod begin,
-	    ExecutionPeriod end, CurricularRuleType curricularRuleType,
+    public static CurricularRule createCurricularRule(DegreeModule toApplyRule, ExecutionSemester begin,
+	    ExecutionSemester end, CurricularRuleType curricularRuleType,
 	    CurricularRuleParametersDTO parametersDTO) {
 
 	switch (curricularRuleType) {
@@ -65,12 +65,12 @@ public class CurricularRulesManager {
     }
 
     public static void editCurricularRule(CurricularRule curricularRule,
-	    ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+	    ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
 	curricularRule.edit(beginExecutionPeriod, endExecutionPeriod);
     }
 
     private static CurricularRule createMinimumNumberOfCreditsToEnrol(DegreeModule toApplyRule,
-	    ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+	    ExecutionSemester begin, ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
 	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
@@ -80,7 +80,7 @@ public class CurricularRulesManager {
     }
     
     private static CurricularRule createEvenOdd(DegreeModule toApplyRule,
-	    ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+	    ExecutionSemester begin, ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
 	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
@@ -91,7 +91,7 @@ public class CurricularRulesManager {
     }
 
     private static CurricularRule createAnyCurricularCourse(DegreeModule toApplyRule,
-	    ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+	    ExecutionSemester begin, ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
 	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
@@ -107,7 +107,7 @@ public class CurricularRulesManager {
     }
 
     private static CurricularRule createExclusiveness(DegreeModule firstExclusiveDegreeModule,
-	    ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+	    ExecutionSemester begin, ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
 	final DegreeModule secondExclusiveDegreeModule = RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getSelectedDegreeModuleID());
@@ -124,7 +124,7 @@ public class CurricularRulesManager {
     }
 
     private static CurricularRule createRestrictionBetweenDegreeModules(DegreeModule toApplyRule,
-	    ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+	    ExecutionSemester begin, ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
 	final DegreeModule precedenceDegreeModule = RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getSelectedDegreeModuleID());
@@ -137,7 +137,7 @@ public class CurricularRulesManager {
     }
 
     private static CurricularRule createEnrolmentToBeApprovedByCoordinator(DegreeModule toApplyRule,
-	    ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+	    ExecutionSemester begin, ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
 	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
@@ -146,8 +146,8 @@ public class CurricularRulesManager {
 		contextCourseGroup, begin, end);
     }
 
-    private static CurricularRule createCreditsLimit(DegreeModule toApplyRule, ExecutionPeriod begin,
-	    ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createCreditsLimit(DegreeModule toApplyRule, ExecutionSemester begin,
+	    ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
 	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
@@ -157,7 +157,7 @@ public class CurricularRulesManager {
     }
 
     private static CurricularRule createDegreeModulesSelectionLimit(DegreeModule toApplyRule,
-	    ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+	    ExecutionSemester begin, ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
 	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance()
 		.readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
@@ -167,7 +167,7 @@ public class CurricularRulesManager {
     }
 
     private static CurricularRule createRestrictionEnroledDegreeModule(DegreeModule toApplyRule,
-	    ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+	    ExecutionSemester begin, ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
 	final DegreeModule enroledDegreeModule = RootDomainObject.getInstance().readDegreeModuleByOID(
 		parametersDTO.getSelectedDegreeModuleID());
@@ -180,7 +180,7 @@ public class CurricularRulesManager {
     }
 
     private static CurricularRule createRestrictionDoneDegreeModule(DegreeModule toApplyRule,
-	    ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO) {
+	    ExecutionSemester begin, ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
 	final DegreeModule done = RootDomainObject.getInstance().readDegreeModuleByOID(
 		parametersDTO.getSelectedDegreeModuleID());

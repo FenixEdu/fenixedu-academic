@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -32,9 +32,9 @@ public class PastEnrolmentsFilter extends Filtro {
             throw new NotAuthorizedFilterException("noAuthorization");
         }
 
-        ExecutionPeriod actualExecutionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-        ExecutionPeriod previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
-        ExecutionPeriod beforePreviousExecutionPeriod = previousExecutionPeriod
+        ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+        ExecutionSemester previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
+        ExecutionSemester beforePreviousExecutionPeriod = previousExecutionPeriod
                 .getPreviousExecutionPeriod();
 
         for (StudentCurricularPlan scp : registration.getStudentCurricularPlans()) {

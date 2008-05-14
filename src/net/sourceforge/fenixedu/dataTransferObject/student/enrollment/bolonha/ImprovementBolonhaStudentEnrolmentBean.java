@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha;
 
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.CurriculumModuleEnroledWrapperConverter;
@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 public class ImprovementBolonhaStudentEnrolmentBean extends BolonhaStudentEnrollmentBean {
     
     public ImprovementBolonhaStudentEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionPeriod executionPeriod) {
-	super(studentCurricularPlan, executionPeriod, 
-		new ImprovementStudentCurriculumGroupBean(studentCurricularPlan.getRoot(), executionPeriod), CurricularRuleLevel.IMPROVEMENT_ENROLMENT);
+	    final ExecutionSemester executionSemester) {
+	super(studentCurricularPlan, executionSemester, 
+		new ImprovementStudentCurriculumGroupBean(studentCurricularPlan.getRoot(), executionSemester), CurricularRuleLevel.IMPROVEMENT_ENROLMENT);
     }
     
     @Override

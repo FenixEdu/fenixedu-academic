@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.interfaces.HasExecutionPeriod;
+import net.sourceforge.fenixedu.domain.interfaces.HasExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -17,8 +17,8 @@ public class ExecutionDegreeForExecutionPeriodProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
 
-	final HasExecutionPeriod hasExecutionPeriod = (HasExecutionPeriod) source;
-	final ExecutionPeriod executionPeriod = hasExecutionPeriod.getExecutionPeriod();
+	final HasExecutionSemester hasExecutionSemester = (HasExecutionSemester) source;
+	final ExecutionSemester executionPeriod = hasExecutionSemester.getExecutionPeriod();
 	if (executionPeriod != null) {
 	    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
 	    executionDegrees.addAll(executionYear.getExecutionDegreesSet());
@@ -30,7 +30,7 @@ public class ExecutionDegreeForExecutionPeriodProvider implements DataProvider {
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

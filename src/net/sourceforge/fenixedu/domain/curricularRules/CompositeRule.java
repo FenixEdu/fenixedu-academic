@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleLevel;
@@ -54,27 +54,27 @@ public abstract class CompositeRule extends CompositeRule_Base {
 	}
     }
 
-    private ExecutionPeriod getEndExecutionPeriod(CurricularRule[] curricularRules) {
-	ExecutionPeriod executionPeriod = null;
+    private ExecutionSemester getEndExecutionPeriod(CurricularRule[] curricularRules) {
+	ExecutionSemester executionSemester = null;
 	for (CurricularRule rule : curricularRules) {
 	    if (rule.getEnd() == null) {
 		return null;
 	    }
-	    if (executionPeriod == null || rule.getEnd().isAfter(executionPeriod)) {
-		executionPeriod = rule.getEnd();
+	    if (executionSemester == null || rule.getEnd().isAfter(executionSemester)) {
+		executionSemester = rule.getEnd();
 	    }
 	}
-	return executionPeriod;
+	return executionSemester;
     }
 
-    private ExecutionPeriod getBeginExecutionPeriod(CurricularRule... curricularRules) {
-	ExecutionPeriod executionPeriod = null;
+    private ExecutionSemester getBeginExecutionPeriod(CurricularRule... curricularRules) {
+	ExecutionSemester executionSemester = null;
 	for (CurricularRule rule : curricularRules) {
-	    if (executionPeriod == null || rule.getBegin().isBefore(executionPeriod)) {
-		executionPeriod = rule.getBegin();
+	    if (executionSemester == null || rule.getBegin().isBefore(executionSemester)) {
+		executionSemester = rule.getBegin();
 	    }
 	}
-	return executionPeriod;
+	return executionSemester;
     }
 
     private boolean haveAllSameDegreeModule(CurricularRule... curricularRules) {

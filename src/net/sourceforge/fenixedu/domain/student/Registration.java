@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
@@ -159,17 +159,17 @@ public class Registration extends Registration_Base {
 	this(person, null, agreement, studentCandidacy, degreeCurricularPlan, executionYear);
 
 	final YearMonthDay startDay;
-	final ExecutionPeriod executionPeriod;
+	final ExecutionSemester executionSemester;
 	if (executionYear == null || executionYear.isCurrent()) {
 	    startDay = new YearMonthDay();
-	    executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
+	    executionSemester = ExecutionSemester.readActualExecutionPeriod();
 	} else {
 	    startDay = executionYear.getBeginDateYearMonthDay();
-	    executionPeriod = executionYear.getFirstExecutionPeriod();
+	    executionSemester = executionYear.getFirstExecutionPeriod();
 	}
 
 	final StudentCurricularPlan scp = StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
-		startDay, executionPeriod, cycleType);
+		startDay, executionSemester, cycleType);
 
 	EventGenerator.generateNecessaryEvents(scp, person, executionYear);
     }
@@ -320,10 +320,10 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
-    final public List<WrittenEvaluation> getWrittenEvaluations(final ExecutionPeriod executionPeriod) {
+    final public List<WrittenEvaluation> getWrittenEvaluations(final ExecutionSemester executionSemester) {
 	final List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.isFor(executionPeriod)) {
+	    if (attend.isFor(executionSemester)) {
 		for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluations()) {
 		    if (evaluation instanceof WrittenEvaluation && !result.contains(evaluation)) {
 			result.add((WrittenEvaluation) evaluation);
@@ -334,21 +334,21 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public List<Exam> getEnroledExams(final ExecutionPeriod executionPeriod) {
+    final public List<Exam> getEnroledExams(final ExecutionSemester executionSemester) {
 	final List<Exam> result = new ArrayList<Exam>();
 	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolments()) {
 	    if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof Exam
-		    && writtenEvaluationEnrolment.isForExecutionPeriod(executionPeriod)) {
+		    && writtenEvaluationEnrolment.isForExecutionPeriod(executionSemester)) {
 		result.add((Exam) writtenEvaluationEnrolment.getWrittenEvaluation());
 	    }
 	}
 	return result;
     }
 
-    final public List<Exam> getUnenroledExams(final ExecutionPeriod executionPeriod) {
+    final public List<Exam> getUnenroledExams(final ExecutionSemester executionSemester) {
 	final List<Exam> result = new ArrayList<Exam>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.isFor(executionPeriod)) {
+	    if (attend.isFor(executionSemester)) {
 		for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluations()) {
 		    if (evaluation instanceof Exam && !this.isEnroledIn(evaluation)) {
 			result.add((Exam) evaluation);
@@ -359,21 +359,21 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public List<WrittenTest> getEnroledWrittenTests(final ExecutionPeriod executionPeriod) {
+    final public List<WrittenTest> getEnroledWrittenTests(final ExecutionSemester executionSemester) {
 	final List<WrittenTest> result = new ArrayList<WrittenTest>();
 	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolments()) {
 	    if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof WrittenTest
-		    && writtenEvaluationEnrolment.isForExecutionPeriod(executionPeriod)) {
+		    && writtenEvaluationEnrolment.isForExecutionPeriod(executionSemester)) {
 		result.add((WrittenTest) writtenEvaluationEnrolment.getWrittenEvaluation());
 	    }
 	}
 	return result;
     }
 
-    final public List<WrittenTest> getUnenroledWrittenTests(final ExecutionPeriod executionPeriod) {
+    final public List<WrittenTest> getUnenroledWrittenTests(final ExecutionSemester executionSemester) {
 	final List<WrittenTest> result = new ArrayList<WrittenTest>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+	    if (attend.getExecutionCourse().getExecutionPeriod() == executionSemester) {
 		for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluations()) {
 		    if (evaluation instanceof WrittenTest && !this.isEnroledIn(evaluation)) {
 			result.add((WrittenTest) evaluation);
@@ -384,10 +384,10 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    public List<Project> getProjects(final ExecutionPeriod executionPeriod) {
+    public List<Project> getProjects(final ExecutionSemester executionSemester) {
 	final List<Project> result = new ArrayList<Project>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.isFor(executionPeriod)) {
+	    if (attend.isFor(executionSemester)) {
 		for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluations()) {
 		    if (evaluation instanceof Project) {
 			result.add((Project) evaluation);
@@ -782,8 +782,8 @@ public class Registration extends Registration_Base {
 	return getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
     }
 
-    final public Collection<Enrolment> getEnrolments(final ExecutionPeriod executionPeriod) {
-	return getStudentCurricularPlan(executionPeriod.getExecutionYear()).getEnrolmentsByExecutionPeriod(executionPeriod);
+    final public Collection<Enrolment> getEnrolments(final ExecutionSemester executionSemester) {
+	return getStudentCurricularPlan(executionSemester.getExecutionYear()).getEnrolmentsByExecutionPeriod(executionSemester);
     }
 
     final public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
@@ -947,10 +947,10 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
-    final public boolean hasAnyEnrolmentsIn(final ExecutionPeriod executionPeriod) {
+    final public boolean hasAnyEnrolmentsIn(final ExecutionSemester executionSemester) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-		if (enrolment.getExecutionPeriod() == executionPeriod) {
+		if (enrolment.getExecutionPeriod() == executionSemester) {
 		    return true;
 		}
 	    }
@@ -1048,8 +1048,8 @@ public class Registration extends Registration_Base {
 	return getSortedEnrolmentsExecutionYears().last();
     }
 
-    final public Collection<ExecutionPeriod> getEnrolmentsExecutionPeriods() {
-	final Collection<ExecutionPeriod> result = new ArrayList<ExecutionPeriod>();
+    final public Collection<ExecutionSemester> getEnrolmentsExecutionPeriods() {
+	final Collection<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
 
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
@@ -1060,9 +1060,9 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public SortedSet<ExecutionPeriod> getSortedEnrolmentsExecutionPeriods() {
-	final SortedSet<ExecutionPeriod> result = new TreeSet<ExecutionPeriod>(
-		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+    final public SortedSet<ExecutionSemester> getSortedEnrolmentsExecutionPeriods() {
+	final SortedSet<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
+		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
 	result.addAll(getEnrolmentsExecutionPeriods());
 
 	return result;
@@ -1137,10 +1137,10 @@ public class Registration extends Registration_Base {
 	return attends;
     }
 
-    public List<Attends> readAttendsByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public List<Attends> readAttendsByExecutionPeriod(final ExecutionSemester executionSemester) {
 	final List<Attends> attends = new ArrayList<Attends>();
 	for (final Attends attend : this.getAssociatedAttends()) {
-	    if (attend.isFor(executionPeriod)) {
+	    if (attend.isFor(executionSemester)) {
 		attends.add(attend);
 	    }
 	}
@@ -1459,16 +1459,16 @@ public class Registration extends Registration_Base {
 
     // Improvement
 
-    final public List<Enrolment> getEnrolmentsToImprov(ExecutionPeriod executionPeriod) {
+    final public List<Enrolment> getEnrolmentsToImprov(ExecutionSemester executionSemester) {
 
-	if (executionPeriod == null) {
+	if (executionSemester == null) {
 	    throw new DomainException("error.executionPeriod.notExist");
 	}
 
 	final List<Enrolment> enrolmentsToImprov = new ArrayList<Enrolment>();
 	for (final StudentCurricularPlan scp : getStudentCurricularPlans()) {
 	    if (!scp.isBoxStructure() && scp.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
-		enrolmentsToImprov.addAll(scp.getEnrolmentsToImprov(executionPeriod));
+		enrolmentsToImprov.addAll(scp.getEnrolmentsToImprov(executionSemester));
 	    }
 	}
 	return enrolmentsToImprov;
@@ -1494,10 +1494,10 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionPeriod executionPeriod) {
+    final public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionSemester executionSemester) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
-	    if (attends.isFor(executionPeriod)) {
+	    if (attends.isFor(executionSemester)) {
 		result.add(attends.getExecutionCourse());
 	    }
 	}
@@ -1515,10 +1515,10 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public List<Attends> getAttendsForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    final public List<Attends> getAttendsForExecutionPeriod(final ExecutionSemester executionSemester) {
 	final List<Attends> result = new ArrayList<Attends>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
-	    if (attends.isFor(executionPeriod)) {
+	    if (attends.isFor(executionSemester)) {
 		result.add(attends);
 	    }
 	}
@@ -1535,10 +1535,10 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public List<Shift> getShiftsFor(final ExecutionPeriod executionPeriod) {
+    final public List<Shift> getShiftsFor(final ExecutionSemester executionSemester) {
 	final List<Shift> result = new ArrayList<Shift>();
 	for (final Shift shift : getShiftsSet()) {
-	    if (shift.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+	    if (shift.getExecutionCourse().getExecutionPeriod() == executionSemester) {
 		result.add(shift);
 	    }
 	}
@@ -1555,25 +1555,25 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    private int countNumberOfDistinctExecutionCoursesOfShiftsFor(final ExecutionPeriod executionPeriod) {
+    private int countNumberOfDistinctExecutionCoursesOfShiftsFor(final ExecutionSemester executionSemester) {
 	final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
 	for (final Shift shift : getShiftsSet()) {
-	    if (shift.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
+	    if (shift.getExecutionCourse().getExecutionPeriod() == executionSemester) {
 		result.add(shift.getExecutionCourse());
 	    }
 	}
 	return result.size();
     }
 
-    final public Integer getNumberOfExecutionCoursesWithEnroledShiftsFor(final ExecutionPeriod executionPeriod) {
-	return getAttendingExecutionCoursesFor(executionPeriod).size()
-		- countNumberOfDistinctExecutionCoursesOfShiftsFor(executionPeriod);
+    final public Integer getNumberOfExecutionCoursesWithEnroledShiftsFor(final ExecutionSemester executionSemester) {
+	return getAttendingExecutionCoursesFor(executionSemester).size()
+		- countNumberOfDistinctExecutionCoursesOfShiftsFor(executionSemester);
     }
 
-    final public Integer getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(final ExecutionPeriod executionPeriod) {
+    final public Integer getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(final ExecutionSemester executionSemester) {
 	int result = 0;
-	final List<Shift> enroledShifts = getShiftsFor(executionPeriod);
-	for (final ExecutionCourse executionCourse : getAttendingExecutionCoursesFor(executionPeriod)) {
+	final List<Shift> enroledShifts = getShiftsFor(executionSemester);
+	for (final ExecutionCourse executionCourse : getAttendingExecutionCoursesFor(executionSemester)) {
 	    for (final ShiftType shiftType : executionCourse.getOldShiftTypesToEnrol()) {
 		if (!enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(enroledShifts, executionCourse, shiftType)) {
 		    result++;
@@ -1645,10 +1645,10 @@ public class Registration extends Registration_Base {
     }
 
     private Enrolment findEnrolment(final StudentCurricularPlan studentCurricularPlan, final ExecutionCourse executionCourse,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
 	    final Enrolment enrolment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,
-		    executionPeriod);
+		    executionSemester);
 	    if (enrolment != null) {
 		return enrolment;
 	    }
@@ -1887,21 +1887,21 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    final public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionPeriod executionPeriod) {
+    final public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionSemester executionSemester) {
 	final Set<RegistrationStateType> result = new HashSet<RegistrationStateType>();
 
-	for (final RegistrationState registrationState : getRegistrationStates(executionPeriod)) {
+	for (final RegistrationState registrationState : getRegistrationStates(executionSemester)) {
 	    result.add(registrationState.getStateType());
 	}
 
 	return result;
     }
 
-    public boolean isInRegisteredState(ExecutionPeriod executionPeriod) {
-	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionPeriod);
+    public boolean isInRegisteredState(ExecutionSemester executionSemester) {
+	final Set<RegistrationStateType> registrationStatesTypes = getRegistrationStatesTypes(executionSemester);
 
 	return registrationStatesTypes.contains(RegistrationStateType.REGISTERED)
-		|| registrationStatesTypes.contains(RegistrationStateType.MOBILITY) || hasAnyEnrolmentsIn(executionPeriod);
+		|| registrationStatesTypes.contains(RegistrationStateType.MOBILITY) || hasAnyEnrolmentsIn(executionSemester);
     }
 
     final public boolean isInRegisteredState(ExecutionYear executionYear) {
@@ -2003,8 +2003,8 @@ public class Registration extends Registration_Base {
 		.getEndDateYearMonthDay().toDateTimeAtMidnight());
     }
 
-    public Set<RegistrationState> getRegistrationStates(final ExecutionPeriod executionPeriod) {
-	return getRegistrationStates(executionPeriod.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionPeriod
+    public Set<RegistrationState> getRegistrationStates(final ExecutionSemester executionSemester) {
+	return getRegistrationStates(executionSemester.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionSemester
 		.getEndDateYearMonthDay().toDateTimeAtMidnight());
     }
 
@@ -2399,8 +2399,8 @@ public class Registration extends Registration_Base {
 		.getEndDateYearMonthDay());
     }
 
-    final public StudentCurricularPlan getStudentCurricularPlan(final ExecutionPeriod executionPeriod) {
-	return executionPeriod == null ? getStudentCurricularPlan(new YearMonthDay()) : getStudentCurricularPlan(executionPeriod
+    final public StudentCurricularPlan getStudentCurricularPlan(final ExecutionSemester executionSemester) {
+	return executionSemester == null ? getStudentCurricularPlan(new YearMonthDay()) : getStudentCurricularPlan(executionSemester
 		.getEndDateYearMonthDay());
     }
 
@@ -2458,8 +2458,8 @@ public class Registration extends Registration_Base {
 	return getStartExecutionYear().isBefore(ExecutionYear.readFirstBolonhaExecutionYear());
     }
 
-    final public boolean hasStudentCurricularPlanInExecutionPeriod(ExecutionPeriod executionPeriod) {
-	return getStudentCurricularPlan(executionPeriod) != null;
+    final public boolean hasStudentCurricularPlanInExecutionPeriod(ExecutionSemester executionSemester) {
+	return getStudentCurricularPlan(executionSemester) != null;
     }
 
     final public boolean isCustomEnrolmentModel(final ExecutionYear executionYear) {
@@ -2891,9 +2891,9 @@ public class Registration extends Registration_Base {
     final public boolean hasInquiriesToRespond() {
 	for (final Attends attends : getAssociatedAttendsSet()) {
 	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
-	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+	    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 	    if (executionCourse.getAvailableForInquiries().booleanValue()
-		    && executionPeriod.getState().equals(PeriodState.CURRENT) && !hasInquiryResponseFor(executionCourse)) {
+		    && executionSemester.getState().equals(PeriodState.CURRENT) && !hasInquiryResponseFor(executionCourse)) {
 		return true;
 	    }
 	}
@@ -2920,7 +2920,7 @@ public class Registration extends Registration_Base {
 
     }
 
-    final public ExternalEnrolment findExternalEnrolment(Unit university, ExecutionPeriod period, String code) {
+    final public ExternalEnrolment findExternalEnrolment(Unit university, ExecutionSemester period, String code) {
 	for (final ExternalEnrolment externalEnrolment : this.getExternalEnrolments()) {
 	    if (externalEnrolment.getExecutionPeriod() == period
 		    && externalEnrolment.getExternalCurricularCourse().getCode().equals(code)
@@ -2997,8 +2997,8 @@ public class Registration extends Registration_Base {
 	    final Registration newRegistration = getTargetTransitionRegistrations().iterator().next();
 	    for (final Attends attends : getAssociatedAttendsSet()) {
 		final ExecutionCourse executionCourse = attends.getExecutionCourse();
-		final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-		if (executionPeriod.isCurrent()) {
+		final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+		if (executionSemester.isCurrent()) {
 		    transferAttends(attends, newRegistration);
 		}
 	    }
@@ -3008,8 +3008,8 @@ public class Registration extends Registration_Base {
     private void transferCurrentExecutionPeriodAttends(final Registration newRegistration) {
 	for (final Attends attends : getAssociatedAttendsSet()) {
 	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
-	    final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-	    if (executionPeriod.isCurrent()) {
+	    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+	    if (executionSemester.isCurrent()) {
 		for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
 		    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
 		    if (newRegistration.getLastStudentCurricularPlan().getDegreeCurricularPlan() == degreeCurricularPlan) {
@@ -3089,20 +3089,20 @@ public class Registration extends Registration_Base {
 	super.setConclusionProcessResponsible(null);
     }
 
-    public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionPeriod executionPeriod) {
+    public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionSemester executionSemester) {
 	final Collection<EnrolmentLog> res = new HashSet<EnrolmentLog>();
 	for (EnrolmentLog enrolmentLog : getEnrolmentLogsSet()) {
-	    if (enrolmentLog.getExecutionPeriod() == executionPeriod) {
+	    if (enrolmentLog.getExecutionPeriod() == executionSemester) {
 		res.add(enrolmentLog);
 	    }
 	}
 	return res;
     }
 
-    public boolean containsEnrolmentOutOfPeriodEventFor(ExecutionPeriod executionPeriod) {
+    public boolean containsEnrolmentOutOfPeriodEventFor(ExecutionSemester executionSemester) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
 	    for (final EnrolmentOutOfPeriodEvent event : studentCurricularPlan.getEnrolmentOutOfPeriodEvents()) {
-		if (event.getExecutionPeriod() == executionPeriod) {
+		if (event.getExecutionPeriod() == executionSemester) {
 		    return true;
 		}
 	    }

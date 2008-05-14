@@ -73,7 +73,7 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     }
  
     @Override
-    public ExecutionPeriod getExecutionPeriod() {
+    public ExecutionSemester getExecutionPeriod() {
         return getSiteExecutionCourse().getExecutionPeriod();
     }
 
@@ -149,12 +149,12 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
 
     @Override
     public MultiLanguageString getName() {
-	final ExecutionPeriod executionPeriod = getSiteExecutionCourse().getExecutionPeriod();
+	final ExecutionSemester executionSemester = getSiteExecutionCourse().getExecutionPeriod();
 	return MultiLanguageString.i18n()
 		.add(
 			"pt",
 			new Formatter().format("%s/%s/%d-semestre", getSiteExecutionCourse().getSigla(),
-				executionPeriod.getExecutionYear().getYear().replace('/', '-'), executionPeriod.getSemester())
+				executionSemester.getExecutionYear().getYear().replace('/', '-'), executionSemester.getSemester())
 				.toString()).finish();
     }
 

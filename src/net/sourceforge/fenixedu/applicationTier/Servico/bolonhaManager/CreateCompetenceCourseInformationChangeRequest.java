@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean;
@@ -13,7 +13,7 @@ public class CreateCompetenceCourseInformationChangeRequest extends Service {
     public void run(CompetenceCourseInformationRequestBean bean, CompetenceCourseLoadBean loadBean, Person requestor) {
 
 	CompetenceCourse course = bean.getCompetenceCourse();
-	ExecutionPeriod period = bean.getExecutionPeriod();
+	ExecutionSemester period = bean.getExecutionPeriod();
 	CompetenceCourseInformationChangeRequest request = course.getCompetenceCourseInformationChangeRequests(period);
 	if (request != null) {
 	    request.delete();

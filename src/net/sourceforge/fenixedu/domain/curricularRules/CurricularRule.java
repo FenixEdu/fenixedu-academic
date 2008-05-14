@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.curricularRules;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -27,7 +27,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     }
 
     protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
-	    final ExecutionPeriod begin, final ExecutionPeriod end, final CurricularRuleType type) {
+	    final ExecutionSemester begin, final ExecutionSemester end, final CurricularRuleType type) {
 
 	// TODO assure only one rule of a certain type for a given execution period
 	
@@ -43,7 +43,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     }
 
     protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
-	    final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final ExecutionSemester begin, final ExecutionSemester end) {
 
 	checkParameters(degreeModuleToApplyRule, begin);
 	checkExecutionPeriods(begin, end);
@@ -53,7 +53,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	setEnd(end);
     }
 
-    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin) {
+    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
 	if (degreeModuleToApplyRule == null || begin == null) {
 	    throw new DomainException("curricular.rule.invalid.parameters");
 	}
@@ -62,7 +62,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	}
     }
 
-    protected void edit(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+    protected void edit(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
 	checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
 	setBegin(beginExecutionPeriod);
 	setEnd(endExecutionPeriod);
@@ -101,12 +101,12 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     }
 
     @Override
-    public ExecutionPeriod getBegin() {
+    public ExecutionSemester getBegin() {
 	return belongsToCompositeRule() ? getParentCompositeRule().getBegin() : super.getBegin();
     }
 
     @Override
-    public ExecutionPeriod getEnd() {
+    public ExecutionSemester getEnd() {
 	return belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
     }
 
@@ -121,13 +121,13 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	return belongsToCompositeRule() ? getParentCompositeRule().getContextCourseGroup() : super.getContextCourseGroup();
     }
 
-    public boolean isValid(ExecutionPeriod executionPeriod) {
-	return (getBegin().isBeforeOrEquals(executionPeriod) && (getEnd() == null || getEnd().isAfterOrEquals(executionPeriod)));
+    public boolean isValid(ExecutionSemester executionSemester) {
+	return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd().isAfterOrEquals(executionSemester)));
     }
 
     public boolean isValid(ExecutionYear executionYear) {
-	for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-	    if (isValid(executionPeriod)) {
+	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+	    if (isValid(executionSemester)) {
 		return true;
 	    }
 	}
@@ -138,7 +138,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
         return !hasEnd() || getEnd().containsDay(new YearMonthDay());
     }
 
-    protected void checkExecutionPeriods(ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+    protected void checkExecutionPeriods(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
 	if (endExecutionPeriod != null && beginExecutionPeriod.isAfter(endExecutionPeriod)) {
 	    throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
 	}

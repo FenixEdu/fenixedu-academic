@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDCourseDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TeacherServiceDistributionDTOEntry;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
@@ -121,10 +121,10 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 	TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
 	TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
 
-	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>(tsdProcess.getExecutionPeriods());
+	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>(tsdProcess.getExecutionPeriods());
 	Collections.sort(executionPeriodList, new BeanComparator("semester"));
-	ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm, null);
-	List<ExecutionPeriod> selectedExecutionPeriodList = new ArrayList<ExecutionPeriod>();
+	ExecutionSemester selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm, null);
+	List<ExecutionSemester> selectedExecutionPeriodList = new ArrayList<ExecutionSemester>();
 	if (selectedExecutionPeriod == null) {
 	    selectedExecutionPeriodList.addAll(executionPeriodList);
 	} else {
@@ -215,10 +215,10 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 	TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
 	TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
 
-	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>(tsdProcess.getExecutionPeriods());
+	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>(tsdProcess.getExecutionPeriods());
 	Collections.sort(executionPeriodList, new BeanComparator("semester"));
-	ExecutionPeriod selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm, null);
-	List<ExecutionPeriod> selectedExecutionPeriodList = new ArrayList<ExecutionPeriod>();
+	ExecutionSemester selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm, null);
+	List<ExecutionSemester> selectedExecutionPeriodList = new ArrayList<ExecutionSemester>();
 	if (selectedExecutionPeriod == null) {
 	    selectedExecutionPeriodList.addAll(executionPeriodList);
 	} else {
@@ -265,9 +265,9 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 	TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
 
 	Integer executionPeriodId = new Integer(request.getParameter("executionPeriod"));
-	ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodId);
+	ExecutionSemester selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
-	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
+	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 	if (selectedExecutionPeriod != null) {
 	    executionPeriodList.add(selectedExecutionPeriod);
 	} else {
@@ -388,11 +388,11 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")
     private List<TSDTeacherDTOEntry> getTSDTeacherDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
-	    TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionPeriod executionPeriod)
+	    TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
 	    throws FenixFilterException, FenixServiceException {
 	Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
 	tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(), new Pair<Integer, Integer>(
-		selectedTeacherServiceDistribution.getIdInternal(), (executionPeriod == null) ? 0 : executionPeriod
+		selectedTeacherServiceDistribution.getIdInternal(), (executionSemester == null) ? 0 : executionSemester
 			.getIdInternal()));
 
 	return (List<TSDTeacherDTOEntry>) ServiceUtils.executeService(userView, "ReadTSDTeachersFromTSDProcesses",
@@ -401,11 +401,11 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")
     private List<TSDCourseDTOEntry> getTSDCourseDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
-	    TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionPeriod executionPeriod)
+	    TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
 	    throws FenixFilterException, FenixServiceException {
 	Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
 	tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(), new Pair<Integer, Integer>(
-		selectedTeacherServiceDistribution.getIdInternal(), (executionPeriod == null) ? 0 : executionPeriod
+		selectedTeacherServiceDistribution.getIdInternal(), (executionSemester == null) ? 0 : executionSemester
 			.getIdInternal()));
 
 	return (List<TSDCourseDTOEntry>) ServiceUtils.executeService(userView, "ReadTSDCoursesFromTSDProcesses",
@@ -424,10 +424,10 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 	request.setAttribute("viewStudentsEnrolmentsPerShift", viewStudentsEnrolmentsPerShift);
     }
 
-    private ExecutionPeriod getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm,
-	    List<ExecutionPeriod> executionPeriodList) throws FenixServiceException, FenixFilterException {
+    private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm,
+	    List<ExecutionSemester> executionPeriodList) throws FenixServiceException, FenixFilterException {
 	Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
-	ExecutionPeriod selectedExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(selectedExecutionPeriodId);
+	ExecutionSemester selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(selectedExecutionPeriodId);
 
 	if (selectedExecutionPeriod == null) {
 	    if (executionPeriodList != null && executionPeriodList.size() > 0) {

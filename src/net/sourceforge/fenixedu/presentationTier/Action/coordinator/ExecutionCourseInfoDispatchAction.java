@@ -36,198 +36,187 @@ import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *  
+ * 
  */
 public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareChoice(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
-        
-        Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
+    public ActionForward prepareChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	HttpSession session = request.getSession(false);
+	IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
+	Integer degreeCurricularPlanID = null;
+	if (request.getParameter("degreeCurricularPlanID") != null) {
+	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
 
-        Object argsReadExecutionPeriods[] = { infoExecutionDegree.getInfoExecutionYear().getIdInternal() };
-        List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadExecutionPeriodsByExecutionYear", argsReadExecutionPeriods);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
-        chainComparator.addComparator(new BeanComparator("semester"));
-        Collections.sort(executionPeriods, chainComparator);
+	Object argsReadExecutionPeriods[] = { infoExecutionDegree.getInfoExecutionYear().getIdInternal() };
+	List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView,
+		"ReadExecutionPeriodsByExecutionYear", argsReadExecutionPeriods);
 
-        List executionPeriodsLabelValueList = new ArrayList();
-        for (int i = 0; i < executionPeriods.size(); i++) {
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
-            executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
-                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod
-                    .getIdInternal().toString()));
-        }
+	ComparatorChain chainComparator = new ComparatorChain();
+	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+	chainComparator.addComparator(new BeanComparator("semester"));
+	Collections.sort(executionPeriods, chainComparator);
 
-        request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
-        
-        /* Obtain a list of curricular years */
-        List labelListOfCurricularYears = ContextUtils.getLabelListOfOptionalCurricularYears();
-        request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
+	List executionPeriodsLabelValueList = new ArrayList();
+	for (int i = 0; i < executionPeriods.size(); i++) {
+	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
+	    executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
+		    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal().toString()));
+	}
 
-        return mapping.findForward("ReadyToSearch");
+	request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+
+	/* Obtain a list of curricular years */
+	List labelListOfCurricularYears = ContextUtils.getLabelListOfOptionalCurricularYears();
+	request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
+
+	return mapping.findForward("ReadyToSearch");
     }
 
-    
-    public ActionForward prepareChoiceForCoordinator(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = getUserView(request);
-        
-        Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
+    public ActionForward prepareChoiceForCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	IUserView userView = getUserView(request);
 
-        Object argsReadExecutionPeriods[] = {degreeCurricularPlanID};
-        List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadExecutionPeriodsByDegreeCurricularPlan", argsReadExecutionPeriods);
+	Integer degreeCurricularPlanID = null;
+	if (request.getParameter("degreeCurricularPlanID") != null) {
+	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
 
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
-        chainComparator.addComparator(new BeanComparator("semester"));
-        Collections.sort(executionPeriods, chainComparator);
+	Object argsReadExecutionPeriods[] = { degreeCurricularPlanID };
+	List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView,
+		"ReadExecutionPeriodsByDegreeCurricularPlan", argsReadExecutionPeriods);
 
-        List executionPeriodsLabelValueList = new ArrayList();
-        for (int i = 0; i < executionPeriods.size(); i++) {
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
-            executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
-                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod
-                    .getIdInternal().toString()));
-        }
+	ComparatorChain chainComparator = new ComparatorChain();
+	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+	chainComparator.addComparator(new BeanComparator("semester"));
+	Collections.sort(executionPeriods, chainComparator);
 
-        request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
-        
-        /* Obtain a list of curricular years */
-        List labelListOfCurricularYears = ContextUtils.getLabelListOfOptionalCurricularYears();
-        request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
+	List executionPeriodsLabelValueList = new ArrayList();
+	for (int i = 0; i < executionPeriods.size(); i++) {
+	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
+	    executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
+		    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal().toString()));
+	}
 
-        return mapping.findForward("ReadyToSearch");
-    }
-    
-    
-    
-    public ActionForward getExecutionCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+	request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 
-        HttpSession session = request.getSession(false);
+	/* Obtain a list of curricular years */
+	List labelListOfCurricularYears = ContextUtils.getLabelListOfOptionalCurricularYears();
+	request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
 
-        IUserView userView = getUserView(request);
-
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-                .getAttribute(SessionConstants.MASTER_DEGREE);
-
-        DynaActionForm searchExecutionCourse = (DynaActionForm) form;
-        
-        Integer degreeCurricularPlanID = (Integer) searchExecutionCourse.get("degreeCurricularPlanID");
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-
-        // Mandatory Selection
-        Integer executionPeriodOID = null;
-        if (((String) searchExecutionCourse.get("executionPeriodOID")) != null) {
-            executionPeriodOID = new Integer((String) searchExecutionCourse.get("executionPeriodOID"));
-        } else {
-            executionPeriodOID = new Integer(request.getParameter("executionPeriodOID"));
-        }
-        request.setAttribute("executionPeriodOID", executionPeriodOID.toString());
-
-        // Optional Selection
-        Integer curricularYearOID = null;
-        InfoCurricularYear infoCurricularYear = null;
-        if (searchExecutionCourse.get("curricularYearOID") != null
-                && !searchExecutionCourse.get("curricularYearOID").equals("")
-                && !searchExecutionCourse.get("curricularYearOID").equals("null")) {
-            curricularYearOID = new Integer((String) searchExecutionCourse.get("curricularYearOID"));
-            infoCurricularYear = new InfoCurricularYear(RootDomainObject.getInstance().readCurricularYearByOID(curricularYearOID));
-            request.setAttribute("curricularYearOID", curricularYearOID);
-        } else {
-            if ((request.getParameter("curricularYearOID") != null)
-                    && (request.getParameter("curricularYearOID").length() != 0)
-                    && (!searchExecutionCourse.get("curricularYearOID").equals("null"))) {
-            	infoCurricularYear = new InfoCurricularYear(RootDomainObject.getInstance().readCurricularYearByOID(new Integer(request.getParameter("curricularYearOID"))));
-            }
-        }
-
-        // Optional Selection
-        String executionCourseName = (String) searchExecutionCourse.get("executionCourseName");
-        if ((executionCourseName != null) && (executionCourseName.length() == 0)) {
-            executionCourseName = request.getParameter("executionCourseName");
-        }
-        request.setAttribute("executionCourseName", executionCourseName);
-
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(RootDomainObject.getInstance().readExecutionPeriodByOID(executionPeriodOID));
-
-        if ((executionCourseName != null) && (executionCourseName.length() == 0)) {
-            executionCourseName = null;
-        }
-
-        Object args[] = { infoExecutionPeriod, infoExecutionDegree, infoCurricularYear,
-                executionCourseName };
-
-        List infoExecutionCourses = null;
-        try {
-            infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(userView,
-                    "SearchExecutionCourses", args);
-        } catch (NotAuthorizedFilterException e) {
-            return mapping.findForward("notAuthorized");
-        }
-        
-        if (infoExecutionCourses != null) {
-            sortList(request, infoExecutionCourses);
-            request.setAttribute(SessionConstants.LIST_INFOEXECUTIONCOURSE, infoExecutionCourses);
-        }
-
-        return mapping.findForward("ShowCurricularCourseList");
+	return mapping.findForward("ReadyToSearch");
     }
 
-    public ActionForward showOccupancyLevels(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward getExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
-        
-        Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
+	HttpSession session = request.getSession(false);
 
-        Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
+	IUserView userView = getUserView(request);
 
-        InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory
-                .executeService(userView, "ReadShiftsByExecutionCourseID", args);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
-        arranjeShifts(infoExecutionCourseOccupancy);
+	DynaActionForm searchExecutionCourse = (DynaActionForm) form;
 
-        request.setAttribute("infoExecutionCourseOccupancy", infoExecutionCourseOccupancy);
-        return mapping.findForward("showOccupancy");
+	Integer degreeCurricularPlanID = (Integer) searchExecutionCourse.get("degreeCurricularPlanID");
+	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+
+	// Mandatory Selection
+	Integer executionPeriodOID = null;
+	if (((String) searchExecutionCourse.get("executionPeriodOID")) != null) {
+	    executionPeriodOID = new Integer((String) searchExecutionCourse.get("executionPeriodOID"));
+	} else {
+	    executionPeriodOID = new Integer(request.getParameter("executionPeriodOID"));
+	}
+	request.setAttribute("executionPeriodOID", executionPeriodOID.toString());
+
+	// Optional Selection
+	Integer curricularYearOID = null;
+	InfoCurricularYear infoCurricularYear = null;
+	if (searchExecutionCourse.get("curricularYearOID") != null && !searchExecutionCourse.get("curricularYearOID").equals("")
+		&& !searchExecutionCourse.get("curricularYearOID").equals("null")) {
+	    curricularYearOID = new Integer((String) searchExecutionCourse.get("curricularYearOID"));
+	    infoCurricularYear = new InfoCurricularYear(RootDomainObject.getInstance().readCurricularYearByOID(curricularYearOID));
+	    request.setAttribute("curricularYearOID", curricularYearOID);
+	} else {
+	    if ((request.getParameter("curricularYearOID") != null) && (request.getParameter("curricularYearOID").length() != 0)
+		    && (!searchExecutionCourse.get("curricularYearOID").equals("null"))) {
+		infoCurricularYear = new InfoCurricularYear(RootDomainObject.getInstance().readCurricularYearByOID(
+			new Integer(request.getParameter("curricularYearOID"))));
+	    }
+	}
+
+	// Optional Selection
+	String executionCourseName = (String) searchExecutionCourse.get("executionCourseName");
+	if ((executionCourseName != null) && (executionCourseName.length() == 0)) {
+	    executionCourseName = request.getParameter("executionCourseName");
+	}
+	request.setAttribute("executionCourseName", executionCourseName);
+
+	InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(RootDomainObject.getInstance()
+		.readExecutionSemesterByOID(executionPeriodOID));
+
+	if ((executionCourseName != null) && (executionCourseName.length() == 0)) {
+	    executionCourseName = null;
+	}
+
+	Object args[] = { infoExecutionPeriod, infoExecutionDegree, infoCurricularYear, executionCourseName };
+
+	List infoExecutionCourses = null;
+	try {
+	    infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(userView, "SearchExecutionCourses", args);
+	} catch (NotAuthorizedFilterException e) {
+	    return mapping.findForward("notAuthorized");
+	}
+
+	if (infoExecutionCourses != null) {
+	    sortList(request, infoExecutionCourses);
+	    request.setAttribute(SessionConstants.LIST_INFOEXECUTIONCOURSE, infoExecutionCourses);
+	}
+
+	return mapping.findForward("ShowCurricularCourseList");
+    }
+
+    public ActionForward showOccupancyLevels(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	IUserView userView = getUserView(request);
+
+	Integer degreeCurricularPlanID = null;
+	if (request.getParameter("degreeCurricularPlanID") != null) {
+	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
+
+	Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
+
+	InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory
+		.executeService(userView, "ReadShiftsByExecutionCourseID", args);
+
+	arranjeShifts(infoExecutionCourseOccupancy);
+
+	request.setAttribute("infoExecutionCourseOccupancy", infoExecutionCourseOccupancy);
+	return mapping.findForward("showOccupancy");
 
     }
 
     private void sortList(HttpServletRequest request, List infoExecutionCourses) {
-        String sortParameter = request.getParameter("sortBy");
-        if ((sortParameter != null) && (sortParameter.length() != 0)) {
-            if (sortParameter.equals("occupancy")) {
-                Collections.sort(infoExecutionCourses, new ReverseComparator(new BeanComparator(
-                        sortParameter)));
-            } else {
-                Collections.sort(infoExecutionCourses, new BeanComparator(sortParameter));
-            }
-        } else {
-            Collections.sort(infoExecutionCourses,
-                    new ReverseComparator(new BeanComparator("occupancy")));
-        }
+	String sortParameter = request.getParameter("sortBy");
+	if ((sortParameter != null) && (sortParameter.length() != 0)) {
+	    if (sortParameter.equals("occupancy")) {
+		Collections.sort(infoExecutionCourses, new ReverseComparator(new BeanComparator(sortParameter)));
+	    } else {
+		Collections.sort(infoExecutionCourses, new BeanComparator(sortParameter));
+	    }
+	} else {
+	    Collections.sort(infoExecutionCourses, new ReverseComparator(new BeanComparator("occupancy")));
+	}
     }
 
     /**
@@ -235,96 +224,96 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
      */
     private void arranjeShifts(InfoExecutionCourseOccupancy infoExecutionCourseOccupancy) {
 
-        // Note : This must be synched with TipoAula.java
+	// Note : This must be synched with TipoAula.java
 
-        List theoreticalShifts = new ArrayList();
-        List theoPraticalShifts = new ArrayList();
-        List praticalShifts = new ArrayList();
-        List labShifts = new ArrayList();
-        List reserveShifts = new ArrayList();
-        List doubtsShifts = new ArrayList();
+	List theoreticalShifts = new ArrayList();
+	List theoPraticalShifts = new ArrayList();
+	List praticalShifts = new ArrayList();
+	List labShifts = new ArrayList();
+	List reserveShifts = new ArrayList();
+	List doubtsShifts = new ArrayList();
 
-        infoExecutionCourseOccupancy.setShiftsInGroups(new ArrayList());
+	infoExecutionCourseOccupancy.setShiftsInGroups(new ArrayList());
 
-        Iterator iterator = infoExecutionCourseOccupancy.getInfoShifts().iterator();
-        while (iterator.hasNext()) {
-            InfoShift infoShift = (InfoShift) iterator.next();
-            if (infoShift.containsType(ShiftType.TEORICA)) {
-                theoreticalShifts.add(infoShift);
-            } else if (infoShift.containsType(ShiftType.PRATICA)) {
-                praticalShifts.add(infoShift);
-            } else if (infoShift.containsType(ShiftType.DUVIDAS)) {
-                doubtsShifts.add(infoShift);
-            } else if (infoShift.containsType(ShiftType.LABORATORIAL)) {
-                labShifts.add(infoShift);
-            } else if (infoShift.containsType(ShiftType.RESERVA)) {
-                reserveShifts.add(infoShift);
-            } else if (infoShift.containsType(ShiftType.TEORICO_PRATICA)) {
-                theoPraticalShifts.add(infoShift);
-            }
-        }
-        infoExecutionCourseOccupancy.setInfoShifts(null);
-        InfoShiftGroupStatistics infoShiftGroupStatistics = new InfoShiftGroupStatistics();
-        if (!theoreticalShifts.isEmpty()) {
-            infoShiftGroupStatistics.setShiftsInGroup(theoreticalShifts);
-            infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
-        }
+	Iterator iterator = infoExecutionCourseOccupancy.getInfoShifts().iterator();
+	while (iterator.hasNext()) {
+	    InfoShift infoShift = (InfoShift) iterator.next();
+	    if (infoShift.containsType(ShiftType.TEORICA)) {
+		theoreticalShifts.add(infoShift);
+	    } else if (infoShift.containsType(ShiftType.PRATICA)) {
+		praticalShifts.add(infoShift);
+	    } else if (infoShift.containsType(ShiftType.DUVIDAS)) {
+		doubtsShifts.add(infoShift);
+	    } else if (infoShift.containsType(ShiftType.LABORATORIAL)) {
+		labShifts.add(infoShift);
+	    } else if (infoShift.containsType(ShiftType.RESERVA)) {
+		reserveShifts.add(infoShift);
+	    } else if (infoShift.containsType(ShiftType.TEORICO_PRATICA)) {
+		theoPraticalShifts.add(infoShift);
+	    }
+	}
+	infoExecutionCourseOccupancy.setInfoShifts(null);
+	InfoShiftGroupStatistics infoShiftGroupStatistics = new InfoShiftGroupStatistics();
+	if (!theoreticalShifts.isEmpty()) {
+	    infoShiftGroupStatistics.setShiftsInGroup(theoreticalShifts);
+	    infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
+	}
 
-        if (!theoPraticalShifts.isEmpty()) {
-            infoShiftGroupStatistics = new InfoShiftGroupStatistics();
-            infoShiftGroupStatistics.setShiftsInGroup(theoPraticalShifts);
-            infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
-        }
+	if (!theoPraticalShifts.isEmpty()) {
+	    infoShiftGroupStatistics = new InfoShiftGroupStatistics();
+	    infoShiftGroupStatistics.setShiftsInGroup(theoPraticalShifts);
+	    infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
+	}
 
-        if (!labShifts.isEmpty()) {
-            infoShiftGroupStatistics = new InfoShiftGroupStatistics();
-            infoShiftGroupStatistics.setShiftsInGroup(labShifts);
-            infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
-        }
+	if (!labShifts.isEmpty()) {
+	    infoShiftGroupStatistics = new InfoShiftGroupStatistics();
+	    infoShiftGroupStatistics.setShiftsInGroup(labShifts);
+	    infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
+	}
 
-        if (!praticalShifts.isEmpty()) {
-            infoShiftGroupStatistics = new InfoShiftGroupStatistics();
-            infoShiftGroupStatistics.setShiftsInGroup(praticalShifts);
-            infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
-        }
+	if (!praticalShifts.isEmpty()) {
+	    infoShiftGroupStatistics = new InfoShiftGroupStatistics();
+	    infoShiftGroupStatistics.setShiftsInGroup(praticalShifts);
+	    infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
+	}
 
-        if (!reserveShifts.isEmpty()) {
-            infoShiftGroupStatistics = new InfoShiftGroupStatistics();
-            infoShiftGroupStatistics.setShiftsInGroup(reserveShifts);
-            infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
-        }
+	if (!reserveShifts.isEmpty()) {
+	    infoShiftGroupStatistics = new InfoShiftGroupStatistics();
+	    infoShiftGroupStatistics.setShiftsInGroup(reserveShifts);
+	    infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
+	}
 
-        if (!doubtsShifts.isEmpty()) {
-            infoShiftGroupStatistics = new InfoShiftGroupStatistics();
-            infoShiftGroupStatistics.setShiftsInGroup(doubtsShifts);
-            infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
-        }
+	if (!doubtsShifts.isEmpty()) {
+	    infoShiftGroupStatistics = new InfoShiftGroupStatistics();
+	    infoShiftGroupStatistics.setShiftsInGroup(doubtsShifts);
+	    infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
+	}
 
     }
 
     public ActionForward showLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+	    HttpServletResponse response) throws Exception {
 
-        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
-        
-        Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        }
+	IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
-        Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
+	Integer degreeCurricularPlanID = null;
+	if (request.getParameter("degreeCurricularPlanID") != null) {
+	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
 
-        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory
-                .executeService(userView, "ReadExecutionCourseByOID", args);
+	Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
-        List curricularCoursesWithScopes = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadCurricularCourseScopesByExecutionCourseID", args);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(userView,
+		"ReadExecutionCourseByOID", args);
 
-        request.setAttribute("infoExecutionCourse", infoExecutionCourse);
-        request.setAttribute("curricularCourses", curricularCoursesWithScopes);
+	List curricularCoursesWithScopes = (List) ServiceManagerServiceFactory.executeService(userView,
+		"ReadCurricularCourseScopesByExecutionCourseID", args);
 
-        return mapping.findForward("showLoads");
+	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
+	request.setAttribute("curricularCourses", curricularCoursesWithScopes);
+
+	return mapping.findForward("showLoads");
 
     }
 

@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRule
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse;
@@ -597,12 +597,12 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         
         final DegreeModule degreeModule = getDegreeModule();
-        final ExecutionPeriod currentExecutionPeriod = degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionPeriod.readActualExecutionPeriod();
+        final ExecutionSemester currentExecutionPeriod = degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionSemester.readActualExecutionPeriod();
         
-        final List<ExecutionPeriod> notClosedExecutionPeriods = ExecutionPeriod.readNotClosedExecutionPeriods();
+        final List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();
         Collections.sort(notClosedExecutionPeriods);
         
-        for (final ExecutionPeriod notClosedExecutionPeriod : notClosedExecutionPeriods) {
+        for (final ExecutionSemester notClosedExecutionPeriod : notClosedExecutionPeriods) {
             if (notClosedExecutionPeriod.isAfterOrEquals(currentExecutionPeriod)) {                
                 result.add(new SelectItem(notClosedExecutionPeriod.getIdInternal(), notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));
             }

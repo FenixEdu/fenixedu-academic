@@ -8,16 +8,16 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import pt.ist.utl.fenix.utils.Pair;
 
 public class TSDCourseDTOEntry extends DataTranferObject {
 	private TSDCourse tsdCourse;
-	private List<ExecutionPeriod> executionPeriodList = null;
+	private List<ExecutionSemester> executionPeriodList = null;
 	
-	public TSDCourseDTOEntry(TSDCourse _tsdCourse, List<ExecutionPeriod> executionPeriodList) {
+	public TSDCourseDTOEntry(TSDCourse _tsdCourse, List<ExecutionSemester> executionPeriodList) {
 		this.tsdCourse = _tsdCourse;
 		this.executionPeriodList = executionPeriodList;
 	}
@@ -67,7 +67,7 @@ public class TSDCourseDTOEntry extends DataTranferObject {
 		}
 	}
 	
-	private Set<String> buildCurricularYearsSet(CurricularCourse tsdCurricularCourseEntry, ExecutionPeriod executionPeriodEntry) {
+	private Set<String> buildCurricularYearsSet(CurricularCourse tsdCurricularCourseEntry, ExecutionSemester executionPeriodEntry) {
 		Set<String> curricularYearsSet = new LinkedHashSet<String>();
 		
 		for (Integer year : getCurricularIntYears(tsdCurricularCourseEntry)) {

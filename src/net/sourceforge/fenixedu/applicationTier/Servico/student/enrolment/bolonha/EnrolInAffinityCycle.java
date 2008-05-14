@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolon
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
@@ -42,7 +42,7 @@ public class EnrolInAffinityCycle extends Service {
          * 
          */
     public Registration run(final Person person, final StudentCurricularPlan studentCurricularPlan,
-	    final CycleCourseGroup cycleCourseGroupToEnrol, final ExecutionPeriod executionPeriod) throws FenixServiceException {
+	    final CycleCourseGroup cycleCourseGroupToEnrol, final ExecutionSemester executionSemester) throws FenixServiceException {
 
 	/*
          * TODO: refactor this code, should be more generic and moved to
@@ -51,13 +51,13 @@ public class EnrolInAffinityCycle extends Service {
          * 
          */
 
-	checkConditionsToEnrol(studentCurricularPlan, executionPeriod);
+	checkConditionsToEnrol(studentCurricularPlan, executionSemester);
 
 	final CycleCurriculumGroup secondCycle = studentCurricularPlan.getSecondCycle();
 	if (secondCycle == null) {
 
 	    if (studentCurricularPlanAllowAffinityCycle(studentCurricularPlan, cycleCourseGroupToEnrol)) {
-		studentCurricularPlan.enrolInAffinityCycle(cycleCourseGroupToEnrol, executionPeriod);
+		studentCurricularPlan.enrolInAffinityCycle(cycleCourseGroupToEnrol, executionSemester);
 		return studentCurricularPlan.getRegistration();
 
 	    } else {
@@ -67,7 +67,7 @@ public class EnrolInAffinityCycle extends Service {
 		    throw new FenixServiceException("error");
 		}
 
-		final MDCandidacy candidacy = createMDCandidacy(student, cycleCourseGroupToEnrol, executionPeriod);
+		final MDCandidacy candidacy = createMDCandidacy(student, cycleCourseGroupToEnrol, executionSemester);
 		final Registration newRegistration = new Registration(student.getPerson(), cycleCourseGroupToEnrol
 			.getParentDegreeCurricularPlan(), candidacy, RegistrationAgreement.NORMAL, cycleCourseGroupToEnrol
 			.getCycleType());
@@ -106,14 +106,14 @@ public class EnrolInAffinityCycle extends Service {
     }
 
     private MDCandidacy createMDCandidacy(final Student student, final CycleCourseGroup cycleCourseGroupToEnrol,
-	    final ExecutionPeriod executionPeriod) {
+	    final ExecutionSemester executionSemester) {
 	return new MDCandidacy(student.getPerson(), cycleCourseGroupToEnrol.getParentDegreeCurricularPlan()
-		.getExecutionDegreeByYear(executionPeriod.getExecutionYear()));
+		.getExecutionDegreeByYear(executionSemester.getExecutionYear()));
     }
 
-    private void checkConditionsToEnrol(final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod)
+    private void checkConditionsToEnrol(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester)
 	    throws FenixServiceException {
-	if (isFromSpecialSeason(studentCurricularPlan, executionPeriod)) {
+	if (isFromSpecialSeason(studentCurricularPlan, executionSemester)) {
 	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
 		throw new FenixServiceException("error.out.of.enrolment.period");
 	    }
@@ -129,7 +129,7 @@ public class EnrolInAffinityCycle extends Service {
     }
 
     private boolean isFromSpecialSeason(final StudentCurricularPlan activeStudentCurricularPlan,
-	    final ExecutionPeriod executionPeriod) {
-	return activeStudentCurricularPlan.hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionPeriod);
+	    final ExecutionSemester executionSemester) {
+	return activeStudentCurricularPlan.hasSpecialSeasonOrHasSpecialSeasonInTransitedStudentCurricularPlan(executionSemester);
     }
 }

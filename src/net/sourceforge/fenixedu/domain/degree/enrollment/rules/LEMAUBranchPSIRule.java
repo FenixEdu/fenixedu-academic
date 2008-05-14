@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
@@ -22,17 +22,17 @@ public class LEMAUBranchPSIRule implements IEnrollmentRule{
 	private static final String FITH_YEAR_2SEM_OPTIONAL_GROUP = "Opções 5ºAno 2ºSem"; 
 	
     private StudentCurricularPlan studentCurricularPlan;
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
 
     public LEMAUBranchPSIRule(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
         this.studentCurricularPlan = studentCurricularPlan;
-        this.executionPeriod = executionPeriod;
+        this.executionSemester = executionSemester;
     }
 
 
 	public List apply(List curricularCoursesToBeEnrolledIn) throws EnrolmentRuleDomainException {
-		if(executionPeriod.getSemester().equals(2) && studentCurricularPlan.getBranch() != null && studentCurricularPlan.getBranch().getCode().equals(AUTOMACAO_ROBOTICA_CODE)) {
+		if(executionSemester.getSemester().equals(2) && studentCurricularPlan.getBranch() != null && studentCurricularPlan.getBranch().getCode().equals(AUTOMACAO_ROBOTICA_CODE)) {
 			CurricularCourse2Enroll curricularCourse2Enroll = getProjectoSistemasICourse2Enroll(curricularCoursesToBeEnrolledIn);
 			if(curricularCourse2Enroll != null) {
 				List<CurricularCourse> fifthYear2Sem = new ArrayList<CurricularCourse>();

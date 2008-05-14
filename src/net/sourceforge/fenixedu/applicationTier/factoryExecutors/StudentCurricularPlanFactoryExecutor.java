@@ -8,7 +8,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -44,7 +44,7 @@ public class StudentCurricularPlanFactoryExecutor {
 	    }
 
 	    return StudentCurricularPlan.createBolonhaStudentCurricularPlan(getRegistration(),
-		    getDegreeCurricularPlan(), new YearMonthDay(), ExecutionPeriod
+		    getDegreeCurricularPlan(), new YearMonthDay(), ExecutionSemester
 			    .readActualExecutionPeriod(), getCycleType());
 	}
 

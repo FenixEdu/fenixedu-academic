@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,15 +16,15 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 
     static final public double ACCUMULATED_FACTOR = 0.75;
 
-    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin,
-	    final ExecutionPeriod end) {
+    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin,
+	    final ExecutionSemester end) {
 
 	super();
 	checkDegreeModule(degreeModuleToApplyRule);
 	init(degreeModuleToApplyRule, null, begin, end, CurricularRuleType.MAXIMUM_NUMBER_OF_CREDITS_FOR_ENROLMENT_PERIOD);
     }
 
-    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin) {
+    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
 	this(degreeModuleToApplyRule, begin, null);
     }
 
@@ -36,7 +36,7 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
     }
 
     @Override
-    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionPeriod begin) {
+    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
 	if (degreeModuleToApplyRule == null || begin == null) {
 	    throw new DomainException("curricular.rule.invalid.parameters");
 	}
@@ -62,8 +62,8 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 	return result;
     }
 
-    public static Double getAccumulatedEctsCredits(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	return curricularCourse.getEctsCredits(executionPeriod.getSemester(), executionPeriod) * ACCUMULATED_FACTOR;
+    public static Double getAccumulatedEctsCredits(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+	return curricularCourse.getEctsCredits(executionSemester.getSemester(), executionSemester) * ACCUMULATED_FACTOR;
     }
 
     public VerifyRuleExecutor createVerifyRuleExecutor() {

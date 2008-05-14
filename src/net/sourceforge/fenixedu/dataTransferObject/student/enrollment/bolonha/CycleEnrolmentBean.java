@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -16,7 +16,7 @@ public class CycleEnrolmentBean implements Serializable {
 
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
 
-    private DomainReference<ExecutionPeriod> executionPeriod;
+    private DomainReference<ExecutionSemester> executionSemester;
 
     private DomainReference<CycleCourseGroup> cycleCourseGroupToEnrol;
 
@@ -24,17 +24,17 @@ public class CycleEnrolmentBean implements Serializable {
 
     private CycleType cycleTypeToEnrol;
 
-    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod,
+    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
 	    final CycleType sourceCycleAffinity, final CycleType cycleTypeToEnrol) {
 	setStudentCurricularPlan(studentCurricularPlan);
-	setExecutionPeriod(executionPeriod);
+	setExecutionPeriod(executionSemester);
 	setSourceCycleAffinity(sourceCycleAffinity);
 	setCycleTypeToEnrol(cycleTypeToEnrol);
     }
 
-    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionPeriod executionPeriod,
+    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
 	    final CycleCourseGroup cycleCourseGroup) {
-	this(studentCurricularPlan, executionPeriod, CycleType.FIRST_CYCLE, cycleCourseGroup.getCycleType());
+	this(studentCurricularPlan, executionSemester, CycleType.FIRST_CYCLE, cycleCourseGroup.getCycleType());
 	setCycleCourseGroupToEnrol(cycleCourseGroup);
     }
 
@@ -47,12 +47,12 @@ public class CycleEnrolmentBean implements Serializable {
 		studentCurricularPlan) : null;
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-	return (this.executionPeriod != null) ? this.executionPeriod.getObject() : null;
+    public ExecutionSemester getExecutionPeriod() {
+	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-	this.executionPeriod = (executionPeriod != null) ? new DomainReference<ExecutionPeriod>(executionPeriod) : null;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
     public CycleCourseGroup getCycleCourseGroupToEnrol() {

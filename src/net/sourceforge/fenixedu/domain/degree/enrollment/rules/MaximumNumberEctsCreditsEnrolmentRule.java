@@ -6,7 +6,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
@@ -14,19 +14,19 @@ import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 public class MaximumNumberEctsCreditsEnrolmentRule implements IEnrollmentRule {
 
     private StudentCurricularPlan studentCurricularPlan;
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
     
     public MaximumNumberEctsCreditsEnrolmentRule(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
         this.studentCurricularPlan = studentCurricularPlan;
-        this.executionPeriod = executionPeriod;
+        this.executionSemester = executionSemester;
     }
 
     public List<CurricularCourse2Enroll> apply(
 	    List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn)
 	    throws EnrolmentRuleDomainException {
         List allStudentEnrolledEnrollments = this.studentCurricularPlan
-        .getAllStudentEnrolledEnrollmentsInExecutionPeriod(this.executionPeriod);
+        .getAllStudentEnrolledEnrollmentsInExecutionPeriod(this.executionSemester);
 
         Double maxECTS = 40.0;
         Double ects = getAnualCurricularCoursesECTS(curricularCoursesToBeEnrolledIn);
@@ -49,7 +49,7 @@ public class MaximumNumberEctsCreditsEnrolmentRule implements IEnrollmentRule {
     
     private Double getAnualCurricularCoursesECTS(List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
 	Double ects = 0.0;
-	for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionPeriod.getPreviousExecutionPeriod())) {
+	for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester.getPreviousExecutionPeriod())) {
 	    if(enrolment.getCurricularCourse().isAnual()) {
 		ects += enrolment.getCurricularCourse().getEctsCredits();
 		removeAnualCourseFromCoursesToEnroll(enrolment.getCurricularCourse(), curricularCoursesToBeEnrolledIn);

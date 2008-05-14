@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -16,12 +16,12 @@ public class EditSupportLesson extends Service {
 
         Professorship professorship = rootDomainObject.readProfessorshipByOID(supportLessonDTO
                 .getProfessorshipID());
-        ExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
+        ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         Teacher teacher = professorship.getTeacher();
-        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 
         if (teacherService == null) {
-            new TeacherService(teacher, executionPeriod);
+            new TeacherService(teacher, executionSemester);
         }
 
         SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonDTO

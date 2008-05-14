@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.precedences;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 /**
@@ -12,19 +12,19 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 public class PrecedenceContext {
     private List curricularCourses2Enroll;
 
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
 
     private StudentCurricularPlan studentCurricularPlan;
 
     public PrecedenceContext() {
     }
 
-    public ExecutionPeriod getExecutionPeriod() {
-        return executionPeriod;
+    public ExecutionSemester getExecutionPeriod() {
+        return executionSemester;
     }
 
-    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod;
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+        this.executionSemester = executionSemester;
     }
 
     public List getCurricularCourses2Enroll() {

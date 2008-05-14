@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
@@ -159,7 +159,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
 
 	Degree degree = course.getDegree();
 	DegreeCurricularPlan curricularPlan = course.getDegreeCurricularPlan();
-	ExecutionPeriod period = executionCourse.getExecutionPeriod();
+	ExecutionSemester period = executionCourse.getExecutionPeriod();
 
 	return String.format(format, degree.getSigla().toLowerCase(), ExecutionCoursesProcessor.PREFIX, curricularPlan
 		.getInitialDateYearMonthDay().getYear(), course.getAcronym().toLowerCase(), period.getExecutionYear().getYear()
@@ -169,8 +169,8 @@ public class ExecutionCourseProcessor extends PathProcessor {
     public static String getExecutionCoursePath(ExecutionCourse executionCourse) {
 	StringBuilder result = new StringBuilder();
 
-	ExecutionPeriod currentPeriod = ExecutionPeriod.readActualExecutionPeriod();
-	ExecutionPeriod period = executionCourse.getExecutionPeriod();
+	ExecutionSemester currentPeriod = ExecutionSemester.readActualExecutionPeriod();
+	ExecutionSemester period = executionCourse.getExecutionPeriod();
 
 	CurricularCourse course = executionCourse.getAssociatedCurricularCourses().get(0);
 	Degree degree = course.getDegree();

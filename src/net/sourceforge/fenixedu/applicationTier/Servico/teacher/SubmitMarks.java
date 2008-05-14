@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.FinalMark;
@@ -104,8 +104,8 @@ public class SubmitMarks extends Service {
 	
 	
 
-	private void addMarksFileToMap(Map<String, InputStream> fileMap, FinalEvaluation finalEvaluation, Degree degree, CurricularCourse curricularCourse, Teacher teacher, Map<Attends, FinalMark> marksMap, ExecutionPeriod executionPeriod, Integer version, String season) throws IOException {
-		MarksFile marksFile = new MarksFile(degree, teacher, curricularCourse.getCurricularSemesterWithLowerYearBySemester(executionPeriod.getSemester(), executionPeriod.getEndDate()), curricularCourse, version);
+	private void addMarksFileToMap(Map<String, InputStream> fileMap, FinalEvaluation finalEvaluation, Degree degree, CurricularCourse curricularCourse, Teacher teacher, Map<Attends, FinalMark> marksMap, ExecutionSemester executionSemester, Integer version, String season) throws IOException {
+		MarksFile marksFile = new MarksFile(degree, teacher, curricularCourse.getCurricularSemesterWithLowerYearBySemester(executionSemester.getSemester(), executionSemester.getEndDate()), curricularCourse, version);
 		marksFile.addLines(marksMap, season);
 		fileMap.put(marksFile.getFileName(), new ByteArrayInputStream(marksFile.getFileContent().getBytes()));
 	}

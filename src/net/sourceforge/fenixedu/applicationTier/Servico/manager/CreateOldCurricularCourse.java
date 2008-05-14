@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -43,8 +43,8 @@ public class CreateOldCurricularCourse extends Service {
 	curricularCourse.setType(CurricularCourseType.NORMAL_COURSE);
 
 	final CurricularPeriod curricularPeriod = getCurricularPeriod(degreeCurricularPlan, year, semester);
-	final ExecutionPeriod beginExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(beginExecutionPeriodId);
-	final ExecutionPeriod endExecutionPeriod = rootDomainObject.readExecutionPeriodByOID(endExecutionPeriodId);
+	final ExecutionSemester beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodId);
+	final ExecutionSemester endExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodId);
 
 	courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }

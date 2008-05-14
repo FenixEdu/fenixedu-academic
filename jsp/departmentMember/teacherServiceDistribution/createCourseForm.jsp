@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess" %>
-<%@ page import="net.sourceforge.fenixedu.domain.ExecutionPeriod" %>
+<%@ page import="net.sourceforge.fenixedu.domain.ExecutionSemester" %>
 <%@ page import="net.sourceforge.fenixedu.domain.CurricularYear" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>

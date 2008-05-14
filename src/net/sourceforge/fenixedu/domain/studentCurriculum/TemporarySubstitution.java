@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
@@ -16,9 +16,9 @@ public class TemporarySubstitution extends TemporarySubstitution_Base {
     }
 
     public TemporarySubstitution(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
-	    Collection<IEnrolment> enrolments, ExecutionPeriod executionPeriod) {
+	    Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
 	this();
-	init(studentCurricularPlan, dismissals, enrolments, executionPeriod);
+	init(studentCurricularPlan, dismissals, enrolments, executionSemester);
     }
 
     @Override

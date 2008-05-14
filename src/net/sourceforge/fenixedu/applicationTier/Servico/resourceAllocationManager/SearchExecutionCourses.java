@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,12 +37,12 @@ import org.apache.commons.collections.Transformer;
 public class SearchExecutionCourses extends Service {
 
     public List<InfoExecutionCourse> run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
-	    InfoCurricularYear infoCurricularYear, String executionCourseName)
-    throws ExcepcaoPersistencia {
+	    InfoCurricularYear infoCurricularYear, String executionCourseName) throws ExcepcaoPersistencia {
 
 	List<InfoExecutionCourse> result = null;
 
-	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
+		.getIdInternal());
 
 	ExecutionDegree executionDegree = null;
 	if (infoExecutionDegree != null) {
@@ -50,14 +50,14 @@ public class SearchExecutionCourses extends Service {
 	}
 
 	CurricularYear curricularYear = null;
-	if(infoCurricularYear != null) {
+	if (infoCurricularYear != null) {
 	    curricularYear = rootDomainObject.readCurricularYearByOID(infoCurricularYear.getIdInternal());
 	}
 
-
 	List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-	if(executionPeriod != null) {
-	    executionCourses = executionPeriod.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionDegree.getDegreeCurricularPlan(), curricularYear, executionCourseName);
+	if (executionSemester != null) {
+	    executionCourses = executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+		    executionDegree.getDegreeCurricularPlan(), curricularYear, executionCourseName);
 	}
 
 	result = (List<InfoExecutionCourse>) CollectionUtils.collect(executionCourses, new Transformer() {
@@ -83,7 +83,7 @@ public class SearchExecutionCourses extends Service {
 		    while (iter.hasNext()) {
 			CurricularCourse curricularCourse = iter.next();
 
-			final List<Enrolment> enroled = curricularCourse.getEnrolmentsByExecutionPeriod(executionPeriod);
+			final List<Enrolment> enroled = curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester);
 			enrolledInCurricularCourse += enroled.size();
 			evaluated = Enrolment.countEvaluated(enroled);
 			approved = Enrolment.countApproved(enroled);
@@ -98,7 +98,7 @@ public class SearchExecutionCourses extends Service {
 
 	    private InfoExecutionCourse getOccupancyLevels(Object arg0) {
 
-		InfoExecutionCourse infoExecutionCourse;              
+		InfoExecutionCourse infoExecutionCourse;
 		ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
 		Integer theoreticalCapacity = Integer.valueOf(0);
@@ -118,7 +118,7 @@ public class SearchExecutionCourses extends Service {
 		Iterator<Shift> iterator = shifts.iterator();
 
 		while (iterator.hasNext()) {
-		    
+
 		    Shift shift = (Shift) iterator.next();
 
 		    if (shift.containsType(ShiftType.TEORICA)) {
@@ -138,19 +138,19 @@ public class SearchExecutionCourses extends Service {
 
 		    } else if (shift.containsType(ShiftType.RESERVA)) {
 			reserveCapacity = Integer.valueOf(reserveCapacity.intValue() + shift.getLotacao().intValue());
-			
+
 		    } else if (shift.containsType(ShiftType.SEMINARY)) {
 			semCapacity = Integer.valueOf(semCapacity.intValue() + shift.getLotacao().intValue());
-			
+
 		    } else if (shift.containsType(ShiftType.PROBLEMS)) {
 			probCapacity = Integer.valueOf(probCapacity.intValue() + shift.getLotacao().intValue());
-			
+
 		    } else if (shift.containsType(ShiftType.FIELD_WORK)) {
 			fieldCapacity = Integer.valueOf(fieldCapacity.intValue() + shift.getLotacao().intValue());
-			
+
 		    } else if (shift.containsType(ShiftType.TRAINING_PERIOD)) {
 			trainCapacity = Integer.valueOf(trainCapacity.intValue() + shift.getLotacao().intValue());
-			
+
 		    } else if (shift.containsType(ShiftType.TUTORIAL_ORIENTATION)) {
 			tutCapacity = Integer.valueOf(tutCapacity.intValue() + shift.getLotacao().intValue());
 		    }

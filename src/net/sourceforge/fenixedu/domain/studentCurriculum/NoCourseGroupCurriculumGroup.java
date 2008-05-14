@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -65,12 +65,12 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
 
     @Override
-    public List<Context> getCurricularCourseContextsToEnrol(ExecutionPeriod executionPeriod) {
+    public List<Context> getCurricularCourseContextsToEnrol(ExecutionSemester executionSemester) {
 	return Collections.emptyList();
     }
 
     @Override
-    public List<Context> getCourseGroupContextsToEnrol(ExecutionPeriod executionPeriod) {
+    public List<Context> getCourseGroupContextsToEnrol(ExecutionSemester executionSemester) {
 	return Collections.emptyList();
     }
 
@@ -117,24 +117,24 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
 
     @Override
-    public Integer getChildOrder(final ExecutionPeriod executionPeriod) {
+    public Integer getChildOrder(final ExecutionSemester executionSemester) {
 	return Integer.MAX_VALUE;
     }
 
     @Override
-    protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionPeriod executionPeriod) {
+    protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionSemester executionSemester) {
 	final List<CurriculumModule> result = new ArrayList<CurriculumModule>(getCurriculumModulesSet());
 	Collections.sort(result, CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
 	return result.indexOf(child);
     }
 
     @Override
-    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionPeriod executionPeriod) {
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
 	return Collections.EMPTY_SET;
     }
 
     @Override
-    public Set<ICurricularRule> getCurricularRules(ExecutionPeriod executionPeriod) {
+    public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
 	return Collections.emptySet();
     }
 

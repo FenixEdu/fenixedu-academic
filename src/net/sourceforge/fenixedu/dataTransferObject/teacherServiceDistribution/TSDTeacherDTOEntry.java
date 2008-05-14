@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.teacher.Category;
@@ -18,9 +18,9 @@ import org.apache.commons.collections.Predicate;
 
 public class TSDTeacherDTOEntry extends DataTranferObject {
 	private List<TSDTeacher> tsdTeacherList;
-	private List<ExecutionPeriod> executionPeriodList = null;
+	private List<ExecutionSemester> executionPeriodList = null;
 	
-	public TSDTeacherDTOEntry(TSDTeacher tsdTeacher, List<ExecutionPeriod> executionPeriodList) {
+	public TSDTeacherDTOEntry(TSDTeacher tsdTeacher, List<ExecutionSemester> executionPeriodList) {
 		this.tsdTeacherList = new ArrayList<TSDTeacher>();
 		this.tsdTeacherList.add(tsdTeacher);
 		
@@ -57,7 +57,7 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
 		return tsdTeacherList.get(0).getName();
 	}
 	
-	public List<ExecutionPeriod> getExecutionPeriodList() {
+	public List<ExecutionSemester> getExecutionPeriodList() {
 		return executionPeriodList;
 	}
 	/*
@@ -141,10 +141,10 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
 		return getRequiredHours() - getExtraCreditsValue();
 	}
 	
-	public void addExecutionPeriodList(List<ExecutionPeriod> executionPeriodList) {
-		for(ExecutionPeriod executionPeriod : executionPeriodList) {
-			if(!this.executionPeriodList.contains(executionPeriod)) {
-				this.executionPeriodList.add(executionPeriod);
+	public void addExecutionPeriodList(List<ExecutionSemester> executionPeriodList) {
+		for(ExecutionSemester executionSemester : executionPeriodList) {
+			if(!this.executionPeriodList.contains(executionSemester)) {
+				this.executionPeriodList.add(executionSemester);
 			}
 		}
 	}

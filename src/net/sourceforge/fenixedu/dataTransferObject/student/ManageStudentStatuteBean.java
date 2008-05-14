@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 
@@ -19,9 +19,9 @@ public class ManageStudentStatuteBean implements Serializable {
 
     private StudentStatuteType statuteType;
 
-    private DomainReference<ExecutionPeriod> beginExecutionPeriod;
+    private DomainReference<ExecutionSemester> beginExecutionPeriod;
 
-    private DomainReference<ExecutionPeriod> endExecutionPeriod;
+    private DomainReference<ExecutionSemester> endExecutionPeriod;
 
     private DomainReference<Student> student;
 
@@ -30,11 +30,11 @@ public class ManageStudentStatuteBean implements Serializable {
 	this.student = new DomainReference<Student>(student);
     }
 
-    public ExecutionPeriod getBeginExecutionPeriod() {
+    public ExecutionSemester getBeginExecutionPeriod() {
 	return beginExecutionPeriod != null ? beginExecutionPeriod.getObject() : null;
     }
 
-    public ExecutionPeriod getEndExecutionPeriod() {
+    public ExecutionSemester getEndExecutionPeriod() {
 	return endExecutionPeriod != null ? endExecutionPeriod.getObject() : null;
     }
 
@@ -46,13 +46,13 @@ public class ManageStudentStatuteBean implements Serializable {
 	return student != null ? student.getObject() : null;
     }
 
-    public void setBeginExecutionPeriod(ExecutionPeriod beginExecutionPeriod) {
-	this.beginExecutionPeriod = beginExecutionPeriod != null ? new DomainReference<ExecutionPeriod>(
+    public void setBeginExecutionPeriod(ExecutionSemester beginExecutionPeriod) {
+	this.beginExecutionPeriod = beginExecutionPeriod != null ? new DomainReference<ExecutionSemester>(
 		beginExecutionPeriod) : null;
     }
 
-    public void setEndExecutionPeriod(ExecutionPeriod endExecutionPeriod) {
-	this.endExecutionPeriod = endExecutionPeriod != null ? new DomainReference<ExecutionPeriod>(
+    public void setEndExecutionPeriod(ExecutionSemester endExecutionPeriod) {
+	this.endExecutionPeriod = endExecutionPeriod != null ? new DomainReference<ExecutionSemester>(
 		endExecutionPeriod) : null;
     }
 

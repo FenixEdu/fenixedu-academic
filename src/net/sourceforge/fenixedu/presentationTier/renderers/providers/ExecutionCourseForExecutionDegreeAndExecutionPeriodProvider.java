@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionDegree;
-import net.sourceforge.fenixedu.domain.interfaces.HasExecutionPeriod;
+import net.sourceforge.fenixedu.domain.interfaces.HasExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.renderers.DataProvider;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
@@ -20,8 +20,8 @@ public class ExecutionCourseForExecutionDegreeAndExecutionPeriodProvider impleme
     public Object provide(Object source, Object currentValue) {
 	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 
-	final HasExecutionPeriod hasExecutionPeriod = (HasExecutionPeriod) source;
-	final ExecutionPeriod executionPeriod = hasExecutionPeriod.getExecutionPeriod();
+	final HasExecutionSemester hasExecutionSemester = (HasExecutionSemester) source;
+	final ExecutionSemester executionPeriod = hasExecutionSemester.getExecutionPeriod();
 
 	final HasExecutionDegree hasExecutionDegree = (HasExecutionDegree) source;
 	final ExecutionDegree executionDegree = hasExecutionDegree.getExecutionDegree();
@@ -50,7 +50,7 @@ public class ExecutionCourseForExecutionDegreeAndExecutionPeriodProvider impleme
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

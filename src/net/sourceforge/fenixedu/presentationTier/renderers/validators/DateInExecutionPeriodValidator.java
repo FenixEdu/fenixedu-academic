@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
 import java.text.ParseException;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.renderers.validators.DateValidator;
 import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -33,7 +33,7 @@ public class DateInExecutionPeriodValidator extends DateValidator {
 	if (isValid()) {
 	    try {
 		DateTime dateTime = new DateTime(DateFormatUtil.parse(getDateFormat(), getComponent().getValue()).getTime());
-		setValid(ExecutionPeriod.readByDateTime(dateTime) != null);
+		setValid(ExecutionSemester.readByDateTime(dateTime) != null);
 		if (!isValid()) {
 		    setMessage("renderers.validator.dateInExecutionPeriod.notInExecutionPeriod");
 		}

@@ -30,8 +30,8 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
-        return this.getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
+    public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
+        return this.getExecutionCourse().getExecutionPeriod().equals(executionSemester);
     }
 
     public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse,
@@ -114,12 +114,12 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public static List<Professorship> readByDegreeCurricularPlanAndExecutionPeriod(
-            DegreeCurricularPlan degreeCurricularPlan, ExecutionPeriod executionPeriod) {
+            DegreeCurricularPlan degreeCurricularPlan, ExecutionSemester executionSemester) {
 
         Set<Professorship> professorships = new HashSet<Professorship>();
         for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
             for (ExecutionCourse executionCourse : curricularCourse
-                    .getExecutionCoursesByExecutionPeriod(executionPeriod)) {
+                    .getExecutionCoursesByExecutionPeriod(executionSemester)) {
                 professorships.addAll(executionCourse.getProfessorships());
             }
         }

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 
 public class CriarTurma extends Service {
@@ -26,9 +26,10 @@ public class CriarTurma extends Service {
 	    final InfoExecutionPeriod infoExecutionPeriod) throws ExistingServiceException {
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
-	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(infoExecutionPeriod.getIdInternal());        
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
+		.getIdInternal());
 
-	final SchoolClass schoolClass = new SchoolClass(executionDegree, executionPeriod, className, curricularYear);
+	final SchoolClass schoolClass = new SchoolClass(executionDegree, executionSemester, className, curricularYear);
 	return InfoClass.newInfoFromDomain(schoolClass);
     }
 }

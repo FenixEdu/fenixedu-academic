@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -26,10 +26,10 @@ public class ReadBibliographicReference extends Service {
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(infoExecutionCourse
                 .getInfoExecutionPeriod().getInfoExecutionYear().getYear());
 
-        final ExecutionPeriod executionPeriod = executionYear
+        final ExecutionSemester executionSemester = executionYear
                 .readExecutionPeriodByName(infoExecutionCourse.getInfoExecutionPeriod().getName());
 
-        final ExecutionCourse executionCourse = executionPeriod.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
+        final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
 
         final List<InfoBibliographicReference> infoBibliographicReferences = new ArrayList<InfoBibliographicReference>();
         for (final BibliographicReference bibliographicReference : executionCourse

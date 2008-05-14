@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     protected AnyCurricularCourse(final OptionalCurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
-	    final ExecutionPeriod begin, final ExecutionPeriod end, final Double credits, final Integer curricularPeriodOrder,
+	    final ExecutionSemester begin, final ExecutionSemester end, final Double credits, final Integer curricularPeriodOrder,
 	    final Integer minimumYear, final Integer maximumYear, final DegreeType degreeType, final Degree degree,
 	    final DepartmentUnit departmentUnit) {
 

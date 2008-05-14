@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.ExclusivenessVerifier;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class Exclusiveness extends Exclusiveness_Base {
 
     protected Exclusiveness(final DegreeModule toApplyRule, final DegreeModule exclusiveDegreeModule,
-	    final CourseGroup contextCourseGroup, final ExecutionPeriod begin, final ExecutionPeriod end) {
+	    final CourseGroup contextCourseGroup, final ExecutionSemester begin, final ExecutionSemester end) {
 
 	super();
 	checkParameters(toApplyRule, exclusiveDegreeModule);

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class ReadEnrollmentsWithStateEnrolledByStudent extends Service {
 
 	public StudentCurricularPlan run(Registration registration, DegreeType degreeType,
-			ExecutionPeriod executionPeriod) throws FenixServiceException {
+			ExecutionSemester executionSemester) throws FenixServiceException {
 
 		final StudentCurricularPlan studentCurricularPlan = (registration == null) ? null : registration
 				.getLastStudentCurricularPlan();
@@ -20,7 +20,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent extends Service {
 			throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 		}
 
-		if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionPeriod
+		if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionSemester
 				.getExecutionYear())) {
 			return studentCurricularPlan;
 		} else {

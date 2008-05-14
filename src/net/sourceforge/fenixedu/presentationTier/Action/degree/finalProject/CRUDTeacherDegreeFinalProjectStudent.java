@@ -38,111 +38,104 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID {
 
-    protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
-            ActionForm form, HttpServletRequest request) {
-        DynaActionForm teacherDegreeFinalProjectStudentForm = (DynaActionForm) form;
-        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
+    protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject, ActionForm form,
+	    HttpServletRequest request) {
+	DynaActionForm teacherDegreeFinalProjectStudentForm = (DynaActionForm) form;
+	InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
 
-        teacherDegreeFinalProjectStudentForm.set("idInternal", infoTeacherDegreeFinalProjectStudent
-                .getIdInternal());
-        teacherDegreeFinalProjectStudentForm.set("teacherId", infoTeacherDegreeFinalProjectStudent
-                .getInfoTeacher().getIdInternal());
-        teacherDegreeFinalProjectStudentForm.set("executionPeriodId",
-                infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod().getIdInternal());
-        teacherDegreeFinalProjectStudentForm.set("percentage", "100");
+	teacherDegreeFinalProjectStudentForm.set("idInternal", infoTeacherDegreeFinalProjectStudent.getIdInternal());
+	teacherDegreeFinalProjectStudentForm.set("teacherId", infoTeacherDegreeFinalProjectStudent.getInfoTeacher()
+		.getIdInternal());
+	teacherDegreeFinalProjectStudentForm.set("executionPeriodId", infoTeacherDegreeFinalProjectStudent
+		.getInfoExecutionPeriod().getIdInternal());
+	teacherDegreeFinalProjectStudentForm.set("percentage", "100");
     }
 
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) {
-        DynaActionForm teacherDegreeFinalProjectStudentForm = (DynaActionForm) form;
-        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = new InfoTeacherDegreeFinalProjectStudent();
+	DynaActionForm teacherDegreeFinalProjectStudentForm = (DynaActionForm) form;
+	InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = new InfoTeacherDegreeFinalProjectStudent();
 
-        Integer idInternal = (Integer) teacherDegreeFinalProjectStudentForm.get("idInternal");
-        Integer teacherId = (Integer) teacherDegreeFinalProjectStudentForm.get("teacherId");
-        Integer studentNumber = Integer.valueOf((String) teacherDegreeFinalProjectStudentForm
-                .get("studentNumber"));
-        Integer executionPeriodId = (Integer) teacherDegreeFinalProjectStudentForm
-                .get("executionPeriodId");
-        Double percentage = Double.valueOf((String) teacherDegreeFinalProjectStudentForm
-                .get("percentage"));
+	Integer idInternal = (Integer) teacherDegreeFinalProjectStudentForm.get("idInternal");
+	Integer teacherId = (Integer) teacherDegreeFinalProjectStudentForm.get("teacherId");
+	Integer studentNumber = Integer.valueOf((String) teacherDegreeFinalProjectStudentForm.get("studentNumber"));
+	Integer executionPeriodId = (Integer) teacherDegreeFinalProjectStudentForm.get("executionPeriodId");
+	Double percentage = Double.valueOf((String) teacherDegreeFinalProjectStudentForm.get("percentage"));
 
-        infoTeacherDegreeFinalProjectStudent.setIdInternal(idInternal);
+	infoTeacherDegreeFinalProjectStudent.setIdInternal(idInternal);
 
-        infoTeacherDegreeFinalProjectStudent.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(RootDomainObject.getInstance().readExecutionPeriodByOID(executionPeriodId)));
+	infoTeacherDegreeFinalProjectStudent.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(RootDomainObject
+		.getInstance().readExecutionSemesterByOID(executionPeriodId)));
 
-        final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+	final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
 
-        InfoStudent infoStudent = new InfoStudent(registration);
+	InfoStudent infoStudent = new InfoStudent(registration);
 
-        infoTeacherDegreeFinalProjectStudent.setInfoStudent(infoStudent);
-        infoTeacherDegreeFinalProjectStudent.setInfoTeacher(new InfoTeacher(rootDomainObject.readTeacherByOID(teacherId)));
-        infoTeacherDegreeFinalProjectStudent.setPercentage(percentage);
+	infoTeacherDegreeFinalProjectStudent.setInfoStudent(infoStudent);
+	infoTeacherDegreeFinalProjectStudent.setInfoTeacher(new InfoTeacher(rootDomainObject.readTeacherByOID(teacherId)));
+	infoTeacherDegreeFinalProjectStudent.setPercentage(percentage);
 
-        return infoTeacherDegreeFinalProjectStudent;
+	return infoTeacherDegreeFinalProjectStudent;
     }
 
-    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	IUserView userView = SessionUtils.getUserView(request);
 
-        InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        if (infoTeacher == null) {
-            DynaActionForm teacherDegreeFinalProjectStudentForm = (DynaActionForm) form;
-            Integer teacherId = (Integer) teacherDegreeFinalProjectStudentForm.get("teacherId");
-            infoTeacher = new InfoTeacher(rootDomainObject.readTeacherByOID(teacherId));
-        }
+	InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
+	if (infoTeacher == null) {
+	    DynaActionForm teacherDegreeFinalProjectStudentForm = (DynaActionForm) form;
+	    Integer teacherId = (Integer) teacherDegreeFinalProjectStudentForm.get("teacherId");
+	    infoTeacher = new InfoTeacher(rootDomainObject.readTeacherByOID(teacherId));
+	}
 
-        DynaActionForm dynaForm = (DynaActionForm) form;
+	DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Object args[] = { infoTeacher, dynaForm.get("executionPeriodId") };
+	Object args[] = { infoTeacher, dynaForm.get("executionPeriodId") };
 
-        TeacherDegreeFinalProjectStudentsDTO teacherDFPStudents = (TeacherDegreeFinalProjectStudentsDTO) ServiceUtils
-                .executeService(userView, "ReadTeacherDFPStudents", args);
+	TeacherDegreeFinalProjectStudentsDTO teacherDFPStudents = (TeacherDegreeFinalProjectStudentsDTO) ServiceUtils
+		.executeService(userView, "ReadTeacherDFPStudents", args);
 
-        request.setAttribute("teacherDegreeFinalProjectStudents", teacherDFPStudents);
+	request.setAttribute("teacherDegreeFinalProjectStudents", teacherDFPStudents);
 
-        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = new InfoTeacherDegreeFinalProjectStudent();
+	InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = new InfoTeacherDegreeFinalProjectStudent();
 
-        infoTeacherDegreeFinalProjectStudent.setInfoTeacher(teacherDFPStudents.getInfoTeacher());
-        infoTeacherDegreeFinalProjectStudent.setInfoExecutionPeriod(teacherDFPStudents
-                .getInfoExecutionPeriod());
-        populateFormFromInfoObject(mapping, infoTeacherDegreeFinalProjectStudent, form, request);
-        return mapping.findForward("list-teacher-degree-final-project-students");
+	infoTeacherDegreeFinalProjectStudent.setInfoTeacher(teacherDFPStudents.getInfoTeacher());
+	infoTeacherDegreeFinalProjectStudent.setInfoExecutionPeriod(teacherDFPStudents.getInfoExecutionPeriod());
+	populateFormFromInfoObject(mapping, infoTeacherDegreeFinalProjectStudent, form, request);
+	return mapping.findForward("list-teacher-degree-final-project-students");
     }
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        try {
-            return super.edit(mapping, form, request, response);
-        } catch (StudentPercentageExceed e) {
-            ActionErrors actionErrors = new ActionErrors();
-            Object args[] = getStudentPercentageExceedArgs(e);
-            ActionError actionError = new ActionError(
-                    "message.teacherDegreeFinalProjectStudent.percentageExceed", args);
-            actionErrors.add("message.teacherDegreeFinalProjectStudent.percentageExceed", actionError);
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        } catch (FenixServiceException e) {
-            ActionErrors actionErrors = new ActionErrors();
-            ActionError actionError = new ActionError(e.getMessage());
-            actionErrors.add(e.getMessage(), actionError);
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	try {
+	    return super.edit(mapping, form, request, response);
+	} catch (StudentPercentageExceed e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    Object args[] = getStudentPercentageExceedArgs(e);
+	    ActionError actionError = new ActionError("message.teacherDegreeFinalProjectStudent.percentageExceed", args);
+	    actionErrors.add("message.teacherDegreeFinalProjectStudent.percentageExceed", actionError);
+	    saveErrors(request, actionErrors);
+	    return mapping.getInputForward();
+	} catch (FenixServiceException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError actionError = new ActionError(e.getMessage());
+	    actionErrors.add(e.getMessage(), actionError);
+	    saveErrors(request, actionErrors);
+	    return mapping.getInputForward();
 
-        }
+	}
     }
 
     private Object[] getStudentPercentageExceedArgs(StudentPercentageExceed e) {
-        StringBuilder result = new StringBuilder();
-        final List<InfoTeacherDegreeFinalProjectStudent> infoTeacherDegreeFinalProjectStudentList = e
-                .getInfoTeacherDegreeFinalProjectStudentList();
-        for (final InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent : infoTeacherDegreeFinalProjectStudentList) {
-            InfoTeacher infoTeacher = infoTeacherDegreeFinalProjectStudent.getInfoTeacher();
-            result.append(infoTeacher.getTeacherNumber()).append("-").append(
-                    infoTeacher.getInfoPerson().getNome());
-            result.append(" ( ").append(infoTeacherDegreeFinalProjectStudent.getPercentage()).append(
-                    "% )<br/>");
-        }
-        Object arguments[] = { result.toString() };
-        return arguments;
+	StringBuilder result = new StringBuilder();
+	final List<InfoTeacherDegreeFinalProjectStudent> infoTeacherDegreeFinalProjectStudentList = e
+		.getInfoTeacherDegreeFinalProjectStudentList();
+	for (final InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent : infoTeacherDegreeFinalProjectStudentList) {
+	    InfoTeacher infoTeacher = infoTeacherDegreeFinalProjectStudent.getInfoTeacher();
+	    result.append(infoTeacher.getTeacherNumber()).append("-").append(infoTeacher.getInfoPerson().getNome());
+	    result.append(" ( ").append(infoTeacherDegreeFinalProjectStudent.getPercentage()).append("% )<br/>");
+	}
+	Object arguments[] = { result.toString() };
+	return arguments;
     }
 }

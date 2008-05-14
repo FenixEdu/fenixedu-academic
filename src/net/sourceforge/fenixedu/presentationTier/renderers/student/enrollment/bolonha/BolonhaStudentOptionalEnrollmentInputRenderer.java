@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
@@ -145,11 +145,11 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 	    }
 	}
 	
-	private Map<Branch, SortedSet<DegreeModuleScope>> getBranchMap(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionPeriod executionPeriod){
+	private Map<Branch, SortedSet<DegreeModuleScope>> getBranchMap(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester){
 	    final Map<Branch, SortedSet<DegreeModuleScope>> branchMap = new TreeMap<Branch, SortedSet<DegreeModuleScope>>(new BeanComparator("name"));
 	    for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
 		for (final CurricularCourseScope scope : curricularCourse.getScopesSet()) {
-		    if(scope.isActiveForExecutionPeriod(executionPeriod)) {
+		    if(scope.isActiveForExecutionPeriod(executionSemester)) {
 			addToMap(branchMap, scope);
 		    }
 		}

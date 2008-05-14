@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
-import net.sourceforge.fenixedu.domain.AcademicPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.joda.time.DateTime;
@@ -12,12 +12,12 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	super();
     }
 
-    public AcademicPeriod getCandidacyAcademicPeriod() {
-	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyAcademicPeriod() : null;
+    public ExecutionInterval getCandidacyExecutionInterval() {
+	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
     }
 
-    public boolean isFor(final AcademicPeriod academicPeriod) {
-	return getCandidacyAcademicPeriod() == academicPeriod;
+    public boolean isFor(final ExecutionInterval executionInterval) {
+	return getCandidacyExecutionInterval() == executionInterval;
     }
 
     public DateTime getCandidacyStart() {

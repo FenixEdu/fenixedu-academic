@@ -99,9 +99,9 @@ public class Department extends Department_Base {
 	return competenceCoursesByExecutionYear;
     }
 
-    public void addAllCompetenceCoursesByExecutionPeriod(final Collection<CompetenceCourse> competenceCourses, final ExecutionPeriod executionPeriod) {
+    public void addAllCompetenceCoursesByExecutionPeriod(final Collection<CompetenceCourse> competenceCourses, final ExecutionSemester executionSemester) {
 	for (CompetenceCourse competenceCourse : getCompetenceCourses()) {
-	    if (competenceCourse.hasActiveScopesInExecutionPeriod(executionPeriod)) {
+	    if (competenceCourse.hasActiveScopesInExecutionPeriod(executionSemester)) {
 		competenceCourses.add(competenceCourse);
 	    }
 	}
@@ -127,7 +127,7 @@ public class Department extends Department_Base {
 
     @SuppressWarnings("unchecked")
     public List<TSDProcess> getTSDProcessesByExecutionPeriods(
-	    final List<ExecutionPeriod> executionPeriodList) {
+	    final List<ExecutionSemester> executionPeriodList) {
 	return (List<TSDProcess>) CollectionUtils.select(
 		getTSDProcesses(), new Predicate() {
 		    public boolean evaluate(Object arg0) {
@@ -139,9 +139,9 @@ public class Department extends Department_Base {
 		});
     }
 
-    public List<TSDProcess> getTSDProcessesByExecutionPeriod(final ExecutionPeriod executionPeriod) {
-	List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
-	executionPeriodList.add(executionPeriod);
+    public List<TSDProcess> getTSDProcessesByExecutionPeriod(final ExecutionSemester executionSemester) {
+	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
+	executionPeriodList.add(executionSemester);
 	return getTSDProcessesByExecutionPeriods(executionPeriodList);
     }
 
@@ -165,7 +165,7 @@ public class Department extends Department_Base {
 	return courses;
     }
 
-    public void addAllBolonhaCompetenceCourses(final Collection<CompetenceCourse> competenceCourses, final ExecutionPeriod period) {
+    public void addAllBolonhaCompetenceCourses(final Collection<CompetenceCourse> competenceCourses, final ExecutionSemester period) {
 	for (CompetenceCourse course : getBolonhaCompetenceCourses()) {
 	    if (!course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).isEmpty()) {
 		competenceCourses.add(course);

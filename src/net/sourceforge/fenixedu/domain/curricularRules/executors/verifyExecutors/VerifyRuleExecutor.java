@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -67,9 +67,9 @@ abstract public class VerifyRuleExecutor {
     }
 
     protected boolean hasEnrolmentWithEnroledState(final EnrolmentContext enrolmentContext,
-	    final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
+	    final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
 	return enrolmentContext.getStudentCurricularPlan().getRoot().hasEnrolmentWithEnroledState(curricularCourse,
-		executionPeriod);
+		executionSemester);
     }
 
     protected RuleResult verifyDegreeConclusionWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,

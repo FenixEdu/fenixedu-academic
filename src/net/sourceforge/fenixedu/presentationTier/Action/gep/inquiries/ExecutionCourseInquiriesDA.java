@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
@@ -22,8 +22,8 @@ public class ExecutionCourseInquiriesDA extends FenixDispatchAction {
         ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) getRenderedObject();
         if (executionCourseSearchBean == null) {
             executionCourseSearchBean = new ExecutionCourseSearchBean();
-            final ExecutionPeriod executionPeriod = ExecutionPeriod.readActualExecutionPeriod();
-            executionCourseSearchBean.setExecutionPeriod(executionPeriod);
+            final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+            executionCourseSearchBean.setExecutionPeriod(executionSemester);
         } else {
             final Collection<ExecutionCourse> executionCourses = executionCourseSearchBean.search();
             if (executionCourses != null) {

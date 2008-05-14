@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -24,9 +24,9 @@ public class DegreeCurricularPlansForDegree implements DataProvider {
 	if (markSheetManagementBean.getDegree() != null && markSheetManagementBean.getExecutionPeriod() != null) {
 	    Campus employeeCampus = getEmployeeCampus();
 	    if (employeeCampus != null) {
-		ExecutionPeriod executionPeriod = ExecutionPeriod.readBySemesterAndExecutionYear(1, "2006/2007");
+		ExecutionSemester executionSemester = ExecutionSemester.readBySemesterAndExecutionYear(1, "2006/2007");
 
-		if (markSheetManagementBean.getExecutionPeriod().isBeforeOrEquals(executionPeriod)) {
+		if (markSheetManagementBean.getExecutionPeriod().isBeforeOrEquals(executionSemester)) {
 
 		    if (!employeeCampus.getName().equalsIgnoreCase("Taguspark")) {
 			for (DegreeCurricularPlan degreeCurricularPlan : markSheetManagementBean.getDegree()

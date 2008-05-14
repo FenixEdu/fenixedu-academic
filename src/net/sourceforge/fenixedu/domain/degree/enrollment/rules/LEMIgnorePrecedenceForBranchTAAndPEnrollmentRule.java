@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 public class LEMIgnorePrecedenceForBranchTAAndPEnrollmentRule implements IEnrollmentRule {
 
     private StudentCurricularPlan studentCurricularPlan;
-    private ExecutionPeriod executionPeriod;
+    private ExecutionSemester executionSemester;
 
     private static final String MOTORES_TERMICOS_CODE = "F2";
     private static final String TERMODINAMICA_APLICADA_BRANCH_CODE = "310";
@@ -33,9 +33,9 @@ public class LEMIgnorePrecedenceForBranchTAAndPEnrollmentRule implements IEnroll
      *  
      */
     public LEMIgnorePrecedenceForBranchTAAndPEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
-            ExecutionPeriod executionPeriod) {
+            ExecutionSemester executionSemester) {
         this.studentCurricularPlan = studentCurricularPlan;
-        this.executionPeriod = executionPeriod;
+        this.executionSemester = executionSemester;
     }
 
     /*
@@ -60,7 +60,7 @@ public class LEMIgnorePrecedenceForBranchTAAndPEnrollmentRule implements IEnroll
                     });
 
             CurricularCourse2Enroll curricularCourse2Enroll = transformToCurricularCourse2Enroll(
-                    curricularCourse, executionPeriod);
+                    curricularCourse, executionSemester);
 
             if (curricularCourse2Enroll.getEnrollmentType().equals(
                     CurricularCourseEnrollmentType.NOT_ALLOWED))
@@ -75,7 +75,7 @@ public class LEMIgnorePrecedenceForBranchTAAndPEnrollmentRule implements IEnroll
     }
 
     protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(
-            CurricularCourse curricularCourse, ExecutionPeriod currentExecutionPeriod) {
+            CurricularCourse curricularCourse, ExecutionSemester currentExecutionPeriod) {
         return new CurricularCourse2Enroll(curricularCourse, studentCurricularPlan
                 .getCurricularCourseEnrollmentType(curricularCourse, currentExecutionPeriod),
                 new Boolean(true));

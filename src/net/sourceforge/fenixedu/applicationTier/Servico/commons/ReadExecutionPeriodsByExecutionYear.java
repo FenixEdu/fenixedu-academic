@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -17,8 +17,8 @@ public class ReadExecutionPeriodsByExecutionYear extends Service {
                 : ExecutionYear.readCurrentExecutionYear();
 
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
-        for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
-            infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
+        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+            infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
         }
         return infoExecutionPeriods;
     }

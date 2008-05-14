@@ -2,26 +2,26 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 
 import org.joda.time.DateTime;
 
 abstract public class CandidacyProcessBean implements Serializable {
 
-    private DomainReference<AcademicPeriod> academicPeriod;
+    private DomainReference<ExecutionInterval> executionInterval;
 
     private DateTime start, end;
 
     protected CandidacyProcessBean() {
     }
 
-    public AcademicPeriod getAcademicPeriod() {
-	return (this.academicPeriod != null) ? this.academicPeriod.getObject() : null;
+    public ExecutionInterval getExecutionInterval() {
+	return (this.executionInterval != null) ? this.executionInterval.getObject() : null;
     }
 
-    public void setAcademicPeriod(AcademicPeriod academicPeriod) {
-	this.academicPeriod = (academicPeriod != null) ? new DomainReference<AcademicPeriod>(academicPeriod) : null;
+    public void setExecutionInterval(ExecutionInterval executionInterval) {
+	this.executionInterval = (executionInterval != null) ? new DomainReference<ExecutionInterval>(executionInterval) : null;
     }
 
     public DateTime getStart() {

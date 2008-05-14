@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grade;
 
 public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
@@ -39,7 +39,7 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
     }
     
     @Override
-    final public ExecutionPeriod getExecutionPeriod() {
+    final public ExecutionSemester getExecutionPeriod() {
 	return getEnrolment().getExecutionPeriod();
     }
 

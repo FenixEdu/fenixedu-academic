@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrintServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -39,44 +39,44 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response, ExecutionPeriod.readActualExecutionPeriod());
+	return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response, ExecutionSemester.readActualExecutionPeriod());
     }
 
     public ActionForward choosePrinterMarkSheetsWebPostBack(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	DynaActionForm form = (DynaActionForm) actionForm;
 	final Integer ecID = Integer.valueOf(form.getString("ecID"));
-	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(ecID);
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(ecID);
 
-	return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response, executionPeriod);
+	return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response, executionSemester);
     }
 
     private ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response, ExecutionPeriod executionPeriod) {
+	    HttpServletResponse response, ExecutionSemester executionSemester) {
 	DynaActionForm form = (DynaActionForm) actionForm;
 	String[] printerNames = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace()
 		.getPrinterNamesByFunctionalityName("markSheet");
 	request.setAttribute("printerNames", Arrays.asList(printerNames));
 
-	Collection<MarkSheet> webMarkSheetsNotPrinted = executionPeriod
+	Collection<MarkSheet> webMarkSheetsNotPrinted = executionSemester
 		.getWebMarkSheetsNotPrintedByAdministraticeOfficeAndCampus(AccessControl.getPerson().getEmployee()
 			.getAdministrativeOffice(), AccessControl.getPerson().getEmployee().getCurrentCampus());
 
-	request.setAttribute("executionPeriod", executionPeriod);
+	request.setAttribute("executionPeriod", executionSemester);
 	request.setAttribute("curricularCourseMap", buildMapWithCurricularCoursesAndNumberOfMarkSheets(webMarkSheetsNotPrinted));
 	request.setAttribute("totalMarkSheetsCount", webMarkSheetsNotPrinted.size());
 
-	List<ExecutionPeriod> notClosedExecutionPeriods = ExecutionPeriod.readNotClosedExecutionPeriods();
+	List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();
 	Collections.sort(notClosedExecutionPeriods, new ReverseComparator(
-		ExecutionPeriod.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
+		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
 	List<LabelValueBean> periods = new ArrayList<LabelValueBean>();
-	for (ExecutionPeriod period : notClosedExecutionPeriods) {
+	for (ExecutionSemester period : notClosedExecutionPeriods) {
 	    periods.add(new LabelValueBean(period.getExecutionYear().getYear() + " - " + period.getName(), period.getIdInternal()
 		    .toString()));
 	}
 
 	request.setAttribute("periods", periods);
-	form.set("ecID", executionPeriod.getIdInternal().toString());
+	form.set("ecID", executionSemester.getIdInternal().toString());
 
 	return mapping.findForward("choosePrinterMarkSheetsWeb");
     }
@@ -146,12 +146,12 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	DynaActionForm form = (DynaActionForm) actionForm;
 	String printerName = form.getString("printerName");
 	final Integer ecID = Integer.valueOf(form.getString("ecID"));
-	final ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(ecID);
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(ecID);
 	ActionMessages actionMessages = new ActionMessages();
 	try {
 	    ServiceUtils.executeService(getUserView(request), "PrintMarkSheets",
 		    new Object[] {
-			    executionPeriod.getWebMarkSheetsNotPrintedByAdministraticeOfficeAndCampus(AccessControl.getPerson()
+			    executionSemester.getWebMarkSheetsNotPrintedByAdministraticeOfficeAndCampus(AccessControl.getPerson()
 				    .getEmployee().getAdministrativeOffice(), AccessControl.getPerson().getEmployee()
 				    .getCurrentCampus()), printerName });
 	} catch (NotAuthorizedException e) {

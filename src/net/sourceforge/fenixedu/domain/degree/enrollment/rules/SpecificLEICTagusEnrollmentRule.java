@@ -8,15 +8,15 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 
     public SpecificLEICTagusEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
-	    ExecutionPeriod executionPeriod) {
-	super(studentCurricularPlan, executionPeriod);
+	    ExecutionSemester executionSemester) {
+	super(studentCurricularPlan, executionSemester);
     }
 
     protected List<CurricularCourse> getOptionalCurricularCourses() {
@@ -36,7 +36,7 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 	for (CurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
 	    List<CurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
 	    for (CurricularCourse course : optionalCurricularCourses) {
-		if(!studentCurricularPlan.isCurricularCourseApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
+		if(!studentCurricularPlan.isCurricularCourseApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionSemester)) {
 		    if(isAnyScopeActive(course.getScopes())) {
 			areaCourses.add(course);
 		    }
@@ -66,7 +66,7 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 	}
 
 	for (CurricularCourse curricularCourse : allCurricularCourses) {
-	    if(!studentCurricularPlan.isCurricularCourseApproved(curricularCourse) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod)) {
+	    if(!studentCurricularPlan.isCurricularCourseApproved(curricularCourse) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionSemester)) {
 		if(isAnyScopeActive(curricularCourse.getScopes())) {
 		    areaCourses.add(curricularCourse);
 		}
@@ -89,7 +89,7 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 	for (CurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
 	    List<CurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
 	    for (CurricularCourse course : optionalCurricularCourses) {
-		if (!isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
+		if (!isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionSemester)) {
 		    if(!studentCurricularPlan.isCurricularCourseApproved(course) && isAnyScopeActive(course.getScopes())) {
 			areaCourses.add(course);
 		    }

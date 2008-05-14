@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -23,34 +23,33 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID extends Service {
 
-	public List run(Integer degreeID, Integer executionPeriodID) throws FenixServiceException,
-			ExcepcaoPersistencia {
-		Degree degree = rootDomainObject.readDegreeByOID(degreeID);
-		ExecutionPeriod executionPeriod = rootDomainObject.readExecutionPeriodByOID(executionPeriodID);
+    public List run(Integer degreeID, Integer executionPeriodID) throws FenixServiceException, ExcepcaoPersistencia {
+	Degree degree = rootDomainObject.readDegreeByOID(degreeID);
+	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-		if (degree == null) {
-			throw new FenixServiceException("nullDegreeId");
-		}
-		if (executionPeriod == null) {
-			throw new FenixServiceException("nullExecutionPeriodId");
-		}
-		
-		List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getOldInquiriesSummariesByExecutionPeriod(executionPeriod); 
-
-		CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
-
-			public Object transform(Object oldInquiriesSummary) {
-				InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
-				try {
-					iois.copyFromDomain((OldInquiriesSummary) oldInquiriesSummary);
-
-				} catch (Exception ex) {
-				}
-
-				return iois;
-			}
-		});
-
-		return oldInquiriesSummaryList;
+	if (degree == null) {
+	    throw new FenixServiceException("nullDegreeId");
 	}
+	if (executionSemester == null) {
+	    throw new FenixServiceException("nullExecutionPeriodId");
+	}
+
+	List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getOldInquiriesSummariesByExecutionPeriod(executionSemester);
+
+	CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
+
+	    public Object transform(Object oldInquiriesSummary) {
+		InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
+		try {
+		    iois.copyFromDomain((OldInquiriesSummary) oldInquiriesSummary);
+
+		} catch (Exception ex) {
+		}
+
+		return iois;
+	    }
+	});
+
+	return oldInquiriesSummaryList;
+    }
 }

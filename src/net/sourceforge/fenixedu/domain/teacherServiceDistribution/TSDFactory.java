@@ -9,7 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -161,7 +161,7 @@ public class TSDFactory {
 
     private List<TSDCourse> createTSDCompetenceCourses(TSDProcess tsdProcess) {
 		List<TSDCourse> courseList = new ArrayList<TSDCourse>();
-		List<ExecutionPeriod> periods = tsdProcess.getExecutionPeriods();
+		List<ExecutionSemester> periods = tsdProcess.getExecutionPeriods();
 		
 		for (CompetenceCourse competenceCourse : tsdProcess.getAllCompetenceCourses()) {
 			courseList.addAll(createTSDCompetenceCourses(competenceCourse, periods));
@@ -170,10 +170,10 @@ public class TSDFactory {
 		return courseList; 
     }
     
-    private List<TSDCourse> createTSDCompetenceCourses(CompetenceCourse course, List<ExecutionPeriod> periods) {
+    private List<TSDCourse> createTSDCompetenceCourses(CompetenceCourse course, List<ExecutionSemester> periods) {
 		List<TSDCourse> courseList = new ArrayList<TSDCourse>();
 		
-		for(ExecutionPeriod period : periods){
+		for(ExecutionSemester period : periods){
 			if(course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).size() > 0)
 				courseList.add(new TSDCompetenceCourse(course, period));
 		}
@@ -181,14 +181,14 @@ public class TSDFactory {
 		return courseList; 
     }
 
-    private List<TSDTeacher> createTSDTeacher(Department department, List<ExecutionPeriod> executionPeriodList) {
+    private List<TSDTeacher> createTSDTeacher(Department department, List<ExecutionSemester> executionPeriodList) {
 	    	
 		List<TSDTeacher> tsdTeacherList = new ArrayList<TSDTeacher>();
 		Set<Teacher> teacherSet = new HashSet<Teacher>();
 	
-		for (ExecutionPeriod executionPeriod : executionPeriodList) {
-		    teacherSet.addAll(department.getAllTeachers(executionPeriod.getBeginDateYearMonthDay(),
-			    executionPeriod.getEndDateYearMonthDay()));
+		for (ExecutionSemester executionSemester : executionPeriodList) {
+		    teacherSet.addAll(department.getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
+			    executionSemester.getEndDateYearMonthDay()));
 		}
 	
 		for (Teacher teacher : teacherSet) {
