@@ -1485,3 +1485,23 @@
 		<property name="format" value="${nome}" />
 	</slot>
 </schema>
+
+<schema name="OptionalCurricularCoursesLocationBean.edit.enrolmentBeans" bundle="APPLICATION_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.student.OptionalCurricularCoursesLocationBean$EnrolmentLocationBean">
+	<slot name="enrolment.fullPath" read-only="true" key="label.curricularCourse" />
+	<slot name="optionalCurricularCourse" key="label.option" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.CurriculumGroupsProviderForEnrolmentsLocationManagement" />
+		<property name="saveOptions" value="true" />
+		<property name="format" value="${name}" />
+	</slot>
+</schema>
+
+<schema name="OptionalCurricularCoursesLocationBean.edit.optionalEnrolmentBeans" bundle="APPLICATION_RESOURCES"
+		type="net.sourceforge.fenixedu.dataTransferObject.student.OptionalCurricularCoursesLocationBean$OptionalEnrolmentLocationBean">
+	<slot name="enrolment.fullPath" read-only="true" key="label.curricularCourse" />
+	<slot name="curriculumGroup" layout="menu-select" key="label.group" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.CurriculumGroupsProviderForOptionalEnrolmentsLocationManagement" />
+		<property name="saveOptions" value="true" />
+		<property name="format" value="${fullPath}" />
+	</slot>
+</schema>

@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledOptionalEnrolment;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class OptionalEnrolment extends OptionalEnrolment_Base {
@@ -54,8 +56,9 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	}
     }
 
-    private boolean hasCurricularCourseOrOptionalCurricularCourse(final CurricularCourse curricularCourse, final ExecutionPeriod executionPeriod) {
-	return hasCurricularCourse(getCurricularCourse(), curricularCourse, executionPeriod) 
+    private boolean hasCurricularCourseOrOptionalCurricularCourse(final CurricularCourse curricularCourse,
+	    final ExecutionPeriod executionPeriod) {
+	return hasCurricularCourse(getCurricularCourse(), curricularCourse, executionPeriod)
 		|| hasCurricularCourse(getOptionalCurricularCourse(), curricularCourse, executionPeriod);
     }
 
@@ -102,5 +105,56 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	}
 	return Collections.emptySet();
 
+    }
+
+    /**
+     * 
+     * After create new OptionalEnrolment, must delete Enrolment
+     * (to delete Enrolment remove: ProgramCertificateRequests, CourseLoadRequests, ExamDateCertificateRequests)
+     * @param enrolment 
+     * @param curriculumGroup: new CurriculumGroup for OptionalEnrolment
+     * @param optionalCurricularCourse: choosed OptionalCurricularCourse
+     * @return OptionalEnrolment
+     */
+    static OptionalEnrolment createBasedOn(final Enrolment enrolment, final CurriculumGroup curriculumGroup,
+	    final OptionalCurricularCourse optionalCurricularCourse) {
+	checkParameters(enrolment, curriculumGroup, optionalCurricularCourse);
+
+	final OptionalEnrolment optionalEnrolment = new OptionalEnrolment();
+	optionalEnrolment.setCurricularCourse(enrolment.getCurricularCourse());
+	optionalEnrolment.setWeigth(enrolment.getWeigth());
+	optionalEnrolment.setEnrollmentState(enrolment.getEnrollmentState());
+	optionalEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
+	optionalEnrolment.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+	optionalEnrolment.setCreatedBy(AccessControl.getUserView().getUtilizador());
+	optionalEnrolment.setCreationDateDateTime(enrolment.getCreationDateDateTime());
+	optionalEnrolment.setEnrolmentCondition(enrolment.getEnrolmentCondition());
+	optionalEnrolment.setCurriculumGroup(curriculumGroup);
+	optionalEnrolment.setOptionalCurricularCourse(optionalCurricularCourse);
+
+	optionalEnrolment.getEvaluations().addAll(enrolment.getEvaluations());
+	optionalEnrolment.getProgramCertificateRequests().addAll(enrolment.getProgramCertificateRequests());
+	optionalEnrolment.getCourseLoadRequests().addAll(enrolment.getCourseLoadRequests());
+	optionalEnrolment.getExtraExamRequests().addAll(enrolment.getExtraExamRequests());
+	optionalEnrolment.getEnrolmentWrappers().addAll(enrolment.getEnrolmentWrappers());
+	optionalEnrolment.getTheses().addAll(enrolment.getTheses());
+	optionalEnrolment.getExamDateCertificateRequests().addAll(enrolment.getExamDateCertificateRequests());
+	optionalEnrolment.getAttends().addAll(enrolment.getAttends());
+	optionalEnrolment.createEnrolmentLog(EnrolmentAction.ENROL);
+
+	return optionalEnrolment;
+    }
+
+    private static void checkParameters(final Enrolment enrolment, final CurriculumGroup curriculumGroup,
+	    final OptionalCurricularCourse optionalCurricularCourse) {
+	if (enrolment == null || enrolment.isOptional()) {
+	    throw new DomainException("error.OptionalEnrolment.invalid.enrolment");
+	}
+	if (curriculumGroup == null) {
+	    throw new DomainException("error.OptionalEnrolment.invalid.curriculumGroup");
+	}
+	if (optionalCurricularCourse == null) {
+	    throw new DomainException("error.OptionalEnrolment.invalid.optional.curricularCourse");
+	}
     }
 }

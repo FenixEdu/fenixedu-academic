@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.enrolment;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
@@ -11,7 +12,17 @@ public class CurriculumModuleMoveWrapper extends EnroledCurriculumModuleWrapper 
 
     public CurriculumModuleMoveWrapper(final CurriculumModule curriculumModule, final ExecutionPeriod executionPeriod) {
 	super(curriculumModule, executionPeriod);
+	checkParameters(curriculumModule, executionPeriod);
 	collectRules = curriculumModule.isRoot() ? true : !curriculumModule.isNoCourseGroupCurriculumGroup();
+    }
+
+    private void checkParameters(final CurriculumModule curriculumModule, final ExecutionPeriod executionPeriod) {
+	if (curriculumModule == null) {
+	    throw new DomainException("error.CurriculumModuleMoveWrapper.invalid.curriculumModule");
+	}
+	if (executionPeriod == null) {
+	    throw new DomainException("error.CurriculumModuleMoveWrapper.invalid.executionPeriod");
+	}
     }
 
     @Override

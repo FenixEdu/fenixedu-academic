@@ -22,6 +22,7 @@ public class DegreesByDegreeType implements DataProvider {
             Collections.sort(result, new BeanComparator("name"));
             return result;
         } else {
+            optionalEnrolmentBean.setDegreeCurricularPlan(null);
             return Collections.emptyList();   
         }
         

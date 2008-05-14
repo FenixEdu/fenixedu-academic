@@ -588,4 +588,13 @@
         <put name="body" value="/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp"></put>
     </definition>
     
+    <!-- OptionalCurricularCoursesLocationManagement -->
+    <definition name="optionalCurricularCoursesLocation.showEnrolments" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/curriculum/enrolments/location/showEnrolments.jsp"></put>
+    </definition>
+    
+    <definition name="optionalCurricularCoursesLocation.chooseNewDestination" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/curriculum/enrolments/location/chooseNewDestination.jsp"></put>
+    </definition>
+
 </tiles-definitions>

@@ -138,6 +138,8 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
 		ectsCredits = Double.valueOf(ectsCredits.doubleValue()
 			+ curriculumModule.getEnroledEctsCredits(executionPeriod.getPreviousExecutionPeriod()).doubleValue());
 
+		//TODO: remove duplicated ects from anual CurricularCourses
+		
 		if (rule.creditsExceedMaximum(ectsCredits)) {
 		    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule(),
 			    "curricularRules.ruleExecutors.CreditsLimitExecutor.exceeded.maximum.credits.limit", ectsCredits

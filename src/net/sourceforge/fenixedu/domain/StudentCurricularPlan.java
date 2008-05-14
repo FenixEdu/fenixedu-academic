@@ -2777,6 +2777,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getRoot().getCurricularCoursePossibleGroups(curricularCourse);
     }
 
+    public Collection<CurriculumGroup> getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(
+	    final CurricularCourse curricularCourse) {
+	return getRoot().getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(curricularCourse);
+    }
+
     public CycleCurriculumGroup getFirstCycle() {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.FIRST_CYCLE) : null;
     }
@@ -2906,4 +2911,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
+    public OptionalEnrolment convertEnrolmentToOptionalEnrolment(final Enrolment enrolment,
+	    final CurriculumGroup curriculumGroup, final OptionalCurricularCourse curricularCourse) {
+	final OptionalEnrolment result = OptionalEnrolment.createBasedOn(enrolment, curriculumGroup, curricularCourse);
+	enrolment.getProgramCertificateRequests().clear();
+	enrolment.getCourseLoadRequests().clear();
+	enrolment.getExamDateCertificateRequests().clear();
+	enrolment.delete();
+	return result;
+    }
+
+    public Enrolment convertOptionalEnrolmentToEnrolment(final OptionalEnrolment enrolment, final CurriculumGroup curriculumGroup) {
+	final Enrolment result = Enrolment.createBasedOn(enrolment, curriculumGroup);
+	enrolment.getProgramCertificateRequests().clear();
+	enrolment.getCourseLoadRequests().clear();
+	enrolment.getExamDateCertificateRequests().clear();
+	enrolment.delete();
+	return result;
+    }
 }

@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EntryPhase;
@@ -81,6 +82,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public Enrolment() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	super.setIsExtraCurricular(Boolean.FALSE);
     }
 
     public Enrolment(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
@@ -1345,4 +1347,47 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return false;
     }
 
+    /**
+     * 
+     * After create new Enrolment, must delete OptionalEnrolment
+     * (to delete OptionalEnrolment remove: ProgramCertificateRequests, CourseLoadRequests, ExamDateCertificateRequests) 
+     * @param optionalEnrolment 
+     * @param curriculumGroup: new CurriculumGroup for Enrolment
+     * @return Enrolment
+     */
+    static Enrolment createBasedOn(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {
+	checkParameters(optionalEnrolment, curriculumGroup);
+
+	final Enrolment enrolment = new Enrolment();
+	enrolment.setCurricularCourse(optionalEnrolment.getCurricularCourse());
+	enrolment.setWeigth(optionalEnrolment.getWeigth());
+	enrolment.setEnrollmentState(optionalEnrolment.getEnrollmentState());
+	enrolment.setExecutionPeriod(optionalEnrolment.getExecutionPeriod());
+	enrolment.setEnrolmentEvaluationType(optionalEnrolment.getEnrolmentEvaluationType());
+	enrolment.setCreatedBy(AccessControl.getUserView().getUtilizador());
+	enrolment.setCreationDateDateTime(optionalEnrolment.getCreationDateDateTime());
+	enrolment.setEnrolmentCondition(optionalEnrolment.getEnrolmentCondition());
+	enrolment.setCurriculumGroup(curriculumGroup);
+
+	enrolment.getEvaluations().addAll(optionalEnrolment.getEvaluations());
+	enrolment.getProgramCertificateRequests().addAll(optionalEnrolment.getProgramCertificateRequests());
+	enrolment.getCourseLoadRequests().addAll(optionalEnrolment.getCourseLoadRequests());
+	enrolment.getExtraExamRequests().addAll(optionalEnrolment.getExtraExamRequests());
+	enrolment.getEnrolmentWrappers().addAll(optionalEnrolment.getEnrolmentWrappers());
+	enrolment.getTheses().addAll(optionalEnrolment.getTheses());
+	enrolment.getExamDateCertificateRequests().addAll(optionalEnrolment.getExamDateCertificateRequests());
+	enrolment.getAttends().addAll(optionalEnrolment.getAttends());
+	enrolment.createEnrolmentLog(EnrolmentAction.ENROL);
+
+	return enrolment;
+    }
+
+    private static void checkParameters(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {
+	if (optionalEnrolment == null) {
+	    throw new DomainException("error.Enrolment.invalid.optionalEnrolment");
+	}
+	if (curriculumGroup == null) {
+	    throw new DomainException("error.Enrolment.invalid.curriculumGroup");
+	}
+    }
 }

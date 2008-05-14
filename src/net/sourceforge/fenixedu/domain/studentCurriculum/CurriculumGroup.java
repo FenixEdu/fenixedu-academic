@@ -818,6 +818,22 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    public Collection<CurriculumGroup> getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(
+	    final CurricularCourse curricularCourse) {
+	Collection<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+	if (getDegreeModule().hasDegreeModuleOnChilds(curricularCourse)) {
+	    result.add(this);
+	}
+
+	for (CurriculumGroup curriculumGroup : this.getCurriculumGroups()) {
+	    result
+		    .addAll(curriculumGroup
+			    .getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(curricularCourse));
+	}
+
+	return result;
+    }
+
     public Collection<NoCourseGroupCurriculumGroup> getNoCourseGroupCurriculumGroups() {
 	Collection<NoCourseGroupCurriculumGroup> res = new HashSet<NoCourseGroupCurriculumGroup>();
 	for (CurriculumGroup curriculumGroup : getCurriculumGroups()) {

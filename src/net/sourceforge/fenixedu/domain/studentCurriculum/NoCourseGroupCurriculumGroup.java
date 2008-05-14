@@ -162,6 +162,11 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(CurricularCourse curricularCourse) {
 	return Collections.singleton(this);
     }
+    
+    @Override
+    public Collection<CurriculumGroup> getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(CurricularCourse curricularCourse) {
+        return Collections.emptyList();
+    }
 
     @Override
     public Double getAprovedEctsCredits() {
