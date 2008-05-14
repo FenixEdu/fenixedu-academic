@@ -84,6 +84,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
@@ -833,6 +834,14 @@ public class Registration extends Registration_Base {
 	}
 
 	return result;
+    }
+
+    public void assertConclusionDate(final Collection<CurriculumModule> result) {
+	for (final CurriculumLine curriculumLine : getApprovedCurriculumLines()) {
+	    if (curriculumLine.calculateConclusionDate() == null) {
+		result.add(curriculumLine);
+	    }
+	}
     }
 
     final public Collection<Enrolment> getPropaedeuticEnrolments() {
