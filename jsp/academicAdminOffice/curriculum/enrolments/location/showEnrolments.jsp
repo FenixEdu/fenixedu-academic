@@ -4,15 +4,12 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
-
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-	<em><bean:message key="label.academicAdminOffice"
-		bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
+
+	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 	<h2><strong><bean:message key="label.optionalCurricularCourses.move"	bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 
-
-	<bean:define id="studentCurricularPlanId" name="studentCurricularPlan"
-		property="idInternal" />
+	<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="idInternal" />
 	<fr:form action="<%="/optionalCurricularCoursesLocation.do?scpID=" + studentCurricularPlanId.toString() %>">
 		<input type="hidden" name="method" />
 		
@@ -26,10 +23,10 @@
 			<br/>
 		</logic:messagesPresent>
 
-		<fr:view name="enrolments" schema="Enrolment.view-curricular-course-name-only">
+		<fr:view name="enrolments" schema="OptionalCurricularCoursesLocation.enrolment.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop05"/>
-				<fr:property name="columnClasses" value="acenter,,"/>
+				<fr:property name="columnClasses" value="acenter width12em,,tdclear tderror1"/>
 				
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="enrolmentsToChange" />

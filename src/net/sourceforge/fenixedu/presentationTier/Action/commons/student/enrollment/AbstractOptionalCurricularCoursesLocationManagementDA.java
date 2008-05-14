@@ -13,13 +13,14 @@ import net.sourceforge.fenixedu.dataTransferObject.student.OptionalCurricularCou
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 public abstract class AbstractOptionalCurricularCoursesLocationManagementDA extends FenixDispatchAction {
 
@@ -43,7 +44,7 @@ public abstract class AbstractOptionalCurricularCoursesLocationManagementDA exte
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 
 	final OptionalCurricularCoursesLocationBean bean = new OptionalCurricularCoursesLocationBean(studentCurricularPlan);
-	final String[] enrolmentIds = ((DynaActionForm) actionForm).getStrings("enrolmentsToChange");
+	final String[] enrolmentIds = ((OptionalCurricularCoursesLocationForm) actionForm).getEnrolmentsToChange();
 	bean.addEnrolments(getEnrolments(bean.getStudentCurricularPlan(), enrolmentIds));
 
 	request.setAttribute("optionalCurricularCoursesLocationBean", bean);
@@ -68,21 +69,22 @@ public abstract class AbstractOptionalCurricularCoursesLocationManagementDA exte
 	final OptionalCurricularCoursesLocationBean bean = getBean();
 	try {
 	    executeService("MoveCurriculumLines", bean);
+	    return backToStudentEnrolments(mapping, actionForm, request, response);
+
+	} catch (EnrollmentDomainException ex) {
+	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
-	    request.setAttribute("optionalCurricularCoursesLocationBean", bean);
-	    request.setAttribute("studentCurricularPlan", bean.getStudentCurricularPlan());
-	    return mapping.findForward("chooseNewDestination");
+	    addActionMessage(request, e.getMessage(), e.getArgs());
 	} catch (FenixServiceException e) {
 	    addActionMessage(request, e.getMessage());
-	    request.setAttribute("optionalCurricularCoursesLocationBean", bean);
-	    request.setAttribute("studentCurricularPlan", bean.getStudentCurricularPlan());
-	    return mapping.findForward("chooseNewDestination");
 	}
 
-	return backToStudentEnrolments(mapping, actionForm, request, response);
+	request.setAttribute("optionalCurricularCoursesLocationBean", bean);
+	request.setAttribute("studentCurricularPlan", bean.getStudentCurricularPlan());
+	return mapping.findForward("chooseNewDestination");
+
     }
-    
+
     protected StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {
 	return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request, "scpID"));
     }
@@ -110,6 +112,19 @@ public abstract class AbstractOptionalCurricularCoursesLocationManagementDA exte
 	    }
 	}
 	return null;
+    }
+    
+    static public class OptionalCurricularCoursesLocationForm extends FenixActionForm {
+	    
+        private String[] enrolmentsToChange;
+    
+        public String[] getEnrolmentsToChange() {
+            return enrolmentsToChange;
+        }
+    
+        public void setEnrolmentsToChange(String[] enrolmentsToChange) {
+            this.enrolmentsToChange = enrolmentsToChange;
+        }
     }
 
     abstract public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,

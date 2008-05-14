@@ -6,13 +6,10 @@
 
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-	<em><bean:message key="label.academicAdminOffice"
-		bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
+	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 	<h2><strong><bean:message key="label.optionalCurricularCourses.move" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 
-
 	<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="idInternal" />
-	
 	<bean:define id="url">/optionalCurricularCoursesLocation.do?scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
 	
 	<fr:form action="<%= url.toString() %>">
@@ -20,7 +17,7 @@
 		
 		<logic:messagesPresent message="true">
 			<ul class="nobullet list6">
-				<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
 					<li><span class="error0"><bean:write name="messages" /></span></li>
 				</html:messages>
 			</ul>

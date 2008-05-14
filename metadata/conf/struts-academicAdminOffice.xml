@@ -169,11 +169,6 @@
 	     <form-property name="method" type="java.lang.String" />
       </form-bean>
       
-       <form-bean name="optionalCurricularCoursesLocationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	     <form-property name="method" type="java.lang.String" />
-	     <form-property name="enrolmentsToChange" type="java.lang.String[]" />
-      </form-bean>
-
 	  <form-bean name="candidacyForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 	     <form-property name="method" type="java.lang.String" />
 	     <form-property name="degreesToDelete" type="java.lang.String[]" />
@@ -902,15 +897,6 @@
             <forward name="createEnrolmentOutOfPeriodEvent" path="accountingEventsManagement.createEnrolmentOutOfPeriodEvent" />
         </action>
         
-        <action path="/optionalCurricularCoursesLocation" name="optionalCurricularCoursesLocationForm"
-        		type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.OptionalCurricularCoursesLocationManagementDA"
-        		parameter="method">
-        		
-       		<forward name="showEnrolments" path="optionalCurricularCoursesLocation.showEnrolments" />
-       		<forward name="chooseNewDestination" path="optionalCurricularCoursesLocation.chooseNewDestination" />
-       		<forward name="backToStudentEnrolments" path="/studentEnrolments.do?method=prepare" />
-        </action>
-
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

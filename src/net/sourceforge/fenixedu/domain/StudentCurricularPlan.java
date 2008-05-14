@@ -2913,6 +2913,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public OptionalEnrolment convertEnrolmentToOptionalEnrolment(final Enrolment enrolment,
 	    final CurriculumGroup curriculumGroup, final OptionalCurricularCourse curricularCourse) {
+	if (isApproved(curricularCourse)) {
+	    throw new DomainException("error.Enrolment.duplicate.enrolment", curricularCourse.getName());
+	}
 	final OptionalEnrolment result = OptionalEnrolment.createBasedOn(enrolment, curriculumGroup, curricularCourse);
 	enrolment.getProgramCertificateRequests().clear();
 	enrolment.getCourseLoadRequests().clear();
