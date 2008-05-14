@@ -165,7 +165,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public String getFullPath() {
-	if (isRoot()) {
+	if (isRoot() || !isBoxStructure()) {
 	    return getName().getContent();
 	} else {
 	    return getCurriculumGroup().getFullPath() + " > " + getName().getContent();
