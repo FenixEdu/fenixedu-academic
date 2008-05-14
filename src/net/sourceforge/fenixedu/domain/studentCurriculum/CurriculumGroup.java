@@ -780,6 +780,18 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    public void assertConclusionDate(final Collection<CurriculumModule> result) {
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.isConcluded(getApprovedCurriculumLinesLastExecutionYear()).isValid()
+		    && curriculumModule.hasAnyApprovedCurriculumLines()) {
+		final YearMonthDay curriculumModuleConclusionDate = curriculumModule.calculateConclusionDate();
+		if (curriculumModuleConclusionDate == null) {
+		    result.add(curriculumModule);
+		}
+	    }
+	}
+    }
+
     @Override
     public Curriculum getCurriculum(final ExecutionYear executionYear) {
 	final Curriculum curriculum = Curriculum.createEmpty(this, executionYear);
@@ -813,6 +825,22 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
 	for (CurriculumGroup curriculumGroup : this.getCurriculumGroups()) {
 	    result.addAll(curriculumGroup.getCurricularCoursePossibleGroups(curricularCourse));
+	}
+
+	return result;
+    }
+
+    public Collection<CurriculumGroup> getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(
+	    final CurricularCourse curricularCourse) {
+	Collection<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+	if (getDegreeModule().hasDegreeModuleOnChilds(curricularCourse)) {
+	    result.add(this);
+	}
+
+	for (CurriculumGroup curriculumGroup : this.getCurriculumGroups()) {
+	    result
+		    .addAll(curriculumGroup
+			    .getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(curricularCourse));
 	}
 
 	return result;
