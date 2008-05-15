@@ -291,7 +291,6 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
      * 
      * @return the field count
      */
-    @Override
     public int size() {
         return 3;
     }

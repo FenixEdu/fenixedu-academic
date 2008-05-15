@@ -59,7 +59,6 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	return (AcademicChronology) getChronology();
     }
 
-    @Override
     public Chronology getChronology() {
 	if(academicChronology == null) {	    
 	    academicChronology = getAcademicCalendar().getAcademicChronology();	    
@@ -67,12 +66,10 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	return academicChronology;
     }   
 
-    @Override
     public long getStartMillis() {
 	return getAcademicCalendarEntry().getBegin().getMillis();	
     }
 
-    @Override
     public long getEndMillis() {
 	return getAcademicCalendarEntry().getEnd().getMillis();
     }
