@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
@@ -1059,7 +1060,9 @@ public class CreateTestData {
 
     public static void main(String[] args) {
 	try {
-	    FenixFramework.initialize("build/WEB-INF/classes/domain_model.dml", null);
+	    Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
+	    FenixFramework.initialize(config);
+
 	    RootDomainObject.init();
 	    setPrivledges();
 	    createTestData();

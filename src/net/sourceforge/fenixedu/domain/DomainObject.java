@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.lang.reflect.Field;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu._development.LogLevel;
@@ -12,17 +11,13 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixframework.pstm.Transaction;
-import pt.ist.fenixframework.pstm.VersionedSubject;
-
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.metadata.ClassDescriptor;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 /**
  * @author jpvl
  */
-public abstract class DomainObject extends DomainObject_Base implements dml.runtime.FenixDomainObject,pt.ist.fenixframework.DomainObject {
+public abstract class DomainObject extends DomainObject_Base {
 
     static final protected Comparator<DomainObject> COMPARATOR_BY_ID = new Comparator<DomainObject>() {
         public int compare(DomainObject o1, DomainObject o2) {
@@ -39,67 +34,20 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
         }
     }
 
-    private Integer idInternal;
-
     public DomainObject() {
         super();
-        // All domain objects become persistent upon there creation.
-        // Ensure that this object gets an idInternal
-        // The idInternal will be used by both the hashcode and the equals methods
-        // jcachopo: This should be changed in the future...
-        ensureIdInternal();
-        Transaction.storeNewObject(this);
-    }
-
-    public Integer getIdInternal() {
-        return idInternal;
     }
     
-    public Integer get$idInternal() {
-        return idInternal;
-    }
-    
-    public void setIdInternal(Integer idInternal) {
-        if ((this.idInternal != null) && (! this.idInternal.equals(idInternal))) {
-            System.out.println("!!!!!! WARNING !!!!!! Changing the idInternal of an object: " + this);
-            //throw new Error("Cannot change the idInternal of an object");
-        }
-        this.idInternal = idInternal;
-    }
-    
-    public void set$idInternal(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-
-    private void ensureIdInternal() {
+    @Override
+    protected final void ensureIdInternal() {
         try {
-            PersistenceBroker broker = Transaction.getOJBBroker();
-            ClassDescriptor cld = broker.getClassDescriptor(this.getClass());
-            Integer id = (Integer)broker.serviceSequenceManager().getUniqueValue(cld.getFieldDescriptorByName("idInternal"));
-            setIdInternal(id);
-        } catch (Exception e) {
+            super.ensureIdInternal();
+        } catch (Throwable t) {
             if (LogLevel.WARN) {
                 System.out.println("Something went wrong when initializing the idInternal.  Not setting it...");
             }
-            throw new UnableToDetermineIdException(e);
+            throw new UnableToDetermineIdException(t);
         }
-    }
-
-    public final int hashCode() {
-        return super.hashCode();
-    }
-
-    public final boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    public long getOID() {
-        return Transaction.getOIDFor(this);
-    }
-
-    public static DomainObject fromOID(long oid) {
-        return (DomainObject)Transaction.getObjectForOID(oid);
     }
 
     public boolean isDeleted() {
@@ -120,28 +68,6 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
         Transaction.deleteObject(this);
     }
 
-    public jvstm.VBoxBody addNewVersion(String attrName, int txNumber) {
-	Class myClass = this.getClass();
-	while (myClass != Object.class) {
-	    try {
-		Field f = myClass.getDeclaredField(attrName);
-		f.setAccessible(true);
-		return ((VersionedSubject)f.get(this)).addNewVersion(attrName, txNumber);
-	    } catch (NoSuchFieldException nsfe) {
-		myClass = myClass.getSuperclass();
-	    } catch (IllegalAccessException iae) {
-		throw new Error("Couldn't addNewVersion to attribute " + attrName + ": " + iae);
-	    } catch (SecurityException se) {
-		throw new Error("Couldn't addNewVersion to attribute " + attrName + ": " + se);
-	    }
-	}
-        
-	if (LogLevel.WARN) {
-            System.out.println("!!! WARNING !!!: addNewVersion couldn't find the appropriate slot");
-	}
-        return null;
-    }
-
     protected String getCurrentUser() {
     	if(AccessControl.getUserView() != null) {
     	    return AccessControl.getUserView().getUtilizador();
@@ -155,11 +81,6 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
 	return StringAppender.append(getClass().getName(), "(", getIdInternal().toString(), ")");
     }
 
-    public final void readFromResultSet(java.sql.ResultSet rs) throws java.sql.SQLException {
-        int txNumber = Transaction.current().getNumber();
-        readSlotsFromResultSet(rs, txNumber);
-    }
-    
     /**
      * This method allows you to obtains the reification of this object's type.
      * Note that the corresponding reification may no yet exist and, thus, this
@@ -169,6 +90,5 @@ public abstract class DomainObject extends DomainObject_Base implements dml.runt
      */
     public MetaDomainObject getMeta() {
         return MetaDomainObject.getMeta(getClass());
-    }
-    
+    }    
 }

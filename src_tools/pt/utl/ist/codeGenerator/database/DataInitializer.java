@@ -1,5 +1,7 @@
 package pt.utl.ist.codeGenerator.database;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Login;
@@ -28,7 +30,9 @@ public class DataInitializer {
 
     public static void main(String[] args) {
 
-	FenixFramework.initialize("build/WEB-INF/classes/domain_model.dml", null);
+        Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
+        FenixFramework.initialize(config);
+
 	RootDomainObject.init();
 
 	try {

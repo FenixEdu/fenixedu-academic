@@ -46,12 +46,7 @@ public class StartupServlet extends HttpServlet {
         super.init(config);
 
         String domainModelPath = getServletContext().getRealPath(getInitParameter("domainmodel"));
-        Config frameworkConfig = new Config() {{
-            appName = PropertiesManager.getProperty("app.name");
-            errorIfChangingDeletedObject = 
-                PropertiesManager.getBooleanProperty("error.if.changing.deleted.object");
-        }};
-        FenixFramework.initialize(domainModelPath, frameworkConfig);
+        FenixFramework.initialize(PropertiesManager.getFenixFrameworkConfig(domainModelPath));
 
         Service.init(RootDomainObject.getInstance());
 

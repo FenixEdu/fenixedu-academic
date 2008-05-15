@@ -48,9 +48,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.fenixframework.FenixFramework;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.pstm.MissingObjectException;
 import pt.ist.fenixframework.pstm.Transaction;
 import dml.DomainClass;
@@ -115,7 +116,7 @@ public class DomainBrowserServlet extends HttpServlet {
             return;
         }
         
-        DomainObject domObj = DomainObject.fromOID(params.oid);
+        DomainObject domObj = Transaction.getObjectForOID(params.oid);
         DomainClass domClass = getDomainClass(domObj);
 
         out.println("<H1>");
@@ -197,7 +198,7 @@ public class DomainBrowserServlet extends HttpServlet {
             return;
         }
 
-        DomainObject domObj = DomainObject.fromOID(params.oid);
+        DomainObject domObj = Transaction.getObjectForOID(params.oid);
 
         out.println("<H1>");
         renderObjectId(out, domObj);

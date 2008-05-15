@@ -72,19 +72,6 @@ manager.url=http://localhost:8080/manager
 #   db.assiduousness.alias: 
 #   db.assiduousness.validationQuery: 
 #
-#   db.personFilter.name: 
-#   db.personFilter.platform: 
-#   db.personFilter.driver: 
-#   db.personFilter.protocol: 
-#   db.personFilter.subprotocol: 
-#   db.personFilter.user: 
-#   db.personFilter.pass: 
-#   db.personFilter.alias: 
-#   db.personFilter.validationQuery: 
-#   db.personFilter.other: 
-#   db.personFilter.errorFile: 
-#   db.personFilter.log: 
-#
 #   db.slide.driver: 
 #   db.slide.alias: 
 #   db.slide.user: 
@@ -121,19 +108,6 @@ db.projectManagement.validationQuery=select 1
 db.giaf.user=root
 db.giaf.pass=
 db.giaf.alias=//localhost:3306/AssiduidadeOracleTeste
-
-db.personFilter.name=personFilter
-db.personFilter.platform=MySQL
-db.personFilter.driver=com.mysql.jdbc.Driver
-db.personFilter.protocol=jdbc
-db.personFilter.subprotocol=mysql
-db.personFilter.user=root
-db.personFilter.pass=
-db.personFilter.alias=//localhost:3306/personFilter
-db.personFilter.validationQuery=select 1
-db.personFilter.other=-1
-db.personFilter.errorFile=FicheiroErros.txt
-db.personFilter.log=true
 
 db.slide.driver=com.mysql.jdbc.Driver
 db.slide.alias=mysql://localhost:3306/slide

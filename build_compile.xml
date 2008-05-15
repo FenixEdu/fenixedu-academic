@@ -151,44 +151,6 @@
 	<target name="replace-property-values">
 
 		<sequential>
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}/OJB/"
-					 propertyFile="build.properties">
-				<include name="repository_database.xml"/>
-				<replacefilter token="@db.user@"
-							   property="db.user"/>
-				<replacefilter token="@db.pass@" 
-							   property="db.pass"/>
-				<replacefilter token="@db.name@"
-							   property="db.name"/>
-				<replacefilter token="@db.alias@"
-							   property="db.alias"/>
-
-				<replacefilter token="@db.personFilter.user@" 
-				    			   property="db.personFilter.user"/>
-				<replacefilter token="@db.personFilter.pass@" 
-				    			   property="db.personFilter.pass"/>
-				<replacefilter token="@db.personFilter.name@" 
-				    			   property="db.personFilter.name"/>
-				<replacefilter token="@db.personFilter.alias@" 
-				    			   property="db.personFilter.alias"/>
-				<replacefilter token="@db.personFilter.platform@" 
-				    			   property="db.personFilter.platform"/>
-				<replacefilter token="@db.personFilter.driver@" 
-				    			   property="db.personFilter.driver"/>
-				<replacefilter token="@db.personFilter.protocol@" 
-				    			   property="db.personFilter.protocol"/>
-				<replacefilter token="@db.personFilter.subprotocol@" 
-				    			   property="db.personFilter.subprotocol"/>
-				<replacefilter token="@db.personFilter.validationQuery@" 
-				    			   property="db.personFilter.validationQuery"/>
-				<replacefilter token="@db.personFilter.other@" 
-				    			   property="db.personFilter.other"/>
-				<replacefilter token="@db.personFilter.errorFile@" 
-				    			   property="db.personFilter.errorFile"/>
-				<replacefilter token="@db.personFilter.log@" 
-				    			   property="db.personFilter.log"/>
-			</replace>
-
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="Domain.xml"/>
@@ -324,6 +286,12 @@
 						   value="${login.page}"/>
 				<replacefilter token="@default.persistenceSupport@"
 		    			   property="default.persistenceSupport"/>
+				<replacefilter token="@db.user@"
+							   property="db.user"/>
+				<replacefilter token="@db.pass@" 
+							   property="db.pass"/>
+				<replacefilter token="@db.alias@"
+							   property="db.alias"/>
 				<replacefilter token="@cas.enabled@"
 			  			   property="cas.enabled"/>
 				<replacefilter token="@cas.loginUrl@"

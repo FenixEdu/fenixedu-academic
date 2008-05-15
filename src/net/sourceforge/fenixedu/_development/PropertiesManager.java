@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu._development;
 import java.io.IOException;
 import java.util.Properties;
 
+import pt.ist.fenixframework.Config;
+
 /**
  * @author Luis Cruz
  *
@@ -40,4 +42,14 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
         properties.setProperty(key, value);
     }
 
+    public static Config getFenixFrameworkConfig(final String domainModel) {
+        return new Config() {{
+            domainModelPath = domainModel;
+            dbAlias = getProperty("db.alias");
+            dbUsername = getProperty("db.user");
+            dbPassword = getProperty("db.pass");
+            appName = getProperty("app.name");
+            errorIfChangingDeletedObject = getBooleanProperty("error.if.changing.deleted.object");
+        }};
+    }
 }

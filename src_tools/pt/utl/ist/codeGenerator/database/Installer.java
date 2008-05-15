@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginAlias;
@@ -615,7 +616,10 @@ public class Installer extends Task implements TaskContainer {
 	    String username = getFenixManagerUser();
 	    String password = getFenixManagerUserPassword();
 	    Gender gender = Gender.parseGender(getFenixManagerUserGender());
-	    FenixFramework.initialize("build/WEB-INF/classes/domain_model.dml", null);
+
+	    Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
+	    FenixFramework.initialize(config);
+
 	    RootDomainObject.init();
 
 	    boolean txFinished = false;

@@ -228,12 +228,9 @@ public class SQLUpdateGenerator {
 
     public static void main(String[] args) {
 	try {
-	    Config frameworkConfig = new Config() {{
-		appName = PropertiesManager.getProperty("app.name");
-		errorIfChangingDeletedObject = 
-		    PropertiesManager.getBooleanProperty("error.if.changing.deleted.object");
-	    }};
-	    FenixFramework.initialize("build/WEB-INF/classes/domain_model.dml", frameworkConfig);
+	    Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
+	    FenixFramework.initialize(config);
+
 	    final PersistenceBroker persistenceBroker = PersistenceBrokerFactory.defaultPersistenceBroker();
 	    connection = persistenceBroker.serviceConnectionManager().getConnection();
 	    generate();
