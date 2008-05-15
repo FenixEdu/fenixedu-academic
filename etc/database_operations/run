@@ -29,6 +29,5 @@ function executeWithTempFile() {
 }
 
 execute "ExecutionPeriod refactoring" executioPeriodRefactoring.sql
-
-
 execute "Change timestamps columns to datetime" alterTimestamps.sql
+execute "Change send email path" changeSendEmailPath.sql
