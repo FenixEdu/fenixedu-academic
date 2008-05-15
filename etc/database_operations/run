@@ -28,6 +28,6 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "ExecutionPeriod refactoring" executioPeriodRefactoring.sql
+execute "ExecutionPeriod refactoring" executionPeriodRefactoring.sql
 execute "Change timestamps columns to datetime" alterTimestamps.sql
 execute "Change send email path" changeSendEmailPath.sql
