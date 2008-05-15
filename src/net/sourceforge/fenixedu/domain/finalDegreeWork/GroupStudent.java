@@ -18,6 +18,9 @@ public class GroupStudent extends GroupStudent_Base {
 
     public void delete() {
         removeRootDomainObject();
+        removeFinalDegreeDegreeWorkGroup();
+        removeFinalDegreeWorkProposalConfirmation();
+        removeRegistration();
         deleteDomainObject();
     }
 

@@ -6,12 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -24,9 +27,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
             FenixServiceException {
     	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
-    	Registration registration = person.getStudentByType(DegreeType.DEGREE);
-    	if (registration == null) registration = person.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
-    	if (registration == null) registration = person.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    	final Registration registration = getRegistrationForExecutionDegree(person, executionDegree);
     	if (registration == null) {
             throw new FenixServiceException("Error reading student to place in final degree work group.");
     	}
@@ -53,6 +54,27 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
         }
 
         return true;
+    }
+
+    private Registration getRegistrationForExecutionDegree(final Person person, final ExecutionDegree executionDegree) {
+	final Student student = person.getStudent();
+	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+	for (final Registration registration : student.getRegistrationsSet()) {
+	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		if (degreeCurricularPlan == studentCurricularPlan.getDegreeCurricularPlan()) {
+		    return registration;
+		}
+	    }
+	}
+	for (final Registration registration : student.getRegistrationsSet()) {
+	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getSecondCycle();
+		if (cycleCurriculumGroup != null && cycleCurriculumGroup.getDegreeCurricularPlanOfDegreeModule() == degreeCurricularPlan) {
+		    return registration;
+		}
+	    }
+	}
+	return null;
     }
 
     public class GroupStudentCandidaciesExistException extends FenixServiceException {

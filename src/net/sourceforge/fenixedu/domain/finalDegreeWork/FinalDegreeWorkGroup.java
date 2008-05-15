@@ -36,4 +36,18 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 		return true;
 	}
 
+	public void delete() {
+	    removeExecutionDegree();
+	    for (final GroupProposal groupProposal : getGroupProposalsSet()) {
+		groupProposal.delete();
+	    }
+	    for (final GroupStudent groupStudent : getGroupStudentsSet()) {
+		groupStudent.delete();
+	    }
+	    removeProposalAttributed();
+	    removeProposalAttributedByTeacher();
+	    removeRootDomainObject();
+	    deleteDomainObject();
+	}
+
 }
