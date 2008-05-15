@@ -2,8 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <ul>
-	<li><html:link page="/sendEmail.do?method=prepare&amp;allowChangeSender=false&amp;fromName=Conselho Directivo&amp;from=cd@ist.utl.pt"><bean:message key="label.send.mail"/> (New)</html:link></li>
-    <li><html:link page="/sendMail.faces"><bean:message key="label.send.mail"/></html:link></li>
+	<li><html:link page="/sendEmail.do?method=prepare&amp;allowChangeSender=false&amp;fromName=Conselho Directivo&amp;from=cd@ist.utl.pt"><bean:message key="label.send.mail"/></html:link></li>
     <li><html:link page="/assiduousnessStructure.do?method=showAssiduousnessStructure"><bean:message key="link.assiduousnessStructure"/></html:link></li>    <li><html:link page="/gratuitySection.do"><bean:message key="link.masterDegree.administrativeOffice.gratuity" /></html:link></li>
     <li><html:link page="/manageCardGeneration.do?method=firstPage"><bean:message key="link.manage.card.generation" /></html:link></li>
 
