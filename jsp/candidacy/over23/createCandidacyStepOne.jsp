@@ -19,7 +19,7 @@
 </fr:hasMessages>
 
 <fr:form action="/caseHandlingOver23IndividualCandidacyProcess.do">
- 	<html:hidden name="candidacyForm" property="method" value="fillPersonalInformation" />
+ 	<html:hidden property="method" value="fillPersonalInformation" />
 
 	<fr:edit id="over23IndividualCandidacyProcessBean" name="over23IndividualCandidacyProcessBean" visible="false" />
 

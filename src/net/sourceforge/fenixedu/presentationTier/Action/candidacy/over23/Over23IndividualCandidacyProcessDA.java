@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualC
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
@@ -30,9 +31,8 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
-@Mapping(path = "/caseHandlingOver23IndividualCandidacyProcess", module = "academicAdminOffice", formBean = "candidacyForm")
+@Mapping(path = "/caseHandlingOver23IndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = Over23IndividualCandidacyProcessDA.CandidacyForm.class)
 @Forwards( { @Forward(name = "intro", path = "/candidacy/over23/intro.jsp"),
 	@Forward(name = "list-processes", path = "/academicAdminOffice/caseHandling/listProcesses.jsp"),
 	@Forward(name = "list-allowed-activities", path = "/academicAdminOffice/caseHandling/listActivities.jsp"),
@@ -174,10 +174,12 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	final Over23IndividualCandidacyProcessBean bean = getCandidacyBean();
 	request.setAttribute("over23IndividualCandidacyProcessBean", bean);
 
-	final String[] degreeIDs = ((DynaActionForm) actionForm).getStrings("degreesToDelete");
-	for (final Degree degree : getDegrees(degreeIDs)) {
-	    if (bean.containsDegree(degree)) {
-		bean.removeDegree(degree);
+	final String[] degreeIDs = ((CandidacyForm) actionForm).getDegreesToDelete();
+	if (degreeIDs != null) {
+	    for (final Degree degree : getDegrees(degreeIDs)) {
+		if (bean.containsDegree(degree)) {
+		    bean.removeDegree(degree);
+		}
 	    }
 	}
 
@@ -345,4 +347,17 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
+
+    static public class CandidacyForm extends FenixActionForm {
+	private String[] degreesToDelete;
+
+	public String[] getDegreesToDelete() {
+	    return degreesToDelete;
+	}
+
+	public void setDegreesToDelete(String[] degreesToDelete) {
+	    this.degreesToDelete = degreesToDelete;
+	}
+    }
+    
 }

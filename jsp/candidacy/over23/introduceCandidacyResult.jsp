@@ -15,7 +15,7 @@
 
 <fr:form action='<%="/caseHandlingOver23IndividualCandidacyProcess.do?processId=" + processId.toString() %>'>
 
- 	<html:hidden name="candidacyForm" property="method" value="executeIntroduceCandidacyResult" />
+ 	<html:hidden property="method" value="executeIntroduceCandidacyResult" />
 	<fr:edit id="over23IndividualCandidacyResultBean" name="over23IndividualCandidacyResultBean" visible="false" />
 
 	<logic:notEmpty name="over23IndividualCandidacyResultBean" property="candidacyProcess">

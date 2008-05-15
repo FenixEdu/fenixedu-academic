@@ -13,9 +13,11 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividualCandidacyProcess_Base {
 
@@ -66,8 +68,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     public String getDisplayName() {
 	String name = ResourceBundle.getBundle("resources/CaseHandlingResources").getString("label." + getClass().getName());
 	name += " - " + getCandidacy().getPerson().getName() + " (" + getCandidacy().getPerson().getDocumentIdNumber() + "), ";
-	name += ResourceBundle.getBundle("resources/EnumerationResources")
-		.getString(getCandidacy().getState().getQualifiedName());
+	name += ResourceBundle.getBundle("resources/EnumerationResources").getString(getCandidacyState().getQualifiedName());
 	return name;
     }
 
@@ -266,11 +267,11 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    if (!process.isCandidacyAccepted()) {
 		throw new PreConditionNotValidException();
 	    }
-	    
+
 	    if (process.hasRegistrationForCandidacy()) {
 		throw new PreConditionNotValidException();
 	    }
-	    
+
 	    if (!process.isPublished()) {
 		throw new PreConditionNotValidException();
 	    }
@@ -285,7 +286,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	private void createRegistration(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
 	    final Registration registration = new Registration(candidacyProcess.getCandidacyPerson(),
-		    getDegreeCurricularPlan(candidacyProcess));
+		    getDegreeCurricularPlan(candidacyProcess), null, RegistrationAgreement.NORMAL, CycleType.SECOND_CYCLE);
 	    registration.setIngression(Ingression.CIA2C); //TODO: change ingression
 	}
 

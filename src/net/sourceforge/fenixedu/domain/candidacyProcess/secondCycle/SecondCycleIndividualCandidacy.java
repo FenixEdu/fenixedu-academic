@@ -55,7 +55,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 		    DateFormatUtil.DEFAULT_DATE_FORMAT));
 	}
 	if (person.hasValidSecondCycleIndividualCandidacy(process.getCandidacyExecutionInterval())) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.person.already.has.candidacy");
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.person.already.has.candidacy", process
+		    .getCandidacyExecutionInterval().getName());
 	}
 	if (degree == null || personHasDegree(person, degree)) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degrees");

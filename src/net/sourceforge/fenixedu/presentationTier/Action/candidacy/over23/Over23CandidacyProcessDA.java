@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualC
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
@@ -36,7 +37,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
-@Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBean = "candidacyForm")
+@Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "intro", path = "/candidacy/over23/intro.jsp"),
 	@Forward(name = "list-processes", path = "/academicAdminOffice/caseHandling/listProcesses.jsp"),
 	@Forward(name = "list-allowed-activities", path = "/academicAdminOffice/caseHandling/listActivities.jsp"),

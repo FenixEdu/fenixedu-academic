@@ -26,7 +26,7 @@
 </fr:hasMessages>
 
 <fr:form action="/caseHandlingSecondCycleIndividualCandidacyProcess.do">
- 	<html:hidden name="candidacyForm" property="method" value="fillPersonalInformation" />
+ 	<html:hidden property="method" value="fillPersonalInformation" />
 
 	<fr:edit id="secondCycleIndividualCandidacyProcessBean" name="secondCycleIndividualCandidacyProcessBean" visible="false" />
 

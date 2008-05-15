@@ -17,7 +17,7 @@
 
 <fr:form action='<%="/caseHandlingSecondCycleIndividualCandidacyProcess.do?processId=" + processId.toString() %>'>
 
- 	<html:hidden name="candidacyForm" property="method" value="executeEditCandidacyPersonalInformation" />
+ 	<html:hidden property="method" value="executeEditCandidacyPersonalInformation" />
 	<fr:edit id="secondCycleIndividualCandidacyProcessBean" name="secondCycleIndividualCandidacyProcessBean" visible="false" />
 
 	<logic:notEmpty name="secondCycleIndividualCandidacyProcessBean" property="personBean">

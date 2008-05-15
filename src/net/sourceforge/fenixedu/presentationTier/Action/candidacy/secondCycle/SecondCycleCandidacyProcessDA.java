@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
@@ -19,9 +20,11 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleI
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.SpreadsheetXLSExporter;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -31,7 +34,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
-@Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdminOffice", formBean = "candidacyForm")
+@Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "intro", path = "/candidacy/secondCycle/intro.jsp"),
 	@Forward(name = "list-processes", path = "/academicAdminOffice/caseHandling/listProcesses.jsp"),
 	@Forward(name = "list-allowed-activities", path = "/academicAdminOffice/caseHandling/listActivities.jsp"),
@@ -178,37 +181,52 @@ public class SecondCycleCandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     private Spreadsheet buildReport(final Degree degree, final List<SecondCycleIndividualCandidacyProcess> values) {
-	final Spreadsheet spreadsheet = new CandidacyReport(degree.getSigla());
-	addHeader(spreadsheet);
+	final Spreadsheet spreadsheet = new CandidacyReport(degree.getSigla(), getHeader());
 
 	for (final SecondCycleIndividualCandidacyProcess process : values) {
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(process.getCandidacyPerson().getName());
 	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
-	    row.setCell(" "); // EP
+	    row.setCell(process.getCandidacyProfessionalExperience() != null ? process.getCandidacyProfessionalExperience()
+		    .toString() : " ");
 	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getDegreeDesignation() + " / "
 		    + process.getCandidacyPrecedentDegreeInformation().getInstitution().getName());
-	    row.setCell(" "); // Affinity
-	    row.setCell(" "); // DegreeNature
-	    row.setCell(" "); // Grade
-	    row.setCell(" "); // Interview Grade
-	    row.setCell(" "); // Grade
-	    row.setCell(" "); // Result
+	    row.setCell(process.getCandidacyAffinity() != null ? process.getCandidacyAffinity().toString() : " ");
+	    row.setCell(process.getCandidacyDegreeNature() != null ? process.getCandidacyDegreeNature().toString() : " ");
+	    row.setCell(process.getCandidacyGrade() != null ? process.getCandidacyGrade().toString() : " ");
+	    row.setCell(process.getCandidacyInterviewGrade() != null ? process.getCandidacyInterviewGrade() : " ");
+	    row.setCell(process.getCandidacySeriesGrade() != null ? process.getCandidacySeriesGrade().toString() : " ");
+	    if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
+		row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", LanguageUtils.getLocale()).getString(
+			process.getCandidacyState().getQualifiedName()));
+	    } else {
+		row.setCell(" ");
+	    }
 	}
 
 	return spreadsheet;
     }
 
-    private void addHeader(final Spreadsheet spreadsheet) {
-	// TODO temporary
-	spreadsheet.setHeaders(new String[] { "Nome", "Média Final Curso (MFC)", "Exp. Prof. (EP)", "Curso / Escola",
-		"Afinidade", "Natureza", "Nota", "Entrevista", "Nota de seriação", "Resultado" });
+    private List<Object> getHeader() {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils.getLocale());
+	final List<Object> result = new ArrayList<Object>();
+	result.add(bundle.getString("label.name"));
+	result.add(bundle.getString("label.candidacy.mfc"));
+	result.add(bundle.getString("label.candidacy.professionalExperience"));
+	result.add(bundle.getString("label.candidacy.degree.and.school"));
+	result.add(bundle.getString("label.candidacy.affinity"));
+	result.add(bundle.getString("label.candidacy.degreeNature"));
+	result.add(bundle.getString("label.candidacy.grade"));
+	result.add(bundle.getString("label.candidacy.interviewGrade"));
+	result.add(bundle.getString("label.candidacy.seriesGrade"));
+	result.add(bundle.getString("label.candidacy.result"));
+	return result;
     }
 
     private class CandidacyReport extends Spreadsheet {
 
-	public CandidacyReport(final String name) {
-	    super(name);
+	public CandidacyReport(final String name, final List<Object> header) {
+	    super(name, header);
 	}
     }
 

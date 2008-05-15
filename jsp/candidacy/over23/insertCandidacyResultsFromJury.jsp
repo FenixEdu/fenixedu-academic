@@ -14,7 +14,7 @@
 <bean:define id="processId" name="process" property="idInternal" />
 
 <fr:form action='<%="/caseHandlingOver23CandidacyProcess.do?processId=" + processId.toString() %>'>
- 	<html:hidden name="candidacyForm" property="method" value="executeInsertResultsFromJury" />
+ 	<html:hidden property="method" value="executeInsertResultsFromJury" />
 
 	<h3 class="mtop15 mbottom025"><bean:message key="label.information" bundle="APPLICATION_RESOURCES"/></h3>
 	<fr:edit id="over23IndividualCandidacyResultBeans"

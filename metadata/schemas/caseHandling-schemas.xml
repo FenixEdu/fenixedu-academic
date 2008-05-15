@@ -111,7 +111,7 @@
    	<slot name="degreeToAdd" layout="menu-select" key="label.degree.name">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.Over23IndividualCandidacyDegreesProvider" />
         <property name="format" value="${presentationName}" />
-        <property name="sortBy" value="name"/>
+        <property name="sortBy" value="degreeType, name"/>
     </slot>
 </schema>
 
@@ -169,7 +169,7 @@
    	<slot name="selectedDegree" layout="menu-select" key="label.degree.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCycleIndividualCandidacyDegreesProvider" />
         <property name="format" value="${presentationName}" />
-        <property name="sortBy" value="name"/>
+        <property name="sortBy" value="degreeType, name"/>
     </slot>
 </schema>
 

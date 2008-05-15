@@ -47,7 +47,8 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	    throw new DomainException("error.Over23IndividualCandidacy.invalid.process");
 	}
 	if (person.hasValidOver23IndividualCandidacy(process.getCandidacyExecutionInterval())) {
-	    throw new DomainException("error.Over23IndividualCandidacy.person.already.has.candidacy");
+	    throw new DomainException("error.Over23IndividualCandidacy.person.already.has.candidacy", process
+		    .getCandidacyExecutionInterval().getName());
 	}
 	checkParameters(process, candidacyDate, degrees);
     }

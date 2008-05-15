@@ -34,6 +34,7 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
     private String languages;
 
     public Over23IndividualCandidacyProcessBean() {
+	setCandidacyDate(new YearMonthDay());
 	setSelectedDegrees(new ArrayList<Degree>());
     }
 
