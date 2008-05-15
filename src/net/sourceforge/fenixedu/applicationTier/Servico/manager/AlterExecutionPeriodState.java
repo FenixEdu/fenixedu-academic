@@ -19,7 +19,7 @@ public class AlterExecutionPeriodState extends Service {
 
         if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
             // Deactivate the current
-            final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+            final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
             final ExecutionYear currentExecutionYear = currentExecutionPeriod.getExecutionYear();
             if (currentExecutionPeriod != null) {
             	currentExecutionPeriod.setState(PeriodState.OPEN);

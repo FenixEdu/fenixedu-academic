@@ -45,7 +45,7 @@ public class AssertUniqueApprovalInCurricularCourseContexts extends CurricularRu
     }
 
     public ExecutionSemester getBegin() {
-	return ExecutionSemester.readActualExecutionPeriod();
+	return ExecutionSemester.readActualExecutionSemester();
     }
 
     public ExecutionSemester getEnd() {

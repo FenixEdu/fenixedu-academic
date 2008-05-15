@@ -597,7 +597,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         
         final DegreeModule degreeModule = getDegreeModule();
-        final ExecutionSemester currentExecutionPeriod = degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionSemester.readActualExecutionPeriod();
+        final ExecutionSemester currentExecutionPeriod = degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionSemester.readActualExecutionSemester();
         
         final List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();
         Collections.sort(notClosedExecutionPeriods);

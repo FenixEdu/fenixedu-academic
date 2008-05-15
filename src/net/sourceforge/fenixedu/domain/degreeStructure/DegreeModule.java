@@ -446,11 +446,11 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public Double getMaxEctsCredits() {
-	return getMaxEctsCredits(ExecutionSemester.readActualExecutionPeriod());
+	return getMaxEctsCredits(ExecutionSemester.readActualExecutionSemester());
     }
 
     public Double getMinEctsCredits() {
-	return getMinEctsCredits(ExecutionSemester.readActualExecutionPeriod());
+	return getMinEctsCredits(ExecutionSemester.readActualExecutionSemester());
     }
 
     public boolean hasDegreeModule(final DegreeModule degreeModule) {

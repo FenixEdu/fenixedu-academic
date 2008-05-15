@@ -14,7 +14,7 @@ public class ReadStudentCurricularPlanWithRulesForEnrollments extends ReadStuden
 	@Override
 	public StudentCurricularPlan run(Integer executionDegreeId, Registration registration) throws FenixServiceException {
 
-		final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+		final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 		final StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(registration);
 
 		if (studentCurricularPlan.hasSpecialSeasonFor(actualExecutionPeriod)) {

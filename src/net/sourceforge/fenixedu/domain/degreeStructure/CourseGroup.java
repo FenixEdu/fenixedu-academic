@@ -750,7 +750,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Set<CurricularCourse> getAllOpenCurricularCourses() {
-	return getAllCurricularCourses(ExecutionSemester.readActualExecutionPeriod());
+	return getAllCurricularCourses(ExecutionSemester.readActualExecutionSemester());
     }
     
     public Set<ExecutionYear> getBeginContextExecutionYears() {

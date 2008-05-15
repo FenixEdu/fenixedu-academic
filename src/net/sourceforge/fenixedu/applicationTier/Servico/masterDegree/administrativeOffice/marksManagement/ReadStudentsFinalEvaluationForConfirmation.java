@@ -64,7 +64,7 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 	if (infoEnrolmentEvaluations.size() == 0) {
 	    throw new NonExistingServiceException();
 	}
-	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionSemester);
 
 	InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();

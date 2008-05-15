@@ -22,7 +22,7 @@ public class ExecutionCourseInquiriesDA extends FenixDispatchAction {
         ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) getRenderedObject();
         if (executionCourseSearchBean == null) {
             executionCourseSearchBean = new ExecutionCourseSearchBean();
-            final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+            final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
             executionCourseSearchBean.setExecutionPeriod(executionSemester);
         } else {
             final Collection<ExecutionCourse> executionCourses = executionCourseSearchBean.search();

@@ -24,7 +24,7 @@ public class MoveCurriculumLines extends Service {
     public void run(final OptionalCurricularCoursesLocationBean bean) throws FenixServiceException {
 	moveEnrolments(bean);
 	moveOptionalEnrolments(bean);
-	final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionSemester();
 	bean.getStudentCurricularPlan().enrol(AccessControl.getPerson(), executionPeriod,
 		bean.getIDegreeModulesToEvaluate(executionPeriod), Collections.EMPTY_LIST,
 		CurricularRuleLevel.ENROLMENT_WITH_RULES);

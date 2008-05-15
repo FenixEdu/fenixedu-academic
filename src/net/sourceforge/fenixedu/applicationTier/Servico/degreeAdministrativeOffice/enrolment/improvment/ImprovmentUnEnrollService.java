@@ -28,7 +28,7 @@ public class ImprovmentUnEnrollService extends Service {
             if (enrolment == null) {
                 throw new InvalidArgumentsServiceException();
             }
-			enrolment.unEnrollImprovement(ExecutionSemester.readActualExecutionPeriod());
+			enrolment.unEnrollImprovement(ExecutionSemester.readActualExecutionSemester());
         }
     }
 }

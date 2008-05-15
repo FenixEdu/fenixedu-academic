@@ -464,7 +464,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     static transient private ExecutionSemester firstEnrolmentsExecutionPeriod = null;
 
-    public static ExecutionSemester readActualExecutionPeriod() {
+    public static ExecutionSemester readActualExecutionSemester() {
 	if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()
 		|| !currentExecutionPeriod.isCurrent()) {
 	    for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
@@ -517,12 +517,12 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	return firstEnrolmentsExecutionPeriod;
     }
 
-    public static ExecutionSemester readFirstExecutionPeriod() {
+    public static ExecutionSemester readFirstExecutionSemester() {
 	final Set<ExecutionSemester> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
 	return exeutionPeriods.isEmpty() ? null : Collections.min(exeutionPeriods);
     }
 
-    public static ExecutionSemester readLastExecutionPeriod() {
+    public static ExecutionSemester readLastExecutionSemester() {
 	final Set<ExecutionSemester> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
 	final int size = exeutionPeriods.size();
 	return size == 0 ? null : size == 1 ? exeutionPeriods.iterator().next() : Collections.max(exeutionPeriods);

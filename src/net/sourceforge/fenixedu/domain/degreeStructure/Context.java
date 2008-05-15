@@ -247,7 +247,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public boolean isOpen() {
-	return isOpen(ExecutionSemester.readActualExecutionPeriod());
+	return isOpen(ExecutionSemester.readActualExecutionSemester());
     }
 
     public boolean contains(final ExecutionSemester begin, final ExecutionSemester end) {

@@ -32,7 +32,7 @@ public class PastEnrolmentsFilter extends Filtro {
             throw new NotAuthorizedFilterException("noAuthorization");
         }
 
-        ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+        ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         ExecutionSemester previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
         ExecutionSemester beforePreviousExecutionPeriod = previousExecutionPeriod
                 .getPreviousExecutionPeriod();

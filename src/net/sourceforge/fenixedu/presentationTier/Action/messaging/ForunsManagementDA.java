@@ -19,7 +19,7 @@ public class ForunsManagementDA extends FenixDispatchAction {
     
     public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	Person person = AccessControl.getPerson();
-	Collection<Forum> foruns = person.getForuns(ExecutionSemester.readActualExecutionPeriod());
+	Collection<Forum> foruns = person.getForuns(ExecutionSemester.readActualExecutionSemester());
 	request.setAttribute("foruns", foruns);
 	return mapping.findForward("listForuns");
     }

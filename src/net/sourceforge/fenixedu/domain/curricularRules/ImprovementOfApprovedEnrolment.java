@@ -48,7 +48,7 @@ public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent 
     }
 
     public ExecutionSemester getBegin() {
-	return ExecutionSemester.readActualExecutionPeriod();
+	return ExecutionSemester.readActualExecutionSemester();
     }
 
     public ExecutionSemester getEnd() {

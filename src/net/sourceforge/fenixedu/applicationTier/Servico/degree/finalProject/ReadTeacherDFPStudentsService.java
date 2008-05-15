@@ -55,7 +55,7 @@ public class ReadTeacherDFPStudentsService extends Service {
 
 	final ExecutionSemester executionSemester;
 	if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
-	    executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	    executionSemester = ExecutionSemester.readActualExecutionSemester();
 	} else {
 	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 	}

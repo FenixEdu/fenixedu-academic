@@ -124,7 +124,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	if (parkingRequest.getParkingParty().getParty().isPerson()) {
 	    Person person = (Person) parkingRequest.getParkingParty().getParty();
 	    if (person.getTeacher() != null
-		    && person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
+		    && person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 		request.setAttribute("monitor", "true");
 	    }
 	}
@@ -336,7 +336,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    return "Nº: " + p.getParkingParty().getPhdNumber();
 	}
 	if (p.getTeacher() != null && p.getTeacher().getCurrentWorkingDepartment() != null
-		&& !p.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
+		&& !p.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 	    return "Nº Mec: " + p.getTeacher().getTeacherNumber();
 	}
 	if (p.getEmployee() != null && p.getEmployee().getCurrentWorkingContract() != null
@@ -358,7 +358,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    return "Nº: " + p.getGrantOwner().getNumber();
 	}
 	if (p.getTeacher() != null && p.getTeacher().getCurrentWorkingDepartment() != null
-		&& p.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
+		&& p.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 	    return "Nº Mec: " + p.getTeacher().getTeacherNumber();
 	}
 	return "";

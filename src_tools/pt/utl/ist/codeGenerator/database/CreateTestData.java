@@ -1304,7 +1304,7 @@ public class CreateTestData {
     }
 
     private static void createShiftProfessorhips(final ExecutionCourse executionCourse) {
-	final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionSemester();
 	for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
 	    final Teacher teacher = professorship.getTeacher();
 	    for (final Shift shift : executionCourse.getAssociatedShifts()) {
@@ -1502,7 +1502,7 @@ public class CreateTestData {
     }
 
     private static void createStudentEnrolments(final StudentCurricularPlan studentCurricularPlan) {
-	final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionSemester();
 	if (studentCurricularPlan.isBolonhaDegree()) {
 
 	} else {

@@ -68,7 +68,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 	if (executionPeriodID == null || !contains(getExecutionPeriodSelectItems(), executionPeriodID)) {
 	    executionPeriodID = getAndHoldIntegerParameter("executionPeriodID");
 	    if (executionPeriodID == null) {
-		ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+		ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 		ExecutionDegree currentExecutionDegree = getDegreeCurricularPlan().getExecutionDegreeByYear(currentExecutionPeriod.getExecutionYear());
 
 		executionPeriodID = (currentExecutionDegree != null) ? currentExecutionPeriod.getIdInternal() : getMostRecentExecutionPeriod().getIdInternal(); 

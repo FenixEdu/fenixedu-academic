@@ -89,7 +89,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	((DynaActionForm) form).set("scpId", getStudentCurricularPlan(request).getIdInternal());
-	request.setAttribute("infoExecutionPeriod", new InfoExecutionPeriod(ExecutionSemester.readActualExecutionPeriod()));
+	request.setAttribute("infoExecutionPeriod", new InfoExecutionPeriod(ExecutionSemester.readActualExecutionSemester()));
 	return mapping.findForward("showExecutionPeriodToEnrol");
     }
 

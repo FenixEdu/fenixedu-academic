@@ -79,7 +79,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 //		if (student.doesNotWantToRespondToInquiries()) {
 //		    return false;
 //		}
-		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 		if (executionSemester != null && executionSemester.getInquiryResponsePeriod() != null && executionSemester.getInquiryResponsePeriod().insidePeriod()) {
 		    for (final Registration reistration : student.getRegistrationsSet()) {
 			if (reistration.isAvailableDegreeTypeForInquiries() && reistration.hasInquiriesToRespond()) {

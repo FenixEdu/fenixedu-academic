@@ -24,7 +24,7 @@ public class CreateRule extends Service {
 
 	final ExecutionSemester beginExecutionPeriod;
 	if (beginExecutionPeriodID == null) {
-	    beginExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	    beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 	} else {
 	    beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
 	}

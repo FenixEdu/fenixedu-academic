@@ -82,7 +82,7 @@ public class ParkingRequestSearch implements Serializable {
 		|| request.getParkingParty().getParty().getPartyClassification() == getPartyClassification()) {
 	    if (getPartyClassification() == PartyClassification.TEACHER) {
 		Person person = (Person) request.getParkingParty().getParty();
-		if (person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
+		if (person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 		    return false;
 		}
 	    }

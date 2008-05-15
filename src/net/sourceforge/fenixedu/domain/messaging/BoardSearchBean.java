@@ -45,7 +45,7 @@ public class BoardSearchBean implements Serializable, HasExecutionSemester {
 
     public ExecutionSemester getExecutionPeriod() {
 	if (executionSemester == null) {
-	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	    setExecutionPeriod(executionSemester);
 	}
         return executionSemester.getObject();

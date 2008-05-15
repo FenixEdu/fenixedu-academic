@@ -24,7 +24,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
 	if (studentCurricularPlan != null) {
 	    studentEnrolmentBean.setStudentCurricularPlan(studentCurricularPlan);
-	    studentEnrolmentBean.setExecutionPeriod(ExecutionSemester.readActualExecutionPeriod());
+	    studentEnrolmentBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
 	    return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, actionForm, request, response);
 	} else {
 	    throw new FenixActionException();

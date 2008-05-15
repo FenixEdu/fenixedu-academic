@@ -82,7 +82,7 @@ public abstract class DegreeModuleScope {
     }
 
     public boolean isActive() {
-	return isActiveForExecutionPeriod(ExecutionSemester.readActualExecutionPeriod());
+	return isActiveForExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
     }
 
     public boolean isActive(int year, int semester) {

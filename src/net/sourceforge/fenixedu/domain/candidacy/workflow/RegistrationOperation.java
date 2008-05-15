@@ -60,10 +60,10 @@ public class RegistrationOperation extends CandidacyOperation {
 	for (final CurricularCourse curricularCourse : finalExecutionCourse.getAssociatedCurricularCoursesSet()) {
 
 	    final Enrolment enrolment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,
-		    ExecutionSemester.readActualExecutionPeriod());
+		    ExecutionSemester.readActualExecutionSemester());
 	    if (enrolment != null) {
 
-		final Attends attends = enrolment.getAttendsFor(ExecutionSemester.readActualExecutionPeriod());
+		final Attends attends = enrolment.getAttendsFor(ExecutionSemester.readActualExecutionSemester());
 		if (attends != null && !attends.isFor(finalExecutionCourse)) {
 		    attends.setDisciplinaExecucao(finalExecutionCourse);
 		}

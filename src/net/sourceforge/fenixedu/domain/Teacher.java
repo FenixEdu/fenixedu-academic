@@ -1088,7 +1088,7 @@ public class Teacher extends Teacher_Base {
     public SortedSet<ExecutionCourse> getCurrentExecutionCourses() {
 	final SortedSet<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(
 		ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 	final ExecutionSemester previousExecutionPeriod = currentExecutionPeriod == null ? null : currentExecutionPeriod
 		.getPreviousExecutionPeriod();
 	for (final Professorship professorship : getProfessorshipsSet()) {

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends Service {
 
     public Set<ExecutionCourseView> run(final Degree degree) {
-	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 	final ExecutionSemester previousExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
 
 	final Set<ExecutionCourseView> result = new HashSet<ExecutionCourseView>();

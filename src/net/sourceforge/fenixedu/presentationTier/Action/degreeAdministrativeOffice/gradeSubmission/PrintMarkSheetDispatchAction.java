@@ -39,7 +39,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response, ExecutionSemester.readActualExecutionPeriod());
+	return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response, ExecutionSemester.readActualExecutionSemester());
     }
 
     public ActionForward choosePrinterMarkSheetsWebPostBack(ActionMapping mapping, ActionForm actionForm,

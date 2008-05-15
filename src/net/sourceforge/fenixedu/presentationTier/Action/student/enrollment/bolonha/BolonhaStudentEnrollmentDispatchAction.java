@@ -22,7 +22,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 
 	final Registration registration = (Registration) request.getAttribute("registration");
 	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration.getLastStudentCurricularPlan(),
-		ExecutionSemester.readActualExecutionPeriod());
+		ExecutionSemester.readActualExecutionSemester());
     }
 
     @Override

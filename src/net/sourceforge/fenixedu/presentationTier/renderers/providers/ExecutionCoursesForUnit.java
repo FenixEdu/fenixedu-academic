@@ -74,7 +74,7 @@ public class ExecutionCoursesForUnit implements DataProvider {
     private List<ExecutionCourse> getExecutionCoursesFromCompetenceCourses(
             List<CompetenceCourse> competenceCourses) {
         List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
-        ExecutionSemester period = ExecutionSemester.readActualExecutionPeriod();
+        ExecutionSemester period = ExecutionSemester.readActualExecutionSemester();
         for (CompetenceCourse course : competenceCourses) {
             courses.addAll(course.getExecutionCoursesByExecutionPeriod(period));
         }

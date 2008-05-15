@@ -31,7 +31,7 @@ public class EditCourseGroup extends Service {
 
     private ExecutionSemester getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
 	if (beginExecutionPeriodID == null) {
-	    return ExecutionSemester.readActualExecutionPeriod();
+	    return ExecutionSemester.readActualExecutionSemester();
 	} else {
 	    return rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
 	}

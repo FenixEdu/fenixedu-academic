@@ -24,7 +24,7 @@ public class SearchCurrentExecutionCourses extends Service implements AutoComple
 	List<DomainObject> result = new ArrayList<DomainObject>();
 
 	String slotName = arguments.get("slot");
-	Collection<ExecutionCourse> objects = ExecutionSemester.readActualExecutionPeriod()
+	Collection<ExecutionCourse> objects = ExecutionSemester.readActualExecutionSemester()
 		.getAssociatedExecutionCourses();
 
 	if (value == null) {

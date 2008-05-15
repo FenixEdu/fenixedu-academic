@@ -1098,7 +1098,7 @@ public abstract class Space extends Space_Base {
 	Set<ExecutionCourse> executionCoursesToTest = null;
 	if(labelWords != null && (searchType.equals(SpacesSearchCriteriaType.EXECUTION_COURSE) || searchType.equals(SpacesSearchCriteriaType.WRITTEN_EVALUATION))) {
 	    executionCoursesToTest = new HashSet<ExecutionCourse>();
-	    for (ExecutionCourse executionCourse : ExecutionSemester.readActualExecutionPeriod().getAssociatedExecutionCoursesSet()) {
+	    for (ExecutionCourse executionCourse : ExecutionSemester.readActualExecutionSemester().getAssociatedExecutionCoursesSet()) {
 		if(executionCourse.verifyNameEquality(labelWords)) {
 		    executionCoursesToTest.add(executionCourse);
 		}

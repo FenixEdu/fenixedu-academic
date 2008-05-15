@@ -43,7 +43,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
 
         MarkSheetManagementCreateBean markSheetManagementCreateBean = new MarkSheetManagementCreateBean();
-        markSheetManagementCreateBean.setExecutionPeriod(ExecutionSemester.readActualExecutionPeriod());
+        markSheetManagementCreateBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
         markSheetManagementCreateBean.setUrl("");
         
         request.setAttribute("edit", markSheetManagementCreateBean);

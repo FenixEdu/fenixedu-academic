@@ -22,7 +22,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDeta
 
 	final ExecutionSemester executionSemester;
 	if (executionPeriodOID == null) {
-	    executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	    executionSemester = ExecutionSemester.readActualExecutionSemester();
 	} else {
 	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodOID);
 	}

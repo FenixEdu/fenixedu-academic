@@ -22,7 +22,7 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
 	if (bean == null) {
 	    ExecutionSemester executionSemester = getExecutionPeriodToEditPeriod(request);
 	    if (executionSemester == null) {
-		bean = new TeacherCreditsPeriodBean(ExecutionSemester.readActualExecutionPeriod());
+		bean = new TeacherCreditsPeriodBean(ExecutionSemester.readActualExecutionSemester());
 	    } else {
 		bean = new TeacherCreditsPeriodBean(executionSemester);
 	    }

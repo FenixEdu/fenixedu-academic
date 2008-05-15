@@ -36,7 +36,7 @@ public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAl
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         Integer teacherNumber = Integer.valueOf(dynaActionForm.getString("teacherNumber"));
 
-        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         Teacher teacher = getTeacherOfManageableDepartments(teacherNumber, executionSemester, request);
         if (teacher == null) {
             request.setAttribute("teacherNotFound", "teacherNotFound");

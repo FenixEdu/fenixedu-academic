@@ -53,7 +53,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
                     }
                 });
 
-        final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+        final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
        
         List<ExecutionCourse> associatedExecutionCourses = new ArrayList<ExecutionCourse>();
         List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();

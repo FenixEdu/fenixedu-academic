@@ -494,7 +494,7 @@ public class Student extends Student_Base {
     }
 
     public Collection<StudentStatuteBean> getCurrentStatutes() {
-	return getStatutes(ExecutionSemester.readActualExecutionPeriod());
+	return getStatutes(ExecutionSemester.readActualExecutionSemester());
     }
 
     public Collection<StudentStatuteBean> getStatutes(ExecutionSemester executionSemester) {

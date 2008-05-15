@@ -16,7 +16,7 @@ public class RespondToInquiriesQuestion extends FenixDispatchAction {
 
     public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
-	request.setAttribute("executionPeriod", ExecutionSemester.readActualExecutionPeriod());
+	request.setAttribute("executionPeriod", ExecutionSemester.readActualExecutionSemester());
 	return mapping.findForward("respondToInquiriesQuestion");
     }
 

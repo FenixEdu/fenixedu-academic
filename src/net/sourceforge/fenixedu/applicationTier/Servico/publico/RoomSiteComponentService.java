@@ -10,6 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 public class RoomSiteComponentService extends Service {
     public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day) throws Exception {
         return RoomSiteComponentServiceByExecutionPeriodID.runService(bodyComponent, roomKey, day,
-                ExecutionSemester.readActualExecutionPeriod());
+                ExecutionSemester.readActualExecutionSemester());
     }
 }

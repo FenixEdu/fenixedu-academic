@@ -60,7 +60,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	    bean = (CompetenceCourseInformationRequestBean) viewState.getMetaObject().getObject();
 	    ExecutionSemester beanPeriod = bean.getExecutionPeriod();
 	    if (beanPeriod == null) {
-		beanPeriod = ExecutionSemester.readActualExecutionPeriod();
+		beanPeriod = ExecutionSemester.readActualExecutionSemester();
 		bean.setExecutionPeriod(beanPeriod);
 	    }
 	    information = bean.getCompetenceCourse().findCompetenceCourseInformationForExecutionPeriod(
@@ -70,7 +70,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	if (bean == null) {
 	    bean = new CompetenceCourseInformationRequestBean(course
 		    .findCompetenceCourseInformationForExecutionPeriod((period != null) ? period
-			    : ExecutionSemester.readActualExecutionPeriod()));
+			    : ExecutionSemester.readActualExecutionSemester()));
 	} else {
 	    if (information == null) {
 		bean.reset();

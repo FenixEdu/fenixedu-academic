@@ -489,7 +489,7 @@ public class SeparationCyclesManagement {
     }
 
     protected ExecutionSemester getExecutionPeriod() {
-	return ExecutionSemester.readActualExecutionPeriod();
+	return ExecutionSemester.readActualExecutionSemester();
     }
 
     private ExecutionYear getExecutionYear() {

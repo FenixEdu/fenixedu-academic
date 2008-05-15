@@ -26,7 +26,7 @@ public class ReadExecutionCoursesByExecutionDegreeService extends Service {
 
 	final ExecutionSemester executionSemester;
 	if (executionPeriodId == null) {
-	    executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	    executionSemester = ExecutionSemester.readActualExecutionSemester();
 	} else {
 	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 	}

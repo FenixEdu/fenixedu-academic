@@ -82,7 +82,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    final Registration registration) {
 
 	final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 
 	// -------------------------------------------------------------------------------------------------------------------
 	//TODO: refactor this code, should be more generic

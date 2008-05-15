@@ -18,7 +18,7 @@ public class ReadEnroledExecutionCourses extends Service {
 
     public List<ExecutionCourse> run(final Registration registration) {
 	
-	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	
 	for (final Attends attend : registration.getAssociatedAttendsSet()) {

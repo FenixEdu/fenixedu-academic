@@ -282,7 +282,7 @@ public class StudentDA extends FenixDispatchAction {
 	AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
 	if (addAttendsBean == null) {
 	    addAttendsBean = new AddAttendsBean();
-	    final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	    final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionSemester();
 	    final ExecutionYear executionYear = executionPeriod.getExecutionYear();
 	    final Degree degree = registration.getDegree();
 	    final ExecutionDegree executionDegree = getExecutionDegree(executionYear, degree);

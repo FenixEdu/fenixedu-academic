@@ -83,7 +83,7 @@ public class SchoolClassProcessor extends PathProcessor {
                 return null;
             }
             
-            ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+            ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
             for (SchoolClass schoolClass : executionSemester.getSchoolClasses()) {
                 if (schoolClass.getNome().equalsIgnoreCase(schoolClassName)) {
                     return this.schoolClass = schoolClass;

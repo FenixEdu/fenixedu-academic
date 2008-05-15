@@ -166,7 +166,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
     private void prepareEnrollmentChooseCurricularCoursesInformation(HttpServletRequest request,
 	    final StudentCurricularPlan studentCurricularPlan) throws FenixDomainException {
 
-	final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 
 	request.setAttribute("studentNumber", studentCurricularPlan.getRegistration().getNumber());
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
@@ -444,7 +444,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 				args);
 	    }
 
-	    final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	    final ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 
 	    request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 	    request.setAttribute("executionPeriod", actualExecutionPeriod);

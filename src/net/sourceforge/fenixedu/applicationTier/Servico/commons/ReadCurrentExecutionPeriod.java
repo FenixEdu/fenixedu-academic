@@ -6,6 +6,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ReadCurrentExecutionPeriod extends Service {
     public InfoExecutionPeriod run() {
-        return InfoExecutionPeriod.newInfoFromDomain(ExecutionSemester.readActualExecutionPeriod());
+        return InfoExecutionPeriod.newInfoFromDomain(ExecutionSemester.readActualExecutionSemester());
     }
 }

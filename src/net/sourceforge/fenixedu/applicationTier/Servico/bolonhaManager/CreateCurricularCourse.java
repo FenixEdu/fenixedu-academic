@@ -89,7 +89,7 @@ public class CreateCurricularCourse extends Service {
 
     private ExecutionSemester getBeginExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
 	if (curricularCourseArgs.getBeginExecutionPeriodID() == null) {
-	    return ExecutionSemester.readActualExecutionPeriod();
+	    return ExecutionSemester.readActualExecutionSemester();
 	} else {
 	    return rootDomainObject.readExecutionSemesterByOID(curricularCourseArgs.getBeginExecutionPeriodID());
 	}

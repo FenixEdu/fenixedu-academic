@@ -200,7 +200,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    Person person = (Person) getParty();
 	    Teacher teacher = person.getTeacher();
 	    if (teacher != null && person.getPersonRole(RoleType.TEACHER) != null
-		    && !teacher.isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
+		    && !teacher.isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 		roles.add(RoleType.TEACHER);
 	    }
 	    Employee employee = person.getEmployee();
@@ -240,7 +240,7 @@ public class ParkingParty extends ParkingParty_Base {
 		if (teacher.getCurrentWorkingDepartment() != null) {
 		    currentDepartment = teacher.getCurrentWorkingDepartment().getName();
 		}
-		if (teacher.isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
+		if (teacher.isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 		    stringBuilder.append("<strong>Monitor</strong><br/> Nº " + teacher.getTeacherNumber() + "<br/>"
 			    + currentDepartment);
 		} else {
@@ -440,7 +440,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    }
 	    Person person = (Person) getParty();
 	    if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
-		    && !person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
+		    && !person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 		return person.getTeacher().getTeacherNumber();
 	    }
 	    if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null
@@ -464,7 +464,7 @@ public class ParkingParty extends ParkingParty_Base {
 		return person.getGrantOwner().getNumber();
 	    }
 	    if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
-		    && person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
+		    && person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 		return person.getTeacher().getTeacherNumber();
 	    }
 	}

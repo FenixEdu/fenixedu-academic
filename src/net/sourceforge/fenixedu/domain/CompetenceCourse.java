@@ -69,7 +69,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	super.setCompetenceCourseGroupUnit(unit);
 
 	CompetenceCourseInformation competenceCourseInformation = new CompetenceCourseInformation(name
-		.trim(), nameEn.trim(), basic, regimeType, competenceCourseLevel, ExecutionSemester.readActualExecutionPeriod());
+		.trim(), nameEn.trim(), basic, regimeType, competenceCourseLevel, ExecutionSemester.readActualExecutionSemester());
 	super.addCompetenceCourseInformations(competenceCourseInformation);
 
 	// unique acronym creation

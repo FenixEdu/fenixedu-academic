@@ -45,7 +45,7 @@ public class StudentCurricularPlanFactoryExecutor {
 
 	    return StudentCurricularPlan.createBolonhaStudentCurricularPlan(getRegistration(),
 		    getDegreeCurricularPlan(), new YearMonthDay(), ExecutionSemester
-			    .readActualExecutionPeriod(), getCycleType());
+			    .readActualExecutionSemester(), getCycleType());
 	}
 
 	public DegreeCurricularPlan getDegreeCurricularPlan() {

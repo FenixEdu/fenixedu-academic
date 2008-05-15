@@ -162,7 +162,7 @@ public class Registration extends Registration_Base {
 	final ExecutionSemester executionSemester;
 	if (executionYear == null || executionYear.isCurrent()) {
 	    startDay = new YearMonthDay();
-	    executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	    executionSemester = ExecutionSemester.readActualExecutionSemester();
 	} else {
 	    startDay = executionYear.getBeginDateYearMonthDay();
 	    executionSemester = executionYear.getFirstExecutionPeriod();

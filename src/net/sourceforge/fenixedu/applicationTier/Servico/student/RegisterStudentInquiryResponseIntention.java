@@ -21,7 +21,7 @@ public class RegisterStudentInquiryResponseIntention extends Service {
 		return inquiriesStudentExecutionPeriod;
 	    }
 	}
-	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	return new InquiriesStudentExecutionPeriod(student, executionSemester);
     }
 

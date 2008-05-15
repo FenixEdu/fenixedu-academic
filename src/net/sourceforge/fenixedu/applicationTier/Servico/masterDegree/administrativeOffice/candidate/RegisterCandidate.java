@@ -139,7 +139,7 @@ public class RegisterCandidate extends Service {
     private void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
 	    StudentCurricularPlan studentCurricularPlan) {
 	List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
-	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
 	    new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(), executionSemester,
 		    EnrollmentCondition.FINAL, userView.getUtilizador());

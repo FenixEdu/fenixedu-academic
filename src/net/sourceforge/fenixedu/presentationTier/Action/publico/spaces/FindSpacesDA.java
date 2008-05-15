@@ -73,7 +73,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 	    List<FindSpacesBean> result = new ArrayList<FindSpacesBean>();
 	    Set<Space> resultSpaces = Space.findSpaces(labelToSearch, campus, building, bean.getSearchType());
 	    for (Space space : resultSpaces) {
-		result.add(new FindSpacesBean(space, bean.getSearchType(), ExecutionSemester.readActualExecutionPeriod()));
+		result.add(new FindSpacesBean(space, bean.getSearchType(), ExecutionSemester.readActualExecutionSemester()));
 	    }	   
 	    
 	    request.setAttribute("foundSpaces", result);
@@ -113,7 +113,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 	    //setBlueprintTextRectangles(request, space);	
 	    Set<Space> containedSpaces = space.getContainedSpacesByState(SpaceState.ACTIVE);
 	    request.setAttribute("containedSpaces", containedSpaces);
-	    request.setAttribute("selectedSpace", new FindSpacesBean(space, ExecutionSemester.readActualExecutionPeriod()));	    
+	    request.setAttribute("selectedSpace", new FindSpacesBean(space, ExecutionSemester.readActualExecutionSemester()));	    
 	}
 	
 	return mapping.findForward("viewSelectedSpace");

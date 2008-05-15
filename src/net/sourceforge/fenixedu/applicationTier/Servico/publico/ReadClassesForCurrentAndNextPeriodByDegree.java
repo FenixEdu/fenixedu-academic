@@ -20,7 +20,7 @@ public class ReadClassesForCurrentAndNextPeriodByDegree extends Service {
 
     public Object run(final Integer degreeOID) throws ExcepcaoPersistencia {
 
-        final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+        final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         final ExecutionSemester nextExecutionPeriod = currentExecutionPeriod.getNextExecutionPeriod();
 
         final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);

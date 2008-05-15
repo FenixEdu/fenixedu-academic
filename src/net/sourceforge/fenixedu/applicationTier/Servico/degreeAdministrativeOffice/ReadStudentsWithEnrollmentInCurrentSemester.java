@@ -51,7 +51,7 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
 
     private boolean studentHasEnrollments(Registration registration) throws ExcepcaoPersistencia {
 
-        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+        ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 
         List<Enrolment> enrollments = registration.getActiveStudentCurricularPlan()
                 .getEnrolmentsByExecutionPeriod(executionSemester);

@@ -169,7 +169,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
     public static String getExecutionCoursePath(ExecutionCourse executionCourse) {
 	StringBuilder result = new StringBuilder();
 
-	ExecutionSemester currentPeriod = ExecutionSemester.readActualExecutionPeriod();
+	ExecutionSemester currentPeriod = ExecutionSemester.readActualExecutionSemester();
 	ExecutionSemester period = executionCourse.getExecutionPeriod();
 
 	CurricularCourse course = executionCourse.getAssociatedCurricularCourses().get(0);

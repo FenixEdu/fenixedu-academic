@@ -59,7 +59,7 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public boolean isValidInCurrentExecutionPeriod() {
-	return this.isValidInExecutionPeriod(ExecutionSemester.readActualExecutionPeriod());
+	return this.isValidInExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
     }
 
     public void delete() {
@@ -84,9 +84,9 @@ public class StudentStatute extends StudentStatute_Base {
     public boolean overlapsWith(StudentStatute statute) {
 
 	ExecutionSemester statuteBegin = statute.getBeginExecutionPeriod() != null ? statute.getBeginExecutionPeriod()
-		: ExecutionSemester.readFirstExecutionPeriod();
+		: ExecutionSemester.readFirstExecutionSemester();
 	ExecutionSemester statuteEnd = statute.getEndExecutionPeriod() != null ? statute.getEndExecutionPeriod() : ExecutionSemester
-		.readLastExecutionPeriod();
+		.readLastExecutionSemester();
 
 	return overlapsWith(statute.getStatuteType(), statuteBegin, statuteEnd);
 
@@ -99,9 +99,9 @@ public class StudentStatute extends StudentStatute_Base {
 	}
 
 	ExecutionSemester thisStatuteBegin = getBeginExecutionPeriod() != null ? getBeginExecutionPeriod() : ExecutionSemester
-		.readFirstExecutionPeriod();
+		.readFirstExecutionSemester();
 	ExecutionSemester thisStatuteEnd = getEndExecutionPeriod() != null ? getEndExecutionPeriod() : ExecutionSemester
-		.readLastExecutionPeriod();
+		.readLastExecutionSemester();
 
 	return statuteBegin.isAfterOrEquals(thisStatuteBegin) && statuteBegin.isBeforeOrEquals(thisStatuteEnd)
 		|| statuteEnd.isAfterOrEquals(thisStatuteBegin) && statuteEnd.isBeforeOrEquals(thisStatuteEnd);

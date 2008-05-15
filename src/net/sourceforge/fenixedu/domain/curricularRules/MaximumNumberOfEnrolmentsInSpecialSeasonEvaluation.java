@@ -33,7 +33,7 @@ public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation extends Curricul
     }
 
     public ExecutionSemester getBegin() {
-	return ExecutionSemester.readActualExecutionPeriod();
+	return ExecutionSemester.readActualExecutionSemester();
     }
 
     public ExecutionSemester getEnd() {

@@ -22,7 +22,7 @@ public class AlterExecutionPeriodState extends Service {
         }
         if (periodState.getStateCode().equals(PeriodState.CURRENT)) {
             // Deactivate the current
-            ExecutionSemester.readActualExecutionPeriod().setState(new PeriodState(PeriodState.OPEN));
+            ExecutionSemester.readActualExecutionSemester().setState(new PeriodState(PeriodState.OPEN));
         }
         executionSemester.setState(periodState);
     }

@@ -22,7 +22,7 @@ public class PreviousYearsEnrolmentCurricularRule extends CurricularRuleNotPersi
     }
 
     public ExecutionSemester getBegin() {
-	return ExecutionSemester.readActualExecutionPeriod();
+	return ExecutionSemester.readActualExecutionSemester();
     }
 
     public CourseGroup getContextCourseGroup() {

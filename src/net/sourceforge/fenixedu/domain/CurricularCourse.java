@@ -384,7 +384,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    throw new DomainException("CurricularCourse.method.only.appliable.to.bolonha.structure");
 	}
 
-	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
 
 	for (final CurricularRule curricularRule : getCurricularRulesSet()) {
 	    if (curricularRule.isValid(currentExecutionPeriod) && curricularRule instanceof RestrictionDoneDegreeModule) {
@@ -1745,7 +1745,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public List<ExecutionCourse> getMostRecentExecutionCourses() {
-	ExecutionSemester period = ExecutionSemester.readActualExecutionPeriod();
+	ExecutionSemester period = ExecutionSemester.readActualExecutionSemester();
 
 	while (period != null) {
 	    List<ExecutionCourse> executionCourses = getExecutionCoursesByExecutionPeriod(period);

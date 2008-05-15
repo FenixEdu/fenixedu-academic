@@ -67,7 +67,7 @@ public class ReadTeacherInformation extends Service {
         // should refer to the previous execution year
         ExecutionYear executionYear = null;
         if (argExecutionYear == null || argExecutionYear.equals("")) {
-            ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionPeriod();
+            ExecutionSemester actualExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
             ExecutionSemester previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
             if (previousExecutionPeriod != null) {
                 while (previousExecutionPeriod.getExecutionYear().equals(

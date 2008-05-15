@@ -1943,7 +1943,7 @@ public class Person extends Person_Base {
 	}
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Professorship professorship : getTeacher().getProfessorships()) {
-	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionSemester.readActualExecutionPeriod()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == ExecutionSemester.readActualExecutionSemester()) {
 		final AnnouncementBoard board = professorship.getExecutionCourse().getBoard();
 		if (board != null && board.hasReaderOrWriter(this)) {
 		    result.add(board);
@@ -1960,7 +1960,7 @@ public class Person extends Person_Base {
 	final Collection<AnnouncementBoard> result = new HashSet<AnnouncementBoard>();
 	for (final Registration registration : getStudent().getRegistrationsSet()) {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
-		if (attends.getExecutionCourse().isLecturedIn(ExecutionSemester.readActualExecutionPeriod())) {
+		if (attends.getExecutionCourse().isLecturedIn(ExecutionSemester.readActualExecutionSemester())) {
 		    final AnnouncementBoard board = attends.getExecutionCourse().getBoard();
 		    if (board != null && board.hasReaderOrWriter(this)) {
 			result.add(board);
@@ -2009,7 +2009,7 @@ public class Person extends Person_Base {
 	final Teacher teacher = getTeacher();
 	if (teacher != null) {
 	    if (teacher.getCurrentWorkingDepartment() != null
-		    && !teacher.isMonitor(ExecutionSemester.readActualExecutionPeriod())) {
+		    && !teacher.isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 		return PartyClassification.TEACHER;
 	    }
 	}

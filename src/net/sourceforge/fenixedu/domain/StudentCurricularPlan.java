@@ -1202,7 +1202,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse) {
-	return isBoxStructure() ? isEnroledInExecutionPeriod(curricularCourse, ExecutionSemester.readActualExecutionPeriod())
+	return isBoxStructure() ? isEnroledInExecutionPeriod(curricularCourse, ExecutionSemester.readActualExecutionSemester())
 		: isCurricularCourseEnrolled(curricularCourse);
     }
 
@@ -1247,7 +1247,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public Integer getCurricularCourseAcumulatedEnrollments(CurricularCourse curricularCourse) {
-	return getCurricularCourseAcumulatedEnrollments(curricularCourse, ExecutionSemester.readActualExecutionPeriod());
+	return getCurricularCourseAcumulatedEnrollments(curricularCourse, ExecutionSemester.readActualExecutionSemester());
     }
 
     final public List<Enrolment> getAllStudentEnrolledEnrollmentsInExecutionPeriod(final ExecutionSemester executionSemester) {
@@ -2089,7 +2089,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean hasSpecialSeasonForActualExecutionPeriod() {
-	return hasSpecialSeasonFor(ExecutionSemester.readActualExecutionPeriod());
+	return hasSpecialSeasonFor(ExecutionSemester.readActualExecutionSemester());
     }
 
     public boolean hasSpecialSeasonFor(ExecutionSemester executionSemester) {
@@ -2748,7 +2748,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	runRules &= isBolonhaDegree();
 
 	if (runRules && !responsiblePerson.hasRole(RoleType.MANAGER)) {
-	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	    checkEnrolmentRules(responsiblePerson, moveCurriculumLinesBean.getIDegreeModulesToEvaluate(executionSemester),
 		    executionSemester);
 	}

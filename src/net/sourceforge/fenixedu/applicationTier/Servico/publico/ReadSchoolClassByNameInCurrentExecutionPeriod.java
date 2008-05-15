@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 public class ReadSchoolClassByNameInCurrentExecutionPeriod extends Service {
 
 	public SchoolClassDTO run(final String schoolClassName) throws FenixServiceException, ExcepcaoPersistencia {
-		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 		SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(executionSemester
 				.getSchoolClasses(), new Predicate() {
 

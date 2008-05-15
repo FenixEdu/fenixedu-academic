@@ -48,7 +48,7 @@ public class EnrolmentInSpecialSeasonEvaluation extends CurricularRuleNotPersist
     }
 
     public ExecutionSemester getBegin() {
-	return ExecutionSemester.readActualExecutionPeriod();
+	return ExecutionSemester.readActualExecutionSemester();
     }
 
     public ExecutionSemester getEnd() {

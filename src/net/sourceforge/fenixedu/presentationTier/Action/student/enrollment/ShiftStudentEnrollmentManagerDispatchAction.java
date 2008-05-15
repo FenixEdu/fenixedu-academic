@@ -91,7 +91,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	    return mapping.findForward("showEnrollmentPage");
 	}
 
-	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	if (readAndSetSelectCoursesParameter(request) == null) {
 	    return prepareShiftEnrolmentInformation(mapping, request, registration,
 		    executionSemester);

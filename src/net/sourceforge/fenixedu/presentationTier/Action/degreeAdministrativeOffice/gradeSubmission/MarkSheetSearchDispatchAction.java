@@ -40,7 +40,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         
         MarkSheetManagementSearchBean markSheetManagementSearchBean = new MarkSheetManagementSearchBean();
-        markSheetManagementSearchBean.setExecutionPeriod(ExecutionSemester.readActualExecutionPeriod());
+        markSheetManagementSearchBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
         request.setAttribute("edit", markSheetManagementSearchBean);
         
         return mapping.findForward("searchMarkSheet");

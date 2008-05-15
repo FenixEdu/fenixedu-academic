@@ -27,7 +27,7 @@ public class WriteEnrollment extends Service {
 
 	ExecutionSemester executionSemester = null;
 	if (executionPeriodID == null) {
-	    executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	    executionSemester = ExecutionSemester.readActualExecutionSemester();
 	} else {
 	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 	}

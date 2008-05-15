@@ -28,7 +28,7 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 
     private void createCycleCourseGroups(DegreeType courseGroupType) {
 	if (courseGroupType.isBolonhaType()) {
-	    ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionPeriod();
+	    ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	    if (courseGroupType.isFirstCycle()) {
 		new CycleCourseGroup(this, "1º Ciclo", "First Cycle", CycleType.FIRST_CYCLE,
 			executionSemester, null);

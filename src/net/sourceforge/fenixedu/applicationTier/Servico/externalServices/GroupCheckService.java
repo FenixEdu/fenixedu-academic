@@ -330,7 +330,7 @@ public class GroupCheckService extends Service {
 	if (year != null && semester != null) {
 	    return ExecutionSemester.readBySemesterAndExecutionYear(semester, year);
 	} else if (year == null && semester == null) {
-	    return ExecutionSemester.readActualExecutionPeriod();
+	    return ExecutionSemester.readActualExecutionSemester();
 	} else {
 	    throw new NonExistingServiceException();
 	}
