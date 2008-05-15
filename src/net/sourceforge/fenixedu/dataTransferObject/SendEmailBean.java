@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -24,6 +25,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class SendEmailBean implements Serializable {
 
@@ -65,7 +67,7 @@ public class SendEmailBean implements Serializable {
     private Boolean allowChangeSender = Boolean.TRUE;
 
     public void send() throws FenixFilterException, FenixServiceException {
-	final Object[] args = { getToList(), getCCList(), getBCCList(), getFromName(), getFrom(), getSubject(), getMessage() };
+	final Object[] args = { getToList(), getCCList(), getBCCList(), getFromName(), getFrom(), getSubject(), getMessageWithFooter() };
 	ServiceUtils.executeService(null, "commons.SendMail", args);
 	sent = Boolean.TRUE;
     }
@@ -264,6 +266,83 @@ public class SendEmailBean implements Serializable {
 
     public String getMessage() {
 	return message;
+    }
+
+    public String getMessageWithFooter() {
+	final StringBuilder stringBuilder = new StringBuilder();
+	stringBuilder.append(getMessage());
+	stringBuilder.append("\n\n\n");
+	stringBuilder.append("---\n");
+
+	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ManagerResources", LanguageUtils.getLocale());
+	stringBuilder.append(resourceBundle.getString("message.email.footer.prefix"));
+	stringBuilder.append(getFromName());
+
+	if (hasBooleanValueRecipients()) {
+	    stringBuilder.append(resourceBundle.getString("message.email.footer.recipients.prefix"));
+	    appendRecipients(resourceBundle, stringBuilder, teachers, "message.email.footer.recipients.teachers");
+	    appendRecipients(resourceBundle, stringBuilder, employees, "message.email.footer.recipients.employees");
+	    appendRecipients(resourceBundle, stringBuilder, students, "message.email.footer.recipients.students");
+	    appendRecipients(resourceBundle, stringBuilder, researchers, "message.email.footer.recipients.researchers");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaAdvancedFormationDiplomaStudents, "message.email.footer.recipients.bolonhaAdvancedFormationDiplomaStudents");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaDegreeStudents, "message.email.footer.recipients.bolonhaDegreeStudents");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaIntegratedMasterDegreeStudents, "message.email.footer.recipients.bolonhaIntegratedMasterDegreeStudents");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaMasterDegreeStudents, "message.email.footer.recipients.bolonhaMasterDegreeStudents");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaPhdProgramStudents, "message.email.footer.recipients.bolonhaPhdProgramStudents");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaSpecializationDegreeStudents, "message.email.footer.recipients.bolonhaSpecializationDegreeStudents");
+	    appendRecipients(resourceBundle, stringBuilder, degreeStudents, "message.email.footer.recipients.degreeStudents");
+	    appendRecipients(resourceBundle, stringBuilder, masterDegreeStudents, "message.email.footer.recipients.masterDegreeStudents");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaAdvancedFormationDiplomaCoordinators, "message.email.footer.recipients.bolonhaAdvancedFormationDiplomaCoordinators");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaDegreeCoordinators, "message.email.footer.recipients.bolonhaDegreeCoordinators");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaIntegratedMasterDegreeCoordinators, "message.email.footer.recipients.bolonhaIntegratedMasterDegreeCoordinators");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaMasterDegreeCoordinators, "message.email.footer.recipients.bolonhaMasterDegreeCoordinators");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaPhdProgramCoordinators, "message.email.footer.recipients.bolonhaPhdProgramCoordinators");
+	    appendRecipients(resourceBundle, stringBuilder, bolonhaSpecializationDegreeCoordinators, "message.email.footer.recipients.bolonhaSpecializationDegreeCoordinators");
+	    appendRecipients(resourceBundle, stringBuilder, degreeCoordinators, "message.email.footer.recipients.degreeCoordinators");
+	    appendRecipients(resourceBundle, stringBuilder, masterDegreeCoordinators, "message.email.footer.recipients.masterDegreeCoordinators");
+	    appendRecipients(resourceBundle, stringBuilder, executionCourseResponsibles, "message.email.footer.recipients.executionCourseResponsibles");
+	} else {
+	    stringBuilder.append(resourceBundle.getString("message.email.footer.recipients.none"));
+	}
+
+	return stringBuilder.toString();
+    }
+
+
+    private boolean hasBooleanValueRecipients() {
+	return hasBooleanValueRecipients(teachers)
+		|| hasBooleanValueRecipients(employees)
+		|| hasBooleanValueRecipients(students)
+		|| hasBooleanValueRecipients(researchers)	    
+		|| hasBooleanValueRecipients(bolonhaAdvancedFormationDiplomaStudents)
+		|| hasBooleanValueRecipients(bolonhaDegreeStudents)
+		|| hasBooleanValueRecipients(bolonhaIntegratedMasterDegreeStudents)
+		|| hasBooleanValueRecipients(bolonhaMasterDegreeStudents)
+		|| hasBooleanValueRecipients(bolonhaPhdProgramStudents)
+		|| hasBooleanValueRecipients(bolonhaSpecializationDegreeStudents)
+		|| hasBooleanValueRecipients(degreeStudents)
+		|| hasBooleanValueRecipients(masterDegreeStudents)
+		|| hasBooleanValueRecipients(bolonhaAdvancedFormationDiplomaCoordinators)
+		|| hasBooleanValueRecipients(bolonhaDegreeCoordinators)
+		|| hasBooleanValueRecipients(bolonhaIntegratedMasterDegreeCoordinators)
+		|| hasBooleanValueRecipients(bolonhaMasterDegreeCoordinators)
+		|| hasBooleanValueRecipients(bolonhaPhdProgramCoordinators)
+		|| hasBooleanValueRecipients(bolonhaSpecializationDegreeCoordinators)
+		|| hasBooleanValueRecipients(degreeCoordinators)
+		|| hasBooleanValueRecipients(masterDegreeCoordinators)
+		|| hasBooleanValueRecipients(executionCourseResponsibles);
+    }
+
+    private boolean hasBooleanValueRecipients(final Boolean isRecipient) {
+	return isRecipient != null && isRecipient.booleanValue();
+    }
+
+    private void appendRecipients(final ResourceBundle resourceBundle, final StringBuilder stringBuilder,
+	    final Boolean isRecipient, final String key) {
+	if (isRecipient != null && isRecipient.booleanValue()) {
+	    stringBuilder.append("\n    ");
+	    stringBuilder.append(resourceBundle.getString(key));
+	}
     }
 
     public void setMessage(String message) {
