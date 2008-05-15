@@ -18,9 +18,13 @@ public class SendEmailDA extends FenixDispatchAction {
 	if (sendEmailBean == null) {
 	    sendEmailBean = new SendEmailBean();
 	    final String fromName = request.getParameter("fromName");
-	    sendEmailBean.setFromName(fromName);
+	    if (fromName != null && fromName.length() > 0) {
+		sendEmailBean.setFromName(fromName);
+	    }
 	    final String from = request.getParameter("from");
-	    sendEmailBean.setFrom(from);
+	    if (from != null && from.length() > 0) {
+		sendEmailBean.setFrom(from);
+	    }
 	    final String allowChangeSender = request.getParameter("allowChangeSender");
 	    sendEmailBean.setAllowChangeSender(allowChangeSender == null || allowChangeSender.length() == 0 ? Boolean.TRUE : Boolean.valueOf(allowChangeSender));
 	}

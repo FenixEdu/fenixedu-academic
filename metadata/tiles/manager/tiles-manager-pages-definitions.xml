@@ -1053,5 +1053,11 @@
         <put name="body" value="/manager/viewEnrolmentLogs.jsp"></put>
     </definition>
 
+     <definition name="df.page.send.email.form" extends="definition.manager.masterPage">
+        <put name="body" value="/email/sendEmailForm.jsp"/>
+    </definition>
+     <definition name="df.page.send.email.result" extends="definition.manager.masterPage">
+        <put name="body" value="/email/sendEmailResult.jsp"/>
+    </definition>
 	
 </tiles-definitions>
