@@ -2566,7 +2566,7 @@ public class Registration extends Registration_Base {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
 	    if (documentRequest.isDiploma() && !documentRequest.finishedUnsuccessfully()) {
 		final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
-		if (cycleType == null || cycleType == diplomaRequest.getRequestedCycle()) {
+		if (cycleType == null || cycleType == diplomaRequest.getWhatShouldBeRequestedCycle()) {
 		    return diplomaRequest;
 		}
 	    }
