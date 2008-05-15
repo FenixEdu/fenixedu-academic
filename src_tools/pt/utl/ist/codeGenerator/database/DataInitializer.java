@@ -1,7 +1,6 @@
 package pt.utl.ist.codeGenerator.database;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Login;
@@ -23,6 +22,7 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 
@@ -30,8 +30,8 @@ public class DataInitializer {
 
     public static void main(String[] args) {
 
-        Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
-        FenixFramework.initialize(config);
+	Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
+	FenixFramework.initialize(config);
 
 	RootDomainObject.init();
 
@@ -69,7 +69,8 @@ public class DataInitializer {
 	new Role(RoleType.STUDENT, "/student", "/index.do", "portal.student");
 	new Role(RoleType.TEACHER, "/teacher", "/index.do", "portal.teacher");
 	new Role(RoleType.MASTER_DEGREE_CANDIDATE, "/masterDegreeCandidate", "/index.do", "portal.candidate");
-	new Role(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE, "/masterDegreeAdministrativeOffice", "/index.do", "portal.masterDegree");
+	new Role(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE, "/masterDegreeAdministrativeOffice", "/index.do",
+		"portal.masterDegree");
 	new Role(RoleType.TREASURY, "/treasury", "/index.do", "portal.treasury");
 	new Role(RoleType.COORDINATOR, "/coordinator", "/index.do", "portal.coordinator");
 	new Role(RoleType.EMPLOYEE, "/employee", "/index.do", "portal.employee");

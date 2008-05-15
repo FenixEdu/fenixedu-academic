@@ -11,13 +11,15 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.fenixframework.Config;
+import pt.ist.fenixframework.pstm.MetadataManager;
 import dml.DomainClass;
 import dml.DomainEntity;
 import dml.DomainModel;
 import dml.DomainRelation;
 import dml.Role;
 import dml.Slot;
-import pt.ist.fenixframework.pstm.MetadataManager;
 
 public class OidSqlGenerator {
 
@@ -188,7 +190,8 @@ public class OidSqlGenerator {
     }
 
     private static void generate(final String dmlFilePath) throws IOException {
-	MetadataManager.init(dmlFilePath);
+	Config config = PropertiesManager.getFenixFrameworkConfig(dmlFilePath);
+	MetadataManager.init(config);
 	final DomainModel domainModel = MetadataManager.getDomainModel();
 
 	for (final DomainClass domainClass : domainModel.getDomainClasses()) {

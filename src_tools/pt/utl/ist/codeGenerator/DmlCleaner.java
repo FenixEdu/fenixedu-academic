@@ -11,8 +11,12 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixframework.Config;
+import pt.ist.fenixframework.pstm.MetadataManager;
 import pt.utl.ist.codeGenerator.DmlCleaner.DomainModelWriter.DomainEntityWrapper;
 import pt.utl.ist.codeGenerator.DmlCleaner.DomainModelWriter.ValueTypeWrapper;
 import dml.DomainClass;
@@ -22,7 +26,6 @@ import dml.DomainRelation;
 import dml.Role;
 import dml.Slot;
 import dml.Slot.Option;
-import pt.ist.fenixframework.pstm.MetadataManager;
 
 public class DmlCleaner {
 
@@ -344,7 +347,8 @@ public class DmlCleaner {
     }
 
     private static void cleanUp(final String dmlFilePath) {
-	MetadataManager.init(dmlFilePath);
+	Config config = PropertiesManager.getFenixFrameworkConfig(dmlFilePath);
+	MetadataManager.init(config);
 	final DomainModel domainModel = MetadataManager.getDomainModel();
 	final DomainModelWriter domainModelWriter = new DomainModelWriter(domainModel);
 	fixValueTypeNames(domainModelWriter);

@@ -9,15 +9,18 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
 
+import pt.ist.fenixframework.Config;
+import pt.ist.fenixframework.pstm.MetadataManager;
 import dml.DomainClass;
 import dml.DomainEntity;
 import dml.DomainModel;
 import dml.Role;
 import dml.Slot;
-import pt.ist.fenixframework.pstm.MetadataManager;
 
 public class DmlChecker {
 
@@ -43,7 +46,8 @@ public class DmlChecker {
 
     private static void check(final String dmlFilePath) throws IOException {
 	fileWriter = new FileWriter("/tmp/renameTables.sql");
-	MetadataManager.init(dmlFilePath);
+	Config config = PropertiesManager.getFenixFrameworkConfig(dmlFilePath);
+	MetadataManager.init(config);
 	final DomainModel domainModel = MetadataManager.getDomainModel();
 	final DescriptorRepository descriptorRepository = MetadataManager.getOjbMetadataManager().getGlobalRepository();
 	for (final DomainClass domainClass : domainModel.getDomainClasses()) {

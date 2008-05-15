@@ -5,15 +5,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.fenixframework.Config;
+import pt.ist.fenixframework.pstm.MetadataManager;
 import pt.utl.ist.codeGenerator.database.DatabaseDescriptorFactory;
 import pt.utl.ist.codeGenerator.database.SqlTable;
-import pt.ist.fenixframework.pstm.MetadataManager;
 
 public class SQLGenerator {
 
     public static void main(String[] args) {
 	try {
-	    MetadataManager.init("build/WEB-INF/classes/domain_model.dml");
+	    Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
+	    MetadataManager.init(config);
 	    generate(args[0]);
 	} catch (Exception ex) {
 	    ex.printStackTrace();
