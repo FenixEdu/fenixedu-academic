@@ -201,7 +201,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     public boolean isToPrint() {
-	return !isConcluded();
+	return !isDelivered();
     }
 
     @Override
