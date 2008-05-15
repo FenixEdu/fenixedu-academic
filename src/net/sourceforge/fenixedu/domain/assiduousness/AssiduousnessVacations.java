@@ -36,6 +36,7 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
 	setExtraWorkDays(extraWorkDays);
 	setLastYearExtraWorkDays(lastYearExtraWorkDays);
 	setLastModifiedDate(lastModifiedDate);
+	setEfectiveWorkDays(0);
     }
 
     public Double getTotalDays() {
@@ -133,7 +134,7 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
     }
 
     public Integer getArt17And18MaximumLimitDays() {
-	return Math.max((int) (getEfectiveWorkDays() * new Double(0.08)), AssiduousnessExemption
+	return Math.max(Math.round((float) (getEfectiveWorkDays() * new Double(0.08))), AssiduousnessExemption
 		.getAssiduousnessExemptionDaysQuantity(getYear()));
     }
 

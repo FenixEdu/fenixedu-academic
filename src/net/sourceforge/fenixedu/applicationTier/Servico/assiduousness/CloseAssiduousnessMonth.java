@@ -192,16 +192,18 @@ public class CloseAssiduousnessMonth extends Service {
 			}
 		    }
 		    Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight());
-		    if (leavesList.isEmpty()
-			    && ((workSchedule.getWorkScheduleType().getScheduleClockingType()
-				    .equals(ScheduleClockingType.NOT_MANDATORY_CLOCKING)) || (!workDaySheet
-				    .getAssiduousnessRecords().isEmpty()))) {
-			thisBonusDiscount = 1;
-			thisA17Discount = 1;
-			if (!workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
+		    if (leavesList.isEmpty()) {
+			if (workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
 				ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
 			    thisDayWorkedTime = workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
+				    .getWorkPeriodDuration();
+			    thisBonusDiscount = 1;
+			    thisA17Discount = 1;
+			} else if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
+			    thisDayWorkedTime = workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
 				    .getWorkPeriodDuration().plus(thisDayBalance);
+			    thisBonusDiscount = 1;
+			    thisA17Discount = 1;
 			}
 		    }
 		    if (!workSchedule.getWorkScheduleType().getScheduleClockingType().equals(

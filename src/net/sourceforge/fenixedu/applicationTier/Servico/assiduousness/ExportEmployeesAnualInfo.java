@@ -151,11 +151,6 @@ public class ExportEmployeesAnualInfo extends Service {
 	return total == 0 ? null : new Integer(total);
     }
 
-    private int getJustificationDays(List<Leave> leaves, String justification, YearMonthDay beginDate, YearMonthDay endDate) {
-	Integer halfDaysVacations1 = countLeaveNumberOfDays(leaves, justification, beginDate, endDate);
-	return halfDaysVacations1 == null ? 0 : halfDaysVacations1.intValue();
-    }
-
     private void setArticle52(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,
 	    YearMonthDay beginDate, YearMonthDay endDate) {
 	double clinicTreatmentPercentage = getClinicTreatmentPercentage(assiduousnessClosedMonth, "T.AMB", beginDate, endDate);
