@@ -39,8 +39,8 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	init(studentCurricularPlan, rootCourseGroup, executionSemester, cycleType);
     }
 
-    private void init(StudentCurricularPlan studentCurricularPlan, RootCourseGroup courseGroup, ExecutionSemester executionSemester,
-	    CycleType cycleType) {
+    private void init(StudentCurricularPlan studentCurricularPlan, RootCourseGroup courseGroup,
+	    ExecutionSemester executionSemester, CycleType cycleType) {
 	checkParameters(studentCurricularPlan, courseGroup, executionSemester);
 	checkInitConstraints(studentCurricularPlan, courseGroup);
 
@@ -165,15 +165,18 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return null;
     }
 
-    public CycleCurriculumGroup getFirstCycleCurriculumGroup() {
-	final SortedSet<CycleCurriculumGroup> cycleCurriculumGroups = new TreeSet<CycleCurriculumGroup>(
-		CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
-	cycleCurriculumGroups.addAll(getInternalCycleCurriculumGroups());
+    public CycleCurriculumGroup getFirstOrderedCycleCurriculumGroup() {
+	for (final CycleType cycleType : getDegreeType().getOrderedCycleTypes()) {
+	    CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
+	    if (cycleCurriculumGroup != null) {
+		return cycleCurriculumGroup;
+	    }
+	}
 
-	return cycleCurriculumGroups.isEmpty() ? null : cycleCurriculumGroups.first();
+	return null;
     }
 
-    public CycleCurriculumGroup getLastCycleCurriculumGroup() {
+    public CycleCurriculumGroup getLastOrderedCycleCurriculumGroup() {
 	final SortedSet<CycleCurriculumGroup> cycleCurriculumGroups = new TreeSet<CycleCurriculumGroup>(
 		CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
 	cycleCurriculumGroups.addAll(getInternalCycleCurriculumGroups());

@@ -1218,7 +1218,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return false;
     }
 
-    final public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+    final public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse,
+	    final ExecutionSemester executionSemester) {
 	return isBoxStructure() ? getRoot().isEnroledInExecutionPeriod(curricularCourse, executionSemester)
 		: isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionSemester);
     }
@@ -1264,7 +1265,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void initEctsCredits(ExecutionSemester executionSemester, List<Enrolment> enrolments) {
 	for (final Enrolment enrolment : enrolments) {
-	    enrolment.setAccumulatedEctsCredits(this.getAccumulatedEctsCredits(executionSemester, enrolment.getCurricularCourse()));
+	    enrolment.setAccumulatedEctsCredits(this
+		    .getAccumulatedEctsCredits(executionSemester, enrolment.getCurricularCourse()));
 	}
     }
 
@@ -1426,7 +1428,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    final public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester, final CurricularCourse curricularCourse) {
+    final public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester,
+	    final CurricularCourse curricularCourse) {
 	if (curricularCourse.isBolonhaDegree()) {
 	    return isAccumulated(executionSemester, curricularCourse) ? MaximumNumberOfCreditsForEnrolmentPeriod
 		    .getAccumulatedEctsCredits(curricularCourse, executionSemester) : curricularCourse.getEctsCredits(
@@ -2043,8 +2046,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean isEnroledInSpecialSeason(final ExecutionYear executionYear) {
 	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>(executionYear.getExecutionPeriods());
-	Collections.sort(executionSemesters,
-		new ReverseComparator(ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
+	Collections.sort(executionSemesters, new ReverseComparator(
+		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
 
 	for (final ExecutionSemester executionSemester : executionSemesters) {
 	    if (isEnroledInSpecialSeason(executionSemester)) {
@@ -2794,12 +2797,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBoxStructure() ? getRoot().getCycleCurriculumGroup(CycleType.THIRD_CYCLE) : null;
     }
 
-    public CycleCurriculumGroup getFirstCycleCurriculumGroup() {
-	return isBoxStructure() ? getRoot().getFirstCycleCurriculumGroup() : null;
+    public CycleCurriculumGroup getFirstOrderedCycleCurriculumGroup() {
+	return isBoxStructure() ? getRoot().getFirstOrderedCycleCurriculumGroup() : null;
     }
 
-    public CycleCurriculumGroup getLastCycleCurriculumGroup() {
-	return isBoxStructure() ? getRoot().getLastCycleCurriculumGroup() : null;
+    public CycleCurriculumGroup getLastOrderedCycleCurriculumGroup() {
+	return isBoxStructure() ? getRoot().getLastOrderedCycleCurriculumGroup() : null;
     }
 
     public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {

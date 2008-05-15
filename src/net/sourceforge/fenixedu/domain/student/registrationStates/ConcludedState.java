@@ -48,7 +48,7 @@ public class ConcludedState extends ConcludedState_Base {
 	    getRegistration().setFinalAverage(null);
 	    getRegistration().setConclusionDate(null);
 	} else {
-	    getRegistration().getLastStudentCurricularPlan().getLastCycleCurriculumGroup().removeConcludedInformation();
+	    getRegistration().getLastStudentCurricularPlan().getLastOrderedCycleCurriculumGroup().removeConcludedInformation();
 	}
 	super.delete();
     }

@@ -2278,7 +2278,7 @@ public class Registration extends Registration_Base {
 	final SortedSet<CycleType> concludedCycles = new TreeSet<CycleType>(getConcludedCycles());
 
 	if (concludedCycles.isEmpty()) {
-	    return getLastStudentCurricularPlan().getFirstCycleCurriculumGroup().getCycleType();
+	    return getLastStudentCurricularPlan().getFirstOrderedCycleCurriculumGroup().getCycleType();
 	} else {
 	    final CycleType lastConcludedCycle = concludedCycles.last();
 
@@ -2400,8 +2400,8 @@ public class Registration extends Registration_Base {
     }
 
     final public StudentCurricularPlan getStudentCurricularPlan(final ExecutionSemester executionSemester) {
-	return executionSemester == null ? getStudentCurricularPlan(new YearMonthDay()) : getStudentCurricularPlan(executionSemester
-		.getEndDateYearMonthDay());
+	return executionSemester == null ? getStudentCurricularPlan(new YearMonthDay())
+		: getStudentCurricularPlan(executionSemester.getEndDateYearMonthDay());
     }
 
     final public StudentCurricularPlan getStudentCurricularPlan(final YearMonthDay date) {

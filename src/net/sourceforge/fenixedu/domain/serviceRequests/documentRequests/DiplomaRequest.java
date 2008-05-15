@@ -176,7 +176,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
 	if (requestedCycle == null) {
 	    if (registration.getDegreeType().hasExactlyOneCycleType()) {
-		return registration.getLastStudentCurricularPlan().getLastCycleCurriculumGroup();
+		return registration.getLastStudentCurricularPlan().getLastOrderedCycleCurriculumGroup();
 	    } else {
 		return null;
 	    }
