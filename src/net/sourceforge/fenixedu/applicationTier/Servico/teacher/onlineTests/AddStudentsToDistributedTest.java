@@ -39,6 +39,16 @@ public class AddStudentsToDistributedTest extends Service {
 		.findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder();
 	int order = 0;
 	for (StudentTestQuestion studentTestQuestionExample : studentTestQuestions) {
+	    if (studentTestQuestionExample.getQuestion().getSubQuestions() == null || studentTestQuestionExample.getQuestion().getSubQuestions().size() == 0) {
+		try {
+		    new ParseSubQuestion().parseSubQuestion(studentTestQuestionExample.getQuestion(), contextPath.replace('\\', '/'));
+		} catch (ParseException e) {
+		    throw new InvalidArgumentsServiceException();
+		} catch (ParseQuestionException e) {
+		    throw new InvalidArgumentsServiceException();
+		}
+	    }
+		
 	    if (!studentTestQuestionExample.isSubQuestion()) {
 		order++;
 		List<Question> questionList = new ArrayList<Question>();
