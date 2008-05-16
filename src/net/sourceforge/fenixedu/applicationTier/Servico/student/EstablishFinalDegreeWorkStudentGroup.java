@@ -29,7 +29,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
 
     	final Registration registration = getRegistrationForExecutionDegree(person, executionDegree);
     	if (registration == null) {
-            throw new FenixServiceException("Error reading student to place in final degree work group.");
+    	    throw new StudentCannotBeACandidateForSelectedDegree("Student.Cannot.Be.A.Candidate.For.Selected.Degree");
     	}
         FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForExecutionYear(executionDegree.getExecutionYear());
         if (group == null) {
@@ -37,13 +37,13 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
                 GroupStudent groupStudent = new GroupStudent();
                 groupStudent.setRegistration(registration);
                 groupStudent.setFinalDegreeDegreeWorkGroup(group);
-        } else {
-            if (!group.getGroupProposals().isEmpty()) {
-                throw new GroupProposalCandidaciesExistException();
-            }
-            if (group.getGroupStudents().size() > 1) {
-                throw new GroupStudentCandidaciesExistException();
-            }
+//        } else {
+//            if (!group.getGroupProposals().isEmpty()) {
+//                throw new GroupProposalCandidaciesExistException();
+//            }
+//            if (group.getGroupStudents().size() > 1) {
+//                throw new GroupStudentCandidaciesExistException();
+//            }
         }
 
         if (group.getExecutionDegree() == null
@@ -75,6 +75,30 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
 	    }
 	}
 	return null;
+    }
+
+    public class StudentCannotBeACandidateForSelectedDegree extends FenixServiceException {
+
+        public StudentCannotBeACandidateForSelectedDegree() {
+            super();
+        }
+
+        public StudentCannotBeACandidateForSelectedDegree(int errorType) {
+            super(errorType);
+        }
+
+        public StudentCannotBeACandidateForSelectedDegree(String s) {
+            super(s);
+        }
+
+        public StudentCannotBeACandidateForSelectedDegree(Throwable cause) {
+            super(cause);
+        }
+
+        public StudentCannotBeACandidateForSelectedDegree(String message, Throwable cause) {
+            super(message, cause);
+        }
+
     }
 
     public class GroupStudentCandidaciesExistException extends FenixServiceException {

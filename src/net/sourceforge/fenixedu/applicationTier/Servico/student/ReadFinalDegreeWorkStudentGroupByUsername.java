@@ -18,9 +18,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
     public InfoGroup run(final Person personUser, final ExecutionYear executionYear) throws ExcepcaoPersistencia {
-	Registration registration = personUser.getStudentByType(DegreeType.DEGREE);
-	if (registration == null) registration = personUser.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
+	Registration registration = personUser.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
 	if (registration == null) registration = personUser.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	if (registration == null) registration = personUser.getStudentByType(DegreeType.BOLONHA_DEGREE);
+	if (registration == null) registration = personUser.getStudentByType(DegreeType.DEGREE);
 	if (registration == null) {
 	    return null;
 	}

@@ -307,9 +307,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
                 && infoExecutionDegrees != null && !infoExecutionDegrees.isEmpty()) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object[] args = { userView, DegreeType.DEGREE };
-            InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils
-                    .executeService(userView, "ReadActiveStudentCurricularPlanByDegreeType", args);
+            InfoStudentCurricularPlan infoStudentCurricularPlan = getDefaultStudentCurricularPlan(userView);
             if (infoStudentCurricularPlan == null) {
                 throw new NoDegreeStudentCurricularPlanFoundException();
             }
@@ -324,6 +322,27 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
                 request.setAttribute("finalDegreeWorkCandidacyForm", dynaActionForm);
             }
         }
+    }
+
+    private InfoStudentCurricularPlan getDefaultStudentCurricularPlan(IUserView userView) throws FenixServiceException,
+    	FenixFilterException {
+	InfoStudentCurricularPlan infoStudentCurricularPlan = getDefaultStudentCurricularPlan(userView, DegreeType.BOLONHA_MASTER_DEGREE);
+	if (infoStudentCurricularPlan == null) {
+	    infoStudentCurricularPlan = getDefaultStudentCurricularPlan(userView, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	}
+	if (infoStudentCurricularPlan == null) {
+	    infoStudentCurricularPlan = getDefaultStudentCurricularPlan(userView, DegreeType.BOLONHA_DEGREE);
+	}
+	if (infoStudentCurricularPlan == null) {
+	    infoStudentCurricularPlan = getDefaultStudentCurricularPlan(userView, DegreeType.DEGREE);
+	}
+	return infoStudentCurricularPlan;
+    }
+
+    private InfoStudentCurricularPlan getDefaultStudentCurricularPlan(IUserView userView, final DegreeType degreeType) throws FenixServiceException,
+	    FenixFilterException {
+	Object[] args = { userView, degreeType };
+	return (InfoStudentCurricularPlan) ServiceUtils.executeService(userView, "ReadActiveStudentCurricularPlanByDegreeType", args);
     }
 
     /**
