@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -11,7 +12,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.LanguageUtils;
 
 public class DelegatesGroup extends LeafGroup {
 
@@ -67,15 +68,14 @@ public class DelegatesGroup extends LeafGroup {
 	
 	@Override
 	public String getName() {
-		if(hasDegree()) {
-			return RenderUtils.getResourceString("DELEGATES_RESOURCES", "label." + getClass().getSimpleName()) + " " + 
-				RenderUtils.getResourceString("DELEGATES_RESOURCES", "label.of") + " "+ getDegree().getSigla();
-		}
-		else {
-			return RenderUtils.getResourceString("DELEGATES_RESOURCES", "label." + getClass().getSimpleName() + "." +
-					getFunctionType().getName());
-		}
-    }
+	    final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DelegateResources", LanguageUtils.getLocale());
+	    if(hasDegree()) {
+		return resourceBundle.getString("label." + getClass().getSimpleName()) + " " + 
+			resourceBundle.getString("label.of") + " "+ getDegree().getSigla();
+	    } else {
+		return resourceBundle.getString("label." + getClass().getSimpleName() + "." + getFunctionType().getName());
+	    }
+	}
 
 	public Degree getDegree() {
 		return (degree != null ? degree.getObject() : null);
