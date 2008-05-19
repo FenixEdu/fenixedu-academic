@@ -47,7 +47,7 @@
 </schema>
 
 <schema name="delegates.searchDelegates.searchByDegree.restrictedDelegateResume" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
-	<slot name="delegate.student.lastActiveRegistration.number" key="label.studentNumber" />
+	<slot name="delegate.student.number" key="label.studentNumber" />
 	<slot name="delegate.name" key="label.name" />
 	<slot name="delegate.email" key="label.email" layout="link" >
 		<property name="useParent" value="true" />
