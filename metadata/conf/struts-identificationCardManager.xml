@@ -46,6 +46,7 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.CardGenerationSearchDA"
 				parameter="method">
 			<forward name="showSearchPage" path="df.page.card.generation.showSearchPage"/>
+			<forward name="viewPersonCards" path="df.page.card.generation.viewPersonCards"/>
 		</action>
     </action-mappings>
 

@@ -28,3 +28,8 @@
 	<slot name="documentIdNumber"/>
 	<slot name="numberOfCardGenerationEntries"/>
 </schema>
+<schema name="card.generation.person.card.list" type="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry">
+	<slot name="cardGenerationBatch.executionYear.year"/>
+	<slot name="cardGenerationBatch.description"/>
+	<slot name="cardGenerationBatch.sent"/>
+</schema>

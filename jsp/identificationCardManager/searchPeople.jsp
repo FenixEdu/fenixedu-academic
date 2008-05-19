@@ -30,11 +30,17 @@
 	<bean:define id="params">&amp;name=<logic:present name="searchParameters" property="name"><bean:write name="searchParameters" property="name"/></logic:present>&amp;email=<logic:present name="searchParameters" property="email"><bean:write name="searchParameters" property="email"/></logic:present>&amp;username=<logic:present name="searchParameters" property="username"><bean:write name="searchParameters" property="username"/></logic:present>&amp;documentIdNumber=<logic:present name="searchParameters" property="documentIdNumber"><bean:write name="searchParameters" property="documentIdNumber"/></logic:present></bean:define>
 	<cp:collectionPages url="<%= "/identificationCardManager" + url + params %>" 
 		pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="8"/>
-	<fr:view name="people" schema="person.name.id.dateOfBirth">
+	<fr:view name="people" schema="card.generation.search.person.list">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
 			<fr:property name="rowClasses" value=",bgcolorfafafa"/>
 			<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
+
+			<fr:property name="link(view)" value="/searchPeople.do?method=viewPersonCards"/>
+			<fr:property name="key(view)" value="label.view" />
+			<fr:property name="param(view)" value="idInternal/personId" />
+			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
+			<fr:property name="order(view)" value="1" />
 		</fr:layout>
 	</fr:view>
 </logic:present>
