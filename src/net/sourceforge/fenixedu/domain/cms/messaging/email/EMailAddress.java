@@ -9,6 +9,8 @@ import java.io.UnsupportedEncodingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import net.sourceforge.fenixedu.util.EMail;
+
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
  *         <br/> Created on 13:17:42,8/Fev/2006
@@ -17,9 +19,7 @@ import javax.mail.internet.InternetAddress;
 public class EMailAddress {
     private String user;
 
-    // private static final String validationPattern =
-    // "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*$";
-    private static final String validationPattern = "^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\\-+)|([A-Za-z0-9]+\\.+)|([A-Za-z0-9]+\\++))*[A-Za-z0-9]+@((\\w+\\-+)|(\\w+\\.))*\\w{1,63}\\.[a-zA-Z]{2,6}$";
+    private static final String validationPattern = EMail.W3C_EMAIL_SINTAX_VALIDATOR;
     private String domain;
 
     private String personalName;
