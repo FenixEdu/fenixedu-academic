@@ -7,8 +7,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 /**
  * @author jpvl
@@ -25,11 +28,19 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
             InfoLesson lesson = (InfoLesson) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a href='").append(context).append("/publico/");
-            strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
-            strBuffer.append(infoExecutionCourse.getIdInternal());
-            strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
-            strBuffer.append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")");
+            
+	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+
+            if (site.isPublic()) {
+		strBuffer.append(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+	    } else {
+		strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    }
+	    strBuffer.append("<a href=\"").append(context);
+	    strBuffer.append(site.getReversePath());	    
+	    strBuffer.append("\">");	    
+	    strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
             if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
@@ -40,11 +51,19 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();            
-            strBuffer.append("<a href='").append(context).append("/publico/");
-            strBuffer.append("executionCourse.do?method=firstPage&amp;executionCourseID=");
-            strBuffer.append(infoExecutionCourse.getIdInternal());
-            strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
-            strBuffer.append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")");           
+	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+
+            if (site.isPublic()) {
+		strBuffer.append(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+	    } else {
+		strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    }
+	    strBuffer.append("<a href=\"").append(context);
+	    strBuffer.append(site.getReversePath());	    
+	    strBuffer.append("\">");	    
+	    strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
+           
                         
         } else if (showOccupation instanceof InfoExam) {
             InfoExam infoExam = (InfoExam) showOccupation;
