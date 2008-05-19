@@ -54,14 +54,7 @@
         <bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="tipoCurso.name"/>
     </logic:equal>
     <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in"/>
-    <logic:present name="inEnglish">
-        <logic:equal name="inEnglish" value="false">
-            <bean:write name="degree" property="nome"/>
-        </logic:equal>
-        <logic:equal name="inEnglish" value="true">
-            <bean:write name="degree" property="nameEn"/>
-        </logic:equal>
-    </logic:present>
+   <fr:view name="degree" property="nameI18N"/>
 </h1>
 
 <bean:define id="site" name="degree" property="site" toScope="request"/>
