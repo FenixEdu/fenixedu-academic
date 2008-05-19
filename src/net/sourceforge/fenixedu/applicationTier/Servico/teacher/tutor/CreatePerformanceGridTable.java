@@ -134,7 +134,7 @@ public class CreatePerformanceGridTable extends Service {
 		for(Enrolment enrolment : newLine.getEnrolmentsWithLastExecutionPeriod()) {
 			CurricularCourse curricular = enrolment.getCurricularCourse();
 			DegreeModuleScope scope = curricular.getOldestDegreeModuleScope();
-			PerformanceGridLineYearGroup bean = studentPerformanceByYearArray[scope.getCurricularYear() - 1];
+			PerformanceGridLineYearGroup bean = studentPerformanceByYearArray[Math.min(scope.getCurricularYear(),max_years) - 1];
 			bean.addEnrolmentToSemester(scope, curricular, enrolment);
 		}
 		
