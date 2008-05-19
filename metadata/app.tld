@@ -192,38 +192,6 @@
     </attribute>
 
   </tag>
-   <tag>
-
-    <name>generateSectionMenu</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.publico.sectionMenu.RenderSectionMenuTag</tagclass>
-    <bodycontent>empty</bodycontent>
-    
-    <info>
-        Generates a Menu of sections.
-    </info>
-
-    <attribute>
-      <name>name</name>
-      <required>true</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-      <name>path</name>
-      <required>true</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-	 <attribute>
-      <name>activeSectionName</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-      <name>renderer</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-  </tag>
-
 
 <tag>
 <name>link</name>

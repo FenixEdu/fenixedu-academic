@@ -566,13 +566,6 @@
         <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
     </action>
 
-    <action path="/viewPublishedMarks"
-            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewPublishedMarksAction"
-            parameter="method"
-            >
-        <forward name="viewPublishedMarks" path="/executionCourseSite.jsp"/>
-    </action>
-	
 <!-- END OF EXAMS -->
 
     <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->

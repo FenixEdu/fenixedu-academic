@@ -11,10 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -149,35 +153,40 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
 	// read lessons of (previously selected) room in selected
 	// executionPeriod
-	InfoRoom infoRoom = null;
-	Object argsReadRoomByOID[] = new Object[1];
-	if (request.getParameter(SessionConstants.ROOM_OID) != null) {
-	    argsReadRoomByOID[0] = new Integer(request.getParameter(SessionConstants.ROOM_OID));
-	} else {
-	}
+	Integer roomId = request.getParameter(SessionConstants.ROOM_OID) != null ? new Integer(request
+		.getParameter(SessionConstants.ROOM_OID)) : null;
 
-	try {
-	    infoRoom = (InfoRoom) ServiceUtils.executeService(null, "ReadRoomByOID", argsReadRoomByOID);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
-	}
+	InfoRoom infoRoom = roomId != null ? InfoRoom.newInfoFromDomain((AllocatableSpace) rootDomainObject.readResourceByOID(roomId))
+		: null;
+
 	request.setAttribute(SessionConstants.ROOM, infoRoom);
 	request.setAttribute(SessionConstants.ROOM_OID, infoRoom.getIdInternal());
 
-	Object argsReadLessons[] = { selectedInfoExecutionPeriod, infoRoom, null };
+	List<InfoLesson> lessons;
+	lessons = readLessons(selectedInfoExecutionPeriod, infoRoom);
 
-	try {
-	    List lessons;
-	    lessons = (List) ServiceUtils.executeService(null, "LerAulasDeSalaEmSemestre", argsReadLessons);
-
-	    if (lessons != null) {
-		request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessons);
-	    }
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
+	if (lessons != null) {
+	    request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessons);
 	}
+
 	return mapping.findForward("viewRoom");
     }
 
+    private List<InfoLesson> readLessons(InfoExecutionPeriod infoExecutionPeriod, InfoRoom infoRoom) {
+
+	Integer executionPeriodId = infoExecutionPeriod.getIdInternal();
+
+	final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
+	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+
+	final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
+	for (final Lesson elem : room.getAssociatedLessons(executionSemester)) {
+	    if (!elem.hasShift()) {
+		continue;
+	    }
+	    infoAulas.add(InfoLesson.newInfoFromDomain(elem));
+	}
+
+	return infoAulas;
+    }
 }

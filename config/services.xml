@@ -265,13 +265,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>LerAulasDeSalaEmSemestre</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeSalaEmSemestre</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>LerSala</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerSala</implementationClass>
 		<description />
@@ -2630,21 +2623,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadSections</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadSections</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadSectionsBySiteAndSuperiorSection</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadSectionsBySiteAndSuperiorSection</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ReadSite</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadSite</implementationClass>
 		<description />
@@ -3843,14 +3821,6 @@
 			<chain name="SubmitMarksAuthorization" />
 		</filterChains>
 	</service>	
-	<service>
-		<name>ReadPublishedMarksByExam</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadPublishedMarksByExam</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
 	<service>
 		<name>WrittenEvaluationRoomDistribution</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.WrittenEvaluationRoomDistribution</implementationClass>

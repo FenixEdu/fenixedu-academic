@@ -1017,10 +1017,6 @@
 			<forward name="bibliographicReference" path="manage-execution-course-bibliographicReference"/>
         </action>
 
-        <action path="/viewSite" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ReadSite">
-            <forward name="viewSite" path="/viewSite.jsp"/>
-            <!--		<forward name="viewSite" path="df.page.initial.management.execution_course"/>-->
-        </action>
         <!-- Insert Section -->
         <action name="sectionForm" path="/createSection" parameter="method" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
@@ -1581,17 +1577,17 @@
         <action path="/fileList" type="net.sourceforge.fenixedu.presentationTier.Action.fileManager.FileListingAction" >
             <forward name="xpto1" path="/xpto1.jsp"/>
         </action>
-        <!--- by gedl, 1-9-2003 -->
+        <!-- by gedl, 1-9-2003 -->
         <action path="/showCandidacies" name="showCandidacies" 
             type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacies">
             <forward name="allCandidaciesGrid" path="candidaciesGrid"/>
         </action>
-        <!--- by gedl, 1-2-2004 -->
+        <!-- by gedl, 1-2-2004 -->
         <action path="/viewCandidateCurriculum"
             type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ViewCandidateCurriculum">
             <forward name="viewCurriculum" path="definition.viewCandidateCurriculum"/>
         </action>
-        <!--- by gedl, 8-9-2003 -->
+        <!-- by gedl, 8-9-2003 -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacyDetails" path="/candidacyDetails" 
             scope="request">
             <forward name="showCandidacyDetails" path="/showCandidacyDetails.jsp"/>
@@ -1600,11 +1596,11 @@
         <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.DownloadCandidaciesTable" 
             path="/getTabSeparatedCandidacies" scope="request">
         </action>
-        <!--- by ajfe / jpvb, 1-2005 -->
+        <!-- by ajfe / jpvb, 1-2005 -->
 		<action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.DownloadStudentsWithAttendsByExecutionCourseListAction" 
             path="/getTabSeparatedStudentList" scope="request">
         </action>
-        <!--- by gedl, 17-9-2003 -->
+        <!-- by gedl, 17-9-2003 -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SendMailToSelectedStudents" 
             path="/mailSender" name="sendMailForm" parameter="method" scope="request" validate="true">
 
@@ -1617,7 +1613,7 @@
             <forward name="sendMail" path="sendMail"/>
         </action>
                 
-        <!--- by gedl, 25-9-2003 -->
+        <!-- by gedl, 25-9-2003 -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.SelectCandidacies" path="/selectCandidacies" 
             name="selectCandidaciesForm" parameter="method" scope="request">
             <forward name="showSelectCandidacies" path="showSelectCandidacies"/>

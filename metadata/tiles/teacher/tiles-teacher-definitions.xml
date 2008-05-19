@@ -54,12 +54,6 @@
   	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
 	</definition>
 	
-	<definition name="df.teacher.execution-course-management" extends="definition.teacher.two-column">
-	    <put name="navLocal" value="/teacher/commons/localNavBar.jsp"/>		
-		<put name="body-context" value="/teacher/executionCourseName.jsp"></put>
-		<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
-	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
-	</definition>
 	<definition name="df.teacher.credits-management" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/commons/creditsManagementLocalNavigationBar.jsp"/>	
 	    <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
@@ -128,16 +122,5 @@
 	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
  	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>	  
 	</definition>	
-	
-	<definition name="definition.teacher.siteAdministration" page="/layout/teacherLayout_2col.jsp">
-	  <put name="serviceName" value="Portal Docente" />	
-	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
-	  <put name="navLocal" value="/teacher/sectionsNavbar.jsp"/>
-	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
-	  <put name="body" value="/commons/blank.jsp" />
-	  <put name="footer" value="/copyright.jsp" />
-	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
- 	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>	  
-	</definition>
 	
 </tiles-definitions>

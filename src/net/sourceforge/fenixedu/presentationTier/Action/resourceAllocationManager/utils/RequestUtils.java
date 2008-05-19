@@ -9,7 +9,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -23,13 +22,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.util.LabelValueBean;
@@ -143,21 +140,6 @@ public abstract class RequestUtils {
 	return infoSite;
     }
 
-    public static final List<InfoSection> getSectionsFromRequest(HttpServletRequest request) throws FenixActionException,
-	    FenixFilterException {
-	List<InfoSection> sections = null;
-	try {
-	    InfoSite infoSite = getSiteFromRequest(request);
-	    Object[] args = { infoSite };
-	    sections = (List<InfoSection>) ServiceUtils.executeService(null, "ReadSections", args);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
-	return sections;
-    }
-
     public static final InfoExecutionDegree getExecutionDegreeFromRequest(HttpServletRequest request,
 	    InfoExecutionYear infoExecutionYear) throws FenixActionException, FenixFilterException {
 
@@ -215,38 +197,6 @@ public abstract class RequestUtils {
 	    request.setAttribute("eYName", infoExecutionPeriod.getInfoExecutionYear().getYear());
 
 	}
-    }
-
-    public static final void setSectionsToRequest(HttpServletRequest request, InfoSite infoSite) throws FenixActionException,
-	    FenixFilterException {
-	if (infoSite != null) {
-	    Object argsReadSections[] = { infoSite };
-
-	    List<InfoSection> infoSections = null;
-
-	    try {
-		infoSections = (List<InfoSection>) ServiceManagerServiceFactory.executeService(null, "ReadSections",
-			argsReadSections);
-	    } catch (FenixServiceException e) {
-		throw new FenixActionException(e);
-	    }
-
-	    if (infoSections != null) {
-		Collections.sort(infoSections);
-	    }
-
-	    request.setAttribute("sections", infoSections);
-
-	}
-    }
-
-    public static final void setSectionToRequest(HttpServletRequest request) {
-
-	InfoSection infoSection = (InfoSection) request.getAttribute("infoSection");
-	if (infoSection != null) {
-	    request.setAttribute("infoSection", infoSection);
-	}
-
     }
 
     public static final void setExecutionDegreeToRequest(HttpServletRequest request, InfoExecutionDegree executionDegree) {

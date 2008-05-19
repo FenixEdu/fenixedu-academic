@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -66,10 +65,6 @@ public class ViewShiftTimeTableAction extends FenixContextAction {
 
         request.setAttribute("shift", InfoShift.newInfoFromDomain(shift));
         request.setAttribute("lessonList", lessons);
-        InfoSite site = RequestUtils.getSiteFromRequest(request);
-        RequestUtils.setExecutionCourseToRequest(request, infoExecutionCourse);
-        RequestUtils.setSectionsToRequest(request, site);
-        RequestUtils.setSectionToRequest(request);
 
         return mapping.findForward("Sucess");
     }
