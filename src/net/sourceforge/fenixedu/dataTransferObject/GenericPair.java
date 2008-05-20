@@ -39,12 +39,13 @@ public class GenericPair<T, V> implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-	return o instanceof GenericPair && getLeft().equals(((GenericPair) o).getLeft()) && getRight().equals(((GenericPair) o).getRight());
+	return o instanceof GenericPair && getLeft().equals(((GenericPair) o).getLeft())
+		&& getRight().equals(((GenericPair) o).getRight());
     }
 
     @Override
     public int hashCode() {
-	final String hashBase = getLeft().toString() + getRight().toString();
+	final String hashBase = String.valueOf(getLeft()) + String.valueOf(getRight());
 	return hashBase.hashCode();
     }
 
