@@ -205,9 +205,9 @@
 				<tr>
 					<td colspan="7">
 						<p>
-							<bean:write name="infoSiteCourseInformation" 
+							<fr:view name="infoSiteCourseInformation" 
 										property="infoEvaluationMethod.evaluationElements" 
-										filter="false"/>
+										layout="html"/>
 						</p>
 					</td>
 				</tr>

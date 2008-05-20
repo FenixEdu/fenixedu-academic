@@ -10,15 +10,15 @@
 			<h3><bean:write name="curricularCourse" property="name"/></h3>
 			<table class="ects_headertable" width="90%" cellspacing="0">
 				<tr>
-					<td><strong><bean:message key="label.ects.yearOrSemester" bundle="GEP_RESOURCES_EN"/></strong></td>
-					<td colspan="3"><bean:message key="label.ects.semestral" bundle="GEP_RESOURCES_EN"/></td>
+					<td><strong><bean:message key="label.ects.yearOrSemester" bundle="GEP_RESOURCES" locale="en"/></strong></td>
+					<td colspan="3"><bean:message key="label.ects.semestral" bundle="GEP_RESOURCES" locale="en"/></td>
 				</tr>
 	  			<tr>
 					<td>
 						<strong>
-							<bean:message key="label.ects.curricularYear" bundle="GEP_RESOURCES_EN"/>/
-							<bean:message key="label.ects.semester" bundle="GEP_RESOURCES_EN"/>/
-							<bean:message key="label.ects.branch" bundle="GEP_RESOURCES_EN"/>
+							<bean:message key="label.ects.curricularYear" bundle="GEP_RESOURCES" locale="en"/>/
+							<bean:message key="label.ects.semester" bundle="GEP_RESOURCES" locale="en"/>/
+							<bean:message key="label.ects.branch" bundle="GEP_RESOURCES" locale="en"/>
 						</strong>
 					</td>
 		  			<td colspan="3">
@@ -33,7 +33,7 @@
 				<tr>
 					<td>
 						<strong>
-							<bean:message key="label.gep.code" bundle="GEP_RESOURCES_EN"/>:
+							<bean:message key="label.gep.code" bundle="GEP_RESOURCES" locale="en"/>:
 						</strong>
 					</td>
 					<td colspan="3">
@@ -42,7 +42,7 @@
 				</tr>
 			 	<tr>
 					<td><strong><bean:message key="label.ects.mandatoryOrOptional"
-											  bundle="GEP_RESOURCES_EN"/></strong></td>
+											  bundle="GEP_RESOURCES" locale="en"/></strong></td>
 					<td colspan="3">
 					<logic:equal name="curricularCourse" property="mandatory" value="true">
 			  			<bean:message key="message.courseInformation.mandatory" />
@@ -54,11 +54,11 @@
 				</tr>
 				<tr>
 					<td><strong><bean:message key="label.ects.credits"
-											  bundle="GEP_RESOURCES_EN"/></strong></td>
+											  bundle="GEP_RESOURCES" locale="en"/></strong></td>
 					<td><bean:message key="label.ects.creditsEcts"
-									  bundle="GEP_RESOURCES_EN"/></td>
+									  bundle="GEP_RESOURCES" locale="en"/></td>
 					<td colspan="2"><bean:message key="label.ects.creditsNational"
-												  bundle="GEP_RESOURCES_EN"/></td>
+												  bundle="GEP_RESOURCES" locale="en"/></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -67,7 +67,7 @@
 				</tr>
 				<tr>
 					<td><strong><bean:message key="label.ects.webPage"
-											  bundle="GEP_RESOURCES_EN"/></strong>
+											  bundle="GEP_RESOURCES" locale="en"/></strong>
 					<td colspan="3">
 						<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
 						<bean:define id="courseURL" type="java.lang.String">
@@ -79,7 +79,7 @@
 				<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers">
 					<tr>
 						<td><strong><bean:message key="label.ects.responsibleTeacher"
-												  bundle="GEP_RESOURCES_EN"/></strong></td>
+												  bundle="GEP_RESOURCES" locale="en"/></strong></td>
 						<td colspan="3"><bean:write name="infoTeacher" property="infoPerson.nome"/></td>
 					</tr>
 				</logic:iterate>
@@ -88,7 +88,7 @@
 			<table cellspacing="0">
 				<tr>
 					<td colspan="7"><strong>1.&nbsp;<bean:message key="label.ects.semanalHours"
-													      bundle="GEP_RESOURCES_EN"/></strong></td>
+													      bundle="GEP_RESOURCES" locale="en"/></strong></td>
 				</tr>
 				<tr>
 					<td>
@@ -96,28 +96,28 @@
 									property="theoreticalHours"/>
 					</td>
 					<td><strong><bean:message key="label.ects.teo"
-											  bundle="GEP_RESOURCES_EN"/></td>
+											  bundle="GEP_RESOURCES" locale="en"/></td>
 					<td>
 						<bean:write name="curricularCourse" 
 									property="praticalHours"/>
 					</td>
 					<td><strong><bean:message key="label.ects.prat"
-											  bundle="GEP_RESOURCES_EN"/></td>
+											  bundle="GEP_RESOURCES" locale="en"/></td>
 					<td><bean:write name="curricularCourse" 
 									property="theoPratHours"/>
 					<td><strong><bean:message key="label.ects.teoPrat"
-												bundle="GEP_RESOURCES_EN"/></td>
+												bundle="GEP_RESOURCES" locale="en"/></td>
 					<td><bean:write name="curricularCourse" 
 									property="labHours"/></td>
 					<td><strong><bean:message key="label.ects.lab"
-											  bundle="GEP_RESOURCES_EN"/></td>
+											  bundle="GEP_RESOURCES" locale="en"/></td>
 				</tr>
 			</table>
 			<table id="ects" width="90%" cellspacing="0">
 				<tr>
 					<td colspan="7"><strong><br />
 				    2.&nbsp;<bean:message key="label.ects.objectivesGen"
-								  bundle="GEP_RESOURCES_EN"/></strong></td>
+								  bundle="GEP_RESOURCES" locale="en"/></strong></td>
 				</tr>
 				<logic:iterate id="infoCurriculum" name="infoSiteCourseInformation" property="infoCurriculums">
 					<tr>
@@ -129,7 +129,7 @@
 				<tr>
 					<td colspan="7"><strong><br />
 				    3.&nbsp;<bean:message key="label.ects.objectivesOper"
-								  bundle="GEP_RESOURCES_EN"/></strong></td>
+								  bundle="GEP_RESOURCES" locale="en"/></strong></td>
 				</tr>
 				<logic:iterate id="infoCurriculum" name="infoSiteCourseInformation" property="infoCurriculums">
 					<tr>
@@ -142,7 +142,7 @@
 					<td colspan="7">
 						<strong>
 							<br />
-							4.&nbsp;<bean:message key="label.ects.program" bundle="GEP_RESOURCES_EN"/>
+							4.&nbsp;<bean:message key="label.ects.program" bundle="GEP_RESOURCES" locale="en"/>
 						</strong>
 				  	</td>
 				</tr>
@@ -158,7 +158,7 @@
 						<strong>
 							<br />
 				    		5.&nbsp;
-				    		<bean:message key="label.ects.bibliography" bundle="GEP_RESOURCES_EN"/>
+				    		<bean:message key="label.ects.bibliography" bundle="GEP_RESOURCES" locale="en"/>
 			    		</strong>
 		    		</td>
 				</tr>
@@ -166,7 +166,7 @@
 					<td colspan="7">
 						<strong>
 							<br />
-				    		<bean:message key="label.ects.principalBiblio" bundle="GEP_RESOURCES_EN"/>
+				    		<bean:message key="label.ects.principalBiblio" bundle="GEP_RESOURCES" locale="en"/>
 			    		</strong>
 		    		</td>
 				</tr>
@@ -188,7 +188,7 @@
 					<td colspan="7">
 						<strong>
 							<br />
-					    	<bean:message key="label.ects.secondaryBiblio" bundle="GEP_RESOURCES_EN"/>
+					    	<bean:message key="label.ects.secondaryBiblio" bundle="GEP_RESOURCES" locale="en"/>
 				    	</strong>
 			    	</td>
 				</tr>
@@ -210,16 +210,16 @@
 					<td colspan="7">
 						<strong>
 							<br />
-				    		6.&nbsp;<bean:message key="label.ects.avaliation" bundle="GEP_RESOURCES_EN"/>
+				    		6.&nbsp;<bean:message key="label.ects.avaliation" bundle="GEP_RESOURCES" locale="en"/>
 			    		</strong>
 	    			</td>
 				</tr>
 				<tr>
 					<td colspan="7">
 						<p>
-							<bean:write name="infoSiteCourseInformation" 
-										property="infoEvaluationMethod.evaluationElementsEn" 
-										filter="false"/>
+								<fr:view name="infoSiteCourseInformation" 
+										property="infoEvaluationMethod.evaluationElements" 
+										layout="html"/>
 						</p>
 					</td>
 				</tr>
@@ -227,7 +227,7 @@
 					<td colspan="7">
 						<strong>
 							<br />
-				    		<bean:message key="label.ects.lastModificationDate" bundle="GEP_RESOURCES_EN"/>
+				    		<bean:message key="label.ects.lastModificationDate" bundle="GEP_RESOURCES" locale="en"/>
 			    		</strong>
 				  	</td>
 				</tr>
