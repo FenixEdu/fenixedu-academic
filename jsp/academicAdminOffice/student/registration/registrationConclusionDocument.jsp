@@ -347,7 +347,7 @@
 			<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.average"/></td>
 			<td style="padding: 5px;"><bean:write name="registrationConclusionBean" property="average"/></td>		
 			
-			<logic:equal name="registration" property="degreeType.administrativeOfficeType" value="MASTER_DEGREE">
+			<logic:equal name="registration" property="degreeType" value="MASTER_DEGREE">
 				<td width="50%" style="padding: 5px; padding-left: 15em;">O coordenador do curso,</td>
 			</logic:equal>
 		</tr>
@@ -365,7 +365,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" style="padding: 5px;"></td>
-			<logic:equal name="registration" property="degreeType.administrativeOfficeType" value="MASTER_DEGREE">
+			<logic:equal name="registration" property="degreeType" value="MASTER_DEGREE">
 				<td width="50%" style="padding: 5px; padding-left: 15em;">_____________________________</td>
 			</logic:equal>
 		</tr>
