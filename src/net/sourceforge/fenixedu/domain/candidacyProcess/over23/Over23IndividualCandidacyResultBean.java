@@ -16,9 +16,11 @@ public class Over23IndividualCandidacyResultBean implements Serializable {
 
     public Over23IndividualCandidacyResultBean(final Over23IndividualCandidacyProcess candidacyProcess) {
 	setCandidacyProcess(candidacyProcess);
-	if (candidacyProcess.getCandidacy().hasAcceptedDegree()) {
-	    setState(candidacyProcess.getCandidacy().getState());
-	    setAcceptedDegree(candidacyProcess.getCandidacy().getAcceptedDegree());
+	if (candidacyProcess.isCandidacyAccepted()) {
+	    setState(candidacyProcess.getCandidacyState());
+	    setAcceptedDegree(candidacyProcess.getAcceptedDegree());
+	} else if (candidacyProcess.isCandidacyRejected()) {
+	    setState(candidacyProcess.getCandidacyState());
 	}
     }
 
@@ -47,4 +49,7 @@ public class Over23IndividualCandidacyResultBean implements Serializable {
 	this.acceptedDegree = (acceptedDegree != null) ? new DomainReference<Degree>(acceptedDegree) : null;
     }
 
+    public boolean isValid() {
+	return getState() != null;
+    }
 }

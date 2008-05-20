@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
+<em><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.candidacy.create" bundle="APPLICATION_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
@@ -11,9 +12,11 @@
 	<br />
 </html:messages>
 
-<fr:form action="/caseHandlingSecondCycleIndividualCandidacyProcess.do">
- 	<html:hidden property="method" value="createNewProcess" />
+<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 
+<fr:form action='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?parentProcessId=" + parentProcessId.toString() %>'>
+
+ 	<html:hidden property="method" value="createNewProcess" />
 	<fr:edit id="secondCycleIndividualCandidacyProcessBean" name="secondCycleIndividualCandidacyProcessBean" visible="false" />
 
 	<logic:notEmpty name="secondCycleIndividualCandidacyProcessBean" property="candidacyProcess">
@@ -25,7 +28,7 @@
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path="/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid" />
+			<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 	
 		<h3 class="mtop15 mbottom025"><bean:message key="label.selectDegree" bundle="APPLICATION_RESOURCES"/>:</h3>
@@ -36,7 +39,7 @@
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path="/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid" />
+			<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 		
 		<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.precedentDegreeInformation" bundle="APPLICATION_RESOURCES"/>:</h3>
@@ -52,8 +55,8 @@
 						<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	    		    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 					</fr:layout>
-					<fr:destination name="invalid" path="/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid" />
-					<fr:destination name="precedentDegreeTypePostback" path="/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationPostback" />
+					<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
+					<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
 				</fr:edit>
 			</logic:equal>
 
@@ -64,8 +67,8 @@
 						<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
     			    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 					</fr:layout>
-					<fr:destination name="invalid" path="/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid" />
-					<fr:destination name="precedentDegreeTypePostback" path="/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationPostback" />
+					<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
+					<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
 				</fr:edit>
 				<strong><em><bean:message key="label.candidacy.invalid.precedentDegree" bundle="APPLICATION_RESOURCES"/></em></strong>
 			</logic:equal>
@@ -79,8 +82,8 @@
 					<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
     		    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 				</fr:layout>
-				<fr:destination name="invalid" path="/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid" />
-				<fr:destination name="precedentDegreeTypePostback" path="/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationPostback" />
+				<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
+				<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:edit>
 		</logic:empty>
 		
@@ -92,7 +95,7 @@
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path="/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid" />
+			<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 			
 	</logic:notEmpty>

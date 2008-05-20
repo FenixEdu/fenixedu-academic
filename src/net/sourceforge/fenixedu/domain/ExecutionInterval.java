@@ -52,14 +52,22 @@ public class ExecutionInterval extends ExecutionInterval_Base {
 	}
 	return result;
     }
-
+    
     public Over23CandidacyPeriod getOver23CandidacyPeriod() {
 	final List<Over23CandidacyPeriod> candidacyPeriods = (List<Over23CandidacyPeriod>) getCandidacyPeriod(Over23CandidacyPeriod.class);
 	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    }
+    
+    public boolean hasOver23CandidacyPeriod() {
+	return getOver23CandidacyPeriod() != null;
     }
 
     public SecondCycleCandidacyPeriod getSecondCycleCandidacyPeriod() {
 	final List<SecondCycleCandidacyPeriod> candidacyPeriods = (List<SecondCycleCandidacyPeriod>) getCandidacyPeriod(SecondCycleCandidacyPeriod.class);
 	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    }
+    
+    public boolean hasSecondCycleCandidacyPeriod() {
+	return getSecondCycleCandidacyPeriod() != null;
     }
 }

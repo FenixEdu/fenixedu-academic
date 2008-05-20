@@ -170,4 +170,12 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
     public void setLanguages(String languages) {
 	this.languages = languages;
     }
+    
+    public boolean hasChoosenPerson() {
+	return getChoosePersonBean().hasPerson();
+    }
+
+    public void removeChoosePersonBean() {
+	setChoosePersonBean(null);
+    }
 }

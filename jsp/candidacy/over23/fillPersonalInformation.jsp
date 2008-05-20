@@ -27,22 +27,22 @@
 
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 
-<fr:form action='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?parentProcessId=" + parentProcessId.toString() %>'>
+<fr:form action='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?parentProcessId=" + parentProcessId.toString() %>'>
  	<html:hidden property="method" value="searchPersonForCandidacy" />
 
-	<fr:edit id="secondCycleIndividualCandidacyProcessBean" name="secondCycleIndividualCandidacyProcessBean" visible="false" />
+	<fr:edit id="over23IndividualCandidacyProcessBean" name="over23IndividualCandidacyProcessBean" visible="false" />
 
-	<logic:notEmpty name="secondCycleIndividualCandidacyProcessBean" property="candidacyProcess">
-		<logic:notEmpty name="secondCycleIndividualCandidacyProcessBean" property="personBean">
+	<logic:notEmpty name="over23IndividualCandidacyProcessBean" property="candidacyProcess">
+		<logic:notEmpty name="over23IndividualCandidacyProcessBean" property="personBean">
 			<h3 class="mtop15 mbottom025"><bean:message key="label.person.title.personal.info" bundle="APPLICATION_RESOURCES"/>:</h3>
 			<fr:edit id="candidacyProcess.personalDataBean"
-				name="secondCycleIndividualCandidacyProcessBean" property="personBean"
+				name="over23IndividualCandidacyProcessBean" property="personBean"
 				schema="CandidacyProcess.personalDataBean">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 			        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 				</fr:layout>
-				<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillPersonalInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
+				<fr:destination name="invalid" path='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?method=fillPersonalInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:edit>
 			<html:submit onclick="this.form.method.value='fillCandidacyInformation';return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
 		</logic:notEmpty>

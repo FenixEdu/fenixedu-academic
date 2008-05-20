@@ -85,6 +85,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	checkRulesToCancel();
 	setState(IndividualCandidacyState.CANCELLED);
 	setResponsible(person.getUsername());
+	getEvent().cancel("Over23IndividualCandidacy.canceled");
     }
 
     private void checkRulesToCancel() {

@@ -67,6 +67,7 @@
 <schema name="person.name.id.dateOfBirth" type="net.sourceforge.fenixedu.domain.Person" >	
 	<slot name="documentIdNumber" bundle="MANAGER_RESOURCES" key="documentIdNumber"/>
 	<slot name="name"/>
+	<slot name="dateOfBirthYearMonthDay" />
 </schema>
 
 <schema name="student.personalData-edit" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" >

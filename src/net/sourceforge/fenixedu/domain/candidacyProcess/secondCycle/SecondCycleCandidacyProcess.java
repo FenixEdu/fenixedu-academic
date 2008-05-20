@@ -88,14 +88,6 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	return activities;
     }
 
-    @Override
-    public String getDisplayName() {
-	String message = super.getDisplayName();
-	message += " - " + getCandidacyExecutionInterval().getName();
-	message += " (" + getCandidacyStart().toString("dd/MM/yyyy") + " : " + getCandidacyEnd().toString("dd/MM/yyyy") + ")";
-	return message;
-    }
-
     public List<SecondCycleIndividualCandidacyProcess> getValidSecondCycleIndividualCandidacies() {
 	final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {

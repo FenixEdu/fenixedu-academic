@@ -106,6 +106,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	checkRulesToCancel();
 	setState(IndividualCandidacyState.CANCELLED);
 	setResponsible(person.getUsername());
+	getEvent().cancel("SecondCycleIndividualCandidacy.canceled");
     }
 
     private void checkRulesToCancel() {
@@ -127,13 +128,29 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation, final String professionalStatus,
 	    final String otherEducation) {
 
-	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate, selectedDegree, precedentDegreeInformation);
+	checkParameters(candidacyDate, selectedDegree, precedentDegreeInformation);
 	setCandidacyDate(candidacyDate);
 	setSelectedDegree(selectedDegree);
 	setProfessionalStatus(professionalStatus);
 	setOtherEducation(otherEducation);
 	if (getPrecedentDegreeInformation().isExternal()) {
 	    getPrecedentDegreeInformation().edit(precedentDegreeInformation);
+	}
+    }
+
+    private void checkParameters(final YearMonthDay candidacyDate, final Degree selectedDegree,
+	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+
+	if (candidacyDate == null || !getCandidacyProcess().hasOpenCandidacyPeriod(candidacyDate.toDateTimeAtMidnight())) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.candidacyDate", getCandidacyProcess()
+		    .getCandidacyStart().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getCandidacyProcess().getCandidacyEnd()
+		    .toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
+	}
+	if (selectedDegree == null || personHasDegree(getPerson(), selectedDegree)) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
+	}
+	if (precedentDegreeInformation == null) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.precedentDegreeInformation");
 	}
     }
 

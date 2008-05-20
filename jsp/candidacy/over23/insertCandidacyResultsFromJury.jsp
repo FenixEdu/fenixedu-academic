@@ -4,7 +4,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
-<h2><bean:message key="label.candidacy.introduce.results" bundle="APPLICATION_RESOURCES"/></h2>
+<em><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><bean:message key="label.candidacy.over23" bundle="APPLICATION_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>
@@ -16,7 +17,7 @@
 <fr:form action='<%="/caseHandlingOver23CandidacyProcess.do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeInsertResultsFromJury" />
 
-	<h3 class="mtop15 mbottom025"><bean:message key="label.information" bundle="APPLICATION_RESOURCES"/></h3>
+	<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.introduce.results" bundle="APPLICATION_RESOURCES"/></h3>
 	<fr:edit id="over23IndividualCandidacyResultBeans"
 		name="over23IndividualCandidacyResultBeans"
 		schema="Over23IndividualCandidacyResultBean.manage.all.students">

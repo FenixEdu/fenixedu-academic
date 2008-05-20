@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
@@ -32,18 +33,18 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/secondCycle/intro.jsp"),
-	@Forward(name = "list-processes", path = "/academicAdminOffice/caseHandling/listProcesses.jsp"),
-	@Forward(name = "list-allowed-activities", path = "/academicAdminOffice/caseHandling/listActivities.jsp"),
+@Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/secondCycle/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/secondCycle/editCandidacyPeriod.jsp"),
-	@Forward(name = "introduce-candidacy-results", path = "/candidacy/secondCycle/introduceCandidacyResults.jsp")
+	@Forward(name = "send-to-coordinator", path = "/candidacy/secondCycle/sendToCoordinator.jsp"),
+	@Forward(name = "introduce-candidacy-results", path = "/candidacy/secondCycle/introduceCandidacyResults.jsp"),
+	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/secondCycle/sendToScientificCouncil.jsp")
 
 })
-public class SecondCycleCandidacyProcessDA extends CaseHandlingDispatchAction {
+public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
     protected Class getProcessType() {
@@ -51,13 +52,25 @@ public class SecondCycleCandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     @Override
+    protected Class getChildProcessType() {
+	return SecondCycleIndividualCandidacyProcess.class;
+    }
+
+    @Override
     protected SecondCycleCandidacyProcess getProcess(HttpServletRequest request) {
 	return (SecondCycleCandidacyProcess) super.getProcess(request);
     }
 
+    @Override
     public ActionForward intro(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+	setCandidacyProcessInformation(request, getCandidacyProcess(ExecutionYear.readCurrentExecutionYear()));
 	return mapping.findForward("intro");
+    }
+
+    private SecondCycleCandidacyProcess getCandidacyProcess(final ExecutionInterval executionInterval) {
+	return executionInterval.hasSecondCycleCandidacyPeriod() ? executionInterval.getSecondCycleCandidacyPeriod()
+		.getSecondCycleCandidacyProcess() : null;
     }
 
     @Override
@@ -113,11 +126,17 @@ public class SecondCycleCandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) {
+	return mapping.findForward("send-to-coordinator");
+    }
+
+    public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    executeActivity(getProcess(request), "SendToCoordinator");
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return prepareExecuteSendToCoordinator(mapping, actionForm, request, response);
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
@@ -127,7 +146,7 @@ public class SecondCycleCandidacyProcessDA extends CaseHandlingDispatchAction {
 
 	response.setContentType("application/vnd.ms-excel");
 	response.setHeader("Content-disposition", "attachment; filename=Candidaturas_2_Ciclo_"
-		+ new YearMonthDay().toString("ddMMyyyy") + ".xls");
+		+ new LocalDate().toString("ddMMyyyy") + ".xls");
 
 	final ServletOutputStream writer = response.getOutputStream();
 	writeReport(getProcess(request), writer);
@@ -168,6 +187,23 @@ public class SecondCycleCandidacyProcessDA extends CaseHandlingDispatchAction {
 	    return mapping.findForward("introduce-candidacy-results");
 	}
 
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareExecuteSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return mapping.findForward("send-to-scientificCouncil");
+    }
+
+    public ActionForward executeSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    executeActivity(getProcess(request), "SendToScientificCouncil");
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return prepareExecuteSendToScientificCouncil(mapping, actionForm, request, response);
+	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
@@ -239,5 +275,4 @@ public class SecondCycleCandidacyProcessDA extends CaseHandlingDispatchAction {
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
-
 }

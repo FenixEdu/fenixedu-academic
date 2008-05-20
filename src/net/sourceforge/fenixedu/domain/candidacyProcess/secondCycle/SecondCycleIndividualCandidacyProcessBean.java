@@ -16,17 +16,20 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegree
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 public class SecondCycleIndividualCandidacyProcessBean implements Serializable {
 
+    private static final double MINIMUM_ECTS = 150d;
+
     private DomainReference<SecondCycleCandidacyProcess> candidacyProcess;
-    
+
     private ChoosePersonBean choosePersonBean;
 
     private PersonBean personBean;
 
     private YearMonthDay candidacyDate;
-    
+
     private DomainReference<Degree> selectedDegree;
 
     private String professionalStatus;
@@ -44,7 +47,7 @@ public class SecondCycleIndividualCandidacyProcessBean implements Serializable {
     public SecondCycleIndividualCandidacyProcessBean(final SecondCycleIndividualCandidacyProcess process) {
 	setSelectedDegree(process.getCandidacySelectedDegree());
 	setProfessionalStatus(process.getCandidacyProfessionalStatus());
-	setOtherEducation(process.getCandidacyOhterEducation());
+	setOtherEducation(process.getCandidacyOtherEducation());
 	setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(process
 		.getCandidacyPrecedentDegreeInformation()));
 	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
@@ -61,11 +64,11 @@ public class SecondCycleIndividualCandidacyProcessBean implements Serializable {
     }
 
     public YearMonthDay getCandidacyDate() {
-        return candidacyDate;
+	return candidacyDate;
     }
 
     public void setCandidacyDate(YearMonthDay candidacyDate) {
-        this.candidacyDate = candidacyDate;
+	this.candidacyDate = candidacyDate;
     }
 
     public ChoosePersonBean getChoosePersonBean() {
@@ -149,22 +152,31 @@ public class SecondCycleIndividualCandidacyProcessBean implements Serializable {
     }
 
     public StudentCurricularPlan getPrecedentStudentCurricularPlan() {
-	final Student student = personBean.hasPerson() && personBean.getPerson().hasStudent() ? personBean.getPerson()
-		.getStudent() : null;
+	final Student student = getStudent();
 	if (student == null) {
 	    return null;
 	}
 
-	//TODO: move to domain ?
 	final Set<StudentCurricularPlan> studentCurricularPlans = new HashSet<StudentCurricularPlan>();
 	for (final Registration registration : student.getRegistrations()) {
 	    if (registration.isBolonha()) {
-		if (registration.getDegreeType().getCycleTypes().contains(getPrecedentCycleType())) {
-		    if (registration.isRegistrationConclusionProcessed(getPrecedentCycleType())
-			    || registration.hasConcludedCycle(getPrecedentCycleType())) {
+		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+		if (studentCurricularPlan.hasCycleCurriculumGroup(getPrecedentCycleType())) {
+		    final CycleCurriculumGroup cycle = studentCurricularPlan.getCycle(getPrecedentCycleType());
+		    if (cycle.isConclusionProcessed() || cycle.isConcluded()
+			    || cycle.getCreditsConcluded().doubleValue() >= MINIMUM_ECTS) {
 			studentCurricularPlans.add(registration.getLastStudentCurricularPlan());
 		    }
 		}
+
+		/*
+                 * if
+                 * (registration.getDegreeType().getCycleTypes().contains(getPrecedentCycleType())) {
+                 * if
+                 * (registration.isRegistrationConclusionProcessed(getPrecedentCycleType()) ||
+                 * registration.hasConcludedCycle(getPrecedentCycleType())) {
+                 * studentCurricularPlans.add(registration.getLastStudentCurricularPlan()); } }
+                 */
 	    } else {
 		if (registration.isRegistrationConclusionProcessed()) {
 		    studentCurricularPlans.add(registration.getLastStudentCurricularPlan());
@@ -175,7 +187,19 @@ public class SecondCycleIndividualCandidacyProcessBean implements Serializable {
 	return (studentCurricularPlans.size() == 1) ? studentCurricularPlans.iterator().next() : null;
     }
 
+    private Student getStudent() {
+	return personBean.hasPerson() && personBean.getPerson().hasStudent() ? personBean.getPerson().getStudent() : null;
+    }
+
     public boolean isValidPrecedentDegreeInformation() {
 	return hasPrecedentDegreeType() && (isExternalPrecedentDegreeType() || getPrecedentStudentCurricularPlan() != null);
+    }
+
+    public boolean hasChoosenPerson() {
+	return getChoosePersonBean().hasPerson();
+    }
+
+    public void removeChoosePersonBean() {
+	setChoosePersonBean(null);
     }
 }

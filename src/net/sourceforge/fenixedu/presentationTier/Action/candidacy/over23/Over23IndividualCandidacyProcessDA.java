@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.over23;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,15 +10,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
@@ -33,11 +28,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 @Mapping(path = "/caseHandlingOver23IndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = Over23IndividualCandidacyProcessDA.CandidacyForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/over23/intro.jsp"),
-	@Forward(name = "list-processes", path = "/academicAdminOffice/caseHandling/listProcesses.jsp"),
-	@Forward(name = "list-allowed-activities", path = "/academicAdminOffice/caseHandling/listActivities.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/over23/createCandidacyStepOne.jsp"),
-	@Forward(name = "fill-candidacy-information", path = "/candidacy/over23/createCandidacyStepTwo.jsp"),
+@Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
+	@Forward(name = "list-allowed-activities", path = "/candidacy/listIndividualCandidacyActivities.jsp"),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/over23/selectPersonForCandidacy.jsp"),
+	@Forward(name = "fill-personal-information", path = "/candidacy/over23/fillPersonalInformation.jsp"),
+	@Forward(name = "fill-candidacy-information", path = "/candidacy/over23/fillCandidacyInformation.jsp"),
 	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/over23/editCandidacyPersonalInformation.jsp"),
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/over23/editCandidacyInformation.jsp"),
@@ -45,38 +40,43 @@ import org.apache.struts.action.ActionMapping;
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp")
 
 })
-public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchAction {
+public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
+
+    @Override
+    protected Class getParentProcessType() {
+	return Over23CandidacyProcess.class;
+    }
 
     @Override
     protected Class getProcessType() {
 	return Over23IndividualCandidacyProcess.class;
     }
 
-    public ActionForward intro(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return mapping.findForward("intro");
+    @Override
+    protected Over23CandidacyProcess getParentProcess(HttpServletRequest request) {
+	return (Over23CandidacyProcess) super.getParentProcess(request);
+    }
+    
+    @Override
+    protected Over23IndividualCandidacyProcess getProcess(HttpServletRequest request) {
+	return (Over23IndividualCandidacyProcess) super.getProcess(request);
     }
 
     @Override
     public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
-	final Over23CandidacyProcess candidacyProcess = getCandidacyProcess();
+	final Over23CandidacyProcess candidacyProcess = getParentProcess(request);
 	if (candidacyProcess == null) {
-	    addActionMessage(request, "error.Over32IndividualCandidacy.invalid.candidacyProcess");
+	    addActionMessage(request, "error.Over23IndividualCandidacy.invalid.candidacyProcess");
 	    return listProcesses(mapping, form, request, response);
 	} else {
+	    final Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
 	    bean.setCandidacyProcess(candidacyProcess);
 	    bean.setChoosePersonBean(new ChoosePersonBean());
 	    request.setAttribute("over23IndividualCandidacyProcessBean", bean);
 	    return mapping.findForward("prepare-create-new-process");
 	}
-    }
-
-    private Over23CandidacyProcess getCandidacyProcess() {
-	final Over23CandidacyPeriod candidacyPeriod = ExecutionYear.readCurrentExecutionYear().getOver23CandidacyPeriod();
-	return (candidacyPeriod == null) ? null : candidacyPeriod.getOver23CandidacyProcess();
     }
 
     public ActionForward prepareCreateNewProcessInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -85,7 +85,7 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	return mapping.findForward("prepare-create-new-process");
     }
 
-    public ActionForward fillPersonalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward searchPersonForCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	final Over23IndividualCandidacyProcessBean bean = getCandidacyBean();
@@ -95,7 +95,6 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	if (!choosePersonBean.hasPerson()) {
 	    if (choosePersonBean.isFirstTimeSearch()) {
 		final Collection<Person> persons = Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber());
-		filterPersonsWithStudent(persons);
 		choosePersonBean.setFirstTimeSearch(false);
 		if (showSimilarPersons(choosePersonBean, persons)) {
 		    RenderUtils.invalidateViewState();
@@ -104,21 +103,56 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	    }
 	    bean.setPersonBean(new PersonBean(choosePersonBean.getName(), choosePersonBean.getIdentificationNumber(),
 		    choosePersonBean.getDocumentType(), choosePersonBean.getDateOfBirth()));
-	    return mapping.findForward("prepare-create-new-process");
+	    return mapping.findForward("fill-personal-information");
 
 	} else {
 	    bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
-	    return mapping.findForward("prepare-create-new-process");
+	    return mapping.findForward("fill-personal-information");
 	}
     }
 
-    private void filterPersonsWithStudent(final Collection<Person> persons) {
-	final Iterator<Person> personsIter = persons.iterator();
-	while (personsIter.hasNext()) {
-	    if (personsIter.next().hasStudent()) {
-		personsIter.remove();
-	    }
+    public ActionForward searchAgainPersonForCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final Over23IndividualCandidacyProcessBean bean = getCandidacyBean();
+	request.setAttribute("over23IndividualCandidacyProcessBean", bean);
+	bean.getChoosePersonBean().setFirstTimeSearch(true);
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("prepare-create-new-process");
+    }
+
+    public ActionForward selectPersonForCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Over23IndividualCandidacyProcessBean bean = getCandidacyBean();
+	request.setAttribute("over23IndividualCandidacyProcessBean", bean);
+
+	if (!bean.hasChoosenPerson()) {
+	    addActionMessage(request, "error.candidacy.must.select.any.person");
+	    return mapping.findForward("prepare-create-new-process");
 	}
+
+	bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
+	bean.removeChoosePersonBean();
+	return mapping.findForward("fill-personal-information");
+
+    }
+
+    public ActionForward fillPersonalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Over23IndividualCandidacyProcessBean bean = getCandidacyBean();
+	final ChoosePersonBean choosePersonBean = bean.getChoosePersonBean();
+	request.setAttribute("over23IndividualCandidacyProcessBean", bean);
+	bean.setPersonBean(new PersonBean(choosePersonBean.getName(), choosePersonBean.getIdentificationNumber(),
+		choosePersonBean.getDocumentType(), choosePersonBean.getDateOfBirth()));
+	bean.removeChoosePersonBean();
+	return mapping.findForward("fill-personal-information");
+    }
+
+    public ActionForward fillPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("over23IndividualCandidacyProcessBean", getCandidacyBean());
+	return mapping.findForward("fill-personal-information");
     }
 
     public ActionForward fillCandidacyInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -138,11 +172,8 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	if (!persons.isEmpty()) {
 	    return true;
 	}
-
-	final Collection<Person> personsByDateOfBirth = Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(), Person
-		.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName()));
-	filterPersonsWithStudent(personsByDateOfBirth);
-	return !personsByDateOfBirth.isEmpty();
+	return !Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(),
+		Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty();
     }
 
     public ActionForward addDegreeToCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -174,36 +205,19 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	final Over23IndividualCandidacyProcessBean bean = getCandidacyBean();
 	request.setAttribute("over23IndividualCandidacyProcessBean", bean);
 
-	final String[] degreeIDs = ((CandidacyForm) actionForm).getDegreesToDelete();
-	if (degreeIDs != null) {
-	    for (final Degree degree : getDegrees(degreeIDs)) {
-		if (bean.containsDegree(degree)) {
-		    bean.removeDegree(degree);
-		}
+	final String degreeId = ((CandidacyForm) actionForm).getDegreeToDelete();
+	if (degreeId != null) {
+	    final Degree degree = getDegree(degreeId);
+	    if (bean.containsDegree(degree)) {
+		bean.removeDegree(degree);
 	    }
 	}
 
 	return mapping.findForward(forward);
     }
 
-    private List<Degree> getDegrees(final String[] degreeIDs) {
-	final List<Degree> result = new ArrayList<Degree>();
-	for (final String degreeId : degreeIDs) {
-	    final Degree degree = rootDomainObject.readDegreeByOID(Integer.valueOf(degreeId));
-	    if (degree != null) {
-		result.add(degree);
-	    }
-	}
-	return result;
-    }
-
-    public ActionForward backToStepOne(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final Over23IndividualCandidacyProcessBean bean = getCandidacyBean();
-	bean.removeDegreeToAdd();
-	bean.removeSelectedDegrees();
-	request.setAttribute("over23IndividualCandidacyProcessBean", bean);
-	return mapping.findForward("prepare-create-new-process");
+    private Degree getDegree(final String degreeId) {
+	return rootDomainObject.readDegreeByOID(Integer.valueOf(degreeId));
     }
 
     @Override
@@ -217,11 +231,6 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
 	    return mapping.findForward("fill-candidacy-information");
 	}
 	return listProcessAllowedActivities(mapping, form, request, response);
-    }
-
-    @Override
-    protected Over23IndividualCandidacyProcess getProcess(HttpServletRequest request) {
-	return (Over23IndividualCandidacyProcess) super.getProcess(request);
     }
 
     private Over23IndividualCandidacyProcessBean getCandidacyBean() {
@@ -349,15 +358,15 @@ public class Over23IndividualCandidacyProcessDA extends CaseHandlingDispatchActi
     }
 
     static public class CandidacyForm extends FenixActionForm {
-	private String[] degreesToDelete;
+	private String degreeToDelete;
 
-	public String[] getDegreesToDelete() {
-	    return degreesToDelete;
+	public String getDegreeToDelete() {
+	    return degreeToDelete;
 	}
 
-	public void setDegreesToDelete(String[] degreesToDelete) {
-	    this.degreesToDelete = degreesToDelete;
+	public void setDegreeToDelete(String degreeToDelete) {
+	    this.degreeToDelete = degreeToDelete;
 	}
     }
-    
+
 }

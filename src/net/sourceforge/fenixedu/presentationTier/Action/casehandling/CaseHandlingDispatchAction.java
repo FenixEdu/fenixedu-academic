@@ -28,7 +28,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	setProcessName(request);
-	setProcessId(request);
+	setProcess(request);
 	return super.execute(mapping, actionForm, request, response);
     }
 
@@ -36,7 +36,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 	request.setAttribute("processName", getProcessType().getSimpleName());
     }
 
-    protected void setProcessId(final HttpServletRequest request) {
+    protected void setProcess(final HttpServletRequest request) {
 	final Integer processId = getIntegerFromRequest(request, "processId");
 	if (processId != null) {
 	    request.setAttribute("process", rootDomainObject.readProcessByOID(Integer.valueOf(processId)));
@@ -57,17 +57,25 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 	return (Process) request.getAttribute("process");
     }
 
+    protected boolean hasProcess(final HttpServletRequest request) {
+	return getProcess(request) != null;
+    }
+
     public ActionForward listProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final Activity startActivity = Process.getStartActivity(getProcessType().getName());
-	try {
-	    startActivity.checkPreConditions(null, AccessControl.getUserView());
-	    request.setAttribute("canCreateProcess", true);
-	} catch (PreConditionNotValidException e) {
-	    request.setAttribute("canCreateProcess", false);
-	}
+	request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
 	request.setAttribute("processes", getAllowedProcessInstances(AccessControl.getUserView()));
 	return mapping.findForward("list-processes");
+    }
+
+    protected Object canCreateProcess(final String name) {
+	try {
+	    final Activity startActivity = Process.getStartActivity(name);
+	    startActivity.checkPreConditions(null, AccessControl.getUserView());
+	} catch (PreConditionNotValidException e) {
+	    return false;
+	}
+	return true;
     }
 
     public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,

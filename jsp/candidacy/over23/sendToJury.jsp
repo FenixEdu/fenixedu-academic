@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <em><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="label.candidacy.cancel" bundle="APPLICATION_RESOURCES"/></h2>
+<h2><bean:message key="label.candidacy.over23.send.to.jury" bundle="APPLICATION_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>
@@ -16,11 +16,11 @@
 <bean:define id="processName" name="processName"/>
 
 <fr:form action='<%= "/caseHandling" + processName.toString() + ".do?processId=" + processId.toString() %>'>
- 	<html:hidden property="method" value="executeCancelCandidacy" />
+ 	<html:hidden property="method" value="executeSendInformationToJury" />
 
-	<strong><bean:message key="label.candidacy.cancel.confirm.message" bundle="APPLICATION_RESOURCES" />&nbsp;<bean:write name="process" property="displayName" />?</strong>
+	<strong><bean:message key="label.candidacy.over23.send.to.jury.confirm.message" bundle="APPLICATION_RESOURCES" />?</strong>
 	<br/>
 	<br/>
-	<html:submit><bean:message key="label.yes.capitalized" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.no.capitalized" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	<html:submit><bean:message key="label.update" bundle="APPLICATION_RESOURCES" /></html:submit>
+	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
 </fr:form>

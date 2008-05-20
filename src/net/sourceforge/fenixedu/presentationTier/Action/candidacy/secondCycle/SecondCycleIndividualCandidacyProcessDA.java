@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
@@ -19,8 +18,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleI
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
@@ -33,10 +31,10 @@ import org.apache.struts.action.ActionMapping;
 
 @Mapping(path = "/caseHandlingSecondCycleIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( {
-	@Forward(name = "intro", path = "/candidacy/secondCycle/intro.jsp"),
-	@Forward(name = "list-processes", path = "/academicAdminOffice/caseHandling/listProcesses.jsp"),
-	@Forward(name = "list-allowed-activities", path = "/academicAdminOffice/caseHandling/listActivities.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/secondCycle/fillPersonalInformation.jsp"),
+	@Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
+	@Forward(name = "list-allowed-activities", path = "/candidacy/listIndividualCandidacyActivities.jsp"),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/secondCycle/selectPersonForCandidacy.jsp"),
+	@Forward(name = "fill-personal-information", path = "/candidacy/secondCycle/fillPersonalInformation.jsp"),
 	@Forward(name = "fill-candidacy-information", path = "/candidacy/secondCycle/fillCandidacyInformation.jsp"),
 	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/secondCycle/editCandidacyPersonalInformation.jsp"),
@@ -45,11 +43,21 @@ import org.apache.struts.action.ActionMapping;
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp")
 
 })
-public class SecondCycleIndividualCandidacyProcessDA extends CaseHandlingDispatchAction {
+public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
+
+    @Override
+    protected Class getParentProcessType() {
+	return SecondCycleCandidacyProcess.class;
+    }
 
     @Override
     protected Class getProcessType() {
 	return SecondCycleIndividualCandidacyProcess.class;
+    }
+
+    @Override
+    protected SecondCycleCandidacyProcess getParentProcess(HttpServletRequest request) {
+	return (SecondCycleCandidacyProcess) super.getParentProcess(request);
     }
 
     @Override
@@ -61,16 +69,11 @@ public class SecondCycleIndividualCandidacyProcessDA extends CaseHandlingDispatc
 	return (SecondCycleIndividualCandidacyProcessBean) getRenderedObject("secondCycleIndividualCandidacyProcessBean");
     }
 
-    public ActionForward intro(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return mapping.findForward("intro");
-    }
-
     @Override
     public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final SecondCycleCandidacyProcess candidacyProcess = getCandidacyProcess();
+	final SecondCycleCandidacyProcess candidacyProcess = getParentProcess(request);
 	if (candidacyProcess == null) {
 	    addActionMessage(request, "error.SecondCycleCandidacyPeriod.invalid.candidacyProcess");
 	    return listProcesses(mapping, form, request, response);
@@ -83,21 +86,15 @@ public class SecondCycleIndividualCandidacyProcessDA extends CaseHandlingDispatc
 	}
     }
 
-    private SecondCycleCandidacyProcess getCandidacyProcess() {
-	final SecondCycleCandidacyPeriod candidacyPeriod = ExecutionYear.readCurrentExecutionYear()
-		.getSecondCycleCandidacyPeriod();
-	return (candidacyPeriod == null) ? null : candidacyPeriod.getSecondCycleCandidacyProcess();
-    }
-
     public ActionForward prepareCreateNewProcessInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("secondCycleIndividualCandidacyProcessBean", getCandidacyBean());
 	return mapping.findForward("prepare-create-new-process");
     }
 
-    public ActionForward fillPersonalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward searchPersonForCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-
+	
 	final SecondCycleIndividualCandidacyProcessBean bean = getCandidacyBean();
 	final ChoosePersonBean choosePersonBean = bean.getChoosePersonBean();
 	request.setAttribute("secondCycleIndividualCandidacyProcessBean", bean);
@@ -113,12 +110,56 @@ public class SecondCycleIndividualCandidacyProcessDA extends CaseHandlingDispatc
 	    }
 	    bean.setPersonBean(new PersonBean(choosePersonBean.getName(), choosePersonBean.getIdentificationNumber(),
 		    choosePersonBean.getDocumentType(), choosePersonBean.getDateOfBirth()));
-	    return mapping.findForward("prepare-create-new-process");
+	    return mapping.findForward("fill-personal-information");
 
 	} else {
 	    bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
+	    return mapping.findForward("fill-personal-information");
+	}
+    }
+    
+    public ActionForward searchAgainPersonForCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final SecondCycleIndividualCandidacyProcessBean bean = getCandidacyBean();
+	request.setAttribute("secondCycleIndividualCandidacyProcessBean", bean);
+	bean.getChoosePersonBean().setFirstTimeSearch(true);
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("prepare-create-new-process");
+    }
+
+    public ActionForward selectPersonForCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final SecondCycleIndividualCandidacyProcessBean bean = getCandidacyBean();
+	request.setAttribute("secondCycleIndividualCandidacyProcessBean", bean);
+
+	if (!bean.hasChoosenPerson()) {
+	    addActionMessage(request, "error.candidacy.must.select.any.person");
 	    return mapping.findForward("prepare-create-new-process");
 	}
+
+	bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
+	bean.removeChoosePersonBean();
+	return mapping.findForward("fill-personal-information");
+
+    }
+
+    public ActionForward fillPersonalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final SecondCycleIndividualCandidacyProcessBean bean = getCandidacyBean();
+	final ChoosePersonBean choosePersonBean = bean.getChoosePersonBean();
+	request.setAttribute("secondCycleIndividualCandidacyProcessBean", bean);
+	bean.setPersonBean(new PersonBean(choosePersonBean.getName(), choosePersonBean.getIdentificationNumber(),
+		choosePersonBean.getDocumentType(), choosePersonBean.getDateOfBirth()));
+	bean.removeChoosePersonBean();
+	return mapping.findForward("fill-personal-information");
+    }
+
+    public ActionForward fillPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("secondCycleIndividualCandidacyProcessBean", getCandidacyBean());
+	return mapping.findForward("fill-personal-information");
     }
 
     public ActionForward fillCandidacyInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -312,4 +353,5 @@ public class SecondCycleIndividualCandidacyProcessDA extends CaseHandlingDispatc
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
+
 }

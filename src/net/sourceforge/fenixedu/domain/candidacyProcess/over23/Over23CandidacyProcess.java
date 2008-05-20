@@ -39,7 +39,6 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
-	// TODO: activities.add(new SetJury());
 	activities.add(new EditCandidacyPeriod());
 	activities.add(new SendInformationToJury());
 	activities.add(new PrintCandidacies());
@@ -95,14 +94,6 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	return result;
     }
 
-    @Override
-    public String getDisplayName() {
-	String message = super.getDisplayName();
-	message += " - " + getCandidacyExecutionInterval().getName();
-	message += " (" + getCandidacyStart().toString("dd/MM/yyyy") + " : " + getCandidacyEnd().toString("dd/MM/yyyy") + ")";
-	return message;
-    }
-
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
@@ -122,19 +113,6 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
 	    final Over23CandidacyProcessBean bean = (Over23CandidacyProcessBean) object;
 	    return new Over23CandidacyProcess(bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
-	}
-    }
-
-    static private class SetJury extends Activity<Over23CandidacyProcess> {
-
-	@Override
-	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    throw new PreConditionNotValidException();
-	}
-
-	@Override
-	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    return process;
 	}
     }
 
@@ -213,7 +191,9 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
 	    final List<Over23IndividualCandidacyResultBean> beans = (List<Over23IndividualCandidacyResultBean>) object;
 	    for (final Over23IndividualCandidacyResultBean bean : beans) {
-		bean.getCandidacyProcess().executeActivity(userView, "IntroduceCandidacyResult", bean);
+		if (bean.isValid()) {
+		    bean.getCandidacyProcess().executeActivity(userView, "IntroduceCandidacyResult", bean);
+		}
 	    }
 	    return process;
 	}

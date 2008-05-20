@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 
@@ -38,6 +40,10 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public boolean hasOpenCandidacyPeriod(final DateTime date) {
 	return hasCandidacyProcess() && getCandidacyProcess().hasOpenCandidacyPeriod(date);
+    }
+    
+    public CandidacyProcessState getState() {
+	return hasCandidacyProcess() ? getCandidacyProcess().getState() : null;
     }
 
     public boolean isInStandBy() {
@@ -98,5 +104,10 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public boolean hasRegistrationForCandidacy() {
 	return getCandidacy().hasRegistration();
+    }
+    
+    @Override
+    public String getDisplayName() {
+	return ResourceBundle.getBundle("resources/CaseHandlingResources").getString("label." + getClass().getName());
     }
 }

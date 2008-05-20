@@ -4,7 +4,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
-<h2><bean:message key="label.candidacy.introduce.result" bundle="APPLICATION_RESOURCES"/></h2>
+<em><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><bean:message key="label.candidacy.secondCycle" bundle="APPLICATION_RESOURCES"/></h2>
+
 
 <strong><bean:write name="process" property="displayName" /></strong>
 <br/>
@@ -19,7 +21,7 @@
 <fr:form action='<%="/caseHandlingSecondCycleCandidacyProcess.do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeIntroduceCandidacyResults" />
 
-	<h3 class="mtop15 mbottom025"><bean:message key="label.information" bundle="APPLICATION_RESOURCES"/></h3>
+	<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.introduce.result" bundle="APPLICATION_RESOURCES"/></h3>
 	<fr:edit id="secondCycleIndividualCandidacyResultBeans"
 		name="secondCycleIndividualCandidacyResultBeans"
 		schema="SecondCycleIndividualCandidacyResultBean.introduce.results">

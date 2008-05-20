@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Drop colum social security number" alterTableParty.sql

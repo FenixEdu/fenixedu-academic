@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
@@ -35,27 +36,38 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 @Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/over23/intro.jsp"),
-	@Forward(name = "list-processes", path = "/academicAdminOffice/caseHandling/listProcesses.jsp"),
-	@Forward(name = "list-allowed-activities", path = "/academicAdminOffice/caseHandling/listActivities.jsp"),
+@Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/over23/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/over23/editCandidacyPeriod.jsp"),
+	@Forward(name = "send-to-jury", path = "/candidacy/over23/sendToJury.jsp"),
 	@Forward(name = "insert-candidacy-results-from-jury", path = "/candidacy/over23/insertCandidacyResultsFromJury.jsp")
 
 })
-public class Over23CandidacyProcessDA extends CaseHandlingDispatchAction {
+public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
     protected Class getProcessType() {
 	return Over23CandidacyProcess.class;
     }
 
+    @Override
+    protected Class getChildProcessType() {
+	return Over23IndividualCandidacyProcess.class;
+    }
+
+    @Override
     public ActionForward intro(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+	setCandidacyProcessInformation(request, getCandidacyProcess(ExecutionYear.readCurrentExecutionYear()));
 	return mapping.findForward("intro");
+    }
+
+    private Over23CandidacyProcess getCandidacyProcess(final ExecutionInterval executionInterval) {
+	return executionInterval.hasOver23CandidacyPeriod() ? executionInterval.getOver23CandidacyPeriod()
+		.getOver23CandidacyProcess() : null;
     }
 
     @Override
@@ -111,11 +123,17 @@ public class Over23CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     public ActionForward prepareExecuteSendInformationToJury(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) {
+	return mapping.findForward("send-to-jury");
+    }
+
+    public ActionForward executeSendInformationToJury(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    executeActivity(getProcess(request), "SendInformationToJury", null);
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return prepareExecuteSendInformationToJury(mapping, actionForm, request, response);
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
@@ -125,7 +143,7 @@ public class Over23CandidacyProcessDA extends CaseHandlingDispatchAction {
 
 	response.setContentType("application/vnd.ms-excel");
 	response.setHeader("Content-disposition", "attachment; filename=Candidaturas_Maiores_23_"
-		+ new YearMonthDay().toString("ddMMyyyy") + ".xls");
+		+ new LocalDate().toString("ddMMyyyy") + ".xls");
 
 	final ServletOutputStream writer = response.getOutputStream();
 	final Over23CandidacyProcess process = getProcess(request);

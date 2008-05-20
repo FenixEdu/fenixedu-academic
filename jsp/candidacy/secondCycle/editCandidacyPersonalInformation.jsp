@@ -12,6 +12,13 @@
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />
 </html:messages>
+<fr:hasMessages for="CandidacyProcess.personalDataBean" type="conversion">
+	<ul class="nobullet list6">
+		<fr:messages>
+			<li><span class="error0"><fr:message/></span></li>
+		</fr:messages>
+	</ul>
+</fr:hasMessages>
 
 <bean:define id="processId" name="process" property="idInternal" />
 
@@ -23,9 +30,9 @@
 	<logic:notEmpty name="secondCycleIndividualCandidacyProcessBean" property="personBean">
 		
 		<h3 class="mtop15 mbottom025"><bean:message key="label.person.title.personal.info" bundle="APPLICATION_RESOURCES"/>:</h3>
-		<fr:edit id="CandidacyProcess.personalData"
+		<fr:edit id="candidacyProcess.personalDataBean"
 			name="secondCycleIndividualCandidacyProcessBean" property="personBean"
-			schema="CandidacyProcess.personalData">
+			schema="CandidacyProcess.personalDataBean">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

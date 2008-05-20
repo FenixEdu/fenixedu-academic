@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
@@ -26,9 +25,9 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
 	activities.add(new EditCandidacyInformation());
-	//TODO: activities.add(new IntroduceCandidacyResult());
+	// TODO: activities.add(new IntroduceCandidacyResult());
 	activities.add(new CancelCandidacy());
-	//TODO: activities.add(new CreateRegistration());
+	// TODO: activities.add(new CreateRegistration());
     }
 
     private SecondCycleIndividualCandidacyProcess() {
@@ -42,8 +41,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	new SecondCycleIndividualCandidacy(this, bean);
     }
 
-    private void checkParameters(final SecondCycleCandidacyProcess candidacyProcess) {
-	if (candidacyProcess == null || !candidacyProcess.hasCandidacyPeriod() || !candidacyProcess.hasOpenCandidacyPeriod()) {
+    private void checkParameters(final SecondCycleCandidacyProcess process) {
+	if (process == null || !process.hasCandidacyPeriod()) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacyProcess.invalid.candidacy.process");
 	}
     }
@@ -62,14 +61,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     @Override
     public SecondCycleIndividualCandidacy getCandidacy() {
 	return (SecondCycleIndividualCandidacy) super.getCandidacy();
-    }
-
-    @Override
-    public String getDisplayName() {
-	String name = ResourceBundle.getBundle("resources/CaseHandlingResources").getString("label." + getClass().getName());
-	name += " - " + getCandidacy().getPerson().getName() + " (" + getCandidacy().getPerson().getDocumentIdNumber() + "), ";
-	name += ResourceBundle.getBundle("resources/EnumerationResources").getString(getCandidacyState().getQualifiedName());
-	return name;
     }
 
     private SecondCycleIndividualCandidacyProcess editPersonalCandidacyInformation(final PersonBean personBean) {
@@ -91,7 +82,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	return getCandidacy().getProfessionalStatus();
     }
 
-    public String getCandidacyOhterEducation() {
+    public String getCandidacyOtherEducation() {
 	return getCandidacy().getOtherEducation();
     }
 
@@ -168,7 +159,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	@Override
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    return process; //nothing to be done, for now payment is being done by existing interface
+	    return process; // nothing to be done, for now payment is being
+	    // done by existing interface
 	}
     }
 
@@ -219,7 +211,11 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy()) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.hasAnyPaymentForCandidacy()) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -275,6 +271,9 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    if (!process.isPublished()) {
 		throw new PreConditionNotValidException();
 	    }
+
+	    // TODO: check if can create registration when first cycle is
+                // not concluded
 	}
 
 	@Override
@@ -287,7 +286,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	private void createRegistration(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
 	    final Registration registration = new Registration(candidacyProcess.getCandidacyPerson(),
 		    getDegreeCurricularPlan(candidacyProcess), null, RegistrationAgreement.NORMAL, CycleType.SECOND_CYCLE);
-	    registration.setIngression(Ingression.CIA2C); //TODO: change ingression
+	    registration.setIngression(Ingression.CIA2C); // TODO: change
+	    // ingression
 	}
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
