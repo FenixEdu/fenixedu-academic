@@ -54,9 +54,9 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	final String date = request.getExceptionalConclusionDate().toString(DATE_FORMAT, LanguageUtils.getLocale());
 	if (request.getInternshipAbolished()) {
-	    return date + ", data em que a Comissão Directiva decidiu abolir o sistema de estágios";
+	    return " em " + date + ", data em que a Comissão Directiva decidiu abolir o sistema de estágios";
 	} else if (request.getInternshipApproved()) {
-	    return date + ", data em que foi aprovado o estágio regulamentar";
+	    return " em " + date + ", data em que foi aprovado o estágio regulamentar";
 	} else if (request.getStudyPlan()) {
 	    return " com Plano de Estudos homologado em " + date + " pelo Conselho Científico";
 	} else {
