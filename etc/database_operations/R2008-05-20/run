@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Datafix regarding problems with timestamps, please delete it after running in production" dataFix.sql
