@@ -96,6 +96,22 @@
 		</logic:notEmpty>
 </table>
 
+<script type="text/javascript">
+            function hasTinyMCE() {
+                return tinyMCE.configs.length > 0;
+            }
+            
+            function insertLink(url, name) {
+                if (hasTinyMCE()) {
+                    tinyMCE.execCommand('mceInsertContent', false, '<a href="' + url + '">' + name + '</a> ');
+                }
+            }
+    
+            if (hasTinyMCE()) {
+                switchGlobal();
+            }
+</script>
+            
 <p class="mtop1 mbottom025"><strong><bean:message bundle="MESSAGING_RESOURCES" key="label.optionalFields"/>:</strong></p>
 <table class="tstyle5 thlight thtop thright mtop025">
 <%-- Excerto --%>
