@@ -83,9 +83,18 @@ public class Diploma extends AdministrativeOfficeDocument {
 	final ResourceBundle applicationResources = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils
 		.getLocale());
 
+	if (registration.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
+	    forDFA(result, applicationResources, diplomaRequest, registration);
+	} else {
+	    forOthers(result, applicationResources, diplomaRequest, registration);
+	}
+
+	return result.toString();
+    }
+
+    private void forOthers(StringBuilder result, ResourceBundle applicationResources, final DiplomaRequest diplomaRequest,
+	    final Registration registration) {
 	final DegreeType degreeType = registration.getDegreeType();
-	// reportConcludedCycles(result, applicationResources,
-	// diplomaRequest, registration);
 
 	if (degreeType.hasAnyCycleTypes()) {
 	    result.append(enumerationBundle.getString(diplomaRequest.getWhatShouldBeRequestedCycle().getQualifiedName()));
@@ -93,8 +102,16 @@ public class Diploma extends AdministrativeOfficeDocument {
 	}
 
 	result.append(degreeType.getPrefix()).append(degreeType.getFilteredName());
+    }
 
-	return result.toString();
+    private void forDFA(StringBuilder result, ResourceBundle applicationResources, final DiplomaRequest diplomaRequest,
+	    final Registration registration) {
+	final DegreeType degreeType = registration.getDegreeType();
+
+	result.append(degreeType.getPrefix()).append(degreeType.getFilteredName());
+	if (degreeType.hasExactlyOneCycleType()) {
+	    result.append(" (").append(enumerationBundle.getString(degreeType.getCycleType().getQualifiedName())).append(")");
+	}
     }
 
     private void reportConcludedCycles(final StringBuilder result, final ResourceBundle applicationResources,
