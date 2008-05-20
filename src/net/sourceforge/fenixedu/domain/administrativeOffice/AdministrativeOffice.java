@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.administrativeOffice;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -125,6 +126,18 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     public static AdministrativeOffice getResponsibleAdministrativeOffice(Degree degree) {
 	return readByAdministrativeOfficeType(degree.getDegreeType().getAdministrativeOfficeType());
+    }
+
+    public Collection<DegreeType> getAdministratedDegreeTypes() {
+	Collection<DegreeType> result = new HashSet<DegreeType>();
+
+	for (final DegreeType degreeType : DegreeType.values()) {
+	    if (degreeType.getAdministrativeOfficeType() == getAdministrativeOfficeType()) {
+		result.add(degreeType);
+	    }
+	}
+
+	return result;
     }
 
     public Set<Degree> getAdministratedDegrees() {
