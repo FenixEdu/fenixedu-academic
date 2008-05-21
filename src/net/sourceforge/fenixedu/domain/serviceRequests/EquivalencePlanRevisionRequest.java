@@ -37,7 +37,7 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
 	    throw new DomainException("error.EquivalencePlanRevisionRequest.equivalencePlanRequest.cannot.be.null");
 	}
 
-	if (!equivalencePlanRequest.isConcluded()) {
+	if (!equivalencePlanRequest.hasConcluded()) {
 	    throw new DomainException("error.EquivalencePlanRevisionRequest.equivalencePlanRequest.is.not.concluded");
 	}
 
