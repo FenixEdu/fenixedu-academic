@@ -186,7 +186,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester);
 	// TODO: check this
 	// validateDegreeModuleLink(curriculumGroup, curricularCourse);
-	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition, createdBy);
+	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
+		createdBy);
 	createEnrolmentLog(studentCurricularPlan.getRegistration(), EnrolmentAction.ENROL);
     }
 
@@ -338,16 +339,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     private void checkRulesToDelete() {
 	if (hasAnyExtraExamRequests()) {
-	    throw new DomainException("error.Enrolment.cannot.delete");
+	    throw new DomainException("error.Enrolment.has.ExtraExamRequests");
 	}
 	if (hasAnyEnrolmentWrappers()) {
-	    throw new DomainException("error.Enrolment.cannot.delete");
+	    throw new DomainException("error.Enrolment.is.origin.in.some.Equivalence");
 	}
 	if (hasAnyCourseLoadRequests()) {
-	    throw new DomainException("error.Enrolment.cannot.delete");
+	    throw new DomainException("error.Enrolment.has.CourseLoadRequests");
 	}
 	if (hasAnyProgramCertificateRequests()) {
-	    throw new DomainException("error.Enrolment.cannot.delete");
+	    throw new DomainException("error.Enrolment.has.ProgramCertificateRequests");
 	}
     }
 
@@ -590,7 +591,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
 
 	for (ExecutionSemester executionSemester = enrolmentNextExecutionPeriod; executionSemester != null
-		&& executionSemester != improvementExecutionPeriod; executionSemester = executionSemester.getNextExecutionPeriod()) {
+		&& executionSemester != improvementExecutionPeriod; executionSemester = executionSemester
+		.getNextExecutionPeriod()) {
 	    if (degreeModule.hasAnyParentContexts(executionSemester)) {
 		return false;
 	    }
@@ -1349,10 +1351,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     /**
      * 
-     * After create new Enrolment, must delete OptionalEnrolment
-     * (to delete OptionalEnrolment remove: ProgramCertificateRequests, CourseLoadRequests, ExamDateCertificateRequests) 
-     * @param optionalEnrolment 
-     * @param curriculumGroup: new CurriculumGroup for Enrolment
+     * After create new Enrolment, must delete OptionalEnrolment (to delete
+     * OptionalEnrolment remove: ProgramCertificateRequests, CourseLoadRequests,
+     * ExamDateCertificateRequests)
+     * 
+     * @param optionalEnrolment
+     * @param curriculumGroup:
+     *                new CurriculumGroup for Enrolment
      * @return Enrolment
      */
     static Enrolment createBasedOn(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {
