@@ -51,7 +51,7 @@ public class ShowStudentGroupInfo extends Action {
 	    Collection<Grouping> groupings = executionCourse.getGroupings();
 
 	    if (executionCourse == null || groupings == null)
-		return new String("-1");
+		return "-1";
 
 	    for (Iterator iterGroupings = groupings.iterator(); iterGroupings.hasNext();) {
 		Grouping grouping = (Grouping) iterGroupings.next();

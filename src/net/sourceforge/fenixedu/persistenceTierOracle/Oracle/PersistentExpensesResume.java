@@ -32,8 +32,8 @@ public class PersistentExpensesResume extends PersistentReport implements IPersi
             PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            String query = new String("select \"RECEITA\", \"DESPESA\", \"IVA\", \"TOTAL\" from " + tableOrView + " where PROJECTCODE='"
-                    + projectCode + "'");
+            String query = "select \"RECEITA\", \"DESPESA\", \"IVA\", \"TOTAL\" from " + tableOrView + " where PROJECTCODE='"
+                    + projectCode + "'";
             PreparedStatement stmt = p.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next()) {
@@ -58,8 +58,8 @@ public class PersistentExpensesResume extends PersistentReport implements IPersi
             PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            String query = new String("select \"RECEITA\", \"DESPESA\", \"IVA\", \"AD_POR_JUST\",  \"TOTAL\" from " + tableOrView
-                    + " where PROJECTCODE='" + projectCode + "'");
+            String query = "select \"RECEITA\", \"DESPESA\", \"IVA\", \"AD_POR_JUST\",  \"TOTAL\" from " + tableOrView
+                    + " where PROJECTCODE='" + projectCode + "'";
             PreparedStatement stmt = p.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next()) {

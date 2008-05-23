@@ -238,7 +238,7 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 
     private Double formatDouble(Double value) {
 	Double result = value;
-	String pattern = new String("0.00");
+	String pattern = "0.00";
 	try {
 	    DecimalFormat simpledf = new DecimalFormat(pattern);
 	    result = new Double(simpledf.parse(simpledf.format(value)).toString());

@@ -253,12 +253,12 @@ public class StudentTestsAction extends FenixDispatchAction {
             response.setContentType(imgTypeString);
             response.setContentLength(imageData.length);
             response.setBufferSize(imageData.length);
-            String imageName = new String("image"
+            String imageName = "image"
                     + exerciseIdString
                     + imgCodeString
                     + "."
                     + imgTypeString
-                            .substring(imgTypeString.lastIndexOf("/") + 1, imgTypeString.length()));
+                            .substring(imgTypeString.lastIndexOf("/") + 1, imgTypeString.length());
             response.setHeader("Content-disposition", "attachment; filename=" + imageName);
             OutputStream os = response.getOutputStream();
             os.write(imageData, 0, imageData.length);
@@ -304,7 +304,7 @@ public class StudentTestsAction extends FenixDispatchAction {
                     .get(i);
             int order = studentTestQuestion.getTestQuestionOrder().intValue() - 1;
             if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR) {
-                String responseOp = request.getParameter(new String("question" + order));
+                String responseOp = request.getParameter("question" + order);
                 ResponseSTR responseSTR = null;
                 if (responseOp != null && responseOp.length() != 0) {
                     responseSTR = new ResponseSTR(responseOp);
@@ -314,7 +314,7 @@ public class StudentTestsAction extends FenixDispatchAction {
                 }
                 userResponse[order] = responseSTR;
             } else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.NUM) {
-                String responseOp = request.getParameter(new String("question" + order));
+                String responseOp = request.getParameter("question" + order);
                 ResponseNUM responseNUM = null;
                 if (responseOp != null && responseOp.length() != 0) {
                     responseNUM = new ResponseNUM(responseOp);
@@ -324,7 +324,7 @@ public class StudentTestsAction extends FenixDispatchAction {
                 }
                 userResponse[order] = responseNUM;
             } else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID) {
-                String[] responseOp = request.getParameterValues(new String("question" + order));
+                String[] responseOp = request.getParameterValues("question" + order);
                 ResponseLID responseLID = null;
                 if (responseOp != null && responseOp.length != 0) {
                     responseLID = new ResponseLID(responseOp);

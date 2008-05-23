@@ -61,7 +61,7 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
         final String costCenter = request.getParameter("costCenter");
 
         HSSFWorkbook wb = new HSSFWorkbook();
-        String fileName = new String("listagem");
+        String fileName = "listagem";
 
         if (reportType.getReportType() != null) {
             if (reportType.equals(ReportType.GENERATED_OVERHEADS)

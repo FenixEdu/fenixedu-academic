@@ -397,11 +397,11 @@ public class ResponseCondition extends FenixUtil {
             condition = condition.replaceAll("ignorecase", "");
             ignoreCase = "Yes";
         }
-        result = result.concat(new String("<" + condition));
+        result = result.concat("<" + condition);
         if (condition.equals(VAREQUAL_XML_STRING) || condition.equals(VARSUBSTRING_XML_STRING))
-            result = result.concat(new String(" case=\"" + ignoreCase) + "\"");
-        result = result.concat(new String(" respident=\"" + responseLabelId + "\">\n" + response
-                + "\n</" + condition + ">"));
+            result = result.concat(" case=\"" + ignoreCase + "\"");
+        result = result.concat(" respident=\"" + responseLabelId + "\">\n" + response
+                + "\n</" + condition + ">");
         return result.concat(endResult);
     }
 }

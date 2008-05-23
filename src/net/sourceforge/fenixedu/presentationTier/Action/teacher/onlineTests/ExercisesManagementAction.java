@@ -391,7 +391,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 		    condition = ResponseCondition.VAREQUAL_XML_STRING;
 		}
 		if (condition != null) {
-		    ResponseCondition responseCondition = new ResponseCondition(condition, correctResponse, new String("1"));
+		    ResponseCondition responseCondition = new ResponseCondition(condition, correctResponse, "1");
 		    responseConditionList.add(responseCondition);
 		}
 	    }

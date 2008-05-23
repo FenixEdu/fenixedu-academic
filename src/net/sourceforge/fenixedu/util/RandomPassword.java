@@ -10,7 +10,7 @@ public class RandomPassword extends FenixUtil {
      * Gera uma password aleatoria com size caracteres
      */
     public static String getRandomPassword(int size) {
-        String password = new String("");
+        String password = "";
         Random rand = new Random();
         int nrand;
 

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 public class EnrollmentLEECWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
-    private static String DEGREE_LEEC_CODE = new String("LEEC");
+    private static String DEGREE_LEEC_CODE = "LEEC";
 
     private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
 
@@ -38,17 +38,17 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
         try {
             // verify if the degree type is LICENCIATURA_OBJ
             if (!verifyDegreeTypeIsNonMaster(arguments)) {
-                return new String("error.degree.type");
+                return "error.degree.type";
             }
 
             // verify if the student to enroll is a non master degree student
             if (!verifyStudentNonMasterDegree(arguments)) {
-                return new String("error.student.degree.nonMaster");
+                return "error.student.degree.nonMaster";
             }
 
             // verify if the student to enroll is a LEEC degree student
             if (!verifyStudentLEEC(arguments)) {
-                return new String("error.student.degree.nonMaster");
+                return "error.student.degree.nonMaster";
             }
 
             return null;

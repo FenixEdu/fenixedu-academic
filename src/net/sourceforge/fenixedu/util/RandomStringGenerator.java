@@ -15,7 +15,7 @@ public class RandomStringGenerator extends FenixUtil {
     private static Random rand = new Random();
 
     public static String getRandomStringGenerator(int size) {
-        String password = new String("");
+        String password = "";
         int nrand;
 
         for (int i = 0; i < size; i++) {

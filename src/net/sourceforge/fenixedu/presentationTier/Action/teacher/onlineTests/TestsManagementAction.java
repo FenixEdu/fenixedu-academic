@@ -206,7 +206,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 	List<String> testQuestionNames = new ArrayList<String>();
 	List<Integer> testQuestionValues = new ArrayList<Integer>();
 	for (int i = 0; i < test.getTestQuestions().size(); i++) {
-	    testQuestionNames.add(new String("Pergunta " + (i + 1)));
+	    testQuestionNames.add("Pergunta " + (i + 1));
 	    testQuestionValues.add(new Integer(i));
 	}
 
@@ -280,7 +280,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 	int questionOrder = testQuestion.getTestQuestionOrder().intValue();
 	for (int i = 0; i < test.getTestQuestions().size(); i++) {
 	    if ((i + 1) != questionOrder && (i + 1) != questionOrder + 1) {
-		testQuestionNames.add(new String("Pergunta " + (i + 1)));
+		testQuestionNames.add("Pergunta " + (i + 1));
 		testQuestionValues.add(new Integer(i));
 	    }
 	}
@@ -424,8 +424,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    response.setContentType(imgTypeString);
 	    response.setContentLength(imageData.length);
 	    response.setBufferSize(imageData.length);
-	    String imageName = new String("image" + exerciseCode + imgCode + "."
-		    + imgTypeString.substring(imgTypeString.lastIndexOf("/") + 1, imgTypeString.length()));
+	    String imageName = "image" + exerciseCode + imgCode + "."
+		    + imgTypeString.substring(imgTypeString.lastIndexOf("/") + 1, imgTypeString.length());
 	    response.setHeader("Content-disposition", "attachment; filename=" + imageName);
 	    DataOutputStream dataOut = new DataOutputStream(response.getOutputStream());
 	    dataOut.write(imageData);
@@ -1343,11 +1343,11 @@ public class TestsManagementAction extends FenixDispatchAction {
 	Response[] userResponse = new Response[test.getTestQuestions().size()];
 	for (int i = 0; i < test.getTestQuestions().size(); i++) {
 	    if (new Integer(questionTypes[i]).intValue() == QuestionType.STR)
-		userResponse[i] = new ResponseSTR(request.getParameter(new String("question" + i)));
+		userResponse[i] = new ResponseSTR(request.getParameter("question" + i));
 	    else if (new Integer(questionTypes[i]).intValue() == QuestionType.NUM)
-		userResponse[i] = new ResponseNUM(request.getParameter(new String("question" + i)));
+		userResponse[i] = new ResponseNUM(request.getParameter("question" + i));
 	    else if (new Integer(questionTypes[i]).intValue() == QuestionType.LID)
-		userResponse[i] = new ResponseLID(request.getParameterValues(new String("question" + i)));
+		userResponse[i] = new ResponseLID(request.getParameterValues("question" + i));
 	}
 	InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = null;
 	try {

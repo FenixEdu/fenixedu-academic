@@ -32,12 +32,12 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
 	if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
 
 	    if (!(checkDegreeType(arguments, MASTER_DEGREE_TYPE) || checkDegreeType(arguments, DFA_TYPE))) {
-		return new String("error.masterDegree.type");
+		return "error.masterDegree.type";
 	    }
 
 	    if (!(checkStudentType(arguments, MASTER_DEGREE_TYPE) || checkStudentType(arguments,
 		    DFA_TYPE))) {
-		return new String("error.student.degree.master");
+		return "error.student.degree.master";
 	    }
 	}
 
@@ -45,11 +45,11 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
 		|| id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
 
 	    if (!checkDegreeType(arguments, DEGREE_TYPE)) {
-		return new String("error.degree.type");
+		return "error.degree.type";
 	    }
 
 	    if (!checkStudentType(arguments, DEGREE_TYPE)) {
-		return new String("error.student.degree.nonMaster");
+		return "error.student.degree.nonMaster";
 	    }
 	}
 	return null;

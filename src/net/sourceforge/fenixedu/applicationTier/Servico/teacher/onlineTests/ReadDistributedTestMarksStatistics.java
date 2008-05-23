@@ -59,7 +59,7 @@ public class ReadDistributedTestMarksStatistics extends Service {
                 if (partially != 0)
                     partiallyCorrectAnswersPercentage.add(df.format(partially * java.lang.Math.pow(numOfStudent, -1)));
                 else
-                    partiallyCorrectAnswersPercentage.add(new String("-"));
+                    partiallyCorrectAnswersPercentage.add("-");
 
             }
             int responsed = distributedTest.countResponses(studentTestQuestion.getTestQuestionOrder(), true);

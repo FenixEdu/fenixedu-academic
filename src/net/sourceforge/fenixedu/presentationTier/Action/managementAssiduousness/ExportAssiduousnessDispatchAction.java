@@ -173,16 +173,16 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
 	AssiduousnessStatus assiduousnessStatus = AssiduousnessStatus
 		.getAssiduousnessStatusByDescription("Contratado pela ADIST");
-	String fileName = new String("listagemADIST.pdf");
-	String action = new String("exportADISTEmployees");
+	String fileName = "listagemADIST.pdf";
+	String action = "exportADISTEmployees";
 	return exportEmployeesAnualInfo(mapping, actionForm, request, response, assiduousnessStatus, fileName, action);
     }
 
     public ActionForward exportAssignedEmployees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessStatus assiduousnessStatus = AssiduousnessStatus.getAssiduousnessStatusByDescription("Destacado no IST");
-	String fileName = new String("listagemDestacados.pdf");
-	String action = new String("exportAssignedEmployees");
+	String fileName = "listagemDestacados.pdf";
+	String action = "exportAssignedEmployees";
 	return exportEmployeesAnualInfo(mapping, actionForm, request, response, assiduousnessStatus, fileName, action);
     }
 
@@ -236,7 +236,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
 	Map<String, String> parameters = new HashMap<String, String>();
 	YearMonthDay now = new YearMonthDay();
-	final String dateSeparator = new String(" de ");
+	final String dateSeparator = " de ";
 	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
 	String month = bundleEnumeration.getString(Month.values()[now.getMonthOfYear() - 1].toString());
 	StringBuilder stringBuilder = new StringBuilder().append(now.getDayOfMonth()).append(dateSeparator).append(month).append(

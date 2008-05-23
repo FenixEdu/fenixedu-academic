@@ -90,7 +90,7 @@ public class ValidateDate {
             return false;
         }
         String date = new String(day.toString() + "/" + month.toString() + "/" + year);
-        String datePattern = new String("dd/MM/yyyy");
+        String datePattern = "dd/MM/yyyy";
         if (!GenericValidator.isDate(date, datePattern, false)) {
             errors.add(field.getKey(), Resources.getActionMessage(request, va, field));
             return false;

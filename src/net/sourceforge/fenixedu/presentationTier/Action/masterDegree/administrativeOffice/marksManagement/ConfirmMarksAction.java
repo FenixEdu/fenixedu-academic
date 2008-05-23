@@ -70,7 +70,7 @@ public class ConfirmMarksAction extends FenixDispatchAction {
     private String findForward(HttpServletRequest request,
             InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation) {
         String useCase = (String) getFromRequest("useCase", request);
-        String forward = new String("MarksConfirmationMenu");
+        String forward = "MarksConfirmationMenu";
         if (useCase != null && useCase.equals("confirm")) {
             forward = "MarksConfirmation";
         } else if (useCase != null && useCase.equals("print")) {

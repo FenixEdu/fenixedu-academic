@@ -44,7 +44,7 @@ public class InfoBranch extends InfoObject {
          */
     public String getPrettyCode() {
 	if (representsCommonBranch().booleanValue()) {
-	    return new String("");
+	    return "";
 	}
 	StringBuilder prettyCode = new StringBuilder();
 	String namePart = null;

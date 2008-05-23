@@ -466,7 +466,7 @@ public class ParseSubQuestion extends DefaultHandler {
                     if (or == 0 && and == 0) {
                         String tagName = tag;
                         if (not)
-                            tagName = new String("not").concat(tagName);
+                            tagName = "not".concat(tagName);
                         if (atts.getIndex("case") != -1) {
                             if (atts.getValue("case").equals("Nocase"))
                                 tagName = tagName.concat("ignorecase");
@@ -863,7 +863,7 @@ public class ParseSubQuestion extends DefaultHandler {
                                 "Exercício Inválido (identificadores inválidos)");
                     String tagName = tag;
                     if (not)
-                        tagName = new String("not").concat(tagName);
+                        tagName = "not".concat(tagName);
                     if (atts.getIndex("case") != -1) {
                         if (atts.getValue("case").equals("Nocase"))
                             tagName = tagName.concat("ignorecase");
@@ -929,7 +929,7 @@ public class ParseSubQuestion extends DefaultHandler {
                                 "Exercício Inválido (identificadores inválidos)");
                     String tagName = tag;
                     if (not)
-                        tagName = new String("not").concat(tagName);
+                        tagName = "not".concat(tagName);
                     if (atts.getIndex("case") != -1) {
                         if (atts.getValue("case").equals("Nocase"))
                             tagName = tagName.concat("ignorecase");

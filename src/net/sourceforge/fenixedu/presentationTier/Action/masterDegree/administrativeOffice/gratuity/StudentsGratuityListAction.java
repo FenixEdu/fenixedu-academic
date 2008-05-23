@@ -414,29 +414,29 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             // order list by student's number, it is the ordering by default
             Collections.sort(infoGratuitySituationList, new BeanComparator(
                     "infoStudentCurricularPlan.infoStudent.number"));
-        } else if (orderingType.equals(new String("studentNumber"))) {
+        } else if (orderingType.equals("studentNumber")) {
             // order list by student's number
             Collections.sort(infoGratuitySituationList, new BeanComparator(
                     "infoStudentCurricularPlan.infoStudent.number"));
-        } else if (orderingType.equals(new String("studentName"))) {
+        } else if (orderingType.equals("studentName")) {
             // order list by student's name
             Collections.sort(infoGratuitySituationList, new BeanComparator(
                     "infoStudentCurricularPlan.infoStudent.infoPerson.nome"));
-        } else if (orderingType.equals(new String("gratuitySituation"))) {
+        } else if (orderingType.equals("gratuitySituation")) {
             // order list by gratuity's state
             Collections.sort(infoGratuitySituationList, new BeanComparator("situationType"));
-        } else if (orderingType.equals(new String("payedValue"))) {
+        } else if (orderingType.equals("payedValue")) {
             // order list by apyed value
             Collections.sort(infoGratuitySituationList, new BeanComparator("payedValue"));
-        } else if (orderingType.equals(new String("notPayedValue"))) {
+        } else if (orderingType.equals("notPayedValue")) {
             // order list by total value
             Collections.sort(infoGratuitySituationList, new BeanComparator("remainingValue"));
-        } else if (orderingType.equals(new String("insurance"))) {
+        } else if (orderingType.equals("insurance")) {
             Collections.sort(infoGratuitySituationList, new BeanComparator("insurancePayed"));
-        } else if (orderingType.equals(new String("scplanState"))) {
+        } else if (orderingType.equals("scplanState")) {
             Collections.sort(infoGratuitySituationList, new BeanComparator(
                     "infoStudentCurricularPlan.currentState.state"));
-        } else if (orderingType.equals(new String("dcplan"))) {
+        } else if (orderingType.equals("dcplan")) {
             Collections.sort(infoGratuitySituationList, new BeanComparator(
                     "infoStudentCurricularPlan.infoDegreeCurricularPlan.name"));
         }
@@ -451,7 +451,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
     private Integer findExecutionDegreeId(String degree) {
         Integer idInternal = null;
         // if degree is the string "all", then all degrees are desirable
-        if (!degree.equals(new String("all"))) {
+        if (!degree.equals("all")) {
             String idInString = degree.substring(degree.indexOf(">") + 1, degree.length());
             try {
                 if (idInString.length() != 0)

@@ -113,7 +113,7 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
         final String costCenter = request.getParameter("costCenter");
 
         HSSFWorkbook wb = new HSSFWorkbook();
-        String fileName = new String("listagem");
+        String fileName = "listagem";
         InfoProjectReport infoProjectReport = null;
         if (reportType.getReportType() != null) {
             if (reportType.equals(ReportType.EXPENSES) || reportType.equals(ReportType.COMPLETE_EXPENSES)) {

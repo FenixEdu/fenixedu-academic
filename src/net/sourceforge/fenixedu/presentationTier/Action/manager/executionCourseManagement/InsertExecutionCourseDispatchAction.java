@@ -134,7 +134,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 		.readExecutionSemesterByOID(new Integer((String) dynaForm.get("executionPeriodId"))));
 	infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
-	String comment = new String("");
+	String comment = "";
 	if ((String) dynaForm.get("comment") != null) {
 	    comment = (String) dynaForm.get("comment");
 	}

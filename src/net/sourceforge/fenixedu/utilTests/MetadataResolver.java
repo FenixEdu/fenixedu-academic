@@ -21,7 +21,7 @@ public class MetadataResolver implements EntityResolver {
     }
 
     public InputSource resolveEntity(String publicId, String systemId) {
-        return new InputSource(new String("file:///" + path.concat(metadataDtd)));
+        return new InputSource("file:///" + path.concat(metadataDtd));
     }
 
 }

@@ -123,10 +123,10 @@ public class GenerateFilesAction extends FenixDispatchAction {
         String serviceName = null;
 
         // Create respective file
-        if (fileType.equals(new String("sibs"))) {
+        if (fileType.equals("sibs")) {
             serviceName = "GenerateOutgoingSibsPaymentFileByExecutionYearID";
 
-        } else if (fileType.equals(new String("letters"))) {
+        } else if (fileType.equals("letters")) {
             serviceName = "GeneratePaymentLettersFileByExecutionYearID";
         }
         

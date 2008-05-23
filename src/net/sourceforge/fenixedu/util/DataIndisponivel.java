@@ -26,7 +26,7 @@ public class DataIndisponivel extends java.util.Date implements Serializable {
     }
 
     /** mensagem a imprimir */
-    private static String mensagem = new String("Data Indisponível");
+    private static String mensagem = "Data Indisponível";
 
     /** Creates a new instance of DataIndisponivel */
     public DataIndisponivel() {

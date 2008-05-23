@@ -50,7 +50,7 @@ public class ReadStudentTest extends Service {
 	}
 	if (log.booleanValue()) {
 	    final Registration registration = studentTestQuestions.iterator().next().getStudent();
-	    StudentTestLog studentTestLog = new StudentTestLog(distributedTest, registration, new String("Ler Ficha de Trabalho"));
+	    StudentTestLog studentTestLog = new StudentTestLog(distributedTest, registration, "Ler Ficha de Trabalho");
 	}
 	return studentTestQuestionList;
     }

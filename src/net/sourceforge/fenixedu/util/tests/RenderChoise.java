@@ -45,8 +45,8 @@ public class RenderChoise extends Render {
     }
 
     public String toXML(String inside) {
-        return new String("<render_choice shuffle=\"" + getShuffleString() + "\">\n" + inside
-                + "</render_choice>\n");
+        return "<render_choice shuffle=\"" + getShuffleString() + "\">\n" + inside
+                + "</render_choice>\n";
     }
 
 }

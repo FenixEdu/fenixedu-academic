@@ -81,7 +81,7 @@ public class RenderFIB extends Render {
     }
 
     public String toXML(String inside) {
-        String result = new String("<render_fib");
+        String result = "<render_fib";
         if (fibtype != null)
             result = result.concat(" fibtype=\"" + getFibTypeString() + "\"");
         if (rows != null)

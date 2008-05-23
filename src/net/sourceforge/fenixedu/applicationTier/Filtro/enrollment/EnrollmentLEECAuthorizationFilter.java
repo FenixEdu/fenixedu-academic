@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFilter {
-    private static String DEGREE_LEEC_CODE = new String("LEEC");
+    private static String DEGREE_LEEC_CODE = "LEEC";
 
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
@@ -36,19 +36,19 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
             }
 
             if (!verifyStudentLEEC(arguments)) {
-                return new String("error.student.degreeCurricularPlan.LEEC");
+                return "error.student.degreeCurricularPlan.LEEC";
             }
 
             final Tutorship tutor = registration.getActiveTutorship();
             if (tutor != null) {
-                return new String("error.enrollment.student.withTutor+"
+                return "error.enrollment.student.withTutor+"
                         + tutor.getTeacher().getTeacherNumber().toString() + "+"
-                        + tutor.getTeacher().getPerson().getName());
+                        + tutor.getTeacher().getPerson().getName();
             }
         } else {
             // verify if the student to enroll is a LEEC degree student
             if (!verifyStudentLEEC(arguments)) {
-                return new String("error.student.degreeCurricularPlan.LEEC");
+                return "error.student.degreeCurricularPlan.LEEC";
             }
 
             // verify if the coodinator is of the LEEC degree

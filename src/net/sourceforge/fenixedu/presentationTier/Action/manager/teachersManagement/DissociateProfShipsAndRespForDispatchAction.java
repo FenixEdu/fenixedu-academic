@@ -135,9 +135,9 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
         }
 
         if (professorshipsNotRemoved != null && professorshipsNotRemoved.size() > 0) {
-            errors = createErrors(professorshipsNotRemoved, new String("supportLessons"), "PSWithSL",
+            errors = createErrors(professorshipsNotRemoved, "supportLessons", "PSWithSL",
                     "error.manager.teachersManagement.PSWithSL", errors);
-            errors = createErrors(professorshipsNotRemoved, new String("shifts"), "PSWithS",
+            errors = createErrors(professorshipsNotRemoved, "shifts", "PSWithS",
                     "error.manager.teachersManagement.PSWithS", errors);
             saveErrors(request, errors);
 

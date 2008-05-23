@@ -137,8 +137,8 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
                     new Double(((ResponseNUM) newResponse).getResponse());
                 }
             } catch (NumberFormatException ex) {
-                return new String("Pergunta " + studentTestQuestion.getTestQuestionOrder().toString()
-                        + ": Formato de resposta inválido");
+                return "Pergunta " + studentTestQuestion.getTestQuestionOrder().toString()
+                        + ": Formato de resposta inválido";
             }
         } else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getRender() instanceof RenderChoise) {
             if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType()
@@ -148,9 +148,9 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
                 if (emptyOptionIndex != -1) {
                     if (responseIsEmptyAndOther(((ResponseLID) newResponse).getResponse(),
                             emptyOptionIndex))
-                        return new String("Pergunta "
+                        return "Pergunta "
                                 + studentTestQuestion.getTestQuestionOrder().toString()
-                                + ": Não pode responder \"Nenhuma\" e uma opção em simultâneo");
+                                + ": Não pode responder \"Nenhuma\" e uma opção em simultâneo";
                 }
 
             }

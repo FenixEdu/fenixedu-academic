@@ -335,37 +335,37 @@ public class TeacherInformationAction extends FenixDispatchAction {
 
                 if (infoPublicationsNumber.getPublicationType().equals(PublicationType.COMUNICATION)) {
                     dynaForm.set("comunicationPublicationsNumberId", publicationsNumberId);
-                    dynaForm.set("comunicationNational", national == null ? new String("0") : national
+                    dynaForm.set("comunicationNational", national == null ? "0" : national
                             .toString());
-                    dynaForm.set("comunicationInternational", international == null ? new String("0")
+                    dynaForm.set("comunicationInternational", international == null ? "0"
                             : international.toString());
                 } else if (infoPublicationsNumber.getPublicationType().equals(
                         PublicationType.MAG_ARTICLE)) {
                     dynaForm.set("magArticlePublicationsNumberId", publicationsNumberId);
-                    dynaForm.set("magArticleNational", national == null ? new String("0") : national
+                    dynaForm.set("magArticleNational", national == null ? "0" : national
                             .toString());
-                    dynaForm.set("magArticleInternational", international == null ? new String("0")
+                    dynaForm.set("magArticleInternational", international == null ? "0"
                             : international.toString());
                 } else if (infoPublicationsNumber.getPublicationType().equals(
                         PublicationType.AUTHOR_BOOK)) {
                     dynaForm.set("authorBookPublicationsNumberId", publicationsNumberId);
-                    dynaForm.set("authorBookNational", national == null ? new String("0") : national
+                    dynaForm.set("authorBookNational", national == null ? "0" : national
                             .toString());
-                    dynaForm.set("authorBookInternational", international == null ? new String("0")
+                    dynaForm.set("authorBookInternational", international == null ? "0"
                             : international.toString());
                 } else if (infoPublicationsNumber.getPublicationType().equals(
                         PublicationType.EDITOR_BOOK)) {
                     dynaForm.set("editorBookPublicationsNumberId", publicationsNumberId);
-                    dynaForm.set("editorBookNational", national == null ? new String("0") : national
+                    dynaForm.set("editorBookNational", national == null ? "0" : national
                             .toString());
-                    dynaForm.set("editorBookInternational", international == null ? new String("0")
+                    dynaForm.set("editorBookInternational", international == null ? "0"
                             : international.toString());
                 } else {
                     dynaForm.set("articlesChaptersPublicationsNumberId", publicationsNumberId);
-                    dynaForm.set("articlesChaptersNational", national == null ? new String("0")
+                    dynaForm.set("articlesChaptersNational", national == null ? "0"
                             : national.toString());
                     dynaForm.set("articlesChaptersInternational",
-                            international == null ? new String("0") : international.toString());
+                            international == null ? "0" : international.toString());
                 }
             }
         } catch (Exception e) {

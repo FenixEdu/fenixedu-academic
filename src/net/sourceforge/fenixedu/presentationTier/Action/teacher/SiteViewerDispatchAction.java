@@ -489,7 +489,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
 			   if (shift == null)
 				   shift = (String) request.getAttribute("shift");
 			   if (shift == null)
-				   shift= new String("false");
+				   shift= "false";
 			
 				   request.setAttribute("shift",shift);
 	

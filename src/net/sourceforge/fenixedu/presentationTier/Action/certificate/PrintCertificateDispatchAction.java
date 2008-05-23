@@ -108,7 +108,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
    
                     if (infoStudentCurricularPlan.getSpecialization().equals(
                             Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
-                        certificate = new String("Matrícula");
+                        certificate = "Matrícula";
                         session
                                 .setAttribute(SessionConstants.DURATION_DEGREE, certificate
                                         .toUpperCase());

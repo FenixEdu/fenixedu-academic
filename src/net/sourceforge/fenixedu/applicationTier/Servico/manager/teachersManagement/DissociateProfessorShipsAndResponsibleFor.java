@@ -94,8 +94,8 @@ public class DissociateProfessorShipsAndResponsibleFor extends Service {
 
         HashMap<String, List<InfoProfessorship>> professorshipsNotRemoved = new HashMap<String, List<InfoProfessorship>>();
         if (professorshipsWithSupportLessons.size() > 0 || professorshipsWithShifts.size() > 0) {
-            professorshipsNotRemoved.put(new String("supportLessons"), professorshipsWithSupportLessons);
-            professorshipsNotRemoved.put(new String("shifts"), professorshipsWithShifts);
+            professorshipsNotRemoved.put("supportLessons", professorshipsWithSupportLessons);
+            professorshipsNotRemoved.put("shifts", professorshipsWithShifts);
         }
 
         return professorshipsNotRemoved;

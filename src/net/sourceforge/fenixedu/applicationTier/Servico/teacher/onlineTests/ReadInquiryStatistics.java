@@ -58,7 +58,7 @@ public class ReadInquiryStatistics extends Service {
                 for (int i = 1; i <= studentTestQuestion.getSubQuestionByItem().getOptionNumber(); i++) {
                     int mark = distributedTest.countResponses(
                             studentTestQuestion.getTestQuestionOrder(), new Integer(i).toString());
-                    String percentage = new String("0%");
+                    String percentage = "0%";
                     if (mark != 0) {
                         percentage = df.format(mark * java.lang.Math.pow(numOfStudentResponses, -1));
                     }
@@ -68,7 +68,7 @@ public class ReadInquiryStatistics extends Service {
                 Set<StudentTestQuestion> responses = distributedTest
                         .findStudentTestQuestionsByTestQuestionOrder(studentTestQuestion
                                 .getTestQuestionOrder());
-                String percentage = new String("0%");
+                String percentage = "0%";
                 for (StudentTestQuestion studentTestQuestion2 : responses) {
                     Response response = studentTestQuestion2.getResponse();
                     if (response != null && !StringUtils.isEmpty(((ResponseSTR) response).getResponse())) {
@@ -91,7 +91,7 @@ public class ReadInquiryStatistics extends Service {
                     }
                 }
             }
-            statistics.add(new LabelValueBean(new String("Número de alunos que responderam"),
+            statistics.add(new LabelValueBean("Número de alunos que responderam",
                     new Integer(numOfStudentResponses).toString()));
             infoInquiryStatistics.setInfoStudentTestQuestion(studentTestQuestion);
             infoInquiryStatistics.setOptionStatistics(statistics);

@@ -98,6 +98,6 @@ public class CardinalityType extends FenixUtil {
     }
 
     public String toXML() {
-        return new String("rcardinality=\"" + typeString + "\"");
+        return "rcardinality=\"" + typeString + "\"";
     }
 }

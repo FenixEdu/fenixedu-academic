@@ -124,7 +124,7 @@ public class QuestionType extends FenixUtil {
     }
 
     public String toXML(String inside, int code) {
-        return new String("<" + getTypeString() + " ident=\"" + code + "\" " + cardinalityType.toXML()
-                + ">\n" + render.toXML(inside) + "</" + getTypeString() + ">\n");
+        return "<" + getTypeString() + " ident=\"" + code + "\" " + cardinalityType.toXML()
+                + ">\n" + render.toXML(inside) + "</" + getTypeString() + ">\n";
     }
 }

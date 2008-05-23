@@ -21,7 +21,7 @@ public class QuestionResolver implements EntityResolver {
     }
 
     public InputSource resolveEntity(String publicId, String systemId) {
-        return new InputSource(new String("file:///" + path.concat(xmlDocumentDtd)));
+        return new InputSource("file:///" + path.concat(xmlDocumentDtd));
 
     }
 

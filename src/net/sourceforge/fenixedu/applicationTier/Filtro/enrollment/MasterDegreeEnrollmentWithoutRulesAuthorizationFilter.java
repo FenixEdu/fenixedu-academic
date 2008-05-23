@@ -34,11 +34,11 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
     protected String hasPrevilege(IUserView id, Object[] arguments) {
 	try {
 	    if (!verifyDegreeTypeIsMasterDegree(arguments)) {
-		return new String("error.degree.type");
+		return "error.degree.type";
 	    }
 
 	    if (!verifyStudentIsFromMasterDegree(arguments)) {
-		return new String("error.student.degree.nonMaster");
+		return "error.student.degree.nonMaster";
 	    }
 
 	    return null;

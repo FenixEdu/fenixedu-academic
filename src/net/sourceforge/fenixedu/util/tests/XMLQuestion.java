@@ -97,12 +97,12 @@ public class XMLQuestion extends FenixUtil {
     }
 
     private String getResponseLabel() {
-        return new String("\n<response_label ident=\"1\"/>\n");
+        return "\n<response_label ident=\"1\"/>\n";
     }
 
     private String getResponseLabelLID(String text, int ident, boolean shuffle) {
-        String result = new String("<response_label ident=\"" + ident + "\" rshuffle=\""
-                + RenderChoise.getShuffleString(shuffle) + "\">");
+        String result = "<response_label ident=\"" + ident + "\" rshuffle=\""
+                + RenderChoise.getShuffleString(shuffle) + "\">";
         String[] texts = text.split("\n");
         for (int i = 0; i < texts.length; i++)
             if (!texts[i].equals("\r"))
@@ -122,8 +122,8 @@ public class XMLQuestion extends FenixUtil {
         String feedback = "";
         if (correctFeedbackText != null && !correctFeedbackText.equals("")) {
             displayfeedbackCorrect = "<displayfeedback feedbacktype=\"Response\" linkrefid=\"Correct\"/>\n";
-            feedback = feedback.concat(new String("<itemfeedback ident = \"Correct\" view = \"All\">\n"
-                    + getMattextElement(correctFeedbackText) + getEndElementTag("itemfeedback")));
+            feedback = feedback.concat("<itemfeedback ident = \"Correct\" view = \"All\">\n"
+                    + getMattextElement(correctFeedbackText) + getEndElementTag("itemfeedback"));
         }
         if (wrongFeedbackText != null && !wrongFeedbackText.equals("")) {
             if (questionType.getType().intValue() == QuestionType.LID)
