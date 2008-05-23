@@ -115,6 +115,12 @@
 		<forward name="showSendEmailResult" path="df.page.send.email.result"/>
 	</action>
 
+	<action path="/searchPeople"
+			type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.SearchPeopleDA"
+			parameter="method">
+		<forward name="search" path="df.page.people.search"/>
+	</action>
+
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
