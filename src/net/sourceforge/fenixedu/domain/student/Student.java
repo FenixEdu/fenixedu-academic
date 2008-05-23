@@ -567,7 +567,7 @@ public class Student extends Student_Base {
 
     public boolean isHandicapped() {
 	for (Registration registration : getRegistrationsSet()) {
-	    if (registration.getIngression() != null && registration.getIngressionEnum().equals(Ingression.CNA07)) {
+	    if (registration.getIngression() != null && registration.getIngression().equals(Ingression.CNA07)) {
 		return true;
 	    }
 	}

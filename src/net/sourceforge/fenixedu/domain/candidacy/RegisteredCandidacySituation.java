@@ -28,7 +28,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	    Ingression ingression, EntryPhase entryPhase) {
 	this(candidacy, null, registrationAgreement, cycleType);
 
-	((StudentCandidacy) candidacy).setIngression(ingression != null ? ingression.getName() : null);
+	((StudentCandidacy) candidacy).setIngression(ingression != null ? ingression : null);
 	((StudentCandidacy) candidacy).setEntryPhase(entryPhase);
     }
 
@@ -38,34 +38,6 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	init(candidacy, person == null ? AccessControl.getPerson() : person);
 	registerCandidacy(registrationAgreement, cycleType);
     }
-
-    // private void registerCandidacy(Candidacy candidacy) {
-    // Person person = candidacy.getPerson();
-    // Student student = person.getStudent();
-    // if (student == null) {
-    // student = new Student(person);
-    // }
-    //
-    // // create registration
-    //	
-    //	
-    // Registration registration = createNewRegistration((DFACandidacy)
-    // candidacy);
-    //
-    //	
-    //
-    // ((DFACandidacy) getCandidacy()).setRegistration(registration);
-    //
-    // final AdministrativeOffice administrativeOffice = AdministrativeOffice
-    // .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-    //
-    // new DfaGratuityEvent(administrativeOffice, person,
-    // registration.getActiveStudentCurricularPlan(),
-    // ExecutionYear.readCurrentExecutionYear());
-    //
-    // new DfaRegistrationEvent(administrativeOffice, person, registration);
-    //
-    // }
 
     private void registerCandidacy(RegistrationAgreement registrationAgreement, CycleType cycleType) {
 	Person person = getCandidacy().getPerson();
@@ -81,14 +53,6 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	    createQualification();
 
 	}
-	// else if(candidacy instanceof PHDProgramCandidacy) {
-	// PHDProgramCandidacy programCandidacy =
-	// (PHDProgramCandidacy)candidacy;
-	// registration = new Registration(person,
-	// (programCandidacy).getExecutionDegree().getDegreeCurricularPlan());
-	// person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
-	// programCandidacy.setRegistration(registration);
-	// }
 
 	if (!person.hasStudent()) {
 	    new Student(person);

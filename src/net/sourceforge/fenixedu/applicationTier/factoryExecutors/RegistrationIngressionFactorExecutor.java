@@ -26,7 +26,7 @@ public class RegistrationIngressionFactorExecutor {
 	    super();
 	    this.registration = new DomainReference<Registration>(registration);
 	    if (getRegistration() != null) {
-		setIngression(this.getRegistration().getIngressionEnum());
+		setIngression(this.getRegistration().getIngression());
 		setRegistrationAgreement(this.getRegistration().getRegistrationAgreement());
 		setEntryPhase(this.getRegistration().getEntryPhase());
 	    }
@@ -34,7 +34,7 @@ public class RegistrationIngressionFactorExecutor {
 
 	public Object execute() {
 	    getRegistration().setRegistrationAgreement(getRegistrationAgreement());
-	    getRegistration().setIngression(getIngression() != null ? getIngression().name() : null);
+	    getRegistration().setIngression(getIngression() != null ? getIngression() : null);
 	    getRegistration().setEntryPhase(getEntryPhase());
 	    return getRegistration();
 	}

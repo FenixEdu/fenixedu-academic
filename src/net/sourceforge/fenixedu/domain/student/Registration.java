@@ -94,7 +94,6 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -133,31 +132,89 @@ public class Registration extends Registration_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    private Registration(DateTime startDateTime) {
+    private Registration(final DateTime start) {
 	this();
-	setStartDate(startDateTime.toYearMonthDay());
-	new RegisteredState(this, AccessControl.getUserView() != null ? AccessControl.getUserView().getPerson() : null,
-		startDateTime);
+	setStartDate(start.toYearMonthDay());
+	new RegisteredState(this, AccessControl.getPerson(), start);
     }
 
-    public Registration(Person person, StudentCandidacy studentCandidacy) {
-	this(person, null, RegistrationAgreement.NORMAL, studentCandidacy, null);
+
+    public Registration(final Person person, final StudentCandidacy studentCandidacy) {
+	this(person, null, RegistrationAgreement.NORMAL, null, studentCandidacy);
     }
 
-    public Registration(Person person, Integer studentNumber) {
-	this(person, studentNumber, RegistrationAgreement.NORMAL, null, null);
+    
+    public Registration(final Person person, final Integer studentNumber) {
+	this(person, studentNumber, RegistrationAgreement.NORMAL, null);
     }
 
-    public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan, StudentCandidacy candidacy,
-	    RegistrationAgreement agreement, CycleType cycleType) {
-	this(person, degreeCurricularPlan, candidacy, RegistrationAgreement.NORMAL, null, null);
+    
+    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan) {
+	this(person, degreeCurricularPlan, RegistrationAgreement.NORMAL, null, null);
     }
 
-    public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan, StudentCandidacy studentCandidacy,
-	    RegistrationAgreement agreement, CycleType cycleType, ExecutionYear executionYear) {
+    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType) {
+	this(person, degreeCurricularPlan, RegistrationAgreement.NORMAL, cycleType, null);
+    }
 
-	this(person, null, agreement, studentCandidacy, degreeCurricularPlan, executionYear);
+    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+	    final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear) {
 
+	this(person, null, agreement, executionYear);
+	setDegree((degreeCurricularPlan != null) ? degreeCurricularPlan.getDegree() : null);
+	createStudentCurricularPlan(person, degreeCurricularPlan, cycleType, executionYear);
+    }
+
+    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy candidacy,
+	    final RegistrationAgreement agreement, final CycleType cycleType) {
+	this(person, degreeCurricularPlan, candidacy, agreement, cycleType, null);
+    }
+
+    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+	    final StudentCandidacy studentCandidacy, final RegistrationAgreement agreement, final CycleType cycleType,
+	    final ExecutionYear executionYear) {
+
+	this(person, degreeCurricularPlan, agreement, cycleType, executionYear);
+	setStudentCandidacyInformation(studentCandidacy);
+    }
+
+    private Registration(final Person person, final Integer registrationNumber, final RegistrationAgreement agreement,
+	    final ExecutionYear executionYear, final StudentCandidacy studentCandidacy) {
+
+	this(person, registrationNumber, agreement, executionYear);
+	setStudentCandidacyInformation(studentCandidacy);
+    }
+
+    private Registration(final Person person, final Integer registrationNumber, final RegistrationAgreement agreement,
+	    final ExecutionYear executionYear) {
+
+	this(calculateStartDate(executionYear));
+
+	setStudent(person.hasStudent() ? person.getStudent() : new Student(person, registrationNumber));
+	setNumber(registrationNumber == null ? getStudent().getNumber() : registrationNumber);
+	setPayedTuition(true);
+	setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
+	setRequestedChangeDegree(false);
+	setRequestedChangeBranch(false);
+	setRegistrationAgreement(agreement == null ? RegistrationAgreement.NORMAL : agreement);
+    }
+
+    private void setStudentCandidacyInformation(final StudentCandidacy studentCandidacy) {
+	setStudentCandidacy(studentCandidacy);
+	if (studentCandidacy != null) {
+	    super.setDegree(studentCandidacy.getExecutionDegree().getDegree());
+	    super.setEntryPhase(studentCandidacy.getEntryPhase());
+	    super.setIngression(studentCandidacy.getIngression());
+
+	    if (studentCandidacy.getIngression() == Ingression.RI) {
+		final Degree sourceDegree = studentCandidacy.getDegreeCurricularPlan().getEquivalencePlan().getSourceDegree();
+		setSourceRegistration(getStudent().readRegistrationByDegree(sourceDegree));
+	    }
+	}
+    }
+
+    private void createStudentCurricularPlan(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+	    final CycleType cycleType, final ExecutionYear executionYear) {
 	final YearMonthDay startDay;
 	final ExecutionSemester executionSemester;
 	if (executionYear == null || executionYear.isCurrent()) {
@@ -170,48 +227,12 @@ public class Registration extends Registration_Base {
 
 	final StudentCurricularPlan scp = StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
 		startDay, executionSemester, cycleType);
-
 	EventGenerator.generateNecessaryEvents(scp, person, executionYear);
     }
 
-    public Registration(Person person, DegreeCurricularPlan degreeCurricularPlan) {
-	this(person, degreeCurricularPlan, null, RegistrationAgreement.NORMAL, null);
-    }
-
-    private Registration(Person person, Integer studentNumber, RegistrationAgreement agreement,
-	    StudentCandidacy studentCandidacy, DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear) {
-	this(person, studentNumber, agreement, studentCandidacy, executionYear);
-	if (degreeCurricularPlan != null) {
-	    setDegree(degreeCurricularPlan.getDegree());
-	}
-    }
-
-    private Registration(Person person, Integer registrationNumber, RegistrationAgreement agreement,
-	    StudentCandidacy studentCandidacy, ExecutionYear executionYear) {
-	this(executionYear == null || executionYear.isCurrent() ? new DateTime() : executionYear.getBeginDateYearMonthDay()
-		.toDateTimeAtMidnight());
-	if (person.hasStudent()) {
-	    setStudent(person.getStudent());
-	} else {
-	    setStudent(new Student(person, registrationNumber));
-	}
-	setNumber(registrationNumber == null ? getStudent().getNumber() : registrationNumber);
-	setPayedTuition(true);
-	setStudentCandidacy(studentCandidacy);
-	if (studentCandidacy != null) {
-	    setDegree(studentCandidacy.getExecutionDegree().getDegree());
-	}
-	setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
-	setRequestedChangeDegree(false);
-	setRequestedChangeBranch(false);
-	setRegistrationAgreement(agreement == null ? RegistrationAgreement.NORMAL : agreement);
-
-	if (studentCandidacy != null && studentCandidacy.getIngressionEnum() == Ingression.RI) {
-	    Degree sourceDegree = studentCandidacy.getExecutionDegree().getDegreeCurricularPlan().getEquivalencePlan()
-		    .getSourceDegreeCurricularPlan().getDegree();
-	    setSourceRegistration(getStudent().readRegistrationByDegree(sourceDegree));
-	}
-
+    private static DateTime calculateStartDate(final ExecutionYear executionYear) {
+	return executionYear == null || executionYear.isCurrent() ? new DateTime() : executionYear.getBeginDateYearMonthDay()
+		.toDateTimeAtMidnight();
     }
 
     @Override
@@ -259,6 +280,7 @@ public class Registration extends Registration_Base {
 	    getStudentCandidacy().delete();
 	}
 
+	removeIndividualCandidacy();
 	removeSourceRegistration();
 	removeRegistrationYear();
 	removeDegree();
@@ -417,8 +439,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     final public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
 
@@ -467,24 +489,24 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     private void setApprovationRatio(Double approvationRatio) {
 	this.approvationRatio = approvationRatio;
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     private void setArithmeticMean(Double arithmeticMean) {
 	this.arithmeticMean = arithmeticMean;
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     final public Integer getApprovedEnrollmentsNumber() {
 	if (this.approvedEnrollmentsNumber == null) {
@@ -494,16 +516,16 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     private void setApprovedEnrollmentsNumber(Integer approvedEnrollmentsNumber) {
 	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     final public Double getApprovationRatio() {
 	if (this.approvationRatio == null) {
@@ -513,8 +535,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * @Deprecated Use Curriculum algorithm instead
-     */
+         * @Deprecated Use Curriculum algorithm instead
+         */
     @Deprecated
     final public Double getArithmeticMean() {
 	if (this.arithmeticMean == null) {
@@ -1706,21 +1728,6 @@ public class Registration extends Registration_Base {
 	return getPerson().getEmail();
     }
 
-    final public EntryPhase getEntryPhase() {
-	if (hasStudentCandidacy()) {
-	    return getStudentCandidacy().getEntryPhase();
-	}
-	return null;
-    }
-
-    final public void setEntryPhase(EntryPhase entryPhase) {
-	if (hasStudentCandidacy()) {
-	    getStudentCandidacy().setEntryPhase(entryPhase);
-	} else if (entryPhase != null) {
-	    throw new DomainException("error.registration.withou.student.candidacy");
-	}
-    }
-
     final public Double getEntryGrade() {
 	return hasStudentCandidacy() ? getStudentCandidacy().getEntryGrade() : null;
     }
@@ -1733,39 +1740,20 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    final public String getIngression() {
-	return hasStudentCandidacy() ? getStudentCandidacy().getIngression() : null;
-    }
-
     public boolean isFirstCycleAtributionIngression() {
-	return getIngressionEnum() == Ingression.AG1C;
+	return getIngression() == Ingression.AG1C;
     }
 
     public boolean isSecondCycleInternalCandidacyIngression() {
-	return getIngressionEnum() == Ingression.CIA2C;
-    }
-
-    final public Ingression getIngressionEnum() {
-	return getIngression() != null ? Ingression.valueOf(getIngression()) : null;
-    }
-
-    final public void setIngression(String ingression) {
-	if (hasStudentCandidacy()) {
-	    if (!StringUtils.isEmpty(ingression)) {
-		checkIngression(Ingression.valueOf(ingression));
-	    }
-	    getStudentCandidacy().setIngression(ingression);
-	} else if (!StringUtils.isEmpty(ingression)) {
-	    throw new DomainException("error.registration.withou.student.candidacy");
-	}
-
+	return getIngression() == Ingression.CIA2C;
     }
 
     public void setIngression(Ingression ingression) {
-	this.setIngression(ingression != null ? ingression.name() : null);
+	checkIngression(ingression);
+	super.setIngression(ingression);
     }
 
-    private void checkIngression(Ingression ingression) {
+    private void checkIngression(final Ingression ingression) {
 	checkIngression(ingression, getPerson(), getFirstStudentCurricularPlan().getDegreeCurricularPlan());
     }
 
@@ -1788,15 +1776,6 @@ public class Registration extends Registration_Base {
 
     final public String getContigent() {
 	return hasStudentCandidacy() ? getStudentCandidacy().getContigent() : null;
-    }
-
-    final public void setContigent(String contigent) {
-	if (hasStudentCandidacy()) {
-	    getStudentCandidacy().setContigent(contigent);
-	} else {
-	    throw new DomainException("error.registration.withou.student.candidacy");
-	}
-
     }
 
     final public String getDegreeDescription() {
@@ -2251,8 +2230,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-     * Retrieve concluded cycles before or equal to the given cycle
-     */
+         * Retrieve concluded cycles before or equal to the given cycle
+         */
     final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
 	if (!getDegreeType().hasAnyCycleTypes()) {
 	    return Collections.EMPTY_SET;

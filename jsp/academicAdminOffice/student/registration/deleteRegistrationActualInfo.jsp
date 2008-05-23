@@ -30,7 +30,7 @@
 	</span>
 </p>
 
-<logic:present name="registration" property="ingressionEnum">
+<logic:present name="registration" property="ingression">
 <h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationDetail" >
 	<fr:layout name="tabular">
@@ -41,7 +41,7 @@
 </logic:present>
 
 
-<logic:notPresent name="registration" property="ingressionEnum">
+<logic:notPresent name="registration" property="ingression">
 <h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">

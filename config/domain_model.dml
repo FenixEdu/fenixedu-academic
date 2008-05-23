@@ -185,6 +185,7 @@ valueType org.joda.time.Partial                                                 
 valueType org.joda.time.Period                                                                                       as Period;
 valueType org.joda.time.TimeOfDay                                                                                    as TimeOfDay;
 valueType org.joda.time.YearMonthDay                                                                                 as YearMonthDay;
+valueType org.joda.time.LocalDate                                                                                 	 as LocalDate;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.PartialList                                           	 as PartialList;
 enum      net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType                       as BonusType;
 enum      net.sourceforge.fenixedu.domain.PartyClassification                                                        as PartyClassification;
@@ -194,6 +195,7 @@ enum      net.sourceforge.fenixedu.domain.teacher.CategoryType                  
 enum      net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad.SchoolClassCalculationMethod  as SchoolClassCalculationMethod;
 enum	  net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState 									 as CandidacyProcessState;
 enum	  net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState 								 as IndividualCandidacyState;
+enum	  net.sourceforge.fenixedu.domain.candidacy.Ingression														 as Ingression;
 
 /*
 *
@@ -1938,7 +1940,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			String contigent;
 			Double entryGrade;
 			EntryPhase entryPhase;
-			String ingression;
+			Ingression ingression;
 			Boolean applyForResidence;
 			String notesAboutResidenceAppliance;
 			StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
@@ -3615,6 +3617,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		Integer finalAverage;
 		YearMonthDay conclusionDate;
 		String conclusionProcessNotes;
+		EntryPhase entryPhase;
+		Ingression ingression;
 	}
 
 	class net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {

@@ -26,7 +26,7 @@ public class IMDCandidacy extends IMDCandidacy_Base {
     }
 
     public IMDCandidacy(final Person person, final ExecutionDegree executionDegree, final Person creator,
-	    final Double entryGrade, final String contigent, final String ingression, EntryPhase entryPhase) {
+	    final Double entryGrade, final String contigent, final Ingression ingression, EntryPhase entryPhase) {
 	super();
 	init(person, executionDegree, creator, entryGrade, contigent, ingression, entryPhase);
     }

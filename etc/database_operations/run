@@ -29,3 +29,6 @@ function executeWithTempFile() {
 }
 
 execute "update Weight In Old LMAC Enrolment" updateWeightInOldLMACEnrolment.sql
+execute "Drop colum social security number" alterTableParty.sql
+executeWithTempFile "Migrate Ingression and EntryPhase to Registration" migrateIngressionAndEntryPhaseToRegistration.sql
+

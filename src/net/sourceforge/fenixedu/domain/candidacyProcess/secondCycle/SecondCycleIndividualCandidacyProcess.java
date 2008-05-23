@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.util.EntryPhase;
 
 public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividualCandidacyProcess_Base {
 
@@ -285,14 +285,13 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	private void createRegistration(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
 	    final Registration registration = new Registration(candidacyProcess.getCandidacyPerson(),
-		    getDegreeCurricularPlan(candidacyProcess), null, RegistrationAgreement.NORMAL, CycleType.SECOND_CYCLE);
+		    getDegreeCurricularPlan(candidacyProcess), CycleType.SECOND_CYCLE);
+	    registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	    registration.setIngression(Ingression.CIA2C); // TODO: change
-	    // ingression
 	}
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
 	    return candidacyProcess.getCandidacySelectedDegree().getMostRecentDegreeCurricularPlan();
 	}
-
     }
 }

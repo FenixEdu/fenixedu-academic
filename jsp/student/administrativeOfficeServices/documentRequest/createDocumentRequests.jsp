@@ -31,7 +31,7 @@
 </p>
 
 
-<logic:present name="documentRequestCreateBean" property="registration.ingressionEnum">
+<logic:present name="documentRequestCreateBean" property="registration.ingression">
 <p class="mbottom05"><strong><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 <fr:view name="documentRequestCreateBean" property="registration" schema="student.registrationDetail.short" >
 	<fr:layout name="tabular">
@@ -40,7 +40,7 @@
 	</fr:layout>
 </fr:view>
 </logic:present>
-<logic:notPresent name="documentRequestCreateBean" property="registration.ingressionEnum">
+<logic:notPresent name="documentRequestCreateBean" property="registration.ingression">
 <p class="mbottom05"><strong><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 <fr:view name="documentRequestCreateBean" property="registration" schema="student.registrationsWithStartData" >
 	<fr:layout name="tabular">

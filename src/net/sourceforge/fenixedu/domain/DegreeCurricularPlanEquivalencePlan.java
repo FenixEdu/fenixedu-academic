@@ -15,8 +15,7 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
 	init(degreeCurricularPlan, sourceDegreeCurricularPlan);
     }
 
-    protected void init(DegreeCurricularPlan degreeCurricularPlan,
-	    DegreeCurricularPlan sourceDegreeCurricularPlan) {
+    protected void init(DegreeCurricularPlan degreeCurricularPlan, DegreeCurricularPlan sourceDegreeCurricularPlan) {
 	checkParameters(degreeCurricularPlan, sourceDegreeCurricularPlan);
 
 	super.setDegreeCurricularPlan(degreeCurricularPlan);
@@ -43,12 +42,15 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
 	entries.addAll(getEntriesSet());
 	return entries;
     }
-    
+
     @Override
     public void delete() {
 	removeDegreeCurricularPlan();
 	removeSourceDegreeCurricularPlan();
-        super.delete();
+	super.delete();
     }
 
+    public Degree getSourceDegree() {
+	return getSourceDegreeCurricularPlan().getDegree();
+    }
 }

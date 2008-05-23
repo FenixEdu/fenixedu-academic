@@ -672,7 +672,14 @@ Documentation:
 		<property name="year" value="true"/>
 		<property name="month" value="true"/>
 		<property name="day" value="true"/>
-	</renderer>	
+	</renderer>
+	
+	<!--@ The default layout for a LocalDate automatically includes the hour, minute, and second in the partial -->
+	<renderer mode="input" type="org.joda.time.LocalDate" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+		<property name="year" value="true"/>
+		<property name="month" value="true"/>
+		<property name="day" value="true"/>
+	</renderer>
 	
 	<!--@ The default layout for a DateTime automatically includes the hour, minute, and second in the partial -->
 	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
@@ -700,7 +707,16 @@ Documentation:
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
 	</renderer>	
 	
+	<!--@ The default layout for a LocalDate automatically includes the day, month, and year -->
+	<renderer type="org.joda.time.LocalDate" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
+	</renderer>	
+	
 	<renderer type="org.joda.time.YearMonthDay" layout="year-month" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+		<property name="format" value="${monthOfYear,02d}-${year}"/>
+	</renderer>	
+	
+	<renderer type="org.joda.time.LocalDate" layout="year-month" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
 		<property name="format" value="${monthOfYear,02d}-${year}"/>
 	</renderer>	
 

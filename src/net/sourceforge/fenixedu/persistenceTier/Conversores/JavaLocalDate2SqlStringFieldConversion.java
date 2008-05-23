@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.persistenceTier.Conversores;
 import net.sourceforge.fenixedu.util.date.SerializationTool;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
-public class JavaYearMonthDay2SqlStringFieldConversion implements FieldConversion {
+public class JavaLocalDate2SqlStringFieldConversion implements FieldConversion {
 
     public Object javaToSql(Object object) {
-	return SerializationTool.yearMonthDaySerialize((YearMonthDay) object);
+	return SerializationTool.localDateSerialize((LocalDate) object);
     }
 
     public Object sqlToJava(Object object) {
-	return SerializationTool.yearMonthDayDeserialize((String) object);
+	return SerializationTool.localDateDeserialize((String) object);
     }
 
 }

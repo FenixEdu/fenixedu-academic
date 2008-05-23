@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -39,7 +41,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     private void checkParameters(final Person person, final ExecutionDegree executionDegree, final Person creator,
-	    Double entryGrade, String contigent, String ingression, EntryPhase entryPhase) {
+	    final Double entryGrade, final String contigent, final Ingression ingression, final EntryPhase entryPhase) {
 	if (executionDegree == null) {
 	    throw new DomainException("error.candidacy.DegreeCandidacy.executionDegree.cannot.be.null");
 	}
@@ -63,7 +65,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     protected void init(final Person person, final ExecutionDegree executionDegree, final Person creator, Double entryGrade,
-	    String contigent, String ingression, EntryPhase entryPhase) {
+	    String contigent, Ingression ingression, EntryPhase entryPhase) {
 	checkParameters(person, executionDegree, creator, entryGrade, contigent, ingression, entryPhase);
 	super.setExecutionDegree(executionDegree);
 	super.setPerson(person);
@@ -80,7 +82,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree, Person studentPerson) {
 
-	switch (executionDegree.getDegree().getTipoCurso()) {
+	switch (executionDegree.getDegree().getDegreeType()) {
 
 	case BOLONHA_DEGREE:
 	case DEGREE:
@@ -141,7 +143,8 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
 	    if (candidacy instanceof StudentCandidacy) {
 		final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
-		if (studentCandidacy.hasAnyCandidacySituations() && !studentCandidacy.isConcluded() && studentCandidacy.getExecutionDegree() == executionDegree
+		if (studentCandidacy.hasAnyCandidacySituations() && !studentCandidacy.isConcluded()
+			&& studentCandidacy.getExecutionDegree() == executionDegree
 			&& studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear
 			&& studentCandidacy.getEntryPhase() != null && studentCandidacy.getEntryPhase().equals(entryPhase)) {
 		    result.add(studentCandidacy);
@@ -169,16 +172,16 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 		.getCandidacySituationType() == CandidacySituationType.CANCELLED);
     }
 
-    public Ingression getIngressionEnum() {
-	return getIngression() != null ? Ingression.valueOf(getIngression()) : null;
-    }
-
     public boolean cancelCandidacy() {
 	if (!isConcluded()) {
 	    new CancelledCandidacySituation(this, this.getPerson());
 	    return true;
 	}
 	return false;
+    }
+
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
+	return getExecutionDegree().getDegreeCurricularPlan();
     }
 
 }

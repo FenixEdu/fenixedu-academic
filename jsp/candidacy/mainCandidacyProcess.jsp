@@ -71,8 +71,8 @@
 				<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIfNot(viewProcess)" value="candidacyCancelled" />
 				
-				<fr:property name="sortBy" value="candidacyState, candidacyDate" />
-			</fr:layout>	
+				<fr:property name="sortBy" value="candidacyState, candidacyDate=desc" />
+			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
 	

@@ -52,8 +52,8 @@ public class TransactionSystemDA extends FenixDispatchAction {
 	final String endOfReportString = request.getParameter("endOfReport");
 	final String actionString = request.getParameter("action");
 	final String serverString = request.getParameter("server");
-	final YearMonthDay startOfReport = SerializationTool.yearMonthDaySerialize(startOfReportString);
-	final YearMonthDay endOfReport = SerializationTool.yearMonthDaySerialize(endOfReportString);
+	final YearMonthDay startOfReport = SerializationTool.yearMonthDayDeserialize(startOfReportString);
+	final YearMonthDay endOfReport = SerializationTool.yearMonthDayDeserialize(endOfReportString);
 	final TransactionAction transactionAction = actionString == null || actionString.length() == 0 ? 
 		null : TransactionAction.valueOf(actionString);
 	final String server = serverString == null || serverString.length() == 0 ? null : serverString;

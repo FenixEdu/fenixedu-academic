@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.util.EntryPhase;
 
 public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyProcess_Base {
 
@@ -272,7 +272,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	private void createRegistration(final Over23IndividualCandidacyProcess candidacyProcess) {
 	    final Registration registration = new Registration(candidacyProcess.getCandidacyPerson(),
-		    getDegreeCurricularPlan(candidacyProcess), null, RegistrationAgreement.NORMAL, CycleType.FIRST_CYCLE);
+		    getDegreeCurricularPlan(candidacyProcess), CycleType.FIRST_CYCLE);
+	    registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	    registration.setIngression(Ingression.CM23);
 	}
 
