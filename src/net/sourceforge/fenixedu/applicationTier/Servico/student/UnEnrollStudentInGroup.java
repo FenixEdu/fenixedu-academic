@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -29,7 +29,7 @@ import org.apache.struts.util.MessageResources;
 public class UnEnrollStudentInGroup extends Service {
 
     public String mailServer() {
-        final String server = ResourceBundle.getBundle("SMTPConfiguration").getString("mail.smtp.host");
+	final String server = PropertiesManager.getProperty("mail.smtp.host");
         return (server != null) ? server : "mail.adm";
     }
 

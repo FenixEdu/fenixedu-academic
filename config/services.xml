@@ -6594,13 +6594,6 @@
 		<filterChains>
 			<chain name="OperatorAuthorization" />
 		</filterChains>
-	</service>		
-	<service>
-		<name>RetrievePhoto</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.RetrievePhoto</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
 	</service>
 	<service>
 		<name>GenerateOutgoingSibsPaymentFileByExecutionYearID</name>
@@ -7692,14 +7685,6 @@
         <filterChains>
         </filterChains>
     </service>
-    <service>
-        <name>RetrieveApplicationDocument</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.RetrieveApplicationDocument</implementationClass>
-        <description>Returns a candidacy application document</description>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-        </filterChains>
-    </service>    
     <service>
         <name>ReadDegreeCandidatesWithFilter</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCandidatesWithFilter</implementationClass>

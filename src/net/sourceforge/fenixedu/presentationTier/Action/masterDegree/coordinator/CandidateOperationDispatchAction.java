@@ -87,56 +87,6 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
         return mapping.findForward("ActionReady");
     }
 
-    public ActionForward showApplicationDocuments(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        IUserView userView = getUserView(request);
-
-        String documentTypeStr = request.getParameter(REQUEST_DOCUMENT_TYPE);
-        Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
-        Integer candidateID = new Integer(request.getParameter("candidateID"));
-
-        InfoMasterDegreeCandidate masterDegreeCandidate = null;
-        try {
-            Object args[] = { candidateID };
-            masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                    .executeService(userView, "GetCandidatesByID", args);
-        } catch (Exception e) {
-            throw new Exception(e);
-        }
-
-        FileSuportObject file = null;
-        try {
-            Object args[] = {
-                    masterDegreeCandidate.getInfoPerson().getIdInternal(),
-                    ((documentTypeStr != null) ? ApplicationDocumentType.valueOf(documentTypeStr)
-                            : ApplicationDocumentType.CURRICULUM_VITAE) };
-            file = (FileSuportObject) ServiceUtils.executeService(userView,
-                    "RetrieveApplicationDocument", args);
-
-        } catch (FileAlreadyExistsServiceException e1) {
-        } catch (FileNameTooLongServiceException e1) {
-        } catch (FenixServiceException e1) {
-        }
-
-        if (file != null) {
-            response.setHeader("Content-disposition", "attachment;filename=" + file.getFileName());
-            response.setContentType(file.getContentType());
-            DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-            dos.write(file.getContent());
-            dos.close();
-        } else {
-            List candidateStudyPlan = getCandidateStudyPlanByCandidateID(candidateID, userView);
-            request.setAttribute("masterDegreeCandidate", masterDegreeCandidate);
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-            request.setAttribute("candidateStudyPlan", candidateStudyPlan);
-            return mapping.findForward("ActionReady");
-        }
-
-        return null;
-
-    }
-
     /**
      * 
      * @author Ricardo Clerigo & Telmo Nabais

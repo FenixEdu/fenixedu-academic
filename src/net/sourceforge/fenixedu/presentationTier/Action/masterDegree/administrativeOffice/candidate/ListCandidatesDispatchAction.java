@@ -672,49 +672,4 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	}
     }
 
-    public ActionForward showApplicationDocuments(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	IUserView userView = getUserView(request);
-
-	String documentTypeStr = request.getParameter(REQUEST_DOCUMENT_TYPE);
-
-	Integer candidateID = new Integer(request.getParameter("candidateID"));
-
-	InfoMasterDegreeCandidate masterDegreeCandidate = null;
-	try {
-	    Object args[] = { candidateID };
-	    masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-		    .executeService(userView, "GetCandidatesByID", args);
-	} catch (Exception e) {
-	    throw new Exception(e);
-	}
-
-	FileSuportObject file = null;
-	try {
-	    Object args[] = {
-		    masterDegreeCandidate.getInfoPerson().getIdInternal(),
-		    ((documentTypeStr != null) ? ApplicationDocumentType.valueOf(documentTypeStr)
-			    : ApplicationDocumentType.CURRICULUM_VITAE) };
-	    file = (FileSuportObject) ServiceUtils.executeService(userView,
-		    "RetrieveApplicationDocument", args);
-
-	} catch (FileAlreadyExistsServiceException e1) {
-	} catch (FileNameTooLongServiceException e1) {
-	} catch (FenixServiceException e1) {
-	}
-
-	if (file != null) {
-	    response.setHeader("Content-disposition", "attachment;filename=" + file.getFileName());
-	    response.setContentType(file.getContentType());
-	    DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-	    dos.write(file.getContent());
-	    dos.close();
-	} else {
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
-	    return mapping.findForward("VisualizeCandidate");
-	}
-
-	return null;
-    }
-
 }

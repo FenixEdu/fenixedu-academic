@@ -89,6 +89,8 @@
 		<echo file="${build.home.webinf.classes}/.build.version">${build.version}</echo>
 
 		<sequential>
+			<copy file="build.properties" tofile="${build.home.webinf.classes}/.build.properties"/>
+
 			<copy encoding="${encoding}" todir="${build.home}">
 				<fileset dir="${web-content}" >
 					<include name="**/*.*"/>
@@ -126,7 +128,6 @@
 
 		<echo file="${build.home.webinf.classes}/checkIsAlive.properties" append="false">
 			script.isAlive.check.db=${script.isAlive.check.db}
-			script.isAlive.check.slide=${script.isAlive.check.slide}
 		</echo>
 	</target>
 
@@ -151,47 +152,6 @@
 	<target name="replace-property-values">
 
 		<sequential>
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="Domain.xml"/>
-				<replacefilter token="@db.slide.driver@" 
-			    			   property="db.slide.driver"/>
-				<replacefilter token="@db.slide.alias@" 
-			    			   property="db.slide.alias"/>
-				<replacefilter token="@db.slide.user@" 
-			    			   property="db.slide.user"/>
-				<replacefilter token="@db.slide.pass@" 
-			    			   property="db.slide.pass"/>
-			</replace>		
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="SMTPConfiguration.properties"/>
-				<replacefilter token="@mail.smtp.host@" 
-			    			   property="mail.smtp.host"/>
-				<replacefilter token="@mail.smtp.name@" 
-			    			   property="mail.smtp.name"/>
-					<replacefilter token="@mailingList.host.name@" 
-				    			   property="mailingList.host.name"/>				
-			</replace>
-
-
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="slide.properties"/>
-				<replacefilter token="@slide.config@" 
-			    			   property="slide.config"/>
-				<replacefilter token="@db.slide.driver@" 
-			    			   property="db.slide.driver"/>
-				<replacefilter token="@db.slide.alias@" 
-			    			   property="db.slide.alias"/>
-				<replacefilter token="@db.slide.user@" 
-			    			   property="db.slide.user"/>
-				<replacefilter token="@db.slide.pass@" 
-			    			   property="db.slide.pass"/>
-			</replace>
-			
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="IstFtpServerConfig.properties"/>
@@ -949,21 +909,6 @@
 		</java>
 	</target>
 
-	<target name="slide">
-		<java classname="net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport"
-				fork="true"
-				failonerror="true"
-				maxmemory="1024m"
-				>
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath>
-		</java>
-	</target>
-	
 	<target name="compile-reports" >
 		<mkdir dir="${build.home.reports}"/>
 		<taskdef name="jrc" 

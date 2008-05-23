@@ -72,12 +72,6 @@ manager.url=http://localhost:8080/manager
 #   db.assiduousness.alias: 
 #   db.assiduousness.validationQuery: 
 #
-#   db.slide.driver: 
-#   db.slide.alias: 
-#   db.slide.user: 
-#   db.slide.pass: 
-#   slide.config: 
-#
 default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.SuportePersistenteOJB
 
 db.name=ciapl
@@ -109,14 +103,7 @@ db.giaf.user=root
 db.giaf.pass=
 db.giaf.alias=//localhost:3306/AssiduidadeOracleTeste
 
-db.slide.driver=com.mysql.jdbc.Driver
-db.slide.alias=mysql://localhost:3306/slide
-db.slide.user=root
-db.slide.pass=
-slide.config=/home/<user>/workspace/fenix-head/build/WEB-INF/classes/Domain.xml
-
 script.isAlive.check.db=false
-script.isAlive.check.slide=false
 #
 #
 #------------------------------------------------------------------------------
@@ -291,6 +278,8 @@ struts.validation.doctype.url=file:///home/<user>/workspace/fenix-head/metadata/
 mail.smtp.host=
 mail.smtp.name=
 mailingList.host.name=
+mailSender.max.recipients=50
+
 
 #----------------------------------------------
 # Authentication Service

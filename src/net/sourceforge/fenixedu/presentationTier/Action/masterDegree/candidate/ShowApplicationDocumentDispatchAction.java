@@ -34,47 +34,6 @@ public class ShowApplicationDocumentDispatchAction extends FenixDispatchAction {
         return mapping.findForward("showApplicationDocumentsList");
     }
 
-    public ActionForward showApplicationDocuments(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        IUserView userView = getUserView(request);
-        ActionErrors actionErrors = new ActionErrors();
-
-        request.setAttribute("candidateID", request.getParameter("candidateID"));
-        
-        String documentTypeStr = request.getParameter(REQUEST_DOCUMENT_TYPE);
-
-        InfoPerson infoPerson = readPersonByUsername(userView, actionErrors, request, mapping);
-
-        if (infoPerson == null) {
-            return mapping.findForward("notOK");
-        }
-
-        FileSuportObject file = null;
-        try {
-            Object args[] = {
-                    infoPerson.getIdInternal(),
-                    ((documentTypeStr != null) ? ApplicationDocumentType.valueOf(documentTypeStr)
-                            : ApplicationDocumentType.CURRICULUM_VITAE) };
-            file = (FileSuportObject) ServiceUtils.executeService(userView,
-                    "RetrieveApplicationDocument", args);
-
-        } catch (Exception e) {
-            return mapping.findForward("notOK");
-        }
-
-        if (file != null) {
-            response.setHeader("Content-disposition", "attachment;filename=" + file.getFileName());
-            response.setContentType(file.getContentType());
-            DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-            dos.write(file.getContent());
-            dos.close();
-            return null;
-        }
-
-        return mapping.findForward("notOK");
-    }
-
     /**
      * 
      * @param userView

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -125,15 +124,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public static String mailingListDomainConfiguration() {
-	try {
-	    if (properties == null) {
-		properties = PropertiesManager.loadProperties("/SMTPConfiguration.properties");
-	    }
-	    return properties.getProperty("mailingList.host.name");
-	} catch (IOException e) {
-	    throw new RuntimeException(e);
-	}
-
+	return PropertiesManager.getProperty("mailingList.host.name");
     }
 
     public ActionForward submitDataToImportCustomizationOptions(ActionMapping mapping, ActionForm actionForm,

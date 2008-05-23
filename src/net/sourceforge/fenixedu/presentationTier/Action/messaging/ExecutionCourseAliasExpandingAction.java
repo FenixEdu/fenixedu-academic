@@ -98,15 +98,7 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
     }
 
     public static String mailingListDomainConfiguration() {
-        try {
-            if (properties == null) {
-                properties = PropertiesManager.loadProperties("/SMTPConfiguration.properties");
-            }
-            return properties.getProperty("mailingList.host.name");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+	return PropertiesManager.getProperty("mailingList.host.name");
     }
 
     private void sendAnswer(HttpServletResponse response, String result) throws IOException {

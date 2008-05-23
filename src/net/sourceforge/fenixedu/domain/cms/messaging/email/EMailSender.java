@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cms.messaging.email.Recipient.RecipientType;
@@ -36,27 +37,7 @@ public class EMailSender {
 
 	}
 
-	private static String bundleFile = new String("SMTPConfiguration");
-
-	private static ResourceBundle bundle = null;
-
-	private static String mailServer = null;
-
-	static {
-		if (bundle == null) {
-			try {
-				EMailSender.bundle = ResourceBundle.getBundle(EMailSender.bundleFile);
-				EMailSender.mailServer = EMailSender.bundle.getString("mailSender.server.url");
-				if (EMailSender.mailServer == null) {
-					EMailSender.mailServer = "mail.adm";
-				}
-			}
-			catch (Exception e) {
-				// the default server
-				EMailSender.mailServer = "mail.adm";
-			}
-		}
-	}
+	private static String mailServer = PropertiesManager.getProperty("mailSender.server.url");
 
 	public EMailSender(IGroup[] allowedSenders) {
 		this.allowedSenders = allowedSenders;
