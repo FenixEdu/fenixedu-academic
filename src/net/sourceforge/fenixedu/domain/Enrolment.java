@@ -879,6 +879,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
 	return false;
     }
+    
+    final public boolean hasAssociatedMarkSheetOrFinalGrade() {
+	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
+	    if (enrolmentEvaluation.hasMarkSheet() || enrolmentEvaluation.isFinal()) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
     final public boolean hasAssociatedMarkSheetOrFinalGrade(MarkSheetType markSheetType) {
 	for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
