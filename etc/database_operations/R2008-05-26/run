@@ -28,3 +28,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "update Weight In Old LMAC Enrolment" updateWeightInOldLMACEnrolment.sql
+execute "update Registration Conclusion Process" updateRegistrationConclusionProcess.sql
+executeWithTempFile "Migrate Ingression and EntryPhase to Registration" migrateIngressionAndEntryPhaseToRegistration.sql
