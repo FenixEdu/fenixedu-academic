@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -37,7 +38,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
 	}
     };
-    
+
     public static Comparator<RegistrationState> DATE_AND_STATE_TYPE_COMPARATOR = new Comparator<RegistrationState>() {
 	public int compare(RegistrationState leftState, RegistrationState rightState) {
 	    int comparationResult = DATE_COMPARATOR.compare(leftState, rightState);
@@ -48,7 +49,6 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
 	}
     };
-        
 
     public RegistrationState() {
 	super();
@@ -97,7 +97,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    return responsiblePerson.hasRole(RoleType.MANAGER) ? null : responsiblePerson;
 	} else {
 	    final Person loggedPerson = AccessControl.getPerson();
-	    return (loggedPerson == null) ?  null : (loggedPerson.hasRole(RoleType.MANAGER) ? null : loggedPerson);
+	    return (loggedPerson == null) ? null : (loggedPerson.hasRole(RoleType.MANAGER) ? null : loggedPerson);
 	}
     }
 
@@ -174,11 +174,11 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	RegistrationState state = getNext();
 	return (state != null) ? state.getStateDate() : null;
     }
-    
+
     public void setStateDate(YearMonthDay yearMonthDay) {
-        super.setStateDate(yearMonthDay.toDateTimeAtMidnight());
+	super.setStateDate(yearMonthDay.toDateTimeAtMidnight());
     }
-    
+
     public static class RegistrationStateDeleter extends IdInternalBean implements FactoryExecutor {
 
 	public RegistrationStateDeleter(Integer idInternal) {
@@ -235,9 +235,19 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
 	throw new DomainException("RegistrationState.external.enrolments.only.included.in.mobility.states");
     }
-    
+
     public boolean getCanDeleteActualInfo() {
 	return getStateType().deleteActualPeriodInfo();
+    }
+
+    static public boolean hasAnyState(final Collection<RegistrationState> states, final Collection<RegistrationStateType> types) {
+	for (final RegistrationState state : states) {
+	    if (types.contains(state.getStateType())) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
 }
