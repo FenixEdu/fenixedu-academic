@@ -142,17 +142,6 @@
       	  <forward name="Success" path="/visualizeApplicationInfo.jsp"/>
       </action>     
 
-      <!-- Action for Visualization Of the Candidate's Application Information -->
-      <action path="/insertApplicationDocuments"
-	     attribute="insertApplicationDocumentsForm"
-	          name="insertApplicationDocumentsForm"
-	         input="/insertApplicationDocuments.do?method=prepare"
-	      validate="true"
-	      parameter="method"
-      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.InsertApplicationDocumentsAction">
-      	  <forward name="chooseFile" path="/insertApplicationDocuments.jsp"/>
-      </action>
-
       <!-- Dispatch Action to Change the Candidate's Application Information -->
       <action path="/changeApplicationInfoDispatchAction"
 	     attribute="changeApplicationInfoForm"

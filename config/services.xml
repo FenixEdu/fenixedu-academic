@@ -6580,13 +6580,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>StorePhoto</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePhoto</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>StorePersonalPhoto</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersonalPhoto</implementationClass>
 		<description />
