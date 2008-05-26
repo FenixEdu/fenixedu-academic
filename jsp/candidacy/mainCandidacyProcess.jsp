@@ -62,7 +62,7 @@
 	<logic:notEmpty name="childProcesses">
 		<br/>
 		<fr:view name="childProcesses" schema="IndividualCandidacyProcess.list.processes">
-			<fr:layout name="tabular">
+			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
 
@@ -70,8 +70,10 @@
 				<fr:property name="key(viewProcess)" value="label.candidacy.show.candidate"/>
 				<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIfNot(viewProcess)" value="candidacyCancelled" />
-				
-				<fr:property name="sortBy" value="candidacyState, candidacyDate=desc" />
+							
+				<fr:property name="sortParameter" value="sortBy"/>
+	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=intro&amp;processId=" + processId.toString()%>'/>
+    	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacyState,candidacyDate=desc" : request.getParameter("sortBy") %>"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
