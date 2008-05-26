@@ -142,6 +142,9 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
 	    }
+	    if (process.isCandidacyDebtPayed()) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
