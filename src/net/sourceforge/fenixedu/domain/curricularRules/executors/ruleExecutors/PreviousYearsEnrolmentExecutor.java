@@ -480,7 +480,9 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 	    // .getMinEctsCredits(enrolmentContext.getExecutionPeriod())
 	    // :
 	    // curricularCourse.getEctsCredits(enrolmentContext.getExecutionPeriod());
-	    // if (collectContext.hasCreditsToSpent(creditsRequiredToApprove)) {
+	    // if
+                // (collectContext.hasCreditsToSpent(creditsRequiredToApprove))
+                // {
 	    // collectContext.useCredits(creditsRequiredToApprove);
 	    // iterator.remove();
 	    //
@@ -644,7 +646,13 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
 		    continue;
 		}
 
-		result.add(degreeModuleToEvaluate.getContext());
+		final Context context = degreeModuleToEvaluate.getContext();
+		if (context == null) {
+		    throw new DomainException("error.degreeModuleToEvaluate.has.invalid.context", degreeModuleToEvaluate
+			    .getName(), degreeModuleToEvaluate.getExecutionPeriod().getQualifiedName());
+		}
+
+		result.add(context);
 	    }
 	}
 
