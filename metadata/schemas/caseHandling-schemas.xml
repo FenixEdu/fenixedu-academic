@@ -21,6 +21,8 @@
 <schema name="IndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="candidacyDate" key="label.candidacy.date" />
 	<slot name="candidacyPerson.name" key="label.name" />
+	<slot name="candidacyPerson.name" key="label.name" />
+	<slot name="candidacyPerson.documentIdNumber" key="label.identificationNumber" />
 	<slot name="candidacyState" key="label.candidacy.process.state" />
 </schema>
 
