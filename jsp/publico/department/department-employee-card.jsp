@@ -30,7 +30,16 @@
 					<fr:view name="employee" property="person.nickname" layout="person-name"/>
 				</logic:notEqual>
 			</p>
-			
+
+			<logic:notEmpty  name="employee" property="person.personFunctions">
+			<bean:message key="label.functions" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>: 
+			<fr:view name="employee" property="person.personFunctions" schema="personFunction.name">
+				<fr:layout name="values">
+						<fr:property name="htmlSeparator" value=", "/>
+				</fr:layout>
+			</fr:view>
+			</logic:notEmpty>
+						
 			<logic:notEmpty name="employee" property="person.email">
 				<logic:equal name="employee" property="person.emailPubliclyAvailable" value="true">
 					<p class="mtop025 mbottom05">
@@ -53,6 +62,7 @@
 					<fr:view name="employee" property="person.personWorkPhone.number"/>
 				</p>
 			</logic:notEmpty>
+			
 		</td>
 	</tr>
 </table>

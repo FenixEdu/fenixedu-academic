@@ -522,3 +522,7 @@
 		<property name="subLayout" value="default"/>
 	</slot>
 </schema>
+
+<schema name="personFunction.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" bundle="RESEARCHER_RESOURCES">
+	<slot name="function.name"/>
+</schema>
