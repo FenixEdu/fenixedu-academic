@@ -229,6 +229,22 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	return result;
     }
 
+    public Duration getTotalFirstLevelBalance() {
+	Duration result = Duration.ZERO;
+	for (AssiduousnessExtraWork assiduousnessExtraWork : getAssiduousnessExtraWorks()) {
+	    result = result.plus(assiduousnessExtraWork.getFirstLevelBalance());
+	}
+	return result;
+    }
+
+    public Duration getTotalSecondLevelBalance() {
+	Duration result = Duration.ZERO;
+	for (AssiduousnessExtraWork assiduousnessExtraWork : getAssiduousnessExtraWorks()) {
+	    result = result.plus(assiduousnessExtraWork.getSecondLevelBalance());
+	}
+	return result;
+    }
+
     public Map<WorkScheduleType, Duration> getNightWorkByWorkScheduleType() {
 	Map<WorkScheduleType, Duration> nightWorkByWorkScheduleType = new HashMap<WorkScheduleType, Duration>();
 	for (AssiduousnessExtraWork assiduousnessExtraWork : getAssiduousnessExtraWorks()) {

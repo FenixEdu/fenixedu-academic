@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
 
 public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorization_Base {
 

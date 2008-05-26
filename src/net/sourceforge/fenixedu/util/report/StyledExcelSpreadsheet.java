@@ -236,14 +236,26 @@ public class StyledExcelSpreadsheet {
 	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle(), wrapText));
     }
 
-    public void addDuration(Duration value) {
+    public void addDuration(Duration value, int columnNumber) {
 	HSSFRow currentRow = getRow();
-	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
+	HSSFCell cell = currentRow.createCell((short) (columnNumber));
 	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(":")
 		.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	MutablePeriod finalUnjustifiedBalance = new MutablePeriod(value.getMillis(), PeriodType.time());
-	cell.setCellValue(fmt.print(finalUnjustifiedBalance));
+	MutablePeriod valueFormatted = new MutablePeriod(value.getMillis(), PeriodType.time());
+	if (value.toPeriod().getMinutes() < 0) {
+	    valueFormatted.setMinutes(-value.toPeriod().getMinutes());
+	    if (value.toPeriod().getHours() == 0) {
+		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours().appendSeparator(":")
+			.minimumPrintedDigits(2).appendMinutes().toFormatter();
+	    }
+	}
+	cell.setCellValue(fmt.print(valueFormatted));
 	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle(), wrapText));
+
+    }
+
+    public void addDuration(Duration value) {
+	addDuration(value, getRow().getLastCellNum() + 1);
     }
 
     public void sumColumn(int firstRow, int lastRow, int firstColumn, int lastColumn, HSSFCellStyle newStyle) {

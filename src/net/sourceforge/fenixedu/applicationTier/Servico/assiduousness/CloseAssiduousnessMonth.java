@@ -186,26 +186,33 @@ public class CloseAssiduousnessMonth extends Service {
 			    if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
 				thisDayWorkedTime = workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
 					.getWorkPeriodDuration();
-			    } else if (leave.getJustificationMotive().getJustificationType() != null) {
+			    }
+			} else {
+			    if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.TIME)
+				    && leave.getJustificationMotive().getJustificationType() != null) {
 				timeLeaveToDiscount = timeLeaveToDiscount.plus(leave.getDuration());
 			    }
 			}
 		    }
 		    Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight());
-		    if (leavesList.isEmpty()) {
-			if (workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
-				ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
-			    thisDayWorkedTime = workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
-				    .getWorkPeriodDuration();
+
+		    if (workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
+			    ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
+			thisDayWorkedTime = workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
+				.getWorkPeriodDuration();
+			if (leavesList.isEmpty()) {
 			    thisBonusDiscount = 1;
 			    thisA17Discount = 1;
-			} else if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
-			    thisDayWorkedTime = workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
-				    .getWorkPeriodDuration().plus(thisDayBalance);
+			}
+		    } else if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
+			thisDayWorkedTime = workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
+				.getWorkPeriodDuration().plus(thisDayBalance);
+			if (leavesList.isEmpty()) {
 			    thisBonusDiscount = 1;
 			    thisA17Discount = 1;
 			}
 		    }
+
 		    if (!workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
 			    ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
 			totalBalance = totalBalance.plus(thisDayBalance);

@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletOutputStream;
@@ -7,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
@@ -17,6 +22,7 @@ import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -24,6 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Duration;
 import org.joda.time.YearMonthDay;
 
 public class VacationsManagementDispatchAction extends FenixDispatchAction {
@@ -59,11 +66,19 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	spreadsheet.addHeader(bundle.getString("label.art17Days"));
 	spreadsheet.addHeader(bundle.getString("label.art18Days"));
 
+	final ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
+		.getLocale());
+	for (Month month : Month.values()) {
+	    spreadsheet.addHeader(bundleEnumeration.getString(month.getName()));
+	}
+
+	spreadsheet.addHeader("Média de horas");
+
 	ServiceUtils.executeService(SessionUtils.getUserView(request), "CalculateArticles17And18", new Object[] { yearMonth
 		.getYear() });
 
-	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), 1, 1);
-	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), 12, 31);
+	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear() - 1, 1, 1);
+	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear() - 1, 12, 31);
 
 	for (AssiduousnessVacations assiduousnessVacations : rootDomainObject.getAssiduousnessVacations()) {
 	    if (assiduousnessVacations.getYear().equals(yearMonth.getYear())) {
@@ -79,6 +94,23 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 		    spreadsheet.addCell(assiduousnessVacations.getArt17And18LimitDays());
 		    spreadsheet.addCell(assiduousnessVacations.getNumberOfArt17());
 		    spreadsheet.addCell(assiduousnessVacations.getNumberOfArt18());
+
+		    List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(
+			    assiduousnessStatusHistory.getAssiduousnessClosedMonths());
+		    Collections.sort(assiduousnessClosedMonths, new BeanComparator("beginDate"));
+
+		    for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
+			if (assiduousnessClosedMonth.getBeginDate().get(DateTimeFieldType.year()) == (yearMonth.getYear() - 1)) {
+			    spreadsheet.addDuration(assiduousnessClosedMonth.getTotalWorkedTime());
+			}
+		    }
+
+		    List<Schedule> schedules = assiduousnessVacations.getAssiduousness().getSchedules(beginDate, endDate);
+		    Duration averageWorkPeriodDuration = Duration.ZERO;
+		    for (Schedule schedule : schedules) {
+			averageWorkPeriodDuration = averageWorkPeriodDuration.plus(schedule.getAverageWorkPeriodDuration());
+		    }
+		    spreadsheet.addDuration(new Duration(averageWorkPeriodDuration.getMillis() / schedules.size()));
 		}
 	    }
 	}
