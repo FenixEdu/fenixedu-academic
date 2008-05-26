@@ -124,11 +124,11 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
     public ActionForward uploadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	
+
 	Container container = getSelectContainer(request);
 	Site site = getSite(request);
 
-	FileContentCreationBean bean = new FileContentCreationBean(container,site);
+	FileContentCreationBean bean = new FileContentCreationBean(container, site);
 
 	if (!site.isFileClassificationSupported()) {
 	    bean.setEducationalLearningResourceType(FileContentCreationBean.EducationalResourceType.SITE_CONTENT);
@@ -143,10 +143,10 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
     private Container getSelectContainer(HttpServletRequest request) {
 	Item item = selectItem(request);
-	
+
 	return item == null ? selectSection(request) : item;
     }
-    
+
     private Item selectItem(HttpServletRequest request) {
 	final Item item = getItem(request);
 
@@ -217,7 +217,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	    } catch (DomainException e) {
 		addErrorMessage(request, "section", e.getKey(), (Object[]) e.getArgs());
 	    }
-	    
+
 	}
 
 	selectSection(request, section);
@@ -390,19 +390,25 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	Container container = bean.getFileHolder();
 	if (container instanceof Item) {
 	    selectItem(request);
-	}else {
+	} else {
 	    selectSection(request);
 	}
-	
+
 	InputStream formFileInputStream = null;
 	File file = null;
 	try {
 	    formFileInputStream = bean.getFile();
+	    if (formFileInputStream == null) {
+		addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
+		return (service.equalsIgnoreCase("CreateScormPackage") ? prepareCreateScormFile(mapping, form, request, response)
+			: uploadFile(mapping, form, request, response));
+	    }
+
 	    file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-	    
-	    executeService(request, service, new Object[] { bean.getSite(), container, file, bean.getFileName(), bean.getDisplayName(),
-		    bean.getPermittedGroup(), getLoggedPerson(request), bean.getEducationalLearningResourceType() });
+	    executeService(request, service, new Object[] { bean.getSite(), container, file, bean.getFileName(),
+		    bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request),
+		    bean.getEducationalLearningResourceType() });
 	} catch (FileManagerException e) {
 	    addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
 
@@ -436,9 +442,9 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     }
 
     private void putScormCreationBeanInRequest(HttpServletRequest request) {
-	
+
 	Site site = getSite(request);
-	ScormCreationBean bean = new ScormCreationBean(getSelectContainer(request),site);
+	ScormCreationBean bean = new ScormCreationBean(getSelectContainer(request), site);
 
 	if (!site.isFileClassificationSupported()) {
 	    bean.setEducationalLearningResourceType(FileContentCreationBean.EducationalResourceType.SITE_CONTENT);
@@ -492,11 +498,10 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	Container container = bean.getFileHolder();
 	if (container instanceof Item) {
 	    selectItem(request);
-	}
-	else {
+	} else {
 	    selectSection(request);
 	}
-	
+
 	String resourceLocation = container.getReversePath();
 	bean.setTechnicalLocation(resourceLocation);
 
@@ -575,14 +580,14 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	    selectSection(request);
 	}
 	FileContent fileContent = selectFileContent(request);
-	Site site = fileContent.getSite();
+	Site site = fileContent != null ? fileContent.getSite() : null;
 
 	if (site == null) {
 	    return mapping.findForward("section");
 	}
 
 	try {
-	    ServiceUtils.executeService(getUserView(request), "DeleteFileContent",  fileContent);
+	    ServiceUtils.executeService(getUserView(request), "DeleteFileContent", fileContent);
 	} catch (FileManagerException e1) {
 	    addErrorMessage(request, "items", "errors.unableToDeleteFile");
 	}
