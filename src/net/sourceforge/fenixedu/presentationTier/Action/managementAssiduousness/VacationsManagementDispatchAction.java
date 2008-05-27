@@ -101,7 +101,8 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 
 		    for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
 			if (assiduousnessClosedMonth.getBeginDate().get(DateTimeFieldType.year()) == (yearMonth.getYear() - 1)) {
-			    spreadsheet.addDuration(assiduousnessClosedMonth.getTotalWorkedTime());
+			    spreadsheet.addDuration(assiduousnessClosedMonth.getTotalWorkedTime(), assiduousnessClosedMonth
+				    .getBeginDate().get(DateTimeFieldType.monthOfYear()) + 6);
 			}
 		    }
 
@@ -110,7 +111,7 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 		    for (Schedule schedule : schedules) {
 			averageWorkPeriodDuration = averageWorkPeriodDuration.plus(schedule.getAverageWorkPeriodDuration());
 		    }
-		    spreadsheet.addDuration(new Duration(averageWorkPeriodDuration.getMillis() / schedules.size()));
+		    spreadsheet.addDuration(new Duration(averageWorkPeriodDuration.getMillis() / schedules.size()), 19);
 		}
 	    }
 	}
