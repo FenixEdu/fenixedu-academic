@@ -58,15 +58,6 @@
 </fr:view>
 </logic:notPresent>
 
-
-<h3 class="mbottom05"><bean:message key="label.registration.manageState" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:edit name="registrationStateBean" schema="student.manageRegistrationState" action="/manageRegistrationState.do?method=createNewState">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
-		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-	</fr:layout>
-</fr:edit>
-
 <bean:define id="deleteLink">
 	/manageRegistrationState.do?method=deleteState&amp;registrationId=${registration.idInternal}&amp;registrationStateId=${idInternal}
 </bean:define>	
@@ -97,3 +88,12 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
+
+<h3 class="mtop2 mbottom1"><bean:message key="label.registration.manageState" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<span class="warning0"><bean:message key="add.state.warning" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
+<fr:edit name="registrationStateBean" schema="student.manageRegistrationState" action="/manageRegistrationState.do?method=createNewState">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
+		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+	</fr:layout>
+</fr:edit>

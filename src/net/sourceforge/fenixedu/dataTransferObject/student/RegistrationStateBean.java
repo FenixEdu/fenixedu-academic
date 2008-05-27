@@ -28,7 +28,7 @@ public class RegistrationStateBean implements Serializable {
     public RegistrationStateBean(Registration registration) {
 	super();
 	this.registration = new DomainReference<Registration>(registration);
-	this.stateDate = new YearMonthDay();
+	this.stateDate = null;
     }
 
     public Registration getRegistration() {
