@@ -110,9 +110,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Sets an error to display later in the Browser and sets the mapping
-     * forward.
-     */
+         * Sets an error to display later in the Browser and sets the mapping
+         * forward.
+         */
     protected ActionForward setError(HttpServletRequest request, ActionMapping mapping, String errorMessage, String forwardPage,
 	    Object actionArg) {
 	ActionErrors errors = new ActionErrors();
@@ -130,9 +130,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Verifies if a property of type String in a FormBean is not empty. Returns
-     * true if the field is present and not empty. False otherwhise.
-     */
+         * Verifies if a property of type String in a FormBean is not empty.
+         * Returns true if the field is present and not empty. False otherwhise.
+         */
     protected boolean verifyStringParameterInForm(DynaValidatorForm dynaForm, String field) {
 	if (dynaForm.get(field) != null && !dynaForm.get(field).equals("")) {
 	    return true;
@@ -141,9 +141,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Verifies if a parameter in a Http Request is not empty. Return true if
-     * the field is not empty. False otherwise.
-     */
+         * Verifies if a parameter in a Http Request is not empty. Return true
+         * if the field is not empty. False otherwise.
+         */
     protected boolean verifyParameterInRequest(HttpServletRequest request, String field) {
 	if (request.getParameter(field) != null && !request.getParameter(field).equals("")) {
 	    return true;
@@ -179,12 +179,12 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /**
-     * Searches in request parameters first and next in request attributed
-     * 
-     * @param request
-     * @param name
-     * @return
-     */
+         * Searches in request parameters first and next in request attributed
+         * 
+         * @param request
+         * @param name
+         * @return
+         */
     protected Object getFromRequest(HttpServletRequest request, String name) {
 	final String requestParameter = request.getParameter(name);
 	return (requestParameter != null) ? requestParameter : request.getAttribute(name);
@@ -192,7 +192,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected Integer getIntegerFromRequest(HttpServletRequest request, String name) {
 	final String requestParameter = request.getParameter(name);
-	return (requestParameter != null ? Integer.valueOf(requestParameter) : (Integer) request.getAttribute(name));
+	return (!StringUtils.isEmpty(requestParameter) ? Integer.valueOf(requestParameter) : (Integer) request.getAttribute(name));
     }
 
     public ActionForward processException(HttpServletRequest request, ActionMapping mapping, ActionForward input, Exception e) {
