@@ -904,8 +904,8 @@ public class Teacher extends Teacher_Base {
 	return balanceCredits;
     }
 
-    private double sumCreditsBetweenPeriods(ExecutionSemester startPeriod, ExecutionSemester endExecutionPeriod, double totalCredits)
-	    throws ParseException {
+    private double sumCreditsBetweenPeriods(ExecutionSemester startPeriod, ExecutionSemester endExecutionPeriod,
+	    double totalCredits) throws ParseException {
 
 	ExecutionSemester executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
 	while (startPeriod != executionPeriodAfterEnd) {
@@ -1039,8 +1039,8 @@ public class Teacher extends Teacher_Base {
     public List<ManagementPositionCreditLine> getManagementPositionsFor(ExecutionSemester executionSemester) {
 	final List<ManagementPositionCreditLine> result = new ArrayList<ManagementPositionCreditLine>();
 	for (final ManagementPositionCreditLine managementPositionCreditLine : this.getManagementPositions()) {
-	    if (managementPositionCreditLine.getStart().before(executionSemester.getEndDate())
-		    && managementPositionCreditLine.getEnd().after(executionSemester.getBeginDate())) {
+	    if (managementPositionCreditLine.getStart().isBefore(executionSemester.getEndDateYearMonthDay())
+		    && managementPositionCreditLine.getEnd().isAfter(executionSemester.getBeginDateYearMonthDay())) {
 		result.add(managementPositionCreditLine);
 	    }
 	}

@@ -19,36 +19,36 @@ public class InfoManagementPositionCreditLine extends InfoDatePeriodBaseCreditLi
      * @return Returns the position.
      */
     public String getPosition() {
-        return position;
+	return position;
     }
 
     /**
      * @param position
-     *            The position to set.
+     *                The position to set.
      */
     public void setPosition(String position) {
-        this.position = position;
+	this.position = position;
     }
 
     public Double getCredits() {
-        return credits;
+	return credits;
     }
 
     public void setCredits(Double credits) {
-        this.credits = credits;
+	this.credits = credits;
     }
 
     public static InfoManagementPositionCreditLine newInfoFromDomain(ManagementPositionCreditLine managementPositionCreditLine) {
-        InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(managementPositionCreditLine.getTeacher());
+	InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(managementPositionCreditLine.getTeacher());
 
-        InfoManagementPositionCreditLine infoCreditLine = new InfoManagementPositionCreditLine();
-        infoCreditLine.setCredits(managementPositionCreditLine.getCredits());
-        infoCreditLine.setEnd(managementPositionCreditLine.getEnd());
-        infoCreditLine.setIdInternal(managementPositionCreditLine.getIdInternal());
-        infoCreditLine.setPosition(managementPositionCreditLine.getPosition());
-        infoCreditLine.setStart(managementPositionCreditLine.getStart());
+	InfoManagementPositionCreditLine infoCreditLine = new InfoManagementPositionCreditLine();
+	infoCreditLine.setCredits(managementPositionCreditLine.getCredits());
+	infoCreditLine.setEnd(managementPositionCreditLine.getEnd().toDateMidnight().toDate());
+	infoCreditLine.setIdInternal(managementPositionCreditLine.getIdInternal());
+	infoCreditLine.setPosition(managementPositionCreditLine.getPosition());
+	infoCreditLine.setStart(managementPositionCreditLine.getStart().toDateMidnight().toDate());
 
-        infoCreditLine.setInfoTeacher(infoTeacher);
-        return infoCreditLine;
+	infoCreditLine.setInfoTeacher(infoTeacher);
+	return infoCreditLine;
     }
 }

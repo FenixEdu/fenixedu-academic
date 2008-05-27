@@ -25,7 +25,6 @@
  */
 
 valueType java.math.BigDecimal                                                                                       as BigDecimal;
-valueType java.util.Date                                                                                             as Date;
 valueType java.util.UUID                                                                                             as UUID;
 enum      net.sourceforge.fenixedu.domain.CompetenceCourseType                                                       as CompetenceCourseType;
 enum      net.sourceforge.fenixedu.domain.DocumentType                                                               as DocumentType;
@@ -2017,8 +2016,8 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	}
 
 		class net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
-			Date end;
-			Date start;
+			LocalDate end;
+			LocalDate start;
 		}
 
 			class net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
