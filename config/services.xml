@@ -7671,14 +7671,6 @@
         <filterChains/>
     </service> 
     <service>
-        <name>StoreApplicationDocuments</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StoreApplicationDocuments</implementationClass>
-        <description>Candidacy application documents submission</description>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-        </filterChains>
-    </service>
-    <service>
         <name>ReadDegreeCandidatesWithFilter</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCandidatesWithFilter</implementationClass>
         <description>Reads all candidates of a degree curricular plan by a filter</description>
