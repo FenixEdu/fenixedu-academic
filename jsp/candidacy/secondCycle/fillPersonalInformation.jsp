@@ -41,6 +41,7 @@
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 			        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			        <fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
 				<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillPersonalInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:edit>
@@ -50,3 +51,6 @@
 
 	<html:cancel onclick="this.form.method.value='listProcesses';return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 </fr:form>
+
+<br/>
+<em><bean:message key="renderers.validator.required.mark.explanation" bundle="RENDERER_RESOURCES" /></em>

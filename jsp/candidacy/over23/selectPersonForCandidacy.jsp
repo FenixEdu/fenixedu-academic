@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <em><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="label.candidacy.create" bundle="APPLICATION_RESOURCES"/></h2>
+<h2><bean:message key="label.create" bundle="APPLICATION_RESOURCES"/> <bean:message name="processName" bundle="CASE_HANDLING_RESOURCES"/></h2>
 
 <p class="breadcumbs">
 	<span class="actual"><strong><bean:message key="label.step" bundle="APPLICATION_RESOURCES" /> 1</strong>: <bean:message key="label.candidacy.selectPerson" bundle="APPLICATION_RESOURCES" /> </span> &gt;
@@ -41,6 +41,7 @@
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 			        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			        <fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
 				<fr:destination name="invalid" path='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?method=prepareCreateNewProcessInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:edit>
@@ -85,3 +86,7 @@
 	<html:cancel onclick="this.form.method.value='listProcesses';return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	
 </fr:form>
+
+<br/>
+<em><bean:message key="renderers.validator.required.mark.explanation" bundle="RENDERER_RESOURCES" /></em>
+

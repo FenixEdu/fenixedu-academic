@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -26,7 +27,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     protected void setParentProcess(HttpServletRequest request) {
 	final Integer parentProcessId = getIntegerFromRequest(request, "parentProcessId");
 	if (parentProcessId != null) {
-	    request.setAttribute("parentProcess", rootDomainObject.readProcessByOID(Integer.valueOf(parentProcessId)));
+	    request.setAttribute("parentProcess", rootDomainObject.readProcessByOID(parentProcessId));
 	} else {
 	    setProcess(request);
 	    if (hasProcess(request)) {
@@ -63,6 +64,9 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	request.setAttribute("canCreateChildProcess", canCreateProcess(getProcessType().getName()));
 	request.setAttribute("childProcessName", getProcessType().getSimpleName());
 	request.setAttribute("childProcesses", process.getChildProcesses());
+	request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getIdInternal());
+	request.setAttribute("executionIntervals", ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(process
+		.getCandidacyPeriod().getClass()));
     }
 
 }

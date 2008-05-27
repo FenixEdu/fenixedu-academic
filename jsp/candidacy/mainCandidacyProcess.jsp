@@ -17,7 +17,18 @@
 		<bean:message key='<%= "link.create.new.process." + processName.toString()%>' bundle="APPLICATION_RESOURCES"/>	
 		</html:link>
 	</logic:equal>
-	<%-- TODO: previous years candidacy --%>
+	<%-- previous years candidacy --%>
+	<br/>
+	<br/>
+	<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
+		<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId">
+			<html:option value=""><!-- w3c complient --></html:option>
+			<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
+		</html:select>
+		<html:submit><bean:message key="label.choose"/> </html:submit>
+	</html:form>
+	<br/>
+	<br/>
 </logic:empty>
 
 <%-- candidacy process of current year --%>
@@ -27,6 +38,22 @@
 
 	<bean:define id="processId" name="process" property="idInternal" />
 	<bean:define id="childProcessName" name="childProcessName" />
+	
+	<%-- show execution intervals  --%>
+	<bean:define id="executionIntervalId" name="executionIntervalId" />
+	<bean:size id="executionIntervalsSize" name="executionIntervals" />
+
+	<logic:greaterThan name="executionIntervalsSize" value="1">
+		<br/>
+		<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
+			<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" value="<%= executionIntervalId.toString() %>">
+				<html:option value=""><!-- w3c complient --></html:option>
+				<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
+			</html:select>
+			<html:submit><bean:message key="label.choose"/> </html:submit>
+		</html:form>
+		<br/>
+	</logic:greaterThan>
 
 	<%-- show main process information --%>
 	<fr:view name="process" schema="CandidacyProcess.view">
@@ -72,7 +99,7 @@
 				<fr:property name="visibleIfNot(viewProcess)" value="candidacyCancelled" />
 							
 				<fr:property name="sortParameter" value="sortBy"/>
-	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=intro&amp;processId=" + processId.toString()%>'/>
+	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=intro&amp;processId=" + processId.toString() + "&amp;executionIntervalId=" + executionIntervalId.toString() %>'/>
     	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacyState,candidacyDate=desc" : request.getParameter("sortBy") %>"/>
 			</fr:layout>
 		</fr:view>

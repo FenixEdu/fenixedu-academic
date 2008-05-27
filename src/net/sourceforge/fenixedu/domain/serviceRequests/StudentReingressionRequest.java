@@ -64,7 +64,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	if (!isEnrolmentPeriodOpen(registration, executionYear, requestDate)) {
 	    throw new DomainException("error.StudentReingressionRequest.out.of.enrolment.period");
 	}
-	
+
 	if (alreadyHasRequest(registration, executionYear)) {
 	    throw new DomainException("error.StudentReingressionRequest.already.has.request.to.same.executionYear");
 	}
@@ -97,7 +97,8 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     private boolean hasOpenEnrolmentPeriod(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear,
 	    final DateTime requestDate) {
 	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-	    final EnrolmentPeriod enrolmentPeriod = degreeCurricularPlan.getEnrolmentPeriodInCurricularCoursesBy(executionSemester);
+	    final EnrolmentPeriod enrolmentPeriod = degreeCurricularPlan
+		    .getEnrolmentPeriodInCurricularCoursesBy(executionSemester);
 	    if (enrolmentPeriod != null && enrolmentPeriod.containsDate(requestDate)) {
 		return true;
 	    }
@@ -141,7 +142,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
 	}
-	}
+    }
 
     private DegreeCurricularPlan getDegreeCurricularPlan() {
 	return getRegistration().getLastDegreeCurricularPlan();

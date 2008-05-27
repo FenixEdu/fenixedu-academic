@@ -23,14 +23,13 @@ public abstract class Process extends Process_Base implements Comparable<Process
 
     private static void load() {
 	startActivities = new HashMap<String, Activity<? extends Process>>();
-	Collection<DomainClass> domainClasses = FenixFramework.getDomainModel().getDomainClasses();
+	final Collection<DomainClass> domainClasses = FenixFramework.getDomainModel().getDomainClasses();
 
-	for (DomainClass domainClass : domainClasses) {
+	for (final DomainClass domainClass : domainClasses) {
 	    try {
-		Class<?> clazz = Class.forName(domainClass.getFullName());
+		final Class<?> clazz = Class.forName(domainClass.getFullName());
 		if (Process.class.isAssignableFrom(clazz) && !Modifier.isAbstract(clazz.getModifiers())) {
-		    Activity<? extends Process> activity = getStartActivity((Class<? extends Process>) clazz);
-		    System.out.println("start!!!! " + activity);
+		    final Activity<? extends Process> activity = getStartActivity((Class<? extends Process>) clazz);
 		    if (activity != null) {
 			startActivities.put(domainClass.getFullName(), activity);
 		    }

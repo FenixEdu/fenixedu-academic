@@ -168,7 +168,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.hasCandidacyPeriod() || process.hasOpenCandidacyPeriod()) {
+	    if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
 		throw new PreConditionNotValidException();
 	    }
 

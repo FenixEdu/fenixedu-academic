@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.joda.time.YearMonthDay;
 
-public class ExecutionInterval extends ExecutionInterval_Base {
+abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
-    public ExecutionInterval() {
+    protected ExecutionInterval() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setState(PeriodState.NOT_OPEN);
@@ -43,7 +43,7 @@ public class ExecutionInterval extends ExecutionInterval_Base {
 	return start != null && end != null && start.isBefore(end);
     }
 
-    public List<? extends CandidacyPeriod> getCandidacyPeriod(final Class<? extends CandidacyPeriod> clazz) {
+    public List<? extends CandidacyPeriod> getCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
 	final List<CandidacyPeriod> result = new ArrayList<CandidacyPeriod>();
 	for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriods()) {
 	    if (candidacyPeriod.getClass().equals(clazz)) {
@@ -52,22 +52,41 @@ public class ExecutionInterval extends ExecutionInterval_Base {
 	}
 	return result;
     }
-    
+
+    public boolean hasCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
+	for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriods()) {
+	    if (candidacyPeriod.getClass().equals(clazz)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public Over23CandidacyPeriod getOver23CandidacyPeriod() {
-	final List<Over23CandidacyPeriod> candidacyPeriods = (List<Over23CandidacyPeriod>) getCandidacyPeriod(Over23CandidacyPeriod.class);
+	final List<Over23CandidacyPeriod> candidacyPeriods = (List<Over23CandidacyPeriod>) getCandidacyPeriods(Over23CandidacyPeriod.class);
 	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
     }
-    
+
     public boolean hasOver23CandidacyPeriod() {
 	return getOver23CandidacyPeriod() != null;
     }
 
     public SecondCycleCandidacyPeriod getSecondCycleCandidacyPeriod() {
-	final List<SecondCycleCandidacyPeriod> candidacyPeriods = (List<SecondCycleCandidacyPeriod>) getCandidacyPeriod(SecondCycleCandidacyPeriod.class);
+	final List<SecondCycleCandidacyPeriod> candidacyPeriods = (List<SecondCycleCandidacyPeriod>) getCandidacyPeriods(SecondCycleCandidacyPeriod.class);
 	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
     }
-    
+
     public boolean hasSecondCycleCandidacyPeriod() {
 	return getSecondCycleCandidacyPeriod() != null;
+    }
+
+    static public List<ExecutionInterval> readExecutionIntervalsWithCandidacyPeriod(final Class<? extends CandidacyPeriod> clazz) {
+	final List<ExecutionInterval> result = new ArrayList<ExecutionInterval>();
+	for (final ExecutionInterval executionInterval : RootDomainObject.getInstance().getExecutionIntervals()) {
+	    if (executionInterval.hasCandidacyPeriods(clazz)) {
+		result.add(executionInterval);
+	    }
+	}
+	return result;
     }
 }

@@ -74,7 +74,8 @@
 <schema name="Over23IndividualCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES"
 		extends="IndividualCandidacyProcess.view">
 	<slot name="acceptedDegree" layout="null-as-label" key="label.degree.name">
-		<property name="format" value="${name} - ${sigla}" />
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="Degree.name.and.sigla" />
 	</slot>
 	<slot name="selectedDegreesSortedByOrder" key="label.candidacy.choosen.degrees">
 		<property name="eachLayout" value="values" />

@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyPr
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
@@ -38,7 +38,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.LocalDate;
 
-@Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/over23/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/over23/editCandidacyPeriod.jsp"),
@@ -59,13 +59,24 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     @Override
-    public ActionForward intro(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	setCandidacyProcessInformation(request, getCandidacyProcess(ExecutionYear.readCurrentExecutionYear()));
+    protected Class getCandidacyPeriodType() {
+	return Over23CandidacyPeriod.class;
+    }
+
+    @Override
+    protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	if (!hasExecutionInterval(request)) {
+	    request.setAttribute("executionInterval", ExecutionYear.readCurrentExecutionYear());
+	}
+	setCandidacyProcessInformation(request, getCandidacyProcess(getExecutionInterval(request)));
+    }
+
+    protected ActionForward introForward(ActionMapping mapping) {
 	return mapping.findForward("intro");
     }
 
-    private Over23CandidacyProcess getCandidacyProcess(final ExecutionInterval executionInterval) {
+    @Override
+    protected Over23CandidacyProcess getCandidacyProcess(final ExecutionInterval executionInterval) {
 	return executionInterval.hasOver23CandidacyPeriod() ? executionInterval.getOver23CandidacyPeriod()
 		.getOver23CandidacyProcess() : null;
     }

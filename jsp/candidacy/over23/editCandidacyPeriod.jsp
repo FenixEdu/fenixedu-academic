@@ -22,7 +22,10 @@
 	<fr:layout name="tabular-editable">
 		<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
         <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+        <fr:property name="requiredMarkShown" value="true" />
 	</fr:layout>
 	<fr:destination name="invalid" path="<%= "/caseHandlingOver23CandidacyProcess.do?method=executeEditCandidacyPeriodInvalid&amp;processId=" + processId %>" />
 	<fr:destination name="cancel"  path="<%= "/caseHandlingOver23CandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=" + processId %>" />
 </fr:edit>
+<br/>
+<em><bean:message key="renderers.validator.required.mark.explanation" bundle="RENDERER_RESOURCES" /></em>

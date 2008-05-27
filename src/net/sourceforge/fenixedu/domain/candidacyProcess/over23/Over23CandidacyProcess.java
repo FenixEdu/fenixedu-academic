@@ -140,7 +140,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    if (!process.hasCandidacyPeriod() || process.hasOpenCandidacyPeriod()) {
+	    if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
 		throw new PreConditionNotValidException();
 	    }
 
