@@ -77,7 +77,7 @@ default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.SuportePersi
 db.name=ciapl
 db.user=root
 db.pass=
-db.alias=//localhost:3306/ciapl?useUnicode=true&amp;characterEncoding=latin1&amp;clobCharacterEncoding=latin1&amp;zeroDateTimeBehavior=convertToNull&amp;statementInterceptors=net.sourceforge.fenixedu.persistenceTier.statementInterceptors.FenixStatementInterceptor
+db.alias=//localhost:3306/ciapl?useUnicode=true&characterEncoding=latin1&clobCharacterEncoding=latin1&zeroDateTimeBehavior=convertToNull&statementInterceptors=net.sourceforge.fenixedu.persistenceTier.statementInterceptors.FenixStatementInterceptor
 
 db.assiduousness.name=AssiduidadeOracleTeste
 db.assiduousness.platform=MySQL
