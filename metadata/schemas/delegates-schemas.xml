@@ -136,7 +136,7 @@
 	<slot name="degreeType" key="label.degreeType" layout="menu-select-postback" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.DegreeTypesForBolonhaDegrees"/> 
 		<property name="format" value="${localizedName}"/>
-		<property name="sortBy" value="curricularPeriodType"/>
+		<property name="sortBy" value="academicPeriod"/>
 		<property name="saveOptions" value="true" />
 		<property name="nullOptionHidden" value="true" />
 		<property name="destination" value="post-back-degree-type"/>

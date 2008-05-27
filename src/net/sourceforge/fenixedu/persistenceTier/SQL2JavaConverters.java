@@ -17,7 +17,7 @@ public class SQL2JavaConverters {
     public static FieldConversion Season2EnumSeasonFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.Season2EnumSeasonFieldConversion();
     public static FieldConversion JavaYearMonthDay2SqlStringFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion();
     public static FieldConversion JavaPeriodState2SqlPeriodState = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodState2SqlPeriodState();
-    public static FieldConversion PublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationTypeFieldConversion();    
+    public static FieldConversion PublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationTypeFieldConversion();
     public static FieldConversion EntryPhase2SqlEntryPhaseFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.EntryPhase2SqlEntryPhaseFieldConversion();
     public static FieldConversion OldPublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.OldPublicationTypeFieldConversion();
     public static FieldConversion JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion();
@@ -51,4 +51,5 @@ public class SQL2JavaConverters {
     public static FieldConversion Grade2SqlGradeStringConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.Grade2SqlGradeStringConversion();
     public static FieldConversion PartialList2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.PartialList2SqlVarcharConverter();
     public static FieldConversion AcademicInterval2SqlAcademicIntervalConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicInterval2SqlAcademicIntervalConversion();
+    public static FieldConversion AcademicPeriod2SqlAcademicPeriodConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicPeriod2SqlAcademicPeriodConversion();
 }

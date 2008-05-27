@@ -5,16 +5,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
 public class ChangeCompetenceCourseInformationChangeRequestStatus extends Service {
 
-    public void run(CompetenceCourseInformationChangeRequest changeRequest, Person analisedBy,
-	    Boolean status) throws FenixServiceException {
+    public void run(CompetenceCourseInformationChangeRequest changeRequest, Person analisedBy, Boolean status)
+	    throws FenixServiceException {
 	if (changeRequest.getApproved() != null) {
 	    throw new FenixServiceException("error.request.already.processed");
 	}
@@ -29,27 +29,24 @@ public class ChangeCompetenceCourseInformationChangeRequestStatus extends Servic
 	    CompetenceCourseInformation information = null;
 	    if (course.isCompetenceCourseInformationDefinedAtExecutionPeriod(executionSemester)) {
 		information = course.findCompetenceCourseInformationForExecutionPeriod(executionSemester);
-		information.edit(changeRequest.getName(), changeRequest.getNameEn(), information.getBasic(),
-			changeRequest.getCompetenceCourseLevel());
+		information.edit(changeRequest.getName(), changeRequest.getNameEn(), information.getBasic(), changeRequest
+			.getCompetenceCourseLevel());
 		information.setRegime(changeRequest.getRegime());
-		information.edit(changeRequest.getObjectives(), changeRequest.getProgram(),
-			changeRequest.getEvaluationMethod(), changeRequest.getObjectivesEn(),
-			changeRequest.getProgramEn(), changeRequest.getEvaluationMethodEn());
+		information.edit(changeRequest.getObjectives(), changeRequest.getProgram(), changeRequest.getEvaluationMethod(),
+			changeRequest.getObjectivesEn(), changeRequest.getProgramEn(), changeRequest.getEvaluationMethodEn());
 
 		information.setBibliographicReferences(changeRequest.getBibliographicReferences());
 
-		for (; !information.getCompetenceCourseLoads().isEmpty(); information
-			.getCompetenceCourseLoads().get(0).delete())
+		for (; !information.getCompetenceCourseLoads().isEmpty(); information.getCompetenceCourseLoads().get(0).delete())
 		    ;
 		createLoads(changeRequest, information);
 
 	    } else {
-		information = new CompetenceCourseInformation(changeRequest.getName(), changeRequest.getNameEn(),
-			course.isBasic(), changeRequest.getRegime(), changeRequest
-				.getCompetenceCourseLevel(), changeRequest.getExecutionPeriod());
-		information.edit(changeRequest.getObjectives(), changeRequest.getProgram(),
-			changeRequest.getEvaluationMethod(), changeRequest.getObjectivesEn(),
-			changeRequest.getProgramEn(), changeRequest.getEvaluationMethodEn());
+		information = new CompetenceCourseInformation(changeRequest.getName(), changeRequest.getNameEn(), course
+			.isBasic(), changeRequest.getRegime(), changeRequest.getCompetenceCourseLevel(), changeRequest
+			.getExecutionPeriod());
+		information.edit(changeRequest.getObjectives(), changeRequest.getProgram(), changeRequest.getEvaluationMethod(),
+			changeRequest.getObjectivesEn(), changeRequest.getProgramEn(), changeRequest.getEvaluationMethodEn());
 		information.setAcronym(course.getAcronym());
 		information.setBibliographicReferences(changeRequest.getBibliographicReferences());
 		course.addCompetenceCourseInformations(information);
@@ -59,26 +56,22 @@ public class ChangeCompetenceCourseInformationChangeRequestStatus extends Servic
 	}
     }
 
-    private void createLoads(CompetenceCourseInformationChangeRequest changeRequest,
-	    CompetenceCourseInformation information) {
-	CompetenceCourseLoad courseLoad = new CompetenceCourseLoad(changeRequest.getTheoreticalHours(),
-		changeRequest.getProblemsHours(), changeRequest.getLaboratorialHours(), changeRequest
-			.getSeminaryHours(), changeRequest.getFieldWorkHours(), changeRequest
-			.getTrainingPeriodHours(), changeRequest.getTutorialOrientationHours(),
-		changeRequest.getAutonomousWorkHours(), changeRequest.getEctsCredits(), new Integer(0),
-		(changeRequest.getRegime() == RegimeType.SEMESTRIAL) ? CurricularPeriodType.SEMESTER
-			: CurricularPeriodType.YEAR);
+    private void createLoads(CompetenceCourseInformationChangeRequest changeRequest, CompetenceCourseInformation information) {
+	CompetenceCourseLoad courseLoad = new CompetenceCourseLoad(changeRequest.getTheoreticalHours(), changeRequest
+		.getProblemsHours(), changeRequest.getLaboratorialHours(), changeRequest.getSeminaryHours(), changeRequest
+		.getFieldWorkHours(), changeRequest.getTrainingPeriodHours(), changeRequest.getTutorialOrientationHours(),
+		changeRequest.getAutonomousWorkHours(), changeRequest.getEctsCredits(), new Integer(0), (changeRequest
+			.getRegime() == RegimeType.SEMESTRIAL) ? AcademicPeriod.SEMESTER : AcademicPeriod.YEAR);
 
 	information.addCompetenceCourseLoads(courseLoad);
 
 	if (changeRequest.getRegime() == RegimeType.ANUAL) {
-	    CompetenceCourseLoad secondCourseLoad = new CompetenceCourseLoad(changeRequest
-		    .getSecondTheoreticalHours(), changeRequest.getSecondProblemsHours(), changeRequest
-		    .getSecondLaboratorialHours(), changeRequest.getSecondSeminaryHours(), changeRequest
-		    .getSecondFieldWorkHours(), changeRequest.getSecondTrainingPeriodHours(),
-		    changeRequest.getSecondTutorialOrientationHours(), changeRequest
-			    .getSecondAutonomousWorkHours(), changeRequest.getSecondEctsCredits(),
-		    new Integer(1), CurricularPeriodType.YEAR);
+	    CompetenceCourseLoad secondCourseLoad = new CompetenceCourseLoad(changeRequest.getSecondTheoreticalHours(),
+		    changeRequest.getSecondProblemsHours(), changeRequest.getSecondLaboratorialHours(), changeRequest
+			    .getSecondSeminaryHours(), changeRequest.getSecondFieldWorkHours(), changeRequest
+			    .getSecondTrainingPeriodHours(), changeRequest.getSecondTutorialOrientationHours(), changeRequest
+			    .getSecondAutonomousWorkHours(), changeRequest.getSecondEctsCredits(), new Integer(1),
+		    AcademicPeriod.YEAR);
 
 	    information.addCompetenceCourseLoads(secondCourseLoad);
 	}

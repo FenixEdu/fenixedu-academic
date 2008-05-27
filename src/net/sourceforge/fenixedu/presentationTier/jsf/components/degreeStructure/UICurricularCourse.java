@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 
 public class UICurricularCourse extends UIDegreeModule {
@@ -77,8 +77,8 @@ public class UICurricularCourse extends UIDegreeModule {
 		buffer.append(tabs);
 		buffer.append("[LEVEL ").append(new Integer(this.depth)).append("]");
 		buffer.append("[CC ").append(this.curricularCourse.getIdInternal()).append("][");
-		buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
-		buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
+		buffer.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.YEAR)).append("Y,");
+		buffer.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.SEMESTER)).append("S] ");
 		buffer.append(this.curricularCourse.getName(lastExecutionPeriod));
 		System.out.println(buffer.toString());
 	    }
@@ -227,14 +227,15 @@ public class UICurricularCourse extends UIDegreeModule {
 		writer.append(String.valueOf(previousContext.getCurricularPeriod().getParent().getChildOrder()));
 		writer.append(" ");
 		writer.append(getBundleValue("EnumerationResources", previousContext.getCurricularPeriod().getParent()
-			.getPeriodType().name()
+			.getAcademicPeriod().getName()
 			+ ".ABBREVIATION"));
 		writer.append(", ");
 	    }
 
 	    writer.append(String.valueOf(previousContext.getCurricularPeriod().getChildOrder() + 1));
 	    writer.append(" ");
-	    writer.append(getBundleValue("EnumerationResources", previousContext.getCurricularPeriod().getPeriodType().name()
+	    writer.append(getBundleValue("EnumerationResources", previousContext.getCurricularPeriod().getAcademicPeriod()
+		    .getName()
 		    + ".ABBREVIATION"));
 	} else {
 	    writer.append(previousContext.getParentCourseGroup().getName());

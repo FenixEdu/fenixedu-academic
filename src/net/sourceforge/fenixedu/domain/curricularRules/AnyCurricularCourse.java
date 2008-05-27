@@ -9,7 +9,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -18,13 +17,14 @@ import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
 public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     protected AnyCurricularCourse(final OptionalCurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
-	    final ExecutionSemester begin, final ExecutionSemester end, final Double credits, final Integer curricularPeriodOrder,
-	    final Integer minimumYear, final Integer maximumYear, final DegreeType degreeType, final Degree degree,
-	    final DepartmentUnit departmentUnit) {
+	    final ExecutionSemester begin, final ExecutionSemester end, final Double credits,
+	    final Integer curricularPeriodOrder, final Integer minimumYear, final Integer maximumYear,
+	    final DegreeType degreeType, final Degree degree, final DepartmentUnit departmentUnit) {
 
 	super();
 	init(toApplyRule, contextCourseGroup, begin, end, CurricularRuleType.ANY_CURRICULAR_COURSE);
@@ -77,7 +77,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     private boolean hasCurricularPeriodOrderFor(final Context context) {
 	return context.containsSemester(getCurricularPeriodOrder())
-		&& context.getCurricularPeriod().getPeriodType() == CurricularPeriodType.SEMESTER;
+		&& context.getCurricularPeriod().getAcademicPeriod().equals(AcademicPeriod.SEMESTER);
     }
 
     private boolean hasCurricularPeriodOrder() {

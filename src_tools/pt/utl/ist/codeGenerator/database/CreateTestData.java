@@ -87,7 +87,6 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -133,6 +132,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
@@ -156,6 +156,9 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
+import pt.utl.ist.codeGenerator.database.ExamRoomManager;
+import pt.utl.ist.codeGenerator.database.LessonRoomManager;
+import pt.utl.ist.codeGenerator.database.WrittenTestsRoomManager;
 
 public class CreateTestData {
 
@@ -653,21 +656,21 @@ public class CreateTestData {
     public static class CreateCurricularPeriods extends AtomicAction {
 
 	public void doIt() {
-	    for (final CurricularPeriodType curricularPeriodType : CurricularPeriodType.values()) {
-		final float weight = curricularPeriodType.getWeight();
+	    for (final AcademicPeriod academicPeriod : AcademicPeriod.values()) {
+		final float weight = academicPeriod.getWeight();
 		if (weight > 1) {
-		    final CurricularPeriod curricularPeriod = new CurricularPeriod(curricularPeriodType, null, null);
-		    for (int i = 1; i <= curricularPeriodType.getWeight(); i++) {
-			final CurricularPeriod curricularYear = new CurricularPeriod(CurricularPeriodType.YEAR, Integer
-				.valueOf(i), curricularPeriod);
+		    final CurricularPeriod curricularPeriod = new CurricularPeriod(academicPeriod, null, null);
+		    for (int i = 1; i <= academicPeriod.getWeight(); i++) {
+			final CurricularPeriod curricularYear = new CurricularPeriod(AcademicPeriod.YEAR, Integer.valueOf(i),
+				curricularPeriod);
 			for (int j = 1; j <= 2; j++) {
-			    new CurricularPeriod(CurricularPeriodType.SEMESTER, Integer.valueOf(j), curricularYear);
+			    new CurricularPeriod(AcademicPeriod.SEMESTER, Integer.valueOf(j), curricularYear);
 			}
 		    }
 		} else if (weight == 1) {
-		    final CurricularPeriod curricularPeriod = new CurricularPeriod(curricularPeriodType, null, null);
+		    final CurricularPeriod curricularPeriod = new CurricularPeriod(academicPeriod, null, null);
 		    for (int j = 1; j <= 2; j++) {
-			new CurricularPeriod(CurricularPeriodType.SEMESTER, Integer.valueOf(j), curricularPeriod);
+			new CurricularPeriod(AcademicPeriod.SEMESTER, Integer.valueOf(j), curricularPeriod);
 		    }
 		}
 	    }
@@ -722,9 +725,9 @@ public class CreateTestData {
 
 	private CurricularPeriod findCurricularPeriod(final DegreeCurricularPlan degreeCurricularPlan, final int y, final int s) {
 	    final DegreeType degreeType = degreeCurricularPlan.getDegreeType();
-	    final CurricularPeriodType curricularPeriodType = degreeType.getCurricularPeriodType();
+	    final AcademicPeriod academicPeriod = degreeType.getAcademicPeriod();
 	    for (final CurricularPeriod curricularPeriod : RootDomainObject.getInstance().getCurricularPeriodsSet()) {
-		if (curricularPeriod.getPeriodType() == curricularPeriodType) {
+		if (curricularPeriod.getAcademicPeriod().equals(academicPeriod)) {
 		    for (final CurricularPeriod curricularYear : curricularPeriod.getChildsSet()) {
 			if (curricularYear.getChildOrder().intValue() == y) {
 			    for (final CurricularPeriod curricularSemester : curricularYear.getChildsSet()) {
@@ -737,7 +740,7 @@ public class CreateTestData {
 		}
 	    }
 	    for (final CurricularPeriod curricularPeriod : RootDomainObject.getInstance().getCurricularPeriodsSet()) {
-		if (curricularPeriod.getPeriodType() == curricularPeriodType && curricularPeriodType == CurricularPeriodType.YEAR) {
+		if (curricularPeriod.getAcademicPeriod().equals(academicPeriod) && academicPeriod.equals(AcademicPeriod.YEAR)) {
 		    if (curricularPeriod.getChildOrder() == null || curricularPeriod.getChildOrder().intValue() == y) {
 			for (final CurricularPeriod curricularSemester : curricularPeriod.getChildsSet()) {
 			    if (curricularSemester.getChildOrder().intValue() == s) {
@@ -747,7 +750,7 @@ public class CreateTestData {
 		    }
 		}
 	    }
-	    System.out.println("found no curricular period for: " + curricularPeriodType + " y " + y + " s " + s);
+	    System.out.println("found no curricular period for: " + academicPeriod + " y " + y + " s " + s);
 	    if (true)
 		throw new Error();
 	    return null;
@@ -791,7 +794,7 @@ public class CreateTestData {
 	    final CompetenceCourseLoad competenceCourseLoad = new CompetenceCourseLoad(Double.valueOf(2), Double.valueOf(0),
 		    Double.valueOf(0), Double.valueOf(0), Double.valueOf(0), Double.valueOf(0), Double.valueOf(0), Double
 			    .valueOf(0), Double.valueOf(degreeType.getDefaultEctsCredits()), Integer.valueOf(0),
-		    CurricularPeriodType.SEMESTER);
+		    AcademicPeriod.SEMESTER);
 	    competenceCourseInformation.addCompetenceCourseLoads(competenceCourseLoad);
 	    curricularCourse.setCompetenceCourse(competenceCourse);
 	}

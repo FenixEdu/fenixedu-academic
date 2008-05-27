@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -11,22 +11,22 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
  */
 public class CurricularPeriodInfoDTO extends DataTranferObject {
 
-    private CurricularPeriodType periodType;
+    private AcademicPeriod periodType;
 
     private Integer order;
 
-    public CurricularPeriodInfoDTO(Integer order, CurricularPeriodType type) {
-        super();
-        this.order = order;
-        this.periodType = type;
+    public CurricularPeriodInfoDTO(Integer order, AcademicPeriod type) {
+	super();
+	this.order = order;
+	this.periodType = type;
     }
 
     public Integer getOrder() {
-        return order;
+	return order;
     }
 
-    public CurricularPeriodType getPeriodType() {
-        return periodType;
+    public AcademicPeriod getPeriodType() {
+	return periodType;
     }
 
 }

@@ -273,7 +273,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		creator.addPersonRoles(bolonhaRole);
 	    }
 
-	    CurricularPeriod curricularPeriod = new CurricularPeriod(this.getDegreeType().getCurricularPeriodType());
+	    CurricularPeriod curricularPeriod = new CurricularPeriod(this.getDegreeType().getAcademicPeriod());
 
 	    return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
 	} else {

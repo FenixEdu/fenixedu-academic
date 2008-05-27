@@ -2,25 +2,25 @@ package net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
 public class CompetenceCourseLoadBean implements Serializable {
     private Double theoreticalHours;
     private Double problemsHours;
-    private Double laboratorialHours; 
+    private Double laboratorialHours;
     private Double seminaryHours;
     private Double fieldWorkHours;
     private Double trainingPeriodHours;
     private Double tutorialOrientationHours;
     private Double autonomousWorkHours;
     private Double ectsCredits;
-    
+
     private Double secondTheoreticalHours;
     private Double secondProblemsHours;
-    private Double secondLaboratorialHours; 
+    private Double secondLaboratorialHours;
     private Double secondSeminaryHours;
     private Double secondFieldWorkHours;
     private Double secondTrainingPeriodHours;
@@ -28,21 +28,21 @@ public class CompetenceCourseLoadBean implements Serializable {
     private Double secondAutonomousWorkHours;
     private Double secondEctsCredits;
     private Integer loadOrder;
-    
+
     private boolean sameInformationForBothPeriods;
-    private CurricularPeriodType curricularPeriodType;
-    
+    private AcademicPeriod academicPeriod;
+
     // Values from CompetenceCourseLoad
     private Double contactLoad;
     private Double totalLoad;
-    
+
     public CompetenceCourseLoadBean() {
-	setCurricularPeriodType(CurricularPeriodType.SEMESTER);
-	sameInformationForBothPeriods=true;
+	setAcademicPeriod(AcademicPeriod.SEMESTER);
+	sameInformationForBothPeriods = true;
     }
-    
+
     public CompetenceCourseLoadBean(CompetenceCourseInformationChangeRequest request) {
-	setCurricularPeriodType(request.getRegime() == RegimeType.SEMESTRIAL ? CurricularPeriodType.SEMESTER : CurricularPeriodType.YEAR);
+	setAcademicPeriod(request.getRegime() == RegimeType.SEMESTRIAL ? AcademicPeriod.SEMESTER : AcademicPeriod.YEAR);
 	setTheoreticalHours(request.getTheoreticalHours());
 	setProblemsHours(request.getProblemsHours());
 	setLaboratorialHours(request.getLaboratorialHours());
@@ -52,7 +52,7 @@ public class CompetenceCourseLoadBean implements Serializable {
 	setTutorialOrientationHours(request.getTutorialOrientationHours());
 	setAutonomousWorkHours(request.getAutonomousWorkHours());
 	setEctsCredits(request.getEctsCredits());
-	
+
 	setSecondTheoreticalHours(request.getSecondTheoreticalHours());
 	setSecondProblemsHours(request.getSecondProblemsHours());
 	setSecondLaboratorialHours(request.getSecondLaboratorialHours());
@@ -63,7 +63,7 @@ public class CompetenceCourseLoadBean implements Serializable {
 	setSecondAutonomousWorkHours(request.getSecondAutonomousWorkHours());
 	setSecondEctsCredits(request.getSecondEctsCredits());
     }
-    
+
     public CompetenceCourseLoadBean(CompetenceCourseLoad competenceCourseLoad) {
 	this();
 	setTheoreticalHours(competenceCourseLoad.getTheoreticalHours());
@@ -79,144 +79,189 @@ public class CompetenceCourseLoadBean implements Serializable {
 	setContactLoad(competenceCourseLoad.getContactLoad());
 	setTotalLoad(competenceCourseLoad.getTotalLoad());
     }
-    
+
     public Double getAutonomousWorkHours() {
-        return autonomousWorkHours;
+	return autonomousWorkHours;
     }
+
     public void setAutonomousWorkHours(Double autonomousWorkHours) {
-        this.autonomousWorkHours = autonomousWorkHours;
+	this.autonomousWorkHours = autonomousWorkHours;
     }
-    public CurricularPeriodType getCurricularPeriodType() {
-        return curricularPeriodType;
+
+    public AcademicPeriod getAcademicPeriod() {
+	return academicPeriod;
     }
-    public void setCurricularPeriodType(CurricularPeriodType curricularPeriodType) {
-        this.curricularPeriodType = curricularPeriodType;
+
+    public void setAcademicPeriod(AcademicPeriod academicPeriod) {
+	this.academicPeriod = academicPeriod;
     }
+
     public Double getEctsCredits() {
-        return ectsCredits;
+	return ectsCredits;
     }
+
     public void setEctsCredits(Double ectsCredits) {
-        this.ectsCredits = ectsCredits;
+	this.ectsCredits = ectsCredits;
     }
+
     public Double getFieldWorkHours() {
-        return fieldWorkHours;
+	return fieldWorkHours;
     }
+
     public void setFieldWorkHours(Double fieldWorkHours) {
-        this.fieldWorkHours = fieldWorkHours;
+	this.fieldWorkHours = fieldWorkHours;
     }
+
     public Double getLaboratorialHours() {
-        return laboratorialHours;
+	return laboratorialHours;
     }
+
     public void setLaboratorialHours(Double laboratorialHours) {
-        this.laboratorialHours = laboratorialHours;
+	this.laboratorialHours = laboratorialHours;
     }
+
     public Double getProblemsHours() {
-        return problemsHours;
+	return problemsHours;
     }
+
     public void setProblemsHours(Double problemsHours) {
-        this.problemsHours = problemsHours;
+	this.problemsHours = problemsHours;
     }
+
     public Double getSeminaryHours() {
-        return seminaryHours;
+	return seminaryHours;
     }
+
     public void setSeminaryHours(Double seminaryHours) {
-        this.seminaryHours = seminaryHours;
+	this.seminaryHours = seminaryHours;
     }
+
     public Double getTheoreticalHours() {
-        return theoreticalHours;
+	return theoreticalHours;
     }
+
     public void setTheoreticalHours(Double theoreticalHours) {
-        this.theoreticalHours = theoreticalHours;
+	this.theoreticalHours = theoreticalHours;
     }
+
     public Double getTrainingPeriodHours() {
-        return trainingPeriodHours;
+	return trainingPeriodHours;
     }
+
     public void setTrainingPeriodHours(Double trainingPeriodHours) {
-        this.trainingPeriodHours = trainingPeriodHours;
+	this.trainingPeriodHours = trainingPeriodHours;
     }
+
     public Double getTutorialOrientationHours() {
-        return tutorialOrientationHours;
+	return tutorialOrientationHours;
     }
+
     public void setTutorialOrientationHours(Double tutorialOrientationHours) {
-        this.tutorialOrientationHours = tutorialOrientationHours;
+	this.tutorialOrientationHours = tutorialOrientationHours;
     }
+
     public boolean isSameInformationForBothPeriods() {
-        return sameInformationForBothPeriods;
+	return sameInformationForBothPeriods;
     }
+
     public void setSameInformationForBothPeriods(boolean sameInformationForBothPeriods) {
-        this.sameInformationForBothPeriods = sameInformationForBothPeriods;
+	this.sameInformationForBothPeriods = sameInformationForBothPeriods;
     }
+
     public Double getSecondAutonomousWorkHours() {
-        return (isSameInformationForBothPeriods()) ? getAutonomousWorkHours() : secondAutonomousWorkHours;
+	return (isSameInformationForBothPeriods()) ? getAutonomousWorkHours() : secondAutonomousWorkHours;
     }
+
     public void setSecondAutonomousWorkHours(Double secondAutonomousWorkHours) {
-        this.secondAutonomousWorkHours = secondAutonomousWorkHours;
+	this.secondAutonomousWorkHours = secondAutonomousWorkHours;
     }
+
     public Double getSecondEctsCredits() {
-        return (isSameInformationForBothPeriods()) ? getEctsCredits() : secondEctsCredits;
+	return (isSameInformationForBothPeriods()) ? getEctsCredits() : secondEctsCredits;
     }
+
     public void setSecondEctsCredits(Double secondEctsCredits) {
-        this.secondEctsCredits = secondEctsCredits;
+	this.secondEctsCredits = secondEctsCredits;
     }
+
     public Double getSecondFieldWorkHours() {
-        return (isSameInformationForBothPeriods()) ? getFieldWorkHours() : secondFieldWorkHours;
+	return (isSameInformationForBothPeriods()) ? getFieldWorkHours() : secondFieldWorkHours;
     }
+
     public void setSecondFieldWorkHours(Double secondFieldWorkHours) {
-        this.secondFieldWorkHours = secondFieldWorkHours;
+	this.secondFieldWorkHours = secondFieldWorkHours;
     }
+
     public Double getSecondLaboratorialHours() {
-        return (isSameInformationForBothPeriods()) ? getLaboratorialHours() : secondLaboratorialHours;
+	return (isSameInformationForBothPeriods()) ? getLaboratorialHours() : secondLaboratorialHours;
     }
+
     public void setSecondLaboratorialHours(Double secondLaboratorialHours) {
-        this.secondLaboratorialHours = secondLaboratorialHours;
+	this.secondLaboratorialHours = secondLaboratorialHours;
     }
+
     public Double getSecondProblemsHours() {
-        return (isSameInformationForBothPeriods()) ? getProblemsHours() : secondProblemsHours;
+	return (isSameInformationForBothPeriods()) ? getProblemsHours() : secondProblemsHours;
     }
+
     public void setSecondProblemsHours(Double secondProblemsHours) {
-        this.secondProblemsHours = secondProblemsHours;
+	this.secondProblemsHours = secondProblemsHours;
     }
+
     public Double getSecondSeminaryHours() {
-        return (isSameInformationForBothPeriods()) ? getSeminaryHours() : secondSeminaryHours;
+	return (isSameInformationForBothPeriods()) ? getSeminaryHours() : secondSeminaryHours;
     }
+
     public void setSecondSeminaryHours(Double secondSeminaryHours) {
-        this.secondSeminaryHours = secondSeminaryHours;
+	this.secondSeminaryHours = secondSeminaryHours;
     }
+
     public Double getSecondTheoreticalHours() {
-        return (isSameInformationForBothPeriods()) ? getTheoreticalHours() :secondTheoreticalHours;
+	return (isSameInformationForBothPeriods()) ? getTheoreticalHours() : secondTheoreticalHours;
     }
+
     public void setSecondTheoreticalHours(Double secondTheoreticalHours) {
-        this.secondTheoreticalHours = secondTheoreticalHours;
+	this.secondTheoreticalHours = secondTheoreticalHours;
     }
+
     public Double getSecondTrainingPeriodHours() {
-        return (isSameInformationForBothPeriods()) ? getTrainingPeriodHours() : secondTrainingPeriodHours;
+	return (isSameInformationForBothPeriods()) ? getTrainingPeriodHours() : secondTrainingPeriodHours;
     }
+
     public void setSecondTrainingPeriodHours(Double secondTrainingPeriodHours) {
-        this.secondTrainingPeriodHours = secondTrainingPeriodHours;
+	this.secondTrainingPeriodHours = secondTrainingPeriodHours;
     }
+
     public Double getSecondTutorialOrientationHours() {
-        return (isSameInformationForBothPeriods()) ? getTutorialOrientationHours() : secondTutorialOrientationHours;
+	return (isSameInformationForBothPeriods()) ? getTutorialOrientationHours() : secondTutorialOrientationHours;
     }
+
     public void setSecondTutorialOrientationHours(Double secondTutorialOrientationHours) {
-        this.secondTutorialOrientationHours = secondTutorialOrientationHours;
+	this.secondTutorialOrientationHours = secondTutorialOrientationHours;
     }
+
     public Integer getLoadOrder() {
-        return loadOrder;
+	return loadOrder;
     }
+
     public void setLoadOrder(Integer loadOrder) {
-        this.loadOrder = loadOrder;
+	this.loadOrder = loadOrder;
     }
+
     public Double getContactLoad() {
-        return contactLoad;
+	return contactLoad;
     }
+
     private void setContactLoad(Double contactLoad) {
-        this.contactLoad = contactLoad;
+	this.contactLoad = contactLoad;
     }
+
     public Double getTotalLoad() {
-        return totalLoad;
+	return totalLoad;
     }
+
     private void setTotalLoad(Double totalLoad) {
-        this.totalLoad = totalLoad;
+	this.totalLoad = totalLoad;
     }
-    
+
 }

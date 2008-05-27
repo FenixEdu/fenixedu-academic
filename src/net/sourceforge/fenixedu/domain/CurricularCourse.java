@@ -17,7 +17,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -36,6 +35,7 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCur
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -140,8 +140,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	String tab = tabs + "\t";
 	dcp.append(tab);
 	dcp.append("[CC ").append(this.getIdInternal()).append("][");
-	dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
-	dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S]\t");
+	dcp.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.YEAR)).append("Y,");
+	dcp.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.SEMESTER)).append("S]\t");
 	dcp.append("[B:").append(previousContext.getBeginExecutionPeriod().getBeginDateYearMonthDay());
 	dcp.append(" E:").append(
 		previousContext.hasEndExecutionPeriod() ? previousContext.getEndExecutionPeriod().getEndDateYearMonthDay()
@@ -880,7 +880,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return getTutorialOrientationHours((CurricularPeriod) null, executionSemester);
     }
 
-    final public Double getTutorialOrientationHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
+    final public Double getTutorialOrientationHours(final CurricularPeriod curricularPeriod,
+	    final ExecutionSemester executionSemester) {
 	return isBolonhaDegree() && hasCompetenceCourse() ? getCompetenceCourse().getTutorialOrientationHours(
 		curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester) : 0.0d;
     }
@@ -1693,7 +1694,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return DegreeModuleScope.getDegreeModuleScopes(this);
     }
 
-    private int countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(ExecutionSemester executionSemester, int enrolmentNumber) {
+    private int countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(ExecutionSemester executionSemester,
+	    int enrolmentNumber) {
 	int curricularCourseAndExecutionPeriodAssociatedStudents = 0;
 
 	for (CurriculumModule curriculumModule : getCurriculumModules()) {

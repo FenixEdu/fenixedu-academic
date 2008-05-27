@@ -187,6 +187,7 @@ valueType org.joda.time.TimeOfDay                                               
 valueType org.joda.time.YearMonthDay                                                                                 as YearMonthDay;
 valueType org.joda.time.LocalDate                                                                                 	 as LocalDate;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.PartialList                                           	 as PartialList;
+valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod                                      as AcademicPeriod;
 enum      net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType                       as BonusType;
 enum      net.sourceforge.fenixedu.domain.PartyClassification                                                        as PartyClassification;
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval                                    as AcademicInterval;
@@ -371,7 +372,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	class net.sourceforge.fenixedu.domain.DegreeContext extends net.sourceforge.fenixedu.domain.DomainObject {
 		AcademicInterval beginInterval (REQUIRED);
 		AcademicInterval endInterval;
-		CurricularPeriodType periodType (REQUIRED);
+		AcademicPeriod period (REQUIRED);
 	} 
 
 	class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2032,7 +2033,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 	class net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
 		Integer childOrder;
-		CurricularPeriodType periodType;
+		AcademicPeriod academicPeriod;
 	}
 
 	class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2081,7 +2082,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			
 			class net.sourceforge.fenixedu.domain.curricularRules.EvenOddRule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
 				Integer curricularPeriodOrder;
-				CurricularPeriodType curricularPeriodType;
+				AcademicPeriod academicPeriod;
 				Boolean even;
 			}
 
@@ -2094,7 +2095,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 			class net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
 				Integer curricularPeriodOrder;
-				CurricularPeriodType curricularPeriodType;
+				AcademicPeriod academicPeriod;
 			}
 
 				class net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules extends net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule {
@@ -2172,7 +2173,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 	class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad extends net.sourceforge.fenixedu.domain.DomainObject {
 		Double autonomousWorkHours;
-		CurricularPeriodType curricularPeriodType;
+		AcademicPeriod academicPeriod;
 		Double ectsCredits;
 		Double fieldWorkHours;
 		Double laboratorialHours;

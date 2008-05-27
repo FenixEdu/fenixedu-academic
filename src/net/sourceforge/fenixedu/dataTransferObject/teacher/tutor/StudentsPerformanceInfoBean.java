@@ -28,7 +28,7 @@ public class StudentsPerformanceInfoBean implements Serializable {
 
 	public void setDegree(Degree degree) {
 		this.degree = new DomainReference<Degree>(degree);
-		this.degreeCurricularPeriod = (degree != null ? (int)degree.getDegreeType().getCurricularPeriodType().getWeight() : getDegreeCurricularPeriod());
+		this.degreeCurricularPeriod = (degree != null ? (int)degree.getDegreeType().getAcademicPeriod().getWeight() : getDegreeCurricularPeriod());
 	}
 
 	public ExecutionYear getCurrentMonitoringYear() {

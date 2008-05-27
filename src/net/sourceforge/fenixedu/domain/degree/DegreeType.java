@@ -18,9 +18,9 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.cardGeneration.Category;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 
 import org.apache.commons.lang.StringUtils;
@@ -33,7 +33,7 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
  */
 public enum DegreeType {
 
-    DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, true, // canCreateStudent
+    DEGREE(GradeScale.TYPE20, AcademicPeriod.FIVE_YEAR, true, // canCreateStudent
 	    false, // canCreateStudentOnlyWithCandidacy
 	    AdministrativeOfficeType.DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
@@ -53,7 +53,7 @@ public enum DegreeType {
 
     },
 
-    MASTER_DEGREE(GradeScale.TYPE5, CurricularPeriodType.TWO_YEAR, false, // canCreateStudent
+    MASTER_DEGREE(GradeScale.TYPE5, AcademicPeriod.TWO_YEAR, false, // canCreateStudent
 	    true, // canCreateStudentOnlyWithCandidacy
 	    AdministrativeOfficeType.MASTER_DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
@@ -73,7 +73,7 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_DEGREE(GradeScale.TYPE20, CurricularPeriodType.THREE_YEAR, true, // canCreateStudent
+    BOLONHA_DEGREE(GradeScale.TYPE20, AcademicPeriod.THREE_YEAR, true, // canCreateStudent
 	    false, // canCreateStudentOnlyWithCandidacy
 	    AdministrativeOfficeType.DEGREE, true, // isFirstCycle
 	    false, // isSecondCycle
@@ -98,7 +98,7 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.TWO_YEAR, true, // canCreateStudent
+    BOLONHA_MASTER_DEGREE(GradeScale.TYPE20, AcademicPeriod.TWO_YEAR, true, // canCreateStudent
 	    false, // canCreateStudentOnlyWithCandidacy
 	    AdministrativeOfficeType.DEGREE, false, // isFirstCycle
 	    true, // isSecondCycle
@@ -118,7 +118,7 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_INTEGRATED_MASTER_DEGREE(GradeScale.TYPE20, CurricularPeriodType.FIVE_YEAR, true, // canCreateStudent
+    BOLONHA_INTEGRATED_MASTER_DEGREE(GradeScale.TYPE20, AcademicPeriod.FIVE_YEAR, true, // canCreateStudent
 	    false, // canCreateStudentOnlyWithCandidacy
 	    AdministrativeOfficeType.DEGREE, true, // isFirstCycle
 	    true, // isSecondCycle
@@ -159,7 +159,7 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, // canCreateStudent
+    BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, AcademicPeriod.YEAR, true, // canCreateStudent
 	    false, // canCreateStudentOnlyWithCandidacy
 	    AdministrativeOfficeType.MASTER_DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
@@ -179,7 +179,7 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, // canCreateStudent
+    BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, AcademicPeriod.YEAR, true, // canCreateStudent
 	    true, // canCreateStudentOnlyWithCandidacy
 	    AdministrativeOfficeType.MASTER_DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
@@ -199,7 +199,7 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, CurricularPeriodType.YEAR, true, // canCreateStudent
+    BOLONHA_SPECIALIZATION_DEGREE(GradeScale.TYPE20, AcademicPeriod.YEAR, true, // canCreateStudent
 	    false, // canCreateStudentOnlyWithCandidacy
 	    AdministrativeOfficeType.MASTER_DEGREE, false, // isFirstCycle
 	    false, // isSecondCycle
@@ -230,7 +230,7 @@ public enum DegreeType {
 
     private GradeScale gradeScale;
 
-    private CurricularPeriodType curricularPeriodType;
+    private AcademicPeriod academicPeriod;
 
     private boolean canCreateStudent;
 
@@ -248,11 +248,11 @@ public enum DegreeType {
 
     private Category studentCategoryCode;
 
-    private DegreeType(GradeScale gradeScale, CurricularPeriodType curricularPeriodType, boolean canCreateStudent,
+    private DegreeType(GradeScale gradeScale, AcademicPeriod academicPeriod, boolean canCreateStudent,
 	    boolean canCreateStudentOnlyWithCandidacy, AdministrativeOfficeType administrativeOfficeType, boolean isFirstCycle,
 	    boolean isSecondCycle, boolean isThirdCycle, boolean qualifiesForGraduateTitle) {
 	this.gradeScale = gradeScale;
-	this.curricularPeriodType = curricularPeriodType;
+	this.academicPeriod = academicPeriod;
 	this.canCreateStudent = canCreateStudent;
 	this.canCreateStudentOnlyWithCandidacy = canCreateStudentOnlyWithCandidacy;
 	this.administrativeOfficeType = administrativeOfficeType;
@@ -274,12 +274,12 @@ public enum DegreeType {
 	return this.gradeScale;
     }
 
-    public CurricularPeriodType getCurricularPeriodType() {
-	return curricularPeriodType;
+    public AcademicPeriod getAcademicPeriod() {
+	return academicPeriod;
     }
 
     public int getYears() {
-	return Float.valueOf(this.curricularPeriodType.getWeight()).intValue();
+	return Float.valueOf(this.academicPeriod.getWeight()).intValue();
     }
 
     public Integer getYears(final CycleType cycleType) {
@@ -287,7 +287,7 @@ public enum DegreeType {
 	    return getYears();
 	}
 
-	return hasCycleTypes(cycleType) ? Float.valueOf(getCurricularPeriodType().getWeight()).intValue() : null;
+	return hasCycleTypes(cycleType) ? Float.valueOf(getAcademicPeriod().getWeight()).intValue() : null;
     }
 
     final public boolean hasExactlyOneCurricularYear() {
@@ -295,16 +295,13 @@ public enum DegreeType {
     }
 
     public double getDefaultEctsCredits() {
-	switch (getCurricularPeriodType()) {
-	case YEAR:
+	if (getAcademicPeriod().equals(AcademicPeriod.YEAR)) {
 	    return 30;
-	case TWO_YEAR:
+	} else if (getAcademicPeriod().equals(AcademicPeriod.TWO_YEAR)) {
 	    return 120;
-	case THREE_YEAR:
-	    return 180;
-	case FIVE_YEAR:
+	} else if (getAcademicPeriod().equals(AcademicPeriod.FIVE_YEAR)) {
 	    return 300;
-	default:
+	} else {
 	    return 0;
 	}
     }

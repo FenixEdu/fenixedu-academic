@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -38,6 +37,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -277,7 +277,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Integer getCurricularYearID() {
 	if (curricularYearID == null && getContext(getContextID()) != null) {
-	    curricularYearID = getContext(getContextID()).getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR);
+	    curricularYearID = getContext(getContextID()).getCurricularPeriod().getOrderByType(AcademicPeriod.YEAR);
 	    if (curricularYearID == null) {
 		curricularYearID = Integer.valueOf(1);
 	    }
@@ -293,7 +293,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Integer getCurricularSemesterID() {
 	if (curricularSemesterID == null && getContext(getContextID()) != null) {
-	    curricularSemesterID = getContext(getContextID()).getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER);
+	    curricularSemesterID = getContext(getContextID()).getCurricularPeriod().getOrderByType(AcademicPeriod.SEMESTER);
 	} else if (curricularSemesterID == null && getAndHoldIntegerParameter("curricularSemesterID") != null) {
 	    curricularSemesterID = getAndHoldIntegerParameter("curricularSemesterID");
 	}
@@ -353,7 +353,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public boolean isToDelete() {
 	if (getCurricularCourse() != null) {
 	    toDelete = getCurricularCourse().getParentContextsCount() == 1; // Last
-									    // context?
+	    // context?
 	}
 	return toDelete;
     }

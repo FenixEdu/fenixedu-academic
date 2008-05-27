@@ -26,16 +26,15 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     private Integer academicCalendarIdInternal;
-    private Integer entryIdInternal;       
-    private String entryClassName;    
+    private Integer entryIdInternal;
+    private String entryClassName;
 
     private transient AcademicCalendarEntry academicCalendarEntry;
     private transient AcademicCalendarRootEntry academicCalendarRootEntry;
     private transient AcademicChronology academicChronology;
 
-
     public AcademicInterval(Integer entryIdInternal, String entryClassName, Integer academicCalendarIdInternal) {
-	setEntryIdInternal(entryIdInternal);	
+	setEntryIdInternal(entryIdInternal);
 	setEntryClassName(entryClassName);
 	setAcademicCalendarIdInternal(academicCalendarIdInternal);
     }
@@ -46,9 +45,9 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	setEntryClassName(entry.getClass().getName());
 	setAcademicCalendarIdInternal(academicCalendarIdInternal);
     }
-    
+
     public AcademicInterval(AcademicCalendarEntry entry, AcademicCalendarRootEntry rootEntry) {
-	setEntryIdInternal(entry.getIdInternal());	
+	setEntryIdInternal(entry.getIdInternal());
 	setEntryClassName(entry.getClass().getName());
 	setAcademicCalendarIdInternal(rootEntry.getIdInternal());
 	academicCalendarEntry = entry;
@@ -60,14 +59,14 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     public Chronology getChronology() {
-	if(academicChronology == null) {	    
-	    academicChronology = getAcademicCalendar().getAcademicChronology();	    
+	if (academicChronology == null) {
+	    academicChronology = getAcademicCalendar().getAcademicChronology();
 	}
 	return academicChronology;
-    }   
+    }
 
     public long getStartMillis() {
-	return getAcademicCalendarEntry().getBegin().getMillis();	
+	return getAcademicCalendarEntry().getBegin().getMillis();
     }
 
     public long getEndMillis() {
@@ -81,26 +80,27 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     public AcademicCalendarEntry getAcademicCalendarEntryInIntervalChronology() {
 	return getAcademicChronology().findSameEntry(getAcademicCalendarEntry());
     }
-    
+
     public AcademicCalendarRootEntry getAcademicCalendar() {
-	if(academicCalendarRootEntry == null) {
-	    academicCalendarRootEntry = (AcademicCalendarRootEntry) RootDomainObject.getInstance().readAcademicCalendarEntryByOID(getAcademicCalendarIdInternal());
+	if (academicCalendarRootEntry == null) {
+	    academicCalendarRootEntry = (AcademicCalendarRootEntry) RootDomainObject.getInstance()
+		    .readAcademicCalendarEntryByOID(getAcademicCalendarIdInternal());
 	}
 	return academicCalendarRootEntry;
     }
 
     public AcademicCalendarEntry getAcademicCalendarEntry() {
-	if(academicCalendarEntry == null) {
+	if (academicCalendarEntry == null) {
 	    academicCalendarEntry = RootDomainObject.getInstance().readAcademicCalendarEntryByOID(getEntryIdInternal());
-	}	
-	if(!academicCalendarEntry.getClass().getName().equals(getEntryClassName())) {
+	}
+	if (!academicCalendarEntry.getClass().getName().equals(getEntryClassName())) {
 	    throw new DomainException("error.AcademicInterval.invalid.class.names");
-	}	
+	}
 	return academicCalendarEntry;
-    }   
-    
+    }
+
     private AcademicCalendarEntry getAcademicCalendarEntryIntervalWithoutClassNameCheck() {
-	if(academicCalendarEntry == null) {
+	if (academicCalendarEntry == null) {
 	    academicCalendarEntry = RootDomainObject.getInstance().readAcademicCalendarEntryByOID(getEntryIdInternal());
 	}
 	return academicCalendarEntry;
@@ -122,16 +122,16 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	return getAcademicCalendarEntry().getEnd();
     }
 
-    public boolean isEqualOrEquivalent(AcademicInterval interval) {	
+    public boolean isEqualOrEquivalent(AcademicInterval interval) {
 	return getAcademicCalendarEntry().isEqualOrEquivalent(interval.getAcademicCalendarEntry());
     }
-    
+
     public Integer getEntryIdInternal() {
 	return entryIdInternal;
     }
 
     public void setEntryIdInternal(Integer entryIdInternal) {
-	if(entryIdInternal == null) {
+	if (entryIdInternal == null) {
 	    throw new DomainException("error.AcademicInterval.empty.entry.idInternal");
 	}
 	this.entryIdInternal = entryIdInternal;
@@ -142,7 +142,7 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     public void setEntryClassName(String clazz) {
-	if(clazz == null || StringUtils.isEmpty(clazz)) {
+	if (clazz == null || StringUtils.isEmpty(clazz)) {
 	    throw new DomainException("error.AcademicInterval.empty.entry.class");
 	}
 	this.entryClassName = clazz;
@@ -153,48 +153,48 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     public void setAcademicCalendarIdInternal(Integer academicCalendarIdInternal) {
-	if(academicCalendarIdInternal == null) {
+	if (academicCalendarIdInternal == null) {
 	    throw new DomainException("error.AcademicInterval.empty.academic.chronology.idInternal");
 	}
 	this.academicCalendarIdInternal = academicCalendarIdInternal;
-    }       
+    }
 
     public String getRepresentationInStringFormat() {
 	return getEntryClassName() + ":" + getEntryIdInternal() + ":" + getAcademicCalendarIdInternal();
     }
 
-    public static AcademicInterval getAcademicIntervalFromString(String representationInStringFormat) {	  
-	String[] split = representationInStringFormat.split(":");	  
+    public static AcademicInterval getAcademicIntervalFromString(String representationInStringFormat) {
+	String[] split = representationInStringFormat.split(":");
 	String entryClassName = split[0];
 	Integer entryIdInternal = Integer.valueOf(split[1]);
 	Integer academicCalendarIdInternal = Integer.valueOf(split[2]);
-	return new AcademicInterval(entryIdInternal, entryClassName, academicCalendarIdInternal);	  
+	return new AcademicInterval(entryIdInternal, entryClassName, academicCalendarIdInternal);
     }
 
     public String getResumedRepresentationInStringFormat() {
 	return getEntryIdInternal() + ":" + getAcademicCalendarIdInternal();
     }
 
-    public static AcademicInterval getAcademicIntervalFromResumedString(String representationInStringFormat) {	  
-	String[] split = representationInStringFormat.split(":");	  	
+    public static AcademicInterval getAcademicIntervalFromResumedString(String representationInStringFormat) {
+	String[] split = representationInStringFormat.split(":");
 	Integer entryIdInternal = Integer.valueOf(split[0]);
 	Integer academicCalendarIdInternal = Integer.valueOf(split[1]);
-	return new AcademicInterval(entryIdInternal, academicCalendarIdInternal);	  
+	return new AcademicInterval(entryIdInternal, academicCalendarIdInternal);
     }
-    
+
     // Operations for get periods.
 
     public TeacherCreditsFillingForTeacherCE getTeacherCreditsFillingForTeacher() {
-	return getAcademicCalendarEntry().getTeacherCreditsFillingForTeacher(getAcademicChronology());	
+	return getAcademicCalendarEntry().getTeacherCreditsFillingForTeacher(getAcademicChronology());
     }
 
     public TeacherCreditsFillingForDepartmentAdmOfficeCE getTeacherCreditsFillingForDepartmentAdmOffice() {
-	return getAcademicCalendarEntry().getTeacherCreditsFillingForDepartmentAdmOffice(getAcademicChronology());	
+	return getAcademicCalendarEntry().getTeacherCreditsFillingForDepartmentAdmOffice(getAcademicChronology());
     }
 
-    public int getAcademicSemesterOfAcademicYear() {			
+    public int getAcademicSemesterOfAcademicYear() {
 	return getAcademicCalendarEntry().getAcademicSemesterOfAcademicYear(getAcademicChronology());
-    }                       
+    }
 
     public AcademicSemesterCE plusSemester(int amount) {
 	int index = getStart().get(AcademicSemesterDateTimeFieldType.academicSemester());
@@ -206,15 +206,15 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	return getAcademicChronology().getAcademicSemesterIn(index - amount);
     }
 
-    public AcademicYearCE plusYear(int amount) {	
+    public AcademicYearCE plusYear(int amount) {
 	int index = getStart().get(AcademicYearDateTimeFieldType.academicYear());
-	return getAcademicChronology().getAcademicYearIn(index + amount);		
+	return getAcademicChronology().getAcademicYearIn(index + amount);
     }
 
     public AcademicYearCE minusYear(int amount) {
 	int index = getStart().get(AcademicYearDateTimeFieldType.academicYear());
-	return getAcademicChronology().getAcademicYearIn(index - amount);		
-    } 
+	return getAcademicChronology().getAcademicYearIn(index - amount);
+    }
 
-    /////////
+    // ///////
 }

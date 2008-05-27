@@ -31,7 +31,7 @@ public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Bas
 	this(done);
 	init(toApply, contextCourseGroup, begin, end);
 	if (curricularPeriodInfoDTO != null) {
-	    setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
+	    setAcademicPeriod(curricularPeriodInfoDTO.getPeriodType());
 	    setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
 	}
     }
@@ -49,7 +49,7 @@ public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Bas
     protected void edit(DegreeModule done, CourseGroup contextCourseGroup, CurricularPeriodInfoDTO curricularPeriodInfoDTO) {
 	setPrecedenceDegreeModule(done);
 	setContextCourseGroup(contextCourseGroup);
-	setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
+	setAcademicPeriod(curricularPeriodInfoDTO.getPeriodType());
 	setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
     }
 
@@ -83,7 +83,7 @@ public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Bas
 	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
 	    labelList.add(new GenericPair<Object, Boolean>("label.in", true));
 	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	    labelList.add(new GenericPair<Object, Boolean>(getCurricularPeriodType().name(), true));
+	    labelList.add(new GenericPair<Object, Boolean>(getAcademicPeriod().getName(), true));
 	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
 	    labelList.add(new GenericPair<Object, Boolean>(getCurricularPeriodOrder(), false));
 	}
