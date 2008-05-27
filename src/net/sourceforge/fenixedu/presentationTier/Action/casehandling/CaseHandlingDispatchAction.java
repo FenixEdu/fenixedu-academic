@@ -39,7 +39,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
     protected void setProcess(final HttpServletRequest request) {
 	final Integer processId = getIntegerFromRequest(request, "processId");
 	if (processId != null) {
-	    request.setAttribute("process", rootDomainObject.readProcessByOID(Integer.valueOf(processId)));
+	    request.setAttribute("process", rootDomainObject.readProcessByOID(processId));
 	}
     }
 
