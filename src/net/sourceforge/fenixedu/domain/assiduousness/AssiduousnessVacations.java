@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -98,44 +99,56 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
     }
 
     public void calculateArticles17And18() {
-	YearMonthDay beginDate = new YearMonthDay(getYear(), 1, 1);
-	YearMonthDay endDate = new YearMonthDay(getYear(), 12, 31);
-	AssiduousnessStatusHistory assiduousnessStatusHistory = getAssiduousness().getLastAssiduousnessStatusHistoryBetween(
-		beginDate, endDate);
-	Duration totalWorkedTime = Duration.ZERO;
-	if (assiduousnessStatusHistory == null || assiduousnessStatusHistory.getAssiduousnessClosedMonths().size() == 0) {
-	    setEfectiveWorkDays(0);
-	} else {
-	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessStatusHistory.getAssiduousnessClosedMonths()) {
-		if (assiduousnessClosedMonth.getClosedMonth() != null
-			&& assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()) == (getYear() - 1)) {
-		    totalWorkedTime = totalWorkedTime.plus(assiduousnessClosedMonth.getTotalWorkedTime());
-		}
-	    }
-	    if (!totalWorkedTime.equals(Duration.ZERO)) {
-		if (beginDate.isBefore(assiduousnessStatusHistory.getBeginDate())) {
-		    beginDate = assiduousnessStatusHistory.getBeginDate();
-		}
-		if (assiduousnessStatusHistory.getEndDate() != null && endDate.isAfter(assiduousnessStatusHistory.getEndDate())) {
-		    endDate = assiduousnessStatusHistory.getEndDate();
-		}
-		List<Schedule> schedules = getAssiduousness().getSchedules(beginDate, endDate);
-		Duration averageWorkPeriodDuration = Duration.ZERO;
-		for (Schedule schedule : schedules) {
-		    averageWorkPeriodDuration = averageWorkPeriodDuration.plus(schedule.getAverageWorkPeriodDuration());
-		}
-		averageWorkPeriodDuration = new Duration(averageWorkPeriodDuration.getMillis() / schedules.size());
-		int efectiveWorkDays = (int) (totalWorkedTime.getMillis() / averageWorkPeriodDuration.getMillis());
-		setEfectiveWorkDays(efectiveWorkDays);
-	    } else {
+	if (isInExercise()) {
+	    YearMonthDay beginDate = new YearMonthDay((getYear() - 1), 1, 1);
+	    YearMonthDay endDate = new YearMonthDay((getYear() - 1), 12, 31);
+	    AssiduousnessStatusHistory assiduousnessStatusHistory = getAssiduousness().getLastAssiduousnessStatusHistoryBetween(
+		    beginDate, endDate);
+	    Duration totalWorkedTime = Duration.ZERO;
+	    if (assiduousnessStatusHistory == null || assiduousnessStatusHistory.getAssiduousnessClosedMonths().size() == 0) {
 		setEfectiveWorkDays(0);
+	    } else {
+		for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessStatusHistory
+			.getAssiduousnessClosedMonths()) {
+		    if (assiduousnessClosedMonth.getClosedMonth() != null
+			    && assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()) == (getYear() - 1)) {
+			totalWorkedTime = totalWorkedTime.plus(assiduousnessClosedMonth.getTotalWorkedTime());
+		    }
+		}
+		if (!totalWorkedTime.equals(Duration.ZERO)) {
+		    Duration averageWorkPeriodDuration = assiduousnessStatusHistory.getSheculeWeightedAverage(beginDate, endDate);
+		    int efectiveWorkDays = Math.round((float) (totalWorkedTime.getMillis() * Math.pow(averageWorkPeriodDuration
+			    .getMillis(), -1)));
+		    setEfectiveWorkDays(efectiveWorkDays);
+		} else {
+		    setEfectiveWorkDays(0);
+		}
 	    }
+	} else {
+	    setEfectiveWorkDays(0);
 	}
     }
 
+    private boolean isInExercise() {
+	YearMonthDay beginDate = new YearMonthDay(getYear(), 1, 1);
+	List<AssiduousnessStatusHistory> statusList = getAssiduousness().getStatusBetween(beginDate, beginDate);
+	if (statusList.size() == 0 || statusList.get(0).getAssiduousnessStatus().getState() != AssiduousnessState.ACTIVE) {
+	    return false;
+	}
+	for (Leave leave : getAssiduousness().getLeaves(beginDate)) {
+	    if (!leave.getJustificationMotive().getInExercise()) {
+		return false;
+	    }
+	}
+	return true;
+    }
+
     public Integer getArt17And18MaximumLimitDays() {
-	return Math.max(Math.round((float) (getEfectiveWorkDays() * new Double(0.08))), AssiduousnessExemption
-		.getAssiduousnessExemptionDaysQuantity(getYear()));
+	if (isInExercise()) {
+	    return Math.max(Math.round((float) (getEfectiveWorkDays() * new Double(0.08))), AssiduousnessExemption
+		    .getAssiduousnessExemptionDaysQuantity(getYear()));
+	}
+	return 0;
     }
 
     public Integer getNumberOfArt17() {
@@ -143,7 +156,11 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
     }
 
     public Integer getNumberOfArt18() {
-	return Math.min(AssiduousnessExemption.getAssiduousnessExemptionDaysQuantity(getYear()), getArt17And18MaximumLimitDays());
+	if (isInExercise()) {
+	    return Math.min(AssiduousnessExemption.getAssiduousnessExemptionDaysQuantity(getYear()),
+		    getArt17And18MaximumLimitDays());
+	}
+	return 0;
     }
 
     public Integer getArt17And18LimitDays() {

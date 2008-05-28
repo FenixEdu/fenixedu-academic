@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.assiduousness;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
+
+import org.joda.time.YearMonthDay;
 
 public class CalculateArticles17And18 extends Service {
 
@@ -22,5 +22,4 @@ public class CalculateArticles17And18 extends Service {
 	}
 	return;
     }
-
 }

@@ -1,10 +1,14 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base {
@@ -25,7 +29,7 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 	    YearMonthDay beginDate, YearMonthDay endDate, Employee modifiedBy) {
 	AssiduousnessStatusHistory lastAssiduousnessStatusHistory = assiduousness.getLastAssiduousnessStatusHistory();
 	if (lastAssiduousnessStatusHistory != null) {
-	    if(lastAssiduousnessStatusHistory.getAssiduousnessStatus().equals(assiduousnessStatus)) {
+	    if (lastAssiduousnessStatusHistory.getAssiduousnessStatus().equals(assiduousnessStatus)) {
 		throw new DomainException("error.sameAssiduousnessStatus");
 	    }
 
@@ -82,5 +86,29 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 	    removeModifiedBy();
 	    deleteDomainObject();
 	}
+    }
+
+    public Duration getSheculeWeightedAverage(YearMonthDay beginDate, YearMonthDay endDate) {
+	Duration averageWorkPeriodDuration = Duration.ZERO;
+	if (beginDate.isBefore(getBeginDate())) {
+	    beginDate = getBeginDate();
+	}
+	if (getEndDate() != null && endDate.isAfter(getEndDate())) {
+	    endDate = getEndDate();
+	}
+	for (int month = beginDate.getMonthOfYear(); month <= endDate.getMonthOfYear(); month++) {
+	    Duration thisMonthWorkPeriodAverage = Duration.ZERO;
+	    YearMonthDay beginMonth = new YearMonthDay(beginDate.getYear(), month, 1);
+	    YearMonthDay endMonth = new YearMonthDay(endDate.getYear(), month, beginMonth.dayOfMonth().getMaximumValue());
+	    List<Schedule> schedules = getAssiduousness().getSchedules(beginMonth, endMonth);
+	    for (Schedule schedule : schedules) {
+		thisMonthWorkPeriodAverage = thisMonthWorkPeriodAverage.plus(schedule.getAverageWorkPeriodDuration());
+	    }
+	    thisMonthWorkPeriodAverage = new Duration(thisMonthWorkPeriodAverage.getMillis() / schedules.size());
+	    averageWorkPeriodDuration = averageWorkPeriodDuration.plus(thisMonthWorkPeriodAverage);
+	}
+	averageWorkPeriodDuration = new Duration(averageWorkPeriodDuration.getMillis()
+		/ (Months.monthsBetween(beginDate, endDate).getMonths() + 1));
+	return averageWorkPeriodDuration;
     }
 }

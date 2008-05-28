@@ -106,12 +106,8 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 			}
 		    }
 
-		    List<Schedule> schedules = assiduousnessVacations.getAssiduousness().getSchedules(beginDate, endDate);
-		    Duration averageWorkPeriodDuration = Duration.ZERO;
-		    for (Schedule schedule : schedules) {
-			averageWorkPeriodDuration = averageWorkPeriodDuration.plus(schedule.getAverageWorkPeriodDuration());
-		    }
-		    spreadsheet.addDuration(new Duration(averageWorkPeriodDuration.getMillis() / schedules.size()), 19);
+		    Duration averageWorkPeriodDuration = assiduousnessStatusHistory.getSheculeWeightedAverage(beginDate, endDate);
+		    spreadsheet.addDuration(averageWorkPeriodDuration, 19);
 		}
 	    }
 	}
