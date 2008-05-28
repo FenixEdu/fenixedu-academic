@@ -65,7 +65,14 @@
 			</tr>
 			<tr>
 				<td class="listClasses">
-					<bean:write name="finalDegreeWorkProposal" property="coorientator.person.teacher.teacherNumber"/>
+					<logic:present name="finalDegreeWorkProposal" property="coorientator.person.teacher">
+						<bean:write name="finalDegreeWorkProposal" property="coorientator.person.teacher.teacherNumber"/>
+					</logic:present>
+					<logic:notPresent name="finalDegreeWorkProposal" property="coorientator.person.teacher">
+						<logic:present name="finalDegreeWorkProposal" property="coorientator.person.employee">
+							<bean:write name="finalDegreeWorkProposal" property="coorientator.person.employee.employeeNumber"/>
+						</logic:present>
+					</logic:notPresent>
 				</td>
 				<td class="listClasses">
 					<bean:write name="finalDegreeWorkProposal" property="coorientator.person.name"/>
