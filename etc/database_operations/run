@@ -28,4 +28,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Criar funcionalidades no portal de relações publicas." createPublicRelationsFeatures.sql
