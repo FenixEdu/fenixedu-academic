@@ -348,120 +348,100 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	if (time == null) {
 	    return null;
 	}
-	return new Duration(new YearMonthDay().toDateTimeAtMidnight().getMillis(), time
-		.toDateTimeToday().getMillis());
+	return new Duration(new YearMonthDay().toDateTimeAtMidnight().getMillis(), time.toDateTimeToday().getMillis());
     }
 
     protected WorkScheduleType getOrCreateWorkScheduleType() {
 	WorkScheduleType workScheduleType = null;
 	Chronology chronology = GregorianChronology.getInstanceUTC();
 	DateTime lastModifiedDate = new DateTime(chronology);
-	WorkPeriod normalWorkPeriod = getOrCreateWorkPeriod(getBeginNormalWorkFirstPeriod(),
-		getEndNormalWorkFirstPeriod(), getEndNormalWorkFirstPeriodNextDay(),
-		getBeginNormalWorkSecondPeriod(), getEndNormalWorkSecondPeriod(),
+	WorkPeriod normalWorkPeriod = getOrCreateWorkPeriod(getBeginNormalWorkFirstPeriod(), getEndNormalWorkFirstPeriod(),
+		getEndNormalWorkFirstPeriodNextDay(), getBeginNormalWorkSecondPeriod(), getEndNormalWorkSecondPeriod(),
 		getEndNormalWorkSecondPeriodNextDay());
 
-	WorkPeriod fixedWorkPeriod = getOrCreateWorkPeriod(getBeginFixedWorkFirstPeriod(),
-		getEndFixedWorkFirstPeriod(), getEndFixedWorkFirstPeriodNextDay(),
-		getBeginFixedWorkSecondPeriod(), getEndFixedWorkSecondPeriod(),
+	WorkPeriod fixedWorkPeriod = getOrCreateWorkPeriod(getBeginFixedWorkFirstPeriod(), getEndFixedWorkFirstPeriod(),
+		getEndFixedWorkFirstPeriodNextDay(), getBeginFixedWorkSecondPeriod(), getEndFixedWorkSecondPeriod(),
 		getEndFixedWorkSecondPeriodNextDay());
 	Meal meal = getOrCreateMeal(getMealBeginTime(), getMealEndTime(), getMinimumMealBreakInterval(),
 		getMandatoryMealDiscount());
 
 	Duration dayTimeDuration = getDuration(getBeginDayTime(), getEndDayTime(), getEndDayNextDay());
-	Duration clockingTimeDurtion = getDuration(getBeginClockingTime(), getEndClockingTime(),
-		getEndClockingNextDay());
+	Duration clockingTimeDurtion = getDuration(getBeginClockingTime(), getEndClockingTime(), getEndClockingNextDay());
 	if (normalWorkPeriod == null) {
-	    workScheduleType = new ScheduleExemption(getAcronym(), getScheduleClockingType(),
-		    getBeginValidDate(), getEndValidDate(), getBeginDayTime(), dayTimeDuration,
-		    getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod, meal,
-		    lastModifiedDate, getModifiedBy());
-	} else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(
-		HalfTimeSchedule.normalHalfTimeWorkDayDuration) <= 0) {
-	    workScheduleType = new HalfTimeSchedule(getAcronym(), getScheduleClockingType(),
-		    getBeginValidDate(), getEndValidDate(), getBeginDayTime(), dayTimeDuration,
-		    getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod,
-		    lastModifiedDate, getModifiedBy());
-	} else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(
-		Assiduousness.normalWorkDayDuration) < 0
-		&& (normalWorkPeriod.getSecondPeriod() != null && !normalWorkPeriod.getEndFirstPeriod()
-			.equals(normalWorkPeriod.getSecondPeriod()))) {
-	    workScheduleType = new HourExemptionSchedule(getAcronym(), getScheduleClockingType(),
-		    getBeginValidDate(), getEndValidDate(), getBeginDayTime(), dayTimeDuration,
-		    getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod,
-		    meal, lastModifiedDate, getModifiedBy());
+	    workScheduleType = new ScheduleExemption(getAcronym(), getScheduleClockingType(), getBeginValidDate(),
+		    getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(), clockingTimeDurtion,
+		    normalWorkPeriod, meal, lastModifiedDate, getModifiedBy());
+	} else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(HalfTimeSchedule.normalHalfTimeWorkDayDuration) <= 0) {
+	    workScheduleType = new HalfTimeSchedule(getAcronym(), getScheduleClockingType(), getBeginValidDate(),
+		    getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(), clockingTimeDurtion,
+		    normalWorkPeriod, fixedWorkPeriod, lastModifiedDate, getModifiedBy());
+	} else if (normalWorkPeriod.getWorkPeriodDuration().compareTo(Assiduousness.normalWorkDayDuration) < 0
+		&& (normalWorkPeriod.getSecondPeriod() != null && !normalWorkPeriod.getEndFirstPeriod().equals(
+			normalWorkPeriod.getSecondPeriod()))) {
+	    workScheduleType = new HourExemptionSchedule(getAcronym(), getScheduleClockingType(), getBeginValidDate(),
+		    getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(), clockingTimeDurtion,
+		    normalWorkPeriod, fixedWorkPeriod, meal, lastModifiedDate, getModifiedBy());
 	} else {
 	    if (normalWorkPeriod.getSecondPeriodInterval() != null) {
 		if (normalWorkPeriod.getEndFirstPeriod().equals(normalWorkPeriod.getSecondPeriod())) {
-		    if (normalWorkPeriod.getWorkPeriodDuration().isShorterThan(
-			    ContinuousSchedule.normalContinuousWorkDayDuration)) {
+		    if (normalWorkPeriod.getWorkPeriodDuration()
+			    .isShorterThan(ContinuousSchedule.normalContinuousWorkDayDuration)) {
 			return null;
 		    }
-		    workScheduleType = new ContinuousSchedule(getAcronym(), getScheduleClockingType(),
-			    getBeginValidDate(), getEndValidDate(), getBeginDayTime(), dayTimeDuration,
-			    getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod,
-			    fixedWorkPeriod, lastModifiedDate, getModifiedBy());
+		    workScheduleType = new ContinuousSchedule(getAcronym(), getScheduleClockingType(), getBeginValidDate(),
+			    getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(), clockingTimeDurtion,
+			    normalWorkPeriod, fixedWorkPeriod, lastModifiedDate, getModifiedBy());
 		} else {
 		    if (fixedWorkPeriod != null) {
-			workScheduleType = new FlexibleSchedule(getAcronym(), getScheduleClockingType(),
-				getBeginValidDate(), getEndValidDate(), getBeginDayTime(),
-				dayTimeDuration, getBeginClockingTime(), clockingTimeDurtion,
-				normalWorkPeriod, fixedWorkPeriod, meal, lastModifiedDate,
-				getModifiedBy());
+			workScheduleType = new FlexibleSchedule(getAcronym(), getScheduleClockingType(), getBeginValidDate(),
+				getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
+				clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod, meal, lastModifiedDate, getModifiedBy());
 		    } else {
-			workScheduleType = new ScheduleExemption(getAcronym(),
-				getScheduleClockingType(), getBeginValidDate(), getEndValidDate(),
-				getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
-				clockingTimeDurtion, normalWorkPeriod, meal, lastModifiedDate,
-				getModifiedBy());
+			workScheduleType = new ScheduleExemption(getAcronym(), getScheduleClockingType(), getBeginValidDate(),
+				getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(),
+				clockingTimeDurtion, normalWorkPeriod, meal, lastModifiedDate, getModifiedBy());
 		    }
 		}
 	    } else {
-		if (normalWorkPeriod.getWorkPeriodDuration().isShorterThan(
-			ContinuousSchedule.normalContinuousWorkDayDuration)) {
+		if (normalWorkPeriod.getWorkPeriodDuration().isShorterThan(ContinuousSchedule.normalContinuousWorkDayDuration)) {
 		    return null;
 		}
-		workScheduleType = new ContinuousSchedule(getAcronym(), getScheduleClockingType(),
-			getBeginValidDate(), getEndValidDate(), getBeginDayTime(), dayTimeDuration,
-			getBeginClockingTime(), clockingTimeDurtion, normalWorkPeriod, fixedWorkPeriod,
-			lastModifiedDate, getModifiedBy());
+		workScheduleType = new ContinuousSchedule(getAcronym(), getScheduleClockingType(), getBeginValidDate(),
+			getEndValidDate(), getBeginDayTime(), dayTimeDuration, getBeginClockingTime(), clockingTimeDurtion,
+			normalWorkPeriod, fixedWorkPeriod, lastModifiedDate, getModifiedBy());
 	    }
 	}
 	return workScheduleType;
     }
 
-    protected Meal getOrCreateMeal(TimeOfDay beginTime, TimeOfDay endTime, TimeOfDay minimumInterval,
-	    TimeOfDay mandatoryDiscount) {
+    protected Meal getOrCreateMeal(TimeOfDay beginTime, TimeOfDay endTime, TimeOfDay minimumInterval, TimeOfDay mandatoryDiscount) {
 	if (beginTime == null || endTime == null) {
 	    return null;
 	}
 	Duration minimumMealBreakInterval = getDuration(minimumInterval);
 	Duration mandatoryMealDiscount = getDuration(mandatoryDiscount);
-	return getOrCreateMeal(getMealBeginTime(), getMealEndTime(), minimumMealBreakInterval,
-		mandatoryMealDiscount);
+	return getOrCreateMeal(getMealBeginTime(), getMealEndTime(), minimumMealBreakInterval, mandatoryMealDiscount);
     }
 
-    protected Meal getOrCreateMeal(TimeOfDay beginTime, TimeOfDay endTime,
-	    Duration minimumMealBreakInterval, Duration mandatoryMealDiscount) {
+    protected Meal getOrCreateMeal(TimeOfDay beginTime, TimeOfDay endTime, Duration minimumMealBreakInterval,
+	    Duration mandatoryMealDiscount) {
 	if (beginTime == null || endTime == null) {
 	    return null;
 	}
-	Meal meal = getEquivalentMeal(beginTime, endTime, minimumMealBreakInterval,
-		mandatoryMealDiscount);
-	return meal != null ? meal : new Meal(getMealBeginTime(), getMealEndTime(),
-		mandatoryMealDiscount, minimumMealBreakInterval);
+	Meal meal = getEquivalentMeal(beginTime, endTime, minimumMealBreakInterval, mandatoryMealDiscount);
+	return meal != null ? meal : new Meal(getMealBeginTime(), getMealEndTime(), mandatoryMealDiscount,
+		minimumMealBreakInterval);
     }
 
-    protected Meal getEquivalentMeal(TimeOfDay beginTime, TimeOfDay endTime,
-	    Duration minimumMealBreakInterval, Duration mandatoryMealDiscount) {
+    protected Meal getEquivalentMeal(TimeOfDay beginTime, TimeOfDay endTime, Duration minimumMealBreakInterval,
+	    Duration mandatoryMealDiscount) {
 	for (Meal meal : RootDomainObject.getInstance().getMeals()) {
 	    if (meal.getBeginMealBreak().equals(beginTime) && meal.getEndMealBreak().equals(endTime)) {
 		if ((meal.getMandatoryMealDiscount() == null && mandatoryMealDiscount == null)
 			|| (meal.getMandatoryMealDiscount() != null && mandatoryMealDiscount != null && meal
 				.getMandatoryMealDiscount().equals(mandatoryMealDiscount))) {
 		    if ((meal.getMinimumMealBreakInterval() == null && minimumMealBreakInterval == null)
-			    || (meal.getMinimumMealBreakInterval() != null
-				    && minimumMealBreakInterval != null && meal
+			    || (meal.getMinimumMealBreakInterval() != null && minimumMealBreakInterval != null && meal
 				    .getMinimumMealBreakInterval().equals(minimumMealBreakInterval))) {
 			return meal;
 		    }
@@ -471,35 +451,30 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	return null;
     }
 
-    protected WorkPeriod getOrCreateWorkPeriod(TimeOfDay beginWorkFirstPeriod,
-	    TimeOfDay endWorkFirstPeriod, Boolean endWorkFirstPeriodNextDay,
-	    TimeOfDay beginWorkSecondPeriod, TimeOfDay endWorkSecondPeriod,
+    protected WorkPeriod getOrCreateWorkPeriod(TimeOfDay beginWorkFirstPeriod, TimeOfDay endWorkFirstPeriod,
+	    Boolean endWorkFirstPeriodNextDay, TimeOfDay beginWorkSecondPeriod, TimeOfDay endWorkSecondPeriod,
 	    Boolean endWorkSecondPeriodNextDay) {
 	if (beginWorkFirstPeriod == null || endWorkFirstPeriod == null) {
 	    return null;
 	}
-	Duration firstPeriodDuration = getDuration(beginWorkFirstPeriod, endWorkFirstPeriod,
-		endWorkFirstPeriodNextDay);
-	Duration secondPeriodDuration = getDuration(beginWorkSecondPeriod, endWorkSecondPeriod,
-		endWorkSecondPeriodNextDay);
+	Duration firstPeriodDuration = getDuration(beginWorkFirstPeriod, endWorkFirstPeriod, endWorkFirstPeriodNextDay);
+	Duration secondPeriodDuration = getDuration(beginWorkSecondPeriod, endWorkSecondPeriod, endWorkSecondPeriodNextDay);
 
-	return getOrCreateWorkPeriod(beginWorkFirstPeriod, firstPeriodDuration, beginWorkSecondPeriod,
-		secondPeriodDuration);
+	return getOrCreateWorkPeriod(beginWorkFirstPeriod, firstPeriodDuration, beginWorkSecondPeriod, secondPeriodDuration);
     }
 
-    protected WorkPeriod getOrCreateWorkPeriod(TimeOfDay firstPeriod, Duration firstPeriodDuration,
-	    TimeOfDay secondPeriod, Duration secondPeriodDuration) {
+    protected WorkPeriod getOrCreateWorkPeriod(TimeOfDay firstPeriod, Duration firstPeriodDuration, TimeOfDay secondPeriod,
+	    Duration secondPeriodDuration) {
 	if (firstPeriod == null || firstPeriodDuration == null) {
 	    return null;
 	}
-	WorkPeriod workPeriod = getEquivalentWorkPeriod(firstPeriod, firstPeriodDuration, secondPeriod,
+	WorkPeriod workPeriod = getEquivalentWorkPeriod(firstPeriod, firstPeriodDuration, secondPeriod, secondPeriodDuration);
+	return workPeriod != null ? workPeriod : new WorkPeriod(firstPeriod, firstPeriodDuration, secondPeriod,
 		secondPeriodDuration);
-	return workPeriod != null ? workPeriod : new WorkPeriod(firstPeriod, firstPeriodDuration,
-		secondPeriod, secondPeriodDuration);
     }
 
-    protected WorkPeriod getEquivalentWorkPeriod(TimeOfDay firstPeriod, Duration firstPeriodDuration,
-	    TimeOfDay secondPeriod, Duration secondPeriodDuration) {
+    protected WorkPeriod getEquivalentWorkPeriod(TimeOfDay firstPeriod, Duration firstPeriodDuration, TimeOfDay secondPeriod,
+	    Duration secondPeriodDuration) {
 	for (WorkPeriod workPeriod : RootDomainObject.getInstance().getWorkPeriods()) {
 	    if (workPeriod.getFirstPeriod().equals(firstPeriod)
 		    && workPeriod.getFirstPeriodDuration().equals(firstPeriodDuration)) {
@@ -519,22 +494,19 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	for (WorkScheduleType workScheduleType : RootDomainObject.getInstance().getWorkScheduleTypes()) {
 	    if ((workScheduleId == null || !workScheduleType.getIdInternal().equals(workScheduleId))
 		    && workScheduleType.isValidWorkScheduleType()
-		    && workScheduleType.equivalent(getBeginDayTime(), getDuration(getBeginDayTime(),
-			    getEndDayTime(), getEndDayNextDay()), getBeginClockingTime(), getDuration(
-			    getBeginClockingTime(), getEndClockingTime(), getEndClockingNextDay()),
-			    getScheduleClockingType(), getBeginNormalWorkFirstPeriod(), getDuration(
-				    getBeginNormalWorkFirstPeriod(), getEndNormalWorkFirstPeriod(),
-				    getEndNormalWorkFirstPeriodNextDay()),
-			    getBeginNormalWorkSecondPeriod(), getDuration(
-				    getBeginNormalWorkSecondPeriod(), getEndNormalWorkSecondPeriod(),
-				    getEndNormalWorkSecondPeriodNextDay()),
-			    getBeginFixedWorkFirstPeriod(), getDuration(getBeginFixedWorkFirstPeriod(),
-				    getEndFixedWorkFirstPeriod(), getEndFixedWorkFirstPeriodNextDay()),
-			    getBeginFixedWorkSecondPeriod(), getDuration(
-				    getBeginFixedWorkSecondPeriod(), getEndFixedWorkSecondPeriod(),
-				    getEndFixedWorkSecondPeriodNextDay()), getMealBeginTime(),
-			    getMealEndTime(), getDuration(getMinimumMealBreakInterval()),
-			    getDuration(getMandatoryMealDiscount()))) {
+		    && workScheduleType
+			    .equivalent(getBeginDayTime(), getDuration(getBeginDayTime(), getEndDayTime(), getEndDayNextDay()),
+				    getBeginClockingTime(), getDuration(getBeginClockingTime(), getEndClockingTime(),
+					    getEndClockingNextDay()), getScheduleClockingType(), getBeginNormalWorkFirstPeriod(),
+				    getDuration(getBeginNormalWorkFirstPeriod(), getEndNormalWorkFirstPeriod(),
+					    getEndNormalWorkFirstPeriodNextDay()), getBeginNormalWorkSecondPeriod(), getDuration(
+					    getBeginNormalWorkSecondPeriod(), getEndNormalWorkSecondPeriod(),
+					    getEndNormalWorkSecondPeriodNextDay()), getBeginFixedWorkFirstPeriod(), getDuration(
+					    getBeginFixedWorkFirstPeriod(), getEndFixedWorkFirstPeriod(),
+					    getEndFixedWorkFirstPeriodNextDay()), getBeginFixedWorkSecondPeriod(), getDuration(
+					    getBeginFixedWorkSecondPeriod(), getEndFixedWorkSecondPeriod(),
+					    getEndFixedWorkSecondPeriodNextDay()), getMealBeginTime(), getMealEndTime(),
+				    getDuration(getMinimumMealBreakInterval()), getDuration(getMandatoryMealDiscount()))) {
 		return workScheduleType;
 	    }
 	}
@@ -544,19 +516,20 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
     public static class WorkScheduleTypeFactoryCreator extends WorkScheduleTypeFactory {
 
 	public Object execute() {
+	    if (getScheduleClockingType() == null) {
+		return new ActionMessage("error.emptyScheduleClockingType");
+	    }
 	    WorkScheduleType equivalentWorkScheduleType = getEquivalentWorkScheduleType(null);
 	    if (equivalentWorkScheduleType == null) {
 		if (getOrCreateWorkScheduleType() == null) {
 		    Chronology chronology = GregorianChronology.getInstanceUTC();
 		    DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
-		    TimeOfDay time = new TimeOfDay(ContinuousSchedule.normalContinuousWorkDayDuration
-			    .getMillis(), chronology);
+		    TimeOfDay time = new TimeOfDay(ContinuousSchedule.normalContinuousWorkDayDuration.getMillis(), chronology);
 		    return new ActionMessage("error.invalidContinuousDuration", fmt.print(time));
 		}
 		return null;
 	    }
-	    return new ActionMessage("error.existingEquivalentSchedule", equivalentWorkScheduleType
-		    .getAcronym());
+	    return new ActionMessage("error.existingEquivalentSchedule", equivalentWorkScheduleType.getAcronym());
 	}
 
     }
@@ -582,45 +555,32 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		setBeginClockingTime(getWorkScheduleType().getClockingTime());
 		setEndClockingTime(getWorkScheduleType().getClockingEndTime());
 		setEndClockingNextDay(getWorkScheduleType().isClokingTimeNextDay());
-		setBeginNormalWorkFirstPeriod(getWorkScheduleType().getNormalWorkPeriod()
-			.getFirstPeriod());
-		setEndNormalWorkFirstPeriod(getWorkScheduleType().getNormalWorkPeriod()
-			.getEndFirstPeriod());
-		setEndNormalWorkFirstPeriodNextDay(getWorkScheduleType().getNormalWorkPeriod()
-			.isFirstPeriodNextDay());
+		setBeginNormalWorkFirstPeriod(getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod());
+		setEndNormalWorkFirstPeriod(getWorkScheduleType().getNormalWorkPeriod().getEndFirstPeriod());
+		setEndNormalWorkFirstPeriodNextDay(getWorkScheduleType().getNormalWorkPeriod().isFirstPeriodNextDay());
 		if (getWorkScheduleType().getNormalWorkPeriod().isSecondWorkPeriodDefined()) {
-		    setBeginNormalWorkSecondPeriod(getWorkScheduleType().getNormalWorkPeriod()
-			    .getSecondPeriod());
-		    setEndNormalWorkSecondPeriod(getWorkScheduleType().getNormalWorkPeriod()
-			    .getEndSecondPeriod());
-		    setEndNormalWorkSecondPeriodNextDay(getWorkScheduleType().getNormalWorkPeriod()
-			    .isSecondPeriodNextDay());
+		    setBeginNormalWorkSecondPeriod(getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod());
+		    setEndNormalWorkSecondPeriod(getWorkScheduleType().getNormalWorkPeriod().getEndSecondPeriod());
+		    setEndNormalWorkSecondPeriodNextDay(getWorkScheduleType().getNormalWorkPeriod().isSecondPeriodNextDay());
 		}
 		if (getWorkScheduleType().hasFixedWorkPeriod()) {
-		    setBeginFixedWorkFirstPeriod(getWorkScheduleType().getFixedWorkPeriod()
-			    .getFirstPeriod());
-		    setEndFixedWorkFirstPeriod(getWorkScheduleType().getFixedWorkPeriod()
-			    .getEndFirstPeriod());
-		    setEndFixedWorkFirstPeriodNextDay(getWorkScheduleType().getFixedWorkPeriod()
-			    .isFirstPeriodNextDay());
+		    setBeginFixedWorkFirstPeriod(getWorkScheduleType().getFixedWorkPeriod().getFirstPeriod());
+		    setEndFixedWorkFirstPeriod(getWorkScheduleType().getFixedWorkPeriod().getEndFirstPeriod());
+		    setEndFixedWorkFirstPeriodNextDay(getWorkScheduleType().getFixedWorkPeriod().isFirstPeriodNextDay());
 		    if (getWorkScheduleType().getFixedWorkPeriod().isSecondWorkPeriodDefined()) {
-			setBeginFixedWorkSecondPeriod(getWorkScheduleType().getFixedWorkPeriod()
-				.getSecondPeriod());
-			setEndFixedWorkSecondPeriod(getWorkScheduleType().getFixedWorkPeriod()
-				.getEndSecondPeriod());
-			setEndFixedWorkSecondPeriodNextDay(getWorkScheduleType().getFixedWorkPeriod()
-				.isSecondPeriodNextDay());
+			setBeginFixedWorkSecondPeriod(getWorkScheduleType().getFixedWorkPeriod().getSecondPeriod());
+			setEndFixedWorkSecondPeriod(getWorkScheduleType().getFixedWorkPeriod().getEndSecondPeriod());
+			setEndFixedWorkSecondPeriodNextDay(getWorkScheduleType().getFixedWorkPeriod().isSecondPeriodNextDay());
 		    }
 		}
 		if (getWorkScheduleType().hasMeal()) {
 		    setMealBeginTime(getWorkScheduleType().getMeal().getBeginMealBreak());
 		    setMealEndTime(getWorkScheduleType().getMeal().getEndMealBreak());
-		    setMandatoryMealDiscount(new TimeOfDay(getWorkScheduleType().getMeal()
-			    .getMandatoryMealDiscount().getMillis(), GregorianChronology
-			    .getInstanceUTC()));
-		    setMinimumMealBreakInterval(new TimeOfDay(getWorkScheduleType().getMeal()
-			    .getMinimumMealBreakInterval().getMillis(), GregorianChronology
-			    .getInstanceUTC()));
+		    setMandatoryMealDiscount(new TimeOfDay(
+			    getWorkScheduleType().getMeal().getMandatoryMealDiscount().getMillis(), GregorianChronology
+				    .getInstanceUTC()));
+		    setMinimumMealBreakInterval(new TimeOfDay(getWorkScheduleType().getMeal().getMinimumMealBreakInterval()
+			    .getMillis(), GregorianChronology.getInstanceUTC()));
 		}
 
 	    }
@@ -635,8 +595,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	    YearMonthDay firstDay = getNotClosedMonthFirstDay();
 	    boolean changeDatesOrAcronym = false;
 	    if (!getWorkScheduleType().getBeginValidDate().equals(getBeginValidDate())) {
-		if (!getWorkScheduleType().getWorkSchedules().isEmpty()
-			&& isWorkScheduleTypeBeenUsedBeforeBeginDate()) {
+		if (!getWorkScheduleType().getWorkSchedules().isEmpty() && isWorkScheduleTypeBeenUsedBeforeBeginDate()) {
 		    return new ActionMessage("error.scheduleBeingUsedBeforeBeginDate");
 		}
 		changeDatesOrAcronym = true;
@@ -656,26 +615,31 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		changeDatesOrAcronym = true;
 	    }
 
-	    if (!getWorkScheduleType().equivalent(
-		    getBeginDayTime(),
-		    getDuration(getBeginDayTime(), getEndDayTime(), getEndDayNextDay()),
-		    getBeginClockingTime(),
-		    getDuration(getBeginClockingTime(), getEndClockingTime(), getEndClockingNextDay()),
-		    getScheduleClockingType(),
-		    getBeginNormalWorkFirstPeriod(),
-		    getDuration(getBeginNormalWorkFirstPeriod(), getEndNormalWorkFirstPeriod(),
-			    getEndNormalWorkFirstPeriodNextDay()),
-		    getBeginNormalWorkSecondPeriod(),
-		    getDuration(getBeginNormalWorkSecondPeriod(), getEndNormalWorkSecondPeriod(),
-			    getEndNormalWorkSecondPeriodNextDay()),
-		    getBeginFixedWorkFirstPeriod(),
-		    getDuration(getBeginFixedWorkFirstPeriod(), getEndFixedWorkFirstPeriod(),
-			    getEndFixedWorkFirstPeriodNextDay()),
-		    getBeginFixedWorkSecondPeriod(),
-		    getDuration(getBeginFixedWorkSecondPeriod(), getEndFixedWorkSecondPeriod(),
-			    getEndFixedWorkSecondPeriodNextDay()), getMealBeginTime(), getMealEndTime(),
-		    getDuration(getMinimumMealBreakInterval()), getDuration(getMandatoryMealDiscount()))) {
-		WorkScheduleType equivalentWorkScheduleType = null;// getEquivalentWorkScheduleType(getWorkScheduleType().getIdInternal());
+	    if (getScheduleClockingType() == null) {
+		return new ActionMessage("error.emptyScheduleClockingType");
+	    }
+
+	    if (!getWorkScheduleType()
+		    .equivalent(
+			    getBeginDayTime(),
+			    getDuration(getBeginDayTime(), getEndDayTime(), getEndDayNextDay()),
+			    getBeginClockingTime(),
+			    getDuration(getBeginClockingTime(), getEndClockingTime(), getEndClockingNextDay()),
+			    getScheduleClockingType(),
+			    getBeginNormalWorkFirstPeriod(),
+			    getDuration(getBeginNormalWorkFirstPeriod(), getEndNormalWorkFirstPeriod(),
+				    getEndNormalWorkFirstPeriodNextDay()),
+			    getBeginNormalWorkSecondPeriod(),
+			    getDuration(getBeginNormalWorkSecondPeriod(), getEndNormalWorkSecondPeriod(),
+				    getEndNormalWorkSecondPeriodNextDay()),
+			    getBeginFixedWorkFirstPeriod(),
+			    getDuration(getBeginFixedWorkFirstPeriod(), getEndFixedWorkFirstPeriod(),
+				    getEndFixedWorkFirstPeriodNextDay()),
+			    getBeginFixedWorkSecondPeriod(),
+			    getDuration(getBeginFixedWorkSecondPeriod(), getEndFixedWorkSecondPeriod(),
+				    getEndFixedWorkSecondPeriodNextDay()), getMealBeginTime(), getMealEndTime(),
+			    getDuration(getMinimumMealBreakInterval()), getDuration(getMandatoryMealDiscount()))) {
+		WorkScheduleType equivalentWorkScheduleType = getEquivalentWorkScheduleType(getWorkScheduleType().getIdInternal());
 		if (equivalentWorkScheduleType == null) {
 		    if (!getWorkScheduleType().getWorkSchedules().isEmpty()
 			    || getWorkScheduleType().getBeginValidDate().isBefore(firstDay)) {
@@ -702,8 +666,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 			    // alterar
 			    editWorkScheduleType();
 			} else {
-			    getWorkScheduleType().setAcronym(
-				    getNewAcronym(getWorkScheduleType().getAcronym()));
+			    getWorkScheduleType().setAcronym(getNewAcronym(getWorkScheduleType().getAcronym()));
 			    getWorkScheduleType().setEndValidDate(firstDay.minusDays(1));
 			    getWorkScheduleType().setModifiedBy(getModifiedBy());
 			    getWorkScheduleType().setLastModifiedDate(now);
@@ -712,29 +675,24 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 			    if (newWorkScheluleType == null) {
 				Chronology chronology = GregorianChronology.getInstanceUTC();
 				DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
-				TimeOfDay time = new TimeOfDay(
-					ContinuousSchedule.normalContinuousWorkDayDuration.getMillis(),
+				TimeOfDay time = new TimeOfDay(ContinuousSchedule.normalContinuousWorkDayDuration.getMillis(),
 					chronology);
-				return new ActionMessage("error.invalidContinuousDuration", fmt
-					.print(time));
+				return new ActionMessage("error.invalidContinuousDuration", fmt.print(time));
 			    }
 			    for (WorkSchedule workSchedule : workScheduleToChangeWorkScheduleType) {
 				workSchedule.setWorkScheduleType(newWorkScheluleType);
 			    }
 
 			    for (Schedule schedule : scheduleToChangeDate) {
-				Schedule newSchedule = new Schedule(schedule.getAssiduousness(),
-					firstDay, schedule.getEndDate(), schedule.getException(), now,
-					getModifiedBy());
+				Schedule newSchedule = new Schedule(schedule.getAssiduousness(), firstDay, schedule.getEndDate(),
+					schedule.getException(), now, getModifiedBy());
 				List<WorkSchedule> newWorkSchedules = new ArrayList<WorkSchedule>();
 				for (WorkSchedule workSchedule : schedule.getWorkSchedules()) {
-				    WorkSchedule newWorkSchedule = getWorkSchedule(newWorkScheluleType
-					    .getIdInternal(), workSchedule.getWorkWeek(), workSchedule
-					    .getPeriodicity());
+				    WorkSchedule newWorkSchedule = getWorkSchedule(newWorkScheluleType.getIdInternal(),
+					    workSchedule.getWorkWeek(), workSchedule.getPeriodicity());
 				    if (newWorkSchedule == null) {
-					newWorkSchedule = new WorkSchedule(newWorkScheluleType,
-						workSchedule.getWorkWeek(), workSchedule
-							.getPeriodicity());
+					newWorkSchedule = new WorkSchedule(newWorkScheluleType, workSchedule.getWorkWeek(),
+						workSchedule.getPeriodicity());
 				    }
 				    newWorkSchedules.add(newWorkSchedule);
 				}
@@ -746,13 +704,15 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 			// ninguém usa alterar horário ou foi criado depois do
 			// firstday(basta alterar
 			// este)
+			// mas deviamos fazer validações, que não estamos a
+			// fazer pq.... (nº de horas dos horários continuos,
+			// etc...)
 			editWorkScheduleType();
 		    }
 
 		    return null;
 		} else {
-		    return new ActionMessage("error.existingEquivalentSchedule",
-			    equivalentWorkScheduleType.getAcronym());
+		    return new ActionMessage("error.existingEquivalentSchedule", equivalentWorkScheduleType.getAcronym());
 		}
 	    } else if (changeDatesOrAcronym) {
 		// só alterou as datas de validade e/ou acrónimo e já vi em cima
@@ -777,8 +737,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	    for (WorkSchedule workSchedule : getWorkScheduleType().getWorkSchedules()) {
 		for (Schedule schedule : workSchedule.getSchedules()) {
 		    if ((schedule.getEndDate() == null && getEndValidDate() != null)
-			    || (getEndValidDate() != null && !schedule.getEndDate().isBefore(
-				    getEndValidDate()))) {
+			    || (getEndValidDate() != null && !schedule.getEndDate().isBefore(getEndValidDate()))) {
 			return true;
 		    }
 		}
@@ -786,12 +745,10 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	    return false;
 	}
 
-	private static WorkSchedule getWorkSchedule(Integer workScheduleTypeId, WorkWeek workWeek,
-		Periodicity periodicity) {
+	private static WorkSchedule getWorkSchedule(Integer workScheduleTypeId, WorkWeek workWeek, Periodicity periodicity) {
 	    for (WorkSchedule workSchedule : RootDomainObject.getInstance().getWorkSchedules()) {
 		if (workSchedule.getWorkScheduleType().getIdInternal().equals(workScheduleTypeId)
-			&& workSchedule.getWorkWeek().equals(workWeek)
-			&& workSchedule.getPeriodicity() == periodicity) {
+			&& workSchedule.getWorkWeek().equals(workWeek) && workSchedule.getPeriodicity() == periodicity) {
 		    return workSchedule;
 		}
 	    }
@@ -808,8 +765,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	}
 
 	private boolean alreadyExistsWorkScheduleTypeAcronym(String acronym) {
-	    for (WorkScheduleType workScheduleType : RootDomainObject.getInstance()
-		    .getWorkScheduleTypes()) {
+	    for (WorkScheduleType workScheduleType : RootDomainObject.getInstance().getWorkScheduleTypes()) {
 		if (workScheduleType.getAcronym().equalsIgnoreCase(acronym)) {
 		    return true;
 		}
@@ -818,11 +774,9 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	}
 
 	private boolean alreadyExistsWorkScheduleTypeAcronymExceptThis(String acronym) {
-	    for (WorkScheduleType workScheduleType : RootDomainObject.getInstance()
-		    .getWorkScheduleTypes()) {
+	    for (WorkScheduleType workScheduleType : RootDomainObject.getInstance().getWorkScheduleTypes()) {
 		if (workScheduleType.getAcronym().equalsIgnoreCase(acronym)
-			&& !getWorkScheduleType().getIdInternal().equals(
-				workScheduleType.getIdInternal())) {
+			&& !getWorkScheduleType().getIdInternal().equals(workScheduleType.getIdInternal())) {
 		    return true;
 		}
 	    }
@@ -835,40 +789,34 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	    getWorkScheduleType().setBeginValidDate(getBeginValidDate());
 	    getWorkScheduleType().setEndValidDate(getEndValidDate());
 	    getWorkScheduleType().setWorkTime(getBeginDayTime());
-	    getWorkScheduleType().setWorkTimeDuration(
-		    getDuration(getBeginDayTime(), getEndDayTime(), getEndDayNextDay()));
+	    getWorkScheduleType().setWorkTimeDuration(getDuration(getBeginDayTime(), getEndDayTime(), getEndDayNextDay()));
 	    getWorkScheduleType().setClockingTime(getBeginClockingTime());
 	    getWorkScheduleType().setClockingTimeDuration(
 		    getDuration(getBeginClockingTime(), getEndClockingTime(), getEndClockingNextDay()));
 
 	    getWorkScheduleType().setNormalWorkPeriod(
-		    editWorkPeriod(getWorkScheduleType().getNormalWorkPeriod(),
-			    getBeginNormalWorkFirstPeriod(), getDuration(
-				    getBeginNormalWorkFirstPeriod(), getEndNormalWorkFirstPeriod(),
-				    getEndNormalWorkFirstPeriodNextDay()),
-			    getBeginNormalWorkSecondPeriod(), getDuration(
+		    editWorkPeriod(getWorkScheduleType().getNormalWorkPeriod(), getBeginNormalWorkFirstPeriod(),
+			    getDuration(getBeginNormalWorkFirstPeriod(), getEndNormalWorkFirstPeriod(),
+				    getEndNormalWorkFirstPeriodNextDay()), getBeginNormalWorkSecondPeriod(), getDuration(
 				    getBeginNormalWorkSecondPeriod(), getEndNormalWorkSecondPeriod(),
 				    getEndNormalWorkSecondPeriodNextDay())));
 
 	    getWorkScheduleType().setFixedWorkPeriod(
-		    editWorkPeriod(getWorkScheduleType().getFixedWorkPeriod(),
-			    getBeginFixedWorkFirstPeriod(), getDuration(getBeginFixedWorkFirstPeriod(),
-				    getEndFixedWorkFirstPeriod(), getEndFixedWorkFirstPeriodNextDay()),
-			    getBeginFixedWorkSecondPeriod(), getDuration(
-				    getBeginFixedWorkSecondPeriod(), getEndFixedWorkSecondPeriod(),
-				    getEndFixedWorkSecondPeriodNextDay())));
+		    editWorkPeriod(getWorkScheduleType().getFixedWorkPeriod(), getBeginFixedWorkFirstPeriod(), getDuration(
+			    getBeginFixedWorkFirstPeriod(), getEndFixedWorkFirstPeriod(), getEndFixedWorkFirstPeriodNextDay()),
+			    getBeginFixedWorkSecondPeriod(), getDuration(getBeginFixedWorkSecondPeriod(),
+				    getEndFixedWorkSecondPeriod(), getEndFixedWorkSecondPeriodNextDay())));
 
 	    getWorkScheduleType().setMeal(
 		    editMeal(getWorkScheduleType().getMeal(), getMealBeginTime(), getMealEndTime(),
-			    getDuration(getMinimumMealBreakInterval()),
-			    getDuration(getMandatoryMealDiscount())));
+			    getDuration(getMinimumMealBreakInterval()), getDuration(getMandatoryMealDiscount())));
 	}
 
-	private WorkPeriod editWorkPeriod(WorkPeriod workPeriod, TimeOfDay firstPeriod,
-		Duration firstPeriodDuration, TimeOfDay secondPeriod, Duration secondPeriodDuration) {
+	private WorkPeriod editWorkPeriod(WorkPeriod workPeriod, TimeOfDay firstPeriod, Duration firstPeriodDuration,
+		TimeOfDay secondPeriod, Duration secondPeriodDuration) {
 	    if (workPeriod != null && !isWorkPeriodUsed(workPeriod)) {
-		WorkPeriod equivalentWorkPeriod = getEquivalentWorkPeriod(firstPeriod,
-			firstPeriodDuration, secondPeriod, secondPeriodDuration);
+		WorkPeriod equivalentWorkPeriod = getEquivalentWorkPeriod(firstPeriod, firstPeriodDuration, secondPeriod,
+			secondPeriodDuration);
 		if (equivalentWorkPeriod == null) {
 		    workPeriod.setFirstPeriod(firstPeriod);
 		    workPeriod.setFirstPeriodDuration(firstPeriodDuration);
@@ -880,16 +828,13 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		}
 		return workPeriod;
 	    }
-	    return getOrCreateWorkPeriod(firstPeriod, firstPeriodDuration, secondPeriod,
-		    secondPeriodDuration);
+	    return getOrCreateWorkPeriod(firstPeriod, firstPeriodDuration, secondPeriod, secondPeriodDuration);
 	}
 
 	private boolean isWorkPeriodUsed(WorkPeriod workPeriod) {
-	    if ((workPeriod.getNormalWorkScheduleTypesCount() == 0 || (workPeriod
-		    .getNormalWorkScheduleTypesCount() == 1 && workPeriod.getNormalWorkScheduleTypes()
-		    .iterator().next().getIdInternal().equals(getWorkScheduleType().getIdInternal())))
-		    && (workPeriod.getFixedWorkScheduleTypesCount() == 0 || (workPeriod
-			    .getFixedWorkScheduleTypesCount() == 1 && workPeriod
+	    if ((workPeriod.getNormalWorkScheduleTypesCount() == 0 || (workPeriod.getNormalWorkScheduleTypesCount() == 1 && workPeriod
+		    .getNormalWorkScheduleTypes().iterator().next().getIdInternal().equals(getWorkScheduleType().getIdInternal())))
+		    && (workPeriod.getFixedWorkScheduleTypesCount() == 0 || (workPeriod.getFixedWorkScheduleTypesCount() == 1 && workPeriod
 			    .getFixedWorkScheduleTypes().iterator().next().getIdInternal().equals(
 				    getWorkScheduleType().getIdInternal())))) {
 		return false;
@@ -897,8 +842,8 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	    return true;
 	}
 
-	private Meal editMeal(Meal meal, TimeOfDay beginMeal, TimeOfDay endMeal,
-		Duration minimumMealBreakInterval, Duration mandatoryMealDiscount) {
+	private Meal editMeal(Meal meal, TimeOfDay beginMeal, TimeOfDay endMeal, Duration minimumMealBreakInterval,
+		Duration mandatoryMealDiscount) {
 	    if (beginMeal != null) {
 		if (minimumMealBreakInterval == null) {
 		    minimumMealBreakInterval = Duration.ZERO;
@@ -908,8 +853,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		}
 	    }
 	    if (meal != null && meal.getWorkScheduleTypesCount() == 1) {
-		Meal equivalentMeal = getEquivalentMeal(beginMeal, endMeal, minimumMealBreakInterval,
-			mandatoryMealDiscount);
+		Meal equivalentMeal = getEquivalentMeal(beginMeal, endMeal, minimumMealBreakInterval, mandatoryMealDiscount);
 		if (equivalentMeal == null) {
 		    meal.setBeginMealBreak(beginMeal);
 		    meal.setEndMealBreak(endMeal);
@@ -932,12 +876,10 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		yearMonth = closedMonth.getClosedYearMonth();
 	    }
 	}
-	return new YearMonthDay(yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType
-		.monthOfYear()), 1);
+	return new YearMonthDay(yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType.monthOfYear()) + 1, 1);
     }
 
     public boolean areEndDatesEqual(YearMonthDay endDate1, YearMonthDay endDate2) {
-	return (endDate1 == null && endDate2 == null)
-		|| (endDate1 != null && endDate2 != null && endDate1.equals(endDate2));
+	return (endDate1 == null && endDate2 == null) || (endDate1 != null && endDate2 != null && endDate1.equals(endDate2));
     }
 }
