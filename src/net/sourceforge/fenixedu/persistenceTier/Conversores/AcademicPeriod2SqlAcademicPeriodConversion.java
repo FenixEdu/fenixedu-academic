@@ -7,7 +7,6 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 public class AcademicPeriod2SqlAcademicPeriodConversion implements FieldConversion {
 
-    @Override
     public Object javaToSql(Object source) throws ConversionException {
 	if (source instanceof AcademicPeriod) {
 	    AcademicPeriod academicPeriod = (AcademicPeriod) source;
@@ -16,7 +15,6 @@ public class AcademicPeriod2SqlAcademicPeriodConversion implements FieldConversi
 	return source;
     }
 
-    @Override
     public Object sqlToJava(Object source) throws ConversionException {
 	if (source == null || source.equals("")) {
 	    return null;
