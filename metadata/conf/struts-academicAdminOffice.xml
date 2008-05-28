@@ -290,15 +290,6 @@
 	        	<forward name="showEditIngression" path="student.showEditIngression"/>
 	    </action>		
 
-		<action path="/manageRegistrationStartDates"
-		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ManageRegistrationStartDatesDA"
-	        parameter="method"
-			scope="request"
-			validate="true"
-			input="/manageRegistrationStartDates.do?method=prepare">
-	        	<forward name="showEditStartDates" path="student.showEditStartDates"/>
-	    </action>
-
 		<action path="/manageExternalRegistrationData"
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ManageExternalRegistrationDataDA"
 	        parameter="method"

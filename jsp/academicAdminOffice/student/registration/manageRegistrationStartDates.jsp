@@ -51,11 +51,19 @@
 </fr:view>
 </logic:notPresent>
 
+<br/>
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<span class="error0"> <bean:write name="message" /> </span>
+	<br />
+</html:messages>
+
 <bean:define id="registrationID" name="registration" property="idInternal" />
 <fr:edit name="registration" schema="student.manageRegistrationStartDates" >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mtop15 thmiddle" />
+		<fr:property name="requiredMarkShown" value="true" />
 	</fr:layout>
 	<fr:destination name="cancel" path="<%="/student.do?method=visualizeRegistration&registrationID=" + registrationID %>" />	
 </fr:edit>
-
+<br/>
+<em><bean:message key="renderers.validator.required.mark.explanation" bundle="RENDERER_RESOURCES" /></em>

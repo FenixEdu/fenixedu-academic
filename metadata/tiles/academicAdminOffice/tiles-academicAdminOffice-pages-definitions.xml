@@ -110,10 +110,6 @@
     <definition name="student.showCreateNewStudentCurricularPlan" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/createStudentCurricularPlan.jsp"></put>
     </definition>      
-    <definition name="student.showEditStartDates" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/manageRegistrationStartDates.jsp"></put>
-    </definition>      
-
 
 	<definition name="show-student-equivalency.plan" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>

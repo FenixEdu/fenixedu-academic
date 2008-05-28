@@ -138,17 +138,14 @@ public class Registration extends Registration_Base {
 	new RegisteredState(this, AccessControl.getPerson(), start);
     }
 
-
     public Registration(final Person person, final StudentCandidacy studentCandidacy) {
 	this(person, null, RegistrationAgreement.NORMAL, null, studentCandidacy);
     }
 
-    
     public Registration(final Person person, final Integer studentNumber) {
 	this(person, studentNumber, RegistrationAgreement.NORMAL, null);
     }
 
-    
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan) {
 	this(person, degreeCurricularPlan, RegistrationAgreement.NORMAL, null, null);
     }
@@ -3024,6 +3021,24 @@ public class Registration extends Registration_Base {
 
     final public boolean getIsForDegreeOffice() {
 	return isForOffice(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE));
+    }
+
+    public void editStartDates(final YearMonthDay startDate, final YearMonthDay homologationDate,
+	    final YearMonthDay studiesStartDate) {
+
+	if (startDate == null) {
+	    throw new DomainException("error.Registration.null.startDate");
+	}
+	setStartDate(startDate);
+	final RegistrationState firstRegistrationState = getFirstRegistrationState();
+	firstRegistrationState.setStateDate(startDate);
+	if (firstRegistrationState != getFirstRegistrationState()) {
+	    throw new DomainException("error.Registration.startDate.changes.first.registration.state");
+	}
+	getLastStudentCurricularPlan().setStartDate(startDate);
+
+	setHomologationDate(homologationDate);
+	setStudiesStartDate(studiesStartDate);
     }
 
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
