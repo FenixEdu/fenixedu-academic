@@ -1826,6 +1826,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime lastModifiedDate;
 		Boolean discountBonus;
 		Boolean discountA17Vacations;
+		Boolean inExercise;
 	}
 
 	class net.sourceforge.fenixedu.domain.assiduousness.Meal extends net.sourceforge.fenixedu.domain.DomainObject {
