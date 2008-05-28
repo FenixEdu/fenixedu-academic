@@ -431,6 +431,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public Registration getStudent() {
 	return this.getRegistration();
     }
+    
+    public void setStartDate(YearMonthDay startDate) {
+	super.setStartDateYearMonthDay(startDate);
+    }
 
     @Override
     @Deprecated
