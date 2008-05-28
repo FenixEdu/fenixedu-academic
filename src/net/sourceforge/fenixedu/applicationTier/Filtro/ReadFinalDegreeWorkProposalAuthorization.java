@@ -25,26 +25,8 @@ public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
 	if (finalDegreeWorkProposalOID != null) {
 	    Proposal proposal = rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID);
 	    if (proposal != null) {
-		if (proposal.getStatus() != null
-			&& proposal.getStatus().equals(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS)) {
+		if (proposal.canBeReadBy(id)) {
 		    return;
-		}
-		if (proposal.getOrientator() != null && proposal.getOrientator() != null
-			&& id != null
-			&& proposal.getOrientator().getUsername().equals(id.getUtilizador())) {
-		    return;
-		}
-		if (proposal.getCoorientator() != null && proposal.getCoorientator() != null
-			&& id != null
-			&& proposal.getCoorientator().getUsername().equals(id.getUtilizador())) {
-		    return;
-		}
-		for (final ExecutionDegree executionDegree : proposal.getScheduleing()
-			.getExecutionDegrees()) {
-		    if (ExecutionDegreeCoordinatorAuthorizationFilter.verifyCondition(id,
-			    executionDegree.getIdInternal())) {
-			return;
-		    }
 		}
 	    }
 	}

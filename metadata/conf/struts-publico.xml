@@ -727,6 +727,7 @@
 			>
 		<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
 		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
+		<forward name="show-final-degree-work-proposal-not-published-page" path="df.page.showFinalDegreeWorkProposal.not.published"/>
 	</action>
 
 	<action path="/smsController" 

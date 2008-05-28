@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWo
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
@@ -134,10 +135,18 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
 
     public ActionForward viewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String finalDegreeWorkProposalOID = request.getParameter("finalDegreeWorkProposalOID");
-        if (finalDegreeWorkProposalOID != null && !finalDegreeWorkProposalOID.equals("")
-                && StringUtils.isNumeric(finalDegreeWorkProposalOID)) {
-            Object[] args = { new Integer(finalDegreeWorkProposalOID) };
+        String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
+        if (finalDegreeWorkProposalOIDString != null && !finalDegreeWorkProposalOIDString.equals("")
+                && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
+
+            final Integer finalDegreeWorkProposalOID = Integer.valueOf(finalDegreeWorkProposalOIDString);
+            final Proposal proposal = rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID);
+
+            if (!proposal.canBeReadBy(getUserView(request))) {
+        	return mapping.findForward("show-final-degree-work-proposal-not-published-page");
+            }
+
+            Object[] args = { finalDegreeWorkProposalOID };
             InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService(null,
                     "ReadFinalDegreeWorkProposal", args);
             infoProposal.getExecutionDegree().setGetNextExecutionYear(true);

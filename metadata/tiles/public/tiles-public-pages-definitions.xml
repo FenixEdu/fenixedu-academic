@@ -122,6 +122,11 @@
 		<put name="profile_navigation" value="/commons/blank.jsp" />
 		<put name="body" value="/publico/finalDegreeWork/showFinalDegreeWorkProposal.jsp"/>
 	</definition>
+	<definition name="df.page.showFinalDegreeWorkProposal.not.published" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/finalDegreeWork/mainNavigation.jsp" />
+		<put name="profile_navigation" value="/commons/blank.jsp" />
+		<put name="body" value="/publico/finalDegreeWork/showFinalDegreeWorkProposalNotPublished.jsp"/>
+	</definition>
 	<definition name="viewExamsMap" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
 		<put name="body" value="/publico/viewExamsMap1_bd.jsp"/>
