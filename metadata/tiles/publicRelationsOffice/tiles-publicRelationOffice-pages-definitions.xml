@@ -38,12 +38,17 @@
 	<definition name="publicRelationsOffice-editFile" extends="definition.publicRelationOffice.master" >
 	    <put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
 	</definition>				
-	
-	
+
 	<!-- ==================== Email ================== -->
 
 	<definition name="publicRelationsOffice-sendMail" extends="definition.publicRelationOffice.master" >
 	    <put name="body" value="/publicRelations/email/sendEmail.jsp" />
 	</definition>	
-	
+
+	<!-- ==================== Reports ================== -->
+
+	<definition name="publicRelationsOffice-studentReportsSearch" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/reports/studentReports.jsp" />
+	</definition>
+
 </tiles-definitions>
