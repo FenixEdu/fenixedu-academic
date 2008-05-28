@@ -15,8 +15,6 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -25,6 +23,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -44,17 +43,15 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
     private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
-    private static final MessageResources messages = MessageResources
-	    .getMessageResources("resources/StudentResources");
+    private static final MessageResources messages = MessageResources.getMessageResources("resources/StudentResources");
 
-    private static final ComparatorChain executionPeriodComparator = new ComparatorChain();
+    private static final ComparatorChain executionSemesterComparator = new ComparatorChain();
     static {
-	executionPeriodComparator.addComparator(new BeanComparator("executionYear.year"), true);
-	executionPeriodComparator.addComparator(new BeanComparator("semester"), true);
+	executionSemesterComparator.addComparator(new BeanComparator("executionYear.year"), true);
+	executionSemesterComparator.addComparator(new BeanComparator("semester"), true);
     }
 
-    private static final Comparator<ExecutionCourse> executionCourseComparator = new BeanComparator(
-	    "nome");
+    private static final Comparator<ExecutionCourse> executionCourseComparator = new BeanComparator("nome");
 
     private Collection<ExecutionSemester> executionSemesters;
 
@@ -62,18 +59,21 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
     private ExecutionSemester executionSemester;
 
-    private Registration student;
+    private Registration registration;
 
     boolean setExecutionCourse = true;
 
     private String evaluationTypeClassname;
 
-    public Collection<ExecutionSemester> getExecutionPeriods() throws FenixFilterException,
-	    FenixServiceException {
+    protected Person getPerson() {
+	return getUserView() == null ? null : getUserView().getPerson();
+    }
+
+    public Collection<ExecutionSemester> getExecutionPeriods() {
 	if (executionSemesters == null) {
 	    final Registration registration = getStudent();
 
-	    executionSemesters = new TreeSet<ExecutionSemester>(executionPeriodComparator);
+	    executionSemesters = new TreeSet<ExecutionSemester>(executionSemesterComparator);
 	    for (final Attends attends : registration.getAssociatedAttends()) {
 		executionSemesters.add(attends.getExecutionCourse().getExecutionPeriod());
 	    }
@@ -81,13 +81,11 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	return executionSemesters;
     }
 
-    public Collection<ExecutionCourse> getExecutionCourses() throws FenixFilterException,
-	    FenixServiceException {
+    public Collection<ExecutionCourse> getExecutionCourses() {
 	final ExecutionSemester executionSemester = getExecutionPeriod();
 
 	if (executionCourses == null
-		|| (!executionCourses.isEmpty() && executionSemester != executionCourses.iterator().next()
-			.getExecutionPeriod())) {
+		|| (!executionCourses.isEmpty() && executionSemester != executionCourses.iterator().next().getExecutionPeriod())) {
 	    final Registration registration = getStudent();
 
 	    executionCourses = new TreeSet<ExecutionCourse>(executionCourseComparator);
@@ -101,7 +99,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	return executionCourses;
     }
 
-    public ExecutionSemester getExecutionPeriod() throws FenixFilterException, FenixServiceException {
+    public ExecutionSemester getExecutionPeriod() {
 	final Integer executionPeriodID = getExecutionPeriodID();
 	if (executionSemester == null || !executionPeriodID.equals(executionSemester.getIdInternal())) {
 	    final Collection<ExecutionSemester> executionSemesters = getExecutionPeriods();
@@ -119,47 +117,47 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getRegistrationsSelectItems() {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
-	for (final Registration registration : getUserView().getPerson().getStudents()) {
-	    result.add(new SelectItem(registration.getIdInternal(), registration
-		    .getLastStudentCurricularPlan().getDegreeCurricularPlan().getPresentationName()));
+
+	for (final Registration registration : getPerson().getStudent().getActiveRegistrations()) {
+	    result.add(new SelectItem(registration.getIdInternal(), registration.getLastDegreeCurricularPlan()
+		    .getPresentationName()));
 	}
+
 	if (!result.isEmpty()) {
-	    setRegistrationID((Integer) result.get(0).getValue());
+	    setRegistrationID(getPerson().getStudent().getLastActiveRegistration().getIdInternal());
 	}
+
 	return result;
     }
-    
+
     public Integer getRegistrationID() {
 	return (Integer) getViewState().getAttribute("registrationID");
     }
-    
+
     public void setRegistrationID(Integer registrationID) {
 	getViewState().setAttribute("registrationID", registrationID);
     }
 
     public Registration getStudent() {
-	if (student == null) {
-	    for (final Registration registration : getUserView().getPerson().getStudents()) {
-		if (registration.getIdInternal().equals(getRegistrationID())) {
-		    student = registration;
+	if (registration == null) {
+	    for (final Registration activeRegistration : getPerson().getStudent().getActiveRegistrations()) {
+		if (activeRegistration.getIdInternal().equals(getRegistrationID())) {
+		    registration = activeRegistration;
 		    break;
 		}
 	    }
-		}
-	return student;
+	}
+	return registration;
     }
 
-    public Date getCalendarStartDate() throws FenixFilterException, FenixServiceException {
+    public Date getCalendarStartDate() {
 	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final String evaluationTypeClassname = getEvaluationTypeClassname();
-	final StudentCurricularPlan studentCurricularPlan = getStudent()
-		.getActiveStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = getStudent().getActiveStudentCurricularPlan();
 	final DegreeCurricularPlan degreeCurricularPlan = (studentCurricularPlan != null) ? studentCurricularPlan
-		.getDegreeCurricularPlan()
-		: null;
+		.getDegreeCurricularPlan() : null;
 	final ExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionSemester);
-	if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
-		|| executionDegree == null) {
+	if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0 || executionDegree == null) {
 	    if (executionDegree != null && executionSemester.getSemester().intValue() == 1
 		    && executionDegree.getPeriodLessonsFirstSemester() != null) {
 		return executionDegree.getPeriodLessonsFirstSemester().getStart();
@@ -194,17 +192,14 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	return null;
     }
 
-    public Date getCalendarEndDate() throws FenixFilterException, FenixServiceException {
+    public Date getCalendarEndDate() {
 	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final String evaluationTypeClassname = getEvaluationTypeClassname();
-	final StudentCurricularPlan studentCurricularPlan = getStudent()
-		.getActiveStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = getStudent().getActiveStudentCurricularPlan();
 	final DegreeCurricularPlan degreeCurricularPlan = (studentCurricularPlan != null) ? studentCurricularPlan
-		.getDegreeCurricularPlan()
-		: null;
+		.getDegreeCurricularPlan() : null;
 	final ExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionSemester);
-	if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
-		|| executionDegree == null) {
+	if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0 || executionDegree == null) {
 	    if (executionDegree != null && executionSemester.getSemester().intValue() == 1
 		    && executionDegree.getPeriodExamsFirstSemester() != null) {
 		return executionDegree.getPeriodExamsFirstSemester().getEnd();
@@ -237,8 +232,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	    final ExecutionSemester executionSemester) {
 	if (degreeCurricularPlan != null) {
 	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
-		if (executionSemester != null
-			&& executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
+		if (executionSemester != null && executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
 		    return executionDegree;
 		}
 	    }
@@ -246,7 +240,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	return null;
     }
 
-    public List<CalendarLink> getCalendarLinks() throws FenixFilterException, FenixServiceException {
+    public List<CalendarLink> getCalendarLinks() {
 	List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
 
 	final ExecutionSemester executionSemester = getExecutionPeriod();
@@ -255,8 +249,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	for (final Attends attends : registration.getAssociatedAttends()) {
 	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
 	    if (executionCourse.getExecutionPeriod() == executionSemester
-		    && (getExecutionCourseID() == null || getExecutionCourseID().equals(
-			    executionCourse.getIdInternal()))) {
+		    && (getExecutionCourseID() == null || getExecutionCourseID().equals(executionCourse.getIdInternal()))) {
 		for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
 		    if (evaluation instanceof WrittenEvaluation) {
 			if (evaluation instanceof Exam) {
@@ -268,16 +261,13 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
 			final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
 			final String evaluationTypeClassname = getEvaluationTypeClassname();
-			if (evaluationTypeClassname == null
-				|| evaluationTypeClassname.length() == 0
-				|| evaluationTypeClassname
-					.equals(writtenEvaluation.getClass().getName())) {
+			if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
+				|| evaluationTypeClassname.equals(writtenEvaluation.getClass().getName())) {
 			    CalendarLink calendarLink = new CalendarLink();
 			    calendarLinks.add(calendarLink);
 
 			    calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-			    calendarLink.setObjectLinkLabel(constructCalendarPresentation(
-				    executionCourse, writtenEvaluation));
+			    calendarLink.setObjectLinkLabel(constructCalendarPresentation(executionCourse, writtenEvaluation));
 			    calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
 			}
 		    } else if (evaluation instanceof Project) {
@@ -288,18 +278,15 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 			    CalendarLink calendarLinkBegin = new CalendarLink();
 			    calendarLinks.add(calendarLinkBegin);
 			    calendarLinkBegin.setObjectOccurrence(project.getBegin());
-			    calendarLinkBegin.setObjectLinkLabel(constructCalendarPresentation(
-				    executionCourse, project, project.getBegin(), messages
-					    .getMessage("label.evaluation.project.begin")));
-			    calendarLinkBegin
-				    .setLinkParameters(constructLinkParameters(executionCourse));
+			    calendarLinkBegin.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project, project
+				    .getBegin(), messages.getMessage("label.evaluation.project.begin")));
+			    calendarLinkBegin.setLinkParameters(constructLinkParameters(executionCourse));
 
 			    CalendarLink calendarLinkEnd = new CalendarLink();
 			    calendarLinks.add(calendarLinkEnd);
 			    calendarLinkEnd.setObjectOccurrence(project.getEnd());
-			    calendarLinkEnd.setObjectLinkLabel(constructCalendarPresentation(
-				    executionCourse, project, project.getEnd(), messages
-					    .getMessage("label.evaluation.project.end")));
+			    calendarLinkEnd.setObjectLinkLabel(constructCalendarPresentation(executionCourse, project, project
+				    .getEnd(), messages.getMessage("label.evaluation.project.end")));
 			    calendarLinkEnd.setLinkParameters(constructLinkParameters(executionCourse));
 			}
 		    }
@@ -309,28 +296,25 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	return calendarLinks;
     }
 
-    public List<SelectItem> getExecutionPeriodSelectItems() throws FenixFilterException,
-	    FenixServiceException {
+    public List<SelectItem> getExecutionPeriodSelectItems() {
 	final List<SelectItem> executionPeriodSelectItems = new ArrayList<SelectItem>();
 
 	for (final ExecutionSemester executionSemester : getExecutionPeriods()) {
 	    if (executionSemester.getState() != PeriodState.NOT_OPEN) {
 		final ExecutionYear executionYear = executionSemester.getExecutionYear();
-		executionPeriodSelectItems.add(new SelectItem(executionSemester.getIdInternal(),
-			executionSemester.getName() + " " + executionYear.getYear()));
+		executionPeriodSelectItems.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getName()
+			+ " " + executionYear.getYear()));
 	    }
 	}
 
 	return executionPeriodSelectItems;
     }
 
-    public List<SelectItem> getExecutionCourseSelectItems() throws FenixFilterException,
-	    FenixServiceException {
+    public List<SelectItem> getExecutionCourseSelectItems() {
 	final List<SelectItem> executionPeriodSelectItems = new ArrayList<SelectItem>();
 
 	for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-	    executionPeriodSelectItems.add(new SelectItem(executionCourse.getIdInternal(),
-		    executionCourse.getNome()));
+	    executionPeriodSelectItems.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
 	}
 
 	return executionPeriodSelectItems;
@@ -342,15 +326,14 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	final Map<String, String> linkParameters = new HashMap<String, String>();
 	linkParameters.put("method", "evaluations");
 	linkParameters.put("objectCode", (site != null) ? site.getIdInternal().toString() : null);
-	linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getIdInternal()
-		.toString());
+	linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getIdInternal().toString());
 	linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
 	linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, executionCourse.getSite().getReversePath());
 	return linkParameters;
     }
 
-    private String constructCalendarPresentation(final ExecutionCourse executionCourse,
-	    final Project project, final Date time, final String tail) {
+    private String constructCalendarPresentation(final ExecutionCourse executionCourse, final Project project, final Date time,
+	    final String tail) {
 	final StringBuilder stringBuilder = new StringBuilder();
 	stringBuilder.append(messages.getMessage("label.evaluation.shortname.project"));
 	stringBuilder.append(" ");
@@ -362,8 +345,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	return stringBuilder.toString();
     }
 
-    private String constructCalendarPresentation(final ExecutionCourse executionCourse,
-	    final WrittenEvaluation writtenEvaluation) {
+    private String constructCalendarPresentation(final ExecutionCourse executionCourse, final WrittenEvaluation writtenEvaluation) {
 	final StringBuilder stringBuilder = new StringBuilder();
 	if (writtenEvaluation instanceof WrittenTest) {
 	    stringBuilder.append(messages.getMessage("label.evaluation.shortname.test"));
@@ -383,7 +365,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }
 
-    public Integer getExecutionPeriodID() throws FenixFilterException, FenixServiceException {
+    public Integer getExecutionPeriodID() {
 	if (getViewState().getAttribute("executionPeriodID") == null) {
 	    final Collection<ExecutionSemester> executionSemesters = getExecutionPeriods();
 	    if (executionSemesters != null) {
