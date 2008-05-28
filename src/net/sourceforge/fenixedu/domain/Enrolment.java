@@ -879,7 +879,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
 	return false;
     }
-    
+
     final public boolean hasAssociatedMarkSheetOrFinalGrade() {
 	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
 	    if (enrolmentEvaluation.hasMarkSheet() || enrolmentEvaluation.isFinal()) {
@@ -1144,7 +1144,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 		final Degree leicPb = Degree.readBySigla("LEIC-pB");
 		if (isStudentFromDegree(leicPb, dcpOfStudent)) {
-		    return getCurricularCourse().isTFC() ? getBaseWeigth() : LEIC_WEIGHT_BEFORE_0607_EXCEPT_TFC;
+		    return getBaseWeigth();
 		}
 
 		final Degree lmacPb = Degree.readBySigla("LMAC-pB");
