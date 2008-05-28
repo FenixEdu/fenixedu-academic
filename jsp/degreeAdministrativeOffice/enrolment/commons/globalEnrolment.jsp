@@ -6,9 +6,6 @@
 <h2><bean:message key="title.student.curricularEnrollments"/></h2>
 <ul>
 	<li>
-		<html:link page="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent"><bean:message key="link.student.enrollment"/></html:link>
-	</li>
-	<li>
 		<html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=DEGREE&amp;userType=0"><bean:message key="link.student.enrollment.without.rules"/></html:link>
 	</li>
 	<li>

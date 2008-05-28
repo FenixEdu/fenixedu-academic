@@ -17,9 +17,5 @@
 			<html:link page="<%= "/viewStudentCurriculum.do?method=prepare&amp;executionDegreeId=" + infoExecutionDegreeID.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 			    <bean:message key="link.student.curriculum" /></html:link>
 		</li>
-		<li>
-			<html:link page="<%= "/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent&amp;executionDegreeId=" + infoExecutionDegreeID.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
-			    <bean:message key="link.student.enrollment" /></html:link>
-		</li>		
 	</ul>
 </logic:present>

@@ -1,12 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -45,22 +42,10 @@ public class Branch extends Branch_Base {
 	setCode(code);
     }
 
-    public List getAreaCurricularCourseGroups(final AreaType areaType) {
-
-	return (List) CollectionUtils.select(getCurricularCourseGroups(), new Predicate() {
-
-	    public boolean evaluate(Object arg0) {
-		CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) arg0;
-		return curricularCourseGroup.getAreaType().equals(areaType);
-	    }
-	});
-    }
-
     private Boolean canDeleteAllEligibleCurricularCourseScopes(final Branch commonBranch) {
 	Iterator branchCurricularCourseScopesIterator = getScopesIterator();
 	while (branchCurricularCourseScopesIterator.hasNext()) {
-	    CurricularCourseScope scope = (CurricularCourseScope) branchCurricularCourseScopesIterator
-		    .next();
+	    CurricularCourseScope scope = (CurricularCourseScope) branchCurricularCourseScopesIterator.next();
 	    CurricularCourse curricularCourse = scope.getCurricularCourse();
 
 	    // if CurricularCourse already has a common Branch
@@ -78,8 +63,7 @@ public class Branch extends Branch_Base {
 	if (this.hasAnyAssociatedFinalDegreeWorkProposals())
 	    throw new DomainException("error.branch.cant.delete");
 
-	if (this.representsCommonBranch()
-		&& (this.hasAnyCurricularCourseGroups() || this.hasAnyScopes()))
+	if (this.representsCommonBranch() && this.hasAnyScopes())
 	    throw new DomainException("error.branch.cant.delete");
 
 	Branch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
@@ -101,13 +85,6 @@ public class Branch extends Branch_Base {
 
 	this.getStudentCurricularPlans().clear();
 
-	final Iterator curricularCourseGroupsIterator = getCurricularCourseGroupsIterator();
-	while (curricularCourseGroupsIterator.hasNext()) {
-	    CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) curricularCourseGroupsIterator.next();
-	    curricularCourseGroupsIterator.remove();
-	    curricularCourseGroup.setBranch(commonBranch);
-	}
-
 	removeCurricularCourseScopes(commonBranch);
 	removeDegreeCurricularPlan();
 	removeRootDomainObject();
@@ -117,8 +94,7 @@ public class Branch extends Branch_Base {
     private void removeCurricularCourseScopes(final Branch commonBranch) throws DomainException {
 	Iterator branchCurricularCourseScopesIterator = getScopesIterator();
 	while (branchCurricularCourseScopesIterator.hasNext()) {
-	    CurricularCourseScope scope = (CurricularCourseScope) branchCurricularCourseScopesIterator
-		    .next();
+	    CurricularCourseScope scope = (CurricularCourseScope) branchCurricularCourseScopesIterator.next();
 	    CurricularCourse curricularCourse = scope.getCurricularCourse();
 
 	    // if CurricularCourse already has a common Branch
@@ -145,72 +121,14 @@ public class Branch extends Branch_Base {
 	return null;
     }
 
-    private Boolean hasCurricularCourseCommonBranchInAnyCurricularCourseScope(
-	    CurricularCourse curricularCourse, final Branch commonBranch) {
-	return ((CurricularCourseScope) CollectionUtils.find(curricularCourse.getScopes(),
-		new Predicate() {
-		    public boolean evaluate(Object o) {
-			CurricularCourseScope ccs = (CurricularCourseScope) o;
-			return ccs.getBranch().equals(commonBranch);
-		    }
-		}) != null);
-    }
-
-    public List<CurricularCourseGroup> readCurricularCourseGroupsByAreaType(AreaType areaType) {
-	List<CurricularCourseGroup> result = new ArrayList<CurricularCourseGroup>();
-	for (CurricularCourseGroup curricularCourseGroup : this.getCurricularCourseGroups()) {
-	    if ((curricularCourseGroup instanceof AreaCurricularCourseGroup)
-		    && curricularCourseGroup.getAreaType().equals(areaType)) {
-		result.add(curricularCourseGroup);
+    private Boolean hasCurricularCourseCommonBranchInAnyCurricularCourseScope(CurricularCourse curricularCourse,
+	    final Branch commonBranch) {
+	return ((CurricularCourseScope) CollectionUtils.find(curricularCourse.getScopes(), new Predicate() {
+	    public boolean evaluate(Object o) {
+		CurricularCourseScope ccs = (CurricularCourseScope) o;
+		return ccs.getBranch().equals(commonBranch);
 	    }
-	}
-	return result;
-    }
-
-    public CurricularCourseGroup readCurricularCourseGroupByCurricularCourseAndAreaType(
-	    CurricularCourse curricularCourse, AreaType areaType) {
-	List<CurricularCourseGroup> areaCurricularCourseGroups = readCurricularCourseGroupsByAreaType(areaType);
-	for (CurricularCourseGroup group : areaCurricularCourseGroups) {
-	    for (CurricularCourse course : group.getCurricularCourses()) {
-		if (course.equals(curricularCourse)) {
-		    return group;
-		}
-	    }
-	}
-	return null;
-    }
-
-    public CurricularCourseGroup readCurricularCourseGroupByScientificAreaAndAreaType(
-	    ScientificArea scientificArea, AreaType areaType) {
-	List<CurricularCourseGroup> areaCurricularCourseGroups = readCurricularCourseGroupsByAreaType(areaType);
-	for (CurricularCourseGroup group : areaCurricularCourseGroups) {
-	    for (ScientificArea area : group.getScientificAreas()) {
-		if (area.equals(scientificArea)) {
-		    return group;
-		}
-	    }
-	}
-	return null;
-    }
-
-    public List<CurricularCourseGroup> getOptionalCurricularCourseGroups() {
-	List<CurricularCourseGroup> result = new ArrayList<CurricularCourseGroup>();
-	for (CurricularCourseGroup curricularCourseGroup : this.getCurricularCourseGroups()) {
-	    if (curricularCourseGroup instanceof OptionalCurricularCourseGroup) {
-		result.add(curricularCourseGroup);
-	    }
-	}
-	return result;
-    }
-
-    public CurricularCourseGroup getOptionalCurricularCourseGroupByName(final String name) {
-	for (CurricularCourseGroup curricularCourseGroup : this.getCurricularCourseGroups()) {
-	    if ((curricularCourseGroup instanceof OptionalCurricularCourseGroup)
-		    && curricularCourseGroup.getName().equals(name)) {
-		return curricularCourseGroup;
-	    }
-	}
-	return null;
+	}) != null);
     }
 
     // Static methods

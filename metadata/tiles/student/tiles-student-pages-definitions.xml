@@ -151,18 +151,6 @@
 	<!-- END OF GROUPS DEFINITIONS -->
 
 	<!--  *******************  Enrollment ******************** -->
-	<definition name="df.page.prepareEnrollmentChooseAreas" extends="definition.student.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseAreas.jsp"/>
-	</definition>
-	<definition name="df.page.prepareEnrollmentChooseCurricularCourses" extends="definition.student.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseCurricularCourses.jsp"/>
-	</definition>
-    <definition name="df.page.showOptionalCourses" extends="definition.student.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseOptionalCurricularCourses.jsp"/>
-	</definition>
-	<definition name="df.page.enrollmentConfirmation" extends="definition.student.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
-	</definition>
 	<definition name="df.page.warning" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/warning.jsp"/>
 	</definition>

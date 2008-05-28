@@ -38,12 +38,6 @@
 			key="label.manager.branches.management" />
 	</html:link></li>
 	<li><html:link module="/manager"
-		page="<%="/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeId=" + request.getParameter("degreeId")%>"
-		paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId">
-		<bean:message bundle="MANAGER_RESOURCES"
-			key="label.manager.curricularCourseGroups.management" />
-	</html:link></li>
-	<li><html:link module="/manager"
 		page="<%="/managePrecedences.do?method=showMenu&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>">
 		<bean:message bundle="MANAGER_RESOURCES"
 			key="label.manager.precedences.management" />

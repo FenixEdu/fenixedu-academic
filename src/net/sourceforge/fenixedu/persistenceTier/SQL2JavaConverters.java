@@ -23,7 +23,6 @@ public class SQL2JavaConverters {
     public static FieldConversion OldPublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.OldPublicationTypeFieldConversion();
     public static FieldConversion JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion();
     public static FieldConversion OrientationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.OrientationTypeFieldConversion();
-    public static FieldConversion JavaAreaType2SqlAreaTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaAreaType2SqlAreaTypeFieldConversion();
     public static FieldConversion JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConversion();
     public static FieldConversion org$apache$ojb$broker$accesslayer$conversions$Boolean2IntFieldConversion = new org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion();
     public static FieldConversion JavaCurricularCourseExecutionScope2SqlCurricularCourseExecutionScopeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularCourseExecutionScope2SqlCurricularCourseExecutionScopeFieldConversion();

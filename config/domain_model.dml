@@ -144,7 +144,6 @@ enum      net.sourceforge.fenixedu.domain.transactions.TransactionType          
 valueType net.sourceforge.fenixedu.domain.util.EmailAddressList                                                      as EmailAddressList;
 enum      net.sourceforge.fenixedu.domain.util.LogicOperator                                                         as LogicOperator;
 enum      net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus                                                  as AttendingStatus;
-valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                                         as AreaType;
 valueType net.sourceforge.fenixedu.util.ByteArray                                                                    as ByteArray;
 enum      net.sourceforge.fenixedu.util.ContentType                                                                  as ContentType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope                                               as CurricularCourseExecutionScope;
@@ -298,19 +297,6 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 
 	class net.sourceforge.fenixedu.domain.CurricularCourseEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
 	}
-
-	class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourceforge.fenixedu.domain.DomainObject {
-		Integer maximumValue;
-		Integer minimumValue;
-		String name;
-	}
-
-		class net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
-			AreaType areaType;
-		}
-
-		class net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
-		}
 
 	class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
 		String anotation;
@@ -5241,13 +5227,6 @@ relation BlueprintBlueprintFile {
 	net.sourceforge.fenixedu.domain.space.BlueprintFile playsRole blueprintFile;
 }
 
-relation BranchCurricularCourseGroup {
-	net.sourceforge.fenixedu.domain.Branch playsRole branch;
-	net.sourceforge.fenixedu.domain.CurricularCourseGroup playsRole curricularCourseGroups {
-		multiplicity *;
-	}
-}
-
 relation BranchCurricularCourseScope {
 	net.sourceforge.fenixedu.domain.Branch playsRole branch;
 	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole scopes {
@@ -5573,15 +5552,6 @@ relation CurricularCourseCurricularCourseEquivalence {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole equivalentCurricularCourse;
-}
-
-relation CurricularCourseCurricularCourseGroup {
-	net.sourceforge.fenixedu.domain.CurricularCourseGroup playsRole curricularCourseGroups {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourses {
-		multiplicity *;
-	}
 }
 
 relation CurricularCourseCurricularCourseScope {
@@ -9067,13 +9037,6 @@ relation RootDomainObjectCurricularCourseEquivalence {
 	}
 }
 
-relation RootDomainObjectCurricularCourseGroup {
-	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
-	net.sourceforge.fenixedu.domain.CurricularCourseGroup playsRole curricularCourseGroups {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectCurricularCourseScope {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole curricularCourseScopes {
@@ -10956,15 +10919,6 @@ relation ScientificAreaCreditsInScientificArea {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificArea;
-}
-
-relation ScientificAreaCurricularCourseGroup {
-	net.sourceforge.fenixedu.domain.CurricularCourseGroup playsRole curricularCourseGroups {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificAreas {
-		multiplicity *;
-	}
 }
 
 relation ScientificCommissionPerson {

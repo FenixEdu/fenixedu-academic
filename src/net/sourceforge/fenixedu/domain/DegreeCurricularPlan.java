@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -25,14 +24,8 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
-import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.AMIIICDIIRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberEctsCreditsEnrolmentRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularCourseFunctor;
@@ -51,7 +44,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.LanguageUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -644,48 +636,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
 
-    public List<IEnrollmentRule> getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,
-	    ExecutionSemester executionSemester) {
-
-	final List<IEnrollmentRule> result = new ArrayList<IEnrollmentRule>(4);
-
-	result.add(new AMIIICDIIRule(studentCurricularPlan, executionSemester));
-	result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionSemester));
-	result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan, executionSemester));
-	result.add(new MaximumNumberEctsCreditsEnrolmentRule(studentCurricularPlan, executionSemester));
-
-	return result;
-    }
-
-    public List<CurricularCourse> getCurricularCoursesFromArea(Branch area, AreaType areaType) {
-	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
-
-	List<CurricularCourseScope> scopes = area.getScopes();
-
-	int scopesSize = scopes.size();
-
-	for (int i = 0; i < scopesSize; i++) {
-	    CurricularCourseScope curricularCourseScope = (CurricularCourseScope) scopes.get(i);
-
-	    CurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
-
-	    if (!curricularCourses.contains(curricularCourse)) {
-		curricularCourses.add(curricularCourse);
-	    }
-	}
-
-	return curricularCourses;
-    }
-
-    public List<CurricularCourse> getCurricularCoursesFromAnyArea() {
-	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
-	for (Iterator<Branch> iter = getAreas().iterator(); iter.hasNext();) {
-	    Branch branch = iter.next();
-	    curricularCourses.addAll(getCurricularCoursesFromArea(branch, null));
-	}
-	return curricularCourses;
-    }
-
     public CurricularCourse getCurricularCourseByCode(String code) {
 	for (CurricularCourse curricularCourse : getCurricularCourses()) {
 	    if (curricularCourse.getCode().equals(code))
@@ -817,57 +767,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	});
     }
 
-    public List<CurricularCourse> getTFCs() {
-	List<CurricularCourse> curricularCourses = (List<CurricularCourse>) CollectionUtils.select(getCurricularCourses(),
-		new Predicate() {
-		    public boolean evaluate(Object obj) {
-			CurricularCourse cc = (CurricularCourse) obj;
-			return cc.getType().equals(CurricularCourseType.TFC_COURSE);
-		    }
-		});
-
-	return curricularCourses;
-    }
-
-    public List<Branch> getSpecializationAreas() {
-
-	return (List<Branch>) CollectionUtils.select(getAreas(), new Predicate() {
-
-	    public boolean evaluate(Object arg0) {
-		Branch branch = (Branch) arg0;
-		return branch.getBranchType().equals(BranchType.SPECBR);
-	    }
-
-	});
-    }
-
-    public List<Branch> getSecundaryAreas() {
-	return (List<Branch>) CollectionUtils.select(getAreas(), new Predicate() {
-
-	    public boolean evaluate(Object arg0) {
-		Branch branch = (Branch) arg0;
-		return branch.getBranchType().equals(BranchType.SECNBR);
-	    }
-
-	});
-    }
-
-    public List<CurricularCourse> getActiveCurricularCoursesByYearAndSemester(int year, Integer semester) {
-	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-	for (final CurricularCourse curricularCourse : getCurricularCourses()) {
-	    for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-		final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
-		if (curricularSemester.getSemester().equals(semester)
-			&& curricularSemester.getCurricularYear().getYear().intValue() == year
-			&& curricularCourseScope.isActive()) {
-		    result.add(curricularCourse);
-		    break;
-		}
-	    }
-	}
-	return result;
-    }
-
     public Set<CurricularCourse> getActiveCurricularCourses() {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : getCurricularCourses()) {
@@ -898,18 +797,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public List getSpecialListOfCurricularCourses() {
 	return new ArrayList();
-    }
-
-    public List<CurricularCourseGroup> getAllOptionalCurricularCourseGroups() {
-	List<CurricularCourseGroup> result = new ArrayList<CurricularCourseGroup>();
-	for (Branch branch : this.getAreas()) {
-	    for (CurricularCourseGroup curricularCourseGroup : branch.getCurricularCourseGroups()) {
-		if (curricularCourseGroup instanceof OptionalCurricularCourseGroup) {
-		    result.add(curricularCourseGroup);
-		}
-	    }
-	}
-	return result;
     }
 
     public boolean isGradeValid(Grade grade) {

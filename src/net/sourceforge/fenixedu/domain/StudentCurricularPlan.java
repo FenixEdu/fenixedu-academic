@@ -23,19 +23,16 @@ import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEve
 import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
@@ -46,7 +43,6 @@ import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -74,7 +70,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.Curricul
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -1128,27 +1123,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return false;
     }
 
-    final public List<CurricularCourse2Enroll> getCurricularCoursesToEnroll(ExecutionSemester executionSemester)
-	    throws FenixDomainException {
-
-	calculateStudentAcumulatedEnrollments(executionSemester);
-
-	List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll = getCommonBranchAndStudentBranchesCourses(executionSemester);
-
-	initEctsCreditsToEnrol(setOfCurricularCoursesToEnroll, executionSemester);
-
-	setOfCurricularCoursesToEnroll = initAcumulatedEnrollments(setOfCurricularCoursesToEnroll);
-
-	for (final IEnrollmentRule enrollmentRule : getListOfEnrollmentRules(executionSemester)) {
-	    setOfCurricularCoursesToEnroll = enrollmentRule.apply(setOfCurricularCoursesToEnroll);
-	    if (setOfCurricularCoursesToEnroll.isEmpty()) {
-		break;
-	    }
-	}
-
-	return setOfCurricularCoursesToEnroll;
-    }
-
     final public void initEctsCreditsToEnrol(List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll,
 	    ExecutionSemester executionSemester) {
 	for (CurricularCourse2Enroll curricularCourse2Enroll : setOfCurricularCoursesToEnroll) {
@@ -1294,68 +1268,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}));
     }
 
-    public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(CurricularCourse curricularCourse,
-	    ExecutionSemester currentExecutionPeriod) {
-
-	if (getBranch() == null) {
-	    if (!curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
-		return CurricularCourseEnrollmentType.NOT_ALLOWED;
-	    }
-	} else {
-	    if (!curricularCourse.hasActiveScopeInGivenSemesterForCommonAndGivenBranch(currentExecutionPeriod.getSemester(),
-		    getBranch())) {
-		return CurricularCourseEnrollmentType.NOT_ALLOWED;
-	    }
-	}
-
-	if (isCurricularCourseApproved(curricularCourse)) {
-	    return CurricularCourseEnrollmentType.NOT_ALLOWED;
-	}
-
-	List enrollmentsWithEnrolledStateInCurrentExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod);
-
-	for (int i = 0; i < enrollmentsWithEnrolledStateInCurrentExecutionPeriod.size(); i++) {
-	    Enrolment enrollment = (Enrolment) enrollmentsWithEnrolledStateInCurrentExecutionPeriod.get(i);
-	    if (curricularCourse.equals(enrollment.getCurricularCourse())) {
-		return CurricularCourseEnrollmentType.NOT_ALLOWED;
-	    }
-	}
-
-	List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
-		.getPreviousExecutionPeriod());
-
-	for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod.size(); i++) {
-	    Enrolment enrollment = (Enrolment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod.get(i);
-	    if (curricularCourse.equals(enrollment.getCurricularCourse())) {
-		return CurricularCourseEnrollmentType.TEMPORARY;
-	    }
-	}
-
-	CurricularCourseEnrollmentType courseEnrollmentType = CurricularCourseEnrollmentType.DEFINITIVE;
-	for (CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalencesSet()) {
-	    for (CurricularCourse eqCurricularCourse : curricularCourseEquivalence.getOldCurricularCoursesSet()) {
-		if (this.isEquivalentAproved(eqCurricularCourse)) {
-		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.DEFINITIVE);
-		} else if (hasEnrolledStateInPreviousExecutionPerdiod(eqCurricularCourse,
-			enrollmentsWithEnrolledStateInPreviousExecutionPeriod)) {
-		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.TEMPORARY);
-		} else {
-		    courseEnrollmentType = courseEnrollmentType.and(CurricularCourseEnrollmentType.NOT_ALLOWED);
-		}
-	    }
-	    if (courseEnrollmentType.equals(CurricularCourseEnrollmentType.TEMPORARY)) {
-		return CurricularCourseEnrollmentType.TEMPORARY;
-	    }
-	}
-
-	if (isMathematicalCourse(curricularCourse)) {
-	    if (hasCurricularCourseEquivalenceIn(curricularCourse, enrollmentsWithEnrolledStateInPreviousExecutionPeriod))
-		return CurricularCourseEnrollmentType.TEMPORARY;
-	}
-
-	return CurricularCourseEnrollmentType.DEFINITIVE;
-    }
-
     final public boolean hasEnrolledStateInPreviousExecutionPerdiod(CurricularCourse curricularCourse,
 	    List<Enrolment> enrollmentsWithEnrolledStateInPreviousExecutionPeriod) {
 	for (Enrolment enrolment : enrollmentsWithEnrolledStateInPreviousExecutionPeriod) {
@@ -1364,49 +1276,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	}
 	return false;
-    }
-
-    final protected boolean hasActiveScopeInGivenSemester(CurricularCourse curricularCourse,
-	    ExecutionSemester currentExecutionPeriod) {
-
-	boolean result = true;
-	List<CurricularCourse> curricularCoursesFromCommonBranches = new ArrayList<CurricularCourse>();
-	List<Branch> commonAreas = getDegreeCurricularPlan().getCommonAreas();
-	int commonAreasSize = commonAreas.size();
-
-	for (int i = 0; i < commonAreasSize; i++) {
-	    Branch area = (Branch) commonAreas.get(i);
-	    curricularCoursesFromCommonBranches.addAll(getDegreeCurricularPlan()
-		    .getCurricularCoursesFromArea(area, AreaType.BASE));
-	}
-	if (!curricularCoursesFromCommonBranches.contains(curricularCourse)) {
-
-	    if (this.getBranch() != null && this.getSecundaryBranch() != null) {
-		if (!curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(currentExecutionPeriod.getSemester(), this
-			.getBranch())
-			&& !curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(currentExecutionPeriod.getSemester(),
-				this.getSecundaryBranch())) {
-		    result = false;
-		}
-	    } else if (getBranch() != null && getSecundaryBranch() == null) {
-		if (!curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(currentExecutionPeriod.getSemester(), this
-			.getBranch())) {
-		    result = false;
-		}
-	    } else if (getBranch() == null && getSecundaryBranch() != null) {
-		if (!curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(currentExecutionPeriod.getSemester(), this
-			.getSecundaryBranch())) {
-		    result = false;
-		}
-	    } else if (getBranch() == null) {
-		if (!curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
-		    result = false;
-		}
-	    }
-	} else {
-	    result = curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester());
-	}
-	return result;
     }
 
     public boolean areNewAreasCompatible(Branch specializationArea, Branch secundaryArea)
@@ -1551,21 +1420,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    final protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(CurricularCourse curricularCourse,
-	    ExecutionSemester currentExecutionPeriod) {
-
-	return new CurricularCourse2Enroll(curricularCourse, getCurricularCourseEnrollmentType(curricularCourse,
-		currentExecutionPeriod), Boolean.FALSE, curricularCourse.getCurricularYearByBranchAndSemester(this.getBranch(),
-		currentExecutionPeriod.getSemester()));
-    }
-
-    private CurricularCourse2Enroll transformToCurricularCourse2Enroll(CurricularCourse curricularCourse,
-	    ExecutionSemester currentExecutionPeriod, CurricularCourseEnrollmentType curricularCourseEnrollmentType) {
-
-	return new CurricularCourse2Enroll(curricularCourse, curricularCourseEnrollmentType, Boolean.FALSE, curricularCourse
-		.getCurricularYearByBranchAndSemester(this.getBranch(), currentExecutionPeriod.getSemester()));
-    }
-
     final public List initAcumulatedEnrollments(List elements) {
 	if (this.acumulatedEnrollments != null) {
 	    List result = new ArrayList();
@@ -1664,10 +1518,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
 
-    private List<IEnrollmentRule> getListOfEnrollmentRules(ExecutionSemester executionSemester) {
-	return getDegreeCurricularPlan().getListOfEnrollmentRules(this, executionSemester);
-    }
-
     private List<CurricularCourse> getStudentNotNeedToEnrollCurricularCourses() {
 	return (List<CurricularCourse>) CollectionUtils.collect(getNotNeedToEnrollCurricularCourses(), new Transformer() {
 	    final public Object transform(Object obj) {
@@ -1675,117 +1525,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return notNeedToEnrollInCurricularCourse.getCurricularCourse();
 	    }
 	});
-    }
-
-    protected List<CurricularCourse2Enroll> getCommonBranchAndStudentBranchesCourses(ExecutionSemester executionSemester) {
-	Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
-	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-	List commonAreas = degreeCurricularPlan.getCommonAreas();
-	int commonAreasSize = commonAreas.size();
-
-	for (int i = 0; i < commonAreasSize; i++) {
-	    Branch area = (Branch) commonAreas.get(i);
-	    curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(area, AreaType.BASE));
-	}
-
-	if (getBranch() != null) {
-	    curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getBranch(), AreaType.SPECIALIZATION));
-	}
-
-	if (getSecundaryBranch() != null) {
-	    curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getSecundaryBranch(), AreaType.SECONDARY));
-	}
-
-	curricularCourses.addAll(degreeCurricularPlan.getTFCs());
-
-	List<CurricularCourse2Enroll> result = new ArrayList<CurricularCourse2Enroll>();
-	for (final CurricularCourse curricularCourse : curricularCourses) {
-	    if (curricularCourse.getEnrollmentAllowed().booleanValue()) {
-		final CurricularCourseEnrollmentType curricularCourseEnrollmentType = getCurricularCourseEnrollmentType(
-			curricularCourse, executionSemester);
-		if (curricularCourseEnrollmentType != CurricularCourseEnrollmentType.NOT_ALLOWED) {
-
-		    result.add(transformToCurricularCourse2Enroll(curricularCourse, executionSemester,
-			    curricularCourseEnrollmentType));
-		}
-	    }
-	}
-
-	markOptionalCurricularCourses(result, executionSemester);
-	return result;
-    }
-
-    private void markOptionalCurricularCourses(List result, ExecutionSemester executionSemester) {
-
-	List allOptionalCurricularCourseGroups = getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups();
-
-	List<CurricularCourse> curricularCoursesToRemove = new ArrayList<CurricularCourse>();
-	List<CurricularCourse> curricularCoursesToKeep = new ArrayList<CurricularCourse>();
-
-	int size = allOptionalCurricularCourseGroups.size();
-	for (int i = 0; i < size; i++) {
-
-	    CurricularCourseGroup optionalCurricularCourseGroup = (CurricularCourseGroup) allOptionalCurricularCourseGroups
-		    .get(i);
-
-	    if (getBranch() != null && getSecundaryBranch() != null) {
-		if (optionalCurricularCourseGroup.getBranch().equals(getBranch())
-			|| optionalCurricularCourseGroup.getBranch().equals(getSecundaryBranch())) {
-		    selectOptionalCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
-			    optionalCurricularCourseGroup, executionSemester);
-		}
-	    } else if (getBranch() != null && getSecundaryBranch() == null) {
-		if (optionalCurricularCourseGroup.getBranch().equals(getBranch())) {
-		    selectOptionalCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
-			    optionalCurricularCourseGroup, executionSemester);
-		}
-	    } else if (getBranch() == null && getSecundaryBranch() != null) {
-		if (optionalCurricularCourseGroup.getBranch().equals(getSecundaryBranch())) {
-		    selectOptionalCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
-			    optionalCurricularCourseGroup, executionSemester);
-		}
-	    } else if (getBranch() == null) {
-		if (optionalCurricularCourseGroup.getBranch().getBranchType().equals(BranchType.COMNBR)) {
-		    selectOptionalCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
-			    optionalCurricularCourseGroup, executionSemester);
-		}
-	    }
-
-	}
-
-	Iterator iter = result.iterator();
-	while (iter.hasNext()) {
-	    CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) iter.next();
-
-	    if (curricularCoursesToRemove.contains(curricularCourse2Enroll.getCurricularCourse())
-		    && !curricularCoursesToKeep.contains(curricularCourse2Enroll.getCurricularCourse())) {
-		iter.remove();
-		// result.remove(curricularCourse2Enroll);
-	    } else if (curricularCoursesToKeep.contains(curricularCourse2Enroll.getCurricularCourse())) {
-		curricularCourse2Enroll.setOptionalCurricularCourse(Boolean.TRUE);
-	    }
-	}
-    }
-
-    protected void selectOptionalCoursesToBeRemoved(List<CurricularCourse> curricularCoursesToRemove,
-	    List<CurricularCourse> curricularCoursesToKeep, CurricularCourseGroup optionalCurricularCourseGroup,
-	    ExecutionSemester executionSemester) {
-	int count = 0;
-
-	int size2 = optionalCurricularCourseGroup.getCurricularCourses().size();
-	for (int j = 0; j < size2; j++) {
-	    CurricularCourse curricularCourse = optionalCurricularCourseGroup.getCurricularCourses().get(j);
-	    if (isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionSemester)
-		    || isCurricularCourseApproved(curricularCourse)) {
-		count++;
-	    }
-	}
-
-	if (count >= optionalCurricularCourseGroup.getMaximumNumberOfOptionalCourses().intValue()) {
-	    curricularCoursesToRemove.addAll(optionalCurricularCourseGroup.getCurricularCourses());
-	} else {
-	    curricularCoursesToKeep.addAll(optionalCurricularCourseGroup.getCurricularCourses());
-	}
     }
 
     final protected boolean hasCurricularCourseEquivalenceIn(CurricularCourse curricularCourse, List curricularCoursesEnrollments) {

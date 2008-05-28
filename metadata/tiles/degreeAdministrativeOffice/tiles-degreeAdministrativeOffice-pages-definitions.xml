@@ -12,19 +12,6 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/commons/globalEnrolment.jsp"/>
 	</definition>
 
-<!-- ************************************** LEEC Enrollment **************************** -->
-	<definition name="df.page.prepareEnrollmentChooseStudent" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseStudent.jsp"/>
-	</definition>
-	<definition name="df.page.prepareEnrollmentChooseAreas" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseAreas.jsp"/>
-	</definition>
-	<definition name="df.page.prepareEnrollmentChooseCurricularCourses" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseCurricularCourses.jsp"/>
-	</definition>
-	<definition name="df.page.enrollmentConfirmation" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
-	</definition>
 <!-- ************************************** Improvment Enrollment **************************** -->
 	<definition name="df.page.prepareImprovmentEnrollmentChooseStudent" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/improvment/prepareImprovmentEnrollmentChooseStudent.jsp"/>

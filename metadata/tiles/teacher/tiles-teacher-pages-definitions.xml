@@ -171,26 +171,6 @@
 	
 	
 	<!-- ************************************** LEEC Enrollment **************************** -->
-	<definition name="df.page.prepareEnrollmentChooseStudent" 
-		extends="definition.teacher.two-column.extra-menu.tutor">
-		<put name="body" 
-			value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseStudent.jsp"/>
-	</definition>
-	<definition name="df.page.prepareEnrollmentChooseAreas" 
-		extends="definition.teacher.two-column.extra-menu.tutor">
-		<put name="body" 
-			value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseAreas.jsp"/>
-	</definition>
-	<definition name="df.page.prepareEnrollmentChooseCurricularCourses" 
-		extends="definition.teacher.two-column.extra-menu.tutor">
-		<put name="body" 
-			value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseCurricularCourses.jsp"/>
-	</definition>
-	<definition name="df.page.enrollmentConfirmation" 
-		extends="definition.teacher.two-column.extra-menu.tutor">
-		<put name="body" 
-			value="/degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
-	</definition>
 	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" 
 		extends="definition.teacher.two-column.extra-menu.tutor">
 		<put name="body" 
