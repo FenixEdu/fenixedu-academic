@@ -12,7 +12,7 @@ public class SqlTable {
     private static final Map<String, String> mySqlTypeTranslation = new HashMap<String, String>();
     static {
         mySqlTypeTranslation.put("BIT", "tinyint(1)");
-        mySqlTypeTranslation.put("CHAR", "varchar(20)");
+        mySqlTypeTranslation.put("CHAR", "char");
         mySqlTypeTranslation.put("DATE", "date");
         mySqlTypeTranslation.put("DOUBLE", "double");
         mySqlTypeTranslation.put("FLOAT", "float(10,2)");
