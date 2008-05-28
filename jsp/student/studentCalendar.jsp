@@ -10,13 +10,6 @@
 	<h:outputText value="<em>#{bundle['title.student.portalTitle']}</em>" escape="false"/>
 	<h:outputText value="<h2>#{bundle['link.title.calendar']}</h2>" escape="false"/>
 			
-	<h:panelGroup rendered="#{empty studentCalendar.student}">
-		<h:outputText value="<span class='warning0'><em>" escape="false"/>
-		<h:outputText value="#{bundle['label.noActiveRegistration']}"/>
-		<h:outputText value="</em></span>" escape="false"/>
-	</h:panelGroup>
-
-	<h:panelGroup rendered="#{!empty studentCalendar.student}">
 		<h:form>
 			<fc:viewState binding="#{studentCalendar.viewState}"/>
 
@@ -69,6 +62,5 @@
 				 		editLinkParameters="#{studentCalendar.calendarLinks}"/>
 			</h:panelGroup>
 		</h:form>
-	</h:panelGroup>
 
 </ft:tilesView>
