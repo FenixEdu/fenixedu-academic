@@ -2663,6 +2663,7 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 	class net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog extends net.sourceforge.fenixedu.domain.DomainObject {
 		DateTime dateDateTime;
 		String event;
+		String checksum;
 	}
 
 	class net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2680,6 +2681,10 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 		String information;
 		DateTime lastModifiedDateDateTime;
 		String title;
+	}
+	
+	class net.sourceforge.fenixedu.domain.onlineTests.TestChecksum extends net.sourceforge.fenixedu.domain.DomainObject {
+		String checksumCode;
 	}
 
 	class net.sourceforge.fenixedu.domain.onlineTests.TestQuestion extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -10630,6 +10635,13 @@ relation RootDomainObjectTeacherServiceItem {
 relation RootDomainObjectTest {
 	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
 	net.sourceforge.fenixedu.domain.onlineTests.Test playsRole tests {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTestChecksum {
+	net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+	net.sourceforge.fenixedu.domain.onlineTests.TestChecksum playsRole testChecksums {
 		multiplicity *;
 	}
 }

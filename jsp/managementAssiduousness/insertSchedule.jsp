@@ -41,10 +41,7 @@
 		</tr>
 		
 		<tr>
-			<th>
-				<bean:message key="label.scheduleClockingType" bundle="ASSIDUOUSNESS_RESOURCES"/>:
-				
-			</th>
+			<th><bean:message key="label.scheduleClockingType" bundle="ASSIDUOUSNESS_RESOURCES"/>:<span class="required">*</span></th>
 			<td>
 				<fr:edit name="workScheduleTypeFactory" id="scheduleClockingType" slot="scheduleClockingType"
 					type="net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory">
