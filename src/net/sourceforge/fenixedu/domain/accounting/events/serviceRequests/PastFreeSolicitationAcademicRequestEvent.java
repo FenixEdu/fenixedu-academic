@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.FreeSolicitationAcademicRequest;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -17,7 +17,7 @@ public class PastFreeSolicitationAcademicRequestEvent extends PastFreeSolicitati
     }
 
     public PastFreeSolicitationAcademicRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-	    final PhotocopyRequest request) {
+	    final FreeSolicitationAcademicRequest request) {
 	this();
 	super.init(administrativeOffice, EventType.PAST_FREE_SOLICITATION_ACADEMIC_REQUEST, person, request);
     }

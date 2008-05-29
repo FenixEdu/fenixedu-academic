@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
@@ -16,7 +16,7 @@ public class PastCourseGroupChangeRequestEvent extends PastCourseGroupChangeRequ
     }
 
     public PastCourseGroupChangeRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-	    final PhotocopyRequest request) {
+	    final CourseGroupChangeRequest request) {
 	this();
 	super.init(administrativeOffice, EventType.PAST_COURSE_GROUP_CHANGE_REQUEST, person, request);
     }
