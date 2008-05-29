@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
@@ -106,7 +107,20 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     final private Collection<ICurriculumEntry> getEntriesToReport() {
-	return filterEntries(new HashSet<ICurriculumEntry>(), getCurriculum().getCurriculumEntries());
+	final HashSet<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
+
+	final Registration registration = getRegistration();
+	if (registration.isBolonha()) {
+	    for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
+		if (cycle.hasAnyApprovedCurriculumLines() && !cycle.isConclusionProcessed()) {
+		    filterEntries(result, cycle.getCurriculum().getCurriculumEntries());
+		}
+	    }
+
+	    return result;
+	} else {
+	    return filterEntries(result, getCurriculum().getCurriculumEntries());
+	}
     }
 
     static final public Collection<ICurriculumEntry> filterEntries(final Collection<ICurriculumEntry> result,
