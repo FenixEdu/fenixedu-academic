@@ -35,6 +35,12 @@
 	</li>
 </ul>
 
+<html:messages property="error" message="true" id="errMsg" bundle="STUDENT_RESOURCES">
+	<p>
+		<span class="error0"><!-- Error messages go here --><bean:write name="errMsg" /></span>
+	</p>
+</html:messages>
+
 <bean:define id="registrationId" name="registration" property="idInternal" />
 
 <fr:form action="<%= contextInformation.toString() + "registrationId=" + registrationId + parameters.toString()  %>">
