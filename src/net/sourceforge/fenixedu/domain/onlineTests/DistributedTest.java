@@ -15,6 +15,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
@@ -131,6 +132,16 @@ public class DistributedTest extends DistributedTest_Base {
 	setEndHourDate(date);
     }
 
+    public StudentTestLog getLastStudentTestLog(final Integer studentNumber) {
+	Student student = Student.readStudentByNumber(studentNumber);
+	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
+	    if (student.getRegistrations().contains(studentTestLog.getStudent())) {
+		return studentTestLog;
+	    }
+	}
+	return null;
+    }
+
     public List<StudentTestLog> getStudentTestLogs(final Registration registration) {
 	List<StudentTestLog> result = new ArrayList<StudentTestLog>();
 	for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
@@ -199,7 +210,8 @@ public class DistributedTest extends DistributedTest_Base {
 
     public int countLikeResponses(final Integer order, final Response response) {
 	int count = 0;
-	// for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+	// for (final StudentTestQuestion studentTestQuestion :
+	// getDistributedTestQuestionsSet()) {
 	// if (studentTestQuestion.getTestQuestionOrder().equals(order)
 	// && studentTestQuestion.getResponse().contains(response)) {
 	// count++;

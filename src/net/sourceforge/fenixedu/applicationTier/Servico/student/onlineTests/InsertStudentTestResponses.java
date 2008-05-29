@@ -182,10 +182,11 @@ public class InsertStudentTestResponses extends Service {
 		}
 		mark.setMark(grade);
 	    }
-
-	    new StudentTestLog(distributedTest, registration, event);
-	} else
+	    StudentTestLog studentTestLog = new StudentTestLog(distributedTest, registration, event);
+	    infoSiteStudentTestFeedback.setStudentTestLog(studentTestLog);
+	} else {
 	    throw new NotAuthorizedException();
+	}
 	infoSiteStudentTestFeedback.setResponseNumber(new Integer(responseNumber));
 	infoSiteStudentTestFeedback.setNotResponseNumber(new Integer(notResponseNumber));
 	infoSiteStudentTestFeedback.setErrors(errors);
