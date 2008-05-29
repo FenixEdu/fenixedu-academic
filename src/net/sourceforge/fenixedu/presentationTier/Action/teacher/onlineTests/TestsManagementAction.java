@@ -65,6 +65,7 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -72,6 +73,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.util.Base64;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.sun.faces.el.impl.parser.ParseException;
 
@@ -656,15 +660,15 @@ public class TestsManagementAction extends FenixDispatchAction {
 	}
 
 	request.setAttribute("successfulDistribution", new Boolean(true));
-		final ActionForward actionForward = new ActionForward();
+	final ActionForward actionForward = new ActionForward();
 	actionForward.setRedirect(true);
 	final String path = request.getContextPath() + "/teacher/testDistribution.do?method=showDistributedTests&amp;objectCode="
-		+ objectCode + "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + 
-		FilterFunctionalityContext.getCurrentContext(request).getCurrentContextPath();
-	final String requestPath = "/testDistribution.do?method=showDistributedTests&objectCode=" + objectCode
-	+ "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + 
-	FilterFunctionalityContext.getCurrentContext(request).getCurrentContextPath() 
-	+ "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(path);
+		+ objectCode + "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "="
+		+ FilterFunctionalityContext.getCurrentContext(request).getCurrentContextPath();
+	final String requestPath = "/testDistribution.do?method=showDistributedTests&objectCode=" + objectCode + "&"
+		+ ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "="
+		+ FilterFunctionalityContext.getCurrentContext(request).getCurrentContextPath() + "&_request_checksum_="
+		+ ChecksumRewriter.calculateChecksum(path);
 	actionForward.setPath(requestPath);
 	return actionForward;
     }
@@ -968,6 +972,54 @@ public class TestsManagementAction extends FenixDispatchAction {
 	request.setAttribute("studentTestLogList", studentTestLogList);
 	request.setAttribute("distributedTestCode", distributedTestCode);
 	return mapping.findForward("showStudentTestLog");
+    }
+
+    public ActionForward prepareValidateTestChecksum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	final Integer objectCode = getCodeFromRequest(request, "objectCode");
+	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
+	final Integer studentCode = getCodeFromRequest(request, "studentCode");
+	final Registration student = rootDomainObject.readRegistrationByOID(studentCode);
+	if (student == null) {
+	    throw new FenixActionException();
+	}
+	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestCode);
+	if (distributedTest == null) {
+	    throw new FenixActionException();
+	}
+
+	request.setAttribute("objectCode", objectCode);
+	request.setAttribute("registration", student);
+	request.setAttribute("distributedTest", distributedTest);
+	return mapping.findForward("validateStudentTestChecksum");
+    }
+
+    public ActionForward validateTestChecksum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	final Integer objectCode = getCodeFromRequest(request, "objectCode");
+	final Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
+	final Integer studentCode = getCodeFromRequest(request, "studentCode");
+
+	final Registration student = rootDomainObject.readRegistrationByOID(studentCode);
+	if (student == null) {
+	    throw new FenixActionException();
+	}
+	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestCode);
+	if (distributedTest == null) {
+	    throw new FenixActionException();
+	}
+
+	final String dateString = request.getParameter("date");
+	final DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+	final DateTime datetime = dateTimeFormat.parseDateTime(dateString);
+
+	String checksum = StudentTestLog.getChecksum(distributedTest, student, datetime);
+
+	request.setAttribute("checksum", checksum);
+	request.setAttribute("objectCode", objectCode);
+	request.setAttribute("registration", student);
+	request.setAttribute("distributedTest", distributedTest);
+	return mapping.findForward("validateStudentTestChecksum");
     }
 
     public ActionForward showTestMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,

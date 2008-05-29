@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 
 /**
  * @author Susana Fernandes
@@ -17,42 +18,52 @@ public class InfoSiteStudentTestFeedback extends DataTranferObject implements IS
 
     private Integer notResponseNumber;
 
-    private List errors;
+    private List<String> errors;
 
     private List studentTestQuestionList;
+
+    private StudentTestLog studentTestLog;
 
     public InfoSiteStudentTestFeedback() {
     }
 
-    public List getErrors() {
-        return errors;
+    public List<String> getErrors() {
+	return errors;
     }
 
-    public void setErrors(List errors) {
-        this.errors = errors;
+    public void setErrors(List<String> errors) {
+	this.errors = errors;
     }
 
     public Integer getNotResponseNumber() {
-        return notResponseNumber;
+	return notResponseNumber;
     }
 
     public void setNotResponseNumber(Integer notResponseNumber) {
-        this.notResponseNumber = notResponseNumber;
+	this.notResponseNumber = notResponseNumber;
     }
 
     public Integer getResponseNumber() {
-        return responseNumber;
+	return responseNumber;
     }
 
     public void setResponseNumber(Integer responseNumber) {
-        this.responseNumber = responseNumber;
+	this.responseNumber = responseNumber;
     }
 
     public List getStudentTestQuestionList() {
-        return studentTestQuestionList;
+	return studentTestQuestionList;
     }
 
     public void setStudentTestQuestionList(List studentTestQuestionList) {
-        this.studentTestQuestionList = studentTestQuestionList;
+	this.studentTestQuestionList = studentTestQuestionList;
+    }
+
+    public StudentTestLog getStudentTestLog() {
+	return studentTestLog;
+    }
+
+    public void setStudentTestLog(StudentTestLog studentTestLog) {
+	this.studentTestLog = studentTestLog;
     }
 }

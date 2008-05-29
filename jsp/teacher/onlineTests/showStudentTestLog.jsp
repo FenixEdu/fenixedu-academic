@@ -28,25 +28,32 @@
 			<tr>
 				<th class="listClasses-header"><b>Data</b></th>
 				<th class="listClasses-header"><b>Evento</b></th>
-				<% for(int i=1; i<=new Integer(questionNumber).intValue()-1;i++ ){ 
+				<% for(int i=1; i<=new Integer(questionNumber).intValue();i++ ){ 
 					out.write(new String("<th class='listClasses-header'><b>P"+i+"</b></th>"));				
 				} %>
+				<th class="listClasses-header"><b>Código Validação</b></th>
 			</tr>
 			</logic:equal>
 			<tr>
 				<td class="listClasses"><bean:write name="log" property="dateFormatted"/></td>
 				
 				<logic:iterate id="event" name="log" property="eventList" indexId="eventIndex">
-					<td class="listClasses"><bean:write name="event"/></td>
+					<logic:notEmpty name="event">
+						<td class="listClasses"><bean:write name="event"/></td>
+					</logic:notEmpty>
+					<logic:empty name="event">
+						<td class='listClasses'>-</td>
+					</logic:empty>
+					
 				</logic:iterate>
 				<bean:define id="questionNumber" value="<%=(pageContext.findAttribute("questionNumber")).toString()%>"/>
-				<logic:notEqual name="eventIndex" value="<%=new Integer(new Integer(questionNumber).intValue()-1).toString()%>">
+				<logic:notEqual name="eventIndex" value="<%=new Integer(new Integer(questionNumber).intValue()).toString()%>">
 					<bean:define id="thisEvent" name="eventIndex"/>
-					<% for(int i=((Integer)thisEvent).intValue(); i<new Integer(questionNumber).intValue()-1;i++ ){ 
+					<% for(int i=((Integer)thisEvent).intValue(); i<new Integer(questionNumber).intValue();i++ ){ 
 						out.write(new String("<td class='listClasses'>-</td>"));
 					} %>
 				</logic:notEqual>
-				
+				<td class="listClasses"><bean:write name="log" property="checksum"/></td>
 			</tr>
 		</logic:iterate>
 		</table>

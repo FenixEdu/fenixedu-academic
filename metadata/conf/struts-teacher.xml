@@ -165,7 +165,14 @@
 	   		<form-property name="response" type="java.lang.String[]"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
-        
+        <form-bean name="validateTestChecksumForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+            <form-property name="studentCode" type="java.lang.String"/>
+            <form-property name="distributedTestCode" type="java.lang.String"/>
+            <form-property name="date" type="java.lang.String"/>
+            <form-property name="objectCode" type="java.lang.String"/>
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+        </form-bean>        
         <!-- Summaries Management -->
         <form-bean name="summariesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">            	            
             <form-property name="teacher" type="java.lang.String" initial=""/>
@@ -1182,6 +1189,13 @@
             <forward name="prepareDeleteDistributedTest" path="prepare-Delete-Distributed-Test"/>
             <forward name="showTests" path="show-Tests"/>
 		</action>
+		<action path="/testChecksumValidation" name="validateTestChecksumForm" 
+            input="/testChecksumValidation.do?method=prepareValidateTestChecksum&amp;page=0" scope="request" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
+            validate="true">
+            <forward name="validateStudentTestChecksum" path="validate-Student-Test-Checksum"/>
+		</action>
+		
         <action path="/testDistributionByShifts" name="distributedTestForm" 
             input="/testDistribution.do?method=chooseShifts&amp;page=1" scope="request" parameter="method" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" validate="true">

@@ -345,6 +345,9 @@
 	<definition name="remove-Exercise-Variation" extends="definition.teacher.testsPage">
 		<put name="body" value="/teacher/onlineTests/removeExerciseVariation.jsp"></put>		
 	</definition>
+	<definition name="validate-Student-Test-Checksum" extends="definition.teacher.testsPage">
+		<put name="body" value="/teacher/onlineTests/validateStudentTestChecksum.jsp"></put>		
+	</definition>
 	<!-- END TESTS DEFINITIONS -->	
 	
 	<!-- ResultTeacher -->
