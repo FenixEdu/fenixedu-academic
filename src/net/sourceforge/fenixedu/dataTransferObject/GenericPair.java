@@ -43,8 +43,8 @@ public class GenericPair<T, V> implements Serializable {
 	    T oLeft = ((GenericPair<T, V>) o).getLeft();
 	    V oRight = ((GenericPair<T, V>) o).getRight();
 
-	    return (getLeft() == null && oLeft == null || getLeft().equals(oLeft))
-		    && (getRight() == null && oRight == null || getRight().equals(oRight));
+	    return ((getLeft() == null && oLeft == null) || getLeft().equals(oLeft))
+		    && ((getRight() == null && oRight == null) || getRight().equals(oRight));
 	}
 
 	return false;
