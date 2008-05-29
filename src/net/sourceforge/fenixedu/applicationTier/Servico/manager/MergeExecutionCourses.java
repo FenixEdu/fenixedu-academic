@@ -318,21 +318,23 @@ public class MergeExecutionCourses extends Service {
 	    changeGroups(executionCourseTo, content, transferedContents);
 	}
 
-	final Collection<String> tos = createListOfEmailAddresses(executionCourseTo);
-	final StringBuilder message = new StringBuilder();
-	message.append("Viva, \n\n");
-	message.append("Devido à junção da disciplina acima referida entre vários cursos, não foi possível manter os ");
-	message.append("previlégios de acesso aos seguintes conteúdos: ");
-	for (final Content content : transferedContents) {
-	    message.append("\n\t");
-	    message.append(content.getName());
-	}
-	message.append("\n\nAgradecemos que actualize os previlégios ");
-	message.append("dos conteúdos logo que possível.\n\n");
-	message.append("Os melhores cumprimentos,\n\nO sistema Fénix.");
+	if (transferedContents.size() > 0) {
+	    final Collection<String> tos = createListOfEmailAddresses(executionCourseTo);
+	    final StringBuilder message = new StringBuilder();
+	    message.append("Viva, \n\n");
+	    message.append("Devido à junção da disciplina acima referida entre vários cursos, não foi possível manter os ");
+	    message.append("previlégios de acesso aos seguintes conteúdos: ");
+	    for (final Content content : transferedContents) {
+		message.append("\n\t");
+		message.append(content.getName());
+	    }
+	    message.append("\n\nAgradecemos que actualize os previlégios ");
+	    message.append("dos conteúdos logo que possível.\n\n");
+	    message.append("Os melhores cumprimentos,\n\nO sistema Fénix.");
 
-	new Email("Sistema Fénix", "no-reply@ist.utl.pt", new String[] {}, tos, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-		"Junção de disciplinas: " + executionCourseTo.getNome(), message.toString());
+	    new Email("Sistema Fénix", "no-reply@ist.utl.pt", new String[] {}, tos, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
+		    "Junção de disciplinas: " + executionCourseTo.getNome(), message.toString());
+	}
     }
 
     private void changeGroups(final ExecutionCourse executionCourseTo, final Content content,
