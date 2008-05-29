@@ -51,7 +51,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     public ExternalEnrolment(final Registration registration, final ExternalCurricularCourse externalCurricularCourse,
-	    final Grade grade, final ExecutionSemester executionSemester, final YearMonthDay evaluationDate, final Double ectsCredits) {
+	    final Grade grade, final ExecutionSemester executionSemester, final YearMonthDay evaluationDate,
+	    final Double ectsCredits) {
 	this();
 
 	checkConstraints(registration, externalCurricularCourse, executionSemester, grade, ectsCredits);
@@ -142,7 +143,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     private void checkRulesToDelete() {
 	if (hasAnyEnrolmentWrappers()) {
-	    throw new DomainException("error.ExternalEnrolment.cannot.delete");
+	    throw new DomainException("error.Enrolment.is.origin.in.some.Equivalence");
 	}
     }
 
