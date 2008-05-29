@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentDegreeInformation_Base {
@@ -46,8 +47,9 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
     }
 
     @Override
-    public YearMonthDay getConclusionDate() {
-	return isBolonha() ? getStudentCurricularPlan().getConclusionDate(getCycleType()) : getRegistration().getConclusionDate();
+    public LocalDate getConclusionDate() {
+	return new LocalDate(isBolonha() ? getStudentCurricularPlan().getConclusionDate(getCycleType()) : getRegistration()
+		.getConclusionDate());
     }
 
     @Override

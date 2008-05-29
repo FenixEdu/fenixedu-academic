@@ -4738,7 +4738,7 @@ class net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeI
 	
 	class net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation extends net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation {
 		String degreeDesignation;
-		YearMonthDay conclusionDate;
+		LocalDate conclusionDate;
 		String conclusionGrade;
 	}
 

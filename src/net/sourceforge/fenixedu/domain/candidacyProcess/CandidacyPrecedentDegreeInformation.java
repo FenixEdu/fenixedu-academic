@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrecedentDegreeInformation_Base {
 
@@ -22,7 +22,7 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
 
     abstract public String getDegreeDesignation();
 
-    abstract public YearMonthDay getConclusionDate();
+    abstract public LocalDate getConclusionDate();
 
     abstract public Unit getInstitution();
 

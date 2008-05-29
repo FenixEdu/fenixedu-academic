@@ -11,6 +11,13 @@
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />
 </html:messages>
+<fr:hasMessages for="secondCycleIndividualCandidacyProcessBean.precedentDegreeInformation" type="conversion">
+	<ul class="nobullet list6">
+		<fr:messages>
+			<li><span class="error0"><fr:message/></span></li>
+		</fr:messages>
+	</ul>
+</fr:hasMessages>
 
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 
@@ -58,6 +65,9 @@
 					<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 					<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
 				</fr:edit>
+				<logic:equal name="secondCycleIndividualCandidacyProcessBean" property="externalPrecedentDegreeType" value="true">
+					<em><bean:message key="label.candidacy.precedentDegree.externalPrecedentDegreeType" bundle="APPLICATION_RESOURCES"/></em> (<html:link action="/externalUnits.do?method=prepareSearch" target="_blank"><bean:message key="label.externalUnits" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link>)
+				</logic:equal>
 			</logic:equal>
 
 			<logic:equal name="secondCycleIndividualCandidacyProcessBean" property="validPrecedentDegreeInformation" value="false">

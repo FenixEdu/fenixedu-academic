@@ -282,7 +282,6 @@
 		<property name="size" value="50"/>
 		<property name="maxLength" value="255"/>
 	</slot>
-	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	<slot name="precedentDegreeInformation.institutionUnitName" layout="autoComplete" key="label.candidacy.choose.institution" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 		<property name="size" value="40"/>
 		<property name="labelField" value="unit.name"/>
@@ -293,11 +292,12 @@
 		<property name="minChars" value="2"/>
 		<property name="rawSlotName" value="precedentDegreeInformation.institutionName"/>
 	</slot>
-	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" />
+	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade">
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
 		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
-            <property name="regexp" value="\d{2}"/>
+            <property name="regexp" value="(\d{2}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
@@ -311,8 +311,8 @@
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
 	<slot name="precedentDegreeInformation.degreeDesignation" key="label.Degree" read-only="true" />
-	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
 	<slot name="precedentDegreeInformation.institutionUnitName.name" key="label.candidacy.institution" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
 	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
 </schema>
 
@@ -325,7 +325,6 @@
 		<property name="size" value="50"/>
 		<property name="maxLength" value="255"/>
 	</slot>
-	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 	<slot name="precedentDegreeInformation.institutionUnitName" layout="autoComplete" key="label.candidacy.choose.institution" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 		<property name="size" value="40"/>
 		<property name="labelField" value="unit.name"/>
@@ -336,11 +335,12 @@
 		<property name="minChars" value="2"/>
 		<property name="rawSlotName" value="precedentDegreeInformation.institutionName"/>
 	</slot>
-	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" />
+	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade">
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
 		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
-            <property name="regexp" value="\d{2}"/>
+            <property name="regexp" value="(\d{2}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
@@ -353,8 +353,8 @@
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
 	<slot name="precedentDegreeInformation.degreeDesignation" key="label.Degree" read-only="true" />
-	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
 	<slot name="precedentDegreeInformation.institutionUnitName.name" key="label.candidacy.institution" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
 	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
 </schema>
 

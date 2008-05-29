@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 public class CandidacyPrecedentDegreeInformationBean implements Serializable {
 
     private String degreeDesignation;
 
-    private YearMonthDay conclusionDate;
+    private LocalDate conclusionDate;
 
     private DomainReference<Unit> institution;
 
@@ -46,11 +46,11 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
 	this.degreeDesignation = degreeDesignation;
     }
 
-    public YearMonthDay getConclusionDate() {
+    public LocalDate getConclusionDate() {
 	return conclusionDate;
     }
 
-    public void setConclusionDate(YearMonthDay conclusionDate) {
+    public void setConclusionDate(LocalDate conclusionDate) {
 	this.conclusionDate = conclusionDate;
     }
 

@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.LocalDate;
 
 @Mapping(path = "/caseHandlingSecondCycleIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( {
@@ -94,7 +95,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
     public ActionForward searchPersonForCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	final SecondCycleIndividualCandidacyProcessBean bean = getCandidacyBean();
 	final ChoosePersonBean choosePersonBean = bean.getChoosePersonBean();
 	request.setAttribute("secondCycleIndividualCandidacyProcessBean", bean);
@@ -117,7 +118,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    return mapping.findForward("fill-personal-information");
 	}
     }
-    
+
     public ActionForward searchAgainPersonForCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final SecondCycleIndividualCandidacyProcessBean bean = getCandidacyBean();
@@ -214,8 +215,8 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    final StudentCurricularPlan studentCurricularPlan) {
 	final CandidacyPrecedentDegreeInformationBean info = new CandidacyPrecedentDegreeInformationBean();
 	info.setDegreeDesignation(studentCurricularPlan.getName());
-	info.setConclusionDate(studentCurricularPlan.isBolonhaDegree() ? studentCurricularPlan
-		.getConclusionDate(CycleType.FIRST_CYCLE) : studentCurricularPlan.getRegistration().getConclusionDate());
+	info.setConclusionDate(new LocalDate(studentCurricularPlan.isBolonhaDegree() ? studentCurricularPlan
+		.getConclusionDate(CycleType.FIRST_CYCLE) : studentCurricularPlan.getRegistration().getConclusionDate()));
 	info.setConclusionGrade(studentCurricularPlan.isBolonhaDegree() ? studentCurricularPlan
 		.getFinalAverage(CycleType.FIRST_CYCLE) : studentCurricularPlan.getRegistration().getFinalAverage());
 	info.setInstitutionUnitName(rootDomainObject.getInstitutionUnit().getUnitName());

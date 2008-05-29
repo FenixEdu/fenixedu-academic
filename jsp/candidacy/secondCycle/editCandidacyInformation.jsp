@@ -12,6 +12,13 @@
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />
 </html:messages>
+<fr:hasMessages for="secondCycleIndividualCandidacyProcessBean.precedentDegreeInformation" type="conversion">
+	<ul class="nobullet list6">
+		<fr:messages>
+			<li><span class="error0"><fr:message/></span></li>
+		</fr:messages>
+	</ul>
+</fr:hasMessages>
 
 <bean:define id="processId" name="process" property="idInternal" />
 
@@ -48,10 +55,13 @@
 		name="secondCycleIndividualCandidacyProcessBean" schema="<%= schema.toString() + ".edit" %>">
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-  		    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+	    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="invalid" path="<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
 	</fr:edit>
+	<logic:equal name="secondCycleIndividualCandidacyProcessBean" property="externalPrecedentDegreeType" value="true">
+		<em><bean:message key="label.candidacy.precedentDegree.externalPrecedentDegreeType" bundle="APPLICATION_RESOURCES"/></em> (<html:link action="/externalUnits.do?method=prepareSearch" target="_blank"><bean:message key="label.externalUnits" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link>)
+	</logic:equal>
 
 	<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.information" bundle="APPLICATION_RESOURCES"/>:</h3>
 	<fr:edit id="secondCycleIndividualCandidacyProcessBean.optionalInformation"
