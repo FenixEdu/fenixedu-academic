@@ -1309,6 +1309,16 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 						Money pastAmount;
 					}
 
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastCourseGroupChangeRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
+
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastExtraExamRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
+
+				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastFreeSolicitationAcademicRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
+
+
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 			YearMonthDay creationDate;
 		}
@@ -1539,6 +1549,15 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 			}
 
 			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastEquivalencePlanRevisionRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastCourseGroupChangeRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastExtraExamRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
+			}
+
+			class net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PastFreeSolicitationAcademicRequestPR extends net.sourceforge.fenixedu.domain.accounting.postingRules.GenericSingleEntryTypePR {
 			}
 
 
