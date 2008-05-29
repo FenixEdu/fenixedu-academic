@@ -1,16 +1,17 @@
 /* --------------------------------------------------------
-	main.css
+	main_r.css
 	made by: Bruno Monteiro (GAEL)
-	date: 19.04.2007
+	date: 04.03.2008
 ---------------------------------------------------------*/
 
 body { font: 62.5% "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #333; background: #a2aebc; margin: 0; padding: 0; }
 body * :target { display: inline; background-color: #FCFFBA; }
-h1 { font: 1.8em/1em "bitstream vera sans", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; color: #069; }
-h2 { font: bold 1.4em "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; margin: 0 0 0.5em 0; color: #c30; }
+h1 { font: 1.8em/1em "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #069; }
+h2 { font: bold 1.4em "Trebuchet MS", "bitstream vera sans", Georgia, Arial, Helvetica, sans-serif; margin: 0 0 0.5em 0; color: #c30; }
 h2.blue	{ margin: 0.5em 0 0.5em 0; color: #069; }
 h3 { font: bold 1.2em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #333; margin-bottom: 0; }
 h3.grey { color: #666; }
+h3.spaced { margin: 0.5em 0 0.5em 0; }
 img { border: 0; }
 a:link, a:visited { text-decoration: underline; color: #069; }
 a:visited { color: #7a8f99; }
@@ -37,7 +38,7 @@ ul li ul { font-size: 1em}
 
 #search { position: absolute; right: 40px; top: 55px; text-align: right; }
 #textfield { font-size: 1em; margin: 0 10px }	
-#submit { font: 1em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif;background: #a2aebc; }
+#submit { font: 1em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; background: #a2aebc; }
 
 /***********************************************************
 	sitewide profile navigation
@@ -70,13 +71,13 @@ td#latnav_container { width: 155px; vertical-align: top; background: #eae7e4; bo
 
 #bigtable { left: 155px; width: 100%; background: #fff; }
 td#main { font-size: 1.1em; width: 100%; vertical-align: top; padding: 20px 30px 40px 30px; }	
-td#main p, td#main table { font-family: "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; line-height: 1.63em; }
+td#main p, td#main table { font-family: "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; line-height: 1.63em;}
 .image_container { height: 150px; text-align: center; }
 .image_container_center { /* height: 150px; */ margin: 0; padding: 0; text-align: center;  }
 .image_container img { border: none; vertical-align: middle; text-align: center; margin: 0; padding: 0; } /* margin: 0 10px 0 0 */
-.spot_event_1 { background: #fff url(../img/spot/exploramateriais_2008/expo_materiais_bck.jpg) no-repeat left; margin: 0; padding: 0; } /* Destaque: Explora Materiais */
-.spot_event_2 { background: url(../img/spot/mit_candidaturas_2008/mit_bck.gif) repeat-x; margin: 0; padding: 0; } /* Destaque: Canidaturas MIT */
-.spot_event_3 { background: #35302D url(../img/spot/mobilidade_2007/mobilidade_final_bck.jpg) no-repeat center center; margin: 0; padding: 0; } /* Canidaturas programas de mobilidade */
+.spot_event_1 { background: url(http://www.ist.utl.pt/img/spot/tutorado_2006/tutorado_bck.gif) repeat-x; margin: 0; padding: 0; } /* Destaque: Tutorado 2008*/
+.spot_event_2 { background: url(http://www.ist.utl.pt/img/spot/mit_candidaturas_2008/mit_bck.gif) repeat-x; margin: 0; padding: 0; } /* Destaque: Canidaturas MIT */
+.spot_event_3 { background: url(http://www.ist.utl.pt/img/spot/candidato_2008/tile_back.gif) repeat-x; margin: 0; padding: 0; } /* Destaque: Candidato 2008 */
 .noticias, .eventos, .campus { width: 30%; font: bold 1.5em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #fff; margin: 0; padding: 4px 0 4px 5px; text-align: left; }
 .noticias { background: #a8a88e; }
 .eventos {  background: #cc9; }
@@ -84,8 +85,8 @@ td#main p, td#main table { font-family: "Lucida Grande", "Trebuchet MS", "bitstr
 .info_cell_holder { width: 30%; font: 1.1em/1.33em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #333; background: #fff; vertical-align: top; border-right: 1px solid #ccc; padding: 5px 10px 10px 10px; margin: 0;}
 .info_cell_holder_nobrd { font: 1.1em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #333; background: #fff; vertical-align: top; padding: 5px 10px 5px 10px; }
 .hp_p_spacer { margin: 5px 0;}
-.page { background: url(/img/icon_page.gif) no-repeat 7px 50%; padding: 2px 0 2px 27px; }
-.feed { background: url(/img/icon_feed.gif) no-repeat 10px 50%; padding: 2px 0 2px 30px; }
+.page { background: url(http://www.ist.utl.pt/img/icon_page.gif) no-repeat 7px 50%; padding: 2px 0 2px 27px; }
+.feed { background: url(http://www.ist.utl.pt/img/icon_feed.gif) no-repeat 10px 50%; padding: 2px 0 2px 30px; }
 
 /***********************************************************
 	page footer
@@ -131,19 +132,20 @@ td#main p, td#main table { font-family: "Lucida Grande", "Trebuchet MS", "bitstr
 .post_date { font: 1em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #999; margin: 0; padding: 0; }	
 .bottom_border { border-bottom: 1px solid #ccc; }
 .redbox { color: #fff; background: #c30; padding: 3px 6px 3px 6px; }
-.marker { background: #fff794; padding: 2px; }
+.marker { background: #fffbc7; padding: 2px; }
 .update { font-size: 0.9em; color: #999; background: #e8e8e8; padding: 2px 3px; }
-.pdf_solo { background: url(/img/icon_pdf.gif) no-repeat 10px 50%; padding: 5px 0 5px 35px; }
-.page { background: url(/img/icon_page.gif) no-repeat 7px 50%; padding: 2px 0 2px 27px; }
-.feed { background: url(/img/icon_feed.gif) no-repeat 10px 50%; padding: 2px 0 2px 30px; }
+.pdf_solo { background: url(http://www.ist.utl.pt/img/icon_pdf.gif) no-repeat 10px 50%; padding: 5px 0 5px 35px; }
+.page { background: url(http://www.ist.utl.pt/img/icon_page.gif) no-repeat 7px 50%; padding: 2px 0 2px 27px; }
+.feed { background: url(http://www.ist.utl.pt/img/icon_feed.gif) no-repeat 10px 50%; padding: 2px 0 2px 30px; }
 ul.material { list-style-type: none; margin-left: 0; padding-left: 0; }
-ul.material li.pdf { background: url(/img/icon_pdf.gif) no-repeat 10px 50%; padding-left: 35px; }
-ul.material li.doc { background: url(/img/icon_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.xls { background: url(/img/icon_excel.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.document { background: url(/img/icon_generic_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.link { background: url(/img/icon_link.gif) no-repeat 10px 50%; padding-left: 35px; }
-ul.material li.lightbulb { background: url(/img/icon_lightbulb.gif) no-repeat 10px 50%; padding-left: 35px; }
+ul.material li.pdf { background: url(http://www.ist.utl.pt/img/icon_pdf.gif) no-repeat 10px 50%; padding-left: 35px; }
+ul.material li.doc { background: url(http://www.ist.utl.pt/img/icon_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.xls { background: url(http://www.ist.utl.pt/img/icon_excel.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.document { background: url(http://www.ist.utl.pt/img/icon_generic_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.link { background: url(http://www.ist.utl.pt/img/icon_link.gif) no-repeat 10px 50%; padding-left: 35px; }
+ul.material li.lightbulb { background: url(http://www.ist.utl.pt/img/icon_lightbulb.gif) no-repeat 10px 50%; padding-left: 35px; }
 ul.material li.cellphone { background: url(http://www.ist.utl.pt/img/icon_cellphone.png) no-repeat 10px 50%; padding-left: 30px; }
+ul.material li.submit { background: url(http://www.ist.utl.pt/img/icon_doc_edit.gif) no-repeat 13px 50%; padding-left: 35px; }
 
 /***********************************************************
 	licenciatura section
@@ -173,7 +175,7 @@ ul.material li.cellphone { background: url(http://www.ist.utl.pt/img/icon_cellph
 .tab_themes td.title { background: #e2e2e2; }
 .tab_themes h3 { color: #333; margin: 0; }
 caption { font: bold 1.2em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #333; text-align: left; margin: 0 0.3em 0; padding: 1em 0 0.5em 0; }
-#main p.table_comment { font-size: 1em; color: #333; margin: 0 0 1em 0; }
+#main p.table_comment { font-size: 0.9em; color: #666; margin: 0 0 1em 0; padding: 0; }
 
 /***********************************************************
 	context navigation
@@ -183,7 +185,7 @@ caption { font: bold 1.2em "Lucida Grande", "Trebuchet MS", "bitstream vera sans
 #contextual_nav h2 { color:#666; }
 #contextual_nav ul, #contextual_nav li  { list-style-type: none; margin: 0; padding-left: 0; }
 #contextual_nav ul { margin-bottom: 20px; padding-left: 15px; border-left: 1px solid #ccc; }
-#contextual_nav li { background: url(/img/icon_redcircle.gif) no-repeat 0 50%; padding-left: 15px; }
+#contextual_nav li { background: url(http://www.ist.utl.pt/img/icon_redcircle.gif) no-repeat 0 50%; padding-left: 15px; }
 
 /***********************************************************
  Errors
@@ -214,8 +216,9 @@ h3.question a:link, h3.question a:visited { text-decoration: none; color: #333; 
 .q_number { font: bold 2.2em "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; color: #d4cfb4; float: left; margin: -0.15em 0.5em 0 0; }
 .h_box, .h_box_alt { background:#f6f6f6; width: 69%; padding: 0.75em; margin: 1em 0 ; border: 1px solid #e2e2e2; }
 .h_box_alt { background: #FCFCEC; }
+#main .tab_simpler { margin-bottom: 1em; }
 #main .tab_simpler td { padding: 5px; }
-#main .tab_simpler td.align_r { text-align: right;}
+#main .tab_simpler td.align_r { text-align: right; }
 
 /***********************************************************
 	complementary navigation hints
@@ -229,114 +232,3 @@ h3.question a:link, h3.question a:visited { text-decoration: none; color: #333; 
 #version { float: right; padding-top: 0em; }
 #version img { padding: 1px; border: 1px solid #fff; }
 #version img.activeflag { border: 1px solid #A2AEBC; background-color: #ccc; }
-
-
-
-/***********************************************************
-	fenix
-***********************************************************/
-
-#perfnav { height: 22px; } /* resolve o problema de a perfnav desaparecer quando não tem items de navegação */
-.dinline { display: inline !important; }
-.tab_lay th { font-size: 1.0em !important; }
-.tab_lay { border-collapse: collapse; }
-
-
-/* --- form fieldset --- */
-.form1 fieldset {
-margin: 1em 0;
-padding: 1em;
-background: #f6f6f6;
-width: 80%;
-border: 1px solid #e2e2e2;
-}
-.form1 fieldset p { color: #666; margin-top: 0; margin-bottom: 1em; }
-.form1 legend {
-margin: 0;
-padding: 0 0.5em;
-font-size: 1.2em;
-font-weight: bold;
-color: #000;
-}
-.form1 label { font-weight: normal; display: block; padding: 6px 0 3px;}
-.form1 input { display: block; }
-.form1 p.comment { font-size: 1em; color: #999; padding-top: 1em; }
-.form1 input#button { margin-top: 1em; }
-.form1 span.red { color: #bb1309 !important; }
-.form1 span.comment { font-size: 1em; color: #999; font-weight: normal; }
-span.red { color: #c30 !important; }
-
-* html .form1 fieldset { padding-top: 1.75em; } /* ie6 only*/
-*:first-child+html .form1 fieldset { padding-top: 1.75em; } /* ie7 only */
- 
-span.comment { font-size: 0.85em !important; color: #999; }
-
-
-
-/***********************************************************
-	fenix - editor allowed classes & id's pub-
-***********************************************************/
-
-/* (id > class) version */
-.pub-version { margin: 0; padding: 0; }
-.pub-version * { margin: 0; padding: 0; }
-.pub-version { float: right; padding-top: 0em; }
-.pub-version img { padding: 1px; border: 1px solid #fff; }
-.pub-version img.pub-activeflag { border: 1px solid #A2AEBC; background-color: #ccc; }
-
-.pub-col_left, .pub-col_left_photo { float: left; width: 150px; margin: 0 30px 0 0;}
-.pub-col_left_photo img { border: 2px solid #e2e2e2; } 
-.pub-col_right, .pub-col_right_photo { float: right; width: 150px; margin: 30px; }
-.pub-col_right { width: 250px; }
-.pub-col_right_photo img { border: 2px solid #e2e2e2; margin-bottom: 20px;}
-
-.pub-box { width: 250px; border: 1px solid #e2e2e2; margin: 0 0 1em 1em; }
-.pub-box p { margin: 0; } 
-.pub-box img { border: 0; }
-#main .pub-box_header { background: #ccc; padding: 3px 10px 3px 10px; }
-#main .pub-box_cell { background: #eae7e4; padding: 10px; }
-#main td.pub-box_cell p { font-size: 1em;}
-.pub-box ul { list-style-type: none; margin: 0; padding: 0; font-size: 1em; }
-
-/* (id > class) contextual_nav */
-.pub-contextual_nav { float: right; width: 200px; margin: 0 0 20px 20px; padding: 20px 0 20px 20px; /* border-left: 1px solid #ccc; */}
-.pub-contextual_nav h2 { color:#666; }
-.pub-contextual_nav ul, .contextual_nav li  { list-style-type: none; margin: 0; padding-left: 0; }
-.pub-contextual_nav ul { margin-bottom: 20px; padding-left: 15px; border-left: 1px solid #ccc; }
-.pub-contextual_nav li { background: url(/img/icon_redcircle.gif) no-repeat 0 50%; padding-left: 15px; }
-
-.pub-h_box, .pub-h_box_alt { background:#f6f6f6; width: 69%; padding: 0.75em; margin: 1em 0 ; border: 1px solid #e2e2e2; }
-.pub-h_box_alt { background: #FCFCEC; }
-
-.pub-skipto { display: none; }
-.pub-greytxt { color: #666; }
-.pub-grey_bright { color: #999; }
-.pub-px10 { font-size: 1em; } 
-.pub-photoframer { display: block; border: 2px solid #999; }
-.pub-nospace { margin: 0; padding: 0;}
-.pub-inline { display: inline; }
-.pub-clear { clear: both; }
-.pub-center { text-align: center; }
-.pub-post_date { font: 1em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #999; margin: 0; padding: 0; }	
-.pub-bottom_border { border-bottom: 1px solid #ccc; }
-.pub-redbox { color: #fff; background: #c30; padding: 3px 6px 3px 6px; }
-.pub-marker { background: #fff794; padding: 2px; }
-.pub-update { font-size: 0.9em; color: #999; background: #e8e8e8; padding: 2px 3px; }
-.pub-pdf_solo { background: url(/img/icon_pdf.gif) no-repeat 10px 50%; padding: 5px 0 5px 35px; }
-.pub-page { background: url(/img/icon_page.gif) no-repeat 7px 50%; padding: 2px 0 2px 27px; }
-.pub-feed { background: url(/img/icon_feed.gif) no-repeat 10px 50%; padding: 2px 0 2px 30px; }
-ul.pub-material { list-style-type: none; margin-left: 0; padding-left: 0; }
-ul.pub-material li.pub-pdf { background: url(/img/icon_pdf.gif) no-repeat 10px 50%; padding-left: 35px; }
-ul.pub-material li.pub-doc { background: url(/img/icon_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.pub-material li.pub-xls { background: url(/img/icon_excel.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.pub-material li.pub-document { background: url(/img/icon_generic_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.pub-material li.pub-link { background: url(/img/icon_link.gif) no-repeat 10px 50%; padding-left: 35px; }
-ul.pub-material li.pub-lightbulb { background: url(/img/icon_lightbulb.gif) no-repeat 10px 50%; padding-left: 35px; }
-ul.pub-material li.pub-cellphone { background: url(http://www.ist.utl.pt/img/icon_cellphone.png) no-repeat 10px 50%; padding-left: 30px; }
-
-.pub-tab_lay { border: 1px solid #e2e2e2; margin-bottom: 1.5em;}
-.pub-tab_lay th { color: #333; background: #ccc; text-align: left; padding: 5px; }
-.pub-tab_lay td { padding: 5px; height: 2em; }
-.pub-tab_lay td.pub-subheader { font-weight: bold; color: #333; background: #e2e2e2; padding: 5px 5px 5px 5px; }
-.pub-tab_lay td.pub-bluecell, .pub-tab_lay tr.pub-bluecell { background: #EDF3FE; }
-
