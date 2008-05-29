@@ -1122,7 +1122,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return result;
     }
 
-    static final protected BigDecimal LEIC_WEIGHT_BEFORE_0607_EXCEPT_TFC = BigDecimal.valueOf(4.0d);
+    static final public BigDecimal LEIC_WEIGHT_BEFORE_0607_EXCEPT_TFC = BigDecimal.valueOf(4.0d);
 
     static final BigDecimal LMAC_AND_LCI_WEIGHT_FACTOR = BigDecimal.valueOf(0.25d);
 
