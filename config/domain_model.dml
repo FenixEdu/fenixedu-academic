@@ -1310,14 +1310,16 @@ class net.sourceforge.fenixedu.domain.DomainObject {
 					}
 
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastCourseGroupChangeRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+					Money pastAmount;
 				}
 
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastExtraExamRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+					Money pastAmount;
 				}
 
 				class net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastFreeSolicitationAcademicRequestEvent extends net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+					Money pastAmount;
 				}
-
 
 		class net.sourceforge.fenixedu.domain.accounting.events.gratuity.PhDGratuityEvent extends net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent {
 			YearMonthDay creationDate;
