@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.export;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainListReference;
@@ -21,7 +19,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.record.BeginRecord;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
