@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.export;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -16,18 +17,20 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
-import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
+import org.apache.poi.hssf.record.BeginRecord;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class GrantSearch implements Serializable {
 
-    private YearMonth grantYearMonth;
+    private LocalDate beginDate;
+
+    private LocalDate endDate;
 
     private String responsibleName;
 
@@ -39,12 +42,12 @@ public class GrantSearch implements Serializable {
 
     private Boolean inactive;
 
-    //datas do subsidio
+    // datas do subsidio
     private String subsidyCostCenterOrProject;
 
     private Boolean isSubsidyCostCenter;
 
-    //  datas do seguro
+    // datas do seguro
     private String insuranceCostCenterOrProject;
 
     private Boolean isInsuranceCostCenter;
@@ -53,32 +56,28 @@ public class GrantSearch implements Serializable {
 	super();
 	setActive(true);
 	setInactive(false);
-	setGrantYearMonth(new YearMonth());
+	LocalDate today = new LocalDate();
+	setBeginDate(new LocalDate(today.getYear(), today.getMonthOfYear(), 1));
+	setEndDate(new LocalDate(today.getYear(), today.getMonthOfYear(), today.dayOfMonth().getMaximumValue()));
 	search = new DomainListReference<GrantContractRegime>();
 	setIsSubsidyCostCenter(true);
 	setIsInsuranceCostCenter(true);
     }
 
-    public YearMonth getGrantYearMonth() {
-	return grantYearMonth;
+    public LocalDate getBeginDate() {
+	return beginDate;
     }
 
-    public Partial getGrantYearMonthPartial() {
-	if (grantYearMonth.getYear() != null || grantYearMonth.getMonth() != null) {
-	    YearMonthDay now = new YearMonthDay();
-	    if (grantYearMonth.getYear() == null) {
-		getGrantYearMonth().setYear(now.getYear());
-	    }
-	    if (grantYearMonth.getMonth() == null) {
-		getGrantYearMonth().setMonth(Month.values()[now.getMonthOfYear() - 1]);
-	    }
-	    return grantYearMonth.getPartial();
-	}
-	return null;
+    public void setBeginDate(LocalDate beginDate) {
+	this.beginDate = beginDate;
     }
 
-    public void setGrantYearMonth(YearMonth grantYearMonth) {
-	this.grantYearMonth = grantYearMonth;
+    public LocalDate getEndDate() {
+	return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+	this.endDate = endDate;
     }
 
     public Teacher getResponsible() {
@@ -151,12 +150,11 @@ public class GrantSearch implements Serializable {
 
     public void setSearch() {
 	List<GrantContractRegime> result = new ArrayList<GrantContractRegime>();
-	for (GrantContractRegime grantContractRegime : RootDomainObject.getInstance()
-		.getGrantContractRegimes()) {
-	    if (satisfiedSubsidyCostCenter(grantContractRegime)
-		    && satisfiedInsuranceCostCenter(grantContractRegime)
-		    && satisfiedPeriod(grantContractRegime) && satisfiedResponsible(grantContractRegime)
-		    && satisfiedActive(grantContractRegime)) {
+	for (GrantContractRegime grantContractRegime : RootDomainObject.getInstance().getGrantContractRegimes()) {
+	    if (grantContractRegime.getGrantContract() != null && satisfiedSubsidyCostCenter(grantContractRegime)
+		    && satisfiedInsuranceCostCenter(grantContractRegime) // &&
+		    // satisfiedPeriod(grantContractRegime)
+		    && satisfiedResponsible(grantContractRegime) && satisfiedActive(grantContractRegime)) {
 		result.add(grantContractRegime);
 	    }
 
@@ -172,10 +170,9 @@ public class GrantSearch implements Serializable {
 	if (getInsuranceCostCenterOrProject() != null && getInsuranceCostCenterOrProject().length() != 0) {
 	    GrantInsurance grantInsurance = grantContractRegime.getGrantContract().getGrantInsurance();
 	    if (grantInsurance != null
-		    && grantInsurance.getGrantPaymentEntity().getNumber().equalsIgnoreCase(
-			    getInsuranceCostCenterOrProject())
-		    && (grantInsurance.getGrantPaymentEntity() instanceof GrantProject
-			    && !getIsInsuranceCostCenter() || grantInsurance.getGrantPaymentEntity() instanceof GrantCostCenter
+		    && grantInsurance.getGrantPaymentEntity().getNumber().equalsIgnoreCase(getInsuranceCostCenterOrProject())
+		    && (grantInsurance.getGrantPaymentEntity() instanceof GrantProject && !getIsInsuranceCostCenter() || grantInsurance
+			    .getGrantPaymentEntity() instanceof GrantCostCenter
 			    && getIsInsuranceCostCenter())) {
 		return true;
 	    }
@@ -190,8 +187,7 @@ public class GrantSearch implements Serializable {
 	    if (grantSubsidy != null) {
 		for (GrantPart grantPart : grantSubsidy.getAssociatedGrantParts()) {
 		    if (grantPart.getGrantPaymentEntity() != null
-			    && grantPart.getGrantPaymentEntity().getNumber().equalsIgnoreCase(
-				    getSubsidyCostCenterOrProject())
+			    && grantPart.getGrantPaymentEntity().getNumber().equalsIgnoreCase(getSubsidyCostCenterOrProject())
 			    && ((grantPart.getGrantPaymentEntity() instanceof GrantProject && (!getIsSubsidyCostCenter())) || (grantPart
 				    .getGrantPaymentEntity() instanceof GrantCostCenter && getIsSubsidyCostCenter()))) {
 			return true;
@@ -205,16 +201,19 @@ public class GrantSearch implements Serializable {
 
     private boolean satisfiedActive(GrantContractRegime grantContractRegime) {
 	if (getActive() || getInactive()) {
-	    Partial partial = getGrantYearMonthPartial();
-	    if (partial == null) {
-		YearMonthDay now = new YearMonthDay();
-		partial = new Partial().with(DateTimeFieldType.monthOfYear(), now.getMonthOfYear())
-			.with(DateTimeFieldType.year(), now.getYear());
+	    LocalDate endDate = new LocalDate(grantContractRegime.getDateEndContractYearMonthDay());
+	    if (!StringUtils.isEmpty(grantContractRegime.getGrantContract().getEndContractMotive())) {
+		DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+		try {
+		    LocalDate rescissionDate = dateFormat.parseDateTime(
+			    grantContractRegime.getGrantContract().getEndContractMotive()).toLocalDate();
+		    endDate = endDate.isBefore(rescissionDate) ? endDate : rescissionDate;
+		} catch (IllegalArgumentException e) {
+		}
 	    }
-	    if ((getActive() && belongsToPeriod(grantContractRegime, partial) && StringUtils
-		    .isEmpty(grantContractRegime.getGrantContract().getEndContractMotive()))
-		    || (getInactive() && !belongsToPeriod(grantContractRegime, partial) && (!StringUtils
-			    .isEmpty(grantContractRegime.getGrantContract().getEndContractMotive())))) {
+	    if ((getActive() && belongsToPeriod(new LocalDate(grantContractRegime.getDateBeginContractYearMonthDay()), endDate))
+		    || (getInactive() && !belongsToPeriod(new LocalDate(grantContractRegime.getDateBeginContractYearMonthDay()),
+			    endDate))) {
 		return true;
 	    }
 	    return false;
@@ -224,25 +223,14 @@ public class GrantSearch implements Serializable {
 
     private boolean satisfiedResponsible(GrantContractRegime grantContractRegime) {
 	if (getResponsible() != null) {
-	    return (grantContractRegime.getTeacher() != null && grantContractRegime.getTeacher().equals(
-		    getResponsible())) ? true : false;
+	    return (grantContractRegime.getTeacher() != null && grantContractRegime.getTeacher().equals(getResponsible())) ? true
+		    : false;
 	}
 	return true;
     }
 
-    private boolean satisfiedPeriod(GrantContractRegime grantContractRegime) {
-	return (getGrantYearMonthPartial() == null || (grantContractRegime != null && belongsToPeriod(
-		grantContractRegime, getGrantYearMonthPartial()))) ? true : false;
-    }
-
-    public boolean belongsToPeriod(GrantContractRegime contractRegime, Partial partialDate) {
-	Partial begin = new Partial().with(DateTimeFieldType.monthOfYear(),
-		contractRegime.getDateBeginContractYearMonthDay().getMonthOfYear()).with(
-		DateTimeFieldType.year(), contractRegime.getDateBeginContractYearMonthDay().getYear());
-	Partial end = new Partial().with(DateTimeFieldType.monthOfYear(),
-		contractRegime.getDateEndContractYearMonthDay().getMonthOfYear()).with(
-		DateTimeFieldType.year(), contractRegime.getDateEndContractYearMonthDay().getYear());
-	return !(begin).isAfter(partialDate) && !(end).isBefore(partialDate);
+    public boolean belongsToPeriod(LocalDate contractBeginDate, LocalDate contractEndDate) {
+	return (!contractBeginDate.isAfter(getEndDate())) && (!contractEndDate.isBefore(getBeginDate()));
     }
 
 }

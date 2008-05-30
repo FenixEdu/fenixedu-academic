@@ -1,13 +1,17 @@
 <schema name="search.grants.contract" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
-	<slot name="grantYearMonth.year" key="label.year">
-		<validator name="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-		<property name="maxLength" value="4" />
-		<property name="size" value="4" />
+	<slot name="beginDate" key="label.grant.subsidy.dateBeginSubsidy"> 
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
-	<slot name="grantYearMonth.month" layout="menu-select" key="label.month">
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.util.Month" />
-		<property name="eachLayout" value="this-does-not-exist" />
+	<slot name="endDate" key="label.grant.subsidy.dateEndSubsidy"> 
+		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<property name="format" value="dd/MM/yyyy"/>
+		<property name="size" value="10"/>
+		</validator>
+		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="responsible" layout="autoComplete" key="label.grant.paymententity.teacher">
 		<property name="size" value="80"/>

@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
-import org.joda.time.YearMonthDay;
-
 public class AssiduousnessStructureSearch implements Serializable {
 
     private String responsibleName;
@@ -199,7 +197,6 @@ public class AssiduousnessStructureSearch implements Serializable {
 
     public List<PersonFunction> getAssiduousnessPersonFunctions() {
 	List<PersonFunction> result = new ArrayList<PersonFunction>();
-	YearMonthDay today = new YearMonthDay();
 	for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
 	    if (accountability instanceof PersonFunction) {
 		PersonFunction personFunction = (PersonFunction) accountability;
