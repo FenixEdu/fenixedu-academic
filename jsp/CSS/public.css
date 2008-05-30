@@ -69,7 +69,7 @@ span.comment { font-size: 0.85em !important; color: #999; }
 .pub-contextual_nav h2 { color:#666; }
 .pub-contextual_nav ul, .contextual_nav li  { list-style-type: none; margin: 0; padding-left: 0; }
 .pub-contextual_nav ul { margin-bottom: 20px; padding-left: 15px; border-left: 1px solid #ccc; }
-.pub-contextual_nav li { background: url(/img/icon_redcircle.gif) no-repeat 0 50%; padding-left: 15px; }
+.pub-contextual_nav li { background: url(http://www.ist.utl.pt/img/icon_redcircle.gif) no-repeat 0 50%; padding-left: 15px; }
 
 .pub-h_box, .pub-h_box_alt { background:#f6f6f6; width: 69%; padding: 0.75em; margin: 1em 0 ; border: 1px solid #e2e2e2; }
 .pub-h_box_alt { background: #FCFCEC; }
@@ -88,16 +88,16 @@ span.comment { font-size: 0.85em !important; color: #999; }
 .pub-redbox { color: #fff; background: #c30; padding: 3px 6px 3px 6px; }
 .pub-marker { background: #fff794; padding: 2px; }
 .pub-update { font-size: 0.9em; color: #999; background: #e8e8e8; padding: 2px 3px; }
-.pub-pdf_solo { background: url(/img/icon_pdf.gif) no-repeat 10px 50%; padding: 5px 0 5px 35px; }
-.pub-page { background: url(/img/icon_page.gif) no-repeat 7px 50%; padding: 2px 0 2px 27px; }
-.pub-feed { background: url(/img/icon_feed.gif) no-repeat 10px 50%; padding: 2px 0 2px 30px; }
+.pub-pdf_solo { background: url(http://www.ist.utl.pt/img/icon_pdf.gif) no-repeat 10px 50%; padding: 5px 0 5px 35px; }
+.pub-page { background: url(http://www.ist.utl.pt/img/icon_page.gif) no-repeat 7px 50%; padding: 2px 0 2px 27px; }
+.pub-feed { background: url(http://www.ist.utl.pt/img/icon_feed.gif) no-repeat 10px 50%; padding: 2px 0 2px 30px; }
 ul.pub-material { list-style-type: none; margin-left: 0; padding-left: 0; }
-ul.pub-material li.pub-pdf { background: url(/img/icon_pdf.gif) no-repeat 10px 50%; padding-left: 35px; }
-ul.pub-material li.pub-doc { background: url(/img/icon_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.pub-material li.pub-xls { background: url(/img/icon_excel.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.pub-material li.pub-document { background: url(/img/icon_generic_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.pub-material li.pub-link { background: url(/img/icon_link.gif) no-repeat 10px 50%; padding-left: 35px; }
-ul.pub-material li.pub-lightbulb { background: url(/img/icon_lightbulb.gif) no-repeat 10px 50%; padding-left: 35px; }
+ul.pub-material li.pub-pdf { background: url(http://www.ist.utl.pt/img/icon_pdf.gif) no-repeat 10px 50%; padding-left: 35px; }
+ul.pub-material li.pub-doc { background: url(http://www.ist.utl.pt/img/icon_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.pub-material li.pub-xls { background: url(http://www.ist.utl.pt/img/icon_excel.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.pub-material li.pub-document { background: url(http://www.ist.utl.pt/img/icon_generic_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.pub-material li.pub-link { background: url(http://www.ist.utl.pt/img/icon_link.gif) no-repeat 10px 50%; padding-left: 35px; }
+ul.pub-material li.pub-lightbulb { background: url(http://www.ist.utl.pt/img/icon_lightbulb.gif) no-repeat 10px 50%; padding-left: 35px; }
 ul.pub-material li.pub-cellphone { background: url(http://www.ist.utl.pt/img/icon_cellphone.png) no-repeat 10px 50%; padding-left: 30px; }
 
 .pub-tab_lay { border: 1px solid #e2e2e2; margin-bottom: 1.5em;}
