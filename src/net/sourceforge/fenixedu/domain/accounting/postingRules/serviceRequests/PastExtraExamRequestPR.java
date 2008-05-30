@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastEquivalencePlanRevisionRequestEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PastExtraExamRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
@@ -34,7 +34,7 @@ public class PastExtraExamRequestPR extends PastExtraExamRequestPR_Base {
 
     @Override
     public Money calculateTotalAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
-	return ((PastEquivalencePlanRevisionRequestEvent) event).getPastAmount();
+	return ((PastExtraExamRequestEvent) event).getPastAmount();
     }
 
     @Override
