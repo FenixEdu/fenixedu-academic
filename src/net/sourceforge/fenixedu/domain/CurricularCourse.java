@@ -1315,8 +1315,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getAcronym(ExecutionSemester period) {
-	return (super.getAcronym() == null || super.getAcronym().length() == 0) ? getCompetenceCourse().getAcronym(period)
-		: super.getAcronym();
+	return (super.getAcronym() == null || super.getAcronym().length() == 0) && hasCompetenceCourse() ?
+		getCompetenceCourse().getAcronym(period) : super.getAcronym();
     }
 
     @Override

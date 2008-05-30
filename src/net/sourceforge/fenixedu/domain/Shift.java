@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -37,7 +38,7 @@ public class Shift extends Shift_Base {
     }
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
-    public Shift(final ExecutionCourse executionCourse, List<ShiftType> types, final Integer lotacao) {
+    public Shift(final ExecutionCourse executionCourse, Collection<ShiftType> types, final Integer lotacao) {
 	
 	super();
 	
@@ -118,7 +119,7 @@ public class Shift extends Shift_Base {
 	return getExecutionCourse().getExecutionPeriod();
     }
     
-    private void shiftTypeManagement(List<ShiftType> types, ExecutionCourse executionCourse) {
+    private void shiftTypeManagement(Collection<ShiftType> types, ExecutionCourse executionCourse) {
 	if(executionCourse != null) {
 	    getCourseLoads().clear();
 	    for (ShiftType shiftType : types) {

@@ -42,7 +42,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 
 	checkParameters(name, executionCourse);
 
-	setName(new MultiLanguageString(name));
+	setName(new MultiLanguageString(name.replace('?', ' ').replace('/', ' ')));
 	setExecutionCourse(executionCourse);
 	setMandatory(Boolean.FALSE);
 

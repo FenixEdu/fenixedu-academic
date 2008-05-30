@@ -93,7 +93,7 @@ public class SchoolClass extends SchoolClass_Base {
 
 	    for (final SchoolClass schoolClass : classes) {
 		if (!schoolClass.equals(this) && schoolClassName.equalsIgnoreCase(schoolClass.getNome())) {
-		    throw new DomainException("Duplicate Entry: " + className);
+		    throw new DomainException("Duplicate Entry: " + className + " for curricular year " + curricularYear + " and degree curricular plan " + degreeCurricularPlan.getName());
 		}
 	    }
 	}
