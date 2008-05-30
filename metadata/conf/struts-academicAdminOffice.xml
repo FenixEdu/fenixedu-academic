@@ -590,7 +590,7 @@
 			scope="request">
 			
 	     		<forward name="createMarkSheetStep1" path="show.markSheetManagement.create.page.step1"/>
-	     		<forward name="createMarkSheetStep2" path="show.markSheetManagement.create.page.step2"/>       		
+	     		<forward name="createMarkSheetStep2" path="show.markSheetManagement.create.page.step2"/>
 	     		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
 		<forward name="rectifyMarkSheetStep1" path="show.markSheetManagement.rectify.page.step1"/>
 	     		<forward name="rectifyMarkSheetStep2" path="show.markSheetManagement.rectify.page.step2"/>

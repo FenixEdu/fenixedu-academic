@@ -104,6 +104,23 @@
 					<h:inputText alt="#{htmlAltBundle['inputText.number]']}" size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.aluno.number]}"/>
 				</h:column>
 			</h:dataTable>
+			
+			<br/>
+			<br/>
+			
+			<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.studentsWithImpossibleEnrolments}">
+				<h:outputText value="<strong>#{bundle['label.markSheet.studentsWithImpossibleEnrolments']}:</strong>" escape="false"/>
+				<h:dataTable value="#{evaluationManagementBackingBean.studentsWithImpossibleEnrolments}" var="student" styleClass="tstyle4">
+					<h:column>
+						<f:facet name="header"><h:outputText value="#{bundle['label.number']}"/></f:facet>
+						<h:outputText value="#{student.number}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header"><h:outputText value="#{bundle['label.name']}"/></f:facet>
+						<h:outputText value="#{student.person.name}" />
+					</h:column>
+				</h:dataTable>
+			</h:panelGroup>
 
 		<h:outputText value="<p>" escape="false"/>
 			<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" action="#{evaluationManagementBackingBean.editMarks}" value="#{bundle['button.save']}"/>

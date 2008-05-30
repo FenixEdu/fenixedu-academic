@@ -34,23 +34,29 @@ public class WriteMarks extends Service {
 
 	    if (attends != null) {
 		if(attends.isEnrolledOrWithActiveSCP()) {
-		    final Mark mark = findExistingMark(attends.getAssociatedMarks(), evaluation);
-
-		    if (markValue == null || markValue.length() == 0) {
-			if (mark != null) {
-			    mark.delete();
-			}
+		    
+		    if (attends.hasEnrolment() && attends.getEnrolment().isImpossible()) {
+			exceptionList.add(new DomainException("errors.student.with.impossible.enrolment", studentNumber.toString()));						
 		    } else {
-			try {
-			    if (mark == null) {
-				evaluation.addNewMark(attends, markValue);
-			    } else {
-				mark.setMark(markValue);
+			final Mark mark = findExistingMark(attends.getAssociatedMarks(), evaluation);
+			
+			if (markValue == null || markValue.length() == 0) {
+			    if (mark != null) {
+				mark.delete();
 			    }
-			} catch (InvalidMarkDomainException e) {
-			    exceptionList.add(e);
+			} else {
+			    try {
+				if (mark == null) {
+				    evaluation.addNewMark(attends, markValue);
+				} else {
+				    mark.setMark(markValue);
+				}
+			    } catch (InvalidMarkDomainException e) {
+				exceptionList.add(e);
+			    }
 			}
 		    }
+		    
 		} else {
 		    exceptionList.add(new DomainException("errors.student.not.active", studentNumber.toString()));
 		}

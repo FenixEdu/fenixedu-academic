@@ -18,8 +18,6 @@
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 
-
-
 			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.onlineTests.OnlineTest'}">
 				<h:outputText value="#{bundle['lable.test']}: "/>
 				<h:outputText value="<b>#{evaluationManagementBackingBean.evaluation.distributedTest.evaluationTitle}</b> " escape="false"/>

@@ -51,17 +51,33 @@
 
 	<fr:edit id="edit-invisible" name="edit" visible="false"/>
 
-	<p class="mtop15 mbottom05"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:</p>
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.students.capitalized"/>:</strong></p>
 	
 	<fr:edit id="edit-enrolments" name="edit" property="enrolmentEvaluationBeans" 
 			 schema="markSheet.create.step.two" layout="tabular-editable">
 		<fr:layout>
-			<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
 			<fr:property name="classes" value="tstyle4"/>
 	        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
 		</fr:layout>
 		<fr:destination name="invalid" path="/createMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>
 	</fr:edit>
+
+	<logic:notEmpty name="edit" property="impossibleEnrolmentEvaluationBeans">
+		<br/>
+		<p class="mtop15 mbottom05"><strong><span class="error0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.studentsWithImpossibleEnrolments" />:</span></strong></p>
+		<fr:edit id="edit-impossible-enrolments" name="edit" property="impossibleEnrolmentEvaluationBeans" 
+			schema="markSheet.create.step.two" layout="tabular-editable">
+			<fr:layout>
+				<fr:property name="classes" value="tstyle4"/>
+		        <fr:property name="columnClasses" value="listClasses,,"/>
+				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
+			</fr:layout>
+		<fr:destination name="invalid" path="/createMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>
+	</fr:edit>
+	<br/>
+	</logic:notEmpty>
+
 	<br/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.submit" /></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backSearchMarkSheet';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.cancel"/></html:cancel>

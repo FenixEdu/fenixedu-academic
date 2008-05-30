@@ -50,6 +50,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -679,7 +680,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    }
 	    return "";
 	} catch (IOException e) {
-	    addErrorMessages(getResourceBundle("resources/ApplicationResources"), e.getMessage(), null);
+	    addErrorMessages(getResourceBundle("resources/ApplicationResources"), e.getMessage());
 	    return "";
 	} finally {
 	    if (inputStream != null) {
@@ -747,6 +748,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(),
 		this.getEnd().getTime(), executionCourseIDs, degreeModuleScopesIDs, null, this.evaluationID, season,
 		this.getDescription() };
+	
 	try {
 	    ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
 	} catch (Exception e) {
@@ -888,7 +890,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
 		.getWrittenEvaluationSpaceOccupations()) {
 	    result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), ((AllocatableSpace) roomOccupation.getRoom())
-		    .getNome()));
+		    .getIdentification()));
 	}
 	return result;
     }
@@ -945,7 +947,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	return numberOfAttendingStudents;
     }
 
-    public FinalEvaluation getFinalEvaluation() throws FenixFilterException, FenixServiceException {
+    public FinalEvaluation getFinalEvaluation() {
 	for (final Evaluation evaluation : getExecutionCourse().getAssociatedEvaluations()) {
 	    if (evaluation instanceof FinalEvaluation) {
 		return (FinalEvaluation) evaluation;
@@ -954,10 +956,32 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	return null;
     }
 
-    public List<Attends> getExecutionCourseAttends() throws FenixFilterException, FenixServiceException {
-	List<Attends> executionCourseAttends = getExecutionCourse().getAttendsEnrolledOrWithActiveSCP();
-	Collections.sort(executionCourseAttends, new BeanComparator("aluno.number"));
-	return executionCourseAttends;
+    public List<Attends> getExecutionCourseAttends() {
+	final List<Attends> result = new ArrayList<Attends>();
+	for (final Attends attends : getExecutionCourse().getAttendsEnrolledOrWithActiveSCP()) {
+	    if (attends.hasEnrolment()) {
+		if (!attends.getEnrolment().isImpossible()) {
+		    result.add(attends);
+		}
+	    } else {
+		result.add(attends);
+	    }
+	}
+	Collections.sort(result, Attends.COMPARATOR_BY_STUDENT_NUMBER);
+	return result;
+    }
+
+    public List<Student> getStudentsWithImpossibleEnrolments() {
+	final List<Student> result = new ArrayList<Student>();
+	for (final Attends attends : getExecutionCourse().getAttendsEnrolledOrWithActiveSCP()) {
+	    if (attends.hasEnrolment() && attends.getEnrolment().isImpossible()) {
+		final Student student = attends.getEnrolment().getStudentCurricularPlan().getRegistration().getStudent();
+		if (!result.contains(student)) {
+		    result.add(student);
+		}
+	    }
+	}
+	return result;
     }
 
     public String getPublishMarksMessage() {
@@ -1126,7 +1150,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    List<Exam> exams = getExamList();
 	    if (exams != null && !exams.isEmpty()) {
 		Exam exam = exams.get(exams.size() - 1);
-		submitEvaluationDateTextBoxValue = DateFormatUtil.format("dd/MM/yyyy", exam.getDayDate());
+		submitEvaluationDateTextBoxValue = exam.getDayDateYearMonthDay().toString("dd/MM/yyyy");
 	    }
 	}
 	return submitEvaluationDateTextBoxValue;

@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,7 @@ import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
@@ -81,16 +83,15 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
 	ActionMessages actionMessages = new ActionMessages();
 	boolean canSubmitMarksAnyCurricularCourse = checkIfCanSubmitMarksToAnyCurricularCourse(submissionBean
 		.getAllCurricularCourses(), submissionBean.getExecutionCourse().getExecutionPeriod(), request, actionMessages);
-	Collection<MarkSheetTeacherMarkBean> marksToSubmit = getMarksToSubmit(submissionBean);
+	calculateMarksToSubmit(request, submissionBean);
 
-	if (marksToSubmit.isEmpty()) {
+	if (submissionBean.getMarksToSubmit().isEmpty()) {
 	    addMessage(request, actionMessages,
 		    (!canSubmitMarksAnyCurricularCourse) ? "error.teacher.gradeSubmission.noStudentsToSubmitMarksInPeriods"
 			    : "error.teacher.gradeSubmission.noStudentsToSubmitMarks");
 	    return mapping.findForward("gradeSubmission.step.one");
 	}
 
-	submissionBean.setMarksToSubmit(marksToSubmit);
 	return mapping.findForward("gradeSubmission.step.two");
     }
 
@@ -126,17 +127,28 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
 	return mapping.findForward("mainPage");
     }
 
-    private Collection<MarkSheetTeacherMarkBean> getMarksToSubmit(MarkSheetTeacherGradeSubmissionBean submissionBean) {
-
-	Collection<MarkSheetTeacherMarkBean> result = new HashSet<MarkSheetTeacherMarkBean>();
-	for (Enrolment enrolment : getEnrolmentsNotInAnyMarkSheet(submissionBean)) {
-	    Attends attends = enrolment.getAttendsByExecutionCourse(submissionBean.getExecutionCourse());
-	    if (attends != null) {
-		result.add(new MarkSheetTeacherMarkBean(attends, submissionBean.getEvaluationDate(), getMark(attends),
-			getEnrolmentEvaluationType(submissionBean, enrolment), getMark(attends).length() != 0));
+    private void calculateMarksToSubmit(final HttpServletRequest request, final MarkSheetTeacherGradeSubmissionBean submissionBean) {
+	final Collection<MarkSheetTeacherMarkBean> marksToSubmit = new HashSet<MarkSheetTeacherMarkBean>();
+	final List<Student> studentsWithImpossibleEnrolments = new ArrayList<Student>();
+	
+	for (final Enrolment enrolment : getEnrolmentsNotInAnyMarkSheet(submissionBean)) {
+	    if (enrolment.isImpossible()) {
+		final Student student = enrolment.getStudentCurricularPlan().getRegistration().getStudent();
+		if (!studentsWithImpossibleEnrolments.contains(student)) {
+		    studentsWithImpossibleEnrolments.add(student);
+		}
+	    } else {
+		Attends attends = enrolment.getAttendsByExecutionCourse(submissionBean.getExecutionCourse());
+		if (attends != null) {
+		    marksToSubmit.add(new MarkSheetTeacherMarkBean(attends, submissionBean.getEvaluationDate(), getMark(attends),
+			    getEnrolmentEvaluationType(submissionBean, enrolment), getMark(attends).length() != 0));
+		}
 	    }
+	    
 	}
-	return result;
+
+	submissionBean.setMarksToSubmit(marksToSubmit);
+	request.setAttribute("studentsWithImpossibleEnrolments", studentsWithImpossibleEnrolments);
     }
 
     private EnrolmentEvaluationType getEnrolmentEvaluationType(MarkSheetTeacherGradeSubmissionBean submissionBean,

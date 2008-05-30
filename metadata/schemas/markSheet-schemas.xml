@@ -184,8 +184,8 @@
 	<slot name="teacher" layout="format" key="label.teacher">
 		<property name="format" value="${person.name} (${teacherNumber})" />
 	</slot>
-	<slot name="evaluationDate" key="label.evaluationDate"/>
-	<slot name="markSheetType"  key="label.markSheetType"/>
+	<slot name="evaluationDate" key="label.evaluationDate" />
+	<slot name="markSheetType"  key="label.markSheetType" />
 </schema>
 
 <schema name="markSheet.create.step.two" bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -479,4 +479,7 @@
 	<slot name="enrolmentEvaluationsCount" key="label.markSheet.evaluatedStudents"/>	
 </schema>
 
-
+<schema name="Student.view-marksheet" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
+	<slot name="number" key="label.number" />
+	<slot name="person.name" key="label.name" />
+</schema>

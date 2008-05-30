@@ -18,23 +18,18 @@ public class CreateMarkSheet extends Service {
 
     public MarkSheet run(MarkSheetManagementCreateBean markSheetManagementCreateBean, Employee employee) {
 
-        Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeanList = CollectionUtils
-                .select(markSheetManagementCreateBean.getEnrolmentEvaluationBeans(), new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        MarkSheetEnrolmentEvaluationBean markSheetEnrolmentEvaluationBean = (MarkSheetEnrolmentEvaluationBean) arg0;
-                        return markSheetEnrolmentEvaluationBean.getGradeValue() != null
-                                && markSheetEnrolmentEvaluationBean.getGradeValue().length() != 0;
-                    }
+	final Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeanList = CollectionUtils.select(
+		markSheetManagementCreateBean.getAllEnrolmentEvalutionBeans(), new Predicate() {
+		    public boolean evaluate(Object arg0) {
+			return ((MarkSheetEnrolmentEvaluationBean) arg0).hasAnyGradeValue();
+		    }
 
-                });
+		});
 
-        return markSheetManagementCreateBean.getCurricularCourse().createNormalMarkSheet(
-                markSheetManagementCreateBean.getExecutionPeriod(),
-                markSheetManagementCreateBean.getTeacher(),
-                markSheetManagementCreateBean.getEvaluationDate(),
-                markSheetManagementCreateBean.getMarkSheetType(),
-                Boolean.FALSE,
-                enrolmentEvaluationBeanList, employee);
+	return markSheetManagementCreateBean.getCurricularCourse().createNormalMarkSheet(
+		markSheetManagementCreateBean.getExecutionPeriod(), markSheetManagementCreateBean.getTeacher(),
+		markSheetManagementCreateBean.getEvaluationDate(), markSheetManagementCreateBean.getMarkSheetType(),
+		Boolean.FALSE, enrolmentEvaluationBeanList, employee);
     }
 
 }

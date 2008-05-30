@@ -50,13 +50,16 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
         this.gradeValue = grade;
     }
     
+    public boolean hasAnyGradeValue() {
+	return getGradeValue() != null && getGradeValue().length() != 0;
+    }
+    
     public EnrolmentEvaluation getEnrolmentEvaluation() {
         return (this.enrolmentEvaluation == null) ? null : this.enrolmentEvaluation.getObject();
     }
 
     public void setEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation) {
         this.enrolmentEvaluation = (enrolmentEvaluation != null) ? new DomainReference<EnrolmentEvaluation>(enrolmentEvaluation) : null;
-        //TODO: ????????????
         if (this.enrolmentEvaluation != null) {
             setEnrolment(this.enrolmentEvaluation.getObject().getEnrolment());
         }

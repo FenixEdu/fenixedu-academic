@@ -72,10 +72,23 @@
 
 		<p><a href="javascript:setCheckBoxValue(true)"><bean:message key="button.selectAll"/></a> | <a href="javascript:setCheckBoxValue(false)"><bean:message key="button.selectNone"/></a></p>
 
+		<br/>
+		<logic:notEmpty name="studentsWithImpossibleEnrolments">
+			<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.studentsWithImpossibleEnrolments" />:</strong></p>
+			<fr:view name="studentsWithImpossibleEnrolments" schema="Student.view-marksheet">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4"/>
+			        <fr:property name="columnClasses" value="listClasses,,"/>
+				</fr:layout>
+			</fr:view>
+			<br/>
+		</logic:notEmpty>
+
 		<p class="mtop15">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="label.submit"/></html:submit>
 			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='backToMainPage';"><bean:message key="button.cancel"/></html:cancel>
 		</p>
+		
 	</logic:notEmpty>
 
 </fr:form>
