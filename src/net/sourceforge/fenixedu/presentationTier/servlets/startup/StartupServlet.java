@@ -10,22 +10,20 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import pt.ist.fenixframework.Config;
-import pt.ist.fenixframework.FenixFramework;
-import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.functionalities.ExecutionPath;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.pstm.Transaction;
+ts;
 import pt.ist.fenixframework.pstm.Transaction;
 
 /**
@@ -46,7 +44,7 @@ public class StartupServlet extends HttpServlet {
         super.init(config);
 
         String domainModelPath = getServletContext().getRealPath(getInitParameter("domainmodel"));
-        FenixFramework.initialize(PropertiesManager.getFenixFrameworkConfig(domainModelPath));
+        FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(domainModelPath));
 
         Service.init(RootDomainObject.getInstance());
 
