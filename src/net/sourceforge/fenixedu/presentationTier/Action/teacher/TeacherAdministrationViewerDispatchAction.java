@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChang
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
@@ -58,7 +57,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -73,7 +71,6 @@ import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMap
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -379,74 +376,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    throw new FenixActionException(e);
 	}
 	return viewProgram(mapping, form, request, response);
-    }
-
-    // ======================== EvaluationMethod Management
-    // ========================
-    public ActionForward viewEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-
-	ISiteComponent evaluationComponent = new InfoEvaluationMethod();
-
-	readSiteView(request, evaluationComponent, null, null, null);
-	return mapping.findForward("viewEvaluationMethod");
-    }
-
-    public ActionForward prepareEditEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-
-	ISiteComponent evaluationComponent = new InfoEvaluationMethod();
-	try {
-	    readSiteView(request, evaluationComponent, null, null, null);
-	} catch (FenixActionException e1) {
-	    throw e1;
-	}
-
-	TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request.getAttribute("siteView");
-
-	if (siteView.getComponent() != null) {
-	    DynaActionForm evaluationForm = (DynaActionForm) form;
-	    evaluationForm.set("evaluationElements", ((InfoEvaluationMethod) siteView.getComponent()).getEvaluationElements()
-		    .getContent(Language.pt));
-	    evaluationForm.set("evaluationElementsEn", ((InfoEvaluationMethod) siteView.getComponent()).getEvaluationElements()
-		    .getContent(Language.en));
-	}
-
-	return mapping.findForward("editEvaluationMethod");
-    }
-
-    public ActionForward editEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-
-	Integer objectCode = getObjectCode(request);
-	Integer evaluationMethodCode = getParameter(request, "evaluationMethodCode");
-
-	DynaActionForm evaluationForm = (DynaActionForm) form;
-
-	InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
-	infoEvaluationMethod.setIdInternal(evaluationMethodCode);
-	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	if ((String) evaluationForm.get("evaluationElements") != null
-		&& ((String) evaluationForm.get("evaluationElements")).length() > 0) {
-	    multiLanguageString.setContent(Language.pt, (String) evaluationForm.get("evaluationElements"));
-	}
-	if ((String) evaluationForm.get("evaluationElementsEn") != null
-		&& ((String) evaluationForm.get("evaluationElementsEn")).length() > 0) {
-	    multiLanguageString.setContent(Language.en, (String) evaluationForm.get("evaluationElementsEn"));
-	}
-	infoEvaluationMethod.setEvaluationElements(multiLanguageString);
-
-	Object args[] = { objectCode, evaluationMethodCode, infoEvaluationMethod };
-
-	IUserView userView = getUserView(request);
-	try {
-	    ServiceManagerServiceFactory.executeService(userView, "EditEvaluation", args);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
-	return viewEvaluationMethod(mapping, form, request, response);
     }
 
     // ======================== Teachers Management ========================

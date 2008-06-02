@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -71,19 +70,6 @@ public class SiteViewerDispatchActionNew extends FenixContextDispatchAction {
 	readSiteView(request, programComponent, null, null, null);
 
 	return mapping.findForward("sucess");
-    }
-
-    public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	ISiteComponent evaluationComponent = new InfoEvaluationMethod();
-	readSiteView(request, evaluationComponent, null, null, null);
-
-	return mapping.findForward("sucess");
-
-	// ISiteComponent evaluationComponent = new InfoSiteEvaluationMethods();
-	// readSiteView(request, evaluationComponent, null, null, null);
-	//
-	// return mapping.findForward("sucess");
     }
 
     public ActionForward curricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,

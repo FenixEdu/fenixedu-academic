@@ -147,10 +147,6 @@ public class InfoExecutionCourse extends InfoObject {
 	return InfoCourseReport.newInfoFromDomain(getExecutionCourse().getCourseReport());
     }
 
-    public InfoEvaluationMethod getInfoEvaluationMethod() {
-	return InfoEvaluationMethod.newInfoFromDomain(getExecutionCourse().getEvaluationMethod());
-    }
-
     public List<InfoShift> getAssociatedInfoShifts() {
 	final List<InfoShift> result = new ArrayList<InfoShift>();
 

@@ -206,7 +206,7 @@
 					<td colspan="7">
 						<p>
 							<fr:view name="infoSiteCourseInformation" 
-										property="infoEvaluationMethod.evaluationElements" 
+										property="executionCourse.evaluationMethod.evaluationElements" 
 										layout="html"/>
 						</p>
 					</td>

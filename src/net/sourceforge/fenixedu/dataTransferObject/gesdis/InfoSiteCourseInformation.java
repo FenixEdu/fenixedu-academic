@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -33,7 +32,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -46,6 +44,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Leonor Almeida
@@ -83,10 +83,6 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 
     public InfoCourseReport getInfoCourseReport() {
 	return getInfoExecutionCourse().getInfoCourseReport();
-    }
-
-    public InfoEvaluationMethod getInfoEvaluationMethod() {
-	return getInfoExecutionCourse().getInfoEvaluationMethod();
     }
 
     public List<InfoCurricularCourse> getInfoCurricularCourses() {
@@ -158,9 +154,10 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 		break;
 	    }
 	}
-	if (getInfoEvaluationMethod() != null && getInfoEvaluationMethod().getEvaluationElements() != null
-		&& getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt) != null
-		&& getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH) {
+	if (getExecutionCourse().getEvaluationMethod() != null
+		&& getExecutionCourse().getEvaluationMethod().getEvaluationElements() != null
+		&& getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(Language.pt) != null
+		&& getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH) {
 	    result++;
 	}
 
@@ -200,9 +197,10 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 		break;
 	    }
 	}
-	if (getInfoEvaluationMethod() != null && getInfoEvaluationMethod().getEvaluationElements() != null
-		&& getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en) != null
-		&& getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH) {
+	if (getExecutionCourse().getEvaluationMethod() != null
+		&& getExecutionCourse().getEvaluationMethod().getEvaluationElements() != null
+		&& getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(Language.en) != null
+		&& getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH) {
 	    numberOfFieldsFilled++;
 	}
 

@@ -244,7 +244,7 @@
 	<p class="infoop mtop2"><span class="emphasis-box">7</span>
 	<bean:message key="message.courseInformation.courseAvaliationMethods" /></p>
 
-	<p><bean:write name="siteCourseInformation" property="infoEvaluationMethod.evaluationElements" filter="false"/></p>
+	<p><bean:write name="siteCourseInformation" property="executionCourse.evaluationMethod.evaluationElements" filter="false"/></p>
 
 
 	<p class="infoop mtop2"><span class="emphasis-box">8</span>

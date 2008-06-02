@@ -344,7 +344,7 @@
 	<bean:message key="message.courseInformation.courseAvaliationMethods" /></p>
 	<table border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<td><bean:write name="infoSiteCourseInformation" property="infoEvaluationMethod.evaluationElements" filter="false"/></td>
+			<td><bean:write name="infoSiteCourseInformation" property="executionCourse.evaluationMethod.evaluationElements" filter="false"/></td>
 		</tr>
 	</table>
 	<br />

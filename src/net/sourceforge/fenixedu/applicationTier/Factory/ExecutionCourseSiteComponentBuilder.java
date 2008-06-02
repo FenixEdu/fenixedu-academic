@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -37,11 +36,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Item;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -50,6 +47,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Jo�o Mota
@@ -77,8 +75,6 @@ public class ExecutionCourseSiteComponentBuilder {
 	    return getInfoSiteCommon((InfoSiteCommon) component, site);
 	} else if (component instanceof InfoSiteFirstPage) {
 	    return getInfoSiteFirstPage((InfoSiteFirstPage) component, site);
-	} else if (component instanceof InfoEvaluationMethod) {
-	    return getInfoEvaluationMethod((InfoEvaluationMethod) component, site);
 	} else if (component instanceof InfoSiteAssociatedCurricularCourses) {
 	    return getInfoSiteAssociatedCurricularCourses((InfoSiteAssociatedCurricularCourses) component, site);
 	} else if (component instanceof InfoSiteTimetable) {
@@ -242,17 +238,6 @@ public class ExecutionCourseSiteComponentBuilder {
 	infoCurricularCourseList = readCurricularCourses(executionCourse);
 
 	component.setAssociatedCurricularCourses(infoCurricularCourseList);
-	return component;
-    }
-
-    private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, ExecutionCourseSite site)
-	    throws FenixServiceException, ExcepcaoPersistencia {
-
-	final EvaluationMethod evaluationMethod = site.getExecutionCourse().getEvaluationMethod();
-	if (evaluationMethod != null) {
-	    component = copyFromDomain(evaluationMethod);
-	}
-
 	return component;
     }
 
@@ -450,20 +435,6 @@ public class ExecutionCourseSiteComponentBuilder {
 	    infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse()));
 	}
 	return infoSite;
-    }
-
-    /**
-     * @param evaluationMethod
-     * @return
-     */
-    private InfoEvaluationMethod copyFromDomain(EvaluationMethod evaluationMethod) {
-	InfoEvaluationMethod infoEvaluationMethod = null;
-	if (evaluationMethod != null) {
-	    infoEvaluationMethod = new InfoEvaluationMethod();
-	    infoEvaluationMethod.setIdInternal(evaluationMethod.getIdInternal());
-	    infoEvaluationMethod.setEvaluationElements(evaluationMethod.getEvaluationElements());
-	}
-	return infoEvaluationMethod;
     }
 
     /**

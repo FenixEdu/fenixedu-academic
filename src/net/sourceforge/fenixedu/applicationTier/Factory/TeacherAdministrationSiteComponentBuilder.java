@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourseAndInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupations;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -35,7 +34,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationExecutionCourses;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMethods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteExamExecutionCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGrouping;
@@ -66,7 +64,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
@@ -121,10 +118,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 	    return getInfoSitePrograms((InfoSitePrograms) component, site);
 	} else if (component instanceof InfoCurriculum) {
 	    return getInfoCurriculum((InfoCurriculum) component, site, (Integer) obj1);
-	} else if (component instanceof InfoSiteEvaluationMethods) {
-	    return getInfoEvaluationMethods((InfoSiteEvaluationMethods) component, site);
-	} else if (component instanceof InfoEvaluationMethod) {
-	    return getInfoEvaluationMethod((InfoEvaluationMethod) component, site);
 	} else if (component instanceof InfoSiteTeachers) {
 	    return getInfoSiteTeachers((InfoSiteTeachers) component, site, (String) obj2);
 	} else if (component instanceof InfoSiteEvaluation) {
@@ -271,43 +264,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 	component.setInfoCurriculums(infoCurriculums);
 	component.setInfoCurricularCourses(readInfoCurricularCourses(site));
 
-	return component;
-    }
-
-    /**
-     * @param evaluation
-     * @param site
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-    private ISiteComponent getInfoEvaluationMethods(InfoSiteEvaluationMethods component, ExecutionCourseSite site)
-	    throws FenixServiceException {
-	ExecutionCourse executionCourse = site.getExecutionCourse();
-	List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-	Iterator iter = curricularCourses.iterator();
-	List<InfoCurriculum> infoEvaluationMethods = new ArrayList<InfoCurriculum>();
-
-	while (iter.hasNext()) {
-	    CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-	    Curriculum curriculum = curricularCourse.findLatestCurriculum();
-
-	    if (curriculum != null) {
-		infoEvaluationMethods.add(InfoCurriculum.newInfoFromDomain(curriculum));
-	    }
-	}
-	component.setInfoEvaluations(infoEvaluationMethods);
-	component.setInfoCurricularCourses(readInfoCurricularCourses(site));
-
-	return component;
-    }
-
-    private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, ExecutionCourseSite site)
-	    throws FenixServiceException {
-
-	final EvaluationMethod evaluationMethod = site.getExecutionCourse().getEvaluationMethod();
-	if (evaluationMethod != null) {
-	    component = InfoEvaluationMethod.newInfoFromDomain(evaluationMethod);
-	}
 	return component;
     }
 

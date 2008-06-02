@@ -5,11 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMarks;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluationMethods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluations;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteFirstPage;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
@@ -54,10 +52,6 @@ public class PublicTilesComponentController extends ControllerSupport {
 	    tileContext.putAttribute("body", "/publico/objectives_bd.jsp");
 	} else if (component instanceof InfoSiteProgram) {
 	    tileContext.putAttribute("body", "/publico/program_bd.jsp");
-	} else if (component instanceof InfoSiteEvaluationMethods) {
-	    tileContext.putAttribute("body", "/publico/viewEvaluation_bd.jsp");
-	} else if (component instanceof InfoEvaluationMethod) {
-	    tileContext.putAttribute("body", "/publico/viewEvaluationMethod_bd.jsp");
 	} else if (component instanceof InfoSiteAssociatedCurricularCourses) {
 	    tileContext.putAttribute("body", "/publico/curricularCourses_bd.jsp");
 	} else if (component instanceof InfoSiteTimetable) {
