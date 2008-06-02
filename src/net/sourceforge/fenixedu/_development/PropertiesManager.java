@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu._development;
 import java.io.IOException;
 import java.util.Properties;
 
-import pt.ist.fenixframework.Config;
+import pt.ist.fenixWebFramework.Config;
 
 /**
  * @author Luis Cruz
@@ -50,6 +50,9 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
             dbPassword = getProperty("db.pass");
             appName = getProperty("app.name");
             errorIfChangingDeletedObject = getBooleanProperty("error.if.changing.deleted.object");
+            defaultLanguage = getProperty("language");
+            defaultLocation = getProperty("location");
+            defaultVariant = getProperty("variant");
         }};
     }
 }
