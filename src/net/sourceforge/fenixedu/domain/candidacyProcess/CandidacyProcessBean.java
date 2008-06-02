@@ -7,13 +7,23 @@ import net.sourceforge.fenixedu.domain.ExecutionInterval;
 
 import org.joda.time.DateTime;
 
-abstract public class CandidacyProcessBean implements Serializable {
+public class CandidacyProcessBean implements Serializable {
 
     private DomainReference<ExecutionInterval> executionInterval;
 
     private DateTime start, end;
 
     protected CandidacyProcessBean() {
+    }
+    
+    public CandidacyProcessBean(final ExecutionInterval executionInterval) {
+	setExecutionInterval(executionInterval);
+    }
+
+    public CandidacyProcessBean(final CandidacyProcess process) {
+	setExecutionInterval(process.getCandidacyExecutionInterval());
+	setStart(process.getCandidacyStart());
+	setEnd(process.getCandidacyEnd());
     }
 
     public ExecutionInterval getExecutionInterval() {

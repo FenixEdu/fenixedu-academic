@@ -290,7 +290,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    final Registration registration = new Registration(candidacyProcess.getCandidacyPerson(),
 		    getDegreeCurricularPlan(candidacyProcess), CycleType.SECOND_CYCLE);
 	    registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
-	    registration.setIngression(Ingression.CIA2C); // TODO: change
+	    registration.setIngression(Ingression.CIA2C);
 	}
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(final SecondCycleIndividualCandidacyProcess candidacyProcess) {

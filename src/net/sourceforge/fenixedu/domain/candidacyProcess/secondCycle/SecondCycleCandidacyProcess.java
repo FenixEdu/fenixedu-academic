@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -137,7 +138,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	@Override
 	protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
 		Object object) {
-	    final SecondCycleCandidacyProcessBean bean = (SecondCycleCandidacyProcessBean) object;
+	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
 	    return new SecondCycleCandidacyProcess(bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
 	}
     }
@@ -154,7 +155,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	@Override
 	protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
 		Object object) {
-	    final SecondCycleCandidacyProcessBean bean = (SecondCycleCandidacyProcessBean) object;
+	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
 	    process.edit(bean.getStart(), bean.getEnd());
 	    return process;
 	}

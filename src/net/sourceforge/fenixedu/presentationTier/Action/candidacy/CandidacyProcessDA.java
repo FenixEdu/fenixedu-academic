@@ -3,8 +3,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -96,4 +101,56 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	    this.executionIntervalId = executionIntervalId;
 	}
     }
+
+    @Override
+    public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyProcessBean", new CandidacyProcessBean(ExecutionYear.readCurrentExecutionYear()));
+	return mapping.findForward("prepare-create-new-process");
+    }
+
+    @Override
+    public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    return super.createNewProcess(mapping, form, request, response);
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("candidacyProcessBean", getRenderedObject("candidacyProcessBean"));
+	    return mapping.findForward("prepare-create-new-process");
+	}
+    }
+
+    public ActionForward createNewProcessInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyProcessBean", getRenderedObject("candidacyProcessBean"));
+	return mapping.findForward("prepare-create-new-process");
+    }
+
+    public ActionForward prepareExecuteEditCandidacyPeriod(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final CandidacyProcess process = getProcess(request);
+	request.setAttribute("candidacyProcessBean", new CandidacyProcessBean(process));
+	return mapping.findForward("prepare-edit-candidacy-period");
+    }
+
+    public ActionForward executeEditCandidacyPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    executeActivity(getProcess(request), "EditCandidacyPeriod", getRenderedObject("candidacyProcessBean"));
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	    request.setAttribute("candidacyProcessBean", getRenderedObject("candidacyProcessBean"));
+	    return mapping.findForward("prepare-edit-candidacy-period");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    public ActionForward executeEditCandidacyPeriodInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("candidacyProcessBean", getRenderedObject("candidacyProcessBean"));
+	return mapping.findForward("prepare-edit-candidacy-period");
+    }
+
 }

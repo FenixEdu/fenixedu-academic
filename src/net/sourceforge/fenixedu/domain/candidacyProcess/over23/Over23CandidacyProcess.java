@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -111,7 +112,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    final Over23CandidacyProcessBean bean = (Over23CandidacyProcessBean) object;
+	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
 	    return new Over23CandidacyProcess(bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
 	}
     }
@@ -127,7 +128,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    final Over23CandidacyProcessBean bean = (Over23CandidacyProcessBean) object;
+	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
 	    process.edit(bean.getStart(), bean.getEnd());
 	    return process;
 	}

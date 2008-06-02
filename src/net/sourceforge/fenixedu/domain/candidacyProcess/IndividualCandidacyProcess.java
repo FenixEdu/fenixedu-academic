@@ -108,6 +108,6 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     
     @Override
     public String getDisplayName() {
-	return ResourceBundle.getBundle("resources/CaseHandlingResources").getString("label." + getClass().getName());
+	return ResourceBundle.getBundle("resources/CaseHandlingResources").getString(getClass().getSimpleName());
     }
 }

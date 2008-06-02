@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -40,8 +39,8 @@ import org.joda.time.LocalDate;
 
 @Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/over23/createCandidacyPeriod.jsp"),
-	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/over23/editCandidacyPeriod.jsp"),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
+	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "send-to-jury", path = "/candidacy/over23/sendToJury.jsp"),
 	@Forward(name = "insert-candidacy-results-from-jury", path = "/candidacy/over23/insertCandidacyResultsFromJury.jsp")
 
@@ -79,58 +78,6 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     protected Over23CandidacyProcess getCandidacyProcess(final ExecutionInterval executionInterval) {
 	return executionInterval.hasOver23CandidacyPeriod() ? executionInterval.getOver23CandidacyPeriod()
 		.getOver23CandidacyProcess() : null;
-    }
-
-    @Override
-    public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("over23CandidacyProcessBean", new Over23CandidacyProcessBean(ExecutionYear
-		.readCurrentExecutionYear()));
-	return mapping.findForward("prepare-create-new-process");
-    }
-
-    @Override
-    public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	try {
-	    return super.createNewProcess(mapping, form, request, response);
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("over23CandidacyProcessBean", getRenderedObject("over23CandidacyProcessBean"));
-	    return mapping.findForward("prepare-create-new-process");
-	}
-    }
-
-    public ActionForward createNewProcessInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("over23CandidacyProcessBean", getRenderedObject("over23CandidacyProcessBean"));
-	return mapping.findForward("prepare-create-new-process");
-    }
-
-    public ActionForward prepareExecuteEditCandidacyPeriod(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	final Over23CandidacyProcess process = getProcess(request);
-	request.setAttribute("over23CandidacyProcessBean", new Over23CandidacyProcessBean(process));
-	return mapping.findForward("prepare-edit-candidacy-period");
-    }
-
-    public ActionForward executeEditCandidacyPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	try {
-	    executeActivity(getProcess(request), "EditCandidacyPeriod", getRenderedObject("over23CandidacyProcessBean"));
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage());
-	    request.setAttribute("over23CandidacyProcessBean", getRenderedObject("over23CandidacyProcessBean"));
-	    return mapping.findForward("prepare-edit-candidacy-period");
-	}
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
-    }
-
-    public ActionForward executeEditCandidacyPeriodInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("over23CandidacyProcessBean", getRenderedObject("over23CandidacyProcessBean"));
-	return mapping.findForward("prepare-edit-candidacy-period");
     }
 
     public ActionForward prepareExecuteSendInformationToJury(ActionMapping mapping, ActionForm actionForm,

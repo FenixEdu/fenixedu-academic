@@ -62,6 +62,6 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
 
     @Override
     public String getDisplayName() {
-	return ResourceBundle.getBundle("resources/CaseHandlingResources").getString("label." + getClass().getName());
+	return ResourceBundle.getBundle("resources/CaseHandlingResources").getString(getClass().getSimpleName());
     }
 }

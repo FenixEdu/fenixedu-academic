@@ -34,11 +34,11 @@
 	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
 </schema>
 
-<schema name="Over23CandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcessBean"
+<schema name="Over23CandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean"
 		extends="CandidacyProcessBean.manage" bundle="APPLICATION_RESOURCES">
 </schema>
 
-<schema name="SecondCycleCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcessBean"
+<schema name="SecondCycleCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean"
 		extends="CandidacyProcessBean.manage" bundle="APPLICATION_RESOURCES">
 </schema>
 
