@@ -172,9 +172,8 @@
                                 <fr:edit id="editBannerWeight" name="editBannerBean" slot="weight">
 									<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 							    		<fr:property name="lowerBound" value="0"/>
-							    		<fr:property name="required" value="false"/>
 							    	</fr:validator>
-                                	
+									<fr:validator name="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>                                 	
                                     <fr:layout>
                                     	<fr:property name="size" value="10"/>
                                     </fr:layout>
