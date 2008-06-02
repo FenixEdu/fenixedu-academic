@@ -12,7 +12,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -43,13 +42,11 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourseDomainReference == null ? null : executionCourseDomainReference
-		.getObject();
+	return executionCourseDomainReference == null ? null : executionCourseDomainReference.getObject();
     }
 
     public boolean equals(Object obj) {
-	return obj instanceof InfoExecutionCourse
-		&& getExecutionCourse() == ((InfoExecutionCourse) obj).getExecutionCourse();
+	return obj instanceof InfoExecutionCourse && getExecutionCourse() == ((InfoExecutionCourse) obj).getExecutionCourse();
     }
 
     public int hashCode() {
@@ -66,9 +63,10 @@ public class InfoExecutionCourse extends InfoObject {
 	throw new Error("Method should not be called!");
     }
 
-    //=================== FIELDS RETRIEVED BY DOMAIN LOGIC =======================
+    // =================== FIELDS RETRIEVED BY DOMAIN LOGIC
+    // =======================
 
-    public Double getWeeklyTheoreticalHours() {	
+    public Double getWeeklyTheoreticalHours() {
 	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TEORICA).doubleValue();
     }
 
@@ -101,9 +99,9 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public Double getWeeklyTutorialOrientationHours() {
-	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TUTORIAL_ORIENTATION).doubleValue();    
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TUTORIAL_ORIENTATION).doubleValue();
     }
-    
+
     public String getNome() {
 	return getExecutionCourse().getNome();
     }
@@ -119,13 +117,14 @@ public class InfoExecutionCourse extends InfoObject {
     public Boolean getHasSite() {
 	return getExecutionCourse().hasSite();
     }
-   
+
     public Integer getNumberOfAttendingStudents() {
 	return getExecutionCourse().getAttendsCount();
     }
 
     public String getCourseReportFilled() {
-	return (!getExecutionCourse().hasCourseReport() || getExecutionCourse().getCourseReport().getReport() == null) ? "false" : "true";
+	return (!getExecutionCourse().hasCourseReport() || getExecutionCourse().getCourseReport().getReport() == null) ? "false"
+		: "true";
     }
 
     public String getEqualLoad() {
@@ -135,7 +134,7 @@ public class InfoExecutionCourse extends InfoObject {
     public Boolean getAvailableForInquiries() {
 	return getExecutionCourse().getAvailableForInquiries();
     }
-    
+
     public Boolean getAvailableGradeSubmission() {
 	return getExecutionCourse().getAvailableGradeSubmission();
     }
@@ -143,13 +142,13 @@ public class InfoExecutionCourse extends InfoObject {
     public InfoExecutionPeriod getInfoExecutionPeriod() {
 	return InfoExecutionPeriod.newInfoFromDomain(getExecutionCourse().getExecutionPeriod());
     }
-    
+
     public InfoCourseReport getInfoCourseReport() {
 	return InfoCourseReport.newInfoFromDomain(getExecutionCourse().getCourseReport());
     }
 
     public InfoEvaluationMethod getInfoEvaluationMethod() {
-        return InfoEvaluationMethod.newInfoFromDomain(getExecutionCourse().getEvaluationMethod());
+	return InfoEvaluationMethod.newInfoFromDomain(getExecutionCourse().getEvaluationMethod());
     }
 
     public List<InfoShift> getAssociatedInfoShifts() {
@@ -165,8 +164,7 @@ public class InfoExecutionCourse extends InfoObject {
     public List<InfoNonAffiliatedTeacher> getNonAffiliatedTeachers() {
 	final List<InfoNonAffiliatedTeacher> result = new ArrayList<InfoNonAffiliatedTeacher>();
 
-	for (final NonAffiliatedTeacher nonAffiliatedTeacher : getExecutionCourse()
-		.getNonAffiliatedTeachers()) {
+	for (final NonAffiliatedTeacher nonAffiliatedTeacher : getExecutionCourse().getNonAffiliatedTeachers()) {
 	    result.add(InfoNonAffiliatedTeacher.newInfoFromDomain(nonAffiliatedTeacher));
 	}
 
@@ -183,16 +181,6 @@ public class InfoExecutionCourse extends InfoObject {
 	return result;
     }
 
-    public List<InfoBibliographicReference> getAssociatedInfoBibliographicReferences() {
-	final List<InfoBibliographicReference> result = new ArrayList<InfoBibliographicReference>();
-	
-        for (final BibliographicReference bibliographicReference : getExecutionCourse().getAssociatedBibliographicReferencesSet()) {
-            result.add(InfoBibliographicReference.newInfoFromDomain(bibliographicReference));
-        }
-        
-        return result;
-    }
-
     public List<InfoCurricularCourse> getAssociatedInfoCurricularCourses() {
 	if (filteredAssociatedInfoCurricularCourses == null) {
 	    List<InfoCurricularCourse> result = new ArrayList<InfoCurricularCourse>();
@@ -200,7 +188,7 @@ public class InfoExecutionCourse extends InfoObject {
 	    for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
 		final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 		infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse.getScopesSet()));
-		
+
 		result.add(infoCurricularCourse);
 	    }
 
@@ -211,13 +199,13 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     private List<InfoCurricularCourseScope> getInfoScopes(final Collection<CurricularCourseScope> curricularCourseScopes) {
-        final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
-        
-        for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
-            result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
-        }
-        
-        return result;
+	final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
+
+	for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+	    result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+	}
+
+	return result;
     }
 
     public List<InfoCurricularCourse> getAssociatedInfoCurricularCourses(final ExecutionYear executionYear) {
@@ -225,14 +213,15 @@ public class InfoExecutionCourse extends InfoObject {
 
 	for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
 	    final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-	    infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse.findCurricularCourseScopesIntersectingPeriod(executionYear.getBeginDate(), executionYear.getEndDate())));
-		
+	    infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse.findCurricularCourseScopesIntersectingPeriod(
+		    executionYear.getBeginDate(), executionYear.getEndDate())));
+
 	    result.add(infoCurricularCourse);
 	}
 
 	return result;
     }
-    
+
     public List<InfoExam> getAssociatedInfoExams() {
 	if (filteredAssociatedInfoExams == null) {
 	    List<InfoExam> result = new ArrayList<InfoExam>();
@@ -258,12 +247,13 @@ public class InfoExecutionCourse extends InfoObject {
 	    return getFilteredInfoGroupings();
 	}
     }
-    
 
-    public List<CourseLoad> getCourseLoads(){
+    public List<CourseLoad> getCourseLoads() {
 	return getExecutionCourse().getCourseLoads();
     }
-    //=================== FIELDS NOT RETRIEVED BY DOMAIN LOGIC =======================
+
+    // =================== FIELDS NOT RETRIEVED BY DOMAIN LOGIC
+    // =======================
 
     // The following variable serves the purpose of indicating the
     // the curricular year in which the execution course is given
@@ -294,13 +284,13 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     private Double occupancy;
-    
+
     public Double getOccupancy() {
-        return occupancy;
+	return occupancy;
     }
 
     public void setOccupancy(Double occupancy) {
-        this.occupancy = occupancy;
+	this.occupancy = occupancy;
     }
 
     private List<InfoCurricularCourse> filteredAssociatedInfoCurricularCourses;
@@ -323,13 +313,13 @@ public class InfoExecutionCourse extends InfoObject {
     public void setFilteredAssociatedInfoExams(final List<InfoExam> filteredAssociatedInfoExams) {
 	this.filteredAssociatedInfoExams = filteredAssociatedInfoExams;
     }
-    
+
     public String toString() {
 	return getExecutionCourse().toString();
     }
 
     private List<InfoGrouping> filteredInfoGroupings;
-    
+
     private List<InfoGrouping> getFilteredInfoGroupings() {
 	return filteredInfoGroupings;
     }
@@ -337,9 +327,9 @@ public class InfoExecutionCourse extends InfoObject {
     public void setFilteredInfoGroupings(List<InfoGrouping> filteredInfoGroupings) {
 	this.filteredInfoGroupings = filteredInfoGroupings;
     }
-    
+
     public EntryPhase getEntryPhase() {
 	return getExecutionCourse().getEntryPhase();
     }
-    
+
 }

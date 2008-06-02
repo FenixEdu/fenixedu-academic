@@ -14,7 +14,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -54,9 +54,9 @@ import org.joda.time.DateTime;
 public class InfoSiteCourseInformation extends DataTranferObject implements ISiteComponent {
 
     private DomainReference<ExecutionCourse> executionCourseDomainReference;
-    
+
     private DomainReference<ExecutionYear> executionYearDomainReference;
-    
+
     public InfoSiteCourseInformation(final ExecutionCourse executionCourse) {
 	executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
     }
@@ -67,65 +67,62 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     }
 
     private ExecutionCourse getExecutionCourse() {
-	return this.executionCourseDomainReference == null ?  null : this.executionCourseDomainReference.getObject();
+	return this.executionCourseDomainReference == null ? null : this.executionCourseDomainReference.getObject();
     }
 
     private ExecutionYear getExecutionYear() {
-	return this.executionYearDomainReference == null ?  null : this.executionYearDomainReference.getObject();
+	return this.executionYearDomainReference == null ? null : this.executionYearDomainReference.getObject();
     }
 
+    // =================== FIELDS RETRIEVED BY DOMAIN LOGIC
+    // =======================
 
-    //=================== FIELDS RETRIEVED BY DOMAIN LOGIC =======================
-    
     public InfoExecutionCourse getInfoExecutionCourse() {
-        return InfoExecutionCourse.newInfoFromDomain(getExecutionCourse());
+	return InfoExecutionCourse.newInfoFromDomain(getExecutionCourse());
     }
 
     public InfoCourseReport getInfoCourseReport() {
-        return getInfoExecutionCourse().getInfoCourseReport();
+	return getInfoExecutionCourse().getInfoCourseReport();
     }
 
     public InfoEvaluationMethod getInfoEvaluationMethod() {
-        return getInfoExecutionCourse().getInfoEvaluationMethod();
-    }
-
-    public List<InfoBibliographicReference> getInfoBibliographicReferences() {
-        return getInfoExecutionCourse().getAssociatedInfoBibliographicReferences();
+	return getInfoExecutionCourse().getInfoEvaluationMethod();
     }
 
     public List<InfoCurricularCourse> getInfoCurricularCourses() {
-	return getExecutionYear() == null ? getInfoExecutionCourse().getAssociatedInfoCurricularCourses() : getInfoExecutionCourse().getAssociatedInfoCurricularCourses(getExecutionYear());
+	return getExecutionYear() == null ? getInfoExecutionCourse().getAssociatedInfoCurricularCourses()
+		: getInfoExecutionCourse().getAssociatedInfoCurricularCourses(getExecutionYear());
     }
 
     public List<InfoTeacher> getInfoLecturingTeachers() {
 	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
-	
-        for (final Professorship professorship : getExecutionCourse().getProfessorships()) {
-            result.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
-        }
-        
-        return result;
+
+	for (final Professorship professorship : getExecutionCourse().getProfessorships()) {
+	    result.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
+	}
+
+	return result;
     }
 
     public List<InfoTeacher> getInfoResponsibleTeachers() {
 	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
-        
-	for (final Professorship responsibleFor : getExecutionCourse().responsibleFors()) {
-            result.add(InfoTeacher.newInfoFromDomain(responsibleFor.getTeacher()));
-        }
 
-        return result;
+	for (final Professorship responsibleFor : getExecutionCourse().responsibleFors()) {
+	    result.add(InfoTeacher.newInfoFromDomain(responsibleFor.getTeacher()));
+	}
+
+	return result;
     }
 
-    
-    //=================== FIELDS NOT RETRIEVED BY DOMAIN LOGIC =======================
-    
+    // =================== FIELDS NOT RETRIEVED BY DOMAIN LOGIC
+    // =======================
+
     public Integer getNumberOfTheoLessons() {
-        return getNumberOfLessons(getExecutionCourse().getShiftsByTypeOrderedByShiftName(ShiftType.TEORICA));
+	return getNumberOfLessons(getExecutionCourse().getShiftsByTypeOrderedByShiftName(ShiftType.TEORICA));
     }
 
     public Integer getNumberOfPratLessons() {
-        return getNumberOfLessons(getExecutionCourse().getShiftsByTypeOrderedByShiftName(ShiftType.PRATICA));
+	return getNumberOfLessons(getExecutionCourse().getShiftsByTypeOrderedByShiftName(ShiftType.PRATICA));
     }
 
     public Integer getNumberOfTheoPratLessons() {
@@ -133,131 +130,125 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     }
 
     public Integer getNumberOfLabLessons() {
-        return getNumberOfLessons(getExecutionCourse().getShiftsByTypeOrderedByShiftName(ShiftType.LABORATORIAL));
+	return getNumberOfLessons(getExecutionCourse().getShiftsByTypeOrderedByShiftName(ShiftType.LABORATORIAL));
     }
 
     private Integer getNumberOfLessons(final Collection<Shift> shifts) {
-        int result = 0;	
-        for (final Shift shift : shifts) {
-            result += shift.getAssociatedLessonsCount();
-        }        
-        return result;
+	int result = 0;
+	for (final Shift shift : shifts) {
+	    result += shift.getAssociatedLessonsCount();
+	}
+	return result;
     }
-       
+
     static final private int MIN_LENGTH = 10;
-    
+
     public Integer getNumberOfFieldsFilled() {
-        int result = 0;
+	int result = 0;
 
-        if (!getInfoLecturingTeachers().isEmpty()) {
-            result++;
-        }
-        
-        Iterator iter = getInfoBibliographicReferences().iterator();
-        while (iter.hasNext()) {
-            InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) iter
-                    .next();
-            if (infoBibliographicReference.getTitle() != null
-                    && infoBibliographicReference.getTitle().length() > MIN_LENGTH) {
-                result++;
-                break;
-            }
-        }
-        if (getInfoEvaluationMethod() != null && getInfoEvaluationMethod().getEvaluationElements() != null
-                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt) != null
-                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH) {
-            result++;
-        }
+	if (!getInfoLecturingTeachers().isEmpty()) {
+	    result++;
+	}
 
-        iter = getInfoCurriculums().iterator();
-        while (iter.hasNext()) {
-            InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-            if (infoCurriculum.getGeneralObjectives() != null
-                    && infoCurriculum.getGeneralObjectives().length() > MIN_LENGTH) {
-                result++;
-                break;
-            }
-        }
+	Iterator iter = getExecutionCourse().getAssociatedBibliographicReferencesIterator();
+	while (iter.hasNext()) {
+	    BibliographicReference bibliographicReference = (BibliographicReference) iter.next();
+	    if (bibliographicReference.getTitle() != null && bibliographicReference.getTitle().length() > MIN_LENGTH) {
+		result++;
+		break;
+	    }
+	}
+	if (getInfoEvaluationMethod() != null && getInfoEvaluationMethod().getEvaluationElements() != null
+		&& getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt) != null
+		&& getInfoEvaluationMethod().getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH) {
+	    result++;
+	}
 
-        iter = getInfoCurriculums().iterator();
-        while (iter.hasNext()) {
-            InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-            if (infoCurriculum.getProgram() != null && infoCurriculum.getProgram().length() > MIN_LENGTH) {
-                result++;
-                break;
-            }
-        }
+	iter = getInfoCurriculums().iterator();
+	while (iter.hasNext()) {
+	    InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
+	    if (infoCurriculum.getGeneralObjectives() != null && infoCurriculum.getGeneralObjectives().length() > MIN_LENGTH) {
+		result++;
+		break;
+	    }
+	}
 
-        return new Integer(result);
+	iter = getInfoCurriculums().iterator();
+	while (iter.hasNext()) {
+	    InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
+	    if (infoCurriculum.getProgram() != null && infoCurriculum.getProgram().length() > MIN_LENGTH) {
+		result++;
+		break;
+	    }
+	}
+
+	return new Integer(result);
     }
 
     public Integer getNumberOfFieldsFilledEn() {
-        int numberOfFieldsFilled = 0;
+	int numberOfFieldsFilled = 0;
 
-        if (!getInfoLecturingTeachers().isEmpty()) {
-            numberOfFieldsFilled++;
-        }
-        
-        Iterator iter = getInfoBibliographicReferences().iterator();
-        while (iter.hasNext()) {
-            InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) iter.next();
-            if (infoBibliographicReference.getTitle().length() > MIN_LENGTH) {
-                numberOfFieldsFilled++;
-                break;
-            }
-        }
-        if (getInfoEvaluationMethod() != null
-                && getInfoEvaluationMethod().getEvaluationElements() != null
-                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en) != null
-                && getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH) {
-            numberOfFieldsFilled++;
-        }
+	if (!getInfoLecturingTeachers().isEmpty()) {
+	    numberOfFieldsFilled++;
+	}
 
-        iter = getInfoCurriculums().iterator();
-        while (iter.hasNext()) {
-            InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-            if (infoCurriculum.getGeneralObjectivesEn() != null
-                    && infoCurriculum.getGeneralObjectivesEn().length() > MIN_LENGTH) {
-                numberOfFieldsFilled++;
-                break;
-            }
-        }
+	Iterator iter = getExecutionCourse().getAssociatedBibliographicReferencesIterator();
+	while (iter.hasNext()) {
+	    BibliographicReference bibliographicReference = (BibliographicReference) iter.next();
+	    if (bibliographicReference.getTitle().length() > MIN_LENGTH) {
+		numberOfFieldsFilled++;
+		break;
+	    }
+	}
+	if (getInfoEvaluationMethod() != null && getInfoEvaluationMethod().getEvaluationElements() != null
+		&& getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en) != null
+		&& getInfoEvaluationMethod().getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH) {
+	    numberOfFieldsFilled++;
+	}
 
-        iter = getInfoCurriculums().iterator();
-        while (iter.hasNext()) {
-            InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-            if (infoCurriculum.getOperacionalObjectivesEn() != null
-                    && infoCurriculum.getOperacionalObjectivesEn().length() > MIN_LENGTH) {
-                numberOfFieldsFilled++;
-                break;
-            }
-        }
+	iter = getInfoCurriculums().iterator();
+	while (iter.hasNext()) {
+	    InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
+	    if (infoCurriculum.getGeneralObjectivesEn() != null && infoCurriculum.getGeneralObjectivesEn().length() > MIN_LENGTH) {
+		numberOfFieldsFilled++;
+		break;
+	    }
+	}
 
-        iter = getInfoCurriculums().iterator();
-        while (iter.hasNext()) {
-            InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-            if (infoCurriculum.getProgramEn() != null
-                    && infoCurriculum.getProgramEn().length() > MIN_LENGTH) {
-                numberOfFieldsFilled++;
-                break;
-            }
-        }
+	iter = getInfoCurriculums().iterator();
+	while (iter.hasNext()) {
+	    InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
+	    if (infoCurriculum.getOperacionalObjectivesEn() != null
+		    && infoCurriculum.getOperacionalObjectivesEn().length() > MIN_LENGTH) {
+		numberOfFieldsFilled++;
+		break;
+	    }
+	}
 
-        return new Integer(numberOfFieldsFilled);
+	iter = getInfoCurriculums().iterator();
+	while (iter.hasNext()) {
+	    InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
+	    if (infoCurriculum.getProgramEn() != null && infoCurriculum.getProgramEn().length() > MIN_LENGTH) {
+		numberOfFieldsFilled++;
+		break;
+	    }
+	}
+
+	return new Integer(numberOfFieldsFilled);
     }
 
     public Date getLastModificationDate() {
 	final Set<DateTime> dates = new HashSet<DateTime>();
-        
+
 	if (getExecutionCourse().hasCourseReport()) {
-	    dates.add(getExecutionCourse().getCourseReport().getLastModificationDateDateTime());    
+	    dates.add(getExecutionCourse().getCourseReport().getLastModificationDateDateTime());
 	}
-	
-        for (final Curriculum curriculum : getExecutionCourse().getCurriculums(getExecutionYear())) {
-            dates.add(curriculum.getLastModificationDateDateTime());
-        }
-	
-        return dates.isEmpty() ? null : Collections.max(dates).toDate();
+
+	for (final Curriculum curriculum : getExecutionCourse().getCurriculums(getExecutionYear())) {
+	    dates.add(curriculum.getLastModificationDateDateTime());
+	}
+
+	return dates.isEmpty() ? null : Collections.max(dates).toDate();
     }
 
     public List<InfoDepartment> getInfoDepartments() {
@@ -267,145 +258,148 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 	}
 
 	final List<InfoDepartment> result = new ArrayList<InfoDepartment>();
-	
+
 	for (final Teacher teacher : responsibleForTeachers) {
 	    result.add(InfoDepartment.newInfoFromDomain(teacher.getCurrentWorkingDepartment()));
-        }
+	}
 
-        return result;
+	return result;
     }
 
     public List<InfoCurriculum> getInfoCurriculums() {
-        final List<InfoCurriculum> result = new ArrayList<InfoCurriculum>();
-        
-        for (final Curriculum curriculum : getExecutionCourse().getCurriculums(getExecutionYear())) {
-            final InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
-            
-            final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curriculum.getCurricularCourse());
-            infoCurricularCourse.setInfoScopes(getInfoScopes(curriculum.getCurricularCourse()));
-            infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
-            
-            result.add(infoCurriculum);
-        }
+	final List<InfoCurriculum> result = new ArrayList<InfoCurriculum>();
 
-        return result;
+	for (final Curriculum curriculum : getExecutionCourse().getCurriculums(getExecutionYear())) {
+	    final InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
+
+	    final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curriculum
+		    .getCurricularCourse());
+	    infoCurricularCourse.setInfoScopes(getInfoScopes(curriculum.getCurricularCourse()));
+	    infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
+
+	    result.add(infoCurriculum);
+	}
+
+	return result;
     }
 
     private List<InfoCurricularCourseScope> getInfoScopes(final CurricularCourse curricularCourse) {
-        final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
-        
-        for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
-            result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
-        }
-        
-        return result;
-    }
-    
-    public List<InfoLesson> getInfoLessons() {
-    	final List<InfoLesson> result = new ArrayList<InfoLesson>();
+	final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
 
-    	for (final Lesson lesson : getExecutionCourse().getLessons()) {
-    	    result.add(InfoLesson.newInfoFromDomain(lesson));
-    	}
-    	
-    	return getFilteredInfoLessons(result);
+	for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
+	    result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+	}
+
+	return result;
+    }
+
+    public List<InfoLesson> getInfoLessons() {
+	final List<InfoLesson> result = new ArrayList<InfoLesson>();
+
+	for (final Lesson lesson : getExecutionCourse().getLessons()) {
+	    result.add(InfoLesson.newInfoFromDomain(lesson));
+	}
+
+	return getFilteredInfoLessons(result);
     }
 
     private List<InfoLesson> getFilteredInfoLessons(final List<InfoLesson> infoLessons) {
-        final List<InfoLesson> result = new ArrayList<InfoLesson>();
-        
-        InfoLesson infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.TEORICA);
-        if (infoLesson != null) {
-            result.add(infoLesson);
-        }
+	final List<InfoLesson> result = new ArrayList<InfoLesson>();
 
-        infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.PRATICA);
-        if (infoLesson != null) {
-            result.add(infoLesson);
-        }
+	InfoLesson infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.TEORICA);
+	if (infoLesson != null) {
+	    result.add(infoLesson);
+	}
 
-        infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.LABORATORIAL);
-        if (infoLesson != null) {
-            result.add(infoLesson);
-        }
+	infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.PRATICA);
+	if (infoLesson != null) {
+	    result.add(infoLesson);
+	}
 
-        infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.TEORICO_PRATICA);
-        if (infoLesson != null) {
-            result.add(infoLesson);
-        }
+	infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.LABORATORIAL);
+	if (infoLesson != null) {
+	    result.add(infoLesson);
+	}
 
-        return result;
+	infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.TEORICO_PRATICA);
+	if (infoLesson != null) {
+	    result.add(infoLesson);
+	}
+
+	return result;
     }
 
     private InfoLesson getFilteredInfoLessonByType(List<InfoLesson> infoLessons, ShiftType type) {
-        final ShiftType lessonType = type;
-        InfoLesson infoLesson = (InfoLesson) CollectionUtils.find(infoLessons, new Predicate() {
-            public boolean evaluate(Object o) {
-                InfoLesson infoLesson = (InfoLesson) o;
-                if(infoLesson.getInfoShift().getShift().getCourseLoadsCount() == 1) {
-                    return infoLesson.getInfoShift().getShift().containsType(lessonType);
-                }
-                return false;
-            }
-        });
-        return infoLesson;
+	final ShiftType lessonType = type;
+	InfoLesson infoLesson = (InfoLesson) CollectionUtils.find(infoLessons, new Predicate() {
+	    public boolean evaluate(Object o) {
+		InfoLesson infoLesson = (InfoLesson) o;
+		if (infoLesson.getInfoShift().getShift().getCourseLoadsCount() == 1) {
+		    return infoLesson.getInfoShift().getShift().containsType(lessonType);
+		}
+		return false;
+	    }
+	});
+	return infoLesson;
     }
-    
+
     public List<InfoSiteEvaluationInformation> getInfoSiteEvaluationInformations() {
-        final List<InfoSiteEvaluationInformation> result = new ArrayList<InfoSiteEvaluationInformation>();
-        
-        final ExecutionSemester executionSemester = getExecutionCourse().getExecutionPeriod();
-        for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
-            final InfoSiteEvaluationInformation infoSiteEvaluationInformation = new InfoSiteEvaluationInformation();
-            
-            final InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-            final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester);
-            infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
-            infoSiteEvaluationStatistics.setEvaluated(Enrolment.countEvaluated(enrolled));
-            infoSiteEvaluationStatistics.setApproved(Enrolment.countApproved(enrolled));
-            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+	final List<InfoSiteEvaluationInformation> result = new ArrayList<InfoSiteEvaluationInformation>();
 
-            infoSiteEvaluationInformation.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
-            infoSiteEvaluationInformation.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
-            infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(executionSemester, curricularCourse));
-            
-            result.add(infoSiteEvaluationInformation);
-        }
+	final ExecutionSemester executionSemester = getExecutionCourse().getExecutionPeriod();
+	for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
+	    final InfoSiteEvaluationInformation infoSiteEvaluationInformation = new InfoSiteEvaluationInformation();
 
-        return result;
+	    final InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
+	    final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester);
+	    infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
+	    infoSiteEvaluationStatistics.setEvaluated(Enrolment.countEvaluated(enrolled));
+	    infoSiteEvaluationStatistics.setApproved(Enrolment.countApproved(enrolled));
+	    infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+
+	    infoSiteEvaluationInformation.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
+	    infoSiteEvaluationInformation.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+	    infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(executionSemester,
+		    curricularCourse));
+
+	    result.add(infoSiteEvaluationInformation);
+	}
+
+	return result;
     }
 
-    private List<InfoSiteEvaluationStatistics> getInfoSiteEvaluationsHistory(final ExecutionSemester executionPeriodToTest, final CurricularCourse curricularCourse) {
-        final List<InfoSiteEvaluationStatistics> result = new ArrayList<InfoSiteEvaluationStatistics>();
+    private List<InfoSiteEvaluationStatistics> getInfoSiteEvaluationsHistory(final ExecutionSemester executionPeriodToTest,
+	    final CurricularCourse curricularCourse) {
+	final List<InfoSiteEvaluationStatistics> result = new ArrayList<InfoSiteEvaluationStatistics>();
 
-        final Set<ExecutionSemester> executionSemesters = new HashSet<ExecutionSemester>();
-        for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-            final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+	final Set<ExecutionSemester> executionSemesters = new HashSet<ExecutionSemester>();
+	for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+	    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 
-            // filter the executionPeriods by semester;
-            // also, information regarding execution years after the course's
-            // execution year must not be shown
-            if (executionSemester.getSemester().equals(executionPeriodToTest.getSemester())
-        	    && executionSemester.getExecutionYear().isBefore(executionPeriodToTest.getExecutionYear())) {
-        	executionSemesters.add(executionSemester);
-            }
-        }
+	    // filter the executionPeriods by semester;
+	    // also, information regarding execution years after the course's
+	    // execution year must not be shown
+	    if (executionSemester.getSemester().equals(executionPeriodToTest.getSemester())
+		    && executionSemester.getExecutionYear().isBefore(executionPeriodToTest.getExecutionYear())) {
+		executionSemesters.add(executionSemester);
+	    }
+	}
 
-        for (final ExecutionSemester executionSemester : executionSemesters) {
-            final InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
-            
-            final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester);
-            infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
-            infoSiteEvaluationStatistics.setEvaluated(Enrolment.countEvaluated(enrolled));
-            infoSiteEvaluationStatistics.setApproved(Enrolment.countApproved(enrolled));
-            
-            result.add(infoSiteEvaluationStatistics);
-        }
+	for (final ExecutionSemester executionSemester : executionSemesters) {
+	    final InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
+	    infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
 
-        Collections.sort(result, new ReverseComparator(new BeanComparator("infoExecutionPeriod.infoExecutionYear.year")));
-        
-        return result;
+	    final List<Enrolment> enrolled = curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester);
+	    infoSiteEvaluationStatistics.setEnrolled(enrolled.size());
+	    infoSiteEvaluationStatistics.setEvaluated(Enrolment.countEvaluated(enrolled));
+	    infoSiteEvaluationStatistics.setApproved(Enrolment.countApproved(enrolled));
+
+	    result.add(infoSiteEvaluationStatistics);
+	}
+
+	Collections.sort(result, new ReverseComparator(new BeanComparator("infoExecutionPeriod.infoExecutionYear.year")));
+
+	return result;
     }
 
     public String getEvaluationMethod() {
@@ -415,7 +409,8 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 	    for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
 		final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
 		if (curricularCourse.isActive(executionSemester) && competenceCourse != null) {
-		    final CompetenceCourseInformation competenceCourseInformation = competenceCourse.findCompetenceCourseInformationForExecutionPeriod(executionSemester);
+		    final CompetenceCourseInformation competenceCourseInformation = competenceCourse
+			    .findCompetenceCourseInformationForExecutionPeriod(executionSemester);
 		    if (competenceCourseInformation != null) {
 			competenceCourseInformation.getEvaluationMethod();
 		    }

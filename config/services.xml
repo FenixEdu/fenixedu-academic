@@ -2615,14 +2615,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadBibliographicReference</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.ReadBibliographicReference</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ReadSite</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadSite</implementationClass>
 		<description />
