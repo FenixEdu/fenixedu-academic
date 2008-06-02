@@ -21,9 +21,7 @@ import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.Transaction;
-ts;
+import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 
 /**
