@@ -32,8 +32,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestWrapperFilter;
-import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
@@ -53,6 +51,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
+import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
 
 import com.sun.faces.el.impl.parser.ParseException;
 

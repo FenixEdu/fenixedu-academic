@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
@@ -339,7 +339,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	}
 
 	public String getLocalizedName() {
-	    return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(
+	    return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(
 		    StringAppender.append(ConclusionValue.class.getSimpleName(), ".", name()));
 	}
     }

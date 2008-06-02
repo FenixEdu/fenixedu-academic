@@ -57,7 +57,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
@@ -118,7 +118,7 @@ public class Unit extends Unit_Base {
 
 	MultiLanguageString partyName = getPartyName();
 	partyName = partyName == null ? new MultiLanguageString() : partyName;
-	partyName.setContent(LanguageUtils.getSystemLanguage(), name);
+	partyName.setContent(Language.getDefaultLanguage(), name);
 
 	super.setPartyName(partyName);
 
@@ -807,7 +807,7 @@ public class Unit extends Unit_Base {
     public static Unit createNewNoOfficialExternalInstitution(String unitName, Country country) {
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	Unit noOfficialExternalInstitutionUnit = new Unit();
-	noOfficialExternalInstitutionUnit.init(new MultiLanguageString(LanguageUtils.getSystemLanguage(), unitName), null, null,
+	noOfficialExternalInstitutionUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null, null,
 		new YearMonthDay(), null, null, null, null, null);
 	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
 		.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));

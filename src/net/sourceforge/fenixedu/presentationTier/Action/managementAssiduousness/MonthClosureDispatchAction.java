@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -416,7 +416,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    return actionForward;
 	}
 
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
 	String fileName = new StringBuilder().append(bundleEnumeration.getString(closedMonthDocumentType.name())).append("-")
 		.append(month).append("-").append(yearMonth.getYear()).append(".txt").toString();
@@ -460,7 +460,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    return prepareToCloseMonth(mapping, actionForm, request, response);
 	}
 	response.setContentType("text/plain");
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
 	response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=").append(month).append("-").append(
 		yearMonth.getYear()).toString()
@@ -501,7 +501,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    return prepareToCloseMonth(mapping, actionForm, request, response);
 	}
 	response.setContentType("text/plain");
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
 	response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=").append(month).append("-").append(
 		yearMonth.getYear()).toString()

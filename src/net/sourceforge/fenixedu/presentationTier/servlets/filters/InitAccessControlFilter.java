@@ -16,12 +16,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixframework.pstm.RequestInfo;
-import pt.ist.fenixframework.pstm.Transaction;
 
 import org.joda.time.DateTime;
 
-public class CloseTransactionFilter implements Filter {
+public class InitAccessControlFilter implements Filter {
 
     private static class PublicRequester implements IUserView {
 	private class InformationNotAvailable extends RuntimeException {
@@ -97,25 +95,11 @@ public class CloseTransactionFilter implements Filter {
 	return userView == null ? PUBLIC_REQUESTER : userView;
     }
 
-    protected void setTransactionOwner(final ServletRequest request) {
-	AccessControl.setUserView(getUserView(request));
-    }
-
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
     		throws IOException, ServletException {
-
-	if (request instanceof HttpServletRequest) {
-	    RequestInfo.setRequestURI(((HttpServletRequest)request).getRequestURI());
-	}
-
-	try {
-	    Transaction.begin(true);
-	    Transaction.currentFenixTransaction().setReadOnly();
-	    setTransactionOwner(request);
-	    chain.doFilter(request, response);
-	} finally {
-	    Transaction.forceFinish();
-	}
+	AccessControl.setUserView(getUserView(request));
+	chain.doFilter(request, response);
     }
 
 }
+

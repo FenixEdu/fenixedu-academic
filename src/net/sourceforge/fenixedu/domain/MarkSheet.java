@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateTime;
 
@@ -797,10 +797,10 @@ public class MarkSheet extends MarkSheet_Base {
 
     public String getStateDiscription() {
 	StringBuilder stringBuilder = new StringBuilder();
-	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	stringBuilder.append(enumerationResources.getString(getMarkSheetState().getName()).trim());
 	if(getSubmittedByTeacher()) {
-	    final ResourceBundle academicResources = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
+	    final ResourceBundle academicResources = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 	    stringBuilder.append(" (").append(academicResources.getString("label.markSheet.submittedByTeacher").trim()).append(")");
 	}
 	return stringBuilder.toString();

@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.renderers.DateInputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlScript;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * This renderer provides a more fashionable way of doing the input of a date
@@ -76,14 +76,14 @@ public class DateInputRendererWithPicker extends DateInputRenderer {
     protected HtmlComponent getSetupScripts() {
         HtmlContainer container = new HtmlInlineContainer();
 
-        Language language = LanguageUtils.getLanguage();
+        Language language = Language.getLanguage();
         switch (language) {
         case en:
         case pt:
         case es:
             break;
         default:
-            language = LanguageUtils.getSystemLanguage();
+            language = Language.getDefaultLanguage();
         }
 
         String langPath = String.format(CALENDAR_LANG_PATH, language.name());

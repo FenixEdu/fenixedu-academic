@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.Partial;
@@ -52,7 +52,7 @@ public class RoomsPunctualSchedulingBean implements Serializable {
     
     private Boolean ganttDiagramAvailable;
     
-    private transient Locale locale = LanguageUtils.getLocale(); 
+    private transient Locale locale = Language.getLocale(); 
     
     public RoomsPunctualSchedulingBean() {  
 	setGanttDiagramAvailable(Boolean.TRUE);	

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
@@ -50,11 +50,11 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     }
     
     public String getTitle() {
-	return getGenericEvent().getTitle().getContent(LanguageUtils.getLanguage());
+	return getGenericEvent().getTitle().getContent(Language.getLanguage());
     }
 
     public String getDescription() {
-	return getGenericEvent().getDescription().getContent(LanguageUtils.getLanguage());
+	return getGenericEvent().getDescription().getContent(Language.getLanguage());
     }
     
     @Override

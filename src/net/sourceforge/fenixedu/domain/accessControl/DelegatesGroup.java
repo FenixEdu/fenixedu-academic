@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DelegatesGroup extends LeafGroup {
 
@@ -68,7 +68,7 @@ public class DelegatesGroup extends LeafGroup {
 	
 	@Override
 	public String getName() {
-	    final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DelegateResources", LanguageUtils.getLocale());
+	    final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DelegateResources", Language.getLocale());
 	    if(hasDegree()) {
 		return resourceBundle.getString("label." + getClass().getSimpleName()) + " " + 
 			resourceBundle.getString("label.of") + " "+ getDegree().getSigla();

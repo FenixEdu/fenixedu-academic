@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.renderers.DataProvider;

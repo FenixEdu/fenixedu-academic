@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProce
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.SpreadsheetXLSExporter;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -115,7 +115,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private Spreadsheet buildReport(final List<Over23IndividualCandidacyProcess> over23IndividualCandidacies) {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
 	final Spreadsheet result = new CandidacyReport("candidacies");
 
 	result.setHeaders(new String[] { bundle.getString("label.name"), bundle.getString("label.identificationNumber"),

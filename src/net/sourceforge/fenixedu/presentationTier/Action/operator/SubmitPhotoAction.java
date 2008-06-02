@@ -7,7 +7,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.Map.Entry;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -21,8 +20,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestWrapperFilter;
-import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.struts.action.ActionForm;
@@ -31,7 +28,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.upload.FormFile;
+
+import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
+import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
 
 public class SubmitPhotoAction extends FenixDispatchAction {
 

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrint
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 
 public abstract class AbstractPrintMarkSheet extends Service {
@@ -48,7 +48,7 @@ public abstract class AbstractPrintMarkSheet extends Service {
 	parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
 	parameters.put("rectification", rectification);
 	parameters.put("rectified", rectification.getRectified());
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", LanguageUtils
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", Language
 		.getLocale());
 	
 	boolean result = ReportsUtils.printReport("markSheetRectification", parameters, bundle, Collections.emptyList(),
@@ -62,7 +62,7 @@ public abstract class AbstractPrintMarkSheet extends Service {
 	Map parameters = new HashMap();
 	parameters.put("markSheet", markSheet);
 	parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", LanguageUtils
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", Language
 		.getLocale());
 	List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet
 		.getEnrolmentEvaluations());

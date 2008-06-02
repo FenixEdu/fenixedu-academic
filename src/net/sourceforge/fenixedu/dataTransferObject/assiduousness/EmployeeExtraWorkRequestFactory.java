@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.GiafInterface;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.struts.action.ActionMessage;
 import org.joda.time.DateTimeFieldType;
@@ -380,7 +380,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     protected ActionMessage validateBalances() {
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(getExtraWorkRequestFactory().getHoursDoneInPartialDate());
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 
 	AssiduousnessMonthlyResume assiduousnessMonthlyResume = new AssiduousnessMonthlyResume(getEmployee(), closedMonth);
 

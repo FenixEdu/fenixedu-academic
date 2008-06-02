@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -224,7 +224,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 		    || (yearMonth.getYear() == firstMonth.getYear() && yearMonth.getMonth()
 			    .getNumberOfMonth() < firstMonth.getMonthOfYear())) {
 		final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources",
-			LanguageUtils.getLocale());
+			Language.getLocale());
 
 		saveErrors(request, yearMonth, "error.invalidDateBefore", new Object[] {
 			bundle.getString(Month.values()[firstMonth.getMonthOfYear() - 1].toString()),

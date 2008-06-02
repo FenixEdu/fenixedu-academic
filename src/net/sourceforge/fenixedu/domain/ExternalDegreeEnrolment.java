@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
     
     public ExternalDegreeEnrolment() {

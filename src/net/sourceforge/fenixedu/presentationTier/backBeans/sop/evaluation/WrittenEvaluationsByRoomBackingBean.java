@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.MessageResources;
@@ -245,7 +245,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	    if (classification.hasParentRoomClassification()) {
 		roomTypeSelectItems.add(new SelectItem(String.valueOf(classification.getIdInternal()), classification
 			.getPresentationCode()
-			+ " - " + classification.getName().getContent(LanguageUtils.getLanguage())));
+			+ " - " + classification.getName().getContent(Language.getLanguage())));
 	    }
 	}
 	return roomTypeSelectItems;

@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 
 import pt.ist.utl.fenix.utils.Pair;
 
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.presentationTier.renderers.validators.MultiLanguageStringValidator;
 import net.sourceforge.fenixedu.renderers.InputRenderer;
 import net.sourceforge.fenixedu.renderers.components.HtmlActionLink;
@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 /**
@@ -359,7 +359,7 @@ public class MultiLanguageStringInputRenderer extends InputRenderer {
 	    PresentationContext context = getInputContext().createSubContext(getInputContext().getMetaObject());
 	    context.setProperties(new Properties());
 
-	    Language usedLanguage = language == null ? LanguageUtils.getUserLanguage() : language;
+	    Language usedLanguage = language == null ? Language.getUserLanguage() : language;
 
 	    HtmlSimpleValueComponent languageComponent = (HtmlSimpleValueComponent) RenderKit.getInstance().render(context,
 		    usedLanguage, Language.class);

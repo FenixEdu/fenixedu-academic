@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.domain.protocols.ProtocolHistory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -146,7 +146,7 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=protocolos.xls");
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ScientificCouncilResources",
-		LanguageUtils.getLocale());
+		Language.getLocale());
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle
 		.getString("label.protocols.navigation.header"), false);
 	Protocol.getExcelHeader(spreadsheet, bundle);

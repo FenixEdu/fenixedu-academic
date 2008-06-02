@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -260,7 +260,7 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	HashMap<String, WorkScheduleDaySheet> workScheduleDays = new HashMap<String, WorkScheduleDaySheet>();
 	if (employee.getAssiduousness() != null) {
 	    if (employee.getAssiduousness().getCurrentSchedule() != null) {
-		ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 		WorkWeek workWeek = new WorkWeek(EnumSet.range(WeekDay.MONDAY, WeekDay.FRIDAY));
 		for (WorkSchedule workSchedule : employee.getAssiduousness().getCurrentSchedule().getWorkSchedules()) {
 		    workSchedule.setWorkScheduleDays(workScheduleDays, bundle);
@@ -324,7 +324,7 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	} else if (yearMonth.getYear() < firstMonth.getYear()
 		|| (yearMonth.getYear() == firstMonth.getYear() && yearMonth.getMonth().getNumberOfMonth() < firstMonth
 			.getMonthOfYear())) {
-	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	    saveErrors(request, "error.invalidDateBefore", new Object[] {
 		    bundle.getString(Month.values()[firstMonth.getMonthOfYear() - 1].toString()),
 		    new Integer(firstMonth.getYear()).toString() });

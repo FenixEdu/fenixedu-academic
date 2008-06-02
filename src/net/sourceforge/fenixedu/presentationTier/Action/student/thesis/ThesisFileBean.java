@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.thesis;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ThesisFileBean implements Serializable {
 

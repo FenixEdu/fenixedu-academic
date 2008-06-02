@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors;
 
-import net.sourceforge.fenixedu.domain.Language;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.util.StringUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class SiteElementPathProcessor extends PathProcessor {
 
@@ -11,7 +11,7 @@ public abstract class SiteElementPathProcessor extends PathProcessor {
     }
 
     public static String getElementPathName(Content element) {
-        String name = element.getName().getContent(Language.getApplicationLanguage());
+        String name = element.getName().getContent(Language.getDefaultLanguage());
         
         if (name == null) {
             name = element.getName().getContent();

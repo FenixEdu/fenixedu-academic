@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 	<distributable/>
-    
+
    	<context-param>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
 		<param-value>client</param-value>
@@ -28,11 +28,15 @@
 	</filter>
 	<filter>
 	    <filter-name>CloseTxFilter</filter-name>
-	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.CloseTransactionFilter</filter-class>
+	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.CloseTransactionFilter</filter-class>
+	</filter>
+	<filter>
+	    <filter-name>InitAccessControlFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.InitAccessControlFilter</filter-class>
 	</filter>
 	<filter>
 	    <filter-name>indexFilter</filter-name>
-	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestWrapperFilter</filter-class>
+	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter</filter-class>
 	</filter>
 	<filter>
 	    <filter-name>ManagerFilter</filter-name>
@@ -56,7 +60,7 @@
 	</filter>
 	<filter>
 	    <filter-name>I18NFilter</filter-name>
-	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.I18NFilter</filter-class>
+	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.I18NFilter</filter-class>
 	</filter>
 	<filter>
 	    <filter-name>LoginPageFilter</filter-name>
@@ -104,7 +108,7 @@
     </filter>
     <filter>
         <filter-name>PathAccessControlFilter</filter-name>
-        <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.PathAccessControlFilter</filter-class>
+        <filter-class>pt.ist.fenixWebFramework.servlets.filters.PathAccessControlFilter</filter-class>
         <init-param>
             <param-name>use-request-path</param-name>
             <param-value>true</param-value> 
@@ -112,7 +116,7 @@
     </filter>
     <filter>
         <description>
-            This filter is used to check a requested path agains the model of functionalities. 
+            This filter is used to check a requested path against the model of functionalities. 
             The request proceeds normally if the path is not mapped in the model or if the targeted 
             functionality does not have an availability policy defined.
         </description>
@@ -151,6 +155,10 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>CloseTxFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>InitAccessControlFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>

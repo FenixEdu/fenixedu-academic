@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.joda.time.DateTime;
@@ -122,7 +122,7 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
     }
 
     public String getHoursDoneYearMonthString() {
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	String month = bundleEnumeration.getString((Month.values()[getHoursDoneInPartialDate().get(
 		DateTimeFieldType.monthOfYear()) - 1]).toString());
 	return new StringBuilder(month).append(" ").append(getHoursDoneInPartialDate().get(DateTimeFieldType.year())).toString();

@@ -44,7 +44,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -1422,7 +1422,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    return getLastCycleCourseGroup().getGraduateTitle();
 	} else {
 	    final StringBuilder result = new StringBuilder(getDegreeType().getGraduateTitle());
-	    final String in = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils.getLocale()).getString(
+	    final String in = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(
 		    "label.in");
 	    result.append(" ").append(in);
 	    result.append(" ").append(getDegree().getFilteredName());

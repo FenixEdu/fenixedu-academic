@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.candidacy.workflow.RegistrationOperation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.util.EntryPhase;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class IMDCandidacy extends IMDCandidacy_Base {
 
@@ -33,7 +33,7 @@ public class IMDCandidacy extends IMDCandidacy_Base {
 
     @Override
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale())
+	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale())
 		.getString("label.imdCandidacy")
 		+ " - "
 		+ getExecutionDegree().getDegreeCurricularPlan().getName()

@@ -8,7 +8,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.Employee"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.DegreeFinalizationCertificate"%>
-<%@page import="net.sourceforge.fenixedu.util.LanguageUtils"%>
+<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@page import="org.joda.time.YearMonthDay"%>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">

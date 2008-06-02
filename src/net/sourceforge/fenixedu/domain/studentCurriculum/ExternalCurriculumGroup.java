@@ -4,7 +4,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimitInExternalCycle;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;

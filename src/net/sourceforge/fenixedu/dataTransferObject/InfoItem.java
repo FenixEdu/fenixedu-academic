@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.fileupload.FileItem;

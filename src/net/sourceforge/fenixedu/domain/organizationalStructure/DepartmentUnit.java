@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
@@ -49,7 +49,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     public static DepartmentUnit createNewOfficialExternalDepartmentUnit(final String departmentName, final String departmentAcronym, final Unit parentUnit) {							
 
 	final DepartmentUnit departmentUnit = new DepartmentUnit();
-	departmentUnit.init(new MultiLanguageString(LanguageUtils.getSystemLanguage(), departmentName), null, departmentAcronym, new YearMonthDay(), null, null, null, null, null);
+	departmentUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), departmentName), null, departmentAcronym, new YearMonthDay(), null, null, null, null, null);
 	if(parentUnit.isCountryUnit()) {
 	    departmentUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
 	} else {

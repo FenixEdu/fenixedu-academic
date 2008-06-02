@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.util.Email;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateTime;
 
@@ -39,7 +39,7 @@ public class UpdateParkingParty extends Service {
         String email = ((Person) parkingParty.getParty()).getEmail();
 
         if (note != null && note.trim().length() != 0 && email != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language
                     .getLocale());
             List<String> to = new ArrayList<String>();
             to.add(email);

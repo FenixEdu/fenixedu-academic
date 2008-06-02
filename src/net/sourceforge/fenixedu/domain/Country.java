@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Country extends Country_Base {
     
@@ -64,7 +64,7 @@ public class Country extends Country_Base {
     
     public String getFilteredNationality() {
         final String nationality = getNationality();
-        final String nationalitySpecialCase = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils.getLocale()).getString("label.person.portugueseNationality").toUpperCase();
+        final String nationalitySpecialCase = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString("label.person.portugueseNationality").toUpperCase();
 	return nationality.trim().contains(nationalitySpecialCase) ? nationalitySpecialCase : nationality;
     }
     

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateTSDProcess extends Service {
     public TSDProcess run(List<Integer> executionPeriodIdList, Integer departmentId, Integer creatorId, String name) {
@@ -17,7 +17,7 @@ public class CreateTSDProcess extends Service {
 
 	List<ExecutionSemester> executionPeriodList = getExecutionPeriods(executionPeriodIdList);
 
-	ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
+	ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
 
 	Person creator = (Person) rootDomainObject.readPartyByOID(creatorId);
 

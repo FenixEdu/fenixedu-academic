@@ -140,7 +140,7 @@
 		<bean:message  key="label.payments.printTemplates.vatExemptionNotice" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		<br/>
 		<bean:define id="receiptCreationDate" name="receipt" property="whenCreated" />
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= ((DateTime)receiptCreationDate).toString("dd MMMM yyyy", net.sourceforge.fenixedu.util.LanguageUtils.getLocale()) %>
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= ((DateTime)receiptCreationDate).toString("dd MMMM yyyy", pt.utl.ist.fenix.tools.util.i18n.Language.getLocale()) %>
 	</p>
 
 	<p style="text-align: right; margin-top: 1em; padding-right: 15em; font-size: 10pt;">

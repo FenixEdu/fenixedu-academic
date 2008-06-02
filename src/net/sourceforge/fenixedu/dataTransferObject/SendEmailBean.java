@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SendEmailBean implements Serializable {
 
@@ -274,7 +274,7 @@ public class SendEmailBean implements Serializable {
 	stringBuilder.append("\n\n\n");
 	stringBuilder.append("---\n");
 
-	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ManagerResources", LanguageUtils.getLocale());
+	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ManagerResources", Language.getLocale());
 	stringBuilder.append(resourceBundle.getString("message.email.footer.prefix"));
 	stringBuilder.append(getFromName());
 

@@ -15,12 +15,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author tfc130
@@ -36,7 +36,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     
     private final DomainReference<CurricularCourse> curricularCourseDomainReference;
 
-    private final boolean showEnVersion = (LanguageUtils.getUserLanguage() == Language.en); 
+    private final boolean showEnVersion = (Language.getUserLanguage() == Language.en); 
     
     private List<InfoCurricularCourseScope> infoScopes;
 

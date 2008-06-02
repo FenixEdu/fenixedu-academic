@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.administrativeOffice;
 
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum AdministrativeOfficeType {
     
@@ -21,7 +21,7 @@ public enum AdministrativeOfficeType {
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName());
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
     }
     
 }

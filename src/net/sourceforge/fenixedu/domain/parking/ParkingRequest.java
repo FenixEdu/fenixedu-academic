@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateTime;
 
@@ -898,7 +898,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	if (driverLicenseDocument != null) {
 	    return driverLicenseDocument.getParkingFile().getFilename();
 	} else if (getDriverLicenseDeliveryType() != null) {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language
 		    .getLocale());
 	    return bundle.getString(getDriverLicenseDeliveryType().name());
 	}

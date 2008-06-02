@@ -11,8 +11,8 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Language;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
@@ -76,7 +76,7 @@ public class InfoCurricularCourseScope extends InfoObject {
 
     private final DomainReference<CurricularCourseScope> curricularCourseScopeDomainReference;
 
-    private boolean showEnVersion = (LanguageUtils.getUserLanguage() == Language.en);
+    private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoCurricularCourseScope(final CurricularCourseScope curricularCourseScope) {
 	curricularCourseScopeDomainReference = new DomainReference<CurricularCourseScope>(curricularCourseScope);

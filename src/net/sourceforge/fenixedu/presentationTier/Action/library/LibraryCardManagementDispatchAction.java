@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -231,7 +231,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
 	cardList.add(libraryCardDTO);
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", LanguageUtils.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", Language.getLocale());
 	byte[] data = ReportsUtils.exportToPdf("net.sourceforge.fenixedu.domain.library.LibrabryCard", null, bundle, cardList);
 
 	ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardAsEmited", new Object[] { libraryCardDTO
@@ -293,7 +293,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	}
 
 	if (!cardList.isEmpty()) {
-	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", LanguageUtils.getLocale());
+	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", Language.getLocale());
 	    byte[] data = ReportsUtils
 		    .exportToPdf("net.sourceforge.fenixedu.domain.library.LibrabryCard", null, bundle, cardList);
 
@@ -325,7 +325,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
 	cardList.add(new LibraryCardDTO(libraryCard));
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", LanguageUtils.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", Language.getLocale());
 	String reportID = "net.sourceforge.fenixedu.domain.library.LibrabryCard.letter";
 	if (!libraryCard.getPartyClassification().equals(PartyClassification.EMPLOYEE)
 		&& !libraryCard.getPartyClassification().equals(PartyClassification.TEACHER)) {
@@ -381,7 +381,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	}
 
 	if (!cardList.isEmpty()) {
-	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", LanguageUtils.getLocale());
+	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", Language.getLocale());
 	    String reportID = "net.sourceforge.fenixedu.domain.library.LibrabryCard.letter";
 	    if (result.equalsIgnoreCase("yes")) {
 		reportID += "ForStudents";

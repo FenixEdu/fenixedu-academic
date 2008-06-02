@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -357,7 +357,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    HtmlTableCell cellName = htmlTableRow.createCell();
 	    cellName.setClasses(getEnrolmentNameClasses());	    
-	    cellName.setBody(new HtmlText(enrolment.getName().getContent(LanguageUtils.getLanguage())));
+	    cellName.setBody(new HtmlText(enrolment.getName().getContent(Language.getLanguage())));
 	    
 	    // Year
 	    final HtmlTableCell yearCell = htmlTableRow.createCell();

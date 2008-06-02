@@ -46,7 +46,7 @@ import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EntryPhase;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
@@ -1395,7 +1395,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public String getNome() {
-	if (LanguageUtils.getUserLanguage() == Language.en && hasAnyAssociatedCurricularCourses()) {
+	if (Language.getUserLanguage() == Language.en && hasAnyAssociatedCurricularCourses()) {
 	    final StringBuilder stringBuilder = new StringBuilder();
 
 	    final Set<String> names = new HashSet<String>();

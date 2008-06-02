@@ -6,6 +6,8 @@ import java.io.InputStream;
 
 import org.apache.struts.upload.FormFile;
 
+import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
+
 /**
  * This is a wrapper around a {@link org.apache.struts.upload.FormFile form file} from 
  * Struts upload.

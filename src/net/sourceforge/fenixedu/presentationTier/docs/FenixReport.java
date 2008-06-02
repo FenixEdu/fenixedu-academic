@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class FenixReport implements Serializable {
 
@@ -17,7 +17,7 @@ abstract public class FenixReport implements Serializable {
 
     protected ResourceBundle resourceBundle;
     static protected final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources",
-	    LanguageUtils.getLocale());
+	    Language.getLocale());
     
     protected FenixReport() {
 	this.dataSource = new ArrayList();

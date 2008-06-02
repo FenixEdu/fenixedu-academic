@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.student;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * TODO: remove this, enrich RegistrationAgreement instead
@@ -26,7 +26,7 @@ public enum MobilityProgram {
 
 	@Override
 	public String getSpecificDescription() {
-	    return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName()) + UniversityUnit.getInstitutionsUniversityUnit().getName();
+	    return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName()) + UniversityUnit.getInstitutionsUniversityUnit().getName();
 	}
     
     };
@@ -41,7 +41,7 @@ public enum MobilityProgram {
     }
 
     public String getSpecificDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(getQualifiedName());
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
     }
     
     public String getDescription() {

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class TSDCompetenceCourse extends TSDCompetenceCourse_Base {
     
@@ -54,7 +54,7 @@ public class TSDCompetenceCourse extends TSDCompetenceCourse_Base {
 		if(getCompetenceCourse().isBolonha()){
 			return getCompetenceCourse().getName();
 		} else {
-			ResourceBundle bundleDepartementMember = ResourceBundle.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
+			ResourceBundle bundleDepartementMember = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
 			String nonBolonhaSuffix = bundleDepartementMember.getString("label.teacherServiceDistribution.nonBolonhaSuffix");
 			
 			return getCompetenceCourse().getName() + " " + nonBolonhaSuffix;

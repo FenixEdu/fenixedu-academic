@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.IStateWithOperations;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateTime;
 
@@ -71,7 +71,7 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(
 		getCandidacySituationType().getQualifiedName());
     }
 

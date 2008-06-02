@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.domain.Language;
-
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class MultiLanguageString implements Serializable, Comparable<MultiLanguageString> {
 
@@ -40,17 +40,17 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
     }
 
     public boolean isRequestedLanguage() {
-        Language userLanguage = LanguageUtils.getUserLanguage();
+        Language userLanguage = Language.getUserLanguage();
         return userLanguage != null && userLanguage.equals(getContentLanguage());
     }
 
     public Language getContentLanguage() {
-        Language userLanguage = LanguageUtils.getUserLanguage();
+        Language userLanguage = Language.getUserLanguage();
         if (userLanguage != null && hasLanguage(userLanguage)) {
             return userLanguage;
         }
 
-        Language systemLanguage = LanguageUtils.getSystemLanguage();
+        Language systemLanguage = Language.getDefaultLanguage();
         if (systemLanguage != null && hasLanguage(systemLanguage)) {
             return systemLanguage;
         }
@@ -59,11 +59,11 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
     }
 
     public void setContent(String text) {
-        final Language userLanguage = LanguageUtils.getUserLanguage();
+        final Language userLanguage = Language.getUserLanguage();
         if (userLanguage != null) {
             setContent(userLanguage, text);
         }
-        final Language systemLanguage = LanguageUtils.getSystemLanguage();
+        final Language systemLanguage = Language.getDefaultLanguage();
         if (userLanguage != systemLanguage && !hasLanguage(systemLanguage)) {
             setContent(systemLanguage, text);
         }
@@ -78,7 +78,7 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
     }
 
     public String getPreferedContent() {
-	return hasLanguage(LanguageUtils.getSystemLanguage()) ? getContent(LanguageUtils.getSystemLanguage()) : getContent();
+	return hasLanguage(Language.getDefaultLanguage()) ? getContent(Language.getDefaultLanguage()) : getContent();
     }
     
     public void setContent(Language language, String content) {
@@ -159,7 +159,7 @@ public class MultiLanguageString implements Serializable, Comparable<MultiLangua
               
         // HACK: MultiLanguageString should not allow null values as language
         if (mls.getAllContents().isEmpty()) {
-            mls.setContent(Language.getApplicationLanguage(), nullContent);
+            mls.setContent(Language.getDefaultLanguage(), nullContent);
         }
 
         return mls;

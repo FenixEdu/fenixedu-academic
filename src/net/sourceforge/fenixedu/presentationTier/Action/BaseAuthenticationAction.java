@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.I18NFilter;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
@@ -33,6 +32,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+
+import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 

@@ -8,7 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SDCandidacy extends SDCandidacy_Base {
     
@@ -19,7 +19,7 @@ public class SDCandidacy extends SDCandidacy_Base {
     
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.CandidateResources", LanguageUtils.getLocale()).getString("label.sdCandidacy")
+        return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString("label.sdCandidacy")
                 + " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
                 + getExecutionDegree().getExecutionYear().getYear();
     }

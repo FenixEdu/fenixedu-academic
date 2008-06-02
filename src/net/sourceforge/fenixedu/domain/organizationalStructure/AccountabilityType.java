@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
@@ -69,7 +69,7 @@ public class AccountabilityType extends AccountabilityType_Base {
 	
 	MultiLanguageString typeName = getTypeName();
 	typeName = typeName == null ? new MultiLanguageString() : typeName;
-	typeName.setContent(LanguageUtils.getSystemLanguage(), name);
+	typeName.setContent(Language.getDefaultLanguage(), name);
 	
 	setTypeName(typeName);
     }

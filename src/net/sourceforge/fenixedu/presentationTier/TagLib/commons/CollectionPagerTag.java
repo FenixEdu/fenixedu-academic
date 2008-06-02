@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.struts.taglib.TagUtils;
 
@@ -146,8 +146,8 @@ public class CollectionPagerTag extends TagSupport {
 
     private String getMessageFromBundle(String key) throws JspException {
 	return (getBundle() != null) ? ((TagUtils.getInstance().present(this.pageContext, getBundle(),
-		LanguageUtils.getLocale().toString(), key)) ? TagUtils.getInstance().message(
-		this.pageContext, getBundle(), LanguageUtils.getLocale().toString(), key) : null) : null;
+		Language.getLocale().toString(), key)) ? TagUtils.getInstance().message(
+		this.pageContext, getBundle(), Language.getLocale().toString(), key) : null) : null;
     }
 
     private Boolean hasModule() {

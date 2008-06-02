@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
@@ -45,7 +45,7 @@ public abstract class TutorshipManagement extends Service {
 		
 		if (!verifyIfBelongsToDegree(registration, degreeCurricularPlan.getDegree())) {
 			// student doesn't belong to this degree
-			ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+			ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 			String degreeType = bundle.getString(executionDegree.getDegree().getDegreeType().getName());
 
 			throw new FenixServiceException("error.tutor.studentNoDegree", new String[] { 

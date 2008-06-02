@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.Language;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -17,7 +17,7 @@ public class InfoDegree extends InfoObject implements Comparable {
 
     private final DomainReference<Degree> degreeDomainReference;
 
-    private boolean showEnVersion = (LanguageUtils.getUserLanguage() == Language.en);
+    private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoDegree(final Degree degree) {
 	degreeDomainReference = new DomainReference<Degree>(degree);

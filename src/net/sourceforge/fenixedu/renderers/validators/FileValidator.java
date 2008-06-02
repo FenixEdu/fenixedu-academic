@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.renderers.validators;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlInputFile;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
-import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
+import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 /**

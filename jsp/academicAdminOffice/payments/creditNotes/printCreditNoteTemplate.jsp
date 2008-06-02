@@ -150,7 +150,7 @@
 			<tr>
 				<td>
 					<bean:define id="creditNoteCreationDate" name="creditNote" property="whenCreated" />
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= ((DateTime)creditNoteCreationDate).toString("dd MMMM yyyy", net.sourceforge.fenixedu.util.LanguageUtils.getLocale()) %>
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= ((DateTime)creditNoteCreationDate).toString("dd MMMM yyyy", pt.utl.ist.fenix.tools.util.i18n.Language.getLocale()) %>
 				</td>
 			</tr>
 

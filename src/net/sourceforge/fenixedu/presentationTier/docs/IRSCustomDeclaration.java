@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.docs;
 
 import java.text.MessageFormat;
 
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -159,7 +159,7 @@ public class IRSCustomDeclaration extends FenixReport {
 
 	addParameter("civilYear", String.valueOf(this.declaration.getCivilYear()));
 
-	addParameter("date", new YearMonthDay().toString("yyyy/MM/dd", LanguageUtils.getLocale()));
+	addParameter("date", new YearMonthDay().toString("yyyy/MM/dd", Language.getLocale()));
 	addParameter("gratuityAmount", this.declaration.getGratuityAmount().toPlainString());
 	addParameter("otherAmount", this.declaration.getOtherAmount().toPlainString());
 	addParameter("totalAmount", this.declaration.getTotalAmount().toPlainString());

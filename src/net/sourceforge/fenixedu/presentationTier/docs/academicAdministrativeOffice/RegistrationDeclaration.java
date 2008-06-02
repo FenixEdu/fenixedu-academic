@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -41,7 +41,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	this.executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
 
 	addParameter("RegistrationDeclaration", this);
-	resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
+	resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 	addDataSourceElement(this);
     }
 

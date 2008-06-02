@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -349,7 +349,7 @@ public class Protocol extends Protocol_Base {
 	spreadsheet.addHeader(bundle.getString("label.protocol.signedDate"));
 	spreadsheet.addHeader(bundle.getString("label.protocol.scientificAreas"), 9000);
 	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources",
-		LanguageUtils.getLocale());
+		Language.getLocale());
 	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.STUDENTS_INTERCHANGE
 		.toString()), spreadsheet.getExcelStyle().getVerticalHeaderStyle(), 500);
 	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.TEACHERS_INTERCHANGE

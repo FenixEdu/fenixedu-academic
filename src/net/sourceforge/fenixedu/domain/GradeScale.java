@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -60,7 +60,7 @@ public enum GradeScale {
 	    try {
 		final int intValue = Integer.valueOf(grade.getValue());
 		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
-			LanguageUtils.getLocale());
+			Language.getLocale());
 
 		if (18 <= intValue && intValue <= 20) {
 		    return applicationResources.getString("label.grade.a");
@@ -181,7 +181,7 @@ public enum GradeScale {
 	    try {
 		final int intValue = Integer.valueOf(grade.getValue());
 		final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
-			LanguageUtils.getLocale());
+			Language.getLocale());
 
 		if (intValue == 5) {
 		    return applicationResources.getString("label.grade.a");
@@ -269,7 +269,7 @@ public enum GradeScale {
 		return StringUtils.EMPTY;
 	    }
 
-	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
+	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
 		    .getLocale());
 
 	    final String value = grade.getValue();
@@ -328,7 +328,7 @@ public enum GradeScale {
 		return StringUtils.EMPTY;
 	    }
 
-	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
+	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
 		    .getLocale());
 
 	    final String value = grade.getValue();

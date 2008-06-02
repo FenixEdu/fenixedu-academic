@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -17,7 +18,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 public class CurricularRuleLabelFormatter {
 
     public static String getLabel(ICurricularRule curricularRule) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/BolonhaManagerResources", LanguageUtils.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/BolonhaManagerResources", Language.getLocale());
         return buildLabel(curricularRule, bundle);
     }
 

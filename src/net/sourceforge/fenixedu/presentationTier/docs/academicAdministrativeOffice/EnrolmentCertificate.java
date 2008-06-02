@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class EnrolmentCertificate extends AdministrativeOfficeDocument {
@@ -42,7 +42,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	    final Integer curricularYear = Integer.valueOf(getDocumentRequest().getRegistration()
 		    .getCurricularYear(executionYear));
 	    final ResourceBundle enumerationResources = ResourceBundle
-		    .getBundle("resources/EnumerationResources", LanguageUtils.getLocale());
+		    .getBundle("resources/EnumerationResources", Language.getLocale());
 
 	    result.append(enumerationResources.getString(curricularYear.toString() + ".ordinal").toUpperCase());
 	    result.append(" ano curricular, do ");

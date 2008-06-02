@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.joda.time.YearMonthDay;
@@ -19,9 +19,9 @@ public class ExportJustifications extends Service {
 
     public StyledExcelSpreadsheet run(AssiduousnessExportChoices assiduousnessExportChoices) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		LanguageUtils.getLocale());
+		Language.getLocale());
 	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources",
-		LanguageUtils.getLocale());
+		Language.getLocale());
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle
 		.getString("link.justifications"), false);
 	HashMap<Assiduousness, List<Justification>> justificationsMap = assiduousnessExportChoices

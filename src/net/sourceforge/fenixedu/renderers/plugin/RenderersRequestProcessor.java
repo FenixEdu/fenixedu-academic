@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -15,14 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestWrapperFilter.FenixHttpServletRequestWrapper;
 import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.plugin.upload.RenderersRequestWrapper;
 import net.sourceforge.fenixedu.renderers.plugin.upload.StrutsFile;
-import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.Action;
@@ -31,6 +28,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.tiles.TilesRequestProcessor;
 import org.apache.struts.upload.FormFile;
+
+import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
+import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter.FenixHttpServletRequestWrapper;
 
 /**
  * The standard renderers request processor. This processor is responsible for handling any viewstate present

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
-import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
+import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 
 import org.apache.commons.beanutils.PropertyUtils;
 

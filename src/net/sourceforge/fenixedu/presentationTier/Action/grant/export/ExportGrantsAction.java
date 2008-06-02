@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.lang.StringUtils;
@@ -47,7 +47,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	    HttpServletResponse response, GrantSearch grantSearch) throws Exception {
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=bolsas.xls");
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.FacultyAdmOfficeResources", LanguageUtils.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.FacultyAdmOfficeResources", Language.getLocale());
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("bolsas", false);
 	getExcelHeader(spreadsheet, bundle);
 	List<GrantContractRegime> grantContractRegimeList = grantSearch.getSearch();

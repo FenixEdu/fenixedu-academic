@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
@@ -239,7 +239,7 @@ public class DataInitializer {
 
     private static void createOrganizationalStructure() {
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-	final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(),
+	final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit(new MultiLanguageString(Language.getDefaultLanguage(),
 		"Earth"), null, "E", new YearMonthDay(), null, null, null, null, false, null);
 	rootDomainObject.setEarthUnit(planetUnit);
 
@@ -248,7 +248,7 @@ public class DataInitializer {
 
     private static void createCountryUnits(final RootDomainObject rootDomainObject, final PlanetUnit planetUnit) {
 	for (final Country country : rootDomainObject.getCountrysSet()) {
-	    CountryUnit.createNewCountryUnit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), country.getName()), null,
+	    CountryUnit.createNewCountryUnit(new MultiLanguageString(Language.getDefaultLanguage(), country.getName()), null,
 		    country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
 	}
     }

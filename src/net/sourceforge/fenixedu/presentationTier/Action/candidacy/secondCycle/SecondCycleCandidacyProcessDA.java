@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProce
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.SpreadsheetXLSExporter;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -192,7 +192,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	    row.setCell(process.getCandidacyInterviewGrade() != null ? process.getCandidacyInterviewGrade() : " ");
 	    row.setCell(process.getCandidacySeriesGrade() != null ? process.getCandidacySeriesGrade().toString() : " ");
 	    if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
-		row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", LanguageUtils.getLocale()).getString(
+		row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(
 			process.getCandidacyState().getQualifiedName()));
 	    } else {
 		row.setCell(" ");
@@ -203,7 +203,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private List<Object> getHeader() {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
 	final List<Object> result = new ArrayList<Object>();
 	result.add(bundle.getString("label.name"));
 	result.add(bundle.getString("label.candidacy.mfc"));

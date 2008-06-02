@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
@@ -63,7 +63,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	if (getRequestParameter("unitID") != null) {
 	    getUnitIDHidden().setValue(getRequestParameter("unitID"));
 	}	
-	this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
     }
 
     public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {

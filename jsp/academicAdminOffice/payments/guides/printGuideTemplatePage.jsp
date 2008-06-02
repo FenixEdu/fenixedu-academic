@@ -93,7 +93,7 @@
 	<p style="text-align: left; margin-top: 10em; font-size: 10pt;">
 		<bean:message  key="label.payments.printTemplates.vatExemptionNotice" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		<br/>
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", net.sourceforge.fenixedu.util.LanguageUtils.getLocale()).format(new java.util.Date()) %>
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.payments.printTemplates.city"/>, <%= new java.text.SimpleDateFormat("dd MMMM yyyy", pt.utl.ist.fenix.tools.util.i18n.Language.getLocale()).format(new java.util.Date()) %>
 	</p>
 
 	<p style="text-align: right; margin-top: 2em; padding-right: 15em; font-size: 10pt;">

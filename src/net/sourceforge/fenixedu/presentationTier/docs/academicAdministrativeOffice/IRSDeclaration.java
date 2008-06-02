@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -40,7 +40,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	setAmounts(person, civilYear);
 	setEmployeeFields();
 
-	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
     }
 
     final private void setPersonFields(final Registration registration, final Person person) {

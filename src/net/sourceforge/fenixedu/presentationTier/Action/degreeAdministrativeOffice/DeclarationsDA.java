@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.RegistrationDeclaration;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -70,7 +70,7 @@ public class DeclarationsDA extends FenixDispatchAction {
 	result.append(new DateTime().toString(DateTimeFormat.forPattern("yyyyMMdd")));
 	result.append("-");
 
-	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	result.append(enumerationResources.getString("AcademicServiceRequestType.DOCUMENT"));
 	result.append(enumerationResources.getString(DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION.getName()));
 

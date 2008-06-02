@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -64,7 +64,7 @@ public class ProtocolAction implements Serializable {
     public String getText() {
 	StringBuilder stringBuilder = new StringBuilder();
 	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources",
-		LanguageUtils.getLocale());
+		Language.getLocale());
 	if (getProcotolActionTypes() != null) {
 	    Iterator<ProtocolActionType> iterator = getProcotolActionTypes().iterator();
 	    while (iterator.hasNext()) {

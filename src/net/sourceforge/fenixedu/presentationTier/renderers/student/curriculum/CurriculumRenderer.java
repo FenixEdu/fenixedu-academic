@@ -20,19 +20,19 @@ import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 
 public class CurriculumRenderer extends InputRenderer {
 
-    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", LanguageUtils
+    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language
 	    .getLocale());
 
-    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
+    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
 	    .getLocale());
 
-    private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
+    private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
 	    .getLocale());
 
     private String studentCurricularPlanClass = "scplan";

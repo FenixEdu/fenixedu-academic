@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
@@ -47,9 +47,9 @@ public class Diploma extends AdministrativeOfficeDocument {
 		.getCycleCurriculumGroup());
 
 	addParameter("conclusionDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy",
-		LanguageUtils.getLocale()));
+		Language.getLocale()));
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
 
 	if (diplomaRequest.hasFinalAverageDescription()) {
 	    addParameter("finalAverageDescription", StringUtils.capitalize(ResourceBundle.getBundle(
@@ -80,7 +80,7 @@ public class Diploma extends AdministrativeOfficeDocument {
     final private String getConclusionStatusAndDegreeType(final DiplomaRequest diplomaRequest, final Registration registration) {
 	final StringBuilder result = new StringBuilder();
 
-	final ResourceBundle applicationResources = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils
+	final ResourceBundle applicationResources = ResourceBundle.getBundle("resources/ApplicationResources", Language
 		.getLocale());
 
 	if (registration.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {

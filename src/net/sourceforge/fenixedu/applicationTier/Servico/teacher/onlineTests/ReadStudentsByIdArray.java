@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -78,7 +78,7 @@ public class ReadStudentsByIdArray extends Service {
     private List<InfoStudent> returnStudentsFromShiftsArray(DistributedTest distributedTest,
 	    String[] shifts) throws FenixServiceException, ExcepcaoPersistencia {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources",
-		LanguageUtils.getLocale());
+		Language.getLocale());
 	List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
 	for (int i = 0; i < shifts.length; i++) {
 	    if (shifts[i].equals(bundle.getString("label.allShifts"))) {
@@ -103,7 +103,7 @@ public class ReadStudentsByIdArray extends Service {
 	    String[] students, Integer executionCourseId) throws FenixServiceException,
 	    ExcepcaoPersistencia {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources",
-		LanguageUtils.getLocale());
+		Language.getLocale());
 	List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 

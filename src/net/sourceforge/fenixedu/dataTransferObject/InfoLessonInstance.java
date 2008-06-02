@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoLessonInstance extends InfoShowOccupation {
 
@@ -40,12 +40,12 @@ public class InfoLessonInstance extends InfoShowOccupation {
     
     @Override
     public Calendar getInicio() {
-	return getLessonInstance().getBeginDateTime().toCalendar(LanguageUtils.getLocale());
+	return getLessonInstance().getBeginDateTime().toCalendar(Language.getLocale());
     }
 
     @Override
     public Calendar getFim() {
-	return getLessonInstance().getEndDateTime().toCalendar(LanguageUtils.getLocale());
+	return getLessonInstance().getEndDateTime().toCalendar(Language.getLocale());
     }
 
     @Override

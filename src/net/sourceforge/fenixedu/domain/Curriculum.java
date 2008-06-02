@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.joda.time.DateTime;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 /**
  * 
  * @author EP 15 - fjgc

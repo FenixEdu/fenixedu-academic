@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ex
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.EditExternalUnitBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 public class EditExternalUnit extends Service {
     
     public void run(final EditExternalUnitBean externalUnitBean) {
 	final Unit externalUnit = externalUnitBean.getExternalUnit();
-	externalUnit.edit(new MultiLanguageString(LanguageUtils.getSystemLanguage(), externalUnitBean.getUnitName()), externalUnitBean.getUnitCode());
+	externalUnit.edit(new MultiLanguageString(Language.getDefaultLanguage(), externalUnitBean.getUnitName()), externalUnitBean.getUnitCode());
     }
 }

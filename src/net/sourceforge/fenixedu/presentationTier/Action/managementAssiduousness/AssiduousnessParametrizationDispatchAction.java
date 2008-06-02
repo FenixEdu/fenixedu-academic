@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactor
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -196,7 +196,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 
     private boolean hasWorkScheduleAcronym(HttpServletRequest request, WorkScheduleTypeFactory workScheduleTypeFactory) {
 	if (StringUtils.isEmpty(workScheduleTypeFactory.getAcronym())) {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	    setError(request, "validation", "errors.required", bundle.getString("label.acronym"));
 	    return false;
 	}
@@ -205,7 +205,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 
     private boolean validateWorkScheduleAcronym(HttpServletRequest request, WorkScheduleTypeFactory workScheduleTypeFactory) {
 	if (StringUtils.isEmpty(workScheduleTypeFactory.getAcronym())) {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	    setError(request, "validation", "errors.required", bundle.getString("label.acronym"));
 	    return false;
 	}
@@ -217,7 +217,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
     }
 
     private boolean validateWorkScheduleTypeFactory(HttpServletRequest request, WorkScheduleTypeFactory workScheduleTypeFactory) {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	if (workScheduleTypeFactory.getBeginValidDate() == null
 		|| (workScheduleTypeFactory.getEndValidDate() != null && !workScheduleTypeFactory.getBeginValidDate().isBefore(
 			workScheduleTypeFactory.getEndValidDate()))) {

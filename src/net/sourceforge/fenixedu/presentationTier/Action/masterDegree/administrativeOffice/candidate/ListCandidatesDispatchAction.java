@@ -41,7 +41,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.commons.lang.StringUtils;
@@ -570,7 +570,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	editCandidateForm.set("motherName", infoPerson.getNomeMae());
 
 	if (infoPerson.getInfoPais() == null) {
-	    editCandidateForm.set("nationality", ResourceBundle.getBundle("resources.GlobalResources", LanguageUtils.getLocale())
+	    editCandidateForm.set("nationality", ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale())
 		    .getString("default.nationality"));
 	} else {
 	    editCandidateForm.set("nationality", infoPerson.getInfoPais().getNationality());

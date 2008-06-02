@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.plugin.ExceptionHandler;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
@@ -71,7 +71,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected static ResourceBundle getResourceBundleByName(String bundleName) {
-	return ResourceBundle.getBundle(bundleName, LanguageUtils.getLocale());
+	return ResourceBundle.getBundle(bundleName, Language.getLocale());
     }
 
     protected static IUserView getUserView(HttpServletRequest request) {

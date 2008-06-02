@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class UIDegreeModule extends UIInput {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeModule";
@@ -98,7 +98,7 @@ public class UIDegreeModule extends UIInput {
     }
 
     protected String getBundleValue(String bundleName, String bundleKey) {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, Language.getLocale());
 	return bundle.getString(bundleKey);
     }
 
@@ -200,7 +200,7 @@ public class UIDegreeModule extends UIInput {
 	    writer.writeAttribute("colspan", "2", null);
 	}
 	writer.writeAttribute("style", "color: #888;", null);
-	writer.append(CurricularRuleLabelFormatter.getLabel(curricularRule, LanguageUtils.getLocale()));
+	writer.append(CurricularRuleLabelFormatter.getLabel(curricularRule, Language.getLocale()));
 	writer.endElement("td");
     }
 

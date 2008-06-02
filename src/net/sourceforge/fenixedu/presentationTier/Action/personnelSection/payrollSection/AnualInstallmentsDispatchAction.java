@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.Emp
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -159,8 +159,8 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	}
 	bonusInstallment.updateList();
 
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
-	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
+	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle.getString("label.bonus"), false);
 
 	bonusInstallment.getExcelHeader(spreadsheet, bundle, enumBundle);

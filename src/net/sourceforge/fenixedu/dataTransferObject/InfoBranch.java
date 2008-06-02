@@ -4,9 +4,9 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author dcs-rjao
@@ -23,7 +23,7 @@ public class InfoBranch extends InfoObject {
 	return branchDomainReference == null ? null : branchDomainReference.getObject();
     }
 
-    private boolean showEnVersion = (LanguageUtils.getUserLanguage() == Language.en);
+    private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoBranch(final Branch branch) {
 	branchDomainReference = new DomainReference<Branch>(branch);

@@ -34,7 +34,7 @@ valueType net.sourceforge.fenixedu.domain.Grade                                 
 enum      net.sourceforge.fenixedu.domain.GradeScale                                                                 as GradeScale;
 enum      net.sourceforge.fenixedu.domain.GraduationType                                                             as GraduationType;
 enum      net.sourceforge.fenixedu.domain.GuideState                                                                 as GuideState;
-enum      net.sourceforge.fenixedu.domain.Language                                                                   as Language;
+enum      pt.utl.ist.fenix.tools.util.i18n.Language                                                                   as Language;
 enum      net.sourceforge.fenixedu.domain.LoginAliasType                                                             as LoginAliasType;
 enum      net.sourceforge.fenixedu.domain.MarkSheetState                                                             as MarkSheetState;
 enum      net.sourceforge.fenixedu.domain.MarkSheetType                                                              as MarkSheetType;

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TS
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDProfessorshipDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -32,7 +32,7 @@ public class TeacherServiceDistributionSpreadsheet {
 	private String spreadsheetName = null;
 
 	private HSSFWorkbook workbook = null;
-	private ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DepartmentMemberResources", LanguageUtils.getLocale());
+	private ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
 
 	public TeacherServiceDistributionSpreadsheet(
 			List<TSDCourseDTOEntry> _tsdCourseDTOEntryList,

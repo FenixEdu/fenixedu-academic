@@ -50,7 +50,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
@@ -1534,7 +1534,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     private String createDefaultDistributedInquiryInfo() {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	return bundle.getString("message.distributeTest.inquiry");
     }
 }

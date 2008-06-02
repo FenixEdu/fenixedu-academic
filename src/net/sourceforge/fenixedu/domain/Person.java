@@ -94,7 +94,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -147,7 +147,7 @@ public class Person extends Person_Base {
 
 	MultiLanguageString partyName = super.getPartyName();
 	partyName = partyName == null ? new MultiLanguageString() : partyName;
-	partyName.setContent(LanguageUtils.getSystemLanguage(), formattedName);
+	partyName.setContent(Language.getDefaultLanguage(), formattedName);
 
 	super.setPartyName(partyName);
 
@@ -200,7 +200,7 @@ public class Person extends Person_Base {
     }
 
     final public String getValidatedName() {
-	return StringFormatter.personNameValidator(getName(), LanguageUtils.getLanguage());
+	return StringFormatter.personNameValidator(getName(), Language.getLanguage());
     }
 
     public Person() {

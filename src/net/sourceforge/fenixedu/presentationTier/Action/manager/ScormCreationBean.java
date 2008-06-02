@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.InputStream;
 
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 

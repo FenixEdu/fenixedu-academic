@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFi
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument {
@@ -44,7 +44,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
     private String getDegreeFinalizationDate(final DegreeFinalizationCertificateRequest request) {
 	return request.mustHideConclusionDate() ? StringUtils.EMPTY : " em "
-		+ request.getConclusionDate().toString(DATE_FORMAT, LanguageUtils.getLocale());
+		+ request.getConclusionDate().toString(DATE_FORMAT, Language.getLocale());
     }
 
     private String getExceptionalConclusionInfo(final DegreeFinalizationCertificateRequest request) {
@@ -52,7 +52,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	    return StringUtils.EMPTY;
 	}
 
-	final String date = request.getExceptionalConclusionDate().toString(DATE_FORMAT, LanguageUtils.getLocale());
+	final String date = request.getExceptionalConclusionDate().toString(DATE_FORMAT, Language.getLocale());
 	if (request.getInternshipAbolished()) {
 	    return " em " + date + ", data em que a Comissão Directiva decidiu abolir o sistema de estágios";
 	} else if (request.getInternshipApproved()) {
@@ -67,7 +67,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     static final public String getDegreeFinalizationGrade(final Integer finalAverage) {
 	final StringBuilder result = new StringBuilder();
 
-	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
+	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 
 	result.append(", ").append(resourceBundle.getString("documents.registration.final.arithmetic.mean"));
 	result.append(" de ").append(finalAverage);

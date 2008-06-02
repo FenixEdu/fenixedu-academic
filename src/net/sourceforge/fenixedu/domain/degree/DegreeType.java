@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -350,7 +350,7 @@ public enum DegreeType {
     }
 
     public String getLocalizedName() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale())
 		.getString(getQualifiedName());
     }
 
@@ -365,7 +365,7 @@ public enum DegreeType {
 	if (isBolonhaType()) {
 	    toRemove = " Bolonha";
 	} else if (this == DegreeType.DEGREE) {
-	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
+	    final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
 		    .getLocale());
 	    toRemove = StringAppender.append(" (", Integer.toString(getYears()), " ", applicationResources.getString("years"),
 		    ")");
@@ -391,7 +391,7 @@ public enum DegreeType {
 
     final public String getGraduateTitle() {
 	if (getQualifiesForGraduateTitle()) {
-	    return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(
+	    return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(
 		    getQualifiedName() + ".graduate.title");
 	}
 
@@ -414,7 +414,7 @@ public enum DegreeType {
 	    }
 
 	    if (getQualifiesForGraduateTitle()) {
-		return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale()).getString(
+		return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(
 			getQualifiedName() + (isComposite() ? "." + cycleType.name() : "") + ".graduate.title");
 	    }
 

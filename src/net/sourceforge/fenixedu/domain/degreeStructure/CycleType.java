@@ -10,7 +10,7 @@ import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum CycleType {
 
@@ -61,7 +61,7 @@ public enum CycleType {
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale())
 		.getString(getQualifiedName());
     }
 

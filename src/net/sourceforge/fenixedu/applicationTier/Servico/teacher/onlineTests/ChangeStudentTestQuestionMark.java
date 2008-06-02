@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
@@ -97,7 +97,7 @@ public class ChangeStudentTestQuestionMark extends Service {
 		    }
 		}
 	    }
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	    String event = MessageFormat
 		    .format(bundle.getString("message.changeStudentMarkLogMessage"), new Object[] { newMark });
 

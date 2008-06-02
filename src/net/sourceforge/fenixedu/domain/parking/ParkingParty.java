@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -117,7 +117,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public String getParkingAcceptedRegulationMessage() {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
 	String name = getParty().getName();
 	String number = "";
 	if (getParty().isPerson()) {
@@ -164,7 +164,7 @@ public class ParkingParty extends ParkingParty_Base {
 	if (driverLicenseDocument != null) {
 	    return driverLicenseDocument.getParkingFile().getFilename();
 	} else if (getDriverLicenseDeliveryType() != null) {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", LanguageUtils.getLocale());
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
 	    return bundle.getString(getDriverLicenseDeliveryType().name());
 	}
 	return "";

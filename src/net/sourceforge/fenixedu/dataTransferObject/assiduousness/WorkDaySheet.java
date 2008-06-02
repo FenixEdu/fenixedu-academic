@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.Duration;
@@ -193,7 +193,7 @@ public class WorkDaySheet implements Serializable {
 	    return "";
 	}
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		LanguageUtils.getLocale());
+		Language.getLocale());
 	return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
 		.toString()
 		+ "_ACRONYM");
@@ -366,7 +366,7 @@ public class WorkDaySheet implements Serializable {
     public void setIrregularDay(Boolean irregular) {
 	this.irregular = irregular;
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		LanguageUtils.getLocale());
+		Language.getLocale());
 	addNote(bundle.getString("label.irregular"));
     }
 

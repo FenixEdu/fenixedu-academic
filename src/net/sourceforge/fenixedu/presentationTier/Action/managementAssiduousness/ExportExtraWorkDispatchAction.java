@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorizat
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
@@ -79,14 +79,14 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	comparatorChain.addComparator(new BeanComparator("assiduousness.employee.employeeNumber"));
 	Collections.sort(extraWorkRequests, comparatorChain);
 	Map<String, String> parameters = new HashMap<String, String>();
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
 	StringBuilder stringBuilder = new StringBuilder(month).append(" ").append(yearMonth.getYear());
 	parameters.put("yearMonth", stringBuilder.toString());
 
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=trabalhoExtraFunc.pdf");
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	byte[] data = ReportsUtils.exportToPdf("assiduousness.employeeExtraWork", parameters, bundle, extraWorkRequests);
 	response.setContentLength(data.length);
 	ServletOutputStream writer = response.getOutputStream();
@@ -107,8 +107,8 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	}
 
 	List<UnitExtraWorkAmount> unitExtraWorkAmountList = getUnitExtraWorkAmountsByYear(yearMonth.getYear());
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
-	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
+	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 
 	String sheetName = bundle.getString("title.extraWork");
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(sheetName);

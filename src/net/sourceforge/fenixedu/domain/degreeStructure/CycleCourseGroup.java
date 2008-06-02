@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -43,7 +43,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 	result.append(getDegreeType().getGraduateTitle(getCycleType()));
 
 	final String degreeFilteredName = getDegree().getFilteredName();
-	final String in = ResourceBundle.getBundle("resources/ApplicationResources", LanguageUtils.getLocale()).getString(
+	final String in = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(
 		"label.in");
 	result.append(" ").append(in);
 

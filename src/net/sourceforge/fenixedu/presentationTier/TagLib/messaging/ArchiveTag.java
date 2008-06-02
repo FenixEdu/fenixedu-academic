@@ -15,7 +15,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.AnnouncementArchive;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.MonthAnnouncementArchiveEntry;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.YearAnnouncementArchiveEntry;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.struts.taglib.TagUtils;
 
@@ -136,7 +136,7 @@ public class ArchiveTag extends TagSupport {
                 buffer.append("\">");
             }
             if (month != null) {
-            	Locale locale = LanguageUtils.getLocale();
+            	Locale locale = Language.getLocale();
             	Calendar calendar = Calendar.getInstance();
             	calendar.set(Calendar.MONTH, i - 1);
             	

@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -15,13 +16,13 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 public class CurricularPeriodLabelFormatter {
 
     public static String getLabel(CurricularPeriod curricularPeriod, boolean abbreviated) {
-	final Locale locale = LanguageUtils.getLocale();
+	final Locale locale = Language.getLocale();
 	ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources", locale);
 	return getLabel(curricularPeriod, bundle, abbreviated);
     }
 
     public static String getFullLabel(CurricularPeriod curricularPeriod, boolean abbreviated) {
-	final Locale locale = LanguageUtils.getLocale();
+	final Locale locale = Language.getLocale();
 	ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources", locale);
 	return getFullLabel(curricularPeriod, bundle, abbreviated);
     }

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
@@ -27,7 +27,7 @@ import org.joda.time.YearMonthDay;
 public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent {
 
     public static final Comparator<GenericEvent> COMPARATOR_BY_DATE_AND_TIME = new ComparatorChain();   
-    private static transient Locale locale = LanguageUtils.getLocale();
+    private static transient Locale locale = Language.getLocale();
 
     static {
 	((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("endDate"));

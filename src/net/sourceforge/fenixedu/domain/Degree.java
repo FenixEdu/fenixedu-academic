@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
@@ -466,9 +466,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     final public String getPresentationName() {
-	final ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
+	final ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language
 		.getLocale());
-	final ResourceBundle appResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils
+	final ResourceBundle appResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language
 		.getLocale());
 	return enumResourceBundle.getString(getDegreeType().toString()) + " " + appResourceBundle.getString("label.in") + " "
 		+ getNome();

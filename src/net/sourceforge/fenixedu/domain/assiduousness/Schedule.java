@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -84,7 +84,7 @@ public class Schedule extends Schedule_Base {
                     DateTimeFieldType.monthOfYear()) - 1];
             throw new DomainException("error.schedule.monthClose",
                     ResourceBundle
-                            .getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+                            .getBundle("resources.EnumerationResources", Language.getLocale())
                             .getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
                             DateTimeFieldType.year())).toString());
         }
@@ -117,7 +117,7 @@ public class Schedule extends Schedule_Base {
                     DateTimeFieldType.monthOfYear()) - 1];
             throw new DomainException("error.schedule.monthClose",
                     ResourceBundle
-                            .getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+                            .getBundle("resources.EnumerationResources", Language.getLocale())
                             .getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
                             DateTimeFieldType.year())).toString());
         }
@@ -139,7 +139,7 @@ public class Schedule extends Schedule_Base {
                     DateTimeFieldType.monthOfYear()) - 1];
             throw new DomainException("error.schedule.monthClose",
                     ResourceBundle
-                            .getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+                            .getBundle("resources.EnumerationResources", Language.getLocale())
                             .getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
                             DateTimeFieldType.year())).toString());
         }
@@ -201,7 +201,7 @@ public class Schedule extends Schedule_Base {
                 Month month = Month.values()[closedMonth.getClosedYearMonth().get(
                         DateTimeFieldType.monthOfYear()) - 1];
                 throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle(
-                        "resources.EnumerationResources", LanguageUtils.getLocale()).getString(
+                        "resources.EnumerationResources", Language.getLocale()).getString(
                         month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
                         DateTimeFieldType.year())).toString());
             }
@@ -262,7 +262,7 @@ public class Schedule extends Schedule_Base {
                 Month month = Month.values()[closedMonth.getClosedYearMonth().get(
                         DateTimeFieldType.monthOfYear()) - 1];
                 throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle(
-                        "resources.EnumerationResources", LanguageUtils.getLocale()).getString(
+                        "resources.EnumerationResources", Language.getLocale()).getString(
                         month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
                         DateTimeFieldType.year())).toString());
             }

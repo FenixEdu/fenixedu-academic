@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class UIDegreeCurricularPlan extends UIInput {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan";
@@ -315,7 +315,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     }
 
     private String getBundleValue(String bundleName, String bundleKey) {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, Language.getLocale());
 	return bundle.getString(bundleKey);
     }
 

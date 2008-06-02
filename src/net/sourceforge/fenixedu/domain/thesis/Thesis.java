@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Person;
@@ -46,7 +46,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
@@ -158,7 +158,7 @@ public class Thesis extends Thesis_Base {
 	    return getTitle();
 	} else {
 	    final Language dlanguage = dissertation.getLanguage();
-	    final Language language = dlanguage == null ? Language.getApplicationLanguage() : dlanguage;
+	    final Language language = dlanguage == null ? Language.getDefaultLanguage() : dlanguage;
 	    return new MultiLanguageString(language, dissertation.getTitle());
 	}
     }
@@ -627,7 +627,7 @@ public class Thesis extends Thesis_Base {
     }
 
     protected String getMessage(final String key, final Object ... args) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ScientificCouncilResources", LanguageUtils.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ScientificCouncilResources", Language.getLocale());
         final String message = bundle.getString(key);
         return MessageFormat.format(message, args);
     }

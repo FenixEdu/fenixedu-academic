@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DeployNotifier;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DeployNotifierServlet extends HttpServlet {
 
@@ -59,7 +59,7 @@ public class DeployNotifierServlet extends HttpServlet {
 
     private ResourceBundle getResourceBundle() {
 	if (resourceBundle == null) {
-	    resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", LanguageUtils.getLocale());
+	    resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	}
 	return resourceBundle;
     }

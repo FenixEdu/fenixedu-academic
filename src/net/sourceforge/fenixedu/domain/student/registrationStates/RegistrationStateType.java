@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.domain.student.registrationStates;
 
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -50,7 +50,7 @@ public enum RegistrationStateType {
     }
 
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale())
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale())
 		.getString(getQualifiedName());
     }
 

@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.UnitSite;

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -59,7 +59,7 @@ public class ExportClosedMonth extends Service {
 	YearMonthDay beginDate = assiduousnessClosedMonth.getBeginDate();
 	YearMonthDay endDate = assiduousnessClosedMonth.getEndDate();
 	StringBuilder result = new StringBuilder();
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	YearMonthDay lowerBeginDate = beginDate.minusDays(8);
 	HashMap<YearMonthDay, WorkSchedule> workScheduleMap = assiduousnessClosedMonth.getAssiduousnessStatusHistory()
 		.getAssiduousness().getWorkSchedulesBetweenDates(lowerBeginDate, endDate);

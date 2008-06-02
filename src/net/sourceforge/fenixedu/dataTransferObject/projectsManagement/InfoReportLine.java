@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
@@ -37,6 +37,6 @@ public class InfoReportLine extends DataTranferObject implements IReportLine {
     }
 
     protected String getString(String label) {
-        return (ResourceBundle.getBundle("resources.ProjectsManagementResources", LanguageUtils.getLocale())).getString(label);
+        return (ResourceBundle.getBundle("resources.ProjectsManagementResources", Language.getLocale())).getString(label);
     }
 }

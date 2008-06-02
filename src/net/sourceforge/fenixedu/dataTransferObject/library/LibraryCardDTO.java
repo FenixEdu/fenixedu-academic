@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearcherContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitsProvider;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.YearMonthDay;
 
@@ -197,7 +197,7 @@ public class LibraryCardDTO implements Serializable {
 	if (getPartyClassification().equals(PartyClassification.PERSON)) {
 	    return "Externa";
 	}
-	final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
+	final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language
 		.getLocale());
 	return enumerationBundle.getString(getPartyClassification().name());
     }

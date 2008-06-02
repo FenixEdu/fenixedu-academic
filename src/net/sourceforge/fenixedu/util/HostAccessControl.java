@@ -14,9 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.PathAccessControlFilter;
 
 import org.apache.log4j.Logger;
+
+import pt.ist.fenixWebFramework.servlets.filters.PathAccessControlFilter;
 
 public class HostAccessControl {
     private static final Logger logger = Logger.getLogger(PathAccessControlFilter.class);

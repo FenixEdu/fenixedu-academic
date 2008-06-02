@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MarkType;
 
 /**
@@ -24,7 +24,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 
     private DomainReference<DegreeCurricularPlan> degreeCurricularPlanDomainReference;
 
-    private boolean showEnVersion = (LanguageUtils.getUserLanguage() == Language.en);
+    private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
     	degreeCurricularPlanDomainReference = new DomainReference<DegreeCurricularPlan>(degreeCurricularPlan);

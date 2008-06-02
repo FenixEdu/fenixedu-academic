@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.YearMonthDay;
@@ -58,7 +58,7 @@ public class ClockingsDaySheet implements Serializable {
 
     public String getWeekDay() {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		LanguageUtils.getLocale());
+		Language.getLocale());
 	return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
 		.toString()
 		+ "_ACRONYM");

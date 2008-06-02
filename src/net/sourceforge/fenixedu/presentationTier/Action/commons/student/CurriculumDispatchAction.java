@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.St
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -48,7 +48,7 @@ import org.apache.struts.util.LabelValueBean;
 public class CurriculumDispatchAction extends FenixDispatchAction {
 
     private final static ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
-	    LanguageUtils.getLocale());
+	    Language.getLocale());
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	RenderUtils.invalidateViewState();

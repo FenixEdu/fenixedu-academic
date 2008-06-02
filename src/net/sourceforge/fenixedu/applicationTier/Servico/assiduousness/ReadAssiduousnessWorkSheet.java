@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -162,7 +162,7 @@ public class ReadAssiduousnessWorkSheet extends Service {
 		    }
 		    workDaySheet.setNotes(notes.toString());
 		    if (isDayHoliday) {
-			ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils
+			ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language
 				.getLocale());
 			workDaySheet.setWorkScheduleAcronym(bundle.getString("label.holiday"));
 		    }

@@ -8,12 +8,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.renderers.components.HtmlLink;
 import net.sourceforge.fenixedu.renderers.components.HtmlScript;
 import net.sourceforge.fenixedu.renderers.components.HtmlTextArea;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.log4j.Logger;
 
@@ -108,7 +108,7 @@ public class TinyMceEditor extends HtmlTextArea {
         properties.setProperty("convert_fonts_to_spans", "true");
         properties.setProperty("fix_list_elements", "true");
         
-        Language language = LanguageUtils.getLanguage();
+        Language language = Language.getLanguage();
         properties.setProperty("language", language.toString());
         properties.setProperty("docs_language", "en"); // hardcoded because pt is not supported
         

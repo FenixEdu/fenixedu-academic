@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -32,7 +32,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
     private static int SATURDAY_IN_JODA_TIME = 6, SUNDAY_IN_JODA_TIME = 7;
 
-    private static transient Locale locale = LanguageUtils.getLocale();
+    private static transient Locale locale = Language.getLocale();
 
 
     public abstract Boolean getDailyFrequencyMarkSaturday();

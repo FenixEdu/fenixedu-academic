@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -109,7 +109,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	}
 
 	public Object execute() {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	    if (getCorrectionType() != null && getCorrectionType().equals(CorrectionType.JUSTIFICATION)) {
 		if (getJustificationMotive() != null && getJustificationMotive().getJustificationType() != null) {
 		    final GregorianChronology gregorianChronology = GregorianChronology.getInstanceUTC();
@@ -327,7 +327,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	}
 
 	public Object execute() {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	    if (getCorrectionType() != null && getCorrectionType().equals(CorrectionType.JUSTIFICATION)) {
 		if (getJustificationMotive() != null) {
 		    final GregorianChronology gregorianChronology = GregorianChronology.getInstanceUTC();
@@ -568,7 +568,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	}
 
 	public Object execute() {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	    if (getJustificationMotive() != null && getJustificationMotive().getJustificationType() != null) {
 		final GregorianChronology gregorianChronology = GregorianChronology.getInstanceUTC();
 		if (getJustificationMotive().getJustificationType().equals(JustificationType.TIME)) {

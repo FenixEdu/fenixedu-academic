@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.renderers.plugin.upload.UploadedFile;
+import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;

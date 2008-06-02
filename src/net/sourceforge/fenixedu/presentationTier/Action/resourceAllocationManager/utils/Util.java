@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -48,7 +48,7 @@ public class Util {
         for (RoomClassification classification : RoomClassification.sortByRoomClassificationAndCode(roomClassifications)) {          
             if(classification.hasParentRoomClassification()) {
                 tipos.add(new LabelValueBean(classification.getPresentationCode() + " - " 
-            	    + classification.getName().getContent(LanguageUtils.getLanguage()), classification.getIdInternal().toString()));
+            	    + classification.getName().getContent(Language.getLanguage()), classification.getIdInternal().toString()));
             }
 	}
                

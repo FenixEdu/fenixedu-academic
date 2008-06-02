@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemptionShift;
 import net.sourceforge.fenixedu.domain.assiduousness.util.PartialList;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionMessage;
@@ -99,7 +99,7 @@ public class AssiduousnessExemptionBean implements Serializable, FactoryExecutor
     }
 
     public Object execute() {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	if (getYear() == null) {
 	    return new ActionMessage("errors.required", bundle.getString("label.year"));
 	}

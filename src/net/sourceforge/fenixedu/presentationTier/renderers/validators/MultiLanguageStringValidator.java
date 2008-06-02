@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Language;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringInputRenderer.LanguageBean;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;

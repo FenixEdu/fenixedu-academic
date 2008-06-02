@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
@@ -55,7 +55,7 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	}
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=a17a18.xls");
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("A17A18");
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(bundle.getString("label.employeeNumber"));
@@ -66,7 +66,7 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	spreadsheet.addHeader(bundle.getString("label.art17Days"));
 	spreadsheet.addHeader(bundle.getString("label.art18Days"));
 
-	final ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
+	final ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language
 		.getLocale());
 	for (Month month : Month.values()) {
 	    spreadsheet.addHeader(bundleEnumeration.getString(month.getName()));

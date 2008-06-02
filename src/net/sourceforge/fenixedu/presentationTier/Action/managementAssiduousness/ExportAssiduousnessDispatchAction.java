@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
@@ -75,14 +75,14 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward exportWorkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	final IUserView userView = SessionUtils.getUserView(request);
 	List<EmployeeWorkSheet> employeeWorkSheetList = (List<EmployeeWorkSheet>) ServiceUtils.executeService(userView,
 		"ReadAllAssiduousnessWorkSheets", new Object[] { assiduousnessExportChoices });
 	if (employeeWorkSheetList.size() != 0) {
 	    Map<String, String> parameters = new HashMap<String, String>();
 	    if (assiduousnessExportChoices.getYearMonth() != null) {
-		ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils
+		ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language
 			.getLocale());
 		String month = bundleEnumeration.getString(assiduousnessExportChoices.getYearMonth().getMonth().toString());
 		StringBuilder stringBuilder = new StringBuilder(month).append(" ").append(
@@ -123,7 +123,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 		.executeService(userView, "ReadMonthResume", new Object[] { assiduousnessExportChoices });
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=resumoMes.xls");
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle.getString("label.monthlyResume"));
 	AssiduousnessMonthlyResume.getExcelHeader(spreadsheet, bundle);
 	for (AssiduousnessMonthlyResume assiduousnessMonthlyResume : assiduousnessMonthlyResumeList) {
@@ -232,12 +232,12 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    }
 	}
 
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", LanguageUtils.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 
 	Map<String, String> parameters = new HashMap<String, String>();
 	YearMonthDay now = new YearMonthDay();
 	final String dateSeparator = " de ";
-	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", LanguageUtils.getLocale());
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	String month = bundleEnumeration.getString(Month.values()[now.getMonthOfYear() - 1].toString());
 	StringBuilder stringBuilder = new StringBuilder().append(now.getDayOfMonth()).append(dateSeparator).append(month).append(
 		dateSeparator).append(now.getYear());

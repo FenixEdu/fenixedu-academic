@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.CurriculumModuleEnroledWrapperConverter;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SpecialSeasonBolonhaStudentEnrolmentBean extends BolonhaStudentEnrollmentBean {
     
@@ -23,7 +23,7 @@ public class SpecialSeasonBolonhaStudentEnrolmentBean extends BolonhaStudentEnro
     }
 
     public String getFuncionalityTitle() {
-	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", LanguageUtils.getLocale());
+	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 	return resourceBundle.getString("label.special.season.enrolment");
     }
     

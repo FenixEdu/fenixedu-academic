@@ -41,7 +41,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.util.LanguageUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
@@ -554,7 +554,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	spreadsheet.addHeader("Outras Informações", 6000);
 
 	final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
-		"resources.EnumerationResources", LanguageUtils.getLocale());
+		"resources.EnumerationResources", Language.getLocale());
 	for (ParkingRequest parkingRequest : parkingRequestList) {
 	    if (parkingRequest.getParkingParty().getParty().isPerson()) {
 		Person person = (Person) parkingRequest.getParkingParty().getParty();
