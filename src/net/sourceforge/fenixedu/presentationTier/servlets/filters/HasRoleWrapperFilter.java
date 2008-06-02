@@ -11,7 +11,7 @@ public class HasRoleWrapperFilter extends RequestWrapperFilter {
 
     @Override
     public FenixHttpServletRequestWrapper getFenixHttpServletRequestWrapper(final HttpServletRequest httpServletRequest) {
-	return new FenixHttpServletRequestWrapper(httpServletRequest);
+	return new FenixHttpServletRequestWrapperWithRoles(httpServletRequest);
     }
 
     public static class FenixHttpServletRequestWrapperWithRoles extends FenixHttpServletRequestWrapper {
