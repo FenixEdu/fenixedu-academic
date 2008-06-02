@@ -37,7 +37,8 @@ import org.apache.struts.action.ActionMapping;
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/over23/editCandidacyPersonalInformation.jsp"),
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/over23/editCandidacyInformation.jsp"),
 	@Forward(name = "introduce-candidacy-result", path = "/candidacy/over23/introduceCandidacyResult.jsp"),
-	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp")
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
+	@Forward(name = "create-registration", path="/candidacy/createRegistration.jsp")
 
 })
 public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -56,7 +57,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     protected Over23CandidacyProcess getParentProcess(HttpServletRequest request) {
 	return (Over23CandidacyProcess) super.getParentProcess(request);
     }
-    
+
     @Override
     protected Over23IndividualCandidacyProcess getProcess(HttpServletRequest request) {
 	return (Over23IndividualCandidacyProcess) super.getProcess(request);
@@ -348,11 +349,19 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) {
+	final Over23IndividualCandidacyProcess process = getProcess(request);
+	request.setAttribute("degree", process.getAcceptedDegree());
+	return mapping.findForward("create-registration");
+    }
+
+    public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    executeActivity(getProcess(request), "CreateRegistration");
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return mapping.findForward("create-registration");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }

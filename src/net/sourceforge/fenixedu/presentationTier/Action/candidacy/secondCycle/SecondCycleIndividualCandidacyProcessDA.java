@@ -41,7 +41,8 @@ import org.joda.time.LocalDate;
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/secondCycle/editCandidacyPersonalInformation.jsp"),
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/secondCycle/editCandidacyInformation.jsp"),
 	@Forward(name = "introduce-candidacy-result", path = "/candidacy/secondCycle/introduceCandidacyResult.jsp"),
-	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp")
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
+	@Forward(name = "create-registration", path="/candidacy/createRegistration.jsp")
 
 })
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -347,10 +348,18 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	final SecondCycleIndividualCandidacyProcess process = getProcess(request);
+	request.setAttribute("degree", process.getCandidacySelectedDegree());
+	return mapping.findForward("create-registration");
+    }
+
+    public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    executeActivity(getProcess(request), "CreateRegistration");
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return mapping.findForward("create-registration");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
