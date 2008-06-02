@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
@@ -38,24 +40,28 @@ public class NumberRangeValidator extends HtmlValidator {
     @Override
     public void performValidation() {
 
-	try {
-	    int number = Integer.parseInt(getComponent().getValue().trim());
+	String numberText = getComponent().getValue();
 
-	    boolean inRange = true;
-	    isNumber = true;
+	if (!StringUtils.isEmpty(numberText)) {
+	    try {
+		int number = Integer.parseInt(numberText.trim());
 
-	    if (lowerBound != null) {
-		inRange &= lowerBound <= number;
+		boolean inRange = true;
+		isNumber = true;
+
+		if (lowerBound != null) {
+		    inRange &= lowerBound <= number;
+		}
+
+		if (upperBound != null) {
+		    inRange &= upperBound >= number;
+		}
+
+		this.setValid(inRange);
+	    } catch (NumberFormatException e) {
+		isNumber = false;
+		setValid(false);
 	    }
-
-	    if (upperBound != null) {
-		inRange &= upperBound >= number;
-	    }
-
-	    this.setValid(inRange);
-	} catch (NumberFormatException e) {
-	    isNumber = false;
-	    setValid(false);
 	}
     }
 

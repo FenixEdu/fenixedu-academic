@@ -36,13 +36,10 @@ public class NumberValidator extends HtmlValidator {
     public void performValidation() {
 
 	String numberText = getComponent().getValue();
-	if (numberText != null) {
-	    numberText.trim();
-	}
 	
 	if (!StringUtils.isEmpty(numberText)) {
 	    try {
-		Integer.parseInt(numberText, getBase());
+		Integer.parseInt(numberText.trim(), getBase());
 		setValid(true);
 	    } catch (NumberFormatException e) {
 		setValid(false);
