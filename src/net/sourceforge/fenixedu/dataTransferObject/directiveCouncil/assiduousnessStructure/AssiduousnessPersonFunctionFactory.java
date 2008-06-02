@@ -10,6 +10,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -138,7 +139,7 @@ public class AssiduousnessPersonFunctionFactory implements Serializable, Factory
 	    }
 	}
 	return new Function(new MultiLanguageString(Language.pt, "Responsável pela Assiduidade"), begin, null,
-		FunctionType.ASSIDUOUSNESS_RESPONSIBLE, unit);
+		FunctionType.ASSIDUOUSNESS_RESPONSIBLE, unit, AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE);
     }
 
 }
