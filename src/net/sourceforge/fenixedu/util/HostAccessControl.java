@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.servlets.filters.PathAccessControlFilter;
 public class HostAccessControl {
     private static final Logger logger = Logger.getLogger(PathAccessControlFilter.class);
     
-    private static final String HOST_CONTROL_PROPERTIES = "/.hostAccessControl.properties";
+    private static final String HOST_CONTROL_PROPERTIES = "/.pathAccessControl.properties";
     private static final String HOST_CONTROL_NAME_PREFIX = "host.control.name.";
     
     private static HostAccessControl intance = new HostAccessControl();

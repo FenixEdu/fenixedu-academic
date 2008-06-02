@@ -585,7 +585,7 @@
 	</target>
 
 	<target name="write-path-access-control-configuration-file">
-		<copy encoding="${encoding}" file="build.properties" tofile="${build.home.webinf.classes}/.hostAccessControl.properties">
+		<copy encoding="${encoding}" file="build.properties" tofile="${build.home.webinf.classes}/.pathAccessControl.properties">
 			<filterchain>
 				<linecontainsregexp>
 					<regexp pattern="^host.control.(path|name)."/>
