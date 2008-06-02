@@ -215,13 +215,13 @@
 
 	<p class="mtop15 mbottom05"><strong><bean:message key="message.courseInformation.coursePrincipalBibliographicReference" /></strong></p>
 	<table class="tstyle4 tdcenter mtop05" width="98%">
-		<logic:iterate id="infoBibliographicReference" name="siteCourseInformation" property="infoBibliographicReferences">
-		<logic:equal name="infoBibliographicReference" property="optional" value="false">
+		<logic:iterate id="bibliographicReference" name="siteCourseInformation" property="executionCourse.associatedBibliographicReferences">
+		<logic:equal name="bibliographicReference" property="optional" value="false">
 		<tr>
-			<td><bean:write name="infoBibliographicReference" property="title" filter="false"/></td>
-			<td><bean:write name="infoBibliographicReference" property="authors"/></td>
-			<td><bean:write name="infoBibliographicReference" property="reference"/></td>
-			<td><bean:write name="infoBibliographicReference" property="year"/></td>
+			<td><bean:write name="bibliographicReference" property="title" filter="false"/></td>
+			<td><bean:write name="bibliographicReference" property="authors"/></td>
+			<td><bean:write name="bibliographicReference" property="reference"/></td>
+			<td><bean:write name="bibliographicReference" property="year"/></td>
 		</tr>
 		</logic:equal>
 		</logic:iterate>
@@ -229,13 +229,13 @@
 	
 	<p class="mtop15 mbottom05"><strong><bean:message key="message.courseInformation.courseSecondaryBibliographicReference" /></strong></p>
 	<table class="tstyle4 tdcenter mvert05" width="98%">
-		<logic:iterate id="infoBibliographicReference" name="siteCourseInformation" property="infoBibliographicReferences">
-		<logic:equal name="infoBibliographicReference" property="optional" value="true">
+		<logic:iterate id="bibliographicReference" name="siteCourseInformation" property="executionCourse.associatedBibliographicReferences">
+		<logic:equal name="bibliographicReference" property="optional" value="true">
 		<tr>
-			<td><bean:write name="infoBibliographicReference" property="title" filter="false"/></td>
-			<td><bean:write name="infoBibliographicReference" property="authors"/></td>
-			<td><bean:write name="infoBibliographicReference" property="reference"/></td>
-			<td><bean:write name="infoBibliographicReference" property="year"/></td>
+			<td><bean:write name="bibliographicReference" property="title" filter="false"/></td>
+			<td><bean:write name="bibliographicReference" property="authors"/></td>
+			<td><bean:write name="bibliographicReference" property="reference"/></td>
+			<td><bean:write name="bibliographicReference" property="year"/></td>
 		</tr>
 		</logic:equal>
 		</logic:iterate>

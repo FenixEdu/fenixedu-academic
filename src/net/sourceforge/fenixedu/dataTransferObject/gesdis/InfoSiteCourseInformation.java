@@ -66,7 +66,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 	executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
     }
 
-    private ExecutionCourse getExecutionCourse() {
+    public ExecutionCourse getExecutionCourse() {
 	return this.executionCourseDomainReference == null ? null : this.executionCourseDomainReference.getObject();
     }
 

@@ -170,15 +170,15 @@
 			    		</strong>
 		    		</td>
 				</tr>
-				<logic:iterate id="infoBibliographicReference" name="infoSiteCourseInformation" property="infoBibliographicReferences">
-					<logic:equal name="infoBibliographicReference" property="optional" value="false">
+				<logic:iterate id="bibliographicReference" name="infoSiteCourseInformation" property="executionCourse.associatedBibliographicReferences">
+					<logic:equal name="bibliographicReference" property="optional" value="false">
 						<tr>
 							<td colspan="7">
 								<p>
-									<bean:write name="infoBibliographicReference" property="authors"/>;
-									<em><bean:write name="infoBibliographicReference" property="title"/></em>,
-									<bean:write name="infoBibliographicReference" property="reference"/>,
-									<bean:write name="infoBibliographicReference" property="year"/>.
+									<bean:write name="bibliographicReference" property="authors"/>;
+									<em><bean:write name="bibliographicReference" property="title"/></em>,
+									<bean:write name="bibliographicReference" property="reference"/>,
+									<bean:write name="bibliographicReference" property="year"/>.
 								</p>
 							</td>
 						</tr>
@@ -192,15 +192,15 @@
 				    	</strong>
 			    	</td>
 				</tr>
-				<logic:iterate id="infoBibliographicReference" name="infoSiteCourseInformation" property="infoBibliographicReferences">
-					<logic:equal name="infoBibliographicReference" property="optional" value="true">
+				<logic:iterate id="bibliographicReference" name="infoSiteCourseInformation" property="executionCourse.associatedBibliographicReferences">
+					<logic:equal name="bibliographicReference" property="optional" value="true">
 						<tr>
 							<td colspan="7">
 								<p>
-									<bean:write name="infoBibliographicReference" property="authors"/>;
-									<em><bean:write name="infoBibliographicReference" property="title"/></em>,
-									<bean:write name="infoBibliographicReference" property="reference"/>,
-									<bean:write name="infoBibliographicReference" property="year"/>.
+									<bean:write name="bibliographicReference" property="authors"/>;
+									<em><bean:write name="bibliographicReference" property="title"/></em>,
+									<bean:write name="bibliographicReference" property="reference"/>,
+									<bean:write name="bibliographicReference" property="year"/>.
 								</p>
 							</td>
 						</tr>
