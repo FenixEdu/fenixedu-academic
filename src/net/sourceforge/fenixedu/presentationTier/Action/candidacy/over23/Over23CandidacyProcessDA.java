@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy.over23;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -24,7 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProce
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.SpreadsheetXLSExporter;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -37,12 +37,15 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.LocalDate;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 @Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "send-to-jury", path = "/candidacy/over23/sendToJury.jsp"),
-	@Forward(name = "insert-candidacy-results-from-jury", path = "/candidacy/over23/insertCandidacyResultsFromJury.jsp")
+	@Forward(name = "insert-candidacy-results-from-jury", path = "/candidacy/over23/insertCandidacyResultsFromJury.jsp"),
+	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
 
 })
 public class Over23CandidacyProcessDA extends CandidacyProcessDA {
@@ -217,13 +220,39 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	}
     }
 
+    static public class Over23CandidacyDegreeBean extends CandidacyDegreeBean {
+
+	public Over23CandidacyDegreeBean(final Over23IndividualCandidacyProcess process) {
+	    setPerson(process.getCandidacyPerson());
+	    setDegree(process.getAcceptedDegree());
+	    setRegistrationCreated(process.hasRegistrationForCandidacy());
+	}
+    }
+
     public ActionForward prepareExecuteCreateRegistrations(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final Over23CandidacyProcess process = getProcess(request);
+	final List<CandidacyDegreeBean> candidacyDegreeBeans = new ArrayList<CandidacyDegreeBean>();
+
+	for (final Over23IndividualCandidacyProcess child : process.getAcceptedOver23IndividualCandidacies()) {
+	    candidacyDegreeBeans.add(new Over23CandidacyDegreeBean(child));
+	}
+
+	Collections.sort(candidacyDegreeBeans);
+	request.setAttribute("candidacyDegreeBeans", candidacyDegreeBeans);
+	return mapping.findForward("create-registrations");
+    }
+
+    public ActionForward executeCreateRegistrations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    executeActivity(getProcess(request), "CreateRegistrations");
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return mapping.findForward("create-registrations");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
+
 }

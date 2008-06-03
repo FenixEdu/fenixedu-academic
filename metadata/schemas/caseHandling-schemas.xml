@@ -499,3 +499,23 @@
 		<property name="size" value="20"/>
 	</slot>
 </schema>
+
+<schema name="CandidacyProcess.candidacyDegreeBean" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$CandidacyDegreeBean" bundle="APPLICATION_RESOURCES">
+	<slot name="person" layout="format" key="label.name">
+		<property name="format" value="${name} (${documentIdNumber})" />
+	</slot>
+	<slot name="degree.presentationName" key="label.degree" />
+	<slot name="registrationCreated" key="label.candidacy.isRegistrationCreated">
+		<property name="trueLabel" value="label.yes" />
+		<property name="falseLabel" value="label.empty" />
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="Over23CandidacyProcess.candidacyDegreeBean" 
+		type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.over23.Over23CandidacyProcessDA$Over23CandidacyDegreeBean"
+		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES" />
+
+<schema name="SecondCycleCandidacyProcess.candidacyDegreeBean" 
+		type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle.SecondCycleCandidacyProcessDA$SecondCycleCandidacyDegreeBean"
+		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES" />

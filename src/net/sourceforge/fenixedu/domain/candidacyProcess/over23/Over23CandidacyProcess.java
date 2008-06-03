@@ -94,6 +94,17 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
 	return result;
     }
+    
+    public List<Over23IndividualCandidacyProcess> getAcceptedOver23IndividualCandidacies() {
+	final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
+	for (final IndividualCandidacyProcess child : getChildProcesses()) {
+	    final Over23IndividualCandidacyProcess over23CP = (Over23IndividualCandidacyProcess) child;
+	    if (over23CP.isCandidacyDebtPayed() && over23CP.isCandidacyAccepted()) {
+		result.add(over23CP);
+	    }
+	}
+	return result;
+    }
 
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)

@@ -119,6 +119,17 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	}
 	values.add(process);
     }
+    
+    public List<SecondCycleIndividualCandidacyProcess> getAcceptedSecondCycleIndividualCandidacies() {
+	final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
+	for (final IndividualCandidacyProcess child : getChildProcesses()) {
+	    final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
+	    if (process.isCandidacyDebtPayed() && process.isCandidacyAccepted()) {
+		result.add(process);
+	    }
+	}
+	return result;
+    }
 
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)

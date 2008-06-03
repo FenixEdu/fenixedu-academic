@@ -41,7 +41,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public boolean hasOpenCandidacyPeriod(final DateTime date) {
 	return hasCandidacyProcess() && getCandidacyProcess().hasOpenCandidacyPeriod(date);
     }
-    
+
     public CandidacyProcessState getState() {
 	return hasCandidacyProcess() ? getCandidacyProcess().getState() : null;
     }
@@ -94,7 +94,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return getCandidacy().isCancelled();
     }
 
-    protected boolean isCandidacyDebtPayed() {
+    public boolean isCandidacyDebtPayed() {
 	return getCandidacy().isDebtPayed();
     }
 
@@ -105,7 +105,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public boolean hasRegistrationForCandidacy() {
 	return getCandidacy().hasRegistration();
     }
-    
+
     @Override
     public String getDisplayName() {
 	return ResourceBundle.getBundle("resources/CaseHandlingResources").getString(getClass().getSimpleName());
