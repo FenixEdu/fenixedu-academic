@@ -27,6 +27,15 @@
 
 <p/>
 
+<br/>
+<logic:present name="searchBean" property="executionYear">
+	<bean:define id="statsUrl">/studentsListByCurricularCourse.do?method=downloadStatistics&executionYearId=<bean:write name="searchBean" property="executionYear.idInternal"/></bean:define>
+	<html:link action="<%= statsUrl %>">
+		<html:img border="0" src='<%= request.getContextPath() + "/images/excel.gif"%>' altKey="excel" bundle="IMAGE_RESOURCES"/>
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="link.download.statistics"/>
+	</html:link>
+</logic:present>
+
 <logic:present name="degreeModuleScopes">
 
 	<bean:define id="executionYear" name="searchBean" property="executionYear.idInternal"/>
