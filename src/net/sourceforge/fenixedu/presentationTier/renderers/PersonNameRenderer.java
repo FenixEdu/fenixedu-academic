@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.renderers.StringRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.StringRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 /**

@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.renderers.NumberInputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.NumberInputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.util.Money;
 
 /**

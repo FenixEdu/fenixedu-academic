@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class SummaryTeacherBean implements Serializable {
 

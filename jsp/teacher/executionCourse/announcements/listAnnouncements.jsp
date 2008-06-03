@@ -59,7 +59,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 			<logic:equal name="announcement" property="visible" value="true">
 				<h3 class="mtop0 mbottom025">
 				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
-					<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></span>
+					<span><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
 			</logic:equal>
@@ -68,7 +68,7 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 				<p class="mvert025">
 				<h3 class="mvert0 dinline">
 				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
-					<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></span>
+					<span><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/></span>
 				</html:link> 	 	
 				</h3>
 				<em class="warning1"><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.invisible" /></em>
@@ -85,14 +85,14 @@ String extraParameters = (String) request.getAttribute("extraParameters");
 					 </html:link> 
 				</logic:equal>
 				 <logic:equal name="announcement" property="excerptEmpty" value="true">
-				 	<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html"/>				 	
+				 	<fr:view name="announcement" property="body" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html"/>				 	
 				</logic:equal>
 				 </div>
 			 </logic:notPresent>
 				
 			<logic:present name="announcementBoard">
 				<div class="ann_body mvert025">
-				<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html"/>
+				<fr:view name="announcement" property="body" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html"/>
 				</div>
 			</logic:present>
 

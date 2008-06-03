@@ -9,7 +9,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CalendarUtil;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 import org.joda.time.Days;
 import org.joda.time.YearMonthDay;

@@ -6,14 +6,14 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.renderers.OutputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlLink;
-import net.sourceforge.fenixedu.renderers.components.HtmlList;
-import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
-import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.OutputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlList;
+import pt.ist.fenixWebFramework.renderers.components.HtmlListItem;
+import pt.ist.fenixWebFramework.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class TagCloudRenderer extends OutputRenderer {
 

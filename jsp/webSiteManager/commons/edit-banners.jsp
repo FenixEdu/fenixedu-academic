@@ -64,7 +64,7 @@
                                 </logic:notEmpty>
                                 
                                 <fr:edit id="editBannerMainImage" name="editBannerBean" slot="mainImage.file">
-                                    <fr:validator name="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+                                    <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
                                         <fr:property name="acceptedTypes" value="image/gif,image/jpeg,image/pjpeg,image/png,image/x-png"/>
                                     </fr:validator>
                                     
@@ -99,7 +99,7 @@
                                 </logic:notEmpty>
                             
                                 <fr:edit id="editBannerBackgroundImage" name="editBannerBean" slot="backgroundImage.file">
-                                    <fr:validator name="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+                                    <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
                                         <fr:property name="acceptedTypes" value="image/gif,image/jpeg,image/pjpeg,image/png,image/x-png"/>
                                     </fr:validator>
                                     
@@ -173,7 +173,7 @@
 									<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 							    		<fr:property name="lowerBound" value="0"/>
 							    	</fr:validator>
-									<fr:validator name="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>                                 	
+									<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>                                 	
                                     <fr:layout>
                                     	<fr:property name="size" value="10"/>
                                     </fr:layout>

@@ -1,11 +1,12 @@
-package net.sourceforge.fenixedu.renderers;
+package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlLink;
-import net.sourceforge.fenixedu.renderers.components.HtmlLink.Target;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.OutputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLink.Target;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class JournalIssueRenderer extends OutputRenderer {
 

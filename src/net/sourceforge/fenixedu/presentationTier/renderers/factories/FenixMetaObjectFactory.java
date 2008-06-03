@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.renderers.model.DefaultMetaObjectFactory;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;
-import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
+import pt.ist.fenixWebFramework.renderers.model.DefaultMetaObjectFactory;
+import pt.ist.fenixWebFramework.renderers.model.MetaObject;
+import pt.ist.fenixWebFramework.renderers.model.MetaObjectCollection;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
+import pt.ist.fenixWebFramework.renderers.schemas.Schema;
+import pt.ist.fenixWebFramework.renderers.schemas.SchemaSlotDescription;
+import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 
 public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
 

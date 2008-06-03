@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchJou
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchScientificJournalCreationBean;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationType;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ResearchActivityRolesDataProvider implements DataProvider {
 

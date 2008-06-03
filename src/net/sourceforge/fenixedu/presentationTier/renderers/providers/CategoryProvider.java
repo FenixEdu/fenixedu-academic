@@ -8,9 +8,9 @@ import java.util.TreeSet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CategoryProvider implements DataProvider {
 

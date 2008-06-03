@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

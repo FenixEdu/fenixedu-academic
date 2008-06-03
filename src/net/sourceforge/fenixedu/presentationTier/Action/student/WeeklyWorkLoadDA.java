@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
-import net.sourceforge.fenixedu.renderers.components.state.ViewState;
+import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
+import pt.ist.fenixWebFramework.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.action.ActionForm;

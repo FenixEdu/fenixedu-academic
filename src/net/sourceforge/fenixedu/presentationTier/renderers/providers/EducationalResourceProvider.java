@@ -6,9 +6,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class EducationalResourceProvider implements DataProvider {
 

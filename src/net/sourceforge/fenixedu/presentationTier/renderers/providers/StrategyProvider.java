@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategyFactory;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class StrategyProvider implements DataProvider {
 

@@ -9,10 +9,10 @@ import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import net.sourceforge.fenixedu.renderers.components.HtmlLink;
-import net.sourceforge.fenixedu.renderers.components.HtmlScript;
-import net.sourceforge.fenixedu.renderers.components.HtmlTextArea;
-import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlScript;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTextArea;
+import pt.ist.fenixWebFramework.renderers.components.tags.HtmlTag;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.log4j.Logger;

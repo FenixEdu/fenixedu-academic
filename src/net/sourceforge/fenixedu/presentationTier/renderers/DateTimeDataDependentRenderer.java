@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.renderers.FormatRenderer;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.FormatRenderer;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 import org.joda.time.DateTime;
 

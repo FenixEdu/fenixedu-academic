@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.converters;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DomainObjectKeyConverter extends Converter {
 

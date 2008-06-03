@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-import net.sourceforge.fenixedu.util.EMail;
+import pt.utl.ist.fenix.tools.util.EMail;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>

@@ -4,14 +4,14 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage;
-import net.sourceforge.fenixedu.renderers.OutputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
+import pt.ist.fenixWebFramework.renderers.OutputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.contexts.PresentationContext;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.model.MetaObject;
+import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
+import pt.ist.fenixWebFramework.renderers.schemas.Schema;
+import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 
 
 public abstract class ResearchActivityStageRenderer extends OutputRenderer {

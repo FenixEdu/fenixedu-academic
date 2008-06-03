@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
 

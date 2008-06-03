@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 import java.text.ParseException;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.renderers.validators.DateValidator;
-import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
+import pt.ist.fenixWebFramework.renderers.validators.DateValidator;
+import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 import org.joda.time.DateTime;
 

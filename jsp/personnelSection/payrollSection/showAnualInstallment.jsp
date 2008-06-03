@@ -103,7 +103,7 @@
 					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList">
 						<td>
 						<fr:edit id="anualBonusInstallmentBean" name="anualBonusInstallmentBean" slot="paymentYearMonth" layout="menu-select" schema="choose.date"
-							validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 							<fr:layout>
 								<fr:property name="eachLayout" value="values" />
 								<fr:property name="saveOptions" value="true" />
@@ -117,7 +117,7 @@
 					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList">
 						<td>
 						<fr:edit id="anualBonusInstallmentBean" name="anualBonusInstallmentBean" slot="yearMonths" layout="option-select" 
-							validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 							<fr:layout>
 								<fr:property name="eachLayout" value="values" />
 								<fr:property name="saveOptions" value="true" />

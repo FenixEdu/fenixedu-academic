@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.PersonUsernameConverter;
-import net.sourceforge.fenixedu.renderers.StringInputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
+import pt.ist.fenixWebFramework.renderers.StringInputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlFormComponent;
 
 public class PersonUsernameStringInputRenderer extends StringInputRenderer {
 

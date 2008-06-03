@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain;
 import java.text.ParseException;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ProjectTest extends DomainTestBase {
 

@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
-import net.sourceforge.fenixedu.renderers.model.DefaultValues;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import pt.ist.fenixWebFramework.renderers.model.DefaultValues;
+import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 
-public class MetaSlotWithDefault extends net.sourceforge.fenixedu.renderers.model.MetaSlotWithDefault {
+public class MetaSlotWithDefault extends pt.ist.fenixWebFramework.renderers.model.MetaSlotWithDefault {
 
     public MetaSlotWithDefault(MetaObject metaObject, String name) {
         super(metaObject, name);

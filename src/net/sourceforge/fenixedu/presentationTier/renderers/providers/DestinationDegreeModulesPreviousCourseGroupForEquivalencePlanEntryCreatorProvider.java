@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntryCreator;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.BiDirectionalConverter;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 import org.apache.commons.lang.StringUtils;
 

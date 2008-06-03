@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.renderers.utils.RendererPropertyUtils;
+import pt.ist.fenixWebFramework.renderers.utils.RendererPropertyUtils;
 
 public class CreateObjects extends UpdateObjects {
 

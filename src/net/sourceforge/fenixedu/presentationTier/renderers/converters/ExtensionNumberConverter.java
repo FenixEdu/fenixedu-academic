@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.converters;
 
 import net.sourceforge.fenixedu.domain.material.Extension;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExtensionNumberConverter extends Converter {
 

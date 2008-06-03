@@ -1,14 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.renderers.StringInputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlLink;
-import net.sourceforge.fenixedu.renderers.components.HtmlScript;
-import net.sourceforge.fenixedu.renderers.components.HtmlTextInput;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
+import pt.ist.fenixWebFramework.renderers.StringInputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlScript;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTextInput;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlotKey;
 
 /**
  * This renderer provides a way of asking the user for a color using a color picker.

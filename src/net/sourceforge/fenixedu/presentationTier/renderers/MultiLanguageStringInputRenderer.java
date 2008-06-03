@@ -11,32 +11,32 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
 
-import pt.ist.utl.fenix.utils.Pair;
+import pt.utl.ist.fenix.tools.util.Pair;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.presentationTier.renderers.validators.MultiLanguageStringValidator;
-import net.sourceforge.fenixedu.renderers.InputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlActionLink;
-import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
-import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlTextInput;
-import net.sourceforge.fenixedu.renderers.components.controllers.HtmlActionLinkController;
-import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
-import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
+import pt.ist.fenixWebFramework.renderers.InputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlHiddenField;
+import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTextInput;
+import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlActionLinkController;
+import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlController;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.contexts.PresentationContext;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.model.MetaObject;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlotKey;
+import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * This renderer provides a generic wya of editing slots that contain a

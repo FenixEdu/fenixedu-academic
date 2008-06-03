@@ -8,8 +8,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.CreateObjects;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectKey;
-import net.sourceforge.fenixedu.renderers.model.InstanceCreator;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
+import pt.ist.fenixWebFramework.renderers.model.InstanceCreator;
+import pt.ist.fenixWebFramework.renderers.model.MetaObjectKey;
 
 public class CreationDomainMetaObject extends DomainMetaObject {
 

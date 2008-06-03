@@ -1,16 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.renderers.EnumRadioInputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
-import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlRadioButton;
-import net.sourceforge.fenixedu.renderers.components.HtmlRadioButtonList;
-import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaSlot;
+import pt.ist.fenixWebFramework.renderers.EnumRadioInputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlHiddenField;
+import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlRadioButton;
+import pt.ist.fenixWebFramework.renderers.components.HtmlRadioButtonList;
+import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlController;
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 
 public class EnumRadioInputRendererWithPostBack extends EnumRadioInputRenderer  {
 

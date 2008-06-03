@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * Specific site instance that is associated with the unit that represents the

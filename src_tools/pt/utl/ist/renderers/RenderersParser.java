@@ -22,7 +22,7 @@ import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.RootDoc;
 
 public class RenderersParser {
-    private static final String RENDERER_CLASS_NAME = "net.sourceforge.fenixedu.renderers.Renderer";
+    private static final String RENDERER_CLASS_NAME = "pt.ist.fenixWebFramework.renderers.Renderer";
     private static final String COMMENT_PREFIX = "@";
 
     private ParserConfiguration configuration;

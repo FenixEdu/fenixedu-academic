@@ -11,19 +11,19 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import net.sourceforge.fenixedu.renderers.OutputRenderer;
-import net.sourceforge.fenixedu.renderers.CollectionRenderer.TableLink;
-import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlList;
-import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
-import net.sourceforge.fenixedu.renderers.components.HtmlTable;
-import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
-import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
-import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.OutputRenderer;
+import pt.ist.fenixWebFramework.renderers.CollectionRenderer.TableLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlList;
+import pt.ist.fenixWebFramework.renderers.components.HtmlListItem;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
+import pt.ist.fenixWebFramework.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class CompetenceCourseVersionList extends OutputRenderer {
 

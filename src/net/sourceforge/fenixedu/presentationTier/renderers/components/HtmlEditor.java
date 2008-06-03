@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers.components;
 
 import javax.servlet.jsp.PageContext;
 
-import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
-import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
+import pt.ist.fenixWebFramework.renderers.components.tags.HtmlTag;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class HtmlEditor extends HtmlSimpleValueComponent {
 

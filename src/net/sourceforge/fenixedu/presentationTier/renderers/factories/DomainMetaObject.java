@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.renderers.model.CompositeSlotSetter;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
-import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.model.SimpleMetaObject;
+import pt.ist.fenixWebFramework.renderers.model.CompositeSlotSetter;
+import pt.ist.fenixWebFramework.renderers.model.MetaObjectKey;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
+import pt.ist.fenixWebFramework.renderers.model.SimpleMetaObject;
 import pt.ist.fenixframework.pstm.ServiceInfo;
 
 public class DomainMetaObject extends SimpleMetaObject {

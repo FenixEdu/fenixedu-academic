@@ -26,8 +26,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Arch
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.DiskZipArchive;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

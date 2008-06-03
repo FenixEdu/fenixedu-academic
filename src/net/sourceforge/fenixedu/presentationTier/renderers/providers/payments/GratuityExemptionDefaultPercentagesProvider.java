@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.payments;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class GratuityExemptionDefaultPercentagesProvider implements DataProvider {
 

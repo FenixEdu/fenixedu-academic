@@ -6,9 +6,9 @@ import java.util.List;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringInputRenderer.LanguageBean;
-import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
-import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
-import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
+import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
+import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
+import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 
 public class MultiLanguageStringValidator extends HtmlValidator {
 

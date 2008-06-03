@@ -27,10 +27,10 @@
 	</slot>
 </schema>
 <schema name="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
-	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="idDocumentType" key="label.idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="documentIdNumber" key="label.identificationNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="documentIdNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="documentIdEmissionLocation"/>
 	<slot name="documentIdEmissionDate">
 		<property name="size" value="12"/>
@@ -78,7 +78,7 @@
 	<slot name="documentIdNumber" key="label.identificationNumber"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean.Unit" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
-	<slot name="unit" key="unitName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="unit" key="unitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>
 		<property name="format" value="${name}"/>
@@ -94,7 +94,7 @@
 </schema>
 
 <schema name="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean.allUnits" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
-	<slot name="unit" key="unitName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="unit" key="unitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>
 		<property name="format" value="${presentationName}"/>
@@ -124,24 +124,24 @@
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.contact.info" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="phone" key="label.person.telephone">
-		 <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="mobile" key="label.person.mobilePhone">
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="workPhone" key="label.person.workPhone">    	
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]*"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
     </slot>
-	<slot name="email" key="label.person.email" validator="net.sourceforge.fenixedu.renderers.validators.EmailValidator">
+	<slot name="email" key="label.person.email" validator="pt.ist.fenixWebFramework.renderers.validators.EmailValidator">
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="webAddress" key="label.person.webSite">
-		 <validator class="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
             <property name="required" value="false"/>
         </validator>
 		<property name="size" value="50"/>
@@ -149,14 +149,14 @@
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.contact.info.without.email" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="phone" key="label.person.telephone">
-		 <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="mobile" key="label.person.mobilePhone">
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="workPhone" key="label.person.workPhone">    	
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]*"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
@@ -164,7 +164,7 @@
     </slot>
 	<slot name="email" hidden="true"/>
 	<slot name="webAddress" key="label.person.webSite">
-		 <validator class="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
             <property name="required" value="false"/>
         </validator>
 		<property name="size" value="50"/>

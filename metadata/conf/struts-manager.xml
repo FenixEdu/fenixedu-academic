@@ -2057,7 +2057,7 @@
         <forward name="show" path="domain.view"/>
     </action>
         
-    <action path="/renderers/reload" type="net.sourceforge.fenixedu.renderers.plugin.ReloadConfigurationAction">
+    <action path="/renderers/reload" type="pt.ist.fenixWebFramework.renderers.plugin.ReloadConfigurationAction">
         <forward name="success" path="renderers.index"/>
     </action>
 

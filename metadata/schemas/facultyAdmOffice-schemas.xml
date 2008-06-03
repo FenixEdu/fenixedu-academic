@@ -1,17 +1,17 @@
 <schema name="search.grants.contract" type="net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch">
 	<slot name="beginDate" key="label.grant.subsidy.dateBeginSubsidy"> 
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="endDate" key="label.grant.subsidy.dateEndSubsidy"> 
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="responsible" layout="autoComplete" key="label.grant.paymententity.teacher">
 		<property name="size" value="80"/>

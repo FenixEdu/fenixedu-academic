@@ -66,12 +66,12 @@
 	<slot name="number" key="label.card.number" read-only="true"/>
 	<slot name="pin" key="label.card.pin" read-only="true"/>
 	<slot name="person.nickname" key="label.card.name" read-only="true"/>
-	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="userName" key="label.card.nameToCard" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="maxLength" value="60"/>
 	</slot>
 	<slot name="unitName" key="label.card.unitName" read-only="true"/>
-	<slot name="chosenUnitName" key="label.card.unitNameToCard" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="chosenUnitName" key="label.card.unitNameToCard" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="eachLayout" value="this-does-not-exist" />
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitsProvider"/>
 	</slot>
@@ -88,12 +88,12 @@
 	<slot name="number" key="label.card.number" read-only="true"/>
 	<slot name="pin" key="label.card.pin" read-only="true"/>
 	<slot name="person.nickname" key="label.card.name" read-only="true"/>
-	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="userName" key="label.card.nameToCard" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="maxLength" value="60"/>
 	</slot>
 	<slot name="unitName" key="label.card.unitName" read-only="true"/>
-	<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="maxLength" value="41"/>
 	</slot>
@@ -110,12 +110,12 @@
 	<slot name="number" key="label.card.number" read-only="true"/>
 	<slot name="pin" key="label.card.pin" read-only="true"/>
 	<slot name="person.nickname" key="label.card.name" read-only="true"/>
-	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="userName" key="label.card.nameToCard" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="maxLength" value="60"/>
 	</slot>
 	<slot name="unitName" key="label.card.unitName" read-only="true"/>
-	<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="maxLength" value="41"/>
 	</slot>
@@ -134,8 +134,8 @@
 
 <schema name="library.card.generate.date" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
 	<slot name="validUntil" key="label.card.date">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 	</slot>
 </schema>
 
@@ -156,7 +156,7 @@
 	<slot name="number" key="label.card.number" read-only="true"/>
 	<slot name="pinToShow" key="label.card.pin" read-only="true"/>
 	<slot name="person.nickname" key="label.card.name" read-only="true"/>
-	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="userName" key="label.card.nameToCard" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="maxLength" value="60"/>
 	</slot>
@@ -165,7 +165,7 @@
 	<slot name="phone" key="label.card.phone" read-only="true"/>
     <slot name="mobile" key="label.card.mobile" read-only="true"/>
     <slot name="unitName" key="label.card.unitName" read-only="true"/>
-	<slot name="chosenUnitName" key="label.card.unitNameToCard" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="chosenUnitName" key="label.card.unitNameToCard" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="eachLayout" value="this-does-not-exist" />
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitsProvider"/>
 	</slot>
@@ -175,7 +175,7 @@
 		<property name="nullOptionHidden" value="true"/>		
 	</slot>
     <slot name="validUntil" key="label.card.date">
-  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+  		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 	</slot>
 </schema>
 
@@ -183,7 +183,7 @@
 	<slot name="number" key="label.card.number" read-only="true"/>
 	<slot name="pinToShow" key="label.card.pin" read-only="true"/>
 	<slot name="person.nickname" key="label.card.name" read-only="true"/>
-	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="userName" key="label.card.nameToCard" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="maxLength" value="45"/>
 	</slot>
@@ -192,7 +192,7 @@
 	<slot name="phone" key="label.card.phone" read-only="true"/>
     <slot name="mobile" key="label.card.mobile" read-only="true"/>
     <slot name="unitName" key="label.card.unitName" read-only="true"/>
-		<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="maxLength" value="50"/>
 	</slot>
@@ -202,8 +202,8 @@
 		<property name="nullOptionHidden" value="true"/>		
 	</slot>	
     <slot name="validUntil" key="label.card.date">
-   		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+   		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
     </slot>
 </schema>
 
@@ -211,7 +211,7 @@
 	<slot name="number" key="label.card.number" read-only="true"/>
 	<slot name="pinToShow" key="label.card.pin" read-only="true"/>
 	<slot name="person.nickname" key="label.card.name" read-only="true"/>
-	<slot name="userName" key="label.card.nameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="userName" key="label.card.nameToCard" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="maxLength" value="45"/>
 	</slot>
@@ -220,7 +220,7 @@
 	<slot name="phone" key="label.card.phone" read-only="true"/>
     <slot name="mobile" key="label.card.mobile" read-only="true"/>
     <slot name="unitName" key="label.card.unitName" read-only="true"/>
-		<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="chosenUnitName" key="label.card.unitNameToCard" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="maxLength" value="50"/>
 	</slot>
@@ -230,7 +230,7 @@
 		<property name="nullOptionHidden" value="true"/>		
 	</slot>
     <slot name="validUntil" key="label.card.date">
-  		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+  		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 	</slot>
 </schema>
 
@@ -253,7 +253,7 @@
 </schema>
 
 <schema name="library.card.create.person" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="LIBRARY_RESOURCES">
-	 <slot name="personName" layout="autoComplete" key="label.card.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	 <slot name="personName" layout="autoComplete" key="label.card.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="80"/>
 		<property name="labelField" value="name"/>		
 		<property name="rawSlotName" value="name"/>		

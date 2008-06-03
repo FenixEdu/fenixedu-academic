@@ -101,7 +101,7 @@
         
             <fr:form action="<%= String.format("%s?method=uploadLogo&amp;%s", actionName, context) %>" encoding="multipart/form-data">
                 <fr:edit id="logoUpload" name="bean" slot="file">
-                    <fr:validator name="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+                    <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
                         <fr:property name="acceptedTypes" value="image/gif,image/jpeg,image/pjpeg,image/png,image/x-png"/>
                     </fr:validator>
                     

@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.renderers.ValuesRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlList;
-import net.sourceforge.fenixedu.renderers.components.HtmlListItem;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import pt.ist.fenixWebFramework.renderers.ValuesRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlList;
+import pt.ist.fenixWebFramework.renderers.components.HtmlListItem;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 
 public class ValuesAsListRenderer extends ValuesRenderer {
 

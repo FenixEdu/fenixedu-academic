@@ -1,19 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor;
 
 import net.sourceforge.fenixedu.presentationTier.renderers.components.TinyMceEditor;
-import net.sourceforge.fenixedu.renderers.InputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlRadioButton;
-import net.sourceforge.fenixedu.renderers.components.HtmlRadioButtonList;
-import net.sourceforge.fenixedu.renderers.components.HtmlScript;
-import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.InputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlRadioButton;
+import pt.ist.fenixWebFramework.renderers.components.HtmlRadioButtonList;
+import pt.ist.fenixWebFramework.renderers.components.HtmlScript;
+import pt.ist.fenixWebFramework.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlController;
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlotKey;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * Allows you to use the <a href="http://tinymce.moxiecode.com/">TinyMCE</a>

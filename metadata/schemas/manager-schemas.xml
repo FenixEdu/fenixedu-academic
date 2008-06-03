@@ -73,22 +73,22 @@
 </schema>	
 
 <schema name="ChooseInvitedPersonResponsibilityPerson" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
-	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>				
+	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>				
 </schema>	
 
 <schema name="NewInvitedPersonIdentificationInfo" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
-	<slot name="documentIdNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
-	<slot name="idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>			
+	<slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
+	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			
     <slot name="documentIdEmissionLocation" />
 	<slot name="documentIdEmissionDate" />
     <slot name="documentIdExpirationDate" />
 </schema>
 
 <schema name="NewInvitedPersonPersonalInfo" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
-	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>		
-    <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="socialSecurityNumber"/>
     <slot name="profession"/>
     <slot name="maritalStatus"/>	
@@ -159,7 +159,7 @@
 	<slot name="phone">
     	<property name="size" value="9"/>
 		<property name="maxLength" value="9"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
@@ -168,7 +168,7 @@
     <slot name="mobile">
     	<property name="size" value="9"/>
 		<property name="maxLength" value="9"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
@@ -181,20 +181,20 @@
     <slot name="webAddress">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="200"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
 			<property name="required" value="false" />
 		</validator>
     </slot>    
 </schema>	
 
 <schema name="NewInvitedPersonLoginInfo" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
-	<slot name="begin" key="label.login.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
-	<slot name="end" key="label.login.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>		
+	<slot name="begin" key="label.login.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>		
+	<slot name="end" key="label.login.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>		
 </schema>	
 
 <schema name="PersonIdentificationInfo" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
-	<slot name="documentIdNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
-	<slot name="idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
+	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="emissionLocationOfDocumentId" />
 	<slot name="emissionDateOfDocumentIdYearMonthDay" />
     <slot name="expirationDateOfDocumentIdYearMonthDay" />
@@ -202,10 +202,10 @@
 </schema>	
 
 <schema name="PersonPersonalInfo" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
-	<slot name="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>		
-    <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="socialSecurityNumber"/>
     <slot name="profession"/>
     <slot name="maritalStatus"/>	
@@ -276,7 +276,7 @@
 	<slot name="phone">
     	<property name="size" value="9"/>
 		<property name="maxLength" value="9"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
@@ -285,14 +285,14 @@
     <slot name="mobile">
     	<property name="size" value="9"/>
 		<property name="maxLength" value="9"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
 	</slot>
 	<slot name="workPhone">    	
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]*"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
@@ -305,7 +305,7 @@
     <slot name="webAddress">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="200"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.UrlValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
 			<property name="required" value="false" />
 		</validator>
     </slot>    
@@ -319,13 +319,13 @@
 </schema>
 
 <schema name="EditInviteTimeInterval" type="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" bundle="MANAGER_RESOURCES">
-	<slot name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<setter signature="setInvitationInterval(beginDate, endDate)"/>
 </schema>
 
 <schema name="EditInvitationResponsible" type="net.sourceforge.fenixedu.domain.organizationalStructure.Invitation" bundle="MANAGER_RESOURCES">
-	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>				
+	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>				
 </schema>
 
 <schema name="ViewInstitutionalLoginAlias" type="net.sourceforge.fenixedu.domain.LoginAlias" bundle="MANAGER_RESOURCES">
@@ -338,18 +338,18 @@
 </schema>
 
 <schema name="CreateNewRoleTypeAlias" type="net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement.LoginAliasBean" bundle="MANAGER_RESOURCES">
-	<slot name="alias" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="roleType" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+	<slot name="alias" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="roleType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.manager.PersonRolesProvider" />
 	</slot>			
 </schema>
 
 <schema name="CreateNewCustomAlias" type="net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement.LoginAliasBean" bundle="MANAGER_RESOURCES">
-	<slot name="alias" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="alias" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="EditCustomAlias" type="net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement.LoginAliasBean" bundle="MANAGER_RESOURCES">
-	<slot name="alias" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="alias" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<setter signature="editCustomAlias(alias)"/>
 </schema>
 
@@ -359,13 +359,13 @@
 </schema>
 
 <schema name="EditLoginPeriod" type="net.sourceforge.fenixedu.domain.LoginPeriod" bundle="MANAGER_RESOURCES">
-	<slot name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<setter signature="edit(beginDate, endDate)" />
 </schema>
 
 <schema name="CreateLoginPeriod" type="net.sourceforge.fenixedu.domain.LoginPeriod" bundle="MANAGER_RESOURCES" constructor="beginDate, endDate, login">
-	<slot name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="endDate" />
 	<slot name="login" hidden="true"/>
 </schema>
@@ -453,7 +453,7 @@
 </schema>
 
 <schema name="ChooseAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
-	<slot name="type" layout="menu-select-postback" key="label.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+	<slot name="type" layout="menu-select-postback" key="label.type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.manager.AcademicCalendarEntryTypes"/>
 		<property name="eachLayout" value="label-to-academicCalendar-management"/>
 		<property name="destination" value="postBack"/>	
@@ -477,8 +477,8 @@
 <schema name="CreateAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
 	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="description" key="label.academicCalendar.description"/>
-	<slot name="begin" key="label.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	    				
+	<slot name="begin" key="label.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	    				
 </schema>
 
 <schema name="CreateAcademicSemesterCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
@@ -522,8 +522,8 @@
 <schema name="EditAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
 	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="description" key="label.academicCalendar.description"/>
-	<slot name="begin" key="label.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="begin" key="label.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
 </schema>
 
 <schema name="EditAcademicSemesterCECalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">
@@ -561,11 +561,11 @@
 
 
 <schema name="ChooseDatesToViewAcademicCalendarSchema" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
-	<slot name="beginDateToDisplay" layout="year-month" key="label.begin.date.to.displar.academic.calendar" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="beginDateToDisplay" layout="year-month" key="label.begin.date.to.displar.academic.calendar" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="maxLength" value="7" />
 		<property name="size" value="7" />
 	</slot>
-	<slot name="endDateToDisplay" layout="year-month" key="label.end.date.to.displar.academic.calendar" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="endDateToDisplay" layout="year-month" key="label.end.date.to.displar.academic.calendar" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="maxLength" value="7" />
 		<property name="size" value="7" />
 	</slot> 
@@ -611,7 +611,7 @@
 <schema name="siteTemplate.choose.module"
         type="net.sourceforge.fenixedu.domain.SiteTemplate"
         bundle="DEFAULT">
-    <slot name="module" layout="functionalities-tree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="module" layout="functionalities-tree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="eachLayout" value="values-dash"/>
         <property name="schemaFor(Module)" value="functionalities.module.tree"/>
         <property name="moduleOnly" value="true"/>
@@ -620,23 +620,23 @@
  -->
  
 <schema name="ViewPersistentGroup" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" bundle="MANAGER_RESOURCES" constructor="name, type"> 	
-	<slot name="name" key="label.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50" />
 	</slot>
-	<slot name="type" key="label.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="type" key="label.type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="personsCount" key="label.persistent.group.number.of.members" />
 </schema>
 
 <schema name="EditPersistentGroup" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" bundle="MANAGER_RESOURCES"> 	
-	<slot name="name" key="label.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50" />
 	</slot>
-	<slot name="type" key="label.type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="type" key="label.type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<setter signature="edit(name, type)" />
 </schema>
 
 <schema name="AddNewMemberToPersistentGroup" type="net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers" bundle="MANAGER_RESOURCES"> 		
-	<slot name="newPersonToMembersList" key="label.responsibility.person.username" layout="username-as-person" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+	<slot name="newPersonToMembersList" key="label.responsibility.person.username" layout="username-as-person" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
 </schema>
 
 <schema name="PersonInfoWithUsername" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">			
@@ -645,7 +645,7 @@
 </schema>
 
 <schema name="student.bolonhaEnrolment.choose.executionPeriod" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean">
-	<slot name="executionPeriod" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+	<slot name="executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
@@ -654,7 +654,7 @@
 </schema>
 
 <schema name="student.bolonhaEnrolment.choose.executionPeriodInInfo" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod">
-	<slot name="executionPeriod" layout="menu-select-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+	<slot name="executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
@@ -674,12 +674,12 @@
 </schema>
 
 <schema name="enrolmentLog.search" type="net.sourceforge.fenixedu.dataTransferObject.enrolmentLog.SearchEnrolmentLog" bundle="MANAGER_RESOURCES">
-	<slot name="executionPeriod" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.manager.executionCourse.executionPeriod">
+	<slot name="executionPeriod" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.manager.executionCourse.executionPeriod">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />	
 	</slot>
-	<slot name="studentNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="property.student.number"/>	
+	<slot name="studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="property.student.number"/>	
 </schema>	
 
 <schema name="enrolmentLogs.list" type="net.sourceforge.fenixedu.domain.log.EnrolmentLog" bundle="MANAGER_RESOURCES">

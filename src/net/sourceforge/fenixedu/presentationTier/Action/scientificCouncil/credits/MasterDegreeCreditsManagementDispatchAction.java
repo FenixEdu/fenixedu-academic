@@ -45,7 +45,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTime;
 
-import pt.ist.utl.fenix.utils.Pair;
+import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
  * @author Ricardo Rodrigues

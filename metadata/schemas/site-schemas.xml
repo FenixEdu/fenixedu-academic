@@ -70,7 +70,7 @@
 
 <schema name="site.banner.create" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.BannerBean" bundle="WEBSITEMANAGER_RESOURCES">
     <slot name="mainImage.file" key="label.site.banner.mainImage">
-        <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
             <property name="required" value="true"/>
             <property name="acceptedTypes" value="image/gif,image/jpeg,image/pjpeg,image/png,image/x-png"/>
             <property name="typeMessage" value="message.site.image.type.validation"/>
@@ -83,7 +83,7 @@
         <property name="fileContentTypeSlot" value="mainImage.contentType"/>
     </slot>
     <slot name="backgroundImage.file" key="label.site.banner.backgroundImage">
-        <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
             <property name="acceptedTypes" value="image/gif,image/jpeg,image/png"/>
             <property name="typeMessage" value="message.site.image.type.validation"/>
             <property name="bundle" value="WEBSITEMANAGER_RESOURCES"/>
@@ -149,7 +149,7 @@
 </schema>
 
 <schema name="site.customLink.edit" type="net.sourceforge.fenixedu.domain.UnitSiteLink" bundle="WEBSITEMANAGER_RESOURCES">
-    <slot name="url" key="label.site.link.url" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="url" key="label.site.link.url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
     </slot>
     <slot name="label" key="label.site.link.label"  validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
@@ -191,14 +191,14 @@
 		<property name="minChars" value="4"/>
 	</slot>
 	<slot name="begin"> 
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 	</slot>
 	<slot name="end">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 	</slot>
-	<slot name="contractType" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="contractType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract$ResearchContractType"/> 
 		<property name="eachLayout" value=""/>
 	</slot>
@@ -260,15 +260,15 @@
 </schema>	
 
 <schema name="research.contract.extraInformation.for.externalPerson" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean" bundle="WEBSITEMANAGER_RESOURCES">
-	<slot name="email" validator="net.sourceforge.fenixedu.renderers.validators.EmailValidator" key="messaging.email.label">
+	<slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.EmailValidator" key="messaging.email.label">
 		<property name="size" value="40"/>	
 	</slot>
-	<slot name="documentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="documentIDNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="documentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="documentIDNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>	
 
 <schema name="research.contract.extraInformation.for.internalPerson" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean" bundle="WEBSITEMANAGER_RESOURCES">
-	<slot name="email" validator="net.sourceforge.fenixedu.renderers.validators.EmailValidator" key="messaging.email.label">
+	<slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.EmailValidator" key="messaging.email.label">
 		<property name="size" value="40"/>	
 	</slot>
 	<slot name="documentType" read-only="true"/>
@@ -280,13 +280,13 @@
     <slot name="documentType" read-only="true"/>
 	<slot name="documentIDNumber" read-only="true"/>
 	<slot name="email" read-only="true"/>
-	<slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" layout="radio">
+	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="radio">
 		<property name="classes" value="liinline"/>
 	</slot>
-	<slot name="phone" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="phone" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="username" read-only="true"/>
 	<slot name="password" layout="input-with-comment">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.StringLengthValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.StringLengthValidator">
 			<property name="min" value="8"/>
 		</validator>
 		<property name="subLayout" value="password"/>
@@ -294,7 +294,7 @@
 		<property name="comment" value="label.passwordLength.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
-	<slot name="passwordConfirmation" layout="password" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="passwordConfirmation" layout="password" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>	
 
 <schema name="unitSite.choose.introductionContent" type="net.sourceforge.fenixedu.domain.UnitSite" bundle="WEBSITEMANAGER_RESOURCES">
@@ -311,7 +311,7 @@
 <schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionCreator.UnitSite.functionality"
         type="net.sourceforge.fenixedu.domain.FunctionalitySection"
         bundle="DEFAULT">
-    <slot name="functionality" layout="unitSite-functionalities-tree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="functionality" layout="unitSite-functionalities-tree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="eachLayout" value="values-dash"/>
         <property name="schemaFor(Module)" value="unitSite.institution.section.functionalities"/>
         <property name="schemaFor(Functionality)" value="unitSite.institution.section.functionalities"/>
@@ -328,7 +328,7 @@
 <schema name="net.sourceforge.fenixedu.domain.FunctionalitySectionEditor.unitSite.functionality"
         type="net.sourceforge.fenixedu.domain.FunctionalitySection"
         bundle="DEFAULT">
-    <slot name="functionality" layout="unitSite-functionalities-tree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="functionality" layout="unitSite-functionalities-tree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="eachLayout" value="values-dash"/>
         <property name="schemaFor(Module)" value="functionalities.module.tree"/>
         <property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
@@ -387,7 +387,7 @@
 </schema>
 
 <schema name="site.functions.addPerson" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="SITE_RESOURCES">
-	<slot name="string" key="label.username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="string" key="label.username" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="site.functions.view.PersonFunctionsBean" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.PersonFunctionsBean" bundle="SITE_RESOURCES">
@@ -399,13 +399,13 @@
 	<slot name="parentParty" hidden="true"/>
 	<slot name="childParty" hidden="true"/>
 	<slot name="accountabilityType" hidden="true"/>
-	<slot name="beginDate" key="label.personFunction.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" key="label.personFunction.endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" key="label.personFunction.beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" key="label.personFunction.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="site.functions.person.personFunction.edit" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" bundle="SITE_RESOURCES">
-	<slot name="beginDate" key="label.personFunction.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" key="label.personFunction.endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" key="label.personFunction.beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" key="label.personFunction.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<setter signature="setOccupationInterval(beginDate, endDate)"/>
 </schema>
 

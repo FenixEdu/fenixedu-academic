@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.renderers;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 
 public class CommitMetaObjects extends Service {
     public void run(List<MetaObject> metaObjects) {

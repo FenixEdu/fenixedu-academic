@@ -21,7 +21,7 @@
 
 
     <h2>
-        <fr:view name="section" property="name" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
+        <fr:view name="section" property="name" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
 		<app:defineContentPath id="sectionURL" name="section" toScope="request"/>
 		<bean:define id="url" name="sectionURL" type="java.lang.String"/>
   		<span class="permalink1">(<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>

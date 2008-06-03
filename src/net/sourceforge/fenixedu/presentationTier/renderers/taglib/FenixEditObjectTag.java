@@ -4,9 +4,9 @@ import javax.servlet.jsp.JspException;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.renderers.factories.DomainMetaObject;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.taglib.EditObjectTag;
+import pt.ist.fenixWebFramework.renderers.model.MetaObject;
+import pt.ist.fenixWebFramework.renderers.schemas.Schema;
+import pt.ist.fenixWebFramework.renderers.taglib.EditObjectTag;
 
 public class FenixEditObjectTag extends EditObjectTag {
     private String oid;

@@ -9,7 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 

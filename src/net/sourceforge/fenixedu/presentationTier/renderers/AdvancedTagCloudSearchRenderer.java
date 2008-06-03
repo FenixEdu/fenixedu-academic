@@ -6,7 +6,7 @@ import java.util.HashSet;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 
 public class AdvancedTagCloudSearchRenderer extends TagCloudRenderer {
 

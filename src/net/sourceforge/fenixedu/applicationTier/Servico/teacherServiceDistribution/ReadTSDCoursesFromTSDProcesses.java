@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TS
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.utl.fenix.utils.Pair;
+import pt.utl.ist.fenix.tools.util.Pair;
 
 public class ReadTSDCoursesFromTSDProcesses extends Service {
     public List<TSDCourseDTOEntry> run(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap) {

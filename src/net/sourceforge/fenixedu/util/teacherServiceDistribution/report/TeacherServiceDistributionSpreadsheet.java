@@ -22,7 +22,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.hssf.util.Region;
 
-import pt.ist.utl.fenix.utils.Pair;
+import pt.utl.ist.fenix.tools.util.Pair;
 
 public class TeacherServiceDistributionSpreadsheet {
 	private List<TSDCourseDTOEntry> tsdCourseDTOEntryList;

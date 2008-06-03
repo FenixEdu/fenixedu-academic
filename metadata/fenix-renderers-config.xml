@@ -10,15 +10,15 @@
   Example:
 	
  	<renderer type="java.lang.Integer" layout="testing" 
-			  class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+			  class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
 		<property name="template" value="/template.jsp"/>
 	</renderer>
 	
     <renderer mode="input" type="java.lang.Integer"
-              class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+              class="pt.ist.fenixWebFramework.renderers.IntegerInputRenderer"/>
 
     <renderer mode="input" type="java.lang.Integer" layout="base-16" 
-              class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer">
+              class="pt.ist.fenixWebFramework.renderers.IntegerInputRenderer">
         <property name="base" layout="16"/>
     </renderer>
 
@@ -45,46 +45,46 @@ Documentation:
     <!-- output -->
 
     <!--@ The default presentation for a custom component that was "manually" created. -->  
-    <renderer type="net.sourceforge.fenixedu.renderers.components.HtmlComponent" class="net.sourceforge.fenixedu.renderers.StandardComponentRenderer"/>
+    <renderer type="pt.ist.fenixWebFramework.renderers.components.HtmlComponent" class="pt.ist.fenixWebFramework.renderers.StandardComponentRenderer"/>
   
     <!--@ The default presentation for every object. -->
-    <renderer type="java.lang.Class" layout="label" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer"/>
+    <renderer type="java.lang.Class" layout="label" class="pt.ist.fenixWebFramework.renderers.ClassAsLabelRenderer"/>
 
     <!--@ The default presentation for every object. -->
-    <renderer type="java.lang.Class" layout="label-to-material-type-in-spaces-management" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer">
+    <renderer type="java.lang.Class" layout="label-to-material-type-in-spaces-management" class="pt.ist.fenixWebFramework.renderers.ClassAsLabelRenderer">
     	<property name="labelFormat" value="label.${simpleName}.type"/>
     	<property name="bundle" value="SPACE_RESOURCES"/>
     </renderer>
     
     <!--@ The default presentation for every object. -->
-    <renderer type="java.lang.Class" layout="label-to-academicCalendar-management" class="net.sourceforge.fenixedu.renderers.ClassAsLabelRenderer">
+    <renderer type="java.lang.Class" layout="label-to-academicCalendar-management" class="pt.ist.fenixWebFramework.renderers.ClassAsLabelRenderer">
     	<property name="labelFormat" value="label.${simpleName}.type"/>
     	<property name="bundle" value="MANAGER_RESOURCES"/>
     </renderer>
 
     <!--@ The default presentation for every object. -->
-    <renderer type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
+    <renderer type="java.lang.Object" class="pt.ist.fenixWebFramework.renderers.StandardObjectRenderer">
     		<property name="labelTerminator" value=":"/>
     </renderer>
 
-    <renderer type="java.lang.Object" layout="null-as-label" class="net.sourceforge.fenixedu.renderers.NullAsLabelRenderer">
+    <renderer type="java.lang.Object" layout="null-as-label" class="pt.ist.fenixWebFramework.renderers.NullAsLabelRenderer">
     	<property name="label" value="-"/>
     </renderer>
 
     <!--@ A tabular presentation for an object. This consist of a table were each row presents one
           of the object's slots. The slot's name is shown in the left column and the corresponding 
           value in the right column. -->
-    <renderer type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
+    <renderer type="java.lang.Object" layout="tabular" class="pt.ist.fenixWebFramework.renderers.StandardObjectRenderer">
     		<property name="labelTerminator" value=":"/>
     </renderer>
 
     <!--@ The template layout is used when you specify the template attribute of a renderer's tag. It delegates
           the presentation of the object to a JSP that is extended with the <tt>fenix-template.tld</tt>. -->
-    <renderer type="java.lang.Object" layout="template" class="net.sourceforge.fenixedu.renderers.TemplateRenderer"/>
+    <renderer type="java.lang.Object" layout="template" class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"/>
     
     <!--@ This layout shows each slot value after the previous without a special organization. You can specify
           a separator between values and achive simple presentations like "6666 / José Dias" for a person. -->
-    <renderer type="java.lang.Object" layout="values" class="net.sourceforge.fenixedu.renderers.ValuesRenderer"/>
+    <renderer type="java.lang.Object" layout="values" class="pt.ist.fenixWebFramework.renderers.ValuesRenderer"/>
 	
 	<!--@ Same thing as values renderer but does not displays slots with null values -->
     <renderer type="java.lang.Object" layout="nonNullValues" class="net.sourceforge.fenixedu.presentationTier.renderers.NonNullValuesRenderer"/>
@@ -92,7 +92,7 @@ Documentation:
     <!--@ The format offers other way of presenting objects inline. The <tt>format</tt> property accepts a special
           syntax that allows you to choose how the information is presented. Read the renderer documentation for
           more details. -->
-    <renderer type="java.lang.Object" layout="format" class="net.sourceforge.fenixedu.renderers.FormatRenderer"/>
+    <renderer type="java.lang.Object" layout="format" class="pt.ist.fenixWebFramework.renderers.FormatRenderer"/>
     
     <!--@ This layout is only to be used for slots of domain objects and never for the top level object that is 
           beeing presented. It generates a link for the object details. The action called is configurable. The 
@@ -104,7 +104,7 @@ Documentation:
 	<renderer type="java.lang.Object" layout="conditional-link" class="net.sourceforge.fenixedu.presentationTier.renderers.ConditionalObjectLinkRenderer"/>
 
     <!--@ Presents the object's slots in a flow layout. With or without labels.  -->
-    <renderer type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowRenderer">
+    <renderer type="java.lang.Object" layout="flow" class="pt.ist.fenixWebFramework.renderers.FlowRenderer">
     	<property name="labelTerminator" value=":" />
     	<property name="labelStyle" value="font-weight: bold;" />
     </renderer>
@@ -153,23 +153,23 @@ Documentation:
 		<property name="infoCellClasses"  value="personalcard_info"/>
   	</renderer>
   	
-    <renderer type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringRenderer"/>
+    <renderer type="java.lang.String" class="pt.ist.fenixWebFramework.renderers.StringRenderer"/>
           
-    <renderer type="java.lang.String" layout="short" class="net.sourceforge.fenixedu.renderers.StringRenderer">
+    <renderer type="java.lang.String" layout="short" class="pt.ist.fenixWebFramework.renderers.StringRenderer">
    		<property name="length" value="40"/>  
     </renderer>
     
-    <renderer type="java.lang.String" layout="text-link" class="net.sourceforge.fenixedu.renderers.StringRenderer">
+    <renderer type="java.lang.String" layout="text-link" class="pt.ist.fenixWebFramework.renderers.StringRenderer">
     	<property name="link" value="true"/>
     </renderer>
     
     <!--@ Considers that the string is html and as such does not escape it's content nor does it replace newlines. -->
-    <renderer type="java.lang.String" layout="html" class="net.sourceforge.fenixedu.renderers.StringRenderer">
+    <renderer type="java.lang.String" layout="html" class="pt.ist.fenixWebFramework.renderers.StringRenderer">
         <property name="newlineAware" value="false"/>
         <property name="escaped" value="false"/>
     </renderer>
     
-    <renderer type="java.lang.String" layout="code-block" class="net.sourceforge.fenixedu.renderers.CodeRenderer"/>
+    <renderer type="java.lang.String" layout="code-block" class="pt.ist.fenixWebFramework.renderers.CodeRenderer"/>
 
     <renderer type="java.lang.String" layout="person-name" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonNameRenderer"/>
 
@@ -181,7 +181,7 @@ Documentation:
         <property name="label" value="label.person.login.external"/>
     </renderer>
 
-    <renderer type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" layout="degree-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+    <renderer type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" layout="degree-label" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
         <property name="format" value="${degree.sigla} ${initialDateYearMonthDay.year}"/>
     </renderer>
         
@@ -193,25 +193,25 @@ Documentation:
 
 	<renderer type="net.sourceforge.fenixedu.domain.Summary" layout="summary-plain-to-create-summary" class="net.sourceforge.fenixedu.presentationTier.renderers.SummaryPlainRenderer"/>
 
-    <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
+    <renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
     	<property name="languageShown" value="false"/>
     </renderer>
-    <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="short" class="net.sourceforge.fenixedu.presentationTier.renderers.ShortMultiLanguageStringRenderer">
+    <renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="short" class="net.sourceforge.fenixedu.presentationTier.renderers.ShortMultiLanguageStringRenderer">
        	<property name="length" value="40"/>
        	<property name="languageShown" value="false"/>
     </renderer>
 
-    <!-- <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="short-html" class="net.sourceforge.fenixedu.presentationTier.renderers.ShortMultiLanguageStringRenderer">  -->
-	<renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="short-html" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
+    <!-- <renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="short-html" class="net.sourceforge.fenixedu.presentationTier.renderers.ShortMultiLanguageStringRenderer">  -->
+	<renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="short-html" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
     	<property name="escaped" value="false"/>
 <!--     	<property name="languageShown" value="false"/> -->
     </renderer>
-    <renderer type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
+    <renderer type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringRenderer">
     	<property name="escaped" value="false"/>
     	<property name="languageShown" value="false"/>
     </renderer>
     
-    <renderer type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
+    <renderer type="java.lang.Number" class="pt.ist.fenixWebFramework.renderers.IntegerRenderer"/>
     <renderer type="java.lang.Number" layout="fileSize" class="net.sourceforge.fenixedu.presentationTier.renderers.FileSizeRenderer">
     	   <property name="shortUnit" value="true"/>
     </renderer>
@@ -239,15 +239,15 @@ Documentation:
 	
 	
 	
-    <renderer type="int" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
-    <renderer type="long" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
-    <renderer type="short" class="net.sourceforge.fenixedu.renderers.IntegerRenderer"/>
+    <renderer type="int" class="pt.ist.fenixWebFramework.renderers.IntegerRenderer"/>
+    <renderer type="long" class="pt.ist.fenixWebFramework.renderers.IntegerRenderer"/>
+    <renderer type="short" class="pt.ist.fenixWebFramework.renderers.IntegerRenderer"/>
     
-    <renderer type="double" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
-    <renderer type="float" class="net.sourceforge.fenixedu.renderers.NumberRenderer"/>
+    <renderer type="double" class="pt.ist.fenixWebFramework.renderers.NumberRenderer"/>
+    <renderer type="float" class="pt.ist.fenixWebFramework.renderers.NumberRenderer"/>
     
-    <renderer type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanRenderer"/>
-    <renderer type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanRenderer"/>
+    <renderer type="java.lang.Boolean" class="pt.ist.fenixWebFramework.renderers.BooleanRenderer"/>
+    <renderer type="boolean" class="pt.ist.fenixWebFramework.renderers.BooleanRenderer"/>
 
 	<!--@ Specific renderer for a boolean. This renderer adds a control link to change the boolean state -->
     <renderer type="java.lang.Boolean" layout="boolean-changer" class="net.sourceforge.fenixedu.presentationTier.renderers.BooleanLinkChangerRenderer"/>
@@ -256,13 +256,13 @@ Documentation:
 
     <!--@ The default presentation for an enum searches the bundle ENUMERATION_RESOURCES for a description
           of the enum value. The key used for seaching is the enum name. -->
-    <renderer type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumRenderer"/>
+    <renderer type="java.lang.Enum" class="pt.ist.fenixWebFramework.renderers.EnumRenderer"/>
     
-	<renderer type="java.util.EnumSet" class="net.sourceforge.fenixedu.renderers.EnumSetRenderer"/>    
+	<renderer type="java.util.EnumSet" class="pt.ist.fenixWebFramework.renderers.EnumSetRenderer"/>    
     
     <!--@ The default presentation of the date respect the user locale and preents the date
           accordingly with the format given.  -->
-    <renderer type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateRenderer"/>
+    <renderer type="java.util.Date" class="pt.ist.fenixWebFramework.renderers.DateRenderer"/>
 
 	<renderer type="org.joda.time.base.AbstractPartial" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer"/>
 	
@@ -282,7 +282,7 @@ Documentation:
 
     <!--@ The default presentation for a domain object consist of a link for it's details. The is the top level 
           version of the <tt>link</tt> layout. -->
-    <renderer type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+    <renderer type="net.sourceforge.fenixedu.domain.DomainObject" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
         <property name="format" value="${class.simpleName}:${idInternal}"/>
     </renderer>
     
@@ -345,24 +345,24 @@ Documentation:
     
     <renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean" layout="bolonha-student-optional-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentInputRenderer"/>
     
-    <renderer layout="viewDepartmentTeachersExpectationsNestedTemplateLayout" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+    <renderer layout="viewDepartmentTeachersExpectationsNestedTemplateLayout" type="net.sourceforge.fenixedu.domain.DomainObject" class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
         <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/showPersonalExpectationTemplate.jsp"/>
     </renderer>
     
-    <renderer layout="printDepartmentTeachersExpectationsNestedTemplateLayout" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+    <renderer layout="printDepartmentTeachersExpectationsNestedTemplateLayout" type="net.sourceforge.fenixedu.domain.DomainObject" class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
         <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/printPersonalExpectationTemplate.jsp"/>
     </renderer>
     
-	<renderer type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" class="net.sourceforge.fenixedu.renderers.JournalIssueRenderer"/> 
+	<renderer type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" class="net.sourceforge.fenixedu.presentationTier.renderers.JournalIssueRenderer"/> 
  
     <!--@ The default layout for a collection. -->
-    <renderer type="java.util.Collection" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>
+    <renderer type="java.util.Collection" class="pt.ist.fenixWebFramework.renderers.CollectionRenderer"/>
     
     <!--@ Each object in the collection will be presented in a differente row. The given schema is used to define 
           the table columns as well as the table header. The table can also be extended with control links to the right. 
           Control links are link that are parameterized with values from the object beeing presented in each row.
           Check the renderer documentation for more details.  -->
-    <renderer type="java.util.Collection" layout="tabular" class="net.sourceforge.fenixedu.renderers.CollectionRenderer">
+    <renderer type="java.util.Collection" layout="tabular" class="pt.ist.fenixWebFramework.renderers.CollectionRenderer">
         	<property name="groupLinks" value="true"/>
         	<property name="linkGroupSeparator" value=", "/>
     </renderer>
@@ -373,11 +373,11 @@ Documentation:
     
     <!--@ Renders a table with a given schema for a domain object but doesn't render fields that are null or empty
      -->
-    <renderer type="java.lang.Object" layout="tabular-nonNullValues" class="net.sourceforge.fenixedu.renderers.TabularNonNullValuesRenderer"/>
+    <renderer type="java.lang.Object" layout="tabular-nonNullValues" class="pt.ist.fenixWebFramework.renderers.TabularNonNullValuesRenderer"/>
 
     <!--@ This layout intends to provide the control links feature to a list presentation. Each object in the collection
           is presented with their own layout and schema in the left column o the table. -->
-    <renderer type="java.util.Collection" layout="tabular-list" class="net.sourceforge.fenixedu.renderers.TabularListRenderer"/>
+    <renderer type="java.util.Collection" layout="tabular-list" class="pt.ist.fenixWebFramework.renderers.TabularListRenderer"/>
     
     <!--@ Each object in the collection is presented with it's own layout and schema. This layouts works for several objects
           the same way that the <tt>values</tt> layouts works for slots. -->
@@ -454,10 +454,10 @@ Documentation:
     <renderer mode="input" type="java.util.Collection" layout="vigilantsInGroup-render" class="net.sourceforge.fenixedu.presentationTier.renderers.VigilantsInGroupRender"/>
 
     <!--@ The default layout for a list really creates an html list were each object is presented in a list item. -->
-    <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
-    <renderer type="java.util.Collection" layout="list" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
+    <renderer type="java.util.List" class="pt.ist.fenixWebFramework.renderers.ListRenderer"/>
+    <renderer type="java.util.Collection" layout="list" class="pt.ist.fenixWebFramework.renderers.ListRenderer"/>
 
-    <renderer type="java.util.Collection" layout="list-personFunctions" class="net.sourceforge.fenixedu.renderers.ListRenderer">
+    <renderer type="java.util.Collection" layout="list-personFunctions" class="pt.ist.fenixWebFramework.renderers.ListRenderer">
     	<property name="eachLayout" value="values"/>
     	<property name="eachSchema" value="site.functions.personFunction.person"/>
     </renderer>
@@ -469,7 +469,7 @@ Documentation:
     		<property name="bundleName(default)" value="APPLICATION_RESOURCES"/>
     </renderer>
     
-    <renderer type="net.sourceforge.fenixedu.domain.functionalities.GroupAvailability" layout="textual" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+    <renderer type="net.sourceforge.fenixedu.domain.functionalities.GroupAvailability" layout="textual" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
         <property name="format" value="${expression}"/>
     </renderer>
 
@@ -499,8 +499,8 @@ Documentation:
               layout="equation" />
     
 	<!--@ Decimal output. -->
-    <renderer type="java.math.BigDecimal" class="net.sourceforge.fenixedu.renderers.DecimalRenderer" layout="decimal-format"/>
-    <renderer type="java.lang.Double" class="net.sourceforge.fenixedu.renderers.DecimalRenderer" layout="decimal-format"/>
+    <renderer type="java.math.BigDecimal" class="pt.ist.fenixWebFramework.renderers.DecimalRenderer" layout="decimal-format"/>
+    <renderer type="java.lang.Double" class="pt.ist.fenixWebFramework.renderers.DecimalRenderer" layout="decimal-format"/>
     
     <!--@ Money output -->
     <renderer type="net.sourceforge.fenixedu.util.Money" class="net.sourceforge.fenixedu.presentationTier.renderers.MoneyRenderer"/>
@@ -524,19 +524,19 @@ Documentation:
     <!-- input -->
 
     <!--@ The default layout for editing objects.  -->  
-    <renderer mode="input" type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
+    <renderer mode="input" type="java.lang.Object" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
     		<property name="labelTerminator" value=":"/>
     </renderer>
 
     <!--@ Allows an object to be editing in a tabular way, that is, labels are presented in the left column of the table
           and slot editors are presented in the right column. Additionally validation errors messages are presented to the
           right of the editor. -->  
-    <renderer mode="input" type="java.lang.Object" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
+    <renderer mode="input" type="java.lang.Object" layout="tabular" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
     		<property name="labelTerminator" value=":"/>
     </renderer>
 
     <!--@ This layout is the same as the default tabular layout but it includes the default presentation for an objecti input.  -->  
-    <renderer mode="input" type="java.lang.Object" layout="tabular-style5" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
+    <renderer mode="input" type="java.lang.Object" layout="tabular-style5" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
         <property name="labelTerminator" value=":"/>
         <property name="classes" value="tstyle5 thlight thright mbottom05"/>
         <property name="columnClasses" value=",,tdclear tderror1"/>
@@ -544,7 +544,7 @@ Documentation:
     
     <!--@ This layout allows several slots to be edited without a specific organization. Each slot's editor e shown after the
           previous. You can shoose to present the slot's label or not. -->
-    <renderer mode="input" type="java.lang.Object" layout="flow" class="net.sourceforge.fenixedu.renderers.FlowInputRenderer">
+    <renderer mode="input" type="java.lang.Object" layout="flow" class="pt.ist.fenixWebFramework.renderers.FlowInputRenderer">
             <property name="labelTerminator" value=":"/>
     </renderer>
 
@@ -559,9 +559,9 @@ Documentation:
           valid as a menu option text. Use the <tt>format</tt> property if possible. -->    
 	<renderer mode="input" type="java.lang.Object" layout="menu-select-postback" class="net.sourceforge.fenixedu.presentationTier.renderers.InputMenuOptionListRendererWithPostback"/>
 
-    <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
+    <renderer mode="input" type="java.lang.String" class="pt.ist.fenixWebFramework.renderers.StringInputRenderer"/>
 
-	<renderer mode="input" type="java.lang.Object" layout="input-with-comment" class="net.sourceforge.fenixedu.renderers.GenericInputWithComment"/>
+	<renderer mode="input" type="java.lang.Object" layout="input-with-comment" class="pt.ist.fenixWebFramework.renderers.GenericInputWithComment"/>
 	
     <!--@ This layout allows an html text string to be edited with the fenix javascript html editor. 
           If the current browser is not supported by the html editor then it falls back to a simple text area. -->
@@ -573,67 +573,67 @@ Documentation:
     </renderer>
 
     <!--@ This layout indicates that we want to accept a text that can be very long and extend over multiple lines.  -->
-    <renderer mode="input" type="java.lang.String" layout="longText" class="net.sourceforge.fenixedu.renderers.TextAreaInputRenderer"/>
+    <renderer mode="input" type="java.lang.String" layout="longText" class="pt.ist.fenixWebFramework.renderers.TextAreaInputRenderer"/>
     
     <!--@ This layout allows a string to be edited with the password field -->
-    <renderer mode="input" type="java.lang.String" layout="password" class="net.sourceforge.fenixedu.renderers.PasswordInputRenderer"/>
+    <renderer mode="input" type="java.lang.String" layout="password" class="pt.ist.fenixWebFramework.renderers.PasswordInputRenderer"/>
     
-    <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringInputRenderer"/>
-    <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="area" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageTextInputRenderer"/>
-    <renderer mode="input" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageRichTextInputRenderer"/>
+    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringInputRenderer"/>
+    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="area" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageTextInputRenderer"/>
+    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageRichTextInputRenderer"/>
 	    
-    <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
+    <renderer mode="input" type="java.lang.Number" class="pt.ist.fenixWebFramework.renderers.IntegerInputRenderer"/>
 
-    <renderer mode="input" type="int" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
-    <renderer mode="input" type="java.lang.Integer" class="net.sourceforge.fenixedu.renderers.IntegerInputRenderer"/>
-    <renderer mode="input" type="long" class="net.sourceforge.fenixedu.renderers.LongInputRenderer"/>
-    <renderer mode="input" type="java.lang.Long" class="net.sourceforge.fenixedu.renderers.LongInputRenderer"/>
-    <renderer mode="input" type="short" class="net.sourceforge.fenixedu.renderers.ShortInputRenderer"/>
-    <renderer mode="input" type="java.lang.Short" class="net.sourceforge.fenixedu.renderers.ShortInputRenderer"/>
-    <renderer mode="input" type="double" class="net.sourceforge.fenixedu.renderers.DoubleInputRenderer"/>
-    <renderer mode="input" type="java.lang.Double" class="net.sourceforge.fenixedu.renderers.DoubleInputRenderer"/>
-    <renderer mode="input" type="float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
-    <renderer mode="input" type="java.lang.Float" class="net.sourceforge.fenixedu.renderers.FloatInputRenderer"/>
-    <renderer mode="input" type="java.math.BigDecimal" class="net.sourceforge.fenixedu.renderers.BigDecimalInputRenderer"/>
+    <renderer mode="input" type="int" class="pt.ist.fenixWebFramework.renderers.IntegerInputRenderer"/>
+    <renderer mode="input" type="java.lang.Integer" class="pt.ist.fenixWebFramework.renderers.IntegerInputRenderer"/>
+    <renderer mode="input" type="long" class="pt.ist.fenixWebFramework.renderers.LongInputRenderer"/>
+    <renderer mode="input" type="java.lang.Long" class="pt.ist.fenixWebFramework.renderers.LongInputRenderer"/>
+    <renderer mode="input" type="short" class="pt.ist.fenixWebFramework.renderers.ShortInputRenderer"/>
+    <renderer mode="input" type="java.lang.Short" class="pt.ist.fenixWebFramework.renderers.ShortInputRenderer"/>
+    <renderer mode="input" type="double" class="pt.ist.fenixWebFramework.renderers.DoubleInputRenderer"/>
+    <renderer mode="input" type="java.lang.Double" class="pt.ist.fenixWebFramework.renderers.DoubleInputRenderer"/>
+    <renderer mode="input" type="float" class="pt.ist.fenixWebFramework.renderers.FloatInputRenderer"/>
+    <renderer mode="input" type="java.lang.Float" class="pt.ist.fenixWebFramework.renderers.FloatInputRenderer"/>
+    <renderer mode="input" type="java.math.BigDecimal" class="pt.ist.fenixWebFramework.renderers.BigDecimalInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.util.Money" class="net.sourceforge.fenixedu.presentationTier.renderers.MoneyInputRenderer"/>
     
     
     
 
     <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unchecked is <tt>false</tt>.  -->
-    <renderer mode="input" type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
+    <renderer mode="input" type="java.lang.Boolean" class="pt.ist.fenixWebFramework.renderers.BooleanInputRenderer"/>
     <!--@ The default input layout for a boolean is a checkbox. Check is <tt>true</tt>, unched is <tt>false</tt>.  -->
-    <renderer mode="input" type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
+    <renderer mode="input" type="boolean" class="pt.ist.fenixWebFramework.renderers.BooleanInputRenderer"/>
     
     <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
           The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
-    <renderer mode="input" type="java.lang.Boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
+    <renderer mode="input" type="java.lang.Boolean" layout="menu" class="pt.ist.fenixWebFramework.renderers.BooleanMenuInputRenderer"/>
     <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
           The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
-    <renderer mode="input" type="java.lang.Boolean" layout="radio" class="net.sourceforge.fenixedu.renderers.BooleanRadioInputRenderer"/>
-    <renderer mode="input" type="boolean" layout="radio-postback" class="net.sourceforge.fenixedu.renderers.BooleanRadioInputRendererWithPostBack"/>
-    <renderer mode="input" type="java.lang.Boolean" layout="radio-postback" class="net.sourceforge.fenixedu.renderers.BooleanRadioInputRendererWithPostBack"/>    
+    <renderer mode="input" type="java.lang.Boolean" layout="radio" class="pt.ist.fenixWebFramework.renderers.BooleanRadioInputRenderer"/>
+    <renderer mode="input" type="boolean" layout="radio-postback" class="pt.ist.fenixWebFramework.renderers.BooleanRadioInputRendererWithPostBack"/>
+    <renderer mode="input" type="java.lang.Boolean" layout="radio-postback" class="pt.ist.fenixWebFramework.renderers.BooleanRadioInputRendererWithPostBack"/>    
     
     <!--@ This layout allows you to input a boolean value though a menu. The menu is filled with two options. 
           The labels are fetched from the resources with the keys <tt>TRUE</tt> and <tt>FALSE</tt>. -->
-    <renderer mode="input" type="boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
+    <renderer mode="input" type="boolean" layout="menu" class="pt.ist.fenixWebFramework.renderers.BooleanMenuInputRenderer"/>
     
     <!--@ The default input layout for an enumeration presents an html menu with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->
-    <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/> 
+    <renderer mode="input" type="java.lang.Enum" class="pt.ist.fenixWebFramework.renderers.EnumInputRenderer"/> 
     <!--@ The input layout (with postback) for an enumeration presents an html menu with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key. -->     
-    <renderer mode="input" type="java.lang.Enum" layout="menu-postback" class="net.sourceforge.fenixedu.renderers.EnumInputRendererWithPostBack"/>    
+    <renderer mode="input" type="java.lang.Enum" layout="menu-postback" class="pt.ist.fenixWebFramework.renderers.EnumInputRendererWithPostBack"/>    
     <!--@ The input layout for an enumeration presents radio buttons with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key.  -->     
-    <renderer mode="input" type="java.lang.Enum" layout="radio" class="net.sourceforge.fenixedu.renderers.EnumRadioInputRenderer">
+    <renderer mode="input" type="java.lang.Enum" layout="radio" class="pt.ist.fenixWebFramework.renderers.EnumRadioInputRenderer">
     	<property name="style" value="list-style:none"/>
     </renderer>
     <!--@ The input layout (with postback) for an enumeration presents radio buttons with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key. -->     
     <renderer mode="input" type="java.lang.Enum" layout="radio-postback" class="net.sourceforge.fenixedu.presentationTier.renderers.EnumRadioInputRendererWithPostBack"/>
 
-    <renderer mode="input" type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateInputRenderer"/>
+    <renderer mode="input" type="java.util.Date" class="pt.ist.fenixWebFramework.renderers.DateInputRenderer"/>
     <renderer mode="input" type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeInputRenderer"/>
     <renderer mode="input" layout="picker" type="java.util.Date" class="net.sourceforge.fenixedu.presentationTier.renderers.DateInputRendererWithPicker"/>
     <renderer mode="input" layout="picker" type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeInputRendererWithPicker"/>
@@ -689,11 +689,11 @@ Documentation:
 	</renderer>
 	
 	<!--@ The default layout for a DateTime automatically includes the hour, minute, and second in the partial -->
-	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+	<renderer type="org.joda.time.DateTime" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}"/>
 	</renderer>	
 
-	<renderer type="org.joda.time.DateTime" layout="no-time" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+	<renderer type="org.joda.time.DateTime" layout="no-time" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
 	</renderer>
 
@@ -705,39 +705,39 @@ Documentation:
 	</renderer>
 	
 	<!--@ The default layout for a HourMinuteSecond automatically includes the hour and minute -->	
-	<renderer type="net.sourceforge.fenixedu.util.HourMinuteSecond" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+	<renderer type="net.sourceforge.fenixedu.util.HourMinuteSecond" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
 		<property name="format" value="${hour,02d}:${minuteOfHour,02d}"/>
 	</renderer>	
 	
 	<!--@ The default layout for a YearMonthDay automatically includes the day, month, and year -->
-	<renderer type="org.joda.time.YearMonthDay" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+	<renderer type="org.joda.time.YearMonthDay" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
 	</renderer>	
 	
 	<!--@ The default layout for a LocalDate automatically includes the day, month, and year -->
-	<renderer type="org.joda.time.LocalDate" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+	<renderer type="org.joda.time.LocalDate" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
 	</renderer>	
 	
-	<renderer type="org.joda.time.YearMonthDay" layout="year-month" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+	<renderer type="org.joda.time.YearMonthDay" layout="year-month" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
 		<property name="format" value="${monthOfYear,02d}-${year}"/>
 	</renderer>	
 	
-	<renderer type="org.joda.time.LocalDate" layout="year-month" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+	<renderer type="org.joda.time.LocalDate" layout="year-month" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
 		<property name="format" value="${monthOfYear,02d}-${year}"/>
 	</renderer>	
 
     <!--@ Allows to present a collection in a table were rows can be sorted by pressing the table headers. -->
-    <renderer type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer">
+    <renderer type="java.util.Collection" layout="tabular-sortable" class="pt.ist.fenixWebFramework.renderers.OrderableCollectionRenderer">
         <property name="groupLinks" value="true"/>
         <property name="linkGroupSeparator" value=", "/>
     </renderer>
 
     <!--@ Allows to edit all objects of a collection by presenting each object in a table row and each slot editor in a table cell. -->
-    <renderer mode="input" type="java.util.Collection" layout="tabular-editable" class="net.sourceforge.fenixedu.renderers.TabularInputRenderer"/>
+    <renderer mode="input" type="java.util.Collection" layout="tabular-editable" class="pt.ist.fenixWebFramework.renderers.TabularInputRenderer"/>
 
     <!--@ A single object is edited in a tabular layout but slots are edited horizontally in a table row. -->
-    <renderer mode="input" type="java.lang.Object" layout="tabular-row" class="net.sourceforge.fenixedu.renderers.SingleObjectTabularInputRenderer"/>
+    <renderer mode="input" type="java.lang.Object" layout="tabular-row" class="pt.ist.fenixWebFramework.renderers.SingleObjectTabularInputRenderer"/>
     
     <!--@ Presents a list were each object is presented with it's own layout and schema in a list item. Each item has
           an checkbox associated. This layout allows to choose several objects from a list. Only the choosen object will
@@ -749,39 +749,39 @@ Documentation:
      <!--@ Presents a list were each object is presented with it's own layout and schema in a list item. Each item has
           an radio button associated. This layout allows to choose an object from a list. The choosen object will be 
           the slot's value.  -->
-    <renderer mode="input" type="java.lang.Object" layout="radio-select" class="net.sourceforge.fenixedu.renderers.RadioButtonListRenderer">
+    <renderer mode="input" type="java.lang.Object" layout="radio-select" class="pt.ist.fenixWebFramework.renderers.RadioButtonListRenderer">
         	<property name="eachClasses" value="dinline" />
         <property name="style" value="list-style: none; padding: 0; margin: 0;" />
     </renderer>
     
     <!--@ This layout allows you to construct a list of objects for input. The deletion if managed by the renderer the
           addition of objects to the list must be handled by an external action. -->
-    <renderer mode="input" type="java.util.List" layout="external-add" class="net.sourceforge.fenixedu.renderers.ManageableListRenderer"/>
+    <renderer mode="input" type="java.util.List" layout="external-add" class="net.sourceforge.fenixedu.presentationTier.renderers.ManageableListRenderer"/>
 
-    <renderer mode="input" type="java.io.InputStream" class="net.sourceforge.fenixedu.renderers.FileInputRenderer"/>
+    <renderer mode="input" type="java.io.InputStream" class="pt.ist.fenixWebFramework.renderers.FileInputRenderer"/>
 
     <!--@ This layout is the default layout for creating objects. The input of a class is the same as creating a new object of the
           type represented by the class. This allows to reuse all the other layouts defined for the input mode, that is, we don't need
           to define a create mode and redefine all the layouts to that mode.  -->
-    <renderer mode="input" type="java.lang.Class" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="java.lang.Class" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer"/>
 
     <!--@ This layouts is the same as the <tt>values</tt> layout preconfigured with an html separator of values. This
           way it can be used as a property of other layout. -->
-    <renderer type="java.lang.Object" layout="values-dash" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
+    <renderer type="java.lang.Object" layout="values-dash" class="pt.ist.fenixWebFramework.renderers.ValuesRenderer">
         <property name="htmlSeparator" value=" - "/>
     </renderer>
 
     <!-- FIXME: this should be removed, used for renderers examples only -->
-    <renderer type="java.lang.Object" layout="nice-details-table" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
+    <renderer type="java.lang.Object" layout="nice-details-table" class="pt.ist.fenixWebFramework.renderers.StandardObjectRenderer">
         <property name="classes" value="style1"/>
         <property name="columnClasses" value="listClasses,"/>
     </renderer>
     
-    <renderer type="java.lang.Object" layout="values-comma" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
+    <renderer type="java.lang.Object" layout="values-comma" class="pt.ist.fenixWebFramework.renderers.ValuesRenderer">
         <property name="htmlSeparator" value=", "/>
     </renderer>
 
-    <renderer type="java.lang.Object" layout="values-with-br" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
+    <renderer type="java.lang.Object" layout="values-with-br" class="pt.ist.fenixWebFramework.renderers.ValuesRenderer">
   			<property name="htmlSeparator" value="&lt;br/&gt;"/>
     </renderer>
     
@@ -789,7 +789,7 @@ Documentation:
     
     <renderer type="java.util.Collection" layout="separator-list" class="net.sourceforge.fenixedu.presentationTier.renderers.SeparatorListRenderer"/>
 
-    <renderer mode="input" type="java.lang.String" layout="allow-case-change" class="net.sourceforge.fenixedu.renderers.StringCaseChangerRenderer"/>
+    <renderer mode="input" type="java.lang.String" layout="allow-case-change" class="pt.ist.fenixWebFramework.renderers.StringCaseChangerRenderer"/>
 
     <!--@ The layout username-as-person allows you to insert a person given a username -->
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.Person" layout="username-as-person" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonUsernameStringInputRenderer"/>
@@ -800,16 +800,16 @@ Documentation:
 	<!--@ The layout extensionNumber-as-extension allows you to insert a Extension given a Extension Number -->
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.material.Material" layout="extensionNumber-as-extension" class="net.sourceforge.fenixedu.presentationTier.renderers.ExtensionNumberStringInputRenderer"/>
 
-	<renderer mode="input" type="java.util.List" layout="tabular-option" class="net.sourceforge.fenixedu.renderers.TabularOptionInputRenderer"/>	
+	<renderer mode="input" type="java.util.List" layout="tabular-option" class="pt.ist.fenixWebFramework.renderers.TabularOptionInputRenderer"/>	
 
-	<renderer mode="input" type="java.util.List" layout="tabular-option-postback" class="net.sourceforge.fenixedu.renderers.TabularOptionInputRendererWithPostBack"/>	
+	<renderer mode="input" type="java.util.List" layout="tabular-option-postback" class="pt.ist.fenixWebFramework.renderers.TabularOptionInputRendererWithPostBack"/>	
 
 	<!--@ Layout that allows you to render a list with checkboxes with postback -->
-	<renderer mode="input" type="java.util.List" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.CheckBoxOptionListRendererWithPostBack"/>
+	<renderer mode="input" type="java.util.List" layout="option-select-postback" class="pt.ist.fenixWebFramework.renderers.CheckBoxOptionListRendererWithPostBack"/>
 
 	<!--@ Layout that allows you to render a boolean or Boolean with checkbox with postback -->
-	<renderer mode="input" type="boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
-	<renderer mode="input" type="java.lang.Boolean" layout="option-select-postback" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderWithPostBack"/>
+	<renderer mode="input" type="boolean" layout="option-select-postback" class="pt.ist.fenixWebFramework.renderers.BooleanInputRenderWithPostBack"/>
+	<renderer mode="input" type="java.lang.Boolean" layout="option-select-postback" class="pt.ist.fenixWebFramework.renderers.BooleanInputRenderWithPostBack"/>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.TestsGrade"
               class="net.sourceforge.fenixedu.presentationTier.renderers.TestGradeInputRenderer"
@@ -860,7 +860,7 @@ Documentation:
               layout="template-variations-tree" />
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewChoice"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
               layout="template-short">
     	<property name="template"
     	          value="/teacher/tests/templates/questionBank/shortChoiceTemplate.jsp"/>
@@ -875,54 +875,54 @@ Documentation:
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
               layout="template-tree">
     	<property name="template"
     	          value="/teacher/tests/templates/questionBank/treeQuestionGroupTemplate.jsp"/>
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
               layout="template-simple">
     	<property name="template"
     	          value="/teacher/tests/templates/questionBank/simplePresentationMaterialTemplate.jsp"/>
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
     	<property name="template"
     	          value="/teacher/tests/templates/presentationMaterial/stringMaterialTemplate.jsp"/>
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewPictureMaterial"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
     	<property name="template"
     	          value="/teacher/tests/templates/presentationMaterial/pictureMaterialTemplate.jsp"/>
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
     	<property name="template"
     	          value="/teacher/tests/templates/presentationMaterial/mathMlMaterialTemplate.jsp"/>
     </renderer>
     
     <!-- Render templates for Tests and descendants in teacher correctByPerson context -->
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewTest"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
               layout="template-correctByPerson-tree">
     	<property name="template"
     	          value="/teacher/tests/templates/test/correctByPerson/test.jsp"/>
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewSection"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
               layout="template-correctByPerson-tree">
     	<property name="template"
     	          value="/teacher/tests/templates/test/correctByPerson/section.jsp"/>
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
               layout="template-correctByPerson-tree">
     	<property name="template"
     	          value="/teacher/tests/templates/test/correctByPerson/atomicQuestion.jsp"/>
@@ -930,21 +930,21 @@ Documentation:
     
     <!-- Render templates for Tests in student context -->
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewTest"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
               layout="template-student-tree">
     	<property name="template"
     	          value="/student/tests/templates/test.jsp"/>
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewSection"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
               layout="template-student-tree">
     	<property name="template"
     	          value="/student/tests/templates/section.jsp"/>
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
-              class="net.sourceforge.fenixedu.renderers.TemplateRenderer"
+              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
               layout="template-student-tree">
     	<property name="template"
     	          value="/student/tests/templates/atomicQuestion.jsp"/>
@@ -952,43 +952,43 @@ Documentation:
     
     <renderer mode="input"
               type="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
-              class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
+              class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
     </renderer>
     
     <renderer mode="input"
               type="net.sourceforge.fenixedu.domain.tests.NewPictureMaterial"
-              class="net.sourceforge.fenixedu.renderers.StandardInputRenderer">
+              class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.TestsGrade"
-              class="net.sourceforge.fenixedu.renderers.FormatRenderer"
+              class="pt.ist.fenixWebFramework.renderers.FormatRenderer"
               layout="format">
 		<property name="format" value="${percentage,.2f}%% (${value,.2f}/${scale,.2f})" />
 	</renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.Person"
-              class="net.sourceforge.fenixedu.renderers.FormatRenderer"
+              class="pt.ist.fenixWebFramework.renderers.FormatRenderer"
               layout="format-name-number">
 		<property name="format" value="${name}" />
 	</renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewTest"
-              class="net.sourceforge.fenixedu.renderers.FormatRenderer"
+              class="pt.ist.fenixWebFramework.renderers.FormatRenderer"
               layout="format-as-variation">
 		<property name="format" value="(V. ${position})" />
 	</renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewAnswer"
-              class="net.sourceforge.fenixedu.renderers.FormatRenderer"
+              class="pt.ist.fenixWebFramework.renderers.FormatRenderer"
               layout="computed-grade">
 		<property name="format" value="${percentage} x ${atomicQuestion.grade.value} = ${calculatedGrade.value}/${calculatedGrade.scale}" />
 	</renderer>	
 
-    <renderer type="net.sourceforge.fenixedu.domain.space.RoomClassification" layout="roomClassification-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+    <renderer type="net.sourceforge.fenixedu.domain.space.RoomClassification" layout="roomClassification-label" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
         <property name="format" value="${presentationCode} - ${name}"/>
     </renderer>
 
-	<renderer type="net.sourceforge.fenixedu.domain.space.Space" layout="spaceInformation-presentationName-label" class="net.sourceforge.fenixedu.renderers.FormatRenderer">
+	<renderer type="net.sourceforge.fenixedu.domain.space.Space" layout="spaceInformation-presentationName-label" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
         <property name="format" value="${spaceInformation.presentationName}"/>
     </renderer>
     
@@ -1103,5 +1103,5 @@ Documentation:
 	
 	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="delegate-election-period" class="net.sourceforge.fenixedu.presentationTier.renderers.DelegateElectionPeriodRenderer" />
 	
-	<renderer type="java.lang.String" layout="slot-as-label" class="net.sourceforge.fenixedu.renderers.SlotAsLabelRenderer"/>
+	<renderer type="java.lang.String" layout="slot-as-label" class="pt.ist.fenixWebFramework.renderers.SlotAsLabelRenderer"/>
 </renderers-config>

@@ -30,7 +30,7 @@
 					<fr:property name="classes" value="mvert0"/>
 					<fr:property name="size" value=""/>
 				</fr:layout>
-				<fr:validator name="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
 			</fr:edit>
 			</td>
 			<td>
@@ -59,7 +59,7 @@
 					<fr:property name="classes" value="mvert0"/>
 					<fr:property name="size" value=""/>
 				</fr:layout>
-				<fr:validator name="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
+				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
 			</fr:edit>
 			</td>
 			<td>

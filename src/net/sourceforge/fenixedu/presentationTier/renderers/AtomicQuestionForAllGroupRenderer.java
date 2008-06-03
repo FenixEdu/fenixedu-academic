@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
-import net.sourceforge.fenixedu.renderers.StringRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.renderers.StringRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 
 public class AtomicQuestionForAllGroupRenderer extends StringRenderer {
 

@@ -55,10 +55,6 @@
 	<property name="compile.deprecation" value="off"/>
 	<property name="compile.optimize"    value="on"/>
 	
-	<!-- Renderers properties -->
-	<property name="renderers.package.dir" value="net/sourceforge/fenixedu/renderers"/>
-	<property name="renderers.lib.name" value="fenix-renderers.jar"/>
-
 	<target name="clean-all"
     		description="Removes any generated files">
 		<delete dir="${build.home}"/>
@@ -644,40 +640,10 @@
 		</javac>
 	</target>
 
-	<target name="check-renderers" description="Checks if the lib built is still up to date">
-		<uptodate property="renderers.skip-compile" targetfile="${lib}/${renderers.lib.name}">
-			<srcfiles dir="${src}/${renderers.package.dir}" includes="**/*.*" />
-		</uptodate>
-	</target>
-
-	<target name="print-renderers-message" if="renderers.skip-compile">
-		<echo level="info">Renderers lib is up to date: '${renderers.lib.name}' not built.</echo>
-	</target>
-
-	<target name="compile-renderers" depends="check-renderers,print-renderers-message" unless="renderers.skip-compile" description="Make renderers available as a lib">
-		<javac srcdir="${src}" includes="${renderers.package.dir}/**" destdir="${build.home.webinf.classes}" 
-			   extdirs="${lib}" 
-			   debug="${compile.debug}" 
-			   optimize="${compile.optimize}" 
-			   deprecation="${compile.deprecation}" 
-			   encoding="${encoding}" 
-			   nowarn="true" 
-  			   />
-		
-		<jar destfile="${lib}/${renderers.lib.name}" basedir="${build.home.webinf.classes}" 
-			 includes="${renderers.package.dir}/**" />
-		<copy encoding="${encoding}" file="${lib}/${renderers.lib.name}" todir="${build.home.webinf.libs}"/>
-
-		<delete dir="${build.home.webinf.classes}/${renderers.package.dir}" />
-	</target>
-
-	<target name="base-compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-all-properties, generate">
+	<target name="base-compile" description="Compile application" depends="compile-domain,i18nDefault, write-all-properties, generate">
 		<javac destdir="${build.home.webinf.classes}" extdirs="${lib}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true" >
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
-
-			<!-- they are used as a lib and not directly -->
-			<exclude name="${renderers.package.dir}/**"/>
 		</javac>
 		<java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" 
 			dir="${build.home.webinf.classes}"
@@ -730,12 +696,12 @@
 		<delete dir="${xfire.stubsTempDir}"/>
 	</target>
 	
-	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain, compile-renderers, write-all-properties, generate, generate-groups-language, base-compile, compile-reports">
+	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile, compile-reports">
 		<ant antfile="build_injectionCode.xml" target="inject-accessControl-code"/>
 		<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code"/>
 	</target>
 
-	<target name="compile-without-injectionCode" description="Compile application" depends="i18nDefault, write-all-properties, compile-domain,compile-renderers, generate, base-compile">
+	<target name="compile-without-injectionCode" description="Compile application" depends="i18nDefault, write-all-properties, compile-domain, generate, base-compile">
 		<ant antfile="build_injectionCode.xml" target="accessControl-void-inject"/>
 		<ant antfile="build_injectionCode.xml" target="domainObjectActionLog-void-inject"/>
 	</target>

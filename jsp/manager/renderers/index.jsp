@@ -23,7 +23,7 @@ declaration of the plugin is made only in <code>struts-default.xml</code>.
 Here is an extract of the module configuration:
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px; margin-top: 10px; margin-bottom: 10px;" >
-    <pre>&lt;plug-in className=&quot;net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin&quot;&gt;
+    <pre>&lt;plug-in className=&quot;pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin&quot;&gt;
     &lt;set-property property=&quot;config&quot; 
                   value=&quot;/WEB-INF/fenix-renderers-config.xml&quot;/&gt;
     &lt;set-property property=&quot;schemas&quot; 

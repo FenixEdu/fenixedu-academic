@@ -171,7 +171,7 @@ table = document.getElementById(t);
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tsd" property="tsd"/>
 
 		<td>
-			<fr:edit id="name-validated" name="selectedTeacherServiceDistribution" slot="name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" scope="request">
+			<fr:edit id="name-validated" name="selectedTeacherServiceDistribution" slot="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" scope="request">
 				<fr:layout>
 					<fr:property name="size" value="44"/>
 					<fr:property name="maxLength" value="240" />

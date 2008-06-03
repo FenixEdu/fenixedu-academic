@@ -6,9 +6,9 @@ import java.util.List;
 
 import pt.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.renderers.model.DefaultSchemaFactory;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
+import pt.ist.fenixWebFramework.renderers.model.DefaultSchemaFactory;
+import pt.ist.fenixWebFramework.renderers.schemas.Schema;
+import pt.ist.fenixWebFramework.renderers.schemas.SchemaSlotDescription;
 import dml.DomainClass;
 import dml.Role;
 import dml.Slot;

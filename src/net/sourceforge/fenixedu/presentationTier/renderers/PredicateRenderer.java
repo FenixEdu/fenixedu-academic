@@ -26,12 +26,12 @@ import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.StringSizeEqualsPredicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.StringSizeLessThanPredicate;
 import net.sourceforge.fenixedu.domain.tests.predicates.StringSizeMoreThanPredicate;
-import net.sourceforge.fenixedu.renderers.OutputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.OutputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class PredicateRenderer extends OutputRenderer {
 

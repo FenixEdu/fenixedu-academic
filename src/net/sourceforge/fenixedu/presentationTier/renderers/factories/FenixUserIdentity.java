@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.renderers.model.UserIdentity;
+import pt.ist.fenixWebFramework.renderers.model.UserIdentity;
 
 public class FenixUserIdentity implements UserIdentity {
     

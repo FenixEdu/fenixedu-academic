@@ -1384,7 +1384,7 @@
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in> 
-	<plug-in className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
+	<plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
 	    <set-property property="config" 
 	                  value="/WEB-INF/fenix-renderers-config.xml"/>
 	    <set-property property="schemas" 

@@ -11,7 +11,7 @@
 <schema name="tests.questionGroup.edit.name"
 	type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup">
 	<slot name="name"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema name="tests.questionBank.owner.name"
@@ -24,7 +24,7 @@
 	constructor="parentQuestionGroup,name">
 	<slot name="parentQuestionGroup" hidden="true" />
 	<slot name="name"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 	</slot>
 </schema>
 
@@ -32,7 +32,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PresentationMaterialBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="presentationMaterialType"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.presentationMaterial.type" />
 </schema>
 
@@ -40,12 +40,12 @@
 	type="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
 	constructor="testElement,inline,text" bundle="TESTS_RESOURCES">
 	<slot name="text"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		layout="rich-text" key="label.stringMaterial.text">
 		<property name="config" value="basic" />
 	</slot>
 	<slot name="inline"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.presentationMaterial.inline" />
 	<slot name="testElement" hidden="true" />
 </schema>
@@ -55,7 +55,7 @@
 	bundle="TESTS_RESOURCES">
 	<slot name="inputStream" key="label.pictureMaterial.picture">
 		<validator
-			class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+			class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="required" value="true" />
 			<property name="acceptedExtensions" value="gif,jpg,png" />
 			<property name="acceptedTypes"
@@ -65,7 +65,7 @@
 		<property name="fileNameSlot" value="originalFileName" />
 	</slot>
 	<slot name="inline"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.presentationMaterial.inline" />
 	<slot name="fileName" key="label.pictureMaterial.displayName" />
 </schema>
@@ -74,13 +74,13 @@
 	type="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial"
 	constructor="testElement,inline,mathMl" bundle="TESTS_RESOURCES">
 	<slot name="mathMl"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		layout="longText" key="label.mathMlMaterial.mathMl">
 		<property name="columns" value="75" />
 		<property name="rows" value="25" />
 	</slot>
 	<slot name="inline"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.presentationMaterial.inline" />
 	<slot name="testElement" hidden="true" />
 </schema>
@@ -89,12 +89,12 @@
 	type="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
 	bundle="TESTS_RESOURCES">
 	<slot name="text"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		layout="rich-text" key="label.stringMaterial.text">
 		<property name="config" value="basic" />
 	</slot>
 	<slot name="inline"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.presentationMaterial.inline" />
 </schema>
 
@@ -104,7 +104,7 @@
 	<slot name="pictureMaterialFile" key="label.pictureMaterial.picture"
 		layout="image" read-only="true" />
 	<slot name="inline"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.presentationMaterial.inline" />
 	<slot name="pictureMaterialFile.displayName"
 		key="label.pictureMaterial.displayName" />
@@ -114,13 +114,13 @@
 	type="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial"
 	bundle="TESTS_RESOURCES">
 	<slot name="mathMl"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		layout="longText" key="label.mathMlMaterial.mathMl">
 		<property name="columns" value="75" />
 		<property name="rows" value="25" />
 	</slot>
 	<slot name="inline"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.presentationMaterial.inline" />
 </schema>
 
@@ -128,7 +128,7 @@
 	type="net.sourceforge.fenixedu.domain.tests.NewPermissionUnit"
 	bundle="TESTS_RESOURCES">
 	<slot name="permission"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.permission" />
 	<slot name="party"
 		validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator"
@@ -155,7 +155,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.AtomicQuestionBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="questionType"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.question.questionType" />
 </schema>
 
@@ -176,8 +176,8 @@
 	type="net.sourceforge.fenixedu.domain.tests.NewAnswer"
 	bundle="TESTS_RESOURCES">
 	<slot name="percentage" key="label.tests.corrector.percentage">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DoubleValidator"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -203,7 +203,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -216,7 +216,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PreConditionPredicateTypesForQuestion" />
@@ -229,7 +229,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PreConditionPredicateTypesForQuestion" />
@@ -237,7 +237,7 @@
 		<property name="destination" value="prepare-create" />
 	</slot>
 	<slot name="atomicQuestion" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.corrector.atomicQuestion">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AtomicQuestionsForQuestion" />
@@ -250,7 +250,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PreConditionPredicateTypesForQuestion" />
@@ -258,7 +258,7 @@
 		<property name="destination" value="prepare-create" />
 	</slot>
 	<slot name="atomicQuestion" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.corrector.atomicQuestion">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AtomicQuestionsForQuestion" />
@@ -270,7 +270,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PreConditionPredicateTypesForQuestion" />
@@ -278,7 +278,7 @@
 		<property name="destination" value="prepare-create" />
 	</slot>
 	<slot name="atomicQuestion" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.corrector.atomicQuestion">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AtomicQuestionsForQuestion" />
@@ -290,7 +290,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PreConditionPredicateTypesForQuestion" />
@@ -298,7 +298,7 @@
 		<property name="destination" value="prepare-create" />
 	</slot>
 	<slot name="corrector" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.corrector.corrector">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CorrectorsForQuestion" />
@@ -310,7 +310,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -318,7 +318,7 @@
 		<property name="destination" value="prepare-create" />
 	</slot>
 	<slot name="choice" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.corrector.choice">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ChoicesForMultipleChoiceQuestionInPredicate" />
@@ -331,7 +331,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -343,7 +343,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="0" />
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -351,7 +351,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -363,7 +363,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="0" />
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -371,7 +371,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -383,7 +383,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="0" />
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -391,7 +391,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -403,7 +403,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="0" />
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -411,7 +411,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -425,7 +425,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -440,7 +440,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -454,7 +454,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -469,7 +469,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="predicateType" layout="menu-select-postback"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.tests.corrector.predicateType">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicateTypesForQuestion" />
@@ -492,7 +492,7 @@
 	</slot>
 	<slot layout="menu-select-postback" name="action"
 		key="label.corrector.action"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActionsForPredicates" />
 		<property name="eachLayout" value="" />
@@ -505,7 +505,7 @@
 	bundle="TESTS_RESOURCES">
 	<slot name="selectedPredicates" layout="option-select"
 		key="label.corrector.selectedPredicates"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="eachLayout" value="values" />
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicatesForPredicateBean" />
@@ -514,7 +514,7 @@
 	</slot>
 	<slot layout="menu-select-postback" name="action"
 		key="label.corrector.action"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActionsForPredicates" />
 		<property name="eachLayout" value="" />
@@ -522,7 +522,7 @@
 	</slot>
 	<slot name="compositePredicateType" layout="menu-select"
 		key="label.tests.corrector.compositePredicateType"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CompositePredicateTypes" />
 		<property name="eachLayout" value="" />
@@ -534,7 +534,7 @@
 	bundle="TESTS_RESOURCES">
 	<slot name="choosenPredicate" layout="menu-select"
 		key="label.corrector.choosenPredicate"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="eachLayout" value="values" />
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicatesForPredicateBean" />
@@ -542,8 +542,8 @@
 	</slot>
 	<slot name="percentage"
 		key="label.tests.corrector.percentage">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 		
 </schema>
@@ -553,7 +553,7 @@
 	bundle="TESTS_RESOURCES">
 	<slot name="choosenPredicate" layout="menu-select"
 		key="label.corrector.choosenPredicate"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="eachLayout" value="values" />
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PredicatesForPredicateBean" />
@@ -592,7 +592,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.GroupElementBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="parent"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		layout="menu-select" key="label.GroupElementBean.associate.parent">
 		<property name="eachLayout" value="short" />
 		<property name="providerClass"
@@ -604,7 +604,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.GroupElementBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="parent"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		layout="menu-select"
 		key="label.GroupElementBean.disassociate.parent">
 		<property name="eachLayout" value="short" />
@@ -681,7 +681,7 @@
 	type="net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion"
 	bundle="TESTS_RESOURCES">
 	<slot name="shuffle" key="label.multipleChoiceQuestion.shuffle"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema name="tests.corrector.representation"
@@ -783,7 +783,7 @@
 	constructor="question,parentGroup" bundle="TESTS_RESOURCES">
 	<slot name="question" hidden="true" />
 	<slot name="parentGroup" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.testModel.choose">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BagsForTeacher" />
@@ -808,10 +808,10 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="name"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.testModel.name" />
 	<slot name="modelGroup" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.modelRestriction.parent">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ModelGroupsForTestModel" />
@@ -844,14 +844,14 @@
 	constructor="creator,name,scale" bundle="TESTS_RESOURCES">
 	<slot name="creator" hidden="true" />
 	<slot name="name"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.testModel.name" />
 	<slot name="scale" key="label.grade">
 		<validator
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="0" />
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="5" />
 	</slot>
 </schema>
@@ -867,7 +867,7 @@
 	bundle="TESTS_RESOURCES">
 	<slot name="scale" key="label.grade">
 		<validator
-			class="net.sourceforge.fenixedu.renderers.validators.DoubleValidator" />
+			class="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator" />
 		<property name="size" value="5" />
 	</slot>
 </schema>
@@ -882,7 +882,7 @@
 	type="net.sourceforge.fenixedu.domain.tests.NewTestModel"
 	bundle="TESTS_RESOURCES">
 	<slot name="name"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.testModel.name" />
 </schema>
 
@@ -902,7 +902,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="modelGroup" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.modelRestriction.parent">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ModelGroupsForTestModel" />
@@ -914,7 +914,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -922,7 +922,7 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="modelGroup" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ModelGroupsForTestModel" />
 		<property name="eachSchema" value="tests.modelGroup.name" />
@@ -949,11 +949,11 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="value" key="label.modelRestriction.value">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DoubleValidator"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -965,7 +965,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -973,27 +973,27 @@
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="value"
-		validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator" />
+		validator="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator" />
 </schema>
 
 <schema name="tests.test.create.prepare"
 	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.TestModelBean"
 	bundle="TESTS_RESOURCES">
 	<slot name="executionCourse" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.executionCourse.name">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionCoursesForTestModel" />
 		<property name="format" value="${nome}" />
 	</slot>
 	<slot name="name"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="label.testModel.name" />
 	<slot name="useVariations"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="tests.generateTests.useVariations" />
 	<slot name="useFinalDate"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		key="tests.generateTests.useFinalDate" />
 </schema>
 
@@ -1012,7 +1012,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="useFinalDate" read-only="true"
 		key="tests.generateTests.useFinalDate" />
@@ -1053,7 +1053,7 @@
 			class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
 			<property name="lowerBound" value="1" />
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="useFinalDate" read-only="true"
 		key="tests.generateTests.useFinalDate" />
@@ -1210,7 +1210,7 @@
 	type="net.sourceforge.fenixedu.domain.tests.NewStringQuestion"
 	bundle="TESTS_RESOURCES">
 	<slot name="stringAnswer" layout="longText"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="columns" value="90" />
 		<property name="rows" value="4" />
 	</slot>
@@ -1221,7 +1221,7 @@
 	type="net.sourceforge.fenixedu.domain.tests.NewNumericQuestion"
 	bundle="TESTS_RESOURCES">
 	<slot name="numericAnswer"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<setter signature="setAnswer(numericAnswer)" />
 </schema>
 

@@ -7,9 +7,9 @@ import java.util.Properties;
 import net.sourceforge.fenixedu.domain.tests.NewModelGroup;
 import net.sourceforge.fenixedu.domain.tests.NewModelRestriction;
 import net.sourceforge.fenixedu.domain.tests.NewTestModel;
-import net.sourceforge.fenixedu.renderers.Renderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.Renderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 public class ModelRestrictionSortRenderer extends Renderer {
 

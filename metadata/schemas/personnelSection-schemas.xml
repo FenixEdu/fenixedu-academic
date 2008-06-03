@@ -23,7 +23,7 @@
 	<slot read-only="true" name="assiduousnessStatus.description" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot read-only="true" name="beginDate"/>
 	<slot name="endDate"> 
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="format" value="dd/MM/yyyy"/>
 			<property name="size" value="10"/>
 		</validator>
@@ -34,12 +34,12 @@
 
 <schema name="create.employeeStatus" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory"
 constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy">
-	<slot name="assiduousnessStatus" layout="menu-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="assiduousnessStatus" layout="menu-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.AssiduousnessStatusAsProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" />
 		<property name="format" value="${description}"/>
 	</slot>
-	<slot read-only="true" name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot read-only="true" name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="endDate"/>
 	<slot name="modifiedBy" hidden="true"/>
 	<slot name="assiduousness" hidden="true"/>
@@ -47,12 +47,12 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="create.employeeStatus.beginDate" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory"
 constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy">
-	<slot name="assiduousnessStatus" layout="menu-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="assiduousnessStatus" layout="menu-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.AssiduousnessStatusAsProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" />
 		<property name="format" value="${description}"/>
 	</slot>
-	<slot name="beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="endDate"/>
 	<slot name="modifiedBy" hidden="true"/>
 	<slot name="assiduousness" hidden="true"/>
@@ -218,13 +218,13 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="choose.date" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth">
 	<slot name="year" bundle="ASSIDUOUSNESS_RESOURCES">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>
 	<slot name="month" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.util.Month" />
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -234,8 +234,8 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <schema name="choose.year"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth">
 	<slot name="year" bundle="ASSIDUOUSNESS_RESOURCES">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>
@@ -258,11 +258,11 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="yearMonth.year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="yearMonth.month" layout="menu-select" key="label.month"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.util.Month" />
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -274,15 +274,15 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="yearMonth.year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
 <schema name="choose.assiduosunessExportChoice.dates"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices">
-	<slot name="beginDate"  bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="endDate"  bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate"  bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDate"  bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 <schema name="choose.assiduosunessExportChoice"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices">
@@ -336,16 +336,16 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="create.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 	constructor="acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, giafCodeOtherStatus, giafCodeContractedStatus, modifiedBy">
-	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="justificationType" key="label.type" layout="menu-select" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="justificationType" key="label.type" layout="menu-select" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationTypeAsProvider" />
 	</slot>
-	<slot name="dayType" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="dayType" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.DayType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
@@ -355,10 +355,10 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	</slot>	
 	<slot name="actualWorkTime" key="label.actualWorkTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeOtherStatus" key="label.permanentStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 	<slot name="discountBonus" key="label.discountBonus" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="discountA17Vacations" key="label.discountA17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
@@ -366,16 +366,16 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 </schema>
 
 <schema name="edit.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
-	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="justificationType" key="label.type" layout="menu-select" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="justificationType" key="label.type" layout="menu-select" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationTypeAsProvider" />
 	</slot>
-	<slot name="dayType" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="dayType" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.DayType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
@@ -394,8 +394,8 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 </schema>
 
 <schema name="edit.usedJustificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
-	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
 	<slot read-only="true" name="justificationType" layout="short" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES"/>
@@ -413,16 +413,16 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="show.regularizationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" 
 	constructor="acronym, description, modifiedBy">
-	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="modifiedBy" hidden="true"/>
 </schema>
 
 <schema name="edit.regularizationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
-	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="modifiedBy" hidden="true"/>
@@ -744,7 +744,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="edit.employeeMonthRegularization" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationMonthFactory">
 	<slot name="justificationMotive" key="label.regularization" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
 		<property name="format" value="${acronym} - ${description}"/>
@@ -756,17 +756,17 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="year" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="month" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.util.Month" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="unitCode" key="label.costCenter">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>
@@ -776,11 +776,11 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="yearMonthHoursDone.year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="yearMonthHoursDone.month" key="label.month" layout="menu-select"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="choiceType"
 			value="net.sourceforge.fenixedu.util.Month" />
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -807,12 +807,12 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="extraNightDays" key="label.extraNightDays" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 	<slot name="requestedExtraNightHours" key="label.extraNightHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 </schema>
 
@@ -820,7 +820,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="extraNightHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 </schema>
 
@@ -828,7 +828,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="requestedSaturdayHours" key="label.saturdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 </schema>
 
@@ -836,7 +836,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="saturdayHours" key="label.saturdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 </schema>
 
@@ -844,14 +844,14 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="requestedHolidayHours" key="label.holidayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 </schema>
 <schema name="show.holidayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="holidayHours" key="label.holidayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 </schema>
 
@@ -859,14 +859,14 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="requestedSundayHours" key="label.sundayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 </schema>
 <schema name="show.sundayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="sundayHours" key="label.sundayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 </schema>
 
@@ -874,14 +874,14 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="requestedWorkdayHours" key="label.workdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 </schema>
 <schema name="show.workdayHours" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
 	<slot name="workdayHours" key="label.workdayHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
 </schema>
 
@@ -904,28 +904,28 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="edit.extraWorkAuthorization" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationFactory">
 	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"> 
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES"> 
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 		<property name="format" value="dd/MM/yyyy" />
 		<property name="size" value="10"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="workingCostCenterCode" key="label.workingUnit">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>
 	<slot name="payingCostCenterCode" key="label.payingUnit">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>
@@ -955,22 +955,22 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="input.extraWorkAuthorizationSearch" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationFactory">
 	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES">
-	    <validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>
 	</slot>
 	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES">
-	    <validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 		<property name="format" value="dd/MM/yyyy" />
 		<property name="size" value="10"/>
 	</slot>
 	<slot name="workingCostCenterCode" key="label.workingUnit">
-	    <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>
     <slot name="payingCostCenterCode" key="label.payingUnit">
-	    <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>
@@ -978,14 +978,14 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	
 <schema name="edit.employeeScheduleFactory.dates" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory">
 	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES">
-	    <validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="format" value="dd/MM/yyyy"/>
 			<property name="size" value="10"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES">
-	    <validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 		<property name="format" value="dd/MM/yyyy" />
 		<property name="size" value="10"/>
 	</slot>
@@ -993,14 +993,14 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 		
 <schema name="edit.employeeExceptionScheduleBean.dates" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExceptionScheduleBean">
 	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES">
-	    <validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="format" value="dd/MM/yyyy"/>
 			<property name="size" value="10"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES">
-	    <validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 		<property name="format" value="dd/MM/yyyy" />
 		<property name="size" value="10"/>
 	</slot>
@@ -1114,33 +1114,33 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <schema name="edit.unitExtraWorkAmount" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitExtraWorkAmountFactory">	
 	<slot name="year"
 		bundle="ASSIDUOUSNESS_RESOURCES">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>
 	<slot name="costCenterCode" key="label.costCenter" bundle="ASSIDUOUSNESS_RESOURCES" 
-			validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+			validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator">
 		<property name="maxLength" value="4" />
 		<property name="size" value="10" />
 	</slot>
 	<slot name="amount" key="label.amount" bundle="ASSIDUOUSNESS_RESOURCES">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DoubleValidator"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10" />
 	</slot>
 </schema>
 
 <schema name="insert.unitExtraWorkMovement" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitExtraWorkAmountFactory">	
 	<slot name="amount" bundle="ASSIDUOUSNESS_RESOURCES">
-	 <validator class="net.sourceforge.fenixedu.renderers.validators.DoubleValidator"/>
-	 <validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	 <validator class="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator"/>
+	 <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	 <property name="size" value="10" />
 	</slot>
 </schema>
 
 <schema name="edit.unitExtraWorkMovement" type="net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkMovement">	
-	<slot name="amount" validator="net.sourceforge.fenixedu.renderers.validators.DoubleValidator">
+	<slot name="amount" validator="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator">
 		<property name="size" value="10" />
 	</slot>
 </schema>
@@ -1162,7 +1162,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <schema name="edit.anualBonusInstallmentFactory.year"
 	type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.AnualBonusInstallmentFactory">
 	<slot name="year"
-		validator="net.sourceforge.fenixedu.renderers.validators.NumberValidator"
+		validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"
 		key="label.year" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
@@ -1176,8 +1176,8 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	</slot>
 	<slot name="installmentsNumber"
 		key="label.installmentsNumber" bundle="ASSIDUOUSNESS_RESOURCES">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
 	</slot>
@@ -1185,14 +1185,14 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="edit.anualBonusInstallmentBean" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.AnualBonusInstallmentBean">
 	<slot name="paymentYearMonth" key="label.paymentMonth" layout="menu-select" schema="choose.date"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="eachLayout" value="values" />
 		<property name="saveOptions" value="true" />
 		<property name="eachSchema" value="show.date" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.PaymentYearMonthAsProvider" />
 	</slot>
 	<slot name="yearMonths" layout="option-select" key="label.assiduousnessMonths"
-		validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="eachLayout" value="values" />
 		<property name="saveOptions" value="true" />
 		<property name="eachSchema" value="show.date" />
@@ -1201,8 +1201,8 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 </schema>
 
 <schema name="upload.bonusInstallmentFileBean" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallmentFileBean">
-	<slot read-only="true" name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="installment" key="label.installment" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot read-only="true" name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="installment" key="label.installment" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 	<!--  	<property name="format" value="${installment}ª prestação" />-->
 		<property name="destination" value="bonusInstallmentsNumberPostBack"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.AnualInstallmentsAsProvider" />
@@ -1214,24 +1214,24 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 </schema>
 
 <schema name="upload.bonusInstallmentFileBean.year" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallmentFileBean">
-	<slot name="year" key="label.year" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="year" key="label.year" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="destination" value="bonusInstallmentFileBeanPostBack"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.AnualInstallmentYearAsProvider" />
 	</slot>
 </schema>
 
 <schema name="choose.bonusInstallment.year" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallment">
-	<slot name="year" key="label.year" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="year" key="label.year" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="destination" value="bonusInstallmentYearPostBack"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.AnualInstallmentYearAsProvider" />
 	</slot>
 </schema>
 
 <schema name="choose.bonusInstallment.installment" type="net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallment">
-	<slot name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="year" key="label.year" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="readOnly" value="true" />
 	</slot>
-	<slot name="installment" key="label.installment" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="installment" key="label.installment" layout="menu-select-postback" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.personnelSection.payrollSection.bonus.AnualInstallmentsAsProvider" />
 		<property name="destination" value="bonusInstallmentPostBack"/> 
 	</slot>
@@ -1276,7 +1276,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="edit.assiduousnessExemption" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExemptionBean">
 	<slot name="year" bundle="ASSIDUOUSNESS_RESOURCES">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 		<property name="maxLength" value="4" />
 		<property name="size" value="4" />
 	</slot>

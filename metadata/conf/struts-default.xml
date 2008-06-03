@@ -202,7 +202,7 @@
         <set-property property="definitions-parser-validate" value="true" />
     </plug-in>
     
-    <plug-in className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
+    <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
       <set-property property="config" value="/WEB-INF/fenix-renderers-config.xml"/>
       <set-property property="schemas" value="/WEB-INF/schemas/fenix-renderers-schemas.xml"/>
       <set-property property="metaObjectFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory"/>

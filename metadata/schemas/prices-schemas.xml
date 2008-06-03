@@ -74,15 +74,15 @@
 <schema name="DFAGratuityPR.edit" 
 		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR"
 		bundle="APPLICATION_RESOURCES">
-	<slot name="dfaTotalAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="dfaTotalAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="dfaAmountPerEctsCredit" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="dfaAmountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="dfaPartialAcceptedPercentage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="dfaPartialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
@@ -294,15 +294,15 @@
 </schema>
 
 <schema name="CreateDFAGratuityPostingRuleBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" bundle="APPLICATION_RESOURCES">
-	<slot name="amountPerEctsCredit" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="amountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="partialAcceptedPercentage" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="partialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="totalAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="totalAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
@@ -329,15 +329,15 @@
 <schema name="EnrolmentOutOfPeriodPR.edit" 
 		type="net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR"
 		bundle="APPLICATION_RESOURCES">
-	<slot name="baseAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="baseAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="amountPerDay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="amountPerDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="maxAmount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="maxAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>

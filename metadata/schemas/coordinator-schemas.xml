@@ -1,7 +1,7 @@
 <schema name="thesis.bean.student" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
     <slot name="student" layout="by-number" key="label.student">
-          <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-          <validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+          <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+          <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
      </slot>
 </schema>
 
@@ -26,7 +26,7 @@
 
 <schema name="thesis.bean.selectPerson.internal.orientator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
         extends="thesis.bean.selectPerson.internal">
-    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="text"/>
@@ -40,7 +40,7 @@
 
 <schema name="thesis.bean.selectPerson.internal.coorientator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
         extends="thesis.bean.selectPerson.internal">
-    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="text"/>
@@ -54,7 +54,7 @@
 
 <schema name="thesis.bean.selectPerson.internal.president" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
         extends="thesis.bean.selectPerson.internal">
-    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="text"/>
@@ -68,7 +68,7 @@
 
 <schema name="thesis.bean.selectPerson.internal.vowel" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
         extends="thesis.bean.selectPerson.internal">
-    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="text"/>
@@ -87,7 +87,7 @@
         <property name="destination" value="changePersonType"/>
         <property name="classes" value="nobullet liinline"/>
     </slot>
-    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
         <property name="labelField" value="text"/>
@@ -105,7 +105,7 @@
         <property name="falseLabel" value="label.coordinator.thesis.edit.externalPerson"/>
     </slot>
     <slot name="rawPersonName" key="label.coordinator.thesis.edit.personName.forUnit" read-only="true"/>
-    <slot name="unitName" key="label.coordinator.thesis.edit.unitName" layout="autoComplete"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="unitName" key="label.coordinator.thesis.edit.unitName" layout="autoComplete"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawUnitName"/>
         <property name="labelField" value="unit.nameWithAcronym"/>
@@ -201,7 +201,7 @@
             <property name="upperBound" value="20"/>
             <property name="message" value="label.coordinator.thesis.evaluation.grade.range"/>
         </validator>
-        <validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
         <property name="size" value="6"/>
     </slot>
     <slot name="discussed" key="label.thesis.evaluate.discussion.date" layout="null-as-label" read-only="true">
@@ -252,8 +252,8 @@
 
 <schema name="coordinator.commissionTeam.addMember" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
     <slot name="integer" key="label.mecanographicNumber">
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
      </slot>
 </schema>
 
@@ -355,11 +355,11 @@
 </schema>
 
 <schema name="net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan" type="net.sourceforge.fenixedu.domain.util.search.StudentSearchBean" bundle="APPLICATION_RESOURCES">
-	<slot name="studentNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="10"/>
 	</slot>
     <slot name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
-    		layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    		layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlanForStudentEquivalenciesProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${presentationName}" />
@@ -421,21 +421,21 @@
 
 <schema name="coordinator.tutor.tutorNumber" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean">
 	<slot name="teacherNumber" key="label.coordinator.tutor.teacherNumber">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10" />
 	</slot>
 </schema>
 
 <schema name="coordinator.tutor.addTutorship" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">
-	<slot name="studentNumber" key="label.coordinator.tutor.associateStudent.studentNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>  
-	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+	<slot name="studentNumber" key="label.coordinator.tutor.associateStudent.studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>  
+	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
 		<property name="eachLayout" value="this-does-not-exist" />
     </slot>
-    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
@@ -525,8 +525,8 @@
 <schema name="coordinator.createTutorship.randomNumber" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionYear.year" key="label.coordinator.tutor.selectedEntryYear" read-only="true" />
 	<slot name="numberOfStudentsToCreateTutorship" key="label.coordinator.tutor.numberOfStudents">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="5" />
 	</slot>
 </schema>
@@ -556,17 +556,17 @@
 
 <schema name="coordinator.createTutorship.tutorNumber" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
 	<slot name="teacherNumber" key="label.coordinator.tutor.teacherNumber">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10" />
 	</slot>
-	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
 		<property name="eachLayout" value="this-does-not-exist" />
     </slot>
-    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
@@ -582,13 +582,13 @@
 	<slot name="tutorship.studentCurricularPlan.registration.person.name" key="label.coordinator.studentName" read-only="true"/>
 	<slot name="tutorship.studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla" read-only="true"/>
 	<slot name="tutorship.startDate" key="label.tutorship.startDate" read-only="true"/>
-	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
 		<property name="eachLayout" value="this-does-not-exist" />
     </slot>
-    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
@@ -596,13 +596,13 @@
 </schema>
 
 <schema name="coordinator.tutor.endDate" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">
-	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
 		<property name="eachLayout" value="this-does-not-exist" />
     </slot>
-    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
@@ -644,17 +644,17 @@
 
 <schema name="coordinator.tutor.transferTutorship" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">
 	<slot name="teacherNumber" key="label.coordinator.tutor.teacherNumber">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10" />
 	</slot>
-	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
 		<property name="eachLayout" value="this-does-not-exist" />
     </slot>
-    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">				
+    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>

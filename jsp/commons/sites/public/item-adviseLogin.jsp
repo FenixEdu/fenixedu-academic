@@ -19,7 +19,7 @@
     <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 
     <h2>
-        <fr:view name="section" property="name" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
+        <fr:view name="section" property="name" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
             <span class="permalink1">
             	(<app:contentLink name="section"><bean:message key="label.link" bundle="SITE_RESOURCES"/></app:contentLink>)            
             </span>

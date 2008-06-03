@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
+import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

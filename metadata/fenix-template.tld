@@ -16,8 +16,8 @@
 
   <tag>
     <name>define</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.DefineTag</tag-class>
-    <tei-class>net.sourceforge.fenixedu.renderers.taglib.DefineTei</tei-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.DefineTag</tag-class>
+    <tei-class>pt.ist.fenixWebFramework.renderers.taglib.DefineTei</tei-class>
     <body-content>empty</body-content>
     <description>
     	   Defines the object beeing rendered or one of it's properties in the page scope.
@@ -54,7 +54,7 @@
 
   <tag>
     <name>label</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.LabelTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.LabelTag</tag-class>
     <body-content>empty</body-content>
     <description>
     		Selects the text to show as label of a property from the render resources.
@@ -90,7 +90,7 @@
 
   <tag>
     <name>view</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.TemplateViewObjectTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.TemplateViewObjectTag</tag-class>
     <body-content>JSP</body-content>
     <description>
       Renders a generic presentation of a domain object.
@@ -171,7 +171,7 @@
   
   <tag>
     <name>layout</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutConfigTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.LayoutConfigTag</tag-class>
     <body-content>JSP</body-content>
     <description>
       Allows selection and configuration of a specific layout. The use of this tag overrides the
@@ -190,7 +190,7 @@
 
   <tag>
     <name>property</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.PropertyTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.PropertyTag</tag-class>
     <body-content>empty</body-content>
     <description>
       Sets a specific property of the layout.
@@ -217,7 +217,7 @@
 
   <tag>
     <name>edit</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.TemplateEditObjectTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.TemplateEditObjectTag</tag-class>
     <body-content>JSP</body-content>
     <description>
       Renders a generic input presentation of an object.
@@ -317,7 +317,7 @@
 
   <tag>
     <name>destination</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.EditLinkTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.EditLinkTag</tag-class>
     <body-content>empty</body-content>
     <description>
       Configures the destination when everything is ok.

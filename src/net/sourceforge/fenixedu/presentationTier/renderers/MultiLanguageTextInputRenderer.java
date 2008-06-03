@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.renderers.components.HtmlActionLink;
-import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlTextArea;
+import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTextArea;
 
 /**
  * This renderer extends the {@link MultiLanguageStringInputRenderer}. The only difference

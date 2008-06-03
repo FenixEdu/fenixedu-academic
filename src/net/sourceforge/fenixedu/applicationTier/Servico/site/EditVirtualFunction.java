@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.site;
 
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EditVirtualFunction extends ManageVirtualFunction {
 

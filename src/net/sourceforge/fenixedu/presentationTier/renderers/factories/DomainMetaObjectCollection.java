@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectCollection;
+import pt.ist.fenixWebFramework.renderers.model.MetaObjectCollection;
 
 public class DomainMetaObjectCollection extends MetaObjectCollection {
 

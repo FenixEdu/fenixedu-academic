@@ -5,7 +5,7 @@
 	<slot name="totalAmount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
 	<slot name="payedAmount" read-only="true"  />
 	<slot name="debtAmount" read-only="true"  />
-	<slot name="amountToPay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="amountToPay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
@@ -16,7 +16,7 @@
 	<slot name="event.whenOccured" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Event.whenOccured" />
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description"/>
 	<slot name="totalAmount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
-	<slot name="amountToPay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="amountToPay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
@@ -85,7 +85,7 @@
 </schema>
 
 <schema name="createReceiptBean.create" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
-	<slot name="contributorParty" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="contributorParty" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${name}"/>
@@ -116,7 +116,7 @@
 
 <schema name="paymentsManagementDTO.edit-with-paymentDate" type="net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="differedPayment" />
-	<slot name="paymentDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="paymentDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema name="AccountingEvent.view" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES">
@@ -143,7 +143,7 @@
 </schema>
 
 <schema name="CreateGratuityExemptionBean" type="net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean" bundle="APPLICATION_RESOURCES">
-	<slot name="exemptionJustificationType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="exemptionJustificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.GratuityExemptionJustificationTypeByDegreeTypeProvider" />
         <property name="saveOptions" value="true"/>
     </slot>
@@ -181,7 +181,7 @@
 <schema name="CreateInstallmentPenaltyExemptionBean.edit" 
 		type="net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean" 
 		bundle="APPLICATION_RESOURCES" >
-   	<slot name="installments" layout="option-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" 
+   	<slot name="installments" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
    		key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean.installments">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.InstallmentsForCreateInstallmentPenaltyExemptionBeanProvider" />
         <property name="saveOptions" value="true"/>
@@ -189,7 +189,7 @@
         <property name="eachSchema" value="Installment.view-description-only" />
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
     </slot>
-   	<slot name="justificationType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" 
+   	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
    		key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.justificationType">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
         <property name="saveOptions" value="true"/>
@@ -201,7 +201,7 @@
 <schema name="CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean.edit" 
 		type="net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean" 
 		bundle="APPLICATION_RESOURCES" >
-   	<slot name="justificationType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" 
+   	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
    	key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.justificationType">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
         <property name="saveOptions" value="true"/>
@@ -213,7 +213,7 @@
 <schema name="CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean.edit" 
 		type="net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean" 
 		bundle="APPLICATION_RESOURCES" >
-   	<slot name="justificationType" layout="radio-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" 
+   	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
    	key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.justificationType">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
         <property name="saveOptions" value="true"/>
@@ -285,7 +285,7 @@
 	<slot name="selected" />
 	<slot name="entry.description" read-only="true" />
 	<slot name="totalAmount" read-only="true"/>
-	<slot name="amountToPay" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="amountToPay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
@@ -305,7 +305,7 @@
 		<property name="minChars" value="1"/>
 		<property name="maxCount" value="20"/>
 	</slot>
-	<slot name="amount" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="amount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
@@ -332,19 +332,19 @@
 <schema name="CancelEventBean.editJustification" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CancelEventBean" bundle="APPLICATION_RESOURCES">
 	<slot name="event.description" read-only="true" />
 	<slot name="event.whenOccured" read-only="true"/>
-	<slot name="justification" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="justification" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="4" />
 		<property name="columns" value="40" />
 	</slot>
 </schema>
 
 <schema name="TransferPaymentsToOtherEventAndCancelBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.TransferPaymentsToOtherEventAndCancelBean" bundle="APPLICATION_RESOURCES">
-	<slot name="targetEvent" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="targetEvent" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.TargetEventsProviderForTransferPaymentsToOtherEventAndCancel" />
         <property name="eachLayout" value="values-dash" />
         <property name="eachSchema" value="AccountingEvent.view" />
     </slot>
-	<slot name="cancelJustification" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="cancelJustification" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="4" />
 		<property name="columns" value="40" />
 	</slot>
@@ -355,12 +355,12 @@
 	<slot name="whenRegistered" read-only="true"/>
 	<slot name="paymentMode" read-only="true"/>
 	<slot name="amountWithAdjustment" read-only="true"/>
-	<slot name="reason" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="reason" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 
 <schema name="editReceiptBean.edit" type="net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments.ReceiptsManagementDA$EditReceiptBean" bundle="APPLICATION_RESOURCES">
-	<slot name="contributorParty" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.contributor">
+	<slot name="contributorParty" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.contributor">
 		<property name="size" value="70"/>
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${name}"/>

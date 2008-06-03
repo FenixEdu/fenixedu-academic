@@ -1,14 +1,14 @@
 <!-- Material Management -->
 
 <schema name="SearchMaterialByType" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean" bundle="RESOURCE_MANAGER_RESOURCES">	
-	<slot name="materialType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="lable.material.type">
+	<slot name="materialType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="lable.material.type">
 		<property name="bundle" value="RESOURCE_MANAGER_RESOURCES"/>
 	</slot>
     <slot name="identification" key="label.material.identification"/> 	
 </schema>
 
 <schema name="PrepareCreateMaterial" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean" bundle="RESOURCE_MANAGER_RESOURCES">	
-	<slot name="materialType" layout="menu-postback" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="lable.material.type">
+	<slot name="materialType" layout="menu-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="lable.material.type">
 		<property name="bundle" value="RESOURCE_MANAGER_RESOURCES"/>
 		<property name="destination" value="postBack"/>	
 	</slot> 	
@@ -23,9 +23,9 @@
 </schema>
 
 <schema name="EditGenericMaterial" type="net.sourceforge.fenixedu.domain.material.Material" bundle="RESOURCE_MANAGER_RESOURCES">	
-	<slot name="identification" key="label.material.identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="barCodeNumber" key="label.material.barCodeNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
-	<slot name="owner" layout="autoComplete" key="label.material.owner" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="identification" key="label.material.identification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="barCodeNumber" key="label.material.barCodeNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
+	<slot name="owner" layout="autoComplete" key="label.material.owner" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="labelField" value="presentationNameWithParents"/>
 		<property name="indicatorShown" value="true"/>		
@@ -34,14 +34,14 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
 		<property name="minChars" value="2"/>	
 	</slot>
-	<slot name="acquisition" key="label.material.acquisition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="acquisition" key="label.material.acquisition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="cease" key="label.material.cease"/>		
 </schema>
 
 <schema name="CreateGenericMaterial" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean" bundle="RESOURCE_MANAGER_RESOURCES">	
-	<slot name="identification" key="label.material.identification" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="barCodeNumber" key="label.material.barCodeNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>	
-	<slot name="owner" layout="autoComplete" key="label.material.owner" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="identification" key="label.material.identification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="barCodeNumber" key="label.material.barCodeNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
+	<slot name="owner" layout="autoComplete" key="label.material.owner" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 		<property name="labelField" value="presentationNameWithParents"/>
 		<property name="indicatorShown" value="true"/>		
@@ -50,7 +50,7 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
 		<property name="minChars" value="2"/>	
 	</slot>
-	<slot name="acquisition" key="label.material.acquisition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="acquisition" key="label.material.acquisition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="cease" key="label.material.cease"/>		
 </schema>
 
@@ -69,16 +69,16 @@
 <!-- FireExtinguisher Schemas -->
 
 <schema name="EditFireExtinguisherMaterial" type="net.sourceforge.fenixedu.domain.material.FireExtinguisher" bundle="RESOURCE_MANAGER_RESOURCES" extends="EditGenericMaterial">		
-	<slot name="delivererEnterprise" key="label.material.delivererEnterprise" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="loadedDate" key="label.material.loadedDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="toBeInspectedDate" key="label.material.toBeInspectedDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="delivererEnterprise" key="label.material.delivererEnterprise" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="loadedDate" key="label.material.loadedDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="toBeInspectedDate" key="label.material.toBeInspectedDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<setter signature="edit(identification, barCodeNumber, acquisition, cease, owner, delivererEnterprise, loadedDate, toBeInspectedDate)" />	
 </schema>
 
 <schema name="CreateFireExtinguisherMaterial" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean" bundle="RESOURCE_MANAGER_RESOURCES" extends="CreateGenericMaterial">
-	<slot name="delivererEnterprise" key="label.material.delivererEnterprise" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="loadedDate" key="label.material.loadedDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-	<slot name="toBeInspectedDate" key="label.material.toBeInspectedDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="delivererEnterprise" key="label.material.delivererEnterprise" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="loadedDate" key="label.material.loadedDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="toBeInspectedDate" key="label.material.toBeInspectedDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="SeeFireExtinguisherMaterial" type="net.sourceforge.fenixedu.domain.material.FireExtinguisher" bundle="RESOURCE_MANAGER_RESOURCES" extends="SeeFoundMaterials">
@@ -94,19 +94,19 @@
 </schema>
 
 <schema name="CreateVehicleSchema" type="net.sourceforge.fenixedu.dataTransferObject.resourceManager.VehicleBean" bundle="RESOURCE_MANAGER_RESOURCES">		
-    <slot name="numberPlate" key="label.vehicle.numberPlate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/> 	
-    <slot name="make" key="label.vehicle.make" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="model" key="label.vehicle.model" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="acquisition" key="label.vehicle.acquisition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="numberPlate" key="label.vehicle.numberPlate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/> 	
+    <slot name="make" key="label.vehicle.make" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="model" key="label.vehicle.model" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="acquisition" key="label.vehicle.acquisition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="cease" key="label.vehicle.cease"/> 	
     <slot name="allocationCostMultiplier" key="label.vehicle.allocation.cost.multiplier"/>
 </schema>
 
 <schema name="SeeVehicleDetails" type="net.sourceforge.fenixedu.domain.resource.Vehicle" bundle="RESOURCE_MANAGER_RESOURCES">		
-    <slot name="numberPlate" key="label.vehicle.numberPlate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/> 	
-    <slot name="make" key="label.vehicle.make" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="model" key="label.vehicle.model" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-    <slot name="acquisition" key="label.vehicle.acquisition" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="numberPlate" key="label.vehicle.numberPlate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/> 	
+    <slot name="make" key="label.vehicle.make" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="model" key="label.vehicle.model" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="acquisition" key="label.vehicle.acquisition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="cease" key="label.vehicle.cease"/>      
     <slot name="allocationCostMultiplier" key="label.vehicle.allocation.cost.multiplier"/> 
     <setter signature="edit(numberPlate, make, model, acquisition, cease, allocationCostMultiplier)" />

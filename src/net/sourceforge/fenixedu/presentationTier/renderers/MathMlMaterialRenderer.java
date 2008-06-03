@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial;
-import net.sourceforge.fenixedu.renderers.StringRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlImage;
+import pt.ist.fenixWebFramework.renderers.StringRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlImage;
 
 public class MathMlMaterialRenderer extends StringRenderer {
 

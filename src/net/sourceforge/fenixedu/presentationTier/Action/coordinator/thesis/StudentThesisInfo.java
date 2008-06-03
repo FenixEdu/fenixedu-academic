@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.util.MultiLanguageString;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class StudentThesisInfo {
 

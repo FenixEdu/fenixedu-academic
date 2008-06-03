@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.taglib;
 
 import net.sourceforge.fenixedu.presentationTier.renderers.factories.DomainMetaObject;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.taglib.CreateObjectTag;
+import pt.ist.fenixWebFramework.renderers.model.MetaObject;
+import pt.ist.fenixWebFramework.renderers.schemas.Schema;
+import pt.ist.fenixWebFramework.renderers.taglib.CreateObjectTag;
 
 public class FenixCreateObjectTag extends CreateObjectTag {
     

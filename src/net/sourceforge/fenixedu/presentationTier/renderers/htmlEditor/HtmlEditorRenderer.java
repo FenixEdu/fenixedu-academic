@@ -4,13 +4,13 @@ package net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.presentationTier.renderers.components.HtmlEditor;
-import net.sourceforge.fenixedu.renderers.InputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlSubmitButton;
-import net.sourceforge.fenixedu.renderers.components.HtmlTextArea;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
+import pt.ist.fenixWebFramework.renderers.InputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlSubmitButton;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTextArea;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlotKey;
 
 
 

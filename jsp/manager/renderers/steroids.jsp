@@ -263,7 +263,7 @@
         &lt;tr&gt;
             &lt;td&gt;
                 &lt;fr:edit id=&quot;person-name-validated&quot; name=&quot;UserView&quot; property=&quot;person&quot; slot=&quot;name&quot;
-                         validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;&gt;
+                         validator=&quot;pt.ist.fenixWebFramework.renderers.validators.RequiredValidator&quot;&gt;
                     &lt;fr:layout&gt;
                         &lt;fr:property name=&quot;size&quot; value=&quot;50&quot;/&gt;
                     &lt;/fr:layout&gt;
@@ -288,7 +288,7 @@
                     <tr>
                         <td>
                             <fr:edit id="person-name-validated" name="UserView" property="person" slot="name"
-                                     validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+                                     validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
                                 <fr:layout>
                                     <fr:property name="size" value="50"/>
                                 </fr:layout>

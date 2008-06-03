@@ -7,14 +7,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
-import net.sourceforge.fenixedu.renderers.MenuOptionListRenderer;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
-import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
-import net.sourceforge.fenixedu.renderers.converters.EnumConverter;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.MenuOptionListRenderer;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.contexts.PresentationContext;
+import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
- * Fenix extension to the {@link net.sourceforge.fenixedu.renderers.MenuOptionListRenderer}.
+ * Fenix extension to the {@link pt.ist.fenixWebFramework.renderers.MenuOptionListRenderer}.
  * 
  * {@inheritDoc}
  * 

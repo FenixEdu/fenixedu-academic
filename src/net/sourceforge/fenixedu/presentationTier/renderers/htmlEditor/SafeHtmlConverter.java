@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
+import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;

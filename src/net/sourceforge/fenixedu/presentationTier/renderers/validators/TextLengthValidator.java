@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
-import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
+import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 
 public class TextLengthValidator extends HtmlValidator {
 

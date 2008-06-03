@@ -4,8 +4,8 @@ import java.util.Collections;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionPeriodsForAccountingEventCreationProvider implements DataProvider {
 

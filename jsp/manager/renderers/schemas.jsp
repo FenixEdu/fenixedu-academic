@@ -157,7 +157,7 @@
 
 <p>
     The input validation is done by validators. Validators are Java classes that extend 
-    <code>net.sourceforge.fenixedu.renderers.validators.HtmlValidator</code>. To validate
+    <code>pt.ist.fenixWebFramework.renderers.validators.HtmlValidator</code>. To validate
     a slot you need to specify the class of the validator that will be used.
 </p>
 
@@ -173,7 +173,7 @@
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
     <pre>&lt;slot ...&gt;
-    &lt;validator class=&quot;net.sourceforge.fenixedu.renderers.validators.RegexpValidator&quot;/&gt;
+    &lt;validator class=&quot;pt.ist.fenixWebFramework.renderers.validators.RegexpValidator&quot;/&gt;
         &lt;property name=&quot;regexp&quot; value=&quot;\p{Digit}+&quot;/&gt;
     &lt;/validator&gt;
     ...

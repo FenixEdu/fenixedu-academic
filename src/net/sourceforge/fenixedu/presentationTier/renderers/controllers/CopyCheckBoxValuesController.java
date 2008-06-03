@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.presentationTier.renderers.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
-import net.sourceforge.fenixedu.renderers.components.HtmlMultipleValueComponent;
-import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
+import pt.ist.fenixWebFramework.renderers.components.HtmlMultipleValueComponent;
+import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlController;
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 
 public class CopyCheckBoxValuesController extends HtmlController {
 

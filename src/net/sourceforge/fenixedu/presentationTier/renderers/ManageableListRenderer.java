@@ -1,32 +1,34 @@
-package net.sourceforge.fenixedu.renderers;
+package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
-import net.sourceforge.fenixedu.renderers.components.HtmlActionLink;
-import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
-import net.sourceforge.fenixedu.renderers.components.HtmlMultipleHiddenField;
-import net.sourceforge.fenixedu.renderers.components.HtmlTable;
-import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
-import net.sourceforge.fenixedu.renderers.components.controllers.HtmlActionLinkController;
-import net.sourceforge.fenixedu.renderers.components.state.IViewState;
-import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
-import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
-import net.sourceforge.fenixedu.renderers.utils.RenderMode;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.commons.collections.Predicate;
+
+import pt.ist.fenixWebFramework.renderers.InputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlMultipleHiddenField;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
+import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlActionLinkController;
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.contexts.PresentationContext;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.layouts.TabularLayout;
+import pt.ist.fenixWebFramework.renderers.model.MetaObject;
+import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlotKey;
+import pt.ist.fenixWebFramework.renderers.schemas.Schema;
+import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
+import pt.ist.fenixWebFramework.renderers.utils.RenderMode;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * This renderer allows you get a list as input but delegates part of the

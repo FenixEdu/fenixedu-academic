@@ -7,8 +7,8 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
-import net.sourceforge.fenixedu.renderers.components.converters.ConversionException;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 import org.w3c.dom.Document;
 import org.w3c.tidy.Tidy;

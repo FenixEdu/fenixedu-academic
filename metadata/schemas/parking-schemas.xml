@@ -220,7 +220,7 @@
 </schema>	
 
 <schema name="create.parkingRequestFactory.submitAs" type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryCreator">
-	<slot name="requestAs" key="label.submitAs" bundle="PARKING_RESOURCES" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="requestAs" key="label.submitAs" bundle="PARKING_RESOURCES" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.parking.ParkingRequestAsProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />		
 	</slot>
@@ -323,7 +323,7 @@
 </schema>
 
 <schema name="edit.parkingRequestFactory.submitAs" type="net.sourceforge.fenixedu.domain.parking.ParkingRequest$ParkingRequestFactoryEditor">
-	<slot name="requestAs" key="label.submitAs" bundle="PARKING_RESOURCES" layout="menu-select"  validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+	<slot name="requestAs" key="label.submitAs" bundle="PARKING_RESOURCES" layout="menu-select"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.parking.ParkingRequestAsProvider" />	
 		<property name="eachLayout" value="this-does-not-exist" />		
 	</slot>
@@ -338,9 +338,9 @@
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
 			<property name="lowerBound" value="1"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
-	<slot name="parkingGroup" key="label.group" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="parkingGroup" key="label.group" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.parking.ParkingGroup"/>
 		<property name="format" value="${groupName}"/>
 	</slot>
@@ -396,7 +396,7 @@
 </schema>
 
 <schema name="search.party.autocomplete" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean" bundle="PARKING_RESOURCES">
-	<slot name="party" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.name">
+	<slot name="party" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.name">
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>
 		<property name="format" value="${name}"/>
@@ -419,7 +419,7 @@
 </schema>
 
 <schema name="read.msAccessFile" type="net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean">
-	<slot name="inputStream" key="label.msAccessFile" bundle="PARKING_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="inputStream" key="label.msAccessFile" bundle="PARKING_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="fileNameSlot" value="fileName"/>
 	</slot>
@@ -443,7 +443,7 @@
 		<property name="sortBy" value="groupName"/>
 	</slot>
 	<slot name="actualEndDate" key="label.cardEndDate">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 		<property name="format" value="dd/MM/yyyy"/>
 		<property name="size" value="10"/>		
 	</slot>

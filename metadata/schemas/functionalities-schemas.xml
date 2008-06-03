@@ -4,7 +4,7 @@
     <slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="executionPath" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="executionPath" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
     <slot name="title">
@@ -53,7 +53,7 @@
     <slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="prefix" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" default="/">
+    <slot name="prefix" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" default="/">
         <property name="size" value="40"/>
     </slot>
     <slot name="title">
@@ -194,7 +194,7 @@
     		<property name="minChars" value="3"/>
     </slot>
     <slot name="personId">
-         <validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
+         <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
      </slot>
     <slot name="parameters">
         <property name="size" value="40"/>
@@ -227,7 +227,7 @@
 <schema name="functionalities.structure.bean" type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.StructureBean"
         bundle="FUNCTIONALITY_RESOURCES">
     <slot name="stream">
-        <validator class="net.sourceforge.fenixedu.renderers.validators.FileValidator">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
             <property name="required" value="true"/>
             <property name="acceptedTypes" value="text/xml"/>
         </validator>

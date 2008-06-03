@@ -423,13 +423,13 @@
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
     <pre>&lt;renderer type=&quot;java.lang.Object&quot; layout=&quot;nice-details-table&quot; 
-          class=&quot;net.sourceforge.fenixedu.renderers.StandardObjectRenderer&quot;&gt;
+          class=&quot;pt.ist.fenixWebFramework.renderers.StandardObjectRenderer&quot;&gt;
     &lt;property name=&quot;classes&quot; value=&quot;style1&quot;/&gt;
     &lt;property name=&quot;columnClasses&quot; value=&quot;listClasses,&quot;/&gt;
 &lt;/renderer&gt;
     
 &lt;renderer type=&quot;java.lang.Object&quot; layout=&quot;values-dash&quot; 
-          class=&quot;net.sourceforge.fenixedu.renderers.ValuesRenderer&quot;&gt;
+          class=&quot;pt.ist.fenixWebFramework.renderers.ValuesRenderer&quot;&gt;
     &lt;property name=&quot;htmlSeparator&quot; value=&quot; - &quot;/&gt;
 &lt;/renderer&gt;</pre>
 </div>

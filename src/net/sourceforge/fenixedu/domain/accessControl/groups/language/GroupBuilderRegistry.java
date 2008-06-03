@@ -53,7 +53,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 
 import org.apache.log4j.Logger;
 
-import pt.ist.utl.fenix.utils.Pair;
+import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
  * Keeps all the registered {@link GroupBuilder} by name.

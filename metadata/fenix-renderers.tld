@@ -301,7 +301,7 @@
   
   <tag>
     <name>validator</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.ValidatorTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.ValidatorTag</tag-class>
     <body-content>JSP</body-content>
     <description>
       Allows you tho specify the validator of a slot edition and give extra properties to that validator.
@@ -319,7 +319,7 @@
 
   <tag>
     <name>destination</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.EditLinkTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.EditLinkTag</tag-class>
     <body-content>empty</body-content>
     <description>
       Configures the destination when everything is ok.
@@ -480,7 +480,7 @@
   
   <tag>
     <name>layout</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.LayoutConfigTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.LayoutConfigTag</tag-class>
     <body-content>JSP</body-content>
     <description>
       Allows selection and configuration of a specific layout. The use of this tag overrides the
@@ -499,7 +499,7 @@
 
   <tag>
     <name>property</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.PropertyTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.PropertyTag</tag-class>
     <body-content>JSP</body-content>
     <description>
     		Sets a specific property of the layout or validator.
@@ -633,14 +633,14 @@
   
   <tag>
     <name>context</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.ContextTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.ContextTag</tag-class>
     <body-content>JSP</body-content>
 
   </tag>
 
   <tag>
     <name>message</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.MessageTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.MessageTag</tag-class>
     <body-content>empty</body-content>
 
     <attribute>
@@ -679,7 +679,7 @@
   
   <tag>
     <name>messages</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.MessagesTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.MessagesTag</tag-class>
     <body-content>JSP</body-content>
     <description>
         This tag is to be used as a parent of 'message' tags with no 'for' attribute.
@@ -709,7 +709,7 @@
 
   <tag>
     <name>hasMessages</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.HasMessagesTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.HasMessagesTag</tag-class>
     <body-content>JSP</body-content>
     <description>
         This tag is used to make a conditional inclusion of the body depending
@@ -741,7 +741,7 @@
 
   <tag>
     <name>form</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.FormTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.FormTag</tag-class>
     <body-content>JSP</body-content>
 
     <attribute>
@@ -855,7 +855,7 @@
 
   <tag>
     <name>viewstate</name>
-    <tag-class>net.sourceforge.fenixedu.renderers.taglib.EditViewStateTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.EditViewStateTag</tag-class>
     <body-content>JSP</body-content>
 
     <attribute>

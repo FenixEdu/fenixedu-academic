@@ -156,7 +156,7 @@ valueType net.sourceforge.fenixedu.util.HourMinuteSecond                        
 valueType net.sourceforge.fenixedu.util.MarkType                                                                     as MarkType;
 valueType net.sourceforge.fenixedu.util.Money                                                                        as Money;
 enum      net.sourceforge.fenixedu.util.Month                                                                        as Month;
-valueType net.sourceforge.fenixedu.util.MultiLanguageString                                                          as MultiLanguageString;
+valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString                                                          as MultiLanguageString;
 valueType net.sourceforge.fenixedu.util.OldPublicationType                                                           as OldPublicationType;
 valueType net.sourceforge.fenixedu.util.OrientationType                                                              as OrientationType;
 valueType net.sourceforge.fenixedu.util.PeriodState                                                                  as PeriodState;

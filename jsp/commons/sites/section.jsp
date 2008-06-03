@@ -389,7 +389,7 @@
         <div class="mtop1" style="background: #fff; border: 1px dotted #ccc; padding: 1em;">
 		
             <div>
-               	<fr:view name="item" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html">
+               	<fr:view name="item" property="body" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html">
                	</fr:view>
             </div>
     

@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 
 import org.apache.struts.action.ActionForm;
 
-import pt.ist.utl.fenix.utils.Pair;
+import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>

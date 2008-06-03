@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.ViewEventSpaceOccupationsBean;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;

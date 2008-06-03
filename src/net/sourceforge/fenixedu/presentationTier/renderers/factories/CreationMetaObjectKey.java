@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
-import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
+import pt.ist.fenixWebFramework.renderers.model.MetaObjectKey;
 
 public class CreationMetaObjectKey extends MetaObjectKey {
     public CreationMetaObjectKey(Class type) {

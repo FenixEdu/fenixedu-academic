@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PossibleParentSpacesToMoveSpaceDownProvider implements DataProvider {
 

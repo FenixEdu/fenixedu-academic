@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewSection;
 import net.sourceforge.fenixedu.domain.tests.NewTest;
-import net.sourceforge.fenixedu.renderers.Renderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.Renderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 public class TestElementVariationRenderer extends Renderer {
 

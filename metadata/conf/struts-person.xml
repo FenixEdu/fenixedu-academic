@@ -338,7 +338,7 @@
       <set-property property="pathnames" 
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-person.xml"/>
     </plug-in>
-    <plug-in className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
+    <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
 	    <set-property property="config" 
 	                  value="/WEB-INF/fenix-renderers-config.xml"
 	    />    

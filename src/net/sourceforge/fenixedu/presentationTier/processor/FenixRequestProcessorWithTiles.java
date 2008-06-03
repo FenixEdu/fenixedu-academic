@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
+import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor;
 
 /**
  * @author jpvl

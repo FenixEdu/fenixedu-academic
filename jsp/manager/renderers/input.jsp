@@ -124,18 +124,18 @@
         <p><strong>Schema</strong></p>
         <pre>&lt;schema name=&quot;person.simple-edit-validated&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
     &lt;slot name=&quot;name&quot;&gt;
-        &lt;validator class=&quot;net.sourceforge.fenixedu.renderers.validators.RegexpValidator&quot;&gt;
+        &lt;validator class=&quot;pt.ist.fenixWebFramework.renderers.validators.RegexpValidator&quot;&gt;
             &lt;property name=&quot;regexp&quot; value=&quot;\p{Space}*[^ ]+\p{Space}+[^ ]+.*&quot;/&gt;
             &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e último nome&quot;/&gt;
             &lt;property name=&quot;key&quot; value=&quot;false&quot;/&gt;
         &lt;/validator&gt;
         &lt;property name=&quot;size&quot; value=&quot;50&quot;/&gt;
     &lt;/slot&gt;
-    &lt;slot name=&quot;gender&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
-    &lt;slot name=&quot;idDocumentType&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
-    &lt;slot name=&quot;documentIdNumber&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
+    &lt;slot name=&quot;gender&quot; validator=&quot;pt.ist.fenixWebFramework.renderers.validators.RequiredValidator&quot;/&gt;
+    &lt;slot name=&quot;idDocumentType&quot; validator=&quot;pt.ist.fenixWebFramework.renderers.validators.RequiredValidator&quot;/&gt;
+    &lt;slot name=&quot;documentIdNumber&quot; validator=&quot;pt.ist.fenixWebFramework.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;expirationDateOfDocumentIdYearMonthDay&quot;&gt;
-        &lt;validator class=&quot;net.sourceforge.fenixedu.renderers.validators.RegexpValidator&quot;&gt;
+        &lt;validator class=&quot;pt.ist.fenixWebFramework.renderers.validators.RegexpValidator&quot;&gt;
             &lt;property name=&quot;regexp&quot; value=&quot;\p{Digit}?\p{Digit}/\p{Digit}?\p{Digit}/(\p{Digit}\p{Digit})?\p{Digit}\p{Digit}&quot;/&gt;
         &lt;/validator&gt;
         &lt;property name=&quot;size&quot; value=&quot;12&quot;/&gt;
@@ -250,7 +250,7 @@ public class RegexpValidator extends HtmlValidator {
         <p><strong>Schema</strong></p>
         <pre>&lt;schema name=&quot;person.create-minimal&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
     &lt;slot name=&quot;name&quot;&gt;
-        &lt;validator class=&quot;net.sourceforge.fenixedu.renderers.validators.RegexpValidator&quot;&gt;
+        &lt;validator class=&quot;pt.ist.fenixWebFramework.renderers.validators.RegexpValidator&quot;&gt;
             &lt;property name=&quot;regexp&quot; value=&quot;\p{Space}*[^ ]+\p{Space}+[^ ]+.*&quot;/&gt;
             &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e último nome&quot;/&gt;
             &lt;property name=&quot;key&quot; value=&quot;false&quot;/&gt;
@@ -258,13 +258,13 @@ public class RegexpValidator extends HtmlValidator {
         &lt;property name=&quot;size&quot; value=&quot;50&quot;/&gt;
     &lt;/slot&gt;
     &lt;slot name=&quot;username&quot;
-          validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
+          validator=&quot;pt.ist.fenixWebFramework.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;idDocumentType&quot; 
-          validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
-    &lt;slot name=&quot;documentIdNumber&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
-    &lt;slot name=&quot;gender&quot; validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
+          validator=&quot;pt.ist.fenixWebFramework.renderers.validators.RequiredValidator&quot;/&gt;
+    &lt;slot name=&quot;documentIdNumber&quot; validator=&quot;pt.ist.fenixWebFramework.renderers.validators.RequiredValidator&quot;/&gt;
+    &lt;slot name=&quot;gender&quot; validator=&quot;pt.ist.fenixWebFramework.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;maritalStatus&quot; 
-          validator=&quot;net.sourceforge.fenixedu.renderers.validators.RequiredValidator&quot;/&gt;
+          validator=&quot;pt.ist.fenixWebFramework.renderers.validators.RequiredValidator&quot;/&gt;
     &lt;slot name=&quot;isPassInKerberos&quot;/&gt;
 &lt;/schema&gt;</pre>
     </div>
@@ -384,7 +384,7 @@ public class RegexpValidator extends HtmlValidator {
     &lt;fr:default slot=&quot;name&quot; name=&quot;UserView&quot; property=&quot;person.name&quot;/&gt;
     &lt;fr:default slot=&quot;username&quot; value=&quot;&lt;%= &quot;p&quot; + 12345 %&gt;&quot;/&gt;
     &lt;fr:default slot=&quot;idDocumentType&quot; value=&quot;IDENTITY_CARD&quot; 
-                converter=&quot;net.sourceforge.fenixedu.renderers.converters.EnumConverter&quot;/&gt;
+                converter=&quot;pt.ist.fenixWebFramework.renderers.converters.EnumConverter&quot;/&gt;
     &lt;fr:default slot=&quot;isPassInKerberos&quot; value=&quot;true&quot;/&gt;
 &lt;/fr:create&gt;</pre>
     </div>
@@ -402,7 +402,7 @@ public class RegexpValidator extends HtmlValidator {
                 <fr:default slot="name" name="UserView" property="person.name"/>
                 <fr:default slot="username" value="<%= "p" + 12345 %>"/>
                 <fr:default slot="idDocumentType" value="IDENTITY_CARD" 
-                            converter="net.sourceforge.fenixedu.renderers.converters.EnumConverter"/>
+                            converter="pt.ist.fenixWebFramework.renderers.converters.EnumConverter"/>
                 <fr:default slot="isPassInKerberos" value="true"/>
             </fr:create>
         </div>

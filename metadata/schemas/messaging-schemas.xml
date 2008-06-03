@@ -14,7 +14,7 @@
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThread.create" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
-   	<slot name="title" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+   	<slot name="title" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThread.view-full" type="net.sourceforge.fenixedu.domain.messaging.ConversationThread">
@@ -118,10 +118,10 @@
 </schema>
 
 <schema name="MailBean.compose" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean" bundle="MESSAGING_RESOURCES">
-    <slot name="fromName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="fromName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="fromAddress" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="fromAddress" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
     <slot name="receiversGroup" layout="menu-select">
@@ -134,7 +134,7 @@
         <property name="size" value="60"/>
     </slot>
     <slot name="copyToSenderRequested"/>
-    <slot name="subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="60"/>
     </slot>
     <slot name="message" layout="longText">
@@ -144,13 +144,13 @@
 </schema>
 
 <schema name="MailBean.compose.option" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean" bundle="MESSAGING_RESOURCES">
-    <slot name="fromName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="fromName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="fromAddress" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="fromAddress" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBeanGroupProvider" />
         <property name="eachSchema" value="group.description"/>
         <property name="eachLayout" value="values"/>
@@ -161,7 +161,7 @@
         <property name="size" value="60"/>
     </slot>
     <slot name="copyToSenderRequested"/>
-    <slot name="subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="60"/>
     </slot>
     <slot name="message" layout="longText">
@@ -172,10 +172,10 @@
 
 <schema name="MailBean.compose.option.fromReadOnly" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean" bundle="MESSAGING_RESOURCES">
     <slot name="fromName" read-only="true"/>
-    <slot name="fromAddress" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="fromAddress" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBeanGroupProvider" />
         <property name="eachSchema" value="group.description"/>
         <property name="eachLayout" value="values"/>
@@ -186,7 +186,7 @@
         <property name="size" value="60"/>
     </slot>
     <slot name="copyToSenderRequested"/>
-    <slot name="subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="60"/>
     </slot>
     <slot name="message" layout="longText">
@@ -197,13 +197,13 @@
 
 
 <schema name="MailBean.compose.for.units" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean" bundle="MESSAGING_RESOURCES">
-	    <slot name="fromName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	    <slot name="fromName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="fromAddress" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="fromAddress" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBeanGroupProvider" />
         <property name="eachSchema" value="researchUnitGroupDescription"/>
         <property name="eachLayout" value="values"/>
@@ -215,7 +215,7 @@
         <property name="size" value="50"/>
     </slot>
     <slot name="copyToSenderRequested"/>
-    <slot name="subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="50"/>
     </slot>
     <slot name="message" layout="longText">
@@ -226,10 +226,10 @@
 
 <schema name="MailBean.compose.for.units.fromReadOnly" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean" bundle="MESSAGING_RESOURCES">
     <slot name="fromName" read-only="true"/>
-    <slot name="fromAddress" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="fromAddress" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBeanGroupProvider" />
         <property name="eachSchema" value="researchUnitGroupDescription"/>
         <property name="eachLayout" value="values"/>
@@ -241,7 +241,7 @@
         <property name="size" value="50"/>
     </slot>
     <slot name="copyToSenderRequested"/>
-    <slot name="subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="50"/>
     </slot>
     <slot name="message" layout="longText">
@@ -252,7 +252,7 @@
 
 
 <schema name="MailBean.compose.for.teacherTutoredStudents" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean" bundle="MESSAGING_RESOURCES">
-    <slot name="fromName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="fromName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
     <slot name="fromAddress" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
@@ -262,7 +262,7 @@
     <slot name="receiversOfCopy" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
 	    <property name="size" value="40"/>
     </slot>
-    <slot name="subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="60"/>
     </slot>
     <slot name="message" layout="longText">
@@ -297,13 +297,13 @@
 </schema>
 
 <schema name="MailBean.compose.for.delegate" type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean" bundle="MESSAGING_RESOURCES">
-    <slot name="fromName" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="fromName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="40"/>
     </slot>
     <slot name="fromAddress" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
         <property name="size" value="40"/>
     </slot>
-    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="receiversGroupList" layout="option-select" key="label.receiversGroup" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBeanGroupProvider" />
         <property name="eachSchema" value="delegatesGroupDescription"/>
         <property name="eachLayout" value="values"/>
@@ -315,7 +315,7 @@
     <slot name="receiversOfCopy" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
 	    <property name="size" value="40"/>
     </slot>
-    <slot name="subject" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+    <slot name="subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="60"/>
     </slot>
     <slot name="message" layout="longText">

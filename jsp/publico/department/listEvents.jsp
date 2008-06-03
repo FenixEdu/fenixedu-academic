@@ -105,7 +105,7 @@ if (month != null && year!=null)
 				<h3 class="mvert025">
 				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
 					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
-						<fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
+						<fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
 					</span>
 				</html:link> 	 	
 				</h3>
@@ -116,7 +116,7 @@ if (month != null && year!=null)
 				<h3 class="mvert0 dinline">
 				<html:link action="<%=contextPrefix +extraParameters +"&amp;method=viewAnnouncement&amp;announcementId=" + announcement.getIdInternal()%>">
 					<span id="<%="ID_" + announcement.getIdInternal().toString()%>">
-						<fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
+						<fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
 					</span>
 				</html:link> 	 	
 				</h3>
@@ -139,7 +139,7 @@ if (month != null && year!=null)
 				 	else
 				 	{
 				 %>
-				 	<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html"/>				 	
+				 	<fr:view name="announcement" property="body" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html"/>				 	
 				 <% 
 				 	}
 				 %>
@@ -148,7 +148,7 @@ if (month != null && year!=null)
 				
 			<logic:present name="announcementBoard">
 				<div class="ann_body mvert025">
-					<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html"/>
+					<fr:view name="announcement" property="body" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html"/>
 				</div>
 			</logic:present>
 

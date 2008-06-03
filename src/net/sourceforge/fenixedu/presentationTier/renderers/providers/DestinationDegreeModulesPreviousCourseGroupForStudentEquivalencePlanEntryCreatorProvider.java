@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.StudentEquivalencyPlanEntryCreator;
-import net.sourceforge.fenixedu.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
 
 public class DestinationDegreeModulesPreviousCourseGroupForStudentEquivalencePlanEntryCreatorProvider
 	extends DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryCreatorProvider

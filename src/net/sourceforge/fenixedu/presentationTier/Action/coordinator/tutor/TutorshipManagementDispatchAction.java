@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipMa
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementByEntryYearBean;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.struts.action.ActionForm;

@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.renderers.model.UserIdentity;
-import net.sourceforge.fenixedu.renderers.model.UserIdentityFactory;
+import pt.ist.fenixWebFramework.renderers.model.UserIdentity;
+import pt.ist.fenixWebFramework.renderers.model.UserIdentityFactory;
 
 public class FenixUserIdentityFactory extends UserIdentityFactory {
 

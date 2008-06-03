@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.tests;
 
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 public class MultipleChoiceTypeRenderer extends AnswerTypeRenderer {
 

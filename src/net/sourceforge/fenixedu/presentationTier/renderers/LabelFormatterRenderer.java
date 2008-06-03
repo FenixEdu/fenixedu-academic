@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.presentationTier.renderers.util.RendererMessageResourceProvider;
-import net.sourceforge.fenixedu.renderers.OutputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.components.HtmlText;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.OutputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 public class LabelFormatterRenderer extends OutputRenderer {

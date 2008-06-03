@@ -1,11 +1,11 @@
 <schema name="specialSeason.choose.student"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonEnrolmentBean">
-	<slot name="studentNumber" key="label.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="studentNumber" key="label.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="6" />
 		<property name="maxLength" value="5" />
 	</slot>
 	<slot name="executionYear" key="lable.executionYear" 
-			validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" layout="menu-select">
+			validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
 		<property name="choiceType"

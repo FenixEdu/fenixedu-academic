@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.converters;
 
-import net.sourceforge.fenixedu.renderers.components.converters.BiDirectionalConverter;
+import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 
 import org.joda.time.YearMonthDay;
 

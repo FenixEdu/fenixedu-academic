@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.ArgumentLis
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilderRegistry;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.collections.set.UnmodifiableSet;

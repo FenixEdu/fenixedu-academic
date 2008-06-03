@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
-import net.sourceforge.fenixedu.renderers.validators.EmailValidator;
-import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
+import pt.ist.fenixWebFramework.renderers.validators.EmailValidator;
+import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 
 public class NotRequiredEmailValidator extends EmailValidator {
 

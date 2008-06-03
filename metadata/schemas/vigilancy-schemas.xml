@@ -72,16 +72,16 @@
 <!--  VigilantGroup Schemas -->
 
 <schema name="vigilantGroup.block1" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" bundle="VIGILANCY_RESOURCES">
-		<slot name="name" key="label.vigilancy.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="name" key="label.vigilancy.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="40"/>
 		</slot>
-		<slot name="convokeStrategy" key="label.vigilancy.algorithm" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="convokeStrategy" key="label.vigilancy.algorithm" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.StrategyProvider"/>
 		</slot>
-		<slot name="contactEmail" key="label.vigilancy.contactEmail" validator="net.sourceforge.fenixedu.renderers.validators.EmailValidator">
+		<slot name="contactEmail" key="label.vigilancy.contactEmail" validator="pt.ist.fenixWebFramework.renderers.validators.EmailValidator">
 			<property name="size" value="40"/>
 		</slot>
-		<slot name="emailPrefix" key="label.vigilancy.subjectEmailPrefix" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="emailPrefix" key="label.vigilancy.subjectEmailPrefix" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="40"/>
 		</slot>
 		<slot name="rulesLink" key="label.vigilancy.rulesLink.optionalField" layout="input-with-comment">
@@ -209,44 +209,44 @@
 
 <schema name="edit.vigilantGroup.points" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" bundle="VIGILANCY_RESOURCES">
 	<slot name="pointsForTeacher">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForConvoked">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForDismissed">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForDismissedTeacher">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForMissing">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForMissingTeacher">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
 	<slot name="pointsForDisconvoked">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>	
 	</slot>
@@ -643,7 +643,7 @@ extends="presentSimpleConvokesWithoutLink">
 </schema>
 
 <schema name="addExternalCourse" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilancyCourseGroupBean" bundle="VIGILANCY_RESOURCES">
-		<slot name="externalCourse" key="label.vigilancy.name" layout="autoComplete" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="externalCourse" key="label.vigilancy.name" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="maxCount" value="30"/>
 			<property name="size" value="40"/>
 			<property name="labelField" value="nome"/>
@@ -720,14 +720,14 @@ extends="presentSimpleConvokesWithoutLink">
 </schema>
 
 <schema name="addUnavailablePeriodToVigilant" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodBean" bundle="VIGILANCY_RESOURCES">
-		<slot name="vigilant" key="label.vigilancy.vigilants" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="vigilant" key="label.vigilancy.vigilants" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.SelectVigilantForUnavailable"/>
 			<property name="format" value="${person.name}"/>
 		</slot>				
-		<slot name="beginDate" key="label.vigilancy.beginDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-		<slot name="endDate" key="label.vigilancy.endDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
-		<slot name="justification" key="label.vigilancy.justification" layout="longText" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+		<slot name="beginDate" key="label.vigilancy.beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<slot name="endDate" key="label.vigilancy.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<slot name="justification" key="label.vigilancy.justification" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<property name="columns" value="50"/>
 				<property name="rows" value="10"/>
 		</slot>
@@ -818,8 +818,8 @@ extends="presentSimpleConvokesWithoutLink">
 	<slot name="person.username" read-only="true" key="label.vigilancy.username"/>
 	<slot name="person.name" read-only="true" key="label.vigilancy.vigilant"/>
 	<slot name="startPoints" key="label.vigilancy.startPoints">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
 	</slot>
@@ -927,7 +927,7 @@ extends="presentSimpleConvokesWithoutLink">
 </schema>
 
 <schema name="variant.integer" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="VIGILANCY_RESOURCES">
-	<slot name="integer" key="label.vigilancy.selectNumberOfVigilantsToUnconvoke" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="integer" key="label.vigilancy.selectNumberOfVigilantsToUnconvoke" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="1"/>
 	</slot>
 </schema>

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
-import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
-import net.sourceforge.fenixedu.renderers.validators.HtmlChainValidator;
+import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
+import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 
 import org.joda.time.DateTime;
 

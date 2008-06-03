@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.publication;
 
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean;
-import net.sourceforge.fenixedu.renderers.DataProvider;
-import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PersonsFoundForBibtexPerson implements DataProvider {
 

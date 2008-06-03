@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.PersonFunctionsBean;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;

@@ -74,13 +74,13 @@
 			
 			<%-- Summary --%>
 			<h3 class="mtop2 mbottom05">
-				<fr:view name="summary" property="title" type="net.sourceforge.fenixedu.util.MultiLanguageString" />
+				<fr:view name="summary" property="title" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" />
 				<%-- Order --%>	
 				<span class="greytxt1 fwnormal" style="font-size: 0.75em"><bean:write name="summary" property="order"/></span>
 			</h3>			
 			<logic:equal name="showSummariesBean" property="listSummaryType" value="ALL_CONTENT">				
 				<p class="mvert05">
-					<fr:view name="summary" property="summaryText" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />					
+					<fr:view name="summary" property="summaryText" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html" />					
 				</p>
 			</logic:equal>	
 			

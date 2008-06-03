@@ -8,29 +8,29 @@
 </schema>
 
 <schema name="create.protocol" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
-	<slot name="protocolNumber"	key="label.protocol.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"
+	<slot name="protocolNumber"	key="label.protocol.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 		 bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
 	</slot>
 	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
 	</slot>
 	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="scientificAreas" key="label.protocol.scientificAreas" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="columns" value="60" />
@@ -52,14 +52,14 @@
 </schema>
 
 <schema name="edit.protocol.data" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
-	<slot name="protocolNumber"	key="label.protocol.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="protocolNumber"	key="label.protocol.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="scientificAreas" key="label.protocol.scientificAreas" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="columns" value="40" />
@@ -81,11 +81,11 @@
 </schema>
 
 <schema name="edit.protocol.totalData" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory">
-	<slot name="protocolNumber"	key="label.protocol.number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	<slot name="protocolNumber"	key="label.protocol.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="signedDate" key="label.protocol.signedDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
 	</slot>
@@ -441,7 +441,7 @@
 	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
 		<property name="formatText" value=""/>		
@@ -449,7 +449,7 @@
 	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
 		<property name="formatText" value=""/>
@@ -458,30 +458,30 @@
 
 <schema name="renew.protocolHistoryFactory" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory">
 	<slot name="duration" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator"/>
-    	<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="maxLength" value="2"/>
 		<property name="size" value="3"/>
 	</slot>
-	<slot name="renewTime" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+	<slot name="renewTime" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="edit.protocolHistoryFactory" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolHistoryFactory">
 	<slot name="beginDate" key="label.protocol.beginDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="endDate" key="label.protocol.endDate" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.DateValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
 
@@ -506,7 +506,7 @@
 <schema name="edit.protocolSearch.number" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
 	<slot name="protocolNumber"	key="label.protocol.number" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="year" key="label.activeInYear" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<validator class="net.sourceforge.fenixedu.renderers.validators.NumberValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator">
 			<property name="required" value="false"/>
 		</validator>
 	</slot>

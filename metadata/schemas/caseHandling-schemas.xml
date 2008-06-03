@@ -30,8 +30,8 @@
 	<slot name="executionInterval.name" key="label.executionInterval" read-only="true">
 		<property name="classes" value="bold" />
 	</slot>
-	<slot name="start" key="label.begin" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="end" key="label.end" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="start" key="label.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema name="Over23CandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean"
@@ -50,14 +50,14 @@
 </schema>
 
 <schema name="CandidacyProcess.choosePersonBean" type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean" bundle="APPLICATION_RESOURCES">
-	<slot name="name" key="label.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50" />
 	</slot>
-	<slot name="identificationNumber" key="label.identificationNumber" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="identificationNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="maxLength" value="20" />
 	</slot>
-	<slot name="documentType" key="label.idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="dateOfBirth" key="label.dateOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="documentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="dateOfBirth" key="label.dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
@@ -150,22 +150,22 @@
 	<slot name="name" read-only="true" key="label.name" />
 	<slot name="documentIdNumber" key="label.identificationNumber" />
 	<slot name="idDocumentType" key="label.idDocumentType" />
-	<slot name="documentIdEmissionDate" key="label.documentIdEmissionDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="documentIdEmissionDate" key="label.documentIdEmissionDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="documentIdExpirationDate" key="label.documentIdExpirationDate" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="documentIdExpirationDate" key="label.documentIdExpirationDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="documentIdEmissionLocation" key="label.documentIdEmissionLocation" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="dateOfBirth" key="label.dateOfBirth" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="documentIdEmissionLocation" key="label.documentIdEmissionLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="dateOfBirth" key="label.dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="gender" key="label.gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="maritalStatus" key="label.maritalStatus" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="nationality" layout="menu-select" key="label.nationality" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="gender" key="label.gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="maritalStatus" key="label.maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${nationality}" />
 		<property name="sortBy" value="nationality"/>
@@ -174,21 +174,21 @@
 		<property name="size" value="9" />
 		<property name="maxLength" value="9" />
 	</slot>
-	<slot name="address" key="label.address" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="address" key="label.address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="areaCode" key="label.areaCode" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="areaCode" key="label.areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="10"/>
-		 <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\d{4}-\d{3}"/>
             <property name="message" value="error.areaCode.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="areaOfAreaCode" key="label.areaOfAreaCode" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="areaOfAreaCode" key="label.areaOfAreaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 	</slot>
-	<slot name="area" key="label.area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="area" key="label.area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 	</slot>
 	
@@ -204,7 +204,7 @@
 </schema>
 
 <schema name="Over23IndividualCandidacyProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyDate" key="label.candidacy.date" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="candidacyDate" key="label.candidacy.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema name="Over23IndividualCandidacyProcessBean.degrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
@@ -231,7 +231,7 @@
 </schema>
 
 <schema name="Over23IndividualCandidacyResultBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
-	<slot name="state" key="label.candidacy.individual.state" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="state" key="label.candidacy.individual.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
 	<slot name="acceptedDegree" layout="menu-select" key="label.degree.name">
@@ -253,11 +253,11 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyDate" key="label.candidacy.date" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="candidacyDate" key="label.candidacy.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyProcessBean.selectDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-   	<slot name="selectedDegree" layout="menu-select" key="label.degree.name" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+   	<slot name="selectedDegree" layout="menu-select" key="label.degree.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCycleIndividualCandidacyDegreesProvider" />
         <property name="format" value="${presentationName}" />
         <property name="sortBy" value="degreeType, name"/>
@@ -265,7 +265,7 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyProcessBean.precedentDegreeInformation.chooseType" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="destination" value="precedentDegreeTypePostback"/>
 		<property name="classes" value="nobullet liinline"/>
@@ -273,12 +273,12 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.create" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="destination" value="precedentDegreeTypePostback"/>
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
-	<slot name="precedentDegreeInformation.degreeDesignation" key="label.Degree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="precedentDegreeInformation.degreeDesignation" key="label.Degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="maxLength" value="255"/>
 	</slot>
@@ -296,7 +296,7 @@
 	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade">
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{2}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -305,7 +305,7 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.create" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="destination" value="precedentDegreeTypePostback"/>
 		<property name="classes" value="nobullet liinline"/>
@@ -317,11 +317,11 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" read-only="true" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" read-only="true" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
-	<slot name="precedentDegreeInformation.degreeDesignation" key="label.Degree" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="precedentDegreeInformation.degreeDesignation" key="label.Degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="maxLength" value="255"/>
 	</slot>
@@ -339,7 +339,7 @@
 	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade">
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="(\d{2}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -348,7 +348,7 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" read-only="true" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" read-only="true" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="classes" value="nobullet liinline"/>
 	</slot>
@@ -373,7 +373,7 @@
 	<slot name="professionalExperience" key="label.candidacy.professionalExperience" >
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\d{1,}"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -382,7 +382,7 @@
 	<slot name="affinity" key="label.candidacy.affinity">
 		<property name="size" value="6"/>
 		<property name="maxLength" value="6"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]+(\\.[0-9]+)?"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -391,7 +391,7 @@
 	<slot name="degreeNature" key="label.candidacy.degreeNature">
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\d{1,}"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -400,7 +400,7 @@
 	<slot name="grade" key="label.candidacy.grade">
 		<property name="size" value="6"/>
 		<property name="maxLength" value="6"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]+(\\.[0-9]+)?"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -409,7 +409,7 @@
 	<slot name="interviewGrade" key="label.candidacy.interviewGrade">
 		<property name="size" value="6"/>
 		<property name="maxLength" value="6"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="([0-9]+(\\.[0-9]+)?)|NA"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -418,13 +418,13 @@
 	<slot name="seriesGrade" key="label.candidacy.seriesGrade">
 		<property name="size" value="6"/>
 		<property name="maxLength" value="6"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]+(\\.[0-9]+)?"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="state" key="label.candidacy.individual.state" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="state" key="label.candidacy.individual.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
 	<slot name="notes" key="label.candidacy.notes">
@@ -438,7 +438,7 @@
 	<slot name="professionalExperience" key="label.candidacy.professionalExperience" >
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\d{1,}"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -450,7 +450,7 @@
 	<slot name="affinity" key="label.candidacy.affinity">
 		<property name="size" value="6"/>
 		<property name="maxLength" value="6"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]+(\\.[0-9]+)?"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -459,7 +459,7 @@
 	<slot name="degreeNature" key="label.candidacy.degreeNature">
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\d{1,}"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -468,7 +468,7 @@
 	<slot name="grade" key="label.candidacy.grade">
 		<property name="size" value="6"/>
 		<property name="maxLength" value="6"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]+(\\.[0-9]+)?"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -477,7 +477,7 @@
 	<slot name="interviewGrade" key="label.candidacy.interviewGrade">
 		<property name="size" value="6"/>
 		<property name="maxLength" value="6"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="([0-9]+(\\.[0-9]+)?)|NA"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
@@ -486,13 +486,13 @@
 	<slot name="seriesGrade" key="label.candidacy.seriesGrade">
 		<property name="size" value="6"/>
 		<property name="maxLength" value="6"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]+(\\.[0-9]+)?"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="state" key="label.candidacy.individual.state" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="state" key="label.candidacy.individual.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
 	<slot name="notes" key="label.candidacy.notes">

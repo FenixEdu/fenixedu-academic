@@ -1,6 +1,6 @@
 <schema name="contacts.PartyContact.manage" type="net.sourceforge.fenixedu.domain.contacts.PartyContact" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="party" hidden="true"/>
-	<slot name="type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="defaultContact" key="label.partyContacts.defaultContact" />
 </schema>
 
@@ -8,23 +8,23 @@
 	 	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES"
 	 	constructor="party, type, defaultContact, address, areaCode, areaOfAreaCode, area, parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, countryOfResidence">
 	 	
-	<slot name="address" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="area" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
+	<slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="areaCode">
 		<property name="size" value="10"/>
-		 <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\d{4}-\d{3}"/>
             <property name="message" value="error.areaCode.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="areaOfAreaCode" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="parishOfResidence" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="districtSubdivisionOfResidence" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="districtOfResidence" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" />
-	<slot name="countryOfResidence" layout="menu-select" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" >
+	<slot name="areaOfAreaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="parishOfResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="districtSubdivisionOfResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="districtOfResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name"/>		
@@ -34,9 +34,9 @@
 
 <schema name="contacts.Phone.manage" type="net.sourceforge.fenixedu.domain.contacts.Phone" extends="contacts.PartyContact.manage"
 		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, number">
-	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="15"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]*"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
@@ -47,9 +47,9 @@
 
 <schema name="contacts.MobilePhone.manage" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone" extends="contacts.PartyContact.manage"
 		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, number">
-	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="15"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]*"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
@@ -60,7 +60,7 @@
 
 <schema name="contacts.EmailAddress.manage" type="net.sourceforge.fenixedu.domain.contacts.EmailAddress" extends="contacts.PartyContact.manage"
 		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, value">
-	<slot name="value" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.email">
+	<slot name="value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.email">
 		<property name="size" value="50"/>
 	</slot>
 	<setter signature="edit(type, defaultContact, value)" />
@@ -68,7 +68,7 @@
 
 <schema name="contacts.WebAddress.manage" type="net.sourceforge.fenixedu.domain.contacts.WebAddress" extends="contacts.PartyContact.manage"
 		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, url">
-	<slot name="url" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.webAddress">
+	<slot name="url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.webAddress">
 		<property name="size" value="40"/>
 	</slot>
 	<setter signature="edit(type, defaultContact, url)" />
@@ -139,7 +139,7 @@
 <!-- student schemas -->
 <schema name="contacts.PartyContact.manage-student" type="net.sourceforge.fenixedu.domain.contacts.PartyContact" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="party" hidden="true"/>
-	<slot name="type" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="INSTITUTIONAL" />
 	</slot>
 	<slot name="defaultContact" key="label.partyContacts.defaultContact" />
@@ -147,9 +147,9 @@
 
 <schema name="contacts.Phone.manage-student" type="net.sourceforge.fenixedu.domain.contacts.Phone" extends="contacts.PartyContact.manage-student"
 		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, number">
-	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="15"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]*"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
@@ -160,9 +160,9 @@
 
 <schema name="contacts.MobilePhone.manage-student" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone" extends="contacts.PartyContact.manage-student"
 		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, number">
-	<slot name="number" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator">
+	<slot name="number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="15"/>
-		<validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="[0-9]*"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
@@ -173,7 +173,7 @@
 
 <schema name="contacts.EmailAddress.manage-student" type="net.sourceforge.fenixedu.domain.contacts.EmailAddress" extends="contacts.PartyContact.manage-student"
 		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, value">
-	<slot name="value" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.email">
+	<slot name="value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.email">
 		<property name="size" value="50"/>
 	</slot>
 	<setter signature="edit(type, defaultContact, value)" />
@@ -181,7 +181,7 @@
 
 <schema name="contacts.WebAddress.manage-student" type="net.sourceforge.fenixedu.domain.contacts.WebAddress" extends="contacts.PartyContact.manage-student"
 		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, url">
-	<slot name="url" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator" key="label.webAddress">
+	<slot name="url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.webAddress">
 		<property name="size" value="40"/>
 	</slot>
 	<setter signature="edit(type, defaultContact, url)" />

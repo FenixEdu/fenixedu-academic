@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.renderers.DateRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.DateRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 import org.joda.time.DateTime;
 

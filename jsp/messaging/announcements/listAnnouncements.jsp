@@ -72,7 +72,7 @@
 					<logic:equal name="announcement" property="visible" value="true">
 						<h3 class="mvert025">
 							<html:link action="<%= urlSubject %>">
-								<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString" /></span>
+								<span><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" /></span>
 							</html:link>
 						</h3>
 					</logic:equal>
@@ -80,7 +80,7 @@
 						<p class="mvert025">
 							<h3 class="mvert0 dinline">
 								<html:link action="<%= urlSubject %>">
-									<span><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString" /></span>
+									<span><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" /></span>
 								</html:link>
 							</h3>
 							<em class="warning1"><bean:message key="label.invisible" bundle="MESSAGING_RESOURCES" /></em>
@@ -97,13 +97,13 @@
 								</html:link>
 							</logic:equal>
 							<logic:equal name="announcement" property="excerptEmpty" value="true">
-								<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />
+								<fr:view name="announcement" property="body" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html" />
 							</logic:equal>
 						</div>
 					</logic:notPresent>
 					<logic:present name="announcementBoard">
 						<div class="ann_body mvert025">
-							<fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />
+							<fr:view name="announcement" property="body" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html" />
 						</div>
 					</logic:present>
 	

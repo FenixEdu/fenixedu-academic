@@ -30,7 +30,7 @@
         &nbsp;&gt;&nbsp;
         
         <logic:present name="announcement">
-            <fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/>
+            <fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
         </logic:present>
     </logic:present>
 </div>
@@ -103,13 +103,13 @@
                 
 <%-- Tï¿?tulo --%>
     <h3 class="mvert025">
-        <b><fr:view name="announcement" property="subject" type="net.sourceforge.fenixedu.util.MultiLanguageString"/></b>
+        <b><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/></b>
     </h3>
 
 
 <%-- Body --%>
 
-    <fr:view name="announcement" property="body" type="net.sourceforge.fenixedu.util.MultiLanguageString" layout="html" />
+    <fr:view name="announcement" property="body" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="html" />
 
 <p class="mvert025">
     <em class="smalltxt" style="color: #888;">

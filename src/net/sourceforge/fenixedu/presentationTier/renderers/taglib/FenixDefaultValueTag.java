@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.taglib;
 
-import net.sourceforge.fenixedu.renderers.taglib.CreateObjectTag;
-import net.sourceforge.fenixedu.renderers.taglib.DefaultValueTag;
+import pt.ist.fenixWebFramework.renderers.taglib.CreateObjectTag;
+import pt.ist.fenixWebFramework.renderers.taglib.DefaultValueTag;
 
 public class FenixDefaultValueTag extends DefaultValueTag {
 

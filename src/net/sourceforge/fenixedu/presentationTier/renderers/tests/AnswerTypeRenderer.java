@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.tests;
 
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
-import net.sourceforge.fenixedu.renderers.InputRenderer;
+import pt.ist.fenixWebFramework.renderers.InputRenderer;
 
 public abstract class AnswerTypeRenderer extends InputRenderer {
 
