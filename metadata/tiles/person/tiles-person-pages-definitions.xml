@@ -23,19 +23,6 @@
 		<put name="body" value="/person/editQualification.jsp" />
 	</definition>
 
-	<!-- Send SMS's -->
-	<definition name="df.page.sendSms" extends="definition.person.masterPage">
-		<put name="body" value="/person/sendSms.jsp" />
-	</definition>
-
-	<definition name="df.page.sendSmsError" extends="definition.person.masterPage">
-		<put name="body" value="/person/sendSms_error.jsp" />
-	</definition>
-	
-	<definition name="df.page.viewSmsDeliveryReports" extends="definition.person.masterPage">
-		<put name="body" value="/person/viewSmsDeliveryReports.jsp" />
-	</definition>
-
 	<!-- ========== Organizational Structure ========== -->	
 	<definition name="df.page.structure" extends="definition.person.masterPage" >
 		<put name="body"  value="/commons/blank.jsp"/>

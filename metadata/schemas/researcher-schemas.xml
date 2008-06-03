@@ -2239,6 +2239,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 		<property name="linkFormat" value="/homepage/${istUsername}"/>	
 		<property name="blankTarget" value="true"/>
 		<property name="hasContext" value="true"/>
+		<property name="hasChecksum" value="false"/>
 	</slot>
 </schema>
 
@@ -3033,4 +3034,11 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="subProperty(eachLayout)" value="values"/>
 		<property name="subProperty(eachSchema)" value="researchInterest.name"/>
 	</slot>
+</schema>
+
+
+<schema name="edit.expert.allowed.contacts" type="net.sourceforge.fenixedu.domain.research.Researcher" bundle="RESEARCHER_RESOURCES">
+	<slot name="allowsContactByStudents"/>
+	<slot name="allowsContactByMedia"/>
+	<slot name="allowsContactByOtherResearchers"/>
 </schema>

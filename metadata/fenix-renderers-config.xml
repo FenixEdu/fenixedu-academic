@@ -110,6 +110,13 @@ Documentation:
     </renderer>
 
 
+	<renderer type="net.sourceforge.fenixedu.domain.research.Researcher" layout="researcher-allowed-contacts" class="net.sourceforge.fenixedu.presentationTier.renderers.ResearcherAllowedContacts">
+		<property name="bundle" value="RESEARCHER_RESOURCES"/>
+		<property name="keyForStudents" value="label.research.contact.students"/>
+		<property name="keyForMedia" value="label.research.contact.media"/>
+		<property name="keyForOtherResearchers" value="label.research.contact.otherResearchers"/>
+	</renderer>
+	
 	<!--@ This layout shows participations for a given activity in the research package -->
 	<renderer type="java.util.List" layout="show-participation-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ParticipationsRenderer">
 		<property name="moduleRelative" value="false"/>

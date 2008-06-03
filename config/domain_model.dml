@@ -120,7 +120,6 @@ enum      net.sourceforge.fenixedu.domain.research.result.publication.ScopeType 
 enum      net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType                              as ThesisType;
 enum      net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType                        as AcademicServiceRequestSituationType;
 enum      net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType                       as DocumentPurposeType;
-enum      net.sourceforge.fenixedu.domain.sms.SmsDeliveryType                                                        as SmsDeliveryType;
 enum      net.sourceforge.fenixedu.domain.student.EnrolmentModel                                                     as EnrolmentModel;
 enum      net.sourceforge.fenixedu.domain.student.MobilityProgram                                                    as MobilityProgram;
 enum      net.sourceforge.fenixedu.domain.student.RegistrationAgreement                                              as RegistrationAgreement;
@@ -3212,6 +3211,14 @@ class DomainObject {
 		ProjectParticipationType role;
 	}
 
+	class research.Researcher extends DomainObject {
+		Boolean allowsToBeSearched;
+		Boolean allowsContactByStudents;
+		Boolean allowsContactByMedia;
+		Boolean allowsContactByOtherResearchers;
+		String keywords;
+	}
+
 	class research.result.ResearchResult extends DomainObject {
 		DateTime lastModificationDate;
 		String modifiedBy;
@@ -3564,17 +3571,6 @@ class DomainObject {
 		class serviceRequests.PersonAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
 		}
 	
-			
-			
-		
-
-	class sms.SentSms extends DomainObject {
-		DateTime deliveryDateDateTime;
-		SmsDeliveryType deliveryType;
-		Integer destinationNumber;
-		DateTime sendDateDateTime;
-	}
-
 	class space.Blueprint extends DomainObject {
 		YearMonthDay validFrom;
 		YearMonthDay validUntil;
@@ -8497,6 +8493,18 @@ relation ReimbursementTransactionReimbursementGuideEntry {
 	reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
 }
 
+relation ResearcherRootDomainObject {
+	research.Researcher playsRole researchers {
+		multiplicity *;
+	}
+	RootDomainObject playsRole rootDomainObject;
+}
+
+relation ResearcherPerson {
+	Person playsRole person;
+	research.Researcher playsRole researcher;
+}
+
 relation ResearchResultCountry {
 	Country playsRole country;
 	research.result.ResearchResult playsRole results {
@@ -10458,13 +10466,6 @@ relation RootDomainObjectSenior {
 	}
 }
 
-relation RootDomainObjectSentSms {
-	RootDomainObject playsRole rootDomainObject;
-	sms.SentSms playsRole sentSmss {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectServiceAgreement {
 	RootDomainObject playsRole rootDomainObject;
 	accounting.ServiceAgreement playsRole serviceAgreements {
@@ -11012,15 +11013,8 @@ relation SendProposal {
 }
 
 relation SeniorStudent {
-	student.Senior playsRole senior;
-	student.Registration playsRole student;
-}
-
-relation SentSmsPerson {
-	sms.SentSms playsRole sentSms {
-		multiplicity *;
-	}
-	Person playsRole person;
+   student.Senior playsRole senior;
+   student.Registration playsRole student;
 }
 
 relation ServiceAgreementPerson {

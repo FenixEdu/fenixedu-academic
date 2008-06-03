@@ -93,6 +93,10 @@
 		<put name="body" value="/commons/unitFiles/editFile.jsp" />
 	</definition>	
 	
+	<definition name="forunsManagement.listForuns" extends="df.layout.two-column.contents" >
+		<put name="body" value="/commons/blank.jsp" />
+	</definition>
+
 	<!-- === Protocols === -->
 	<definition name="search-protocols" extends="definition.messaging.masterPage">
         <put name="body" value="/protocols/searchProtocols.jsp"/>
@@ -101,7 +105,13 @@
         <put name="body" value="/protocols/viewProtocolDetails.jsp"/>
     </definition> 
 
-	<definition name="forunsManagement.listForuns" extends="df.layout.two-column.contents" >
-		<put name="body" value="/commons/blank.jsp" />
+	<!--  ===== Find Experts ===== -->
+	<definition name="show-researchers-results" extends="definition.messaging.masterPage">
+       <put name="body" value="/researcher/expertDetails/searchResearchers.jsp"/>
+    </definition> 
+
+	<definition name="browse-researchers-results" extends="definition.messaging.masterPage" >
+		<put name="body" value="/researcher/expertDetails/browserResearchers.jsp"/>
 	</definition>
+	
 </tiles-definitions>

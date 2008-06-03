@@ -6281,44 +6281,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>CountSentSmsByPersonAndDatePeriod</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.person.sms.CountSentSmsByPersonAndDatePeriod</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="PersonAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>CreateSentSms</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.person.sms.CreateSentSms</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="PersonAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>UpdateSmsDeliveryReport</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.person.sms.UpdateSmsDeliveryReport</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadSentSmsByPerson</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.person.sms.ReadSentSmsByPerson</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="PersonAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadGrantInsuranceByGrantContract</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantInsuranceByGrantContract</implementationClass>

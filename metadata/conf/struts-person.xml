@@ -202,31 +202,6 @@
    		<forward name="successfull-delete" path="/readQualifications.do?page=0"/>
  	   </action>
 
-		<!-- Action to send a SMS -->
-		<action path="/sendSms"
-			type="net.sourceforge.fenixedu.presentationTier.Action.person.SendSmsDispatchAction"
-			parameter="method"
-			scope="request"
-			name="sendSmsForm"
-			input="/sendSms.do?method=prepare&amp;page=0"
-		>
-			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
-					key="resources.Action.exceptions.FenixActionException"
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>							
-			<forward name="start" path="df.page.sendSms"/>
-			<forward name="error" path="df.page.sendSmsError"/>		
-		</action>
-
-		<action path="/viewSmsDeliveryReports"
-			type="net.sourceforge.fenixedu.presentationTier.Action.person.ViewSmsDeliveryReportsAction"
-			scope="request"
-		>
-			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
-					key="resources.Action.exceptions.FenixActionException"
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>							
-			<forward name="start" path="df.page.viewSmsDeliveryReports"/>	
-		</action>
-		
 	<!-- ========== VIEW PHOTO ========== -->
 		<action path="/retrievePersonalPhoto"
 			type="net.sourceforge.fenixedu.presentationTier.Action.person.RetrievePersonalPhotoAction"

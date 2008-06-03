@@ -50,17 +50,28 @@ public class SearchPerson extends Service {
 	private DegreeType degreeType;
 
 	private Boolean activePersons;
-	
+
 	private Boolean externalPersons;
+
+	private Boolean showOnlySearchableResearchers;
 
 	private Integer studentNumber;
 
 	public SearchParameters() {
 	}
 
-	public SearchParameters(String name, String email, String username, String documentIdNumber,
-		String idDocumentType, String roleType, String degreeTypeString, Integer degreeId,
-		Integer departmentId, Boolean activePersons, Integer studentNumber, Boolean externalPersons){
+	public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
+		String roleType, String degreeTypeString, Integer degreeId, Integer departmentId, Boolean activePersons,
+		Integer studentNumber, Boolean externalPersons, Boolean showOnlySearchableResearchers) {
+
+	    this(name, email, username, documentIdNumber, idDocumentType, roleType, degreeTypeString, degreeId, departmentId,
+		    activePersons, studentNumber, externalPersons);
+	    setShowOnlySearchableResearchers(showOnlySearchableResearchers);
+	}
+
+	public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
+		String roleType, String degreeTypeString, Integer degreeId, Integer departmentId, Boolean activePersons,
+		Integer studentNumber, Boolean externalPersons) {
 	    this();
 
 	    setActivePersons(activePersons);
@@ -90,10 +101,9 @@ public class SearchPerson extends Service {
 
 	public boolean emptyParameters() {
 	    return StringUtils.isEmpty(this.email) && StringUtils.isEmpty(this.username)
-		    && StringUtils.isEmpty(this.documentIdNumber) && this.role == null
-		    && this.degree == null && this.department == null && this.degreeType == null
-		    && this.nameWords == null && this.studentNumber == null
-		    && this.idDocumentType == null;
+		    && StringUtils.isEmpty(this.documentIdNumber) && this.role == null && this.degree == null
+		    && this.department == null && this.degreeType == null && this.nameWords == null && this.studentNumber == null
+		    && this.idDocumentType == null && this.showOnlySearchableResearchers == null;
 	}
 
 	private static String[] getNameWords(String name) {
@@ -205,10 +215,17 @@ public class SearchPerson extends Service {
 	public void setStudentNumber(Integer studentNumber) {
 	    this.studentNumber = studentNumber;
 	}
+
+	public Boolean getShowOnlySearchableResearchers() {
+	    return showOnlySearchableResearchers;
+	}
+
+	public void setShowOnlySearchableResearchers(Boolean showOnlySearchableResearchers) {
+	    this.showOnlySearchableResearchers = showOnlySearchableResearchers;
+	}
     }
 
-    public CollectionPager<Person> run(SearchParameters searchParameters, Predicate predicate)
-	    throws FenixServiceException {
+    public CollectionPager<Person> run(SearchParameters searchParameters, Predicate predicate) throws FenixServiceException {
 
 	if (searchParameters.emptyParameters()) {
 	    return new CollectionPager<Person>(new ArrayList<Person>(), 25);
@@ -218,39 +235,39 @@ public class SearchPerson extends Service {
 	List<Person> allValidPersons = new ArrayList<Person>();
 
 	if (searchParameters.getUsername() != null && searchParameters.getUsername().length() > 0) {
-	 
+
 	    final Person person = Person.readPersonByUsername(searchParameters.getUsername());
 	    persons = new ArrayList<Person>();
 	    if (person != null) {
 		persons.add(person);
 	    }
-	    
+
 	} else if (searchParameters.getDocumentIdNumber() != null && searchParameters.getDocumentIdNumber().length() > 0) {
 	    persons = Person.findPersonByDocumentID(searchParameters.getDocumentIdNumber());
-	    
+
 	} else if (searchParameters.getStudentNumber() != null) {
-	    
+
 	    final Student student = Student.readStudentByNumber(searchParameters.getStudentNumber());
 	    persons = new ArrayList<Person>();
 	    if (student != null) {
 		persons.add(student.getPerson());
 	    }
-	    
+
 	} else if (searchParameters.getEmail() != null && searchParameters.getEmail().length() > 0) {
-	   
+
 	    final Person person = Person.readPersonByEmailAddress(searchParameters.getEmail());
 	    persons = new ArrayList<Person>();
 	    if (person != null) {
 		persons.add(person);
 	    }
-	    
+
 	} else if (searchParameters.getName() != null) {
-	 
+
 	    persons = new ArrayList<Person>();
-	    
-	    if(searchParameters.getExternalPersons() == null || !searchParameters.getExternalPersons()) {		
-		
-		persons.addAll(Person.findInternalPerson(searchParameters.getName()));		
+
+	    if (searchParameters.getExternalPersons() == null || !searchParameters.getExternalPersons()) {
+
+		persons.addAll(Person.findInternalPerson(searchParameters.getName()));
 		final Role roleBd = searchParameters.getRole();
 		if (roleBd != null) {
 		    for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
@@ -271,11 +288,11 @@ public class SearchPerson extends Service {
 		    }
 		}
 	    }
-	    	    
-	    if(searchParameters.getExternalPersons() == null || searchParameters.getExternalPersons()) {		
-		persons.addAll(Person.findExternalPerson(searchParameters.getName()));		
-	    }	    
-	    
+
+	    if (searchParameters.getExternalPersons() == null || searchParameters.getExternalPersons()) {
+		persons.addAll(Person.findExternalPerson(searchParameters.getName()));
+	    }
+
 	} else {
 	    persons = new ArrayList<Person>(0);
 	}
@@ -303,7 +320,8 @@ public class SearchPerson extends Service {
 		    && verifyNameEquality(searchParameters.getNameWords(), person)
 		    && verifyParameter(person.getEmail(), searchParameters.getEmail())
 		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(), person)
-		    && verifyStudentNumber(searchParameters.getStudentNumber(), person);
+		    && verifyStudentNumber(searchParameters.getStudentNumber(), person) 
+		    && verifyShowOnlySearchableResearchers(searchParameters.showOnlySearchableResearchers, person);
 	}
 
 	private boolean verifyIdDocumentType(IDDocumentType idDocumentType, Person person) {
@@ -353,7 +371,7 @@ public class SearchPerson extends Service {
 	    return (searchParameter == null) || (parameter != null && normalizeAndCompare(parameter, searchParameter));
 	}
 
-	private boolean simpleNnormalizeAndCompare(String parameter, String searchParameter) { 
+	private boolean simpleNnormalizeAndCompare(String parameter, String searchParameter) {
 	    String personParameter = parameter;
 	    return (personParameter.indexOf(searchParameter) == -1) ? false : true;
 	}
@@ -365,6 +383,11 @@ public class SearchPerson extends Service {
 
 	private static boolean verifyNameEquality(String[] nameWords, Person person) {
 	    return person.verifyNameEquality(nameWords);
+	}
+
+	private static boolean verifyShowOnlySearchableResearchers(Boolean showOnlySearchableResearchers, final Person person) {
+	    return showOnlySearchableResearchers == null || showOnlySearchableResearchers && person.hasResearcher()
+		    && person.getResearcher().getAllowsToBeSearched();
 	}
 
 	public SearchParameters getSearchParameters() {

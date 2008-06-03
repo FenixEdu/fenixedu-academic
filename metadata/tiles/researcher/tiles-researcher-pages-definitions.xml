@@ -238,5 +238,20 @@
        <put name="body" value="/researcher/researchUnit/listPublications.jsp"/>  
     </definition>      
 
+	<!--  Researcher details, find an expert configuration -->
+	<definition name="view-researcher-details" extends="researcher.masterPage">
+       <put name="body" value="/researcher/expertDetails/viewResearcher.jsp"/>  
+    </definition>
+	
+	<definition name="edit-researcher-details" extends="researcher.masterPage">
+       <put name="body" value="/researcher/expertDetails/editResearcher.jsp"/>  
+    </definition>
 
+	<definition name="show-researchers-results" extends="researcher.masterPage">
+       <put name="body" value="/researcher/expertDetails/searchResearchers.jsp"/>  
+    </definition>
+    
+    <definition name="browse-researchers-results" extends="researcher.masterPage">
+       <put name="body" value="/researcher/expertDetails/browserResearchers.jsp"/>  
+    </definition>
 </tiles-definitions>

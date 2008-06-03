@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.dataTransferObject.IdInternalBean;
+import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -179,14 +179,15 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	super.setStateDate(yearMonthDay.toDateTimeAtMidnight());
     }
 
-    public static class RegistrationStateDeleter extends IdInternalBean implements FactoryExecutor {
+    public static class RegistrationStateDeleter extends VariantBean implements FactoryExecutor {
 
 	public RegistrationStateDeleter(Integer idInternal) {
-	    super(idInternal);
+	    super();
+	    setInteger(idInternal);
 	}
 
 	public Object execute() {
-	    RootDomainObject.getInstance().readRegistrationStateByOID(getIdInternal()).delete();
+	    RootDomainObject.getInstance().readRegistrationStateByOID(getInteger()).delete();
 	    return null;
 	}
     }

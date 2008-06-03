@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -77,12 +75,11 @@ import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
+import net.sourceforge.fenixedu.domain.research.Researcher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.sms.SentSms;
-import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -94,7 +91,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -106,14 +102,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Person extends Person_Base {
 
-    final static Comparator<SentSms> PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE = new BeanComparator("sendDate");
     static {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
@@ -1066,7 +1061,7 @@ public class Person extends Person_Base {
     }
 
     private boolean canBeDeleted() {
-	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs() && !hasAnySentSms()
+	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs() 
 		&& !hasAnyExportGroupingReceivers() && !hasAnyPersistentGroups() && !hasAnyPersonSpaceOccupations()
 		&& !hasAnyPunctualRoomsOccupationComments() && !hasAnyVehicleAllocations()
 		&& !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
@@ -1163,7 +1158,6 @@ public class Person extends Person_Base {
 
 	    case DELEGATE:
 	    case OPERATOR:
-	    case RESEARCHER:
 	    case GEP:
 	    case MANAGER:
 	    case WEBSITE_MANAGER:
@@ -1194,6 +1188,11 @@ public class Person extends Person_Base {
 	    case PROJECTS_MANAGER:
 	    case INSTITUCIONAL_PROJECTS_MANAGER:
 		addRoleIfNotPresent(person, RoleType.EMPLOYEE);
+		break;
+
+	    case RESEARCHER:
+		addRoleIfNotPresent(person, RoleType.PERSON);
+		new Researcher(person);
 		break;
 
 	    default:
@@ -1267,29 +1266,7 @@ public class Person extends Person_Base {
 	    }
 	}
     }
-
-    public SortedSet<SentSms> getSentSmsSortedBySendDate() {
-	final SortedSet<SentSms> sentSmsSortedBySendDate = new TreeSet<SentSms>(new ReverseComparator(
-		PERSON_SENTSMS_COMPARATOR_BY_SENT_DATE));
-	sentSmsSortedBySendDate.addAll(this.getSentSmsSet());
-	return sentSmsSortedBySendDate;
-    }
-
-    public int countSentSmsBetween(final Date startDate, final Date endDate) {
-	final DateTime start = new DateTime(startDate);
-	final DateTime end = new DateTime(endDate);
-
-	int count = 0;
-	for (final SentSms sentSms : this.getSentSmsSet()) {
-	    if (sentSms.getDeliveryType() != SmsDeliveryType.NOT_SENT_TYPE
-		    && (sentSms.getSendDateDateTime().isAfter(start) || sentSms.getSendDateDateTime().equals(start))
-		    && sentSms.getSendDateDateTime().isBefore(end)) {
-		count++;
-	    }
-	}
-	return count;
-    }
-
+    
     @Deprecated
     public Registration readStudentByDegreeType(DegreeType degreeType) {
 	for (final Registration registration : this.getStudents()) {

@@ -50,4 +50,9 @@
 			<bean:message bundle="MESSAGING_RESOURCES" key="label.protocols"  />
 		</html:link>
 	</li>
+	<%--
+	<li>
+		<html:link page="/searchResearchers.do?method=search"><bean:message key="researcher.experts" bundle="RESEARCHER_RESOURCES"/></html:link>
+	</li>
+	--%>
 </ul>

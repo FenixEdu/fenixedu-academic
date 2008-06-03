@@ -14,7 +14,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
-public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparable<InfoLesson> {
+public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLesson> {
 
     private final static ComparatorChain INFO_LESSON_COMPARATOR_CHAIN = new ComparatorChain();
     static {
@@ -123,23 +123,6 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         return resultado;
     }
 
-    public String toSmsText() {
-
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("k:mm");
-        final String beginTime = simpleDateFormat.format(getInicio().getTime());
-        final String endTime = simpleDateFormat.format(getFim().getTime());
-
-        String result = "";
-        result += getDiaSemana().toString() + "\n";
-        result += getInfoShift().getInfoDisciplinaExecucao().getSigla() + " (" + getInfoShift().getShiftTypesCodePrettyPrint() + ")";
-        result += "\n" + beginTime;
-        result += "-" + endTime;
-        result += "\nSala=" + getInfoSala().getNome();
-        result += "\n\n";
-
-        return result;
-    }
-    
     private Lesson getLesson(){
         return lesson == null ? null : lesson.getObject();
     }

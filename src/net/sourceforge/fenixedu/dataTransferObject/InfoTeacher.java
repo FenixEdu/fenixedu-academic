@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 /**
  * @author João Mota
  */
-public class InfoTeacher extends InfoObject implements ISmsDTO {
+public class InfoTeacher extends InfoObject  {
 
     private DomainReference<Teacher> teacher;
 
@@ -68,10 +68,6 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
 
     public static InfoTeacher newInfoFromDomain(final Teacher teacher) {
         return teacher == null ? null : new InfoTeacher(teacher);
-    }
-
-    public String toSmsText() {
-        return "Nome: " + getTeacher().getPerson().getName() + " Numero: " + getTeacherNumber();
     }
 
     @Override
