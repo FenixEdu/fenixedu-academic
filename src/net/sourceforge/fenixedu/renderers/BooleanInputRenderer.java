@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 public class BooleanInputRenderer extends InputRenderer {
     private boolean disabled;
 
+    private boolean defaultValue = false;
+
     @Override
     protected Layout getLayout(Object object, Class type) {
 	return new Layout() {
@@ -25,7 +27,7 @@ public class BooleanInputRenderer extends InputRenderer {
 	    @Override
 	    public HtmlComponent createComponent(Object object, Class type) {
 		HtmlCheckBox checkBox = new HtmlCheckBox();
-		checkBox.setChecked(object == null ? false : (Boolean) object);
+		checkBox.setChecked(object == null ? getDefaultValue() : (Boolean) object);
 
 		InputContext context = getInputContext();
 		checkBox.setTargetSlot((MetaSlotKey) context.getMetaObject().getKey());
@@ -50,6 +52,14 @@ public class BooleanInputRenderer extends InputRenderer {
 
     public void setDisabled(boolean disabled) {
 	this.disabled = disabled;
+    }
+
+    public boolean getDefaultValue() {
+	return defaultValue;
+    }
+
+    public void setDefaultValue(boolean defaultValue) {
+	this.defaultValue = defaultValue;
     }
 
 }
