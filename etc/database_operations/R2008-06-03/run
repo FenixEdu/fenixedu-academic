@@ -28,3 +28,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "data fix" changeCompetenceCourseInformationChangeRequests.sql
+execute "Delete SENT_SMS Table" removeSentSMSTable.sql
+execute "Create Researchers Table" createResearcherTable.sql
