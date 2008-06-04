@@ -101,6 +101,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
 import org.joda.time.YearMonthDay;
 
@@ -436,8 +437,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public void calculateApprovationRatioAndArithmeticMeanIfActive(boolean onlyPreviousExecutionYear) {
 
@@ -486,24 +487,24 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     private void setApprovationRatio(Double approvationRatio) {
 	this.approvationRatio = approvationRatio;
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     private void setArithmeticMean(Double arithmeticMean) {
 	this.arithmeticMean = arithmeticMean;
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public Integer getApprovedEnrollmentsNumber() {
 	if (this.approvedEnrollmentsNumber == null) {
@@ -513,16 +514,16 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     private void setApprovedEnrollmentsNumber(Integer approvedEnrollmentsNumber) {
 	this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public Double getApprovationRatio() {
 	if (this.approvationRatio == null) {
@@ -532,8 +533,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * @Deprecated Use Curriculum algorithm instead
-         */
+     * @Deprecated Use Curriculum algorithm instead
+     */
     @Deprecated
     final public Double getArithmeticMean() {
 	if (this.arithmeticMean == null) {
@@ -1974,6 +1975,22 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
+    final public RegistrationState getStateInDate(final LocalDate localDate) {
+	final List<RegistrationState> sortedRegistrationStates = new ArrayList<RegistrationState>(getRegistrationStates());
+	Collections.sort(sortedRegistrationStates, RegistrationState.DATE_COMPARATOR);
+
+	for (ListIterator<RegistrationState> iterator = sortedRegistrationStates.listIterator(sortedRegistrationStates.size()); iterator
+		.hasPrevious();) {
+
+	    RegistrationState registrationState = iterator.previous();
+	    if (!localDate.isBefore(registrationState.getStateDate().toLocalDate())) {
+		return registrationState;
+	    }
+	}
+
+	return null;
+    }
+
     public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
 	return getRegistrationStates(executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionYear
 		.getEndDateYearMonthDay().toDateTimeAtMidnight());
@@ -2227,8 +2244,8 @@ public class Registration extends Registration_Base {
     }
 
     /**
-         * Retrieve concluded cycles before or equal to the given cycle
-         */
+     * Retrieve concluded cycles before or equal to the given cycle
+     */
     final public Collection<CycleType> getConcludedCycles(final CycleType lastCycleTypeToInspect) {
 	if (!getDegreeType().hasAnyCycleTypes()) {
 	    return Collections.EMPTY_SET;
