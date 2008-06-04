@@ -3029,70 +3029,6 @@ class DomainObject {
 		YearMonthDay endDate;
 	}
 
-	class publication.Attribute extends DomainObject {
-		String attributeType;
-	}
-
-	class publication.Authorship extends DomainObject {
-		Integer authorOrder;
-	}
-
-	class publication.Publication extends DomainObject {
-		String conference;
-		String country;
-		String criticizedAuthor;
-		Integer edition;
-		String editor;
-		String editorCity;
-		Integer fascicle;
-		Integer firstPage;
-		String format;
-		String instituition;
-		Integer isbn;
-		Integer issn;
-		String journalName;
-		String language;
-		Integer lastPage;
-		String local;
-		String month;
-		String month_end;
-		Integer number;
-		Integer numberPages;
-		String observation;
-		String originalLanguage;
-		String publicationType;
-		String scope;
-		Integer serie;
-		String subType;
-		String title;
-		String translatedAuthor;
-		String university;
-		String url;
-		String volume;
-		Integer year;
-		Integer year_end;
-	}
-
-	class publication.PublicationFormat extends DomainObject {
-		String format;
-	}
-
-	class publication.PublicationSubtype extends DomainObject {
-		String subtype;
-	}
-
-	class publication.PublicationTeacher extends DomainObject {
-		PublicationArea publicationArea;
-	}
-
-	class publication.PublicationType extends DomainObject {
-		String publicationType;
-	}
-
-	class publication.PublicationTypeAttribute extends DomainObject {
-		Boolean required;
-	}
-
 	class reimbursementGuide.ReimbursementGuide extends DomainObject {
 		YearMonthDay creationYearMonthDay;
 		Integer number;
@@ -5236,20 +5172,6 @@ relation AttendsWeeklyWorkLoad {
 	student.WeeklyWorkLoad playsRole weeklyWorkLoads {
 		multiplicity *;
 	}
-}
-
-relation AttributePublicationTypeAttribute {
-	publication.PublicationTypeAttribute playsRole publicationTypeAttributes {
-		multiplicity *;
-	}
-	publication.Attribute playsRole attribute;
-}
-
-relation AuthorshipPerson {
-	publication.Authorship playsRole personAuthorships {
-		multiplicity *;
-	}
-	Person playsRole author;
 }
 
 relation BelongsTo {
@@ -8158,13 +8080,6 @@ relation ProtocolUnit {
 	}
 }
 
-relation PublicationAuthorship {
-	publication.Authorship playsRole publicationAuthorships {
-		multiplicity *;
-	}
-	publication.Publication playsRole publication;
-}
-
 relation PublicationCollaborators {
 	organizationalStructure.ResearchUnit playsRole collaboratorIn {
 		multiplicity *;
@@ -8174,44 +8089,9 @@ relation PublicationCollaborators {
 	}
 }
 
-relation PublicationTeacherPublication {
-	publication.PublicationTeacher playsRole publicationTeachers {
-		multiplicity *;
-	}
-	publication.Publication playsRole publication;
-}
-
-relation PublicationTeacherTeacher {
-	publication.PublicationTeacher playsRole teacherPublications {
-		multiplicity *;
-	}
-	Teacher playsRole teacher;
-}
-
 relation PublicationThesisPointsProcessThesis {
 	research.result.publication.Thesis playsRole publication;
 	thesis.Thesis playsRole thesis;
-}
-
-relation PublicationTypePublication {
-	publication.PublicationType playsRole type;
-	publication.Publication playsRole publications {
-		multiplicity *;
-	}
-}
-
-relation PublicationTypePublicationSubtype {
-	publication.PublicationType playsRole publicationType;
-	publication.PublicationSubtype playsRole subtypes {
-		multiplicity *;
-	}
-}
-
-relation PublicationTypePublicationTypeAttribute {
-	publication.PublicationTypeAttribute playsRole publicationTypeAttributes {
-		multiplicity *;
-	}
-	publication.PublicationType playsRole publicationType;
 }
 
 relation PublicationsNumberTeacher {
@@ -8788,20 +8668,6 @@ relation RootDomainObjectAssiduousnessVacations {
 relation RootDomainObjectAttends {
 	RootDomainObject playsRole rootDomainObject;
 	Attends playsRole attendss {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectAttribute {
-	RootDomainObject playsRole rootDomainObject;
-	publication.Attribute playsRole attributes {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectAuthorship {
-	RootDomainObject playsRole rootDomainObject;
-	publication.Authorship playsRole authorships {
 		multiplicity *;
 	}
 }
@@ -10182,48 +10048,6 @@ relation RootDomainObjectProtocol {
 relation RootDomainObjectProtocolHistory {
 	RootDomainObject playsRole rootDomainObject;
 	protocols.ProtocolHistory playsRole protocolHistories {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectPublication {
-	RootDomainObject playsRole rootDomainObject;
-	publication.Publication playsRole publications {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectPublicationFormat {
-	RootDomainObject playsRole rootDomainObject;
-	publication.PublicationFormat playsRole publicationFormats {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectPublicationSubtype {
-	RootDomainObject playsRole rootDomainObject;
-	publication.PublicationSubtype playsRole publicationSubtypes {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectPublicationTeacher {
-	RootDomainObject playsRole rootDomainObject;
-	publication.PublicationTeacher playsRole publicationTeachers {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectPublicationType {
-	RootDomainObject playsRole rootDomainObject;
-	publication.PublicationType playsRole publicationTypes {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectPublicationTypeAttribute {
-	RootDomainObject playsRole rootDomainObject;
-	publication.PublicationTypeAttribute playsRole publicationTypeAttributes {
 		multiplicity *;
 	}
 }

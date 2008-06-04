@@ -3016,155 +3016,7 @@
 			<chain name="TeacherAuthorization" />
 		</filterChains>
 	</service>
-	<service>
-		<name>ReadOldPublication</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadOldPublication</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="OldPublicationTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadOldPublications</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadOldPublications</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-
-	<service>
-		<name>InsertPublication</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.InsertPublication</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-        <name>EditPublication</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.EditPublication</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-	        <chain name="PublicationAuthorAuthorization"/>
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadPublicationByID</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationByID</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>DeletePublication</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.DeletePublication</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="PublicationAuthorAuthorization" />
-		</filterChains>
-	</service>
-
 	<!--TJBF & PFON-->
-
-	<service>
-		<name>ReadTeacherPublicationsByArea</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadTeacherPublicationsByArea</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadAllPublicationTypes</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAllPublicationTypes</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadPublicationType</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationType</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadRequiredAttributes</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadRequiredAttributes</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadNonRequiredAttributes</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadNonRequiredAttributes</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadPublicationSubtypesByPublicationType</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationSubtypesByPublicationType</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadAllPublicationFormats</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAllPublicationFormats</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadPublicationMonths</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationMonths</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadPublicationScopes</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationScopes</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadAuthorshipsWithPublicationsByUsername</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorshipsWithPublicationsByUsername</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadAuthorsByName</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorsByName</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
 	<service>
 		<name>ReadPersonsByName</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonsByName</implementationClass>
@@ -3178,33 +3030,6 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
-	</service>
-	<service>
-		<name>AddPublicationToTeacherInformationSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.AddPublicationToTeacherInformationSheet</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadPublicationsNotInTeacherInformationSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationsNotInTeacherInformationSheet</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>RemovePublicationFromTeacherInformationSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.RemovePublicationFromTeacherInformationSheet</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
 	</service>
 
 	<!--TJBF & PFON-->
@@ -7445,17 +7270,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadAttributesByPublicationType</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAttributesByPublicationType
-		</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadInstitutions</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadInstitutions
@@ -7573,14 +7387,6 @@
     	<name>ReadInstitutionByName</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadInstitutionByName</implementationClass>
         <description>Reads a work location given a name</description>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-        </filterChains>
-    </service>
-    <service>
-    	<name>InsertInexistentAuthors</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.InsertInexistentAuthors</implementationClass>
-        <description>Given a set of Persons, it inserts as external persons the ones that do not already exist in the system</description>
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>

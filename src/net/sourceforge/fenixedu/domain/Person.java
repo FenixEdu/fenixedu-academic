@@ -1067,7 +1067,7 @@ public class Person extends Person_Base {
 		&& !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
 		&& !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
 		&& !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
-		&& !hasAnyGuides() && !hasAnyProjectAccesses() && !hasAnyPersonAuthorships() && !hasEmployee() && !hasTeacher()
+		&& !hasAnyGuides() && !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher()
 		&& !hasGrantOwner() && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasParking()
 		&& !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
 		&& !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard()

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
-import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
@@ -31,8 +30,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.publication.Publication;
-import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
@@ -45,7 +42,6 @@ import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 import net.sourceforge.fenixedu.util.OrientationType;
-import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.PublicationType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -297,15 +293,7 @@ public class ReadTeacherInformation extends Service {
 
     private List getInfoOldPublications(Teacher teacher, OldPublicationType oldPublicationType)
             throws ExcepcaoPersistencia {
-        List oldCientificPublications = teacher.readOldPublicationsByType(oldPublicationType);
-        List infoOldPublications = (List) CollectionUtils.collect(oldCientificPublications,
-                new Transformer() {
-                    public Object transform(Object o) {
-                        OldPublication oldPublication = (OldPublication) o;
-                        return InfoOldPublication.newInfoFromDomain(oldPublication);
-                    }
-                });
-        return infoOldPublications;
+	return Collections.emptyList();
     }
 
     private InfoOrientation getInfoOrientation(Teacher teacher, OrientationType orientationType)
@@ -340,25 +328,6 @@ public class ReadTeacherInformation extends Service {
 
     private List getInfoPublications(Teacher teacher, Integer typePublication)
             throws ExcepcaoPersistencia {
-        PublicationArea publicationArea = null;
-        if (PublicationConstants.CIENTIFIC.equals(typePublication)) {
-            publicationArea = PublicationArea.CIENTIFIC;
-        } else {
-            publicationArea = PublicationArea.DIDATIC;
-        }
-
-        List<InfoPublication> infoPublications = new ArrayList<InfoPublication>();
-
-        List<PublicationTeacher> publicationsTeacher = teacher
-                .readPublicationsByPublicationArea(publicationArea);
-        for (PublicationTeacher publicationTeacher : publicationsTeacher) {
-            Publication publication = publicationTeacher.getPublication();
-
-            InfoPublication infoPublication = InfoPublication.newInfoFromDomain(publication);
-            infoPublication.setPublicationString(publicationTeacher.getPublication().toResume());
-            infoPublications.add(infoPublication);
-        }
-
-        return infoPublications;
+        return Collections.emptyList();
     }
 }

@@ -457,20 +457,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>OldPublicationTeacherAuthorization</name>
-        <expression>OldPublicationTeacherAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-	<filterChain>
-        <name>PublicationAuthorAuthorization</name>
-        <expression>PublicationAuthorAuthorizationFilter</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
         <name>ExternalActivityTeacherAuthorization</name>
         <expression>ExternalActivityTeacherAuthorization</expression>
         <description/>

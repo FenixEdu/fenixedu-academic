@@ -429,13 +429,6 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>OldPublicationTeacherAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.teacher.OldPublicationTeacherAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>false</isTransactional>
-    </filter>
-    <filter>
         <name>ExternalActivityTeacherAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.teacher.ExternalActivityTeacherAuthorizationFilter</implementationClass>
@@ -707,12 +700,6 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>    
-    <filter>
-        <name>PublicationAuthorAuthorizationFilter</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.publication.PublicationAuthorAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-    </filter>   
     <filter>
     	<name>ClassEnrollmentAuthorizationFilter</name>
     	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter</implementationClass>

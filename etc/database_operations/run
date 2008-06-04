@@ -28,3 +28,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Removing old publications" removeOldPublicationsTables.sql
+

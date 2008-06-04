@@ -1,0 +1,9 @@
+drop table ATTRIBUTE;
+drop table AUTHORSHIP;
+drop table PUBLICATION;
+drop table PUBLICATION_FORMAT;
+drop table PUBLICATION_SUBTYPE;
+drop table PUBLICATION_TEACHER;
+drop table PUBLICATION_TYPE;
+drop table PUBLICATION_TYPE_ATTRIBUTE;
+ 

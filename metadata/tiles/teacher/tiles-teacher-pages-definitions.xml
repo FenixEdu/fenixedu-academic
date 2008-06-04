@@ -101,16 +101,6 @@
 		<put name="body" 
 			value="/teacher/information/externalActivitiesManagement.jsp"></put>
 	</definition>
-	<definition name="view-cientific-old-publications" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/teacher/information/oldCientificPublicationManagement.jsp"></put>
-	</definition>
-	<definition name="view-didactic-old-publications" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/teacher/information/oldDidacticPublicationManagement.jsp"></put>
-	</definition>
 	<definition name="edit-professional-career" extends="teacher-information">
 		<put name="body" 
 			value="/teacher/information/editProfessionalCareer.jsp"></put>
@@ -363,94 +353,6 @@
 	<definition name="addTeacherCientificResult" extends="teacher-information">
 		<put name="body" value="/researcher/result/teacher/addCientificResult.jsp"></put>
 	</definition>
-	
-	<!-- TJBF & PFON -->
-	<definition name="view-cientific-teacher-publications" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/publicationCientificManagement.jsp"></put>
-	</definition>
-	<definition name="view-didatic-teacher-publications" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/publicationDidaticManagement.jsp"></put>
-	</definition>
-	<definition name="view-cientific-author-publications" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/publicationCientificAuthor.jsp"></put>
-	</definition>
-	<definition name="view-didatic-author-publications" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/publicationDidaticAuthor.jsp"></put>
-	</definition>
-	<definition name="edit-Cientific-publication" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/readPublicationCientificAttributes.jsp"></put>
-	</definition>
-	<definition name="edit-Didatic-publication" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/readPublicationDidaticAttributes.jsp"></put>
-	</definition>
-	<definition name="view-publication-types" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/readPublicationTypes.jsp"></put>
-	</definition>
-	<definition name="view-publicationDidatic-attributes" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/readPublicationDidaticAttributes.jsp"></put>
-	</definition>
-	<definition name="view-publicationCientific-attributes" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/readPublicationCientificAttributes.jsp"></put>
-	</definition>
-	
-	<definition name="publications-management" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/PublicationsManagement.jsp"></put>
-	</definition>
-	
-	<definition name="confirm-delete-publication" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/ConfirmDeletePublication.jsp"></put>
-	</definition>
-	
-	<definition name="view-authors-form" 
-		extends="teacher-information">
-		<put name="body" 
-			value="/publication/searchAuthor.jsp"></put>
-	</definition>
-
-	<definition name="insert-new-publication" extends="teacher-information">
-		<put name="body" value="/publication/insertNewPublication.jsp" />
-	</definition>
-	
-	<definition name="edit-publication" extends="teacher-information">
-		<put name="body" value="/publication/editPublication.jsp" />
-	</definition>
-
-	<definition name="search-authors-for-new-publication" extends="teacher-information">
-		<put name="body" value="/publication/searchAuthors.jsp" />
-	</definition>
-	
-	<definition name="search-authors-for-edit-publication" extends="teacher-information">
-		<put name="body" value="/publication/searchAuthorsEdit.jsp" />
-	</definition>
-
-	<definition name="insert-publication"
-		extends="teacher-information">
-		<put name="body"
-			value="/publication/editPublicationAttributes.jsp" />
-	</definition>
-	
 
 	<!-- ==================== View Curricular Course Historic ================== -->
 	<definition name="view-degree-curricular-plan-execution-year" 

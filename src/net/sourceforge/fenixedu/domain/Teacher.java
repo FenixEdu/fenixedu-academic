@@ -26,15 +26,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.publication.Publication;
-import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
@@ -42,7 +39,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.util.OldPublicationType;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.PublicationType;
@@ -136,32 +132,6 @@ public class Teacher extends Teacher_Base {
 	    return true;
 	else
 	    return false;
-    }
-
-    public void addToTeacherInformationSheet(Publication publication, PublicationArea publicationArea) {
-	new PublicationTeacher(publication, this, publicationArea);
-    }
-
-    public void removeFromTeacherInformationSheet(Publication publication) {
-	Iterator<PublicationTeacher> iterator = getTeacherPublications().iterator();
-
-	while (iterator.hasNext()) {
-	    PublicationTeacher publicationTeacher = iterator.next();
-	    if (publicationTeacher.getPublication().equals(publication)) {
-		iterator.remove();
-		publicationTeacher.delete();
-		return;
-	    }
-	}
-    }
-
-    public Boolean canAddPublicationToTeacherInformationSheet(PublicationArea area) {
-	// NOTA : a linha seguinte cont???m um n???mero expl???cito quando n???o
-	// deve.
-	// Isto deve ser mudado! Mas esta mudan???a implica tornar expl???cito o
-	// conceito de Ficha de docente.
-	return new Boolean(countPublicationsInArea(area) < 5);
-
     }
 
     public List<Professorship> responsibleFors() {
@@ -477,16 +447,6 @@ public class Teacher extends Teacher_Base {
     /***************************************************************************
      * PRIVATE METHODS *
      **************************************************************************/
-
-    private int countPublicationsInArea(PublicationArea area) {
-	int count = 0;
-	for (PublicationTeacher publicationTeacher : getTeacherPublications()) {
-	    if (publicationTeacher.getPublicationArea().equals(area)) {
-		count++;
-	    }
-	}
-	return count;
-    }
 
     public List<MasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(ExecutionYear executionYear) {
 	List<MasterDegreeThesisDataVersion> guidedThesis = new ArrayList<MasterDegreeThesisDataVersion>();
@@ -1042,26 +1002,6 @@ public class Teacher extends Teacher_Base {
 	    if (managementPositionCreditLine.getStart().isBefore(executionSemester.getEndDateYearMonthDay())
 		    && managementPositionCreditLine.getEnd().isAfter(executionSemester.getBeginDateYearMonthDay())) {
 		result.add(managementPositionCreditLine);
-	    }
-	}
-	return result;
-    }
-
-    public List<PublicationTeacher> readPublicationsByPublicationArea(PublicationArea publicationArea) {
-	final List<PublicationTeacher> result = new ArrayList<PublicationTeacher>();
-	for (final PublicationTeacher publicationTeacher : this.getTeacherPublicationsSet()) {
-	    if (publicationTeacher.getPublicationArea().equals(publicationArea)) {
-		result.add(publicationTeacher);
-	    }
-	}
-	return result;
-    }
-
-    public List<OldPublication> readOldPublicationsByType(OldPublicationType oldPublicationType) {
-	final List<OldPublication> result = new ArrayList<OldPublication>();
-	for (final OldPublication oldPublication : this.getAssociatedOldPublicationsSet()) {
-	    if (oldPublication.getOldPublicationType().equals(oldPublicationType)) {
-		result.add(oldPublication);
 	    }
 	}
 	return result;
