@@ -94,7 +94,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     private void checkSpecificConditions() {
 	if (getRegistration().getDegreeType().getQualifiesForGraduateTitle()) {
-	    checkForDiplomaRequest(getRequestedCycle());
+	    checkForDiplomaRequest(getRegistration(), getRequestedCycle());
 	} else {
 	    if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
 		throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
@@ -102,8 +102,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	}
     }
 
-    private void checkForDiplomaRequest(final CycleType requestedCycle) {
-	final DiplomaRequest diplomaRequest = getRegistration().getDiplomaRequest(requestedCycle);
+    static public void checkForDiplomaRequest(final Registration registration, final CycleType requestedCycle) {
+	final DiplomaRequest diplomaRequest = registration.getDiplomaRequest(requestedCycle);
 	if (diplomaRequest == null) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutDiplomaRequest");
 	} else if (diplomaRequest.isPayedUponCreation() && diplomaRequest.hasEvent() && !diplomaRequest.getEvent().isPayed()) {
