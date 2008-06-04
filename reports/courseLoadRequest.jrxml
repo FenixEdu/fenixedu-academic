@@ -70,24 +70,24 @@
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="210"  isSplitAllowed="true" >
+			<band height="195"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="200"
-						y="134"
+						y="131"
 						width="160"
 						height="21"
 						key="staticText-24"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
-						<font pdfFontName="Times-Roman" size="12"/>
+						<font pdfFontName="Times-Roman" size="11"/>
 					</textElement>
 				<text><![CDATA[A Técnica Superior]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
 						x="131"
-						y="179"
+						y="176"
 						width="314"
 						height="0"
 						key="line-1"/>
@@ -96,52 +96,52 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="8"
+						y="4"
 						width="469"
-						height="37"
+						height="27"
 						key="staticText-25"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Justified">
-						<font pdfFontName="Times-Roman" size="12"/>
+						<font pdfFontName="Times-Roman" size="11"/>
 					</textElement>
 				<text><![CDATA[Por ser verdade e me haver sido pedido mandei passar o presente certificado que vou assinar e autenticar com o selo branco em uso nesta Secretaria.]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="68"
+						y="63"
 						width="469"
-						height="20"
+						height="18"
 						key="textField-27"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Justified" verticalAlignment="Middle" isStyledText="true" lineSpacing="1_1_2">
-						<font pdfFontName="Times-Roman" size="12" isBold="false" isItalic="false"/>
+					<textElement textAlignment="Justified" verticalAlignment="Top" isStyledText="true" lineSpacing="Single">
+						<font pdfFontName="Times-Roman" size="11" isBold="false" isItalic="false"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="184"
+						y="181"
 						width="469"
-						height="21"
+						height="14"
 						key="textField-28"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
-						<font pdfFontName="Times-Roman" size="12"/>
+						<font pdfFontName="Times-Roman" size="11"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="50"
+						y="46"
 						width="469"
 						height="17"
 						key="textField-29"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement>
-						<font pdfFontName="Times-Roman" size="12"/>
+					<textElement textAlignment="Justified">
+						<font pdfFontName="Times-Roman" size="11"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeName} + " do " +$P{institutionName}]]></textFieldExpression>
 				</textField>
@@ -153,7 +153,7 @@
 			</band>
 		</background>
 		<title>
-			<band height="355"  isSplitAllowed="true" >
+			<band height="327"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="219"
@@ -172,13 +172,13 @@
 						x="64"
 						y="196"
 						width="469"
-						height="157"
+						height="131"
 						key="textField-16"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
-						<font pdfFontName="Times-Roman" size="12" isBold="false" isItalic="false"/>
+						<font pdfFontName="Times-Roman" size="11" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do " + $P{institutionName} + " da " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que compulsando o processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\"> " + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horária semanal (em horas):"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do " + $P{institutionName} + " da " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que compulsando o processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horária semanal (em horas):"]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>
@@ -192,25 +192,27 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="52"  isSplitAllowed="true" >
+			<band height="55"  isSplitAllowed="true" >
 				<subreport  isUsingCache="true">
 					<reportElement
 						x="0"
-						y="2"
+						y="1"
 						width="595"
 						height="25"
-						key="subreport-1"/>
+						key="subreport-1"
+						isPrintWhenDetailOverflows="true"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{bolonhaList})]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/courseLoadBolonhaRequest.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
 						x="0"
-						y="27"
+						y="30"
 						width="595"
 						height="25"
 						key="subreport-2"
-						positionType="Float"/>
+						positionType="Float"
+						isPrintWhenDetailOverflows="true"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{preBolonhaList})]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/courseLoadPreBolonhaRequest.jasper"]]></subreportExpression>
 				</subreport>
@@ -221,13 +223,13 @@
 			</band>
 		</columnFooter>
 		<pageFooter>
-			<band height="21"  isSplitAllowed="true" >
+			<band height="13"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="450"
 						y="0"
 						width="25"
-						height="19"
+						height="12"
 						key="staticText-18"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -241,7 +243,7 @@
 						x="488"
 						y="0"
 						width="14"
-						height="19"
+						height="12"
 						key="staticText-19"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -255,7 +257,7 @@
 						x="475"
 						y="0"
 						width="13"
-						height="19"
+						height="12"
 						key="textField-23"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -269,7 +271,7 @@
 						x="502"
 						y="0"
 						width="13"
-						height="19"
+						height="12"
 						key="textField-24"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
@@ -281,14 +283,14 @@
 			</band>
 		</pageFooter>
 		<lastPageFooter>
-			<band height="20"  isSplitAllowed="true" >
+			<band height="14"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="450"
 						y="1"
 						width="25"
-						height="19"
-						key="staticText-22"
+						height="12"
+						key="staticText-26"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -301,8 +303,8 @@
 						x="488"
 						y="1"
 						width="14"
-						height="19"
-						key="staticText-23"
+						height="12"
+						key="staticText-27"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -315,8 +317,8 @@
 						x="475"
 						y="1"
 						width="13"
-						height="19"
-						key="textField-25"
+						height="12"
+						key="textField-30"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -329,8 +331,8 @@
 						x="502"
 						y="1"
 						width="13"
-						height="19"
-						key="textField-26"
+						height="12"
+						key="textField-31"
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
