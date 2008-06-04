@@ -251,7 +251,7 @@
 					<fr:property name="order(payments)" value="4" />
 					<fr:property name="order(processing)" value="5" />
 					
-					<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
+					<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
@@ -303,7 +303,7 @@
 					<fr:property name="order(receiveFrom)"	value="5" />
 					<fr:property name="order(conclude)"		value="6" />
 					
-					<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
+					<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
@@ -361,7 +361,7 @@
 					<fr:property name="order(print)" value="6"/>
 					<fr:property name="order(deliver)" value="7"/>
 					
-					<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
+					<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
