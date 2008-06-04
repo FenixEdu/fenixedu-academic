@@ -44,10 +44,11 @@
 <logic:notEmpty name="historicalAcademicServiceRequests">
 	<fr:view name="historicalAcademicServiceRequests" schema="AcademicServiceRequest.view-for-given-registration">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright" />
+			<fr:property name="classes" value="tstyle4 thlight mtop0" />
+			<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,acenter nowrap,nowrap" />
 			<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=academicServiceRequestsManagement&backMethod=viewRegistrationAcademicServiceRequestsHistoric"/>
 			<fr:property name="key(view)" value="view"/>
-			<fr:property name="sortBy" value="creationDate=desc, activeSituation.creationDate=desc, urgentRequest=desc, description=asc"/>
+			<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
