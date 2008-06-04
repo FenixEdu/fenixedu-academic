@@ -324,7 +324,7 @@
 
 	
 	<%
-		request.setAttribute("degreeFinalizationDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+		request.setAttribute("degreeFinalizationDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
 		final Integer finalAverage = registrationConclusionBean.getFinalAverage();	
 		request.setAttribute("finalAverage", finalAverage);
 		request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(finalAverage));
@@ -336,7 +336,7 @@
 		request.setAttribute("administrativeOfficeCoordinator", administrativeOfficeCoordinator);
 		request.setAttribute("administrativeOfficeCoordinatorGender", administrativeOfficeCoordinator.isMale() ? "" : "a");
 		request.setAttribute("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
-		request.setAttribute("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", LanguageUtils.getLocale()));
+		request.setAttribute("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
 	%>
 	
 	<table class="apura-final" width="90%" cellspacing="0" border="0">
