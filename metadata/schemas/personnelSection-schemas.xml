@@ -335,7 +335,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 </schema>
 
 <schema name="create.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
-	constructor="acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, giafCodeOtherStatus, giafCodeContractedStatus, modifiedBy">
+	constructor="acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, giafCodeOtherStatus, giafCodeContractedStatus, discountBonus, discountA17Vacations, modifiedBy">
 	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
