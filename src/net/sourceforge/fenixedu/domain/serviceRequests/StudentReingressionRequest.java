@@ -129,8 +129,12 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
 
 	} else if (academicServiceRequestBean.isToConclude() && hasExecutionDegree()) {
-	    RegistrationState.createState(getRegistration(), academicServiceRequestBean.getEmployee().getPerson(),
-		    new DateTime(), RegistrationStateType.REGISTERED);
+	    final RegistrationState state = RegistrationState.createState(getRegistration(), academicServiceRequestBean.getEmployee()
+		    .getPerson(), academicServiceRequestBean.getFinalSituationDate(), RegistrationStateType.REGISTERED);
+
+	    if (getRegistration().getActiveState() != state) {
+		throw new DomainException("StudentReingressionRequest.reingression.must.be.active.state.after.request.conclusion");
+	    }
 	}
     }
 
