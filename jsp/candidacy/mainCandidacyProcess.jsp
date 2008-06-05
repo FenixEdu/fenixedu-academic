@@ -8,7 +8,6 @@
 
 <%-- no candidacy process for current year --%>
 <logic:empty name="process">
-	<em><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></h2>
 	
 	<bean:message key="label.candidacy.no.candidacies.for.current.year" bundle="APPLICATION_RESOURCES" />
@@ -33,7 +32,7 @@
 
 <%-- candidacy process of current year --%>
 <logic:notEmpty name="process">
-	<em><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+	<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:write name="process" property="displayName" /> </h2>
 
 	<bean:define id="processId" name="process" property="idInternal" />

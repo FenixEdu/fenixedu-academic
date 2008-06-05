@@ -155,7 +155,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     }
 
     void editCandidacyResult(final SecondCycleIndividualCandidacyResultBean bean) {
-	checkEditParameters(bean);
 	setProfessionalExperience(bean.getProfessionalExperience());
 	setAffinity(bean.getAffinity());
 	setDegreeNature(bean.getDegreeNature());
@@ -164,29 +163,5 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	setSeriesCandidacyGrade(bean.getSeriesGrade());
 	setState(bean.getState());
 	setNotes(bean.getNotes());
-    }
-
-    private void checkEditParameters(final SecondCycleIndividualCandidacyResultBean bean) {
-	if (bean.getProfessionalExperience() == null) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.profissionalExperience");
-	}
-	if (bean.getAffinity() == null) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.affinity");
-	}
-	if (bean.getDegreeNature() == null) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degreeNature");
-	}
-	if (bean.getGrade() == null) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.grade");
-	}
-	if (bean.getInterviewGrade() == null || bean.getInterviewGrade().length() == 0) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.interview.value");
-	}
-	if (bean.getSeriesGrade() == null) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.series.grade");
-	}
-	if (bean.getState() == null) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.state");
-	}
     }
 }

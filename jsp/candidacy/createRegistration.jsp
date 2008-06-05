@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
-<em><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:write name="process" property="displayName" /></h2>
 <h3><bean:message key="label.candidacy.createRegistration" bundle="APPLICATION_RESOURCES"/></h3>
 

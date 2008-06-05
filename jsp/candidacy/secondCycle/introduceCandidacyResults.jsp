@@ -4,12 +4,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
-<em><bean:message key="label.candidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="label.candidacy.secondCycle" bundle="APPLICATION_RESOURCES"/></h2>
-
-
-<strong><bean:write name="process" property="displayName" /></strong>
-<br/>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>
@@ -17,21 +13,32 @@
 </html:messages>
 
 <bean:define id="processId" name="process" property="idInternal" />
-
 <fr:form action='<%="/caseHandlingSecondCycleCandidacyProcess.do?processId=" + processId.toString() %>'>
- 	<html:hidden property="method" value="executeIntroduceCandidacyResults" />
+	<html:hidden property="method" value="listProcessAllowedActivities" />
 
-	<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.introduce.result" bundle="APPLICATION_RESOURCES"/></h3>
-	<fr:edit id="secondCycleIndividualCandidacyResultBeans"
-		name="secondCycleIndividualCandidacyResultBeans"
-		schema="SecondCycleIndividualCandidacyResultBean.introduce.results">
-		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4 mtop025"/>
-		</fr:layout>
-		<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleCandidacyProcess.do?method=executeIntroduceCandidacyResultsInvalid&amp;processId=" + processId.toString() %>' />
-	</fr:edit>
+	<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.introduce.results" bundle="APPLICATION_RESOURCES"/></h3>
+	<br/>
+	<logic:notEmpty name="secondCycleIndividualCandidaciesByDegree">
+		<html:cancel><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	</logic:notEmpty>
+	<br/>
+	<br/>
+	<logic:iterate id="entry" name="secondCycleIndividualCandidaciesByDegree">
+	
+		<bean:define id="degree" name="entry" property="key"/>
+		<bean:define id="secondCycleIndividualCandidacyProcesses" name="entry" property="value"/>
 		
-	<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities';return true;"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
+		<bean:define id="degreeId" name="degree" property="idInternal" />
+		<strong><bean:write name="degree" property="presentationName" /></strong>:
+		<html:link action='<%="/caseHandlingSecondCycleCandidacyProcess.do?method=prepareExecuteIntroduceCandidacyResultsForDegree&amp;processId=" + processId.toString() + "&amp;degreeId=" + degreeId.toString() %>' ><bean:message key="label.candidacy.introduce.results" bundle="APPLICATION_RESOURCES" /></html:link>
+		<br/>
+		<fr:view name="secondCycleIndividualCandidacyProcesses" schema="SecondCycleIndividualCandidacy.introduce.results.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 mtop025"/>
+			</fr:layout>
+		</fr:view>
+		<br/>
+	</logic:iterate>
 
+	<html:cancel><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
 </fr:form>

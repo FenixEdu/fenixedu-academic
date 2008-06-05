@@ -1,9 +1,12 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
@@ -46,7 +49,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	activities.add(new EditCandidacyPeriod());
 	activities.add(new SendToCoordinator());
 	activities.add(new PrintCandidacies());
-	// TODO: activities.add(new IntroduceCandidacyResults());
+	activities.add(new IntroduceCandidacyResults());
 	// TODO: activities.add(new SendToScientificCouncil());
 	// TODO: activities.add(new PublishCandidacyResults());
 	// TODO: activities.add(new CreateRegistrations());
@@ -100,8 +103,23 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	return result;
     }
 
-    public Map<Degree, List<SecondCycleIndividualCandidacyProcess>> getValidSecondCycleIndividualCandidaciesByDegree() {
-	final Map<Degree, List<SecondCycleIndividualCandidacyProcess>> result = new HashMap<Degree, List<SecondCycleIndividualCandidacyProcess>>();
+    public List<SecondCycleIndividualCandidacyProcess> getValidSecondCycleIndividualCandidacies(final Degree degree) {
+	if (degree == null) {
+	    return Collections.emptyList();
+	}
+	final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
+	for (final IndividualCandidacyProcess child : getChildProcesses()) {
+	    final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
+	    if (process.isValid() && process.hasCandidacySelectedDegree(degree)) {
+		result.add(process);
+	    }
+	}
+	return result;
+    }
+
+    public Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> getValidSecondCycleIndividualCandidaciesByDegree() {
+	final Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> result = new TreeMap<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>>(
+		Degree.COMPARATOR_BY_NAME_AND_ID);
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
 	    final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
 	    if (process.isValid()) {
@@ -111,15 +129,16 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	return result;
     }
 
-    private void addCandidacy(final Map<Degree, List<SecondCycleIndividualCandidacyProcess>> result,
+    private void addCandidacy(final Map<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> result,
 	    final SecondCycleIndividualCandidacyProcess process) {
-	List<SecondCycleIndividualCandidacyProcess> values = result.get(process.getCandidacySelectedDegree());
+	SortedSet<SecondCycleIndividualCandidacyProcess> values = result.get(process.getCandidacySelectedDegree());
 	if (values == null) {
-	    result.put(process.getCandidacySelectedDegree(), values = new ArrayList<SecondCycleIndividualCandidacyProcess>());
+	    result.put(process.getCandidacySelectedDegree(), values = new TreeSet<SecondCycleIndividualCandidacyProcess>(
+		    SecondCycleIndividualCandidacyProcess.COMPARATOR_BY_CANDIDACY_PERSON));
 	}
 	values.add(process);
     }
-    
+
     public List<SecondCycleIndividualCandidacyProcess> getAcceptedSecondCycleIndividualCandidacies() {
 	final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
@@ -224,7 +243,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isSentToCoordinator()) {
+	    if (process.isInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -302,11 +321,11 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 
 	    for (final IndividualCandidacyProcess candidacyProcess : process.getChildProcesses()) {
 		final SecondCycleIndividualCandidacyProcess secondCycleCP = (SecondCycleIndividualCandidacyProcess) candidacyProcess;
-		if (secondCycleCP.isCandidacyAccepted() && !secondCycleCP.hasRegistrationForCandidacy()) {
+		if (secondCycleCP.isValid() && secondCycleCP.isCandidacyAccepted()
+			&& !secondCycleCP.hasRegistrationForCandidacy()) {
 		    secondCycleCP.executeActivity(userView, "CreateRegistration", null);
 		}
 	    }
-
 	    return process;
 	}
     }

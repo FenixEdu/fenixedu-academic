@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SortedSet;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
@@ -42,6 +43,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "send-to-coordinator", path = "/candidacy/secondCycle/sendToCoordinator.jsp"),
 	@Forward(name = "introduce-candidacy-results", path = "/candidacy/secondCycle/introduceCandidacyResults.jsp"),
+	@Forward(name = "introduce-candidacy-results-for-degree", path = "/candidacy/secondCycle/introduceCandidacyResultsForDegree.jsp"),
 	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/secondCycle/sendToScientificCouncil.jsp"),
 	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
 
@@ -119,21 +121,37 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     public ActionForward prepareExecuteIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+	final SecondCycleCandidacyProcess process = getProcess(request);
+	request.setAttribute("secondCycleIndividualCandidaciesByDegree", process
+		.getValidSecondCycleIndividualCandidaciesByDegree());
+	return mapping.findForward("introduce-candidacy-results");
+    }
+
+    public ActionForward prepareExecuteIntroduceCandidacyResultsForDegree(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 
 	final SecondCycleCandidacyProcess process = getProcess(request);
 	final List<SecondCycleIndividualCandidacyResultBean> beans = new ArrayList<SecondCycleIndividualCandidacyResultBean>();
-	for (final SecondCycleIndividualCandidacyProcess candidacyProcess : process.getValidSecondCycleIndividualCandidacies()) {
+	for (final SecondCycleIndividualCandidacyProcess candidacyProcess : process
+		.getValidSecondCycleIndividualCandidacies(getAndSetDegree(request))) {
 	    beans.add(new SecondCycleIndividualCandidacyResultBean(candidacyProcess));
 	}
 	request.setAttribute("secondCycleIndividualCandidacyResultBeans", beans);
-	return mapping.findForward("introduce-candidacy-results");
+	return mapping.findForward("introduce-candidacy-results-for-degree");
+    }
+
+    private Degree getAndSetDegree(final HttpServletRequest request) {
+	final Degree degree = rootDomainObject.readDegreeByOID(getIntegerFromRequest(request, "degreeId"));
+	request.setAttribute("degree", degree);
+	return degree;
     }
 
     public ActionForward executeIntroduceCandidacyResultsInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+	getAndSetDegree(request);
 	request.setAttribute("secondCycleIndividualCandidacyResultBeans",
 		getRenderedObject("secondCycleIndividualCandidacyResultBeans"));
-	return mapping.findForward("introduce-candidacy-results");
+	return mapping.findForward("introduce-candidacy-results-for-degree");
     }
 
     public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
@@ -144,9 +162,10 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 		    getRenderedObject("secondCycleIndividualCandidacyResultBeans"));
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    getAndSetDegree(request);
 	    request.setAttribute("secondCycleIndividualCandidacyResultBeans",
 		    getRenderedObject("secondCycleIndividualCandidacyResultBeans"));
-	    return mapping.findForward("introduce-candidacy-results");
+	    return mapping.findForward("introduce-candidacy-results-for-degree");
 	}
 
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
@@ -171,17 +190,17 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     private void writeReport(final SecondCycleCandidacyProcess process, final ServletOutputStream writer) throws IOException {
 	final List<Spreadsheet> spreadsheets = new ArrayList<Spreadsheet>();
-	for (final Entry<Degree, List<SecondCycleIndividualCandidacyProcess>> entry : process
+	for (final Entry<Degree, SortedSet<SecondCycleIndividualCandidacyProcess>> entry : process
 		.getValidSecondCycleIndividualCandidaciesByDegree().entrySet()) {
 	    spreadsheets.add(buildReport(entry.getKey(), entry.getValue()));
 	}
 	new SpreadsheetXLSExporter().exportToXLSSheets(writer, spreadsheets);
     }
 
-    private Spreadsheet buildReport(final Degree degree, final List<SecondCycleIndividualCandidacyProcess> values) {
+    private Spreadsheet buildReport(final Degree degree, final SortedSet<SecondCycleIndividualCandidacyProcess> name) {
 	final Spreadsheet spreadsheet = new CandidacyReport(degree.getSigla(), getHeader());
 
-	for (final SecondCycleIndividualCandidacyProcess process : values) {
+	for (final SecondCycleIndividualCandidacyProcess process : name) {
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(process.getCandidacyPerson().getName());
 	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
