@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
@@ -85,7 +86,17 @@ public class ExportClosedExtraWorkMonth extends Service {
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
 		beginDate.dayOfMonth().getMaximumValue());
 	StringBuilder result = new StringBuilder();
-	HashMap<Assiduousness, List<LeaveBean>> allLeaves = getLeaves(beginDate, endDate);
+	HashMap<Assiduousness, List<LeaveBean>> allLeaves = getLeaves(beginDate, endDate, false);
+	YearMonthDay beginUnpaidLicenseDate = new YearMonthDay().withField(DateTimeFieldType.year(),
+		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
+		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
+		DateTimeFieldType.dayOfMonth(), 1);
+	YearMonthDay endUnpaidLicenseDate = new YearMonthDay().withField(DateTimeFieldType.year(),
+		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
+		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
+		DateTimeFieldType.dayOfMonth(), beginUnpaidLicenseDate.dayOfMonth().getMaximumValue());
+	HashMap<Assiduousness, List<LeaveBean>> allUnpaidLicenseLeaves = getLeaves(beginUnpaidLicenseDate, endUnpaidLicenseDate,
+		true);
 	a66JustificationMotive = getA66JustificationMotive();
 	unjustifiedJustificationMotive = getUnjustifiedJustificationMotive();
 	maternityJustificationMotive = getMaternityJustificationMotive();
@@ -99,6 +110,14 @@ public class ExportClosedExtraWorkMonth extends Service {
 			.getAssiduousnessStatusHistory().getAssiduousness()));
 		if (getWorkAbsences) {
 		    result.append(lineResult);
+		    List<LeaveBean> leaveBeanList = allUnpaidLicenseLeaves.get(assiduousnessClosedMonth
+			    .getAssiduousnessStatusHistory().getAssiduousness());
+		    if (leaveBeanList != null) {
+			for (LeaveBean leaveBean : leaveBeanList) {
+			    result.append(getLeaveLine(assiduousnessClosedMonth, leaveBean, beginUnpaidLicenseDate,
+				    endUnpaidLicenseDate));
+			}
+		    }
 		}
 		if (getExtraWorkMovements) {
 		    extraWorkResult.append(getAssiduousnessExtraWork(assiduousnessClosedMonth));
@@ -331,19 +350,24 @@ public class ExportClosedExtraWorkMonth extends Service {
     }
 
     private StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, LeaveBean leaveBean) {
+	return getLeaveLine(assiduousnessClosedMonth, leaveBean, assiduousnessClosedMonth.getBeginDate(),
+		assiduousnessClosedMonth.getEndDate());
+    }
+
+    private StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, LeaveBean leaveBean,
+	    YearMonthDay beginDate, YearMonthDay endDate) {
 	StringBuilder line = new StringBuilder();
-	Interval interval = new Interval(assiduousnessClosedMonth.getBeginDate().toDateTimeAtMidnight(), assiduousnessClosedMonth
-		.getEndDate().toDateTimeAtMidnight().plusSeconds(1));
+	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight().plusSeconds(1));
 	if (leaveBean.getLeave().getTotalInterval().overlaps(interval)) {
-	    YearMonthDay start = getNextWorkingDay(leaveBean.getLeave(), assiduousnessClosedMonth.getBeginDate(), false);
-	    YearMonthDay end = assiduousnessClosedMonth.getEndDate();
-	    if (leaveBean.getDate().toYearMonthDay().isAfter(assiduousnessClosedMonth.getBeginDate())) {
+	    YearMonthDay start = getNextWorkingDay(leaveBean.getLeave(), beginDate, false);
+	    YearMonthDay end = endDate;
+	    if (leaveBean.getDate().toYearMonthDay().isAfter(beginDate)) {
 		start = getNextWorkingDay(leaveBean.getLeave(), leaveBean.getDate().toYearMonthDay(), false);
 	    }
 	    if (leaveBean.getEndYearMonthDay() == null) {
 		end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
 			.getAssiduousness(), leaveBean.getDate().toYearMonthDay(), false);
-	    } else if (leaveBean.getEndYearMonthDay().isBefore(assiduousnessClosedMonth.getEndDate())) {
+	    } else if (leaveBean.getEndYearMonthDay().isBefore(endDate)) {
 		end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
 			.getAssiduousness(), leaveBean.getEndYearMonthDay(), false);
 	    }
@@ -352,8 +376,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 
 	    if (code != 0) {
 		if (leaveBean.getLeave().getJustificationMotive() == maternityJustificationMotive
-			&& assiduousnessClosedMonth.getEndDate().getDayOfMonth() != 30
-			&& Days.daysBetween(start, end).getDays() + 1 == assiduousnessClosedMonth.getEndDate().getDayOfMonth()) {
+			&& endDate.getDayOfMonth() != 30 && Days.daysBetween(start, end).getDays() + 1 == endDate.getDayOfMonth()) {
 		    if (!maternityJustificationList.contains(leaveBean.getLeave().getAssiduousness())
 			    && !isContractedEmployee(leaveBean.getLeave().getAssiduousness(), start, end)) {
 			maternityJustificationList.add(leaveBean.getLeave().getAssiduousness());
@@ -425,22 +448,29 @@ public class ExportClosedExtraWorkMonth extends Service {
 	return line;
     }
 
-    private HashMap<Assiduousness, List<LeaveBean>> getLeaves(YearMonthDay beginDate, YearMonthDay endDate) {
+    private HashMap<Assiduousness, List<LeaveBean>> getLeaves(YearMonthDay beginDate, YearMonthDay endDate,
+	    Boolean unpaidLicenceLeaves) {
 	HashMap<Assiduousness, List<Leave>> assiduousnessLeaves = new HashMap<Assiduousness, List<Leave>>();
 	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateMidnight()));
 	for (AssiduousnessRecord assiduousnessRecord : rootDomainObject.getAssiduousnessRecords()) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
-		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord).getEndDate()
-			.plusSeconds(1));
-		if (leaveInterval.overlaps(interval)) {
+		Leave leave = ((Leave) assiduousnessRecord);
+		if ((!unpaidLicenceLeaves && (leave.getJustificationMotive().getJustificationGroup() == null || leave
+			.getJustificationMotive().getJustificationGroup().equals(JustificationGroup.UNPAID_LICENCES) == unpaidLicenceLeaves))
+			|| (unpaidLicenceLeaves && (leave.getJustificationMotive().getJustificationGroup() != null && leave
+				.getJustificationMotive().getJustificationGroup().equals(JustificationGroup.UNPAID_LICENCES) == unpaidLicenceLeaves))) {
+		    Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord)
+			    .getEndDate().plusSeconds(1));
+		    if (leaveInterval.overlaps(interval)) {
 
-		    List<Leave> leavesList = assiduousnessLeaves.get(assiduousnessRecord.getAssiduousness());
-		    if (leavesList == null) {
-			leavesList = new ArrayList<Leave>();
+			List<Leave> leavesList = assiduousnessLeaves.get(assiduousnessRecord.getAssiduousness());
+			if (leavesList == null) {
+			    leavesList = new ArrayList<Leave>();
+			}
+			leavesList.add(leave);
+			assiduousnessLeaves.put(assiduousnessRecord.getAssiduousness(), leavesList);
 		    }
-		    leavesList.add((Leave) assiduousnessRecord);
-		    assiduousnessLeaves.put(assiduousnessRecord.getAssiduousness(), leavesList);
 		}
 	    }
 	}

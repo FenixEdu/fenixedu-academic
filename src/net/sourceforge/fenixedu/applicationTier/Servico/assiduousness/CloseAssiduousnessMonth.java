@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
+import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 
@@ -154,7 +155,8 @@ public class CloseAssiduousnessMonth extends Service {
 			    } else {
 				vacations = vacations + 1;
 			    }
-			} else if (leave.getJustificationMotive().getAcronym().equals("TOL")) {
+			} else if (leave.getJustificationMotive().getJustificationGroup() != null
+				&& leave.getJustificationMotive().getJustificationGroup().equals(JustificationGroup.TOLERANCES)) {
 			    tolerance = tolerance + 1;
 			} else if (leave.getJustificationMotive().getAcronym().equals("A17")) {
 			    article17 = article17 + 1;

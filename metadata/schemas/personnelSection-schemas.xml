@@ -400,7 +400,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	</slot>
 	<slot read-only="true" name="justificationType" layout="short" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot read-only="true" name="dayType" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot read-only="true" name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES" />
+	<slot name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES" />
 	<slot read-only="true" name="actualWorkTime" key="label.actualWorkTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeOtherStatus" key="label.permanentStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
