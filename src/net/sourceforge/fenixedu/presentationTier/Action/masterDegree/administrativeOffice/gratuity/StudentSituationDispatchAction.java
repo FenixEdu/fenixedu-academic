@@ -43,7 +43,7 @@ import org.apache.struts.action.DynaActionForm;
 
 @Mapping(path = "/studentSituation", formBean = "studentSituationForm", module = "masterDegreeAdministrativeOffice")
 @Forwards( { @Forward(name = "chooseStudent", path = "chooseStudentForStudentSituation"),
-	@Forward(name = "success", path = "publicRelationsOffice-studentReportsSearch") })
+	@Forward(name = "success", path = "studentSituation") })
 @Exceptions( { NonExistingActionException.class })
 public class StudentSituationDispatchAction extends FenixDispatchAction {
 
