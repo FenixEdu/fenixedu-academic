@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import org.apache.commons.lang.StringUtils;
 
 public class Phone extends Phone_Base {
-    
+
     public static Comparator<Phone> COMPARATOR_BY_NUMBER = new Comparator<Phone>() {
 	public int compare(Phone contact, Phone otherContact) {
 	    final String number = contact.getNumber();
@@ -23,21 +23,21 @@ public class Phone extends Phone_Base {
 	    }
 	    return (result == 0) ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
 	}};
-    
+
     protected Phone() {
-        super();
+	super();
     }
-    
+
     protected Phone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
-        this();
-        super.init(party, type, visible, defaultContact);
+	this();
+	super.init(party, type, visible, defaultContact);
     }
-    
+
     public Phone(final Party party, final PartyContactType type, final Boolean defaultContact, final String number) {
-        this(party, type, true, defaultContact, number);
+	this(party, type, true, defaultContact, number);
     }
-    
-    public Phone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String number) {
+
+    public Phone(final Party party, final PartyContactType type, final Boolean visible, final Boolean defaultContact, final String number) {
 	this();
 	super.init(party, type, visible, defaultContact);
 	checkParameters(number);
@@ -49,21 +49,26 @@ public class Phone extends Phone_Base {
 	    throw new DomainException("error.contacts.Phone.invalid.number");
 	}
     }
-    
+
     @Override
     public boolean isPhone() {
-        return true;
+	return true;
     }
-    
+
     public void edit(final String number) {
 	super.setNumber(number);
     }
-    
+
     public void edit(final PartyContactType type, final Boolean defaultContact, final String number) {
 	super.edit(type, true, defaultContact);
 	edit(number);
     }
-    
+
+    public void edit(final PartyContactType type, final Boolean visible, final Boolean defaultContact, final String number) {
+	super.edit(type, visible, defaultContact);
+	edit(number);
+    }
+
     @Override
     protected void checkRulesToDelete() {
 	if (getParty().getPartyContacts(getClass()).size() == 1) {

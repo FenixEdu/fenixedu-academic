@@ -28,10 +28,8 @@ public class ContactsForm extends Form {
     }
 
     public static ContactsForm createFromPerson(Person person) {
-        final boolean availableEmail = person.getAvailableEmail() == null ? false : person
-                .getAvailableEmail();
-        final boolean availableWebSite = person.getAvailableWebSite() == null ? false : person
-                .getAvailableWebSite();
+        final boolean availableEmail = person.isDefaultEmailVisible();
+        final boolean availableWebSite = person.isDefaultWebAddressVisible();
         final boolean availablePhoto = person.getAvailablePhoto() == null ? false : person
                 .getAvailablePhoto();
         return new ContactsForm(person.getEmail(), person.getWebAddress(), availableEmail,

@@ -221,38 +221,64 @@ function check(e,v){
 		  		<bean:define id="personID" name="personalInfo" property="idInternal"/>	  	    		  	  	
 	  			<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 		   	</logic:equal>
-			<table class="ppdetails">
+			<table class="ppdetails tdtop">
 		  		<tr class="highlight">
-		  			<td class="ppleft">
-						<logic:notEqual name="personalInfo" property="workPhone" value=""><bean:message key="label.person.workPhone.short" /></logic:notEqual> 
+		  			<td class="ppleft" valign="top">
+						<bean:message key="label.person.workPhone.short" /> 
 					</td>
 					<td class="ppright2">
-						<logic:notEqual name="personalInfo" property="workPhone" value=""><bean:write name="personalInfo" property="workPhone"/></logic:notEqual>  
+                        <logic:iterate id="phone" name="personalInfo" property="phones">
+                             <logic:equal name="show" value="true">
+                                  <p class="mvert0">
+                                  <bean:write name="phone" property="number" /> (<bean:message name="phone" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
+                                  </p>
+                             </logic:equal>
+                             <logic:notEqual name="show" value="true">
+                                  <logic:equal name="phone" property="visible" value="true">
+                                    <p class="mvert0">
+                                    <bean:write name="phone" property="number" /> (<bean:message name="phone" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
+                                    </p>
+                                  </logic:equal>
+                             </logic:notEqual>
+                        </logic:iterate>
+
+                       <logic:iterate id="phone" name="personalInfo" property="mobilePhones">
+                           <logic:equal name="show" value="true">
+                             <p class="mvert0">
+                               <bean:write name="phone" property="number" /> (<bean:message name="phone" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
+                             </p>
+                           </logic:equal>
+                           <logic:notEqual name="show" value="true">
+                             <logic:equal name="phone" property="visible" value="true">
+                               <p class="mvert0">
+                               <bean:write name="phone" property="number" /> (<bean:message name="phone" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
+                               </p>
+                             </logic:equal>
+                           </logic:notEqual>
+                       </logic:iterate>
 					</td>
 					
-					<logic:equal name="show" value="true">
-						<logic:present name="personalInfo" property="email">
-							<logic:notEqual name="personalInfo" property="email" value=""> 
-								<td class="ppleft_mail"><bean:message key="label.person.email" /></td>
-								<td>
-									<bean:define id="eMail" name="personalInfo" property="email" />
-									<html:link href="<%= "mailto:" + pageContext.findAttribute("eMail").toString() %>"><bean:write name="personalInfo" property="email"/></html:link>		            
-								</td>		
-							</logic:notEqual>  
-						</logic:present>  
-	        		</logic:equal>
-					
-					<logic:equal name="show" value="false">
-						<logic:equal name="personalInfo" property="availableEmail" value="true">
-							<logic:present name="personalInfo" property="email">
-								<td class="ppleft_mail"><bean:message key="label.person.email" /></td>
-								<td>
-									<bean:define id="eMail" name="personalInfo" property="email" />
-									<html:link href="<%= "mailto:" + pageContext.findAttribute("eMail").toString() %>"><bean:write name="personalInfo" property="email"/></html:link>		            
-								</td>
-							</logic:present>
-						</logic:equal>
-					</logic:equal>	        
+                    <td class="ppleft_mail" valign="top">
+                        <bean:message key="label.person.email" />
+                    </td>
+                    <td class="ppright">
+                        <logic:iterate id="email" name="personalInfo" property="emailAddresses">
+                            <logic:equal name="show" value="true">
+                                <p class="mvert0">
+                                    <bean:define id="emailValue" name="email" property="value" />
+                                    <a href="mailto:<%= pageContext.findAttribute("emailValue").toString() %>"><bean:write name="email" property="value" /></a>
+                                </p>
+                            </logic:equal>
+                            <logic:notEqual name="show" value="true">
+                            <logic:equal name="email" property="visible" value="true">
+                                <p class="mvert0">
+                                    <bean:define id="emailValue" name="email" property="value" />
+                                    <a href="mailto:<%= pageContext.findAttribute("emailValue").toString() %>"><bean:write name="email" property="value" /></a>
+                                </p>
+                            </logic:equal>
+                            </logic:notEqual>
+                        </logic:iterate>
+                    </td>
 				</tr>
 			</table>
 						<div id="<%= pageContext.findAttribute("aa").toString() %>" class="switchNone">
@@ -307,19 +333,29 @@ function check(e,v){
 					</logic:notEmpty>										<logic:notEmpty name="personalInfo" property="employee" >						<logic:notEmpty  name="personalInfo" property="employee.category" >							<tr>								<td class="ppleft2"><bean:message key="label.employee.category" />:</td>																<bean:define id="categoryName" name="personalInfo" property="employee.category.longName"/>								<td class="ppright"><bean:write name="categoryName"/></td>							</tr>
 						</logic:notEmpty>					</logic:notEmpty>
 					
-					<logic:equal name="personalInfo" property="availableWebSite" value="true">        
-						<logic:notEmpty name="personalInfo" property="availableWebSite">
-							<tr>
-								<td class="ppleft2"><bean:message key="label.person.webSite" /></td>		            
-								<td class="ppright">	            	
-									<logic:present name="personalInfo" property="webAddress">
-										<bean:define id="homepage" name="personalInfo" property="webAddress" />
-										<html:link target="_blank" href="<%= pageContext.findAttribute("homepage").toString() %>"><bean:write name="personalInfo" property="webAddress"/></html:link>
-									</logic:present>
-								</td>
-							</tr>
-						</logic:notEmpty>
-					</logic:equal>
+					<logic:notEmpty name="personalInfo" property="webAddresses">
+                        <tr>
+                            <td class="ppleft2"><bean:message key="label.person.webSite" /></td>
+                            <td class="ppright">                    
+    					        <logic:iterate id="webAddress" name="personalInfo" property="webAddresses">
+                                    <logic:equal name="show" value="true">
+                                         <p class="mvert0">
+                                         <bean:define id="pageValue" name="webAddress" property="url" />
+                                         <html:link target="_blank" href="<%= pageContext.findAttribute("pageValue").toString() %>"><bean:write name="webAddress" property="url"/></html:link>
+                                         </p>
+                                    </logic:equal>
+                                    <logic:notEqual name="show" value="true">
+                                    <logic:equal name="webAddress" property="visible" value="true">
+                                         <p class="mvert0">
+                                        <bean:define id="pageValue" name="webAddress" property="url" />
+                                        <html:link target="_blank" href="<%= pageContext.findAttribute("pageValue").toString() %>"><bean:write name="webAddress" property="url"/></html:link>
+                                        </p>
+                                    </logic:equal>
+                                    </logic:notEqual>
+	       				        </logic:iterate>
+                            </td>
+                        </tr>
+					</logic:notEmpty>
 					
 					<logic:equal name="personalInfo" property="homePageAvailable" value="true">
 						<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>

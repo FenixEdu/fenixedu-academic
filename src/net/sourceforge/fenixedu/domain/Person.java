@@ -92,7 +92,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringFormatter;
 import net.sourceforge.fenixedu.util.UsernameUtils;
@@ -106,6 +105,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Person extends Person_Base {
 
@@ -202,8 +202,6 @@ public class Person extends Person_Base {
 	super();
 	setMaritalStatus(MaritalStatus.UNKNOWN);
 	setIsPassInKerberos(Boolean.FALSE);
-	setAvailableEmail(Boolean.FALSE);
-	setAvailableWebSite(Boolean.FALSE);
 	setAvailablePhoto(Boolean.FALSE);
     }
 
@@ -1266,7 +1264,7 @@ public class Person extends Person_Base {
 	    }
 	}
     }
-    
+
     @Deprecated
     public Registration readStudentByDegreeType(DegreeType degreeType) {
 	for (final Registration registration : this.getStudents()) {
@@ -2230,15 +2228,14 @@ public class Person extends Person_Base {
     }
 
     public String getHomepageWebAddress() {
-	if (hasHomepage() && getHomepage().isHomepageActivated()) {
+	if (hasHomepage() && getHomepage().isHomepageActivated())
 	    return "/homepage/" + getUsername();
-	}
-	if (hasAvailableWebSite() && hasDefaultWebAddress() && getDefaultWebAddress().hasUrl()) {
+	if (isDefaultWebAddressVisible() && getDefaultWebAddress().hasUrl())
 	    return getDefaultWebAddress().getUrl();
-	}
 	return null;
     }
 
+    @Deprecated
     public boolean hasAvailableWebSite() {
 	return getAvailableWebSite() != null && getAvailableWebSite().booleanValue();
     }
@@ -2645,8 +2642,7 @@ public class Person extends Person_Base {
     }
 
     public boolean isEmailPubliclyAvailable() {
-	Boolean availableEmail = getAvailableEmail();
-	if (availableEmail == null || !availableEmail) {
+	if (!isDefaultEmailVisible()) {
 	    return false;
 	}
 
@@ -2656,6 +2652,36 @@ public class Person extends Person_Base {
 
 	Boolean showEmailInHomepage = getHomepage().getShowEmail();
 	return showEmailInHomepage != null && showEmailInHomepage;
+    }
+
+    public boolean isDefaultEmailVisible() {
+	return getDefaultEmailAddress() == null ? false : getDefaultEmailAddress().isContactVisible();
+    }
+
+    public boolean isDefaultWebAddressVisible() {
+	return getDefaultWebAddress() == null ? false : getDefaultWebAddress().isContactVisible();
+    }
+
+    @Deprecated
+    public Boolean getAvailableEmail() {
+	return isDefaultEmailVisible();
+    }
+
+    @Deprecated
+    public void setAvailableEmail(Boolean available) {
+	if (getDefaultEmailAddress() != null)
+	    getDefaultEmailAddress().setVisible(available);
+    }
+
+    @Deprecated
+    public Boolean getAvailableWebSite() {
+	return isDefaultWebAddressVisible();
+    }
+
+    @Deprecated
+    public void setAvailableWebSite(Boolean available) {
+	if (getDefaultWebAddress() != null)
+	    getDefaultWebAddress().setVisible(available);
     }
 
     public List<UnitFile> getUploadedFiles(Unit unit) {

@@ -192,7 +192,9 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     protected void fillContacts(final Person person) {
 	person.setEmail(getContactsForm().getEmail());
+	person.getDefaultEmailAddress().setVisible(getContactsForm().isEmailAvailable());
 	person.setWebAddress(getContactsForm().getWebAddress());
+	person.getDefaultWebAddress().setVisible(getContactsForm().isHomepageAvailable());
 	person.setMobile(getContactsForm().getMobileNumber());
 	person.setPhone(getContactsForm().getPhoneNumber());
     }

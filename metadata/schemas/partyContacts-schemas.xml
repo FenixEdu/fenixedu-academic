@@ -142,11 +142,12 @@
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="INSTITUTIONAL" />
 	</slot>
+    <slot name="visible" key="label.person.visible.to.students" default="true" />
 	<slot name="defaultContact" key="label.partyContacts.defaultContact" />
 </schema>
 
 <schema name="contacts.Phone.manage-student" type="net.sourceforge.fenixedu.domain.contacts.Phone" extends="contacts.PartyContact.manage-student"
-		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, number">
+		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, visible, defaultContact, number">
 	<slot name="number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
@@ -155,11 +156,11 @@
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<setter signature="edit(type, defaultContact, number)" />
+	<setter signature="edit(type, visible, defaultContact, number)" />
 </schema>
 
 <schema name="contacts.MobilePhone.manage-student" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone" extends="contacts.PartyContact.manage-student"
-		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, number">
+		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, visible, defaultContact, number">
 	<slot name="number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
@@ -168,21 +169,21 @@
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<setter signature="edit(type, defaultContact, number)" />
+	<setter signature="edit(type, visible, defaultContact, number)" />
 </schema>
 
 <schema name="contacts.EmailAddress.manage-student" type="net.sourceforge.fenixedu.domain.contacts.EmailAddress" extends="contacts.PartyContact.manage-student"
-		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, value">
+		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, visible, defaultContact, value">
 	<slot name="value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.email">
 		<property name="size" value="50"/>
 	</slot>
-	<setter signature="edit(type, defaultContact, value)" />
+	<setter signature="edit(type, visible, defaultContact, value)" />
 </schema>
 
 <schema name="contacts.WebAddress.manage-student" type="net.sourceforge.fenixedu.domain.contacts.WebAddress" extends="contacts.PartyContact.manage-student"
-		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, defaultContact, url">
+		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, visible, defaultContact, url">
 	<slot name="url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.webAddress">
 		<property name="size" value="40"/>
 	</slot>
-	<setter signature="edit(type, defaultContact, url)" />
+	<setter signature="edit(type, visible, defaultContact, url)" />
 </schema>

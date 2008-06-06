@@ -72,8 +72,8 @@ public class PersonInformationDTO {
 	this.webAddress = person.getWebAddress();
 	this.email = person.getDefaultEmailAddress().getValue();
 	this.gender = person.getGender() != null ? person.getGender().name() : null;
-	this.availableEmail = person.getAvailableEmail();
-	this.availableWebSite = person.getAvailableWebSite();
+	this.availableEmail = person.isDefaultEmailVisible();
+	this.availableWebSite = person.isDefaultWebAddressVisible();
 	this.availablePhoto = person.getAvailablePhoto();
 	this.userUID = person.getIstUsername();
 

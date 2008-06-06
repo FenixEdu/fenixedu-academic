@@ -2005,7 +2005,7 @@ class DomainObject {
 	class contacts.PartyContact extends DomainObject {
 		Boolean defaultContact;
 		PartyContactType type;
-		Boolean visible;
+		Boolean visible (REQUIRED);
 	}
 
 		class contacts.EmailAddress extends contacts.PartyContact {
@@ -2799,9 +2799,9 @@ class DomainObject {
 	}
 
 		class Person extends organizationalStructure.Party {
-			Boolean availableEmail;
+			//Boolean availableEmail;
 			Boolean availablePhoto;
-			Boolean availableWebSite;
+			//Boolean availableWebSite;
 			YearMonthDay dateOfBirthYearMonthDay;
 			String districtOfBirth;
 			String districtSubdivisionOfBirth;

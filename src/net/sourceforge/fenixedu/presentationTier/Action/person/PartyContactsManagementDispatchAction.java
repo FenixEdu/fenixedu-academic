@@ -20,50 +20,58 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
 public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
-    
-    public ActionForward prepareCreatePhysicalAddress(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	return prepareCreatePartyContact(mapping, actionForm, request, response, PhysicalAddress.class);
-    }
-    
-    public ActionForward prepareCreatePhone(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	return prepareCreatePartyContact(mapping, actionForm, request, response, Phone.class);
-    }
-    
-    public ActionForward prepareCreateMobilePhone(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	return prepareCreatePartyContact(mapping, actionForm, request, response, MobilePhone.class);
-    }
-    
-    public ActionForward prepareCreateEmailAddress(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	return prepareCreatePartyContact(mapping, actionForm, request, response, EmailAddress.class);
-    }
-    
-    public ActionForward prepareCreateWebAddress(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	return prepareCreatePartyContact(mapping, actionForm, request, response, WebAddress.class);
-    }
-    
-    private ActionForward prepareCreatePartyContact(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response, Class<? extends PartyContact> clazz) {
-	
-	request.setAttribute("person", getPerson(request));
-	request.setAttribute("partyContactName", clazz.getSimpleName());
-	
-	return mapping.findForward("createPartyContact");
-    }
-    
-    public ActionForward createPartyContact(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward updateVisibility(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	RenderUtils.invalidateViewState();
 	return backToShowInformation(mapping, actionForm, request, response);
     }
-    
-    public ActionForward prepareEditPartyContact(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	
+
+    public ActionForward prepareCreatePhysicalAddress(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepareCreatePartyContact(mapping, actionForm, request, response, PhysicalAddress.class);
+    }
+
+    public ActionForward prepareCreatePhone(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepareCreatePartyContact(mapping, actionForm, request, response, Phone.class);
+    }
+
+    public ActionForward prepareCreateMobilePhone(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepareCreatePartyContact(mapping, actionForm, request, response, MobilePhone.class);
+    }
+
+    public ActionForward prepareCreateEmailAddress(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepareCreatePartyContact(mapping, actionForm, request, response, EmailAddress.class);
+    }
+
+    public ActionForward prepareCreateWebAddress(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepareCreatePartyContact(mapping, actionForm, request, response, WebAddress.class);
+    }
+
+    private ActionForward prepareCreatePartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response, Class<? extends PartyContact> clazz) {
+
+	request.setAttribute("person", getPerson(request));
+	request.setAttribute("partyContactName", clazz.getSimpleName());
+
+	return mapping.findForward("createPartyContact");
+    }
+
+    public ActionForward createPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return backToShowInformation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareEditPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
 	request.setAttribute("person", getPerson(request));
 	request.setAttribute("partyContact", getPartyContact(getPerson(request), request));
 	return mapping.findForward("editPartyContact");
@@ -78,18 +86,17 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	}
 	return null;
     }
-    
-    public ActionForward editPartyContact(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward editPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return backToShowInformation(mapping, actionForm, request, response);
     }
-    
-    public ActionForward deletePartyContact(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+
+    public ActionForward deletePartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    executeService("DeletePartyContact", new Object[] {getPartyContact(getPerson(request), request)});
+	    executeService("DeletePartyContact", new Object[] { getPartyContact(getPerson(request), request) });
 	} catch (DomainException e) {
 	    addActionMessage("contacts", request, e.getMessage(), e.getArgs());
 	}
@@ -99,9 +106,9 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     protected Person getPerson(final HttpServletRequest request) {
 	return AccessControl.getPerson();
     }
-    
-    public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	return mapping.findForward("visualizePersonalInformation");
     }
 }

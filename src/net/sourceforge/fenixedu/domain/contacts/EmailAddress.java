@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class EmailAddress extends EmailAddress_Base {
-    
+
     public static Comparator<EmailAddress> COMPARATOR_BY_EMAIL = new Comparator<EmailAddress>() {
 	public int compare(EmailAddress contact, EmailAddress otherContact) {
 	    final String value = contact.getValue();
@@ -24,43 +24,40 @@ public class EmailAddress extends EmailAddress_Base {
 	    }
 	    return (result == 0) ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
 	}};
-    
+
     protected EmailAddress() {
-        super();
+	super();
     }
-    
+
     protected EmailAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
-        this();
-        super.init(party, type, visible, defaultContact);
-    }
-    
-    public EmailAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String value) {
-	this(party, type, true, defaultContact.booleanValue(), value);
-    }
-    
-    public EmailAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String value) {
 	this();
-	init(party, type, visible, defaultContact, value);
+	super.init(party, type, visible, defaultContact);
     }
-    
+
+    public EmailAddress(final Party party, final PartyContactType type, final Boolean visible, final Boolean defaultContact,
+	    final String value) {
+	this();
+	init(party, type, visible.booleanValue(), defaultContact.booleanValue(), value);
+    }
+
     protected void init(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String value) {
 	super.init(party, type, visible, defaultContact);
 	checkParameters(value);
 	super.setValue(value);
     }
-    
+
     private void checkParameters(final String value) {
 	if (!EmailSender.emailAddressFormatIsValid(value)) {
 	    throw new DomainException("error.domain.contacts.EmailAddress.invalid.format", value);
 	}
     }
-    
+
     @Override
     public void setType(PartyContactType type) {
-        checkEmailType(type);
-        super.setType(type);
+	checkEmailType(type);
+	super.setType(type);
     }
-    
+
     private void checkEmailType(PartyContactType type) {
 	if (type == PartyContactType.INSTITUTIONAL) {
 	    final List<PartyContact> contacts = (List<PartyContact>) getParty().getPartyContacts(getClass(), type);
@@ -74,24 +71,29 @@ public class EmailAddress extends EmailAddress_Base {
     public boolean hasValue() {
 	return getValue() != null;
     }
-    
+
     public boolean hasValue(final String emailAddressString) {
 	return hasValue() && getValue().equalsIgnoreCase(emailAddressString);
     }
-    
+
     @Override
     public boolean isEmailAddress() {
-        return true;
+	return true;
     }
-    
+
     public void edit(final String value) {
 	if (!isInstitutionalType()) {
 	    super.setValue(value);
 	}
     }
-    
+
     public void edit(final PartyContactType type, final Boolean defaultContact, final String value) {
 	super.edit(type, true, defaultContact);
+	edit(value);
+    }
+
+    public void edit(final PartyContactType type, final Boolean visible, final Boolean defaultContact, final String value) {
+	super.edit(type, visible, defaultContact);
 	edit(value);
     }
 
@@ -104,7 +106,7 @@ public class EmailAddress extends EmailAddress_Base {
 	    throw new DomainException("error.domain.contacts.EmailAddress.cannot.remove.last.emailAddress");
 	}
     }
-    
+
     static public EmailAddress find(final String emailAddressString) {
 	for (final PartyContact contact : RootDomainObject.getInstance().getPartyContactsSet()) {
 	    if (contact.isEmailAddress()) {

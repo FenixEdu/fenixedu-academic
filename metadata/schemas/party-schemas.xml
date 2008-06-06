@@ -112,16 +112,12 @@
 <schema name="net.sourceforge.fenixedu.domain.organizationalStructure.Unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" bundle="MANAGER_RESOURCES" > 
 	<slot name="name" key="unitName"/>
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.Person.information.to.publish" type="net.sourceforge.fenixedu.domain.Person"> 
-	<slot name="availableEmail" key="label.person.availableEmail"/>
-	<slot name="availableWebSite" key="label.person.availableWebSite"/>
-	<slot name="availablePhoto" key="label.person.availablePhoto"/>
-</schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.nickname" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="nickname" key="label.person.nickname">
 		<property name="size" value="50"/>
 	</slot>
 </schema>
+
 <schema name="net.sourceforge.fenixedu.domain.Person.contact.info" type="net.sourceforge.fenixedu.domain.Person"> 
 	<slot name="phone" key="label.person.telephone">
 		 <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
