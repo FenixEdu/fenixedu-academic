@@ -316,7 +316,7 @@ public class ParkingParty extends ParkingParty_Base {
 		    occupations.add(stringBuilder.toString());
 		}
 	    }
-	    if (person.isResearcher()) {
+	    if (person.isPersonResearcher()) {
 		String researchUnitNames = person.getWorkingResearchUnitNames();
 		if (!StringUtils.isEmpty(researchUnitNames)
 			|| !person.getPartyClassification().equals(PartyClassification.TEACHER)) {

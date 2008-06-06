@@ -1990,7 +1990,7 @@ public class Person extends Person_Base {
 		return PartyClassification.TEACHER;
 	    }
 	}
-	if (isResearcher()) {
+	if (isPersonResearcher()) {
 	    return PartyClassification.RESEARCHER;
 	}
 	final Employee employee = getEmployee();
@@ -2711,7 +2711,7 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public boolean isResearcher() {
+    public boolean isPersonResearcher() {
 	return getPersonRole(RoleType.RESEARCHER) != null;
     }
 
