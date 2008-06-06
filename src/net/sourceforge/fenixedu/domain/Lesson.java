@@ -522,6 +522,10 @@ public class Lesson extends Lesson_Base {
 	return (allLessonDatesEvenToday.isEmpty() || date == null) ? false : allLessonDatesEvenToday.contains(date);
     }
 
+    public boolean isDateValidToInsertExtraSummary(YearMonthDay date) {
+	return !(getLessonStartDay().isAfter(date) || getLessonEndDay().isBefore(date));
+    }
+
     private YearMonthDay getLessonStartDay() {
 	if (!wasFinished()) {
 	    YearMonthDay periodBegin = getPeriod().getStartYearMonthDay();
