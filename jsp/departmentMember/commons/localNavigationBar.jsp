@@ -45,7 +45,7 @@
 		</ul>
 		
 		<ul style="margin-top: 1em">
-			<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" scope="session"/>
+			<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" scope="session"/>
 			<% String deiCode = "28"; %>
 			
 			<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	

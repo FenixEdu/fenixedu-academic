@@ -56,7 +56,7 @@
 				</html:link>
 			</li>
 											
-			<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" scope="session"/>		
+			<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" scope="session"/>		
 			<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 			<% String deiCode = "28"; %>
 			<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">

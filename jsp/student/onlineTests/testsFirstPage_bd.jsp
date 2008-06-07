@@ -28,7 +28,7 @@
 			<td class="listClasses"><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
 			<td class="listClasses">
 				<% 
-				net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE);
+				net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
 				net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastStudentTestLog(user.getPerson().getStudent().getNumber());
 					if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 				<bean:define id="logId" value="<%= studentTestLog.getIdInternal().toString() %>"/>
@@ -66,7 +66,7 @@
 			<td class="listClasses"><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
 			<td class="listClasses">
 				<% 
-				net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE);
+				net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
 				net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastStudentTestLog(user.getPerson().getStudent().getNumber());
 					if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 				<bean:define id="logId" value="<%= studentTestLog.getIdInternal().toString() %>"/>

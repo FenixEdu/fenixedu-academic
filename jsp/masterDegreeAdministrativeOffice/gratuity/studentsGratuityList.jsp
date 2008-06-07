@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 
-<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" scope="session"/>
+<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" scope="session"/>
 <% boolean masterDegreeUser = false; %>
 <logic:iterate id="roleType" name="userView" property="roleTypes">
 	<logic:equal name="roleType" value="<%= RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE.toString() %>" >

@@ -39,7 +39,7 @@
 		<br/>
 		<br/>
 		<%
-			IUserView userView = (IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE);
+			IUserView userView = (IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
 			if(userView.getUtilizador().startsWith("D"))
 			{
 				InfoStudentCurricularPlan infoScp = (InfoStudentCurricularPlan) ((List) studentCPList).get(0);

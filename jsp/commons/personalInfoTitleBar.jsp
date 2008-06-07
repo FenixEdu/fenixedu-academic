@@ -6,4 +6,4 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 
-Utilizador: <bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" property="person.nickname"/> - <dt:format pattern="dd.MM.yyyy"><dt:currentTime/></dt:format>
+Utilizador: <bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.nickname"/> - <dt:format pattern="dd.MM.yyyy"><dt:currentTime/></dt:format>

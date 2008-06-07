@@ -8,7 +8,7 @@
 
 <html:xhtml/>
 
-<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" scope="session"/>
+<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" scope="session"/>
 <logic:notEmpty name="userView" property="person.user.lastLoginHost">
 	<logic:notEmpty name="userView" property="person.user.lastLoginDateTime">
 		<bean:define id="lastLoginDateTime" type="java.util.Date" name="userView" property="person.user.lastLoginDateTime"/>
